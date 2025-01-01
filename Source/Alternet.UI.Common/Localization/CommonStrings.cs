@@ -22,6 +22,9 @@ namespace Alternet.UI.Localization
         public string ButtonOk { get; set; } = "Ok";
 
         /// <inheritdoc cref="ButtonOk"/>
+        public string ButtonFilter { get; set; } = "Filter";
+
+        /// <inheritdoc cref="ButtonOk"/>
         public string ButtonQuit { get; set; } = "Quit";
 
         /// <inheritdoc cref="ButtonOk"/>
@@ -104,6 +107,9 @@ namespace Alternet.UI.Localization
 
         /// <inheritdoc cref="ButtonOk"/>
         public string ButtonCopy { get; set; } = "Copy";
+
+        /// <inheritdoc cref="ButtonOk"/>
+        public string ButtonPassword { get; set; } = "Password";
 
         /// <inheritdoc cref="ButtonOk"/>
         public string ButtonPaste { get; set; } = "Paste";
