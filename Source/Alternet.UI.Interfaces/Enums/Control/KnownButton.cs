@@ -142,6 +142,11 @@ namespace Alternet.UI
         BrowserGo,
 
         /// <summary>
+        /// 'Search' button.
+        /// </summary>
+        Search,
+
+        /// <summary>
         /// 'Ellipsis' button that can be used near the textbox or other value editors.
         /// </summary>
         TextBoxEllipsis,

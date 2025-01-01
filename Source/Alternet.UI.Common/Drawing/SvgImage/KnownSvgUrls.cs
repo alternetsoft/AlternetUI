@@ -52,6 +52,12 @@ namespace Alternet.UI
             GetImageUrl("alternet-circle-xmark");
 
         /// <summary>
+        /// Gets or sets url used to load "Search" svg image used in toolbars.
+        /// </summary>
+        public static string UrlImageSearch { get; set; } =
+            GetImageUrl("alternet-search");
+
+        /// <summary>
         /// Gets or sets url used to load "File|New" svg image used in toolbars.
         /// </summary>
         public static string UrlImageFileNew { get; set; } =

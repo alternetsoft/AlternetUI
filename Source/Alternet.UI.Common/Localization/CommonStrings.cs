@@ -121,6 +121,9 @@ namespace Alternet.UI.Localization
         public string ButtonBold { get; set; } = "Bold";
 
         /// <inheritdoc cref="ButtonOk"/>
+        public string ButtonSearch { get; set; } = "Search";
+
+        /// <inheritdoc cref="ButtonOk"/>
         public string ButtonItalic { get; set; } = "Italic";
 
         /// <inheritdoc cref="ButtonOk"/>
@@ -183,9 +186,6 @@ namespace Alternet.UI.Localization
 
         /// <inheritdoc cref="ButtonOk"/>
         public string NotebookTabTitleActions { get; set; } = "Actions";
-
-        /// <inheritdoc cref="ButtonOk"/>
-        public string NotebookTabTitleSearch { get; set; } = "Search";
 
         // ========================
 

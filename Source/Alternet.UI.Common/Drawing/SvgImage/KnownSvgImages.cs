@@ -72,6 +72,7 @@ namespace Alternet.UI
         private static SvgImage? imgDiamondFilled;
         private static SvgImage? imgEyeOn;
         private static SvgImage? imgEyeOff;
+        private static SvgImage? imgSearch;
 
         /// <summary>
         /// Gets or sets 'Eye On' image.
@@ -80,6 +81,15 @@ namespace Alternet.UI
         {
             get => imgEyeOn ??= new MonoSvgImage(KnownSvgUrls.UrlImageEyeOn);
             set => imgEyeOn = value;
+        }
+
+        /// <summary>
+        /// Gets or sets 'Search' image.
+        /// </summary>
+        public static SvgImage ImgSearch
+        {
+            get => imgSearch ??= new MonoSvgImage(KnownSvgUrls.UrlImageSearch);
+            set => imgSearch = value;
         }
 
         /// <summary>
