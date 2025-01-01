@@ -1,5 +1,7 @@
 # Whatsnew 0.9.700
 
+Summary:
+
 - AlterNET UI now supports .NET 9, MAUI 9, and SkiaSharp 3.
 - Improved MAUI support across the library alongside with WxWidgets.
 - New controls: TextBoxAndButton (TextBox with buttons and image on the right side), RichToolTip (reimplemented inside the library), PopupControl (popups inside the parent control), and others.
