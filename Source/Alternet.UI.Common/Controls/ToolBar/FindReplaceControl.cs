@@ -166,7 +166,7 @@ namespace Alternet.UI
                     KnownSvgImages.ImgAngleDown);
 
                 findEdit.SuggestedWidth = 150;
-                findEdit.EmptyTextHint = CommonStrings.Default.ButtonFind + StringUtils.ThreeDots;
+                findEdit.EmptyTextHint = EmptyTextHints.FindEdit;
                 replaceEdit.SuggestedWidth = findEdit.SuggestedWidth;
                 findEdit.Parent = findEditBorder;
                 IdFindEdit = FindToolBar.AddControl(findEditBorder);
@@ -194,8 +194,7 @@ namespace Alternet.UI
 
                 replaceEdit.Parent = replaceEditBorder;
                 IdReplaceEdit = ReplaceToolBar.AddControl(replaceEditBorder);
-                replaceEdit.EmptyTextHint
-                    = CommonStrings.Default.ButtonReplace + StringUtils.ThreeDots;
+                replaceEdit.EmptyTextHint = EmptyTextHints.ReplaceEdit;
 
                 IdReplace = ReplaceToolBar.AddSpeedBtn(
                     CommonStrings.Default.ButtonReplace,
