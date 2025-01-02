@@ -31,13 +31,10 @@ namespace Alternet.UI
         /// </summary>
         public static Func<AbstractControl> CreateDefaultLabel = () => new Label();
 
-        private readonly PictureBox errorPicture = new()
-        {
-            Margin = new Thickness(DefaultControlLabelDistance, 0, 0, 0),
-        };
-
         private readonly AbstractControl label;
         private readonly AbstractControl mainControl;
+
+        private PictureBox? errorPicture;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ControlAndLabel"/> class.
@@ -65,11 +62,6 @@ namespace Alternet.UI
             mainControl = CreateControl();
             mainControl.Alignment = (HorizontalAlignment.Fill, VerticalAlignment.Center);
             mainControl.Parent = this;
-
-            errorPicture.Alignment = (HorizontalAlignment.Right, VerticalAlignment.Center);
-            CustomTextBox.InitErrorPicture(errorPicture);
-            errorPicture.ParentBackColor = true;
-            errorPicture.Parent = this;
         }
 
         /// <summary>
@@ -155,7 +147,22 @@ namespace Alternet.UI
         /// displays validation error information.
         /// </summary>
         [Browsable(false)]
-        public PictureBox ErrorPicture => errorPicture;
+        public PictureBox ErrorPicture
+        {
+            get
+            {
+                if (errorPicture is null)
+                {
+                    errorPicture = new();
+                    errorPicture.Visible = false;
+                    CustomTextBox.InitErrorPicture(errorPicture);
+                    errorPicture.Alignment = (HorizontalAlignment.Right, VerticalAlignment.Center);
+                    errorPicture.Parent = this;
+                }
+
+                return errorPicture;
+            }
+        }
 
         /// <summary>
         /// Gets main child control.
