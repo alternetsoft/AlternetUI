@@ -220,6 +220,11 @@ namespace Alternet.UI
             if (CharValidator is not null)
             {
                 var isValid = CharValidator.IsValid(ch);
+                if (!isValid)
+                {
+                    isValid = Array.IndexOf(Alternet.UI.CharValidator.AlwaysValidChars, ch) >= 0;
+                }
+
                 return isValid;
             }
 
