@@ -292,9 +292,9 @@ namespace Alternet.UI
                 if(errorPicture is null)
                 {
                     errorPicture = new();
-                    errorPicture.Alignment = (HorizontalAlignment.Right, VerticalAlignment.Center);
-                    CustomTextBox.InitErrorPicture(errorPicture);
                     errorPicture.Visible = false;
+                    CustomTextBox.InitErrorPicture(errorPicture);
+                    errorPicture.Alignment = (HorizontalAlignment.Right, VerticalAlignment.Center);
                     errorPicture.Parent = this;
                 }
 
