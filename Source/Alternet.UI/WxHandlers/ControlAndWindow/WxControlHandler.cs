@@ -572,12 +572,12 @@ namespace Alternet.UI
             NativeControl.RecreateWindow();
         }
 
-        public void BeginUpdate()
+        public virtual void BeginUpdate()
         {
             NativeControl.BeginUpdate();
         }
 
-        public void EndUpdate()
+        public virtual void EndUpdate()
         {
             NativeControl.EndUpdate();
         }

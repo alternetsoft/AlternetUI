@@ -8,8 +8,6 @@ namespace ControlsSample
     [IsCsLocalized(true)]
     internal partial class CheckListBoxPage : Control
     {
-        private int newItemIndex = 0;
-
         public CheckListBoxPage()
         {
             InitializeComponent();
@@ -41,24 +39,9 @@ namespace ControlsSample
             checkListBox.HasBorder = !checkListBox.HasBorder;
         }
 
-        private int GenItemIndex()
-        {
-            newItemIndex++;
-            return newItemIndex;
-        }
-
         private void AddManyItemsButton_Click(object? sender, EventArgs e)
         {
-            checkListBox.BeginUpdate();
-            try
-            {
-                for (int i = 0; i < 5000; i++)
-                    checkListBox.Items.Add($"{GenericStrings.Item} " + GenItemIndex());
-            }
-            finally
-            {
-                checkListBox.EndUpdate();
-            }
+            ListBoxPage.AddManyItems(checkListBox);
         }
 
         private static string IndicesToStr(IReadOnlyList<int> indices)
@@ -112,7 +95,9 @@ namespace ControlsSample
 
         private void AddItemButton_Click(object? sender, EventArgs e)
         {
-            checkListBox.Items.Add($"{GenericStrings.Item} " + GenItemIndex());
+            checkListBox.Items.Add(ListBoxPage.GenItemText());
+            checkListBox.SelectLastItem();
+            checkListBox.ScrollToLastRow();
         }
 
         private void EnsureLastItemVisibleButton_Click(

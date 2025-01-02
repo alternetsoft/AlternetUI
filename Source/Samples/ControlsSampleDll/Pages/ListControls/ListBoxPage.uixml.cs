@@ -8,7 +8,7 @@ namespace ControlsSample
 {
     internal partial class ListBoxPage : Control
     {
-        private int newItemIndex = 0;
+        private static int newItemIndex = 0;
 
         public ListBoxPage()
         {
@@ -47,7 +47,7 @@ namespace ControlsSample
             DialogFactory.EditItemsWithListEditor(listBox);
         }
 
-        private int GenItemIndex()
+        public static int GenItemIndex()
         {
             newItemIndex++;
             return newItemIndex;
@@ -68,18 +68,36 @@ namespace ControlsSample
             App.Log($"HitTest result: Item: '{item}'");
         }
 
-        private void AddManyItemsButton_Click(object? sender, EventArgs e)
+        public static string GenItemText()
+        {
+            return $"{GenericStrings.Item} id({GenItemIndex()})";
+        }
+
+        public static void AddManyItems(ListBox listBox)
         {
             listBox.BeginUpdate();
             try
             {
-                for (int i = 0; i < 5000; i++)
-                    listBox.Items.Add("Item " + GenItemIndex());
+                string[] data = new string[5000];
+
+                var length = data.Length;
+
+                for (int i = 0; i < length; i++)
+                    data[i] = GenItemText();
+
+                listBox.Items.AddRange(data);
+
+                App.Log("Added 5000 items");
             }
             finally
             {
                 listBox.EndUpdate();
             }
+        }
+
+        private void AddManyItemsButton_Click(object? sender, EventArgs e)
+        {
+            AddManyItems(listBox);
         }
 
         private static string IndicesToStr(IReadOnlyList<int> indices)
@@ -117,7 +135,9 @@ namespace ControlsSample
 
         private void AddItemButton_Click(object? sender, EventArgs e)
         {
-            listBox.Items.Add("Item " + GenItemIndex());
+            listBox.Items.Add(GenItemText());
+            listBox.SelectLastItem();
+            listBox.ScrollToLastRow();
         }
 
         private void EnsureLastItemVisibleButton_Click(

@@ -203,18 +203,6 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        public IControlHandler CreateCheckListBoxHandler(CheckListBox control)
-        {
-            return new CheckListBoxHandler();
-        }
-
-        /// <inheritdoc/>
-        public IControlHandler CreateListBoxHandler(ListBox control)
-        {
-            return new ListBoxHandler();
-        }
-
-        /// <inheritdoc/>
         public IStatusBarHandler CreateStatusBarHandler(StatusBar control)
         {
             return new StatusBarHandler(control);

@@ -194,26 +194,9 @@ namespace Alternet.UI
         string GetItemText(int index, bool forDisplay);
 
         /// <summary>
-        /// Returns the text representation of the specified item.
-        /// </summary>
-        /// <param name="item">The object from which to get the contents to
-        /// display.</param>
-        /// <param name="forDisplay">The flag which specifies whether to get text
-        /// for display purposes or the real value.</param>
-        string GetItemText(TItem? item, bool forDisplay);
-
-        /// <summary>
         /// Selects first item in the control.
         /// </summary>
         void SelectFirstItem();
-
-        /// <summary>
-        /// Casts selected item to <typeparamref name="T"/> type.
-        /// </summary>
-        /// <typeparam name="T">Type of the result.</typeparam>
-        /// <returns></returns>
-        public T? SelectedItemAs<T>()
-            where T : TItem;
 
         /// <summary>
         /// Removed all items from the control.

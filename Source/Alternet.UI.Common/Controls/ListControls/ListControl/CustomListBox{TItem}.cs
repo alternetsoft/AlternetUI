@@ -109,17 +109,7 @@ namespace Alternet.UI
                 if (DisposingOrDisposed)
                     return [];
 
-                if (IsSelectionModeSingle)
-                {
-                    if (SelectedIndex is null)
-                        return [];
-                    else
-                        return [SelectedIndex.Value];
-                }
-                else
-                {
-                    return selectedIndices.ToArray();
-                }
+                return selectedIndices.ToArray();
             }
 
             set
@@ -127,9 +117,10 @@ namespace Alternet.UI
                 if (DisposingOrDisposed)
                     return;
 
+                bool changed = false;
+
                 ClearSelectedCore();
 
-                bool changed = false;
                 foreach (var index in value)
                 {
                     if (SetSelectedCore(index, true))
@@ -273,7 +264,7 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Gets or sets the currently selected item in the ListBox.
+        /// Gets or sets the currently selected item in the control.
         /// </summary>
         /// <value>An object that represents the current selection in the control,
         /// or <c>null</c> if no item is selected.</value>
@@ -490,6 +481,8 @@ namespace Alternet.UI
         /// <param name="itemIndex">The item index to scroll into visibility.</param>
         public virtual void EnsureVisible(int itemIndex)
         {
+            if (DisposingOrDisposed)
+                return;
             if (Count > 0)
                 Handler.EnsureVisible(itemIndex);
         }
@@ -503,7 +496,12 @@ namespace Alternet.UI
         /// <returns>The zero-based index of the item found at the specified
         /// coordinates; returns <see langword="null"/>
         /// if no match is found.</returns>
-        public virtual int? HitTest(PointD position) => Handler.HitTest(position);
+        public virtual int? HitTest(PointD position)
+        {
+            if (DisposingOrDisposed)
+                return null;
+            return Handler.HitTest(position);
+        }
 
         /// <summary>
         /// Gets only valid indexes from the list of indexes in
@@ -648,6 +646,8 @@ namespace Alternet.UI
         /// </summary>
         public virtual void RunSelectedItemDoubleClickAction()
         {
+            if (DisposingOrDisposed)
+                return;
             var item = SelectedItem as ListControlItem;
             var action = item?.DoubleClickAction;
             action?.Invoke();

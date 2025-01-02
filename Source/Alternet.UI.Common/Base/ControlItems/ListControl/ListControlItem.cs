@@ -27,6 +27,7 @@ namespace Alternet.UI
         public static bool DrawDebugCornersOnElements = false;
 
         private CachedSvgImage<Image> cachedSvg = new();
+        private string? text;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ListControlItem"/> class
@@ -55,7 +56,6 @@ namespace Alternet.UI
         /// </summary>
         public ListControlItem()
         {
-            Text = string.Empty;
         }
 
         /// <summary>
@@ -299,7 +299,11 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets text which is displayed when item is painted.
         /// </summary>
-        public virtual string Text { get; set; }
+        public virtual string Text
+        {
+            get => text ?? Value?.ToString() ?? string.Empty;
+            set => text = value;
+        }
 
         /// <summary>
         /// Gets or sets user data. This is different from <see cref="BaseObjectWithAttr.Tag"/>.
@@ -940,6 +944,14 @@ namespace Alternet.UI
         public virtual void SetImage(VisualControlState state, Image? image, bool? isDark = null)
         {
             cachedSvg.SetImage(state, image, isDark);
+        }
+
+        /// <summary>
+        /// Sets <see cref="Value"/> property.
+        /// </summary>
+        public void SetValue(object? value)
+        {
+            Value = value;
         }
 
         /// <summary>
