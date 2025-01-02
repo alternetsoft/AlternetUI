@@ -13,7 +13,6 @@ namespace Alternet.UI
         IButtonHandler,
         ICalendarHandler,
         ICheckBoxHandler,
-        ICheckListBoxHandler,
         IColorPickerHandler,
         IComboBoxHandler,
         IContextMenuHandler,
