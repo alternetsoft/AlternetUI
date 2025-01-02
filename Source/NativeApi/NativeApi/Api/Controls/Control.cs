@@ -12,6 +12,13 @@ namespace NativeApi.Api
     {
         public static IntPtr CreateControl() => default;
 
+        // Returns true if this window can have a scroll bar in this orientation.
+        // wxHORIZONTAL = 0x0004,  wxVERTICAL = 0x0008,
+        public bool CanScroll(int orient) => default;
+
+        // Returns true if this window currently has a scroll bar for this orientation.
+        public bool HasScrollbar(int orient) => default;
+
         public bool WantChars { get; set; }
         public bool ShowVertScrollBar { get; set; }
         public bool ShowHorzScrollBar { get; set; }
@@ -50,7 +57,8 @@ namespace NativeApi.Api
             => default;
         public static Color GetClassDefaultAttributesFgColor(int controlType, int windowVariant)
             => default;
-        public static Font GetClassDefaultAttributesFont(int controlType, int windowVariant) => default;
+        public static Font GetClassDefaultAttributesFont(int controlType, int windowVariant)
+            => default;
 
         public static int DrawingFromDip(Coord value, IntPtr window) => default;
         public static Coord DrawingDPIScaleFactor(IntPtr window) => default;

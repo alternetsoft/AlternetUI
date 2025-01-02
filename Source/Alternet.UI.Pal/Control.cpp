@@ -2259,6 +2259,16 @@ namespace Alternet::UI
         return toDip(wxPoint(point.X, point.Y), GetWxWindow());
     }
 
+    bool Control::CanScroll(int orient)
+    {
+        return GetWxWindow()->CanScroll(orient);
+    }
+
+    bool Control::HasScrollbar(int orient)
+    {
+        return GetWxWindow()->HasScrollbar(orient);
+    }
+
     void* Control::GetContainingSizer() 
     {
         return GetWxWindow()->GetContainingSizer();

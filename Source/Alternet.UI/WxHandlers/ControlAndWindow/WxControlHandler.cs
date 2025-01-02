@@ -14,6 +14,9 @@ namespace Alternet.UI
     /// </summary>
     internal class WxControlHandler : BaseControlHandler, IControlHandler
     {
+        const int wxHORIZONTAL = 0x0004;
+        const int wxVERTICAL = 0x0008;
+
         private Native.Control? nativeControl;
 
         public WxControlHandler()
@@ -863,6 +866,16 @@ namespace Alternet.UI
         public void SetFocusFlags(bool canSelect, bool tabStop, bool acceptsFocusRecursively)
         {
             NativeControl.SetFocusFlags(canSelect, tabStop, acceptsFocusRecursively);
+        }
+
+        public bool CanScroll(bool isVertical)
+        {
+            return NativeControl.CanScroll(isVertical ? wxVERTICAL : wxHORIZONTAL);
+        }
+
+        public bool HasScrollbar(bool isVertical)
+        {
+            return NativeControl.HasScrollbar(isVertical ? wxVERTICAL : wxHORIZONTAL);
         }
 
         public ScrollBarInfo GetScrollBarInfo(bool isVertical)
