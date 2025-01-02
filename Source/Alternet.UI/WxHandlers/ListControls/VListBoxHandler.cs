@@ -196,15 +196,11 @@ namespace Alternet.UI
 
         public void DetachItems(IListControlItems<ListControlItem> items)
         {
-            items.ItemInserted -= Items_ItemInserted;
-            items.ItemRemoved -= Items_ItemRemoved;
             items.CollectionChanged -= Items_CollectionChanged;
         }
 
         public void AttachItems(IListControlItems<ListControlItem> items)
         {
-            items.ItemInserted += Items_ItemInserted;
-            items.ItemRemoved += Items_ItemRemoved;
             items.CollectionChanged += Items_CollectionChanged;
             NativeControl.ItemsCount = items.Count;
         }
@@ -340,20 +336,30 @@ namespace Alternet.UI
             }
         }
 
-        private void Items_ItemInserted(object? sender, int index, object item)
+        private void CountChanged()
+        {
+            if (!Control.InUpdates)
+            {
+                var newCount = Control.Items.Count;
+
+                if (NativeControl.ItemsCount != newCount)
+                {
+                    NativeControl.ItemsCount = newCount;
+                    Control.Invalidate();
+                }
+            }
+        }
+
+        /// <inheritdoc/>
+        public override void EndUpdate()
         {
             NativeControl.ItemsCount = Control.Items.Count;
-            Control.Invalidate();
+            base.EndUpdate();
         }
 
         private void Items_CollectionChanged(object? sender, NotifyCollectionChangedEventArgs e)
         {
-        }
-
-        private void Items_ItemRemoved(object? sender, int index, object item)
-        {
-            NativeControl.ItemsCount = Control.Items.Count;
-            Control.Invalidate();
+            CountChanged();
         }
 
         private class NativeVListBox : Native.VListBox

@@ -702,6 +702,28 @@ namespace Alternet.UI
             return ToggleItemCheckState(itemIndex.Value);
         }
 
+        /// <summary>
+        /// Finds the item with <see cref="ListControlItem.Value"/> property which is
+        /// equal to the specified value.
+        /// </summary>
+        /// <param name="value">Value to search for.</param>
+        /// <returns></returns>
+        public virtual ListControlItem? FindItemWithValue(object? value)
+        {
+            if (value is null)
+                return null;
+
+            for (int i = 0; i < Items.Count; i++)
+            {
+                var item = Items[i];
+
+                if(value.Equals(item.Value))
+                    return item;
+            }
+
+            return null;
+        }
+
         /// <inheritdoc/>
         protected override IControlHandler CreateHandler()
         {
