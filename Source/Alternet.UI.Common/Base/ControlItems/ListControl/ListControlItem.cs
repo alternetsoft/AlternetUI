@@ -74,6 +74,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets whether <see cref="Image"/> or <see cref="SvgImage"/> is assigned.
         /// </summary>
+        [Browsable(false)]
         public bool HasImageOrSvg => Image is not null || SvgImage is not null;
 
         /// <summary>
@@ -88,7 +89,6 @@ namespace Alternet.UI
         /// It is up to control to decide whether and how this property is used.
         /// When this property is changed, you need to repaint the item.
         /// </remarks>
-        [Browsable(false)]
         public virtual CheckState CheckState { get; set; }
 
         /// <summary>
@@ -127,7 +127,6 @@ namespace Alternet.UI
         /// It is up to control to decide whether and how this property is used.
         /// When this property is changed, you need to repaint the item.
         /// </remarks>
-        [Browsable(false)]
         public virtual bool? CheckBoxVisible { get; set; }
 
         /// <summary>
@@ -136,7 +135,6 @@ namespace Alternet.UI
         /// <remarks>
         /// It is up to control to decide whether and how this property is used.
         /// </remarks>
-        [Browsable(false)]
         public virtual bool CanRemove { get; set; } = true;
 
         /// <summary>
@@ -146,7 +144,6 @@ namespace Alternet.UI
         /// It is up to control to decide whether and how this property is used.
         /// When this property is changed, you need to repaint the item.
         /// </remarks>
-        [Browsable(false)]
         public virtual Image? Image
         {
             get => GetImage(VisualControlState.Normal);
@@ -160,7 +157,6 @@ namespace Alternet.UI
         /// It is up to control to decide whether and how this property is used.
         /// When this property is changed, you need to repaint the item.
         /// </remarks>
-        [Browsable(false)]
         public virtual Image? DisabledImage
         {
             get => GetImage(VisualControlState.Disabled);
@@ -174,7 +170,6 @@ namespace Alternet.UI
         /// It is up to control to decide whether and how this property is used.
         /// When this property is changed, you need to repaint the item.
         /// </remarks>
-        [Browsable(false)]
         public virtual Image? SelectedImage
         {
             get => GetImage(VisualControlState.Selected);
@@ -188,7 +183,6 @@ namespace Alternet.UI
         /// It is up to control to decide whether and how this property is used.
         /// When this property is changed, you need to repaint the item.
         /// </remarks>
-        [Browsable(false)]
         public virtual SvgImage? SvgImage
         {
             get => cachedSvg.SvgImage;
@@ -206,7 +200,6 @@ namespace Alternet.UI
         /// When this property is changed, you need to repaint the item.
         /// Currently only rectangular svg images are supported.
         /// </remarks>
-        [Browsable(false)]
         public virtual SizeI? SvgImageSize
         {
             get => cachedSvg.SvgSize;
@@ -216,7 +209,6 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets minimal item height.
         /// </summary>
-        [Browsable(false)]
         public virtual Coord MinHeight { get; set; }
 
         /// <summary>
@@ -226,7 +218,6 @@ namespace Alternet.UI
         /// It is up to control to decide whether and how this property is used.
         /// When this property is changed, you need to repaint the item.
         /// </remarks>
-        [Browsable(false)]
         public virtual FontStyle? FontStyle { get; set; }
 
         /// <summary>
@@ -236,19 +227,16 @@ namespace Alternet.UI
         /// It is up to control to decide whether and how this property is used.
         /// When this property is changed, you need to repaint the item.
         /// </remarks>
-        [Browsable(false)]
         public virtual Font? Font { get; set; }
 
         /// <summary>
         /// Gets or sets whether to hide selection for this item.
         /// </summary>
-        [Browsable(false)]
         public virtual bool HideSelection { get; set; }
 
         /// <summary>
         /// Gets or sets whether to hide focus rectangle for this item.
         /// </summary>
-        [Browsable(false)]
         public virtual bool HideFocusRect { get; set; }
 
         /// <summary>
@@ -258,7 +246,6 @@ namespace Alternet.UI
         /// It is up to control to decide whether and how this property is used.
         /// When this property is changed, you need to repaint the item.
         /// </remarks>
-        [Browsable(false)]
         public virtual Color? ForegroundColor { get; set; }
 
         /// <summary>
@@ -268,7 +255,6 @@ namespace Alternet.UI
         /// It is up to control to decide whether and how this property is used.
         /// When this property is changed, you need to repaint the item.
         /// </remarks>
-        [Browsable(false)]
         public virtual Color? BackgroundColor { get; set; }
 
         /// <summary>
@@ -278,7 +264,6 @@ namespace Alternet.UI
         /// It is up to control to decide whether and how this property is used.
         /// When this property is changed, you need to repaint the item.
         /// </remarks>
-        [Browsable(false)]
         public virtual BorderSettings? Border { get; set; }
 
         /// <summary>
@@ -288,7 +273,6 @@ namespace Alternet.UI
         /// It is up to control to decide whether and how this property is used.
         /// When this property is changed, you need to repaint the item.
         /// </remarks>
-        [Browsable(false)]
         public virtual HVAlignment Alignment { get; set; } = DefaultItemAlignment;
 
         /// <summary>
@@ -301,7 +285,14 @@ namespace Alternet.UI
         /// </summary>
         public virtual string Text
         {
-            get => text ?? Value?.ToString() ?? string.Empty;
+            get
+            {
+                if (string.IsNullOrEmpty(text))
+                    return Value?.ToString() ?? string.Empty;
+
+                return text ?? string.Empty;
+            }
+
             set => text = value;
         }
 
@@ -952,6 +943,48 @@ namespace Alternet.UI
         public void SetValue(object? value)
         {
             Value = value;
+        }
+
+        /// <summary>
+        /// Assigns properties of this object from the properties of another object.
+        /// </summary>
+        /// <param name="assignFrom">The object to assign properties from.</param>
+        public virtual void Assign(ListControlItem assignFrom)
+        {
+            DisplayText = assignFrom.DisplayText;
+            CheckState = assignFrom.CheckState;
+            CheckBoxThreeState = assignFrom.CheckBoxThreeState;
+            CheckBoxAllowAllStatesForUser = assignFrom.CheckBoxAllowAllStatesForUser;
+            CheckBoxVisible = assignFrom.CheckBoxVisible;
+            CanRemove = assignFrom.CanRemove;
+            Image = assignFrom.Image;
+            DisabledImage = assignFrom.DisabledImage;
+            SelectedImage = assignFrom.SelectedImage;
+            SvgImage = assignFrom.SvgImage;
+            SvgImageSize = assignFrom.SvgImageSize;
+            MinHeight = assignFrom.MinHeight;
+            FontStyle = assignFrom.FontStyle;
+            Font = assignFrom.Font;
+            HideSelection = assignFrom.HideSelection;
+            HideFocusRect = assignFrom.HideFocusRect;
+            ForegroundColor = assignFrom.ForegroundColor;
+            BackgroundColor = assignFrom.BackgroundColor;
+            Border = assignFrom.Border;
+            Alignment = assignFrom.Alignment;
+            LabelFlags = assignFrom.LabelFlags;
+            Text = assignFrom.Text;
+            Value = assignFrom.Value;
+        }
+
+        /// <summary>
+        /// Creates a copy of this object.
+        /// </summary>
+        /// <returns></returns>
+        public virtual ListControlItem Clone()
+        {
+            ListControlItem result = new();
+            result.Assign(this);
+            return result;
         }
 
         /// <summary>
