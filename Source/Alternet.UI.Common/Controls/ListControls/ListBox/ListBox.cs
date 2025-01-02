@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 
@@ -50,6 +51,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets last item in the control or <c>null</c> if there are no items.
         /// </summary>
+        [Browsable(false)]
         public new object? LastItem
         {
             get
@@ -68,6 +70,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets first item in the control or <c>null</c> if there are no items.
         /// </summary>
+        [Browsable(false)]
         public new object? FirstItem
         {
             get
@@ -86,6 +89,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets last root item in the control or <c>null</c> if there are no items.
         /// </summary>
+        [Browsable(false)]
         public new object? LastRootItem
         {
             get
@@ -126,6 +130,7 @@ namespace Alternet.UI
         /// property to obtain all the selected indexes in a multiple-selection control.
         /// </para>
         /// </remarks>
+        [Browsable(false)]
         public new object? SelectedItem
         {
             get
@@ -144,6 +149,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets a collection of the selected items.
         /// </summary>
+        [Browsable(false)]
         public IEnumerable<object> SelectedItemsCollection
         {
             get
@@ -161,6 +167,7 @@ namespace Alternet.UI
         /// Gets or sets items as collection <see cref="ListControlItem"/> items.
         /// This is the fastest way to access items.
         /// </summary>
+        [Browsable(false)]
         public IListControlItems<ListControlItem> BaseItems
         {
             get
@@ -201,6 +208,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets an array of the selected items.
         /// </summary>
+        [Browsable(false)]
         public new IReadOnlyList<object> SelectedItems
         {
             get
