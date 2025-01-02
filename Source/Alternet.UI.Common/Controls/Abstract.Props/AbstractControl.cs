@@ -447,6 +447,11 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets or sets whether <see cref="CharValidator"/> is ignored. Default is True.
+        /// </summary>
+        public virtual bool IgnoreCharValidator { get; set; } = true;
+
+        /// <summary>
         /// Gets or sets the title of the control as string.
         /// There is also <see cref="TitleAsObject"/> property.
         /// </summary>

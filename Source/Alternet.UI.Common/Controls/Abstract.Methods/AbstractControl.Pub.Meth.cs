@@ -217,8 +217,14 @@ namespace Alternet.UI
         /// <returns></returns>
         public virtual bool IsValidInputChar(char ch)
         {
-            if (CharValidator is not null)
+            if ((CharValidator is not null) && !IgnoreCharValidator)
             {
+                if(ch < 32)
+                {
+                    if (Alternet.UI.CharValidator.AlwaysValidControlChars)
+                        return true;
+                }
+
                 var isValid = CharValidator.IsValid(ch);
                 if (!isValid)
                 {
