@@ -76,8 +76,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Alternet.UI.Integration.Rem
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Alternet.UI.Integration.UIXmlHostApp", "Integration\Components\Alternet.UI.Integration.UIXmlHostApp\Alternet.UI.Integration.UIXmlHostApp.csproj", "{A7C0DF95-0DFD-4BEB-B84F-3152DE9A61E8}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "05 - Tests", "05 - Tests", "{1A0684D9-5391-4CC9-B8A6-49384A9C0E8B}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ApiDocDll", "Samples\ApiDocDll\ApiDocDll.csproj", "{689EB3F5-7302-41EE-A425-03440F7283AA}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MauiControlsTest", "Tests\MauiControlsTest\MauiControlsTest.csproj", "{C7B3C844-F6D7-49CD-A83E-C759F6CB6A3E}"
