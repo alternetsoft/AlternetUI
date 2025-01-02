@@ -106,7 +106,8 @@ namespace Alternet.UI
         {
             get
             {
-                CheckDisposed();
+                if (DisposingOrDisposed)
+                    return [];
 
                 if (IsSelectionModeSingle)
                 {
@@ -123,7 +124,8 @@ namespace Alternet.UI
 
             set
             {
-                CheckDisposed();
+                if (DisposingOrDisposed)
+                    return;
 
                 ClearSelectedCore();
 
@@ -223,7 +225,8 @@ namespace Alternet.UI
 
             set
             {
-                CheckDisposed();
+                if (DisposingOrDisposed)
+                    return;
 
                 var oldSelected = SelectedIndex;
                 var oldCount = selectedIndices.Count;
@@ -256,13 +259,15 @@ namespace Alternet.UI
         {
             get
             {
-                CheckDisposed();
+                if (DisposingOrDisposed)
+                    return false;
                 return Handler.HasBorder;
             }
 
             set
             {
-                CheckDisposed();
+                if (DisposingOrDisposed)
+                    return;
                 Handler.HasBorder = value;
             }
         }
@@ -298,7 +303,8 @@ namespace Alternet.UI
         {
             get
             {
-                CheckDisposed();
+                if (DisposingOrDisposed)
+                    return null;
 
                 var selectedIndex = SelectedIndex;
 
@@ -315,7 +321,8 @@ namespace Alternet.UI
 
             set
             {
-                CheckDisposed();
+                if (DisposingOrDisposed)
+                    return;
 
                 if (value == null)
                 {
@@ -367,7 +374,8 @@ namespace Alternet.UI
         {
             get
             {
-                CheckDisposed();
+                if (DisposingOrDisposed)
+                    return [];
 
                 return SelectedIndices.Select(x => Items[x]).ToArray();
             }
@@ -428,14 +436,16 @@ namespace Alternet.UI
         {
             get
             {
-                CheckDisposed();
+                if (DisposingOrDisposed)
+                    return ListBoxSelectionMode.Single;
 
                 return selectionMode;
             }
 
             set
             {
-                CheckDisposed();
+                if (DisposingOrDisposed)
+                    return;
 
                 if (selectionMode == value)
                     return;
@@ -576,10 +586,10 @@ namespace Alternet.UI
         /// was outside the range of valid values.</exception>
         public virtual bool SetSelected(int index, bool value)
         {
+            if (DisposingOrDisposed)
+                return false;
             if (index < 0 || index >= Items.Count)
-                throw new ArgumentOutOfRangeException(nameof(value));
-
-            CheckDisposed();
+                return false;
 
             var changed = SetSelectedCore(index, value);
 
@@ -651,6 +661,8 @@ namespace Alternet.UI
         /// data.</param>
         public void RaiseSelectionChanged(EventArgs? e = null)
         {
+            if (DisposingOrDisposed)
+                return;
             if (ignoreSelectEvents > 0)
                 return;
             OnSelectionChanged(EventArgs.Empty);

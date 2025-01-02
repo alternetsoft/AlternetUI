@@ -45,12 +45,91 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets last item in the control or <c>null</c> if there are no items.
+        /// </summary>
+        [Browsable(false)]
+        public virtual TItem? LastItem
+        {
+            get
+            {
+                var count = Count;
+                if (count > 0)
+                    return GetItem(count - 1);
+                return null;
+            }
+
+            set
+            {
+                var count = Count;
+                if (count > 0 && value is not null)
+                    SetItem(count - 1, value);
+            }
+        }
+
+        /// <summary>
+        /// Gets first item in the control or <c>null</c> if there are no items.
+        /// </summary>
+        [Browsable(false)]
+        public virtual TItem? FirstItem
+        {
+            get
+            {
+                if (Count > 0)
+                    return GetItem(0);
+                return null;
+            }
+
+            set
+            {
+                if (Count > 0 && value is not null)
+                    SetItem(0, value);
+            }
+        }
+
+        /// <summary>
+        /// Gets last root item in the control or <c>null</c> if there are no items.
+        /// </summary>
+        [Browsable(false)]
+        public virtual TItem? LastRootItem
+        {
+            get => LastItem;
+            set => LastItem = value;
+        }
+
+        /// <summary>
         /// Gets or sets the currently selected item in the control.
         /// </summary>
         /// <value>An object that represents the current selection in the
         /// control, or <c>null</c> if no item is selected.</value>
         [Browsable(false)]
         public abstract TItem? SelectedItem { get; set; }
+
+        /// <summary>
+        /// Gets or sets the items of the control.
+        /// </summary>
+        /// <value>A collection representing the items
+        /// in the control.</value>
+        /// <remarks>This property enables you to obtain a reference to the list
+        /// of items that are currently stored in the control.
+        /// With this reference, you can add items, remove items, and obtain
+        /// a count of the items in the collection.</remarks>
+        [Content]
+        public virtual IListControlItems<TItem> Items
+        {
+            get
+            {
+                return SafeItems();
+            }
+
+            set
+            {
+                DoInsideUpdate(() =>
+                {
+                    RemoveAll();
+                    Items.AddRange(value);
+                });
+            }
+        }
 
         /// <summary>
         /// Gets or sets the zero-based index of the currently selected item in
@@ -104,33 +183,6 @@ namespace Alternet.UI
             (SelectedItem as ListControlItem)?.UniqueId;
 
         /// <summary>
-        /// Gets or sets the items of the control.
-        /// </summary>
-        /// <value>A collection representing the items
-        /// in the control.</value>
-        /// <remarks>This property enables you to obtain a reference to the list
-        /// of items that are currently stored in the control.
-        /// With this reference, you can add items, remove items, and obtain
-        /// a count of the items in the collection.</remarks>
-        [Content]
-        public virtual IListControlItems<TItem> Items
-        {
-            get
-            {
-                return SafeItems();
-            }
-
-            set
-            {
-                DoInsideUpdate(() =>
-                {
-                    RemoveAll();
-                    Items.AddRange(value);
-                });
-            }
-        }
-
-        /// <summary>
         /// Gets the number of elements contained in the control.
         /// </summary>
         /// <returns>
@@ -145,58 +197,6 @@ namespace Alternet.UI
             {
                 throw new InvalidOperationException();
             }
-        }
-
-        /// <summary>
-        /// Gets last item in the control or <c>null</c> if there are no items.
-        /// </summary>
-        [Browsable(false)]
-        public virtual TItem? LastItem
-        {
-            get
-            {
-                var count = Count;
-                if (count > 0)
-                    return GetItem(count - 1);
-                return null;
-            }
-
-            set
-            {
-                var count = Count;
-                if (count > 0 && value is not null)
-                    SetItem(count - 1, value);
-            }
-        }
-
-        /// <summary>
-        /// Gets first item in the control or <c>null</c> if there are no items.
-        /// </summary>
-        [Browsable(false)]
-        public virtual TItem? FirstItem
-        {
-            get
-            {
-                if (Count > 0)
-                    return GetItem(0);
-                return null;
-            }
-
-            set
-            {
-                if (Count > 0 && value is not null)
-                    SetItem(0, value);
-            }
-        }
-
-        /// <summary>
-        /// Gets last root item in the control or <c>null</c> if there are no items.
-        /// </summary>
-        [Browsable(false)]
-        public virtual TItem? LastRootItem
-        {
-            get => LastItem;
-            set => LastItem = value;
         }
 
         [Browsable(false)]
@@ -559,7 +559,8 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Removes item with the specified value. Item is removed if it equals the specified value or
+        /// Removes item with the specified value. Item is removed if it equals
+        /// the specified value or
         /// if it is <see cref="ListControlItem"/> and it's <see cref="ListControlItem.Value"/>
         /// property equals the value.
         /// </summary>
