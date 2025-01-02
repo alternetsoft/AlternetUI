@@ -1378,12 +1378,18 @@ namespace Alternet.UI
 
             void Report(IValidatorReporter? reporter)
             {
-                reporter?.SetErrorStatus(this, showError, hint);
                 if (AutoShowError && reporter is Control reporterControl)
                 {
                     if(reporterControl != this)
-                        reporterControl.Visible = showError;
+                    {
+                        this.RunWhenIdle(() =>
+                        {
+                            reporterControl.Visible = showError;
+                        });
+                    }
                 }
+
+                reporter?.SetErrorStatus(this, showError, hint);
             }
         }
 
