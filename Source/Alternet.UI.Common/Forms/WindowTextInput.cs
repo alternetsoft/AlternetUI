@@ -154,7 +154,7 @@ namespace Alternet.UI
         {
             Initialize(prm);
 
-            Edit.InitErrorAndBorder();
+            Edit.InnerOuterBorder = InnerOuterSelector.Outer;
             var e = Edit.MainControl;
 
             e.MinValue = prm.MinValue;

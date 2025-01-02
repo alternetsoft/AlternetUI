@@ -33,7 +33,8 @@ namespace Alternet.UI
         /// </summary>
         public WindowPropertyGrid()
         {
-            Size = (800, 600);
+            Size = (500, 800);
+            StartLocation = WindowStartLocation.ScreenTopRight;
             panel.Parent = this;
             propGrid.VerticalAlignment = VerticalAlignment.Fill;
             propGrid.Parent = panel;
@@ -66,14 +67,46 @@ namespace Alternet.UI
             bool sort = false)
         {
             defaultWindow ??= new();
+            defaultWindow.Unbind();
+
             defaultWindow.Title = title ?? CommonStrings.Default.WindowTitleProperties;
             defaultWindow.PropGrid.SetProps(instance, true);
+
+            if(instance is IDisposableObject disposable)
+            {
+                disposable.Disposed += defaultWindow.Disposable_Disposed;
+            }
+
             defaultWindow.Show();
             return defaultWindow;
         }
 
+        private object? GetPropGridItemInstance()
+        {
+            var first = PropGrid.Items.FirstOrDefault();
+            var result = first?.Instance;
+            return result;
+        }
+
+        private void Disposable_Disposed(object sender, EventArgs e)
+        {
+            Unbind();
+        }
+
+        private void Unbind()
+        {
+            var instance = GetPropGridItemInstance();
+            if (instance is IDisposableObject disposable)
+            {
+                disposable.Disposed -= Disposable_Disposed;
+            }
+
+            PropGrid.Clear();
+        }
+
         private void WindowPropertyGrid_Disposed(object? sender, EventArgs e)
         {
+            Unbind();
             if (defaultWindow == this)
                 defaultWindow = null;
         }
