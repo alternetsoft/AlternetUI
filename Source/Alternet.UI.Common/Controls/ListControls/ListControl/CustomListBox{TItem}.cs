@@ -13,7 +13,7 @@ namespace Alternet.UI
     /// with multi-select and other features.
     /// </summary>
     /// <typeparam name="TItem">Type of the item.</typeparam>
-    public abstract class CustomListBox<TItem> : ListControl<TItem>
+    public abstract class CustomListBox<TItem> : ListControl<TItem>, ICustomListBox<TItem>
             where TItem : class, new()
     {
         private readonly HashSet<int> selectedIndices = new();
