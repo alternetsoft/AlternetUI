@@ -15,8 +15,9 @@ namespace Alternet.UI
     {
         /// <summary>
         /// Gets or sets whether to use char validator to limit unwanted chars in the input.
+        /// Default is False.
         /// </summary>
-        public static bool UseCharValidator = true;
+        public static bool UseCharValidator = false;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ValueEditorUDouble"/> class.
