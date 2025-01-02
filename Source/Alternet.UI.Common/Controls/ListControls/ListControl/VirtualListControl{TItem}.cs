@@ -14,7 +14,8 @@ namespace Alternet.UI
     /// </summary>
     /// <typeparam name="TItem">Type of the item.</typeparam>
     public abstract class VirtualListControl<TItem>
-        : CustomListBox<TItem>, IListControlItemContainer, IListControlItemDefaults
+        : CustomListBox<TItem>, IListControlItemContainer, IListControlItemDefaults,
+        ICheckListBox<TItem>
         where TItem : class, new()
     {
         /// <summary>
@@ -185,6 +186,36 @@ namespace Alternet.UI
         IListControlItemDefaults IListControlItemContainer.Defaults
         {
             get => this;
+        }
+
+        /// <summary>
+        /// Gets or sets the zero-based index of the currently checked item
+        /// in a <see cref="ListBox"/>.
+        /// </summary>
+        /// <value>A zero-based index of the currently checked item. A value
+        /// of <c>null</c> is returned if no item is checked.</value>
+        [Browsable(false)]
+        public virtual int? CheckedIndex
+        {
+            get
+            {
+                if (DisposingOrDisposed)
+                    return default;
+                return CheckedIndices.FirstOrDefault();
+            }
+
+            set
+            {
+                if (DisposingOrDisposed)
+                    return;
+
+                if (value != null && (value < 0 || value >= Items.Count))
+                    value = null;
+
+                ClearChecked();
+                if (value != null)
+                    SetChecked(value.Value, true);
+            }
         }
 
         /// <summary>
@@ -621,9 +652,10 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Unchecks all items in the control.
+        /// Unchecks all items in the control and optionally calls
+        /// <see cref="RaiseCheckedChanged"/>.
         /// </summary>
-        public virtual bool ClearChecked(bool raiseEvents = true)
+        public virtual bool ClearChecked(bool raiseEvents)
         {
             if (Items.Count == 0)
                 return false;
@@ -841,6 +873,8 @@ namespace Alternet.UI
         /// event data.</param>
         public void RaiseCheckedChanged(EventArgs e)
         {
+            if (DisposingOrDisposed)
+                return;
             OnCheckedChanged(e);
             CheckedChanged?.Invoke(this, e);
         }
@@ -1002,9 +1036,22 @@ namespace Alternet.UI
                 item.DrawForeground(this, e);
         }
 
+        /// <inheritdoc/>
+        public void ClearChecked()
+        {
+            ClearChecked(true);
+        }
+
+        /// <inheritdoc/>
+        public void SetChecked(int index, bool value)
+        {
+            SetItemChecked(index, value);
+        }
+
         /// <summary>
         /// Allows to set items from the <see cref="IEnumerable{T}"/> with huge number of items which
-        /// is "yield" constructed. This method can be called from the another thread which is different
+        /// is "yield" constructed. This method can be called from the
+        /// another thread which is different
         /// from UI thread.
         /// </summary>
         /// <typeparam name="TSource">The type of the item in the source enumerable.</typeparam>
