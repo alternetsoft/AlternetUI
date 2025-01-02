@@ -340,6 +340,9 @@ namespace Alternet.UI
         /// data.</param>
         public void RaiseImageChanged(EventArgs e)
         {
+            if (DisposingOrDisposed)
+                return;
+            UpdatePrimitiveImage(VisualControlState.Normal);
             OnImageChanged(e);
             ImageChanged?.Invoke(this, e);
         }
@@ -434,11 +437,7 @@ namespace Alternet.UI
         {
             var primitive = Primitive;
             var state = VisualState;
-
-            var image = StateObjects?.Images?.GetObjectOrNull(state);
-            image ??= Image;
-            primitive.Image = image;
-            primitive.ImageSet = StateObjects?.ImageSets?.GetObjectOrNormal(state);
+            UpdatePrimitiveImage(state);
             primitive.Bounds =
                 (rect.Location + Padding.LeftTop, rect.Size - Padding.Size);
             primitive.Draw(this, dc);
@@ -493,6 +492,14 @@ namespace Alternet.UI
             using var dc = CreateDrawingContext();
             var result = dc.GetTextExtent(text, Font ?? UI.AbstractControl.DefaultFont);
             return result;
+        }
+
+        private void UpdatePrimitiveImage(VisualControlState state)
+        {
+            var image = StateObjects?.Images?.GetObjectOrNull(state);
+            image ??= Image;
+            primitive.Image = image;
+            primitive.ImageSet = StateObjects?.ImageSets?.GetObjectOrNormal(state);
         }
     }
 }
