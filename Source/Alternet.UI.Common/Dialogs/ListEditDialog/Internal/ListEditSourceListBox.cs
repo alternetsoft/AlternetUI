@@ -10,18 +10,42 @@ namespace Alternet.UI
 {
     internal class ListEditSourceListBox : ListEditSource
     {
-        public ListControl? ListControl => Instance as ListControl;
+        private IEnumerable? rootItems;
 
-        public override IEnumerable? RootItems => ListControl?.Items;
+        public override IEnumerable RootItems
+        {
+            get
+            {
+                if (rootItems is not null)
+                    return rootItems;
 
-        public override object? CreateNewItem() =>
-            new ValueContainer<string>(CommonStrings.Default.ListEditDefaultItemTitle);
+                if (Instance is VirtualListBox listBox)
+                    rootItems = listBox.Items;
+                else
+                if (Instance is VirtualListBox comboBox)
+                    rootItems = comboBox.Items;
+                else
+                if(Instance is not null)
+                    rootItems = PropInfo?.GetValue(Instance) as IEnumerable;
+
+                rootItems ??= new List<object>();
+
+                return rootItems;
+            }
+        }
+
+        public override object? CreateNewItem() => new ListControlItem();
 
         public override object CloneItem(object item)
         {
-            var s = item.ToString() ?? string.Empty;
-            var container = new ValueContainer<string>(s);
-            return container;
+            if (item is ListControlItem listItem)
+                return listItem.Clone();
+            else
+            {
+                var result = new ListControlItem();
+                result.Value = item;
+                return result;
+            }
         }
 
         public override object? GetProperties(object item)
@@ -31,17 +55,32 @@ namespace Alternet.UI
 
         public override void ApplyData(IEnumerableTree tree)
         {
-            if (ListControl == null)
-                return;
-            ListControl control = ListControl;
+            IList? items = null;
 
-            control.DoInsideUpdate(() =>
+            if (RootItems is IListControlItems<ListControlItem> list1)
+                items = list1.AsList;
+            else
+            if (RootItems is IListControlItems<object> list2)
+                items = list2.AsList;
+            else
+                items = RootItems as IList;
+
+            if (items is null)
+                return;
+
+            var containers = EnumerableUtils.GetItems<ListControlItem>(tree);
+
+            if (Instance is Control control)
+                control.DoInsideUpdate(() => { SetItems(items); });
+            else
+                SetItems(items);
+
+            void SetItems(IList list)
             {
-                control.RemoveAll();
-                var containers = EnumerableUtils.GetItems<ValueContainer<string>>(tree);
-                foreach(var item in containers)
-                    control.Items.Add(item.Value);
-            });
+                list.Clear();
+                foreach (var item in containers)
+                    list.Add(item);
+            }
         }
 
         private class ValueContainer<T>
