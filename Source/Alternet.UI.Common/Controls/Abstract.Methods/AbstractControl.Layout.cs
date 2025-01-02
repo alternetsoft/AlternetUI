@@ -40,7 +40,8 @@ namespace Alternet.UI
         /// to fit in the container. Optional. Default is <c>true</c>.</param>
         /// <remarks>
         /// This method changes <see cref="Bounds"/> so default layout must be disabled
-        /// before using it. You can disable default layout using <see cref="IgnoreLayout"/> property
+        /// before using it. You can disable default layout using
+        /// <see cref="IgnoreLayout"/> property
         /// of the control.
         /// </remarks>
         public virtual void AlignInParent(
@@ -63,7 +64,8 @@ namespace Alternet.UI
         /// <param name="value"><see cref="DockStyle"/> value which specifies align option.</param>
         /// <remarks>
         /// This method changes <see cref="Bounds"/> so default layout must be disabled
-        /// before using it. You can disable default layout using <see cref="IgnoreLayout"/> property
+        /// before using it. You can disable default layout using
+        /// <see cref="IgnoreLayout"/> property
         /// of the control.
         /// </remarks>
         public virtual RectD DockInParent(DockStyle value)
@@ -82,7 +84,8 @@ namespace Alternet.UI
         /// <param name="container">Container rectangle.</param>
         /// <remarks>
         /// This method changes <see cref="Bounds"/> so default layout must be disabled
-        /// before using it. You can disable default layout using <see cref="IgnoreLayout"/> property
+        /// before using it. You can disable default layout using
+        /// <see cref="IgnoreLayout"/> property
         /// of the control.
         /// </remarks>
         public virtual RectD DockInRect(RectD container, DockStyle value)
@@ -106,7 +109,8 @@ namespace Alternet.UI
         /// to fit in the container. Optional. Default is <c>true</c>.</param>
         /// <remarks>
         /// This method changes <see cref="Bounds"/> so default layout must be disabled
-        /// before using it. You can disable default layout using <see cref="IgnoreLayout"/> property
+        /// before using it. You can disable default layout using
+        /// <see cref="IgnoreLayout"/> property
         /// of the control.
         /// </remarks>
         public virtual void AlignInRect(
@@ -228,7 +232,8 @@ namespace Alternet.UI
                 {
                     var preferredSize = child.GetPreferredSizeLimited(
                         new(containerSize.Width, containerSize.Height - result.Height));
-                    result.Width = Math.Max(result.Width, preferredSize.Width + childMargin.Horizontal);
+                    result.Width
+                        = Math.Max(result.Width, preferredSize.Width + childMargin.Horizontal);
                     result.Height += preferredSize.Height + childMargin.Vertical;
                 }
                 else
@@ -236,13 +241,16 @@ namespace Alternet.UI
                     var preferredSize = child.GetPreferredSizeLimited(
                         new SizeD(containerSize.Width - result.Width, containerSize.Height));
                     result.Width += preferredSize.Width + childMargin.Horizontal;
-                    result.Height = Math.Max(result.Height, preferredSize.Height + childMargin.Vertical);
+                    result.Height
+                        = Math.Max(result.Height, preferredSize.Height + childMargin.Vertical);
                 }
             }
 
             var padding = container.Padding;
-            var newWidth = isNanWidth ? result.Width + padding.Horizontal : container.SuggestedWidth;
-            var newHeight = isNanHeight ? result.Height + padding.Vertical : container.SuggestedHeight;
+            var newWidth = isNanWidth
+                ? result.Width + padding.Horizontal : container.SuggestedWidth;
+            var newHeight = isNanHeight
+                ? result.Height + padding.Vertical : container.SuggestedHeight;
             return new(newWidth, newHeight);
         }
     }

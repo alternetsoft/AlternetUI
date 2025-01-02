@@ -16,12 +16,14 @@ namespace Alternet.UI
         bool BindScrollEvents { get; set; }
 
         /// <summary>
-        /// Gets or sets an action which is called when 'VerticalScrollBarValueChanged' event is raised.
+        /// Gets or sets an action which is called when 'VerticalScrollBarValueChanged'
+        /// event is raised.
         /// </summary>
         Action? VerticalScrollBarValueChanged { get; set; }
 
         /// <summary>
-        /// Gets or sets an action which is called when 'HorizontalScrollBarValueChanged' event is raised.
+        /// Gets or sets an action which is called when 'HorizontalScrollBarValueChanged'
+        /// event is raised.
         /// </summary>
         Action? HorizontalScrollBarValueChanged { get; set; }
 
