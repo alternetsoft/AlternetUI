@@ -201,10 +201,59 @@ namespace Alternet.UI
         /// When this property is changed, you need to repaint the item.
         /// Currently only rectangular svg images are supported.
         /// </remarks>
+        [Browsable(false)]
         public virtual SizeI? SvgImageSize
         {
             get => cachedSvg.SvgSize;
             set => cachedSvg.SvgSize = value;
+        }
+
+        /// <summary>
+        /// Gets or sets width of the svg image.
+        /// </summary>
+        public virtual int? SvgImageWidth
+        {
+            get => SvgImageSize?.Width;
+            set
+            {
+                if(value is null)
+                {
+                    SvgImageSize = null;
+                }
+                else
+                {
+                    if (SvgImageSize is null)
+                        SvgImageSize = value;
+                    else
+                    {
+                        SvgImageSize = SvgImageSize.Value.WithWidth(value.Value);
+                    }
+                }
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets height of the svg image.
+        /// </summary>
+        public virtual int? SvgImageHeight
+        {
+            get => SvgImageSize?.Height;
+            set
+            {
+                if (value is null)
+                {
+                    SvgImageSize = null;
+                }
+                else
+                {
+                    if (SvgImageSize is null)
+                        SvgImageSize = value;
+                    else
+                    {
+                        SvgImageSize = SvgImageSize.Value.WithHeight(value.Value);
+                    }
+                }
+            }
         }
 
         /// <summary>
@@ -265,6 +314,7 @@ namespace Alternet.UI
         /// It is up to control to decide whether and how this property is used.
         /// When this property is changed, you need to repaint the item.
         /// </remarks>
+        [Browsable(false)]
         public virtual BorderSettings? Border { get; set; }
 
         /// <summary>
