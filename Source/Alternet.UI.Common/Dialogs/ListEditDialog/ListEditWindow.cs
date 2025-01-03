@@ -66,7 +66,7 @@ namespace Alternet.UI
             treeView.Parent = panel.FillPanel;
 
             propertyGrid.ApplyFlags |= PropertyGridApplyFlags.PropInfoSetValue
-                | PropertyGridApplyFlags.ReloadAfterSetValue;
+                | PropertyGridApplyFlags.ReloadAllAfterSetValue;
             propertyGrid.Parent = panel.RightPanel;
 
             ShowInTaskbar = false;
@@ -100,6 +100,10 @@ namespace Alternet.UI
 
             propertyGrid.SuggestedInitDefaults();
             propertyGrid.PropertyChanged += PropertyGrid_PropertyChanged;
+
+            toolbar.Margin = (0, 0, 0, ToolBar.DefaultDistanceToContent);
+            toolbar.SetVisibleBorders(false, false, false, true);
+            BackgroundColor = SystemColors.Window;
 
             ComponentDesigner.InitDefault();
             ComponentDesigner.Default!.PropertyChanged += OnDesignerPropertyChanged;
