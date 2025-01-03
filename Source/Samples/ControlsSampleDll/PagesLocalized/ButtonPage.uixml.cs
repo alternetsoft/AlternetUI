@@ -12,7 +12,7 @@ namespace ControlsSample
     {
         private readonly Label labelBackColor = new(GenericStrings.BackColor)
         {
-            Margin = (0, 5, 0, 0),
+            Margin = 5,
             VerticalAlignment = VerticalAlignment.Center,
             ColumnIndex = 0,
             RowIndex = 3,
@@ -20,7 +20,7 @@ namespace ControlsSample
 
         private readonly ColorComboBox comboBoxBackColor = new()
         {
-            Margin = (5, 5, 0, 0),
+            Margin = 5,
             IsEditable = false,
             ColumnIndex = 1,
             RowIndex = 3,
@@ -28,7 +28,7 @@ namespace ControlsSample
 
         private readonly Label labelTextColor = new(GenericStrings.Color)
         {
-            Margin = (0, 5, 0, 0),
+            Margin = 5,
             VerticalAlignment = VerticalAlignment.Center,
             ColumnIndex = 0,
             RowIndex = 2,
@@ -36,7 +36,7 @@ namespace ControlsSample
 
         private readonly ColorComboBox comboBoxTextColor = new()
         {
-            Margin = (5, 5, 0, 0),
+            Margin = 5,
             IsEditable = false,
             ColumnIndex = 1,
             RowIndex = 2,
@@ -80,9 +80,11 @@ namespace ControlsSample
                 button.Padding = 5;
 
                 textAlignComboBox.Items.AddRange(ValidAlign);
-                textAlignComboBox.SelectedIndex = textAlignComboBox.FindStringExact(GenericStrings.Default);
+                textAlignComboBox.SelectedIndex
+                    = textAlignComboBox.FindStringExact(GenericStrings.Default);
                 imageAlignComboBox.Items.AddRange(ValidAlign);
-                imageAlignComboBox.SelectedIndex = imageAlignComboBox.FindStringExact(GenericStrings.Default);
+                imageAlignComboBox.SelectedIndex
+                    = imageAlignComboBox.FindStringExact(GenericStrings.Default);
 
                 if (!Button.ImagesEnabled)
                 {
@@ -96,8 +98,10 @@ namespace ControlsSample
 
                 comboBoxTextColor.Add(GenericStrings.Default);
                 comboBoxBackColor.Add(GenericStrings.Default);
-                comboBoxTextColor.SelectedIndex = comboBoxTextColor.FindStringExact(GenericStrings.Default);
-                comboBoxBackColor.SelectedIndex = comboBoxBackColor.FindStringExact(GenericStrings.Default);
+                comboBoxTextColor.SelectedIndex
+                    = comboBoxTextColor.FindStringExact(GenericStrings.Default);
+                comboBoxBackColor.SelectedIndex
+                    = comboBoxBackColor.FindStringExact(GenericStrings.Default);
 
                 ControlSet editors = new(
                     textTextBox,
