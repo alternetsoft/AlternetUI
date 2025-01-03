@@ -224,10 +224,14 @@ namespace Alternet.UI
 
             set
             {
+                base.SelectedIndex = value;
+                /*
                 if (DisposingOrDisposed)
                     return;
-                if (SelectedIndex == value)
+                var oldSelectedIndex = SelectedIndex;
+                if (oldSelectedIndex == value)
                     return;
+
                 if (SelectionMode == ListBoxSelectionMode.Single)
                 {
                     Handler.SetSelection(value ?? -1);
@@ -238,6 +242,10 @@ namespace Alternet.UI
                     if (value is not null && value >= 0)
                         Handler.SetSelected(value.Value, true);
                 }
+
+                if (oldSelectedIndex != SelectedIndex)
+                    RaiseSelectionChanged();
+                */
             }
         }
 
