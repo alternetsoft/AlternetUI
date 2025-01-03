@@ -1257,6 +1257,12 @@ namespace Alternet::UI
     string WebBrowser::DoCommandGlobal(const string& cmdName,
         const string& cmdParam1, const string& cmdParam2)
     {
+        if (cmdName == wxStr("wxCHECK_MSG"))
+        {
+            wxCHECK_MSG(false, wxStr("true"), wxT("This is wxCHECK_MSG test message"));
+            return wxStr("true");
+        }
+
         if (cmdName == wxStr("GetUsefulDefines"))
             return wxStr(GetUsefulDefines());
 
