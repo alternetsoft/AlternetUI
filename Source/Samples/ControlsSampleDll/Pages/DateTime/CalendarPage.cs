@@ -70,12 +70,15 @@ namespace ControlsSample
                     = buttonPanel.AddButton($"{GenericStrings.DaysStyle} (5, 7)", SetDayColors);
                 setDayColorsButton.Enabled = useGenericCheckBox.IsChecked;
 
-                buttonPanel.AddButtons(
+                (string, Action?)[] buttons = [
                     ($"{GenericStrings.MarkDays} (2, 3)", MarkDays),
                     (GenericStrings.Today, calendar.SelectToday),
                     ("Clear marks", () => calendar.MarkAll(false)),
-                    ("Clear styles", () => calendar.ResetAttrAll()))
-                .Margin(5);
+                    ("Clear styles", calendar.ResetAttrAll),
+                    ("Light theme", calendar.SetColorThemeToLight)
+                ];
+
+                buttonPanel.AddButtons(buttons).Margin(5);
 
                 // Allow date range panel
 
