@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Globalization;
 using System.IO;
@@ -130,6 +131,15 @@ namespace Alternet.UI
 
                 if (Exception.Message != null)
                     text += "\n" + "Message: " + Exception.Message;
+
+                if(Exception is BaseException baseException)
+                {
+                    var s = baseException.AdditionalInformation;
+                    if (!string.IsNullOrEmpty(s))
+                    {
+                        text += "\n" + s;
+                    }
+                }
             }
 
             if (additionalInfo is not null)
@@ -266,22 +276,33 @@ namespace Alternet.UI
                 };
                 stackPanel.Parent = firstSection;
 
-                var s1 = "Unhandled exception has occurred in your application.";
-                var s2 = "If you click Continue, the application will ignore this error";
+                var s1 = "Error has occurred in your application.";
+                var s2 = "If you click 'Continue', the application will ignore this error";
                 var s3 = "and attempt to continue.";
-                var s4 = "If you click Quit, the application will close immediately.";
+                var s4 = "If you click 'Quit', the application will close immediately.";
 
-                string[] lines;
+                List<string> lines = new();
+
+                lines.Add(s1);
 
                 if (CanContinue)
-                    lines = new[] { s1, s2, s3, s4 };
-                else
-                    lines = new[] { s1, s4 };
+                {
+                    lines.Add(s2);
+                    lines.Add(s3);
+                }
+
+                if (CanQuit)
+                {
+                    lines.Add(s4);
+                }
 
                 foreach (var line in lines)
                 {
-                    var label = new Label { Text = line };
-                    stackPanel.Children.Add(label);
+                    var label = new Label
+                    {
+                        Text = line,
+                        Parent = stackPanel,
+                    };
                 }
 
                 messageGrid.Children.Add(
