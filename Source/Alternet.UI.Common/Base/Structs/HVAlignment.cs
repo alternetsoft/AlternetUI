@@ -204,6 +204,16 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="value">New value for the alignment.</param>
         /// <returns></returns>
+        public HVAlignment WithVertical(VerticalAlignment value)
+        {
+            return new(Horizontal, value);
+        }
+
+        /// <summary>
+        /// Returns this object with changed vertical alignment.
+        /// </summary>
+        /// <param name="value">New value for the alignment.</param>
+        /// <returns></returns>
         public HVAlignment WithVertical(CoordAlignment value)
         {
             return new(Horizontal, (VerticalAlignment)value);
@@ -217,6 +227,16 @@ namespace Alternet.UI
         public HVAlignment WithHorizontal(CoordAlignment value)
         {
             return new((HorizontalAlignment)value, Vertical);
+        }
+
+        /// <summary>
+        /// Returns this object with changed horizontal alignment.
+        /// </summary>
+        /// <param name="value">New value for the alignment.</param>
+        /// <returns></returns>
+        public HVAlignment WithHorizontal(HorizontalAlignment value)
+        {
+            return new(value, Vertical);
         }
 
         /// <summary>
