@@ -150,6 +150,7 @@ namespace Alternet.Drawing
         /// <summary>
         /// Gets diagonal of the rectangle with height and width specified in this object.
         /// </summary>
+        [Browsable(false)]
         public readonly Coord Diagonal
         {
             get
