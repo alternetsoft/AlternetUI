@@ -41,9 +41,9 @@ namespace Alternet.UI
 
         private WebBrowserFindParams findParams;
 
-        public WindowWebBrowserSearch(WebBrowserFindParams? findParams = null)
+        public WindowWebBrowserSearch(WebBrowserFindParams? prm = null)
         {
-            findParams ??= new();
+            prm ??= new();
 
             HasSystemMenu = false;
             IsToolWindow = true;
@@ -56,7 +56,7 @@ namespace Alternet.UI
             findButton.IsDefault = true;
             closeButton.IsCancel = true;
 
-            this.findParams = findParams;
+            this.findParams = prm;
 
             findPanel.Parent = this;
             findTextBox.Parent = findPanel;
@@ -64,6 +64,10 @@ namespace Alternet.UI
             findButton.Click += FindButton_Click;
             findClearButton.Click += FindClearButton_Click;
             closeButton.Click += CloseButton_Click;
+
+            findHighlightResultCheckBox.Enabled = false;
+
+            ParamsToControls(this.findParams);
 
             Group(
                 findWrapCheckBox,
@@ -80,8 +84,6 @@ namespace Alternet.UI
             };
 
             Group(findButton, findClearButton, closeButton).Margin(5).Parent(buttonPanel);
-
-            ParamsToControls(findParams);
 
             StartLocation = WindowStartLocation.CenterScreen;
             ActiveControl = findTextBox;
