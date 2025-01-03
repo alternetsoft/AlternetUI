@@ -14,12 +14,14 @@ namespace Alternet.UI
         private readonly CheckBox findEntireWordCheckBox
             = new(CommonStrings.Default.FindOptionMatchWholeWord);
 
-        private readonly CheckBox findMatchCaseCheckBox = new(CommonStrings.Default.FindOptionMatchCase);
+        private readonly CheckBox findMatchCaseCheckBox
+            = new(CommonStrings.Default.FindOptionMatchCase);
 
         private readonly CheckBox findHighlightResultCheckBox
             = new(CommonStrings.Default.FindOptionHighlight);
 
-        private readonly CheckBox findBackwardsCheckBox = new(CommonStrings.Default.FindOptionBackwards);
+        private readonly CheckBox findBackwardsCheckBox
+            = new(CommonStrings.Default.FindOptionBackwards);
 
         private readonly VerticalStackPanel findPanel = new()
         {
@@ -29,7 +31,7 @@ namespace Alternet.UI
 
         private readonly TextBox findTextBox = new()
         {
-            SuggestedWidth = 300,
+            MinWidth = 450,
             Margin = 5,
         };
 
@@ -48,7 +50,7 @@ namespace Alternet.UI
             ShowInTaskbar = false;
             MinimizeEnabled = false;
             MaximizeEnabled = false;
-            Resizable = false;
+            Resizable = true;
             Title = CommonStrings.Default.ButtonFind;
 
             findButton.IsDefault = true;
@@ -81,10 +83,11 @@ namespace Alternet.UI
 
             ParamsToControls(findParams);
 
-            this.SetSizeToContent();
-            this.MinimumSize = Size;
             StartLocation = WindowStartLocation.CenterScreen;
             ActiveControl = findTextBox;
+
+            this.SetSizeToContent(WindowSizeToContentMode.WidthAndHeight);
+            this.MinimumSize = Size;
         }
 
         public virtual WebBrowser? WebBrowser => ControlUtils.FindVisibleControl<WebBrowser>();
