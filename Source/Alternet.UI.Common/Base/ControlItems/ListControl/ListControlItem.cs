@@ -28,6 +28,7 @@ namespace Alternet.UI
 
         private CachedSvgImage<Image> cachedSvg = new();
         private string? text;
+        private HVAlignment alignment = DefaultItemAlignment;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ListControlItem"/> class
@@ -273,7 +274,50 @@ namespace Alternet.UI
         /// It is up to control to decide whether and how this property is used.
         /// When this property is changed, you need to repaint the item.
         /// </remarks>
-        public virtual HVAlignment Alignment { get; set; } = DefaultItemAlignment;
+        [Browsable(false)]
+        public virtual HVAlignment Alignment
+        {
+            get => alignment;
+            set => alignment = value;
+        }
+
+        /// <summary>
+        /// Gets or sets horizontal alignment of the item.
+        /// </summary>
+        /// <remarks>
+        /// This property just changes horizontal part of the <see cref="Alignment"/>.
+        /// </remarks>
+        public HorizontalAlignment HorizontalAlignment
+        {
+            get
+            {
+                return alignment.Horizontal;
+            }
+
+            set
+            {
+                alignment = alignment.WithHorizontal(value);
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets vertical alignment of the item.
+        /// </summary>
+        /// <remarks>
+        /// This property just changes vertical part of the <see cref="Alignment"/>.
+        /// </remarks>
+        public VerticalAlignment VerticalAlignment
+        {
+            get
+            {
+                return alignment.Vertical;
+            }
+
+            set
+            {
+                alignment = alignment.WithVertical(value);
+            }
+        }
 
         /// <summary>
         /// Gets or sets draw label flags.
