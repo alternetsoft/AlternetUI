@@ -93,7 +93,10 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        public virtual string? GetItemTitle(object item) => item?.ToString();
+        public virtual string? GetItemTitle(object item)
+        {
+            return item?.ToString();
+        }
 
         /// <inheritdoc/>
         public abstract void ApplyData(IEnumerableTree tree);
@@ -102,16 +105,28 @@ namespace Alternet.UI
         public abstract object CloneItem(object item);
 
         /// <inheritdoc/>
-        public virtual IEnumerable? GetChildren(object item) => null;
+        public virtual IEnumerable? GetChildren(object item)
+        {
+            return null;
+        }
 
         /// <inheritdoc/>
-        public virtual object? GetProperties(object item) => item;
+        public virtual object? GetProperties(object item)
+        {
+            return item;
+        }
 
         /// <inheritdoc/>
-        public virtual int? GetItemImageIndex(object item) => null;
+        public virtual int? GetItemImageIndex(object item)
+        {
+            return null;
+        }
 
         /// <inheritdoc/>
-        public virtual object? CreateNewItem() => null;
+        public virtual object? CreateNewItem()
+        {
+            return null;
+        }
 
         /// <summary>
         /// Applies <see cref="IEnumerableTree"/> data to the property specified
