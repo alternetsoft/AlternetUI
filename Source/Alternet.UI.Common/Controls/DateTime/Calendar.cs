@@ -645,6 +645,39 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Marks or unmarks all days in the month.
+        /// </summary>
+        /// <remarks>
+        /// Days will be marked in every month. Usually marked days
+        /// are painted in bold font.
+        /// </remarks>
+        /// <param name="mark"><c>true</c> to mark the days, <c>false</c> to unmark them.</param>
+        public virtual void MarkAll(bool mark = true)
+        {
+            DoInsideUpdate(() =>
+            {
+                for (int i = 1; i <= 31; i++)
+                    Mark(i, mark);
+            });
+        }
+
+        /// <summary>
+        /// Clears any attributes associated with the days.
+        /// </summary>
+        /// <remarks>
+        /// This method is only implemented in generic calendar (when
+        /// <see cref="UseGeneric"/> is <c>true</c>) and does nothing in the native version.
+        /// </remarks>
+        public virtual void ResetAttrAll()
+        {
+            DoInsideUpdate(() =>
+            {
+                for (int i = 1; i <= 31; i++)
+                    ResetAttr(i);
+            });
+        }
+
+        /// <summary>
         /// Marks the specified day as being a holiday in the current month.
         /// </summary>
         /// <param name="day">Day (in the range 1...31).</param>
