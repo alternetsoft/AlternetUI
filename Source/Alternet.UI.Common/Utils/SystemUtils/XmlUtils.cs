@@ -149,6 +149,18 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Deserializes object from the specified string with xml data.
+        /// </summary>
+        /// <typeparam name="T">Type of the deserialized object.</typeparam>
+        /// <param name="text">String with xml data.</param>
+        /// <returns></returns>
+        public static T DeserializeFromString<T>(string text)
+        {
+            using TextReader reader = new StringReader(text);
+            return (T)new XmlSerializer(typeof(T)).Deserialize(reader);
+        }
+
+        /// <summary>
         /// Deserializes object from the specified stream.
         /// </summary>
         /// <typeparam name="T">Type of the deserialized object.</typeparam>
