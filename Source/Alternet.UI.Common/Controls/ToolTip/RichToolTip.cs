@@ -119,7 +119,8 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Gets real default tooltip border. This property returns <see cref="BorderSettings.Default"/>
+        /// Gets real default tooltip border. This property returns
+        /// <see cref="BorderSettings.Default"/>
         /// if <see cref="DefaultToolTipBorderColor"/> and <see cref="DefaultToolTipBorder"/>
         /// are not specified.
         /// </summary>
@@ -653,8 +654,8 @@ namespace Alternet.UI
 
                 if (ToolTipImage != null)
                 {
-                    template.PictureBox.Visible = true;
                     template.PictureBox.ImageSet = ToolTipImage;
+                    template.PictureBox.Visible = true;
                 }
                 else
                 {

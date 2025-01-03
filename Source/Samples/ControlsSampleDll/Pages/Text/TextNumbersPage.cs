@@ -53,14 +53,14 @@ namespace ControlsSample
 
             label.Parent = this;
             RichToolTip toolTip = new();
+            toolTip.Margin = (0,10,0,10);
             toolTip.VerticalAlignment = VerticalAlignment.Fill;
-            toolTip.Margin = 10;
             toolTip.Parent = this;
             toolTip.ParentBackColor = true;
             toolTip.ParentForeColor = true;
             ToolTipProvider = toolTip;
 
-            BackgroundColor = Color.LightBlue;
+            BackgroundColor = Color.Gainsboro;
             ForegroundColor = Color.Black;
         }
 
