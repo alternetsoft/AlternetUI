@@ -122,6 +122,8 @@ namespace Alternet.UI
 
             void Fn()
             {
+                const int minEditWidth = 150;
+
                 scopeEdit.IsEditable = false;
                 UpdateFindScope();
 
@@ -130,7 +132,9 @@ namespace Alternet.UI
 
                 ToolBarCount = 3;
 
-                OptionsToolBar.AddSpeedBtn();
+                /* Options ToolBar */
+
+                IdOptionsEmptyButton1 = OptionsToolBar.AddSpeedBtn();
 
                 IdMatchCase = OptionsToolBar.AddStickyBtn(
                     CommonStrings.Default.FindOptionMatchCase,
@@ -161,14 +165,20 @@ namespace Alternet.UI
 
                 IdScopeEdit = OptionsToolBar.AddControl(scopeEdit);
 
+                /* Find ToolBar */
+
                 IdToggleReplaceOptions = FindToolBar.AddSpeedBtn(
                     CommonStrings.Default.ToggleToSwitchBetweenFindReplace,
                     KnownSvgImages.ImgAngleDown);
 
-                findEdit.SuggestedWidth = 150;
                 findEdit.EmptyTextHint = EmptyTextHints.FindEdit;
-                replaceEdit.SuggestedWidth = findEdit.SuggestedWidth;
+
+                findEditBorder.MinWidth = minEditWidth;
+
+                findEditBorder.HorizontalAlignment = HorizontalAlignment.Fill;
+
                 findEdit.Parent = findEditBorder;
+
                 IdFindEdit = FindToolBar.AddControl(findEditBorder);
 
                 IdFindNext = FindToolBar.AddSpeedBtn(
@@ -177,6 +187,7 @@ namespace Alternet.UI
                 FindToolBar.SetToolShortcut(
                     IdFindNext,
                     KnownShortcuts.FindReplaceControlKeys.FindNext);
+                FindToolBar.SetToolAlignRight(IdFindNext, true);
 
                 IdFindPrevious = FindToolBar.AddSpeedBtn(
                     CommonStrings.Default.ButtonFindPrevious,
@@ -184,13 +195,19 @@ namespace Alternet.UI
                 FindToolBar.SetToolShortcut(
                     IdFindPrevious,
                     KnownShortcuts.FindReplaceControlKeys.FindPrevious);
+                FindToolBar.SetToolAlignRight(IdFindPrevious, true);
 
                 IdFindClose = FindToolBar.AddSpeedBtn(
                     CommonStrings.Default.ButtonClose,
                     KnownSvgImages.ImgCancel);
                 FindToolBar.SetToolAlignRight(IdFindClose, true);
 
-                ReplaceToolBar.AddSpeedBtn();
+                /* Replace ToolBar */
+
+                replaceEditBorder.MinWidth = minEditWidth;
+                replaceEditBorder.HorizontalAlignment = HorizontalAlignment.Fill;
+
+                IdReplaceEmptyButton1 = ReplaceToolBar.AddSpeedBtn();
 
                 replaceEdit.Parent = replaceEditBorder;
                 IdReplaceEdit = ReplaceToolBar.AddControl(replaceEditBorder);
@@ -202,15 +219,20 @@ namespace Alternet.UI
                 ReplaceToolBar.SetToolShortcut(
                     IdReplace,
                     KnownShortcuts.FindReplaceControlKeys.Replace);
+                ReplaceToolBar.SetToolAlignRight(IdReplace, true);
 
-                IdReplaceAll = ReplaceToolBar.AddSpeedBtn(
+                SpeedButton replaceAllButton = ReplaceToolBar.AddSpeedBtnCore(
                     CommonStrings.Default.ButtonReplaceAll,
                     KnownSvgImages.ImgReplaceAll);
-                ReplaceToolBar.SetToolShortcut(
-                    IdReplaceAll,
-                    KnownShortcuts.FindReplaceControlKeys.ReplaceAll);
+                replaceAllButton.ShortcutKeyInfo = KnownShortcuts.FindReplaceControlKeys.ReplaceAll;
+                replaceAllButton.HorizontalAlignment = HorizontalAlignment.Right;
+                IdReplaceAll = replaceAllButton.UniqueId;
+
+                IdReplaceEmptyButton2 = ReplaceToolBar.AddRightSpeedBtn();
 
                 ReplaceToolBar.Visible = false;
+
+                /* Specify click actions */
 
                 FindToolBar.AddToolAction(IdFindNext, OnClickFindNext);
                 FindToolBar.AddToolAction(IdFindPrevious, OnClickFindPrevious);
@@ -962,6 +984,24 @@ namespace Alternet.UI
         public ObjectUniqueId IdFindClose { get; internal set; }
 
         /// <summary>
+        /// Gets id of the first empty button on the replace toolbar.
+        /// </summary>
+        [Browsable(false)]
+        public ObjectUniqueId IdReplaceEmptyButton1 { get; internal set; }
+
+        /// <summary>
+        /// Gets id of the first empty button on the options toolbar.
+        /// </summary>
+        [Browsable(false)]
+        public ObjectUniqueId IdOptionsEmptyButton1 { get; internal set; }
+
+        /// <summary>
+        /// Gets id of the last empty button on the replace toolbar.
+        /// </summary>
+        [Browsable(false)]
+        public ObjectUniqueId IdReplaceEmptyButton2 { get; internal set; }
+
+        /// <summary>
         /// Gets id of the 'Replace' button.
         /// </summary>
         [Browsable(false)]
@@ -1078,7 +1118,8 @@ namespace Alternet.UI
 
         /// <summary>
         /// Gets whether the user can perform 'Match Whole Word' action.
-        /// Returns <c>true</c> if <see cref="OptionsToolBar"/> and 'Match Whole Word' button are visible.
+        /// Returns <c>true</c> if <see cref="OptionsToolBar"/> and 'Match Whole Word'
+        /// button are visible.
         /// </summary>
         [Browsable(false)]
         public virtual bool CanMatchWholeWord =>
@@ -1092,6 +1133,43 @@ namespace Alternet.UI
         [Browsable(false)]
         public virtual bool CanUseRegularExpressions =>
             OptionsToolBar.Visible && OptionsToolBar.GetToolEnabledAndVisible(IdUseRegularExpressions);
+
+        /// <summary>
+        /// Gets or sets whether <see cref="OptionsToolBar"/> is visible.
+        /// </summary>
+        public virtual bool OptionsVisible
+        {
+            get
+            {
+                return OptionsToolBar.Visible;
+            }
+
+            set
+            {
+                OptionsToolBar.Visible = value;
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets whether toggle replace options button is visible.
+        /// </summary>
+        public virtual bool ToggleReplaceVisible
+        {
+            get
+            {
+                var result = FindToolBar.GetToolVisible(IdToggleReplaceOptions);
+                return result;
+            }
+
+            set
+            {
+                if (ToggleReplaceVisible == value)
+                    return;
+                FindToolBar.SetToolVisible(IdToggleReplaceOptions, value);
+                OptionsToolBar.SetToolVisible(IdOptionsEmptyButton1, value);
+                ReplaceToolBar.SetToolVisible(IdReplaceEmptyButton1, value);
+            }
+        }
 
         /// <summary>
         /// Gets or sets whether <see cref="ReplaceToolBar"/> is visible.
@@ -1409,8 +1487,9 @@ namespace Alternet.UI
 
             public void SetFindText(string text)
             {
+                var s = "FindReplaceControl.FindText =";
                 this.text = text;
-                App.Log($"FindReplaceControl.FindText = '{text}'");
+                App.LogReplace($"{s} '{text}'", s);
             }
 
             public void SetMatchCase(bool value)
@@ -1425,7 +1504,8 @@ namespace Alternet.UI
 
             public void SetReplaceText(string text)
             {
-                App.Log($"FindReplaceControl.ReplaceText = '{text}'");
+                var s = "FindReplaceControl.ReplaceText =";
+                App.LogReplace($"{s} '{text}'", s);
             }
 
             public void SetUseRegularExpressions(bool value)
