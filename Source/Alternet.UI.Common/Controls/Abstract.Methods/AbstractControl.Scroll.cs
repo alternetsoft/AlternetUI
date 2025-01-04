@@ -11,6 +11,9 @@ namespace Alternet.UI
 {
     public partial class AbstractControl
     {
+        private ScrollBar? vertScrollBar;
+        private ScrollBar? horzScrollBar;
+
         /// <summary>
         /// Occurs when the user scrolls through the control contents using scrollbars.
         /// </summary>
@@ -64,21 +67,6 @@ namespace Alternet.UI
             set
             {
                 SetScrollBarInfo(true, value);
-            }
-        }
-
-        /// <summary>
-        /// Gets or sets whether scroll events are binded and recveived in the control.
-        /// </summary>
-        protected virtual bool BindScrollEvents
-        {
-            get
-            {
-                return true;
-            }
-
-            set
-            {
             }
         }
 
@@ -204,7 +192,54 @@ namespace Alternet.UI
         /// <returns></returns>
         public virtual ScrollBarInfo GetScrollBarInfo(bool isVertical)
         {
-            return ScrollBarInfo.Default;
+            var scrollBar = isVertical ? vertScrollBar : horzScrollBar;
+
+            if(scrollBar is null)
+                return ScrollBarInfo.Default;
+
+            return scrollBar.PosInfo;
+        }
+
+        /// <summary>
+        /// Sets vertical or horizontal scrollbar position as <see cref="ScrollBarInfo"/>.
+        /// </summary>
+        /// <param name="isVertical">Whether to set position for the vertical or
+        /// horizontal scrollbar.</param>
+        /// <param name="value">Scrollbar position.</param>
+        public virtual void SetScrollBarInfo(bool isVertical, ScrollBarInfo value)
+        {
+            Internal();
+
+            void Internal()
+            {
+                if (isVertical)
+                {
+                    if(vertScrollBar is null)
+                    {
+                        vertScrollBar = new();
+                        vertScrollBar.Visible = false;
+                        vertScrollBar.IsVertical = true;
+                    }
+                }
+                else
+                {
+                    if (horzScrollBar is null)
+                    {
+                        horzScrollBar = new();
+                        horzScrollBar.Visible = false;
+                        horzScrollBar.IsVertical = false;
+                    }
+                }
+
+                var scrollBar = isVertical ? vertScrollBar : horzScrollBar;
+
+                if (scrollBar is null)
+                    return;
+
+                scrollBar.PosInfo = value;
+            }
+
+            RaiseNotifications((n) => n.AfterSetScrollBarInfo(this, isVertical, value));
         }
 
         /// <summary>
@@ -256,17 +291,6 @@ namespace Alternet.UI
 
                 VertScrollBarInfo = vert;
             }
-        }
-
-        /// <summary>
-        /// Sets vertical or horizontal scrollbar position as <see cref="ScrollBarInfo"/>.
-        /// </summary>
-        /// <param name="isVertical">Whether to set position for the vertical or
-        /// horizontal scrollbar.</param>
-        /// <param name="value">Scrollbar position.</param>
-        public virtual void SetScrollBarInfo(bool isVertical, ScrollBarInfo value)
-        {
-            RaiseNotifications((n) => n.AfterSetScrollBarInfo(this, isVertical, value));
         }
 
         /// <summary>
