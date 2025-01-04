@@ -13,6 +13,47 @@ namespace Alternet.UI
     public static class ArrayUtils
     {
         /// <summary>
+        /// Checks whether two arrays are equal.
+        /// </summary>
+        /// <typeparam name="T">Type of the items.</typeparam>
+        /// <param name="left">First array to compare.</param>
+        /// <param name="right">Second array to compare.</param>
+        /// <returns></returns>
+        public static bool AreNotEqual<T>(T[]? left, T[]? right)
+        {
+            const bool Changed = true;
+            const bool NotChanged = false;
+
+            if (left is null)
+            {
+                if (right is null)
+                    return NotChanged;
+                else
+                    return Changed;
+            }
+            else
+            {
+                if (right is null)
+                    return Changed;
+                else
+                {
+                    var length = left.Length;
+
+                    if (length != right.Length)
+                        return Changed;
+
+                    for (int i = 0; i < length; i++)
+                    {
+                        if (!Equals(left[i], right[i]))
+                            return Changed;
+                    }
+
+                    return NotChanged;
+                }
+            }
+        }
+
+        /// <summary>
         /// Checks whether portions of two byte arrays are equal.
         /// </summary>
         /// <param name="a1">First array to compare.</param>
