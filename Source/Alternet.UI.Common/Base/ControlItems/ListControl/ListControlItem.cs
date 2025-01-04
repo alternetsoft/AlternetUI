@@ -1104,10 +1104,11 @@ namespace Alternet.UI
         /// <summary>
         /// Toggles selected state of the item.
         /// </summary>
-        /// <param name="container"></param>
-        public virtual void ToggleSelected(IListControlItemContainer? container)
+        /// <param name="container">Item container.</param>
+        public virtual bool ToggleSelected(IListControlItemContainer? container)
         {
             isSelected = !isSelected;
+            return isSelected;
         }
 
         /// <summary>

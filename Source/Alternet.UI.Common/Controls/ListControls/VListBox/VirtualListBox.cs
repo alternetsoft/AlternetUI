@@ -54,6 +54,28 @@ namespace Alternet.UI
         public event MeasureItemEventHandler? MeasureItem;
 
         /// <summary>
+        /// Enumerates flast for the item click method.
+        /// </summary>
+        [Flags]
+        public enum ItemClickFlags
+        {
+            /// <summary>
+            /// Item is shift-clicked
+            /// </summary>
+            Shift = 1,
+
+            /// <summary>
+            /// Item is ctrl-clicked.
+            /// </summary>
+            Ctrl = 2,
+
+            /// <summary>
+            /// Item selected from keyboard.
+            /// </summary>
+            Keyboard = 4,
+        }
+
+        /// <summary>
         /// Enumerates supported kinds for <see cref="SetItemsFast"/> method.
         /// </summary>
         public enum SetItemsKind
@@ -651,7 +673,7 @@ namespace Alternet.UI
             {
                 var item = Items[i];
 
-                if(value.Equals(item.Value))
+                if (value.Equals(item.Value))
                     return item;
             }
 
@@ -676,167 +698,109 @@ namespace Alternet.UI
                 return;
             }
 
-            if (IsSelectionModeSingle)
-            {
-                DoInsideSuspendedSelectionEvents(HandleInSingleMode);
-                if (e.IsHandledOrSupressed)
-                    return;
-                base.OnKeyDown(e);
-            }
-            else
-            {
-                DoInsideSuspendedSelectionEvents(HandleInMultipleMode);
-                if (e.IsHandledOrSupressed)
-                    return;
-                base.OnKeyDown(e);
-            }
+            ItemClickFlags flags = ItemClickFlags.Keyboard;
 
-            void HandleInMultipleMode()
+            var selected = SelectedIndex;
+
+            int current = 0;
+
+            switch (e.Key)
             {
-                if (!e.HasModifiers)
-                {
-                    HandleInSingleMode();
-                    return;
-                }
+                case Key.Home:
+                    if (e.Control)
+                    {
+                        DoInsideUpdate(() => scrollOffset = 0);
+                        e.Suppressed();
+                        return;
+                    }
+                    else
+                    {
+                        current = 0;
+                    }
 
-                switch (e.Key)
-                {
-                    case Key.Home:
-                        /*
-                        DoInsideUpdate(() =>
-                        {
-                            if (e.Control)
-                            {
-                                scrollOffset = 0;
-                            }
-                            else
-                            {
-                                scrollOffset = 0;
-                                SelectFirstItem();
-                            }
-                            AfterKeyDown();
-                        });
-                        */
-                        break;
-                    case Key.End:
-                        /*
-                        SelectLastItem();
-                        */
-                        AfterKeyDown();
-                        break;
-                    case Key.Left:
-                        /*
-                        if (e.Control)
-                            IncHorizontalOffsetChars(-4);
-                        else
-                            IncHorizontalOffsetChars(-1);
-                        */
-                        AfterKeyDown();
-                        break;
-                    case Key.Right:
-                        /*
-                        if (e.Control)
-                            IncHorizontalOffsetChars(4);
-                        else
-                            IncHorizontalOffsetChars(1);
-                        */
-                        AfterKeyDown();
-                        break;
-                    case Key.Up:
-                        /*
-                        SelectPreviousItem();
-                        */
-                        AfterKeyDown();
-                        break;
-                    case Key.Down:
-                        /*
-                        SelectNextItem();
-                        */
-                        AfterKeyDown();
-                        break;
-                    case Key.PageUp:
-                        /*
-                        SelectItemOnPreviousPage();
-                        */
-                        AfterKeyDown();
-                        break;
-                    case Key.PageDown:
-                        /*
-                        SelectItemOnNextPage();
-                        */
-                        AfterKeyDown();
-                        break;
-                }
+                    break;
 
-                void AfterKeyDown()
-                {
-                    /*
+                case Key.End:
+                    current = Count - 1;
+                    break;
+
+                case Key.Down:
+                    if (selected is null)
+                    {
+                        SelectedIndex = 0;
+                        e.Suppressed();
+                        return;
+                    }
+                    else
+                    if (selected >= Count - 1)
+                    {
+                        e.Suppressed();
+                        return;
+                    }
+
+                    current = selected.Value + 1;
+                    break;
+
+                case Key.Up:
+                    if (selected is null)
+                    {
+                        SelectedIndex = Count - 1;
+                        e.Suppressed();
+                        return;
+                    }
+                    else
+                    if (selected <= 0)
+                    {
+                        e.Suppressed();
+                        return;
+                    }
+
+                    current = selected.Value - 1;
+                    break;
+
+                case Key.PageDown:
+                    current = GetIndexOnNextPage() ?? 0;
+                    break;
+
+                case Key.PageUp:
+                    current = GetIndexOnPreviousPage() ?? 0;
+                    break;
+
+                case Key.Left:
+                    if (e.Control)
+                        IncHorizontalOffsetChars(-4);
+                    else
+                        IncHorizontalOffsetChars(-1);
                     e.Suppressed();
-                    */
-                }
-            }
-
-            void HandleInSingleMode()
-            {
-                switch (e.Key)
-                {
-                    case Key.Home:
-                        DoInsideUpdate(() =>
-                        {
-                            if (e.Control)
-                            {
-                                scrollOffset = 0;
-                            }
-                            else
-                            {
-                                scrollOffset = 0;
-                                SelectFirstItem();
-                            }
-
-                            AfterKeyDown();
-                        });
-                        break;
-                    case Key.End:
-                        SelectLastItem();
-                        AfterKeyDown();
-                        break;
-                    case Key.Left:
-                        if(e.Control)
-                            IncHorizontalOffsetChars(-4);
-                        else
-                            IncHorizontalOffsetChars(-1);
-                        AfterKeyDown();
-                        break;
-                    case Key.Right:
-                        if (e.Control)
-                            IncHorizontalOffsetChars(4);
-                        else
-                            IncHorizontalOffsetChars(1);
-                        AfterKeyDown();
-                        break;
-                    case Key.Up:
-                        SelectPreviousItem();
-                        AfterKeyDown();
-                        break;
-                    case Key.Down:
-                        SelectNextItem();
-                        AfterKeyDown();
-                        break;
-                    case Key.PageUp:
-                        SelectItemOnPreviousPage();
-                        AfterKeyDown();
-                        break;
-                    case Key.PageDown:
-                        SelectItemOnNextPage();
-                        AfterKeyDown();
-                        break;
-                }
-
-                void AfterKeyDown()
-                {
+                    return;
+                case Key.Right:
+                    if (e.Control)
+                        IncHorizontalOffsetChars(4);
+                    else
+                        IncHorizontalOffsetChars(1);
                     e.Suppressed();
-                }
+                    return;
+
+                case Key.Space:
+                    // hack: pressing space should work like a mouse click rather than
+                    // like a keyboard arrow press, so trick DoHandleItemClick() in
+                    // thinking we were clicked.
+                    flags &= ~ItemClickFlags.Keyboard;
+                    current = selected ?? 0;
+                    break;
+
+                default:
+                    return;
             }
+
+            e.Suppressed();
+
+            if (e.Shift)
+                flags |= ItemClickFlags.Shift;
+            if (e.Control)
+                flags |= ItemClickFlags.Ctrl;
+
+            DoHandleItemClick(current, flags);
         }
 
         /// <inheritdoc/>
@@ -873,39 +837,18 @@ namespace Alternet.UI
             var itemIndex = HitTest(e.Location);
             e.Handled = true;
 
-            if (IsSelectionModeSingle)
+            if (itemIndex is not null)
             {
-                SelectedIndex = itemIndex;
-            }
-            else
-            {
-                if(itemIndex is null)
-                {
-                    ClearSelected();
-                    return;
-                }
+                var modifiers = Keyboard.Modifiers;
 
-                var item = SafeItem(itemIndex.Value);
+                ItemClickFlags flags = 0;
 
-                if (item is null)
-                {
-                    return;
-                }
+                if (modifiers.HasShift())
+                    flags |= ItemClickFlags.Shift;
+                if (modifiers.HasControl())
+                    flags |= ItemClickFlags.Ctrl;
 
-                DoInsideSuspendedSelectionEvents(() =>
-                {
-                    switch (Keyboard.Modifiers)
-                    {
-                        case UI.ModifierKeys.Shift:
-                            break;
-                        case UI.ModifierKeys.Control:
-                            item.ToggleSelected(this);
-                            break;
-                        case UI.ModifierKeys.None:
-                            SelectedIndex = itemIndex;
-                            break;
-                    }
-                });
+                DoHandleItemClick(itemIndex.Value, flags);
             }
         }
 
@@ -1110,6 +1053,104 @@ namespace Alternet.UI
         protected override void OnHandleCreated(EventArgs e)
         {
             base.OnHandleCreated(e);
+        }
+
+        private int? GetIndexOnNextPage()
+        {
+            if (Count == 0)
+                return null;
+
+            var selected = SelectedIndex;
+
+            if (selected is null)
+            {
+                return 0;
+            }
+
+            var numVisible = VisibleCount - 1;
+
+            if (numVisible <= 0)
+                return null;
+
+            return Math.Min(selected.Value + numVisible, Count - 1);
+        }
+
+        private void DoHandleItemClick(int item, ItemClickFlags flags)
+        {
+            DoInsideSuspendedSelectionEvents(Internal);
+
+            void Internal()
+            {
+                var current = SelectedIndex;
+                var setSelected = true;
+
+                if (IsSelectionModeMultiple)
+                {
+                    bool select = true;
+
+                    if (flags.HasFlag(ItemClickFlags.Shift))
+                    {
+                        if (current is not null)
+                        {
+                            if (AnchorIndex is null)
+                                AnchorIndex = current;
+
+                            select = false;
+
+                            ClearSelected();
+
+                            if (AnchorIndex is null)
+                                select = true;
+                            else
+                                SelectRange(AnchorIndex.Value, item);
+                        }
+                    }
+                    else
+                    {
+                        AnchorIndex = item;
+
+                        if (flags.HasFlag(ItemClickFlags.Ctrl))
+                        {
+                            select = false;
+
+                            if (!flags.HasFlag(ItemClickFlags.Keyboard))
+                            {
+                                SafeItem(item)?.ToggleSelected(this);
+                                setSelected = false;
+                            }
+                        }
+                    }
+
+                    if (select)
+                    {
+                        SetSelectedIndex(item, clearSelection: true);
+                    }
+                }
+
+                var savedAnchor = AnchorIndex;
+                SetSelectedIndex(item, clearSelection: false, setSelected: setSelected);
+                AnchorIndex = savedAnchor;
+            }
+        }
+
+        private int? GetIndexOnPreviousPage()
+        {
+            if (Count == 0)
+                return null;
+
+            var selected = SelectedIndex;
+
+            if (selected is null)
+            {
+                return 0;
+            }
+
+            var numVisible = VisibleCount - 1;
+
+            if (numVisible <= 0)
+                return null;
+
+            return Math.Max(selected.Value - numVisible, 0);
         }
     }
 }

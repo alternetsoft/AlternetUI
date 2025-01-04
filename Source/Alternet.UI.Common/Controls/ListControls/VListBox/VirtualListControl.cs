@@ -273,6 +273,29 @@ namespace Alternet.UI
             }
         }
 
+        /// <inheritdoc/>
+        public override ControlTypeId ControlKind => ControlTypeId.ListBox;
+
+        /// <summary>
+        /// Gets or sets a value indicating whether the control has a border.
+        /// </summary>
+        public virtual bool HasBorder
+        {
+            get
+            {
+                if (DisposingOrDisposed)
+                    return false;
+                return Handler.HasBorder;
+            }
+
+            set
+            {
+                if (DisposingOrDisposed)
+                    return;
+                Handler.HasBorder = value;
+            }
+        }
+
         /// <summary>
         /// Gets or sets a value indicating whether checkbox will
         /// allow three check states rather than two.
@@ -626,6 +649,25 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets a <see cref="IVListBoxHandler"/> associated with this class.
+        /// </summary>
+        [Browsable(false)]
+        internal new IVListBoxHandler Handler
+        {
+            get
+            {
+                return (IVListBoxHandler)base.Handler;
+            }
+        }
+
+        [Browsable(false)]
+        internal new string Text
+        {
+            get => base.Text;
+            set => base.Text = value;
+        }
+
+        /// <summary>
         /// Gets item font. It must not be <c>null</c>.
         /// </summary>
         /// <returns></returns>
@@ -648,6 +690,60 @@ namespace Alternet.UI
             if (result == SizeD.MinusOne)
                 return ListControlItem.DefaultMeasureItemSize(this, MeasureCanvas, itemIndex);
             return result;
+        }
+
+        /// <summary>
+        /// Ensures that the item is visible within the control, scrolling the
+        /// contents of the control, if necessary.
+        /// </summary>
+        /// <param name="itemIndex">The item index to scroll into visibility.</param>
+        public virtual void EnsureVisible(int itemIndex)
+        {
+            if (DisposingOrDisposed)
+                return;
+            if (Count > 0)
+                Handler.EnsureVisible(itemIndex);
+        }
+
+        /// <summary>
+        /// Returns the zero-based index of the item at the specified coordinates.
+        /// </summary>
+        /// <param name="position">A <see cref="PointD"/> object containing
+        /// the coordinates used to obtain the item
+        /// index.</param>
+        /// <returns>The zero-based index of the item found at the specified
+        /// coordinates; returns <see langword="null"/>
+        /// if no match is found.</returns>
+        public virtual int? HitTest(PointD position)
+        {
+            if (DisposingOrDisposed)
+                return null;
+            return Handler.HitTest(position);
+        }
+
+        /// <summary>
+        /// Gets only valid indexes from the list of indexes in
+        /// the control.
+        /// </summary>
+        public virtual IReadOnlyList<int> GetValidIndexes(params int[] indexes)
+        {
+            var validIndexes = new List<int>();
+
+            foreach (int index in indexes)
+            {
+                if (IsValidIndex(index))
+                    validIndexes.Add(index);
+            }
+
+            return validIndexes;
+        }
+
+        /// <summary>
+        /// Checks whether index is valid in the control.
+        /// </summary>
+        public virtual bool IsValidIndex(int index)
+        {
+            return index >= 0 && index < Items.Count;
         }
 
         /// <summary>
@@ -769,6 +865,14 @@ namespace Alternet.UI
             }
 
             return result;
+        }
+
+        /// <summary>
+        /// Gets whether control has items.
+        /// </summary>
+        public virtual bool HasItems()
+        {
+            return Items.Count > 0;
         }
 
         /// <summary>
@@ -895,10 +999,15 @@ namespace Alternet.UI
         /// <returns></returns>
         public virtual bool IsSelected(int index)
         {
-            if (index == SelectedIndex)
-                return true;
-            var item = SafeItem(index);
-            return item?.IsSelected(this) ?? false;
+            if (IsSelectionModeSingle)
+            {
+                return index == SelectedIndex;
+            }
+            else
+            {
+                var item = SafeItem(index);
+                return item?.IsSelected(this) ?? false;
+            }
         }
 
         /// <summary>
@@ -1162,6 +1271,13 @@ namespace Alternet.UI
         /// <remarks>See <see cref="CheckedChanged"/> for details.</remarks>
         protected virtual void OnCheckedChanged(EventArgs e)
         {
+        }
+
+        /// <inheritdoc/>
+        protected override void OnMouseDoubleClick(MouseEventArgs e)
+        {
+            base.OnMouseDoubleClick(e);
+            RunSelectedItemDoubleClickAction();
         }
 
         /// <summary>

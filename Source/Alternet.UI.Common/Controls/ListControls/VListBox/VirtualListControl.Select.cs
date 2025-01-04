@@ -4,8 +4,6 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text;
 
-using Alternet.Drawing;
-
 namespace Alternet.UI
 {
     public partial class VirtualListControl
@@ -15,6 +13,7 @@ namespace Alternet.UI
         private ListBoxSelectionMode selectionMode = ListBoxSelectionMode.Single;
         private ListControlItem[]? selectionContext;
         private int? selectedIndex;
+        private int? anchor;
 
         /// <summary>
         /// Occurs when the <see cref="SelectedIndex"/> property or the
@@ -60,154 +59,6 @@ namespace Alternet.UI
         /// </summary>
         public event EventHandler? SelectionModeChanged;
 
-        /// <inheritdoc/>
-        public override ControlTypeId ControlKind => ControlTypeId.ListBox;
-
-        /// <summary>
-        /// Gets a collection that contains the zero-based indexes of all
-        /// currently selected items in the control.
-        /// </summary>
-        /// <value>
-        /// An <see cref="IReadOnlyList{T}"/> containing the indexes of the
-        /// currently selected items in the control.
-        /// If no items are currently selected, an empty
-        /// <see cref="IReadOnlyList{T}"/> is returned.
-        /// </value>
-        /// <remarks>
-        /// For a multiple-selection control, this property
-        /// returns a collection containing the indexes to all items that are selected
-        /// in the control. For a single-selection
-        /// control, this property returns a collection containing a
-        /// single element containing the index of the only selected item in the
-        /// control.
-        /// <para>
-        /// There are a number of ways to
-        /// reference selected items. Instead of using the <see cref="SelectedIndices"/>
-        /// property to obtain the index position of the currently selected item
-        /// in a single-selection control, you
-        /// can use the <see cref="SelectedIndex"/> property. If you want to obtain
-        /// the item that is currently selected in the control,
-        /// instead of the index position of the item, use the
-        /// <see cref="SelectedItem"/> property. In addition,
-        /// you can use the <see cref="SelectedItems"/> property if you want to
-        /// obtain all the selected items in a multiple-selection control.
-        /// </para>
-        /// </remarks>
-        /// <seealso cref="SelectedIndicesDescending"/>
-        [Browsable(false)]
-        public virtual IReadOnlyList<int> SelectedIndices
-        {
-            get
-            {
-                if (DisposingOrDisposed)
-                    return [];
-
-                List<int> result = new();
-
-                var index = SelectedIndex;
-
-                if (index is not null && IsSelected(index.Value))
-                    result.Add(index.Value);
-
-                for (int i = 0; i < Count; i++)
-                {
-                    if (i == index)
-                        continue;
-                    if (IsSelected(i))
-                    {
-                        result.Add(i);
-                    }
-                }
-
-                return result;
-            }
-
-            set
-            {
-                if (DisposingOrDisposed)
-                    return;
-
-                DoInsideSuspendedSelectionEvents(() =>
-                {
-                    ClearSelected();
-                    SelectedIndex = value.FirstOrDefault();
-                    foreach (var index in value)
-                    {
-                        SetSelectedCore(index, true);
-                    }
-                });
-            }
-        }
-
-        /// <summary>
-        /// Gets or sets default timeout interval (in msec) for timer that calls
-        /// <see cref="DelayedSelectionChanged"/> event. If not specified,
-        /// <see cref="TimerUtils.DefaultDelayedTextChangedTimeout"/> is used.
-        /// </summary>
-        [Browsable(false)]
-        public int? DelayedSelectionChangedInterval
-        {
-            get => delayedSelectionChanged.Interval;
-            set => delayedSelectionChanged.Interval = value;
-        }
-
-        /// <summary>
-        /// Same as <see cref="SelectedIndices"/>.
-        /// </summary>
-        [Browsable(false)]
-        public IReadOnlyList<int> SelectedIndexes => SelectedIndices;
-
-        /// <summary>
-        /// Gets selected items as array.
-        /// </summary>
-        [Browsable(false)]
-        public virtual ListControlItem[]? SelectedItemsArray
-        {
-            get
-            {
-                if (IsSelectionModeSingle)
-                {
-                    var item = SelectedItem;
-                    if (item is null)
-                        return null;
-                    else
-                        return [item];
-                }
-                else
-                {
-                    return SelectedItems.ToArray();
-                }
-            }
-        }
-
-        /// <summary>
-        /// Gets a collection that contains the zero-based indexes of all
-        /// currently selected
-        /// items in the control.
-        /// </summary>
-        /// <remarks>
-        /// Indexes are returned in the descending order (maximal index is
-        /// the first).
-        /// </remarks>
-        /// <seealso cref="SelectedIndices"/>
-        /// <value>
-        /// An <see cref="IReadOnlyList{T}"/> containing the indexes of the
-        /// currently selected items in the control.
-        /// If no items are currently selected, an empty
-        /// <see cref="IReadOnlyList{T}"/> is returned.
-        /// </value>
-        [Browsable(false)]
-        public virtual IReadOnlyList<int> SelectedIndicesDescending
-        {
-            get
-            {
-#pragma warning disable
-                int[] sortedCopy = SelectedIndices.OrderByDescending(i => i).ToArray();
-#pragma warning restore
-                return sortedCopy;
-            }
-        }
-
         /// <summary>
         /// Gets or sets the zero-based index of the currently selected item in the control.
         /// </summary>
@@ -251,55 +102,264 @@ namespace Alternet.UI
 
             set
             {
-                if (DisposingOrDisposed)
-                    return;
-
-                var oldSelected = SelectedIndex;
-                if (oldSelected == value)
-                    return;
-
-                if (value != null && (value < 0 || value >= Items.Count))
-                    value = null;
-
-                DoInsideSuspendedSelectionEvents(() =>
-                {
-                    if (IsSelectionModeMultiple)
-                        ClearSelected();
-                    selectedIndex = value;
-                });
+                SetSelectedIndex(value, true);
             }
         }
 
         /// <summary>
-        /// Gets whether <see cref="SelectionChanged"/> (and other events
-        /// which are raised on selection change) are suspended.
+        /// Gets a collection that contains the zero-based indexes of all
+        /// currently selected items in the control.
         /// </summary>
+        /// <value>
+        /// An <see cref="IReadOnlyList{T}"/> containing the indexes of the
+        /// currently selected items in the control.
+        /// If no items are currently selected, an empty
+        /// <see cref="IReadOnlyList{T}"/> is returned.
+        /// </value>
+        /// <remarks>
+        /// For a multiple-selection control, this property
+        /// returns a collection containing the indexes to all items that are selected
+        /// in the control. For a single-selection
+        /// control, this property returns a collection containing a
+        /// single element containing the index of the only selected item in the
+        /// control.
+        /// <para>
+        /// There are a number of ways to
+        /// reference selected items. Instead of using the <see cref="SelectedIndices"/>
+        /// property to obtain the index position of the currently selected item
+        /// in a single-selection control, you
+        /// can use the <see cref="SelectedIndex"/> property. If you want to obtain
+        /// the item that is currently selected in the control,
+        /// instead of the index position of the item, use the
+        /// <see cref="SelectedItem"/> property. In addition,
+        /// you can use the <see cref="SelectedItems"/> property if you want to
+        /// obtain all the selected items in a multiple-selection control.
+        /// </para>
+        /// </remarks>
+        /// <seealso cref="SelectedIndicesDescending"/>
         [Browsable(false)]
-        public virtual bool AreSelectEventsSuspended
-        {
-            get
-            {
-                return ignoreSelectEvents > 0;
-            }
-        }
-
-        /// <summary>
-        /// Gets or sets a value indicating whether the control has a border.
-        /// </summary>
-        public virtual bool HasBorder
+        public virtual IReadOnlyList<int> SelectedIndices
         {
             get
             {
                 if (DisposingOrDisposed)
-                    return false;
-                return Handler.HasBorder;
+                    return [];
+
+                if (IsSelectionModeSingle)
+                {
+                    if (SelectedIndex is null)
+                        return [];
+                    return [SelectedIndex.Value];
+                }
+                else
+                {
+                    List<int> result = new();
+
+                    for (int i = 0; i < Count; i++)
+                    {
+                        if (IsSelected(i))
+                            result.Add(i);
+                    }
+
+                    return result;
+                }
             }
 
             set
             {
                 if (DisposingOrDisposed)
                     return;
-                Handler.HasBorder = value;
+
+                if (IsSelectionModeSingle)
+                {
+                    SelectedIndex = value?.FirstOrDefault();
+                }
+                else
+                {
+                    DoInsideSuspendedSelectionEvents(() =>
+                    {
+                        ClearSelected();
+                        foreach (var index in value)
+                        {
+                            SetSelectedCore(index, true);
+                        }
+                    });
+                }
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets default timeout interval (in msec) for timer that calls
+        /// <see cref="DelayedSelectionChanged"/> event. If not specified,
+        /// <see cref="TimerUtils.DefaultDelayedTextChangedTimeout"/> is used.
+        /// </summary>
+        [Browsable(false)]
+        public int? DelayedSelectionChangedInterval
+        {
+            get => delayedSelectionChanged.Interval;
+            set => delayedSelectionChanged.Interval = value;
+        }
+
+        /// <summary>
+        /// Same as <see cref="SelectedIndices"/>.
+        /// </summary>
+        [Browsable(false)]
+        public IReadOnlyList<int> SelectedIndexes => SelectedIndices;
+
+        /// <summary>
+        /// Gets 'Tag' property of the selected item if it is <see cref="BaseObjectWithAttr"/>.
+        /// </summary>
+        [Browsable(false)]
+        public virtual object? SelectedItemTag => (SelectedItem as BaseObjectWithAttr)?.Tag;
+
+        /// <summary>
+        /// Gets a collection containing the currently selected items in the
+        /// control.
+        /// </summary>
+        /// <value>A <see cref="IReadOnlyList{T}"/> containing the currently
+        /// selected items in the control.</value>
+        /// <remarks>
+        /// For a multiple-selection control, this property
+        /// returns a collection containing the indexes to all items that are selected
+        /// in the control. For a single-selection
+        /// control, this property returns a collection containing a
+        /// single element containing the index of the only selected item in the
+        /// control.
+        /// <para>
+        /// There are a number of ways to
+        /// reference selected items. Instead of using the <see cref="SelectedIndices"/>
+        /// property to obtain the index position of the currently selected item
+        /// in a single-selection control, you
+        /// can use the <see cref="SelectedIndex"/> property. If you want to obtain
+        /// the item that is currently selected in the control,
+        /// instead of the index position of the item, use the
+        /// <see cref="SelectedItem"/> property.
+        /// In addition, you can use the <see cref="SelectedIndices"/> property
+        /// to obtain all the selected indexes in a multiple-selection
+        /// control.
+        /// </para>
+        /// </remarks>
+        [Browsable(false)]
+        public virtual IReadOnlyList<ListControlItem> SelectedItems
+        {
+            get
+            {
+                return SelectedIndexes.Select(x => Items[x]).ToArray();
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets whether selection mode is <see cref="ListBoxSelectionMode.Single"/>
+        /// </summary>
+        [Browsable(false)]
+        public bool IsSelectionModeSingle
+        {
+            get
+            {
+                return SelectionMode == ListBoxSelectionMode.Single;
+            }
+
+            set
+            {
+                if (value)
+                    SelectionMode = ListBoxSelectionMode.Single;
+                else
+                    SelectionMode = ListBoxSelectionMode.Multiple;
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets whether selection mode is <see cref="ListBoxSelectionMode.Multiple"/>
+        /// </summary>
+        [Browsable(false)]
+        public bool IsSelectionModeMultiple
+        {
+            get
+            {
+                return SelectionMode == ListBoxSelectionMode.Multiple;
+            }
+
+            set
+            {
+                if (value)
+                    SelectionMode = ListBoxSelectionMode.Multiple;
+                else
+                    SelectionMode = ListBoxSelectionMode.Single;
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets the method in which items are selected in the
+        /// control.
+        /// </summary>
+        /// <value>One of the <see cref="ListBoxSelectionMode"/> values.
+        /// The default is <see cref="ListBoxSelectionMode.Single"/>.</value>
+        /// <remarks>
+        /// The <see cref="SelectionMode"/> property enables you to determine
+        /// how many items in the control
+        /// a user can select at one time.
+        /// </remarks>
+        public virtual ListBoxSelectionMode SelectionMode
+        {
+            get
+            {
+                if (DisposingOrDisposed)
+                    return ListBoxSelectionMode.Single;
+
+                return selectionMode;
+            }
+
+            set
+            {
+                if (DisposingOrDisposed)
+                    return;
+
+                if (selectionMode == value)
+                    return;
+
+                selectionMode = value;
+
+                SelectionModeChanged?.Invoke(this, EventArgs.Empty);
+            }
+        }
+
+        /// <summary>
+        /// Gets selected items as array.
+        /// </summary>
+        [Browsable(false)]
+        public virtual ListControlItem[]? SelectedItemsArray
+        {
+            get
+            {
+                return SelectedItems.ToArray();
+            }
+        }
+
+        /// <summary>
+        /// Gets a collection that contains the zero-based indexes of all
+        /// currently selected
+        /// items in the control.
+        /// </summary>
+        /// <remarks>
+        /// Indexes are returned in the descending order (maximal index is
+        /// the first).
+        /// </remarks>
+        /// <seealso cref="SelectedIndices"/>
+        /// <value>
+        /// An <see cref="IReadOnlyList{T}"/> containing the indexes of the
+        /// currently selected items in the control.
+        /// If no items are currently selected, an empty
+        /// <see cref="IReadOnlyList{T}"/> is returned.
+        /// </value>
+        [Browsable(false)]
+        public virtual IReadOnlyList<int> SelectedIndicesDescending
+        {
+            get
+            {
+#pragma warning disable
+                int[] sortedCopy = SelectedIndices.OrderByDescending(i => i).ToArray();
+#pragma warning restore
+                return sortedCopy;
             }
         }
 
@@ -368,217 +428,41 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Gets 'Tag' property of the selected item if it is <see cref="BaseObjectWithAttr"/>.
+        /// Gets whether <see cref="SelectionChanged"/> (and other events
+        /// which are raised on selection change) are suspended.
         /// </summary>
         [Browsable(false)]
-        public virtual object? SelectedItemTag => (SelectedItem as BaseObjectWithAttr)?.Tag;
+        public virtual bool AreSelectEventsSuspended
+        {
+            get
+            {
+                return ignoreSelectEvents > 0;
+            }
+        }
 
         /// <summary>
-        /// Gets a collection containing the currently selected items in the
-        /// control.
+        /// Gets or sets anchor item index.
         /// </summary>
-        /// <value>A <see cref="IReadOnlyList{T}"/> containing the currently
-        /// selected items in the control.</value>
         /// <remarks>
-        /// For a multiple-selection control, this property
-        /// returns a collection containing the indexes to all items that are selected
-        /// in the control. For a single-selection
-        /// control, this property returns a collection containing a
-        /// single element containing the index of the only selected item in the
-        /// control.
-        /// <para>
-        /// There are a number of ways to
-        /// reference selected items. Instead of using the <see cref="SelectedIndices"/>
-        /// property to obtain the index position of the currently selected item
-        /// in a single-selection control, you
-        /// can use the <see cref="SelectedIndex"/> property. If you want to obtain
-        /// the item that is currently selected in the control,
-        /// instead of the index position of the item, use the
-        /// <see cref="SelectedItem"/> property.
-        /// In addition, you can use the <see cref="SelectedIndices"/> property
-        /// to obtain all the selected indexes in a multiple-selection
-        /// control.
-        /// </para>
+        /// This is the anchor of the selection for the multiselection listboxes:
+        /// shift-clicking an item extends the selection from anchor to the item
+        /// clicked, for example. It is always Null for single selection listboxes.
         /// </remarks>
-        [Browsable(false)]
-        public virtual IReadOnlyList<ListControlItem> SelectedItems
+        protected virtual int? AnchorIndex
         {
             get
             {
-                if (DisposingOrDisposed)
-                    return [];
-
-                List<ListControlItem> result = new();
-
-                var index = SelectedIndex;
-                var selectedItem = SelectedItem;
-
-                if (index is not null && IsSelected(index.Value) && selectedItem is not null)
-                    result.Add(selectedItem);
-
-                for (int i = 0; i < Count; i++)
-                {
-                    if (i == index)
-                        continue;
-                    var item = SafeItem(i);
-                    if (item is null)
-                        continue;
-                    if (IsSelected(i))
-                    {
-                        result.Add(item);
-                    }
-                }
-
-                return result;
-            }
-        }
-
-        /// <summary>
-        /// Gets or sets whether selection mode is <see cref="ListBoxSelectionMode.Single"/>
-        /// </summary>
-        [Browsable(false)]
-        public bool IsSelectionModeSingle
-        {
-            get
-            {
-                return SelectionMode == ListBoxSelectionMode.Single;
+                if (IsSelectionModeSingle || anchor >= Count)
+                    return null;
+                return anchor;
             }
 
             set
             {
-                if(value)
-                    SelectionMode = ListBoxSelectionMode.Single;
-                else
-                    SelectionMode = ListBoxSelectionMode.Multiple;
+                if (IsSelectionModeSingle || anchor >= Count)
+                    value = null;
+                anchor = value;
             }
-        }
-
-        /// <summary>
-        /// Gets or sets whether selection mode is <see cref="ListBoxSelectionMode.Multiple"/>
-        /// </summary>
-        [Browsable(false)]
-        public bool IsSelectionModeMultiple
-        {
-            get
-            {
-                return SelectionMode == ListBoxSelectionMode.Multiple;
-            }
-
-            set
-            {
-                if (value)
-                    SelectionMode = ListBoxSelectionMode.Multiple;
-                else
-                    SelectionMode = ListBoxSelectionMode.Single;
-            }
-        }
-
-        /// <summary>
-        /// Gets or sets the method in which items are selected in the
-        /// control.
-        /// </summary>
-        /// <value>One of the <see cref="ListBoxSelectionMode"/> values.
-        /// The default is <see cref="ListBoxSelectionMode.Single"/>.</value>
-        /// <remarks>
-        /// The <see cref="SelectionMode"/> property enables you to determine
-        /// how many items in the control
-        /// a user can select at one time.
-        /// </remarks>
-        public virtual ListBoxSelectionMode SelectionMode
-        {
-            get
-            {
-                if (DisposingOrDisposed)
-                    return ListBoxSelectionMode.Single;
-
-                return selectionMode;
-            }
-
-            set
-            {
-                if (DisposingOrDisposed)
-                    return;
-
-                if (selectionMode == value)
-                    return;
-
-                selectionMode = value;
-
-                SelectionModeChanged?.Invoke(this, EventArgs.Empty);
-            }
-        }
-
-        /// <summary>
-        /// Gets a <see cref="IVListBoxHandler"/> associated with this class.
-        /// </summary>
-        [Browsable(false)]
-        internal new IVListBoxHandler Handler
-        {
-            get
-            {
-                return (IVListBoxHandler)base.Handler;
-            }
-        }
-
-        [Browsable(false)]
-        internal new string Text
-        {
-            get => base.Text;
-            set => base.Text = value;
-        }
-
-        /// <summary>
-        /// Removes selected items from the control.
-        /// </summary>
-        public virtual void RemoveSelectedItems()
-        {
-            RemoveItems(SelectedIndicesDescending);
-        }
-
-        /// <summary>
-        /// Ensures that the item is visible within the control, scrolling the
-        /// contents of the control, if necessary.
-        /// </summary>
-        /// <param name="itemIndex">The item index to scroll into visibility.</param>
-        public virtual void EnsureVisible(int itemIndex)
-        {
-            if (DisposingOrDisposed)
-                return;
-            if (Count > 0)
-                Handler.EnsureVisible(itemIndex);
-        }
-
-        /// <summary>
-        /// Returns the zero-based index of the item at the specified coordinates.
-        /// </summary>
-        /// <param name="position">A <see cref="PointD"/> object containing
-        /// the coordinates used to obtain the item
-        /// index.</param>
-        /// <returns>The zero-based index of the item found at the specified
-        /// coordinates; returns <see langword="null"/>
-        /// if no match is found.</returns>
-        public virtual int? HitTest(PointD position)
-        {
-            if (DisposingOrDisposed)
-                return null;
-            return Handler.HitTest(position);
-        }
-
-        /// <summary>
-        /// Gets only valid indexes from the list of indexes in
-        /// the control.
-        /// </summary>
-        public IReadOnlyList<int> GetValidIndexes(params int[] indexes)
-        {
-            var validIndexes = new List<int>();
-
-            foreach (int index in indexes)
-            {
-                if (IsValidIndex(index))
-                    validIndexes.Add(index);
-            }
-
-            return validIndexes;
         }
 
         /// <summary>
@@ -610,14 +494,6 @@ namespace Alternet.UI
         public virtual void SelectItems(params int[] indexes)
         {
             SelectedIndices = GetValidIndexes(indexes);
-        }
-
-        /// <summary>
-        /// Checks whether index is valid in the control.
-        /// </summary>
-        public virtual bool IsValidIndex(int index)
-        {
-            return index >= 0 && index < Items.Count;
         }
 
         /// <inheritdoc/>
@@ -665,14 +541,6 @@ namespace Alternet.UI
             });
 
             return result;
-        }
-
-        /// <summary>
-        /// Gets whether control has items.
-        /// </summary>
-        public virtual bool HasItems()
-        {
-            return Items.Count > 0;
         }
 
         /// <summary>
@@ -767,6 +635,40 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets index of the first selected item.
+        /// </summary>
+        /// <returns></returns>
+        public virtual int? GetFirstSelectedIndex()
+        {
+            var count = Items.Count;
+
+            for(int i = 0; i < count; i++)
+            {
+                if (IsSelected(i))
+                    return i;
+            }
+
+            return null;
+        }
+
+        /// <summary>
+        /// Gets index of the last selected item in the block.
+        /// </summary>
+        /// <returns></returns>
+        public virtual int? GetLastSelectedIndexInBlock()
+        {
+            var count = Items.Count;
+
+            for (int i = count - 1; i >= 0; i--)
+            {
+                if (IsSelected(i))
+                    return i;
+            }
+
+            return null;
+        }
+
+        /// <summary>
         /// Suspend raising of <see cref="SelectionChanged"/> and other events
         /// which are raised on selection change.
         /// </summary>
@@ -798,12 +700,113 @@ namespace Alternet.UI
             {
                 var newSelection = SelectedItemsArray;
                 bool changed = ArrayUtils.AreNotEqual(selectionContext, newSelection);
+
+                Invalidate();
                 if (changed)
                 {
-                    Invalidate();
                     RaiseSelectionChanged(EventArgs.Empty);
                 }
             }
+        }
+
+        /// <summary>
+        /// Changes <see cref="SelectedIndex"/> property value and
+        /// optionally clears previous selection.
+        /// </summary>
+        /// <param name="index">Item index</param>
+        /// <param name="setSelected">Whether to modify item's selected state.</param>
+        /// <param name="clearSelection">Whether to clear previous selection.</param>
+        public virtual void SetSelectedIndex(
+            int? index,
+            bool clearSelection = true,
+            bool setSelected = true)
+        {
+            if (DisposingOrDisposed)
+                return;
+
+            var oldSelected = SelectedIndex;
+            if (oldSelected == index)
+                return;
+
+            DoInsideSuspendedSelectionEvents(() =>
+            {
+                if(clearSelection)
+                    ClearSelected();
+
+                if (index != null && (index < 0 || index >= Count))
+                    index = null;
+
+                selectedIndex = index;
+                AnchorIndex = index;
+
+                if (index is not null && setSelected)
+                    SetSelected(index.Value, true);
+            });
+        }
+
+        /// <summary>
+        /// Selects or unselects range of the items (inclusive).
+        /// </summary>
+        /// <param name="startIndex">Index of the first item to select.</param>
+        /// <param name="endIndex">Index of the last item to select.</param>
+        /// <param name="select">Whether to select or unselect the items.</param>
+        public virtual void SelectRange(int startIndex, int endIndex, bool select = true)
+        {
+            var min = Math.Min(startIndex, endIndex);
+            var max = Math.Max(startIndex, endIndex);
+            min = Math.Max(min, 0);
+            max = Math.Min(max, Count - 1);
+
+            DoInsideSuspendedSelectionEvents(() =>
+            {
+                for (int i = min; i <= max; i++)
+                {
+                    SetSelectedCore(i, select);
+                }
+            });
+        }
+
+        /// <summary>
+        /// Removes selected items from the control.
+        /// </summary>
+        public virtual void RemoveSelectedItems()
+        {
+            RemoveItems(SelectedIndicesDescending);
+        }
+
+        /// <summary>
+        /// Gets minimal and maximal item indexes of the continious selection block.
+        /// </summary>
+        /// <param name="blockItemIndex">Index of any item in the continious selection block.</param>
+        /// <returns></returns>
+        internal virtual SelectionRange<int>? GetSelectedMinMax(int blockItemIndex)
+        {
+            var count = Items.Count;
+            int? minIndex = null;
+            int? maxIndex = null;
+
+            for (int i = blockItemIndex; i >= 0; i--)
+            {
+                if (IsSelected(i))
+                {
+                    minIndex = i;
+                    break;
+                }
+            }
+
+            for (int i = blockItemIndex; i < count; i++)
+            {
+                if (IsSelected(i))
+                {
+                    maxIndex = i;
+                    break;
+                }
+            }
+
+            if (minIndex is null || maxIndex is null)
+                return null;
+
+            return new(minIndex.Value, maxIndex.Value);
         }
 
         /// <summary>
@@ -828,14 +831,13 @@ namespace Alternet.UI
         {
         }
 
-        /// <inheritdoc/>
-        protected override void OnMouseDoubleClick(MouseEventArgs e)
-        {
-            base.OnMouseDoubleClick(e);
-            RunSelectedItemDoubleClickAction();
-        }
-
-        private bool SetSelectedCore(int index, bool value)
+        /// <summary>
+        /// Changes selected state of the item without raising events.
+        /// </summary>
+        /// <param name="index">The Item index</param>
+        /// <param name="value">The selected state of the item.</param>
+        /// <returns></returns>
+        protected virtual bool SetSelectedCore(int index, bool value)
         {
             var item = SafeItem(index);
 
