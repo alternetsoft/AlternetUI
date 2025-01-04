@@ -13,11 +13,7 @@ namespace Alternet.UI
         {
             private static AltPositionInfo? def;
 
-            private int minimum;
-            private int maximum = 100;
-            private int smallChange = 1;
-            private int largeChange = 10;
-            private int val;
+            private Record record = new();
 
             /// <summary>
             /// Initializes a new instance of the <see cref="AltPositionInfo"/> struct.
@@ -57,19 +53,19 @@ namespace Alternet.UI
             {
                 get
                 {
-                    return minimum;
+                    return record.Minimum;
                 }
 
                 set
                 {
-                    if (minimum == value || Immutable)
+                    if (record.Minimum == value || Immutable)
                         return;
 
-                    if (maximum < value)
-                        maximum = value;
-                    if (value > this.val)
+                    if (record.Maximum < value)
+                        record.Maximum = value;
+                    if (value > record.Value)
                         Value = value;
-                    minimum = value;
+                    record.Minimum = value;
                     RaisePropertyChanged(nameof(Minimum));
                 }
             }
@@ -84,19 +80,19 @@ namespace Alternet.UI
             {
                 get
                 {
-                    return maximum;
+                    return record.Maximum;
                 }
 
                 set
                 {
-                    if (maximum == value || Immutable)
+                    if (record.Maximum == value || Immutable)
                         return;
 
-                    if (minimum > value)
-                        minimum = value;
-                    if (value < this.val)
+                    if (record.Minimum > value)
+                        record.Minimum = value;
+                    if (value < record.Value)
                         Value = value;
-                    maximum = value;
+                    record.Maximum = value;
                     RaisePropertyChanged(nameof(Maximum));
                 }
             }
@@ -111,21 +107,18 @@ namespace Alternet.UI
             {
                 get
                 {
-                    return Math.Min(smallChange, LargeChange);
+                    return Math.Min(record.SmallChange, LargeChange);
                 }
 
                 set
                 {
-                    if (smallChange == value || Immutable)
+                    if (value < 1)
+                        value = 1;
+
+                    if (record.SmallChange == value || Immutable)
                         return;
 
-                    if (value < 0)
-                    {
-                        LogUtils.LogInvalidBoundArgumentUInt(nameof(SmallChange), value);
-                        return;
-                    }
-
-                    smallChange = value;
+                    record.SmallChange = value;
                     RaisePropertyChanged(nameof(SmallChange));
                 }
             }
@@ -140,25 +133,20 @@ namespace Alternet.UI
             {
                 get
                 {
-                    return val;
+                    return record.Value;
                 }
 
                 set
                 {
-                    if (val == value || Immutable)
+                    if (value < record.Minimum)
+                        value = record.Minimum;
+                    if (value > record.Maximum)
+                        value = record.Maximum;
+
+                    if (record.Value == value || Immutable)
                         return;
 
-                    if (value < minimum || value > maximum)
-                    {
-                        LogUtils.LogInvalidBoundArgument(
-                            nameof(Value),
-                            value,
-                            Minimum,
-                            Maximum);
-                        return;
-                    }
-
-                    this.val = value;
+                    record.Value = value;
 
                     RaisePropertyChanged(null);
                 }
@@ -173,22 +161,47 @@ namespace Alternet.UI
             {
                 get
                 {
-                    return Math.Min(largeChange, maximum - minimum + 1);
+                    return Math.Min(record.LargeChange, record.Maximum - record.Minimum + 1);
                 }
 
                 set
                 {
-                    if (largeChange == value || Immutable)
+                    if (value < 1)
+                        value = 1;
+
+                    if (record.LargeChange == value || Immutable)
                         return;
 
-                    if (value < 0)
-                    {
-                        LogUtils.LogInvalidBoundArgumentUInt(nameof(LargeChange), value);
-                        return;
-                    }
-
-                    largeChange = value;
+                    record.LargeChange = value;
                     RaisePropertyChanged(nameof(LargeChange));
+                }
+            }
+
+            /// <summary>
+            /// Assigns properties from the specified <see cref="ScrollBarInfo"/> value.
+            /// </summary>
+            /// <param name="value"><see cref="ScrollBarInfo"/> value to assign
+            /// properties from.</param>
+            public virtual void Assign(ScrollBarInfo value)
+            {
+                var newMaximum = (value.Range / SmallChange) + Minimum;
+                var newValue = (value.Position / SmallChange) + Minimum;
+                var newLargeChange = value.PageSize / SmallChange;
+                newValue = MathUtils.ApplyMinMax(newValue, Minimum, Maximum);
+
+                var oldRecord = record;
+
+                SuspendPropertyChanged();
+
+                try
+                {
+                    Maximum = newMaximum;
+                    Value = newValue;
+                    LargeChange = newLargeChange;
+                }
+                finally
+                {
+                    ResumePropertyChanged(oldRecord != record);
                 }
             }
 
@@ -203,6 +216,73 @@ namespace Alternet.UI
                 var position = (Value - Minimum) * SmallChange;
                 var result = new ScrollBarInfo(position, range, pageSize);
                 return result;
+            }
+
+            /// <summary>
+            /// Defines all fields of the container class.
+            /// </summary>
+            public struct Record : IEquatable<Record>
+            {
+                /// <inheritdoc cref="AltPositionInfo.Minimum"/>
+                public int Minimum;
+
+                /// <inheritdoc cref="AltPositionInfo.Maximum"/>
+                public int Maximum = 100;
+
+                /// <inheritdoc cref="AltPositionInfo.SmallChange"/>
+                public int SmallChange = 1;
+
+                /// <inheritdoc cref="AltPositionInfo.LargeChange"/>
+                public int LargeChange = 10;
+
+                /// <inheritdoc cref="AltPositionInfo.Value"/>
+                public int Value;
+
+                /// <summary>
+                /// Initializes a new instance of the <see cref="Record"/> struct.
+                /// </summary>
+                public Record()
+                {
+                }
+
+                /// <summary>
+                /// Tests whether two <see cref='Record'/> structs are not equal.
+                /// </summary>
+                public static bool operator !=(Record left, Record right)
+                {
+                    return !(left == right);
+                }
+
+                /// <summary>
+                /// Tests whether two <see cref='Record'/> structs are equal.
+                /// </summary>
+                public static bool operator ==(Record left, Record right)
+                {
+                    return
+                        left.Minimum == right.Minimum &&
+                        left.Maximum == right.Maximum &&
+                        left.SmallChange == right.SmallChange &&
+                        left.LargeChange == right.LargeChange &&
+                        left.Value == right.Value;
+                }
+
+                /// <inheritdoc/>
+                public readonly override bool Equals(object? obj)
+                {
+                    return obj is Record record && Equals(record);
+                }
+
+                /// <inheritdoc/>
+                public readonly bool Equals(Record other)
+                {
+                    return this == other;
+                }
+
+                /// <inheritdoc/>
+                public readonly override int GetHashCode()
+                {
+                    return HashCode.Combine(Minimum, Maximum, SmallChange, LargeChange, Value);
+                }
             }
         }
     }
