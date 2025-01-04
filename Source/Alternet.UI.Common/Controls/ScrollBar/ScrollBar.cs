@@ -265,13 +265,31 @@ namespace Alternet.UI
         /// Gets scrollbar position as <see cref="AltPositionInfo"/>.
         /// </summary>
         [Browsable(false)]
-        public AltPositionInfo AltPosInfo => pos;
+        public virtual AltPositionInfo AltPosInfo
+        {
+            get
+            {
+                return pos;
+            }
+        }
 
         /// <summary>
         /// Gets scrollbar position as <see cref="ScrollBarInfo"/>.
         /// </summary>
         [Browsable(false)]
-        public ScrollBarInfo PosInfo => pos.AsPositionInfo();
+        public virtual ScrollBarInfo PosInfo
+        {
+            get
+            {
+                var result = pos.AsPositionInfo();
+                return result;
+            }
+
+            set
+            {
+                pos.Assign(value);
+            }
+        }
 
         internal IScrollBarHandler PlatformControl
         {
