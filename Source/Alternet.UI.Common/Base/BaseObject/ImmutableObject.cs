@@ -16,6 +16,7 @@ namespace Alternet.UI
     public class ImmutableObject : DisposableObject, IImmutableObject, INotifyPropertyChanged
     {
         private bool immutable;
+        private int suspendCounter;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ImmutableObject"/> class.
@@ -47,10 +48,23 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets whether <see cref="PropertyChanged"/> event is suspended.
+        /// </summary>
+        [Browsable(false)]
+        public bool IsPropertyChangedSuspended
+        {
+            get
+            {
+                return suspendCounter > 0;
+            }
+        }
+
+        /// <summary>
         /// Marks the object as immutable.
         /// </summary>
         /// <remarks>
-        /// Marks this object as immutable, meaning that the contents of its properties will not change
+        /// Marks this object as immutable, meaning that the contents of its properties
+        /// will not change
         /// for the lifetime of the object. This state can be set, but it cannot be cleared once
         /// it is set.
         /// </remarks>
@@ -61,12 +75,69 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Calls <see cref="PropertyChanged"/> event.
+        /// Suspends <see cref="PropertyChanged"/> event and <see cref="OnPropertyChanged"/>
+        /// method so they will not be called when properties are changed.
+        /// </summary>
+        public virtual void SuspendPropertyChanged()
+        {
+            suspendCounter++;
+        }
+
+        /// <summary>
+        /// Resumes <see cref="PropertyChanged"/> event and <see cref="OnPropertyChanged"/>
+        /// method so they will be called when properties are changed.
+        /// </summary>
+        /// <param name="callChangedOnResume">Whether to call <see cref="PropertyChanged"/> event
+        /// after action is executed and events are resumed.
+        /// Optional. Default is True.</param>
+        public virtual void ResumePropertyChanged(bool callChangedOnResume = true)
+        {
+            if (suspendCounter <= 0)
+            {
+                throw new InvalidOperationException(
+                    "ResumePropertyChanged is called without previous call to SuspendPropertyChanged");
+            }
+
+            suspendCounter--;
+
+            if(suspendCounter == 0)
+            {
+                if(callChangedOnResume)
+                    RaisePropertyChanged();
+            }
+        }
+
+        /// <summary>
+        /// Calls the specified action inside block with suspended
+        /// <see cref="PropertyChanged"/> event.
+        /// </summary>
+        /// <param name="action">Action to call.</param>
+        /// <param name="callChangedOnResume">Whether to call <see cref="PropertyChanged"/> event
+        /// after action is executed and events are resumed.
+        /// Optional. Default is True.</param>
+        public void DoInsideSuspendedPropertyChanged(Action action, bool callChangedOnResume = true)
+        {
+            SuspendPropertyChanged();
+            try
+            {
+                action();
+            }
+            finally
+            {
+                ResumePropertyChanged(callChangedOnResume);
+            }
+        }
+
+        /// <summary>
+        /// Calls <see cref="PropertyChanged"/> event. If events are suspended
+        /// with previous call to <see cref="SuspendPropertyChanged"/>, does nothing.
         /// </summary>
         /// <param name="propertyName">Name of the property.</param>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void RaisePropertyChanged([CallerMemberName] string? propertyName = null)
         {
+            if (DisposingOrDisposed || suspendCounter > 0)
+                return;
             OnPropertyChanged(propertyName);
             PropertyChanged?.Invoke(this, EventArgsUtils.GetPropertyChangedEventArgs(propertyName));
         }
