@@ -8,20 +8,13 @@ using Alternet.Drawing;
 
 namespace Alternet.UI
 {
-    /// <summary>
-    /// Custom list box control which extends <see cref="ListControl{T}"/>
-    /// with multi-select and other features.
-    /// </summary>
-    /// <typeparam name="TItem">Type of the item.</typeparam>
-    public abstract class CustomListBox<TItem> : ListControl<TItem>, ICustomListBox<TItem>
-            where TItem : class, new()
+    public partial class VirtualListControl
     {
-        private readonly HashSet<int> selectedIndices = new();
-
         private int ignoreSelectEvents = 0;
         private DelayedEvent<EventArgs> delayedSelectionChanged = new();
-
         private ListBoxSelectionMode selectionMode = ListBoxSelectionMode.Single;
+        private ListControlItem[]? selectionContext;
+        private int? selectedIndex;
 
         /// <summary>
         /// Occurs when the <see cref="SelectedIndex"/> property or the
@@ -109,7 +102,24 @@ namespace Alternet.UI
                 if (DisposingOrDisposed)
                     return [];
 
-                return selectedIndices.ToArray();
+                List<int> result = new();
+
+                var index = SelectedIndex;
+
+                if (index is not null && IsSelected(index.Value))
+                    result.Add(index.Value);
+
+                for (int i = 0; i < Count; i++)
+                {
+                    if (i == index)
+                        continue;
+                    if (IsSelected(i))
+                    {
+                        result.Add(i);
+                    }
+                }
+
+                return result;
             }
 
             set
@@ -117,18 +127,15 @@ namespace Alternet.UI
                 if (DisposingOrDisposed)
                     return;
 
-                bool changed = false;
-
-                ClearSelectedCore();
-
-                foreach (var index in value)
+                DoInsideSuspendedSelectionEvents(() =>
                 {
-                    if (SetSelectedCore(index, true))
-                        changed = true;
-                }
-
-                if (changed)
-                    RaiseSelectionChanged(EventArgs.Empty);
+                    ClearSelected();
+                    SelectedIndex = value.FirstOrDefault();
+                    foreach (var index in value)
+                    {
+                        SetSelectedCore(index, true);
+                    }
+                });
             }
         }
 
@@ -149,6 +156,29 @@ namespace Alternet.UI
         /// </summary>
         [Browsable(false)]
         public IReadOnlyList<int> SelectedIndexes => SelectedIndices;
+
+        /// <summary>
+        /// Gets selected items as array.
+        /// </summary>
+        [Browsable(false)]
+        public virtual ListControlItem[]? SelectedItemsArray
+        {
+            get
+            {
+                if (IsSelectionModeSingle)
+                {
+                    var item = SelectedItem;
+                    if (item is null)
+                        return null;
+                    else
+                        return [item];
+                }
+                else
+                {
+                    return SelectedItems.ToArray();
+                }
+            }
+        }
 
         /// <summary>
         /// Gets a collection that contains the zero-based indexes of all
@@ -208,10 +238,15 @@ namespace Alternet.UI
         {
             get
             {
-                if (selectedIndices.Count == 0)
+                if (DisposingOrDisposed)
+                    return default;
+                if (selectedIndex >= Count)
+                {
+                    selectedIndex = null;
                     return null;
-                else
-                    return selectedIndices.First();
+                }
+
+                return selectedIndex;
             }
 
             set
@@ -220,26 +255,31 @@ namespace Alternet.UI
                     return;
 
                 var oldSelected = SelectedIndex;
-                var oldCount = selectedIndices.Count;
-
-                if (oldSelected == value && oldCount <= 1)
+                if (oldSelected == value)
                     return;
 
                 if (value != null && (value < 0 || value >= Items.Count))
-                    throw new ArgumentOutOfRangeException(nameof(value));
+                    value = null;
 
-                ignoreSelectEvents++;
-                try
+                DoInsideSuspendedSelectionEvents(() =>
                 {
-                    ClearSelected();
-                    if (value != null)
-                        SetSelected(value.Value, true);
-                }
-                finally
-                {
-                    ignoreSelectEvents--;
-                    RaiseSelectionChanged(EventArgs.Empty);
-                }
+                    if (IsSelectionModeMultiple)
+                        ClearSelected();
+                    selectedIndex = value;
+                });
+            }
+        }
+
+        /// <summary>
+        /// Gets whether <see cref="SelectionChanged"/> (and other events
+        /// which are raised on selection change) are suspended.
+        /// </summary>
+        [Browsable(false)]
+        public virtual bool AreSelectEventsSuspended
+        {
+            get
+            {
+                return ignoreSelectEvents > 0;
             }
         }
 
@@ -290,7 +330,7 @@ namespace Alternet.UI
         /// </para>
         /// </remarks>
         [Browsable(false)]
-        public override TItem? SelectedItem
+        public override ListControlItem? SelectedItem
         {
             get
             {
@@ -361,14 +401,35 @@ namespace Alternet.UI
         /// </para>
         /// </remarks>
         [Browsable(false)]
-        public virtual IReadOnlyList<TItem> SelectedItems
+        public virtual IReadOnlyList<ListControlItem> SelectedItems
         {
             get
             {
                 if (DisposingOrDisposed)
                     return [];
 
-                return SelectedIndices.Select(x => Items[x]).ToArray();
+                List<ListControlItem> result = new();
+
+                var index = SelectedIndex;
+                var selectedItem = SelectedItem;
+
+                if (index is not null && IsSelected(index.Value) && selectedItem is not null)
+                    result.Add(selectedItem);
+
+                for (int i = 0; i < Count; i++)
+                {
+                    if (i == index)
+                        continue;
+                    var item = SafeItem(i);
+                    if (item is null)
+                        continue;
+                    if (IsSelected(i))
+                    {
+                        result.Add(item);
+                    }
+                }
+
+                return result;
             }
         }
 
@@ -448,14 +509,14 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Gets a <see cref="IListBoxHandler"/> associated with this class.
+        /// Gets a <see cref="IVListBoxHandler"/> associated with this class.
         /// </summary>
         [Browsable(false)]
-        internal new IListBoxHandler Handler
+        internal new IVListBoxHandler Handler
         {
             get
             {
-                return (IListBoxHandler)base.Handler;
+                return (IVListBoxHandler)base.Handler;
             }
         }
 
@@ -562,8 +623,15 @@ namespace Alternet.UI
         /// <inheritdoc/>
         public override void ClearSelected()
         {
-            ClearSelectedCore();
-            RaiseSelectionChanged(EventArgs.Empty);
+            DoInsideSuspendedSelectionEvents(() =>
+            {
+                foreach (var item in Items)
+                {
+                    item.SetSelected(this, false);
+                }
+
+                selectedIndex = null;
+            });
         }
 
         /// <summary>
@@ -589,12 +657,14 @@ namespace Alternet.UI
             if (index < 0 || index >= Items.Count)
                 return false;
 
-            var changed = SetSelectedCore(index, value);
+            var result = false;
 
-            if (changed)
-                RaiseSelectionChanged(EventArgs.Empty);
+            DoInsideSuspendedSelectionEvents(() =>
+            {
+                result = SetSelectedCore(index, value);
+            });
 
-            return changed;
+            return result;
         }
 
         /// <summary>
@@ -673,6 +743,70 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Calls the specified action inside the block with suspended selection events.
+        /// </summary>
+        /// <remarks>
+        /// Before calling the action, selection events are suspended with
+        /// <see cref="SuspendSelectionEvents"/>. After the action is called, selection events
+        /// are resumed with <see cref="ResumeSelectionEvents"/>.
+        /// </remarks>
+        /// <param name="action">Action to call inside the block with
+        /// suspended selection events.</param>
+        public virtual void DoInsideSuspendedSelectionEvents(Action action)
+        {
+            SuspendSelectionEvents();
+
+            try
+            {
+                action();
+            }
+            finally
+            {
+                ResumeSelectionEvents();
+            }
+        }
+
+        /// <summary>
+        /// Suspend raising of <see cref="SelectionChanged"/> and other events
+        /// which are raised on selection change.
+        /// </summary>
+        public virtual void SuspendSelectionEvents()
+        {
+            if (ignoreSelectEvents == 0)
+            {
+                selectionContext = SelectedItemsArray;
+            }
+
+            ignoreSelectEvents++;
+        }
+
+        /// <summary>
+        /// Resumes raising of <see cref="SelectionChanged"/> and other events
+        /// which are raised on selection change.
+        /// </summary>
+        public virtual void ResumeSelectionEvents()
+        {
+            if (ignoreSelectEvents <= 0)
+            {
+                throw new InvalidOperationException(
+                    "Call to ResumeSelectEvents without previous call to SuspendSelectEvents");
+            }
+
+            ignoreSelectEvents--;
+
+            if (ignoreSelectEvents == 0)
+            {
+                var newSelection = SelectedItemsArray;
+                bool changed = ArrayUtils.AreNotEqual(selectionContext, newSelection);
+                if (changed)
+                {
+                    Invalidate();
+                    RaiseSelectionChanged(EventArgs.Empty);
+                }
+            }
+        }
+
+        /// <summary>
         /// Called when the <see cref="SelectedIndex"/> property or the
         /// <see cref="SelectedIndices"/> collection has changed.
         /// </summary>
@@ -701,19 +835,14 @@ namespace Alternet.UI
             RunSelectedItemDoubleClickAction();
         }
 
-        private void ClearSelectedCore()
-        {
-            selectedIndices.Clear();
-        }
-
         private bool SetSelectedCore(int index, bool value)
         {
-            bool changed;
-            if (value)
-                changed = selectedIndices.Add(index);
-            else
-                changed = selectedIndices.Remove(index);
+            var item = SafeItem(index);
 
+            if (item is null)
+                return false;
+
+            var changed = item.SetSelected(this, value);
             return changed;
         }
     }

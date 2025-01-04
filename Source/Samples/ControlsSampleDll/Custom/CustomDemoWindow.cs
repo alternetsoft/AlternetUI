@@ -104,7 +104,10 @@ namespace Alternet.UI
             return false;
         }
 
-        public static bool ReportFormLoadException(Exception e, string? resName, UixmlLoader.Flags flags)
+        public static bool ReportFormLoadException(
+            Exception e,
+            string? resName,
+            UixmlLoader.Flags flags)
         {
             return false;
         }

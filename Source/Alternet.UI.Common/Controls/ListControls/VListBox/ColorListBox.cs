@@ -296,7 +296,7 @@ namespace Alternet.UI
             {
                 if (sender is not ColorListBox colorListBox)
                 {
-                    if (sender is VirtualListControl<ListControlItem> listControl)
+                    if (sender is VirtualListControl listControl)
                         listControl.DefaultDrawItemForeground(e);
                     return;
                 }

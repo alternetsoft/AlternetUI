@@ -8,9 +8,6 @@ namespace Alternet.UI
 {
     internal class VListBoxHandler : WxControlHandler, IVListBoxHandler
     {
-        private bool receivingSelection;
-        private bool applyingSelection;
-
         public VListBoxHandler()
         {
         }
@@ -53,12 +50,6 @@ namespace Alternet.UI
         {
             get => NativeControl.VScrollBarVisible;
             set => NativeControl.VScrollBarVisible = value;
-        }
-
-        ListBoxSelectionMode IVListBoxHandler.SelectionMode
-        {
-            get => (ListBoxSelectionMode)NativeControl.SelectionMode;
-            set => NativeControl.SelectionMode = value;
         }
 
         internal new Native.VListBox NativeControl => (Native.VListBox)base.NativeControl;
@@ -119,74 +110,14 @@ namespace Alternet.UI
             return NativeControl.GetVisibleBegin();
         }
 
-        bool IVListBoxHandler.IsSelected(int line)
-        {
-            return NativeControl.IsSelected(line);
-        }
-
         bool IVListBoxHandler.IsVisible(int line)
         {
             return NativeControl.IsVisible(line);
         }
 
-        void IVListBoxHandler.ClearItems()
-        {
-            NativeControl.ClearItems();
-        }
-
-        void IVListBoxHandler.ClearSelected()
-        {
-            NativeControl.ClearSelected();
-        }
-
-        void IVListBoxHandler.SetSelected(int index, bool value)
-        {
-            NativeControl.SetSelected(index, value);
-        }
-
-        int IVListBoxHandler.GetFirstSelected()
-        {
-            return NativeControl.GetFirstSelected();
-        }
-
-        int IVListBoxHandler.GetNextSelected()
-        {
-            return NativeControl.GetNextSelected();
-        }
-
-        int IVListBoxHandler.GetSelectedCount()
-        {
-            return NativeControl.GetSelectedCount();
-        }
-
-        int IVListBoxHandler.GetSelection()
-        {
-            return NativeControl.GetSelection();
-        }
-
         int IVListBoxHandler.ItemHitTest(PointD position)
         {
             return NativeControl.ItemHitTest(position);
-        }
-
-        void IVListBoxHandler.SetSelection(int selection)
-        {
-            NativeControl.SetSelection(selection);
-        }
-
-        void IVListBoxHandler.SetSelectionBackground(Color color)
-        {
-            NativeControl.SetSelectionBackground(color);
-        }
-
-        bool IVListBoxHandler.IsCurrent(int current)
-        {
-            return NativeControl.IsCurrent(current);
-        }
-
-        bool IVListBoxHandler.DoSetCurrent(int current)
-        {
-            return NativeControl.DoSetCurrent(current);
         }
 
         internal override Native.Control CreateNativeControl()
@@ -209,14 +140,8 @@ namespace Alternet.UI
         {
             base.OnAttach();
 
-            ApplySelectionMode();
             AttachItems(Control.Items);
-            ApplySelection();
 
-            Control.SelectionModeChanged += Control_SelectionModeChanged;
-            Control.SelectionChanged += Control_SelectionChanged;
-
-            NativeControl.SelectionChanged = NativeControl_SelectionChanged;
             NativeControl.MeasureItem = NativeControl_MeasureItem;
         }
 
@@ -224,10 +149,7 @@ namespace Alternet.UI
         {
             DetachItems(Control.Items);
 
-            Control.SelectionModeChanged -= Control_SelectionModeChanged;
-            Control.SelectionChanged -= Control_SelectionChanged;
             NativeControl.MeasureItem = null;
-            NativeControl.SelectionChanged = null;
 
             base.OnDetach();
         }
@@ -238,102 +160,6 @@ namespace Alternet.UI
             var heightDip = Control.MeasureItemSize(itemIndex).Height;
             var height = Control.PixelFromDip(heightDip);
             NativeControl.EventHeight = height;
-        }
-
-        private void NativeControl_SelectionChanged()
-        {
-            if (applyingSelection)
-                return;
-
-            ReceiveSelection();
-            if (App.IsMacOS)
-                Invalidate();
-        }
-
-        private void Control_SelectionChanged(object? sender, EventArgs e)
-        {
-            if (receivingSelection)
-                return;
-
-            ApplySelection();
-        }
-
-        private void Control_SelectionModeChanged(object? sender, EventArgs e)
-        {
-            ApplySelectionMode();
-        }
-
-        private void ApplySelectionMode()
-        {
-            NativeControl.SelectionMode = Control.SelectionMode;
-        }
-
-        private void ApplySelection()
-        {
-            applyingSelection = true;
-
-            try
-            {
-                var indices = Control.SelectedIndices;
-
-                if (Control.SelectionMode == ListBoxSelectionMode.Single)
-                {
-                    if (indices.Count > 0)
-                        NativeControl.SetSelection(indices[0]);
-                    else
-                        NativeControl.SetSelection(-1);
-                    return;
-                }
-
-                NativeControl.ClearSelected();
-
-                for (var i = 0; i < indices.Count; i++)
-                    NativeControl.SetSelected(indices[i], true);
-            }
-            finally
-            {
-                applyingSelection = false;
-            }
-        }
-
-        private void ReceiveSelection()
-        {
-            receivingSelection = true;
-
-            try
-            {
-                if (Control.SelectionMode == ListBoxSelectionMode.Single)
-                {
-                    Control.SelectedIndices = new int[] { NativeControl.GetSelection() };
-                    return;
-                }
-
-                var selCount = NativeControl.GetSelectedCount();
-
-                if (selCount == 0)
-                {
-                    Control.SelectedIndices = Array.Empty<int>();
-                    return;
-                }
-
-                var result = new List<int>(selCount + 1);
-                var firstSelected = NativeControl.GetFirstSelected();
-                result.Add(firstSelected);
-
-                while (true)
-                {
-                    var selected = NativeControl.GetNextSelected();
-                    if (selected < 0)
-                        break;
-                    result.Add(selected);
-                }
-
-                Control.SelectedIndices = result;
-            }
-            finally
-            {
-                receivingSelection = false;
-            }
         }
 
         private void CountChanged()

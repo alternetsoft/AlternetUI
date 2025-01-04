@@ -50,7 +50,8 @@ namespace Alternet.UI
     /// <param name="arg2">The second parameter of the method that this delegate encapsulates.</param>
     /// <param name="arg3">The third parameter of the method that this delegate encapsulates.</param>
     /// <remarks>
-    /// This delegate is different from <see cref="Action{T1,T2, T3}"/> in the first parameter definition.
+    /// This delegate is different from <see cref="Action{T1,T2, T3}"/> in the
+    /// first parameter definition.
     /// Here it is defined as "ref" parameter.
     /// </remarks>
     public delegate void ActionRef<T1, T2, T3>(ref T1 arg1, T2 arg2, T3 arg3);
@@ -341,12 +342,14 @@ namespace Alternet.UI
         /// Throws <see cref="NotImplementedException"/> exception.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        [Browsable(false)]
         public object NotImplemented() => throw new NotImplementedException();
 
         /// <summary>
         /// Throws <see cref="NotImplementedException"/> exception.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        [Browsable(false)]
         public T NotImplemented<T>() => throw new NotImplementedException();
 
         /// <summary>

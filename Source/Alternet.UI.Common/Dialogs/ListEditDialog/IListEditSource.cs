@@ -48,7 +48,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets property will be edited with the collection editor.
         /// </summary>
-        public PropertyInfo? PropInfo { get; set; }
+        PropertyInfo? PropInfo { get; set; }
 
         /// <summary>
         /// Enumerates root items.

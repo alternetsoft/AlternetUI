@@ -13,7 +13,7 @@ namespace Alternet.UI
     /// Advanced list box control with ability to customize item painting. Works fine with
     /// large number of the items. You can add <see cref="ListControlItem"/> items to this control.
     /// </summary>
-    public class VirtualListBox : VirtualListControl<ListControlItem>, IListControl
+    public class VirtualListBox : VirtualListControl, IListControl
     {
         private TransformMatrix matrix = new();
 
@@ -199,56 +199,6 @@ namespace Alternet.UI
             }
         }
 
-        /// <inheritdoc/>
-        public override int? SelectedIndex
-        {
-            get
-            {
-                if (DisposingOrDisposed)
-                    return default;
-                if (SelectionMode == ListBoxSelectionMode.Single)
-                {
-                    var result = Handler.GetSelection();
-                    if (result < 0)
-                        return null;
-                    return result;
-                }
-                else
-                {
-                    var result = Handler.GetFirstSelected();
-                    if (result < 0)
-                        return null;
-                    return result;
-                }
-            }
-
-            set
-            {
-                base.SelectedIndex = value;
-                /*
-                if (DisposingOrDisposed)
-                    return;
-                var oldSelectedIndex = SelectedIndex;
-                if (oldSelectedIndex == value)
-                    return;
-
-                if (SelectionMode == ListBoxSelectionMode.Single)
-                {
-                    Handler.SetSelection(value ?? -1);
-                }
-                else
-                {
-                    Handler.ClearSelected();
-                    if (value is not null && value >= 0)
-                        Handler.SetSelected(value.Value, true);
-                }
-
-                if (oldSelectedIndex != SelectedIndex)
-                    RaiseSelectionChanged();
-                */
-            }
-        }
-
         /// <summary>
         /// Gets a <see cref="IVListBoxHandler"/> associated with this class.
         /// </summary>
@@ -282,18 +232,6 @@ namespace Alternet.UI
                 Handler.VScrollBarVisible = value;
                 Refresh();
             }
-        }
-
-        /// <summary>
-        /// Gets whether item with the specified index is selected.
-        /// </summary>
-        /// <param name="index">Item index.</param>
-        /// <returns></returns>
-        public override bool IsSelected(int index)
-        {
-            if (DisposingOrDisposed)
-                return default;
-            return Handler.IsSelected(index);
         }
 
         /// <summary>
@@ -529,18 +467,6 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Gets whether item with the specified index is current.
-        /// </summary>
-        /// <param name="index">Item index.</param>
-        /// <returns></returns>
-        public override bool IsCurrent(int index)
-        {
-            if (DisposingOrDisposed)
-                return default;
-            return Handler.IsCurrent(index);
-        }
-
-        /// <summary>
         /// Gets index of the first visible item.
         /// </summary>
         /// <returns></returns>
@@ -743,25 +669,115 @@ namespace Alternet.UI
         {
             if (DisposingOrDisposed)
                 return;
+
+            if (Count == 0)
+            {
+                base.OnKeyDown(e);
+                return;
+            }
+
             if (IsSelectionModeSingle)
             {
-                HandleInSingleMode();
+                DoInsideSuspendedSelectionEvents(HandleInSingleMode);
                 if (e.IsHandledOrSupressed)
                     return;
                 base.OnKeyDown(e);
             }
             else
             {
+                DoInsideSuspendedSelectionEvents(HandleInMultipleMode);
+                if (e.IsHandledOrSupressed)
+                    return;
                 base.OnKeyDown(e);
+            }
+
+            void HandleInMultipleMode()
+            {
+                if (!e.HasModifiers)
+                {
+                    HandleInSingleMode();
+                    return;
+                }
+
+                switch (e.Key)
+                {
+                    case Key.Home:
+                        /*
+                        DoInsideUpdate(() =>
+                        {
+                            if (e.Control)
+                            {
+                                scrollOffset = 0;
+                            }
+                            else
+                            {
+                                scrollOffset = 0;
+                                SelectFirstItem();
+                            }
+                            AfterKeyDown();
+                        });
+                        */
+                        break;
+                    case Key.End:
+                        /*
+                        SelectLastItem();
+                        */
+                        AfterKeyDown();
+                        break;
+                    case Key.Left:
+                        /*
+                        if (e.Control)
+                            IncHorizontalOffsetChars(-4);
+                        else
+                            IncHorizontalOffsetChars(-1);
+                        */
+                        AfterKeyDown();
+                        break;
+                    case Key.Right:
+                        /*
+                        if (e.Control)
+                            IncHorizontalOffsetChars(4);
+                        else
+                            IncHorizontalOffsetChars(1);
+                        */
+                        AfterKeyDown();
+                        break;
+                    case Key.Up:
+                        /*
+                        SelectPreviousItem();
+                        */
+                        AfterKeyDown();
+                        break;
+                    case Key.Down:
+                        /*
+                        SelectNextItem();
+                        */
+                        AfterKeyDown();
+                        break;
+                    case Key.PageUp:
+                        /*
+                        SelectItemOnPreviousPage();
+                        */
+                        AfterKeyDown();
+                        break;
+                    case Key.PageDown:
+                        /*
+                        SelectItemOnNextPage();
+                        */
+                        AfterKeyDown();
+                        break;
+                }
+
+                void AfterKeyDown()
+                {
+                    /*
+                    e.Suppressed();
+                    */
+                }
             }
 
             void HandleInSingleMode()
             {
-                if (Count == 0)
-                    return;
-
-                var selectedIndex = SelectedIndex;
-
                 switch (e.Key)
                 {
                     case Key.Home:
@@ -819,11 +835,6 @@ namespace Alternet.UI
                 void AfterKeyDown()
                 {
                     e.Suppressed();
-
-                    if (selectedIndex != SelectedIndex)
-                    {
-                        RaiseSelectionChanged();
-                    }
                 }
             }
         }
@@ -859,13 +870,42 @@ namespace Alternet.UI
                 }
             }
 
+            var itemIndex = HitTest(e.Location);
+            e.Handled = true;
+
             if (IsSelectionModeSingle)
             {
-                base.OnMouseLeftButtonDown(e);
+                SelectedIndex = itemIndex;
             }
             else
             {
-                base.OnMouseLeftButtonDown(e);
+                if(itemIndex is null)
+                {
+                    ClearSelected();
+                    return;
+                }
+
+                var item = SafeItem(itemIndex.Value);
+
+                if (item is null)
+                {
+                    return;
+                }
+
+                DoInsideSuspendedSelectionEvents(() =>
+                {
+                    switch (Keyboard.Modifiers)
+                    {
+                        case UI.ModifierKeys.Shift:
+                            break;
+                        case UI.ModifierKeys.Control:
+                            item.ToggleSelected(this);
+                            break;
+                        case UI.ModifierKeys.None:
+                            SelectedIndex = itemIndex;
+                            break;
+                    }
+                });
             }
         }
 

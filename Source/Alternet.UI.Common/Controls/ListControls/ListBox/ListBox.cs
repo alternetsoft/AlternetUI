@@ -20,8 +20,8 @@ namespace Alternet.UI
     /// methods enable
     /// you to add a large number of items to the ListBox without the control
     /// being repainted each time an item is added to the list.
-    /// The <see cref="ListControl{T}.Items"/>, <see cref="CustomListBox{T}.SelectedItems"/>, and
-    /// <see cref="CustomListBox{T}.SelectedIndices"/> properties provide access to the three
+    /// The <see cref="ListControl{T}.Items"/>, <see cref="VirtualListControl.SelectedItems"/>, and
+    /// <see cref="VirtualListControl.SelectedIndices"/> properties provide access to the three
     /// collections that are used by the control.
     /// </remarks>
     [ControlCategory("Common")]
@@ -122,11 +122,11 @@ namespace Alternet.UI
         /// <para>
         /// To retrieve a collection containing all selected items in a
         /// multiple-selection control, use the
-        /// <see cref="CustomListBox{T}.SelectedItems"/> property.
+        /// <see cref="VirtualListControl.SelectedItems"/> property.
         /// If you want to obtain the index position of the currently selected
         /// item in the control, use the
-        /// <see cref="CustomListBox{T}.SelectedIndex"/> property.
-        /// In addition, you can use the <see cref="CustomListBox{T}.SelectedIndices"/>
+        /// <see cref="VirtualListControl.SelectedIndex"/> property.
+        /// In addition, you can use the <see cref="VirtualListControl.SelectedIndices"/>
         /// property to obtain all the selected indexes in a multiple-selection control.
         /// </para>
         /// </remarks>

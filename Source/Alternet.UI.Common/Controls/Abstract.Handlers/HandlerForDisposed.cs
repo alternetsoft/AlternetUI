@@ -20,7 +20,6 @@ namespace Alternet.UI
         IGroupBoxHandler,
         ILabelHandler,
         ILinkLabelHandler,
-        IListBoxHandler,
         IListViewHandler,
         IMainMenuHandler,
         IMenuItemHandler,
@@ -1886,7 +1885,7 @@ namespace Alternet.UI
             return default;
         }
 
-        int? IListBoxHandler.HitTest(PointD position)
+        int? IVListBoxHandler.HitTest(PointD position)
         {
             return default;
         }

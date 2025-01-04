@@ -51,7 +51,8 @@ namespace Alternet.UI
         /// Gets selected item when popup window is closed.
         /// </summary>
         /// <remarks>
-        /// Use this property instead of <see cref="CustomListBox{T}.SelectedItem"/> after popup is closed.
+        /// Use this property instead of <see cref="VirtualListControl.SelectedItem"/>
+        /// after popup is closed.
         /// In cases when <see cref="PopupResult"/> is <see cref="ModalResult.Accepted"/>
         /// it contains selected item.
         /// </remarks>
@@ -69,11 +70,11 @@ namespace Alternet.UI
         /// Gets index of the selected item when popup window is closed.
         /// </summary>
         /// <remarks>
-        /// Use this property instead of <see cref="CustomListBox{T}.SelectedIndex"/>
+        /// Use this property instead of <see cref="VirtualListControl.SelectedIndex"/>
         /// after popup is closed.
         /// In cases when <see cref="PopupResult"/> is <see cref="ModalResult.Accepted"/>
         /// it contains selected item index. This item index is more correct than
-        /// <see cref="CustomListBox{T}.SelectedIndex"/>.
+        /// <see cref="VirtualListControl.SelectedIndex"/>.
         /// </remarks>
         [Browsable(false)]
         public int? ResultIndex

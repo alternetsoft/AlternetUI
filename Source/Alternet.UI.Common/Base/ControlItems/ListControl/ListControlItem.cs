@@ -29,6 +29,7 @@ namespace Alternet.UI
         private CachedSvgImage<Image> cachedSvg = new();
         private string? text;
         private HVAlignment alignment = DefaultItemAlignment;
+        private bool isSelected;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ListControlItem"/> class
@@ -1079,6 +1080,34 @@ namespace Alternet.UI
             ListControlItem result = new();
             result.Assign(this);
             return result;
+        }
+
+        /// <summary>
+        /// Gets whether item is selected.
+        /// </summary>
+        public virtual bool IsSelected(IListControlItemContainer? container)
+        {
+            return isSelected;
+        }
+
+        /// <summary>
+        /// Sets whether item is selected.
+        /// </summary>
+        /// <returns>True if selected state was changed; False otherwise.</returns>
+        public virtual bool SetSelected(IListControlItemContainer? container, bool value)
+        {
+            var result = isSelected != value;
+            isSelected = value;
+            return result;
+        }
+
+        /// <summary>
+        /// Toggles selected state of the item.
+        /// </summary>
+        /// <param name="container"></param>
+        public virtual void ToggleSelected(IListControlItemContainer? container)
+        {
+            isSelected = !isSelected;
         }
 
         /// <summary>

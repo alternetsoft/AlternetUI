@@ -12,11 +12,10 @@ namespace Alternet.UI
     /// <summary>
     /// Advanced list control with ability to customize item painting.
     /// </summary>
-    /// <typeparam name="TItem">Type of the item.</typeparam>
-    public abstract class VirtualListControl<TItem>
-        : CustomListBox<TItem>, IListControlItemContainer, IListControlItemDefaults,
-        ICheckListBox<TItem>
-        where TItem : class, new()
+    public abstract partial class VirtualListControl
+        : ListControl<ListControlItem>, ICustomListBox<ListControlItem>,
+        IListControlItemContainer, IListControlItemDefaults,
+        ICheckListBox<ListControlItem>
     {
         /// <summary>
         /// Gets or sets default minimal item height.
@@ -756,7 +755,7 @@ namespace Alternet.UI
         /// otherwise, false.</param>
         /// <remarks>
         /// This method repaints control and raises events.
-        /// Use <see cref="VirtualListControl{T}.SetItemCheckedCore(int, bool)"/>
+        /// Use <see cref="VirtualListControl.SetItemCheckedCore(int, bool)"/>
         /// method to change checked state without raising events and repainting the
         /// control.
         /// </remarks>
@@ -830,7 +829,7 @@ namespace Alternet.UI
         /// <param name="value">New value.</param>
         /// <remarks>
         /// This method repaints control and raises events.
-        /// Use <see cref="VirtualListControl{T}.SetItemCheckStateCore"/>
+        /// Use <see cref="VirtualListControl.SetItemCheckStateCore"/>
         /// method to change checked state without raising events and repainting the
         /// control.
         /// </remarks>
@@ -884,14 +883,23 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="index">Item index.</param>
         /// <returns></returns>
-        public abstract bool IsCurrent(int index);
+        public bool IsCurrent(int index)
+        {
+            return index == SelectedIndex;
+        }
 
         /// <summary>
         /// Gets whether item with the specified index is selected.
         /// </summary>
         /// <param name="index">Item index.</param>
         /// <returns></returns>
-        public abstract bool IsSelected(int index);
+        public virtual bool IsSelected(int index)
+        {
+            if (index == SelectedIndex)
+                return true;
+            var item = SafeItem(index);
+            return item?.IsSelected(this) ?? false;
+        }
 
         /// <summary>
         /// Gets item as object.
@@ -1063,7 +1071,8 @@ namespace Alternet.UI
         /// source item is ignored. This function is called from the thread that
         /// provides <paramref name="source"/> so do not access UI elements from it.</param>
         /// <param name="continueFunc">The function which is called to check whether to continue
-        /// the conversion. You can return False to stop the conversion. This function is called from the
+        /// the conversion. You can return False to stop the conversion. This function
+        /// is called from the
         /// main thread so it can access UI elements.</param>
         /// <param name="bufferSize">Size of the items buffer. Optional. Default is 10.</param>
         /// <param name="sleepAfterBufferMsec">The value in milliseconds to wait after buffer is
@@ -1071,12 +1080,12 @@ namespace Alternet.UI
         /// Optional. Default is 150.</param>
         public virtual void AddItemsThreadSafe<TSource>(
            IEnumerable<TSource> source,
-           Func<TSource, TItem?> convertItem,
+           Func<TSource, ListControlItem?> convertItem,
            Func<bool> continueFunc,
            int bufferSize = 10,
            int sleepAfterBufferMsec = 150)
         {
-            bool AddToDest(IEnumerable<TItem> items)
+            bool AddToDest(IEnumerable<ListControlItem> items)
             {
                 var result = true;
                 Invoke(() =>
@@ -1090,7 +1099,7 @@ namespace Alternet.UI
                 return result;
             }
 
-            EnumerableUtils.ConvertItems<TSource, TItem>(
+            EnumerableUtils.ConvertItems<TSource, ListControlItem>(
                         convertItem,
                         AddToDest,
                         source,
@@ -1107,8 +1116,8 @@ namespace Alternet.UI
         /// <param name="fnCreateItem">Create item action.</param>
         public virtual void SetItemsFast<TItemFrom>(
             IEnumerable<TItemFrom> from,
-            Action<TItem, TItemFrom> fnAssign,
-            Func<TItem> fnCreateItem)
+            Action<ListControlItem, TItemFrom> fnAssign,
+            Func<ListControlItem> fnCreateItem)
         {
             var count = from.Count();
 
@@ -1166,10 +1175,11 @@ namespace Alternet.UI
             /// <summary>
             /// Gets or sets control on which add range operation is performed.
             /// </summary>
-            public VirtualListControl<TItem> ListBox;
+            public VirtualListControl ListBox;
 
             /// <summary>
-            /// Gets or sets the function which provides the <see cref="IEnumerable{T}"/> instance which
+            /// Gets or sets the function which provides the <see cref="IEnumerable{T}"/>
+            /// instance which
             /// is "yield" constructed in the another thread.
             /// </summary>
             public Func<IEnumerable<TSource>> SourceFunc;
@@ -1181,7 +1191,7 @@ namespace Alternet.UI
             /// source item is ignored. This function is called from the thread that
             /// provides source items so do not access UI elements from it.
             /// </summary>
-            public Func<TSource, TItem?> ConvertItemFunc;
+            public Func<TSource, ListControlItem?> ConvertItemFunc;
 
             /// <summary>
             /// Gets or sets the function which is called to check whether to continue
@@ -1220,9 +1230,9 @@ namespace Alternet.UI
             /// class with the specified parameters.
             /// </summary>
             public AddRangeController(
-                VirtualListControl<TItem> listBox,
+                VirtualListControl listBox,
                 Func<IEnumerable<TSource>> source,
-                Func<TSource, TItem?> convertItem,
+                Func<TSource, ListControlItem?> convertItem,
                 Func<bool> continueFunc)
             {
                 ListBox = listBox;
