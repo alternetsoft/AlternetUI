@@ -19,7 +19,11 @@ namespace Alternet.UI
         /// <param name="defaultResult">Default string representation of the item.</param>
         /// <param name="forDisplay">The flag which specifies whether to get text
         /// for display purposes or the real value.</param>
-        public GetItemTextEventArgs(int itemIndex, object? item, string defaultResult, bool forDisplay)
+        public GetItemTextEventArgs(
+            int itemIndex,
+            object? item,
+            string defaultResult,
+            bool forDisplay)
         {
             ItemIndex = itemIndex;
             Item = item;

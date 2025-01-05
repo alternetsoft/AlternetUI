@@ -137,14 +137,7 @@ namespace ControlsSample
 
         private void FindText_TextChanged(object? sender, EventArgs e)
         {
-            var text = findText.Text;
-            if(text is null)
-            {
-                listBox.SelectedIndex = null;
-                return;
-            }
-            var result = listBox.FindStringEx(text, null, FindExact, FindIgnoreCase);
-            listBox.SelectedIndex = result;
+            listBox.FindAndSelect(findText.Text, null, FindExact, FindIgnoreCase);
         }
 
         public bool FindExact { get; set; } = false;

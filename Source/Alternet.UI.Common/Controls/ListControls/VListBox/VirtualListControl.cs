@@ -677,22 +677,6 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Measures item size. If <see cref="ItemPainter"/> is assigned, uses
-        /// <see cref="IListBoxItemPainter.GetSize"/>, otherwise calls
-        /// <see cref="ListControlItem.DefaultMeasureItemSize"/>.
-        /// </summary>
-        /// <param name="itemIndex">Index of the item.</param>
-        public virtual SizeD MeasureItemSize(int itemIndex)
-        {
-            if (painter is null)
-                return ListControlItem.DefaultMeasureItemSize(this, MeasureCanvas, itemIndex);
-            var result = painter.GetSize(this, itemIndex);
-            if (result == SizeD.MinusOne)
-                return ListControlItem.DefaultMeasureItemSize(this, MeasureCanvas, itemIndex);
-            return result;
-        }
-
-        /// <summary>
         /// Ensures that the item is visible within the control, scrolling the
         /// contents of the control, if necessary.
         /// </summary>
@@ -881,40 +865,6 @@ namespace Alternet.UI
         public virtual void RemoveCheckedItems()
         {
             RemoveItems(CheckedIndicesDescending);
-        }
-
-        /// <summary>
-        /// Selects all items in the control.
-        /// </summary>
-        public virtual void SelectAll()
-        {
-            SetAllSelected(true);
-        }
-
-        /// <summary>
-        /// Unselects all items in the control.
-        /// </summary>
-        public virtual void UnselectAll()
-        {
-            SetAllSelected(false);
-        }
-
-        /// <summary>
-        /// Changes selected state for all items in the control.
-        /// </summary>
-        /// <param name="selected">New selected state.</param>
-        public virtual void SetAllSelected(bool selected)
-        {
-            if (SelectionMode == ListBoxSelectionMode.Single)
-                return;
-
-            DoInsideUpdate(() =>
-            {
-                for (int i = 0; i < Items.Count; i++)
-                {
-                    SetSelected(i, selected);
-                }
-            });
         }
 
         /// <summary>

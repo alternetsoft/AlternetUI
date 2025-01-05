@@ -313,13 +313,19 @@ namespace Alternet.UI
             {
                 if (DisposingOrDisposed)
                     return;
-
                 if (selectionMode == value)
                     return;
 
-                selectionMode = value;
+                DoInsideSuspendedSelectionEvents(() =>
+                {
+                    selectionMode = value;
+                    if (value == ListBoxSelectionMode.Multiple)
+                    {
+                        ClearSelectedExcept(SelectedIndex);
+                    }
+                });
 
-                SelectionModeChanged?.Invoke(this, EventArgs.Empty);
+                RaiseSelectionModeChanged();
             }
         }
 
@@ -499,14 +505,43 @@ namespace Alternet.UI
         /// <inheritdoc/>
         public override void ClearSelected()
         {
+            SetAllSelected(false);
+        }
+
+        /// <summary>
+        /// Selects all items in the control.
+        /// </summary>
+        public virtual void SelectAll()
+        {
+            SetAllSelected(true);
+        }
+
+        /// <summary>
+        /// Unselects all items in the control.
+        /// </summary>
+        public virtual void UnselectAll()
+        {
+            SetAllSelected(false);
+        }
+
+        /// <summary>
+        /// Changes selected state for all items in the control.
+        /// </summary>
+        /// <param name="selected">New selected state.</param>
+        public virtual void SetAllSelected(bool selected)
+        {
+            if (SelectionMode == ListBoxSelectionMode.Single)
+                return;
+
             DoInsideSuspendedSelectionEvents(() =>
             {
                 foreach (var item in Items)
                 {
-                    item.SetSelected(this, false);
+                    item.SetSelected(this, selected);
                 }
 
-                selectedIndex = null;
+                if (!selected)
+                    selectedIndex = null;
             });
         }
 
@@ -589,6 +624,17 @@ namespace Alternet.UI
             var item = SelectedItem as ListControlItem;
             var action = item?.DoubleClickAction;
             action?.Invoke();
+        }
+
+        /// <summary>
+        /// Raises <see cref="SelectionModeChanged"/> event.
+        /// </summary>
+        [Browsable(false)]
+        public void RaiseSelectionModeChanged()
+        {
+            if (DisposingOrDisposed)
+                return;
+            SelectionModeChanged?.Invoke(this, EventArgs.Empty);
         }
 
         /// <summary>
@@ -680,6 +726,19 @@ namespace Alternet.UI
             }
 
             ignoreSelectEvents++;
+        }
+
+        /// <summary>
+        /// Clears selected items except the item with the specified index.
+        /// </summary>
+        /// <param name="index">The index of the item to remain selected.</param>
+        public virtual void ClearSelectedExcept(int? index)
+        {
+            DoInsideSuspendedSelectionEvents(() =>
+            {
+                ClearSelected();
+                SelectedIndex = index;
+            });
         }
 
         /// <summary>

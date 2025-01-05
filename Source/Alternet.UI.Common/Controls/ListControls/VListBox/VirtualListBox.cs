@@ -122,14 +122,10 @@ namespace Alternet.UI
         /// </summary>
         public virtual bool HorizontalScrollbar
         {
-            get => Handler.HScrollBarVisible;
+            get => false;
 
             set
             {
-                if (HorizontalScrollbar == value || !App.IsWindowsOS)
-                    return;
-                Handler.HScrollBarVisible = value;
-                Refresh();
             }
         }
 
@@ -161,17 +157,16 @@ namespace Alternet.UI
         {
             get
             {
-                if (DisposingOrDisposed)
-                    return default;
-                var result = Handler.ItemsCount;
-                return result;
+                return Items.Count;
             }
 
             set
             {
                 if (DisposingOrDisposed)
                     return;
-                Handler.ItemsCount = value;
+                if (Count == value)
+                    return;
+                SafeItems().SetCount(value, () => new ListControlItem());
             }
         }
 
@@ -233,27 +228,33 @@ namespace Alternet.UI
             }
         }
 
-        /// <summary>
-        /// Gets or sets whether vertical scrollbar is visible in the control.
-        /// </summary>
-        internal virtual bool VScrollBarVisible
+        /// <inheritdoc cref="StringSearch.FindStringEx(string?, int?, bool, bool)"/>
+        /// <remarks>
+        /// If text is found in the control, item which contains this text will be selected
+        /// and scrolled into the view.
+        /// </remarks>
+        public virtual int? FindAndSelect(
+         string? str,
+         int? startIndex,
+         bool exact,
+         bool ignoreCase)
         {
-            get
+            if (string.IsNullOrWhiteSpace(str))
             {
-                if (DisposingOrDisposed)
-                    return default;
-                return Handler.VScrollBarVisible;
+                SelectedIndex = null;
+                return null;
             }
 
-            set
+            var result = FindStringEx(str, startIndex, exact, ignoreCase);
+
+            DoInsideUpdate(() =>
             {
-                if (DisposingOrDisposed)
-                    return;
-                if (VScrollBarVisible == value)
-                    return;
-                Handler.VScrollBarVisible = value;
-                Refresh();
-            }
+                SelectedIndex = result;
+                if (result is not null)
+                    EnsureVisible(result.Value);
+            });
+
+            return result;
         }
 
         /// <summary>
@@ -265,7 +266,7 @@ namespace Alternet.UI
         {
             if (DisposingOrDisposed)
                 return default;
-            return Handler.IsVisible(index);
+            return index >= GetVisibleBegin() && index < GetVisibleEnd();
         }
 
         /// <summary>
@@ -280,7 +281,10 @@ namespace Alternet.UI
         {
             if (DisposingOrDisposed)
                 return default;
-            return Handler.ScrollRows(rows);
+            rows += GetVisibleBegin();
+            if (rows < 0)
+                rows = 0;
+            return ScrollToRow(rows);
         }
 
         /// <summary>
@@ -317,7 +321,74 @@ namespace Alternet.UI
         {
             if (DisposingOrDisposed)
                 return default;
-            return Handler.ScrollRowPages(pages);
+
+            bool didSomething = false;
+
+            while (pages != 0)
+            {
+                int unit;
+                if (pages > 0)
+                {
+                    unit = GetVisibleEnd();
+                    if (unit != 0)
+                        --unit;
+                    --pages;
+                }
+                else
+                {
+                    unit = FindFirstVisibleFromLast(GetVisibleEnd());
+                    ++pages;
+                }
+
+                didSomething = ScrollToRow(unit);
+            }
+
+            return didSomething;
+        }
+
+        /// <summary>
+        /// Finds first visible item from the specified last visible item.
+        /// </summary>
+        /// <param name="unitLast">Index of the last visible item.</param>
+        /// <param name="full">Whether to allow partial or full visibility of the last item.</param>
+        /// <returns></returns>
+        public virtual int FindFirstVisibleFromLast(int unitLast, bool full = false)
+        {
+            MeasureItemEventArgs e = new(MeasureCanvas, 0);
+
+            var sWindow = ClientSize.Height;
+
+            // go upwards until we arrive at a unit such that unitLast is not visible
+            // any more when it is shown
+            int unitFirst = unitLast;
+            Coord s = 0;
+            while(true)
+            {
+                e.Index = unitFirst;
+                MeasureItemSize(e);
+
+                s += e.ItemHeight;
+
+                if (s > sWindow)
+                {
+                    // for this unit to be fully visible we need to go one unit
+                    // down, but if it is enough for it to be only partly visible then
+                    // this unit will do as well
+                    if (full)
+                    {
+                        ++unitFirst;
+                    }
+
+                    break;
+                }
+
+                if (unitFirst <= 0)
+                    break;
+
+                --unitFirst;
+            }
+
+            return unitFirst;
         }
 
         /// <inheritdoc/>
@@ -659,6 +730,35 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Measures item size. If <see cref="VirtualListControl.ItemPainter"/> is assigned,
+        /// uses <see cref="IListBoxItemPainter.GetSize"/>, otherwise calls
+        /// <see cref="ListControlItem.DefaultMeasureItemSize"/>. Additionally calls
+        /// <see cref="MeasureItem"/> event and <see cref="OnMeasureItem"/> method if
+        /// drawing mode is not <see cref="DrawMode.Normal"/>.
+        /// </summary>
+        public virtual void MeasureItemSize(MeasureItemEventArgs e)
+        {
+            var itemSize = Internal(e.Index);
+            e.ItemWidth = itemSize.Width;
+            e.ItemHeight = itemSize.Height;
+
+            if (drawMode != DrawMode.Normal)
+            {
+                RaiseMeasureItem(e);
+            }
+
+            SizeD Internal(int itemIndex)
+            {
+                if (ItemPainter is null)
+                    return ListControlItem.DefaultMeasureItemSize(this, e.Graphics, itemIndex);
+                var result = ItemPainter.GetSize(this, itemIndex);
+                if (result == SizeD.MinusOne)
+                    return ListControlItem.DefaultMeasureItemSize(this, e.Graphics, itemIndex);
+                return result;
+            }
+        }
+
+        /// <summary>
         /// Finds the item with <see cref="ListControlItem.Value"/> property which is
         /// equal to the specified value.
         /// </summary>
@@ -706,6 +806,15 @@ namespace Alternet.UI
 
             switch (e.Key)
             {
+                case Key.A:
+                    if (e.Control)
+                    {
+                        SelectAll();
+                        e.Suppressed();
+                    }
+
+                    return;
+
                 case Key.Home:
                     if (e.Control)
                     {
@@ -883,17 +992,10 @@ namespace Alternet.UI
 
             for (int line = Handler.GetVisibleBegin(); line < lineMax; line++)
             {
-                var itemSize = MeasureItemSize(line);
+                measureItemArgs.Index = line;
+                MeasureItemSize(measureItemArgs);
 
-                if (drawMode != DrawMode.Normal)
-                {
-                    measureItemArgs.Index = line;
-                    measureItemArgs.ItemWidth = itemSize.Width;
-                    measureItemArgs.ItemHeight = itemSize.Height;
-                    RaiseMeasureItem(measureItemArgs);
-                }
-
-                var hRow = itemSize.Height;
+                var hRow = measureItemArgs.ItemHeight;
 
                 rectRow.Height = hRow;
 

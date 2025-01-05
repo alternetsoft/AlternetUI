@@ -17,27 +17,15 @@ namespace Alternet.UI
         bool HasBorder { get; set; }
 
         /// <summary>
-        /// Gets or sets items count.
+        /// Sets items count.
         /// </summary>
-        int ItemsCount { get; set; }
-
-        /// <inheritdoc cref="VirtualListBox.HorizontalScrollbar"/>
-        bool HScrollBarVisible { get; set; }
-
-        /// <inheritdoc cref="VirtualListBox.VScrollBarVisible"/>
-        public bool VScrollBarVisible { get; set; }
+        int ItemsCount { set; }
 
         /// <inheritdoc cref="VirtualListBox.GetItemRect"/>
         public RectD? GetItemRect(int index);
 
-        /// <inheritdoc cref="VirtualListBox.ScrollRows(int)"/>
-        bool ScrollRows(int rows);
-
         /// <inheritdoc cref="VirtualListBox.ScrollToRow(int)"/>
         bool ScrollToRow(int row);
-
-        /// <inheritdoc cref="VirtualListBox.ScrollRowPages(int)"/>
-        bool ScrollRowPages(int pages);
 
         /// <inheritdoc cref="VirtualListBox.RefreshRow(int)"/>
         void RefreshRow(int row);
@@ -60,9 +48,6 @@ namespace Alternet.UI
 
         /// <inheritdoc cref="VirtualListBox.GetVisibleBegin"/>
         int GetVisibleBegin();
-
-        /// <inheritdoc cref="VirtualListBox.IsItemVisible(int)"/>
-        bool IsVisible(int line);
 
         /// <summary>
         /// Gets hit text information for the specified point inside the control.

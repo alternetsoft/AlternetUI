@@ -395,7 +395,7 @@ namespace Alternet.UI
             s = GetItem(index);
             var result = GetItemText(s, forDisplay);
 
-            if(CustomItemText is null)
+            if (CustomItemText is null)
                 return result;
 
             GetItemTextEventArgs e = new(index, s, result, forDisplay);
@@ -553,7 +553,7 @@ namespace Alternet.UI
         /// </summary>
         public bool RemoveItemWithValueIf(object? value, bool condition)
         {
-            if(condition)
+            if (condition)
                 return RemoveItemWithValue(value);
             return false;
         }
@@ -566,11 +566,11 @@ namespace Alternet.UI
         /// </summary>
         public virtual bool RemoveItemWithValue(object? value)
         {
-            for(int i = 0; i < Items.Count; i++)
+            for (int i = 0; i < Items.Count; i++)
             {
                 var item = Items[i];
 
-                if(ValueEquals(item))
+                if (ValueEquals(item))
                 {
                     Items.RemoveAt(i);
                     return true;
@@ -617,7 +617,11 @@ namespace Alternet.UI
             items = newItems ?? SafeItems();
         }
 
-        private ListControlItems<TItem> SafeItems()
+        /// <summary>
+        /// Gets items.
+        /// </summary>
+        /// <returns></returns>
+        protected virtual ListControlItems<TItem> SafeItems()
         {
             return items ??= new ListControlItems<TItem>();
         }

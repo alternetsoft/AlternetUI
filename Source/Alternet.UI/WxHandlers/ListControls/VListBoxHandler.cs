@@ -40,18 +40,6 @@ namespace Alternet.UI
             }
         }
 
-        bool IVListBoxHandler.HScrollBarVisible
-        {
-            get => NativeControl.HScrollBarVisible;
-            set => NativeControl.HScrollBarVisible = value;
-        }
-
-        bool IVListBoxHandler.VScrollBarVisible
-        {
-            get => NativeControl.VScrollBarVisible;
-            set => NativeControl.VScrollBarVisible = value;
-        }
-
         internal new Native.VListBox NativeControl => (Native.VListBox)base.NativeControl;
 
         public void EnsureVisible(int itemIndex)
@@ -73,16 +61,6 @@ namespace Alternet.UI
                 return null;
             var resultD = Control.PixelToDip(resultI);
             return resultD;
-        }
-
-        bool IVListBoxHandler.ScrollRows(int rows)
-        {
-            return NativeControl.ScrollRows(rows);
-        }
-
-        bool IVListBoxHandler.ScrollRowPages(int pages)
-        {
-            return NativeControl.ScrollRowPages(pages);
         }
 
         bool IVListBoxHandler.ScrollToRow(int pages)
@@ -108,11 +86,6 @@ namespace Alternet.UI
         int IVListBoxHandler.GetVisibleBegin()
         {
             return NativeControl.GetVisibleBegin();
-        }
-
-        bool IVListBoxHandler.IsVisible(int line)
-        {
-            return NativeControl.IsVisible(line);
         }
 
         int IVListBoxHandler.ItemHitTest(PointD position)
@@ -157,7 +130,11 @@ namespace Alternet.UI
         private void NativeControl_MeasureItem()
         {
             var itemIndex = NativeControl.EventItem;
-            var heightDip = Control.MeasureItemSize(itemIndex).Height;
+
+            MeasureItemEventArgs e = new(Control.MeasureCanvas, itemIndex);
+            Control.MeasureItemSize(e);
+
+            var heightDip = e.ItemHeight;
             var height = Control.PixelFromDip(heightDip);
             NativeControl.EventHeight = height;
         }
