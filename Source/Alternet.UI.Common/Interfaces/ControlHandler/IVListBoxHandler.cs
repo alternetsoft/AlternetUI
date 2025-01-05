@@ -49,13 +49,6 @@ namespace Alternet.UI
         /// <inheritdoc cref="VirtualListBox.GetVisibleBegin"/>
         int GetVisibleBegin();
 
-        /// <summary>
-        /// Gets hit text information for the specified point inside the control.
-        /// </summary>
-        /// <param name="position"></param>
-        /// <returns></returns>
-        int ItemHitTest(PointD position);
-
         /// <inheritdoc cref="VirtualListControl.EnsureVisible"/>
         void EnsureVisible(int itemIndex);
 

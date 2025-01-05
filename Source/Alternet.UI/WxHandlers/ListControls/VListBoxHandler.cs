@@ -48,12 +48,6 @@ namespace Alternet.UI
                 NativeControl.EnsureVisible(itemIndex);
         }
 
-        public int? HitTest(PointD position)
-        {
-            int index = NativeControl.ItemHitTest(position);
-            return index == -1 ? null : index;
-        }
-
         RectD? IVListBoxHandler.GetItemRect(int index)
         {
             var resultI = NativeControl.GetItemRectI(index);
@@ -88,9 +82,10 @@ namespace Alternet.UI
             return NativeControl.GetVisibleBegin();
         }
 
-        int IVListBoxHandler.ItemHitTest(PointD position)
+        public int? HitTest(PointD position)
         {
-            return NativeControl.ItemHitTest(position);
+            int index = NativeControl.ItemHitTest(position);
+            return index == -1 ? null : index;
         }
 
         internal override Native.Control CreateNativeControl()
