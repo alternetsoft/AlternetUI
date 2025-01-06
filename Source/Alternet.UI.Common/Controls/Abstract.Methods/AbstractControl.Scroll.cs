@@ -11,8 +11,7 @@ namespace Alternet.UI
 {
     public partial class AbstractControl
     {
-        private ScrollBar? vertScrollBar;
-        private ScrollBar? horzScrollBar;
+        private ScrollBarsAndInfo scrollBars = new();
 
         /// <summary>
         /// Occurs when the user scrolls through the control contents using scrollbars.
@@ -192,12 +191,7 @@ namespace Alternet.UI
         /// <returns></returns>
         public virtual ScrollBarInfo GetScrollBarInfo(bool isVertical)
         {
-            var scrollBar = isVertical ? vertScrollBar : horzScrollBar;
-
-            if(scrollBar is null)
-                return ScrollBarInfo.Default;
-
-            return scrollBar.PosInfo;
+            return scrollBars.GetInfo(isVertical);
         }
 
         /// <summary>
@@ -212,29 +206,19 @@ namespace Alternet.UI
 
             void Internal()
             {
-                if (isVertical)
+                void Initialize(ScrollBar scrollBar)
                 {
-                    if(vertScrollBar is null)
+                    scrollBar.Parent = this;
+
+                    scrollBar.Scroll += (s, e) =>
                     {
-                        vertScrollBar = new();
-                        vertScrollBar.Visible = false;
-                        vertScrollBar.IsVertical = true;
-                    }
-                }
-                else
-                {
-                    if (horzScrollBar is null)
-                    {
-                        horzScrollBar = new();
-                        horzScrollBar.Visible = false;
-                        horzScrollBar.IsVertical = false;
-                    }
+                        RaiseScroll(e);
+                    };
                 }
 
-                var scrollBar = isVertical ? vertScrollBar : horzScrollBar;
+                scrollBars.SetInfo(isVertical, value);
 
-                if (scrollBar is null)
-                    return;
+                var scrollBar = scrollBars.GetScrollBarSafe(isVertical, Initialize);
 
                 scrollBar.PosInfo = value;
             }
