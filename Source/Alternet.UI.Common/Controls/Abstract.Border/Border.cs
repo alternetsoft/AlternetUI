@@ -1,5 +1,7 @@
 using System;
 using System.ComponentModel;
+using System.Diagnostics;
+
 using Alternet.Drawing;
 
 namespace Alternet.UI
@@ -10,6 +12,11 @@ namespace Alternet.UI
     [ControlCategory("Containers")]
     public partial class Border : UserControl
     {
+        /// <summary>
+        /// Gets or sets whether to show debug corners when control is painted.
+        /// </summary>
+        public static bool ShowDebugCorners = false;
+
         /// <summary>
         /// Initializes a new instance of the <see cref="Border"/> class.
         /// </summary>
@@ -302,6 +309,7 @@ namespace Alternet.UI
         public override void DefaultPaint(PaintEventArgs e)
         {
             DrawDefaultBackground(e);
+            DefaultPaintDebug(e);
         }
 
         /// <summary>
@@ -393,6 +401,13 @@ namespace Alternet.UI
                 if(Padding == NormalBorder.Width)
                     Padding = 0;
             }
+        }
+
+        [Conditional("DEBUG")]
+        private void DefaultPaintDebug(PaintEventArgs e)
+        {
+            if (ShowDebugCorners)
+                BorderSettings.DrawDesignCorners(e.Graphics, e.ClipRectangle);
         }
 
         private void OnSettingsPropertyChanged(object? sender, PropertyChangedEventArgs e)
