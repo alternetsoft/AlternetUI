@@ -1193,7 +1193,12 @@ namespace Alternet.UI
             if (mode == WindowSizeToContentMode.None)
                 return;
 
-            var newSize = GetChildrenMaxPreferredSizePadded(SizeD.PositiveInfinity);
+            var newSize = GetChildrenMaxPreferredSizePadded(MaximumSize.InfinityIfEmpty);
+
+            var newSize2 = GetPaddedPreferredSize(GetPreferredSize(MaximumSize.InfinityIfEmpty));
+
+            newSize = SizeD.Max(newSize, newSize2);
+
             if (newSize != SizeD.Empty)
             {
                 var currentSize = ClientSize;
