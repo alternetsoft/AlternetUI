@@ -148,6 +148,7 @@ namespace Alternet.UI
 
                     record.Value = value;
 
+                    // Here should be null, it is used in ScrollBar.OnPositionPropertyChanged
                     RaisePropertyChanged(null);
                 }
             }

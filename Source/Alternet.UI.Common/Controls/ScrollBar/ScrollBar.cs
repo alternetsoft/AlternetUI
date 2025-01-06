@@ -364,6 +364,16 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Raises the <see cref="ValueChanged" /> event and
+        /// <see cref="OnValueChanged"/> method.
+        /// </summary>
+        public void RaiseValueChanged()
+        {
+            OnValueChanged(EventArgs.Empty);
+            ValueChanged?.Invoke(this, EventArgs.Empty);
+        }
+
+        /// <summary>
         /// Logs scrollbar info.
         /// </summary>
         public virtual void LogInfo()
@@ -394,6 +404,23 @@ namespace Alternet.UI
             PlatformControl.Scroll = RaiseScroll;
         }
 
+        /// <summary>
+        /// This method should not be used in the <see cref="ScrollBar"/>.
+        /// </summary>
+        public override ScrollBarInfo GetScrollBarInfo(bool isVertical)
+        {
+            if (isVertical == IsVertical)
+                return PosInfo;
+            return ScrollBarInfo.Default;
+        }
+
+        /// <summary>
+        /// This method should not be used in the <see cref="ScrollBar"/>.
+        /// </summary>
+        public override void SetScrollBarInfo(bool isVertical, ScrollBarInfo value)
+        {
+        }
+
         /// <inheritdoc/>
         public override void UnbindHandlerEvents()
         {
@@ -404,7 +431,7 @@ namespace Alternet.UI
         /// <summary>
         /// Raises scroll events.
         /// </summary>
-        public virtual void RaiseScroll()
+        internal virtual void RaiseScroll()
         {
             if (DisposingOrDisposed)
                 return;
@@ -418,7 +445,7 @@ namespace Alternet.UI
             var orientation = PlatformControl.IsVertical ? ScrollBarOrientation.Vertical
                 : ScrollBarOrientation.Horizontal;
             RaiseScroll(new ScrollEventArgs(eventType, oldPos, newPos, orientation));
-            OnValueChanged(EventArgs.Empty);
+            RaiseValueChanged();
         }
 
         /// <inheritdoc/>
@@ -466,11 +493,11 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Raises the <see cref="ValueChanged" /> event.</summary>
+        /// Called when <see cref="ValueChanged"/> event is raised.
+        /// </summary>
         /// <param name="e">An <see cref="EventArgs" /> that contains the event data.</param>
         protected virtual void OnValueChanged(EventArgs e)
         {
-            ValueChanged?.Invoke(this, e);
         }
 
         /// <summary>
@@ -519,7 +546,7 @@ namespace Alternet.UI
                 return;
             UpdateScrollInfo();
             if (!e.HasPropertyName())
-                OnValueChanged(EventArgs.Empty);
+                RaiseValueChanged();
         }
     }
 }
