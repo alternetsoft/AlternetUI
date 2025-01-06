@@ -154,9 +154,10 @@ namespace Alternet.UI
         {
             if(maxTextWidth is null)
                 return s;
+            var mw = maxTextWidth.Value;
             var result = DrawingUtils.WrapTextToMultipleLines(
                 s,
-                maxTextWidth.Value,
+                ref mw,
                 Font ?? AbstractControl.DefaultFont,
                 MeasureCanvas);
             return result;
