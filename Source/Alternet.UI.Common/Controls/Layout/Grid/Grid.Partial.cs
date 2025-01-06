@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -253,6 +254,20 @@ namespace Alternet.UI
             var result = new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) };
             ColumnDefinitions.Add(result);
             return result;
+        }
+
+        /// <inheritdoc/>
+        public override void DefaultPaint(PaintEventArgs e)
+        {
+            base.DefaultPaint(e);
+            DefaultPaintDebug(e);
+        }
+
+        [Conditional("DEBUG")]
+        private void DefaultPaintDebug(PaintEventArgs e)
+        {
+            if (ShowDebugCorners)
+                BorderSettings.DrawDesignCorners(e.Graphics, e.ClipRectangle);
         }
     }
 }
