@@ -146,19 +146,14 @@ namespace Alternet.UI
                 typeof(ListEditSourceListViewCell));
 
             RegisterCollectionEditor(
-                typeof(ListBox),
-                nameof(ListBox.Items),
+                typeof(VirtualListBox),
+                nameof(VirtualListBox.Items),
                 typeof(ListEditSourceListBox));
 
             RegisterCollectionEditor(
                 typeof(StatusBar),
                 nameof(StatusBar.Panels),
                 typeof(ListEditSourceStatusBar));
-
-            RegisterCollectionEditor(
-                typeof(CheckListBox),
-                nameof(CheckListBox.Items),
-                typeof(ListEditSourceListBox));
 
             RegisterCollectionEditor(
                 typeof(ComboBox),
