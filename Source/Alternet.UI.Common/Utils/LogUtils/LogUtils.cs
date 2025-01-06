@@ -254,8 +254,17 @@ namespace Alternet.UI
         public static void LogException(Exception e)
         {
             var asString = e.ToString();
-            var separator = $"{SectionSeparator}{Environment.NewLine}";
-            LogToExternalIfAllowed($"{separator}{asString}{separator}", LogItemKind.Error);
+
+            if(e is BaseException baseException)
+            {
+                if (baseException.AdditionalInformation is not null)
+                    asString += Environment.NewLine + baseException.AdditionalInformation;
+            }
+
+            var separator = $"{SectionSeparator}";
+            LogToExternalIfAllowed(
+                $"{separator}{Environment.NewLine}{asString}{Environment.NewLine}{separator}",
+                LogItemKind.Error);
 
             try
             {
