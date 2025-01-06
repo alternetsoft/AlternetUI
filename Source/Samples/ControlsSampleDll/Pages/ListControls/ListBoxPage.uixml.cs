@@ -37,7 +37,7 @@ namespace ControlsSample
 
         private void EditorButton_Click(object? sender, System.EventArgs e)
         {
-            DialogFactory.EditItemsWithListEditor(listBox);
+            listBox.EditItemsWithListEditor();
         }
 
         public static int GenItemIndex()

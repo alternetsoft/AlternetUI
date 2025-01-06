@@ -16,7 +16,7 @@ namespace PropertyGridSample
     public partial class ObjectInit
     {
         private const int defaultListHeight = 250;
-        private const string LoremIpsum =
+        public const string LoremIpsum =
             "Lorem ipsum dolor sit amet,\nconsectetur adipiscing elit. " +
             "Suspendisse tincidunt orci vitae arcu congue commodo. " +
             "Proin fermentum rhoncus dictum.\n";

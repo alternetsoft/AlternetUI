@@ -3,11 +3,10 @@ using Alternet.UI;
 namespace Alternet.Drawing
 {
     /// <summary>
-    /// Encapsulates text layout information (such as alignment and orientation)
-    /// display manipulations (such
-    /// as ellipsis insertion). This class cannot be inherited.
+    /// Encapsulates text layout information (such as alignment and orientation),
+    /// display manipulations (such as ellipsis insertion) and other formatting options.
     /// </summary>
-    public class TextFormat : ImmutableWithRecord<TextFormat.Record>
+    public partial class TextFormat : ImmutableWithRecord<TextFormat.Record>
     {
         /// <summary>
         /// Gets default horizontal alignment of the text;
@@ -259,7 +258,8 @@ namespace Alternet.Drawing
         public static TextFormat Default() => new();
 
         /// <summary>
-        /// Sets horizontal alignment specified in the <paramref name="horizontalAlignment"/> parameter.
+        /// Sets horizontal alignment specified in the
+        /// <paramref name="horizontalAlignment"/> parameter.
         /// </summary>
         /// <param name="horizontalAlignment">New horizontal text alignment.</param>
         /// <returns></returns>

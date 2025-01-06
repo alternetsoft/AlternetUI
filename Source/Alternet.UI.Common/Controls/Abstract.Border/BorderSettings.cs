@@ -27,7 +27,8 @@ namespace Alternet.UI
         public static readonly BorderSettings Temp = new();
 
         /// <summary>
-        /// Gets or sets color of the debug border. Default value is Null. In this case red color is used.
+        /// Gets or sets color of the debug border. Default value is Null.
+        /// In this case red color is used.
         /// </summary>
         public static Color? DefaultDebugBorderColor;
 
@@ -93,7 +94,8 @@ namespace Alternet.UI
         {
             get
             {
-                return debugBorder ??= Default.WithColor(DefaultDebugBorderColor ?? LightDarkColors.Red);
+                return debugBorder
+                    ??= Default.WithColor(DefaultDebugBorderColor ?? LightDarkColors.Red);
             }
         }
 
@@ -323,8 +325,10 @@ namespace Alternet.UI
         /// <summary>
         /// Draws design corners used to indicate element bounds.
         /// </summary>
-        public static void DrawDesignCorners(Graphics dc, RectD rect, BorderSettings border)
+        public static void DrawDesignCorners(Graphics dc, RectD rect, BorderSettings? border = null)
         {
+            border ??= BorderSettings.DebugBorder;
+
             void DrawHorizontal(Graphics dc, Brush brush, RectD rect)
             {
                 var rect1 = rect;
@@ -356,7 +360,10 @@ namespace Alternet.UI
 
             if (border.Bottom.Width > 0)
             {
-                DrawHorizontal(dc, border.Bottom.GetBrush(defaultColor), border.GetBottomRectangle(rect));
+                DrawHorizontal(
+                    dc,
+                    border.Bottom.GetBrush(defaultColor),
+                    border.GetBottomRectangle(rect));
             }
 
             if (border.Left.Width > 0)

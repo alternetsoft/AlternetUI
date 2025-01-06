@@ -124,7 +124,8 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Wraps <see cref="AbstractControl.Text"/> so that each of its lines becomes at most width
+        /// Wraps <see cref="AbstractControl.Text"/> so that each of its
+        /// lines becomes at most width
         /// dips wide if possible (the lines are broken at words boundaries so it
         /// might not be the case if words are too long).
         /// </summary>
