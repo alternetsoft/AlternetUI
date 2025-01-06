@@ -1220,13 +1220,10 @@ namespace Alternet.UI
 
                 if (onlyGrow)
                 {
-                    newSize = SizeD.Max(newSize, ClientSize);
+                    newSize = SizeD.Max(newSize, Size);
                 }
 
-                ClientSize = newSize + new SizeD(1, 0);
-                ClientSize = newSize;
-                Refresh();
-                PerformLayout();
+                Size = newSize;
             }
         }
 
