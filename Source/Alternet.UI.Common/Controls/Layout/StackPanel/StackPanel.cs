@@ -1,5 +1,6 @@
 using System;
 using System.ComponentModel;
+using System.Diagnostics;
 
 using Alternet.Drawing;
 
@@ -12,6 +13,11 @@ namespace Alternet.UI
     [ControlCategory("Containers")]
     public partial class StackPanel : ContainerControl
     {
+        /// <summary>
+        /// Gets or sets whether to show debug corners when control is painted.
+        /// </summary>
+        public static new bool ShowDebugCorners = true;
+
         private StackPanelOrientation orientation;
 
         /// <summary>
@@ -95,6 +101,13 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
+        public override void DefaultPaint(PaintEventArgs e)
+        {
+            base.DefaultPaint(e);
+            DefaultPaintDebug(e);
+        }
+
+        /// <inheritdoc/>
         protected override LayoutStyle GetDefaultLayout()
         {
             if (IsVertical)
@@ -108,7 +121,16 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="e">An <see cref="EventArgs"/> that contains
         /// the event data.</param>
-        protected virtual void OnOrientationChanged(EventArgs e) =>
+        protected virtual void OnOrientationChanged(EventArgs e)
+        {
             OrientationChanged?.Invoke(this, e);
+        }
+
+        [Conditional("DEBUG")]
+        private void DefaultPaintDebug(PaintEventArgs e)
+        {
+            if (ShowDebugCorners)
+                BorderSettings.DrawDesignCorners(e.Graphics, e.ClipRectangle);
+        }
     }
 }
