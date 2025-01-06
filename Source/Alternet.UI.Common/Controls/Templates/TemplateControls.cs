@@ -12,47 +12,39 @@ namespace Alternet.UI
         /// <summary>
         /// Sample template control with text which has a middle part with bold font.
         /// </summary>
-        public class RichToolTip<TLabel> : TemplateControl
-            where TLabel : AbstractControl, new()
+        public class RichToolTipTemplate : TemplateControl
         {
-            private readonly Grid grid;
+            private readonly VerticalStackPanel labels = new();
 
-            private readonly TLabel titleLabel = new();
-            private readonly TLabel messageLabel = new();
+            private readonly GenericTextControl titleLabel = new();
+            private readonly GenericWrappedTextControl messageLabel = new();
             private readonly PictureBox pictureBox = new();
 
             /// <summary>
-            /// Initializes a new instance of the <see cref="RichToolTip{T}"/> class.
+            /// Initializes a new instance of the <see cref="RichToolTipTemplate"/> class.
             /// </summary>
-            public RichToolTip()
+            public RichToolTipTemplate()
             {
-                grid = new()
-                {
-                    RowCount = 2,
-                };
-
-                grid.AddAutoColumn();
-                grid.AddAutoColumn();
-
                 DoInsideLayout(() =>
                 {
+                    Layout = LayoutStyle.Horizontal;
+
                     VerticalAlignment = VerticalAlignment.Top;
                     HorizontalAlignment = HorizontalAlignment.Left;
 
-                    grid.Parent = this;
-
+                    pictureBox.VerticalAlignment = VerticalAlignment.Top;
                     pictureBox.Margin = RichToolTip.DefaultImageMargin;
-                    pictureBox.VerticalAlignment = VerticalAlignment.Center;
-                    pictureBox.Parent = grid;
+                    pictureBox.Parent = this;
+
+                    labels.HorizontalAlignment = HorizontalAlignment.Fill;
+                    labels.VerticalAlignment = VerticalAlignment.Fill;
+                    labels.Parent = this;
 
                     titleLabel.Margin = RichToolTip.DefaultTitleMargin;
-                    titleLabel.VerticalAlignment = VerticalAlignment.Center;
-                    titleLabel.RowColumn = (0, 1);
-                    titleLabel.Parent = grid;
+                    titleLabel.Parent = labels;
 
                     messageLabel.Margin = RichToolTip.DefaultMessageMargin;
-                    messageLabel.RowColumn = (1, 1);
-                    messageLabel.Parent = grid;
+                    messageLabel.Parent = labels;
 
                     SetChildrenUseParentBackColor(true, true);
                     SetChildrenUseParentForeColor(true, true);

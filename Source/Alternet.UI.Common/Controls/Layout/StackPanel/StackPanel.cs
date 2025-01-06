@@ -16,7 +16,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets whether to show debug corners when control is painted.
         /// </summary>
-        public static new bool ShowDebugCorners = true;
+        public static new bool ShowDebugCorners = false;
 
         private StackPanelOrientation orientation;
 

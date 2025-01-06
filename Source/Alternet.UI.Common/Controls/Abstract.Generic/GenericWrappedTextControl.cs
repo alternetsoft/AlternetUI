@@ -13,6 +13,7 @@ namespace Alternet.UI
     public class GenericWrappedTextControl : GenericTextControl
     {
         private TextFormat.Record textFormat;
+        private List<string>? wrappedText;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="GenericWrappedTextControl"/> class
@@ -50,7 +51,7 @@ namespace Alternet.UI
         }
 
         /// <see cref="TextFormat.VerticalAlignment"/>.
-        public TextVerticalAlignment TextVerticalAlignment
+        public virtual TextVerticalAlignment TextVerticalAlignment
         {
             get => textFormat.VerticalAlignment;
             set
@@ -134,6 +135,11 @@ namespace Alternet.UI
         /// <inheritdoc/>
         public override SizeD MeasureText(Graphics dc, Font font, SizeD availableSize)
         {
+            var wrappedWidth = availableSize.Width;
+
+            wrappedText
+                = DrawingUtils.WrapTextToList(TextForPaint, ref wrappedWidth, font, dc);
+
             var result = DrawInternal(dc, (PointD.Empty, availableSize), font);
             return result;
         }
@@ -167,15 +173,17 @@ namespace Alternet.UI
             Color? foreColor = null,
             Color? backColor = null)
         {
-            var wrappedText
-                = DrawingUtils.WrapTextToList(TextForPaint, rect.Width, font, dc);
+            var wrappedWidth = 0;
+
+            if (wrappedText is null)
+                return SizeD.Empty;
 
             var origin = rect.Location;
-            SizeD totalMeasure = 0;
+            SizeD totalMeasure = (wrappedWidth, 0);
 
             foreach (var s in wrappedText)
             {
-                var measure = dc.MeasureText(s, font);
+                var measure = dc.MeasureText(s, font).Ceiling();
 
                 if (foreColor is not null)
                 {
@@ -191,7 +199,12 @@ namespace Alternet.UI
                         itemContainer,
                         (CoordAlignment)alignment);
 
-                    dc.DrawText(s, alignedItemRect.Location, font, foreColor, backColor ?? Color.Empty);
+                    dc.DrawText(
+                        s,
+                        alignedItemRect.Location,
+                        font,
+                        foreColor,
+                        backColor ?? Color.Empty);
                 }
 
                 var increment = measure.Height + LineDistance;
@@ -201,7 +214,7 @@ namespace Alternet.UI
                 totalMeasure.Width = Math.Max(totalMeasure.Width, measure.Width);
             }
 
-            return totalMeasure;
+            return totalMeasure.ApplyMax(rect.Size);
         }
     }
 }

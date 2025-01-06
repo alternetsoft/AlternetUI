@@ -17,7 +17,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets whether to show debug corners when control is painted.
         /// </summary>
-        public static bool ShowDebugCorners = true;
+        public static bool ShowDebugCorners = false;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="GenericTextControl"/> class.

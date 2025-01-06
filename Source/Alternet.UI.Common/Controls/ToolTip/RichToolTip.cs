@@ -44,6 +44,11 @@ namespace Alternet.UI
         public static int ImageToTextDistance = 5;
 
         /// <summary>
+        /// Gets or sets default max width of the tooltip.
+        /// </summary>
+        public static Coord? DefaultMaxWidth = 500;
+
+        /// <summary>
         /// Gets or sets default value for the tooltip minimal image size
         /// (in device-independent units).
         /// This is used for svg image size when standard <see cref="MessageBoxIcon"/>
@@ -53,7 +58,7 @@ namespace Alternet.UI
 
         private static BorderSettings? defaultToolTipBorder;
 
-        private readonly TemplateControls.RichToolTip<GenericLabel> template = new();
+        private readonly TemplateControls.RichToolTipTemplate template = new();
         private readonly PictureBox picture = new();
 
         private BorderSettings? toolTipBorder;
@@ -137,19 +142,19 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets default background color of the tooltip.
         /// </summary>
-        public static Color DefaultToolTipBackgroundColor { get; set; }
+        public static LightDarkColor DefaultToolTipBackgroundColor { get; set; }
             = Color.LightDark(light: (249, 249, 249), dark: (44, 44, 44));
 
         /// <summary>
         /// Gets or sets default foreground color of the tooltip.
         /// </summary>
-        public static Color DefaultToolTipForegroundColor { get; set; }
+        public static LightDarkColor DefaultToolTipForegroundColor { get; set; }
             = Color.LightDark(light: Color.Black, dark: Color.White);
 
         /// <summary>
         /// Gets or sets default foreground color of the tooltip.
         /// </summary>
-        public static Color DefaultToolTipTitleForegroundColor { get; set; }
+        public static LightDarkColor DefaultToolTipTitleForegroundColor { get; set; }
             = Color.LightDark(light: (0, 51, 153), dark: (156, 220, 254));
 
         /// <summary>
@@ -501,7 +506,6 @@ namespace Alternet.UI
         /// By default the tooltip is hidden after system-dependent interval of time
         /// elapses but this method can be used to change this or also disable
         /// hiding the tooltip automatically entirely by passing 0 in this parameter
-        /// (but doing this can result in native version not being used).
         /// </remarks>
         /// <param name="milliseconds">Timeout value.</param>
         /// <param name="millisecondsShowdelay">Show delay value.</param>
@@ -613,9 +617,13 @@ namespace Alternet.UI
         {
             HideToolTip();
 
-            template.DoInsideLayout(() =>
+            template.DoInsideLayout(
+            () =>
             {
-                if(location is not null)
+                if(DefaultMaxWidth is not null)
+                    template.MaxWidth = DefaultMaxWidth;
+
+                if (location is not null)
                     ToolTipLocation = location.Value;
 
                 template.NormalBorder = RealDefaultToolTipBorder;
@@ -625,9 +633,9 @@ namespace Alternet.UI
                 template.RaiseBackgroundColorChanged();
                 template.ForegroundColor
                 = ToolTipForegroundColor ?? RichToolTip.DefaultToolTipForegroundColor;
-                template.TitleLabel.Text = Title;
                 template.TitleLabel.ParentForeColor = false;
                 template.TitleLabel.ParentFont = false;
+                template.TitleLabel.Text = Title;
 
                 template.TitleLabel.Font
                     = ToolTipTitleFont ?? RealFont.Scaled(1.5);
@@ -659,22 +667,14 @@ namespace Alternet.UI
                 }
                 else
                 {
-                    var hasIcon
-                        = template.PictureBox.SetIcon(ToolTipIcon ?? MessageBoxIcon.None, sizeInPixels);
+                    var hasIcon = template.PictureBox.SetIcon(
+                        ToolTipIcon ?? MessageBoxIcon.None,
+                        sizeInPixels);
                     template.PictureBox.Visible = hasIcon;
                 }
 
                 var imageVisible = template.PictureBox.Visible;
                 var anyVisible = imageVisible || anyTextVisible;
-
-                if (titleVisible || !anyTextVisible)
-                {
-                    template.PictureBox.RowIndex = 0;
-                }
-                else
-                {
-                    template.PictureBox.RowIndex = 1;
-                }
 
                 if (!anyVisible)
                 {
@@ -683,10 +683,9 @@ namespace Alternet.UI
                     imageVisible = true;
                 }
 
-                template.PictureBox.Margin = imageVisible ? imageMargin : 0;
-                template.TitleLabel.Margin = titleVisible ? DefaultTitleMargin : 0;
-                template.MessageLabel.Margin = messageVisible ? DefaultMessageMargin : 0;
-            });
+                template.PictureBox.Margin = imageMargin;
+            },
+            false);
 
             var image = TemplateUtils.GetTemplateAsImage(template, template.BackgroundColor);
             picture.BackgroundColor = template.BackgroundColor;
@@ -778,7 +777,8 @@ namespace Alternet.UI
         /// <param name="icon">Tooltip standard icon.</param>
         /// <param name="timeoutMilliseconds">
         /// Timeout in milliseconds after which tooltip will be hidden. Optional. If not specified,
-        /// default timeout value is used. If 0 is specified, tooltip will not be hidden after timeout.
+        /// default timeout value is used. If 0 is specified, tooltip will not be
+        /// hidden after timeout.
         /// </param>
         /// <param name="location">Location where tooltip will be shown.</param>
         public virtual IRichToolTip ShowToolTip(
@@ -789,6 +789,31 @@ namespace Alternet.UI
             PointD? location = null)
         {
             return SetToolTip(title, message, icon, timeoutMilliseconds).ShowToolTip(location);
+        }
+
+        /// <summary>
+        /// Shows tooltip with error on the screen.
+        /// </summary>
+        /// <param name="title">Tooltip title. Optional. If not specified "Error" is used. </param>
+        /// <param name="timeoutMilliseconds">
+        /// Timeout in milliseconds after which tooltip will be hidden. Optional. If not specified,
+        /// default timeout value is used. If 0 is specified, tooltip will not be
+        /// hidden after timeout.
+        /// </param>
+        /// <param name="e">Exception.</param>
+        /// <param name="location">Location where tooltip will be shown.</param>
+        public virtual IRichToolTip ShowToolTipWithError(
+            object? title,
+            Exception e,
+            uint? timeoutMilliseconds = null,
+            PointD? location = null)
+        {
+            return ShowToolTip(
+                        title ?? "Error",
+                        e.Message,
+                        MessageBoxIcon.Error,
+                        timeoutMilliseconds,
+                        location);
         }
 
         /// <summary>
@@ -824,6 +849,12 @@ namespace Alternet.UI
         {
             base.OnTextChanged(e);
             HideToolTip();
+        }
+
+        /// <inheritdoc/>
+        protected override void OnSizeChanged(EventArgs e)
+        {
+            base.OnSizeChanged(e);
         }
 
         /// <inheritdoc/>
