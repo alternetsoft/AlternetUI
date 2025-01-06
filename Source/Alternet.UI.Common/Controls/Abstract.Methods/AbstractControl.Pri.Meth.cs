@@ -13,14 +13,18 @@ namespace Alternet.UI
         {
             item.SetParentInternal(this);
             RaiseChildInserted(index, item);
-            PerformLayout();
+
+            if(item.Visible && !item.IgnoreLayout)
+                PerformLayout();
         }
 
         private void Children_ItemRemoved(object? sender, int index, AbstractControl item)
         {
             item.SetParentInternal(null);
             RaiseChildRemoved(item);
-            PerformLayout();
+
+            if (item.Visible && !item.IgnoreLayout)
+                PerformLayout();
         }
     }
 }
