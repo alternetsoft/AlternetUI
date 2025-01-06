@@ -22,7 +22,7 @@ namespace PropertyGridSample
 
         void TestPictureBoxSetToolTipImage(PictureBox control)
         {
-            var template = new TemplateControls.RichToolTip<GenericLabel>();
+            var template = new TemplateControls.RichToolTipTemplate();
 
             template.DoInsideLayout(() =>
             {

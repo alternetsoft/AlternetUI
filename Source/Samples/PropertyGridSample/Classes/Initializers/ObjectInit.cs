@@ -126,6 +126,7 @@ namespace PropertyGridSample
 
         public static void InitRichToolTip(RichToolTip control)
         {
+            control.HorizontalAlignment = HorizontalAlignment.Left;
             control.ShowToolTip(
                 "This is title",
                 "This is tooltip message",
