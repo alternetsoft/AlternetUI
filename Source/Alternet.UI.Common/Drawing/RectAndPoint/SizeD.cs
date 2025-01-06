@@ -221,6 +221,21 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
+        /// Gets <see cref="Coord.PositiveInfinity"/> instead of width or height
+        /// if their value is 0.
+        /// </summary>
+        [Browsable(false)]
+        public readonly SizeD InfinityIfEmpty
+        {
+            get
+            {
+                var w = width == 0 ? Coord.PositiveInfinity : width;
+                var h = height == 0 ? Coord.PositiveInfinity : height;
+                return (w, h);
+            }
+        }
+
+        /// <summary>
         /// Represents the vertical component of this <see cref='Drawing.SizeD'/>.
         /// </summary>
         public Coord Height
