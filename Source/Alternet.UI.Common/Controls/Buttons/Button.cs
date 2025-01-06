@@ -127,14 +127,14 @@ namespace Alternet.UI
             {
                 if (DisposingOrDisposed)
                     return default;
-                return Handler.HasBorder;
+                return base.Handler.HasBorder;
             }
 
             set
             {
                 if (DisposingOrDisposed)
                     return;
-                Handler.HasBorder = value;
+                base.Handler.HasBorder = value;
             }
         }
 

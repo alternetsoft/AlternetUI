@@ -36,7 +36,7 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc cref="TreeView.HasBorder"/>
-        public bool HasBorder
+        public override bool HasBorder
         {
             get
             {

@@ -31,9 +31,6 @@ namespace Alternet.UI
         /// <inheritdoc cref="ComboBox.TextSelectionLength"/>
         int TextSelectionLength { get; }
 
-        /// <inheritdoc cref="ComboBox.HasBorder"/>
-        bool HasBorder { get; set; }
-
         /// <inheritdoc cref="ComboBox.SelectTextRange"/>
         void SelectTextRange(int start, int length);
 

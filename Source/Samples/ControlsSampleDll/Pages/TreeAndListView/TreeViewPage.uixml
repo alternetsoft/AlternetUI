@@ -103,7 +103,7 @@
                     CheckedChanged="FullRowSelectCheckBox_CheckedChanged"
                     IsChecked="False" />
           <Button Text="Has Border" Margin="0,5,0,5" Name="hasBorderButton" IsTextLocalized="true"
-                  Click="HasBorderButton_Click"/>
+                  HorizontalAlignment="Left" Click="HasBorderButton_Click"/>
         </VerticalStackPanel>
 
         <!-- ========================= -->

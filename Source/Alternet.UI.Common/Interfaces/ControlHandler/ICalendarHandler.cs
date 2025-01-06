@@ -44,9 +44,6 @@ namespace Alternet.UI
         /// <inheritdoc cref="Calendar.UseGeneric"/>
         bool UseGeneric { get; set; }
 
-        /// <inheritdoc cref="Calendar.HasBorder"/>
-        bool HasBorder { get; set; }
-
         /// <inheritdoc cref="Calendar.Value"/>
         DateTime Value { get; set; }
 

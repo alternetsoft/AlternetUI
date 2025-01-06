@@ -13,28 +13,25 @@ namespace Alternet.UI
     /// </summary>
     public interface IVListBoxHandler
     {
-        /// <inheritdoc cref="VirtualListControl.HasBorder"/>
-        bool HasBorder { get; set; }
-
         /// <summary>
         /// Sets items count.
         /// </summary>
         int ItemsCount { set; }
 
         /// <inheritdoc cref="VirtualListBox.GetItemRect"/>
-        public RectD? GetItemRect(int index);
+        public RectD? GetItemRect(int index); // !!
 
         /// <inheritdoc cref="VirtualListBox.ScrollToRow(int)"/>
         bool ScrollToRow(int row);
 
         /// <inheritdoc cref="VirtualListBox.RefreshRow(int)"/>
-        void RefreshRow(int row);
+        void RefreshRow(int row); // !!
 
         /// <inheritdoc cref="VirtualListBox.RefreshRows(int, int)"/>
-        void RefreshRows(int from, int to);
+        void RefreshRows(int from, int to); // !!
 
         /// <inheritdoc cref="VirtualListBox.GetVisibleEnd"/>
-        int GetVisibleEnd();
+        int GetVisibleEnd(); // !!
 
         /// <summary>
         /// Detaches events from items.
@@ -50,9 +47,9 @@ namespace Alternet.UI
         int GetVisibleBegin();
 
         /// <inheritdoc cref="VirtualListControl.EnsureVisible"/>
-        void EnsureVisible(int itemIndex);
+        void EnsureVisible(int itemIndex); // !!
 
         /// <inheritdoc cref="VirtualListControl.HitTest"/>
-        int? HitTest(PointD position);
+        int? HitTest(PointD position); // !!
     }
 }

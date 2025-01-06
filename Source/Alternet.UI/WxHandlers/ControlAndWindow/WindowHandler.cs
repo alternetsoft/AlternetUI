@@ -61,7 +61,7 @@ namespace Alternet.UI
             set => NativeControl.Resizable = value;
         }
 
-        public bool HasBorder
+        public override bool HasBorder
         {
             get => NativeControl.HasBorder;
             set => NativeControl.HasBorder = value;

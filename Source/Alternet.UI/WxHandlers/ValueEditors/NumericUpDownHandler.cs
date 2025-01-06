@@ -4,13 +4,13 @@ using System.Runtime.InteropServices;
 namespace Alternet.UI
 {
     internal class NumericUpDownHandler :
-        WxControlHandler<NumericUpDown, Native.NumericUpDown>, INumericUpDownHandler
+        WxControlHandler<NumericUpDown, Native.NumericUpDown>
     {
         public NumericUpDownHandler()
         {
         }
 
-        public bool HasBorder
+        public override bool HasBorder
         {
             get => NativeControl.HasBorder;
             set => NativeControl.HasBorder = value;

@@ -15,10 +15,7 @@ namespace Alternet.UI
         public class RichToolTip<TLabel> : TemplateControl
             where TLabel : AbstractControl, new()
         {
-            private readonly Grid grid = new()
-            {
-                RowColumnCount = (2, 2),
-            };
+            private readonly Grid grid;
 
             private readonly TLabel titleLabel = new();
             private readonly TLabel messageLabel = new();
@@ -29,6 +26,14 @@ namespace Alternet.UI
             /// </summary>
             public RichToolTip()
             {
+                grid = new()
+                {
+                    RowCount = 2,
+                };
+
+                grid.AddAutoColumn();
+                grid.AddAutoColumn();
+
                 DoInsideLayout(() =>
                 {
                     VerticalAlignment = VerticalAlignment.Top;

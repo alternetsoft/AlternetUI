@@ -450,7 +450,8 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets a value indicating whether the control has a border.
         /// </summary>
-        public virtual bool HasBorder
+        [Browsable(true)]
+        public override bool HasBorder
         {
             get
             {
@@ -464,7 +465,7 @@ namespace Alternet.UI
                 if (hasBorder == value)
                     return;
                 hasBorder = value;
-                Handler.HasBorder = value;
+                base.Handler.HasBorder = value;
                 HasBorderChanged?.Invoke(this, EventArgs.Empty);
             }
         }

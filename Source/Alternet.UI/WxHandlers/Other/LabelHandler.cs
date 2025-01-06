@@ -3,7 +3,7 @@ using System;
 namespace Alternet.UI
 {
     internal class LabelHandler
-        : WxControlHandler<Label, Native.Label>, ILabelHandler
+        : WxControlHandler<Label, Native.Label>
     {
         internal override Native.Control CreateNativeControl()
         {

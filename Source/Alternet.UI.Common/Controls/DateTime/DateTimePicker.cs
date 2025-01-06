@@ -120,26 +120,6 @@ namespace Alternet.UI
             }
         }
 
-        /// <summary>
-        /// Gets or sets a value indicating whether the control has a border.
-        /// </summary>
-        internal bool HasBorder
-        {
-            get
-            {
-                if (DisposingOrDisposed)
-                    return default;
-                return Handler.HasBorder;
-            }
-
-            set
-            {
-                if (DisposingOrDisposed)
-                    return;
-                Handler.HasBorder = value;
-            }
-        }
-
         [Browsable(false)]
         internal new string Text
         {

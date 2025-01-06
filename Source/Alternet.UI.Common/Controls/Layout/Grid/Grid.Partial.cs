@@ -115,7 +115,8 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Gets a value that indicates which row child control within a <see cref="Grid"/> should appear in.
+        /// Gets a value that indicates which row child control within
+        /// a <see cref="Grid"/> should appear in.
         /// </summary>
         /// <param name="control">The control for which to get the row index.</param>
         /// <remarks>The 0-based row index.</remarks>
@@ -180,7 +181,8 @@ namespace Alternet.UI
         /// <param name="controls">Grid controls.</param>
         /// <remarks>
         /// Dimensions for all rows and columns are set to <see cref="GridLength.Auto"/>.
-        /// <see cref="AbstractControl.SetRowColumn"/> is called for the each control with row and column
+        /// <see cref="AbstractControl.SetRowColumn"/> is called for the each control
+        /// with row and column
         /// indexes equal to position in the <paramref name="controls"/> array.
         /// </remarks>
         public void Setup(AbstractControl[,] controls)

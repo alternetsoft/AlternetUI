@@ -46,9 +46,6 @@ namespace Alternet.UI
         /// <inheritdoc cref="Window.Resizable"/>
         bool Resizable { get; set; }
 
-        /// <inheritdoc cref="Window.HasBorder"/>
-        bool HasBorder { get; set; }
-
         /// <inheritdoc cref="Window.HasTitleBar"/>
         bool HasTitleBar { get; set; }
 

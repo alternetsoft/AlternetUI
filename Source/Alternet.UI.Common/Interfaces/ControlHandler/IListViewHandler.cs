@@ -19,9 +19,6 @@ namespace Alternet.UI
         /// <inheritdoc cref="ListView.ColumnHeaderVisible"/>
         bool ColumnHeaderVisible { get; set; }
 
-        /// <inheritdoc cref="ListView.HasBorder"/>
-        bool HasBorder { get; set; }
-
         /// <summary>
         /// Gets or sets focused item index.
         /// </summary>

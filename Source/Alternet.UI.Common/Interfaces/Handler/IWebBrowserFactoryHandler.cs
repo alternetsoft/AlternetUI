@@ -15,7 +15,7 @@ namespace Alternet.UI
         bool IsEdgeBackendEnabled { get; set; }
 
         /// <summary>
-        /// Creates <see cref="IWebBrowserHandler"/> interface provider.
+        /// Creates <see cref="IControlHandler"/> interface provider.
         /// </summary>
         /// <param name="control">Owner.</param>
         /// <returns></returns>

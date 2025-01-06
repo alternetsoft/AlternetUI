@@ -27,6 +27,16 @@ namespace Alternet.UI
             }
         }
 
+        /// <inheritdoc cref="AbstractControl.HasBorder"/>
+        public virtual bool HasBorder
+        {
+            get => false;
+
+            set
+            {
+            }
+        }
+
         /// <summary>
         /// Gets a <see cref="Control"/> this handler provides the implementation for.
         /// If control is disposed or not attached to the handler, returns dummy control.

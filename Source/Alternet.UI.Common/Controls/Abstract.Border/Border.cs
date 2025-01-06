@@ -92,6 +92,7 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
+        [Browsable(true)]
         public override bool HasBorder
         {
             get => base.HasBorder;

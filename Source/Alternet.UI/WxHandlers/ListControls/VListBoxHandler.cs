@@ -27,7 +27,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets a value indicating whether the control has a border.
         /// </summary>
-        public bool HasBorder
+        public override bool HasBorder
         {
             get
             {

@@ -134,7 +134,8 @@ namespace Alternet.UI
         /// <inheritdoc/>
         public override SizeD MeasureText(Graphics dc, Font font, SizeD availableSize)
         {
-            return DrawInternal(dc, (PointD.Empty, availableSize), font);
+            var result = DrawInternal(dc, (PointD.Empty, availableSize), font);
+            return result;
         }
 
         /// <inheritdoc/>

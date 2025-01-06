@@ -277,26 +277,6 @@ namespace Alternet.UI
         public override ControlTypeId ControlKind => ControlTypeId.ListBox;
 
         /// <summary>
-        /// Gets or sets a value indicating whether the control has a border.
-        /// </summary>
-        public virtual bool HasBorder
-        {
-            get
-            {
-                if (DisposingOrDisposed)
-                    return false;
-                return Handler.HasBorder;
-            }
-
-            set
-            {
-                if (DisposingOrDisposed)
-                    return;
-                Handler.HasBorder = value;
-            }
-        }
-
-        /// <summary>
         /// Gets or sets a value indicating whether checkbox will
         /// allow three check states rather than two.
         /// </summary>

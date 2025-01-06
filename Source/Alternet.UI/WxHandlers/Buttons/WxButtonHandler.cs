@@ -43,7 +43,7 @@ namespace Alternet.UI
         /// </summary>
         public new Button Control => (Button)base.Control;
 
-        public bool HasBorder
+        public override bool HasBorder
         {
             get
             {

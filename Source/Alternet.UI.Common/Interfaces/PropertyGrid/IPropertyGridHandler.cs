@@ -11,7 +11,7 @@ namespace Alternet.UI
     /// <summary>
     /// Contains methods and properties which allow to work with property grid control.
     /// </summary>
-    public interface IPropertyGridHandler : IControlHandler
+    public interface IPropertyGridHandler
     {
         /// <summary>
         /// Gets or sets validation failure behavior. Valid only in the event handler.
@@ -42,9 +42,6 @@ namespace Alternet.UI
         /// Gets or sets validation failure message. Valid only in the event handler.
         /// </summary>
         string EventValidationFailureMessage { get; set; }
-
-        /// <inheritdoc cref="PropertyGrid.HasBorder"/>
-        bool HasBorder { get; set; }
 
         /// <inheritdoc cref="PropertyGrid.CreateStyle"/>
         PropertyGridCreateStyle CreateStyle { get; set; }

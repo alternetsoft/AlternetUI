@@ -16,9 +16,6 @@ namespace Alternet.UI
         /// <inheritdoc cref="TreeView.HideRoot"/>
         bool HideRoot { get; set; }
 
-        /// <inheritdoc cref="TreeView.HasBorder"/>
-        bool HasBorder { get; set; }
-
         /// <inheritdoc cref="TreeView.VariableRowHeight"/>
         bool VariableRowHeight { get; set; }
 

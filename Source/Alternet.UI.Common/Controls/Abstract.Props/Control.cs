@@ -258,6 +258,26 @@ namespace Alternet.UI
             }
         }
 
+        /// <summary>
+        /// Gets or sets a value indicating whether the control has a border.
+        /// </summary>
+        public override bool HasBorder
+        {
+            get
+            {
+                if (DisposingOrDisposed)
+                    return false;
+                return Handler.HasBorder;
+            }
+
+            set
+            {
+                if (DisposingOrDisposed)
+                    return;
+                Handler.HasBorder = value;
+            }
+        }
+
         /// <inheritdoc/>
         public override RectI BoundsInPixels
         {

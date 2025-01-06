@@ -3038,6 +3038,27 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets or sets the horizontal alignment applied to this control when
+        /// it is positioned within a parent control.
+        /// </summary>
+        /// <value>A horizontal alignment setting. The default is
+        /// <c>null</c>.</value>
+        public virtual HorizontalAlignment HorizontalAlignment
+        {
+            get => horizontalAlignment;
+            set
+            {
+                if (horizontalAlignment == value)
+                    return;
+
+                horizontalAlignment = value;
+                HorizontalAlignmentChanged?.Invoke(this, EventArgs.Empty);
+                if (Parent is not null && !IgnoreLayout)
+                    PerformLayout();
+            }
+        }
+
+        /// <summary>
         /// Gets or sets the vertical alignment applied to this control when it
         /// is positioned within a parent control.
         /// </summary>
@@ -3055,6 +3076,25 @@ namespace Alternet.UI
                 VerticalAlignmentChanged?.Invoke(this, EventArgs.Empty);
                 if(Parent is not null && !IgnoreLayout)
                     PerformLayout();
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether the control has a border.
+        /// </summary>
+        /// <remarks>
+        /// It's up to the control descendant how this property is used.
+        /// </remarks>
+        [Browsable(false)]
+        public virtual bool HasBorder
+        {
+            get
+            {
+                return false;
+            }
+
+            set
+            {
             }
         }
 
@@ -3127,27 +3167,6 @@ namespace Alternet.UI
                 }
 
                 return result;
-            }
-        }
-
-        /// <summary>
-        /// Gets or sets the horizontal alignment applied to this control when
-        /// it is positioned within a parent control.
-        /// </summary>
-        /// <value>A horizontal alignment setting. The default is
-        /// <c>null</c>.</value>
-        public virtual HorizontalAlignment HorizontalAlignment
-        {
-            get => horizontalAlignment;
-            set
-            {
-                if (horizontalAlignment == value)
-                    return;
-
-                horizontalAlignment = value;
-                HorizontalAlignmentChanged?.Invoke(this, EventArgs.Empty);
-                if (Parent is not null && !IgnoreLayout)
-                    PerformLayout();
             }
         }
 

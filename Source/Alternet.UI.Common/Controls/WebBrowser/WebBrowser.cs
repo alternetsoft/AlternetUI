@@ -384,20 +384,21 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets a value indicating whether the control has a border.
         /// </summary>
-        public virtual bool HasBorder
+        [Browsable(true)]
+        public override bool HasBorder
         {
             get
             {
                 if (DisposingOrDisposed)
                     return default;
-                return Handler.HasBorder;
+                return base.Handler.HasBorder;
             }
 
             set
             {
                 if (DisposingOrDisposed)
                     return;
-                Handler.HasBorder = value;
+                base.Handler.HasBorder = value;
             }
         }
 
@@ -940,7 +941,7 @@ namespace Alternet.UI
         /// Gets handler for the control.
         /// </summary>
         [Browsable(false)]
-        public new IWebBrowserHandler Handler => (IWebBrowserHandler)base.Handler;
+        public new IWebBrowserLite Handler => (IWebBrowserLite)base.Handler;
 
         /// <summary>
         /// Prepends filename with "file" url protocol prefix.
