@@ -19,8 +19,8 @@ namespace PropertyGridSample
         private WxControlPainterHandler.DrawFlags flags;
 
         public ControlPainterPreview()
-            : base()
         {
+            Padding = 10;
         }
 
         public WxControlPainterHandler.ControlPartKind Kind
@@ -63,6 +63,8 @@ namespace PropertyGridSample
             var brush = this.Background;
             if (brush != null)
                 dc.FillRectangle(brush, bounds);
+
+            bounds = bounds.DeflatedWithPadding(Padding);
 
             Painter.DrawItem(
                 Kind,
