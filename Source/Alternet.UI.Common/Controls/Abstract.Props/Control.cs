@@ -96,28 +96,6 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        public override SizeD ClientSize
-        {
-            get
-            {
-                if (IsDummy)
-                    return SizeD.Empty;
-                return SafeHandler?.ClientSize ?? SizeD.Empty;
-            }
-
-            set
-            {
-                if (ClientSize == value || SafeHandler is null)
-                    return;
-
-                DoInsideLayout(() =>
-                {
-                    Handler.ClientSize = value;
-                });
-            }
-        }
-
-        /// <inheritdoc/>
         public override Color RealBackgroundColor
         {
             get
@@ -170,6 +148,30 @@ namespace Alternet.UI
                 if (DisposingOrDisposed)
                     return;
                 Handler.UserPaint = value;
+            }
+        }
+
+        /// <inheritdoc/>
+        public override SizeD ClientSize
+        {
+            get
+            {
+                if (IsDummy)
+                    return SizeD.Empty;
+                return SafeHandler?.ClientSize ?? SizeD.Empty;
+            }
+
+            set
+            {
+                value = value.ApplyMinMax(MinimumSize, MaximumSize);
+
+                if (ClientSize == value || SafeHandler is null)
+                    return;
+
+                DoInsideLayout(() =>
+                {
+                    Handler.ClientSize = value;
+                });
             }
         }
 
