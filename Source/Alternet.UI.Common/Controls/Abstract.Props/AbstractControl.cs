@@ -830,6 +830,7 @@ namespace Alternet.UI
 
             set
             {
+                value = value.ApplyMinMax(MinimumSize, MaximumSize);
                 if (ClientSize == value)
                     return;
                 Size = value;
@@ -3224,11 +3225,17 @@ namespace Alternet.UI
                 var padding = Padding;
                 var intrinsicPadding = IntrinsicLayoutPadding;
 
-                return new RectD(
+                var sz = childrenBounds.Size;
+
+                sz = sz.ApplyMax(MaximumSize);
+
+                var result = new RectD(
                     new PointD(
                         padding.Left + intrinsicPadding.Left,
                         padding.Top + intrinsicPadding.Top),
-                    childrenBounds.Size - padding.Size - intrinsicPadding.Size);
+                    sz - padding.Size - intrinsicPadding.Size);
+
+                return result;
             }
         }
 
