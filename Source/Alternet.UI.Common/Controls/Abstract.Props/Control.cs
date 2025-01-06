@@ -193,7 +193,7 @@ namespace Alternet.UI
         {
             get
             {
-                return SafeHandler?.MinimumSize ?? SizeD.Empty;
+                return base.MinimumSize;
             }
 
             set
@@ -212,7 +212,7 @@ namespace Alternet.UI
         {
             get
             {
-                return SafeHandler?.MaximumSize ?? SizeD.Empty;
+                return base.MaximumSize;
             }
 
             set
@@ -221,6 +221,7 @@ namespace Alternet.UI
                 value.Height = Math.Max(0, value.Height);
                 if (MaximumSize == value || DisposingOrDisposed)
                     return;
+                base.MaximumSize = value;
                 Handler.MaximumSize = value;
                 PerformLayout();
             }
