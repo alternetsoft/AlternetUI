@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
+using System.Runtime.CompilerServices;
 using System.Text;
 
 using Alternet.Drawing;
@@ -15,20 +17,121 @@ namespace Alternet.UI
         public static DefaultLayoutMethod UseLayoutMethod = DefaultLayoutMethod.New;
 
         /// <summary>
-        /// Enumerates known layout methods. This is for internal use only.
+        /// Gets real layout style of the child controls.
         /// </summary>
-        public enum DefaultLayoutMethod
+        [Browsable(false)]
+        public LayoutStyle RealLayout
         {
-            /// <summary>
-            /// Original layout method.
-            /// </summary>
-            Original,
-
-            /// <summary>
-            /// New layout method.
-            /// </summary>
-            New,
+            get
+            {
+                return Layout ?? GetDefaultLayout();
+            }
         }
+
+        /// <summary>
+        /// Gets a rectangle which describes an area inside of the
+        /// <see cref="AbstractControl"/> available
+        /// for positioning (layout) of its child controls, in device-independent units.
+        /// </summary>
+        [Browsable(false)]
+        public virtual RectD ChildrenLayoutBounds
+        {
+            get
+            {
+                var childrenBounds = ClientRectangle;
+                var padding = Padding;
+                var intrinsicPadding = IntrinsicLayoutPadding;
+                var borderWidth = Border.SafeBorderWidth(this);
+
+                var sz = childrenBounds.Size;
+                SizeD size = sz - padding.Size - intrinsicPadding.Size - borderWidth.Size;
+
+                if (size.AnyIsEmptyOrNegative)
+                    return RectD.Empty;
+
+                PointD location = new(
+                        padding.Left + intrinsicPadding.Left + borderWidth.Left,
+                        padding.Top + intrinsicPadding.Top + borderWidth.Top);
+
+                return new RectD(location, size);
+            }
+        }
+
+        /// <summary>
+        /// Called when the control should reposition its child controls.
+        /// </summary>
+        [Browsable(false)]
+        public virtual void OnLayout()
+        {
+            if (CustomLayout is not null)
+            {
+                var e = new HandledEventArgs();
+                CustomLayout(this, e);
+                if (e.Handled)
+                    return;
+            }
+
+            var layoutType = RealLayout;
+
+            RectD GetSpace()
+            {
+                return ChildrenLayoutBounds;
+            }
+
+            var items = AllChildrenInLayout;
+
+            if (GlobalOnLayout is not null)
+            {
+                var e = new DefaultLayoutEventArgs(this, layoutType, GetSpace(), items);
+                GlobalOnLayout(this, e);
+                if (e.Handled)
+                    return;
+                else
+                {
+                    layoutType = e.Layout;
+                    items = e.Children;
+                }
+            }
+
+            DefaultOnLayout(
+                this,
+                layoutType,
+                GetSpace,
+                items);
+        }
+
+        /// <summary>
+        /// Retrieves the size of a rectangular area into which a control can
+        /// be fitted, in device-independent units.
+        /// </summary>
+        /// <param name="availableSize">The available space that a parent element
+        /// can allocate a child control.</param>
+        /// <returns>A <see cref="SuggestedSize"/> representing the width and height of
+        /// a rectangle, in device-independent units.</returns>
+        public virtual SizeD GetPreferredSize(SizeD availableSize)
+        {
+            var layoutType = Layout ?? GetDefaultLayout();
+
+            if (GlobalGetPreferredSize is not null)
+            {
+                var e = new DefaultPreferredSizeEventArgs(layoutType, availableSize);
+                if (e.Handled && e.Result != SizeD.MinusOne)
+                    return e.Result;
+            }
+
+            return DefaultGetPreferredSize(
+                this,
+                availableSize,
+                layoutType);
+        }
+
+        /// <summary>
+        /// Calls <see cref="GetPreferredSize(SizeD)"/> with <see cref="SizeD.PositiveInfinity"/>
+        /// as a parameter value.
+        /// </summary>
+        /// <returns></returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public SizeD GetPreferredSize() => GetPreferredSize(SizeD.PositiveInfinity);
 
         /// <summary>
         /// Aligns control in the parent using horizontal and vertical

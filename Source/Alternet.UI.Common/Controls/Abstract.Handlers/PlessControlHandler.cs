@@ -160,6 +160,15 @@ namespace Alternet.UI
         /// <inheritdoc/>
         public AbstractControl? EventFocusedControl { get; set; }
 
+        /// <inheritdoc/>
+        public ScrollBarInfo VertScrollBarInfo { get; set; }
+
+        /// <inheritdoc/>
+        public ScrollBarInfo HorzScrollBarInfo { get; set; }
+
+        /// <inheritdoc/>
+        public bool IsScrollable { get; set; }
+
         void IControlHandler.BeginInit()
         {
         }

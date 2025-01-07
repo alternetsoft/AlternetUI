@@ -3159,7 +3159,7 @@ namespace Alternet.UI
                 if (all)
                     return controls;
 
-                List<AbstractControl> result = new();
+                List<AbstractControl> result = new(controls.Count);
 
                 foreach (var control in controls)
                 {
@@ -3207,37 +3207,6 @@ namespace Alternet.UI
         /// </summary>
         [Browsable(false)]
         public virtual RectD ClientRectangle => new(PointD.Empty, ClientSize);
-
-        /// <summary>
-        /// Gets a rectangle which describes an area inside of the
-        /// <see cref="AbstractControl"/> available
-        /// for positioning (layout) of its child controls, in device-independent units.
-        /// </summary>
-        [Browsable(false)]
-        public virtual RectD ChildrenLayoutBounds
-        {
-            get
-            {
-                var childrenBounds = ClientRectangle;
-                if (childrenBounds.SizeIsEmpty)
-                    return RectD.Empty;
-
-                var padding = Padding;
-                var intrinsicPadding = IntrinsicLayoutPadding;
-
-                var sz = childrenBounds.Size;
-
-                sz = sz.ApplyMax(MaximumSize);
-
-                var result = new RectD(
-                    new PointD(
-                        padding.Left + intrinsicPadding.Left,
-                        padding.Top + intrinsicPadding.Top),
-                    sz - padding.Size - intrinsicPadding.Size);
-
-                return result;
-            }
-        }
 
         /// <summary>
         /// Returns control identifier.

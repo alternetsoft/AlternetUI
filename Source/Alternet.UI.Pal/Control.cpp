@@ -2561,9 +2561,12 @@ namespace Alternet::UI
         return new wxWindow2();
     }
 
-    wxWindow* ControlNonAbstract::CreateWxWindowCore(wxWindow* parent)
+    long Control::GetDefaultStyle()
     {
-        long style = wxNO_BORDER | wxWANTS_CHARS;
+        long style = wxNO_BORDER;
+
+        if (_wantChars)
+            style |= wxWANTS_CHARS;
 
         if (GetIsScrollable())
             style |= wxHSCROLL | wxVSCROLL;
@@ -2573,6 +2576,18 @@ namespace Alternet::UI
             style |= wxVSCROLL;
         if (_showHorzScrollBar)
             style |= wxHSCROLL;
+
+#ifdef __WXGTK__
+        if (GetIsScrollable() || _showVertScrollBar || _showHorzScrollBar)
+            style |= wxALWAYS_SHOW_SB;
+#endif
+
+        return style;
+    }
+
+    wxWindow* ControlNonAbstract::CreateWxWindowCore(wxWindow* parent)
+    {
+        auto style = GetDefaultStyle();
 
         auto p = new wxWindow2(this, parent, wxID_ANY, wxDefaultPosition, wxDefaultSize, style);
         return p;

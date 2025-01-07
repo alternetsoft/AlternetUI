@@ -7,7 +7,23 @@ namespace Alternet.UI
     public partial class AbstractControl
     {
         /// <summary>
-        /// Enumerates known handler types.
+        /// Enumerates known layout methods. This is for internal use only.
+        /// </summary>
+        public enum DefaultLayoutMethod
+        {
+            /// <summary>
+            /// Original layout method.
+            /// </summary>
+            Original,
+
+            /// <summary>
+            /// New layout method.
+            /// </summary>
+            New,
+        }
+
+        /// <summary>
+        /// Enumerates known handler types. This is for internal use only.
         /// </summary>
         public enum HandlerType
         {

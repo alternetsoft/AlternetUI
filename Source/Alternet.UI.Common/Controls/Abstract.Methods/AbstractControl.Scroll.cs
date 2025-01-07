@@ -11,8 +11,6 @@ namespace Alternet.UI
 {
     public partial class AbstractControl
     {
-        private ScrollBarsAndInfo scrollBars = new();
-
         /// <summary>
         /// Occurs when the user scrolls through the control contents using scrollbars.
         /// </summary>
@@ -205,7 +203,7 @@ namespace Alternet.UI
         {
             OnScroll(e);
 
-            if(Layout == LayoutStyle.Scroll)
+            if(RealLayout == LayoutStyle.Scroll)
             {
                 var offset = GetScrollBarInfo(e.IsVertical).Position;
 
@@ -230,7 +228,7 @@ namespace Alternet.UI
         /// <returns></returns>
         public virtual ScrollBarInfo GetScrollBarInfo(bool isVertical)
         {
-            return scrollBars.GetInfo(isVertical);
+            return ScrollBarInfo.Default;
         }
 
         /// <summary>
@@ -241,32 +239,6 @@ namespace Alternet.UI
         /// <param name="value">Scrollbar position.</param>
         public virtual void SetScrollBarInfo(bool isVertical, ScrollBarInfo value)
         {
-            var info = GetScrollBarInfo(isVertical);
-
-            if (info == value)
-                return;
-
-            Internal();
-
-            void Internal()
-            {
-                void Initialize(ScrollBar scrollBar)
-                {
-                    scrollBar.Parent = this;
-
-                    scrollBar.Scroll += (s, e) =>
-                    {
-                        RaiseScroll(e);
-                    };
-                }
-
-                scrollBars.SetInfo(isVertical, value);
-
-                var scrollBar = scrollBars.GetScrollBarSafe(isVertical, Initialize);
-
-                scrollBar.PosInfo = value;
-            }
-
             RaiseNotifications((n) => n.AfterSetScrollBarInfo(this, isVertical, value));
         }
 

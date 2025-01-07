@@ -790,6 +790,8 @@ namespace Alternet.UI
             NativeControl.DragEnter -= NativeControl_DragEnter;
             NativeControl.DragDrop -= NativeControl_DragDrop;
             NativeControl.HandleCreated = null;
+            NativeControl.VerticalScrollBarValueChanged = null;
+            NativeControl.HorizontalScrollBarValueChanged = null;
         }
 
         protected virtual void OnNativeControlCreated()
@@ -805,6 +807,8 @@ namespace Alternet.UI
             NativeControl.DragOver += NativeControl_DragOver;
             NativeControl.DragEnter += NativeControl_DragEnter;
             NativeControl.DragDrop += NativeControl_DragDrop;
+            NativeControl.VerticalScrollBarValueChanged = NativeVerticalScrollBarValueChanged;
+            NativeControl.HorizontalScrollBarValueChanged = NativeHorizontalScrollBarValueChanged;
 
             NativeControl.HandleCreated = OnNativeControlHandleCreated;
         }
@@ -940,6 +944,36 @@ namespace Alternet.UI
         public void InvalidateBestSize()
         {
             NativeControl.InvalidateBestSize();
+        }
+
+        internal virtual void NativeVerticalScrollBarValueChanged()
+        {
+            if (DisposingOrDisposed)
+                return;
+
+            var args = new ScrollEventArgs
+            {
+                ScrollOrientation = ScrollBarOrientation.Vertical,
+                NewValue = GetScrollBarEvtPosition(),
+                Type = GetScrollBarEvtKind(),
+            };
+            
+            Control.RaiseScroll(args);
+        }
+
+        internal virtual void NativeHorizontalScrollBarValueChanged()
+        {
+            if (DisposingOrDisposed)
+                return;
+
+            var args = new ScrollEventArgs
+            {
+                ScrollOrientation = ScrollBarOrientation.Horizontal,
+                NewValue = GetScrollBarEvtPosition(),
+                Type = GetScrollBarEvtKind(),
+            };
+            
+            Control.RaiseScroll(args);
         }
 
         internal class NonAbstractNativeControl : Native.Control

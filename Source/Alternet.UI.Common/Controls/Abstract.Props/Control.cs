@@ -176,6 +176,22 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
+        public override bool IsScrollable
+        {
+            get
+            {
+                return SafeHandler?.IsScrollable ?? false;
+            }
+
+            set
+            {
+                if (IsScrollable == value || DisposingOrDisposed)
+                    return;
+                Handler.IsScrollable = value;
+            }
+        }
+
+        /// <inheritdoc/>
         public override RectD Bounds
         {
             get => SafeHandler?.Bounds ?? RectD.Empty;
@@ -775,6 +791,28 @@ namespace Alternet.UI
         public override void RecreateWindow()
         {
             SafeHandler?.RecreateWindow();
+        }
+
+        /// <inheritdoc/>
+        public override ScrollBarInfo GetScrollBarInfo(bool isVertical)
+        {
+            if (DisposingOrDisposed)
+                return ScrollBarInfo.Default;
+            if (isVertical)
+                return Handler.VertScrollBarInfo;
+            else
+                return Handler.HorzScrollBarInfo;
+        }
+
+        /// <inheritdoc/>
+        public override void SetScrollBarInfo(bool isVertical, ScrollBarInfo value)
+        {
+            if (DisposingOrDisposed)
+                return;
+            if (isVertical)
+                Handler.VertScrollBarInfo = value;
+            else
+                Handler.HorzScrollBarInfo = value;
         }
 
         /// <inheritdoc/>

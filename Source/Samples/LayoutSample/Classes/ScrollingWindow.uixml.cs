@@ -39,7 +39,7 @@ namespace LayoutSample
 
         private void InitializeGrid()
         {
-            DoInsideInit(() =>
+            grid.DoInsideInit(() =>
             {
                 int rowCount = 10;
                 int columnCount = 10;
