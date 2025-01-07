@@ -32,10 +32,11 @@ namespace Alternet.Drawing
         public static readonly RectD NaN = new(Coord.NaN, Coord.NaN, Coord.NaN, Coord.NaN);
 
         /// <summary>
-        /// Initializes a new instance of the <see cref='RectD'/> class with -1
+        /// Initializes a new instance of the <see cref='RectD'/> with -1
         /// in all bounds.
         /// </summary>
-        public static readonly RectD MinusOne = new(-1, -1, -1, -1);
+        public static readonly RectD MinusOne
+            = new(CoordD.MinusOne, CoordD.MinusOne, CoordD.MinusOne, CoordD.MinusOne);
 
         /// <summary>
         /// Gets or sets default <see cref="MidpointRounding"/> used in round coordinate
@@ -108,16 +109,54 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
+        /// Gets a value indicating whether any property is negative.
+        /// </summary>
+        [Browsable(false)]
+        public readonly bool IsAnyNegative
+        {
+            get
+            {
+                return x < CoordD.Empty || y < CoordD.Empty
+                    || width < CoordD.Empty || height < CoordD.Empty;
+            }
+        }
+
+        /// <summary>
+        /// Gets a value indicating whether location is negative or size is negative or zero.
+        /// </summary>
+        [Browsable(false)]
+        public readonly bool IsLocationNegativeOrSizeEmpty
+        {
+            get
+            {
+                return x < CoordD.Empty || y < CoordD.Empty
+                    || width <= CoordD.Empty || height <= CoordD.Empty;
+            }
+        }
+
+        /// <summary>
+        /// Gets a value indicating whether location is negative.
+        /// </summary>
+        [Browsable(false)]
+        public readonly bool IsLocationNegative
+        {
+            get
+            {
+                return x < CoordD.Empty || y < CoordD.Empty;
+            }
+        }
+
+        /// <summary>
         /// Gets whether height is less or equal 0.
         /// </summary>
         [Browsable(false)]
-        public readonly bool HasEmptyHeight => height <= 0;
+        public readonly bool HasEmptyHeight => height <= CoordD.Empty;
 
         /// <summary>
         /// Gets whether width is less or equal 0.
         /// </summary>
         [Browsable(false)]
-        public readonly bool HasEmptyWidth => width <= 0;
+        public readonly bool HasEmptyWidth => width <= CoordD.Empty;
 
         /// <summary>
         /// Gets or sets the size of this <see cref='RectD'/>.
@@ -216,7 +255,8 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
-        /// Gets the x-coordinate of the lower-right corner of the rectangular region defined by this
+        /// Gets the x-coordinate of the lower-right corner of the rectangular
+        /// region defined by this
         /// <see cref='RectD'/>.
         /// </summary>
         [Browsable(false)]
@@ -230,7 +270,8 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
-        /// Gets the y-coordinate of the lower-right corner of the rectangular region defined by this
+        /// Gets the y-coordinate of the lower-right corner of the rectangular
+        /// region defined by this
         /// <see cref='RectD'/>.
         /// </summary>
         [Browsable(false)]
@@ -251,20 +292,34 @@ namespace Alternet.Drawing
         public readonly bool SizeIsEmpty
         {
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
-            get => (width <= 0) || (height <= 0);
+            get => (width <= CoordD.Empty) || (height <= CoordD.Empty);
         }
 
         /// <summary>
         /// Tests whether this <see cref='RectD'/> has all properties equal to 0.
         /// </summary>
         [Browsable(false)]
-        public readonly bool IsZero => (width == 0) && (height == 0) && (x == 0) && (y == 0);
+        public readonly bool IsZero
+        {
+            get
+            {
+                return (width == CoordD.Empty) && (height == CoordD.Empty)
+                    && (x == CoordD.Empty) && (y == CoordD.Empty);
+            }
+        }
 
         /// <summary>
         /// Tests whether this <see cref='RectD'/> has all properties equal to 0.
         /// </summary>
         [Browsable(false)]
-        public readonly bool IsEmpty => (width == 0) && (height == 0) && (x == 0) && (y == 0);
+        public readonly bool IsEmpty
+        {
+            get
+            {
+                return (width == CoordD.Empty) && (height == CoordD.Empty)
+                    && (x == CoordD.Empty) && (y == CoordD.Empty);
+            }
+        }
 
         /// <summary>
         /// This is a read-only alias for the point which is at (X, Y).
@@ -336,13 +391,13 @@ namespace Alternet.Drawing
         {
             readonly get
             {
-                return Location + (Size / 2);
+                return Location + (Size / CoordD.Two);
             }
 
             set
             {
-                x = value.X - (width / 2);
-                y = value.Y - (height / 2);
+                x = value.X - (width / CoordD.Two);
+                y = value.Y - (height / CoordD.Two);
             }
         }
 
@@ -354,7 +409,7 @@ namespace Alternet.Drawing
         {
             get
             {
-                return (x + (width / 2), y);
+                return (x + (width / CoordD.Two), y);
             }
         }
 
@@ -366,7 +421,7 @@ namespace Alternet.Drawing
         {
             get
             {
-                return (x + (width / 2), Bottom);
+                return (x + (width / CoordD.Two), Bottom);
             }
         }
 
@@ -489,7 +544,7 @@ namespace Alternet.Drawing
         /// <param name="radius">Circle radius.</param>
         public static RectD GetCircleBoundingBox(PointD center, Coord radius)
         {
-            var diameter = radius * 2;
+            var diameter = radius * CoordD.Two;
             RectD rect = (center.X - radius, center.Y - radius, diameter, diameter);
             return rect;
         }
@@ -503,7 +558,7 @@ namespace Alternet.Drawing
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static RectD Create(Coord width, Coord height)
         {
-            return new RectD(0, 0, width, height);
+            return new RectD(CoordD.Empty, CoordD.Empty, width, height);
         }
 
         /// <summary>
@@ -536,8 +591,8 @@ namespace Alternet.Drawing
         public static RectD FromCenter(PointD center, SizeD size)
         {
             return new RectD(
-                center.X - (size.Width / 2),
-                center.Y - (size.Height / 2),
+                center.X - (size.Width / CoordD.Two),
+                center.Y - (size.Height / CoordD.Two),
                 size.Width,
                 size.Height);
         }
@@ -700,7 +755,8 @@ namespace Alternet.Drawing
         /// <param name="percent">Value from 0 to 100.</param>
         /// <returns></returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public readonly Coord PercentOfWidth(Coord percent) => MathUtils.PercentOf(width, percent);
+        public readonly Coord PercentOfWidth(Coord percent)
+            => MathUtils.PercentOf(width, percent);
 
         /// <summary>
         /// Gets percentage of minimal size. Chooses minimum of <see cref="Width"/> and
@@ -718,7 +774,8 @@ namespace Alternet.Drawing
         /// <param name="percent">Value from 0 to 100.</param>
         /// <returns></returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public readonly Coord PercentOfHeight(Coord percent) => MathUtils.PercentOf(height, percent);
+        public readonly Coord PercentOfHeight(Coord percent)
+            => MathUtils.PercentOf(height, percent);
 
         /// <summary>
         /// Tests whether <paramref name="obj"/> is a <see cref='RectD'/> with the
@@ -726,8 +783,8 @@ namespace Alternet.Drawing
         /// size of this <see cref='RectD'/>.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public override readonly bool Equals([NotNullWhen(true)] object? obj) =>
-            obj is RectD rect && Equals(rect);
+        public override readonly bool Equals([NotNullWhen(true)] object? obj)
+            => obj is RectD rect && Equals(rect);
 
         /// <summary>
         /// Indicates whether the current object is equal to another object of the same type.
@@ -763,7 +820,8 @@ namespace Alternet.Drawing
         /// Gets <see cref="X"/> or <see cref="Y"/> depending on <paramref name="vert"/>
         /// parameter value.
         /// </summary>
-        /// <param name="vert">Defines whether to return <see cref="X"/> or <see cref="Y"/>.</param>
+        /// <param name="vert">Defines whether to return <see cref="X"/>
+        /// or <see cref="Y"/>.</param>
         /// <returns></returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public readonly Coord GetLocation(bool vert)
@@ -822,10 +880,12 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
-        /// Gets <see cref="Right"/> or <see cref="Bottom"/> depending on <paramref name="vert"/>
+        /// Gets <see cref="Right"/> or <see cref="Bottom"/> depending
+        /// on <paramref name="vert"/>
         /// parameter value.
         /// </summary>
-        /// <param name="vert">Defines whether to get <see cref="Right"/> or <see cref="Bottom"/>.</param>
+        /// <param name="vert">Defines whether to get <see cref="Right"/>
+        /// or <see cref="Bottom"/>.</param>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public readonly Coord GetFarLocation(bool vert)
         {
@@ -839,7 +899,8 @@ namespace Alternet.Drawing
         /// Sets <see cref="Right"/> or <see cref="Bottom"/> depending on <paramref name="vert"/>
         /// parameter value.
         /// </summary>
-        /// <param name="vert">Defines whether to set <see cref="Right"/> or <see cref="Bottom"/>.</param>
+        /// <param name="vert">Defines whether to set <see cref="Right"/>
+        /// or <see cref="Bottom"/>.</param>
         /// <param name="value">New value.</param>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void SetFarLocation(bool vert, Coord value)
@@ -903,8 +964,8 @@ namespace Alternet.Drawing
         {
             x -= dx;
             y -= dy;
-            width += 2 * dx;
-            height += 2 * dy;
+            width += CoordD.Two * dx;
+            height += CoordD.Two * dy;
         }
 
         /// <summary>
@@ -914,7 +975,7 @@ namespace Alternet.Drawing
         public void InflateVert(Coord dx, Coord dy)
         {
             y -= dy;
-            height += 2 * dy;
+            height += CoordD.Two * dy;
         }
 
         /// <summary>
@@ -924,7 +985,7 @@ namespace Alternet.Drawing
         public void InflateHorz(Coord dx)
         {
             x -= dx;
-            width += 2 * dx;
+            width += CoordD.Two * dx;
         }
 
         /// <summary>
@@ -1021,10 +1082,10 @@ namespace Alternet.Drawing
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void Inflate()
         {
-            x -= 1;
-            y -= 1;
-            width += 2;
-            height += 2;
+            x -= CoordD.One;
+            y -= CoordD.One;
+            width += CoordD.Two;
+            height += CoordD.Two;
         }
 
         /// <summary>
@@ -1035,10 +1096,10 @@ namespace Alternet.Drawing
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void Deflate()
         {
-            x += 1;
-            y += 1;
-            width -= 2;
-            height -= 2;
+            x += CoordD.One;
+            y += CoordD.One;
+            width -= CoordD.Two;
+            height -= CoordD.Two;
         }
 
         /// <summary>
@@ -1080,8 +1141,8 @@ namespace Alternet.Drawing
         public readonly RectD CenterIn(RectD r, bool centerHorz = true, bool centerVert = true)
         {
             return new RectD(
-                centerHorz ? r.x + ((r.width - width) / 2) : x,
-                centerVert ? r.y + ((r.height - height) / 2) : y,
+                centerHorz ? r.x + ((r.width - width) / CoordD.Two) : x,
+                centerVert ? r.y + ((r.height - height) / CoordD.Two) : y,
                 width,
                 height);
         }
