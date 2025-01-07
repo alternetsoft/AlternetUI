@@ -44,12 +44,12 @@ namespace Alternet.Drawing
         /// <summary>
         /// Gets a point with (-1, -1) ccordinates.
         /// </summary>
-        public static readonly PointD MinusOne = new(-1d, -1d);
+        public static readonly PointD MinusOne = new(CoordD.MinusOne, CoordD.MinusOne);
 
         /// <summary>
         /// Gets a point with (1, 1) ccordinates.
         /// </summary>
-        public static readonly PointD One = new(1d, 1d);
+        public static readonly PointD One = new(CoordD.One, CoordD.One);
 
         private Coord x; // Do not rename (binary serialization)
         private Coord y; // Do not rename (binary serialization)
@@ -77,7 +77,8 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref='Drawing.PointD'/> struct from the specified
+        /// Initializes a new instance of the <see cref='Drawing.PointD'/>
+        /// struct from the specified
         /// <see cref="System.Numerics.Vector2"/>.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -88,10 +89,16 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
-        /// Gets a value indicating whether this <see cref='Drawing.PointD'/> is empty.
+        /// Gets a value indicating whether this <see cref='PointD'/> is empty.
         /// </summary>
         [Browsable(false)]
-        public readonly bool IsEmpty => x == 0f && y == 0f;
+        public readonly bool IsEmpty => x == CoordD.Empty && y == CoordD.Empty;
+
+        /// <summary>
+        /// Gets a value indicating whether this <see cref='PointD'/> has X or Y negative.
+        /// </summary>
+        [Browsable(false)]
+        public readonly bool IsAnyNegative => x < CoordD.Empty || y < CoordD.Empty;
 
         /// <summary>
         /// Gets the x-coordinate of this <see cref='Drawing.PointD'/>.
@@ -195,7 +202,7 @@ namespace Alternet.Drawing
         public static PointD operator -(PointD pt, PointD pt2) => Subtract(pt, pt2);
 
         /// <summary>
-        /// Translates a <see cref='Drawing.PointD'/> by a given <see cref='Drawing.SizeD'/>.
+        /// Translates a <see cref='Drawing.PointD'/> by a given <see cref='SizeD'/>.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static PointD operator +(PointD pt, SizeD sz) => Add(pt, sz);
@@ -208,7 +215,7 @@ namespace Alternet.Drawing
             new(pt.X + offset, pt.Y + offset);
 
         /// <summary>
-        /// Translates a <see cref='Drawing.PointD'/> by the negative of a given
+        /// Translates a <see cref='PointD'/> by the negative of a given
         /// <see cref='Drawing.SizeD'/>.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -217,59 +224,68 @@ namespace Alternet.Drawing
         /// <summary>
         /// Compares two <see cref='Drawing.PointD'/> objects. The result specifies whether
         /// the values of the
-        /// <see cref='Drawing.PointD.X'/> and <see cref='Drawing.PointD.Y'/> properties of the two
+        /// <see cref='Drawing.PointD.X'/> and <see cref='Drawing.PointD.Y'/>
+        /// properties of the two
         /// <see cref='Drawing.PointD'/> objects are equal.
         /// </summary>
-        public static bool operator ==(PointD left, PointD right) => left.X == right.X &&
-            left.Y == right.Y;
+        public static bool operator ==(PointD left, PointD right)
+            => left.X == right.X && left.Y == right.Y;
 
         /// <summary>
         /// Compares two <see cref='Drawing.PointD'/> objects. The result specifies whether
         /// the values of the
-        /// <see cref='Drawing.PointD.X'/> or <see cref='Drawing.PointD.Y'/> properties of the two
+        /// <see cref='Drawing.PointD.X'/> or <see cref='Drawing.PointD.Y'/>
+        /// properties of the two
         /// <see cref='Drawing.PointD'/> objects are unequal.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static bool operator !=(PointD left, PointD right) => !(left == right);
+        public static bool operator !=(PointD left, PointD right)
+            => !(left == right);
 
         /// <summary>
         /// Translates a <see cref='Drawing.PointD'/> by a given <see cref='Drawing.SizeI'/>.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static PointD Add(PointD pt, SizeI sz) => new(pt.X + sz.Width, pt.Y + sz.Height);
+        public static PointD Add(PointD pt, SizeI sz)
+            => new(pt.X + sz.Width, pt.Y + sz.Height);
 
         /// <summary>
         /// Translates a <see cref='Drawing.PointD'/> by a given <see cref='Drawing.PointD'/>.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static PointD Add(PointD pt, PointD pt2) => new(pt.X + pt2.X, pt.Y + pt2.Y);
+        public static PointD Add(PointD pt, PointD pt2)
+            => new(pt.X + pt2.X, pt.Y + pt2.Y);
 
         /// <summary>
         /// Translates a <see cref='Drawing.PointD'/> by the negative of a given
         /// <see cref='Drawing.SizeI'/>.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static PointD Subtract(PointD pt, SizeI sz) => new(pt.X - sz.Width, pt.Y - sz.Height);
+        public static PointD Subtract(PointD pt, SizeI sz)
+            => new(pt.X - sz.Width, pt.Y - sz.Height);
 
         /// <summary>
         /// Translates a <see cref='Drawing.PointD'/> by the negative of a given
         /// <see cref='Drawing.PointD'/>.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static PointD Subtract(PointD pt, PointD pt2) => new(pt.X - pt2.X, pt.Y - pt2.Y);
+        public static PointD Subtract(PointD pt, PointD pt2)
+            => new(pt.X - pt2.X, pt.Y - pt2.Y);
 
         /// <summary>
         /// Translates a <see cref='Drawing.PointD'/> by a given <see cref='Drawing.SizeD'/>.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static PointD Add(PointD pt, SizeD sz) => new(pt.X + sz.Width, pt.Y + sz.Height);
+        public static PointD Add(PointD pt, SizeD sz)
+            => new(pt.X + sz.Width, pt.Y + sz.Height);
 
         /// <summary>
         /// Translates a <see cref='Drawing.PointD'/> by the negative of a given
         /// <see cref='Drawing.SizeD'/>.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static PointD Subtract(PointD pt, SizeD sz) => new(pt.X - sz.Width, pt.Y - sz.Height);
+        public static PointD Subtract(PointD pt, SizeD sz)
+            => new(pt.X - sz.Width, pt.Y - sz.Height);
 
         /// <summary>
         /// Returns an instance converted from the provided string using
@@ -305,7 +321,8 @@ namespace Alternet.Drawing
         /// Gets <see cref="X"/> or <see cref="Y"/> depending on <paramref name="vert"/>
         /// parameter value.
         /// </summary>
-        /// <param name="vert">Defines whether to return <see cref="X"/> or <see cref="Y"/>.</param>
+        /// <param name="vert">Defines whether to return <see cref="X"/>
+        /// or <see cref="Y"/>.</param>
         /// <returns></returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public readonly Coord GetLocation(bool vert)
@@ -329,7 +346,8 @@ namespace Alternet.Drawing
         /// Increments <see cref="X"/> or <see cref="Y"/> depending on <paramref name="vert"/>
         /// parameter value.
         /// </summary>
-        /// <param name="vert">Defines whether to increment <see cref="X"/> or <see cref="Y"/>.</param>
+        /// <param name="vert">Defines whether to increment <see cref="X"/>
+        /// or <see cref="Y"/>.</param>
         /// <param name="value">Value to add to the location.</param>
         public void IncLocation(bool vert, Coord value)
         {

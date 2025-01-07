@@ -31,17 +31,17 @@ namespace Alternet.Drawing
         /// <summary>
         /// Gets <see cref="SizeD"/> with width and height equal to -1.
         /// </summary>
-        public static readonly SizeD Default = new(-1d, -1d);
+        public static readonly SizeD Default = new(CoordD.MinusOne, CoordD.MinusOne);
 
         /// <summary>
         /// Gets <see cref="SizeD"/> with width and height equal to -1.
         /// </summary>
-        public static readonly SizeD MinusOne = new(-1d, -1d);
+        public static readonly SizeD MinusOne = new(CoordD.MinusOne, CoordD.MinusOne);
 
         /// <summary>
         /// Gets <see cref="SizeD"/> with width and height equal to 1.
         /// </summary>
-        public static readonly SizeD One = new(1d, 1d);
+        public static readonly SizeD One = new(CoordD.One, CoordD.One);
 
         /// <summary>
         /// Gets <see cref="SizeD"/> with width and height equal
@@ -115,7 +115,8 @@ namespace Alternet.Drawing
         /// <summary>
         /// Initializes a new instance of the <see cref="SizeD"/> struct.
         /// </summary>
-        /// <param name="widthAndHeight"><see cref="Width"/> and <see cref="Height"/> values.</param>
+        /// <param name="widthAndHeight"><see cref="Width"/>
+        /// and <see cref="Height"/> values.</param>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public SizeD(Coord widthAndHeight)
         {
@@ -155,7 +156,7 @@ namespace Alternet.Drawing
         {
             get
             {
-                var result = Math.Pow(Width, 2) + Math.Pow(Height, 2);
+                var result = Math.Pow(Width, CoordD.Two) + Math.Pow(Height, CoordD.Two);
                 result = Math.Sqrt(result);
                 return result;
             }
@@ -191,7 +192,7 @@ namespace Alternet.Drawing
         /// Tests whether this <see cref='Drawing.SizeD'/> has zero width and height.
         /// </summary>
         [Browsable(false)]
-        public readonly bool IsEmpty => width == 0 && height == 0;
+        public readonly bool IsEmpty => width == CoordD.Empty && height == CoordD.Empty;
 
         /// <summary>
         /// Gets <see cref="SizeD"/> with absolute values of (Width, Height).
@@ -203,13 +204,13 @@ namespace Alternet.Drawing
         /// Tests whether this <see cref='SizeD'/> has zero width or height.
         /// </summary>
         [Browsable(false)]
-        public readonly bool AnyIsEmpty => width == 0 || height == 0;
+        public readonly bool AnyIsEmpty => width == CoordD.Empty || height == CoordD.Empty;
 
         /// <summary>
         /// Tests whether this <see cref='SizeD'/> has zero (or negative) width or height.
         /// </summary>
         [Browsable(false)]
-        public readonly bool AnyIsEmptyOrNegative => width <= 0 || height <= 0;
+        public readonly bool AnyIsEmptyOrNegative => width <= CoordD.Empty || height <= CoordD.Empty;
 
         /// <summary>
         /// Represents the horizontal component of this <see cref='Drawing.SizeD'/>.
@@ -229,8 +230,8 @@ namespace Alternet.Drawing
         {
             get
             {
-                var w = width == 0 ? Coord.PositiveInfinity : width;
-                var h = height == 0 ? Coord.PositiveInfinity : height;
+                var w = width == CoordD.Empty ? Coord.PositiveInfinity : width;
+                var h = height == CoordD.Empty ? Coord.PositiveInfinity : height;
                 return (w, h);
             }
         }
@@ -533,9 +534,9 @@ namespace Alternet.Drawing
         public readonly SizeD ApplyMin(SizeD min)
         {
             var result = this;
-            if (min.Width >= 0 && result.Width < min.Width)
+            if (min.Width >= CoordD.Empty && result.Width < min.Width)
                 result.Width = min.Width;
-            if (min.Height >= 0 && result.Height < min.Height)
+            if (min.Height >= CoordD.Empty && result.Height < min.Height)
                 result.Height = min.Height;
             return result;
         }
@@ -549,9 +550,9 @@ namespace Alternet.Drawing
         public readonly SizeD ApplyMax(SizeD max)
         {
             var result = this;
-            if (max.Width > 0 && result.Width > max.Width)
+            if (max.Width > CoordD.Empty && result.Width > max.Width)
                 result.Width = max.Width;
-            if (max.Height > 0 && result.Height > max.Height)
+            if (max.Height > CoordD.Empty && result.Height > max.Height)
                 result.Height = max.Height;
             return result;
         }
