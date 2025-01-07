@@ -55,27 +55,6 @@ namespace Alternet.UI
             set => BorderSettings.Default.Width = value;
         }
 
-        /// <inheritdoc/>
-        public override RectD ChildrenLayoutBounds
-        {
-            get
-            {
-                var bounds = base.ChildrenLayoutBounds;
-
-                if (HasBorder)
-                {
-                    bounds.X += BorderWidth.Left;
-                    bounds.Y += BorderWidth.Top;
-                    if (bounds.SizeIsEmpty)
-                        return bounds;
-                    bounds.Width -= BorderWidth.Horizontal;
-                    bounds.Height -= BorderWidth.Vertical;
-                }
-
-                return bounds;
-            }
-        }
-
         /// <summary>
         /// Gets or sets the border width for the <see cref="Border"/> control.
         /// </summary>
@@ -270,6 +249,21 @@ namespace Alternet.UI
                 else
                     Borders.Normal?.Assign(value);
             }
+        }
+
+        /// <summary>
+        /// Gets <see cref="Thickness"/> that represents border widths for the specified control.
+        /// </summary>
+        /// <param name="control">Control to get border widths for.</param>
+        /// <returns></returns>
+        public static Thickness SafeBorderWidth(AbstractControl? control)
+        {
+            if (control is not null && control.HasBorder)
+            {
+                return control.Borders?.Normal?.Width ?? Thickness.Empty;
+            }
+            else
+                return Thickness.Empty;
         }
 
         /// <summary>
