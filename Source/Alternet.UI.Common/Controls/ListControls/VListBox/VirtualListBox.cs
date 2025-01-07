@@ -117,18 +117,6 @@ namespace Alternet.UI
             }
         }
 
-        /// <summary>
-        /// Gets or sets whether horizontal scrollbar is visible in the control.
-        /// </summary>
-        public virtual bool HorizontalScrollbar
-        {
-            get => false;
-
-            set
-            {
-            }
-        }
-
         /// <inheritdoc/>
         public override bool UserPaint
         {
@@ -166,7 +154,10 @@ namespace Alternet.UI
                     return;
                 if (Count == value)
                     return;
-                SafeItems().SetCount(value, () => new ListControlItem());
+                DoInsideUpdate(() =>
+                {
+                    SafeItems().SetCount(value, () => new ListControlItem());
+                });
             }
         }
 
