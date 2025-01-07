@@ -1095,13 +1095,6 @@ namespace Alternet.UI
         RectD ClientRectangle { get; }
 
         /// <summary>
-        /// Gets a rectangle which describes an area inside of the
-        /// <see cref="AbstractControl"/> available
-        /// for positioning (layout) of its child controls, in device-independent units.
-        /// </summary>
-        RectD ChildrenLayoutBounds { get; }
-
-        /// <summary>
         /// Gets or sets the site of the control.
         /// </summary>
         /// <returns>The <see cref="System.ComponentModel.ISite" /> associated

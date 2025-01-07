@@ -454,6 +454,18 @@ namespace Alternet.UI
             return ControlFactory.Handler.CreateScrollBarHandler(this);
         }
 
+        /// <inheritdoc/>
+        protected override void OnLocationChanged(EventArgs e)
+        {
+            base.OnLocationChanged(e);
+        }
+
+        /// <inheritdoc/>
+        protected override void OnSizeChanged(EventArgs e)
+        {
+            base.OnSizeChanged(e);
+        }
+
         /// <summary>
         /// Sets the native scrollbar properties.
         /// </summary>

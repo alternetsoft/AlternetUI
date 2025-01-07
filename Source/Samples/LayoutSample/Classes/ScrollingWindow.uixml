@@ -137,8 +137,8 @@
     <GroupBox Title="Drawing" IsTitleLocalized="true"
               Padding="10" Grid.Row="0" Grid.Column="1" Margin="10,0,0,0">
       <StackPanel Orientation="Vertical">
-        <Border VerticalAlignment="Top" HorizontalAlignment="Left" HasBorder="false" Padding="5">
-          <ScrollViewer SuggestedWidth="200" SuggestedHeight="200" Name="imageScrollViewer">
+        <Border VerticalAlignment="Top" HorizontalAlignment="Left" HasBorder="true" Padding="5">
+          <ScrollViewer SuggestedSize="200, 200" Name="imageScrollViewer">
           </ScrollViewer>
         </Border>
         <Grid Margin="0,10,0,0">
