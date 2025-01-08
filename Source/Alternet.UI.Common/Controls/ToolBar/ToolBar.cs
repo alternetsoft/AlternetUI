@@ -49,7 +49,7 @@ namespace Alternet.UI
         /// <summary>
         /// Enumerates all toolbar item kinds.
         /// </summary>
-        protected enum ItemKind
+        public enum ItemKind
         {
             /// <summary>
             /// Item is button.
@@ -471,17 +471,22 @@ namespace Alternet.UI
         /// </summary>
         public virtual ObjectUniqueId AddSpeedBtn()
         {
-            var result = InternalAddSpeedBtn(
-                ItemKind.Button,
-                null,
-                KnownSvgImages.ImgEmpty.AsImageSet(GetImageSize()),
-                null);
-            result.Enabled = false;
+            var result = AddSpeedBtnCore();
             return result.UniqueId;
         }
 
         /// <summary>
-        /// Adds <see cref="SpeedButton"/> to the control with svg image.
+        /// Adds an empty disabled <see cref="SpeedButton"/> aligned to the right.
+        /// </summary>
+        public virtual ObjectUniqueId AddRightSpeedBtn()
+        {
+            var result = AddSpeedBtnCore();
+            result.HorizontalAlignment = HorizontalAlignment.Right;
+            return result.UniqueId;
+        }
+
+        /// <summary>
+        /// Adds <see cref="SpeedButton"/> with svg image.
         /// </summary>
         /// <param name="text">Item text.</param>
         /// <param name="image">Item image.</param>
@@ -492,12 +497,35 @@ namespace Alternet.UI
             SvgImage? image,
             EventHandler? action)
         {
-            return AddSpeedBtn(
+            var result = AddSpeedBtnCore(
                 text,
-                ToNormal(image),
-                ToDisabled(image),
+                image,
                 null,
                 action);
+            return result.UniqueId;
+        }
+
+        /// <summary>
+        /// Adds <see cref="SpeedButton"/> aligned to the right.
+        /// </summary>
+        /// <param name="text">Item text.</param>
+        /// <param name="image">Item image.</param>
+        /// <param name="toolTip">Item tooltip.</param>
+        /// <param name="action">Click action.</param>
+        /// <returns><see cref="ObjectUniqueId"/> of the added item.</returns>
+        public virtual ObjectUniqueId AddRightSpeedBtn(
+            string? text,
+            SvgImage? image,
+            string? toolTip = null,
+            EventHandler? action = null)
+        {
+            var result = AddSpeedBtnCore(
+                text,
+                image,
+                toolTip,
+                action);
+            result.HorizontalAlignment = HorizontalAlignment.Right;
+            return result.UniqueId;
         }
 
         /// <summary>
@@ -514,12 +542,36 @@ namespace Alternet.UI
             string? toolTip = null,
             EventHandler? action = null)
         {
-            return AddSpeedBtn(
+            var result = AddSpeedBtnCore(
+                text,
+                image,
+                toolTip,
+                action);
+            return result.UniqueId;
+        }
+
+        /// <summary>
+        /// Adds <see cref="SpeedButton"/> to the control.
+        /// </summary>
+        /// <param name="text">Item text.</param>
+        /// <param name="image">Item image.</param>
+        /// <param name="toolTip">Item tooltip.</param>
+        /// <param name="action">Click action.</param>
+        /// <returns><see cref="ObjectUniqueId"/> of the added item.</returns>
+        public virtual SpeedButton AddSpeedBtnCore(
+            string? text,
+            SvgImage? image,
+            string? toolTip = null,
+            EventHandler? action = null)
+        {
+            var result = AddSpeedBtnCore(
+                ItemKind.Button,
                 text,
                 ToNormal(image),
                 ToDisabled(image),
                 toolTip,
                 action);
+            return result;
         }
 
         /// <summary>
@@ -538,7 +590,7 @@ namespace Alternet.UI
             string? toolTip = null,
             EventHandler? action = null)
         {
-            var result = InternalAddSpeedBtn(
+            var result = AddSpeedBtnCore(
                 ItemKind.Button,
                 text,
                 imageSet,
@@ -586,7 +638,7 @@ namespace Alternet.UI
             string? toolTip = null,
             EventHandler? action = null)
         {
-            var result = InternalAddSpeedBtn(
+            var result = AddSpeedBtnCore(
                 ItemKind.ButtonSticky,
                 text,
                 imageSet,
@@ -1633,6 +1685,20 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Adds an empty disabled <see cref="SpeedButton"/> to the control.
+        /// </summary>
+        public virtual SpeedButton AddSpeedBtnCore()
+        {
+            var result = AddSpeedBtnCore(
+                ItemKind.Button,
+                null,
+                KnownSvgImages.ImgEmpty.AsImageSet(GetImageSize()),
+                null);
+            result.Enabled = false;
+            return result;
+        }
+
+        /// <summary>
         /// Adds <see cref="SpeedButton"/> to the control.
         /// </summary>
         /// <param name="text">Item text.</param>
@@ -1641,7 +1707,7 @@ namespace Alternet.UI
         /// <param name="imageSetDisabled">Item disabled image.</param>
         /// <param name="toolTip">Item tooltip.</param>
         /// <param name="action">Click action.</param>
-        protected virtual SpeedButton InternalAddSpeedBtn(
+        public virtual SpeedButton AddSpeedBtnCore(
             ItemKind itemKind,
             string? text,
             ImageSet? imageSet,

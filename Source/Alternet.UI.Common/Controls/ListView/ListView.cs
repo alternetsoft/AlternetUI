@@ -638,13 +638,13 @@ namespace Alternet.UI
         /// In order to have border place <see cref="ListView"/> inside <see cref="Border"/> control.
         /// </remarks>
         [Browsable(false)]
-        public virtual bool HasBorder
+        public override bool HasBorder
         {
             get
             {
                 if (DisposingOrDisposed)
                     return default;
-                return Handler.HasBorder;
+                return base.Handler.HasBorder;
             }
 
             set

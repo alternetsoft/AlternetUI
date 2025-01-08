@@ -394,6 +394,28 @@ namespace Alternet.Drawing
             HashCode.Combine(Width, Height);
 
         /// <summary>
+        /// Creates new <see cref="SizeI"/> with the height of this object
+        /// and the specified width.
+        /// </summary>
+        /// <param name="newWidth">The width to use in the returned <see cref="SizeI"/>.</param>
+        /// <returns></returns>
+        public readonly SizeI WithWidth(int newWidth)
+        {
+            return new(newWidth, height);
+        }
+
+        /// <summary>
+        /// Creates new <see cref="SizeI"/> with the width of this object
+        /// and the specified height.
+        /// </summary>
+        /// <param name="newHeight">The height to use in the returned <see cref="SizeI"/>.</param>
+        /// <returns></returns>
+        public readonly SizeI WithHeight(int newHeight)
+        {
+            return new(width, newHeight);
+        }
+
+        /// <summary>
         /// Creates a human-readable string that represents this
         /// <see cref='SizeI'/>.
         /// </summary>

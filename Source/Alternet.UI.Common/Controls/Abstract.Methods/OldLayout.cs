@@ -144,6 +144,7 @@ namespace Alternet.UI
                     new SizeD(
                         availableWidth,
                         childrenLayoutBounds.Height));
+
                 var alignedPosition =
                     AbstractControl.AlignVertical(
                         childrenLayoutBounds,

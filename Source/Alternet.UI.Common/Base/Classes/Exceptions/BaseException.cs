@@ -48,6 +48,12 @@ namespace Alternet.UI
         public static event EventHandler<ExceptionCreatedEventArgs>? ExceptionCreated;
 
         /// <summary>
+        /// Gets or sets an additional information for the exception.
+        /// This is used in the <see cref="ThreadExceptionWindow"/>.
+        /// </summary>
+        public string? AdditionalInformation { get; set; }
+
+        /// <summary>
         /// Raises <see cref="ExceptionCreated"/> event.
         /// </summary>
         /// <param name="sender">Exception object to pass as sender parameter.</param>

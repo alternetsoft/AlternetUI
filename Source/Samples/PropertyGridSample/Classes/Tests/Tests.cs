@@ -53,6 +53,15 @@ namespace PropertyGridSample
             InitTestsListView();
             InitTestsButton();
             InitTestsSpeedButton();
+            InitTestsTabControl();
+
+            void InitTestsTabControl()
+            {
+                AddControlAction<TabControl>("Enum loaded pages", (c) =>
+                {
+                    LogUtils.LogRange(c.LoadedPages.Select(x => x.GetType()));
+                });
+            }
 
             void InitTestsButton()
             {

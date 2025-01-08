@@ -59,6 +59,25 @@ namespace Alternet.UI
         public Collection<CardPanelItem> Cards { get; } = new();
 
         /// <summary>
+        /// Gets the collection of the loaded cards.
+        /// </summary>
+        [Browsable(false)]
+        public IEnumerable<CardPanelItem> LoadedCards
+        {
+            get
+            {
+                foreach (var item in Cards)
+                {
+                    if (!item.ControlCreated)
+                        continue;
+                    var control = item.Control;
+                    if (control is not null)
+                        yield return item;
+                }
+            }
+        }
+
+        /// <summary>
         /// Gets or sets selected card.
         /// </summary>
         [Browsable(false)]

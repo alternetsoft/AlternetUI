@@ -67,9 +67,6 @@ namespace Alternet.UI
         /// <inheritdoc cref="TextBox.Multiline"/>
         bool Multiline { get; set; }
 
-        /// <inheritdoc cref="TextBox.HasBorder"/>
-        bool HasBorder { get; set; }
-
         /// <inheritdoc cref="TextBox.ReadOnly"/>
         bool ReadOnly { get; set; }
 

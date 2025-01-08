@@ -39,7 +39,7 @@ namespace Alternet.UI
         /// Gets an empty <see cref="Thickness"/> object with
         /// Left, Top, Right, Bottom properties equal to 1.
         /// </summary>
-        public static readonly Thickness One = new(1);
+        public static readonly Thickness One = new(CoordD.One);
 
         private Coord left;
         private Coord top;
@@ -102,7 +102,8 @@ namespace Alternet.UI
         /// </summary>
         [Browsable(false)]
         public readonly bool IsPositive =>
-            (left > 0) && (right > 0) && (top > 0) && (bottom > 0);
+            (left > CoordD.Empty) && (right > CoordD.Empty)
+            && (top > CoordD.Empty) && (bottom > CoordD.Empty);
 
         /// <summary>
         /// Returns whether any value on the side is positive
@@ -110,7 +111,8 @@ namespace Alternet.UI
         /// </summary>
         [Browsable(false)]
         public readonly bool IsAnyPositive =>
-            (left > 0) || (right > 0) || (top > 0) || (bottom > 0);
+            (left > CoordD.Empty) || (right > CoordD.Empty)
+            || (top > CoordD.Empty) || (bottom > CoordD.Empty);
 
         /// <summary>
         /// Gets the combined padding information in the form of a
@@ -473,10 +475,10 @@ namespace Alternet.UI
         {
             if (!reset)
                 return;
-            left = 0;
-            top = 0;
-            right = 0;
-            bottom = 0;
+            left = CoordD.Empty;
+            top = CoordD.Empty;
+            right = CoordD.Empty;
+            bottom = CoordD.Empty;
         }
 
         /// <summary>

@@ -33,11 +33,6 @@ namespace Alternet.UI
             throw new NotImplementedException();
         }
 
-        IControlHandler IControlFactoryHandler.CreateCheckListBoxHandler(CheckListBox control)
-        {
-            throw new NotImplementedException();
-        }
-
         IPropertyGridChoices IControlFactoryHandler.CreateChoices()
         {
             throw new NotImplementedException();
@@ -79,11 +74,6 @@ namespace Alternet.UI
         }
 
         IControlHandler IControlFactoryHandler.CreateLinkLabelHandler(LinkLabel control)
-        {
-            throw new NotImplementedException();
-        }
-
-        IControlHandler IControlFactoryHandler.CreateListBoxHandler(ListBox control)
         {
             throw new NotImplementedException();
         }

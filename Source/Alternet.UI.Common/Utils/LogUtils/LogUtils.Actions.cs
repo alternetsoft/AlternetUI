@@ -223,6 +223,8 @@ namespace Alternet.UI
                 LogImage(image);
             });
 
+            Fn("Test wxCHECK_MSG", () => { WebBrowser.DoCommandGlobal("wxCHECK_MSG"); });
+
             Fn("Log Embedded Resources in Alternet.UI.Common", () =>
             {
                 const string s = "embres:Alternet.UI?assembly=Alternet.UI.Common";
@@ -451,14 +453,29 @@ namespace Alternet.UI
         {
             App.LogNameValue("SKImageInfo.PlatformColorType", SKImageInfo.PlatformColorType);
 
-            App.LogNameValue("SKImageInfo.PlatformColorAlphaShift", SKImageInfo.PlatformColorAlphaShift);
+            App.LogNameValue(
+                "SKImageInfo.PlatformColorAlphaShift",
+                SKImageInfo.PlatformColorAlphaShift);
+
             App.LogNameValue("SKImageInfo.PlatformColorRedShift", SKImageInfo.PlatformColorRedShift);
-            App.LogNameValue("SKImageInfo.PlatformColorGreenShift", SKImageInfo.PlatformColorGreenShift);
-            App.LogNameValue("SKImageInfo.PlatformColorBlueShift", SKImageInfo.PlatformColorBlueShift);
+
+            App.LogNameValue(
+                "SKImageInfo.PlatformColorGreenShift",
+                SKImageInfo.PlatformColorGreenShift);
+
+            App.LogNameValue(
+                "SKImageInfo.PlatformColorBlueShift",
+                SKImageInfo.PlatformColorBlueShift);
 
             LogSkiaBitmap(new SKBitmap(), "new SKBitmap():");
-            LogSkiaBitmap(new SKBitmap(50, 50, isOpaque: true), "new SKBitmap(50, 50, isOpaque: true):");
-            LogSkiaBitmap(new SKBitmap(50, 50, isOpaque: false), "new SKBitmap(50, 50, isOpaque: false):");
+
+            LogSkiaBitmap(
+                new SKBitmap(50, 50, isOpaque: true),
+                "new SKBitmap(50, 50, isOpaque: true):");
+
+            LogSkiaBitmap(
+                new SKBitmap(50, 50, isOpaque: false),
+                "new SKBitmap(50, 50, isOpaque: false):");
         }
 
         /// <summary>
@@ -530,20 +547,39 @@ namespace Alternet.UI
             App.LogNameValue("BaselineSnap", font.BaselineSnap);
             App.LogNameValue("Size", font.Size);
             App.LogNameValue("Spacing", font.Spacing);
-            App.LogNameValue("Metrics.Top", font.Metrics.Top, null, "Greatest distance above the baseline for any glyph. (<= 0).");
+
+            App.LogNameValue(
+                "Metrics.Top",
+                font.Metrics.Top,
+                null,
+                "Greatest distance above the baseline for any glyph. (<= 0).");
+
             App.LogNameValue("Metrics.Ascent", font.Metrics.Ascent, null, "Recommended distance above the baseline. (<= 0).");
+
             App.LogNameValue("Metrics.Descent", font.Metrics.Descent, null, "Recommended distance below the baseline. (>= 0).");
+
             App.LogNameValue("Metrics.Bottom", font.Metrics.Bottom, null, "Greatest distance below the baseline for any glyph. (>= 0).");
+
             App.LogNameValue("Metrics.Leading", font.Metrics.Leading, null, "Recommended distance to add between lines of text. (>= 0).");
+
             App.LogNameValue("Metrics.AverageCharacterWidth", font.Metrics.AverageCharacterWidth, null, "Average character width. (>= 0).");
+
             App.LogNameValue("Metrics.MaxCharacterWidth", font.Metrics.MaxCharacterWidth, null, "Max character width. (>= 0).");
+
             App.LogNameValue("Metrics.XMin", font.Metrics.XMin, null, "Minimum bounding box x value for all glyphs.");
+
             App.LogNameValue("Metrics.XMax", font.Metrics.XMax, null, "Maximum bounding box x value for all glyphs.");
+
             App.LogNameValue("Metrics.XHeight", font.Metrics.XHeight, null, "Height of an 'x' in px. 0 if no 'x' in face.");
+
             App.LogNameValue("Metrics.CapHeight", font.Metrics.CapHeight, null, "Cap height. Will be > 0, or 0 if cannot be determined.");
+
             App.LogNameValue("Metrics.UnderlineThickness?", font.Metrics.UnderlineThickness, null, "Thickness of underline. 0 - not determined. null - not set.");
+
             App.LogNameValue("Metrics.UnderlinePosition?", font.Metrics.UnderlinePosition, null, "Position of top of underline relative to baseline. <0 - above. >0 - below. 0 - on baseline");
+
             App.LogNameValue("Metrics.StrikeoutThickness?", font.Metrics.StrikeoutThickness, null, "Thickness of strikeout.");
+
             App.LogNameValue("Metrics.StrikeoutPosition?", font.Metrics.StrikeoutPosition, null, "Position of the bottom of the strikeout stroke relative to the baseline. Is negative when valid.");
 
             App.LogEmptyLine();
@@ -785,7 +821,7 @@ namespace Alternet.UI
         internal static void LogUsedAlternetAssemblies()
         {
             var list = KnownAssemblies.AllAlternet;
-            foreach(var item in list)
+            foreach (var item in list)
             {
                 App.Log(item.FullName);
             }

@@ -7,7 +7,8 @@ using Alternet.Drawing;
 namespace Alternet.UI
 {
     /// <summary>
-    /// Represents the method that will handle the measure item events.</summary>
+    /// Represents the method that will handle the measure item events.
+    /// </summary>
     /// <param name="sender">The source of the event.</param>
     /// <param name="e">A <see cref="MeasureItemEventArgs" /> that contains the event data.</param>
     public delegate void MeasureItemEventHandler(object? sender, MeasureItemEventArgs e);
@@ -15,7 +16,7 @@ namespace Alternet.UI
     /// <summary>
     /// Provides data for the measure item events.
     /// </summary>
-    public class MeasureItemEventArgs : EventArgs
+    public class MeasureItemEventArgs : BaseEventArgs
     {
         private Graphics graphics;
         private Coord itemHeight;

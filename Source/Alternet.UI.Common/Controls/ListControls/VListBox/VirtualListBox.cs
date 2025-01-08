@@ -13,7 +13,7 @@ namespace Alternet.UI
     /// Advanced list box control with ability to customize item painting. Works fine with
     /// large number of the items. You can add <see cref="ListControlItem"/> items to this control.
     /// </summary>
-    public class VirtualListBox : VirtualListControl<ListControlItem>, IListControl
+    public class VirtualListBox : VirtualListControl, IListControl
     {
         private TransformMatrix matrix = new();
 
@@ -52,6 +52,28 @@ namespace Alternet.UI
         /// </summary>
         [Category("Behavior")]
         public event MeasureItemEventHandler? MeasureItem;
+
+        /// <summary>
+        /// Enumerates flast for the item click method.
+        /// </summary>
+        [Flags]
+        public enum ItemClickFlags
+        {
+            /// <summary>
+            /// Item is shift-clicked
+            /// </summary>
+            Shift = 1,
+
+            /// <summary>
+            /// Item is ctrl-clicked.
+            /// </summary>
+            Ctrl = 2,
+
+            /// <summary>
+            /// Item selected from keyboard.
+            /// </summary>
+            Keyboard = 4,
+        }
 
         /// <summary>
         /// Enumerates supported kinds for <see cref="SetItemsFast"/> method.
@@ -95,22 +117,6 @@ namespace Alternet.UI
             }
         }
 
-        /// <summary>
-        /// Gets or sets whether horizontal scrollbar is visible in the control.
-        /// </summary>
-        public virtual bool HorizontalScrollbar
-        {
-            get => Handler.HScrollBarVisible;
-
-            set
-            {
-                if (HorizontalScrollbar == value || !App.IsWindowsOS)
-                    return;
-                Handler.HScrollBarVisible = value;
-                Refresh();
-            }
-        }
-
         /// <inheritdoc/>
         public override bool UserPaint
         {
@@ -139,17 +145,19 @@ namespace Alternet.UI
         {
             get
             {
-                if (DisposingOrDisposed)
-                    return default;
-                var result = Handler.ItemsCount;
-                return result;
+                return Items.Count;
             }
 
             set
             {
                 if (DisposingOrDisposed)
                     return;
-                Handler.ItemsCount = value;
+                if (Count == value)
+                    return;
+                DoInsideUpdate(() =>
+                {
+                    SafeItems().SetCount(value, () => new ListControlItem());
+                });
             }
         }
 
@@ -199,48 +207,6 @@ namespace Alternet.UI
             }
         }
 
-        /// <inheritdoc/>
-        public override int? SelectedIndex
-        {
-            get
-            {
-                if (DisposingOrDisposed)
-                    return default;
-                if (SelectionMode == ListBoxSelectionMode.Single)
-                {
-                    var result = Handler.GetSelection();
-                    if (result < 0)
-                        return null;
-                    return result;
-                }
-                else
-                {
-                    var result = Handler.GetFirstSelected();
-                    if (result < 0)
-                        return null;
-                    return result;
-                }
-            }
-
-            set
-            {
-                if (DisposingOrDisposed)
-                    return;
-                if (SelectedIndex == value)
-                    return;
-                if (SelectionMode == ListBoxSelectionMode.Single)
-                {
-                    Handler.SetSelection(value ?? -1);
-                }
-                else
-                {
-                    Handler.ClearSelected();
-                    if (value is not null && value >= 0)
-                        Handler.SetSelected(value.Value, true);
-                }
-            }
-        }
-
         /// <summary>
         /// Gets a <see cref="IVListBoxHandler"/> associated with this class.
         /// </summary>
@@ -253,39 +219,33 @@ namespace Alternet.UI
             }
         }
 
-        /// <summary>
-        /// Gets or sets whether vertical scrollbar is visible in the control.
-        /// </summary>
-        internal virtual bool VScrollBarVisible
+        /// <inheritdoc cref="StringSearch.FindStringEx(string?, int?, bool, bool)"/>
+        /// <remarks>
+        /// If text is found in the control, item which contains this text will be selected
+        /// and scrolled into the view.
+        /// </remarks>
+        public virtual int? FindAndSelect(
+         string? str,
+         int? startIndex,
+         bool exact,
+         bool ignoreCase)
         {
-            get
+            if (string.IsNullOrWhiteSpace(str))
             {
-                if (DisposingOrDisposed)
-                    return default;
-                return Handler.VScrollBarVisible;
+                SelectedIndex = null;
+                return null;
             }
 
-            set
-            {
-                if (DisposingOrDisposed)
-                    return;
-                if (VScrollBarVisible == value)
-                    return;
-                Handler.VScrollBarVisible = value;
-                Refresh();
-            }
-        }
+            var result = FindStringEx(str, startIndex, exact, ignoreCase);
 
-        /// <summary>
-        /// Gets whether item with the specified index is selected.
-        /// </summary>
-        /// <param name="index">Item index.</param>
-        /// <returns></returns>
-        public override bool IsSelected(int index)
-        {
-            if (DisposingOrDisposed)
-                return default;
-            return Handler.IsSelected(index);
+            DoInsideUpdate(() =>
+            {
+                SelectedIndex = result;
+                if (result is not null)
+                    EnsureVisible(result.Value);
+            });
+
+            return result;
         }
 
         /// <summary>
@@ -297,7 +257,7 @@ namespace Alternet.UI
         {
             if (DisposingOrDisposed)
                 return default;
-            return Handler.IsVisible(index);
+            return index >= GetVisibleBegin() && index < GetVisibleEnd();
         }
 
         /// <summary>
@@ -312,7 +272,10 @@ namespace Alternet.UI
         {
             if (DisposingOrDisposed)
                 return default;
-            return Handler.ScrollRows(rows);
+            rows += GetVisibleBegin();
+            if (rows < 0)
+                rows = 0;
+            return ScrollToRow(rows);
         }
 
         /// <summary>
@@ -349,7 +312,82 @@ namespace Alternet.UI
         {
             if (DisposingOrDisposed)
                 return default;
-            return Handler.ScrollRowPages(pages);
+
+            bool didSomething = false;
+
+            while (pages != 0)
+            {
+                int unit;
+                if (pages > 0)
+                {
+                    unit = GetVisibleEnd();
+                    if (unit != 0)
+                        --unit;
+                    --pages;
+                }
+                else
+                {
+                    unit = FindFirstVisibleFromLast(GetVisibleEnd());
+                    ++pages;
+                }
+
+                didSomething = ScrollToRow(unit);
+            }
+
+            return didSomething;
+        }
+
+        /// <summary>
+        /// Finds first visible item from the specified last visible item.
+        /// </summary>
+        /// <param name="unitLast">Index of the last visible item.</param>
+        /// <param name="full">Whether to allow partial or full visibility of the last item.</param>
+        /// <returns></returns>
+        public virtual int FindFirstVisibleFromLast(int unitLast, bool full = false)
+        {
+            MeasureItemEventArgs e = new(MeasureCanvas, 0);
+
+            var sWindow = ClientSize.Height;
+
+            // go upwards until we arrive at a unit such that unitLast is not visible
+            // any more when it is shown
+            int unitFirst = unitLast;
+            Coord s = 0;
+            while(true)
+            {
+                e.Index = unitFirst;
+                MeasureItemSize(e);
+
+                s += e.ItemHeight;
+
+                if (s > sWindow)
+                {
+                    // for this unit to be fully visible we need to go one unit
+                    // down, but if it is enough for it to be only partly visible then
+                    // this unit will do as well
+                    if (full)
+                    {
+                        ++unitFirst;
+                    }
+
+                    break;
+                }
+
+                if (unitFirst <= 0)
+                    break;
+
+                --unitFirst;
+            }
+
+            return unitFirst;
+        }
+
+        /// <summary>
+        /// Shows list editor dialog which allows to edit items.
+        /// </summary>
+        public virtual void EditItemsWithListEditor()
+        {
+            DialogFactory.EditItemsWithListEditor(this);
         }
 
         /// <inheritdoc/>
@@ -518,18 +556,6 @@ namespace Alternet.UI
             if (DisposingOrDisposed)
                 return;
             Handler.RefreshRows(from, to);
-        }
-
-        /// <summary>
-        /// Gets whether item with the specified index is current.
-        /// </summary>
-        /// <param name="index">Item index.</param>
-        /// <returns></returns>
-        public override bool IsCurrent(int index)
-        {
-            if (DisposingOrDisposed)
-                return default;
-            return Handler.IsCurrent(index);
         }
 
         /// <summary>
@@ -702,6 +728,57 @@ namespace Alternet.UI
             return ToggleItemCheckState(itemIndex.Value);
         }
 
+        /// <summary>
+        /// Measures item size. If <see cref="VirtualListControl.ItemPainter"/> is assigned,
+        /// uses <see cref="IListBoxItemPainter.GetSize"/>, otherwise calls
+        /// <see cref="ListControlItem.DefaultMeasureItemSize"/>. Additionally calls
+        /// <see cref="MeasureItem"/> event and <see cref="OnMeasureItem"/> method if
+        /// drawing mode is not <see cref="DrawMode.Normal"/>.
+        /// </summary>
+        public virtual void MeasureItemSize(MeasureItemEventArgs e)
+        {
+            var itemSize = Internal(e.Index);
+            e.ItemWidth = itemSize.Width;
+            e.ItemHeight = itemSize.Height;
+
+            if (drawMode != DrawMode.Normal)
+            {
+                RaiseMeasureItem(e);
+            }
+
+            SizeD Internal(int itemIndex)
+            {
+                if (ItemPainter is null)
+                    return ListControlItem.DefaultMeasureItemSize(this, e.Graphics, itemIndex);
+                var result = ItemPainter.GetSize(this, itemIndex);
+                if (result == SizeD.MinusOne)
+                    return ListControlItem.DefaultMeasureItemSize(this, e.Graphics, itemIndex);
+                return result;
+            }
+        }
+
+        /// <summary>
+        /// Finds the item with <see cref="ListControlItem.Value"/> property which is
+        /// equal to the specified value.
+        /// </summary>
+        /// <param name="value">Value to search for.</param>
+        /// <returns></returns>
+        public virtual ListControlItem? FindItemWithValue(object? value)
+        {
+            if (value is null)
+                return null;
+
+            for (int i = 0; i < Items.Count; i++)
+            {
+                var item = Items[i];
+
+                if (value.Equals(item.Value))
+                    return item;
+            }
+
+            return null;
+        }
+
         /// <inheritdoc/>
         protected override IControlHandler CreateHandler()
         {
@@ -713,89 +790,125 @@ namespace Alternet.UI
         {
             if (DisposingOrDisposed)
                 return;
-            if (IsSelectionModeSingle)
-            {
-                HandleInSingleMode();
-                if (e.IsHandledOrSupressed)
-                    return;
-                base.OnKeyDown(e);
-            }
-            else
+
+            if (Count == 0)
             {
                 base.OnKeyDown(e);
+                return;
             }
 
-            void HandleInSingleMode()
+            ItemClickFlags flags = ItemClickFlags.Keyboard;
+
+            var selected = SelectedIndex;
+
+            int current = 0;
+
+            switch (e.Key)
             {
-                if (Count == 0)
-                    return;
-
-                var selectedIndex = SelectedIndex;
-
-                switch (e.Key)
-                {
-                    case Key.Home:
-                        DoInsideUpdate(() =>
-                        {
-                            if (e.Control)
-                            {
-                                scrollOffset = 0;
-                            }
-                            else
-                            {
-                                scrollOffset = 0;
-                                SelectFirstItem();
-                            }
-
-                            AfterKeyDown();
-                        });
-                        break;
-                    case Key.End:
-                        SelectLastItem();
-                        AfterKeyDown();
-                        break;
-                    case Key.Left:
-                        if(e.Control)
-                            IncHorizontalOffsetChars(-4);
-                        else
-                            IncHorizontalOffsetChars(-1);
-                        AfterKeyDown();
-                        break;
-                    case Key.Right:
-                        if (e.Control)
-                            IncHorizontalOffsetChars(4);
-                        else
-                            IncHorizontalOffsetChars(1);
-                        AfterKeyDown();
-                        break;
-                    case Key.Up:
-                        SelectPreviousItem();
-                        AfterKeyDown();
-                        break;
-                    case Key.Down:
-                        SelectNextItem();
-                        AfterKeyDown();
-                        break;
-                    case Key.PageUp:
-                        SelectItemOnPreviousPage();
-                        AfterKeyDown();
-                        break;
-                    case Key.PageDown:
-                        SelectItemOnNextPage();
-                        AfterKeyDown();
-                        break;
-                }
-
-                void AfterKeyDown()
-                {
-                    e.Suppressed();
-
-                    if (selectedIndex != SelectedIndex)
+                case Key.A:
+                    if (e.Control)
                     {
-                        RaiseSelectionChanged();
+                        SelectAll();
+                        e.Suppressed();
                     }
-                }
+
+                    return;
+
+                case Key.Home:
+                    if (e.Control)
+                    {
+                        DoInsideUpdate(() => scrollOffset = 0);
+                        e.Suppressed();
+                        return;
+                    }
+                    else
+                    {
+                        current = 0;
+                    }
+
+                    break;
+
+                case Key.End:
+                    current = Count - 1;
+                    break;
+
+                case Key.Down:
+                    if (selected is null)
+                    {
+                        SelectedIndex = 0;
+                        e.Suppressed();
+                        return;
+                    }
+                    else
+                    if (selected >= Count - 1)
+                    {
+                        e.Suppressed();
+                        return;
+                    }
+
+                    current = selected.Value + 1;
+                    break;
+
+                case Key.Up:
+                    if (selected is null)
+                    {
+                        SelectedIndex = Count - 1;
+                        e.Suppressed();
+                        return;
+                    }
+                    else
+                    if (selected <= 0)
+                    {
+                        e.Suppressed();
+                        return;
+                    }
+
+                    current = selected.Value - 1;
+                    break;
+
+                case Key.PageDown:
+                    current = GetIndexOnNextPage() ?? 0;
+                    break;
+
+                case Key.PageUp:
+                    current = GetIndexOnPreviousPage() ?? 0;
+                    break;
+
+                case Key.Left:
+                    if (e.Control)
+                        IncHorizontalOffsetChars(-4);
+                    else
+                        IncHorizontalOffsetChars(-1);
+                    e.Suppressed();
+                    return;
+                case Key.Right:
+                    if (e.Control)
+                        IncHorizontalOffsetChars(4);
+                    else
+                        IncHorizontalOffsetChars(1);
+                    e.Suppressed();
+                    return;
+
+                case Key.Space:
+                    // hack: pressing space should work like a mouse click rather than
+                    // like a keyboard arrow press, so trick DoHandleItemClick() in
+                    // thinking we were clicked.
+                    flags &= ~ItemClickFlags.Keyboard;
+                    current = selected ?? 0;
+                    break;
+
+                default:
+                    return;
             }
+
+            e.Suppressed();
+
+            if (e.Shift)
+                flags |= ItemClickFlags.Shift;
+            if (e.Control)
+                flags |= ItemClickFlags.Ctrl;
+
+            DoHandleItemClick(current, flags);
         }
 
         /// <inheritdoc/>
@@ -829,13 +942,21 @@ namespace Alternet.UI
                 }
             }
 
-            if (IsSelectionModeSingle)
+            var itemIndex = HitTest(e.Location);
+            e.Handled = true;
+
+            if (itemIndex is not null)
             {
-                base.OnMouseLeftButtonDown(e);
-            }
-            else
-            {
-                base.OnMouseLeftButtonDown(e);
+                var modifiers = Keyboard.Modifiers;
+
+                ItemClickFlags flags = 0;
+
+                if (modifiers.HasShift())
+                    flags |= ItemClickFlags.Shift;
+                if (modifiers.HasControl())
+                    flags |= ItemClickFlags.Ctrl;
+
+                DoHandleItemClick(itemIndex.Value, flags);
             }
         }
 
@@ -870,17 +991,10 @@ namespace Alternet.UI
 
             for (int line = Handler.GetVisibleBegin(); line < lineMax; line++)
             {
-                var itemSize = MeasureItemSize(line);
+                measureItemArgs.Index = line;
+                MeasureItemSize(measureItemArgs);
 
-                if (drawMode != DrawMode.Normal)
-                {
-                    measureItemArgs.Index = line;
-                    measureItemArgs.ItemWidth = itemSize.Width;
-                    measureItemArgs.ItemHeight = itemSize.Height;
-                    RaiseMeasureItem(measureItemArgs);
-                }
-
-                var hRow = itemSize.Height;
+                var hRow = measureItemArgs.ItemHeight;
 
                 rectRow.Height = hRow;
 
@@ -1040,6 +1154,104 @@ namespace Alternet.UI
         protected override void OnHandleCreated(EventArgs e)
         {
             base.OnHandleCreated(e);
+        }
+
+        private int? GetIndexOnNextPage()
+        {
+            if (Count == 0)
+                return null;
+
+            var selected = SelectedIndex;
+
+            if (selected is null)
+            {
+                return 0;
+            }
+
+            var numVisible = VisibleCount - 1;
+
+            if (numVisible <= 0)
+                return null;
+
+            return Math.Min(selected.Value + numVisible, Count - 1);
+        }
+
+        private void DoHandleItemClick(int item, ItemClickFlags flags)
+        {
+            DoInsideSuspendedSelectionEvents(Internal);
+
+            void Internal()
+            {
+                var current = SelectedIndex;
+                var setSelected = true;
+
+                if (IsSelectionModeMultiple)
+                {
+                    bool select = true;
+
+                    if (flags.HasFlag(ItemClickFlags.Shift))
+                    {
+                        if (current is not null)
+                        {
+                            if (AnchorIndex is null)
+                                AnchorIndex = current;
+
+                            select = false;
+
+                            ClearSelected();
+
+                            if (AnchorIndex is null)
+                                select = true;
+                            else
+                                SelectRange(AnchorIndex.Value, item);
+                        }
+                    }
+                    else
+                    {
+                        AnchorIndex = item;
+
+                        if (flags.HasFlag(ItemClickFlags.Ctrl))
+                        {
+                            select = false;
+
+                            if (!flags.HasFlag(ItemClickFlags.Keyboard))
+                            {
+                                SafeItem(item)?.ToggleSelected(this);
+                                setSelected = false;
+                            }
+                        }
+                    }
+
+                    if (select)
+                    {
+                        SetSelectedIndex(item, clearSelection: true);
+                    }
+                }
+
+                var savedAnchor = AnchorIndex;
+                SetSelectedIndex(item, clearSelection: false, setSelected: setSelected);
+                AnchorIndex = savedAnchor;
+            }
+        }
+
+        private int? GetIndexOnPreviousPage()
+        {
+            if (Count == 0)
+                return null;
+
+            var selected = SelectedIndex;
+
+            if (selected is null)
+            {
+                return 0;
+            }
+
+            var numVisible = VisibleCount - 1;
+
+            if (numVisible <= 0)
+                return null;
+
+            return Math.Max(selected.Value - numVisible, 0);
         }
     }
 }

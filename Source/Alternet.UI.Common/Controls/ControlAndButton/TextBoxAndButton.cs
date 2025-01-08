@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Text;
 
+using Alternet.UI.Localization;
+
 namespace Alternet.UI
 {
     /// <summary>
@@ -168,14 +170,37 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Shows common border and validation error place.
+        /// Initializes this control for the filter editing.
         /// </summary>
-        public virtual void InitErrorAndBorder()
+        public virtual void InitFilterEdit()
         {
-            ErrorPictureVisible = true;
-            MainControl.HasBorder = false;
-            HasBorder = true;
-            BackColor = MainControl.BackColor;
+            TextBox.IsPassword = false;
+            TextBox.EmptyTextHint = EmptyTextHints.FilterEdit;
+            SetSingleButton(UI.KnownButton.Search);
+            IsButtonLeft = true;
+        }
+
+        /// <summary>
+        /// Initializes this control for the search text editing.
+        /// </summary>
+        public virtual void InitSearchEdit()
+        {
+            TextBox.IsPassword = false;
+            TextBox.EmptyTextHint = EmptyTextHints.FindEdit;
+            SetSingleButton(UI.KnownButton.Search);
+            IsButtonLeft = true;
+        }
+
+        /// <summary>
+        /// Initializes buttons so only combo button with the specified image remains visible.
+        /// </summary>
+        /// <param name="button">Known button identifier.</param>
+        public virtual void SetSingleButton(UI.KnownButton? button)
+        {
+            Buttons.SetChildrenVisible(false);
+            HasBtnComboBox = true;
+            BtnComboBoxSvg = null;
+            ButtonOverride = button;
         }
 
         /// <summary>
@@ -184,10 +209,9 @@ namespace Alternet.UI
         public virtual void InitPasswordEdit()
         {
             TextBox.IsPassword = true;
-            Buttons.SetChildrenVisible(false);
-            this.HasBtnComboBox = true;
-            this.BtnComboBoxSvg = null;
-            this.ButtonOverride = UI.KnownButton.TextBoxShowPassword;
+            SetSingleButton(UI.KnownButton.TextBoxShowPassword);
+            TextBox.EmptyTextHint = EmptyTextHints.PasswordEdit;
+            IsButtonLeft = false;
 
             void TogglePasswordButtonClick(object? s, EventArgs e)
             {

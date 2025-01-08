@@ -16,6 +16,8 @@ namespace PropertyGridSample
             if (control is not FindReplaceControl findReplace)
                 return;
 
+            findReplace.HorizontalAlignment = HorizontalAlignment.Left;
+            findReplace.HasBorder = true;
             findReplace.ReplaceVisible = true;
             findReplace.Manager = findReplace.CreateLogger();
         }

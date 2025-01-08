@@ -27,22 +27,24 @@
       <HorizontalStackPanel>
         <Label Text="Title" Margin="0,0,5,0" VerticalAlignment="Center" IsTextLocalized="true"
                Name="tooltipTitleLabel"/>
-        <TextBox Text="Message Title" Name="tooltipTitleTextBox" Margin="0,0,0,0" IsTextLocalized="true"
-                 SuggestedWidth="250" VerticalAlignment="Center"/>
+        <TextBox Text="Message Title" Name="tooltipTitleTextBox"
+                 Margin="0,0,0,0" IsTextLocalized="true" HorizontalAlignment="Fill"
+                 VerticalAlignment="Center"/>
         <Button Text="Toggle" Name="resetTitleButton" IsTextLocalized="true"
                 VerticalAlignment="Center"
-                Margin="5,0,0,0" HorizontalAlignment="Left"/>
+                Margin="5,0,0,0" HorizontalAlignment="Right"/>
       </HorizontalStackPanel>
 
       <HorizontalStackPanel Margin="0,5,0,0">
         <Label Text="Message" Margin="0,0,5,0" VerticalAlignment="Center" IsTextLocalized="true"
                Name="tooltipMessageLabel"/>
-        <TextBox Text="This is sample text" Name="tooltipMessageTextBox"
-                 Margin="0,0,0,0" IsTextLocalized="true"
-                 SuggestedWidth="250" VerticalAlignment="Center"/>
+        <MultilineTextBox Text="This is sample text" Name="tooltipMessageTextBox"
+                 Margin="0,0,0,0" IsTextLocalized="true"  HorizontalAlignment="Fill"
+                          SuggestedHeight = "100"
+                 VerticalAlignment="Center"/>
         <Button Text="Toggle" Name="resetTextButton" IsTextLocalized="true"
                 VerticalAlignment="Center"
-                Margin="5,0,0,0" HorizontalAlignment="Left"/>
+                Margin="5,0,0,0" HorizontalAlignment="Right"/>
       </HorizontalStackPanel>
     </Control>
 
@@ -59,10 +61,11 @@
     </Control>
 
     <Control Title="Options" Padding="10" Layout="Vertical">
-      <CheckBox Name="dontHideCheckBox" Text="Do not hide after delay" IsChecked="false"/>
+      <CheckBox Name="dontHideCheckBox" Text="Do not hide after delay" IsChecked="true"/>
       <CheckBox Name="atCenterCheckBox" Text="Show at center" IsChecked="false" MarginTop="5"
                 IsEnabled="true"/>
-      <CheckBox Name="otherSchemeCheckBox" Text="Use other color theme" IsChecked="false" MarginTop="5"
+      <CheckBox Name="otherSchemeCheckBox" Text="Use other color theme"
+                IsChecked="false" MarginTop="5"
                 IsEnabled="true"/>
     </Control>
 

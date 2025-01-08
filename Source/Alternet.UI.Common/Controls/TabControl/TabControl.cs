@@ -117,13 +117,33 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets the collection of the loaded pages.
+        /// </summary>
+        [Browsable(false)]
+        public IEnumerable<AbstractControl> LoadedPages
+        {
+            get
+            {
+                return cardPanel.LoadedCards.Select(x => x.Control);
+            }
+        }
+
+        /// <summary>
         /// Gets or sets colors and styles theme of the tabs.
         /// </summary>
         public virtual SpeedButton.KnownTheme TabTheme
         {
-            get => Header.TabTheme;
+            get
+            {
+                if (DisposingOrDisposed)
+                    return SpeedButton.KnownTheme.None;
+                return Header.TabTheme;
+            }
+
             set
             {
+                if (DisposingOrDisposed)
+                    return;
                 if (TabTheme == value)
                     return;
                 Header.TabTheme = value;
@@ -145,6 +165,8 @@ namespace Alternet.UI
         {
             get
             {
+                if (DisposingOrDisposed)
+                    return -1;
                 var result = Header.SelectedTabIndex;
                 if (result is null)
                     return -1;
@@ -153,6 +175,8 @@ namespace Alternet.UI
 
             set
             {
+                if (DisposingOrDisposed)
+                    return;
                 Header.SelectedTabIndex = value;
                 Invalidate();
                 RaiseSelectedIndexChanged();
@@ -173,6 +197,8 @@ namespace Alternet.UI
 
             set
             {
+                if (DisposingOrDisposed)
+                    return;
                 if (ContentVisible == value)
                     return;
                 cardPanel.Visible = value;
@@ -191,6 +217,8 @@ namespace Alternet.UI
 
             set
             {
+                if (DisposingOrDisposed)
+                    return;
                 Header.Visible = value;
             }
         }
@@ -203,11 +231,15 @@ namespace Alternet.UI
         {
             get
             {
+                if (DisposingOrDisposed)
+                    return null;
                 return GetControlAt(SelectedIndex);
             }
 
             set
             {
+                if (DisposingOrDisposed)
+                    return;
                 SelectedPage = value;
             }
         }
@@ -223,6 +255,8 @@ namespace Alternet.UI
         {
             get
             {
+                if (DisposingOrDisposed)
+                    return null;
                 var index = Header.SelectedTabIndex;
                 var result = GetControlAt(index);
                 return result;
@@ -230,6 +264,8 @@ namespace Alternet.UI
 
             set
             {
+                if (DisposingOrDisposed)
+                    return;
                 if (TabCount == 0)
                     return;
                 var selectedPage = SelectedPage;
@@ -303,9 +339,15 @@ namespace Alternet.UI
         /// </summary>
         public virtual Thickness ContentPadding
         {
-            get => Contents.Padding;
+            get
+            {
+                return Contents.Padding;
+            }
 
-            set => Contents.Padding = value;
+            set
+            {
+                Contents.Padding = value;
+            }
         }
 
         /// <summary>
@@ -390,6 +432,8 @@ namespace Alternet.UI
 
             set
             {
+                if (DisposingOrDisposed)
+                    return;
                 if (TabAlignment == value)
                     return;
                 DoInsideLayout(() =>
@@ -890,6 +934,8 @@ namespace Alternet.UI
             string propName,
             bool directChild = true)
         {
+            if (DisposingOrDisposed)
+                return;
             if (propName == nameof(Title))
             {
                 var index = GetTabIndex(child);
@@ -920,6 +966,8 @@ namespace Alternet.UI
         /// <inheritdoc/>
         protected override void OnPaint(PaintEventArgs e)
         {
+            if (DisposingOrDisposed)
+                return;
             if (!hasInteriorBorder || TabCount == 0 || !TabsVisible)
                 return;
             var r = Header.Bounds;
@@ -932,24 +980,34 @@ namespace Alternet.UI
                 tabPaintAlignment ?? TabAlignment);
         }
 
-        private void CardPanelHeader_ButtonSizeChanged(object? sender, BaseEventArgs<AbstractControl> e)
+        private void CardPanelHeader_ButtonSizeChanged(
+            object? sender,
+            BaseEventArgs<AbstractControl> e)
         {
+            if (DisposingOrDisposed)
+                return;
             TabSizeChanged?.Invoke(this, e);
             Invalidate();
         }
 
         private void CardPanelHeader_BeforeTabClick(object sender, BaseCancelEventArgs e)
         {
+            if (DisposingOrDisposed)
+                return;
             GrowMinSize(MinSizeGrowMode);
         }
 
         private void CardPanelHeader_TabClick(object? sender, EventArgs e)
         {
+            if (DisposingOrDisposed)
+                return;
             RaiseSelectedIndexChanged();
         }
 
         private void RaiseSelectedIndexChanged()
         {
+            if (DisposingOrDisposed)
+                return;
             SelectedIndexChanged?.Invoke(this, EventArgs.Empty);
             SelectedPageChanged?.Invoke(this, EventArgs.Empty);
             GrowMinSize(MinSizeGrowMode);
@@ -962,6 +1020,8 @@ namespace Alternet.UI
 
         private void Pages_ItemInserted(object? sender, int index, AbstractControl item)
         {
+            if (DisposingOrDisposed)
+                return;
             if (addSuspended > 0)
                 return;
             if (Contents.Find(item) is not null)
@@ -971,6 +1031,8 @@ namespace Alternet.UI
 
         private void Header_Paint(object? sender, PaintEventArgs e)
         {
+            if (DisposingOrDisposed)
+                return;
             if (!hasInteriorBorder || TabCount == 0 || !TabsVisible)
                 return;
             var r = e.ClipRectangle;
@@ -1010,6 +1072,8 @@ namespace Alternet.UI
                 string propName,
                 bool directChild = true)
             {
+                if (DisposingOrDisposed)
+                    return;
                 Parent?.OnChildPropertyChanged(child, propName, false);
             }
         }

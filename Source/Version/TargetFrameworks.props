@@ -7,10 +7,20 @@
     	<FrameworkOverridesName>FrameworksOverride.props</FrameworkOverridesName>
   	<BoolNet9>true</BoolNet9>
   	<BoolNet8>true</BoolNet8>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="$([MSBuild]::IsOsPlatform('Windows'))">
   	<BoolNet7>true</BoolNet7>
   	<BoolNet6>true</BoolNet6>
   	<BoolNet48>true</BoolNet48>
   	<BoolNet46>true</BoolNet46>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="!$([MSBuild]::IsOsPlatform('Windows'))">
+  	<BoolNet7>false</BoolNet7>
+  	<BoolNet6>false</BoolNet6>
+  	<BoolNet48>false</BoolNet48>
+  	<BoolNet46>false</BoolNet46>
   </PropertyGroup>
 
   <Import Project="$(FrameworkOverridesName)" Condition="Exists($(FrameworkOverridesName))"/>

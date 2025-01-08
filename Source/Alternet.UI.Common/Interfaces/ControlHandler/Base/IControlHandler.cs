@@ -14,6 +14,11 @@ namespace Alternet.UI
     public partial interface IControlHandler : IDisposableObject
     {
         /// <summary>
+        /// Gets or sets a value indicating whether the control has a border.
+        /// </summary>
+        bool HasBorder { get; set; }
+
+        /// <summary>
         /// Gets whether control is visible on screen.
         /// </summary>
         bool VisibleOnScreen { get; }

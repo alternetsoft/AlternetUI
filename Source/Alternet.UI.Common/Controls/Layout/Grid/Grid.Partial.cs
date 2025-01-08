@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -115,7 +116,8 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Gets a value that indicates which row child control within a <see cref="Grid"/> should appear in.
+        /// Gets a value that indicates which row child control within
+        /// a <see cref="Grid"/> should appear in.
         /// </summary>
         /// <param name="control">The control for which to get the row index.</param>
         /// <remarks>The 0-based row index.</remarks>
@@ -180,7 +182,8 @@ namespace Alternet.UI
         /// <param name="controls">Grid controls.</param>
         /// <remarks>
         /// Dimensions for all rows and columns are set to <see cref="GridLength.Auto"/>.
-        /// <see cref="AbstractControl.SetRowColumn"/> is called for the each control with row and column
+        /// <see cref="AbstractControl.SetRowColumn"/> is called for the each control
+        /// with row and column
         /// indexes equal to position in the <paramref name="controls"/> array.
         /// </remarks>
         public void Setup(AbstractControl[,] controls)
@@ -251,6 +254,20 @@ namespace Alternet.UI
             var result = new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) };
             ColumnDefinitions.Add(result);
             return result;
+        }
+
+        /// <inheritdoc/>
+        public override void DefaultPaint(PaintEventArgs e)
+        {
+            base.DefaultPaint(e);
+            DefaultPaintDebug(e);
+        }
+
+        [Conditional("DEBUG")]
+        private void DefaultPaintDebug(PaintEventArgs e)
+        {
+            if (ShowDebugCorners)
+                BorderSettings.DrawDesignCorners(e.Graphics, e.ClipRectangle);
         }
     }
 }

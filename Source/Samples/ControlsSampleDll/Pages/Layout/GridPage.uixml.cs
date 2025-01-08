@@ -47,7 +47,7 @@ namespace ControlsSample
             mainGrid.ColumnCount = 4;
             mainGrid.RowCount = 5;
             controls.Parent(mainGrid);
-            mainGrid.PerformLayout();
+            PerformLayoutAndInvalidate();
             growButton.Enabled = false;
         }
 
@@ -58,7 +58,7 @@ namespace ControlsSample
         private void BackgroundButton_Click(object? sender, EventArgs e)
         {
             if (mainGrid.Background == null)
-                mainGrid.Background = new SolidBrush(Color.Olive);
+                mainGrid.Background = Color.Olive.AsBrush;
             else
                 mainGrid.Background = null;
             mainGrid.Invalidate();

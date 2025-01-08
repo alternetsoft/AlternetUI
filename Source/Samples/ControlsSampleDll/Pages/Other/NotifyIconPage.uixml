@@ -14,7 +14,8 @@
           <TextBox Text="AlterNET UI Notify Icon example" IsTextLocalized="true"
                    Name="notifyIconTextTextBox" Margin="0,0,5,0"
                    SuggestedWidth="250" VerticalAlignment="Center"/>
-          <Button Text="Apply Text" Name="applyTextButton" VerticalAlignment="Center" IsTextLocalized="true"
+          <Button Text="Apply Text" Name="applyTextButton"
+                  VerticalAlignment="Center" IsTextLocalized="true"
                   Click="ApplyTextButton_Click" ColumnIndex="3" />
         </StackPanel>
       </StackPanel>

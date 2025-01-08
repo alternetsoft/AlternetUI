@@ -96,44 +96,6 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        public override SizeD ClientSize
-        {
-            get
-            {
-                if (IsDummy)
-                    return SizeD.Empty;
-                return SafeHandler?.ClientSize ?? SizeD.Empty;
-            }
-
-            set
-            {
-                if (ClientSize == value || SafeHandler is null)
-                    return;
-
-                DoInsideLayout(() =>
-                {
-                    Handler.ClientSize = value;
-                });
-            }
-        }
-
-        /// <inheritdoc/>
-        public override bool IsScrollable
-        {
-            get
-            {
-                return SafeHandler?.IsScrollable ?? false;
-            }
-
-            set
-            {
-                if (IsScrollable == value || DisposingOrDisposed)
-                    return;
-                Handler.IsScrollable = value;
-            }
-        }
-
-        /// <inheritdoc/>
         public override Color RealBackgroundColor
         {
             get
@@ -190,6 +152,46 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
+        public override SizeD ClientSize
+        {
+            get
+            {
+                if (IsDummy)
+                    return SizeD.Empty;
+                return SafeHandler?.ClientSize ?? SizeD.Empty;
+            }
+
+            set
+            {
+                value = value.ApplyMinMax(MinimumSize, MaximumSize);
+
+                if (ClientSize == value || SafeHandler is null)
+                    return;
+
+                DoInsideLayout(() =>
+                {
+                    Handler.ClientSize = value;
+                });
+            }
+        }
+
+        /// <inheritdoc/>
+        public override bool IsScrollable
+        {
+            get
+            {
+                return SafeHandler?.IsScrollable ?? false;
+            }
+
+            set
+            {
+                if (IsScrollable == value || DisposingOrDisposed)
+                    return;
+                Handler.IsScrollable = value;
+            }
+        }
+
+        /// <inheritdoc/>
         public override RectD Bounds
         {
             get => SafeHandler?.Bounds ?? RectD.Empty;
@@ -207,7 +209,7 @@ namespace Alternet.UI
         {
             get
             {
-                return SafeHandler?.MinimumSize ?? SizeD.Empty;
+                return base.MinimumSize;
             }
 
             set
@@ -226,7 +228,7 @@ namespace Alternet.UI
         {
             get
             {
-                return SafeHandler?.MaximumSize ?? SizeD.Empty;
+                return base.MaximumSize;
             }
 
             set
@@ -235,6 +237,7 @@ namespace Alternet.UI
                 value.Height = Math.Max(0, value.Height);
                 if (MaximumSize == value || DisposingOrDisposed)
                     return;
+                base.MaximumSize = value;
                 Handler.MaximumSize = value;
                 PerformLayout();
             }
@@ -271,6 +274,26 @@ namespace Alternet.UI
                 if (value == ControlBackgroundStyle.Transparent || DisposingOrDisposed)
                     return;
                 Handler.BackgroundStyle = value;
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether the control has a border.
+        /// </summary>
+        public override bool HasBorder
+        {
+            get
+            {
+                if (DisposingOrDisposed)
+                    return false;
+                return Handler.HasBorder;
+            }
+
+            set
+            {
+                if (DisposingOrDisposed)
+                    return;
+                Handler.HasBorder = value;
             }
         }
 
@@ -456,22 +479,6 @@ namespace Alternet.UI
                 if (DisposingOrDisposed)
                     return;
                 Handler.ProcessUIUpdates = value;
-            }
-        }
-
-        /// <inheritdoc/>
-        protected override bool BindScrollEvents
-        {
-            get
-            {
-                return SafeHandler?.BindScrollEvents ?? false;
-            }
-
-            set
-            {
-                if (DisposingOrDisposed)
-                    return;
-                Handler.BindScrollEvents = value;
             }
         }
 
@@ -668,8 +675,6 @@ namespace Alternet.UI
             Handler.LostFocus = null;
             Handler.SizeChanged = null;
             Handler.LocationChanged = null;
-            Handler.VerticalScrollBarValueChanged = null;
-            Handler.HorizontalScrollBarValueChanged = null;
             Handler.DragOver = null;
             Handler.DragEnter = null;
             Handler.DragDrop = null;
@@ -707,8 +712,6 @@ namespace Alternet.UI
             };
 
             Handler.Idle = RaiseIdle;
-            Handler.VerticalScrollBarValueChanged = OnHandlerVerticalScrollBarValueChanged;
-            Handler.HorizontalScrollBarValueChanged = OnHandlerHorizontalScrollBarValueChanged;
             Handler.DragLeave = RaiseDragLeave;
             Handler.SizeChanged = RaiseHandlerSizeChanged;
             Handler.LocationChanged = RaiseContainerLocationChanged;
@@ -791,6 +794,28 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
+        public override ScrollBarInfo GetScrollBarInfo(bool isVertical)
+        {
+            if (DisposingOrDisposed)
+                return ScrollBarInfo.Default;
+            if (isVertical)
+                return Handler.VertScrollBarInfo;
+            else
+                return Handler.HorzScrollBarInfo;
+        }
+
+        /// <inheritdoc/>
+        public override void SetScrollBarInfo(bool isVertical, ScrollBarInfo value)
+        {
+            if (DisposingOrDisposed)
+                return;
+            if (isVertical)
+                Handler.VertScrollBarInfo = value;
+            else
+                Handler.HorzScrollBarInfo = value;
+        }
+
+        /// <inheritdoc/>
         public override void FocusNextControl(bool forward = true, bool nested = true)
         {
             if (Keyboard.ProcessTabInternally)
@@ -819,35 +844,6 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        public override ScrollBarInfo GetScrollBarInfo(bool isVertical)
-        {
-            if (DisposingOrDisposed)
-                return ScrollBarInfo.Default;
-
-            if (isVertical)
-                return Handler.VertScrollBarInfo;
-            return Handler.HorzScrollBarInfo;
-        }
-
-        /// <inheritdoc/>
-        public override void SetScrollBarInfo(bool isVertical, ScrollBarInfo value)
-        {
-            if (DisposingOrDisposed)
-                return;
-
-            if (isVertical)
-            {
-                Handler.VertScrollBarInfo = value;
-            }
-            else
-            {
-                Handler.HorzScrollBarInfo = value;
-            }
-
-            base.SetScrollBarInfo(isVertical, value);
-        }
-
-        /// <inheritdoc/>
         public override void RaiseHandleCreated()
         {
             if (DisposingOrDisposed)
@@ -872,20 +868,6 @@ namespace Alternet.UI
             RaiseDpiChanged(e);
         }
 
-        internal virtual void OnHandlerVerticalScrollBarValueChanged()
-        {
-            if (DisposingOrDisposed)
-                return;
-
-            var args = new ScrollEventArgs
-            {
-                ScrollOrientation = ScrollBarOrientation.Vertical,
-                NewValue = Handler.GetScrollBarEvtPosition(),
-                Type = Handler.GetScrollBarEvtKind(),
-            };
-            RaiseScroll(args);
-        }
-
         internal virtual void OnHandlerVisibleChanged()
         {
             if (DisposingOrDisposed)
@@ -906,20 +888,6 @@ namespace Alternet.UI
                 // See https://forums.wxwidgets.org/viewtopic.php?f=1&t=47439
                 PerformLayout();
             }
-        }
-
-        internal virtual void OnHandlerHorizontalScrollBarValueChanged()
-        {
-            if (DisposingOrDisposed)
-                return;
-
-            var args = new ScrollEventArgs
-            {
-                ScrollOrientation = ScrollBarOrientation.Horizontal,
-                NewValue = Handler.GetScrollBarEvtPosition(),
-                Type = Handler.GetScrollBarEvtKind(),
-            };
-            RaiseScroll(args);
         }
 
         internal virtual void OnHandlerPaint()

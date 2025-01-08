@@ -23,7 +23,10 @@ namespace ControlsSample
                 "This text has ",
                 "bold",
                 " fragment",
-                new FontAndColor(Color.Red, Color.LightGoldenrodYellow, Control.DefaultFont.Scaled(1.5)));
+                new FontAndColor(
+                    Color.Red,
+                    Color.LightGoldenrodYellow,
+                    Control.DefaultFont.Scaled(1.5)));
 
             controlTemplate.Parent = this;
             controlTemplate.SetSizeToContent();
@@ -76,11 +79,17 @@ namespace ControlsSample
             tooltipPreview.VerticalAlignment = VerticalAlignment.Fill;
             tooltipPreview.Layout = LayoutStyle.Vertical;
             toolTip.VerticalAlignment = VerticalAlignment.Fill;
+
             toolTip.BackgroundColor = SystemColors.Window;
+
             toolTip.Parent = tooltipPreview;
             toolTip.ShowDebugRectangleAtCenter = false;
             toolTip.ContextMenuStrip = popup;
             toolTip.Padding = 10;
+
+            toolTip.SizeChanged += (s, e) =>
+            {
+            };
 
             showTemplateButton.Click += (s, e) =>
             {
@@ -111,6 +120,32 @@ namespace ControlsSample
                 toolTip.HideToolTip();
                 ShowToolTipButton_Click(null, EventArgs.Empty);
             };
+
+            RunWhenIdle(() =>
+            {
+                ShowToolTipButton_Click(this, EventArgs.Empty);
+            });
+
+            tooltipTitleTextBox.DelayedTextChanged += (s, e) =>
+            {
+                if (toolTip.ToolTipVisible)
+                    RunWhenIdle(() => ShowToolTipButton_Click(this, EventArgs.Empty));
+            };
+
+            tooltipMessageTextBox.DelayedTextChanged += (s, e) =>
+            {
+                if (toolTip.ToolTipVisible)
+                    RunWhenIdle(()=>ShowToolTipButton_Click(this, EventArgs.Empty));
+            };
+
+            tooltipPreview.Click += (s, e) =>
+            {
+                ShowToolTipButton_Click(this, EventArgs.Empty);
+            };
+
+            toolTip.ToolTipPicture.AfterShow += (s, e) =>
+            {
+            };
         }
 
         private void ToolTipLabel_Click(object? sender, EventArgs e)
@@ -136,8 +171,11 @@ namespace ControlsSample
             if (textBox.Text == string.Empty)
                 textBox.Text = text;
             else
+            if (textBox.Text == text)
+                textBox.Text = PropertyGridSample.ObjectInit.LoremIpsum;
+            else
                 textBox.Text = string.Empty;
-            toolTip.HideToolTip();
+            ShowToolTipButton_Click(this, EventArgs.Empty);
         }
 
         internal void NextAligment()

@@ -14,6 +14,9 @@ namespace Alternet.UI
     /// </summary>
     internal class WxControlHandler : BaseControlHandler, IControlHandler
     {
+        const int wxHORIZONTAL = 0x0004;
+        const int wxVERTICAL = 0x0008;
+
         private Native.Control? nativeControl;
 
         public WxControlHandler()
@@ -572,12 +575,12 @@ namespace Alternet.UI
             NativeControl.RecreateWindow();
         }
 
-        public void BeginUpdate()
+        public virtual void BeginUpdate()
         {
             NativeControl.BeginUpdate();
         }
 
-        public void EndUpdate()
+        public virtual void EndUpdate()
         {
             NativeControl.EndUpdate();
         }
@@ -787,6 +790,8 @@ namespace Alternet.UI
             NativeControl.DragEnter -= NativeControl_DragEnter;
             NativeControl.DragDrop -= NativeControl_DragDrop;
             NativeControl.HandleCreated = null;
+            NativeControl.VerticalScrollBarValueChanged = null;
+            NativeControl.HorizontalScrollBarValueChanged = null;
         }
 
         protected virtual void OnNativeControlCreated()
@@ -802,6 +807,8 @@ namespace Alternet.UI
             NativeControl.DragOver += NativeControl_DragOver;
             NativeControl.DragEnter += NativeControl_DragEnter;
             NativeControl.DragDrop += NativeControl_DragDrop;
+            NativeControl.VerticalScrollBarValueChanged = NativeVerticalScrollBarValueChanged;
+            NativeControl.HorizontalScrollBarValueChanged = NativeHorizontalScrollBarValueChanged;
 
             NativeControl.HandleCreated = OnNativeControlHandleCreated;
         }
@@ -863,6 +870,16 @@ namespace Alternet.UI
         public void SetFocusFlags(bool canSelect, bool tabStop, bool acceptsFocusRecursively)
         {
             NativeControl.SetFocusFlags(canSelect, tabStop, acceptsFocusRecursively);
+        }
+
+        public bool CanScroll(bool isVertical)
+        {
+            return NativeControl.CanScroll(isVertical ? wxVERTICAL : wxHORIZONTAL);
+        }
+
+        public bool HasScrollbar(bool isVertical)
+        {
+            return NativeControl.HasScrollbar(isVertical ? wxVERTICAL : wxHORIZONTAL);
         }
 
         public ScrollBarInfo GetScrollBarInfo(bool isVertical)
@@ -927,6 +944,36 @@ namespace Alternet.UI
         public void InvalidateBestSize()
         {
             NativeControl.InvalidateBestSize();
+        }
+
+        internal virtual void NativeVerticalScrollBarValueChanged()
+        {
+            if (DisposingOrDisposed)
+                return;
+
+            var args = new ScrollEventArgs
+            {
+                ScrollOrientation = ScrollBarOrientation.Vertical,
+                NewValue = GetScrollBarEvtPosition(),
+                Type = GetScrollBarEvtKind(),
+            };
+            
+            Control.RaiseScroll(args);
+        }
+
+        internal virtual void NativeHorizontalScrollBarValueChanged()
+        {
+            if (DisposingOrDisposed)
+                return;
+
+            var args = new ScrollEventArgs
+            {
+                ScrollOrientation = ScrollBarOrientation.Horizontal,
+                NewValue = GetScrollBarEvtPosition(),
+                Type = GetScrollBarEvtKind(),
+            };
+            
+            Control.RaiseScroll(args);
         }
 
         internal class NonAbstractNativeControl : Native.Control

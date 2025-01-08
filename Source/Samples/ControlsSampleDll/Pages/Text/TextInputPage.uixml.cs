@@ -119,11 +119,21 @@ namespace ControlsSample
             });
         }
 
+        internal bool UsePopup { get; set; } = false;
+
         private void ShowProperties_Click(object? sender, EventArgs e)
         {
-            popup ??= PopupPropertyGrid.CreatePropertiesPopup();
-            popup.MainControl.SetProps(textBox, true);
-            popup.ShowPopup(showPropertiesButton);
+            if (UsePopup)
+            {
+                popup ??= PopupPropertyGrid.CreatePropertiesPopup();
+                popup.StartLocation = WindowStartLocation.ScreenTopRight;
+                popup.MainControl.SetProps(textBox, true);
+                popup.Show();
+            }
+            else
+            {
+                WindowPropertyGrid.ShowDefault(null, textBox, true);
+            }
         }
         
         private void TextInputPage_Idle(object? sender, EventArgs e)

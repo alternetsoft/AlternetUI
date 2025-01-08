@@ -9,7 +9,7 @@ using Alternet.Drawing;
 
 namespace Alternet.UI
 {
-    internal class MauiWindowHandler : MauiControlHandler, IWindowHandler
+    internal partial class MauiWindowHandler : MauiControlHandler, IWindowHandler
     {
         private string? title;
 
@@ -59,7 +59,7 @@ namespace Alternet.UI
             set;
         }
 
-        public virtual bool HasBorder
+        public override bool HasBorder
         {
             get;
             set;

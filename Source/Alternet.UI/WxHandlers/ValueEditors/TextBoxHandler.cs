@@ -20,7 +20,7 @@ namespace Alternet.UI
             }
         }
 
-        public bool HasBorder
+        public override bool HasBorder
         {
             get
             {

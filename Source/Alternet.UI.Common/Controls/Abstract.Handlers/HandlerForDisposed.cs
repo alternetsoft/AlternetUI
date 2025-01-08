@@ -13,28 +13,22 @@ namespace Alternet.UI
         IButtonHandler,
         ICalendarHandler,
         ICheckBoxHandler,
-        ICheckListBoxHandler,
-        IColorPickerHandler,
         IComboBoxHandler,
         IContextMenuHandler,
         IDateTimePickerHandler,
         IGroupBoxHandler,
-        ILabelHandler,
         ILinkLabelHandler,
-        IListBoxHandler,
         IListViewHandler,
         IMainMenuHandler,
         IMenuItemHandler,
-        INumericUpDownHandler,
-        IProgressBarHandler,
         IRadioButtonHandler,
-        IRichTextBoxHandler,
+        IRichTextBox,
         IScrollBarHandler,
         ISliderHandler,
         ITextBoxHandler,
         ITreeViewHandler,
         IVListBoxHandler,
-        IWebBrowserHandler,
+        IWebBrowserLite,
         IWindowHandler
     {
         /// <summary>
@@ -1887,7 +1881,7 @@ namespace Alternet.UI
             return default;
         }
 
-        int? IListBoxHandler.HitTest(PointD position)
+        int? IVListBoxHandler.HitTest(PointD position)
         {
             return default;
         }

@@ -66,18 +66,7 @@ namespace Alternet::UI
 
     wxWindow* Panel::CreateWxWindowCore(wxWindow* parent)
     {
-        long style = wxNO_BORDER | wxTAB_TRAVERSAL;
-
-        if (GetIsScrollable())
-            style |= wxHSCROLL | wxVSCROLL;
-        if (_scrollBarAlwaysVisible)
-            style |= wxALWAYS_SHOW_SB;
-        if (_wantChars)
-            style |= wxWANTS_CHARS;
-        if(_showVertScrollBar)
-            style |= wxVSCROLL;
-        if(_showHorzScrollBar)
-            style |= wxHSCROLL;
+        auto style = GetDefaultStyle() | wxTAB_TRAVERSAL;
 
         auto p = new wxPanel2(this, parent, wxID_ANY, wxDefaultPosition, wxDefaultSize, style);
         return p;

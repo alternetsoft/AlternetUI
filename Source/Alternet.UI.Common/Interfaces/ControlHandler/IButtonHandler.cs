@@ -43,9 +43,6 @@ namespace Alternet.UI
         /// </summary>
         Action? Click { get; set; }
 
-        /// <inheritdoc cref="Button.HasBorder"/>
-        bool HasBorder { get; set; }
-
         /// <inheritdoc cref="Button.IsDefault"/>
         bool IsDefault { get; set; }
 

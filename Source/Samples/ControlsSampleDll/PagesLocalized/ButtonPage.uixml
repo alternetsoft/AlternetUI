@@ -14,44 +14,44 @@
         <!-- ===================================== -->
 
         <Grid Margin="0,0,0,0" RowCount="4" ColumnCount="2" Name="propsContainer1">
-          <Label Text="Text " Margin="0,0,0,0" Grid.Column="0" Grid.Row="0" IsTextLocalized="true"
+          <Label Text="Text " Margin="5" Grid.Column="0" Grid.Row="0" IsTextLocalized="true"
                  VerticalAlignment="Center"/>
-          <TextBox Text="Test Button" Name="textTextBox" Margin="5,0,0,0" IsTextLocalized="true"
+          <TextBox Text="Test Button" Name="textTextBox" Margin="5" IsTextLocalized="true"
                    TextChanged="Button_Changed" Grid.Column="1" Grid.Row="0"/>
 
-          <Label Text="Text Font" Name="labelFont" Margin="0,5,0,0" IsTextLocalized="true"
+          <Label Text="Text Font" Name="labelFont" Margin="5" IsTextLocalized="true"
                  VerticalAlignment="Center"
                  Grid.Column="0" Grid.Row="1"/>
-          <ComboBox Name="comboBoxFontName" IsEditable="false" Margin="5,5,0,0"
+          <ComboBox Name="comboBoxFontName" IsEditable="false" Margin="5"
                      Grid.Column="1" Grid.Row="1"/>
 
           <Label Text="Text Size" Name="labelSize" IsTextLocalized="true"
-                 Margin="0,5,0,0" VerticalAlignment="Center"
+                 Margin="5" VerticalAlignment="Center"
                  Grid.Column="0" Grid.Row="2"/>
           <ComboBox Width="5" Name="comboBoxFontSize" IsEditable="false"
-                    Margin="5,5,0,0"  Grid.Column="1" Grid.Row="2"/>
+                    Margin="5"  Grid.Column="1" Grid.Row="2"/>
         </Grid>
 
         <!-- ===================================== -->
 
         <Grid Margin="10,0,0,0" RowCount="4" ColumnCount="2" Name="propsContainer2">
-          <Label Text="Align" VerticalAlignment="Center" Margin="0,0,0,0" IsTextLocalized="true"
+          <Label Text="Align" VerticalAlignment="Center" Margin="5" IsTextLocalized="true"
                  Grid.Column="0" Grid.Row="0" />
-          <ComboBox IsEditable="false" Name="textAlignComboBox" Margin="5,0,0,0"
+          <ComboBox IsEditable="false" Name="textAlignComboBox" Margin="5"
                     Grid.Column="1" Grid.Row="0" />
 
-          <Label Text="Image" VerticalAlignment="Center" Margin="0,5,0,0" IsTextLocalized="true"
+          <Label Text="Image" VerticalAlignment="Center" Margin="5" IsTextLocalized="true"
                  Grid.Column="0" Grid.Row="1" />
-          <ComboBox IsEditable="false" Name="imageAlignComboBox" Margin="5,5,0,0"
+          <ComboBox IsEditable="false" Name="imageAlignComboBox" Margin="5"
                     Grid.Column="1" Grid.Row="1"/>
 
           <Button Text="Image Margins..." Name="imageMarginsButton"
                   RowIndex="3" ColumnIndex="0" IsTextLocalized="true"
-                  ColumnSpan="2"/>
+                  ColumnSpan="2" Margin="5"/>
         </Grid>
       </HorizontalStackPanel>
 
-      <HorizontalStackPanel>
+      <HorizontalStackPanel Margin="5,0,0,0">
         <VerticalStackPanel Margin="0,0,0,0">
           <CheckBox Text="Disabled" Name="disabledCheckBox" Margin="0,10,0,0" IsTextLocalized="true" />
           <CheckBox Text="Image" Name="imageCheckBox" Margin="0,10,0,0"

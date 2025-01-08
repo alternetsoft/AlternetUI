@@ -129,13 +129,6 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Gets control handler.
-        /// </summary>
-        [Browsable(false)]
-        public new INumericUpDownHandler Handler =>
-            (INumericUpDownHandler)base.Handler;
-
-        /// <summary>
         /// Gets or sets the maximum allowed value for the numeric up-down control.
         /// </summary>
         /// <value>The maximum allowed value for the numeric up-down control.
@@ -165,26 +158,6 @@ namespace Alternet.UI
                 if (Value > maximum)
                     Value = maximum;
                 RaiseMaximumChanged(EventArgs.Empty);
-            }
-        }
-
-        /// <summary>
-        /// Gets or sets a value indicating whether the control has a border.
-        /// </summary>
-        internal virtual bool HasBorder
-        {
-            get
-            {
-                if (DisposingOrDisposed)
-                    return default;
-                return Handler.HasBorder;
-            }
-
-            set
-            {
-                if (DisposingOrDisposed)
-                    return;
-                Handler.HasBorder = value;
             }
         }
 

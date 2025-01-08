@@ -119,16 +119,14 @@ namespace PropertyGridSample
             });
 
             listBox.HorizontalScrollbar = true;
-            listBox.Count = 5000;
+            listBox.Count = 200;
             listBox.CustomItemText += ListBox_CustomItemText;
 
             static void ListBox_CustomItemText(object? sender, GetItemTextEventArgs e)
             {
-                if (sender is not VirtualListBox listBox)
-                    return;
-                if (e.ItemIndex >= listBox.Items.Count)
+                if(string.IsNullOrEmpty(e.Result))
                 {
-                    e.Result = "Custom item " + e.ItemIndex.ToString();
+                    e.Result = "Virtual item " + e.ItemIndex.ToString();
                     e.Handled = true;
                 }
             }

@@ -447,6 +447,11 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets or sets whether <see cref="CharValidator"/> is ignored. Default is True.
+        /// </summary>
+        public virtual bool IgnoreCharValidator { get; set; } = true;
+
+        /// <summary>
         /// Gets or sets the title of the control as string.
         /// There is also <see cref="TitleAsObject"/> property.
         /// </summary>
@@ -825,6 +830,7 @@ namespace Alternet.UI
 
             set
             {
+                value = value.ApplyMinMax(MinimumSize, MaximumSize);
                 if (ClientSize == value)
                     return;
                 Size = value;
@@ -3033,6 +3039,27 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets or sets the horizontal alignment applied to this control when
+        /// it is positioned within a parent control.
+        /// </summary>
+        /// <value>A horizontal alignment setting. The default is
+        /// <c>null</c>.</value>
+        public virtual HorizontalAlignment HorizontalAlignment
+        {
+            get => horizontalAlignment;
+            set
+            {
+                if (horizontalAlignment == value)
+                    return;
+
+                horizontalAlignment = value;
+                HorizontalAlignmentChanged?.Invoke(this, EventArgs.Empty);
+                if (Parent is not null && !IgnoreLayout)
+                    PerformLayout();
+            }
+        }
+
+        /// <summary>
         /// Gets or sets the vertical alignment applied to this control when it
         /// is positioned within a parent control.
         /// </summary>
@@ -3050,6 +3077,25 @@ namespace Alternet.UI
                 VerticalAlignmentChanged?.Invoke(this, EventArgs.Empty);
                 if(Parent is not null && !IgnoreLayout)
                     PerformLayout();
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether the control has a border.
+        /// </summary>
+        /// <remarks>
+        /// It's up to the control descendant how this property is used.
+        /// </remarks>
+        [Browsable(false)]
+        public virtual bool HasBorder
+        {
+            get
+            {
+                return false;
+            }
+
+            set
+            {
             }
         }
 
@@ -3113,7 +3159,7 @@ namespace Alternet.UI
                 if (all)
                     return controls;
 
-                List<AbstractControl> result = new();
+                List<AbstractControl> result = new(controls.Count);
 
                 foreach (var control in controls)
                 {
@@ -3122,27 +3168,6 @@ namespace Alternet.UI
                 }
 
                 return result;
-            }
-        }
-
-        /// <summary>
-        /// Gets or sets the horizontal alignment applied to this control when
-        /// it is positioned within a parent control.
-        /// </summary>
-        /// <value>A horizontal alignment setting. The default is
-        /// <c>null</c>.</value>
-        public virtual HorizontalAlignment HorizontalAlignment
-        {
-            get => horizontalAlignment;
-            set
-            {
-                if (horizontalAlignment == value)
-                    return;
-
-                horizontalAlignment = value;
-                HorizontalAlignmentChanged?.Invoke(this, EventArgs.Empty);
-                if (Parent is not null && !IgnoreLayout)
-                    PerformLayout();
             }
         }
 
@@ -3182,31 +3207,6 @@ namespace Alternet.UI
         /// </summary>
         [Browsable(false)]
         public virtual RectD ClientRectangle => new(PointD.Empty, ClientSize);
-
-        /// <summary>
-        /// Gets a rectangle which describes an area inside of the
-        /// <see cref="AbstractControl"/> available
-        /// for positioning (layout) of its child controls, in device-independent units.
-        /// </summary>
-        [Browsable(false)]
-        public virtual RectD ChildrenLayoutBounds
-        {
-            get
-            {
-                var childrenBounds = ClientRectangle;
-                if (childrenBounds.SizeIsEmpty)
-                    return RectD.Empty;
-
-                var padding = Padding;
-                var intrinsicPadding = IntrinsicLayoutPadding;
-
-                return new RectD(
-                    new PointD(
-                        padding.Left + intrinsicPadding.Left,
-                        padding.Top + intrinsicPadding.Top),
-                    childrenBounds.Size - padding.Size - intrinsicPadding.Size);
-            }
-        }
 
         /// <summary>
         /// Returns control identifier.

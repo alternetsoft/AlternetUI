@@ -52,9 +52,11 @@ namespace PrintingSample
 
             var drawTextBounds = bounds.InflatedBy(-50, -50);
 
+            var dtbWidth = drawTextBounds.Width;
+
             var wrappedText = DrawingUtils.WrapTextToMultipleLines(
                 TextToDraw,
-                drawTextBounds.Width,
+                ref dtbWidth,
                 font,
                 dc);
 

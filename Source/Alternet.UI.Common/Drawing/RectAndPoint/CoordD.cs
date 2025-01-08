@@ -22,7 +22,31 @@ using System.Text;
 
 namespace Alternet.Drawing
 {
-    internal struct CoordD
+    /// <summary>
+    /// Contains coordinate related properties and methods.
+    /// </summary>
+    public struct CoordD
     {
+#pragma warning disable
+        /// <summary>
+        /// Gets an empty coordinate which is equal to 0.
+        /// </summary>
+        public const Coord Empty = 0D;
+
+        /// <summary>
+        /// Gets a coordinate which is equal to -1.
+        /// </summary>
+        public const Coord MinusOne = -1D;
+
+        /// <summary>
+        /// Gets a coordinate which is equal to 1.
+        /// </summary>
+        public const Coord One = 1D;
+
+        /// <summary>
+        /// Gets a coordinate which is equal to 1.
+        /// </summary>
+        public const Coord Two = 2D;
+#pragma warning enable
     }
 }

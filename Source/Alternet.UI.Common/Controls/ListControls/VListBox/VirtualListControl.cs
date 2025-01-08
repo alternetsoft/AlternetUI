@@ -12,10 +12,10 @@ namespace Alternet.UI
     /// <summary>
     /// Advanced list control with ability to customize item painting.
     /// </summary>
-    /// <typeparam name="TItem">Type of the item.</typeparam>
-    public abstract class VirtualListControl<TItem>
-        : CustomListBox<TItem>, IListControlItemContainer, IListControlItemDefaults
-        where TItem : class, new()
+    public abstract partial class VirtualListControl
+        : ListControl<ListControlItem>, ICustomListBox<ListControlItem>,
+        IListControlItemContainer, IListControlItemDefaults,
+        ICheckListBox<ListControlItem>
     {
         /// <summary>
         /// Gets or sets default minimal item height.
@@ -188,6 +188,36 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets or sets the zero-based index of the currently checked item
+        /// in a <see cref="ListBox"/>.
+        /// </summary>
+        /// <value>A zero-based index of the currently checked item. A value
+        /// of <c>null</c> is returned if no item is checked.</value>
+        [Browsable(false)]
+        public virtual int? CheckedIndex
+        {
+            get
+            {
+                if (DisposingOrDisposed)
+                    return default;
+                return CheckedIndices.FirstOrDefault();
+            }
+
+            set
+            {
+                if (DisposingOrDisposed)
+                    return;
+
+                if (value != null && (value < 0 || value >= Items.Count))
+                    value = null;
+
+                ClearChecked();
+                if (value != null)
+                    SetChecked(value.Value, true);
+            }
+        }
+
+        /// <summary>
         /// Gets a collection that contains the zero-based indexes of all
         /// currently checked items in the control.
         /// </summary>
@@ -242,6 +272,9 @@ namespace Alternet.UI
                 }
             }
         }
+
+        /// <inheritdoc/>
+        public override ControlTypeId ControlKind => ControlTypeId.ListBox;
 
         /// <summary>
         /// Gets or sets a value indicating whether checkbox will
@@ -596,6 +629,25 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets a <see cref="IVListBoxHandler"/> associated with this class.
+        /// </summary>
+        [Browsable(false)]
+        internal new IVListBoxHandler Handler
+        {
+            get
+            {
+                return (IVListBoxHandler)base.Handler;
+            }
+        }
+
+        [Browsable(false)]
+        internal new string Text
+        {
+            get => base.Text;
+            set => base.Text = value;
+        }
+
+        /// <summary>
         /// Gets item font. It must not be <c>null</c>.
         /// </summary>
         /// <returns></returns>
@@ -605,25 +657,64 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Measures item size. If <see cref="ItemPainter"/> is assigned, uses
-        /// <see cref="IListBoxItemPainter.GetSize"/>, otherwise calls
-        /// <see cref="ListControlItem.DefaultMeasureItemSize"/>.
+        /// Ensures that the item is visible within the control, scrolling the
+        /// contents of the control, if necessary.
         /// </summary>
-        /// <param name="itemIndex">Index of the item.</param>
-        public virtual SizeD MeasureItemSize(int itemIndex)
+        /// <param name="itemIndex">The item index to scroll into visibility.</param>
+        public virtual void EnsureVisible(int itemIndex)
         {
-            if (painter is null)
-                return ListControlItem.DefaultMeasureItemSize(this, MeasureCanvas, itemIndex);
-            var result = painter.GetSize(this, itemIndex);
-            if (result == SizeD.MinusOne)
-                return ListControlItem.DefaultMeasureItemSize(this, MeasureCanvas, itemIndex);
-            return result;
+            if (DisposingOrDisposed)
+                return;
+            if (Count > 0)
+                Handler.EnsureVisible(itemIndex);
         }
 
         /// <summary>
-        /// Unchecks all items in the control.
+        /// Returns the zero-based index of the item at the specified coordinates.
         /// </summary>
-        public virtual bool ClearChecked(bool raiseEvents = true)
+        /// <param name="position">A <see cref="PointD"/> object containing
+        /// the coordinates used to obtain the item
+        /// index.</param>
+        /// <returns>The zero-based index of the item found at the specified
+        /// coordinates; returns <see langword="null"/>
+        /// if no match is found.</returns>
+        public virtual int? HitTest(PointD position)
+        {
+            if (DisposingOrDisposed)
+                return null;
+            return Handler.HitTest(position);
+        }
+
+        /// <summary>
+        /// Gets only valid indexes from the list of indexes in
+        /// the control.
+        /// </summary>
+        public virtual IReadOnlyList<int> GetValidIndexes(params int[] indexes)
+        {
+            var validIndexes = new List<int>();
+
+            foreach (int index in indexes)
+            {
+                if (IsValidIndex(index))
+                    validIndexes.Add(index);
+            }
+
+            return validIndexes;
+        }
+
+        /// <summary>
+        /// Checks whether index is valid in the control.
+        /// </summary>
+        public virtual bool IsValidIndex(int index)
+        {
+            return index >= 0 && index < Items.Count;
+        }
+
+        /// <summary>
+        /// Unchecks all items in the control and optionally calls
+        /// <see cref="RaiseCheckedChanged"/>.
+        /// </summary>
+        public virtual bool ClearChecked(bool raiseEvents)
         {
             if (Items.Count == 0)
                 return false;
@@ -724,7 +815,7 @@ namespace Alternet.UI
         /// otherwise, false.</param>
         /// <remarks>
         /// This method repaints control and raises events.
-        /// Use <see cref="VirtualListControl{T}.SetItemCheckedCore(int, bool)"/>
+        /// Use <see cref="VirtualListControl.SetItemCheckedCore(int, bool)"/>
         /// method to change checked state without raising events and repainting the
         /// control.
         /// </remarks>
@@ -741,45 +832,19 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets whether control has items.
+        /// </summary>
+        public virtual bool HasItems()
+        {
+            return Items.Count > 0;
+        }
+
+        /// <summary>
         /// Removes checked items from the control.
         /// </summary>
         public virtual void RemoveCheckedItems()
         {
             RemoveItems(CheckedIndicesDescending);
-        }
-
-        /// <summary>
-        /// Selects all items in the control.
-        /// </summary>
-        public virtual void SelectAll()
-        {
-            SetAllSelected(true);
-        }
-
-        /// <summary>
-        /// Unselects all items in the control.
-        /// </summary>
-        public virtual void UnselectAll()
-        {
-            SetAllSelected(false);
-        }
-
-        /// <summary>
-        /// Changes selected state for all items in the control.
-        /// </summary>
-        /// <param name="selected">New selected state.</param>
-        public virtual void SetAllSelected(bool selected)
-        {
-            if (SelectionMode == ListBoxSelectionMode.Single)
-                return;
-
-            DoInsideUpdate(() =>
-            {
-                for (int i = 0; i < Items.Count; i++)
-                {
-                    SetSelected(i, selected);
-                }
-            });
         }
 
         /// <summary>
@@ -798,7 +863,7 @@ namespace Alternet.UI
         /// <param name="value">New value.</param>
         /// <remarks>
         /// This method repaints control and raises events.
-        /// Use <see cref="VirtualListControl{T}.SetItemCheckStateCore"/>
+        /// Use <see cref="VirtualListControl.SetItemCheckStateCore"/>
         /// method to change checked state without raising events and repainting the
         /// control.
         /// </remarks>
@@ -841,6 +906,8 @@ namespace Alternet.UI
         /// event data.</param>
         public void RaiseCheckedChanged(EventArgs e)
         {
+            if (DisposingOrDisposed)
+                return;
             OnCheckedChanged(e);
             CheckedChanged?.Invoke(this, e);
         }
@@ -850,14 +917,28 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="index">Item index.</param>
         /// <returns></returns>
-        public abstract bool IsCurrent(int index);
+        public bool IsCurrent(int index)
+        {
+            return index == SelectedIndex;
+        }
 
         /// <summary>
         /// Gets whether item with the specified index is selected.
         /// </summary>
         /// <param name="index">Item index.</param>
         /// <returns></returns>
-        public abstract bool IsSelected(int index);
+        public virtual bool IsSelected(int index)
+        {
+            if (IsSelectionModeSingle)
+            {
+                return index == SelectedIndex;
+            }
+            else
+            {
+                var item = SafeItem(index);
+                return item?.IsSelected(this) ?? false;
+            }
+        }
 
         /// <summary>
         /// Gets item as object.
@@ -1002,9 +1083,22 @@ namespace Alternet.UI
                 item.DrawForeground(this, e);
         }
 
+        /// <inheritdoc/>
+        public void ClearChecked()
+        {
+            ClearChecked(true);
+        }
+
+        /// <inheritdoc/>
+        public void SetChecked(int index, bool value)
+        {
+            SetItemChecked(index, value);
+        }
+
         /// <summary>
         /// Allows to set items from the <see cref="IEnumerable{T}"/> with huge number of items which
-        /// is "yield" constructed. This method can be called from the another thread which is different
+        /// is "yield" constructed. This method can be called from the
+        /// another thread which is different
         /// from UI thread.
         /// </summary>
         /// <typeparam name="TSource">The type of the item in the source enumerable.</typeparam>
@@ -1016,7 +1110,8 @@ namespace Alternet.UI
         /// source item is ignored. This function is called from the thread that
         /// provides <paramref name="source"/> so do not access UI elements from it.</param>
         /// <param name="continueFunc">The function which is called to check whether to continue
-        /// the conversion. You can return False to stop the conversion. This function is called from the
+        /// the conversion. You can return False to stop the conversion. This function
+        /// is called from the
         /// main thread so it can access UI elements.</param>
         /// <param name="bufferSize">Size of the items buffer. Optional. Default is 10.</param>
         /// <param name="sleepAfterBufferMsec">The value in milliseconds to wait after buffer is
@@ -1024,12 +1119,12 @@ namespace Alternet.UI
         /// Optional. Default is 150.</param>
         public virtual void AddItemsThreadSafe<TSource>(
            IEnumerable<TSource> source,
-           Func<TSource, TItem?> convertItem,
+           Func<TSource, ListControlItem?> convertItem,
            Func<bool> continueFunc,
            int bufferSize = 10,
            int sleepAfterBufferMsec = 150)
         {
-            bool AddToDest(IEnumerable<TItem> items)
+            bool AddToDest(IEnumerable<ListControlItem> items)
             {
                 var result = true;
                 Invoke(() =>
@@ -1043,7 +1138,7 @@ namespace Alternet.UI
                 return result;
             }
 
-            EnumerableUtils.ConvertItems<TSource, TItem>(
+            EnumerableUtils.ConvertItems<TSource, ListControlItem>(
                         convertItem,
                         AddToDest,
                         source,
@@ -1060,8 +1155,8 @@ namespace Alternet.UI
         /// <param name="fnCreateItem">Create item action.</param>
         public virtual void SetItemsFast<TItemFrom>(
             IEnumerable<TItemFrom> from,
-            Action<TItem, TItemFrom> fnAssign,
-            Func<TItem> fnCreateItem)
+            Action<ListControlItem, TItemFrom> fnAssign,
+            Func<ListControlItem> fnCreateItem)
         {
             var count = from.Count();
 
@@ -1108,6 +1203,13 @@ namespace Alternet.UI
         {
         }
 
+        /// <inheritdoc/>
+        protected override void OnMouseDoubleClick(MouseEventArgs e)
+        {
+            base.OnMouseDoubleClick(e);
+            RunSelectedItemDoubleClickAction();
+        }
+
         /// <summary>
         /// Implements controller for the add range operation which is performed
         /// in the background thread. It allows to continue work with the control while
@@ -1119,10 +1221,11 @@ namespace Alternet.UI
             /// <summary>
             /// Gets or sets control on which add range operation is performed.
             /// </summary>
-            public VirtualListControl<TItem> ListBox;
+            public VirtualListControl ListBox;
 
             /// <summary>
-            /// Gets or sets the function which provides the <see cref="IEnumerable{T}"/> instance which
+            /// Gets or sets the function which provides the <see cref="IEnumerable{T}"/>
+            /// instance which
             /// is "yield" constructed in the another thread.
             /// </summary>
             public Func<IEnumerable<TSource>> SourceFunc;
@@ -1134,7 +1237,7 @@ namespace Alternet.UI
             /// source item is ignored. This function is called from the thread that
             /// provides source items so do not access UI elements from it.
             /// </summary>
-            public Func<TSource, TItem?> ConvertItemFunc;
+            public Func<TSource, ListControlItem?> ConvertItemFunc;
 
             /// <summary>
             /// Gets or sets the function which is called to check whether to continue
@@ -1173,9 +1276,9 @@ namespace Alternet.UI
             /// class with the specified parameters.
             /// </summary>
             public AddRangeController(
-                VirtualListControl<TItem> listBox,
+                VirtualListControl listBox,
                 Func<IEnumerable<TSource>> source,
-                Func<TSource, TItem?> convertItem,
+                Func<TSource, ListControlItem?> convertItem,
                 Func<bool> continueFunc)
             {
                 ListBox = listBox;

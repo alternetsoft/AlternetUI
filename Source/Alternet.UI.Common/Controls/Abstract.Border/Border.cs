@@ -1,5 +1,7 @@
 using System;
 using System.ComponentModel;
+using System.Diagnostics;
+
 using Alternet.Drawing;
 
 namespace Alternet.UI
@@ -10,6 +12,11 @@ namespace Alternet.UI
     [ControlCategory("Containers")]
     public partial class Border : UserControl
     {
+        /// <summary>
+        /// Gets or sets whether to show debug corners when control is painted.
+        /// </summary>
+        public static bool ShowDebugCorners = false;
+
         /// <summary>
         /// Initializes a new instance of the <see cref="Border"/> class.
         /// </summary>
@@ -48,27 +55,6 @@ namespace Alternet.UI
             set => BorderSettings.Default.Width = value;
         }
 
-        /// <inheritdoc/>
-        public override RectD ChildrenLayoutBounds
-        {
-            get
-            {
-                var bounds = base.ChildrenLayoutBounds;
-
-                if (HasBorder)
-                {
-                    bounds.X += BorderWidth.Left;
-                    bounds.Y += BorderWidth.Top;
-                    if (bounds.SizeIsEmpty)
-                        return bounds;
-                    bounds.Width -= BorderWidth.Horizontal;
-                    bounds.Height -= BorderWidth.Vertical;
-                }
-
-                return bounds;
-            }
-        }
-
         /// <summary>
         /// Gets or sets the border width for the <see cref="Border"/> control.
         /// </summary>
@@ -92,6 +78,7 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
+        [Browsable(true)]
         public override bool HasBorder
         {
             get => base.HasBorder;
@@ -265,6 +252,21 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets <see cref="Thickness"/> that represents border widths for the specified control.
+        /// </summary>
+        /// <param name="control">Control to get border widths for.</param>
+        /// <returns></returns>
+        public static Thickness SafeBorderWidth(AbstractControl? control)
+        {
+            if (control is not null && control.HasBorder)
+            {
+                return control.Borders?.Normal?.Width ?? Thickness.Empty;
+            }
+            else
+                return Thickness.Empty;
+        }
+
+        /// <summary>
         /// Creates border filled with default settings.
         /// </summary>
         /// <returns></returns>
@@ -301,6 +303,7 @@ namespace Alternet.UI
         public override void DefaultPaint(PaintEventArgs e)
         {
             DrawDefaultBackground(e);
+            DefaultPaintDebug(e);
         }
 
         /// <summary>
@@ -392,6 +395,13 @@ namespace Alternet.UI
                 if(Padding == NormalBorder.Width)
                     Padding = 0;
             }
+        }
+
+        [Conditional("DEBUG")]
+        private void DefaultPaintDebug(PaintEventArgs e)
+        {
+            if (ShowDebugCorners)
+                BorderSettings.DrawDesignCorners(e.Graphics, e.ClipRectangle);
         }
 
         private void OnSettingsPropertyChanged(object? sender, PropertyChangedEventArgs e)

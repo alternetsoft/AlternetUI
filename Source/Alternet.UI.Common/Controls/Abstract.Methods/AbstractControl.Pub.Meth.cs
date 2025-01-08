@@ -217,9 +217,20 @@ namespace Alternet.UI
         /// <returns></returns>
         public virtual bool IsValidInputChar(char ch)
         {
-            if (CharValidator is not null)
+            if ((CharValidator is not null) && !IgnoreCharValidator)
             {
+                if(ch < 32)
+                {
+                    if (Alternet.UI.CharValidator.AlwaysValidControlChars)
+                        return true;
+                }
+
                 var isValid = CharValidator.IsValid(ch);
+                if (!isValid)
+                {
+                    isValid = Array.IndexOf(Alternet.UI.CharValidator.AlwaysValidChars, ch) >= 0;
+                }
+
                 return isValid;
             }
 
@@ -1182,24 +1193,37 @@ namespace Alternet.UI
             if (mode == WindowSizeToContentMode.None)
                 return;
 
-            var newSize = GetPaddedPreferredSize(GetPreferredSize(SizeD.PositiveInfinity));
+            var newSize = GetChildrenMaxPreferredSizePadded(MaximumSize.InfinityIfEmpty);
+
+            var newSize2 = GetPaddedPreferredSize(GetPreferredSize(MaximumSize.InfinityIfEmpty));
+
+            newSize = SizeD.Max(newSize, newSize2);
+
             if (newSize != SizeD.Empty)
             {
                 var currentSize = ClientSize;
                 switch (mode)
                 {
                     case WindowSizeToContentMode.Width:
+                    case WindowSizeToContentMode.GrowWidth:
                         newSize.Height = currentSize.Height;
                         break;
+                    case WindowSizeToContentMode.GrowHeight:
                     case WindowSizeToContentMode.Height:
                         newSize.Width = currentSize.Width;
                         break;
                 }
 
-                ClientSize = newSize + new SizeD(1, 0);
-                ClientSize = newSize;
-                Refresh();
-                PerformLayout();
+                bool onlyGrow = mode == WindowSizeToContentMode.GrowWidth
+                    || mode == WindowSizeToContentMode.GrowHeight
+                    || mode == WindowSizeToContentMode.GrowWidthAndHeight;
+
+                if (onlyGrow)
+                {
+                    newSize = SizeD.Max(newSize, Size);
+                }
+
+                Size = newSize;
             }
         }
 
@@ -1727,82 +1751,6 @@ namespace Alternet.UI
             Bounds = newBounds.ToRect();
             return true;
         }
-
-        /// <summary>
-        /// Called when the control should reposition its child controls.
-        /// </summary>
-        [Browsable(false)]
-        public virtual void OnLayout()
-        {
-            if (CustomLayout is not null)
-            {
-                var e = new HandledEventArgs();
-                CustomLayout(this, e);
-                if (e.Handled)
-                    return;
-            }
-
-            var layoutType = Layout ?? GetDefaultLayout();
-
-            RectD GetSpace()
-            {
-                return ChildrenLayoutBounds;
-            }
-
-            var items = AllChildrenInLayout;
-
-            if (GlobalOnLayout is not null)
-            {
-                var e = new DefaultLayoutEventArgs(this, layoutType, GetSpace(), items);
-                GlobalOnLayout(this, e);
-                if (e.Handled)
-                    return;
-                else
-                {
-                    layoutType = e.Layout;
-                    items = e.Children;
-                }
-            }
-
-            DefaultOnLayout(
-                this,
-                layoutType,
-                GetSpace,
-                items);
-        }
-
-        /// <summary>
-        /// Retrieves the size of a rectangular area into which a control can
-        /// be fitted, in device-independent units.
-        /// </summary>
-        /// <param name="availableSize">The available space that a parent element
-        /// can allocate a child control.</param>
-        /// <returns>A <see cref="SuggestedSize"/> representing the width and height of
-        /// a rectangle, in device-independent units.</returns>
-        public virtual SizeD GetPreferredSize(SizeD availableSize)
-        {
-            var layoutType = Layout ?? GetDefaultLayout();
-
-            if (GlobalGetPreferredSize is not null)
-            {
-                var e = new DefaultPreferredSizeEventArgs(layoutType, availableSize);
-                if (e.Handled && e.Result != SizeD.MinusOne)
-                    return e.Result;
-            }
-
-            return DefaultGetPreferredSize(
-                this,
-                availableSize,
-                layoutType);
-        }
-
-        /// <summary>
-        /// Calls <see cref="GetPreferredSize(SizeD)"/> with <see cref="SizeD.PositiveInfinity"/>
-        /// as a parameter value.
-        /// </summary>
-        /// <returns></returns>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public SizeD GetPreferredSize() => GetPreferredSize(SizeD.PositiveInfinity);
 
         /// <summary>
         /// Performs some action for the each child of the control.

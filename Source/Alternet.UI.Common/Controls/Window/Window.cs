@@ -406,7 +406,8 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets a value indicating whether the window has a border.
         /// </summary>
-        public virtual bool HasBorder
+        [Browsable(true)]
+        public override bool HasBorder
         {
             get => info.HasBorder;
 
@@ -419,7 +420,7 @@ namespace Alternet.UI
                 info.HasBorder = value;
                 OnHasBorderChanged(EventArgs.Empty);
                 HasBorderChanged?.Invoke(this, EventArgs.Empty);
-                Handler.HasBorder = value;
+                base.Handler.HasBorder = value;
             }
         }
 

@@ -3,14 +3,14 @@ using System;
 namespace Alternet.UI
 {
     internal partial class WebBrowserHandler :
-        WxControlHandler<WebBrowser, Native.WebBrowser>, IWebBrowserHandler
+        WxControlHandler<WebBrowser, Native.WebBrowser>, IWebBrowserLite
     {
         public bool IsEdgeBackend
         {
             get => NativeControl.IsEdge;
         }
 
-        public bool HasBorder
+        public override bool HasBorder
         {
             get => NativeControl.HasBorder;
             set => NativeControl.HasBorder = value;

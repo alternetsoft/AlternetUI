@@ -60,7 +60,8 @@ namespace Alternet.UI
             data[KnownButton.Add] = () => new(strings.ButtonAdd, KnownSvgImages.ImgAdd);
             data[KnownButton.Remove] = () => new(strings.ButtonRemove, KnownSvgImages.ImgRemove);
             data[KnownButton.Clear] = () => new(strings.ButtonClear, KnownSvgImages.ImgRemoveAll);
-            data[KnownButton.AddChild] = () => new(strings.ButtonAddChild, KnownSvgImages.ImgAddChild);
+            data[KnownButton.AddChild]
+                = () => new(strings.ButtonAddChild, KnownSvgImages.ImgAddChild);
             data[KnownButton.MoreItems]
                 = () => new(strings.ToolbarSeeMore, KnownSvgImages.ImgMoreActionsHorz);
             data[KnownButton.New] = () => new(strings.ButtonNew, KnownSvgImages.ImgFileNew);
@@ -70,13 +71,16 @@ namespace Alternet.UI
             data[KnownButton.Redo] = () => new(strings.ButtonRedo, KnownSvgImages.ImgRedo);
             data[KnownButton.Bold] = () => new(strings.ButtonBold, KnownSvgImages.ImgBold);
             data[KnownButton.Italic] = () => new(strings.ButtonItalic, KnownSvgImages.ImgItalic);
-            data[KnownButton.Underline] = () => new(strings.ButtonUnderline, KnownSvgImages.ImgUnderline);
+            data[KnownButton.Underline]
+                = () => new(strings.ButtonUnderline, KnownSvgImages.ImgUnderline);
             data[KnownButton.Back] = () => new(strings.ButtonBack, KnownSvgImages.ImgBrowserBack);
             data[KnownButton.Forward]
                 = () => new(strings.ButtonForward, KnownSvgImages.ImgBrowserForward);
             data[KnownButton.ZoomIn] = () => new(strings.ButtonZoomIn, KnownSvgImages.ImgZoomIn);
             data[KnownButton.ZoomOut] = () => new(strings.ButtonZoomOut, KnownSvgImages.ImgZoomOut);
             data[KnownButton.BrowserGo] = () => new(strings.ButtonGo, KnownSvgImages.ImgBrowserGo);
+
+            data[KnownButton.Search] = () => new(strings.ButtonSearch, KnownSvgImages.ImgSearch);
 
             data[KnownButton.TextBoxEllipsis] = () => new(KnownSvgImages.ImgMoreActionsHorz);
             data[KnownButton.TextBoxCombo] = () => new(KnownSvgImages.ImgAngleDown);

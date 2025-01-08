@@ -22,12 +22,6 @@ namespace Alternet.UI
         private Cursor? cursor;
 #pragma warning restore
 
-        /// <inheritdoc cref="AbstractControl.VertScrollBarInfo"/>
-        ScrollBarInfo IControlHandler.VertScrollBarInfo { get; set; }
-
-        /// <inheritdoc cref="AbstractControl.HorzScrollBarInfo"/>
-        ScrollBarInfo IControlHandler.HorzScrollBarInfo { get; set; }
-
         Action<DragEventArgs>? IControlHandler.DragDrop { get; set; }
 
         Action<DragEventArgs>? IControlHandler.DragOver { get; set; }
@@ -58,10 +52,6 @@ namespace Alternet.UI
 
         Action? IControlHandler.DragLeave { get; set; }
 
-        Action? IControlHandler.VerticalScrollBarValueChanged { get; set; }
-
-        Action? IControlHandler.HorizontalScrollBarValueChanged { get; set; }
-
         Action? IControlHandler.SizeChanged { get; set; }
 
         Action? IControlHandler.LocationChanged { get; set; }
@@ -90,8 +80,6 @@ namespace Alternet.UI
         Thickness IControlHandler.IntrinsicLayoutPadding { get; }
 
         Thickness IControlHandler.IntrinsicPreferredSizePadding { get; }
-
-        bool IControlHandler.IsScrollable { get; set; }
 
         /// <inheritdoc/>
         public RectD Bounds { get; set; }
@@ -142,8 +130,6 @@ namespace Alternet.UI
 
         bool IControlHandler.ProcessIdle { get; set; }
 
-        bool IControlHandler.BindScrollEvents { get; set; }
-
         SizeD IControlHandler.ClientSize
         {
             get => ((IControlHandler)this).Bounds.Size;
@@ -173,6 +159,15 @@ namespace Alternet.UI
 
         /// <inheritdoc/>
         public AbstractControl? EventFocusedControl { get; set; }
+
+        /// <inheritdoc/>
+        public ScrollBarInfo VertScrollBarInfo { get; set; }
+
+        /// <inheritdoc/>
+        public ScrollBarInfo HorzScrollBarInfo { get; set; }
+
+        /// <inheritdoc/>
+        public bool IsScrollable { get; set; }
 
         void IControlHandler.BeginInit()
         {
@@ -257,16 +252,6 @@ namespace Alternet.UI
         SizeD IControlHandler.GetPreferredSize(SizeD availableSize)
         {
             return availableSize;
-        }
-
-        ScrollEventType IControlHandler.GetScrollBarEvtKind()
-        {
-            return default;
-        }
-
-        int IControlHandler.GetScrollBarEvtPosition()
-        {
-            return default;
         }
 
         RectI IControlHandler.GetUpdateClientRectI()

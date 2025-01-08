@@ -31,8 +31,6 @@ namespace Alternet.UI
         
         public bool Resizable { get; set; }
         
-        public bool HasBorder { get; set; }
-        
         public bool HasTitleBar { get; set; }
         
         public bool HasSystemMenu { get; set; }

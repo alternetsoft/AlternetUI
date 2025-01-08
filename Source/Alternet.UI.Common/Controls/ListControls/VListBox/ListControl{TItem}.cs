@@ -16,7 +16,7 @@ namespace Alternet.UI
     /// </summary>
     /// <typeparam name="TItem">Type of the item. Can be <see cref="object"/>,
     /// <see cref="ListControlItem"/> or any other type.</typeparam>
-    public abstract class ListControl<TItem> : Control, IReadOnlyStrings
+    public abstract class ListControl<TItem> : Control, IReadOnlyStrings, IListControl<TItem>
         where TItem : class, new()
     {
         private StringSearch? search;
@@ -41,109 +41,6 @@ namespace Alternet.UI
                 if (value is null)
                     return;
                 search = value;
-            }
-        }
-
-        /// <summary>
-        /// Gets or sets the currently selected item in the control.
-        /// </summary>
-        /// <value>An object that represents the current selection in the
-        /// control, or <c>null</c> if no item is selected.</value>
-        [Browsable(false)]
-        public abstract TItem? SelectedItem { get; set; }
-
-        /// <summary>
-        /// Gets or sets the zero-based index of the currently selected item in
-        /// the control.
-        /// </summary>
-        /// <value>A zero-based index of the currently selected item. A value
-        /// of <c>null</c> is returned if no item is selected.</value>
-        [Browsable(false)]
-        public abstract int? SelectedIndex { get; set; }
-
-        /// <summary>
-        /// Gets or sets the zero-based index of the currently selected item in
-        /// the control. Same as <see cref="SelectedIndex"/> but is not nullable.
-        /// </summary>
-        [Browsable(false)]
-        public virtual int SelectedIndexAsInt
-        {
-            get
-            {
-                var result = SelectedIndex;
-                if (result is null)
-                    return -1;
-                return result.Value;
-            }
-
-            set
-            {
-                if (SelectedIndexAsInt == value)
-                    return;
-                if (value < 0)
-                    SelectedIndex = null;
-                else
-                    SelectedIndex = value;
-            }
-        }
-
-        /// <summary>
-        /// Returns <see cref="Action"/> associated with the <see cref="SelectedItem"/> if it is
-        /// <see cref="ListControlItem"/>.
-        /// </summary>
-        [Browsable(false)]
-        public virtual Action? SelectedAction => (SelectedItem as ListControlItem)?.Action;
-
-        /// <summary>
-        /// Returns <see cref="ObjectUniqueId"/> associated
-        /// with the <see cref="SelectedItem"/> if it is
-        /// <see cref="ListControlItem"/>.
-        /// </summary>
-        [Browsable(false)]
-        public virtual ObjectUniqueId? SelectedUniqueId =>
-            (SelectedItem as ListControlItem)?.UniqueId;
-
-        /// <summary>
-        /// Gets or sets the items of the control.
-        /// </summary>
-        /// <value>A collection representing the items
-        /// in the control.</value>
-        /// <remarks>This property enables you to obtain a reference to the list
-        /// of items that are currently stored in the control.
-        /// With this reference, you can add items, remove items, and obtain
-        /// a count of the items in the collection.</remarks>
-        [Content]
-        public virtual IListControlItems<TItem> Items
-        {
-            get
-            {
-                return SafeItems();
-            }
-
-            set
-            {
-                DoInsideUpdate(() =>
-                {
-                    RemoveAll();
-                    Items.AddRange(value);
-                });
-            }
-        }
-
-        /// <summary>
-        /// Gets the number of elements contained in the control.
-        /// </summary>
-        /// <returns>
-        /// The number of elements contained in the control.
-        /// </returns>
-        [Browsable(false)]
-        public virtual int Count
-        {
-            get => Items.Count;
-
-            set
-            {
-                throw new InvalidOperationException();
             }
         }
 
@@ -197,6 +94,109 @@ namespace Alternet.UI
         {
             get => LastItem;
             set => LastItem = value;
+        }
+
+        /// <summary>
+        /// Gets or sets the currently selected item in the control.
+        /// </summary>
+        /// <value>An object that represents the current selection in the
+        /// control, or <c>null</c> if no item is selected.</value>
+        [Browsable(false)]
+        public abstract TItem? SelectedItem { get; set; }
+
+        /// <summary>
+        /// Gets or sets the items of the control.
+        /// </summary>
+        /// <value>A collection representing the items
+        /// in the control.</value>
+        /// <remarks>This property enables you to obtain a reference to the list
+        /// of items that are currently stored in the control.
+        /// With this reference, you can add items, remove items, and obtain
+        /// a count of the items in the collection.</remarks>
+        [Content]
+        public virtual IListControlItems<TItem> Items
+        {
+            get
+            {
+                return SafeItems();
+            }
+
+            set
+            {
+                DoInsideUpdate(() =>
+                {
+                    RemoveAll();
+                    Items.AddRange(value);
+                });
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets the zero-based index of the currently selected item in
+        /// the control.
+        /// </summary>
+        /// <value>A zero-based index of the currently selected item. A value
+        /// of <c>null</c> is returned if no item is selected.</value>
+        [Browsable(false)]
+        public abstract int? SelectedIndex { get; set; }
+
+        /// <summary>
+        /// Gets or sets the zero-based index of the currently selected item in
+        /// the control. Same as <see cref="SelectedIndex"/> but is not nullable.
+        /// </summary>
+        [Browsable(false)]
+        public virtual int SelectedIndexAsInt
+        {
+            get
+            {
+                var result = SelectedIndex;
+                if (result is null)
+                    return -1;
+                return result.Value;
+            }
+
+            set
+            {
+                if (SelectedIndexAsInt == value)
+                    return;
+                if (value < 0)
+                    SelectedIndex = null;
+                else
+                    SelectedIndex = value;
+            }
+        }
+
+        /// <summary>
+        /// Returns <see cref="Action"/> associated with the <see cref="SelectedItem"/> if it is
+        /// <see cref="ListControlItem"/>.
+        /// </summary>
+        [Browsable(false)]
+        public virtual Action? SelectedAction => (SelectedItem as ListControlItem)?.Action;
+
+        /// <summary>
+        /// Returns <see cref="ObjectUniqueId"/> associated
+        /// with the <see cref="SelectedItem"/> if it is
+        /// <see cref="ListControlItem"/>.
+        /// </summary>
+        [Browsable(false)]
+        public virtual ObjectUniqueId? SelectedUniqueId =>
+            (SelectedItem as ListControlItem)?.UniqueId;
+
+        /// <summary>
+        /// Gets the number of elements contained in the control.
+        /// </summary>
+        /// <returns>
+        /// The number of elements contained in the control.
+        /// </returns>
+        [Browsable(false)]
+        public virtual int Count
+        {
+            get => Items.Count;
+
+            set
+            {
+                throw new InvalidOperationException();
+            }
         }
 
         [Browsable(false)]
@@ -395,7 +395,7 @@ namespace Alternet.UI
             s = GetItem(index);
             var result = GetItemText(s, forDisplay);
 
-            if(CustomItemText is null)
+            if (CustomItemText is null)
                 return result;
 
             GetItemTextEventArgs e = new(index, s, result, forDisplay);
@@ -553,23 +553,24 @@ namespace Alternet.UI
         /// </summary>
         public bool RemoveItemWithValueIf(object? value, bool condition)
         {
-            if(condition)
+            if (condition)
                 return RemoveItemWithValue(value);
             return false;
         }
 
         /// <summary>
-        /// Removes item with the specified value. Item is removed if it equals the specified value or
+        /// Removes item with the specified value. Item is removed if it equals
+        /// the specified value or
         /// if it is <see cref="ListControlItem"/> and it's <see cref="ListControlItem.Value"/>
         /// property equals the value.
         /// </summary>
         public virtual bool RemoveItemWithValue(object? value)
         {
-            for(int i = 0; i < Items.Count; i++)
+            for (int i = 0; i < Items.Count; i++)
             {
                 var item = Items[i];
 
-                if(ValueEquals(item))
+                if (ValueEquals(item))
                 {
                     Items.RemoveAt(i);
                     return true;
@@ -616,7 +617,11 @@ namespace Alternet.UI
             items = newItems ?? SafeItems();
         }
 
-        private ListControlItems<TItem> SafeItems()
+        /// <summary>
+        /// Gets items.
+        /// </summary>
+        /// <returns></returns>
+        protected virtual ListControlItems<TItem> SafeItems()
         {
             return items ??= new ListControlItems<TItem>();
         }

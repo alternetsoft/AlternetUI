@@ -265,13 +265,31 @@ namespace Alternet.UI
         /// Gets scrollbar position as <see cref="AltPositionInfo"/>.
         /// </summary>
         [Browsable(false)]
-        public AltPositionInfo AltPosInfo => pos;
+        public virtual AltPositionInfo AltPosInfo
+        {
+            get
+            {
+                return pos;
+            }
+        }
 
         /// <summary>
         /// Gets scrollbar position as <see cref="ScrollBarInfo"/>.
         /// </summary>
         [Browsable(false)]
-        public ScrollBarInfo PosInfo => pos.AsPositionInfo();
+        public virtual ScrollBarInfo PosInfo
+        {
+            get
+            {
+                var result = pos.AsPositionInfo();
+                return result;
+            }
+
+            set
+            {
+                pos.Assign(value);
+            }
+        }
 
         internal IScrollBarHandler PlatformControl
         {
@@ -346,6 +364,16 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Raises the <see cref="ValueChanged" /> event and
+        /// <see cref="OnValueChanged"/> method.
+        /// </summary>
+        public void RaiseValueChanged()
+        {
+            OnValueChanged(EventArgs.Empty);
+            ValueChanged?.Invoke(this, EventArgs.Empty);
+        }
+
+        /// <summary>
         /// Logs scrollbar info.
         /// </summary>
         public virtual void LogInfo()
@@ -376,6 +404,23 @@ namespace Alternet.UI
             PlatformControl.Scroll = RaiseScroll;
         }
 
+        /// <summary>
+        /// This method should not be used in the <see cref="ScrollBar"/>.
+        /// </summary>
+        public override ScrollBarInfo GetScrollBarInfo(bool isVertical)
+        {
+            if (isVertical == IsVertical)
+                return PosInfo;
+            return ScrollBarInfo.Default;
+        }
+
+        /// <summary>
+        /// This method should not be used in the <see cref="ScrollBar"/>.
+        /// </summary>
+        public override void SetScrollBarInfo(bool isVertical, ScrollBarInfo value)
+        {
+        }
+
         /// <inheritdoc/>
         public override void UnbindHandlerEvents()
         {
@@ -386,7 +431,7 @@ namespace Alternet.UI
         /// <summary>
         /// Raises scroll events.
         /// </summary>
-        public virtual void RaiseScroll()
+        internal virtual void RaiseScroll()
         {
             if (DisposingOrDisposed)
                 return;
@@ -400,13 +445,25 @@ namespace Alternet.UI
             var orientation = PlatformControl.IsVertical ? ScrollBarOrientation.Vertical
                 : ScrollBarOrientation.Horizontal;
             RaiseScroll(new ScrollEventArgs(eventType, oldPos, newPos, orientation));
-            OnValueChanged(EventArgs.Empty);
+            RaiseValueChanged();
         }
 
         /// <inheritdoc/>
         protected override IControlHandler CreateHandler()
         {
             return ControlFactory.Handler.CreateScrollBarHandler(this);
+        }
+
+        /// <inheritdoc/>
+        protected override void OnLocationChanged(EventArgs e)
+        {
+            base.OnLocationChanged(e);
+        }
+
+        /// <inheritdoc/>
+        protected override void OnSizeChanged(EventArgs e)
+        {
+            base.OnSizeChanged(e);
         }
 
         /// <summary>
@@ -448,11 +505,11 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Raises the <see cref="ValueChanged" /> event.</summary>
+        /// Called when <see cref="ValueChanged"/> event is raised.
+        /// </summary>
         /// <param name="e">An <see cref="EventArgs" /> that contains the event data.</param>
         protected virtual void OnValueChanged(EventArgs e)
         {
-            ValueChanged?.Invoke(this, e);
         }
 
         /// <summary>
@@ -501,7 +558,7 @@ namespace Alternet.UI
                 return;
             UpdateScrollInfo();
             if (!e.HasPropertyName())
-                OnValueChanged(EventArgs.Empty);
+                RaiseValueChanged();
         }
     }
 }

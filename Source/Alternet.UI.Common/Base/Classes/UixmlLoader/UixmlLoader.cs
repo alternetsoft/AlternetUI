@@ -4,6 +4,8 @@ using System.IO;
 using System.Reflection;
 using System.Xml;
 
+using Alternet.Drawing;
+
 namespace Alternet.UI
 {
     /// <summary>
@@ -11,6 +13,12 @@ namespace Alternet.UI
     /// </summary>
     public partial class UixmlLoader
     {
+        /// <summary>
+        /// Gets or sets default flags which customize load uixml behavior.
+        /// </summary>
+        public static Flags DefaultFlags
+            = Flags.ReportError | Flags.LogError | Flags.ShowErrorDialog;
+
         /// <summary>
         /// Custom method for loading Uixml from resource. Overrides default behavior.
         /// </summary>
@@ -33,7 +41,8 @@ namespace Alternet.UI
         public enum Flags
         {
             /// <summary>
-            /// Specifies whether to report error.
+            /// Specifies whether to report error. If this memmber is not specified,
+            /// <see cref="ShowErrorDialog"/>, <see cref="LogError"/> are ignored.
             /// </summary>
             ReportError = 1,
 
@@ -45,7 +54,12 @@ namespace Alternet.UI
             /// <summary>
             /// Specifies whether to supress exception throw.
             /// </summary>
-            NoThrowException = 3,
+            NoThrowException = 4,
+
+            /// <summary>
+            /// Specifies whether to log error.
+            /// </summary>
+            LogError = 8,
         }
 
         /// <summary>
@@ -75,22 +89,14 @@ namespace Alternet.UI
         {
             if(LoadFromResName is not null)
             {
-                var result = LoadFromResName(resName, existingObject, 0);
+                var result = LoadFromResName(resName, existingObject, DefaultFlags);
                 if (result)
                     return;
             }
 
-            try
-            {
-                var uixmlStream = existingObject.GetType().Assembly.GetManifestResourceStream(resName)
-                    ?? throw new InvalidOperationException();
-                LoadExistingEx(uixmlStream, existingObject, 0, resName);
-            }
-            catch (Exception e)
-            {
-                DefaultReportLoadException(e, resName, 0);
-                throw;
-            }
+            var uixmlStream = existingObject.GetType().Assembly.GetManifestResourceStream(resName)
+                ?? throw new InvalidOperationException();
+            LoadExistingEx(uixmlStream, existingObject, DefaultFlags, resName);
         }
 
         /// <summary>
@@ -123,53 +129,18 @@ namespace Alternet.UI
             catch (Exception e)
             {
                 DefaultReportLoadException(e, resName, flags);
-                if(!flags.HasFlag(Flags.NoThrowException))
-                    throw e;
                 return existingObject;
             }
         }
 
         /// <summary>
-        /// Reports load error using the specified error information and flags.
+        /// Builds message with filename and error position.
         /// </summary>
-        /// <param name="e">Exception information.</param>
-        /// <param name="resName">Resource name.</param>
-        /// <param name="flags">Flags.</param>
-        public static void DefaultReportLoadException(Exception e, string? resName, Flags flags)
+        /// <param name="e">Exception.</param>
+        /// <param name="resName">Uixml resource name.</param>
+        /// <returns></returns>
+        public static string? GetErrorFileAndPos(Exception e, string? resName)
         {
-            if(ReportLoadException is not null)
-            {
-                var result = ReportLoadException(e, resName, flags);
-                if (result)
-                    return;
-            }
-
-            if (!flags.HasFlag(Flags.ReportError))
-                return;
-
-            void BeginSection()
-            {
-            }
-
-            void EndSection()
-            {
-            }
-
-            void WriteLine(string s)
-            {
-                Debug.WriteLine(s);
-            }
-
-            void Indent()
-            {
-                Debug.Indent();
-            }
-
-            void Unindent()
-            {
-                Debug.Unindent();
-            }
-
             var sourceUri = resName;
             int lineNumber = -1;
             int linePos = -1;
@@ -181,32 +152,89 @@ namespace Alternet.UI
                 sourceUri ??= xmlException.SourceUri;
             }
 
-            BeginSection();
-            WriteLine($"Error reading Uixml: {e.Message}");
-            Indent();
+            string? s2 = null;
+
             if (sourceUri is not null)
             {
                 string lineStr = string.Empty;
                 string charStr = string.Empty;
                 if (linePos > 0)
                     charStr = $" Ch: {linePos}";
-                if(lineNumber > 0)
+                if (lineNumber > 0)
                     lineStr = $" Ln: {lineNumber}{charStr}";
 
-                WriteLine($"File: {sourceUri}{lineStr}");
+                s2 = $"File: {sourceUri}{lineStr}";
             }
 
-            WriteLine($"Exception type: {e.GetType()}");
-            Unindent();
+            return s2;
+        }
+
+        /// <summary>
+        /// Reports load error using the specified error information and flags.
+        /// </summary>
+        /// <param name="e">Exception information.</param>
+        /// <param name="resName">Resource name.</param>
+        /// <param name="flags">Flags.</param>
+        public static void DefaultReportLoadException(Exception e, string? resName, Flags flags)
+        {
+            var s1 = $"Error reading uixml: {e.Message}";
+            var s3 = $"Exception type: {e.GetType()}";
+            var s2 = GetErrorFileAndPos(e, resName);
+
+            if (s2 is not null)
+            {
+                BaseException exc = new(s1, e);
+                exc.AdditionalInformation = s2;
+                e = exc;
+            }
+
+            BeginSection();
+            WriteLine(s1);
+            if (s2 is not null)
+                WriteLine(s2);
+            WriteLine(s3);
             EndSection();
 
-            if (!flags.HasFlag(Flags.ShowErrorDialog))
-                return;
-            if (App.Initialized && !App.Current.InUixmlPreviewerMode
-                && ShowExceptionDialog)
+            if (ReportLoadException is not null)
             {
-                var s = $"Resource Name: {resName}";
-                App.ShowExceptionWindow(e, s, false);
+                var result = ReportLoadException(e, resName, flags);
+                if (result)
+                    return;
+            }
+
+            if (flags.HasFlag(Flags.ReportError))
+            {
+                if (flags.HasFlag(Flags.LogError))
+                    App.LogError(e);
+
+                if (!flags.HasFlag(Flags.ShowErrorDialog))
+                    return;
+                if (App.Initialized && !App.Current.InUixmlPreviewerMode
+                    && ShowExceptionDialog)
+                {
+                    if (!App.ShowExceptionWindow(e))
+                    {
+                        App.Exit();
+                    }
+                }
+            }
+
+            if (!flags.HasFlag(Flags.NoThrowException))
+                throw e;
+
+            void BeginSection()
+            {
+                Debug.WriteLine(LogUtils.SectionSeparator);
+            }
+
+            void EndSection()
+            {
+                Debug.WriteLine(LogUtils.SectionSeparator);
+            }
+
+            void WriteLine(string s)
+            {
+                Debug.WriteLine(s);
             }
         }
 

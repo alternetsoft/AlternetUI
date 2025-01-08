@@ -12,7 +12,8 @@ namespace Alternet.UI
     /// the <see cref="ListViewView.Details"/> <see cref="ListView.View"/>.
     /// </summary>
     /// <remarks>
-    /// A column is an item in a <see cref="ListView"/> control that contains column title text in the
+    /// A column is an item in a <see cref="ListView"/> control that contains column
+    /// title text in the
     /// <see cref="ListViewView.Details"/> <see cref="ListView.View"/>.
     /// <see cref="ListViewColumn"/> objects can be added to a <see cref="ListView"/> using the
     /// <see cref="ICollection{ListViewColumn}.Add"/> method of the collection returned
@@ -169,12 +170,14 @@ namespace Alternet.UI
 
         /// <summary>
         /// Gets or sets the maximal auto-width of the column, in device-independent units.
-        /// This property is used when column width is specified in percents of the container's width.
+        /// This property is used when column width is specified in percents of the
+        /// container's width.
         /// If it equals 0, it is not used.
         /// </summary>
         public virtual Coord? MaxAutoWidth
         {
             get => maxAutoWidth;
+
             set
             {
                 if (maxAutoWidth == value)
@@ -215,7 +218,8 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or set the width sizing behavior for this column.
         /// </summary>
-        /// <value>A <see cref="ListViewColumnWidthMode"/> which specifies the width sizing behavior.
+        /// <value>A <see cref="ListViewColumnWidthMode"/> which specifies
+        /// the width sizing behavior.
         /// Default is <see cref="ListViewColumnWidthMode.Fixed"/>.</value>
         public virtual ListViewColumnWidthMode WidthMode
         {
@@ -234,7 +238,8 @@ namespace Alternet.UI
         /// real width in device-independent units.
         /// If <see cref="ListView"/> is not assigned returns null.
         /// </summary>
-        /// <param name="widthInPercent">The column width in percents of the owner control's width.</param>
+        /// <param name="widthInPercent">The column width in percents of the
+        /// owner control's width.</param>
         /// <param name="minWidth">Minimal possible width of the column. If negative value
         /// is specified, minimal possible width is calculated from the width of the
         /// column title's text plus absolute value of the <paramref name="minWidth"/>.</param>

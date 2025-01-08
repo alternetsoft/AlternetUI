@@ -364,7 +364,7 @@ namespace Alternet.UI
 
         private ListControlItem LogInternal(int id, object? obj, LogItemKind kind)
         {
-            if (IsDisposed)
+            if (DisposingOrDisposed)
                 return new();
 
             var message = obj.SafeToString();
@@ -388,7 +388,7 @@ namespace Alternet.UI
             string? prefix,
             LogItemKind kind)
         {
-            if (IsDisposed)
+            if (DisposingOrDisposed)
                 return new();
 
             string? s;

@@ -11,11 +11,6 @@ namespace Alternet.UI
     /// </summary>
     public interface IDateTimePickerHandler
     {
-        /// <summary>
-        /// Gets or sets a value indicating whether the control has a border.
-        /// </summary>
-        public bool HasBorder { get; set; }
-
         /// <inheritdoc cref="DateTimePicker.PopupKind"/>
         DateTimePickerPopupKind PopupKind { get; set; }
 

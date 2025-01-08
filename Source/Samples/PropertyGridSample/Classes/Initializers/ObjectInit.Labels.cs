@@ -13,6 +13,7 @@ namespace PropertyGridSample
         {
             if (control is not GenericLabel label)
                 return;
+            label.ParentBackColor = true;
             label.Text = "GenericLabel";
             label.HorizontalAlignment = HorizontalAlignment.Left;
             label.ForegroundColor = Color.Sienna;

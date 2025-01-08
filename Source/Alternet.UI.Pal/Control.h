@@ -131,6 +131,8 @@ namespace Alternet::UI
         SizeI _eventNewDpi;
         wxWindow* _eventFocusWindow = nullptr;
 
+        long GetDefaultStyle();
+
         virtual void OnPaint(wxPaintEvent& event);
         virtual void OnEraseBackground(wxEraseEvent& event);
 

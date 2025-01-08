@@ -264,7 +264,8 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets a value indicating whether the control has a border.
         /// </summary>
-        public virtual bool HasBorder
+        [Browsable(true)]
+        public override bool HasBorder
         {
             get
             {
@@ -286,12 +287,12 @@ namespace Alternet.UI
         public override ControlTypeId ControlKind => ControlTypeId.RichTextBox;
 
         [Browsable(false)]
-        internal new IRichTextBoxHandler Handler
+        internal new IRichTextBox Handler
         {
             get
             {
                 CheckDisposed();
-                return (IRichTextBoxHandler)base.Handler;
+                return (IRichTextBox)base.Handler;
             }
         }
 

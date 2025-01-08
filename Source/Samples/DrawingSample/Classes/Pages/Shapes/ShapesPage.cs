@@ -133,9 +133,11 @@ namespace DrawingSample
                 var cellNameRect = cellRect.InflatedBy(-2, -2);
                 cellNameRect.Height -= 4;
 
+                var cw = cellNameRect.Width;
+
                 var cellName = DrawingUtils.WrapTextToMultipleLines(
                     cell.Name,
-                    cellNameRect.Width,
+                    ref cw,
                     AbstractControl.DefaultFont,
                     dc);
 

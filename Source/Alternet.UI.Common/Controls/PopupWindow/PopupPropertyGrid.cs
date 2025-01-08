@@ -54,7 +54,7 @@ namespace Alternet.UI
             popupWindowProps.MainControl.ApplyFlags |= PropertyGridApplyFlags.PropInfoSetValue
                 | PropertyGridApplyFlags.ReloadAllAfterSetValue;
             popupWindowProps.AfterHide += PopupWindowProps_AfterHide;
-            popupWindowProps.Size = (400, 300);
+            popupWindowProps.Size = (500, 800);
             popupWindowProps.BottomToolBar.Visible = false;
             return popupWindowProps;
 

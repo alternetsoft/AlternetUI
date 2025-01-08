@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+
 using Alternet.Drawing;
 
 namespace Alternet.UI
@@ -45,6 +46,40 @@ namespace Alternet.UI
     public partial class Calendar : CustomDateEdit
     {
         /// <summary>
+        /// Gets or sets whether to use generic or native platform calendar by default.
+        /// Default is True.
+        /// </summary>
+        public static bool DefaultUseGeneric = true;
+
+        /// <summary>
+        /// Gets or sets whether to apply theme colors in the constructor (true)
+        /// or to use the default colors (false). Default is True.
+        /// </summary>
+        public static bool SetThemeInConstructor = true;
+
+        /// <summary>
+        /// Gets or sets default value for the <see cref="ShowWeekNumbers"/> property.
+        /// Default is False.
+        /// </summary>
+        public static bool DefaultShowWeekNumbers = false;
+
+        /// <summary>
+        /// Gets or sets default value for the <see cref="SequentalMonthSelect"/> property.
+        /// Default is True.
+        /// </summary>
+        public static bool DefaultSequentalMonthSelect = true;
+
+        /// <summary>
+        /// Gets or sets default value for the <see cref="ShowHolidays"/> property.
+        /// Default is True.
+        /// </summary>
+        public static bool DefaultShowHolidays = true;
+
+        private const bool ColorPropertyBrowsable = true;
+
+        private bool showHolidays;
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="Calendar"/> class.
         /// </summary>
         /// <param name="parent">Parent of the control.</param>
@@ -59,6 +94,17 @@ namespace Alternet.UI
         /// </summary>
         public Calendar()
         {
+            if (UseGeneric != DefaultUseGeneric)
+            {
+                UseGeneric = DefaultUseGeneric;
+            }
+
+            ShowWeekNumbers = DefaultShowWeekNumbers;
+            SequentalMonthSelect = DefaultSequentalMonthSelect;
+            ShowHolidays = DefaultShowHolidays;
+
+            if (!IsDarkBackground && SetThemeInConstructor)
+                SetColorThemeToLight();
         }
 
         /// <summary>
@@ -181,19 +227,20 @@ namespace Alternet.UI
         {
             get
             {
-                if (DisposingOrDisposed)
-                    return default;
-                return Handler.ShowHolidays;
+                return showHolidays;
             }
 
             set
             {
                 if (DisposingOrDisposed)
                     return;
-                if (ShowHolidays == value)
+                if (showHolidays == value)
                     return;
+                showHolidays = value;
                 Handler.EnableHolidayDisplay(value);
-                PerformLayout();
+                if (!value)
+                    ResetAttrAll();
+                PerformLayoutAndInvalidate();
             }
         }
 
@@ -329,20 +376,21 @@ namespace Alternet.UI
                     return;
                 Handler.UseGeneric = value;
                 SetRange();
-                PerformLayout();
+                PerformLayoutAndInvalidate();
             }
         }
 
         /// <summary>
         /// Gets or sets a value indicating whether the control has a border.
         /// </summary>
-        public virtual bool HasBorder
+        [Browsable(true)]
+        public override bool HasBorder
         {
             get
             {
                 if (DisposingOrDisposed)
                     return default;
-                return Handler.HasBorder;
+                return base.Handler.HasBorder;
             }
 
             set
@@ -351,8 +399,8 @@ namespace Alternet.UI
                     return;
                 if (HasBorder == value)
                     return;
-                Handler.HasBorder = value;
-                PerformLayout();
+                base.Handler.HasBorder = value;
+                PerformLayoutAndInvalidate();
             }
         }
 
@@ -415,7 +463,7 @@ namespace Alternet.UI
         /// <see cref="UseGeneric"/> is <c>true</c>) and always returns
         /// <see cref="Color.Empty"/> in the native versions.
         /// </remarks>
-        [Browsable(false)]
+        [Browsable(ColorPropertyBrowsable)]
         public virtual Color HolidayColorFg
         {
             get
@@ -439,7 +487,7 @@ namespace Alternet.UI
         /// <see cref="UseGeneric"/> is <c>true</c>) and always returns
         /// <see cref="Color.Empty"/> in the native versions.
         /// </remarks>
-        [Browsable(false)]
+        [Browsable(ColorPropertyBrowsable)]
         public virtual Color HolidayColorBg
         {
             get
@@ -460,7 +508,7 @@ namespace Alternet.UI
         /// <see cref="UseGeneric"/> is <c>true</c>) and always returns
         /// <see cref="Color.Empty"/> in the native versions.
         /// </remarks>
-        [Browsable(false)]
+        [Browsable(ColorPropertyBrowsable)]
         public virtual Color HeaderColorFg
         {
             get
@@ -481,7 +529,7 @@ namespace Alternet.UI
         /// <see cref="UseGeneric"/> is <c>true</c>) and always returns
         /// <see cref="Color.Empty"/> in the native versions.
         /// </remarks>
-        [Browsable(false)]
+        [Browsable(ColorPropertyBrowsable)]
         public virtual Color HeaderColorBg
         {
             get
@@ -502,7 +550,7 @@ namespace Alternet.UI
         /// <see cref="UseGeneric"/> is <c>true</c>) and always returns
         /// <see cref="Color.Empty"/> in the native versions.
         /// </remarks>
-        [Browsable(false)]
+        [Browsable(ColorPropertyBrowsable)]
         public virtual Color HighlightColorFg
         {
             get
@@ -523,7 +571,7 @@ namespace Alternet.UI
         /// <see cref="UseGeneric"/> is <c>true</c>) and always returns
         /// <see cref="Color.Empty"/> in the native versions.
         /// </remarks>
-        [Browsable(false)]
+        [Browsable(ColorPropertyBrowsable)]
         public virtual Color HighlightColorBg
         {
             get
@@ -537,7 +585,7 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        [Browsable(false)]
+        [Browsable(ColorPropertyBrowsable)]
         public override Color? BackgroundColor
         {
             get => base.BackgroundColor;
@@ -545,14 +593,15 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        [Browsable(false)]
+        [Browsable(ColorPropertyBrowsable)]
         public override Color? ForegroundColor
         {
             get => base.ForegroundColor;
+            set => base.ForegroundColor = value;
         }
 
         /// <inheritdoc/>
-        [Browsable(false)]
+        [Browsable(true)]
         public override Font? Font
         {
             get => base.Font;
@@ -560,7 +609,7 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        [Browsable(false)]
+        [Browsable(true)]
         public override bool IsBold
         {
             get => base.IsBold;
@@ -645,6 +694,39 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Marks or unmarks all days in the month.
+        /// </summary>
+        /// <remarks>
+        /// Days will be marked in every month. Usually marked days
+        /// are painted in bold font.
+        /// </remarks>
+        /// <param name="mark"><c>true</c> to mark the days, <c>false</c> to unmark them.</param>
+        public virtual void MarkAll(bool mark = true)
+        {
+            DoInsideUpdate(() =>
+            {
+                for (int i = 1; i <= 31; i++)
+                    Mark(i, mark);
+            });
+        }
+
+        /// <summary>
+        /// Clears any attributes associated with the days.
+        /// </summary>
+        /// <remarks>
+        /// This method is only implemented in generic calendar (when
+        /// <see cref="UseGeneric"/> is <c>true</c>) and does nothing in the native version.
+        /// </remarks>
+        public virtual void ResetAttrAll()
+        {
+            DoInsideUpdate(() =>
+            {
+                for (int i = 1; i <= 31; i++)
+                    ResetAttr(i);
+            });
+        }
+
+        /// <summary>
         /// Marks the specified day as being a holiday in the current month.
         /// </summary>
         /// <param name="day">Day (in the range 1...31).</param>
@@ -674,6 +756,7 @@ namespace Alternet.UI
             if (DisposingOrDisposed)
                 return;
             Handler.SetHighlightColors(colorFg, colorBg);
+            Invalidate();
         }
 
         /// <summary>
@@ -691,6 +774,7 @@ namespace Alternet.UI
             if (DisposingOrDisposed)
                 return;
             Handler.SetHolidayColors(colorFg, colorBg);
+            Invalidate();
         }
 
         /// <summary>
@@ -708,6 +792,7 @@ namespace Alternet.UI
             if (DisposingOrDisposed)
                 return;
             Handler.SetHeaderColors(colorFg, colorBg);
+            Invalidate();
         }
 
         /// <summary>
@@ -799,6 +884,33 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Sets colors used in the control to the light theme.
+        /// </summary>
+        public virtual void SetColorThemeToLight()
+        {
+            DoInsideUpdate(() =>
+            {
+                ParentForeColor = false;
+                ParentBackColor = false;
+                BackgroundColor = Color.White;
+                ForegroundColor = Color.Black;
+
+                Color headerColorBg = (233, 238, 246);
+                Color headerColorFg = ForegroundColor;
+
+                Color highlightColorBg = (194, 231, 255);
+                Color highlightColorFg = ForegroundColor;
+
+                Color holidayColorBg = BackgroundColor;
+                Color holidayColorFg = LightDarkColors.Red.Light;
+
+                SetHeaderColors(headerColorFg, headerColorBg);
+                SetHighlightColors(highlightColorFg, highlightColorBg);
+                SetHolidayColors(holidayColorFg, holidayColorBg);
+            });
+        }
+
+        /// <summary>
         /// Raises <see cref="DayHeaderClick"/> event and calls
         /// <see cref="OnDayHeaderClick"/> method.
         /// </summary>
@@ -822,6 +934,34 @@ namespace Alternet.UI
                 return;
             OnDayDoubleClick(e);
             DayDoubleClick?.Invoke(this, e);
+        }
+
+        /// <summary>
+        /// Sets colors used in the control to the dark theme.
+        /// This is not supported by the WxWidgets.
+        /// </summary>
+        internal virtual void SetColorThemeToDark()
+        {
+            DoInsideUpdate(() =>
+            {
+                ParentForeColor = false;
+                ParentBackColor = false;
+                BackgroundColor = (27, 27, 27);
+                ForegroundColor = (227, 227, 227);
+
+                Color headerColorBg = (40, 42, 44);
+                Color headerColorFg = ForegroundColor;
+
+                Color highlightColorBg = (0, 74, 119);
+                Color highlightColorFg = (194, 231, 255);
+
+                Color holidayColorBg = BackgroundColor;
+                Color holidayColorFg = LightDarkColors.Red.Dark;
+
+                SetHeaderColors(headerColorFg, headerColorBg);
+                SetHighlightColors(highlightColorFg, highlightColorBg);
+                SetHolidayColors(holidayColorFg, holidayColorBg);
+            });
         }
 
         internal bool AllowMonthChange()

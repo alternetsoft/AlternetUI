@@ -11,22 +11,6 @@ namespace Alternet.UI
     public partial class AbstractControl
     {
         /// <summary>
-        /// Enumerates known handler types.
-        /// </summary>
-        public enum HandlerType
-        {
-            /// <summary>
-            /// Native handler type.
-            /// </summary>
-            Native,
-
-            /// <summary>
-            /// Generic type.
-            /// </summary>
-            Generic,
-        }
-
-        /// <summary>
         /// Calculates horizontal <see cref="AlignedPosition"/> using align parameters.
         /// </summary>
         /// <param name="layoutBounds">Rectangle in which alignment is performed.</param>

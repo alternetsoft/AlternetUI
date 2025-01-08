@@ -33,7 +33,7 @@ namespace Alternet.UI
         IControlHandler CreateButtonHandler(Button control);
 
         /// <summary>
-        /// Creates <see cref="IColorPickerHandler"/> interface provider.
+        /// Creates <see cref="IControlHandler"/> interface provider.
         /// </summary>
         /// <param name="control">Owner.</param>
         /// <returns></returns>
@@ -47,7 +47,7 @@ namespace Alternet.UI
         IControlHandler CreateSliderHandler(Slider control);
 
         /// <summary>
-        /// Creates <see cref="IProgressBarHandler"/> interface provider.
+        /// Creates <see cref="IControlHandler"/> interface provider.
         /// </summary>
         /// <param name="control">Owner.</param>
         /// <returns></returns>
@@ -75,7 +75,7 @@ namespace Alternet.UI
         IControlHandler CreateTextBoxHandler(TextBox control);
 
         /// <summary>
-        /// Creates <see cref="IRichTextBoxHandler"/> interface provider.
+        /// Creates <see cref="IControlHandler"/> interface provider.
         /// </summary>
         /// <param name="editor">Owner.</param>
         /// <returns></returns>
@@ -114,7 +114,7 @@ namespace Alternet.UI
         IControlHandler CreateComboBoxHandler(ComboBox control);
 
         /// <summary>
-        /// Creates <see cref="ILabelHandler"/> interface provider.
+        /// Creates <see cref="IControlHandler"/> interface provider.
         /// </summary>
         /// <param name="control">Owner.</param>
         /// <returns></returns>
@@ -149,13 +149,6 @@ namespace Alternet.UI
         IMainMenuHandler CreateMainMenuHandler(MainMenu control);
 
         /// <summary>
-        /// Creates <see cref="IListBoxHandler"/> interface provider.
-        /// </summary>
-        /// <param name="control">Owner.</param>
-        /// <returns></returns>
-        IControlHandler CreateListBoxHandler(ListBox control);
-
-        /// <summary>
         /// Creates <see cref="IWindowHandler"/> interface provider.
         /// </summary>
         /// <param name="window">Owner.</param>
@@ -182,13 +175,6 @@ namespace Alternet.UI
         /// <param name="control">Owner.</param>
         /// <returns></returns>
         IControlHandler CreateControlHandler(AbstractControl control);
-
-        /// <summary>
-        /// Creates <see cref="ICheckListBoxHandler"/> interface provider.
-        /// </summary>
-        /// <param name="control">Owner.</param>
-        /// <returns></returns>
-        IControlHandler CreateCheckListBoxHandler(CheckListBox control);
 
         /// <summary>
         /// Creates <see cref="IVListBoxHandler"/> interface provider.
@@ -233,7 +219,7 @@ namespace Alternet.UI
         IControlHandler CreateDateTimePickerHandler(DateTimePicker control);
 
         /// <summary>
-        /// Creates <see cref="INumericUpDownHandler"/> interface provider.
+        /// Creates <see cref="IControlHandler"/> interface provider.
         /// </summary>
         /// <param name="control">Owner.</param>
         /// <returns></returns>

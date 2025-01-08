@@ -1,3 +1,44 @@
+# 0.9.701 (2025 January 8)
+
+- ListBox and CheckListBox are now derived from VirtualListBox. As a result they work much faster with large number of items and has less platform specific problems.
+- VirtualListBox: Optimized operations inside BeginUpdate/EndUpdate. As a result Items.AddRange and other operations works much faster.
+- VirtualListBox: Fixed incorrect measure item in some cases. Implement more features internally without using platform control. Add FindAndSelect method. Ctrl+A select all items in the multuselect mode.
+- VirtualListBox: Implement selection internally without using platform control.
+- VirtualListBox: Fixed SelectedIndex prop setter.
+- RichToolTip: Message can be multiline and is word wrapped now.
+- ListControlItem: SvgImageWidth, SvgImageHeight, HorizontalAlignment, VerticalAlignment.
+- CharValidator: Fix didn't allow Delete key on Linux.
+- KnownSvgImages: ImgSearch, Search.
+- Add classes: EmptyTextHints.
+- PictureBox: Fixed GetPreferredSize.
+- ControlAndButton.IsButtonLeft.
+- TextBoxAndButton: InitFilterEdit, InitSearchEdit, SetSingleButton.
+- TextBoxAndButton: Removed InitErrorAndBorder as we have InnerOuterBorder.
+- ControlAndLabel: Do not create error picture if not requested.
+- TextBoxAndLabel.AutoShowError.
+- CustomTextBox: use idle event for errorPicture show.
+- Use DisposingOrDisposed in some controls for more safety.
+- CharValidator.AlwaysValidControlChars, AbstractControl.IgnoreCharValidator.
+- Value editors: set UseCharValidator = false by default.
+- Collection editor: Fixed look on Linux. Updated to work with new ListBox and CheckListBox. Allows to specify item attributes (like color, font, etc.) for list controls. Added reload of all properties after value is edited in PropertyGrid.
+- ThreadExceptionWindow: Do not show label about 'Quit' button if it is hidden. Show BaseException.AdditionalInformation if it is specified.
+- Calendar: MarkAll, ResetAttrAll, DefaultUseGeneric, SetColorThemeToLight, SetThemeInConstructor, DefaultShowWeekNumbers, DefaultSequentalMonthSelect, DefaultShowHolidays.
+- WindowSizeToContentMode: new enum members.
+- WindowWebBrowserSearch: Fixed search behavior.
+- ToolbarSet: Fixed layout when HasBorder = true.
+- Toolbar: AddRightSpeedBtn, AddSpeedBtnCore (many overloads with diff params).
+- FindReplaceControl: Fix layout, add OptionsVisible, ToggleReplaceVisible.
+- ImmutableObject: IsPropertyChangedSuspended, SuspendPropertyChanged, ResumePropertyChanged, DoInsideSuspendedPropertyChanged.
+- ScrollBar: setter for PosInfo property.
+- ScrollBar.PositionInfo: Assign, Record.
+- CardPanelItem: SupressException, DefaultSupressException.
+- UIXmlLoader: better error handling when uixml is loaded.
+- Fixed Control.ClientSize setter so it uses minimum and maximum sizes.
+- AbstractControl: Do not layout if added/removed control is hidden or ignored in layout.
+- LogUtils: Better exception logging.
+- Fixed AbstractControl.ChildrenLayoutBounds.
+- Fix exception on app exit in some cases.
+
 # 0.9.700 (2025 January 1)
 
 Summary:

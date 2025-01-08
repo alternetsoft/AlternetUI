@@ -24,6 +24,12 @@ namespace Alternet.UI
         private const Coord c_starClip = 1e38f;
         // 5 is an arbitrary constant chosen to end the measure loop
         private const int c_layoutLoopMaxCount = 5;
+
+        /// <summary>
+        /// Gets or sets whether to show debug corners when control is painted.
+        /// </summary>
+        public static bool ShowDebugCorners = false;
+
         private static readonly LocalDataStoreSlot s_tempDefinitionsDataSlot
             = Thread.AllocateDataSlot();
         private static readonly IComparer s_spanPreferredDistributionOrderComparer

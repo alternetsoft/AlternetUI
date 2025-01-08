@@ -61,22 +61,6 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Gets or sets a value indicating whether the control has a border.
-        /// </summary>
-        [Browsable(false)]
-        public virtual bool HasBorder
-        {
-            get
-            {
-                return false;
-            }
-
-            set
-            {
-            }
-        }
-
-        /// <summary>
         /// Gets or sets the text displayed on this button.
         /// </summary>
         public override string Text

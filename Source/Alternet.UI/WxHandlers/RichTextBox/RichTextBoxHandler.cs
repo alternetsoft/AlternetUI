@@ -5,7 +5,7 @@ using Alternet.Drawing;
 
 namespace Alternet.UI
 {
-    internal class RichTextBoxHandler : WxControlHandler, IRichTextBoxHandler
+    internal class RichTextBoxHandler : WxControlHandler, ISimpleRichTextBox, IRichTextBox
     {
         static RichTextBoxHandler()
         {
@@ -29,7 +29,7 @@ namespace Alternet.UI
             }
         }
 
-        bool IRichTextBox.HasBorder
+        public override bool HasBorder
         {
             get => NativeControl.HasBorder;
             set => NativeControl.HasBorder = value;

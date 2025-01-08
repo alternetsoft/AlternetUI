@@ -126,6 +126,31 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets or sets whether buttons are aligned to the left or to the right.
+        /// </summary>
+        public virtual bool IsButtonLeft
+        {
+            get
+            {
+                return Buttons.HorizontalAlignment == HorizontalAlignment.Left;
+            }
+
+            set
+            {
+                if (IsButtonLeft == value)
+                    return;
+                if (value)
+                {
+                    Buttons.HorizontalAlignment = HorizontalAlignment.Left;
+                }
+                else
+                {
+                    Buttons.HorizontalAlignment = HorizontalAlignment.Right;
+                }
+            }
+        }
+
+        /// <summary>
         /// Gets or sets 'ComboBox' button image as <see cref="UI.KnownButton"/>.
         /// </summary>
         public virtual KnownButton? ButtonOverride
@@ -222,12 +247,12 @@ namespace Alternet.UI
         {
             get
             {
-                return buttons.GetToolCount() > 0 && buttons.IsToolClickRepeated;
+                return Buttons.GetToolCount() > 0 && Buttons.IsToolClickRepeated;
             }
 
             set
             {
-                buttons.IsToolClickRepeated = value;
+                Buttons.IsToolClickRepeated = value;
             }
         }
 
@@ -267,9 +292,9 @@ namespace Alternet.UI
                 if(errorPicture is null)
                 {
                     errorPicture = new();
-                    errorPicture.Alignment = (HorizontalAlignment.Right, VerticalAlignment.Center);
-                    CustomTextBox.InitErrorPicture(errorPicture);
                     errorPicture.Visible = false;
+                    CustomTextBox.InitErrorPicture(errorPicture);
+                    errorPicture.Alignment = (HorizontalAlignment.Right, VerticalAlignment.Center);
                     errorPicture.Parent = this;
                 }
 
@@ -397,7 +422,7 @@ namespace Alternet.UI
         {
             if (id is null)
                 return false;
-            var result = buttons.GetToolVisible(id.Value);
+            var result = Buttons.GetToolVisible(id.Value);
             return result;
         }
 
@@ -465,28 +490,28 @@ namespace Alternet.UI
 
                     if(svg is null)
                     {
-                        id = buttons.AddSpeedBtn(btn, ClickAction);
+                        id = Buttons.AddSpeedBtn(btn, ClickAction);
                     }
                     else
                     {
-                        id = buttons.AddSpeedBtn(null, svg, ClickAction);
+                        id = Buttons.AddSpeedBtn(null, svg, ClickAction);
                     }
 
                     if (isClickRepeat)
                     {
-                        buttons.SetToolIsClickRepeated(id.Value, true);
+                        Buttons.SetToolIsClickRepeated(id.Value, true);
                     }
                 }
                 else
                 {
-                    buttons.SetToolVisible(id.Value, true);
+                    Buttons.SetToolVisible(id.Value, true);
                 }
             }
             else
             {
                 if (id is null)
                     return;
-                buttons.SetToolVisible(id.Value, false);
+                Buttons.SetToolVisible(id.Value, false);
             }
         }
 
@@ -496,7 +521,11 @@ namespace Alternet.UI
                 return;
             var svg = comboBoxSvg ?? DefaultBtnComboBoxSvg;
             if(svg is null)
-                Buttons.SetToolImage(idButtonCombo.Value, comboBoxKnownImage ?? DefaultBtnComboBoxImage);
+            {
+                Buttons.SetToolImage(
+                    idButtonCombo.Value,
+                    comboBoxKnownImage ?? DefaultBtnComboBoxImage);
+            }
             else
                 Buttons.SetToolSvg(idButtonCombo.Value, svg);
         }

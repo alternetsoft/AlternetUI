@@ -26,6 +26,18 @@ namespace Alternet.UI
     public class CharValidator : AbstractCharValidator
     {
         /// <summary>
+        /// Gets or sets array of characters that are always valid
+        /// and allowed in the input. By default it equals [127] (Delete key is allowed).
+        /// </summary>
+        public static char[] AlwaysValidChars = { (char)127 };
+
+        /// <summary>
+        /// Gets or set whether control characters (chars with codes 0..31) are
+        /// always valid and allowed in the input. Default is True.
+        /// </summary>
+        public static bool AlwaysValidControlChars = true;
+
+        /// <summary>
         /// Gets or sets override which is used instead of
         /// <see cref="CultureInfo.CurrentCulture"/> when char validators are created.
         /// </summary>

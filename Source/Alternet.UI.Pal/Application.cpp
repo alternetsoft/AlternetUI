@@ -81,7 +81,9 @@ namespace Alternet::UI
     {
         if (_owner != nullptr)
             _owner->OnAssertFailure(file, line, func, cond, msg);
+        /*
         wxApp::OnAssertFailure(file, line, func, cond, msg);
+        */
     }
 
     void App::OnUnhandledException()
@@ -555,6 +557,15 @@ currently means only Microsoft Visual C++.
         return false;
     }
 
+    wxString ToCDATA(wxString s)
+    {
+        wxString prefix = "<![CDATA[";
+        wxString suffix = "]]>";
+
+        auto result = prefix + s + suffix;
+        return result;
+    }
+
     /*
 This function is called when an assert failure occurs, i.e. the condition specified in wxASSERT()
 macro evaluated to false.
@@ -582,16 +593,38 @@ or wxFAIL was used
         wxString sFunc = func;
         wxString sCond = cond;
         wxString sMsg = msg;
-
+/*
         Application::LogSeparator();
         Application::Log("Error: Assert Failure");        
+        Application::Log("Msg: " + sMsg);
         Application::Log("File: " + sFile);
         Application::Log("Line: " + sLine);
         Application::Log("Func: " + sFunc);
         Application::Log("Cond: " + sCond);
-        Application::Log("Msg:  " + sMsg);
-
         Application::LogSeparator();
+*/
+        auto xmlMsg = "<Message>" + ToCDATA(sMsg) + "</Message>";
+        auto xmlFile = "<File>" + ToCDATA(sFile) + "</File>";
+        auto xmlLine = "<Line>" + ToCDATA(sLine) + "</Line>";
+        auto xmlFunc = "<Function>" + ToCDATA(sFunc) + "</Function>";
+        auto xmlCond = "<Condition>" + ToCDATA(sCond) + "</Condition>";
+
+        wxString xmlPrefix = "<?xml version='1.0' encoding='utf-8'?>";
+        wxString xmlPrefix2 =
+            + "<AssertFailureExceptionData xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance' xmlns:xsd='http://www.w3.org/2001/XMLSchema'>";
+        wxString xmlSuffix = "</AssertFailureExceptionData>";
+
+        auto xml =
+            xmlPrefix + xmlPrefix2 +
+            xmlMsg+
+            xmlFile+
+            xmlLine+
+            xmlFunc+
+            xmlCond+
+            xmlSuffix;
+
+        _eventArgString = wxStr(xml);
+
         RaiseStaticEvent(ApplicationEvent::AssertFailure);
         return false;
     }

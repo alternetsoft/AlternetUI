@@ -26,7 +26,7 @@ namespace Alternet.UI
     /// collections that are used by the <see cref="CheckListBox"/>.
     /// </remarks>
     [ControlCategory("Common")]
-    public partial class CheckListBox : ListBox
+    public partial class CheckListBox : ListBox, ICheckListBox<object>
     {
         private readonly HashSet<int> checkedIndices = new();
 
@@ -251,9 +251,10 @@ namespace Alternet.UI
         public virtual void SetChecked(int index, bool value)
         {
             if (index < 0 || index >= Items.Count)
-                throw new ArgumentOutOfRangeException(nameof(value));
+                return;
 
-            CheckDisposed();
+            if(DisposingOrDisposed)
+                return;
 
             var changed = SetCheckedCore(index, value);
 

@@ -39,7 +39,7 @@ namespace Alternet.UI
         public virtual bool Resizable { get; set; }
 
         /// <inheritdoc/>
-        public virtual bool HasBorder { get; set; }
+        public override bool HasBorder { get; set; }
 
         /// <inheritdoc/>
         public virtual bool HasTitleBar { get; set; }

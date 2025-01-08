@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Text;
 
 using Alternet.Drawing;
@@ -13,6 +14,11 @@ namespace Alternet.UI
     /// </summary>
     public class GenericTextControl : GenericControl
     {
+        /// <summary>
+        /// Gets or sets whether to show debug corners when control is painted.
+        /// </summary>
+        public static bool ShowDebugCorners = false;
+
         /// <summary>
         /// Initializes a new instance of the <see cref="GenericTextControl"/> class.
         /// </summary>
@@ -75,6 +81,9 @@ namespace Alternet.UI
         /// <inheritdoc/>
         public override SizeD GetPreferredSize(SizeD availableSize)
         {
+            if (availableSize.AnyIsEmptyOrNegative)
+                return SizeD.Empty;
+
             var result = GetDefaultPreferredSize(
                         availableSize,
                         withPadding: true,
@@ -124,6 +133,8 @@ namespace Alternet.UI
                 labelFont,
                 labelForeColor,
                 labelBackColor);
+
+            DefaultPaintDebug(e);
         }
 
         /// <summary>
@@ -153,6 +164,13 @@ namespace Alternet.UI
         {
             base.OnTextChanged(e);
             PerformLayoutAndInvalidate();
+        }
+
+        [Conditional("DEBUG")]
+        private void DefaultPaintDebug(PaintEventArgs e)
+        {
+            if (ShowDebugCorners)
+                BorderSettings.DrawDesignCorners(e.Graphics, e.ClipRectangle);
         }
     }
 }

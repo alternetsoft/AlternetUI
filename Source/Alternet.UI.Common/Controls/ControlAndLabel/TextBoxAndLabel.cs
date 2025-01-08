@@ -47,6 +47,20 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets or sets whether error reporter is automatically shown/hidden when
+        /// error state is changed.
+        /// </summary>
+        public virtual bool AutoShowError
+        {
+            get => MainControl.AutoShowError;
+
+            set
+            {
+                MainControl.AutoShowError = value;
+            }
+        }
+
+        /// <summary>
         /// Gets or sets init arguments which are used when <see cref="InputType"/>
         /// property is assigned.
         /// </summary>
@@ -157,6 +171,7 @@ namespace Alternet.UI
         protected virtual void Init()
         {
             MainControl.ValidatorReporter = ErrorPicture;
+            MainControl.AutoShowError = true;
             MainControl.TextChanged += (s, e) =>
             {
                 RaiseTextChanged();

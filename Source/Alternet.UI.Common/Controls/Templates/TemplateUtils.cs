@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Text;
 
 using Alternet.Drawing;
@@ -13,6 +14,11 @@ namespace Alternet.UI
     /// </summary>
     public static class TemplateUtils
     {
+        /// <summary>
+        /// Gets or sets whether to show debug corners when control is painted.
+        /// </summary>
+        public static bool ShowDebugCorners = false;
+
         /// <summary>
         /// Calls <see cref="RaisePaintRecursive(AbstractControl?, Graphics, PointD)"/>
         /// inside changed clip rectangle.
@@ -140,7 +146,9 @@ namespace Alternet.UI
         /// <param name="backColor">Background color. Optional. If not specified, background color
         /// of the template control is used.</param>
         /// <returns></returns>
-        public static SKBitmap GetTemplateAsSKBitmap(TemplateControl template, Color? backColor = null)
+        public static SKBitmap GetTemplateAsSKBitmap(
+            TemplateControl template,
+            Color? backColor = null)
         {
             try
             {
@@ -152,7 +160,7 @@ namespace Alternet.UI
                 template.SetSizeToContent();
 
                 var canvas = SkiaUtils.CreateBitmapCanvas(
-                    template.Bounds.Size,
+                    template.Bounds.Size.Ceiling(),
                     template.ScaleFactor,
                     true);
 
@@ -185,8 +193,10 @@ namespace Alternet.UI
             Graphics canvas,
             PointD? translate = null)
         {
+            var pt = translate ?? PointD.Empty;
             control.SetSizeToContent();
-            RaisePaintRecursive(control, canvas, translate ?? PointD.Empty);
+            RaisePaintRecursive(control, canvas, pt);
+            DefaultPaintDebug(canvas, (pt, control.Size));
         }
 
         /// <summary>
@@ -243,6 +253,13 @@ namespace Alternet.UI
             if(fontAndColor is not null)
                 result.AsFontAndColor = fontAndColor;
             return result;
+        }
+
+        [Conditional("DEBUG")]
+        private static void DefaultPaintDebug(Graphics canvas, RectD rect)
+        {
+            if (ShowDebugCorners)
+                BorderSettings.DrawDesignCorners(canvas, rect);
         }
     }
 }

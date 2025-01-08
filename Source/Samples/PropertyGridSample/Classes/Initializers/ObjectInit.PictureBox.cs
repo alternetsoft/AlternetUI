@@ -16,6 +16,7 @@ namespace PropertyGridSample
             pictureBox.ImageStretch = false;
             SetBackgrounds(pictureBox);
             pictureBox.SuggestedSize = 150;
+            pictureBox.ParentBackColor = true;
 
             pictureBox.Borders ??= new();
             var border = BorderSettings.Default.Clone();

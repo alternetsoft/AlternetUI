@@ -381,7 +381,8 @@ namespace Alternet.Drawing
         /// Performs layout of the drawable childs and returns calculated bound of the different
         /// parts of the drawable.
         /// </summary>
-        /// <param name="control">Control which scale factor used to convert pixels to/from dips.</param>
+        /// <param name="control">Control which scale factor used to
+        /// convert pixels to/from dips.</param>
         /// <returns>Calculated bounds of the different parts of the drawable.</returns>
         public virtual EnumArray<HitTestResult, RectD> GetLayoutRectangles(AbstractControl control)
         {

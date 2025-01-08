@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
+using System.Runtime.CompilerServices;
 using System.Text;
 
 namespace Alternet.UI
@@ -143,6 +145,26 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Compares two <see cref='ScrollBarInfo'/> objects.
+        /// The result specifies whether
+        /// the values of the properties of the two
+        /// <see cref='ScrollBarInfo'/> objects are equal.
+        /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static bool operator ==(ScrollBarInfo left, ScrollBarInfo right)
+        {
+            return left.Equals(right);
+        }
+
+        /// <summary>
+        /// Compares two <see cref='ScrollBarInfo'/> objects. The result specifies whether
+        /// the values of the properties of the two
+        /// <see cref='ScrollBarInfo'/> objects are unequal.
+        /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static bool operator !=(ScrollBarInfo left, ScrollBarInfo right) => !(left == right);
+
+        /// <summary>
         /// Returns a copy of this object with the new page size and range values.
         /// </summary>
         /// <param name="pageSize">New page size value.</param>
@@ -216,10 +238,32 @@ namespace Alternet.UI
             return result;
         }
 
+        /// <summary>
+        /// Determines whether the specified object is equal to the current object.
+        /// </summary>
+        /// <param name="obj">The object to compare with the current object.</param>
+        /// <returns><c>true</c> if the specified object is equal to the
+        /// current object; otherwise, <c>false</c>.</returns>
+        public readonly override bool Equals([NotNullWhen(true)] object? obj) =>
+            obj is ScrollBarInfo other && Equals(other);
+
         /// <inheritdoc cref="ImmutableObject.SetImmutable"/>
         public void SetImmutable()
         {
             immutable = true;
+        }
+
+        /// <summary>
+        /// Serves as the default hash function.
+        /// </summary>
+        /// <returns>A hash code for the current object.</returns>
+        public readonly override int GetHashCode()
+        {
+            return HashCode.Combine(
+                (int)visibility,
+                position,
+                range,
+                pageSize);
         }
 
         /// <summary>
