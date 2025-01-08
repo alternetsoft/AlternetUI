@@ -13,6 +13,11 @@ namespace Alternet.UI
     public interface IListControlItemContainer
     {
         /// <summary>
+        /// Gets unique id of the container.
+        /// </summary>
+        ObjectUniqueId UniqueId { get; }
+
+        /// <summary>
         /// Gets control used by the container.
         /// </summary>
         AbstractControl? Control { get; }
