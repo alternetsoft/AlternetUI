@@ -259,7 +259,7 @@ namespace Alternet.UI
         {
             if (DisposingOrDisposed)
                 return default;
-            return index >= GetVisibleBegin() && index < GetVisibleEnd();
+            return index >= GetVisibleBegin() && index < (GetVisibleEnd() - 1);
         }
 
         /// <summary>
@@ -337,6 +337,39 @@ namespace Alternet.UI
             }
 
             return didSomething;
+        }
+
+        /// <summary>
+        /// Removes selected items and updates selection so the closest item to the
+        /// previous selection will become selected.
+        /// </summary>
+        /// <returns></returns>
+        public virtual bool RemoveSelectedAndUpdateSelection()
+        {
+            bool removed = false;
+
+            DoInsideSuspendedSelectionEvents(() =>
+            {
+                var selectedIndex = SelectedIndex;
+
+                removed = RemoveSelectedItems();
+
+                if (removed)
+                {
+                    if (selectedIndex != null)
+                    {
+                        if (selectedIndex < Count)
+                        {
+                            SelectedIndex = selectedIndex;
+                            EnsureVisible(selectedIndex.Value);
+                        }
+                        else
+                            SelectLastItemAndScroll();
+                    }
+                }
+            });
+
+            return removed;
         }
 
         /// <summary>
@@ -559,6 +592,29 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Selects items with the specified indexes
+        /// and scrolls the control so the first selected item will become visible in the view.
+        /// </summary>
+        public virtual bool SelectItemsAndScroll(params int[] indexes)
+        {
+            var validIndexes = GetValidIndexes(indexes);
+            if (validIndexes.Count == 0)
+                return false;
+            SelectedIndices = validIndexes;
+            EnsureVisible(validIndexes[0]);
+            return true;
+        }
+
+        /// <summary>
+        /// Selects last item in the control and scrolls the control so last item will be visible.
+        /// </summary>
+        public virtual void SelectLastItemAndScroll()
+        {
+            SelectLastItem();
+            ScrollToLastRow();
+        }
+
+        /// <summary>
         /// Gets index of the first visible item.
         /// </summary>
         /// <returns></returns>
@@ -647,10 +703,24 @@ namespace Alternet.UI
         /// <returns></returns>
         public virtual bool ScrollToLastRow()
         {
+            if (Count == 0)
+                return false;
             var visibleRows = VisibleCount;
             if (visibleRows <= 0)
                 return false;
-            var result = ScrollToRow(Count - VisibleCount + 1);
+
+            return EnsureVisible(Count - 1);
+        }
+
+        /// <inheritdoc/>
+        public override bool EnsureVisible(int index)
+        {
+            if (index < 0 || index >= Count)
+                return false;
+            if (IsItemVisible(index))
+                return true;
+            var newRow = FindFirstVisibleFromLast(index, true);
+            var result = ScrollToRow(newRow);
             return result;
         }
 
@@ -1169,6 +1239,14 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
+        protected override void ItemsCollectionChanged(
+            object? sender,
+            NotifyCollectionChangedEventArgs e)
+        {
+            CountChanged();
+        }
+
+        /// <inheritdoc/>
         protected override void OnHandleCreated(EventArgs e)
         {
             base.OnHandleCreated(e);
@@ -1270,13 +1348,6 @@ namespace Alternet.UI
                 return null;
 
             return Math.Max(selected.Value - numVisible, 0);
-        }
-
-        protected override void ItemsCollectionChanged(
-            object? sender,
-            NotifyCollectionChangedEventArgs e)
-        {
-            CountChanged();
         }
     }
 }

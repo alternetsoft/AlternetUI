@@ -36,9 +36,6 @@ namespace Alternet.UI
         /// <inheritdoc cref="VirtualListBox.GetVisibleBegin"/>
         int GetVisibleBegin();
 
-        /// <inheritdoc cref="VirtualListControl.EnsureVisible"/>
-        void EnsureVisible(int itemIndex); // !!
-
         /// <inheritdoc cref="VirtualListControl.HitTest"/>
         int? HitTest(PointD position); // !!
     }

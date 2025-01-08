@@ -187,14 +187,7 @@ namespace Alternet.UI
         /// <summary>
         /// Removes selected items from the control.
         /// </summary>
-        void RemoveSelectedItems();
-
-        /// <summary>
-        /// Ensures that the item is visible within the control, scrolling the
-        /// contents of the control, if necessary.
-        /// </summary>
-        /// <param name="itemIndex">The item index to scroll into visibility.</param>
-        void EnsureVisible(int itemIndex);
+        bool RemoveSelectedItems();
 
         /// <summary>
         /// Returns the zero-based index of the item at the specified coordinates.
@@ -229,7 +222,7 @@ namespace Alternet.UI
         /// <summary>
         /// Selects items with specified indexes in the control.
         /// </summary>
-        void SelectItems(params int[] indexes);
+        bool SelectItems(params int[] indexes);
 
         /// <summary>
         /// Checks whether index is valid in the control.

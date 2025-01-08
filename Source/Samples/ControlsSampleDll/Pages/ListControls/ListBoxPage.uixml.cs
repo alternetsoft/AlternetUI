@@ -86,6 +86,8 @@ namespace ControlsSample
             {
                 listBox.EndUpdate();
             }
+
+            listBox.SelectLastItemAndScroll();
         }
 
         private void AddManyItemsButton_Click(object? sender, EventArgs e)
@@ -110,55 +112,46 @@ namespace ControlsSample
             object? sender, 
             EventArgs e)
         {
-            listBox.Parent?.BeginUpdate();
-
             var b = allowMultipleSelectionCheckBox.IsChecked;
-
-            listBox.SelectionMode = b ? ListBoxSelectionMode.Multiple : ListBoxSelectionMode.Single;
-
+            listBox.IsSelectionModeMultiple = b;
             selectItemAtIndices2And4Button.Enabled = b;
-
-            listBox.Parent?.EndUpdate();
         }
 
         private void RemoveItemButton_Click(object? sender, EventArgs e)
         {
-            listBox.RemoveSelectedItems();
+            listBox.RemoveSelectedAndUpdateSelection();
         }
 
         private void AddItemButton_Click(object? sender, EventArgs e)
         {
             listBox.Items.Add(GenItemText());
-            listBox.SelectLastItem();
-            listBox.ScrollToLastRow();
+            listBox.SelectLastItemAndScroll();
         }
 
         private void EnsureLastItemVisibleButton_Click(
             object? sender, 
             EventArgs e)
         {
-            var count = listBox.Items.Count;
-            if (count > 0)
-                listBox.EnsureVisible(count - 1);
+            listBox.EnsureVisible(listBox.Count - 1);
         }
 
         private void SelectItemAtIndex2Button_Click(
             object? sender, 
             EventArgs e)
         {
-            listBox.SelectItems(2);
+            listBox.SelectItemsAndScroll(2);
         }
 
         private void DeselectAllButton_Click(object? sender, EventArgs e)
         {
-            listBox.SelectedItem = null;
+            listBox.ClearSelected();
         }
 
         private void SelectItemAtIndices2And4Button_Click(
             object? sender, 
             EventArgs e)
         {
-            listBox.SelectItems(2, 4);
+            listBox.SelectItemsAndScroll(2, 4);
         }
     }
 }

@@ -497,9 +497,13 @@ namespace Alternet.UI
         /// <summary>
         /// Selects items with specified indexes in the control.
         /// </summary>
-        public virtual void SelectItems(params int[] indexes)
+        public virtual bool SelectItems(params int[] indexes)
         {
-            SelectedIndices = GetValidIndexes(indexes);
+            var validIndexes = GetValidIndexes(indexes);
+            if (validIndexes.Count == 0)
+                return false;
+            SelectedIndices = validIndexes;
+            return true;
         }
 
         /// <inheritdoc/>
@@ -531,7 +535,15 @@ namespace Alternet.UI
         public virtual void SetAllSelected(bool selected)
         {
             if (SelectionMode == ListBoxSelectionMode.Single)
+            {
+                if (!selected && selectedIndex != null)
+                {
+                    selectedIndex = null;
+                    Invalidate();
+                }
+
                 return;
+            }
 
             DoInsideSuspendedSelectionEvents(() =>
             {
@@ -796,12 +808,23 @@ namespace Alternet.UI
                     index = null;
 
                 selectedIndex = index;
+
+                if(index is not null)
+                    EnsureVisible(index.Value);
+
                 AnchorIndex = index;
 
                 if (index is not null && setSelected)
                     SetSelected(index.Value, true);
             });
         }
+
+        /// <summary>
+        /// Makes item with the specified index visible in the control's view.
+        /// </summary>
+        /// <param name="index">Index of the item.</param>
+        /// <returns></returns>
+        public abstract bool EnsureVisible(int index);
 
         /// <summary>
         /// Selects or unselects range of the items (inclusive).
@@ -828,9 +851,9 @@ namespace Alternet.UI
         /// <summary>
         /// Removes selected items from the control.
         /// </summary>
-        public virtual void RemoveSelectedItems()
+        public virtual bool RemoveSelectedItems()
         {
-            RemoveItems(SelectedIndicesDescending);
+            return RemoveItems(SelectedIndicesDescending);
         }
 
         /// <summary>

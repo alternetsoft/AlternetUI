@@ -465,10 +465,10 @@ namespace Alternet.UI
         /// <summary>
         /// Removes items from the control.
         /// </summary>
-        public virtual void RemoveItems(IReadOnlyList<int> items)
+        public virtual bool RemoveItems(IReadOnlyList<int> items)
         {
             if (items == null || items.Count == 0)
-                return;
+                return false;
 
             BeginUpdate();
             try
@@ -479,6 +479,8 @@ namespace Alternet.UI
                     if (index < Items.Count)
                         Items.RemoveAt(index);
                 }
+
+                return true;
             }
             finally
             {

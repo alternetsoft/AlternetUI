@@ -206,7 +206,7 @@ namespace Alternet.UI
         /// <summary>
         /// Removes items from the control.
         /// </summary>
-        void RemoveItems(IReadOnlyList<int> items);
+        bool RemoveItems(IReadOnlyList<int> items);
 
         /// <summary>
         /// Gets items as <see cref="string"/>.
