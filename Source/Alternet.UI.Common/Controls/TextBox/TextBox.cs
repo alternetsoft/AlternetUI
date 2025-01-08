@@ -126,7 +126,14 @@ namespace Alternet.UI
         public override bool WantTab
         {
             get => base.WantTab && !ReadOnly;
-            set => base.WantTab = value;
+
+            set
+            {
+                if (WantTab == value || DisposingOrDisposed)
+                    return;
+                base.WantTab = value;
+                Handler.ProcessTab = value;
+            }
         }
 
         /// <summary>
