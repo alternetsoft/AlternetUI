@@ -201,7 +201,7 @@ namespace Alternet.UI
                 typeof(WindowDevTools),
                 nameof(WindowDevTools.ShowFocusedProperties));
             AddToggle(
-                "GotFocus event logging",
+                "Show Debug Focus Rect",
                 typeof(WindowDevTools),
                 nameof(WindowDevTools.LogGotFocus));
             AddToggle(

@@ -14,7 +14,7 @@ namespace Alternet.UI
         /// </summary>
         public static bool ShowDebugFocusRect = false;
 
-        private static AbstractControl? focusedControl;
+        private static WeakReferenceValue<AbstractControl> focusedControl = new();
         private bool canSelect = true;
         private bool tabStop = true;
 
@@ -24,30 +24,27 @@ namespace Alternet.UI
         public static event EventHandler<GlobalFocusNextEventArgs>? GlobalFocusNextControl;
 
         /// <summary>
-        /// Gets or sets focused control for internal purposes. Use <see cref="GetFocusedControl"/>
-        /// instead of this property.
+        /// Gets focused control.
         /// </summary>
         /// <remarks>
         /// Do not change this property, this is done by the library.
         /// </remarks>
         public static AbstractControl? FocusedControl
         {
-            get => focusedControl;
+            get
+            {
+                var focused = focusedControl.Value;
+                if (focused?.Focused ?? false)
+                    return focused;
+                RaiseFocusedControlChanged(App.Handler.GetFocusedControl());
+                return focusedControl.Value;
+            }
 
             set
             {
-                if (focusedControl == value)
+                if (focusedControl.Value == value)
                     return;
-                var prevFocused = focusedControl;
-                focusedControl = value;
-                FocusedControlChanged?.Invoke(focusedControl, EventArgs.Empty);
-                PlessKeyboard.ResetKeysStatesInMemory();
-
-                if (DebugUtils.IsDebugDefined && ShowDebugFocusRect)
-                {
-                    prevFocused?.Parent?.Invalidate();
-                    focusedControl?.Parent?.Invalidate();
-                }
+                RaiseFocusedControlChanged(value);
             }
         }
 
@@ -91,7 +88,7 @@ namespace Alternet.UI
         {
             get
             {
-                var focused = GetFocusedControl();
+                var focused = FocusedControl;
                 if (focused is null)
                     return false;
                 if (focused == this)
@@ -110,10 +107,7 @@ namespace Alternet.UI
         {
             get
             {
-                var focused = GetFocusedControl();
-                if (focused == this)
-                    return true;
-                return false;
+                return FocusedControl == this;
             }
         }
 
@@ -184,18 +178,10 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Returns the currently focused control, or <see langword="null"/> if
-        /// no control is focused.
+        /// Same as <see cref="FocusedControl"/>.
         /// </summary>
-        public static AbstractControl? GetFocusedControl()
-        {
-            if (FocusedControl?.Focused ?? false)
-                return FocusedControl;
-
-            var result = App.Handler.GetFocusedControl();
-            FocusedControl = result;
-            return result;
-        }
+        /// <returns></returns>
+        public static AbstractControl? GetFocusedControl() => FocusedControl;
 
         /// <summary>
         /// Sets input focus to the control.
@@ -276,10 +262,39 @@ namespace Alternet.UI
 
             int Comparison(AbstractControl x, AbstractControl y)
             {
-                var xHash = x.Parent?.GetHashCode() ?? 0;
-                var yHash = y.Parent?.GetHashCode() ?? 0;
+                int result;
 
-                var result = xHash.CompareTo(yHash);
+                bool DistanceIsAlmostEqual(Coord a1, Coord a2)
+                {
+                    var distance = Math.Abs(a1 - a2);
+
+                    return distance < 5;
+                }
+
+                var xTop = x.ClientToScreen(x.Location).Y;
+                var yTop = y.ClientToScreen(y.Location).Y;
+
+                if (DistanceIsAlmostEqual(xTop, yTop))
+                    result = 0;
+                else
+                    result = xTop.CompareTo(yTop);
+
+                if (result == 0)
+                {
+                    var xLeft = x.ClientToScreen(x.Location).X;
+                    var yLeft = y.ClientToScreen(y.Location).X;
+                    if (DistanceIsAlmostEqual(xLeft, yLeft))
+                        result = 0;
+                    else
+                        result = xLeft.CompareTo(yLeft);
+                }
+
+                if (result == 0)
+                {
+                    var xHash = x.Parent?.GetHashCode() ?? 0;
+                    var yHash = y.Parent?.GetHashCode() ?? 0;
+                    result = xHash.CompareTo(yHash);
+                }
 
                 if (result == 0)
                 {
@@ -375,12 +390,14 @@ namespace Alternet.UI
 
             AbstractControl[] items;
 
+            /*
             if (recursive)
             {
                 items = GetItems(this);
                 if(FocusFirstOrLast(forward, items))
                     return;
             }
+            */
 
             items = GetItems(Root);
 
@@ -417,6 +434,26 @@ namespace Alternet.UI
         {
             this.canSelect = canSelect;
             this.tabStop = tabStop;
+        }
+
+        private static void RaiseFocusedControlChanged(AbstractControl? newFocused)
+        {
+            if (App.Terminating)
+                return;
+
+            var prevFocused = focusedControl.Value;
+
+            focusedControl.Value = newFocused;
+
+            FocusedControlChanged?.Invoke(newFocused, EventArgs.Empty);
+
+            PlessKeyboard.ResetKeysStatesInMemory();
+
+            if (DebugUtils.IsDebugDefined && ShowDebugFocusRect)
+            {
+                prevFocused?.Parent?.Invalidate();
+                newFocused?.Parent?.Invalidate();
+            }
         }
     }
 }

@@ -244,7 +244,7 @@ namespace Alternet.UI
             char keyChar,
             KeyStates keyStates = KeyStates.Down)
         {
-            var control = AbstractControl.GetFocusedControl();
+            var control = AbstractControl.FocusedControl;
             if (control is null)
             {
                 handled = false;
@@ -253,7 +253,7 @@ namespace Alternet.UI
 
             var e = new KeyEventArgs(control, key, keyStates, modifiers, repeatCount);
 
-            if (Keyboard.ProcessTabInternally && e.Key == Key.Tab
+            if (e.Key == Key.Tab
                 && e.ShiftOrNone && !control.WantTab)
             {
                 App.AddIdleTask(() =>
@@ -288,7 +288,7 @@ namespace Alternet.UI
             char keyChar,
             KeyStates keyStates = KeyStates.None)
         {
-            var control = AbstractControl.GetFocusedControl();
+            var control = AbstractControl.FocusedControl;
             if (control is null)
             {
                 handled = false;
@@ -297,7 +297,7 @@ namespace Alternet.UI
 
             var e = new KeyEventArgs(control, key, keyStates, modifiers, repeatCount);
 
-            if (Keyboard.ProcessTabInternally && e.Key == Key.Tab
+            if (e.Key == Key.Tab
                 && e.ShiftOrNone && !control.WantTab)
             {
                 handled = true;
@@ -317,7 +317,7 @@ namespace Alternet.UI
         /// <param name="key">Key code.</param>
         public static void BubbleTextInput(char keyChar, out bool handled, Key key)
         {
-            var control = AbstractControl.GetFocusedControl();
+            var control = AbstractControl.FocusedControl;
             if (control is null)
             {
                 handled = false;
