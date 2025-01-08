@@ -136,6 +136,9 @@ namespace Alternet.UI
 
         private void CountChanged()
         {
+            if (DisposingOrDisposed)
+                return;
+
             if (!Control.InUpdates)
             {
                 var newCount = Control.Items.Count;
@@ -151,7 +154,7 @@ namespace Alternet.UI
         /// <inheritdoc/>
         public override void EndUpdate()
         {
-            NativeControl.ItemsCount = Control.Items.Count;
+            CountChanged();
             base.EndUpdate();
         }
 

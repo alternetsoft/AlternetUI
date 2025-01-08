@@ -6,6 +6,18 @@
 
 namespace Alternet::UI
 {
+    Control::~Control()
+    {
+        _destroyed = true;
+        DestroyDropTarget(false);
+        DestroyWxWindow();
+
+        for (auto child : _children)
+        {
+            child->_parent = nullptr;
+        }
+    }
+
     class wxWindow2 : public wxWindow, public wxWidgetExtender
     {
     public:
@@ -406,13 +418,6 @@ namespace Alternet::UI
             return;
         _borderStyle = value;
         RecreateWxWindowIfNeeded();
-    }
-
-    Control::~Control()
-    {
-        _destroyed = true;
-        DestroyDropTarget(false);
-        DestroyWxWindow();
     }
 
     bool Control::CanSetScrollbar()
@@ -1044,13 +1049,16 @@ namespace Alternet::UI
         if (_parent == nullptr)
         {
             parentingWxWindow = ParkingWindow::GetWindow();
-            _wxWindow = CreateWxWindowCore(parentingWxWindow);
         }
         else
         {
             parentingWxWindow = _parent->GetParentingWxWindow(this);
-            _wxWindow = CreateWxWindowCore(parentingWxWindow);
+
+            if(parentingWxWindow == nullptr)
+                parentingWxWindow = ParkingWindow::GetWindow();
         }
+
+        _wxWindow = CreateWxWindowCore(parentingWxWindow);
 
         _wxWindow->SetAutoLayout(false);
 
@@ -2061,7 +2069,8 @@ namespace Alternet::UI
         }
     }
 
-    DelayedValue<Control, Control::ScrollInfo>& Control::GetScrollInfoDelayedValue(ScrollBarOrientation orientation)
+    DelayedValue<Control, Control::ScrollInfo>& Control::GetScrollInfoDelayedValue(
+        ScrollBarOrientation orientation)
     {
         switch (orientation)
         {
@@ -2128,7 +2137,8 @@ namespace Alternet::UI
         SetScrollInfo(ScrollBarOrientation::Horizontal, value);
     }
 
-    void Control::SetScrollBar(ScrollBarOrientation orientation, bool visible, int value, int largeChange, int maximum)
+    void Control::SetScrollBar(ScrollBarOrientation orientation,
+        bool visible, int value, int largeChange, int maximum)
     {
         auto& delayedValue = GetScrollInfoDelayedValue(orientation);
         
@@ -2576,11 +2586,6 @@ namespace Alternet::UI
             style |= wxVSCROLL;
         if (_showHorzScrollBar)
             style |= wxHSCROLL;
-
-#ifdef __WXGTK__
-        if (GetIsScrollable() || _showVertScrollBar || _showHorzScrollBar)
-            style |= wxALWAYS_SHOW_SB;
-#endif
 
         return style;
     }
