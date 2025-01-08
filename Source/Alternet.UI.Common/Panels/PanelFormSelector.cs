@@ -42,7 +42,10 @@ namespace Alternet.UI
             openButton.Parent = buttonPanel;
             openButton.Click += HandleOpenButtonClick;
 
+            view.HorizontalAlignment = HorizontalAlignment.Fill;
             view.Parent = this;
+
+            buttonPanel.HorizontalAlignment = HorizontalAlignment.Right;
             buttonPanel.Parent = this;
 
             AddDefaultItems();
