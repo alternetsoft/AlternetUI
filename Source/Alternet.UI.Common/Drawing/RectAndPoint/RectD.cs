@@ -531,9 +531,8 @@ namespace Alternet.Drawing
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static RectD Inflate(RectD rect, Coord x, Coord y)
         {
-            RectD r = rect;
-            r.Inflate(x, y);
-            return r;
+            rect.Inflate(x, y);
+            return rect;
         }
 
         /// <summary>
@@ -993,6 +992,12 @@ namespace Alternet.Drawing
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public readonly RectD InflatedBy(Coord x, Coord y) => Inflate(this, x, y);
+
+        /// <summary>
+        /// Creates a <see cref='RectD'/> that is inflated by 1.
+        /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public readonly RectD Inflated() => Inflate(this, 1, 1);
 
         /// <summary>
         /// Creates a <see cref='RectD'/> that is offset by the specified amount.
