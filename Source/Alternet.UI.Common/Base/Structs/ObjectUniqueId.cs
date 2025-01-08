@@ -21,9 +21,12 @@ namespace Alternet.UI
         private readonly State state;
 
         [FieldOffset(1)]
+        private readonly int hashCode;
+
+        [FieldOffset(1 + 4)]
         private readonly Guid guid;
 
-        [FieldOffset(1)]
+        [FieldOffset(1 + 4)]
         private readonly ulong id;
 
         /// <summary>
@@ -44,11 +47,13 @@ namespace Alternet.UI
             {
                 state = State.Guid;
                 guid = Guid.NewGuid();
+                hashCode = guid.GetHashCode();
             }
             else
             {
                 state = State.Long;
                 id = counter++;
+                hashCode = id.GetHashCode();
             }
         }
 
@@ -106,9 +111,7 @@ namespace Alternet.UI
         /// <returns></returns>
         public override int GetHashCode()
         {
-            if (state == State.Guid)
-                return guid.GetHashCode();
-            return id.GetHashCode();
+            return hashCode;
         }
 
         /// <summary>
