@@ -93,30 +93,16 @@ namespace Alternet.UI
             return new NativeVListBox();
         }
 
-        public void DetachItems(IListControlItems<ListControlItem> items)
-        {
-            items.CollectionChanged -= Items_CollectionChanged;
-        }
-
-        public void AttachItems(IListControlItems<ListControlItem> items)
-        {
-            items.CollectionChanged += Items_CollectionChanged;
-            NativeControl.ItemsCount = items.Count;
-        }
-
         protected override void OnAttach()
         {
             base.OnAttach();
 
-            AttachItems(Control.Items);
-
             NativeControl.MeasureItem = NativeControl_MeasureItem;
+            NativeControl.ItemsCount = Control.Items.Count;
         }
 
         protected override void OnDetach()
         {
-            DetachItems(Control.Items);
-
             NativeControl.MeasureItem = null;
 
             base.OnDetach();
@@ -132,35 +118,6 @@ namespace Alternet.UI
             var heightDip = e.ItemHeight;
             var height = Control.PixelFromDip(heightDip);
             NativeControl.EventHeight = height;
-        }
-
-        private void CountChanged()
-        {
-            if (DisposingOrDisposed)
-                return;
-
-            if (!Control.InUpdates)
-            {
-                var newCount = Control.Items.Count;
-
-                if (NativeControl.ItemsCount != newCount)
-                {
-                    NativeControl.ItemsCount = newCount;
-                    Control.Invalidate();
-                }
-            }
-        }
-
-        /// <inheritdoc/>
-        public override void EndUpdate()
-        {
-            CountChanged();
-            base.EndUpdate();
-        }
-
-        private void Items_CollectionChanged(object? sender, NotifyCollectionChangedEventArgs e)
-        {
-            CountChanged();
         }
 
         private class NativeVListBox : Native.VListBox

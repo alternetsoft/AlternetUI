@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.Specialized;
 using System.ComponentModel;
 using System.Linq;
 using System.Threading;
 
+using Alternet.Base.Collections;
 using Alternet.Drawing;
 using Alternet.UI.Extensions;
 
@@ -353,7 +355,7 @@ namespace Alternet.UI
             // any more when it is shown
             int unitFirst = unitLast;
             Coord s = 0;
-            while(true)
+            while (true)
             {
                 e.Index = unitFirst;
                 MeasureItemSize(e);
@@ -400,9 +402,7 @@ namespace Alternet.UI
 
             DoInsideUpdate(() =>
             {
-                Handler.DetachItems(Items);
                 RecreateItems();
-                Handler.AttachItems(Items);
                 Invalidate();
             });
         }
@@ -444,9 +444,9 @@ namespace Alternet.UI
                 DoInsideUpdate(() =>
                 {
                     ClearSelected();
-                    Handler.DetachItems(Items);
+                    DetachItems(Items);
                     RecreateItems(value);
-                    Handler.AttachItems(Items);
+                    AttachItems(Items);
                     Handler.ItemsCount = Items.Count;
                     Invalidate();
                 });
@@ -632,6 +632,15 @@ namespace Alternet.UI
             return ScrollToRow(0);
         }
 
+        /// <inheritdoc/>
+        public override int EndUpdate()
+        {
+            var result = base.EndUpdate();
+            if (result == 0)
+                CountChanged();
+            return result;
+        }
+
         /// <summary>
         /// Scrolls control to the last row.
         /// </summary>
@@ -777,6 +786,15 @@ namespace Alternet.UI
             }
 
             return null;
+        }
+
+        internal void CountChanged()
+        {
+            if (DisposingOrDisposed || InUpdates)
+                return;
+            var newCount = Items.Count;
+            Handler.ItemsCount = newCount;
+            Invalidate();
         }
 
         /// <inheritdoc/>
@@ -1252,6 +1270,13 @@ namespace Alternet.UI
                 return null;
 
             return Math.Max(selected.Value - numVisible, 0);
+        }
+
+        protected override void ItemsCollectionChanged(
+            object? sender,
+            NotifyCollectionChangedEventArgs e)
+        {
+            CountChanged();
         }
     }
 }
