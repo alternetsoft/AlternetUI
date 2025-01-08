@@ -8,7 +8,7 @@ using Alternet.Drawing;
 
 namespace Alternet.UI
 {
-    internal class MauiComboBoxHandler : MauiControlHandler, IComboBoxHandler
+    internal partial class MauiComboBoxHandler : MauiControlHandler, IComboBoxHandler
     {
         public ComboBox.OwnerDrawFlags OwnerDrawStyle { get; set; }
 
@@ -19,8 +19,6 @@ namespace Alternet.UI
         public int TextSelectionStart { get; }
 
         public int TextSelectionLength { get; }
-
-        public bool HasBorder { get; set; }
 
         public VirtualListBox? PopupControl { get;  set; }
 

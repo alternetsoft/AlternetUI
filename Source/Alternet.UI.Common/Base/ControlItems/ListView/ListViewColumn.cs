@@ -177,7 +177,7 @@ namespace Alternet.UI
         public virtual Coord? MaxAutoWidth
         {
             get => maxAutoWidth;
-            
+
             set
             {
                 if (maxAutoWidth == value)
