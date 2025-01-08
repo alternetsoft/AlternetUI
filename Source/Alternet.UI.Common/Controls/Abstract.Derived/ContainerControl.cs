@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -33,7 +34,8 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Creates new <see cref="TabControl"/> and adds it to the <see cref="AbstractControl.Children"/>.
+        /// Creates new <see cref="TabControl"/> and adds it
+        /// to the <see cref="AbstractControl.Children"/>.
         /// </summary>
         public virtual TabControl AddTabControl()
         {
@@ -45,7 +47,8 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Creates new <see cref="VerticalStackPanel"/> and adds it to the <see cref="AbstractControl.Children"/>.
+        /// Creates new <see cref="VerticalStackPanel"/> and adds
+        /// it to the <see cref="AbstractControl.Children"/>.
         /// </summary>
         public virtual VerticalStackPanel AddVerticalStackPanel()
         {
@@ -57,7 +60,8 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Creates new <see cref="StackPanel"/> and adds it to the <see cref="AbstractControl.Children"/>.
+        /// Creates new <see cref="StackPanel"/> and adds it to
+        /// the <see cref="AbstractControl.Children"/>.
         /// </summary>
         public virtual StackPanel AddStackPanel(bool isVertical = true)
         {
@@ -77,7 +81,8 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Creates new <see cref="Button"/> and adds it to the <see cref="AbstractControl.Children"/>.
+        /// Creates new <see cref="Button"/> and adds it to
+        /// the <see cref="AbstractControl.Children"/>.
         /// </summary>
         public virtual Button AddButton(string text, Action? action = null)
         {
@@ -98,7 +103,8 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Creates new <see cref="CheckBox"/> and adds it to the <see cref="AbstractControl.Children"/>.
+        /// Creates new <see cref="CheckBox"/> and adds it
+        /// to the <see cref="AbstractControl.Children"/>.
         /// </summary>
         public virtual CheckBox AddCheckBox(string text, Action? action = null)
         {
@@ -154,7 +160,8 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Creates new <see cref="GroupBox"/> and adds it to the <see cref="AbstractControl.Children"/>.
+        /// Creates new <see cref="GroupBox"/> and adds it
+        /// to the <see cref="AbstractControl.Children"/>.
         /// </summary>
         public virtual GroupBox AddGroupBox(string? title = default)
         {
@@ -224,7 +231,8 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Creates new <see cref="Label"/> and adds it to the <see cref="AbstractControl.Children"/>.
+        /// Creates new <see cref="Label"/> and adds it
+        /// to the <see cref="AbstractControl.Children"/>.
         /// </summary>
         public virtual Label AddLabel(string text)
         {

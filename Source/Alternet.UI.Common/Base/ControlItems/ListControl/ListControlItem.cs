@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -787,6 +788,8 @@ namespace Alternet.UI
                 var border = item?.Border?.ToGrayScale();
                 DrawingUtils.DrawBorder(control, e.Graphics, rect, border);
             }
+
+            DefaultDrawBackgroundDebug(container, e);
         }
 
         /// <summary>
@@ -1175,6 +1178,23 @@ namespace Alternet.UI
             result.CheckRect = checkRect;
             result.TextRect = textRect;
             return result;
+        }
+
+        [Conditional("DEBUG")]
+        private static void DefaultDrawBackgroundDebug(
+                   IListControlItemContainer? container,
+                   ListBoxItemPaintEventArgs e)
+        {
+            if (ContainerControl.ShowDebugFocusRect && e.IsCurrent)
+            {
+                if (Control.FocusedControl == container?.Control)
+                {
+                    e.Graphics.FillBorderRectangle(
+                        e.ClipRectangle,
+                        null,
+                        BorderSettings.DebugBorder);
+                }
+            }
         }
 
         private ILockedItem GetContainerRelated(IListControlItemContainer? container)
