@@ -9,12 +9,6 @@ namespace Alternet.UI
     internal class WxScrollBarHandler
         : WxControlHandler<ScrollBar, Native.ScrollBar>, IScrollBarHandler
     {
-        public Action? Scroll
-        {
-            get => NativeControl.Scroll;
-            set => NativeControl.Scroll = value;
-        }
-
         public ScrollEventType EventTypeID
         {
             get
@@ -102,6 +96,22 @@ namespace Alternet.UI
                 range ?? 0,
                 pageSize ?? 0,
                 refresh);
+        }
+
+        protected override void OnAttach()
+        {
+            base.OnAttach();
+            Control.UpdateScrollInfo();
+            NativeControl.Scroll = () =>
+            {
+                Control.RaiseHandlerScroll(EventTypeID, NativeControl.EventNewPos);
+            };
+        }
+
+        protected override void OnDetach()
+        {
+            NativeControl.Scroll = null;
+            base.OnDetach();
         }
 
         internal override Native.Control CreateNativeControl()

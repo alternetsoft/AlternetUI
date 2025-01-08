@@ -22,47 +22,7 @@ namespace Alternet.UI
         private Cursor? cursor;
 #pragma warning restore
 
-        Action<DragEventArgs>? IControlHandler.DragDrop { get; set; }
-
-        Action<DragEventArgs>? IControlHandler.DragOver { get; set; }
-
-        Action<DragEventArgs>? IControlHandler.DragEnter { get; set; }
-
-        Action? IControlHandler.Idle { get; set; }
-
         string IControlHandler.Text { get; set; } = string.Empty;
-
-        Action? IControlHandler.TextChanged { get; set; }
-
-        Action? IControlHandler.Paint { get; set; }
-
-        Action? IControlHandler.MouseEnter { get; set; }
-
-        Action? IControlHandler.MouseLeave { get; set; }
-
-        Action? IControlHandler.MouseClick { get; set; }
-
-        Action? IControlHandler.VisibleChanged { get; set; }
-
-        Action? IControlHandler.MouseCaptureLost { get; set; }
-
-        Action? IControlHandler.GotFocus { get; set; }
-
-        Action? IControlHandler.LostFocus { get; set; }
-
-        Action? IControlHandler.DragLeave { get; set; }
-
-        Action? IControlHandler.SizeChanged { get; set; }
-
-        Action? IControlHandler.LocationChanged { get; set; }
-
-        Action? IControlHandler.Activated { get; set; }
-
-        Action? IControlHandler.Deactivated { get; set; }
-
-        Action? IControlHandler.HandleCreated { get; set; }
-
-        Action? IControlHandler.HandleDestroyed { get; set; }
 
         bool IControlHandler.WantChars { get; set; }
 
@@ -71,6 +31,8 @@ namespace Alternet.UI
         ControlBorderStyle IControlHandler.BorderStyle { get; set; }
 
         bool IControlHandler.IsNativeControlCreated { get; }
+
+        bool IControlHandler.CanSelect { get; set; }
 
         bool IControlHandler.IsFocused
         {
@@ -96,8 +58,6 @@ namespace Alternet.UI
                 Bounds = GraphicsFactory.PixelToDip(value, Control.ScaleFactor);
             }
         }
-
-        RectD IControlHandler.EventBounds { get; }
 
         /// <inheritdoc/>
         public bool Visible { get; set; }
@@ -142,23 +102,8 @@ namespace Alternet.UI
 
         bool IControlHandler.IsHandleCreated => true;
 
-        Action? IControlHandler.SystemColorsChanged { get; set; }
-
-        SizeI IControlHandler.EventOldDpi { get; }
-
-        SizeI IControlHandler.EventNewDpi { get; }
-
-        Action? IControlHandler.DpiChanged { get; set; }
-
-        bool IControlHandler.TabStop => tabStop;
-
-        bool IControlHandler.CanSelect => canSelect;
-
         /// <inheritdoc/>
         public virtual bool VisibleOnScreen => Visible;
-
-        /// <inheritdoc/>
-        public AbstractControl? EventFocusedControl { get; set; }
 
         /// <inheritdoc/>
         public ScrollBarInfo VertScrollBarInfo { get; set; }
@@ -211,10 +156,6 @@ namespace Alternet.UI
         }
 
         void IControlHandler.EndUpdate()
-        {
-        }
-
-        void IControlHandler.FocusNextControl(bool forward, bool nested)
         {
         }
 
@@ -319,10 +260,6 @@ namespace Alternet.UI
             ForegroundColor = SystemColors.WindowText;
         }
 
-        void IControlHandler.SaveScreenshot(string fileName)
-        {
-        }
-
         PointD IControlHandler.ScreenToClient(PointD point)
         {
             PointD result;
@@ -353,13 +290,6 @@ namespace Alternet.UI
             return default;
         }
 
-        void IControlHandler.SetFocusFlags(bool canSelect, bool tabStop, bool acceptsFocusRecursively)
-        {
-            this.canSelect = canSelect;
-            this.tabStop = tabStop;
-            this.acceptsFocusRecursively = acceptsFocusRecursively;
-        }
-
         /// <inheritdoc/>
         public void SetToolTip(string? value)
         {
@@ -374,6 +304,11 @@ namespace Alternet.UI
         void IControlHandler.Update()
         {
             Control.Parent?.Update();
+        }
+
+        /// <inheritdoc/>
+        public virtual void UnbindEvents()
+        {
         }
 
         /// <inheritdoc/>

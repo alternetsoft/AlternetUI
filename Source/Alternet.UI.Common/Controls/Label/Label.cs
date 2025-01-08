@@ -70,6 +70,7 @@ namespace Alternet.UI
         /// </summary>
         public Label()
         {
+            SuspendHandlerTextChange();
         }
 
         /// <inheritdoc/>
@@ -161,12 +162,6 @@ namespace Alternet.UI
                 Font ?? AbstractControl.DefaultFont,
                 MeasureCanvas);
             return result;
-        }
-
-        /// <inheritdoc/>
-        protected override void OnHandlerTextChanged()
-        {
-            // Must be empty here.
         }
 
         /// <inheritdoc/>

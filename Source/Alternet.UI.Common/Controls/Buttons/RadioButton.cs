@@ -102,20 +102,21 @@ namespace Alternet.UI
             set => base.Layout = value;
         }
 
-        /// <inheritdoc/>
-        public override void BindHandlerEvents()
+        /// <summary>
+        /// Raises the <see cref="CheckedChanged"/> event and calls
+        /// <see cref="OnCheckedChanged(EventArgs)"/>.
+        /// </summary>
+        public virtual void RaiseCheckedChanged()
         {
             if (DisposingOrDisposed)
                 return;
-            base.BindHandlerEvents();
-            Handler.CheckedChanged = RaiseCheckedChanged;
-        }
+            var newChecked = IsChecked;
 
-        /// <inheritdoc/>
-        public override void UnbindHandlerEvents()
-        {
-            base.UnbindHandlerEvents();
-            Handler.CheckedChanged = null;
+            if (reportedChecked == newChecked)
+                return;
+            reportedChecked = newChecked;
+            OnCheckedChanged(EventArgs.Empty);
+            CheckedChanged?.Invoke(this, EventArgs.Empty);
         }
 
         /// <inheritdoc/>
@@ -131,23 +132,6 @@ namespace Alternet.UI
         /// data.</param>
         protected virtual void OnCheckedChanged(EventArgs e)
         {
-        }
-
-        /// <summary>
-        /// Raises the <see cref="CheckedChanged"/> event and calls
-        /// <see cref="OnCheckedChanged(EventArgs)"/>.
-        /// </summary>
-        protected virtual void RaiseCheckedChanged()
-        {
-            if (DisposingOrDisposed)
-                return;
-            var newChecked = IsChecked;
-
-            if (reportedChecked == newChecked)
-                return;
-            reportedChecked = newChecked;
-            OnCheckedChanged(EventArgs.Empty);
-            CheckedChanged?.Invoke(this, EventArgs.Empty);
         }
 
         /// <summary>

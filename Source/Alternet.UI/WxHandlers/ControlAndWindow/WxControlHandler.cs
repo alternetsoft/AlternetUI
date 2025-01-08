@@ -45,135 +45,7 @@ namespace Alternet.UI
             }
         }
 
-        public Action? DpiChanged
-        {
-            get => NativeControl.DpiChanged;
-            set => NativeControl.DpiChanged = value;
-        }
-
-        public Action? SystemColorsChanged
-        {
-            get => NativeControl.SystemColorsChanged;
-            set => NativeControl.SystemColorsChanged = value;
-        }
-
-        public Action<DragEventArgs>? DragDrop { get; set; }
-
-        public Action<DragEventArgs>? DragOver { get; set; }
-
-        public Action<DragEventArgs>? DragEnter { get; set; }
-
-        public Action? Idle
-        {
-            get => NativeControl.Idle;
-            set => NativeControl.Idle = value;
-        }
-
         public RectD EventBounds => NativeControl.EventBounds;
-
-        public Action? TextChanged
-        {
-            get => NativeControl.TextChanged;
-            set => NativeControl.TextChanged = value;
-        }
-
-        public Action? Paint
-        {
-            get => NativeControl.Paint;
-            set => NativeControl.Paint = value;
-        }
-
-        public Action? MouseEnter
-        {
-            get => NativeControl.MouseEnter;
-            set => NativeControl.MouseEnter = value;
-        }
-
-        public Action? MouseLeave
-        {
-            get => NativeControl.MouseLeave;
-            set => NativeControl.MouseLeave = value;
-        }
-
-        public Action? MouseClick
-        {
-            get => NativeControl.MouseClick;
-            set => NativeControl.MouseClick = value;
-        }
-
-        public Action? VisibleChanged
-        {
-            get => NativeControl.VisibleChanged;
-            set => NativeControl.VisibleChanged = value;
-        }
-
-        public Action? MouseCaptureLost
-        {
-            get => NativeControl.MouseCaptureLost;
-            set => NativeControl.MouseCaptureLost = value;
-        }
-
-        public Action? GotFocus
-        {
-            get => NativeControl.GotFocus;
-            set => NativeControl.GotFocus = value;
-        }
-
-        public Action? LostFocus
-        {
-            get => NativeControl.LostFocus;
-            set => NativeControl.LostFocus = value;
-        }
-
-        public Action? DragLeave
-        {
-            get => NativeControl.DragLeave;
-            set => NativeControl.DragLeave = value;
-        }
-
-        public Action? VerticalScrollBarValueChanged
-        {
-            get => NativeControl.VerticalScrollBarValueChanged;
-            set => NativeControl.VerticalScrollBarValueChanged = value;
-        }
-
-        public Action? HorizontalScrollBarValueChanged
-        {
-            get => NativeControl.HorizontalScrollBarValueChanged;
-            set => NativeControl.HorizontalScrollBarValueChanged = value;
-        }
-
-        public Action? SizeChanged
-        {
-            get => NativeControl.SizeChanged;
-            set => NativeControl.SizeChanged = value;
-        }
-
-        public Action? LocationChanged
-        {
-            get => NativeControl.LocationChanged;
-            set => NativeControl.LocationChanged = value;
-        }
-
-        public Action? Activated
-        {
-            get => NativeControl.Activated;
-            set => NativeControl.Activated = value;
-        }
-
-        public Action? Deactivated
-        {
-            get => NativeControl.Deactivated;
-            set => NativeControl.Deactivated = value;
-        }
-
-        public Action? HandleCreated { get; set; }
-
-        public Action? HandleDestroyed
-        {
-            get => NativeControl.HandleDestroyed;
-            set => NativeControl.HandleDestroyed = value;
-        }
 
         /// <summary>
         /// Gets a value indicating whether the control has a native control associated with it.
@@ -335,7 +207,18 @@ namespace Alternet.UI
             set => NativeControl.AllowDrop = value;
         }
 
-        public bool CanSelect => AcceptsFocus;
+        public bool CanSelect
+        {
+            get
+            {
+                return AcceptsFocus;
+            }
+
+            set
+            {
+                AcceptsFocus = value;
+            }
+        }
 
         public bool AcceptsFocus
         {
@@ -784,8 +667,27 @@ namespace Alternet.UI
                 nativeControl?.RemoveChild(child);
         }
 
-        protected override void OnDetach()
+        public virtual void UnbindEvents()
         {
+            NativeControl.TextChanged = null;
+            NativeControl.HandleCreated = null;
+            NativeControl.HandleDestroyed = null;
+            NativeControl.Activated = null;
+            NativeControl.Deactivated = null;
+            NativeControl.Idle = null;
+            NativeControl.Paint = null;
+            NativeControl.VisibleChanged = null;
+            NativeControl.MouseEnter = null;
+            NativeControl.MouseLeave = null;
+            NativeControl.MouseCaptureLost = null;
+            NativeControl.DragLeave = null;
+            NativeControl.GotFocus = null;
+            NativeControl.LostFocus = null;
+            NativeControl.SizeChanged = null;
+            NativeControl.LocationChanged = null;
+            NativeControl.SystemColorsChanged = null;
+            NativeControl.DpiChanged = null;
+
             NativeControl.DragOver -= NativeControl_DragOver;
             NativeControl.DragEnter -= NativeControl_DragEnter;
             NativeControl.DragDrop -= NativeControl_DragDrop;
@@ -794,15 +696,16 @@ namespace Alternet.UI
             NativeControl.HorizontalScrollBarValueChanged = null;
         }
 
-        protected virtual void OnNativeControlCreated()
+        protected override void OnDetach()
         {
-            var parent = Control.Parent;
+            UnbindEvents();
+        }
 
-            if (parent is not null)
-            {
-                (UI.Control.RequireHandler(parent) as WxControlHandler)?.OnChildInserted(Control);
-                parent.PerformLayout();
-            }
+        public virtual void BindEvents()
+        {
+            if (DisposingOrDisposed || Control.DisposingOrDisposed
+                || NativeControl.IsDisposed)
+                return;
 
             NativeControl.DragOver += NativeControl_DragOver;
             NativeControl.DragEnter += NativeControl_DragEnter;
@@ -811,6 +714,105 @@ namespace Alternet.UI
             NativeControl.HorizontalScrollBarValueChanged = NativeHorizontalScrollBarValueChanged;
 
             NativeControl.HandleCreated = OnNativeControlHandleCreated;
+
+            NativeControl.MouseEnter = Control.RaiseMouseEnterOnTarget;
+            NativeControl.MouseLeave = Control.RaiseMouseLeaveOnTarget;
+            NativeControl.HandleCreated = Control.RaiseHandleCreated;
+            NativeControl.HandleDestroyed = Control.RaiseHandleDestroyed;
+            NativeControl.Activated = Control.RaiseActivated;
+            NativeControl.Deactivated = Control.RaiseDeactivated;
+            NativeControl.Paint = OnHandlerPaint;
+            NativeControl.VisibleChanged = OnHandlerVisibleChanged;
+            NativeControl.MouseCaptureLost = Control.RaiseMouseCaptureLost;
+
+            NativeControl.GotFocus = () =>
+            {
+                Control.RaiseGotFocus(EventFocusedControl);
+            };
+
+            NativeControl.LostFocus = () =>
+            {
+                Control.RaiseLostFocus(EventFocusedControl);
+            };
+
+            NativeControl.Idle = Control.RaiseIdle;
+            NativeControl.DragLeave = Control.RaiseDragLeave;
+
+            NativeControl.SizeChanged = Control.RaiseHandlerSizeChanged;
+            NativeControl.LocationChanged = Control.RaiseContainerLocationChanged;
+            NativeControl.SystemColorsChanged = Control.RaiseSystemColorsChanged;
+            NativeControl.DpiChanged = OnHandlerDpiChanged;
+
+            NativeControl.TextChanged = () =>
+            {
+                Control.RaiseHandlerTextChanged(NativeControl.Text);
+            };
+        }
+
+        protected virtual void OnNativeControlCreated()
+        {
+            BindEvents();
+
+            var parent = Control.Parent;
+
+            if (parent is not null)
+            {
+                (UI.Control.RequireHandler(parent) as WxControlHandler)?.OnChildInserted(Control);
+                parent.PerformLayout();
+            }
+        }
+
+        internal virtual void OnHandlerVisibleChanged()
+        {
+            if (DisposingOrDisposed)
+                return;
+
+            bool visible = NativeControl.Visible;
+            Control.Visible = visible;
+
+            if (App.IsLinuxOS && visible)
+            {
+                // todo: this is a workaround for a problem on Linux when
+                // ClientSize is not reported correctly until the window is shown
+                // So we need to relayout all after the proper client size is available
+                // This should be changed later in respect to RedrawOnResize functionality.
+                // Also we may need to do this for top-level windows.
+                // Doing this on Windows results in strange glitches like disappearing
+                // tab controls' tab.
+                // See https://forums.wxwidgets.org/viewtopic.php?f=1&t=47439
+                Control.PerformLayout();
+            }
+        }
+
+        internal virtual void OnHandlerPaint()
+        {
+            if (DisposingOrDisposed)
+                return;
+
+            if (!UserPaint)
+                return;
+            var clientRect = Control.ClientRectangle;
+            if (clientRect.SizeIsEmpty)
+                return;
+            if (!VisibleOnScreen)
+                return;
+
+            var e = new PaintEventArgs(() => OpenPaintDrawingContext(), clientRect);
+
+            try
+            {
+                Control.RaisePaint(e);
+            }
+            finally
+            {
+                if (e.GraphicsAllocated)
+                {
+                    e.Graphics.Dispose();
+                }
+                else
+                {
+                }
+            }
         }
 
         private void RaiseDragAndDropEvent(
@@ -834,18 +836,24 @@ namespace Alternet.UI
 
         private void NativeControl_DragOver(
             object? sender,
-            Native.NativeEventArgs<Native.DragEventData> e) =>
-            RaiseDragAndDropEvent(e, DragOver);
+            Native.NativeEventArgs<Native.DragEventData> e)
+        {
+            RaiseDragAndDropEvent(e, Control.RaiseDragOver);
+        }
 
         private void NativeControl_DragEnter(
             object? sender,
-            Native.NativeEventArgs<Native.DragEventData> e) =>
-            RaiseDragAndDropEvent(e, DragEnter);
+            Native.NativeEventArgs<Native.DragEventData> e)
+        {
+            RaiseDragAndDropEvent(e, Control.RaiseDragEnter);
+        }
 
         private void NativeControl_DragDrop(
             object? sender,
-            Native.NativeEventArgs<Native.DragEventData> e) =>
-            RaiseDragAndDropEvent(e, DragDrop);
+            Native.NativeEventArgs<Native.DragEventData> e)
+        {
+            RaiseDragAndDropEvent(e, Control.RaiseDragDrop);
+        }
 
         private void DisposeNativeControl()
         {
@@ -918,7 +926,7 @@ namespace Alternet.UI
 
         protected void SafeHandleRecreate(Action? action = null)
         {
-            Control.UnbindHandlerEvents();
+            UnbindEvents();
 
             try
             {
@@ -927,7 +935,7 @@ namespace Alternet.UI
             }
             finally
             {
-                Control.BindHandlerEvents();
+                BindEvents();
             }
         }
 
@@ -938,7 +946,7 @@ namespace Alternet.UI
         private void OnNativeControlHandleCreated()
         {
             SafeHandleRecreate();
-            HandleCreated?.Invoke();
+            Control.RaiseHandleCreated();
         }
 
         public void InvalidateBestSize()
@@ -959,6 +967,18 @@ namespace Alternet.UI
             };
             
             Control.RaiseScroll(args);
+        }
+
+        internal virtual void OnHandlerDpiChanged()
+        {
+            if (DisposingOrDisposed)
+                return;
+
+            var oldDpi = EventOldDpi;
+            var newDpi = EventNewDpi;
+
+            var e = new DpiChangedEventArgs(oldDpi, newDpi);
+            Control.RaiseDpiChanged(e);
         }
 
         internal virtual void NativeHorizontalScrollBarValueChanged()

@@ -15,16 +15,6 @@ namespace Alternet.UI
     /// </summary>
     public interface IWindowHandler
     {
-        /// <summary>
-        /// Gets or sets action which is called when window state is changed.
-        /// </summary>
-        Action? StateChanged { get; set; }
-
-        /// <summary>
-        /// Gets or sets action which is called when window is closing.
-        /// </summary>
-        Action<CancelEventArgs>? Closing { get; set; }
-
         /// <inheritdoc cref="Window.ShowInTaskbar"/>
         bool ShowInTaskbar { get; set; }
 

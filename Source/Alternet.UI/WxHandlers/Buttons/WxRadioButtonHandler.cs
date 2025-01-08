@@ -21,5 +21,17 @@ namespace Alternet.UI
         {
             return new Native.RadioButton();
         }
+
+        protected override void OnAttach()
+        {
+            base.OnAttach();
+            NativeControl.CheckedChanged = Control.RaiseCheckedChanged;
+        }
+
+        protected override void OnDetach()
+        {
+            base.OnDetach();
+            NativeControl.CheckedChanged = null;
+        }
     }
 }

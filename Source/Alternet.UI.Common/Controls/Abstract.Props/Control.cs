@@ -69,22 +69,6 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        public override bool TabStop
-        {
-            get
-            {
-                return SafeHandler?.TabStop ?? false;
-            }
-
-            set
-            {
-                if (TabStop == value)
-                    return;
-                UpdateFocusFlags(CanSelect, value);
-            }
-        }
-
-        /// <inheritdoc/>
         [Browsable(false)]
         [EditorBrowsable(EditorBrowsableState.Advanced)]
         public override bool Focused
@@ -399,7 +383,13 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        public override object NativeControl => SafeHandler?.GetNativeControl() ?? new();
+        public override object NativeControl
+        {
+            get
+            {
+                return SafeHandler?.GetNativeControl() ?? new();
+            }
+        }
 
         /// <summary>
         /// Gets a <see cref="IControlHandler"/> associated with this class
@@ -625,6 +615,27 @@ namespace Alternet.UI
             base.Invalidate();
         }
 
+        /// <summary>
+        /// Called when handler's text property is changed.
+        /// </summary>
+        public virtual void RaiseHandlerTextChanged(string s)
+        {
+            if (DisposingOrDisposed)
+                return;
+            if (handlerTextChanging > 0)
+                return;
+
+            handlerTextChanging++;
+            try
+            {
+                Text = s;
+            }
+            finally
+            {
+                handlerTextChanging--;
+            }
+        }
+
         /// <inheritdoc/>
         public override bool SetFocus()
         {
@@ -651,76 +662,6 @@ namespace Alternet.UI
         public override bool IsTransparentBackgroundSupported()
         {
             return SafeHandler?.IsTransparentBackgroundSupported() ?? false;
-        }
-
-        /// <summary>
-        /// Unbinds events from the handler.
-        /// </summary>
-        [Browsable(false)]
-        public virtual void UnbindHandlerEvents()
-        {
-            Handler.TextChanged = null;
-            Handler.HandleCreated = null;
-            Handler.HandleDestroyed = null;
-            Handler.Activated = null;
-            Handler.Deactivated = null;
-            Handler.Idle = null;
-            Handler.Paint = null;
-            Handler.VisibleChanged = null;
-            Handler.MouseEnter = null;
-            Handler.MouseLeave = null;
-            Handler.MouseCaptureLost = null;
-            Handler.DragLeave = null;
-            Handler.GotFocus = null;
-            Handler.LostFocus = null;
-            Handler.SizeChanged = null;
-            Handler.LocationChanged = null;
-            Handler.DragOver = null;
-            Handler.DragEnter = null;
-            Handler.DragDrop = null;
-            Handler.SystemColorsChanged = null;
-            Handler.DpiChanged = null;
-        }
-
-        /// <summary>
-        /// Binds events to the handler.
-        /// </summary>
-        [Browsable(false)]
-        public virtual void BindHandlerEvents()
-        {
-            if (DisposingOrDisposed)
-                return;
-
-            Handler.MouseEnter = RaiseMouseEnterOnTarget;
-            Handler.MouseLeave = RaiseMouseLeaveOnTarget;
-            Handler.HandleCreated = RaiseHandleCreated;
-            Handler.HandleDestroyed = RaiseHandleDestroyed;
-            Handler.Activated = RaiseActivated;
-            Handler.Deactivated = RaiseDeactivated;
-            Handler.Paint = OnHandlerPaint;
-            Handler.VisibleChanged = OnHandlerVisibleChanged;
-            Handler.MouseCaptureLost = RaiseMouseCaptureLost;
-
-            Handler.GotFocus = () =>
-            {
-                RaiseGotFocus(Handler.EventFocusedControl);
-            };
-
-            Handler.LostFocus = () =>
-            {
-                RaiseLostFocus(Handler.EventFocusedControl);
-            };
-
-            Handler.Idle = RaiseIdle;
-            Handler.DragLeave = RaiseDragLeave;
-            Handler.SizeChanged = RaiseHandlerSizeChanged;
-            Handler.LocationChanged = RaiseContainerLocationChanged;
-            Handler.DragOver = RaiseDragOver;
-            Handler.DragEnter = RaiseDragEnter;
-            Handler.DragDrop = RaiseDragDrop;
-            Handler.TextChanged = OnHandlerTextChanged;
-            Handler.SystemColorsChanged = RaiseSystemColorsChanged;
-            Handler.DpiChanged = OnHandlerDpiChanged;
         }
 
         /// <inheritdoc/>
@@ -816,34 +757,6 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        public override void FocusNextControl(bool forward = true, bool nested = true)
-        {
-            if (Keyboard.ProcessTabInternally)
-                base.FocusNextControl(forward, nested);
-            else
-                SafeHandler?.FocusNextControl(forward, nested);
-        }
-
-        /// <summary>
-        /// Saves screenshot of this control.
-        /// </summary>
-        /// <param name="fileName">Name of the file to which screenshot
-        /// will be saved.</param>
-        /// <remarks>This function works only on Windows for WxWidgets port.</remarks>
-        public virtual void SaveScreenshot(string fileName)
-        {
-            ScreenShotCounter++;
-            try
-            {
-                SafeHandler?.SaveScreenshot(fileName);
-            }
-            finally
-            {
-                ScreenShotCounter--;
-            }
-        }
-
-        /// <inheritdoc/>
         public override void RaiseHandleCreated()
         {
             if (DisposingOrDisposed)
@@ -854,71 +767,6 @@ namespace Alternet.UI
             if (ForegroundColor is not null)
                 Handler.ForegroundColor = ForegroundColor;
             base.RaiseHandleCreated();
-        }
-
-        internal virtual void OnHandlerDpiChanged()
-        {
-            if (DisposingOrDisposed)
-                return;
-
-            var oldDpi = Handler.EventOldDpi;
-            var newDpi = Handler.EventNewDpi;
-
-            var e = new DpiChangedEventArgs(oldDpi, newDpi);
-            RaiseDpiChanged(e);
-        }
-
-        internal virtual void OnHandlerVisibleChanged()
-        {
-            if (DisposingOrDisposed)
-                return;
-
-            bool visible = Handler.Visible;
-            Visible = visible;
-
-            if (App.IsLinuxOS && visible)
-            {
-                // todo: this is a workaround for a problem on Linux when
-                // ClientSize is not reported correctly until the window is shown
-                // So we need to relayout all after the proper client size is available
-                // This should be changed later in respect to RedrawOnResize functionality.
-                // Also we may need to do this for top-level windows.
-                // Doing this on Windows results in strange glitches like disappearing
-                // tab controls' tab.
-                // See https://forums.wxwidgets.org/viewtopic.php?f=1&t=47439
-                PerformLayout();
-            }
-        }
-
-        internal virtual void OnHandlerPaint()
-        {
-            if (DisposingOrDisposed)
-                return;
-
-            if (!UserPaint)
-                return;
-            var clientRect = ClientRectangle;
-            if (clientRect.SizeIsEmpty)
-                return;
-            if (!VisibleOnScreen)
-                return;
-
-            var e = new PaintEventArgs(() => Handler.OpenPaintDrawingContext(), clientRect);
-
-            try
-            {
-                RaisePaint(e);
-            }
-            finally
-            {
-                if (e.GraphicsAllocated)
-                {
-                    e.Graphics.Dispose();
-                }
-                else
-                {
-                }
-            }
         }
 
         /// <summary>
@@ -953,8 +801,6 @@ namespace Alternet.UI
 
                 OnHandlerAttached(EventArgs.Empty);
 
-                BindHandlerEvents();
-
                 void ApplyChildren()
                 {
                     if (!HasChildren)
@@ -980,7 +826,6 @@ namespace Alternet.UI
             if (handler == null)
                 return;
             OnHandlerDetaching(EventArgs.Empty);
-            UnbindHandlerEvents();
             handler.Detach();
             handler = null;
         }
@@ -988,7 +833,9 @@ namespace Alternet.UI
         /// <inheritdoc/>
         protected override void UpdateFocusFlags(bool canSelect, bool tabStop)
         {
-            SafeHandler?.SetFocusFlags(canSelect, tabStop && canSelect, canSelect);
+            base.UpdateFocusFlags(canSelect, tabStop);
+            if (SafeHandler is not null)
+                SafeHandler.CanSelect = canSelect;
         }
 
         /// <inheritdoc/>
@@ -996,13 +843,20 @@ namespace Alternet.UI
         {
             if (DisposingOrDisposed)
                 return;
-            if (handlerTextChanging == 0)
+
+            SuspendHandlerTextChange();
+
+            try
             {
                 var coercedText = CoerceTextForHandler(Text);
                 var forced = StateFlags.HasFlag(ControlFlags.ForceTextChange);
 
                 if (forced || Handler.Text != coercedText)
                     Handler.Text = coercedText;
+            }
+            finally
+            {
+                ResumeHandlerTextChange();
             }
         }
 
@@ -1033,32 +887,27 @@ namespace Alternet.UI
             return SafeHandler?.GetPreferredSize(availableSize) ?? SizeD.Empty;
         }
 
-        /// <summary>
-        /// Called when handler's text property is changed.
-        /// </summary>
-        protected virtual void OnHandlerTextChanged()
-        {
-            if (DisposingOrDisposed)
-                return;
-            if (handlerTextChanging > 0)
-                return;
-
-            handlerTextChanging++;
-            try
-            {
-                Text = Handler.Text;
-            }
-            finally
-            {
-                handlerTextChanging--;
-            }
-        }
-
         /// <inheritdoc/>
         protected override void RaiseEnabledChanged(EventArgs e)
         {
             SafeHandler?.SetEnabled(Enabled);
             base.RaiseEnabledChanged(EventArgs.Empty);
+        }
+
+        /// <summary>
+        /// Suspends live binding between native control's Text and control's Text.
+        /// </summary>
+        protected void SuspendHandlerTextChange()
+        {
+            handlerTextChanging++;
+        }
+
+        /// <summary>
+        /// Resumes live binding between native control's Text and control's Text.
+        /// </summary>
+        protected void ResumeHandlerTextChange()
+        {
+            handlerTextChanging--;
         }
 
         /// <inheritdoc/>
@@ -1088,7 +937,7 @@ namespace Alternet.UI
         /// <inheritdoc/>
         protected override void DisposeManaged()
         {
-            UnbindHandlerEvents();
+            Handler.UnbindEvents();
             base.DisposeManaged();
         }
 

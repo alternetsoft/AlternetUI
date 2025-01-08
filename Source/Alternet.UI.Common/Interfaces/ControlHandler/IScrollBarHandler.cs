@@ -12,11 +12,6 @@ namespace Alternet.UI
     public interface IScrollBarHandler
     {
         /// <summary>
-        /// Gets or sets action called when scrolling is done.
-        /// </summary>
-        Action? Scroll { get; set; }
-
-        /// <summary>
         /// Gets or sets thumb position.
         /// </summary>
         int ThumbPosition { get; set; }
@@ -35,21 +30,6 @@ namespace Alternet.UI
         /// Gets or sets whether scrollbar is vertical.
         /// </summary>
         bool IsVertical { get; set; }
-
-        /// <summary>
-        /// Gets type of the scroll event.
-        /// </summary>
-        ScrollEventType EventTypeID { get; }
-
-        /// <summary>
-        /// Gets old position of the scroll thumb passed to the scroll event.
-        /// </summary>
-        int EventOldPos { get; }
-
-        /// <summary>
-        /// Gets new position of the scroll thumb passed to the scroll event.
-        /// </summary>
-        int EventNewPos { get; }
 
         /// <inheritdoc cref="ScrollBar.SetScrollbar(int?, int?, int?, bool)"/>
         void SetScrollbar(

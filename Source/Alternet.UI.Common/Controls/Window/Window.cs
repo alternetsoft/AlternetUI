@@ -1439,22 +1439,6 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        public override void BindHandlerEvents()
-        {
-            base.BindHandlerEvents();
-            Handler.StateChanged = RaiseStateChanged;
-            Handler.Closing = OnHandlerClosing;
-        }
-
-        /// <inheritdoc/>
-        public override void UnbindHandlerEvents()
-        {
-            base.UnbindHandlerEvents();
-            Handler.StateChanged = null;
-            Handler.Closing = null;
-        }
-
-        /// <inheritdoc/>
         public override bool CenterOnParent(GenericOrientation direction = GenericOrientation.Both)
         {
             if (DisposingOrDisposed)
@@ -1486,25 +1470,6 @@ namespace Alternet.UI
             display = Display.SafeDisplay(display);
             var clientArea = display.ClientArea;
             SetLocationInRectI(horz, vert, clientArea, shrinkSize);
-        }
-
-        /// <summary>
-        /// Raised by the handler when it is going to be closed.
-        /// </summary>
-        /// <param name="e">Event arguments.</param>
-        public virtual void OnHandlerClosing(CancelEventArgs e)
-        {
-            var canClose = CanClose(true);
-
-            e.Cancel = e.Cancel || !canClose;
-
-            if (e.Cancel)
-                return;
-
-            RaiseClosed();
-
-            if (!Modal)
-                Dispose();
         }
 
         /// <summary>

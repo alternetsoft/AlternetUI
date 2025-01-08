@@ -19,7 +19,10 @@ namespace Alternet.UI
         /// </summary>
         public TextBoxAndButton()
         {
-            Init();
+            SuspendHandlerTextChange();
+            MainControl.ValidatorReporter = ErrorPicture;
+            MainControl.TextChanged += MainControl_TextChanged;
+            MainControl.AutoShowError = true;
         }
 
         /// <summary>
@@ -162,13 +165,6 @@ namespace Alternet.UI
             }
         }
 
-        /// <inheritdoc/>
-        public override void BindHandlerEvents()
-        {
-            base.BindHandlerEvents();
-            Handler.TextChanged = null;
-        }
-
         /// <summary>
         /// Initializes this control for the filter editing.
         /// </summary>
@@ -260,21 +256,6 @@ namespace Alternet.UI
                     BackColor = MainControl.BackColor;
                     break;
             }
-        }
-
-        /// <summary>
-        /// Initializes main child control.
-        /// </summary>
-        /// <remarks>
-        /// Override this method to do custom initialization. Do not call this method
-        /// directly, it is called automatically from constructor. When overriding you
-        /// must call base method before any other initializations.
-        /// </remarks>
-        protected virtual void Init()
-        {
-            MainControl.ValidatorReporter = ErrorPicture;
-            MainControl.TextChanged += MainControl_TextChanged;
-            MainControl.AutoShowError = true;
         }
 
         /// <summary>

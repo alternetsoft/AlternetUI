@@ -1018,6 +1018,7 @@ namespace Alternet.UI
                 return string.Empty;
             }
 
+            /*
             if (cmdName == "Screenshot")
             {
                 string location = Assembly.GetExecutingAssembly().Location;
@@ -1027,17 +1028,10 @@ namespace Alternet.UI
                 if (args.Length == 0)
                     return string.Empty;
                 Control? control = args[0] as Control;
-                control?.SaveScreenshot(screenshotFilename);
+                control?.Handler.SaveScreenshot(screenshotFilename);
                 return screenshotFilename;
             }
-
-            if (cmdName == "UIVersion")
-            {
-                Assembly thisAssembly = typeof(App).Assembly;
-                AssemblyName thisAssemblyName = thisAssembly.GetName();
-                Version? ver = thisAssemblyName?.Version;
-                return ver?.ToString();
-            }
+            */
 
             return Factory.DoCommand(cmdName, args);
         }

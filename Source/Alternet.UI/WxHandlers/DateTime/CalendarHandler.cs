@@ -342,8 +342,6 @@ namespace Alternet.UI
 
             if (App.IsWindowsOS)
                 UserPaint = true;
-            BackgroundColor = SystemColors.Window;
-
             NativeControl.SelectionChanged = NativeControl_SelectionChanged;
             NativeControl.PageChanged = NativeControl_PageChanged;
             NativeControl.WeekNumberClick = NativeControl_WeekNumberClick;

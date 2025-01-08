@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -131,8 +132,10 @@ namespace Alternet.UI
 
         public string? GetUIVersion()
         {
-            var ui = WebBrowser.DoCommandGlobal("UIVersion");
-            return ui;
+            Assembly thisAssembly = typeof(App).Assembly;
+            AssemblyName thisAssemblyName = thisAssembly.GetName();
+            Version? ver = thisAssemblyName?.Version;
+            return ver?.ToString();
         }
 
         public string GetLibraryVersionString()

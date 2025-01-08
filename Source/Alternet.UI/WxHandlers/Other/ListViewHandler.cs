@@ -7,9 +7,10 @@ namespace Alternet.UI
 {
     internal class ListViewHandler : WxControlHandler, IListViewHandler
     {
+        private readonly int clearing = 0;
+
         private int receivingSelection = 0;
         private int applyingSelection = 0;
-        private int clearing = 0;
 
         public ListViewHandler()
         {

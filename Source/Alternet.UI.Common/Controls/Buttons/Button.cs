@@ -464,22 +464,6 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        public override void BindHandlerEvents()
-        {
-            if (DisposingOrDisposed)
-                return;
-            base.BindHandlerEvents();
-            Handler.Click = RaiseClick;
-        }
-
-        /// <inheritdoc/>
-        public override void UnbindHandlerEvents()
-        {
-            base.UnbindHandlerEvents();
-            Handler.Click = null;
-        }
-
-        /// <inheritdoc/>
         protected override IControlHandler CreateHandler()
         {
             return ControlFactory.Handler.CreateButtonHandler(this);

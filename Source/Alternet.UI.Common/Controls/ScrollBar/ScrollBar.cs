@@ -394,16 +394,6 @@ namespace Alternet.UI
             SetScrollbar(posInfo.Position, posInfo.Range, posInfo.PageSize);
         }
 
-        /// <inheritdoc/>
-        public override void BindHandlerEvents()
-        {
-            if (DisposingOrDisposed)
-                return;
-            base.BindHandlerEvents();
-            UpdateScrollInfo();
-            PlatformControl.Scroll = RaiseScroll;
-        }
-
         /// <summary>
         /// This method should not be used in the <see cref="ScrollBar"/>.
         /// </summary>
@@ -421,28 +411,20 @@ namespace Alternet.UI
         {
         }
 
-        /// <inheritdoc/>
-        public override void UnbindHandlerEvents()
-        {
-            base.UnbindHandlerEvents();
-            PlatformControl.Scroll = null;
-        }
-
         /// <summary>
-        /// Raises scroll events.
+        /// Raises scroll event.
         /// </summary>
-        internal virtual void RaiseScroll()
+        public virtual void RaiseHandlerScroll(ScrollEventType eventType, int newPosFromZero)
         {
             if (DisposingOrDisposed)
                 return;
-            var newPos = (PlatformControl.EventNewPos / SmallChange) + Minimum;
+            var newPos = (newPosFromZero / SmallChange) + Minimum;
             var oldPos = Value;
             newPos = MathUtils.ApplyMinMax(newPos, Minimum, Maximum);
             if (newPos == oldPos)
                 return;
             pos.Value = newPos;
-            var eventType = PlatformControl.EventTypeID;
-            var orientation = PlatformControl.IsVertical ? ScrollBarOrientation.Vertical
+            var orientation = IsVertical ? ScrollBarOrientation.Vertical
                 : ScrollBarOrientation.Horizontal;
             RaiseScroll(new ScrollEventArgs(eventType, oldPos, newPos, orientation));
             RaiseValueChanged();
