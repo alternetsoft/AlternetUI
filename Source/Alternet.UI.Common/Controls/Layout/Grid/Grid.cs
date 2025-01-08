@@ -74,6 +74,8 @@ namespace Alternet.UI
         /// </summary>
         public Grid()
         {
+            CanSelect = false;
+            TabStop = false;
         }
 
         /// <summary>

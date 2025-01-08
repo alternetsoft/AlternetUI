@@ -27,6 +27,8 @@ namespace Alternet.UI
         /// </summary>
         public ScrollViewer()
         {
+            CanSelect = false;
+            TabStop = false;
         }
 
         /// <inheritdoc/>

@@ -31,6 +31,8 @@ namespace Alternet.UI
         /// </summary>
         public LayoutPanel()
         {
+            CanSelect = false;
+            TabStop = false;
         }
 
         /// <inheritdoc/>

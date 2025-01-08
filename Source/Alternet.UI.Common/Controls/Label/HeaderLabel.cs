@@ -38,6 +38,8 @@ namespace Alternet.UI
         /// </summary>
         public HeaderLabel()
         {
+            CanSelect = false;
+            TabStop = false;
             control = CreateInnerControl?.Invoke() ?? CreateDefaultInnerControl();
             control.Parent = this;
         }

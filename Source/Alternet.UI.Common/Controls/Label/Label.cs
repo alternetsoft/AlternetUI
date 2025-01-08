@@ -70,6 +70,8 @@ namespace Alternet.UI
         /// </summary>
         public Label()
         {
+            CanSelect = false;
+            TabStop = false;
             SuspendHandlerTextChange();
         }
 

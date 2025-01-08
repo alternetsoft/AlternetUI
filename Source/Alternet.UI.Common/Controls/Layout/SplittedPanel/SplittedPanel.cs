@@ -55,6 +55,9 @@ namespace Alternet.UI
         /// </summary>
         public SplittedPanel()
         {
+            CanSelect = false;
+            TabStop = false;
+
             var panelSize = DefaultPanelSize;
 
             rightPanel = CreateRightPanel();
