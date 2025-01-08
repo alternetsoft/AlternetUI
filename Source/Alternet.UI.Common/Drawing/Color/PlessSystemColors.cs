@@ -4,7 +4,9 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
+
 using Alternet.UI;
+
 using SkiaSharp;
 
 namespace Alternet.Drawing
@@ -363,7 +365,8 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
-        /// Assigns internal system colors structures with RGB values from the operating system settings.
+        /// Assigns internal system colors structures with RGB values from
+        /// the operating system settings.
         /// </summary>
         public static void Reset(bool? isDark = null)
         {
@@ -416,7 +419,8 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
-        /// Assigns internal system colors structures with RGB values from const color declarations.
+        /// Assigns internal system colors structures with RGB values
+        /// from const color declarations.
         /// </summary>
         public static void ResetFromConsts(bool? isDark = null)
         {
@@ -429,39 +433,50 @@ namespace Alternet.Drawing
 
             void ResetLightColors()
             {
-                SetColor(KnownSystemColor.ActiveBorder, (255, 180, 180, 180));
-                SetColor(KnownSystemColor.ActiveCaption, (255, 153, 180, 209));
-                SetColor(KnownSystemColor.ActiveCaptionText, (255, 0, 0, 0));
-                SetColor(KnownSystemColor.AppWorkspace, (255, 171, 171, 171));
-                SetColor(KnownSystemColor.ButtonFace, (255, 240, 240, 240));
-                SetColor(KnownSystemColor.ButtonHighlight, (255, 255, 255, 255));
-                SetColor(KnownSystemColor.ButtonShadow, (255, 160, 160, 160));
-                SetColor(KnownSystemColor.Control, (255, 240, 240, 240));
-                SetColor(KnownSystemColor.ControlDark, (255, 160, 160, 160));
-                SetColor(KnownSystemColor.ControlDarkDark, (255, 105, 105, 105));
-                SetColor(KnownSystemColor.ControlLight, (255, 227, 227, 227));
-                SetColor(KnownSystemColor.ControlLightLight, (255, 255, 255, 255));
-                SetColor(KnownSystemColor.Desktop, (255, 0, 0, 0));
-                SetColor(KnownSystemColor.GradientActiveCaption, (255, 185, 209, 234));
-                SetColor(KnownSystemColor.GradientInactiveCaption, (255, 215, 228, 242));
-                SetColor(KnownSystemColor.GrayText, (255, 109, 109, 109));
-                SetColor(KnownSystemColor.Highlight, (255, 0, 120, 215));
-                SetColor(KnownSystemColor.HighlightText, (255, 255, 255, 255));
-                SetColor(KnownSystemColor.HotTrack, (255, 0, 102, 204));
-                SetColor(KnownSystemColor.InactiveBorder, (255, 244, 247, 252));
-                SetColor(KnownSystemColor.InactiveCaption, (255, 191, 205, 219));
-                SetColor(KnownSystemColor.InactiveCaptionText, (255, 0, 0, 0));
-                SetColor(KnownSystemColor.Info, (255, 255, 255, 225));
-                SetColor(KnownSystemColor.InfoText, (255, 0, 0, 0));
-                SetColor(KnownSystemColor.Menu, (255, 240, 240, 240));
-                SetColor(KnownSystemColor.MenuBar, (255, 240, 240, 240));
-                SetColor(KnownSystemColor.MenuHighlight, (255, 0, 120, 215));
-                SetColor(KnownSystemColor.MenuText, (255, 0, 0, 0));
-                SetColor(KnownSystemColor.ScrollBar, (255, 200, 200, 200));
-                SetColor(KnownSystemColor.WindowFrame, (255, 100, 100, 100));
-                SetColor(KnownSystemColor.Window, (255, 255, 255, 255));
-                SetColor(KnownSystemColor.WindowText, (255, 0, 0, 0));
-                SetColor(KnownSystemColor.ControlText, (255, 0, 0, 0));
+                SetColor(KnownSystemColor.ActiveBorder, SystemColorsLight.ActiveBorder);
+                SetColor(KnownSystemColor.ActiveCaption, SystemColorsLight.ActiveCaption);
+                SetColor(KnownSystemColor.ActiveCaptionText, SystemColorsLight.ActiveCaptionText);
+                SetColor(KnownSystemColor.AppWorkspace, SystemColorsLight.AppWorkspace);
+                SetColor(KnownSystemColor.ButtonFace, SystemColorsLight.ButtonFace);
+                SetColor(KnownSystemColor.ButtonHighlight, SystemColorsLight.ButtonHighlight);
+                SetColor(KnownSystemColor.ButtonShadow, SystemColorsLight.ButtonShadow);
+                SetColor(KnownSystemColor.Control, SystemColorsLight.Control);
+                SetColor(KnownSystemColor.ControlDark, SystemColorsLight.ControlDark);
+                SetColor(KnownSystemColor.ControlDarkDark, SystemColorsLight.ControlDarkDark);
+                SetColor(KnownSystemColor.ControlLight, SystemColorsLight.ControlLight);
+                SetColor(KnownSystemColor.ControlLightLight, SystemColorsLight.ControlLightLight);
+                SetColor(KnownSystemColor.Desktop, SystemColorsLight.Desktop);
+
+                SetColor(
+                    KnownSystemColor.GradientActiveCaption,
+                    SystemColorsLight.GradientActiveCaption);
+
+                SetColor(
+                    KnownSystemColor.GradientInactiveCaption,
+                    SystemColorsLight.GradientInactiveCaption);
+
+                SetColor(KnownSystemColor.GrayText, SystemColorsLight.GrayText);
+                SetColor(KnownSystemColor.Highlight, SystemColorsLight.Highlight);
+                SetColor(KnownSystemColor.HighlightText, SystemColorsLight.HighlightText);
+                SetColor(KnownSystemColor.HotTrack, SystemColorsLight.HotTrack);
+                SetColor(KnownSystemColor.InactiveBorder, SystemColorsLight.InactiveBorder);
+                SetColor(KnownSystemColor.InactiveCaption, SystemColorsLight.InactiveCaption);
+
+                SetColor(
+                    KnownSystemColor.InactiveCaptionText,
+                    SystemColorsLight.InactiveCaptionText);
+
+                SetColor(KnownSystemColor.Info, SystemColorsLight.Info);
+                SetColor(KnownSystemColor.InfoText, SystemColorsLight.InfoText);
+                SetColor(KnownSystemColor.Menu, SystemColorsLight.Menu);
+                SetColor(KnownSystemColor.MenuBar, SystemColorsLight.MenuBar);
+                SetColor(KnownSystemColor.MenuHighlight, SystemColorsLight.MenuHighlight);
+                SetColor(KnownSystemColor.MenuText, SystemColorsLight.MenuText);
+                SetColor(KnownSystemColor.ScrollBar, SystemColorsLight.ScrollBar);
+                SetColor(KnownSystemColor.WindowFrame, SystemColorsLight.WindowFrame);
+                SetColor(KnownSystemColor.Window, SystemColorsLight.Window);
+                SetColor(KnownSystemColor.WindowText, SystemColorsLight.WindowText);
+                SetColor(KnownSystemColor.ControlText, ControlText);
             }
 
             void ResetDarkColors()
