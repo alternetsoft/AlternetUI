@@ -30,8 +30,17 @@ namespace Alternet.UI
         /// Initializes a new instance of the <see cref="ObjectUniqueId"/> struct.
         /// </summary>
         public ObjectUniqueId()
+            : this(ref globalCounter)
         {
-            if(globalCounter == long.MaxValue)
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ObjectUniqueId"/> struct
+        /// using the specified reference to the counter variable.
+        /// </summary>
+        public ObjectUniqueId(ref ulong counter)
+        {
+            if (counter == long.MaxValue)
             {
                 state = State.Guid;
                 guid = Guid.NewGuid();
@@ -39,7 +48,7 @@ namespace Alternet.UI
             else
             {
                 state = State.Long;
-                id = globalCounter++;
+                id = counter++;
             }
         }
 
