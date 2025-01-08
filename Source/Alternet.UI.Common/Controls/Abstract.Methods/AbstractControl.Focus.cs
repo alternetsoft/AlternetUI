@@ -34,8 +34,15 @@ namespace Alternet.UI
             get
             {
                 var focused = focusedControl.Value;
-                if (focused?.Focused ?? false)
-                    return focused;
+
+                if(focused is not null)
+                {
+                    if (focused.Focused)
+                    {
+                        return focused;
+                    }
+                }
+
                 RaiseFocusedControlChanged(App.Handler.GetFocusedControl());
                 return focusedControl.Value;
             }
@@ -271,43 +278,42 @@ namespace Alternet.UI
                     return distance < 5;
                 }
 
-                var xTop = x.ClientToScreen(x.Location).Y;
-                var yTop = y.ClientToScreen(y.Location).Y;
-
-                if (DistanceIsAlmostEqual(xTop, yTop))
-                    result = 0;
-                else
-                    result = xTop.CompareTo(yTop);
-
-                if (result == 0)
+                int CompareDistance(Coord a1, Coord a2)
                 {
-                    var xLeft = x.ClientToScreen(x.Location).X;
-                    var yLeft = y.ClientToScreen(y.Location).X;
-                    if (DistanceIsAlmostEqual(xLeft, yLeft))
-                        result = 0;
+                    if (DistanceIsAlmostEqual(a1, a2))
+                        return 0;
                     else
-                        result = xLeft.CompareTo(yLeft);
+                        return a1.CompareTo(a2);
                 }
 
-                if (result == 0)
-                {
-                    var xHash = x.Parent?.GetHashCode() ?? 0;
-                    var yHash = y.Parent?.GetHashCode() ?? 0;
-                    result = xHash.CompareTo(yHash);
-                }
+                var xLocation = x.ClientToScreen(x.Location);
+                var yLocation = y.ClientToScreen(y.Location);
 
-                if (result == 0)
-                {
-                    result = x.TabIndex.CompareTo(y.TabIndex);
-                }
+                result = CompareDistance(xLocation.Y, yLocation.Y);
 
-                if (result == 0)
-                {
-                    var xIndex = x.IndexInParent ?? 0;
-                    var yIndex = y.IndexInParent ?? 0;
-                    result = xIndex.CompareTo(yIndex);
-                }
+                if (result != 0)
+                    return result;
 
+                result = CompareDistance(xLocation.X, yLocation.X);
+
+                if (result != 0)
+                    return result;
+
+                var xHash = x.Parent?.GetHashCode() ?? 0;
+                var yHash = y.Parent?.GetHashCode() ?? 0;
+                result = xHash.CompareTo(yHash);
+
+                if (result != 0)
+                    return result;
+
+                result = x.TabIndex.CompareTo(y.TabIndex);
+
+                if (result != 0)
+                    return result;
+
+                var xIndex = x.IndexInParent ?? 0;
+                var yIndex = y.IndexInParent ?? 0;
+                result = xIndex.CompareTo(yIndex);
                 return result;
             }
         }
