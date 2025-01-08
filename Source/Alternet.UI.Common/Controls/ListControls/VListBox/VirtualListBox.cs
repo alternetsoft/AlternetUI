@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.Specialized;
 using System.ComponentModel;
 using System.Linq;
 using System.Threading;
 
+using Alternet.Base.Collections;
 using Alternet.Drawing;
 using Alternet.UI.Extensions;
 
@@ -257,7 +259,7 @@ namespace Alternet.UI
         {
             if (DisposingOrDisposed)
                 return default;
-            return index >= GetVisibleBegin() && index < GetVisibleEnd();
+            return index >= GetVisibleBegin() && index < (GetVisibleEnd() - 1);
         }
 
         /// <summary>
@@ -338,6 +340,39 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Removes selected items and updates selection so the closest item to the
+        /// previous selection will become selected.
+        /// </summary>
+        /// <returns></returns>
+        public virtual bool RemoveSelectedAndUpdateSelection()
+        {
+            bool removed = false;
+
+            DoInsideSuspendedSelectionEvents(() =>
+            {
+                var selectedIndex = SelectedIndex;
+
+                removed = RemoveSelectedItems();
+
+                if (removed)
+                {
+                    if (selectedIndex != null)
+                    {
+                        if (selectedIndex < Count)
+                        {
+                            SelectedIndex = selectedIndex;
+                            EnsureVisible(selectedIndex.Value);
+                        }
+                        else
+                            SelectLastItemAndScroll();
+                    }
+                }
+            });
+
+            return removed;
+        }
+
+        /// <summary>
         /// Finds first visible item from the specified last visible item.
         /// </summary>
         /// <param name="unitLast">Index of the last visible item.</param>
@@ -353,7 +388,7 @@ namespace Alternet.UI
             // any more when it is shown
             int unitFirst = unitLast;
             Coord s = 0;
-            while(true)
+            while (true)
             {
                 e.Index = unitFirst;
                 MeasureItemSize(e);
@@ -400,9 +435,7 @@ namespace Alternet.UI
 
             DoInsideUpdate(() =>
             {
-                Handler.DetachItems(Items);
                 RecreateItems();
-                Handler.AttachItems(Items);
                 Invalidate();
             });
         }
@@ -444,9 +477,9 @@ namespace Alternet.UI
                 DoInsideUpdate(() =>
                 {
                     ClearSelected();
-                    Handler.DetachItems(Items);
+                    DetachItems(Items);
                     RecreateItems(value);
-                    Handler.AttachItems(Items);
+                    AttachItems(Items);
                     Handler.ItemsCount = Items.Count;
                     Invalidate();
                 });
@@ -559,6 +592,29 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Selects items with the specified indexes
+        /// and scrolls the control so the first selected item will become visible in the view.
+        /// </summary>
+        public virtual bool SelectItemsAndScroll(params int[] indexes)
+        {
+            var validIndexes = GetValidIndexes(indexes);
+            if (validIndexes.Count == 0)
+                return false;
+            SelectedIndices = validIndexes;
+            EnsureVisible(validIndexes[0]);
+            return true;
+        }
+
+        /// <summary>
+        /// Selects last item in the control and scrolls the control so last item will be visible.
+        /// </summary>
+        public virtual void SelectLastItemAndScroll()
+        {
+            SelectLastItem();
+            ScrollToLastRow();
+        }
+
+        /// <summary>
         /// Gets index of the first visible item.
         /// </summary>
         /// <returns></returns>
@@ -632,16 +688,39 @@ namespace Alternet.UI
             return ScrollToRow(0);
         }
 
+        /// <inheritdoc/>
+        public override int EndUpdate()
+        {
+            var result = base.EndUpdate();
+            if (result == 0)
+                CountChanged();
+            return result;
+        }
+
         /// <summary>
         /// Scrolls control to the last row.
         /// </summary>
         /// <returns></returns>
         public virtual bool ScrollToLastRow()
         {
+            if (Count == 0)
+                return false;
             var visibleRows = VisibleCount;
             if (visibleRows <= 0)
                 return false;
-            var result = ScrollToRow(Count - VisibleCount + 1);
+
+            return EnsureVisible(Count - 1);
+        }
+
+        /// <inheritdoc/>
+        public override bool EnsureVisible(int index)
+        {
+            if (index < 0 || index >= Count)
+                return false;
+            if (IsItemVisible(index))
+                return true;
+            var newRow = FindFirstVisibleFromLast(index, true);
+            var result = ScrollToRow(newRow);
             return result;
         }
 
@@ -777,6 +856,15 @@ namespace Alternet.UI
             }
 
             return null;
+        }
+
+        internal void CountChanged()
+        {
+            if (DisposingOrDisposed || InUpdates)
+                return;
+            var newCount = Items.Count;
+            Handler.ItemsCount = newCount;
+            Invalidate();
         }
 
         /// <inheritdoc/>
@@ -1148,6 +1236,14 @@ namespace Alternet.UI
         protected override void OnMouseMove(MouseEventArgs e)
         {
             base.OnMouseMove(e);
+        }
+
+        /// <inheritdoc/>
+        protected override void ItemsCollectionChanged(
+            object? sender,
+            NotifyCollectionChangedEventArgs e)
+        {
+            CountChanged();
         }
 
         /// <inheritdoc/>

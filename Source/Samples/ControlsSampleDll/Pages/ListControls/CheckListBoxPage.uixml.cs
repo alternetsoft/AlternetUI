@@ -70,11 +70,7 @@ namespace ControlsSample
             object? sender, 
             EventArgs e)
         {
-            checkListBox.Parent?.BeginUpdate();
-            checkListBox.SelectionMode = 
-                allowMultipleSelectionCheckBox.IsChecked ? 
-                ListBoxSelectionMode.Multiple : ListBoxSelectionMode.Single;
-            checkListBox.Parent?.EndUpdate();
+            checkListBox.IsSelectionModeMultiple = allowMultipleSelectionCheckBox.IsChecked;
         }
 
         private void RemoveCheckedButton_Click(object? sender, EventArgs e)
@@ -96,17 +92,14 @@ namespace ControlsSample
         private void AddItemButton_Click(object? sender, EventArgs e)
         {
             checkListBox.Items.Add(ListBoxPage.GenItemText());
-            checkListBox.SelectLastItem();
-            checkListBox.ScrollToLastRow();
+            checkListBox.SelectLastItemAndScroll();
         }
 
         private void EnsureLastItemVisibleButton_Click(
             object? sender, 
             EventArgs e)
         {
-            var count = checkListBox.Items.Count;
-            if (count > 0)
-                checkListBox.EnsureVisible(count - 1);
+            checkListBox.EnsureVisible(checkListBox.Count - 1);
         }
 
         private void CheckItemAtIndex2Button_Click(

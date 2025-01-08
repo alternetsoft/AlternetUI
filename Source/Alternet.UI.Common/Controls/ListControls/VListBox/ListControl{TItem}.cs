@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Collections.Specialized;
 using System.ComponentModel;
 using System.Globalization;
 using System.Linq;
@@ -464,10 +465,10 @@ namespace Alternet.UI
         /// <summary>
         /// Removes items from the control.
         /// </summary>
-        public virtual void RemoveItems(IReadOnlyList<int> items)
+        public virtual bool RemoveItems(IReadOnlyList<int> items)
         {
             if (items == null || items.Count == 0)
-                return;
+                return false;
 
             BeginUpdate();
             try
@@ -478,6 +479,8 @@ namespace Alternet.UI
                     if (index < Items.Count)
                         Items.RemoveAt(index);
                 }
+
+                return true;
             }
             finally
             {
@@ -608,13 +611,44 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Called when items are attached to the control.
+        /// </summary>
+        /// <param name="itm">Attached items.</param>
+        protected virtual void AttachItems(IListControlItems<TItem>? itm)
+        {
+            if (itm is null)
+                return;
+            itm.CollectionChanged += ItemsCollectionChanged;
+        }
+
+        /// <summary>
+        /// Called when items are detached to the control.
+        /// </summary>
+        /// <param name="itm">Detached items.</param>
+        protected virtual void DetachItems(IListControlItems<TItem>? itm)
+        {
+            if (itm is null)
+                return;
+            itm.CollectionChanged -= ItemsCollectionChanged;
+        }
+
+        /// <summary>
+        /// Callback which is called when items are changed in the control.
+        /// </summary>
+        protected virtual void ItemsCollectionChanged(
+            object? sender,
+            NotifyCollectionChangedEventArgs e)
+        {
+        }
+
+        /// <summary>
         /// Recreates items. Before calling this method, you need to unbind all events
         /// connected to the <see cref="Items"/>.
         /// </summary>
         protected virtual void RecreateItems(ListControlItems<TItem>? newItems = null)
         {
-            items = null; // This call must be here.
-            items = newItems ?? SafeItems();
+            DetachItems(Items);
+            items = newItems;
         }
 
         /// <summary>
@@ -623,7 +657,13 @@ namespace Alternet.UI
         /// <returns></returns>
         protected virtual ListControlItems<TItem> SafeItems()
         {
-            return items ??= new ListControlItems<TItem>();
+            if(items is null)
+            {
+                items = new ListControlItems<TItem>();
+                AttachItems(items);
+            }
+
+            return items;
         }
     }
 }
