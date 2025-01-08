@@ -9,6 +9,11 @@ namespace Alternet.UI
 {
     public partial class AbstractControl
     {
+        /// <summary>
+        /// Gets or sets whether to draw debug rectangle around focused control.
+        /// </summary>
+        public static bool ShowDebugFocusRect = false;
+
         private static AbstractControl? focusedControl;
         private bool canSelect = true;
         private bool tabStop = true;
@@ -33,9 +38,16 @@ namespace Alternet.UI
             {
                 if (focusedControl == value)
                     return;
+                var prevFocused = focusedControl;
                 focusedControl = value;
                 FocusedControlChanged?.Invoke(focusedControl, EventArgs.Empty);
                 PlessKeyboard.ResetKeysStatesInMemory();
+
+                if (DebugUtils.IsDebugDefined && ShowDebugFocusRect)
+                {
+                    prevFocused?.Parent?.Invalidate();
+                    focusedControl?.Parent?.Invalidate();
+                }
             }
         }
 
@@ -304,7 +316,7 @@ namespace Alternet.UI
                 if (control.Parent == this && !recursive)
                     continue;
 
-                if (!control.TabStop || !control.Visible || !control.IsEnabled
+                if (!control.TabStop || !control.VisibleOnScreen || !control.IsEnabled
                     || !control.CanSelect || !control.CanFocus || control.IsGraphicControl
                     || control.HasChildren || control.HasFocusableChildren(true))
                     continue;
