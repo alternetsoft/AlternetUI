@@ -32,7 +32,7 @@ namespace Alternet.UI
 
         bool IControlHandler.IsNativeControlCreated { get; }
 
-        bool IControlHandler.CanSelect { get; set; }
+        bool IControlHandler.CanSelect { get; }
 
         bool IControlHandler.IsFocused
         {
@@ -320,6 +320,13 @@ namespace Alternet.UI
         /// <inheritdoc/>
         public virtual void InvalidateBestSize()
         {
+        }
+
+        /// <inheritdoc/>
+        public void UpdateFocusFlags(bool canSelect, bool tabStop)
+        {
+            this.canSelect = canSelect;
+            this.tabStop = tabStop;
         }
     }
 }

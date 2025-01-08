@@ -996,6 +996,11 @@ namespace Alternet.UI
             Control.RaiseScroll(args);
         }
 
+        public void UpdateFocusFlags(bool canSelect, bool tabStop)
+        {
+            NativeControl.SetFocusFlags(canSelect, tabStop && canSelect, canSelect);
+        }
+
         internal class NonAbstractNativeControl : Native.Control
         {
             public NonAbstractNativeControl()

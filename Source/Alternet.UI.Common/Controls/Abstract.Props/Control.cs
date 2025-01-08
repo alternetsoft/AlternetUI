@@ -639,7 +639,9 @@ namespace Alternet.UI
         /// <inheritdoc/>
         public override bool SetFocus()
         {
-            return SafeHandler?.SetFocus() ?? false;
+            if (DisposingOrDisposed)
+                return false;
+            return Handler.SetFocus();
         }
 
         /// <inheritdoc/>
@@ -834,8 +836,7 @@ namespace Alternet.UI
         protected override void UpdateFocusFlags(bool canSelect, bool tabStop)
         {
             base.UpdateFocusFlags(canSelect, tabStop);
-            if (SafeHandler is not null)
-                SafeHandler.CanSelect = canSelect;
+            SafeHandler?.UpdateFocusFlags(canSelect, tabStop);
         }
 
         /// <inheritdoc/>
