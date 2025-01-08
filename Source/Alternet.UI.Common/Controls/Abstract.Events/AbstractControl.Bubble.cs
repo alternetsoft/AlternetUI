@@ -253,13 +253,22 @@ namespace Alternet.UI
 
             var e = new KeyEventArgs(control, key, keyStates, modifiers, repeatCount);
 
+            var visibleOnScreen = control.VisibleOnScreen;
+            var wantTab = control.WantTab && visibleOnScreen;
+
             if (e.Key == Key.Tab
-                && e.ShiftOrNone && !control.WantTab)
+                && e.ShiftOrNone && !wantTab)
             {
                 App.AddIdleTask(() =>
                 {
                     control.FocusNextControl(!e.HasModifiers, recursive: true);
                 });
+                handled = true;
+                return;
+            }
+
+            if (!visibleOnScreen)
+            {
                 handled = true;
                 return;
             }
