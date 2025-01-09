@@ -97,10 +97,14 @@ namespace ControlsSample
             };
 
             popup.Add("Log Information", Log);
+            
+            /*
             popup.Add("Next Alignment", NextAligment);
+            */
 
             atCenterCheckBox.CheckedChanged += (s, e) =>
             {
+                /*
                 if (atCenterCheckBox.IsChecked)
                 {
                     toolTip.ToolTipPicture.Alignment = HVAlignment.Center;
@@ -109,6 +113,7 @@ namespace ControlsSample
                 {
                     toolTip.ToolTipPicture.Alignment = HVAlignment.TopLeft;
                 }
+                */
             };
 
             otherSchemeCheckBox.IsEnabled = false;
@@ -141,10 +146,6 @@ namespace ControlsSample
             tooltipPreview.Click += (s, e) =>
             {
                 ShowToolTipButton_Click(this, EventArgs.Empty);
-            };
-
-            toolTip.ToolTipPicture.AfterShow += (s, e) =>
-            {
             };
         }
 
@@ -180,7 +181,9 @@ namespace ControlsSample
 
         internal void NextAligment()
         {
+            /*
             toolTip.ToolTipPicture.Alignment = toolTip.ToolTipPicture.Alignment.NextValue();
+            */
         }
 
         internal void Log()

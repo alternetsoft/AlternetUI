@@ -63,7 +63,7 @@
     <Control Title="Options" Padding="10" Layout="Vertical">
       <CheckBox Name="dontHideCheckBox" Text="Do not hide after delay" IsChecked="true"/>
       <CheckBox Name="atCenterCheckBox" Text="Show at center" IsChecked="false" MarginTop="5"
-                IsEnabled="true"/>
+                IsEnabled="false"/>
       <CheckBox Name="otherSchemeCheckBox" Text="Use other color theme"
                 IsChecked="false" MarginTop="5"
                 IsEnabled="true"/>

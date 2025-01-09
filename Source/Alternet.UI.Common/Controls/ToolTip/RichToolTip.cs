@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -14,7 +15,7 @@ namespace Alternet.UI
     /// Additionally to the tooltip message <see cref="RichToolTip"/> allows to
     /// specify title, image and other options.
     /// </summary>
-    public class RichToolTip : UserControl, IRichToolTip, IToolTipProvider
+    public class RichToolTip : HiddenBorder, IRichToolTip, IToolTipProvider
     {
         /// <summary>
         /// Gets or sets default tooltip border color.
@@ -59,7 +60,7 @@ namespace Alternet.UI
         private static BorderSettings? defaultToolTipBorder;
 
         private readonly TemplateControls.RichToolTipTemplate template = new();
-        private readonly PictureBox picture = new();
+        private readonly ImageDrawable drawable = new();
 
         private BorderSettings? toolTipBorder;
         private Color? toolTipBackgroundColor;
@@ -79,11 +80,7 @@ namespace Alternet.UI
         /// </summary>
         public RichToolTip()
         {
-            template.Parent = this;
-            picture.Visible = false;
-            picture.ImageStretch = false;
-            picture.Alignment = HVAlignment.TopLeft;
-            picture.Parent = this;
+            drawable.Visible = false;
         }
 
         /// <summary>
@@ -178,14 +175,6 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Gets <see cref="PictureBox"/> used to store tooltip picture.
-        /// Image is filled after tooltip show. You can use this property to perform
-        /// alignment of the tooltip inside the container.
-        /// </summary>
-        [Browsable(false)]
-        public PictureBox ToolTipPicture => picture;
-
-        /// <summary>
         /// Gets template control used to layout tooltip elements.
         /// </summary>
         [Browsable(false)]
@@ -248,7 +237,7 @@ namespace Alternet.UI
         /// </summary>
         public virtual bool ToolTipVisible
         {
-            get => picture.Visible;
+            get => drawable.Visible;
 
             set
             {
@@ -417,7 +406,12 @@ namespace Alternet.UI
             {
                 showTimer?.Stop();
                 hideTimer?.Stop();
-                picture.Hide();
+                if (drawable.Visible)
+                {
+                    drawable.Visible = false;
+                    Invalidate();
+                }
+
                 return this;
             }
             catch
@@ -610,21 +604,16 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Shows the tooltip at the specified location inside the.
-        /// Location coordinates are in device-independent units.
+        /// Creates an image filled with tooltip data (icon, title, message, border, etc.).
         /// </summary>
-        public virtual IRichToolTip ShowToolTip(PointD? location = null)
+        /// <returns></returns>
+        public virtual Image CreateToolTipImage()
         {
-            HideToolTip();
-
             template.DoInsideLayout(
             () =>
             {
-                if(DefaultMaxWidth is not null)
+                if (DefaultMaxWidth is not null)
                     template.MaxWidth = DefaultMaxWidth;
-
-                if (location is not null)
-                    ToolTipLocation = location.Value;
 
                 template.NormalBorder = RealDefaultToolTipBorder;
                 template.HasBorder = true;
@@ -688,9 +677,26 @@ namespace Alternet.UI
             false);
 
             var image = TemplateUtils.GetTemplateAsImage(template, template.BackgroundColor);
+            return image;
+        }
+
+        /// <summary>
+        /// Shows the tooltip at the specified location inside the.
+        /// Location coordinates are in device-independent units.
+        /// </summary>
+        public virtual IRichToolTip ShowToolTip(PointD? location = null)
+        {
+            HideToolTip();
+
+            var image = CreateToolTipImage();
+
+            if (location is not null)
+                ToolTipLocation = location.Value;
+/*
             picture.BackgroundColor = template.BackgroundColor;
             picture.Background = template.BackgroundColor?.AsBrush;
-            picture.Image = image;
+*/
+            drawable.Image = image;
 
             if (showDelayInMilliseconds > 0)
             {
@@ -705,9 +711,10 @@ namespace Alternet.UI
 
             void ShowAction()
             {
-                if (IsDisposed)
+                if (DisposingOrDisposed)
                     return;
-                picture.Show();
+                drawable.Visible = true;
+                Invalidate();
 
                 var timer = TimerForHide;
                 timer.Stop();
@@ -726,20 +733,6 @@ namespace Alternet.UI
             }
 
             return this;
-        }
-
-        /// <inheritdoc/>
-        public override void DefaultPaint(PaintEventArgs e)
-        {
-            DrawDefaultBackground(e);
-
-            if(DebugUtils.IsDebugDefined && ShowDebugRectangleAtCenter)
-            {
-                e.Graphics.FillRectangleAtCenter(
-                    LightDarkColors.Red.AsBrush,
-                    ClientRectangle,
-                    3);
-            }
         }
 
         /// <summary>
@@ -832,6 +825,22 @@ namespace Alternet.UI
             return SetToolTipFromTemplate(template, backColor).ShowToolTip(location);
         }
 
+        /// <inheritdoc/>
+        public override void DefaultPaint(PaintEventArgs e)
+        {
+            DrawDefaultBackground(e);
+
+            if (drawable.Visible && drawable.Image != null)
+            {
+                drawable.VisualState = Enabled
+                    ? VisualControlState.Normal : VisualControlState.Disabled;
+                drawable.Bounds = (Padding.LeftTop.ToPointF(), drawable.GetPreferredSize(this));
+                drawable.Draw(this, e.Graphics);
+            }
+
+            DefaultPaintDebug(e);
+        }
+
         IRichToolTip? IToolTipProvider.Get(object? sender)
         {
             return this;
@@ -864,6 +873,18 @@ namespace Alternet.UI
             SafeDisposeObject(ref hideTimer);
             HideToolTip();
             base.DisposeManaged();
+        }
+
+        [Conditional("DEBUG")]
+        private void DefaultPaintDebug(PaintEventArgs e)
+        {
+            if (ShowDebugRectangleAtCenter)
+            {
+                e.Graphics.FillRectangleAtCenter(
+                    LightDarkColors.Red.AsBrush,
+                    ClientRectangle,
+                    3);
+            }
         }
     }
 }
