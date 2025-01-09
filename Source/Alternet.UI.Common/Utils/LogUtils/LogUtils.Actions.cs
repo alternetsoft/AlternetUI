@@ -72,7 +72,11 @@ namespace Alternet.UI
 
             var dpi = $"DPI: {dpiValue}";
             var ui = $"UI: {SystemSettings.Handler.GetUIVersion()}";
-            var s = $"{ui}, {net}, {wxWidgets}, {dpi}";
+
+            var debugger = Debugger.IsAttached ? ", DebuggerAttached"
+                : DebugUtils.IsDebugDefined ? " , DebugDefined" : null;
+
+            var s = $"{ui}, {net}, {wxWidgets}, {dpi}{debugger}";
 
             return s;
         }
