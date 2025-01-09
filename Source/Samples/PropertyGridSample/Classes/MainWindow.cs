@@ -374,7 +374,7 @@ namespace PropertyGridSample
                         AfterSetProps();
                     });
 
-                    SetBackground(Color.Gray100);
+                    SetBackground(null);
 
                     App.AddIdleTask(() =>
                     {
@@ -426,7 +426,7 @@ namespace PropertyGridSample
             base.DisposeManaged();
         }
 
-        private void SetBackground(Color color)
+        private void SetBackground(Color? color)
         {
             if (PropertyGridSettings.Default!.DemoBackgroundIsWhite)
                 color = Color.White;
