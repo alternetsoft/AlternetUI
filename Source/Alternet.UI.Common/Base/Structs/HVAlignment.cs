@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Diagnostics.CodeAnalysis;
 using System.Runtime.CompilerServices;
 using System.Text;
@@ -77,6 +78,29 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets whether vertical alignment is <see cref="VerticalAlignment.Stretch"/>
+        /// or <see cref="VerticalAlignment.Fill"/>.
+        /// </summary>
+        [Browsable(false)]
+        public bool IsVerticalStretchOrFill => Vertical == VerticalAlignment.Stretch
+                || Vertical == VerticalAlignment.Fill;
+
+        /// <summary>
+        /// Gets whether horizontal alignment is <see cref="HorizontalAlignment.Stretch"/>
+        /// or <see cref="HorizontalAlignment.Fill"/>.
+        /// </summary>
+        [Browsable(false)]
+        public bool IsHorizontalStretchOrFill => Horizontal == HorizontalAlignment.Stretch
+                || Horizontal == HorizontalAlignment.Fill;
+
+        /// <summary>
+        /// Gets whether <see cref="IsHorizontalStretchOrFill"/>
+        /// or <see cref="IsVerticalStretchOrFill"/> returns True.
+        /// </summary>
+        [Browsable(false)]
+        public bool IsStretchOrFill => IsHorizontalStretchOrFill || IsVerticalStretchOrFill;
+
+        /// <summary>
         /// Implicit operator declaration for the conversion from <see cref="HVAlignment"/> to
         /// <see cref="VerticalAlignment"/>.
         /// </summary>
@@ -88,7 +112,8 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Implicit operator declaration for the conversion from <see cref="HVAlignment"/> to
+        /// Implicit operator declaration for the conversion
+        /// from <see cref="HVAlignment"/> to
         /// <see cref="HorizontalAlignment"/>.
         /// </summary>
         /// <param name="value">Value to convert.</param>
@@ -99,7 +124,8 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Implicit operator declaration for the conversion from <see cref="HorizontalAlignment"/> to
+        /// Implicit operator declaration for the conversion from
+        /// <see cref="HorizontalAlignment"/> to
         /// <see cref="HVAlignment"/>.
         /// </summary>
         /// <param name="horizontal">Value to convert.</param>
@@ -110,7 +136,8 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Implicit operator declaration for the conversion from <see cref="VerticalAlignment"/> to
+        /// Implicit operator declaration for the conversion
+        /// from <see cref="VerticalAlignment"/> to
         /// <see cref="HVAlignment"/>.
         /// </summary>
         /// <param name="vertical">Value to convert.</param>
@@ -121,7 +148,8 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Implicit operator declaration for the conversion from tuple with two alignment values to
+        /// Implicit operator declaration for the conversion from
+        /// tuple with two alignment values to
         /// <see cref="HVAlignment"/>.
         /// </summary>
         /// <param name="value">Value to convert.</param>
@@ -133,7 +161,8 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Tests whether two specified <see cref="HVAlignment"/> structures are equivalent.
+        /// Tests whether two specified <see cref="HVAlignment"/>
+        /// structures are equivalent.
         /// </summary>
         /// <param name="left">The <see cref="HVAlignment"/> that is to the left
         /// of the equality operator.</param>
@@ -240,6 +269,19 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Returns this object if <see cref="IsStretchOrFill"/> is False; otherwise
+        /// returns <paramref name="overrideValue"/> (or <see cref="HVAlignment.Center"/>
+        /// if it is not specified or Null).
+        /// </summary>
+        /// <returns></returns>
+        public HVAlignment WithoutStretchOrFill(HVAlignment? overrideValue = null)
+        {
+            if (IsStretchOrFill)
+                return overrideValue ?? HVAlignment.Center;
+            return this;
+        }
+
+        /// <summary>
         /// Determines whether the specified object is equal to the current object.
         /// </summary>
         /// <param name="obj">The object to compare with the current object.</param>
@@ -298,6 +340,24 @@ namespace Alternet.UI
             return new(
                 (HorizontalAlignment)NextValue((CoordAlignment)Horizontal),
                 Vertical);
+        }
+
+        /// <summary>
+        /// Gets next alignment value by incrementing alignments. 'Stretch' or 'Fill'
+        /// alignments are not returned.
+        /// </summary>
+        /// <returns></returns>
+        public HVAlignment NextValueNoStretchOrFill()
+        {
+            HVAlignment result = this;
+
+            while (true)
+            {
+                result = result.NextValue();
+
+                if (result == this || !result.IsStretchOrFill)
+                    return result;
+            }
         }
     }
 }
