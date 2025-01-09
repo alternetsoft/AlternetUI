@@ -24,6 +24,7 @@ namespace PropertyGridSample
 
         private bool updatePropertyGrid = false;
         private bool useIdle = false;
+        private bool showDesignCorners;
 
         static MainWindow()
         {
@@ -65,6 +66,15 @@ namespace PropertyGridSample
             items.Add("Height");
             items.Add("Left");
             items.Add("Top");
+        }
+
+        private bool ShowDesignCorners
+        {
+            get => showDesignCorners;
+            set
+            {
+                showDesignCorners = value;
+            }
         }
 
         public PropertyGrid PropGrid => panel.PropGrid;
@@ -117,6 +127,20 @@ namespace PropertyGridSample
                 panel.ActionsControl.Required();
 
                 panel.FillPanel.MinChildMargin = 10;
+                panel.FillPanel.Paint += (s, e) =>
+                {
+                    if (!ShowDesignCorners)
+                        return;
+                    var rect = panel.FillPanel.FirstVisibleChild?.Bounds;
+                    if(rect is not null)
+                    {
+                        var inflated = rect.Value.Inflated();
+                        BorderSettings.DrawDesignCorners(
+                            e.Graphics,
+                            inflated,
+                            BorderSettings.DebugBorder);
+                    }
+                };
 
                 InitToolBox();
 
@@ -321,14 +345,12 @@ namespace PropertyGridSample
 
                 if (item.Instance is AbstractControl control)
                 {
+                    var hasBorder = PropertyGridSettings.Default!.DesignCorners
+                    && item.HasTicks
+                    && !control.FlagsAndAttributes.HasFlag("NoDesignBorder");
+
                     ControlParent.DoInsideLayout(() =>
                     {
-                        var hasBorder = PropertyGridSettings.Default!.DesignCorners
-
-                        // Update design corners here.
-
-                        && item.HasTicks
-                        && !control.FlagsAndAttributes.HasFlag("NoDesignBorder");
 
                         if (control.Name == null)
                         {
@@ -347,13 +369,15 @@ namespace PropertyGridSample
                         control.Visible = true;
                         control.Refresh();
                     });
-                    
-                    ControlParent.Refresh();
+
+                    ShowDesignCorners = hasBorder;
                 }
                 else
                 {
-                    // Hide designer corners here
+                    ShowDesignCorners = false;
                 }
+
+                ControlParent.Refresh();
 
                 if (type == typeof(WelcomePage))
                 {

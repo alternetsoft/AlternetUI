@@ -185,6 +185,7 @@ namespace PropertyGridSample
 
         private void PGPropertyChanged(object? sender, EventArgs e)
         {
+            ControlParent.Invalidate();
             if (PropertyGridSettings.Default!.LogPropertyChanged)
                 LogEvent("PropertyChanged");
         }
