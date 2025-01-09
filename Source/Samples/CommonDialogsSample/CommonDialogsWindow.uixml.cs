@@ -169,17 +169,7 @@ namespace ControlsSample
 
         private void ThrowExceptionButton_Click(object? sender, EventArgs e)
         {
-            if (App.UnhandledExceptionMode != UnhandledExceptionMode.CatchException)
-            {
-                App.SetUnhandledExceptionMode(UnhandledExceptionMode.CatchException);
-                App.Log("Application.Current.SetUnhandledExceptionMode(CatchException)");
-            }
-
-            if(App.UnhandledExceptionModeIfDebugger != UnhandledExceptionMode.CatchException)
-            {
-                App.SetUnhandledExceptionModeIfDebugger(UnhandledExceptionMode.CatchException);
-                App.Log("Application.Current.SetUnhandledExceptionModeIfDebugger(CatchException)");
-            }
+            ExceptionUtils.ForceUnhandledExceptionToUseDialog();
 
             throw (TestExceptionType)exceptionTypeComboBox.SelectedItem! switch
             {

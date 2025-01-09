@@ -284,7 +284,8 @@ namespace Alternet.UI
             Fn("Test RegistryUtils", () =>
             {
                 var previewerPath = RegistryUtils.ReadUIXmlPreviewPath();
-                RegistryUtils.WriteUIXmlPreviewPath(@"C:\AlternetUI\UIXmlHostApp\Alternet.UI.Integration.UIXmlHostApp.exe");
+                RegistryUtils.WriteUIXmlPreviewPath(
+                    @"C:\AlternetUI\UIXmlHostApp\Alternet.UI.Integration.UIXmlHostApp.exe");
                 previewerPath = RegistryUtils.ReadUIXmlPreviewPath();
                 App.LogNameValue("UIXmlPreviewPath", previewerPath);
             });
@@ -300,15 +301,13 @@ namespace Alternet.UI
 
             Fn("Test Exception: Throw C++", () =>
             {
-                App.SetUnhandledExceptionMode(UnhandledExceptionMode.CatchException);
-                App.SetUnhandledExceptionModeIfDebugger(UnhandledExceptionMode.CatchException);
+                ExceptionUtils.ForceUnhandledExceptionToUseDialog();
                 WebBrowser.DoCommandGlobal("CppThrow");
             });
 
             Fn("Test Exception: Throw C#", () =>
             {
-                App.SetUnhandledExceptionMode(UnhandledExceptionMode.CatchException);
-                App.SetUnhandledExceptionModeIfDebugger(UnhandledExceptionMode.CatchException);
+                ExceptionUtils.ForceUnhandledExceptionToUseDialog();
                 throw new FileNotFoundException("Test message", "MyFileName.dat");
             });
 

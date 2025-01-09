@@ -12,6 +12,40 @@ namespace Alternet.UI
     public static class ExceptionUtils
     {
         /// <summary>
+        /// Configure unhandled exception mode
+        /// so default error dialog will be shown.
+        /// </summary>
+        public static void ForceUnhandledExceptionToUseDialog()
+        {
+            if (!UnhandledExceptionUsesDialog())
+            {
+                App.SetUnhandledExceptionModes(UnhandledExceptionMode.CatchWithDialog);
+                App.Log("Execute App.SetUnhandledExceptionModes(CatchWithDialog)");
+            }
+        }
+
+        /// <summary>
+        /// Gets whether unhandled exception mode is configured
+        /// so default error dialog will be shown.
+        /// </summary>
+        /// <returns></returns>
+        public static bool UnhandledExceptionUsesDialog()
+        {
+            var mode = App.GetUnhandledExceptionMode();
+            switch (mode)
+            {
+                default:
+                case UnhandledExceptionMode.CatchException:
+                case UnhandledExceptionMode.ThrowException:
+                    return false;
+                case UnhandledExceptionMode.CatchWithDialog:
+                case UnhandledExceptionMode.CatchWithDialogAndThrow:
+                case UnhandledExceptionMode.CatchWithThrow:
+                    return true;
+            }
+        }
+
+        /// <summary>
         /// Gets whether the specified exception is considered critical.
         /// </summary>
         /// <param name="ex">Exception to test.</param>
