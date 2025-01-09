@@ -95,6 +95,7 @@ namespace Alternet.UI
         /// </summary>
         public ComboBox()
         {
+            Handler.Required();
             listBox = new(HandlePopupControlChanged);
         }
 
