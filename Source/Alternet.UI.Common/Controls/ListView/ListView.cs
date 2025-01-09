@@ -1022,10 +1022,10 @@ namespace Alternet.UI
                             column.RaiseChanged(ListViewColumn.ColumnEventType.WidthChanged);
                         }
                     }
-                    catch (Exception exception)
+                    catch
                     {
                         if(DebugUtils.IsDebugDefined)
-                            throw exception;
+                            throw;
                     }
                 });
             }

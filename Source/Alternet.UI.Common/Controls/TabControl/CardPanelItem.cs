@@ -79,7 +79,7 @@ namespace Alternet.UI
                     if (SupressException ?? DefaultSupressException)
                         control = CreateErrorCard(e);
                     else
-                        throw e;
+                        throw;
                 }
 
                 if (oldControl != control)

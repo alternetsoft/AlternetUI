@@ -164,17 +164,18 @@ namespace Alternet.UI
                         if (!distanceIsLess)
                             return;
 
-                        LongTapEventArgs e = new(TouchDeviceType.Unknown, LastMousePosition.Position.Value);
+                        LongTapEventArgs e
+                            = new(TouchDeviceType.Unknown, LastMousePosition.Position.Value);
                         if (target.IsDisposed)
                             return;
                         try
                         {
                             target.RaiseLongTap(e);
                         }
-                        catch (Exception exception)
+                        catch
                         {
                             if (DebugUtils.IsDebugDefined)
-                                throw exception;
+                                throw;
                         }
                     }
 
