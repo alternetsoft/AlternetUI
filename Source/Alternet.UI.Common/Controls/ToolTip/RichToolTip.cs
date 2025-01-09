@@ -74,6 +74,7 @@ namespace Alternet.UI
         private ImageSet? toolTipImage;
         private Timer? showTimer;
         private Timer? hideTimer;
+        private HVAlignment toolTipAlignment;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="RichToolTip"/> class.
@@ -204,6 +205,48 @@ namespace Alternet.UI
                 toolTipForegroundColor = value;
                 HideToolTip();
             }
+        }
+
+        /// <summary>
+        /// Gets or sets vertical and horizontal alignment of the tooltip inside the container.
+        /// </summary>
+        [Browsable(false)]
+        public virtual HVAlignment ToolTipAlignment
+        {
+            get
+            {
+                return toolTipAlignment;
+            }
+
+            set
+            {
+                value = value.WithoutStretchOrFill();
+                if (toolTipAlignment == value)
+                    return;
+                toolTipAlignment = value;
+                if (ToolTipVisible)
+                    Invalidate();
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets horizontal alignment of the tooltip inside the container.
+        /// </summary>
+        public HorizontalAlignment ToolTipHorizontalAlignment
+        {
+            get => ToolTipAlignment.Horizontal;
+
+            set => ToolTipAlignment = ToolTipAlignment.WithHorizontal(value);
+        }
+
+        /// <summary>
+        /// Gets or sets vertical alignment of the tooltip inside the container.
+        /// </summary>
+        public VerticalAlignment ToolTipVerticalAlignment
+        {
+            get => ToolTipAlignment.Vertical;
+
+            set => ToolTipAlignment = ToolTipAlignment.WithVertical(value);
         }
 
         /// <inheritdoc/>
@@ -832,9 +875,19 @@ namespace Alternet.UI
 
             if (drawable.Visible && drawable.Image != null)
             {
+                var containerBounds = ClientRectangle.DeflatedWithPadding(Padding);
+                RectD imageBounds = (PointD.Empty, drawable.GetPreferredSize(this));
+
+                var alignedRect = AlignUtils.AlignRectInRect(
+                    imageBounds,
+                    containerBounds,
+                    ToolTipHorizontalAlignment,
+                    ToolTipVerticalAlignment,
+                    false);
+
                 drawable.VisualState = Enabled
                     ? VisualControlState.Normal : VisualControlState.Disabled;
-                drawable.Bounds = (Padding.LeftTop.ToPointF(), drawable.GetPreferredSize(this));
+                drawable.Bounds = alignedRect;
                 drawable.Draw(this, e.Graphics);
             }
 

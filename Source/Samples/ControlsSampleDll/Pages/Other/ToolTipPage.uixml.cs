@@ -98,22 +98,18 @@ namespace ControlsSample
 
             popup.Add("Log Information", Log);
             
-            /*
             popup.Add("Next Alignment", NextAligment);
-            */
 
             atCenterCheckBox.CheckedChanged += (s, e) =>
             {
-                /*
                 if (atCenterCheckBox.IsChecked)
                 {
-                    toolTip.ToolTipPicture.Alignment = HVAlignment.Center;
+                    toolTip.ToolTipAlignment = HVAlignment.Center;
                 }
                 else
                 {
-                    toolTip.ToolTipPicture.Alignment = HVAlignment.TopLeft;
+                    toolTip.ToolTipAlignment = HVAlignment.TopLeft;
                 }
-                */
             };
 
             otherSchemeCheckBox.IsEnabled = false;
@@ -181,17 +177,23 @@ namespace ControlsSample
 
         internal void NextAligment()
         {
-            /*
-            toolTip.ToolTipPicture.Alignment = toolTip.ToolTipPicture.Alignment.NextValue();
-            */
+            toolTip.ToolTipAlignment = toolTip.ToolTipAlignment.NextValueNoStretchOrFill();
         }
 
         internal void Log()
         {
             LogUtils.LogColor("Info", SystemColors.Info);
-            LogUtils.LogColor("SystemSettings.Info", new(SystemSettings.GetColor(KnownSystemColor.Info)));
+            
+            LogUtils.LogColor(
+                "SystemSettings.Info",
+                new(SystemSettings.GetColor(KnownSystemColor.Info)));
+
             LogUtils.LogColor("InfoText", SystemColors.InfoText);
-            LogUtils.LogColor("SystemSettings.InfoText", new(SystemSettings.GetColor(KnownSystemColor.InfoText)));
+            
+            LogUtils.LogColor(
+                "SystemSettings.InfoText",
+                new(SystemSettings.GetColor(KnownSystemColor.InfoText)));
+
             LogUtils.LogColor("BkColor", RealBackgroundColor);
             LogUtils.LogColor("FgColor", RealForegroundColor);
         }
