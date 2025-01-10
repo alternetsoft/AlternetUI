@@ -15,7 +15,7 @@ namespace Alternet.UI
     /// Additionally to the tooltip message <see cref="RichToolTip"/> allows to
     /// specify title, image and other options.
     /// </summary>
-    public class RichToolTip : HiddenBorder, IRichToolTip, IToolTipProvider
+    public class RichToolTip : ScrollViewer, IRichToolTip, IToolTipProvider
     {
         /// <summary>
         /// Gets or sets default tooltip border color.
@@ -461,6 +461,7 @@ namespace Alternet.UI
                 {
                     drawable.Visible = false;
                     RaiseToolTipVisibleChanged(EventArgs.Empty);
+                    LayoutMaxSize = null;
                     Invalidate();
                 }
 
@@ -764,6 +765,7 @@ namespace Alternet.UI
                 if (DisposingOrDisposed)
                     return;
                 drawable.Visible = true;
+                LayoutMaxSize = drawable.GetPreferredSize(this);
                 RaiseToolTipVisibleChanged(EventArgs.Empty);
                 Invalidate();
 
@@ -906,6 +908,7 @@ namespace Alternet.UI
 
                 drawable.VisualState = Enabled
                     ? VisualControlState.Normal : VisualControlState.Disabled;
+                alignedRect.Location += LayoutOffset;
                 drawable.Bounds = alignedRect;
                 drawable.Draw(this, e.Graphics);
             }
@@ -916,6 +919,13 @@ namespace Alternet.UI
         IRichToolTip? IToolTipProvider.Get(object? sender)
         {
             return this;
+        }
+
+        /// <inheritdoc/>
+        protected override void OnScroll(ScrollEventArgs e)
+        {
+            base.OnScroll(e);
+            Invalidate();
         }
 
         /// <inheritdoc/>
