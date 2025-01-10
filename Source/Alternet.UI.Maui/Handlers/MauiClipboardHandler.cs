@@ -10,6 +10,16 @@ namespace Alternet.UI
 {
     internal class MauiClipboardHandler : DisposableObject, IClipboardHandler
     {
+        private IDataObject? lastData;
+
+        public MauiClipboardHandler()
+        {
+            SystemClipboard.ClipboardContentChanged += (s, e) =>
+            {
+                lastData = null;
+            };
+        }
+
         public bool AsyncRequired => true;
 
         public bool OnlyText => true;
@@ -19,11 +29,19 @@ namespace Alternet.UI
 
         public IDataObject? GetData()
         {
-            if(!SystemClipboard.HasText)
+            if (!SystemClipboard.HasText)
                 return null;
             var text = SystemClipboard.GetTextAsync().Result;
             if (text is null)
                 return null;
+
+            if (lastData is not null)
+            {
+                var lastText = lastData.GetData(DataFormats.Text)?.ToString();
+                if (lastText == text)
+                    return lastData;
+            }
+
             var data = new DataObject(text);
             return data;
         }
@@ -67,7 +85,16 @@ namespace Alternet.UI
         public Task SetDataAsync(IDataObject? value)
         {
             var data = value?.GetData(DataFormats.Text);
-            return SystemClipboard.SetTextAsync(data?.ToString());
+            return SystemClipboard
+                .SetTextAsync(data?.ToString())
+                .ContinueWith(
+                (t) =>
+                {
+                    Invoke(() =>
+                    {
+                        lastData = value;
+                    });
+                });
         }
     }
 }
