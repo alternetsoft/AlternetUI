@@ -82,7 +82,15 @@ namespace Alternet.UI
         public RichToolTip()
         {
             drawable.Visible = false;
+            ParentBackColor = true;
+            ParentForeColor = true;
         }
+
+        /// <summary>
+        /// Occurs when <see cref="ToolTipVisible"/> property is changed.
+        /// </summary>
+        [Category("Behavior")]
+        public event EventHandler? ToolTipVisibleChanged;
 
         /// <summary>
         /// Gets or sets default tooltip border.
@@ -452,13 +460,15 @@ namespace Alternet.UI
                 if (drawable.Visible)
                 {
                     drawable.Visible = false;
+                    RaiseToolTipVisibleChanged(EventArgs.Empty);
                     Invalidate();
                 }
 
                 return this;
             }
-            catch
+            catch(Exception e)
             {
+                App.LogError(e);
                 return this;
             }
         }
@@ -735,10 +745,7 @@ namespace Alternet.UI
 
             if (location is not null)
                 ToolTipLocation = location.Value;
-/*
-            picture.BackgroundColor = template.BackgroundColor;
-            picture.Background = template.BackgroundColor?.AsBrush;
-*/
+
             drawable.Image = image;
 
             if (showDelayInMilliseconds > 0)
@@ -757,6 +764,7 @@ namespace Alternet.UI
                 if (DisposingOrDisposed)
                     return;
                 drawable.Visible = true;
+                RaiseToolTipVisibleChanged(EventArgs.Empty);
                 Invalidate();
 
                 var timer = TimerForHide;
@@ -850,6 +858,17 @@ namespace Alternet.UI
                         MessageBoxIcon.Error,
                         timeoutMilliseconds,
                         location);
+        }
+
+        /// <summary>
+        /// Raises <see cref="ToolTipVisibleChanged"/> event.
+        /// </summary>
+        /// <param name="e">Event arguments.</param>
+        public virtual void RaiseToolTipVisibleChanged(EventArgs e)
+        {
+            if (DisposingOrDisposed)
+                return;
+            ToolTipVisibleChanged?.Invoke(this, e);
         }
 
         /// <summary>

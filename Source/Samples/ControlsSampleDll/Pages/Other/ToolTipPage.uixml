@@ -71,9 +71,12 @@
 
   </TabControl>
 
-  <Border Margin="0,10,0,0" Name="tooltipPreview" MinHeight="200">
-    <GenericLabel Margin="5" Text="ToolTip will be shown below" HorizontalAlignment="Center"
-           Name="toolTipLabel" IsTextLocalized="true"/>
+  <Border Margin="0,10,0,0" Name="tooltipPreview" MinHeight="200" HasBorder="true">
+    <Border BorderWidth="0,0,0,1">
+      <GenericLabel Margin="5" Text="ToolTip will be shown below"
+                    HorizontalAlignment="Center"
+             Name="toolTipLabel" IsTextLocalized="true"/>
+    </Border>
   </Border>
 
 </Control>
