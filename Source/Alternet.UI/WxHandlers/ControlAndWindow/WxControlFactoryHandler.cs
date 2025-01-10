@@ -145,7 +145,7 @@ namespace Alternet.UI
         /// <inheritdoc/>
         public IControlHandler CreateGroupBoxHandler(GroupBox control)
         {
-            return new GroupBoxHandler();
+            return new WxControlHandler<GroupBox, Native.GroupBox>();
         }
 
         /// <inheritdoc/>

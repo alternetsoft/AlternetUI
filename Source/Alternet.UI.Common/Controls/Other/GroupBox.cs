@@ -1,7 +1,9 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+
 using Alternet.Drawing;
+using Alternet.UI.Extensions;
 
 namespace Alternet.UI
 {
@@ -49,50 +51,26 @@ namespace Alternet.UI
         /// <inheritdoc/>
         public override ControlTypeId ControlKind => ControlTypeId.GroupBox;
 
+        /// <inheritdoc/>
+        public override object? TitleAsObject
+        {
+            get => base.TitleAsObject;
+
+            set
+            {
+                base.TitleAsObject = value;
+                Text = value.SafeToString();
+            }
+        }
+
         /// <summary>
         /// Gets or sets title. Same as <see cref="AbstractControl.Title"/> property.
         /// </summary>
         [Browsable(false)]
         public new string Text
         {
-            get => Title;
-            set => Title = value;
-        }
-
-        /// <summary>
-        /// Gets control handler.
-        /// </summary>
-        [Browsable(false)]
-        public new IGroupBoxHandler Handler => (IGroupBoxHandler)base.Handler;
-
-        /// <summary>
-        /// Gets the top border (it is the margin at the top where the title is).
-        /// </summary>
-        /// <returns></returns>
-        /// <remarks>
-        /// This is used to account for the
-        /// need for extra space taken by the <see cref="GroupBox"/>.
-        /// </remarks>
-        public virtual int GetTopBorderForSizer()
-        {
-            if (DisposingOrDisposed)
-                return default;
-            return Handler.GetTopBorderForSizer();
-        }
-
-        /// <summary>
-        /// Gets the margin on all other sides except top side.
-        /// </summary>
-        /// <returns></returns>
-        /// <remarks>
-        /// This is used to account for the
-        /// need for extra space taken by the <see cref="GroupBox"/>.
-        /// </remarks>
-        public virtual int GetOtherBorderForSizer()
-        {
-            if (DisposingOrDisposed)
-                return default;
-            return Handler.GetOtherBorderForSizer();
+            get => base.Text;
+            set => base.Text = value;
         }
 
         /// <inheritdoc/>

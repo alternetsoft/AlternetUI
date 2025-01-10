@@ -48,13 +48,15 @@ namespace Alternet.UI
 
         /// <summary>
         /// Creates <see cref="IControlHandler"/> interface provider.
+        /// for the <see cref="ProgressBar"/>.
         /// </summary>
         /// <param name="control">Owner.</param>
         /// <returns></returns>
         IControlHandler CreateProgressBarHandler(ProgressBar control);
 
         /// <summary>
-        /// Creates <see cref="IGroupBoxHandler"/> interface provider.
+        /// Creates <see cref="IControlHandler"/> interface provider
+        /// for the <see cref="GroupBox"/>.
         /// </summary>
         /// <param name="control">Owner.</param>
         /// <returns></returns>
