@@ -43,7 +43,7 @@ namespace Alternet.UI
                     }
                 }
 
-                RaiseFocusedControlChanged(App.Handler.GetFocusedControl());
+                focusedControl.Value = App.Handler.GetFocusedControl();
                 return focusedControl.Value;
             }
 
@@ -431,6 +431,13 @@ namespace Alternet.UI
             {
                 FocusFirstOrLast(forward, items);
             }
+        }
+
+        /// <summary>
+        /// Internal method. Do not use it.
+        public static bool FocusedControlEquals(AbstractControl? control)
+        {
+            return AbstractControl.focusedControl.Value == control;
         }
 
         /// <summary>
