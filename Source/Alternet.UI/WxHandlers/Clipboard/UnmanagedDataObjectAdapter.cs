@@ -24,7 +24,12 @@ namespace Alternet.UI
             if (format == DataFormats.Bitmap)
                 return new Bitmap(new UnmanagedStreamAdapter(dataObject.GetStreamData(format)));
 
-            throw new NotSupportedException();
+            if (format == DataFormats.Serializable)
+            {
+                return null;
+            }
+
+            return null;
         }
 
         public bool GetDataPresent(string format)
