@@ -10,10 +10,7 @@ namespace DragAndDropSample
 {
     public partial class DragAndDropWindow : Window
     {
-        private static readonly string[] SupportedFormats =
-            { DataFormats.Text, DataFormats.Files, DataFormats.Bitmap };
-
-        private readonly Bitmap testBitmap;
+        private readonly Image testBitmap;
 
         public DragAndDropWindow()
         {
@@ -22,7 +19,7 @@ namespace DragAndDropSample
             InitializeComponent();
 
             var sizePixels = PixelFromDip(new SizeD(64, 64));
-            testBitmap = new Bitmap(sizePixels);
+            testBitmap = (Image)Color.Yellow.AsImage(sizePixels);
 
             SetSizeToContent();
 
@@ -73,7 +70,7 @@ namespace DragAndDropSample
         {
             e.Effect = GetDropEffect(e.Effect);
             App.Log($"DragDrop: {e.MouseClientLocation}, {e.Effect}");
-            App.Log($"Dropped Data: {GetStringFromDropResultObject(e.Data)}");
+            App.Log($"Dropped Data: {GetStringFromDataObject(e.Data)}");
         }
 
         private void DropTarget_DragOver(object sender, DragEventArgs e)
@@ -96,52 +93,58 @@ namespace DragAndDropSample
         private void PasteButton_Click(object sender, System.EventArgs e)
         {
             var value = Clipboard.GetDataObject();
-            if (IsDataObjectSupported(value))
-                App.Log($"Pasted Data: {GetStringFromDropResultObject((object?)value)}");
-            else
-                App.Log("Clipboard doesn't contain data in a supported format.");
+
+            if(value is null)
+            {
+                App.Log("Paste from clipboard: None");
+                return;
+            }
+
+            App.LogSeparator();
+            App.Log("Paste from clipboard:");
+            App.Log(GetStringFromDataObject(value));
+            App.LogSeparator();
         }
 
         private void CopyButton_Click(object sender, System.EventArgs e)
         {
-            var dataObject = GetDataObject();
+            var dataObject = CreateDataObject();
+
+            var formats = dataObject.GetFormats();
+
+            App.Log($"Copy to clipboard: {StringUtils.ToString(formats)}");
             Clipboard.SetDataObject(dataObject);
         }
 
-        private IDataObject GetDataObject()
+        private IDataObject CreateDataObject()
         {
             var result = new DataObject();
 
-            if (textFormatCheckBox!.IsChecked)
+            if (textFormatCheckBox.IsChecked)
                 result.SetText("Test data string.");
 
-            if (filesFormatCheckBox!.IsChecked)
+            if (filesFormatCheckBox.IsChecked)
                 result.SetFiles(
                     (Assembly.GetEntryAssembly() ?? throw new Exception()).Location,
                     typeof(App).Assembly.Location);
 
-            if (bitmapFormatCheckBox!.IsChecked)
+            if (bitmapFormatCheckBox.IsChecked)
                 result.SetBitmap(testBitmap);
+
+            if (serializableFormatCheckBox.IsChecked)
+            {
+                result.SetData(DataFormats.Serializable, Keys.B | Keys.Control);
+            }
 
             return result;
         }
 
-        private string GetStringFromDropResultObject(object? value) => value switch
+        private string GetStringFromDataObject(object? value) => value switch
         {
             string x => x,
             IDataObject x => DataObject.ToDebugString(x),
-            _ => throw new Exception(),
+            _ => value is null ? "NULL" : $"TYPE: {value.GetType()}",
         };
-
-        private bool IsDataObjectSupported(object? value)
-        {
-            return value switch
-            {
-                string _ => true,
-                IDataObject d => SupportedFormats.Any(f => d.GetDataPresent(f)),
-                _ => false,
-            };
-        }
 
         bool isDragging = false;
 
@@ -156,7 +159,7 @@ namespace DragAndDropSample
 
             if (isDragging)
             {
-                var result = DoDragDrop(GetDataObject(), GetAllowedEffectsFlags());
+                var result = DoDragDrop(CreateDataObject(), GetAllowedEffectsFlags());
                 var prefix = "DoDragDrop Result";
                 App.LogReplace($"{prefix}: {result}", prefix);
                 isDragging = false;

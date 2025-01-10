@@ -63,6 +63,8 @@
                       IsChecked="true" Margin="0,0,0,5"/>
             <CheckBox Text="Bitmap" Name="bitmapFormatCheckBox" IsTextLocalized="true"
                       IsChecked="true" Margin="0,0,0,5"/>
+            <CheckBox Text="Serializable" Name="serializableFormatCheckBox" IsTextLocalized="true"
+                      IsChecked="true" Margin="0,0,0,5"/>
           </StackPanel>
         </GroupBox>
       </StackPanel>

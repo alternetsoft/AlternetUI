@@ -28,7 +28,8 @@ namespace Alternet::UI
         static wxDataFormat GetBitmapDataFormat();
         static std::vector<wxDataFormat> GetTextDataFormats();
 
-        const char16_t* FormatNotPresentErrorMessage = u"The specified format is not present in this data object.";
+        const char16_t* FormatNotPresentErrorMessage
+            = u"The specified format is not present in this data object.";
     };
 
     namespace DataFormats
