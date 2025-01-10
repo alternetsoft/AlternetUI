@@ -2453,7 +2453,7 @@ namespace Alternet.UI
                     return;
                 parentBackgroundColor = value;
                 if (value && Parent is not null)
-                    BackgroundColor = Parent.BackgroundColor;
+                    BackgroundColor = Parent.BackColor;
             }
         }
 
@@ -2470,7 +2470,7 @@ namespace Alternet.UI
                     return;
                 parentForegroundColor = value;
                 if (value && Parent is not null)
-                    ForegroundColor = Parent.ForegroundColor;
+                    ForegroundColor = Parent.ForeColor;
             }
         }
 

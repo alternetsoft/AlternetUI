@@ -616,7 +616,7 @@ namespace Alternet.UI
                 foreach (var child in Children)
                 {
                     if (child.ParentBackColor)
-                        child.BackgroundColor = BackgroundColor;
+                        child.BackgroundColor = BackColor;
                 }
             }
         }
@@ -636,7 +636,7 @@ namespace Alternet.UI
                 foreach (var child in Children)
                 {
                     if (child.ParentForeColor)
-                        child.ForegroundColor = ForegroundColor;
+                        child.ForegroundColor = ForeColor;
                 }
             }
         }
