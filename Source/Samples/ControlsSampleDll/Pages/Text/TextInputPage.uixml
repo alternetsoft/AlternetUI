@@ -42,7 +42,7 @@
 
     <!-- ========================= -->
 
-    <MultilineTextBox Name="memo" Title="Information" HasBorder="true" ReadOnly="true"
+    <MultilineTextBox Name="memo" Title="Information" HasBorder="false" ReadOnly="true"
                       Text="TextBox information will be here" Margin="5"/>
   </TabControl>
 
