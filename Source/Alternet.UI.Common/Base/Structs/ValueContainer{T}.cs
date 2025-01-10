@@ -4,36 +4,73 @@ using System.Text;
 
 namespace Alternet.UI
 {
-    internal struct ValueContainer<T>
+    /// <summary>
+    /// Value container structure that implements <see cref="IValueContainer{T}"/> interface.
+    /// </summary>
+    /// <typeparam name="T">Type of the value.</typeparam>
+    public struct ValueContainer<T> : IValueContainer<T>
     {
-        public T? Value;
+        private readonly Action? changed;
 
-        public Action? Changed;
+        private T? value;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ValueContainer{T}"/> struct.
+        /// </summary>
         public ValueContainer()
         {
         }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ValueContainer{T}"/> struct
+        /// with the specified action which is executed when value is changed.
+        /// </summary>
+        /// <param name="changed">Action to call when value is changed.</param>
         public ValueContainer(Action changed)
         {
-            Changed = changed;
+            this.changed = changed;
         }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ValueContainer{T}"/> struct
+        /// with the specified default value.
+        /// </summary>
+        /// <param name="value">Default value.</param>
         public ValueContainer(T? value)
         {
-            Value = value;
+            this.value = value;
         }
 
-        public readonly bool IsNull => Value == null;
+        /// <inheritdoc/>
+        public event EventHandler? ValueChanged;
 
-        public readonly T? GetValue()
+        /// <inheritdoc/>
+        public T? Value
         {
-            return Value;
+            readonly get
+            {
+                return GetValue();
+            }
+
+            set
+            {
+                SetValue(value);
+            }
         }
 
+        /// <summary>
+        /// Gets whether value is null.
+        /// </summary>
+        public readonly bool IsNull => value == null;
+
+        /// <summary>
+        /// Compares this value with the another value.
+        /// </summary>
+        /// <param name="value">Another value to compare with.</param>
+        /// <returns></returns>
         public readonly bool ValueEquals(T? value)
         {
-            if(Value is null)
+            if(this.value is null)
             {
                 if (value is null)
                     return true;
@@ -44,55 +81,73 @@ namespace Alternet.UI
                 if (value is null)
                     return false;
 
-                if (Value is IEquatable<T> equatable)
-                {
-                    if (equatable.Equals(value))
-                        return true;
-                }
-
-                if (Value.Equals(value))
+                if (this.value.Equals(value))
                     return true;
             }
 
             return false;
         }
 
-        public bool SetValue(T? value)
+        /// <summary>
+        /// Raises events after value is changed.
+        /// </summary>
+        public readonly void RaiseChanged()
+        {
+            changed?.Invoke();
+            ValueChanged?.Invoke(this, EventArgs.Empty);
+        }
+
+        internal readonly T? GetValue()
+        {
+            return value;
+        }
+
+        internal bool SetValue(T? value)
         {
             if (ValueEquals(value))
                 return false;
-            Value = value;
+            this.value = value;
             RaiseChanged();
             return true;
         }
 
-        public bool SetValueAsDisposable(T? value)
+        /// <summary>
+        /// Sets value as <see cref="IDisposableObject"/>.
+        /// </summary>
+        /// <param name="value">Value to set.</param>
+        /// <returns></returns>
+        internal bool SetValueAsDisposable(T? value)
         {
             if (ValueEquals(value))
                 return false;
-            if (Value is IDisposableObject disposable)
+            if (this.value is IDisposableObject disposable)
                 disposable.Disposed -= ValueDisposedHandler;
-            Value = value;
+            this.value = value;
             if (value is IDisposableObject disposable2)
                 disposable2.Disposed += ValueDisposedHandler;
             RaiseChanged();
             return true;
         }
 
-        public bool SetValueAsControl(T? value)
+        /// <summary>
+        /// Sets value as <see cref="AbstractControl"/>.
+        /// </summary>
+        /// <param name="value">Value to set.</param>
+        /// <returns></returns>
+        internal bool SetValueAsControl(T? value)
         {
-            var oldValue = Value;
+            var oldValue = this.value;
 
             var result = SetValueAsDisposable(value);
 
             if (result)
             {
-                if (oldValue is Control oldControl)
+                if (oldValue is AbstractControl oldControl)
                 {
                     oldControl.HandleCreated -= HandleControlHandleCreated;
                 }
 
-                if (value is Control newControl)
+                if (value is AbstractControl newControl)
                 {
                     newControl.HandleCreated += HandleControlHandleCreated;
                 }
@@ -101,12 +156,7 @@ namespace Alternet.UI
             return result;
         }
 
-        public readonly void RaiseChanged()
-        {
-            Changed?.Invoke();
-        }
-
-        private void HandleControlHandleCreated(object? sender, EventArgs e)
+        private readonly void HandleControlHandleCreated(object? sender, EventArgs e)
         {
             RaiseChanged();
         }
