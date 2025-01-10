@@ -18,6 +18,10 @@ namespace Alternet.UI
 
         private readonly Collection<PanelSettingsItem> items;
 
+        static PanelSettings()
+        {
+        }
+
         /// <summary>
         /// Initializes a new instance of the <see cref="PanelSettings"/> class.
         /// </summary>
@@ -52,9 +56,11 @@ namespace Alternet.UI
         /// <summary>
         /// Registers function which is called when item is converted to the control.
         /// </summary>
+        /// <param name="platform">Platform kind.</param>
         /// <param name="kind">Item kind.</param>
         /// <param name="func">Function which is called when item is converted to the control.</param>
         public static void RegisterItemToControl(
+            UIPlatformKind platform,
             PanelSettingsItemKind kind,
             ItemToControlDelegate func)
         {
