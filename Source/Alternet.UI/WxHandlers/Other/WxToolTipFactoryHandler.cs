@@ -8,15 +8,6 @@ namespace Alternet.UI
 {
     internal class WxToolTipFactoryHandler : DisposableObject, IToolTipFactoryHandler
     {
-        public IRichToolTipHandler CreateRichToolTipHandler(
-            string title,
-            string message,
-            bool useGeneric)
-        {
-            Native.WxOtherFactory.RichToolTipUseGeneric = useGeneric;
-            return new RichToolTipHandler(title, message);
-        }
-
         public bool SetReshow(long msecs)
         {
             Native.WxOtherFactory.ToolTipSetReshow(msecs);
