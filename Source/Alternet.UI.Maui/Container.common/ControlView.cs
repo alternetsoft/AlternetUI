@@ -99,7 +99,10 @@ namespace Alternet.UI
                         control.RemoveNotification(interior.Notification);
 
                     if (control.Handler is MauiControlHandler handler)
+                    {
+                        control.RaiseHandleDestroyed(EventArgs.Empty);
                         handler.Container = null;
+                    }
                 }
 
                 control = value;
@@ -109,7 +112,10 @@ namespace Alternet.UI
                     if (interior is not null)
                         control.AddNotification(interior.Notification);
                     if (control.Handler is MauiControlHandler handler)
+                    {
                         handler.Container = this;
+                        control.RaiseHandleCreated(EventArgs.Empty);
+                    }
                 }
 
                 InvalidateSurface();
