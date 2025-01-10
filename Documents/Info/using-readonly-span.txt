@@ -1,0 +1,9 @@
+
+Using ReadOnlySpan in .NET – Murat Genc
+https://gencmurat.com/en/posts/using-readonlyspan-in-dot-net/
+
+Efficient String Split with ReadOnlySpan in .NET 9 | CodeNx
+https://medium.com/codenx/net-9-readonlyspan-char-split-947d6e1211e6
+
+An Introduction to Writing High-Performance C# Using Span<T> Struct | by Nishan Wickramarathna | Medium
+https://nishanc.medium.com/an-introduction-to-writing-high-performance-c-using-span-t-struct-b859862a84e4
