@@ -168,7 +168,7 @@ namespace Alternet.UI
             MainControl.AutoShowError = true;
             MainControl.TextChanged += (s, e) =>
             {
-                RaiseTextChanged();
+                RaiseTextChanged(EventArgs.Empty);
             };
 
             MainControl.DelayedTextChanged += (s, e) =>

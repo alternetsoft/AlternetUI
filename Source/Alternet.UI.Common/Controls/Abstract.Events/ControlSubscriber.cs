@@ -328,39 +328,39 @@ namespace Alternet.UI
         public event EventHandler? AfterControlMouseLeave;
 
         /// <inheritdoc/>
-        public void AfterActivated(AbstractControl sender)
+        public void AfterActivated(AbstractControl sender, EventArgs e)
         {
-            AfterControlActivated?.Invoke(sender, EventArgs.Empty);
+            AfterControlActivated?.Invoke(sender, e);
         }
 
         /// <inheritdoc/>
-        public void AfterCellChanged(AbstractControl sender)
+        public void AfterCellChanged(AbstractControl sender, EventArgs e)
         {
-            AfterControlCellChanged?.Invoke(sender, EventArgs.Empty);
+            AfterControlCellChanged?.Invoke(sender, e);
         }
 
         /// <inheritdoc/>
-        public void AfterClick(AbstractControl sender)
+        public void AfterClick(AbstractControl sender, EventArgs e)
         {
-            AfterControlClick?.Invoke(sender, EventArgs.Empty);
+            AfterControlClick?.Invoke(sender, e);
         }
 
         /// <inheritdoc/>
-        public void AfterContainerLocationChanged(AbstractControl sender)
+        public void AfterContainerLocationChanged(AbstractControl sender, EventArgs e)
         {
-            AfterControlContainerLocationChanged?.Invoke(sender, EventArgs.Empty);
+            AfterControlContainerLocationChanged?.Invoke(sender, e);
         }
 
         /// <inheritdoc/>
-        public void AfterCreate(AbstractControl sender)
+        public void AfterCreate(AbstractControl sender, EventArgs e)
         {
-            AfterControlCreate?.Invoke(sender, EventArgs.Empty);
+            AfterControlCreate?.Invoke(sender, e);
         }
 
         /// <inheritdoc/>
-        public void AfterDeactivated(AbstractControl sender)
+        public void AfterDeactivated(AbstractControl sender, EventArgs e)
         {
-            AfterControlDeactivated?.Invoke(sender, EventArgs.Empty);
+            AfterControlDeactivated?.Invoke(sender, e);
         }
 
         /// <inheritdoc/>
@@ -382,9 +382,9 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        public void AfterDragLeave(AbstractControl sender)
+        public void AfterDragLeave(AbstractControl sender, EventArgs e)
         {
-            AfterControlDragLeave?.Invoke(sender, EventArgs.Empty);
+            AfterControlDragLeave?.Invoke(sender, e);
         }
 
         /// <inheritdoc/>
@@ -400,51 +400,51 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        public void AfterEnabledChanged(AbstractControl sender)
+        public void AfterEnabledChanged(AbstractControl sender, EventArgs e)
         {
-            AfterControlEnabledChanged?.Invoke(sender, EventArgs.Empty);
+            AfterControlEnabledChanged?.Invoke(sender, e);
         }
 
         /// <inheritdoc/>
-        public void AfterFontChanged(AbstractControl sender)
+        public void AfterFontChanged(AbstractControl sender, EventArgs e)
         {
-            AfterControlFontChanged?.Invoke(sender, EventArgs.Empty);
+            AfterControlFontChanged?.Invoke(sender, e);
         }
 
         /// <inheritdoc/>
-        public void AfterGotFocus(AbstractControl sender, AbstractControl? oldFocus = null)
+        public void AfterGotFocus(AbstractControl sender, GotFocusEventArgs e)
         {
-            AfterControlGotFocus?.Invoke(sender, EventArgs.Empty);
+            AfterControlGotFocus?.Invoke(sender, e);
         }
 
         /// <inheritdoc/>
-        public void AfterHandleCreated(AbstractControl sender)
+        public void AfterHandleCreated(AbstractControl sender, EventArgs e)
         {
-            AfterControlHandleCreated?.Invoke(sender, EventArgs.Empty);
+            AfterControlHandleCreated?.Invoke(sender, e);
         }
 
         /// <inheritdoc/>
-        public void AfterHandleDestroyed(AbstractControl sender)
+        public void AfterHandleDestroyed(AbstractControl sender, EventArgs e)
         {
-            AfterControlHandleDestroyed?.Invoke(sender, EventArgs.Empty);
+            AfterControlHandleDestroyed?.Invoke(sender, e);
         }
 
         /// <inheritdoc/>
-        public void AfterHandlerAttached(AbstractControl sender)
+        public void AfterHandlerAttached(AbstractControl sender, EventArgs e)
         {
-            AfterControlHandlerAttached?.Invoke(sender, EventArgs.Empty);
+            AfterControlHandlerAttached?.Invoke(sender, e);
         }
 
         /// <inheritdoc/>
-        public void AfterHandlerDetaching(AbstractControl sender)
+        public void AfterHandlerDetaching(AbstractControl sender, EventArgs e)
         {
-            AfterControlHandlerDetaching?.Invoke(sender, EventArgs.Empty);
+            AfterControlHandlerDetaching?.Invoke(sender, e);
         }
 
         /// <inheritdoc/>
-        public void AfterHandlerSizeChanged(AbstractControl sender)
+        public void AfterHandlerSizeChanged(AbstractControl sender, EventArgs e)
         {
-            AfterControlHandlerSizeChanged?.Invoke(sender, EventArgs.Empty);
+            AfterControlHandlerSizeChanged?.Invoke(sender, e);
         }
 
         /// <inheritdoc/>
@@ -454,15 +454,15 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        public void AfterIdle(AbstractControl sender)
+        public void AfterIdle(AbstractControl sender, EventArgs e)
         {
-            AfterControlIdle?.Invoke(sender, EventArgs.Empty);
+            AfterControlIdle?.Invoke(sender, e);
         }
 
         /// <inheritdoc/>
-        public void AfterIsMouseOverChanged(AbstractControl sender)
+        public void AfterIsMouseOverChanged(AbstractControl sender, EventArgs e)
         {
-            AfterControlIsMouseOverChanged?.Invoke(sender, EventArgs.Empty);
+            AfterControlIsMouseOverChanged?.Invoke(sender, e);
         }
 
         /// <inheritdoc/>
@@ -484,9 +484,9 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        public void AfterLocationChanged(AbstractControl sender)
+        public void AfterLocationChanged(AbstractControl sender, EventArgs e)
         {
-            AfterControlLocationChanged?.Invoke(sender, EventArgs.Empty);
+            AfterControlLocationChanged?.Invoke(sender, e);
         }
 
         /// <inheritdoc/>
@@ -496,21 +496,21 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        public void AfterLostFocus(AbstractControl sender, AbstractControl? newFocus = null)
+        public void AfterLostFocus(AbstractControl sender, LostFocusEventArgs e)
         {
-            AfterControlLostFocus?.Invoke(sender, EventArgs.Empty);
+            AfterControlLostFocus?.Invoke(sender, e);
         }
 
         /// <inheritdoc/>
-        public void AfterMarginChanged(AbstractControl sender)
+        public void AfterMarginChanged(AbstractControl sender, EventArgs e)
         {
-            AfterControlMarginChanged?.Invoke(sender, EventArgs.Empty);
+            AfterControlMarginChanged?.Invoke(sender, e);
         }
 
         /// <inheritdoc/>
-        public void AfterMouseCaptureLost(AbstractControl sender)
+        public void AfterMouseCaptureLost(AbstractControl sender, EventArgs e)
         {
-            AfterControlMouseCaptureLost?.Invoke(sender, EventArgs.Empty);
+            AfterControlMouseCaptureLost?.Invoke(sender, e);
         }
 
         /// <inheritdoc/>
@@ -526,15 +526,15 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        public void AfterMouseEnter(AbstractControl sender)
+        public void AfterMouseEnter(AbstractControl sender, EventArgs e)
         {
-            AfterControlMouseEnter?.Invoke(sender, EventArgs.Empty);
+            AfterControlMouseEnter?.Invoke(sender, e);
         }
 
         /// <inheritdoc/>
-        public void AfterMouseLeave(AbstractControl sender)
+        public void AfterMouseLeave(AbstractControl sender, EventArgs e)
         {
-            AfterControlMouseLeave?.Invoke(sender, EventArgs.Empty);
+            AfterControlMouseLeave?.Invoke(sender, e);
         }
 
         /// <inheritdoc/>
@@ -580,9 +580,9 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        public void AfterPaddingChanged(AbstractControl sender)
+        public void AfterPaddingChanged(AbstractControl sender, EventArgs e)
         {
-            AfterControlPaddingChanged?.Invoke(sender, EventArgs.Empty);
+            AfterControlPaddingChanged?.Invoke(sender, e);
         }
 
         /// <inheritdoc/>
@@ -598,9 +598,9 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        public void AfterParentChanged(AbstractControl sender)
+        public void AfterParentChanged(AbstractControl sender, EventArgs e)
         {
-            AfterControlParentChanged?.Invoke(sender, EventArgs.Empty);
+            AfterControlParentChanged?.Invoke(sender, e);
         }
 
         /// <inheritdoc/>
@@ -616,9 +616,9 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        public void AfterResize(AbstractControl sender)
+        public void AfterResize(AbstractControl sender, EventArgs e)
         {
-            AfterControlResize?.Invoke(sender, EventArgs.Empty);
+            AfterControlResize?.Invoke(sender, e);
         }
 
         /// <inheritdoc/>
@@ -628,33 +628,33 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        public void AfterSizeChanged(AbstractControl sender)
+        public void AfterSizeChanged(AbstractControl sender, EventArgs e)
         {
-            AfterControlSizeChanged?.Invoke(sender, EventArgs.Empty);
+            AfterControlSizeChanged?.Invoke(sender, e);
         }
 
         /// <inheritdoc/>
-        public void AfterSystemColorsChanged(AbstractControl sender)
+        public void AfterSystemColorsChanged(AbstractControl sender, EventArgs e)
         {
-            AfterControlSystemColorsChanged?.Invoke(sender, EventArgs.Empty);
+            AfterControlSystemColorsChanged?.Invoke(sender, e);
         }
 
         /// <inheritdoc/>
-        public void AfterTextChanged(AbstractControl sender)
+        public void AfterTextChanged(AbstractControl sender, EventArgs e)
         {
-            AfterControlTextChanged?.Invoke(sender, EventArgs.Empty);
+            AfterControlTextChanged?.Invoke(sender, e);
         }
 
         /// <inheritdoc/>
-        public void AfterTitleChanged(AbstractControl sender)
+        public void AfterTitleChanged(AbstractControl sender, EventArgs e)
         {
-            AfterControlTitleChanged?.Invoke(sender, EventArgs.Empty);
+            AfterControlTitleChanged?.Invoke(sender, e);
         }
 
         /// <inheritdoc/>
-        public void AfterToolTipChanged(AbstractControl sender)
+        public void AfterToolTipChanged(AbstractControl sender, EventArgs e)
         {
-            AfterControlToolTipChanged?.Invoke(sender, EventArgs.Empty);
+            AfterControlToolTipChanged?.Invoke(sender, e);
         }
 
         /// <inheritdoc/>
@@ -664,15 +664,15 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        public void AfterVisibleChanged(AbstractControl sender)
+        public void AfterVisibleChanged(AbstractControl sender, EventArgs e)
         {
-            AfterControlVisibleChanged?.Invoke(sender, EventArgs.Empty);
+            AfterControlVisibleChanged?.Invoke(sender, e);
         }
 
         /// <inheritdoc/>
-        public void AfterVisualStateChanged(AbstractControl sender)
+        public void AfterVisualStateChanged(AbstractControl sender, EventArgs e)
         {
-            AfterControlVisualStateChanged?.Invoke(sender, EventArgs.Empty);
+            AfterControlVisualStateChanged?.Invoke(sender, e);
         }
 
         /// <inheritdoc/>

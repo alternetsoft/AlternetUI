@@ -104,6 +104,11 @@ namespace Alternet.UI
                 throw new ObjectDisposedException(null);
         }
 
+        /// <inheritdoc/>
+        public void Required()
+        {
+        }
+
         void IDisposableObject.CheckDisposed() => this.CheckDisposed();
 
         /// <summary>

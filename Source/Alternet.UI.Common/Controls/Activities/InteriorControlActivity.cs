@@ -62,20 +62,20 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        public override void AfterMouseLeave(AbstractControl sender)
+        public override void AfterMouseLeave(AbstractControl sender, EventArgs e)
         {
             UnsubscribeClickRepeated();
         }
 
         /// <inheritdoc/>
-        public override void AfterVisualStateChanged(AbstractControl sender)
+        public override void AfterVisualStateChanged(AbstractControl sender, EventArgs e)
         {
             if (sender.VisualState != VisualControlState.Pressed)
                 UnsubscribeClickRepeated();
         }
 
         /// <inheritdoc/>
-        public override void AfterLostFocus(AbstractControl sender, AbstractControl? newFocus = null)
+        public override void AfterLostFocus(AbstractControl sender, LostFocusEventArgs e)
         {
             UnsubscribeClickRepeated();
         }
@@ -94,7 +94,7 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        public override void AfterClick(AbstractControl sender)
+        public override void AfterClick(AbstractControl sender, EventArgs e)
         {
             var mouseLocation = Mouse.GetPosition(sender);
             var hitTests = interior.HitTests(sender, mouseLocation);

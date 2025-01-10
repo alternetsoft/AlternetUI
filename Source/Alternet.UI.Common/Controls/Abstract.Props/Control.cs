@@ -494,12 +494,12 @@ namespace Alternet.UI
 
         /// <inheritdoc/>
         [Browsable(false)]
-        public override void RaiseVisibleChanged()
+        public override void RaiseVisibleChanged(EventArgs e)
         {
             if (DisposingOrDisposed)
                 return;
             Handler.Visible = Visible;
-            base.RaiseVisibleChanged();
+            base.RaiseVisibleChanged(e);
         }
 
         /// <inheritdoc/>
@@ -759,7 +759,7 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        public override void RaiseHandleCreated()
+        public override void RaiseHandleCreated(EventArgs e)
         {
             if (DisposingOrDisposed)
                 return;
@@ -768,7 +768,7 @@ namespace Alternet.UI
                 Handler.BackgroundColor = BackgroundColor;
             if (ForegroundColor is not null)
                 Handler.ForegroundColor = ForegroundColor;
-            base.RaiseHandleCreated();
+            base.RaiseHandleCreated(e);
         }
 
         /// <summary>

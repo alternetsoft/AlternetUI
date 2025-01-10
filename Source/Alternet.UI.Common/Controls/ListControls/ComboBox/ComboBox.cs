@@ -788,12 +788,12 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        public override void RaiseFontChanged()
+        public override void RaiseFontChanged(EventArgs e)
         {
             if (DisposingOrDisposed)
                 return;
             InvalidateBestSize();
-            base.RaiseFontChanged();
+            base.RaiseFontChanged(e);
         }
 
         /// <summary>

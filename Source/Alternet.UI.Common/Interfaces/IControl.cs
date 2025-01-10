@@ -1316,13 +1316,13 @@ namespace Alternet.UI
         /// Raises the <see cref="Click"/> event.
         /// See <see cref="Click"/> event description for more details.
         /// </summary>
-        void RaiseClick();
+        void RaiseClick(EventArgs e);
 
         /// <summary>
         /// Raises the <see cref="Idle"/> event.
         /// See <see cref="Idle"/> event description for more details.
         /// </summary>
-        void RaiseIdle();
+        void RaiseIdle(EventArgs e);
 
         /// <summary>
         /// Displays the control to the user.

@@ -134,8 +134,8 @@ namespace Alternet.UI
             var defaults = GetDefaults(ControlKind);
             defaults.RaiseInitDefaults(this);
             OnCreateControl();
-            Designer?.RaiseCreated(this);
-            RaiseNotifications((n) => n.AfterCreate(this));
+            Designer?.RaiseCreated(this, EventArgs.Empty);
+            RaiseNotifications((n) => n.AfterCreate(this, EventArgs.Empty));
         }
 
         /// <summary>
@@ -196,7 +196,7 @@ namespace Alternet.UI
             {
                 if (hoveredControl == value)
                     return;
-                hoveredControl?.RaiseVisualStateChanged();
+                hoveredControl?.RaiseVisualStateChanged(EventArgs.Empty);
 
                 if (value is not null)
                 {
@@ -206,7 +206,7 @@ namespace Alternet.UI
 
                 hoveredControl = value;
                 HoveredControlChanged?.Invoke(hoveredControl, EventArgs.Empty);
-                hoveredControl?.RaiseVisualStateChanged();
+                hoveredControl?.RaiseVisualStateChanged(EventArgs.Empty);
             }
         }
 
@@ -442,7 +442,7 @@ namespace Alternet.UI
                 if (title?.Equals(value) ?? false)
                     return;
                 title = value;
-                RaiseTitleChanged();
+                RaiseTitleChanged(EventArgs.Empty);
             }
         }
 
@@ -646,7 +646,7 @@ namespace Alternet.UI
                     return;
                 text = value;
 
-                RaiseTextChanged();
+                RaiseTextChanged(EventArgs.Empty);
             }
         }
 
@@ -1262,7 +1262,7 @@ namespace Alternet.UI
                     return;
 
                 visible = value;
-                RaiseVisibleChanged();
+                RaiseVisibleChanged(EventArgs.Empty);
             }
         }
 
@@ -1535,7 +1535,7 @@ namespace Alternet.UI
                         }
                     }
 
-                    RaiseParentChanged();
+                    RaiseParentChanged(EventArgs.Empty);
                     stateFlags |= ControlFlags.ParentAssigned;
                 }
             }
@@ -2669,7 +2669,7 @@ namespace Alternet.UI
                 if (value == columnIndex)
                     return;
                 columnIndex = value;
-                RaiseCellChanged();
+                RaiseCellChanged(EventArgs.Empty);
             }
         }
 
@@ -2692,7 +2692,7 @@ namespace Alternet.UI
                 if (value == rowIndex)
                     return;
                 rowIndex = value;
-                RaiseCellChanged();
+                RaiseCellChanged(EventArgs.Empty);
             }
         }
 
@@ -2735,7 +2735,7 @@ namespace Alternet.UI
                 if (value == columnSpan)
                     return;
                 columnSpan = value;
-                RaiseCellChanged();
+                RaiseCellChanged(EventArgs.Empty);
             }
         }
 
@@ -2758,7 +2758,7 @@ namespace Alternet.UI
                 if (value == rowSpan)
                     return;
                 rowSpan = value;
-                RaiseCellChanged();
+                RaiseCellChanged(EventArgs.Empty);
             }
         }
 
@@ -2866,7 +2866,7 @@ namespace Alternet.UI
 
                 font = value;
 
-                RaiseFontChanged();
+                RaiseFontChanged(EventArgs.Empty);
             }
         }
 
@@ -2900,7 +2900,7 @@ namespace Alternet.UI
                 if (fontStyle == value)
                     return;
 
-                RaiseFontChanged();
+                RaiseFontChanged(EventArgs.Empty);
             }
         }
 
@@ -2928,7 +2928,7 @@ namespace Alternet.UI
                 if (newValue == oldValue)
                     return;
 
-                RaiseFontChanged();
+                RaiseFontChanged(EventArgs.Empty);
             }
         }
 
@@ -2956,7 +2956,7 @@ namespace Alternet.UI
                 if (newValue == oldValue)
                     return;
 
-                RaiseFontChanged();
+                RaiseFontChanged(EventArgs.Empty);
             }
         }
 

@@ -573,7 +573,7 @@ namespace Alternet.UI
                     switch (e.ActionType)
                     {
                         case TouchAction.Entered:
-                            RaiseMouseEnter();
+                            RaiseMouseEnter(e);
                             break;
                         case TouchAction.Pressed:
                             AbstractControl.BubbleMouseDown(
@@ -603,7 +603,7 @@ namespace Alternet.UI
                         case TouchAction.Cancelled:
                             break;
                         case TouchAction.Exited:
-                            RaiseMouseLeave();
+                            RaiseMouseLeave(e);
                             break;
                         case TouchAction.WheelChanged:
                             AbstractControl.BubbleMouseWheel(
@@ -1435,7 +1435,7 @@ namespace Alternet.UI
                 inLayout = false;
             }
 
-            RaiseLayoutUpdated();
+            RaiseLayoutUpdated(EventArgs.Empty);
         }
 
         /// <summary>
@@ -2113,10 +2113,10 @@ namespace Alternet.UI
             reportedBounds = newBounds;
 
             if (locationChanged)
-                RaiseLocationChanged();
+                RaiseLocationChanged(EventArgs.Empty);
 
             if (sizeChanged)
-                RaiseSizeChanged();
+                RaiseSizeChanged(EventArgs.Empty);
 
             PerformLayout();
 
@@ -2169,7 +2169,7 @@ namespace Alternet.UI
             {
                 rowIndex = row;
                 columnIndex = col;
-                RaiseCellChanged();
+                RaiseCellChanged(EventArgs.Empty);
             }
         }
 

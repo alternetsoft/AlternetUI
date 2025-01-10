@@ -120,10 +120,8 @@ namespace Alternet.UI
         /// <summary>
         /// This method is invoked when the control's child lost focus.
         /// </summary>
-        /// <param name="newFocus">New focused control.</param>
-        /// <param name="sender">The source of the event.</param>
         [EditorBrowsable(EditorBrowsableState.Advanced)]
-        protected virtual void OnChildLostFocus(object? sender, AbstractControl? newFocus = null)
+        protected virtual void OnChildLostFocus(object? sender, LostFocusEventArgs e)
         {
         }
 

@@ -30,11 +30,11 @@ namespace Alternet.UI
         /// Raises <see cref="LayoutUpdated"/> event.
         /// </summary>
         [Browsable(false)]
-        public void RaiseLayoutUpdated()
+        public void RaiseLayoutUpdated(EventArgs e)
         {
             if (DisposingOrDisposed)
                 return;
-            LayoutUpdated?.Invoke(this, EventArgs.Empty);
+            LayoutUpdated?.Invoke(this, e);
         }
 
         /// <summary>
@@ -54,14 +54,14 @@ namespace Alternet.UI
         /// and calls <see cref="OnFontChanged"/> method.
         /// </summary>
         [Browsable(false)]
-        public virtual void RaiseFontChanged()
+        public virtual void RaiseFontChanged(EventArgs e)
         {
             if (DisposingOrDisposed)
                 return;
             PerformLayoutAndInvalidate(() =>
             {
-                OnFontChanged(EventArgs.Empty);
-                FontChanged?.Invoke(this, EventArgs.Empty);
+                OnFontChanged(e);
+                FontChanged?.Invoke(this, e);
 
                 if (HasChildren)
                 {
@@ -105,14 +105,14 @@ namespace Alternet.UI
         /// Raises the <see cref="CellChanged" /> event and <see cref="OnCellChanged"/> method.
         /// </summary>
         [Browsable(false)]
-        public void RaiseCellChanged()
+        public void RaiseCellChanged(EventArgs e)
         {
             if (DisposingOrDisposed)
                 return;
-            CellChanged?.Invoke(this, EventArgs.Empty);
-            OnCellChanged(EventArgs.Empty);
+            CellChanged?.Invoke(this, e);
+            OnCellChanged(e);
 
-            RaiseNotifications((n) => n.AfterCellChanged(this));
+            RaiseNotifications((n) => n.AfterCellChanged(this, e));
         }
 
         /// <summary>
@@ -121,14 +121,14 @@ namespace Alternet.UI
         /// See <see cref="Idle"/> event description for more details.
         /// </summary>
         [Browsable(false)]
-        public void RaiseIdle()
+        public void RaiseIdle(EventArgs e)
         {
             if (DisposingOrDisposed)
                 return;
-            OnIdle(EventArgs.Empty);
-            Idle?.Invoke(this, EventArgs.Empty);
+            OnIdle(e);
+            Idle?.Invoke(this, e);
 
-            RaiseNotifications((n) => n.AfterIdle(this));
+            RaiseNotifications((n) => n.AfterIdle(this, e));
         }
 
         /// <summary>
@@ -172,16 +172,16 @@ namespace Alternet.UI
         /// Raises the <see cref="ParentChanged"/>event and <see cref="OnParentChanged"/> .
         /// </summary>
         [Browsable(false)]
-        public void RaiseParentChanged()
+        public void RaiseParentChanged(EventArgs e)
         {
             if (DisposingOrDisposed)
                 return;
             ResetScaleFactor();
-            Designer?.RaiseParentChanged(this);
-            ParentChanged?.Invoke(this, EventArgs.Empty);
-            OnParentChanged(EventArgs.Empty);
+            Designer?.RaiseParentChanged(this, e);
+            ParentChanged?.Invoke(this, e);
+            OnParentChanged(e);
 
-            RaiseNotifications((n) => n.AfterParentChanged(this));
+            RaiseNotifications((n) => n.AfterParentChanged(this, e));
         }
 
         /// <summary>
@@ -224,7 +224,7 @@ namespace Alternet.UI
             if (DisposingOrDisposed)
                 return;
             IsMouseLeftButtonDown = false;
-            RaiseVisualStateChanged();
+            RaiseVisualStateChanged(e);
             MouseLeftButtonUp?.Invoke(this, e);
             OnMouseLeftButtonUp(e);
 
@@ -282,22 +282,23 @@ namespace Alternet.UI
 
             ForEachVisibleChild(e, (control, e) => control.OnAfterParentMouseDown(this, e));
 
-            RaiseVisualStateChanged();
+            RaiseVisualStateChanged(e);
         }
 
         /// <summary>
         /// Raises the <see cref="GotFocus" /> event and <see cref="OnGotFocus"/> method.
         /// </summary>
         [Browsable(false)]
-        public virtual void RaiseGotFocus(AbstractControl? previousFocus = null)
+        public virtual void RaiseGotFocus(GotFocusEventArgs e)
         {
             if (DisposingOrDisposed)
                 return;
             FocusedControl = this;
-            OnGotFocus(EventArgs.Empty);
-            GotFocus?.Invoke(this, EventArgs.Empty);
-            Designer?.RaiseGotFocus(this);
-            RaiseVisualStateChanged();
+
+            OnGotFocus(e);
+            GotFocus?.Invoke(this, e);
+            Designer?.RaiseGotFocus(this, e);
+            RaiseVisualStateChanged(e);
 
             if (CaretInfo is not null)
             {
@@ -305,7 +306,7 @@ namespace Alternet.UI
                 InvalidateCaret();
             }
 
-            RaiseNotifications((n) => n.AfterGotFocus(this, previousFocus));
+            RaiseNotifications((n) => n.AfterGotFocus(this, e));
 
             RunKnownAction(RunAfterGotFocus);
         }
@@ -314,45 +315,46 @@ namespace Alternet.UI
         /// Calls <see cref="OnChildMouseLeave"/> method of the parent control.
         /// </summary>
         [Browsable(false)]
-        public void RaiseChildMouseLeave(object? sender)
+        public void RaiseChildMouseLeave(object? sender, EventArgs e)
         {
             if (DisposingOrDisposed)
                 return;
             if (Parent is null)
                 return;
             PlessMouse.LastMousePosition = (null, null);
-            Parent.OnChildMouseLeave(sender, EventArgs.Empty);
-            Parent.RaiseChildMouseLeave(sender);
+            Parent.OnChildMouseLeave(sender, e);
+            Parent.RaiseChildMouseLeave(sender, e);
         }
 
         /// <summary>
         /// Calls <see cref="OnChildLostFocus"/> method of the parent control.
         /// </summary>
         [Browsable(false)]
-        public void RaiseChildLostFocus(object? sender, AbstractControl? newFocus = null)
+        public void RaiseChildLostFocus(object? sender, LostFocusEventArgs e)
         {
             if (DisposingOrDisposed)
                 return;
             if (Parent is null)
                 return;
-            Parent.OnChildLostFocus(sender, newFocus);
-            Parent.RaiseChildLostFocus(sender, newFocus);
+            Parent.OnChildLostFocus(sender, e);
+            Parent.RaiseChildLostFocus(sender, e);
         }
 
         /// <summary>
         /// Raises the <see cref="LostFocus" /> event and <see cref="OnLostFocus"/> method.
         /// </summary>
         [Browsable(false)]
-        public virtual void RaiseLostFocus(AbstractControl? newFocus = null)
+        public virtual void RaiseLostFocus(LostFocusEventArgs e)
         {
             if (DisposingOrDisposed)
                 return;
             if (FocusedControl == this)
                 FocusedControl = null;
-            OnLostFocus(EventArgs.Empty);
-            RaiseChildLostFocus(this, newFocus);
-            LostFocus?.Invoke(this, EventArgs.Empty);
-            RaiseVisualStateChanged();
+
+            OnLostFocus(e);
+            RaiseChildLostFocus(this, e);
+            LostFocus?.Invoke(this, e);
+            RaiseVisualStateChanged(e);
 
             if (CaretInfo is not null)
             {
@@ -360,7 +362,7 @@ namespace Alternet.UI
                 Invalidate();
             }
 
-            RaiseNotifications((n) => n.AfterLostFocus(this, newFocus));
+            RaiseNotifications((n) => n.AfterLostFocus(this, e));
 
             RunKnownAction(RunAfterLostFocus);
         }
@@ -369,18 +371,18 @@ namespace Alternet.UI
         /// Raises the <see cref="Deactivated" /> event and <see cref="OnDeactivated"/> method.
         /// </summary>
         [Browsable(false)]
-        public void RaiseDeactivated()
+        public void RaiseDeactivated(EventArgs e)
         {
             if (DisposingOrDisposed)
                 return;
-            OnDeactivated(EventArgs.Empty);
-            Deactivated?.Invoke(this, EventArgs.Empty);
+            OnDeactivated(e);
+            Deactivated?.Invoke(this, e);
 
-            RaiseNotifications((n) => n.AfterDeactivated(this));
+            RaiseNotifications((n) => n.AfterDeactivated(this, e));
 
             if (RaiseActivatedForChildren)
             {
-                ForEachChild((c) => c.RaiseDeactivated(), false);
+                ForEachChild((c) => c.RaiseDeactivated(e), false);
             }
         }
 
@@ -388,7 +390,7 @@ namespace Alternet.UI
         /// Raises the <see cref="Activated" /> event and <see cref="OnActivated"/> method.
         /// </summary>
         [Browsable(false)]
-        public void RaiseActivated()
+        public void RaiseActivated(EventArgs e)
         {
             if (DisposingOrDisposed)
                 return;
@@ -397,14 +399,14 @@ namespace Alternet.UI
                 window.LastActivateTime = DateTime.Now;
             }
 
-            OnActivated(EventArgs.Empty);
-            Activated?.Invoke(this, EventArgs.Empty);
+            OnActivated(e);
+            Activated?.Invoke(this, e);
 
-            RaiseNotifications((n) => n.AfterActivated(this));
+            RaiseNotifications((n) => n.AfterActivated(this, e));
 
             if (RaiseActivatedForChildren)
             {
-                ForEachChild((c) => c.RaiseActivated(), false);
+                ForEachChild((c) => c.RaiseActivated(e), false);
             }
         }
 
@@ -413,14 +415,14 @@ namespace Alternet.UI
         /// methods.
         /// </summary>
         [Browsable(false)]
-        public void RaiseContainerLocationChanged()
+        public void RaiseContainerLocationChanged(EventArgs e)
         {
             if (DisposingOrDisposed)
                 return;
-            OnHandlerLocationChanged(EventArgs.Empty);
+            OnHandlerLocationChanged(e);
             ReportBoundsChanged();
 
-            RaiseNotifications((n) => n.AfterContainerLocationChanged(this));
+            RaiseNotifications((n) => n.AfterContainerLocationChanged(this, e));
         }
 
         /// <summary>
@@ -428,14 +430,14 @@ namespace Alternet.UI
         /// and <see cref="OnSystemColorsChanged"/> method.
         /// </summary>
         [Browsable(false)]
-        public void RaiseSystemColorsChanged()
+        public void RaiseSystemColorsChanged(EventArgs e)
         {
             if (DisposingOrDisposed)
                 return;
-            SystemColorsChanged?.Invoke(this, EventArgs.Empty);
-            OnSystemColorsChanged(EventArgs.Empty);
+            SystemColorsChanged?.Invoke(this, e);
+            OnSystemColorsChanged(e);
 
-            RaiseNotifications((n) => n.AfterSystemColorsChanged(this));
+            RaiseNotifications((n) => n.AfterSystemColorsChanged(this, e));
         }
 
         /// <summary>
@@ -456,29 +458,29 @@ namespace Alternet.UI
         /// Raises the <see cref="HandleCreated" /> event and <see cref="OnHandleCreated"/> method.
         /// </summary>
         [Browsable(false)]
-        public virtual void RaiseHandleCreated()
+        public virtual void RaiseHandleCreated(EventArgs e)
         {
             if (DisposingOrDisposed)
                 return;
-            OnHandleCreated(EventArgs.Empty);
-            HandleCreated?.Invoke(this, EventArgs.Empty);
+            OnHandleCreated(e);
+            HandleCreated?.Invoke(this, e);
 
-            RaiseNotifications((n) => n.AfterHandleCreated(this));
+            RaiseNotifications((n) => n.AfterHandleCreated(this, e));
         }
 
         /// <summary>
         /// Raises the <see cref="HandleDestroyed" /> event and <see cref="OnHandleDestroyed"/> method.
         /// </summary>
         [Browsable(false)]
-        public void RaiseHandleDestroyed()
+        public void RaiseHandleDestroyed(EventArgs e)
         {
             if (DisposingOrDisposed)
                 return;
             ResetScaleFactor();
-            OnHandleDestroyed(EventArgs.Empty);
-            HandleDestroyed?.Invoke(this, EventArgs.Empty);
+            OnHandleDestroyed(e);
+            HandleDestroyed?.Invoke(this, e);
 
-            RaiseNotifications((n) => n.AfterHandleDestroyed(this));
+            RaiseNotifications((n) => n.AfterHandleDestroyed(this, e));
         }
 
         /// <summary>
@@ -486,26 +488,26 @@ namespace Alternet.UI
         /// <see cref="OnMouseCaptureLost"/> method.
         /// </summary>
         [Browsable(false)]
-        public void RaiseMouseCaptureLost()
+        public void RaiseMouseCaptureLost(EventArgs e)
         {
             if (DisposingOrDisposed)
                 return;
             if (HoveredControl == this)
                 HoveredControl = null;
             IsMouseLeftButtonDown = false;
-            OnMouseCaptureLost(EventArgs.Empty);
-            OnMouseCaptureChanged(EventArgs.Empty);
-            MouseCaptureLost?.Invoke(this, EventArgs.Empty);
-            MouseCaptureChanged?.Invoke(this, EventArgs.Empty);
+            OnMouseCaptureLost(e);
+            OnMouseCaptureChanged(e);
+            MouseCaptureLost?.Invoke(this, e);
+            MouseCaptureChanged?.Invoke(this, e);
 
-            RaiseNotifications((n) => n.AfterMouseCaptureLost(this));
+            RaiseNotifications((n) => n.AfterMouseCaptureLost(this, e));
         }
 
         /// <summary>
         /// Raises the <see cref="TextChanged" /> event.
         /// </summary>
         [Browsable(false)]
-        public virtual void RaiseTextChanged()
+        public virtual void RaiseTextChanged(EventArgs e)
         {
             if (DisposingOrDisposed)
                 return;
@@ -514,12 +516,12 @@ namespace Alternet.UI
 
             void Internal()
             {
-                TextChanged?.Invoke(this, EventArgs.Empty);
-                OnTextChanged(EventArgs.Empty);
+                TextChanged?.Invoke(this, e);
+                OnTextChanged(e);
 
-                RaiseNotifications((n) => n.AfterTextChanged(this));
+                RaiseNotifications((n) => n.AfterTextChanged(this, e));
 
-                delayedTextChanged.Raise(this, EventArgs.Empty, () => IsDisposed);
+                delayedTextChanged.Raise(this, e, () => DisposingOrDisposed);
 
                 StateFlags &= ~ControlFlags.ForceTextChange;
             }
@@ -530,34 +532,34 @@ namespace Alternet.UI
         /// <see cref="OnSizeChanged"/>, <see cref="OnResize"/> methods.
         /// </summary>
         [Browsable(false)]
-        public void RaiseSizeChanged()
+        public void RaiseSizeChanged(EventArgs e)
         {
             if (DisposingOrDisposed)
                 return;
-            OnSizeChanged(EventArgs.Empty);
-            SizeChanged?.Invoke(this, EventArgs.Empty);
-            Resize?.Invoke(this, EventArgs.Empty);
-            OnResize(EventArgs.Empty);
+            OnSizeChanged(e);
+            SizeChanged?.Invoke(this, e);
+            Resize?.Invoke(this, e);
+            OnResize(e);
 
-            RaiseNotifications((n) => n.AfterSizeChanged(this));
+            RaiseNotifications((n) => n.AfterSizeChanged(this, e));
         }
 
         /// <summary>
         /// Raises the <see cref="MouseEnter" /> event and <see cref="OnMouseEnter"/> method.
         /// </summary>
         [Browsable(false)]
-        public void RaiseMouseEnter()
+        public void RaiseMouseEnter(EventArgs e)
         {
             if (DisposingOrDisposed)
                 return;
             PlessMouse.CancelLongTapTimer();
             HoveredControl = this;
             PlessMouse.LastMousePosition = (null, this);
-            RaiseIsMouseOverChanged();
-            OnMouseEnter(EventArgs.Empty);
-            MouseEnter?.Invoke(this, EventArgs.Empty);
+            RaiseIsMouseOverChanged(e);
+            OnMouseEnter(e);
+            MouseEnter?.Invoke(this, e);
 
-            RaiseNotifications((n) => n.AfterMouseEnter(this));
+            RaiseNotifications((n) => n.AfterMouseEnter(this, e));
         }
 
         /// <summary>
@@ -565,7 +567,7 @@ namespace Alternet.UI
         /// and <see cref="OnVisualStateChanged"/> method.
         /// </summary>
         [Browsable(false)]
-        public void RaiseVisualStateChanged()
+        public void RaiseVisualStateChanged(EventArgs e)
         {
             if (DisposingOrDisposed)
                 return;
@@ -573,10 +575,10 @@ namespace Alternet.UI
                 return;
             reportedVisualStates = VisualStates;
 
-            OnVisualStateChanged(EventArgs.Empty);
-            VisualStateChanged?.Invoke(this, EventArgs.Empty);
+            OnVisualStateChanged(e);
+            VisualStateChanged?.Invoke(this, e);
 
-            RaiseNotifications((n) => n.AfterVisualStateChanged(this));
+            RaiseNotifications((n) => n.AfterVisualStateChanged(this, e));
         }
 
         /// <summary>
@@ -584,7 +586,7 @@ namespace Alternet.UI
         /// and <see cref="OnIsMouseOverChanged"/> method.
         /// </summary>
         [Browsable(false)]
-        public void RaiseIsMouseOverChanged()
+        public void RaiseIsMouseOverChanged(EventArgs e)
         {
             if (DisposingOrDisposed)
                 return;
@@ -592,11 +594,11 @@ namespace Alternet.UI
             if (reportedHovered == IsMouseOver)
                 return;
 
-            OnIsMouseOverChanged(EventArgs.Empty);
-            IsMouseOverChanged?.Invoke(this, EventArgs.Empty);
-            RaiseVisualStateChanged();
+            OnIsMouseOverChanged(e);
+            IsMouseOverChanged?.Invoke(this, e);
+            RaiseVisualStateChanged(e);
 
-            RaiseNotifications((n) => n.AfterIsMouseOverChanged(this));
+            RaiseNotifications((n) => n.AfterIsMouseOverChanged(this, e));
         }
 
         /// <summary>
@@ -644,20 +646,20 @@ namespace Alternet.UI
         /// and <see cref="OnMouseLeave"/> method.
         /// </summary>
         [Browsable(false)]
-        public void RaiseMouseLeave()
+        public void RaiseMouseLeave(EventArgs e)
         {
             if (DisposingOrDisposed)
                 return;
             PlessMouse.CancelLongTapTimer();
             if (HoveredControl == this)
                 HoveredControl = null;
-            RaiseIsMouseOverChanged();
+            RaiseIsMouseOverChanged(e);
             IsMouseLeftButtonDown = false;
-            OnMouseLeave(EventArgs.Empty);
-            RaiseChildMouseLeave(this);
-            MouseLeave?.Invoke(this, EventArgs.Empty);
+            OnMouseLeave(e);
+            RaiseChildMouseLeave(this, e);
+            MouseLeave?.Invoke(this, e);
 
-            RaiseNotifications((n) => n.AfterMouseLeave(this));
+            RaiseNotifications((n) => n.AfterMouseLeave(this, e));
 
             if (PlessMouse.ShowTestMouseInControl)
             {
@@ -729,14 +731,14 @@ namespace Alternet.UI
         /// Raises the <see cref="LocationChanged"/> event.
         /// </summary>
         [Browsable(false)]
-        public void RaiseLocationChanged()
+        public void RaiseLocationChanged(EventArgs e)
         {
             if (DisposingOrDisposed)
                 return;
-            OnLocationChanged(EventArgs.Empty);
-            LocationChanged?.Invoke(this, EventArgs.Empty);
+            OnLocationChanged(e);
+            LocationChanged?.Invoke(this, e);
 
-            RaiseNotifications((n) => n.AfterLocationChanged(this));
+            RaiseNotifications((n) => n.AfterLocationChanged(this, e));
         }
 
         /// <summary>
@@ -859,14 +861,14 @@ namespace Alternet.UI
         /// Raises the <see cref="DragLeave"/> event.
         /// </summary>
         [Browsable(false)]
-        public void RaiseDragLeave()
+        public void RaiseDragLeave(EventArgs e)
         {
             if (DisposingOrDisposed)
                 return;
-            DragLeave?.Invoke(this, EventArgs.Empty);
-            OnDragLeave(EventArgs.Empty);
+            DragLeave?.Invoke(this, e);
+            OnDragLeave(e);
 
-            RaiseNotifications((n) => n.AfterDragLeave(this));
+            RaiseNotifications((n) => n.AfterDragLeave(this, e));
         }
 
         /// <summary>
@@ -874,14 +876,14 @@ namespace Alternet.UI
         /// and <see cref="OnHandlerSizeChanged"/> method.
         /// </summary>
         [Browsable(false)]
-        public void RaiseHandlerSizeChanged()
+        public void RaiseHandlerSizeChanged(EventArgs e)
         {
             if (DisposingOrDisposed)
                 return;
-            OnHandlerSizeChanged(EventArgs.Empty);
+            OnHandlerSizeChanged(e);
             ReportBoundsChanged();
 
-            RaiseNotifications((n) => n.AfterHandlerSizeChanged(this));
+            RaiseNotifications((n) => n.AfterHandlerSizeChanged(this, e));
         }
 
         /// <summary>
@@ -889,7 +891,7 @@ namespace Alternet.UI
         /// method.
         /// </summary>
         [Browsable(false)]
-        public virtual void RaiseVisibleChanged()
+        public virtual void RaiseVisibleChanged(EventArgs e)
         {
             if (DisposingOrDisposed)
                 return;
@@ -898,14 +900,14 @@ namespace Alternet.UI
                 ResetScaleFactor();
             }
 
-            OnVisibleChanged(EventArgs.Empty);
-            VisibleChanged?.Invoke(this, EventArgs.Empty);
+            OnVisibleChanged(e);
+            VisibleChanged?.Invoke(this, e);
             Parent?.ChildVisibleChanged?.Invoke(Parent, new BaseEventArgs<AbstractControl>(this));
             Parent?.PerformLayout();
             if (visible)
-                AfterShow?.Invoke(this, EventArgs.Empty);
+                AfterShow?.Invoke(this, e);
             else
-                AfterHide?.Invoke(this, EventArgs.Empty);
+                AfterHide?.Invoke(this, e);
         }
 
         /// <summary>
@@ -917,7 +919,7 @@ namespace Alternet.UI
             if (DisposingOrDisposed)
                 return;
             IsMouseLeftButtonDown = true;
-            RaiseVisualStateChanged();
+            RaiseVisualStateChanged(e);
             Designer?.RaiseMouseLeftButtonDown(this, e);
             MouseLeftButtonDown?.Invoke(this, e);
             OnMouseLeftButtonDown(e);
@@ -1059,21 +1061,26 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Calls <see cref="RaiseClick(EventArgs)"/> with an empty arguments.
+        /// </summary>
+        public void RaiseClick() => RaiseClick(EventArgs.Empty);
+
+        /// <summary>
         /// Raises the <see cref="Click"/> event and calls
         /// <see cref="OnClick(EventArgs)"/>.
         /// See <see cref="Click"/> event description for more details.
         /// </summary>
         [Browsable(false)]
-        public virtual void RaiseClick()
+        public virtual void RaiseClick(EventArgs e)
         {
             if (DisposingOrDisposed)
                 return;
             LastClickedTimestamp = DateTime.Now.Ticks;
 
-            OnClick(EventArgs.Empty);
-            Click?.Invoke(this, EventArgs.Empty);
+            OnClick(e);
+            Click?.Invoke(this, e);
 
-            RaiseNotifications((n) => n.AfterClick(this));
+            RaiseNotifications((n) => n.AfterClick(this, e));
         }
 
         /// <summary>
@@ -1099,39 +1106,39 @@ namespace Alternet.UI
         /// <see cref="OnTitleChanged(EventArgs)"/>.
         /// </summary>
         [Browsable(false)]
-        public void RaiseTitleChanged()
+        public void RaiseTitleChanged(EventArgs e)
         {
             if (DisposingOrDisposed)
                 return;
-            OnTitleChanged(EventArgs.Empty);
-            TitleChanged?.Invoke(this, EventArgs.Empty);
+            OnTitleChanged(e);
+            TitleChanged?.Invoke(this, e);
             Parent?.OnChildPropertyChanged(this, nameof(Title));
 
-            RaiseNotifications((n) => n.AfterTitleChanged(this));
+            RaiseNotifications((n) => n.AfterTitleChanged(this, e));
         }
 
         /// <summary>
         /// Calls <see cref="RaiseMouseEnter"/> for the control under the mouse pointer.
         /// </summary>
         [Browsable(false)]
-        public void RaiseMouseEnterOnTarget()
+        public void RaiseMouseEnterOnTarget(EventArgs e)
         {
             if (DisposingOrDisposed)
                 return;
             var currentTarget = UI.AbstractControl.GetMouseTargetControl(this);
-            currentTarget?.RaiseMouseEnter();
+            currentTarget?.RaiseMouseEnter(e);
         }
 
         /// <summary>
         /// Calls <see cref="RaiseMouseLeave"/> for the control under the mouse pointer.
         /// </summary>
         [Browsable(false)]
-        public void RaiseMouseLeaveOnTarget()
+        public void RaiseMouseLeaveOnTarget(EventArgs e)
         {
             if (DisposingOrDisposed)
                 return;
             var currentTarget = UI.AbstractControl.GetMouseTargetControl(this);
-            currentTarget?.RaiseMouseLeave();
+            currentTarget?.RaiseMouseLeave(e);
         }
 
         /// <summary>
@@ -1179,7 +1186,7 @@ namespace Alternet.UI
         {
             if (DisposingOrDisposed)
                 return;
-            RaiseVisualStateChanged();
+            RaiseVisualStateChanged(e);
             OnEnabledChanged(e);
             EnabledChanged?.Invoke(this, e);
             Parent?.OnChildPropertyChanged(this, nameof(Enabled));

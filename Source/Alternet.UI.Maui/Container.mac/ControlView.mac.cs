@@ -77,7 +77,7 @@ namespace Alternet.UI
                 case UIGestureRecognizerState.Possible:
                     break;
                 case UIGestureRecognizerState.Began:
-                    Control.RaiseMouseEnter();
+                    Control.RaiseMouseEnter(EventArgs.Empty);
                     break;
                 case UIGestureRecognizerState.Changed:
                     long timestamp = DateUtils.GetNowInMilliseconds();
@@ -90,7 +90,7 @@ namespace Alternet.UI
                                 out _);
                     break;
                 case UIGestureRecognizerState.Ended:
-                    Control.RaiseMouseLeave();
+                    Control.RaiseMouseLeave(EventArgs.Empty);
                     break;
                 case UIGestureRecognizerState.Cancelled:
                     break;
@@ -108,7 +108,7 @@ namespace Alternet.UI
         protected virtual void HandleMacPlatformResignFirstResponder(PlatformView sender)
         {
             App.DebugLogIf($"ResignFirstResponder", false);
-            Control?.RaiseLostFocus();
+            Control?.RaiseLostFocus(LostFocusEventArgs.Empty);
         }
 
         /// <summary>
@@ -118,7 +118,7 @@ namespace Alternet.UI
         protected virtual void HandleMacPlatformBecomeFirstResponder(PlatformView sender)
         {
             App.DebugLogIf($"BecomeFirstResponder", false);
-            Control?.RaiseGotFocus();
+            Control?.RaiseGotFocus(GotFocusEventArgs.Empty);
         }
 
         /// <summary>
@@ -145,12 +145,12 @@ namespace Alternet.UI
             App.DebugLogIf($"DidUpdateFocus", false);
             if (context.NextFocusedView == sender)
             {
-                Control?.RaiseGotFocus();
+                Control?.RaiseGotFocus(GotFocusEventArgs.Empty);
             }
             else
             if (context.PreviouslyFocusedView == sender)
             {
-                Control?.RaiseLostFocus();
+                Control?.RaiseLostFocus(LostFocusEventArgs.Empty);
             }
         }
 

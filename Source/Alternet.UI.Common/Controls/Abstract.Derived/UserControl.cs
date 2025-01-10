@@ -211,7 +211,7 @@ namespace Alternet.UI
             base.OnMouseLeftButtonDown(e);
             if (!Enabled)
                 return;
-            RaiseClick();
+            RaiseClick(e);
             ShowDropDownMenu();
             Invalidate();
         }

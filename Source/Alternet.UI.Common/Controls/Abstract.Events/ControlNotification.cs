@@ -28,22 +28,25 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        public virtual void AfterActivated(AbstractControl sender)
+        public virtual void AfterActivated(AbstractControl sender, EventArgs e)
         {
         }
 
         /// <inheritdoc/>
-        public virtual void AfterCreate(AbstractControl sender)
+        public virtual void AfterCreate(AbstractControl sender, EventArgs e)
         {
         }
 
         /// <inheritdoc/>
-        public virtual void AfterCellChanged(AbstractControl sender)
+        public virtual void AfterCellChanged(AbstractControl sender, EventArgs e)
         {
         }
 
         /// <inheritdoc/>
-        public virtual void AfterChildInserted(AbstractControl sender, int index, AbstractControl childControl)
+        public virtual void AfterChildInserted(
+            AbstractControl sender,
+            int index,
+            AbstractControl childControl)
         {
         }
 
@@ -53,12 +56,12 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        public virtual void AfterClick(AbstractControl sender)
+        public virtual void AfterClick(AbstractControl sender, EventArgs e)
         {
         }
 
         /// <inheritdoc/>
-        public virtual void AfterDeactivated(AbstractControl sender)
+        public virtual void AfterDeactivated(AbstractControl sender, EventArgs e)
         {
         }
 
@@ -78,7 +81,7 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        public virtual void AfterDragLeave(AbstractControl sender)
+        public virtual void AfterDragLeave(AbstractControl sender, EventArgs e)
         {
         }
 
@@ -93,47 +96,47 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        public virtual void AfterEnabledChanged(AbstractControl sender)
+        public virtual void AfterEnabledChanged(AbstractControl sender, EventArgs e)
         {
         }
 
         /// <inheritdoc/>
-        public virtual void AfterFontChanged(AbstractControl sender)
+        public virtual void AfterFontChanged(AbstractControl sender, EventArgs e)
         {
         }
 
         /// <inheritdoc/>
-        public virtual void AfterGotFocus(AbstractControl sender, AbstractControl? oldFocus = null)
+        public virtual void AfterGotFocus(AbstractControl sender, GotFocusEventArgs e)
         {
         }
 
         /// <inheritdoc/>
-        public virtual void AfterHandleCreated(AbstractControl sender)
+        public virtual void AfterHandleCreated(AbstractControl sender, EventArgs e)
         {
         }
 
         /// <inheritdoc/>
-        public virtual void AfterHandleDestroyed(AbstractControl sender)
+        public virtual void AfterHandleDestroyed(AbstractControl sender, EventArgs e)
         {
         }
 
         /// <inheritdoc/>
-        public virtual void AfterHandlerAttached(AbstractControl sender)
+        public virtual void AfterHandlerAttached(AbstractControl sender, EventArgs e)
         {
         }
 
         /// <inheritdoc/>
-        public virtual void AfterHandlerDetaching(AbstractControl sender)
+        public virtual void AfterHandlerDetaching(AbstractControl sender, EventArgs e)
         {
         }
 
         /// <inheritdoc/>
-        public virtual void AfterContainerLocationChanged(AbstractControl sender)
+        public virtual void AfterContainerLocationChanged(AbstractControl sender, EventArgs e)
         {
         }
 
         /// <inheritdoc/>
-        public virtual void AfterHandlerSizeChanged(AbstractControl sender)
+        public virtual void AfterHandlerSizeChanged(AbstractControl sender, EventArgs e)
         {
         }
 
@@ -143,12 +146,12 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        public virtual void AfterIdle(AbstractControl sender)
+        public virtual void AfterIdle(AbstractControl sender, EventArgs e)
         {
         }
 
         /// <inheritdoc/>
-        public virtual void AfterIsMouseOverChanged(AbstractControl sender)
+        public virtual void AfterIsMouseOverChanged(AbstractControl sender, EventArgs e)
         {
         }
 
@@ -168,22 +171,22 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        public virtual void AfterLocationChanged(AbstractControl sender)
+        public virtual void AfterLocationChanged(AbstractControl sender, EventArgs e)
         {
         }
 
         /// <inheritdoc/>
-        public virtual void AfterLostFocus(AbstractControl sender, AbstractControl? newFocus = null)
+        public virtual void AfterLostFocus(AbstractControl sender, LostFocusEventArgs e)
         {
         }
 
         /// <inheritdoc/>
-        public virtual void AfterMarginChanged(AbstractControl sender)
+        public virtual void AfterMarginChanged(AbstractControl sender, EventArgs e)
         {
         }
 
         /// <inheritdoc/>
-        public virtual void AfterMouseCaptureLost(AbstractControl sender)
+        public virtual void AfterMouseCaptureLost(AbstractControl sender, EventArgs e)
         {
         }
 
@@ -198,12 +201,12 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        public virtual void AfterMouseEnter(AbstractControl sender)
+        public virtual void AfterMouseEnter(AbstractControl sender, EventArgs e)
         {
         }
 
         /// <inheritdoc/>
-        public virtual void AfterMouseLeave(AbstractControl sender)
+        public virtual void AfterMouseLeave(AbstractControl sender, EventArgs e)
         {
         }
 
@@ -243,7 +246,7 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        public virtual void AfterPaddingChanged(AbstractControl sender)
+        public virtual void AfterPaddingChanged(AbstractControl sender, EventArgs e)
         {
         }
 
@@ -258,7 +261,7 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        public virtual void AfterParentChanged(AbstractControl sender)
+        public virtual void AfterParentChanged(AbstractControl sender, EventArgs e)
         {
         }
 
@@ -273,32 +276,32 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        public virtual void AfterResize(AbstractControl sender)
+        public virtual void AfterResize(AbstractControl sender, EventArgs e)
         {
         }
 
         /// <inheritdoc/>
-        public virtual void AfterSizeChanged(AbstractControl sender)
+        public virtual void AfterSizeChanged(AbstractControl sender, EventArgs e)
         {
         }
 
         /// <inheritdoc/>
-        public virtual void AfterSystemColorsChanged(AbstractControl sender)
+        public virtual void AfterSystemColorsChanged(AbstractControl sender, EventArgs e)
         {
         }
 
         /// <inheritdoc/>
-        public virtual void AfterTextChanged(AbstractControl sender)
+        public virtual void AfterTextChanged(AbstractControl sender, EventArgs e)
         {
         }
 
         /// <inheritdoc/>
-        public virtual void AfterTitleChanged(AbstractControl sender)
+        public virtual void AfterTitleChanged(AbstractControl sender, EventArgs e)
         {
         }
 
         /// <inheritdoc/>
-        public virtual void AfterToolTipChanged(AbstractControl sender)
+        public virtual void AfterToolTipChanged(AbstractControl sender, EventArgs e)
         {
         }
 
@@ -308,12 +311,12 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        public virtual void AfterVisibleChanged(AbstractControl sender)
+        public virtual void AfterVisibleChanged(AbstractControl sender, EventArgs e)
         {
         }
 
         /// <inheritdoc/>
-        public virtual void AfterVisualStateChanged(AbstractControl sender)
+        public virtual void AfterVisualStateChanged(AbstractControl sender, EventArgs e)
         {
         }
 

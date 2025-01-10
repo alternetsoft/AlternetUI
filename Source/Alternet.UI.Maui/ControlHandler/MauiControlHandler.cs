@@ -62,43 +62,7 @@ namespace Alternet.UI
             set => container = value;
         }
 
-        public Action<DragEventArgs>? DragDrop { get; set; }
-
-        public Action<DragEventArgs>? DragOver { get; set; }
-
-        public Action<DragEventArgs>? DragEnter { get; set; }
-
-        public Action? Idle { get; set; }
-
         public virtual string Text { get; set; } = string.Empty;
-
-        public Action? TextChanged { get; set; }
-
-        public Action? Paint { get; set; }
-
-        public Action? MouseEnter { get; set; }
-
-        public Action? MouseLeave { get; set; }
-
-        public Action? MouseClick { get; set; }
-
-        public Action? VisibleChanged { get; set; }
-
-        public Action? MouseCaptureLost { get; set; }
-
-        public Action? DragLeave { get; set; }
-
-        public Action? SizeChanged { get; set; }
-
-        public Action? LocationChanged { get; set; }
-
-        public Action? Activated { get; set; }
-
-        public Action? Deactivated { get; set; }
-
-        public Action? HandleCreated { get; set; }
-
-        public Action? HandleDestroyed { get; set; }
 
         public virtual bool WantChars { get; set; }
 
@@ -122,15 +86,13 @@ namespace Alternet.UI
                 bounds = value;
 
                 if(oldBounds.Location != value.Location)
-                    Control.RaiseContainerLocationChanged();
+                    Control.RaiseContainerLocationChanged(EventArgs.Empty);
                 if(oldBounds.Size != value.Size)
-                    Control.RaiseHandlerSizeChanged();
+                    Control.RaiseHandlerSizeChanged(EventArgs.Empty);
 
                 InvalidateContainer();
             }
         }
-
-        public virtual RectD EventBounds { get; set; }
 
         public virtual bool Visible
         {
@@ -181,14 +143,6 @@ namespace Alternet.UI
 
         public virtual bool IsMouseCaptured { get; set; }
 
-        public Action? SystemColorsChanged { get; set; }
-
-        public virtual SizeI EventOldDpi { get; }
-
-        public virtual SizeI EventNewDpi { get; }
-
-        public Action? DpiChanged { get; set; }
-
         public virtual RectI BoundsI
         {
             get
@@ -202,9 +156,13 @@ namespace Alternet.UI
             }
         }
 
-        public virtual bool VisibleOnScreen => Container?.IsVisible ?? false;
-
-        public AbstractControl? EventFocusedControl { get; }
+        public virtual bool VisibleOnScreen
+        {
+            get
+            {
+                return Container?.IsVisible ?? false;
+            }
+        }
 
         public virtual void BeginInit()
         {
@@ -349,10 +307,6 @@ namespace Alternet.UI
             ForegroundColor = DefaultForegroundColor;
         }
 
-        public virtual void SaveScreenshot(string fileName)
-        {
-        }
-
         public virtual void SetCursor(Cursor? value)
         {
         }
@@ -382,6 +336,14 @@ namespace Alternet.UI
         }
 
         public virtual void Update()
+        {
+        }
+
+        public virtual void UnbindEvents()
+        {
+        }
+
+        public void UpdateFocusFlags(bool canSelect, bool tabStop)
         {
         }
 

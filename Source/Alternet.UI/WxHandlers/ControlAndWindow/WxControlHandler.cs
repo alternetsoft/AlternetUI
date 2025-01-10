@@ -715,32 +715,35 @@ namespace Alternet.UI
 
             NativeControl.HandleCreated = OnNativeControlHandleCreated;
 
-            NativeControl.MouseEnter = Control.RaiseMouseEnterOnTarget;
-            NativeControl.MouseLeave = Control.RaiseMouseLeaveOnTarget;
-            NativeControl.HandleCreated = Control.RaiseHandleCreated;
-            NativeControl.HandleDestroyed = Control.RaiseHandleDestroyed;
-            NativeControl.Activated = Control.RaiseActivated;
-            NativeControl.Deactivated = Control.RaiseDeactivated;
+            NativeControl.MouseEnter = ()=> Control.RaiseMouseEnterOnTarget(EventArgs.Empty);
+            NativeControl.MouseLeave = () => Control.RaiseMouseLeaveOnTarget(EventArgs.Empty);
+            NativeControl.HandleCreated = () => Control.RaiseHandleCreated(EventArgs.Empty);
+            NativeControl.HandleDestroyed = () => Control.RaiseHandleDestroyed(EventArgs.Empty);
+            NativeControl.Activated = () => Control.RaiseActivated(EventArgs.Empty);
+            NativeControl.Deactivated = () => Control.RaiseDeactivated(EventArgs.Empty);
             NativeControl.Paint = OnHandlerPaint;
             NativeControl.VisibleChanged = OnHandlerVisibleChanged;
-            NativeControl.MouseCaptureLost = Control.RaiseMouseCaptureLost;
+            NativeControl.MouseCaptureLost = () => Control.RaiseMouseCaptureLost(EventArgs.Empty);
 
             NativeControl.GotFocus = () =>
             {
-                Control.RaiseGotFocus(EventFocusedControl);
+                Control.RaiseGotFocus(new(EventFocusedControl));
             };
 
             NativeControl.LostFocus = () =>
             {
-                Control.RaiseLostFocus(EventFocusedControl);
+                Control.RaiseLostFocus(new(EventFocusedControl));
             };
 
-            NativeControl.Idle = Control.RaiseIdle;
-            NativeControl.DragLeave = Control.RaiseDragLeave;
+            NativeControl.Idle = () => Control.RaiseIdle(EventArgs.Empty);
+            NativeControl.DragLeave = () => Control.RaiseDragLeave(EventArgs.Empty);
 
-            NativeControl.SizeChanged = Control.RaiseHandlerSizeChanged;
-            NativeControl.LocationChanged = Control.RaiseContainerLocationChanged;
-            NativeControl.SystemColorsChanged = Control.RaiseSystemColorsChanged;
+            NativeControl.SizeChanged =
+                () => Control.RaiseHandlerSizeChanged(EventArgs.Empty);
+            NativeControl.LocationChanged =
+                () => Control.RaiseContainerLocationChanged(EventArgs.Empty);
+            NativeControl.SystemColorsChanged =
+                () => Control.RaiseSystemColorsChanged(EventArgs.Empty);
             NativeControl.DpiChanged = OnHandlerDpiChanged;
 
             NativeControl.TextChanged = () =>
@@ -946,7 +949,7 @@ namespace Alternet.UI
         private void OnNativeControlHandleCreated()
         {
             SafeHandleRecreate();
-            Control.RaiseHandleCreated();
+            Control.RaiseHandleCreated(EventArgs.Empty);
         }
 
         public void InvalidateBestSize()
