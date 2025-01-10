@@ -18,6 +18,8 @@ namespace Alternet.UI
         private bool isVisible = true;
         private bool isEnabled = true;
         private IEnumerable? pickList;
+        private PanelSettings.ItemActionDelegate? clickAction;
+        private PanelSettings.ItemActionDelegate? valueChangedAction;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="PanelSettingsItem"/> class.
@@ -34,14 +36,18 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets action which is invoked when value is changed.
         /// </summary>
-        public Action<PanelSettingsItem, EventArgs>? ValueChangedAction { get; set; }
+        public virtual PanelSettings.ItemActionDelegate? ValueChangedAction
+        {
+            get => valueChangedAction;
+            set => valueChangedAction = value;
+        }
 
         /// <summary>
         /// Gets or sets a pick list for the case when item is
         /// <see cref="PanelSettingsItemKind.EditableSelector"/> or
         /// <see cref="PanelSettingsItemKind.Selector"/>.
         /// </summary>
-        public IEnumerable? PickList
+        public virtual IEnumerable? PickList
         {
             get => pickList;
 
@@ -49,6 +55,15 @@ namespace Alternet.UI
             {
                 pickList = value;
             }
+        }
+
+        /// <summary>
+        /// Gets or sets click action.
+        /// </summary>
+        public virtual PanelSettings.ItemActionDelegate? ClickAction
+        {
+            get => clickAction;
+            set => clickAction = value;
         }
 
         /// <summary>
@@ -161,7 +176,7 @@ namespace Alternet.UI
         /// <see cref="ValueChangedAction"/> property.</param>
         /// <returns>This object. Result can be used to implement chained calls.</returns>
         public PanelSettingsItem InvokeWhenChanged(
-            Action<PanelSettingsItem, EventArgs>? actionToInvoke)
+            PanelSettings.ItemActionDelegate? actionToInvoke)
         {
             ValueChangedAction = actionToInvoke;
             return this;
