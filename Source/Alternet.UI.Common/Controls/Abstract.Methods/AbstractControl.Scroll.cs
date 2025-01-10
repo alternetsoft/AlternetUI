@@ -203,7 +203,7 @@ namespace Alternet.UI
         {
             OnScroll(e);
 
-            if(RealLayout == LayoutStyle.Scroll)
+            if(RealLayout == LayoutStyle.Scroll && IsScrollable)
             {
                 var offset = GetScrollBarInfo(e.IsVertical).Position;
 

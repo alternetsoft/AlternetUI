@@ -298,9 +298,8 @@ namespace Alternet.UI
             IReadOnlyList<AbstractControl> controls,
             bool updateScrollbars)
         {
-            if (updateScrollbars)
+            if (updateScrollbars && container.IsScrollable)
             {
-                container.IsScrollable = true;
                 var totalSize = container.GetChildrenMaxPreferredSizePadded(SizeD.PositiveInfinity);
                 container.SetScrollBarInfo(getBounds().Size, totalSize);
             }
