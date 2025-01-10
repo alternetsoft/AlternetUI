@@ -29,11 +29,7 @@ namespace Alternet.UI
 
         public IDataObject? GetData()
         {
-            if (!SystemClipboard.HasText)
-                return null;
             var text = SystemClipboard.GetTextAsync().Result;
-            if (text is null)
-                return null;
 
             if (lastData is not null)
             {
@@ -41,6 +37,9 @@ namespace Alternet.UI
                 if (lastText == text)
                     return lastData;
             }
+
+            if (text is null)
+                return null;
 
             var data = new DataObject(text);
             return data;
