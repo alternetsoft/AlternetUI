@@ -35,15 +35,23 @@ namespace Alternet.UI
 
         public virtual bool IsFocused
         {
-            get => AbstractControl.FocusedControl == container?.Control;
+            get
+            {
+                var c = container?.Control;
+
+                if (c is null)
+                    return false;
+
+                return AbstractControl.FocusedControlEquals(c);
+            }
 
             set
             {
                 if (IsFocused == value)
                     return;
-                AbstractControl.FocusedControl?.RaiseLostFocus();
+                AbstractControl.FocusedControl?.RaiseLostFocus(LostFocusEventArgs.Empty);
                 AbstractControl.FocusedControl = container?.Control;
-                AbstractControl.FocusedControl?.RaiseGotFocus();
+                AbstractControl.FocusedControl?.RaiseGotFocus(GotFocusEventArgs.Empty);
             }
         }
 

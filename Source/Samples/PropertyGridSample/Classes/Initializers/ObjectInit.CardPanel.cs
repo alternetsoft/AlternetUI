@@ -25,6 +25,7 @@ namespace PropertyGridSample
         {
             if (c is not CardPanel control)
                 return;
+            control.HasBorder = true;
             control.SuggestedSize = defaultListSize;
             var panel = CreatePanelWithButtons("Card 1");
             panel.AddLabel("Use SelectedCardIndex").Margin = 5;

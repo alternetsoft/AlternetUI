@@ -97,8 +97,6 @@ namespace ControlsSample
             {
             }
 
-            App.SetUnhandledExceptionModeIfDebugger(UnhandledExceptionMode.CatchException);
-
             InitSamples();
 
             LogSimple("InitSamples Done.");

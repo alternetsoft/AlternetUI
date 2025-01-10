@@ -260,7 +260,7 @@ namespace Alternet.UI
         {
             if (control is null)
                 return;
-            control.RaiseSystemColorsChanged();
+            control.RaiseSystemColorsChanged(EventArgs.Empty);
 
             if(Interior.ScrollBarTheme is not null)
             {
@@ -402,7 +402,7 @@ namespace Alternet.UI
         private void SkiaContainer_SizeChanged(object? sender, EventArgs e)
         {
             UpdateBounds(Bounds.ToRectD());
-            control?.RaiseHandlerSizeChanged();
+            control?.RaiseHandlerSizeChanged(e);
         }
 
         private void Canvas_Touch(object? sender, SKTouchEventArgs e)
@@ -431,7 +431,7 @@ namespace Alternet.UI
                 platformView?.Focus(request);
                 platformView?.SetNeedsFocusUpdate();
                 platformView?.UpdateFocusIfNeeded();
-                control?.RaiseGotFocus();
+                control?.RaiseGotFocus(GotFocusEventArgs.Empty);
             }
 #endif
             if (control is null)
@@ -565,12 +565,12 @@ namespace Alternet.UI
 
         private void SkiaContainer_Focused(object? sender, FocusEventArgs e)
         {
-            control?.RaiseGotFocus();
+            control?.RaiseGotFocus(GotFocusEventArgs.Empty);
         }
 
         private void SkiaContainer_Unfocused(object? sender, FocusEventArgs e)
         {
-            control?.RaiseLostFocus();
+            control?.RaiseLostFocus(LostFocusEventArgs.Empty);
         }
     }
 }

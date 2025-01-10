@@ -12,6 +12,7 @@ namespace Alternet.UI
         where TIndex : notnull
     {
         private readonly AdvDictionary<TIndex, ILockedItem> values = new();
+        private ILockedItem? cachedItem;
 
         /// <summary>
         /// Occurs after all items are cleared.
@@ -133,6 +134,30 @@ namespace Alternet.UI
         {
             values.Clear();
             AfterClear?.Invoke(this, EventArgs.Empty);
+        }
+
+        /// <summary>
+        /// Same as <see cref="GetLockedItemCached(TIndex, Func{TValue?})"/> but
+        /// caches last accessed index value, so repeated calls with the same index
+        /// will work faster.
+        /// </summary>
+        /// <param name="index"></param>
+        /// <param name="getDefault"></param>
+        /// <returns></returns>
+        public ILockedItem GetLockedItemCached(TIndex index, Func<TValue?> getDefault)
+        {
+            if(cachedItem is not null)
+            {
+                if (cachedItem.Index.Equals(index))
+                {
+                }
+                else
+                {
+                    cachedItem = null;
+                }
+            }
+
+            return cachedItem ??= GetLockedItem(index, getDefault);
         }
 
         /// <summary>

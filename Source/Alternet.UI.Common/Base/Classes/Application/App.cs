@@ -122,10 +122,10 @@ namespace Alternet.UI
         private static bool? isMono;
 
         private static UnhandledExceptionMode unhandledExceptionMode
-            = UnhandledExceptionMode.CatchException;
+            = UnhandledExceptionMode.CatchWithDialog;
 
         private static UnhandledExceptionMode unhandledExceptionModeDebug
-            = UnhandledExceptionMode.ThrowException;
+            = UnhandledExceptionMode.CatchWithDialogAndThrow;
 
         private static bool? isMaui;
         private static bool inOnThreadException;
@@ -238,7 +238,7 @@ namespace Alternet.UI
         public static event EventHandler<LogMessageEventArgs>? BeforeNativeLogMessage;
 
         /// <summary>
-        ///  Occurs when an untrapped thread exception is thrown.
+        /// Occurs when an untrapped thread exception is thrown.
         /// </summary>
         /// <remarks>
         /// This event allows your application to handle otherwise
@@ -248,10 +248,11 @@ namespace Alternet.UI
         /// leave your application in an unknown state. Where possible,
         /// exceptions should be handled by a structured
         /// exception handling block. You can change whether this callback
-        /// is used for unhandled Windows Forms thread
-        /// exceptions by setting <see cref="App.SetUnhandledExceptionMode"/>.
+        /// is used for unhandled thread
+        /// exceptions by setting <see cref="App.SetUnhandledExceptionMode"/>
+        /// and <see cref="App.SetUnhandledExceptionModeIfDebugger"/>.
         /// </remarks>
-        public static event ThreadExceptionEventHandler? ThreadException;
+        public static event BaseThreadExceptionEventHandler? ThreadException;
 
         /// <summary>
         /// Occurs when controls which display log messages need to be refreshed.
@@ -294,6 +295,26 @@ namespace Alternet.UI
         /// It is better to use platform specific ways to get whether current thread is UI thread.
         /// </summary>
         public static bool IsAppThread => Thread.CurrentThread.ManagedThreadId == AppThreadId;
+
+        /// <summary>
+        /// Gets last unhandled exception.
+        /// </summary>
+        public static Exception? LastUnhandledException
+        {
+            get => lastUnhandledException;
+
+            internal set => lastUnhandledException = value;
+        }
+
+        /// <summary>
+        /// Gets whether last unhandled exception was thrown.
+        /// </summary>
+        public static bool LastUnhandledExceptionThrown
+        {
+            get => lastUnhandledExceptionThrown;
+
+            internal set => lastUnhandledExceptionThrown = value;
+        }
 
         /// <summary>
         /// Gets whether <see cref="LogMessage"/> event has any handlers.
@@ -1297,7 +1318,7 @@ namespace Alternet.UI
 
                 if (DebugUtils.IsDebugDefined)
                 {
-                    throw e;
+                    throw;
                 }
 
                 return false;
@@ -1414,7 +1435,7 @@ namespace Alternet.UI
         /// <param name="sender">Sender parameter of the event.</param>
         /// <param name="args">Event arguments.</param>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static void RaiseThreadException(object sender, ThreadExceptionEventArgs args)
+        public static void RaiseThreadException(object sender, BaseThreadExceptionEventArgs args)
         {
             ThreadException?.Invoke(sender, args);
         }
@@ -1596,49 +1617,112 @@ namespace Alternet.UI
         /// <param name="exception">Exception to process.</param>
         public static void OnThreadException(Exception exception)
         {
+            bool HandleWithEvent()
+            {
+                if (ThreadExceptionAssigned)
+                {
+                    var args = new BaseThreadExceptionEventArgs(exception);
+                    RaiseThreadException(Thread.CurrentThread, args);
+
+                    if(args.Handled)
+
+                    return args.Handled;
+                }
+
+                return false;
+            }
+
+            bool HandleWithDialog()
+            {
+                var td = new ThreadExceptionWindow(exception);
+                var result = ModalResult.Accepted;
+
+                try
+                {
+                    result = td.ShowModal();
+                }
+                finally
+                {
+                    td.Dispose();
+                }
+
+                if (result == ModalResult.Canceled)
+                {
+                    ExitAndTerminate(ThreadExceptionExitCode);
+                    return true;
+                }
+
+                return false;
+            }
+
             if (inOnThreadException)
                 return;
 
             inOnThreadException = true;
+
             try
             {
+                if (LastUnhandledException == exception)
+                    return;
+
+                LastUnhandledException = exception;
+                LastUnhandledExceptionThrown = false;
+
                 if (LogUnhandledThreadException)
                 {
                     LogUtils.LogException(exception);
                 }
 
-                if (GetUnhandledExceptionMode() == UnhandledExceptionMode.ThrowException)
-                    throw exception;
+                var mode = GetUnhandledExceptionMode();
 
-                if (ThreadExceptionAssigned)
+                switch (mode)
                 {
-                    var args = new ThreadExceptionEventArgs(exception);
-                    RaiseThreadException(Thread.CurrentThread, args);
-                }
-                else
-                {
-                    var td = new ThreadExceptionWindow(exception);
-                    var result = ModalResult.Accepted;
-
-                    try
-                    {
-                        result = td.ShowModal();
-                    }
-                    finally
-                    {
-                        td.Dispose();
-                    }
-
-                    if (result == ModalResult.Canceled)
-                    {
-                        ExitAndTerminate(ThreadExceptionExitCode);
-                    }
+                    case UnhandledExceptionMode.CatchException:
+                        if(ThreadExceptionAssigned)
+                            HandleWithEvent();
+                        else
+                            HandleWithDialog();
+                        break;
+                    case UnhandledExceptionMode.ThrowException:
+                        LastUnhandledExceptionThrown = true;
+                        throw exception;
+                    case UnhandledExceptionMode.CatchWithDialog:
+                        if (HandleWithEvent())
+                            return;
+                        HandleWithDialog();
+                        break;
+                    case UnhandledExceptionMode.CatchWithDialogAndThrow:
+                        if (HandleWithEvent())
+                            return;
+                        if (HandleWithDialog())
+                            return;
+                        LastUnhandledExceptionThrown = true;
+                        throw exception;
+                    case UnhandledExceptionMode.CatchWithThrow:
+                        if (HandleWithEvent())
+                            return;
+                        LastUnhandledExceptionThrown = true;
+                        throw exception;
+                    default:
+                        break;
                 }
             }
             finally
             {
                 inOnThreadException = false;
             }
+        }
+
+        /// <summary>
+        /// Gets current unhandled exception mode.
+        /// </summary>
+        /// <returns></returns>
+        public static UnhandledExceptionMode GetUnhandledExceptionMode()
+        {
+            if (IsDebuggerAttached)
+                return unhandledExceptionModeDebug;
+            else
+                return unhandledExceptionMode;
         }
 
         /// <summary>
@@ -1690,8 +1774,8 @@ namespace Alternet.UI
         /// behave if an exception is thrown without being caught.</param>
         public static void SetUnhandledExceptionModes(UnhandledExceptionMode value)
         {
-            unhandledExceptionModeDebug = value;
-            unhandledExceptionMode = value;
+            SetUnhandledExceptionModeIfDebugger(value);
+            SetUnhandledExceptionMode(value);
         }
 
         /// <summary>
@@ -1741,6 +1825,12 @@ namespace Alternet.UI
                     catch (Exception e)
                     {
                         OnThreadException(e);
+
+                        if(Debugger.IsAttached && DebugUtils.IsDebugDefined
+                            && LastUnhandledExceptionThrown)
+                        {
+                            throw;
+                        }
                     }
                 }
 
@@ -1811,18 +1901,6 @@ namespace Alternet.UI
         {
             foreach (var window in Windows)
                 window.RecreateAllHandlers();
-        }
-
-        /// <summary>
-        /// Gets current unhandled exception mode.
-        /// </summary>
-        /// <returns></returns>
-        protected static UnhandledExceptionMode GetUnhandledExceptionMode()
-        {
-            if (IsDebuggerAttached)
-                return unhandledExceptionModeDebug;
-            else
-                return unhandledExceptionMode;
         }
 
         /// <summary>
@@ -1965,6 +2043,8 @@ namespace Alternet.UI
         /// </summary>
 #pragma warning disable
         public static int BuildCounter = 6;
+        private static Exception? lastUnhandledException;
+        private static bool lastUnhandledExceptionThrown;
 #pragma warning restore
     }
 }

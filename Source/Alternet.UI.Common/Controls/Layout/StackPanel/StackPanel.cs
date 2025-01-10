@@ -35,6 +35,8 @@ namespace Alternet.UI
         /// </summary>
         public StackPanel()
         {
+            CanSelect = false;
+            TabStop = false;
         }
 
         /// <summary>

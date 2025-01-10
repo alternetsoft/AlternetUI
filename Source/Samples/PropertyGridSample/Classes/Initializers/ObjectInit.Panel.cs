@@ -28,6 +28,7 @@ namespace PropertyGridSample
         {
             if (control is not Panel panel)
                 return;
+            panel.HasBorder = true;
             panel.SuggestedSize = 150;
             panel.KeyPress += Panel_KeyPress;
             panel.Scroll += Panel_Scroll;

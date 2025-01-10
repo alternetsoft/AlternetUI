@@ -197,7 +197,7 @@ namespace Alternet.UI
                 HoveredControl = null;
             delayedTextChanged.Reset();
 
-            Designer?.RaiseDisposed(this);
+            Designer?.RaiseDisposed(this, EventArgs.Empty);
 
             DetachHandler();
 

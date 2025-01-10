@@ -197,7 +197,8 @@ namespace Alternet.UI
         /// <inheritdoc/>
         public virtual AbstractControl? GetFocusedControl()
         {
-            return AbstractControl.FocusedControl;
+            // This should return null.
+            return null;
         }
 
         /// <inheritdoc/>

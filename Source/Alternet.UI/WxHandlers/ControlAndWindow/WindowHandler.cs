@@ -9,8 +9,6 @@ namespace Alternet.UI
     {
         private object? statusBar;
 
-        public Action<CancelEventArgs>? Closing { get; set; }
-
         public override bool VisibleOnScreen
         {
             get
@@ -110,18 +108,7 @@ namespace Alternet.UI
                 NativeControl.State = value;
             }
         }
-/*
-        public Window[] OwnedWindows
-        {
-            get
-            {
-                var result = NativeControl.OwnedWindows.Select(
-                    x => ((IWindowHandler)(WxControlHandler.NativeControlToHandler(x) ??
-                    throw new Exception())).Control).ToArray();
-                return result;
-            }
-        }
-*/
+
         public ModalResult ModalResult
         {
             get
@@ -234,9 +221,25 @@ namespace Alternet.UI
             return new NativeWindow((int)Control.GetWindowKind());
         }
 
+        /// <summary>
+        /// Raised by the handler when it is going to be closed.
+        /// </summary>
+        public virtual void OnHandlerClosing(object? sender, CancelEventArgs e)
+        {
+            var canClose = Control.CanClose(true);
+
+            e.Cancel = e.Cancel || !canClose;
+
+            if (e.Cancel)
+                return;
+
+            Control.RaiseClosed();
+        }
+
         protected override void OnDetach()
         {
-            NativeControl.Closing -= NativeControl_Closing;
+            NativeControl.StateChanged = null;
+            NativeControl.Closing -= OnHandlerClosing;
 
             base.OnDetach();
         }
@@ -245,7 +248,8 @@ namespace Alternet.UI
         {
             base.OnAttach();
 
-            NativeControl.Closing += NativeControl_Closing;
+            NativeControl.StateChanged = Control.RaiseStateChanged;
+            NativeControl.Closing += OnHandlerClosing;
         }
 
         private void SetStatusBar(object? oldValue, object? value)
@@ -284,22 +288,6 @@ namespace Alternet.UI
             }
         }
 
-/*
-        public void SetOwner(Window? owner)
-        {
-            var newOwner = (owner as IControl)?.NativeControl as UI.Native.Control;
-            var oldOwner = NativeControl.ParentRefCounted;
-            if (newOwner == oldOwner)
-                return;
-
-            oldOwner?.RemoveChild(NativeControl);
-
-            if (newOwner == null)
-                return;
-
-            newOwner.AddChild(NativeControl);
-        }
-*/
         public void SetIcon(IconSet? value)
         {
             NativeControl.Icon = (UI.Native.IconSet?)value?.Handler;
@@ -308,11 +296,6 @@ namespace Alternet.UI
         public void SetMenu(object? value)
         {
             NativeControl.Menu = (value as IControl)?.NativeControl as Native.MainMenu;
-        }
-
-        private void NativeControl_Closing(object? sender, CancelEventArgs e)
-        {
-            Closing?.Invoke(e);
         }
 
         private class NativeWindow : Native.Window

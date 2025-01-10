@@ -66,7 +66,7 @@ namespace Alternet::UI
 
     wxWindow* Panel::CreateWxWindowCore(wxWindow* parent)
     {
-        auto style = GetDefaultStyle() | wxTAB_TRAVERSAL;
+        auto style = GetDefaultStyle();
 
         auto p = new wxPanel2(this, parent, wxID_ANY, wxDefaultPosition, wxDefaultSize, style);
         return p;

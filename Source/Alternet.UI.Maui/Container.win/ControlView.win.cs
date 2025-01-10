@@ -179,7 +179,7 @@ namespace Alternet.UI
         {
             if (Control is null)
                 return;
-            Control.RaiseLostFocus();
+            Control.RaiseLostFocus(LostFocusEventArgs.Empty);
         }
 
         /// <summary>
@@ -193,7 +193,7 @@ namespace Alternet.UI
         {
             if (Control is null)
                 return;
-            Control.RaiseGotFocus();
+            Control.RaiseGotFocus(GotFocusEventArgs.Empty);
         }
 
         /// <summary>
@@ -294,7 +294,7 @@ namespace Alternet.UI
         {
             if (Control is null)
                 return;
-            Control.RaiseMouseLeave();
+            Control.RaiseMouseLeave(EventArgs.Empty);
         }
 
         /// <summary>
@@ -308,7 +308,7 @@ namespace Alternet.UI
         {
             if (Control is null)
                 return;
-            Control.RaiseMouseEnter();
+            Control.RaiseMouseEnter(EventArgs.Empty);
         }
     }
 }

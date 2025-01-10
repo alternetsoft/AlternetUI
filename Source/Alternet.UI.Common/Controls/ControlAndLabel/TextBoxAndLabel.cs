@@ -31,11 +31,11 @@ namespace Alternet.UI
         /// <param name="title">Label text.</param>
         /// <param name="text">Default value of the <see cref="Text"/> property.</param>
         public TextBoxAndLabel(string title, string? text = default)
+            : this()
         {
             Title = title;
             if (text is not null)
                 TextBox.Text = text;
-            Init();
         }
 
         /// <summary>
@@ -43,6 +43,7 @@ namespace Alternet.UI
         /// </summary>
         public TextBoxAndLabel()
         {
+            SuspendHandlerTextChange();
             Init();
         }
 
@@ -151,13 +152,6 @@ namespace Alternet.UI
         public virtual bool IsNullOrWhiteSpace => string.IsNullOrWhiteSpace(Text);
 
         /// <inheritdoc/>
-        public override void BindHandlerEvents()
-        {
-            base.BindHandlerEvents();
-            Handler.TextChanged = null;
-        }
-
-        /// <inheritdoc/>
         protected override AbstractControl CreateControl() => new TextBox();
 
         /// <summary>
@@ -174,7 +168,7 @@ namespace Alternet.UI
             MainControl.AutoShowError = true;
             MainControl.TextChanged += (s, e) =>
             {
-                RaiseTextChanged();
+                RaiseTextChanged(EventArgs.Empty);
             };
 
             MainControl.DelayedTextChanged += (s, e) =>

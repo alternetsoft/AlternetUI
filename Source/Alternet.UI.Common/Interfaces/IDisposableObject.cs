@@ -9,7 +9,7 @@ namespace Alternet.UI
     /// <summary>
     /// Extends <see cref="IDisposable"/> with new events and properties.
     /// </summary>
-    public interface IDisposableObject : IDisposable
+    public interface IDisposableObject : IDisposable, IBaseObject
     {
         /// <summary>
         /// Occurs when control is disposed.

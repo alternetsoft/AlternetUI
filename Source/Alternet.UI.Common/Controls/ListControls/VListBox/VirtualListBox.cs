@@ -1057,6 +1057,18 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
+        protected override void OnGotFocus(EventArgs e)
+        {
+            base.OnGotFocus(e);
+
+            if(SelectedIndex is null)
+            {
+                if (Count > 0)
+                    SelectItemsAndScroll(0);
+            }
+        }
+
+        /// <inheritdoc/>
         protected override void OnPaint(PaintEventArgs e)
         {
             if (DisposingOrDisposed)

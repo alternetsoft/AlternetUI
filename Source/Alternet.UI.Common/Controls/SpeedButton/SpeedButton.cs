@@ -971,10 +971,10 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        public override void RaiseFontChanged()
+        public override void RaiseFontChanged(EventArgs e)
         {
             Label.Font = RealFont;
-            base.RaiseFontChanged();
+            base.RaiseFontChanged(e);
         }
 
         /// <inheritdoc/>
@@ -1106,7 +1106,7 @@ namespace Alternet.UI
 
             void Fn()
             {
-                RaiseClick();
+                RaiseClick(EventArgs.Empty);
                 ShowDropDownMenu();
             }
         }
@@ -1141,7 +1141,7 @@ namespace Alternet.UI
         {
             if (VisualState != VisualControlState.Pressed)
                 return;
-            RaiseClick();
+            RaiseClick(EventArgs.Empty);
         }
 
         private void UnsubscribeClickRepeated()

@@ -8,7 +8,7 @@ using Alternet.Drawing;
 
 namespace EditorMAUI;
 
-public partial class MainPage : ContentPage
+public partial class MainPage : Alternet.UI.DisposableContentPage
 {
     public bool LogToWindowTitle = false;
 

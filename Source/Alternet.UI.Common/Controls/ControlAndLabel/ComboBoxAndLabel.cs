@@ -29,6 +29,7 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="label">Label text.</param>
         public ComboBoxAndLabel(string label)
+            : this()
         {
             Label.Text = label;
         }
@@ -38,6 +39,7 @@ namespace Alternet.UI
         /// </summary>
         public ComboBoxAndLabel()
         {
+            SuspendHandlerTextChange();
         }
 
         /// <summary>
@@ -95,13 +97,6 @@ namespace Alternet.UI
         {
             get => ComboBox.Items;
             set => ComboBox.Items = value;
-        }
-
-        /// <inheritdoc/>
-        public override void BindHandlerEvents()
-        {
-            base.BindHandlerEvents();
-            Handler.TextChanged = null;
         }
 
         /// <inheritdoc/>

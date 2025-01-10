@@ -53,25 +53,29 @@ namespace Alternet.UI
         /// Notifiers designer when control got focus.
         /// </summary>
         /// <param name="control">Control which received focus.</param>
-        void RaiseGotFocus(object control);
+        /// <param name="e">Event arguments.</param>
+        void RaiseGotFocus(object control, GotFocusEventArgs e);
 
         /// <summary>
         /// Notifiers designer when control was created.
         /// </summary>
         /// <param name="control">Control which was created.</param>
-        void RaiseCreated(object control);
+        /// <param name="e">Event arguments.</param>
+        void RaiseCreated(object control, EventArgs e);
 
         /// <summary>
         /// Notifiers designer when control was disposed.
         /// </summary>
         /// <param name="control">Control which was disposed.</param>
-        void RaiseDisposed(object control);
+        /// <param name="e">Event arguments.</param>
+        void RaiseDisposed(object control, EventArgs e);
 
         /// <summary>
         /// Notifiers designer when control's parent was changed.
         /// </summary>
         /// <param name="control">Affected control.</param>
-        void RaiseParentChanged(object control);
+        /// <param name="e">Event arguments.</param>
+        void RaiseParentChanged(object control, EventArgs e);
 
         /// <summary>
         /// Notifiers designer when the left mouse button was pressed on the control.

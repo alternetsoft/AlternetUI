@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -8,6 +9,9 @@ using Alternet.Drawing;
 
 namespace Alternet.UI
 {
+    using ILockedItem
+        = IndexedValues<ObjectUniqueId, ListControlItem.ContainerRelatedData>.ILockedItem;
+
     /// <summary>
     /// Custom item for <see cref="ListBox"/>, <see cref="ComboBox"/> and other
     /// list controls. This class has <see cref="Text"/>,
@@ -15,6 +19,11 @@ namespace Alternet.UI
     /// </summary>
     public partial class ListControlItem : BaseControlItem
     {
+        /// <summary>
+        /// Gets id of the null container.
+        /// </summary>
+        public static readonly ObjectUniqueId NullContainerId = new();
+
         /// <summary>
         /// Gets default item alignment
         /// </summary>
@@ -29,7 +38,7 @@ namespace Alternet.UI
         private CachedSvgImage<Image> cachedSvg = new();
         private string? text;
         private HVAlignment alignment = DefaultItemAlignment;
-        private bool isSelected;
+        private IndexedValues<ObjectUniqueId, ContainerRelatedData>? containerRelated;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ListControlItem"/> class
@@ -779,6 +788,8 @@ namespace Alternet.UI
                 var border = item?.Border?.ToGrayScale();
                 DrawingUtils.DrawBorder(control, e.Graphics, rect, border);
             }
+
+            DefaultDrawBackgroundDebug(container, e);
         }
 
         /// <summary>
@@ -1087,7 +1098,8 @@ namespace Alternet.UI
         /// </summary>
         public virtual bool IsSelected(IListControlItemContainer? container)
         {
-            return isSelected;
+            var item = GetContainerRelated(container);
+            return item.Value.IsSelected;
         }
 
         /// <summary>
@@ -1096,19 +1108,32 @@ namespace Alternet.UI
         /// <returns>True if selected state was changed; False otherwise.</returns>
         public virtual bool SetSelected(IListControlItemContainer? container, bool value)
         {
-            var result = isSelected != value;
-            isSelected = value;
-            return result;
+            var item = GetContainerRelated(container);
+            var data = item.Value;
+
+            if(data.IsSelected != value)
+            {
+                data.IsSelected = value;
+                item.Value = data;
+                return true;
+            }
+
+            return false;
         }
 
         /// <summary>
         /// Toggles selected state of the item.
         /// </summary>
         /// <param name="container">Item container.</param>
+        /// <returns>New value for the selected state.</returns>
         public virtual bool ToggleSelected(IListControlItemContainer? container)
         {
-            isSelected = !isSelected;
-            return isSelected;
+            var item = GetContainerRelated(container);
+            var data = item.Value;
+            var newSelected = !data.IsSelected;
+            data.IsSelected = newSelected;
+            item.Value = data;
+            return newSelected;
         }
 
         /// <summary>
@@ -1153,6 +1178,36 @@ namespace Alternet.UI
             result.CheckRect = checkRect;
             result.TextRect = textRect;
             return result;
+        }
+
+        [Conditional("DEBUG")]
+        private static void DefaultDrawBackgroundDebug(
+                   IListControlItemContainer? container,
+                   ListBoxItemPaintEventArgs e)
+        {
+            if (ContainerControl.ShowDebugFocusRect && e.IsCurrent)
+            {
+                if (Control.FocusedControl == container?.Control)
+                {
+                    e.Graphics.FillBorderRectangle(
+                        e.ClipRectangle,
+                        null,
+                        BorderSettings.DebugBorder);
+                }
+            }
+        }
+
+        private ILockedItem GetContainerRelated(IListControlItemContainer? container)
+        {
+            var id = container?.UniqueId ?? NullContainerId;
+            containerRelated ??= new();
+            var result = containerRelated.GetLockedItemCached(id, () => new());
+            return result;
+        }
+
+        internal struct ContainerRelatedData
+        {
+            public bool IsSelected;
         }
 
         internal class ItemCheckBoxInfo

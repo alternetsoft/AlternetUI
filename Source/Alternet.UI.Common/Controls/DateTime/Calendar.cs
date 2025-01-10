@@ -892,14 +892,14 @@ namespace Alternet.UI
             {
                 ParentForeColor = false;
                 ParentBackColor = false;
-                BackgroundColor = Color.White;
-                ForegroundColor = Color.Black;
+                BackgroundColor = new(SystemColorsLight.Window);
+                ForegroundColor = new(SystemColorsLight.WindowText);
 
-                Color headerColorBg = (233, 238, 246);
-                Color headerColorFg = ForegroundColor;
+                Color headerColorBg = new(SystemColorsLight.Window);
+                Color headerColorFg = new(SystemColorsLight.WindowText);
 
-                Color highlightColorBg = (194, 231, 255);
-                Color highlightColorFg = ForegroundColor;
+                Color highlightColorBg = new(SystemColorsLight.Highlight);
+                Color highlightColorFg = new(SystemColorsLight.HighlightText);
 
                 Color holidayColorBg = BackgroundColor;
                 Color holidayColorFg = LightDarkColors.Red.Light;

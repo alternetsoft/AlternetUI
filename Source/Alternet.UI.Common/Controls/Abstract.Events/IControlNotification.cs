@@ -39,34 +39,35 @@ namespace Alternet.UI
         /// <summary>
         /// Called after the <see cref="AbstractControl.CellChanged" /> event is raised.
         /// </summary>
-        void AfterCellChanged(AbstractControl sender);
+        void AfterCellChanged(AbstractControl sender, EventArgs e);
 
         /// <summary>
         /// Called after the <see cref="AbstractControl.SystemColorsChanged" /> event is raised.
         /// </summary>
-        void AfterSystemColorsChanged(AbstractControl sender);
+        void AfterSystemColorsChanged(AbstractControl sender, EventArgs e);
 
         /// <summary>
         /// Called after the <see cref="AbstractControl.SizeChanged" /> event.
         /// </summary>
-        void AfterSizeChanged(AbstractControl sender);
+        void AfterSizeChanged(AbstractControl sender, EventArgs e);
 
         /// <summary>
         /// Called when when the application finishes processing events and is
         /// about to enter the idle state.
         /// </summary>
-        void AfterIdle(AbstractControl sender);
+        void AfterIdle(AbstractControl sender, EventArgs e);
 
         /// <summary>
         /// Called after the <see cref="AbstractControl.Resize" /> event is raised.
         /// </summary>
         /// <param name="sender">Control which sends the notification.</param>
-        void AfterResize(AbstractControl sender);
+        /// <param name="e">Event arguments.</param>
+        void AfterResize(AbstractControl sender, EventArgs e);
 
         /// <summary>
         /// Called after the <see cref="AbstractControl.LocationChanged" /> event is raised.
         /// </summary>
-        void AfterLocationChanged(AbstractControl sender);
+        void AfterLocationChanged(AbstractControl sender, EventArgs e);
 
         /// <summary>
         /// Called after a child control is inserted into
@@ -83,32 +84,32 @@ namespace Alternet.UI
         /// <summary>
         /// Called after the conrol's handle is created.
         /// </summary>
-        void AfterHandleCreated(AbstractControl sender);
+        void AfterHandleCreated(AbstractControl sender, EventArgs e);
 
         /// <summary>
         /// Called after the native conrol size is changed.
         /// </summary>
-        void AfterHandlerSizeChanged(AbstractControl sender);
+        void AfterHandlerSizeChanged(AbstractControl sender, EventArgs e);
 
         /// <summary>
         /// Called after the <see cref="AbstractControl.Activated" /> event is raised.
         /// </summary>
-        void AfterActivated(AbstractControl sender);
+        void AfterActivated(AbstractControl sender, EventArgs e);
 
         /// <summary>
         /// Called after the <see cref="AbstractControl.Deactivated" /> event is raised.
         /// </summary>
-        void AfterDeactivated(AbstractControl sender);
+        void AfterDeactivated(AbstractControl sender, EventArgs e);
 
         /// <summary>
         /// Called after the native conrol location is changed.
         /// </summary>
-        void AfterContainerLocationChanged(AbstractControl sender);
+        void AfterContainerLocationChanged(AbstractControl sender, EventArgs e);
 
         /// <summary>
         /// Called after the conrol's handle is destroyed.
         /// </summary>
-        void AfterHandleDestroyed(AbstractControl sender);
+        void AfterHandleDestroyed(AbstractControl sender, EventArgs e);
 
         /// <summary>
         /// Called after the <see cref="AbstractControl.KeyPress" /> event is raised.
@@ -118,27 +119,27 @@ namespace Alternet.UI
         /// <summary>
         /// Called after the <see cref="AbstractControl.TextChanged" /> event is raised.
         /// </summary>
-        void AfterTextChanged(AbstractControl sender);
+        void AfterTextChanged(AbstractControl sender, EventArgs e);
 
         /// <summary>
         /// Called after the control is clicked.
         /// </summary>
-        void AfterClick(AbstractControl sender);
+        void AfterClick(AbstractControl sender, EventArgs e);
 
         /// <summary>
         /// Called after the value of the <see cref="AbstractControl.Visible"/> property changes.
         /// </summary>
-        void AfterVisibleChanged(AbstractControl sender);
+        void AfterVisibleChanged(AbstractControl sender, EventArgs e);
 
         /// <summary>
         /// Called after the control loses mouse capture.
         /// </summary>
-        void AfterMouseCaptureLost(AbstractControl sender);
+        void AfterMouseCaptureLost(AbstractControl sender, EventArgs e);
 
         /// <summary>
         /// Called after the mouse pointer enters the control.
         /// </summary>
-        void AfterMouseEnter(AbstractControl sender);
+        void AfterMouseEnter(AbstractControl sender, EventArgs e);
 
         /// <summary>
         /// Called after the left mouse button was pressed.
@@ -153,27 +154,27 @@ namespace Alternet.UI
         /// <summary>
         /// Called when <see cref="AbstractControl.IsMouseOver"/> property is changed.
         /// </summary>
-        void AfterIsMouseOverChanged(AbstractControl sender);
+        void AfterIsMouseOverChanged(AbstractControl sender, EventArgs e);
 
         /// <summary>
         /// Called after the value of the <see cref="AbstractControl.Title"/> property changes.
         /// </summary>
-        void AfterTitleChanged(AbstractControl sender);
+        void AfterTitleChanged(AbstractControl sender, EventArgs e);
 
         /// <summary>
         /// Called when <see cref="AbstractControl.VisualStateChanged"/> property is changed.
         /// </summary>
-        void AfterVisualStateChanged(AbstractControl sender);
+        void AfterVisualStateChanged(AbstractControl sender, EventArgs e);
 
         /// <summary>
         /// Called after the mouse pointer leaves the control.
         /// </summary>
-        void AfterMouseLeave(AbstractControl sender);
+        void AfterMouseLeave(AbstractControl sender, EventArgs e);
 
         /// <summary>
         /// Called before the current control handler is detached.
         /// </summary>
-        void AfterHandlerDetaching(AbstractControl sender);
+        void AfterHandlerDetaching(AbstractControl sender, EventArgs e);
 
         /// <summary>
         /// Paints the background of the control.
@@ -202,22 +203,23 @@ namespace Alternet.UI
         /// Called after the value of the <see cref="AbstractControl.Margin"/> property changes.
         /// </summary>
         /// <param name="sender">Control which sends the notification.</param>
-        void AfterMarginChanged(AbstractControl sender);
+        /// <param name="e">Event arguments.</param>
+        void AfterMarginChanged(AbstractControl sender, EventArgs e);
 
         /// <summary>
         /// Called after the value of the <see cref="AbstractControl.Font"/> property changes.
         /// </summary>
-        void AfterFontChanged(AbstractControl sender);
+        void AfterFontChanged(AbstractControl sender, EventArgs e);
 
         /// <summary>
         /// Called after the value of the <see cref="AbstractControl.Padding"/> property changes.
         /// </summary>
-        void AfterPaddingChanged(AbstractControl sender);
+        void AfterPaddingChanged(AbstractControl sender, EventArgs e);
 
         /// <summary>
         /// Called after a new control handler is attached.
         /// </summary>
-        void AfterHandlerAttached(AbstractControl sender);
+        void AfterHandlerAttached(AbstractControl sender, EventArgs e);
 
         /// <summary>
         /// Called after the <see cref="AbstractControl.DragDrop" /> event is raised.
@@ -257,17 +259,17 @@ namespace Alternet.UI
         /// <summary>
         /// Called after the <see cref="AbstractControl.DragLeave" /> event is raised.
         /// </summary>
-        void AfterDragLeave(AbstractControl sender);
+        void AfterDragLeave(AbstractControl sender, EventArgs e);
 
         /// <summary>
         /// This method is invoked when the control gets focus.
         /// </summary>
-        void AfterGotFocus(AbstractControl sender, AbstractControl? oldFocus = null);
+        void AfterGotFocus(AbstractControl sender, GotFocusEventArgs e);
 
         /// <summary>
         /// This method is invoked when the control lost focus.
         /// </summary>
-        void AfterLostFocus(AbstractControl sender, AbstractControl? newFocus = null);
+        void AfterLostFocus(AbstractControl sender, LostFocusEventArgs e);
 
         /// <summary>
         /// Called after the mouse button was double-clicked.
@@ -309,25 +311,29 @@ namespace Alternet.UI
         /// Raises the <see cref="AbstractControl.ToolTipChanged"/> event.
         /// </summary>
         /// <param name="sender">Control which sends the notification.</param>
-        void AfterToolTipChanged(AbstractControl sender);
+        /// <param name="e">Event arguments.</param>
+        void AfterToolTipChanged(AbstractControl sender, EventArgs e);
 
         /// <summary>
         /// Called when <see cref="AbstractControl.Parent"/> property is changed.
         /// </summary>
         /// <param name="sender">Control which sends the notification.</param>
-        void AfterParentChanged(AbstractControl sender);
+        /// <param name="e">Event arguments.</param>
+        void AfterParentChanged(AbstractControl sender, EventArgs e);
 
         /// <summary>
         /// Called after control is created.
         /// </summary>
         /// <param name="sender">Control which sends the notification.</param>
-        void AfterCreate(AbstractControl sender);
+        /// <param name="e">Event arguments.</param>
+        void AfterCreate(AbstractControl sender, EventArgs e);
 
         /// <summary>
         /// Called after the enabled of the <see cref="AbstractControl.Enabled"/> property changes.
         /// </summary>
         /// <param name="sender">Control which sends the notification.</param>
-        void AfterEnabledChanged(AbstractControl sender);
+        /// <param name="e">Event arguments.</param>
+        void AfterEnabledChanged(AbstractControl sender, EventArgs e);
 
         /// <summary>
         /// Called after the <see cref="AbstractControl.HelpRequested" /> event is raised.</summary>

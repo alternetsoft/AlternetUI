@@ -61,6 +61,7 @@ namespace Alternet.UI
         public Splitter()
         {
             TabStop = false;
+            CanSelect = false;
             Size = (DefaultWidth, DefaultWidth);
             Dock = DockStyle.Left;
         }

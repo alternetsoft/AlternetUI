@@ -95,6 +95,7 @@ namespace Alternet.UI
         /// </summary>
         public ComboBox()
         {
+            Handler.Required();
             listBox = new(HandlePopupControlChanged);
         }
 
@@ -787,12 +788,12 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        public override void RaiseFontChanged()
+        public override void RaiseFontChanged(EventArgs e)
         {
             if (DisposingOrDisposed)
                 return;
             InvalidateBestSize();
-            base.RaiseFontChanged();
+            base.RaiseFontChanged(e);
         }
 
         /// <summary>

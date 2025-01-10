@@ -37,8 +37,9 @@ namespace Alternet.UI
             {
                 if (minMargin == null)
                 {
-                    minMargin = AllPlatformDefaults.
+                    var value = AllPlatformDefaults.
                         GetAsThickness(ControlKind, ControlDefaultsId.MinMargin);
+                    minMargin = value;
                 }
 
                 return minMargin.Value;

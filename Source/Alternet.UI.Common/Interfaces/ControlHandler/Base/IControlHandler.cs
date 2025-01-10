@@ -23,131 +23,11 @@ namespace Alternet.UI
         /// </summary>
         bool VisibleOnScreen { get; }
 
-        /// <summary>
-        /// Gets old dpi. Available only in the <see cref="AbstractControl.DpiChanged"/> event handler.
-        /// </summary>
-        SizeI EventOldDpi { get; }
-
-        /// <summary>
-        /// Gets new dpi. Available only in the <see cref="AbstractControl.DpiChanged"/> event handler.
-        /// </summary>
-        SizeI EventNewDpi { get; }
-
-        /// <summary>
-        /// Gets or sets an action which is called when 'DragDrop' event is raised.
-        /// </summary>
-        Action<DragEventArgs>? DragDrop { get; set; }
-
-        /// <summary>
-        /// Gets or sets an action which is called when 'DragOver' event is raised.
-        /// </summary>
-        Action<DragEventArgs>? DragOver { get; set; }
-
-        /// <summary>
-        /// Gets or sets an action which is called when 'DragEnter' event is raised.
-        /// </summary>
-        Action<DragEventArgs>? DragEnter { get; set; }
-
-        /// <summary>
-        /// Gets or sets an action which is called when 'SystemColorsChanged' event is raised.
-        /// </summary>
-        Action? SystemColorsChanged { get; set; }
-
-        /// <summary>
-        /// Gets or sets an action which is called when 'DpiChanged' event is raised.
-        /// </summary>
-        Action? DpiChanged { get; set; }
-
-        /// <summary>
-        /// Gets or sets an action which is called when 'Idle' event is raised.
-        /// </summary>
-        Action? Idle { get; set; }
-
-        /// <summary>
-        /// Gets or sets an action which is called when 'Paint' event is raised.
-        /// </summary>
-        Action? Paint { get; set; }
-
-        /// <summary>
-        /// Gets or sets an action which is called when 'MouseEnter' event is raised.
-        /// </summary>
-        Action? MouseEnter { get; set; }
-
-        /// <summary>
-        /// Gets or sets an action which is called when 'MouseLeave' event is raised.
-        /// </summary>
-        Action? MouseLeave { get; set; }
-
-        /// <summary>
-        /// Gets or sets an action which is called when 'MouseClick' event is raised.
-        /// </summary>
-        Action? MouseClick { get; set; }
-
-        /// <summary>
-        /// Gets or sets an action which is called when 'VisibleChanged' event is raised.
-        /// </summary>
-        Action? VisibleChanged { get; set; }
-
-        /// <summary>
-        /// Gets or sets an action which is called when 'TextChanged' event is raised.
-        /// </summary>
-        Action? TextChanged { get; set; }
-
-        /// <summary>
-        /// Gets or sets an action which is called when 'MouseCaptureLost' event is raised.
-        /// </summary>
-        Action? MouseCaptureLost { get; set; }
-
-        /// <summary>
-        /// Gets or sets an action which is called when 'DragLeave' event is raised.
-        /// </summary>
-        Action? DragLeave { get; set; }
-
-        /// <summary>
-        /// Gets or sets an action which is called when 'SizeChanged' event is raised.
-        /// </summary>
-        Action? SizeChanged { get; set; }
-
-        /// <summary>
-        /// Gets or sets an action which is called when 'LocationChanged' event is raised.
-        /// </summary>
-        Action? LocationChanged { get; set; }
-
-        /// <summary>
-        /// Gets or sets an action which is called when 'Activated' event is raised.
-        /// </summary>
-        Action? Activated { get; set; }
-
-        /// <summary>
-        /// Gets or sets an action which is called when 'Deactivated' event is raised.
-        /// </summary>
-        Action? Deactivated { get; set; }
-
-        /// <summary>
-        /// Gets or sets an action which is called when 'HandleCreated' event is raised.
-        /// </summary>
-        Action? HandleCreated { get; set; }
-
-        /// <summary>
-        /// Gets or sets an action which is called when 'HandleDestroyed' event is raised.
-        /// </summary>
-        Action? HandleDestroyed { get; set; }
-
         /// <inheritdoc cref="AbstractControl.Text"/>
         string Text { get; set; }
 
         /// <inheritdoc cref="UserControl.WantChars"/>
         bool WantChars { get; set; }
-
-        /// <summary>
-        /// Gets native control bounds. Valid only in the event handler.
-        /// </summary>
-        RectD EventBounds { get; }
-
-        /// <summary>
-        /// Gets control which is focused or unfocused. Valid only in the event handler.
-        /// </summary>
-        AbstractControl? EventFocusedControl { get; }
 
         /// <inheritdoc cref="Control.LangDirection"/>
         LangDirection LangDirection { get; set; }
@@ -259,6 +139,11 @@ namespace Alternet.UI
         /// <inheritdoc cref="AbstractControl.CaptureMouse"/>
         void CaptureMouse();
 
+        /// <summary>
+        /// Unbinds events from native control.
+        /// </summary>
+        void UnbindEvents();
+
         /// <inheritdoc cref="AbstractControl.ReleaseMouseCapture"/>
         void ReleaseMouseCapture();
 
@@ -288,9 +173,6 @@ namespace Alternet.UI
 
         /// <inheritdoc cref="AbstractControl.EndInit"/>
         void EndInit();
-
-        /// <inheritdoc cref="Control.SaveScreenshot"/>
-        void SaveScreenshot(string fileName);
 
         /// <inheritdoc cref="AbstractControl.IsTransparentBackgroundSupported"/>
         bool IsTransparentBackgroundSupported();

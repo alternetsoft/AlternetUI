@@ -20,7 +20,7 @@
         /// <summary>
         /// Gets parameter value.
         /// </summary>
-        public T Value
+        public virtual T Value
         {
             get => val;
             set => this.val = value;

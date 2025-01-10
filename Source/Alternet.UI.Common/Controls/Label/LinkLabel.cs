@@ -27,6 +27,8 @@ namespace Alternet.UI
         /// </summary>
         public LinkLabel()
         {
+            CanSelect = false;
+            TabStop = false;
         }
 
         /// <summary>

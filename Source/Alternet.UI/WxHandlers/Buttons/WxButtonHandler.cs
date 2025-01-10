@@ -104,17 +104,23 @@ namespace Alternet.UI
             }
         }
 
-        internal override Native.Control CreateNativeControl()
-        {
-            return new Native.Button();
-        }
-
         protected override void OnAttach()
         {
             base.OnAttach();
-
             if (App.IsWindowsOS)
                 Control.UserPaint = true;
+            NativeControl.Click = Control.RaiseClick;
+        }
+
+        protected override void OnDetach()
+        {
+            base.OnDetach();
+            NativeControl.Click = null;
+        }
+
+        internal override Native.Control CreateNativeControl()
+        {
+            return new Native.Button();
         }
     }
 }

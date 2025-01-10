@@ -109,11 +109,11 @@ namespace Alternet.UI
             {
                 case MotionEventActions.HoverEnter:
                     Debug.WriteLineIf(false, "Mouse hover enter");
-                    Control.RaiseMouseEnter();
+                    Control.RaiseMouseEnter(EventArgs.Empty);
                     break;
                 case MotionEventActions.HoverExit:
                     Debug.WriteLineIf(false, "Mouse hover exit");
-                    Control.RaiseMouseLeave();
+                    Control.RaiseMouseLeave(EventArgs.Empty);
                     break;
                 case MotionEventActions.HoverMove:
                     long timestamp = DateUtils.GetNowInMilliseconds();
@@ -150,7 +150,9 @@ namespace Alternet.UI
             e.Handled = false;
         }
 
-        protected virtual void HandleAndroidPlatformKeyPress(object? sender, Android.Views.View.KeyEventArgs e)
+        protected virtual void HandleAndroidPlatformKeyPress(
+            object? sender,
+            Android.Views.View.KeyEventArgs e)
         {
             e.Handled = false;
         }
@@ -158,9 +160,9 @@ namespace Alternet.UI
         protected virtual void HandleAndroidPlatformFocusChanged(PlatformView sender, bool gainFocus)
         {
             if (gainFocus)
-                Control?.RaiseGotFocus();
+                Control?.RaiseGotFocus(GotFocusEventArgs.Empty);
             else
-                Control?.RaiseLostFocus();
+                Control?.RaiseLostFocus(LostFocusEventArgs.Empty);
         }
 
         /// <summary>

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -120,7 +121,8 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Sets <see cref="AbstractControl.StateObjects"/> colors and backgrounds for the state specified
+        /// Sets <see cref="AbstractControl.StateObjects"/> colors and backgrounds
+        /// for the state specified
         /// in the <paramref name="state"/> parameter to the
         /// colors from <paramref name="fontAndColor"/>.
         /// </summary>
@@ -209,7 +211,7 @@ namespace Alternet.UI
             base.OnMouseLeftButtonDown(e);
             if (!Enabled)
                 return;
-            RaiseClick();
+            RaiseClick(e);
             ShowDropDownMenu();
             Invalidate();
         }
@@ -227,6 +229,7 @@ namespace Alternet.UI
         protected override void OnPaint(PaintEventArgs e)
         {
             DefaultPaint(e);
+            DefaultPaintDebug(e);
         }
 
         /// <inheritdoc/>
@@ -272,6 +275,21 @@ namespace Alternet.UI
             base.OnSystemColorsChanged(e);
             SystemSettings.ResetColors();
             Invalidate();
+        }
+
+        [Conditional("DEBUG")]
+        private void DefaultPaintDebug(PaintEventArgs e)
+        {
+            if (DebugUtils.IsDebugDefined && ContainerControl.ShowDebugFocusRect)
+            {
+                if (FocusedControl?.Parent == this)
+                {
+                    e.Graphics.FillBorderRectangle(
+                        FocusedControl.Bounds.Inflated(),
+                        null,
+                        BorderSettings.DebugBorder);
+                }
+            }
         }
     }
 }

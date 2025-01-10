@@ -8,11 +8,6 @@ namespace Alternet.UI
     /// </summary>
     public static class Keyboard
     {
-        /// <summary>
-        /// Gets or sets whether to process 'Tab' key internally without using the platform.
-        /// </summary>
-        public static bool ProcessTabInternally = true;
-
         private static IKeyboardHandler? handler;
 
         /// <summary>

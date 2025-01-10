@@ -287,9 +287,9 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        protected override void OnChildLostFocus(object? sender, AbstractControl? newFocus = null)
+        protected override void OnChildLostFocus(object? sender, LostFocusEventArgs e)
         {
-            base.OnChildLostFocus(sender, newFocus);
+            base.OnChildLostFocus(sender, e);
             if (ContainsFocus)
                 return;
             if (CancelOnLostFocus || AcceptOnLostFocus)

@@ -187,6 +187,7 @@ namespace PropertyGridSample
             Actions.Add(typeof(UserControl), (c) =>
             {
                 var control = (c as UserControl)!;
+                control.HasBorder = true;
                 control.SuggestedSize = 200;
             });
 
@@ -306,6 +307,7 @@ namespace PropertyGridSample
             Actions.Add(typeof(PanelOkCancelButtons), (c) =>
             {
                 PanelOkCancelButtons control = (c as PanelOkCancelButtons)!;
+                control.HasBorder = true;
             });
         }
 
@@ -393,9 +395,13 @@ namespace PropertyGridSample
 
         public static void InitStackPanel(object control)
         {
-            var parent = control as Control;
-            parent!.SuggestedHeight = 250;
-            //parent.BackgroundColor = Color.Cornsilk;
+            var panel = control as Control;
+
+            if (panel is null)
+                return;
+
+            panel.SuggestedHeight = 250;
+            panel.HasBorder = true;
 
 #pragma warning disable
             Button OkButton = new()
@@ -405,7 +411,7 @@ namespace PropertyGridSample
                 VerticalAlignment = VerticalAlignment.Center,
                 HorizontalAlignment = HorizontalAlignment.Right,
                 IsDefault = true,
-                Parent = parent,
+                Parent = panel,
             };
 
             Button CancelButton = new()
@@ -415,7 +421,7 @@ namespace PropertyGridSample
                 VerticalAlignment = VerticalAlignment.Center,
                 HorizontalAlignment = HorizontalAlignment.Right,
                 IsCancel = true,
-                Parent = parent,
+                Parent = panel,
             };
 
             Button ApplyButton = new()
@@ -424,7 +430,7 @@ namespace PropertyGridSample
                 Text = "3",
                 VerticalAlignment = VerticalAlignment.Center,
                 HorizontalAlignment = HorizontalAlignment.Right,
-                Parent = parent,
+                Parent = panel,
             };
 #pragma warning restore
 

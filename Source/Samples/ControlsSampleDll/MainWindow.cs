@@ -237,7 +237,7 @@ namespace ControlsSample
 
         private class GlobalFormActivity : BaseControlActivity
         {
-            public override void AfterCreate(AbstractControl sender)
+            public override void AfterCreate(AbstractControl sender, EventArgs e)
             {
                 ControlActivities.KeyboardZoomInOut.Initialize(sender);
             }

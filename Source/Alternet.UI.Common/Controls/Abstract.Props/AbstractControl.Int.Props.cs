@@ -10,8 +10,6 @@ namespace Alternet.UI
 {
     public partial class AbstractControl
     {
-        internal static int ScreenShotCounter { get; set; } = 0;
-
         internal override FrameworkElement? LogicalParent
         {
             get => Parent;
