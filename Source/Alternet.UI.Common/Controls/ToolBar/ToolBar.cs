@@ -40,6 +40,8 @@ namespace Alternet.UI
         /// </summary>
         public ToolBar()
         {
+            ParentBackColor = true;
+            ParentForeColor = true;
             Layout = LayoutStyle.Horizontal;
             itemSize = Math.Max(DefaultSize, DefaultMinItemSize);
             IsGraphicControl = true;

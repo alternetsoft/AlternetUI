@@ -64,6 +64,8 @@ namespace Alternet.UI
             CanSelect = false;
             Size = (DefaultWidth, DefaultWidth);
             Dock = DockStyle.Left;
+            ParentBackColor = true;
+            ParentForeColor = true;
         }
 
         /// <summary>

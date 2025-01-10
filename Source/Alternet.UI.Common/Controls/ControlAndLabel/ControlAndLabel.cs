@@ -52,6 +52,7 @@ namespace Alternet.UI
         public ControlAndLabel()
         {
             ParentBackColor = true;
+            ParentForeColor = true;
             Layout = LayoutStyle.Horizontal;
 
             label = CreateLabel();
@@ -61,6 +62,7 @@ namespace Alternet.UI
 
             mainControl = CreateControl();
             mainControl.Alignment = (HorizontalAlignment.Fill, VerticalAlignment.Center);
+            mainControl.MinWidth = 50;
             mainControl.Parent = this;
         }
 

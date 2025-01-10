@@ -47,6 +47,8 @@ namespace Alternet.UI
         /// </summary>
         public RadioButton()
         {
+            ParentBackColor = true;
+            ParentForeColor = true;
         }
 
         /// <summary>

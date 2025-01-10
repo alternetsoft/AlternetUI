@@ -29,6 +29,9 @@ namespace Alternet.UI
         {
             CanSelect = false;
             TabStop = false;
+            IsScrollable = true;
+            ParentBackColor = true;
+            ParentForeColor = true;
         }
 
         /// <inheritdoc/>

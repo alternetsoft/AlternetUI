@@ -149,6 +149,8 @@ namespace Alternet.UI
         /// </summary>
         public SpeedButton()
         {
+            ParentBackColor = true;
+            ParentForeColor = true;
             Padding = DefaultPadding;
             Layout = LayoutStyle.Horizontal;
 

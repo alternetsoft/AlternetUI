@@ -33,6 +33,8 @@ namespace Alternet.UI
         {
             CanSelect = false;
             TabStop = false;
+            ParentBackColor = true;
+            ParentForeColor = true;
         }
 
         /// <inheritdoc/>
