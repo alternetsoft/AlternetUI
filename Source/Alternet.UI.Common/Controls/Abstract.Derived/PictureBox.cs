@@ -18,6 +18,18 @@ namespace Alternet.UI
     [ControlCategory("Common")]
     public partial class PictureBox : GraphicControl, IValidatorReporter
     {
+        /// <summary>
+        /// Gets or sets default value of the <see cref="AbstractControl.ParentBackColor"/>
+        /// for the <see cref="PictureBox"/> control.
+        /// </summary>
+        public static bool DefaultParentBackColor = true;
+
+        /// <summary>
+        /// Gets or sets default value of the <see cref="AbstractControl.ParentForeColor"/>
+        /// for the <see cref="PictureBox"/> control.
+        /// </summary>
+        public static bool DefaultParentForeColor = true;
+
         private readonly ImageDrawable primitive = new();
         private bool textVisible = false;
 
@@ -36,6 +48,8 @@ namespace Alternet.UI
         /// </summary>
         public PictureBox()
         {
+            ParentBackColor = DefaultParentBackColor;
+            ParentForeColor = DefaultParentForeColor;
             RefreshOptions = ControlRefreshOptions.RefreshOnBorder
                 | ControlRefreshOptions.RefreshOnBackground
                 | ControlRefreshOptions.RefreshOnImage;

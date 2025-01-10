@@ -39,6 +39,6 @@ namespace Alternet.UI
         /// <summary>
         /// Platformless.
         /// </summary>
-        Plarformless,
+        Platformless,
     }
 }

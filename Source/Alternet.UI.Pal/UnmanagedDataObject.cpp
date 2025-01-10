@@ -59,7 +59,8 @@ namespace Alternet::UI
         return _dataObject;
     }
 
-    /*static*/ optional<wxArrayString> UnmanagedDataObject::TryGetFiles(wxDataObjectComposite* dataObject)
+    /*static*/ optional<wxArrayString> UnmanagedDataObject::TryGetFiles(
+        wxDataObjectComposite* dataObject)
     {
         wxFileDataObject* object = nullptr;
         if (dataObject->IsSupportedFormat(wxDF_FILENAME))
@@ -100,7 +101,8 @@ namespace Alternet::UI
         return object->GetBitmap();
     }
 
-    /*static*/ wxBitmapDataObject* UnmanagedDataObject::TryGetBitmapDataObject(wxDataObjectComposite* dataObject)
+    /*static*/ wxBitmapDataObject* UnmanagedDataObject::TryGetBitmapDataObject(
+        wxDataObjectComposite* dataObject)
     {
         wxBitmapDataObject* object = nullptr;
         auto format = GetBitmapDataFormat();
@@ -238,15 +240,17 @@ namespace Alternet::UI
 
     void UnmanagedDataObject::SetStreamData(const string& format, void* value)
     {
-        if (format != DataFormats::Bitmap)
-            throwEx(u"Data format not supported: " + format);
-
         InputStream inputStream(value);
         ManagedInputStream managedInputStream(&inputStream);
 
-        auto bitmap = wxBitmap(managedInputStream);
-
-        auto bitmapData = new wxBitmapDataObject(bitmap);
-        _dataObject->Add(bitmapData);
+        if (format == DataFormats::Bitmap)
+        {
+            auto bitmap = wxBitmap(managedInputStream);
+            auto bitmapData = new wxBitmapDataObject(bitmap);
+            _dataObject->Add(bitmapData);
+            return;
+        }
+       
+        throwEx(u"Data format not supported: " + format);
     }
 }

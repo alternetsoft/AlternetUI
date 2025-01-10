@@ -49,6 +49,8 @@ namespace Alternet.UI
         /// </summary>
         public CheckBox()
         {
+            ParentBackColor = true;
+            ParentForeColor = true;
         }
 
         /// <summary>

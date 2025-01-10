@@ -94,6 +94,14 @@ namespace Alternet.UI
         public virtual string? DisplayText { get; set; }
 
         /// <summary>
+        /// Gets or sets image index used when item is painted.
+        /// </summary>
+        /// <remarks>
+        /// Currently this property is not used by the default item painter.
+        /// </remarks>
+        public virtual int? ImageIndex { get; set; }
+
+        /// <summary>
         /// Gets or sets state of the check box associated with the item.
         /// </summary>
         /// <remarks>

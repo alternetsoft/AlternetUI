@@ -32,6 +32,8 @@ namespace Alternet.UI
         /// </summary>
         public Border()
         {
+            ParentBackColor = true;
+            ParentForeColor = true;
             RefreshOptions = ControlRefreshOptions.RefreshOnBorder
                 | ControlRefreshOptions.RefreshOnBackground;
             Borders ??= new();

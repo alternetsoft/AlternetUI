@@ -78,6 +78,7 @@ namespace Alternet.UI
         public ControlAndButton()
         {
             ParentBackColor = true;
+            ParentForeColor = true;
             Layout = LayoutStyle.Horizontal;
 
             SuspendLayout();

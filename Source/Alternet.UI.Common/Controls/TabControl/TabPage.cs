@@ -41,6 +41,8 @@ namespace Alternet.UI
         /// </summary>
         public TabPage()
         {
+            ParentBackColor = true;
+            ParentForeColor = true;
         }
 
         /// <summary>
@@ -48,6 +50,7 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="title">Page title.</param>
         public TabPage(string? title)
+            : this()
         {
             Title = title ?? string.Empty;
         }

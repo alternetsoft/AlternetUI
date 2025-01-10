@@ -9,6 +9,7 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Runtime.CompilerServices;
+using System.Runtime.ExceptionServices;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading;
@@ -1685,7 +1686,8 @@ namespace Alternet.UI
                         break;
                     case UnhandledExceptionMode.ThrowException:
                         LastUnhandledExceptionThrown = true;
-                        throw exception;
+                        ExceptionUtils.Rethrow(exception);
+                        break;
                     case UnhandledExceptionMode.CatchWithDialog:
                         if (HandleWithEvent())
                             return;
@@ -1697,12 +1699,14 @@ namespace Alternet.UI
                         if (HandleWithDialog())
                             return;
                         LastUnhandledExceptionThrown = true;
-                        throw exception;
+                        ExceptionUtils.Rethrow(exception);
+                        break;
                     case UnhandledExceptionMode.CatchWithThrow:
                         if (HandleWithEvent())
                             return;
                         LastUnhandledExceptionThrown = true;
-                        throw exception;
+                        ExceptionUtils.Rethrow(exception);
+                        break;
                     default:
                         break;
                 }

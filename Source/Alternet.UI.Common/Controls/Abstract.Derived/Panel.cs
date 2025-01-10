@@ -26,6 +26,8 @@ namespace Alternet.UI
         /// </summary>
         public Panel()
         {
+            ParentBackColor = true;
+            ParentForeColor = true;
         }
 
         /// <inheritdoc/>

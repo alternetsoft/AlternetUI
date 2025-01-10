@@ -45,6 +45,8 @@ namespace Alternet.UI
         /// </summary>
         public GenericLabel()
         {
+            ParentBackColor = true;
+            ParentForeColor = true;
             RefreshOptions = ControlRefreshOptions.RefreshOnBorder
                 | ControlRefreshOptions.RefreshOnColor
                 | ControlRefreshOptions.RefreshOnBackground

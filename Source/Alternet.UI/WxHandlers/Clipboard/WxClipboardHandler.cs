@@ -37,8 +37,10 @@ namespace Alternet.UI
         public void SetData(IDataObject? value)
         {
             value ??= DataObject.Empty;
-            WxApplicationHandler.NativeClipboard.SetDataObject(
-                UnmanagedDataObjectService.GetUnmanagedDataObject(value));
+
+            var unmanaged = UnmanagedDataObjectService.GetUnmanagedDataObject(value);
+            
+            WxApplicationHandler.NativeClipboard.SetDataObject(unmanaged);
         }
 
         public Task SetDataAsync(IDataObject? value)

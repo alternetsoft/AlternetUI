@@ -16,8 +16,8 @@ namespace Alternet.UI
                 return GetUnmanagedDataObject(obj);
 
             var output = new Native.UnmanagedDataObject();
-            var adatpter = new UnmanagedDataObjectAdapter(output);
-            adatpter.SetData(input);
+            var adapter = new UnmanagedDataObjectAdapter(output);
+            adapter.SetData(input);
 
             return output;
         }
@@ -37,11 +37,19 @@ namespace Alternet.UI
                 return;
 
             if (format == DataFormats.Text || data is string)
-                dataObject.SetStringData(format, (string)ClipboardUtils.SetDataTransform(format, data));
-            else
+            {
+                dataObject.SetStringData(
+                    format,
+                    (string)ClipboardUtils.SetDataTransform(format, data));
+                return;
+            }
+
             if (format == DataFormats.Files || data is FileInfo[])
+            {
                 dataObject.SetFileNamesData(format, string.Join("|", GetFileNames(data)));
-            else
+                return;
+            }
+
             if (format == DataFormats.Bitmap || data is Image)
             {
                 var image = (Image)data;
@@ -49,12 +57,21 @@ namespace Alternet.UI
                 image.Save(stream, ImageFormat.Png);
                 stream.Position = 0;
                 dataObject.SetStreamData(format, new Native.InputStream(stream));
+                return;
             }
-            else
-                throw new NotSupportedException("This type of data is not supported: " + data.GetType());
+
+            if (format == DataFormats.Serializable)
+            {
+                return;
+            }
+
+            throw new NotSupportedException("This type of data is not supported: " + data.GetType());
         }
 
-        private static void CopyData(IDataObject input, Native.UnmanagedDataObject output, string format)
+        private static void CopyData(
+            IDataObject input,
+            Native.UnmanagedDataObject output,
+            string format)
         {
             var data = input.GetData(format);
             if (data == null)

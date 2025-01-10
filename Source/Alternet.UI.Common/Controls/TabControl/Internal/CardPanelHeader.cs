@@ -74,6 +74,8 @@ namespace Alternet.UI
         /// </summary>
         public CardPanelHeader()
         {
+            ParentBackColor = true;
+            ParentForeColor = true;
             Layout = LayoutStyle.Horizontal;
             tabs.ThrowOnNullAdd = true;
             tabs.ItemInserted += Tabs_ItemInserted;
@@ -774,7 +776,6 @@ namespace Alternet.UI
         public virtual SpeedButton CreateHeaderButton()
         {
             var result = CreateButton?.Invoke() ?? Fn();
-            result.BackgroundColor = BackgroundColor;
             if (result.MinimumSize.IsEmpty)
                 result.MinimumSize = TabControl.DefaultMinTabSize;
             return result;

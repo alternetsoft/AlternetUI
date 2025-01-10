@@ -9,7 +9,7 @@ using Alternet.UI.Localization;
 
 namespace ControlsSample
 {
-    internal partial class TextInputPage : Control
+    internal partial class TextInputPage : Panel
     {
         public static bool ConsumeTabKey = false;
 
@@ -42,13 +42,12 @@ namespace ControlsSample
             textBox.Options |= TextBoxOptions.DefaultValidation;
             textBox.TextChanged += ReportValueChanged;
             textBox.KeyPress += TextBox_KeyPress;
-            TextBox.InitErrorPicture(textImage);
 
             ErrorsChanged += TextBox_ErrorsChanged;
 
             // ==== Other initializations
 
-            textAlignEdit.ComboBox.BindEnumProp(textBox, nameof(TextBox.TextAlign));
+           textAlignEdit.ComboBox.BindEnumProp(textBox, nameof(TextBox.TextAlign));
 
             readOnlyCheckBox.BindBoolProp(textBox, nameof(TextBox.ReadOnly));
             passwordCheckBox.BindBoolProp(textBox, nameof(TextBox.IsPassword));
@@ -56,12 +55,11 @@ namespace ControlsSample
             logPositionCheckBox.BindBoolProp(this, nameof(LogPosition));
 
             Group(textAlignEdit, minLengthEdit, maxLengthEdit)
-                .LabelSuggestedWidthToMax()
-                .InnerSuggestedWidthToMax();
+                .LabelSuggestedWidthToMax();
 
             // ==== Min and Max length editors
 
-            Group(minLengthEdit, maxLengthEdit).Margin((0, 0, 0, 5)).Parent(textBoxOptionsPanel);
+            Group(minLengthEdit, maxLengthEdit).Parent(textBoxOptionsPanel);
 
             minLengthEdit.TextBox.TextChanged += MinLengthBox_TextChanged;
             minLengthEdit.TextBox.IsRequired = true;
@@ -72,6 +70,17 @@ namespace ControlsSample
 
             textBox.PreviewKeyDown += TextBox_PreviewKeyDown;
             textBox.KeyDown += TextBox_KeyDown;
+
+            Click += (s, e) =>
+            {
+                DoInsideUpdate(() =>
+                {
+                    ParentBackColor = false;
+                    ParentForeColor = false;
+                    BackColor = Color.Ivory;
+                    ForeColor = Color.DarkRed;
+                });
+            };
         }
 
         private void TextBox_KeyDown(object? sender, KeyEventArgs e)
@@ -138,7 +147,7 @@ namespace ControlsSample
         
         private void TextInputPage_Idle(object? sender, EventArgs e)
         {
-            if (tab1.Visible)
+            if (memo.VisibleOnScreen)
             {
                 textBox.IdleAction();
 

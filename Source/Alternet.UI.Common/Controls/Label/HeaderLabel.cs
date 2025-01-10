@@ -38,6 +38,8 @@ namespace Alternet.UI
         /// </summary>
         public HeaderLabel()
         {
+            ParentBackColor = true;
+            ParentForeColor = true;
             CanSelect = false;
             TabStop = false;
             control = CreateInnerControl?.Invoke() ?? CreateDefaultInnerControl();

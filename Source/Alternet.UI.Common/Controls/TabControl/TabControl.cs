@@ -58,6 +58,9 @@ namespace Alternet.UI
         /// </summary>
         public TabControl()
         {
+            ParentBackColor = true;
+            ParentForeColor = true;
+
             cardPanelHeader.UserPaint = true;
             cardPanelHeader.Paint += Header_Paint;
             UserPaint = true;

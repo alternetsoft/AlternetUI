@@ -33,6 +33,8 @@ namespace Alternet.UI
         /// </summary>
         public ToolBarSet()
         {
+            ParentBackColor = true;
+            ParentForeColor = true;
             Layout = LayoutStyle.Vertical;
             ToolBarCount = 1;
             IsGraphicControl = true;

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
+using System.Runtime.ExceptionServices;
 using System.Text;
 
 namespace Alternet.UI
@@ -11,6 +12,15 @@ namespace Alternet.UI
     /// </summary>
     public static class ExceptionUtils
     {
+        /// <summary>
+        /// Rethrows the specified exception with the correct call stack information.
+        /// </summary>
+        /// <param name="e"></param>
+        public static void Rethrow(Exception e)
+        {
+            ExceptionDispatchInfo.Capture(e).Throw();
+        }
+
         /// <summary>
         /// Configure unhandled exception mode
         /// so default error dialog will be shown.
