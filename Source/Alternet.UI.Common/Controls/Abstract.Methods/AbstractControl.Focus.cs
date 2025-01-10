@@ -435,6 +435,7 @@ namespace Alternet.UI
 
         /// <summary>
         /// Internal method. Do not use it.
+        /// </summary>
         public static bool FocusedControlEquals(AbstractControl? control)
         {
             return AbstractControl.focusedControl.Value == control;
