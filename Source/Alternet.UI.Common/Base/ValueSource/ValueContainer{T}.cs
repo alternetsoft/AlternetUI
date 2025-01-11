@@ -5,10 +5,10 @@ using System.Text;
 namespace Alternet.UI
 {
     /// <summary>
-    /// Value container structure that implements <see cref="IValueContainer{T}"/> interface.
+    /// Value container structure that implements <see cref="IValueSource{T}"/> interface.
     /// </summary>
     /// <typeparam name="T">Type of the value.</typeparam>
-    public struct ValueContainer<T> : IValueContainer<T>
+    public struct ValueContainer<T> : IValueSource<T>
     {
         private readonly Action? changed;
 

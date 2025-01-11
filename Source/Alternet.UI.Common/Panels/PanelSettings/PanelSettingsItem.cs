@@ -11,7 +11,7 @@ namespace Alternet.UI
     public class PanelSettingsItem : BaseControlItem
     {
         private object? label;
-        private object? data;
+        private IValueSource<object>? valueSource;
         private PanelSettingsItemKind kind;
         private Type? valueType;
         private bool isNullable = false;
@@ -144,17 +144,27 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets or sets value source.
+        /// </summary>
+        public IValueSource<object> ValueSource
+        {
+            get => valueSource ??= new ValueContainer<object>();
+
+            set => valueSource = value;
+        }
+
+        /// <summary>
         /// Gets or sets value.
         /// </summary>
         public virtual object? Value
         {
-            get => data;
+            get => ValueSource.Value;
 
             set
             {
-                if (data == value)
+                if (ValueSource.Value == value)
                     return;
-                data = value;
+                ValueSource.Value = value;
                 RaiseValueChanged(EventArgs.Empty);
             }
         }

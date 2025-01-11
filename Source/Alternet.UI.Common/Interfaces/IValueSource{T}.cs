@@ -8,7 +8,7 @@ namespace Alternet.UI
     /// Provides access to the value of the specified type.
     /// </summary>
     /// <typeparam name="T">Type of the value.</typeparam>
-    public interface IValueContainer<T>
+    public interface IValueSource<T>
     {
         /// <summary>
         /// Occurs when the value is changed.
