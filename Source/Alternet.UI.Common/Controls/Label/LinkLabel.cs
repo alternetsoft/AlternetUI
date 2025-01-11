@@ -50,16 +50,6 @@ namespace Alternet.UI
         public static bool UseGenericControl { get; set; }
 
         /// <summary>
-        /// Gets or sets whether to use our <see cref="AppUtils.ShellExecute"/>
-        /// for opening the <see cref="Url"/> or allow native control to open it.
-        /// </summary>
-        /// <remarks>
-        /// On Linux (Ubuntu 23) native control has errors with opening urls, so
-        /// this property is <c>true</c> by default and we do not use it.
-        /// </remarks>
-        public static bool UseShellExecute { get; set; } = true;
-
-        /// <summary>
         /// Gets control handler.
         /// </summary>
         [Browsable(false)]
@@ -195,13 +185,6 @@ namespace Alternet.UI
         }
 
         [Browsable(false)]
-        internal new string Title
-        {
-            get => base.Title;
-            set => base.Title = value;
-        }
-
-        [Browsable(false)]
         internal new LayoutStyle? Layout
         {
             get => base.Layout;
@@ -210,7 +193,7 @@ namespace Alternet.UI
         /// <summary>
         /// Raises <see cref="LinkClicked"/> event.
         /// </summary>
-        /// <param name="e"></param>
+        /// <param name="e">Event arguments.</param>
         public void RaiseLinkClicked(CancelEventArgs e)
         {
             if (DisposingOrDisposed)
@@ -218,7 +201,7 @@ namespace Alternet.UI
             OnLinkClicked(e);
             if (!e.Cancel)
                 LinkClicked?.Invoke(this, e);
-            if (!e.Cancel && UseShellExecute)
+            if (!e.Cancel)
             {
                 e.Cancel = true;
                 AppUtils.OpenUrl(Url);
