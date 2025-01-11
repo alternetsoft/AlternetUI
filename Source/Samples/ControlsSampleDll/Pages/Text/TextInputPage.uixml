@@ -10,41 +10,22 @@
     <ErrorPictureBox Name="textImage"/>
   </HorizontalStackPanel>
 
-  <HorizontalStackPanel Margin="0,5,0,5" HorizontalAlignment="Left">
-    <Button Text="Change text..." Margin="0,0,0,5" Name="changeTextButton"
-            Click="ChangeTextButton_Click"  IsTextLocalized="true"/>
-    <Button Text="Properties..." Margin="0,0,0,5" Name="showPropertiesButton"
-            Click="ShowProperties_Click" IsTextLocalized="true" />
-  </HorizontalStackPanel>
-
   <!-- ========================= -->
 
-  <TabControl MinSizeGrowMode="Height" VerticalAlignment="Fill">
-
-    <ScrollViewer Title="Settings">
-      
-      <StackPanel Padding="5" MinChildMargin="5" Orientation="Vertical"
+    <ScrollViewer Margin="5" VerticalAlignment="Fill" >
+      <StackPanel MinChildMargin="5" Orientation="Vertical" SuggestedWidth="350"
                           Name="textBoxOptionsPanel">
-        <CheckBox Name="readOnlyCheckBox" Text="ReadOnly" IsTextLocalized="true"/>
-        <CheckBox Name="passwordCheckBox" Text="Password" IsTextLocalized="true"/>
-        <CheckBox Name="hasBorderCheckBox" Text="Has Border"
-                  IsTextLocalized="true"/>
-        <CheckBox Name="logPositionCheckBox" Text="Log Position"
-                  IsTextLocalized="true"/>
-        <CheckBox Name="allowSpaceCheckBox" Text="Allow space char"
-                  IsTextLocalized="true" IsChecked="true"/>
+        
+        <PanelSettings Name="panelSettings">
+        </PanelSettings>
 
         <ComboBoxAndLabel Title="Text Align" Name="textAlignEdit" IsTitleLocalized="true"/>
-
+        <ValueEditorUInt32 Name="minLengthEdit" Text="0" IsRequired = "true"/>
+        <ValueEditorUInt32 Name="maxLengthEdit" Text="0" IsRequired = "true"/>
+        
+        <Label Name="memo" Text="TextBox information will be here"/>
       </StackPanel>
-
     </ScrollViewer>
-
-    <!-- ========================= -->
-
-    <MultilineTextBox Name="memo" Title="Information" HasBorder="false" ReadOnly="true"
-                      Text="TextBox information will be here" Margin="5"/>
-  </TabControl>
 
   <!-- ========================= -->
 

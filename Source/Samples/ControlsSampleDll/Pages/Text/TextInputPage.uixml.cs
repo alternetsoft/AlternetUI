@@ -18,9 +18,6 @@ namespace ControlsSample
         public static string TextBoxEmptyTextHint = "Sample Hint";
         public static string TextBoxSampleText = "Sample Text";
 
-        private readonly ValueEditorUInt32 minLengthEdit;
-        private readonly ValueEditorUInt32 maxLengthEdit;
-
         private PopupPropertyGrid? popup;
 
         static TextInputPage()
@@ -29,9 +26,6 @@ namespace ControlsSample
 
         public TextInputPage()
         {
-            minLengthEdit = new(MinLengthEditLabel, 0);
-            maxLengthEdit = new(MaxLengthEditLabel, 0);
-
             InitializeComponent();
 
             textBox.EmptyTextHint = TextBoxEmptyTextHint;
@@ -47,12 +41,7 @@ namespace ControlsSample
 
             // ==== Other initializations
 
-           textAlignEdit.ComboBox.BindEnumProp(textBox, nameof(TextBox.TextAlign));
-
-            readOnlyCheckBox.BindBoolProp(textBox, nameof(TextBox.ReadOnly));
-            passwordCheckBox.BindBoolProp(textBox, nameof(TextBox.IsPassword));
-            hasBorderCheckBox.BindBoolProp(textBox, nameof(TextBox.HasBorder));
-            logPositionCheckBox.BindBoolProp(this, nameof(LogPosition));
+            textAlignEdit.ComboBox.BindEnumProp(textBox, nameof(TextBox.TextAlign));
 
             Group(textAlignEdit, minLengthEdit, maxLengthEdit)
                 .LabelSuggestedWidthToMax();
@@ -62,9 +51,9 @@ namespace ControlsSample
             Group(minLengthEdit, maxLengthEdit).Parent(textBoxOptionsPanel);
 
             minLengthEdit.TextBox.TextChanged += MinLengthBox_TextChanged;
-            minLengthEdit.TextBox.IsRequired = true;
             maxLengthEdit.TextBox.TextChanged += MaxLengthBox_TextChanged;
-            maxLengthEdit.TextBox.IsRequired = true;
+
+            // ==== Other
 
             Idle += TextInputPage_Idle;
 
@@ -81,6 +70,15 @@ namespace ControlsSample
                     ForeColor = Color.DarkRed;
                 });
             };
+
+            panelSettings.AddInput("ReadOnly", textBox, nameof(TextBox.ReadOnly));
+            panelSettings.AddInput("Password", textBox, nameof(TextBox.IsPassword));
+            panelSettings.AddInput("Has Border", textBox, nameof(TextBox.HasBorder));
+            panelSettings.AddInput("Allow space char", this, nameof(AllowSpaceChar));
+            panelSettings.AddInput("Log Position", this, nameof(LogPosition));
+
+            panelSettings.AddButton("Change text...", ChangeTextButton_Click);
+            panelSettings.AddButton("Properties...", ShowProperties_Click);
         }
 
         private void TextBox_KeyDown(object? sender, KeyEventArgs e)
@@ -109,7 +107,7 @@ namespace ControlsSample
 
         private void TextBox_KeyPress(object? sender, KeyPressEventArgs e)
         {
-            if (e.KeyChar == ' ' && !allowSpaceCheckBox.IsChecked)
+            if (e.KeyChar == ' ' && !AllowSpaceChar)
                 e.Handled = true;
         }
 
@@ -153,11 +151,12 @@ namespace ControlsSample
 
                 object[] info =
                     [
-                        "Text:", $"<{textBox.Text}>", Environment.NewLine,
-                        "SelectedText:", $"<{textBox.SelectedText}> ({textBox.SelectedText.Length})", 
+                        "Information:", Environment.NewLine, Environment.NewLine,
+                        "Text = ", $"<{textBox.Text}>", Environment.NewLine,
+                        "SelectedText = ", $"<{textBox.SelectedText}> ({textBox.SelectedText.Length})", 
                         Environment.NewLine,
-                        "SelectionStart:", $"<{textBox.SelectionStart}>", Environment.NewLine,
-                        "SelectionLength:", $"<{textBox.SelectionLength}>", Environment.NewLine,
+                        "SelectionStart = ", $"<{textBox.SelectionStart}>", Environment.NewLine,
+                        "SelectionLength = ", $"<{textBox.SelectionLength}>", Environment.NewLine,
                     ];
 
                 var s = StringUtils.ToStringSimple(info);
@@ -166,6 +165,8 @@ namespace ControlsSample
         }
 
         public static bool LogPosition { get; set; }
+
+        public static bool AllowSpaceChar { get; set; } = true;
 
         private void TextBox_CurrentPositionChanged(object? sender, EventArgs e)
         {
