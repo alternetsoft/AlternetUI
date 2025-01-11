@@ -186,8 +186,7 @@ namespace Alternet.UI
 
             result.AsyncWaitHandle.WaitOne();
 
-            if (invocation.Exception != null)
-                throw invocation.Exception;
+            ExceptionUtils.Rethrow(invocation.Exception);
 
             return invocation.ReturnValue;
         }
@@ -359,19 +358,11 @@ namespace Alternet.UI
         public virtual void Log(object? s) => App.Log(s);
 
         /// <summary>
-        /// Throws exception.
-        /// </summary>
-        /// <param name="e">Exception to throw.</param>
-        public virtual void Throw(Exception e)
-        {
-            throw e;
-        }
-
-        /// <summary>
         /// Checks current thread on <see cref="ApartmentState.STA"/>.
         /// </summary>
         /// <exception cref="InvalidOperationException">Raised if
-        /// <see cref="Thread.GetApartmentState"/> is not <see cref="ApartmentState.STA"/>.</exception>
+        /// <see cref="Thread.GetApartmentState"/> is
+        /// not <see cref="ApartmentState.STA"/>.</exception>
         /// <remarks>
         /// This method performs checks only on MSW, on other os it does nothing.
         /// </remarks>

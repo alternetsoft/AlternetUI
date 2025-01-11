@@ -21,6 +21,10 @@ namespace Alternet.Drawing.Printing
         /// <summary>
         /// Gets the printer resolution kind.
         /// </summary>
-        public PrinterResolutionKind Kind { get => throw new Exception(); set => throw new Exception(); }
+        public PrinterResolutionKind Kind
+        {
+            get => throw new Exception();
+            set => throw new Exception();
+        }
     }
 }

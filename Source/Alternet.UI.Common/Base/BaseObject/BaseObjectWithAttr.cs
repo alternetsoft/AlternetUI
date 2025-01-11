@@ -8,7 +8,8 @@ namespace Alternet.UI
     /// <summary>
     /// Extends <see cref="BaseObjectWithId"/> with custom attributes.
     /// This includes <see cref="Tag"/>, <see cref="CustomFlags"/>, <see cref="CustomAttr"/>,
-    /// <see cref="FlagsAndAttributes"/> properties and other related to custom attributes features.
+    /// <see cref="FlagsAndAttributes"/> properties and other related
+    /// to custom attributes features.
     /// </summary>
     public partial class BaseObjectWithAttr : BaseObjectWithId
     {
