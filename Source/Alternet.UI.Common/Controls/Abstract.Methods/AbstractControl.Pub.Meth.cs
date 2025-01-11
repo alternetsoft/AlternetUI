@@ -148,6 +148,8 @@ namespace Alternet.UI
                     return AbstractControl.GetPreferredSizeWhenVertical(container, availableSize);
                 case LayoutStyle.Horizontal:
                     return AbstractControl.GetPreferredSizeWhenHorizontal(container, availableSize);
+                case LayoutStyle.Scroll:
+                    return AbstractControl.GetPreferredSizeWhenScroll(container, availableSize);
             }
         }
 
