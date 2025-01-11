@@ -1222,10 +1222,12 @@ namespace Alternet.UI
 
                 if (onlyGrow)
                 {
-                    newSize = SizeD.Max(newSize, Size);
+                    newSize = SizeD.Max(newSize, ClientSize);
                 }
 
-                Size = newSize;
+                // We need to use here client size as, for example,
+                // window has title bar and thick border.
+                ClientSize = newSize;
             }
         }
 
