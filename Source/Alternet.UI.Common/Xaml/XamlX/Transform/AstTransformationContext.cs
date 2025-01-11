@@ -21,7 +21,7 @@ namespace XamlX.Transform
         public IXamlAstNode Error(IXamlAstNode node, Exception e)
         {
             if (StrictMode)
-                throw e;
+                Alternet.UI.ExceptionUtils.Rethrow(e);
             return node;
         }
 
