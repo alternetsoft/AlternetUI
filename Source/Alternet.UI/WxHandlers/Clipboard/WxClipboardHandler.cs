@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Alternet.UI
 {
-    internal class WxClipboardHandler : DisposableObject, IClipboardHandler
+    internal class WxClipboardHandler : DisposableObject, IClipboardHandler, IDoCommand
     {
         public bool AsyncRequired => false;
 
@@ -47,6 +47,34 @@ namespace Alternet.UI
         {
             SetData(value);
             return Task.CompletedTask;
+        }
+
+        public object? DoCommand(string cmdName, params object?[] args)
+        {
+            if(cmdName == "log")
+            {
+                Log();
+            }
+
+            return null;
+        }
+
+        public void Log()
+        {
+            App.LogBeginSection();
+
+            for (int i = 1; i < (int)ClipboardDataFormatId.Max; i++)
+            {
+                var format = (ClipboardDataFormatId)i;
+                var present = WxApplicationHandler.NativeClipboard.IsIntFormatSupported(i);
+
+                if (present)
+                {
+                    App.Log($"Clipboard contains format: {format}");
+                }
+            }
+
+            App.LogEndSection();
         }
     }
 }
