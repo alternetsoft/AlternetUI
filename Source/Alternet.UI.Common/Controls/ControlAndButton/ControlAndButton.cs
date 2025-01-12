@@ -77,6 +77,7 @@ namespace Alternet.UI
         /// </summary>
         public ControlAndButton()
         {
+            SuspendHandlerTextChange();
             ParentBackColor = true;
             ParentForeColor = true;
             Layout = LayoutStyle.Horizontal;
@@ -92,13 +93,35 @@ namespace Alternet.UI
                 buttons.Alignment = (HorizontalAlignment.Right, VerticalAlignment.Center);
                 buttons.ParentBackColor = true;
                 buttons.ParentForeColor = true;
-                HasBtnComboBox = true;
+
+                if(NeedDefaultButton())
+                    HasBtnComboBox = true;
                 buttons.Parent = this;
             }
             finally
             {
                 ResumeLayout();
             }
+        }
+
+        /// <summary>
+        /// Occurs when <see cref="AbstractControl.TextChanged"/> event of the
+        /// inner control is changed.
+        /// </summary>
+        public new event EventHandler? TextChanged
+        {
+            add => MainControl.TextChanged += value;
+            remove => MainControl.TextChanged -= value;
+        }
+
+        /// <summary>
+        /// Occurs when <see cref="AbstractControl.DelayedTextChanged"/> event of the
+        /// inner control is changed.
+        /// </summary>
+        public new event EventHandler<EventArgs>? DelayedTextChanged
+        {
+            add => MainControl.DelayedTextChanged += value;
+            remove => MainControl.DelayedTextChanged -= value;
         }
 
         /// <summary>
@@ -452,6 +475,12 @@ namespace Alternet.UI
                 return "minus";
             return "other";
         }
+
+        /// <summary>
+        /// Gets whether default button need to be created in the constructor.
+        /// </summary>
+        /// <returns></returns>
+        protected virtual bool NeedDefaultButton() => true;
 
         /// <summary>
         /// Creates main child control.
