@@ -70,7 +70,7 @@ namespace ControlsSample
 
             panelSettings.AddInput("Text Align", textBox, nameof(TextBox.TextAlign));
 
-            BaseEventArgsWithAttr e = new();
+            CustomEventArgs e = new();
             e.CustomFlags["IsRequired"] = true;
             
             var itemMinLengthEdit = panelSettings.AddInput(

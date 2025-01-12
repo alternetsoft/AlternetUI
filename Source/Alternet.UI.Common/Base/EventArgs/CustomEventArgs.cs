@@ -11,7 +11,7 @@ namespace Alternet.UI
     /// <see cref="FlagsAndAttributes"/> properties and other related
     /// to custom attributes features.
     /// </summary>
-    public partial class BaseEventArgsWithAttr : BaseEventArgs
+    public partial class CustomEventArgs : BaseEventArgs
     {
         private FlagsAndAttributesStruct attr = new();
 

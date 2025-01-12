@@ -36,7 +36,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets additional arguments used when item was created.
         /// </summary>
-        public virtual BaseEventArgsWithAttr? CreateArg { get; internal set; }
+        public virtual CustomEventArgs? CreateArg { get; internal set; }
 
         /// <summary>
         /// Gets or sets action which is invoked when value is changed.
