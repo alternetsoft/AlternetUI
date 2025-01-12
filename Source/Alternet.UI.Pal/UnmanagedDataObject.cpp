@@ -148,6 +148,13 @@ namespace Alternet::UI
         return _dataObject->IsSupportedFormat(fmt);
     }
 
+    bool IsStandardDataFormat(wxDataFormat& df)
+    {
+        auto m_format = df.GetType();
+
+        return m_format > 0 && m_format < wxDF_PRIVATE;
+    }
+
     void* UnmanagedDataObject::OpenFormatsArray()
     {
         auto result = new std::vector<string>();
@@ -169,7 +176,7 @@ namespace Alternet::UI
         size_t n;
         for (n = 0; n < fmtCount; n++)
         {
-            if (formats[n].IsStandard())
+            if (IsStandardDataFormat(formats[n]))
                 continue;
             auto st = formats[n].GetId();
             result->push_back(wxStr(st));
