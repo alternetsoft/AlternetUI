@@ -74,6 +74,13 @@ namespace Alternet.UI
                 }
             }
 
+            var s = "WindowsForms10PersistentObject";
+
+            var persistentSupported = WxApplicationHandler.NativeClipboard
+                .IsStrFormatSupported(s);
+            if(persistentSupported)
+                App.Log($"Clipboard contains format: {s}");
+
             App.LogEndSection();
         }
     }
