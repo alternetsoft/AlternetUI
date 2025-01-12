@@ -237,7 +237,8 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Stores text data in this data object. The format of the text data to store is specified
+        /// Stores text data in this data object. The format of the text
+        /// data to store is specified
         /// with a member of <see cref="TextDataFormat" />.</summary>
         /// <param name="textData">A string that contains the text data to store
         /// in the data object.</param>
@@ -258,6 +259,45 @@ namespace Alternet.UI
             }
 
             SetData(DataFormats.ConvertToDataFormats(format), textData);
+        }
+
+        /// <inheritdoc/>
+        public virtual bool HasFormat(ClipboardDataFormatId format)
+        {
+            switch (format)
+            {
+                case ClipboardDataFormatId.UnicodeText:
+                case ClipboardDataFormatId.Text:
+                case ClipboardDataFormatId.OemText:
+                    return ContainsText;
+                case ClipboardDataFormatId.Filename:
+                    return ContainsFiles;
+                case ClipboardDataFormatId.Dib:
+                case ClipboardDataFormatId.Bitmap:
+                    return ContainsBitmap;
+                case ClipboardDataFormatId.Invalid:
+                case ClipboardDataFormatId.MetaFile:
+                case ClipboardDataFormatId.Sylk:
+                case ClipboardDataFormatId.Dif:
+                case ClipboardDataFormatId.Tiff:
+                case ClipboardDataFormatId.Palette:
+                case ClipboardDataFormatId.PenData:
+                case ClipboardDataFormatId.Riff:
+                case ClipboardDataFormatId.Wave:
+                case ClipboardDataFormatId.EnhMetaFile:
+                case ClipboardDataFormatId.Locale:
+                case ClipboardDataFormatId.Private:
+                case ClipboardDataFormatId.Html:
+                case ClipboardDataFormatId.Png:
+                default:
+                    return false;
+            }
+        }
+
+        /// <inheritdoc/>
+        public virtual bool HasFormat(string format)
+        {
+            return GetDataPresent(format);
         }
 
         internal class EmptyDataObject : DataObject

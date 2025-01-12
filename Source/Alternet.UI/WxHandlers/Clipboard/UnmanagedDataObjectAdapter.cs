@@ -84,5 +84,15 @@ namespace Alternet.UI
         {
             SetData(ClipboardUtils.DetectFormatFromData(data), data);
         }
+
+        public bool HasFormat(ClipboardDataFormatId format)
+        {
+            return dataObject.GetNativeDataPresent((int)format);
+        }
+
+        public bool HasFormat(string format)
+        {
+            return dataObject.GetDataPresent(format);
+        }
     }
 }
