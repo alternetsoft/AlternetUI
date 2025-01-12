@@ -43,7 +43,6 @@ namespace Alternet.UI
         /// </summary>
         public TextBoxAndLabel()
         {
-            SuspendHandlerTextChange();
             Init();
         }
 

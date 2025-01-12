@@ -19,7 +19,6 @@ namespace Alternet.UI
         /// </summary>
         public TextBoxAndButton()
         {
-            SuspendHandlerTextChange();
             MainControl.ValidatorReporter = ErrorPicture;
             MainControl.TextChanged += MainControl_TextChanged;
             MainControl.AutoShowError = true;
