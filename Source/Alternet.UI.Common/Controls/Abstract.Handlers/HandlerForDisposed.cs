@@ -319,7 +319,7 @@ namespace Alternet.UI
 
         bool IWebBrowserLite.CanUndo { get; }
 
-        GenericAlignment ITextBoxHandler.TextAlign { get; set; }
+        TextHorizontalAlignment ITextBoxHandler.TextAlign { get; set; }
 
         TreeViewItem? ITreeViewHandler.TopItem { get; }
 

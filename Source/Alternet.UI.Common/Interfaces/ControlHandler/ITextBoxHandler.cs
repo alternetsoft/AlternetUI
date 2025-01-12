@@ -74,7 +74,7 @@ namespace Alternet.UI
         TextBoxTextWrap TextWrap { get; set; }
 
         /// <inheritdoc cref="TextBox.TextAlign"/>
-        GenericAlignment TextAlign { get; set; }
+        TextHorizontalAlignment TextAlign { get; set; }
 
         /// <inheritdoc cref="TextBox.IsRichEdit"/>
         bool IsRichEdit { get; set; }
