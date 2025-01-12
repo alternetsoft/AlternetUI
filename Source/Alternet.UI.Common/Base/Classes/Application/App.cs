@@ -1060,7 +1060,11 @@ namespace Alternet.UI
                 if (obj is Exception e)
                     LogUtils.LogException(e);
                 else
+                {
+                    if (obj is null)
+                        return;
                     Log($"Error: {obj}", LogItemKind.Error);
+                }
             }
             catch
             {
