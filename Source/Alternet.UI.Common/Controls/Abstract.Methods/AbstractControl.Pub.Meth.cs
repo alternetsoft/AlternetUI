@@ -1576,6 +1576,28 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets the validation errors for this control and its child controls.
+        /// </summary>
+        /// <param name="propertyName">
+        /// The name of the property to retrieve validation errors for; or <c>null</c>
+        /// or <see cref="string.Empty"/>, to retrieve entity-level errors.
+        /// </param>
+        /// <returns>The validation errors for this control and its child controls.</returns>
+        /// <remarks>
+        /// This is the same as <see cref="GetErrors"/> but returns <see cref="IEnumerable{T}"/>.
+        /// </remarks>
+        public virtual IEnumerable<object> GetErrorsCollection(string? propertyName = null)
+        {
+            var errors = GetErrors(propertyName);
+
+            if (errors is null)
+                yield break;
+
+            foreach (var e in errors)
+                yield return e;
+        }
+
+        /// <summary>
         /// Gets children of the specified type as <see cref="ControlSet"/>.
         /// </summary>
         /// <param name="recursive">Whether to get all children recurively.</param>
