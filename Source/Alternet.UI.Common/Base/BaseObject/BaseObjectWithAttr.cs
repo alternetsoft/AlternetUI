@@ -13,21 +13,18 @@ namespace Alternet.UI
     /// </summary>
     public partial class BaseObjectWithAttr : BaseObjectWithId
     {
-        private readonly object locker = new();
-
-        private IFlagsAndAttributes? flagsAndAttributes;
-        private IIntFlagsAndAttributes? intFlagsAndAttributes;
+        private FlagsAndAttributesStruct attr = new();
 
         /// <summary>
-        /// Gets or sets the object that contains data about the item.
+        /// Gets or sets the object that contains custom user-defined data.
         /// </summary>
-        /// <value>An <see cref="object"/> that contains data about the item.
+        /// <value>An <see cref="object"/> that contains custom user-defined data.
         /// The default is <c>null</c>.</value>
         /// <remarks>
         /// Any type derived from the <see cref="object"/> class can be assigned
         /// to this property.
         /// A common use for the <see cref="Tag"/> property is to store data that
-        /// is closely associated with the item.
+        /// is closely associated with the object.
         /// </remarks>
         [Browsable(false)]
         public virtual object? Tag { get; set; }
@@ -56,25 +53,17 @@ namespace Alternet.UI
         {
             get
             {
-                if(intFlagsAndAttributes is null)
-                {
-                    lock (locker)
-                    {
-                        intFlagsAndAttributes = FlagsAndAttributesFactory.CreateIntFlagsAndAttributes();
-                    }
-                }
-
-                return intFlagsAndAttributes;
+                return attr.IntFlagsAndAttributes;
             }
 
             set
             {
-                intFlagsAndAttributes = value;
+                attr.IntFlagsAndAttributes = value;
             }
         }
 
         /// <summary>
-        /// Gets custom flags and attributes provider associated with the item.
+        /// Gets custom flags and attributes provider associated with the object.
         /// You can store any custom data here.
         /// </summary>
         [Browsable(false)]
@@ -82,32 +71,24 @@ namespace Alternet.UI
         {
             get
             {
-                if(flagsAndAttributes is null)
-                {
-                    lock (locker)
-                    {
-                        flagsAndAttributes = FlagsAndAttributesFactory.Create();
-                    }
-                }
-
-                return flagsAndAttributes;
+                return attr.FlagsAndAttributes;
             }
 
             set
             {
-                flagsAndAttributes = value;
+                attr.FlagsAndAttributes = value;
             }
         }
 
         /// <summary>
-        /// Gets custom flags provider associated with the item.
+        /// Gets custom flags provider associated with the object.
         /// You can store any custom data here.
         /// </summary>
         [Browsable(false)]
         public ICustomFlags<string> CustomFlags => FlagsAndAttributes.Flags;
 
         /// <summary>
-        /// Gets custom attributes provider associated with the item.
+        /// Gets custom attributes provider associated with the object.
         /// You can store any custom data here.
         /// </summary>
         [Browsable(false)]
