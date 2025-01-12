@@ -12,6 +12,7 @@ void SetStringData(const string& format, const string& value);
 void SetFileNamesData(const string& format, const string& value);
 void SetStreamData(const string& format, void* value);
 bool GetDataPresent(const string& format);
+bool GetNativeDataPresent(int format);
 
 public:
 UnmanagedDataObject();

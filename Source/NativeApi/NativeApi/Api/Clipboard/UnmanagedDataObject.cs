@@ -20,5 +20,7 @@ namespace NativeApi.Api
         public void SetStreamData(string format, InputStream value) => throw new Exception();
 
         public bool GetDataPresent(string format) => throw new Exception();
+
+        public bool GetNativeDataPresent(int format) => throw new Exception();
     }
 }

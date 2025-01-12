@@ -142,3 +142,14 @@ ALTERNET_UI_API c_bool UnmanagedDataObject_GetDataPresent_(UnmanagedDataObject* 
     #endif
 }
 
+ALTERNET_UI_API c_bool UnmanagedDataObject_GetNativeDataPresent_(UnmanagedDataObject* obj, int format)
+{
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    return MarshalExceptions<c_bool>([&](){
+    #endif
+        return obj->GetNativeDataPresent(format);
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    });
+    #endif
+}
+
