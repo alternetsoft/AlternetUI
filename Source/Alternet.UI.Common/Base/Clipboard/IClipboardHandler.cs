@@ -31,5 +31,14 @@ namespace Alternet.UI
 
         /// <inheritdoc cref="Clipboard.SetDataObjectAsync(IDataObject?)"/>
         Task SetDataAsync(IDataObject? value);
+
+        /// <inheritdoc cref="Clipboard.HasFormat(ClipboardDataFormatId)"/>
+        bool HasFormat(ClipboardDataFormatId format);
+
+        /// <inheritdoc cref="Clipboard.HasFormat(string)"/>
+        bool HasFormat(string format);
+
+        /// <inheritdoc cref="Clipboard.Flush()"/>
+        bool Flush();
     }
 }

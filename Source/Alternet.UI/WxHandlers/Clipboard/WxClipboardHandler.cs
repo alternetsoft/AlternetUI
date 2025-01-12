@@ -24,6 +24,11 @@ namespace Alternet.UI
             action(result);
         }
 
+        public bool Flush()
+        {
+            return WxApplicationHandler.NativeClipboard.Flush();
+        }
+
         public IDataObject? GetData()
         {
             var unmanagedDataObject =
@@ -66,7 +71,7 @@ namespace Alternet.UI
             for (int i = 1; i < (int)ClipboardDataFormatId.Max; i++)
             {
                 var format = (ClipboardDataFormatId)i;
-                var present = WxApplicationHandler.NativeClipboard.IsIntFormatSupported(i);
+                var present = HasFormat(format);
 
                 if (present)
                 {
@@ -82,6 +87,18 @@ namespace Alternet.UI
                 App.Log($"Clipboard contains format: {s}");
 
             App.LogEndSection();
+        }
+
+        public bool HasFormat(ClipboardDataFormatId format)
+        {
+            var present = WxApplicationHandler.NativeClipboard.IsIntFormatSupported((int)format);
+            return present;
+        }
+
+        public bool HasFormat(string format)
+        {
+            var result = WxApplicationHandler.NativeClipboard.IsStrFormatSupported(format);
+            return result;
         }
     }
 }

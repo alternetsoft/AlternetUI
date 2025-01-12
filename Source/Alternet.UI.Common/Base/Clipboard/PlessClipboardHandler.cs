@@ -20,6 +20,24 @@ namespace Alternet.UI
         public bool OnlyText => false;
 
         /// <inheritdoc/>
+        public bool Flush()
+        {
+            return false;
+        }
+
+        /// <inheritdoc/>
+        public bool HasFormat(ClipboardDataFormatId format)
+        {
+            return data?.HasFormat(format) ?? false;
+        }
+
+        /// <inheritdoc/>
+        public bool HasFormat(string format)
+        {
+            return data?.HasFormat(format) ?? false;
+        }
+
+        /// <inheritdoc/>
         public virtual IDataObject? GetData()
         {
             return data;
