@@ -39,7 +39,16 @@ namespace Alternet.UI
         /// </summary>
         public ComboBoxAndLabel()
         {
-            SuspendHandlerTextChange();
+        }
+
+        /// <summary>
+        /// Occurs when <see cref="ComboBox.SelectedIndexChanged"/> event of the
+        /// attached combobox control is changed.
+        /// </summary>
+        public event EventHandler? SelectedIndexChanged
+        {
+            add => ComboBox.SelectedIndexChanged += value;
+            remove => ComboBox.SelectedIndexChanged -= value;
         }
 
         /// <summary>
