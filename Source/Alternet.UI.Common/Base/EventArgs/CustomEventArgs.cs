@@ -15,6 +15,13 @@ namespace Alternet.UI
     {
         private FlagsAndAttributesStruct attr = new();
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="CustomEventArgs"/> class.
+        /// </summary>
+        public CustomEventArgs()
+        {
+        }
+
         /// <inheritdoc cref="BaseObjectWithAttr.Tag"/>
         [Browsable(false)]
         public virtual object? Tag { get; set; }
@@ -68,5 +75,32 @@ namespace Alternet.UI
         /// <inheritdoc cref="BaseObjectWithAttr.CustomAttr"/>
         [Browsable(false)]
         public ICustomAttributes<string, object> CustomAttr => FlagsAndAttributes.Attr;
+
+        /// <summary>
+        /// Creates <see cref="CustomEventArgs"/> instance with the specified flag turned on.
+        /// </summary>
+        /// <param name="flagName">Custom flag name.</param>
+        /// <returns></returns>
+        public static CustomEventArgs CreateWithFlag(string flagName)
+        {
+            CustomEventArgs result = new();
+            result.CustomFlags[flagName] = true;
+            return result;
+        }
+
+        /// <summary>
+        /// Creates <see cref="CustomEventArgs"/> instance with the specified flags turned on.
+        /// </summary>
+        /// <param name="flagNames">Collection of custom flag names.</param>
+        /// <returns></returns>
+        public static CustomEventArgs CreateWithFlags(params string[] flagNames)
+        {
+            CustomEventArgs result = new();
+
+            foreach(var flagName in flagNames)
+                result.CustomFlags[flagName] = true;
+
+            return result;
+        }
     }
 }

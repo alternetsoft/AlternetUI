@@ -70,61 +70,28 @@ namespace ControlsSample
 
             panelSettings.AddInput("Text Align", textBox, nameof(TextBox.TextAlign));
 
-            CustomEventArgs e = new();
-            e.CustomFlags["IsRequired"] = true;
+            var e = CustomEventArgs.CreateWithFlag("IsRequired");
             
             var itemMinLengthEdit = panelSettings.AddInput(
                 MinLengthEditLabel,
                 textBox,
                 nameof(TextBox.MinLength),
                 e);
-            itemMinLengthEdit.ValueChanged += (s, e) =>
-            {
-                textBox.RunDefaultValidation();
-            };
+            itemMinLengthEdit.ValueChanged += (s, e) => textBox.RunDefaultValidation();
 
             var itemMaxLengthEdit = panelSettings.AddInput(
                 MaxLengthEditLabel,
                 textBox,
                 nameof(TextBox.MaxLength),
                 e);
-            itemMaxLengthEdit.ValueChanged += (s, e) =>
-            {
-                textBox.RunDefaultValidation();
-            };
-
+            itemMaxLengthEdit.ValueChanged += (s, e) => textBox.RunDefaultValidation();
+            
             panelSettings.AddLinkLabel("Change Text", ChangeTextButton_Click);
             panelSettings.AddLinkLabel("Show All Properties", ShowProperties_Click);
 
             panelSettings.AddInput("Log Text", this, nameof(LogText));
             panelSettings.AddInput("Log Position", this, nameof(LogPosition));
             panelSettings.AddInput("Log Selection", this, nameof(LogSelection));
-
-            /*
-            ValueEditorUInt32 minLengthEdit = new();
-            minLengthEdit.Parent = textBoxOptionsPanel;
-            minLengthEdit.Text = "0";
-            minLengthEdit.Title = ;
-            minLengthEdit.IsRequired = true;
-            minLengthEdit.TextBox.TextChanged += (s,e) =>
-            {
-                var value = minLengthEdit.TextBox.TextAsNumberOrDefault<uint>(0);
-                textBox.MinLength = (int)value;
-                textBox.RunDefaultValidation();
-            };
-
-            ValueEditorUInt32 maxLengthEdit = new();
-            maxLengthEdit.Parent = textBoxOptionsPanel;
-            maxLengthEdit.Title = MaxLengthEditLabel;
-            maxLengthEdit.Text = "0";
-            maxLengthEdit.IsRequired = true;
-            maxLengthEdit.TextBox.TextChanged += (s, e) =>
-            {
-                var value = maxLengthEdit.TextBox.TextAsNumberOrDefault<uint>(0);
-                textBox.MaxLength = (int)value;
-                textBox.RunDefaultValidation();
-            };
-            */
         }
 
         private void TextBox_KeyDown(object? sender, KeyEventArgs e)
