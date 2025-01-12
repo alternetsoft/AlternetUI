@@ -14,10 +14,10 @@ namespace Alternet.UI
         private IValueSource<object>? valueSource;
         private PanelSettingsItemKind kind;
         private Type? valueType;
-        private bool isNullable = false;
+        private bool? isNullable;
         private bool isVisible = true;
         private bool isEnabled = true;
-        private IEnumerable? pickList;
+        private IEnumerable<object>? pickList;
         private PanelSettings.ItemActionDelegate? clickAction;
         private PanelSettings.ItemActionDelegate? valueChangedAction;
 
@@ -43,15 +43,15 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Gets or sets a pick list for the case when item is
+        /// Gets a pick list for the case when item is
         /// <see cref="PanelSettingsItemKind.EditableSelector"/> or
         /// <see cref="PanelSettingsItemKind.Selector"/>.
         /// </summary>
-        public virtual IEnumerable? PickList
+        public virtual IEnumerable<object>? PickList
         {
             get => pickList;
 
-            set
+            internal set
             {
                 pickList = value;
             }
@@ -67,55 +67,59 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Gets or sets kind of the item.
+        /// Gets kind of the item.
         /// </summary>
         public virtual PanelSettingsItemKind Kind
         {
             get => kind;
 
-            set
+            internal set
             {
                 kind = value;
             }
         }
 
         /// <summary>
-        /// Gets or sets whether item is visible.
+        /// Gets whether item is visible.
         /// </summary>
         public virtual bool IsVisible
         {
             get => isVisible;
 
-            set
+            internal set
             {
                 isVisible = value;
             }
         }
 
         /// <summary>
-        /// Gets or sets whether item is enabled.
+        /// Gets whether item is enabled.
         /// </summary>
         public virtual bool IsEnabled
         {
             get => isEnabled;
 
-            set
+            internal set
             {
                 isEnabled = value;
             }
         }
 
         /// <summary>
-        /// Gets or sets whether value is nullable.
+        /// Gets whether value is nullable.
         /// </summary>
         public virtual bool IsNullable
         {
-            get => isNullable;
-            set => isNullable = value;
+            get
+            {
+                if (ValueType is null)
+                    return false;
+                return isNullable ??= AssemblyUtils.IsNullableType(ValueType);
+            }
         }
 
         /// <summary>
-        /// Gets or sets label text which is shown next to the editor for the value.
+        /// Gets label text which is shown next to the editor for the value.
         /// </summary>
         public virtual object? Label
         {
@@ -124,33 +128,34 @@ namespace Alternet.UI
                 return label;
             }
 
-            set
+            internal set
             {
                 label = value;
             }
         }
 
         /// <summary>
-        /// Gets or sets type of the value.
+        /// Gets type of the value.
         /// </summary>
         public virtual Type? ValueType
         {
             get => valueType;
 
-            set
+            internal set
             {
                 valueType = value;
+                isNullable = null;
             }
         }
 
         /// <summary>
-        /// Gets or sets value source.
+        /// Gets value source.
         /// </summary>
-        public IValueSource<object> ValueSource
+        public virtual IValueSource<object> ValueSource
         {
             get => valueSource ??= new ValueContainer<object>();
 
-            set => valueSource = value;
+            internal set => valueSource = value;
         }
 
         /// <summary>
@@ -176,54 +181,6 @@ namespace Alternet.UI
         {
             ValueChangedAction?.Invoke(this, e);
             ValueChanged?.Invoke(this, e);
-            return this;
-        }
-
-        /// <summary>
-        /// Sets <see cref="ValueChangedAction"/> property.
-        /// </summary>
-        /// <param name="actionToInvoke">New value of the
-        /// <see cref="ValueChangedAction"/> property.</param>
-        /// <returns>This object. Result can be used to implement chained calls.</returns>
-        public PanelSettingsItem InvokeWhenChanged(
-            PanelSettings.ItemActionDelegate? actionToInvoke)
-        {
-            ValueChangedAction = actionToInvoke;
-            return this;
-        }
-
-        /// <summary>
-        /// Sets <see cref="Value"/> property.
-        /// </summary>
-        /// <param name="value">New value of the
-        /// <see cref="Value"/> property.</param>
-        /// <returns>This object. Result can be used to implement chained calls.</returns>
-        public PanelSettingsItem SetValue(object? value)
-        {
-            Value = value;
-            return this;
-        }
-
-        /// <summary>
-        /// Sets <see cref="ValueType"/> property.
-        /// </summary>
-        /// <param name="valueType">New value of the
-        /// <see cref="ValueType"/> property.</param>
-        /// <returns>This object. Result can be used to implement chained calls.</returns>
-        public PanelSettingsItem SetValueType(Type? valueType)
-        {
-            ValueType = valueType;
-            return this;
-        }
-
-        /// <summary>
-        /// Sets value of the <see cref="IsNullable"/> property.
-        /// </summary>
-        /// <param name="value">New value for <see cref="IsNullable"/> property.</param>
-        /// <returns></returns>
-        public PanelSettingsItem SetIsNullable(bool value)
-        {
-            IsNullable = value;
             return this;
         }
     }

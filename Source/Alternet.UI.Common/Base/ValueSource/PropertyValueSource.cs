@@ -7,19 +7,15 @@ namespace Alternet.UI
 {
     internal class PropertyValueSource : IValueSource<object>
     {
-        private readonly string propertyName;
-        private readonly Type containerType;
-        private readonly PropertyInfo? propertyInfo;
-
-        private object? propertyContainer;
+        private readonly PropertyInfo propertyInfo;
+        private readonly object? propertyContainer;
 
         public PropertyValueSource(
             Type containerType,
             string propertyName)
         {
-            this.containerType = containerType;
-            this.propertyName = propertyName;
-            propertyInfo = AssemblyUtils.GetPropertySafe(containerType, propertyName);
+            propertyInfo = AssemblyUtils.GetPropertySafe(containerType, propertyName)
+                ?? AssemblyUtils.SpecialDummyPropertyInfo;
         }
 
         public PropertyValueSource(
@@ -33,6 +29,8 @@ namespace Alternet.UI
         public event EventHandler? ValueChanged;
 
         public Type ValueType => propertyInfo?.PropertyType ?? typeof(object);
+
+        public PropertyInfo PropInfo => propertyInfo;
 
         public object? Value
         {

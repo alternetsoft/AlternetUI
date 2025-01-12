@@ -30,6 +30,11 @@ namespace Alternet.UI
         Label,
 
         /// <summary>
+        /// Item is link label.
+        /// </summary>
+        LinkLabel,
+
+        /// <summary>
         /// Item is value of the specified type.
         /// </summary>
         Value,

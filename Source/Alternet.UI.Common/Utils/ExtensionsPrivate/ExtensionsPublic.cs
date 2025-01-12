@@ -18,6 +18,44 @@ namespace Alternet.UI.Extensions
     public static partial class ExtensionsPublic
     {
         /// <summary>
+        /// Converts <see cref="GenericAlignment"/> to <see cref="TextHorizontalAlignment"/>.
+        /// </summary>
+        /// <param name="value">Value to convert.</param>
+        /// <returns></returns>
+        public static TextHorizontalAlignment AsTextHorizontalAlignment(this GenericAlignment value)
+        {
+            switch (value)
+            {
+                default:
+                case GenericAlignment.Left:
+                    return TextHorizontalAlignment.Left;
+                case GenericAlignment.Right:
+                    return TextHorizontalAlignment.Right;
+                case GenericAlignment.CenterHorizontal:
+                    return TextHorizontalAlignment.Center;
+            }
+        }
+
+        /// <summary>
+        /// Converts <see cref="TextHorizontalAlignment"/> to <see cref="GenericAlignment"/>.
+        /// </summary>
+        /// <param name="value">Value to convert.</param>
+        /// <returns></returns>
+        public static GenericAlignment AsGenericAlignment(this TextHorizontalAlignment value)
+        {
+            switch (value)
+            {
+                default:
+                case TextHorizontalAlignment.Left:
+                    return GenericAlignment.Left;
+                case TextHorizontalAlignment.Center:
+                    return GenericAlignment.CenterHorizontal;
+                case TextHorizontalAlignment.Right:
+                    return GenericAlignment.Right;
+            }
+        }
+
+        /// <summary>
         /// Gets whether property name is specified in the <see cref="PropertyChangedEventArgs"/>.
         /// </summary>
         /// <param name="e">Event arguments.</param>

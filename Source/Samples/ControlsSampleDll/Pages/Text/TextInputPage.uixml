@@ -12,20 +12,16 @@
 
   <!-- ========================= -->
 
-    <ScrollViewer Margin="5" VerticalAlignment="Fill" >
-      <StackPanel MinChildMargin="5" Orientation="Vertical" SuggestedWidth="350"
-                          Name="textBoxOptionsPanel">
-        
-        <PanelSettings Name="panelSettings">
-        </PanelSettings>
-
-        <ComboBoxAndLabel Title="Text Align" Name="textAlignEdit" IsTitleLocalized="true"/>
-        <ValueEditorUInt32 Name="minLengthEdit" Text="0" IsRequired = "true"/>
-        <ValueEditorUInt32 Name="maxLengthEdit" Text="0" IsRequired = "true"/>
-        
-        <Label Name="memo" Text="TextBox information will be here"/>
-      </StackPanel>
+  <Border VerticalAlignment="Fill" Margin="5" SuggestedWidth="350">
+    <ScrollViewer>
+      <PanelSettings Name="panelSettings">
+      </PanelSettings>
     </ScrollViewer>
+  </Border>
+
+  <StackPanel MinChildMargin="5" Orientation="Vertical" 
+                      Name="textBoxOptionsPanel">
+  </StackPanel>
 
   <!-- ========================= -->
 

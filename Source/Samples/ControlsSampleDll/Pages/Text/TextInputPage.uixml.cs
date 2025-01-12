@@ -34,24 +34,16 @@ namespace ControlsSample
             textBox.TextMaxLength += TextBox_TextMaxLength;
             textBox.CurrentPositionChanged += TextBox_CurrentPositionChanged;
             textBox.Options |= TextBoxOptions.DefaultValidation;
-            textBox.TextChanged += ReportValueChanged;
+            
+            textBox.TextChanged += (s, e) =>
+            { 
+                if(LogText)
+                    ReportValueChanged(s,e);
+            };
+
             textBox.KeyPress += TextBox_KeyPress;
 
             ErrorsChanged += TextBox_ErrorsChanged;
-
-            // ==== Other initializations
-
-            textAlignEdit.ComboBox.BindEnumProp(textBox, nameof(TextBox.TextAlign));
-
-            Group(textAlignEdit, minLengthEdit, maxLengthEdit)
-                .LabelSuggestedWidthToMax();
-
-            // ==== Min and Max length editors
-
-            Group(minLengthEdit, maxLengthEdit).Parent(textBoxOptionsPanel);
-
-            minLengthEdit.TextBox.TextChanged += MinLengthBox_TextChanged;
-            maxLengthEdit.TextBox.TextChanged += MaxLengthBox_TextChanged;
 
             // ==== Other
 
@@ -74,11 +66,44 @@ namespace ControlsSample
             panelSettings.AddInput("ReadOnly", textBox, nameof(TextBox.ReadOnly));
             panelSettings.AddInput("Password", textBox, nameof(TextBox.IsPassword));
             panelSettings.AddInput("Has Border", textBox, nameof(TextBox.HasBorder));
-            panelSettings.AddInput("Allow space char", this, nameof(AllowSpaceChar));
-            panelSettings.AddInput("Log Position", this, nameof(LogPosition));
+            panelSettings.AddInput("Allow Space Character", this, nameof(AllowSpaceChar));
 
-            panelSettings.AddButton("Change text...", ChangeTextButton_Click);
-            panelSettings.AddButton("Properties...", ShowProperties_Click);
+            panelSettings.AddInput("Text Align", textBox, nameof(TextBox.TextAlign));
+            panelSettings.AddInput(MinLengthEditLabel, textBox, nameof(TextBox.MinLength));
+            panelSettings.AddInput(MaxLengthEditLabel, textBox, nameof(TextBox.MaxLength));
+
+            panelSettings.AddLinkLabel("Change Text", ChangeTextButton_Click);
+            panelSettings.AddLinkLabel("Show All Properties", ShowProperties_Click);
+
+            panelSettings.AddInput("Log Text", this, nameof(LogText));
+            panelSettings.AddInput("Log Position", this, nameof(LogPosition));
+            panelSettings.AddInput("Log Selection", this, nameof(LogSelection));
+
+            /*
+            ValueEditorUInt32 minLengthEdit = new();
+            minLengthEdit.Parent = textBoxOptionsPanel;
+            minLengthEdit.Text = "0";
+            minLengthEdit.Title = ;
+            minLengthEdit.IsRequired = true;
+            minLengthEdit.TextBox.TextChanged += (s,e) =>
+            {
+                var value = minLengthEdit.TextBox.TextAsNumberOrDefault<uint>(0);
+                textBox.MinLength = (int)value;
+                textBox.RunDefaultValidation();
+            };
+
+            ValueEditorUInt32 maxLengthEdit = new();
+            maxLengthEdit.Parent = textBoxOptionsPanel;
+            maxLengthEdit.Title = MaxLengthEditLabel;
+            maxLengthEdit.Text = "0";
+            maxLengthEdit.IsRequired = true;
+            maxLengthEdit.TextBox.TextChanged += (s, e) =>
+            {
+                var value = maxLengthEdit.TextBox.TextAsNumberOrDefault<uint>(0);
+                textBox.MaxLength = (int)value;
+                textBox.RunDefaultValidation();
+            };
+            */
         }
 
         private void TextBox_KeyDown(object? sender, KeyEventArgs e)
@@ -116,14 +141,21 @@ namespace ControlsSample
             if (sender is not AbstractControl control)
                 return;
 
-            App.LogSection(() =>
+            var exception = new BaseException("Input Validation Errors");
+
+            var errors = control.GetErrors(null);
+            var index = 1;
+            string? s = null;
+            foreach (var error in errors)
             {
-                App.LogNameValue("HasErrors", control.HasErrors);
-                var errors = control.GetErrors(null);
-                var index = 1;
-                foreach (var error in errors)
-                    App.LogNameValue($"Error {index++}", error);
-            });
+                if (s != null)
+                    s += Environment.NewLine;
+                s+=$"Error {index++}: {error}";
+            }
+
+            exception.AdditionalInformation = s;
+
+            App.LogError(exception);
         }
 
         internal bool UsePopup { get; set; } = false;
@@ -142,29 +174,34 @@ namespace ControlsSample
                 WindowPropertyGrid.ShowDefault(null, textBox, true);
             }
         }
-        
+
+        private string? reportedSelection;
+
         private void TextInputPage_Idle(object? sender, EventArgs e)
         {
-            if (memo.VisibleOnScreen)
+            textBox.IdleAction();
+
+            if (LogSelection)
             {
-                textBox.IdleAction();
+                var selLength = textBox.SelectedText.Length;
+                var selText = textBox.SelectedText;
+                var selStart = textBox.SelectionStart;
+                var selLength2 = textBox.SelectionLength;
+                var value = $"<{selText}>, Start = {selStart}, Length = {selLength}/{selLength2}";
 
-                object[] info =
-                    [
-                        "Information:", Environment.NewLine, Environment.NewLine,
-                        "Text = ", $"<{textBox.Text}>", Environment.NewLine,
-                        "SelectedText = ", $"<{textBox.SelectedText}> ({textBox.SelectedText.Length})", 
-                        Environment.NewLine,
-                        "SelectionStart = ", $"<{textBox.SelectionStart}>", Environment.NewLine,
-                        "SelectionLength = ", $"<{textBox.SelectionLength}>", Environment.NewLine,
-                    ];
-
-                var s = StringUtils.ToStringSimple(info);
-                memo.Text = s;
+                if(reportedSelection != value)
+                {
+                    App.LogNameValueReplace("TextBox.SelectedText", value);
+                    reportedSelection = value;
+                }
             }
         }
 
         public static bool LogPosition { get; set; }
+
+        public static bool LogSelection { get; set; }
+
+        public static bool LogText { get; set; } = true;
 
         public static bool AllowSpaceChar { get; set; } = true;
 
@@ -179,40 +216,42 @@ namespace ControlsSample
             App.Log("TextBox: Text max length reached");
         }
 
-        private void MaxLengthBox_TextChanged(object? sender, EventArgs e)
-        {
-            var value = maxLengthEdit.TextBox.TextAsNumberOrDefault<uint>(0);
-            textBox.MaxLength = (int)value;
-            textBox.RunDefaultValidation();
-        }
-
-        private void MinLengthBox_TextChanged(object? sender, EventArgs e)
-        {
-            var value = minLengthEdit.TextBox.TextAsNumberOrDefault<uint>(0);
-            textBox.MinLength = (int)value;
-            textBox.RunDefaultValidation();
-        }
-
-        internal static void ReportValueChanged(object? sender, EventArgs e)
+        internal static void GetTextChangedInfo(
+            object? sender,
+            out string? varName,
+            out string? varValue)
         {
             var textBox = (sender as ValueEditorCustom)?.TextBox;
             textBox ??= sender as TextBox;
             if (textBox is null)
+            {
+                varName = null;
+                varValue = null;
                 return;
+            }
+
             var name = (sender as AbstractControl)?.Name;
             var value = textBox.Text;
             string prefix;
             if (name is null)
-                prefix = "TextBox: ";
+                prefix = "TextBox";
             else
-                prefix = $"{name}: ";
+                prefix = $"{name}";
 
             var asNumber = textBox.TextAsNumber;
 
             if (asNumber is not null)
                 asNumber = $" => {asNumber} | {asNumber.GetType().Name}";
 
-            App.LogReplace($"{prefix}{value}{asNumber}", prefix);
+            varValue = $"{value}{asNumber}";
+            varName = prefix;
+        }
+
+        internal static void ReportValueChanged(object? sender, EventArgs e)
+        {
+            GetTextChangedInfo(sender, out var varName, out var varValue);
+            if(varName is not null)
+                App.LogNameValueReplace(varName, varValue);
         }
 
         private void ChangeTextButton_Click(object? sender, EventArgs e)

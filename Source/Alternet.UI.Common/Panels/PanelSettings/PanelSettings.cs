@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Text;
 
 using Alternet.Base.Collections;
@@ -21,10 +22,17 @@ namespace Alternet.UI
         /// </summary>
         public static int DefaultSpacerSize = 2;
 
+        /// <summary>
+        /// Gets or sets default distance between label and text.
+        /// </summary>
+        public static int DefaultLabelToTextMargin = 3;
+
         private static
             EnumArray<PanelSettingsItemKind, ItemToControlDelegate?> itemToControl = new();
 
         private readonly Collection<PanelSettingsItem> items;
+
+        private bool autoCreate = true;
 
         static PanelSettings()
         {
@@ -32,48 +40,54 @@ namespace Alternet.UI
 
             void Fn(RegisterConversionDelegate register)
             {
-                T? ConvertItem<T>(PanelSettingsItem item, object? control)
-                    where T : AbstractControl, new()
-                {
-                    var text = item.Label?.ToString() ?? string.Empty;
-                    var isEmpty = string.IsNullOrEmpty(text);
-
-                    if (control is T typedControl)
-                    {
-                        typedControl.Text = text;
-                        typedControl.Visible = !isEmpty;
-                        return typedControl;
-                    }
-                    else
-                    {
-                        if (isEmpty)
-                            return null;
-                        var created = new T();
-                        created.Text = text;
-                        return created;
-                    }
-                }
+                /* registration call */
 
                 register(
                     PanelSettingsItemKind.Spacer,
                     (item, control) =>
                     {
-                        var spacer = ConvertItem<Spacer>(item, control);
-
-                        if(spacer is not null)
-                        {
-                            spacer.SuggestedSize = DefaultSpacerSize;
-                        }
-
+                        var spacer = CreateOrUpdateControl<Spacer>(item, control);
+                        spacer.SuggestedSize = DefaultSpacerSize;
                         return spacer;
                     });
+
+                /* registration call */
 
                 register(
                     PanelSettingsItemKind.Label,
                     (item, control) =>
                     {
-                        return ConvertItem<Label>(item, control);
+                        var result = CreateOrUpdateControl<Label>(item, control);
+                        UpdateText(item, result);
+                        return result;
                     });
+
+                /* registration call */
+
+                register(
+                    PanelSettingsItemKind.LinkLabel,
+                    (item, control) =>
+                    {
+                        var result = CreateOrUpdateControl<LinkLabel>(item, control);
+                        UpdateText(item, result);
+
+                        result.LinkClicked -= LinkLabelClicked;
+                        result.LinkClicked += LinkLabelClicked;
+
+                        void LinkLabelClicked(object? sender, CancelEventArgs e)
+                        {
+                            result.RunWhenIdle(() =>
+                            {
+                                item.ClickAction?.Invoke(item, EventArgs.Empty);
+                            });
+
+                            e.Cancel = true;
+                        }
+
+                        return result;
+                    });
+
+                /* registration call */
 
                 register(
                     PanelSettingsItemKind.Value,
@@ -81,57 +95,65 @@ namespace Alternet.UI
                     {
                         if (item.ValueType == typeof(bool))
                         {
-                            var checkBox = ConvertItem<CheckBox>(item, control);
+                            var checkBox = CreateOrUpdateControl<CheckBox>(item, control);
+                            UpdateText(item, checkBox);
 
-                            if(checkBox is not null)
+                            if (item.Value is bool isChecked)
+                                checkBox.Checked = isChecked;
+
+                            checkBox.CheckedChanged -= CheckBoxChecked;
+                            checkBox.CheckedChanged += CheckBoxChecked;
+
+                            void CheckBoxChecked(object? sender, EventArgs e)
                             {
-                                if (item.Value is bool isChecked)
-                                    checkBox.Checked = isChecked;
-
-                                checkBox.CheckedChanged -= CheckBoxChecked;
-                                checkBox.CheckedChanged += CheckBoxChecked;
-
-                                void CheckBoxChecked(object? sender, EventArgs e)
-                                {
-                                    item.Value = checkBox.IsChecked;
-                                }
+                                item.Value = checkBox.IsChecked;
                             }
 
                             return checkBox;
                         }
 
-                        return null;
+                        var result = CreateOrUpdateInput(item, control);
+                        return result;
                     });
+
+                /* registration call */
 
                 register(
                     PanelSettingsItemKind.Button,
                     (item, control) =>
                     {
-                        var result = ConvertItem<Button>(item, control);
+                        var result = CreateOrUpdateControl<Button>(item, control);
+                        UpdateText(item, result);
 
-                        if (result is not null)
+                        result.ClickAction = () =>
                         {
-                            result.ClickAction = () =>
+                            result.RunWhenIdle(() =>
                             {
                                 item.ClickAction?.Invoke(item, EventArgs.Empty);
-                            };
-                        }
+                            });
+                        };
 
                         return result;
                     });
+
+                /* registration call */
 
                 register(
                     PanelSettingsItemKind.Selector,
                     (item, control) =>
                     {
-                        return null;
+                        var result = CreateOrUpdateSelector(item, control, false);
+                        return result;
                     });
+
+                /* registration call */
 
                 register(
                     PanelSettingsItemKind.EditableSelector,
                     (item, control) =>
                     {
-                        return null;
+                        var result = CreateOrUpdateSelector(item, control, true);
+                        return result;
                     });
             }
         }
@@ -185,7 +207,15 @@ namespace Alternet.UI
         /// Gets or sets whether controls are automatically created and updated
         /// when items are changed.
         /// </summary>
-        public virtual bool AutoCreate { get; set; } = false;
+        public virtual bool AutoCreate
+        {
+            get => autoCreate;
+
+            set
+            {
+                autoCreate = value;
+            }
+        }
 
         /// <summary>
         /// Gets collection of the items. Each of the items defines individual
@@ -227,29 +257,16 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Adds horizontal line.
-        /// </summary>
-        /// <param name="e">Additional arguments.</param>
-        /// <returns></returns>
-        public virtual void AddHorizontalLine(BaseEventArgs? e = null)
-        {
-            PanelSettingsItem item = new();
-            item.Kind = PanelSettingsItemKind.Line;
-            item.Label = "HorizontalLine";
-            Items.Add(item);
-        }
-
-        /// <summary>
         /// Adds item with an empty space.
         /// </summary>
         /// <param name="e">Additional arguments.</param>
         /// <returns></returns>
-        public virtual void AddSpacer(BaseEventArgs? e = null)
+        public virtual PanelSettingsItem AddSpacer(BaseEventArgs? e = null)
         {
-            PanelSettingsItem item = new();
-            item.Kind = PanelSettingsItemKind.Spacer;
-            item.Label = "Spacer";
+            PanelSettingsItem item
+                = CreateItemCore("Spacer", PanelSettingsItemKind.Spacer, null, e);
             Items.Add(item);
+            return item;
         }
 
         /// <summary>
@@ -258,12 +275,31 @@ namespace Alternet.UI
         /// <param name="label">Text.</param>
         /// <param name="e">Additional arguments.</param>
         /// <returns></returns>
-        public virtual void AddLabel(object? label, BaseEventArgs? e = null)
+        public virtual PanelSettingsItem AddLabel(object label, BaseEventArgs? e = null)
         {
-            PanelSettingsItem item = new();
-            item.Label = label;
-            item.Kind = PanelSettingsItemKind.Label;
+            PanelSettingsItem item
+                = CreateItemCore(label, PanelSettingsItemKind.Label, null, e);
             Items.Add(item);
+            return item;
+        }
+
+        /// <summary>
+        /// Adds item with the link label.
+        /// </summary>
+        /// <param name="clickAction">Action which is invoked when link label is clicked.</param>
+        /// <param name="label">Text.</param>
+        /// <param name="e">Additional arguments.</param>
+        /// <returns></returns>
+        public virtual PanelSettingsItem AddLinkLabel(
+            object label,
+            ItemActionDelegate? clickAction,
+            BaseEventArgs? e = null)
+        {
+            PanelSettingsItem item
+                = CreateItemCore(label, PanelSettingsItemKind.LinkLabel, null, e);
+            item.ClickAction = clickAction;
+            Items.Add(item);
+            return item;
         }
 
         /// <summary>
@@ -273,16 +309,16 @@ namespace Alternet.UI
         /// <param name="clickAction">Action which is invoked when button is clicked.</param>
         /// <param name="e">Additional arguments.</param>
         /// <returns></returns>
-        public virtual void AddButton(
-            object? label,
+        public virtual PanelSettingsItem AddButton(
+            object label,
             ItemActionDelegate? clickAction,
             BaseEventArgs? e = null)
         {
-            PanelSettingsItem item = new();
-            item.Label = label;
-            item.Kind = PanelSettingsItemKind.Button;
+            PanelSettingsItem item
+                = CreateItemCore(label, PanelSettingsItemKind.Button, null, e);
             item.ClickAction = clickAction;
             Items.Add(item);
+            return item;
         }
 
         /// <summary>
@@ -293,66 +329,159 @@ namespace Alternet.UI
         /// <param name="valueSource">Source of the value. If Null an internal
         /// value container is used.</param>
         /// <param name="pickList">Collection of possible values.</param>
-        /// <param name="onChange">Action which is called when value is changed. Optional</param>
         /// <param name="e">Additional arguments.</param>
         /// <returns></returns>
-        public virtual void AddSelector<T>(
+        public virtual PanelSettingsItem AddSelector<T>(
             object label,
             IEnumerable<T> pickList,
             IValueSource<object>? valueSource = null,
-            ItemActionDelegate? onChange = null,
             BaseEventArgs? e = null)
         {
-            var item = AddCore(label, valueSource, onChange);
+            var item
+                = CreateItemCore(label, PanelSettingsItemKind.Selector, valueSource, e);
             item.ValueType = typeof(T);
-            item.Kind = PanelSettingsItemKind.Selector;
-            item.IsNullable = false;
             Items.Add(item);
+            return item;
         }
 
         /// <summary>
-        /// Adds item with the editor for the not null value of the specified type.
+        /// Adds item with the editor for the value of the specified type.
+        /// Value is specified using <see cref="IValueSource{T}"/>.
         /// </summary>
         /// <typeparam name="T">Type of the value.</typeparam>
         /// <param name="label">Text which will be shown next to the editor.</param>
         /// <param name="valueSource">Source of the value. If Null an internal
         /// value container is used.</param>
         /// <param name="e">Additional arguments.</param>
-        /// <param name="onChange">Action which is called when value is changed. Optional</param>
         /// <returns></returns>
-        public virtual void AddInput<T>(
+        public virtual PanelSettingsItem AddInput<T>(
             object label,
             IValueSource<object>? valueSource = null,
-            ItemActionDelegate? onChange = null,
             BaseEventArgs? e = null)
         {
-            PanelSettingsItem item = AddCore(label, valueSource, onChange);
+            PanelSettingsItem item
+                = CreateItemCore(label, PanelSettingsItemKind.Value, valueSource, e);
             item.ValueType = typeof(T);
-            item.Kind = PanelSettingsItemKind.Value;
-            item.IsNullable = false;
             Items.Add(item);
+            return item;
+        }
+
+        /// <summary>
+        /// Adds item with the editor for the value of the specified type.
+        /// Value is specified using getter and setter delegates.
+        /// </summary>
+        /// <typeparam name="T">Type of the value.</typeparam>
+        /// <param name="label">Text which will be shown next to the editor.</param>
+        /// <param name="getValue"></param>
+        /// <param name="setValue"></param>
+        /// <param name="e">Additional arguments.</param>
+        /// <returns></returns>
+        public virtual PanelSettingsItem AddInput<T>(
+            object label,
+            Func<T> getValue,
+            Action<T> setValue,
+            BaseEventArgs? e = null)
+        {
+            var valueSource = new DelegatesValueSource<T>(getValue, setValue);
+            PanelSettingsItem item
+                = CreateItemCore(label, PanelSettingsItemKind.Value, valueSource, e);
+            item.ValueType = typeof(T);
+            Items.Add(item);
+            return item;
         }
 
         /// <summary>
         /// Adds item with the editor for the property of the specified object.
+        /// Value is specified using property name and property container.
         /// </summary>
         /// <param name="label">Text which will be shown next to the editor.</param>
         /// <param name="propContainer">Object which contains the property.</param>
         /// <param name="propName">Property name.</param>
         /// <param name="e">Additional arguments.</param>
         /// <returns></returns>
-        public void AddInput(
+        public virtual PanelSettingsItem AddInput(
             object label,
             object propContainer,
             string propName,
             BaseEventArgs? e = null)
         {
             var valueSource = new PropertyValueSource(propContainer, propName);
-            PanelSettingsItem item = AddCore(label, valueSource);
-            item.Kind = PanelSettingsItemKind.Value;
+
+            var realType = AssemblyUtils.GetRealType(valueSource.ValueType);
+            var isEnum = realType.IsEnum;
+
+            PanelSettingsItem item;
+
+            if (isEnum)
+            {
+                var propInfo = valueSource.PropInfo;
+
+                var prm = PropertyGrid.ConstructNewItemParams(propContainer, propInfo);
+                bool isFlags;
+                if (prm.EnumIsFlags is null)
+                    isFlags = AssemblyUtils.EnumIsFlags(realType);
+                else
+                    isFlags = prm.EnumIsFlags.Value;
+
+                if (isFlags)
+                {
+                    App.LogError("PanelSettings.AddInput: Enum with [Flags] is not supported");
+                    item = new PanelSettingsItem();
+                }
+                else
+                {
+                    var pickList = Enum.GetValues(realType);
+                    item = CreateItemCore(label, PanelSettingsItemKind.Selector, valueSource, e);
+                    List<object> list = new(pickList.Length);
+                    foreach (var element in pickList)
+                        list.Add(element);
+                    item.PickList = list;
+                }
+            }
+            else
+            {
+                item = CreateItemCore(label, PanelSettingsItemKind.Value, valueSource, e);
+            }
+
             item.ValueType = valueSource.ValueType;
-            item.IsNullable = false;
             Items.Add(item);
+            return item;
+        }
+
+        /// <summary>
+        /// Adds horizontal line.
+        /// </summary>
+        /// <param name="e">Additional arguments.</param>
+        /// <returns></returns>
+        internal virtual PanelSettingsItem AddHorizontalLine(BaseEventArgs? e = null)
+        {
+            PanelSettingsItem item
+                = CreateItemCore("HorizontalLine", PanelSettingsItemKind.Line, null, e);
+            Items.Add(item);
+            throw new NotImplementedException();
+        }
+
+        /// <summary>
+        /// Creates item with the specified parameters.
+        /// </summary>
+        /// <param name="label">Text which will be shown next to the editor.</param>
+        /// <param name="kind"></param>
+        /// <param name="valueSource">Source of the value. If Null an internal
+        /// value container is used.</param>
+        /// <param name="e">Additional arguments.</param>
+        /// <returns></returns>
+        protected virtual PanelSettingsItem CreateItemCore(
+            object label,
+            PanelSettingsItemKind kind,
+            IValueSource<object>? valueSource,
+            BaseEventArgs? e)
+        {
+            PanelSettingsItem item = new();
+            item.Kind = kind;
+            item.Label = label;
+            if (valueSource is not null)
+                item.ValueSource = valueSource;
+            return item;
         }
 
         /// <summary>
@@ -360,6 +489,8 @@ namespace Alternet.UI
         /// </summary>
         protected virtual void ItemRemoved(object? sender, int index, PanelSettingsItem item)
         {
+            if (!AutoCreate)
+                return;
         }
 
         /// <summary>
@@ -367,6 +498,8 @@ namespace Alternet.UI
         /// </summary>
         protected virtual void ItemInserted(object? sender, int index, PanelSettingsItem item)
         {
+            if (!AutoCreate)
+                return;
             var conversion = GetRegisteredConversion(item.Kind);
             if (conversion is null)
                 return;
@@ -376,41 +509,135 @@ namespace Alternet.UI
             control.Parent = this;
         }
 
-        /// <summary>
-        /// Adds item with the editor for the nullable value of the specified type.
-        /// </summary>
-        /// <typeparam name="T">Type of the value.</typeparam>
-        /// <param name="label">Text label which will be shown next to the editor.</param>
-        /// <param name="valueSource">Source of the value. If Null an internal
-        /// value container is used.</param>
-        /// <param name="onChange">Action which is called when value is changed. Optional</param>
-        /// <returns></returns>
-        private void AddNullableInput<T>(
-            object label,
-            IValueSource<object>? valueSource = null,
-            ItemActionDelegate? onChange = null)
+        private static object? CreateOrUpdateInput(
+            PanelSettingsItem item,
+            object? control)
         {
-            var item = AddCore(label, valueSource, onChange);
-            item.ValueType = typeof(T);
-            item.Kind = PanelSettingsItemKind.Value;
-            item.IsNullable = true;
-            Items.Add(item);
+            const string magicName = "759A8BD1DD9E4B009E8A5AFB726FA594";
+
+            var result = CreateOrUpdateControl<Panel>(item, control);
+
+            TextBoxAndButton? textBox;
+
+            if (!result.HasChildren)
+            {
+                result.Layout = LayoutStyle.Vertical;
+
+                Label labelControl = new();
+                UpdateText(item, labelControl);
+
+                labelControl.Parent = result;
+                labelControl.MarginBottom = DefaultLabelToTextMargin;
+
+                textBox = new();
+                textBox.HasBtnComboBox = false;
+                textBox.Parent = result;
+                textBox.Name = magicName;
+            }
+            else
+            {
+                textBox = result.FindElement(magicName) as TextBoxAndButton;
+            }
+
+            if (textBox is null)
+                return result;
+
+            textBox.TextBox.SetValidator(item.ValueType, false);
+            textBox.TextBox.AutoShowError = true;
+            textBox.TextBox.Options |= TextBoxOptions.DefaultValidation;
+            textBox.TextBox.TextAsValue = item.Value;
+
+            textBox.TextChanged -= TextChanged;
+            textBox.TextChanged += TextChanged;
+
+            void TextChanged(object? sender, EventArgs e)
+            {
+                item.Value = textBox.TextBox.TextAsValue;
+            }
+
+            return result;
         }
 
-        private PanelSettingsItem AddCore(
-            object label,
-            IValueSource<object>? valueSource = null,
-            ItemActionDelegate? onChange = null)
+        private static object? CreateOrUpdateSelector(
+            PanelSettingsItem item,
+            object? control,
+            bool isEditable)
         {
-            PanelSettingsItem item = new();
-            item.Label = label;
+            const string magicName = "4BBB53EBB30A4D41803F8774E6307AA6";
 
-            if (valueSource is not null)
-                item.ValueSource = valueSource;
+            var result = CreateOrUpdateControl<Panel>(item, control);
 
-            item.ValueChangedAction = onChange;
+            ComboBoxAndButton? comboBox;
 
-            return item;
+            if (!result.HasChildren)
+            {
+                result.Layout = LayoutStyle.Vertical;
+
+                Label labelControl = new();
+                UpdateText(item, labelControl);
+
+                labelControl.Parent = result;
+                labelControl.MarginBottom = DefaultLabelToTextMargin;
+
+                comboBox = new();
+                comboBox.Parent = result;
+                comboBox.Name = magicName;
+            }
+            else
+            {
+                comboBox = result.FindElement(magicName) as ComboBoxAndButton;
+            }
+
+            if (comboBox is null)
+                return result;
+
+            comboBox.IsEditable = isEditable;
+
+            if (comboBox.Items.Count == 0 && item.PickList is not null)
+            {
+                comboBox.DoInsideUpdate(() =>
+                {
+                    comboBox.Items.AddRange(item.PickList);
+                });
+            }
+
+            comboBox.SelectedItem = item.Value;
+
+            comboBox.SelectedIndexChanged -= SelectorChaned;
+            comboBox.SelectedIndexChanged += SelectorChaned;
+
+            void SelectorChaned(object? sender, EventArgs e)
+            {
+                item.Value = comboBox.SelectedItem;
+            }
+
+            return result;
+        }
+
+        private static void UpdateCommonProps(PanelSettingsItem item, AbstractControl control)
+        {
+            control.Visible = item.IsVisible;
+            control.Enabled = item.IsEnabled;
+        }
+
+        private static void UpdateText(PanelSettingsItem item, AbstractControl control)
+        {
+            var text = item.Label?.ToString() ?? string.Empty;
+            control.Text = text;
+        }
+
+        private static void UpdateTitle(PanelSettingsItem item, AbstractControl control)
+        {
+            var text = item.Label?.ToString() ?? string.Empty;
+            control.Title = text;
+        }
+
+        private static T CreateOrUpdateControl<T>(PanelSettingsItem item, object? control)
+            where T : AbstractControl, new()
+        {
+            T? typedControl = control as T ?? new T();
+            UpdateCommonProps(item, typedControl);
+            return typedControl;
         }
     }
 }
