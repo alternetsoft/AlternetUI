@@ -1,3 +1,45 @@
+# 0.9.702 (2025 January 12)
+
+- VirtualListBox: Fixed not repatined after EndUpdate in some cases.
+- VirtualListBox: Fixed some selection related bugs.
+- VirtualListBox: Added RemoveSelectedAndUpdateSelection, SelectItemsAndScroll, SelectLastItemAndScroll.
+- VirtualListBox: Redo EnsureVisible internally without using native control.
+- Add SystemColorsLight and used them in Calendar and PlessSystemColors. SystemColorsLight contains predefined RGB values for system colors when light theme is selected.
+- ObjectUniqueId: precalculate HashCode.
+- IndexedValues.GetLockedItemCached.
+- ListControlItem: Selected state is saved per container.
+- Exclude invisible on screen controls from TAB traversal.
+- Set CanSelect and TabStop in constructor for some controls.
+- TextBox: Fixed WantTab behavior.
+- Fixed Tab traversal behavior.
+- Fixed: Invisible controls don't receive key down anymore.
+- ColorComboBox: Fixed colors were not filled by default.
+- RichToolTip: redesigned to work without creating internal controls.
+- Demo: Return design corners to PropertyGrid sample.
+- RichToolTip: ToolTipAlignment, ToolTipHorizontalAlignment,  ToolTipVerticalAlignment.
+- RichToolTip: ToolTipVisibleChanged event.
+- RichToolTip is now derived from ScrollViewer and can be scrollable.
+- Improved exception handling. Stack frame is now correctly shown for the exceptions raised in the library.
+- UnhandledExceptionMode: CatchWithDialog, CatchWithDialogAndThrow, CatchWithThrow.
+- Create focus event arguments and pass them to GorFocus and LostFocus events.
+- Maui: Fixed AbstractControl.FocusedControl behavior.
+- Maui: OnHandleCreated and OnHandleDestroyed are called by ControlView.
+- Maui: Maui: Clipboard now keeps non text data.
+- Set ParentBackColor/ParentForeColor = true in constructor for different panel like controls.
+- Create ErrorPictureBox, ComboBoxAndButton, BaseEventArgsWithAttr.
+- Fixed ParentBackColor and ParentForeColor behavior.
+- Fixed layout when LayoutStyle.Scroll.
+- ListControlItem.ImageIndex, AbstractControl.GetErrorsCollection.
+- Clipboard: Fix to allow SetData for multiple formats in the same DataObject.
+- UnmanagedDataObjectAdapter: Do not raise exception on unknown data formats.
+- Add PanelSettings control (unfinished).
+- TextBox.TextAlign type changed to TextHorizontalAlignment.
+- ControlAndButton: TextChanged, DelayedTextChanged events.
+- ComboBoxAndLabel.SelectedIndexChanged event.
+- ControlAndLabel: TextChanged, DelayedTextChanged events.
+- BaseException: Tag, IntFlags, IntFlagsAndAttributes, FlagsAndAttributes, CustomFlags, CustomAttr.
+- App.LogError: Fixed behavior in case when parameters is null.
+
 # 0.9.701 (2025 January 8)
 
 - ListBox and CheckListBox are now derived from VirtualListBox. As a result they work much faster with large number of items and has less platform specific problems.
