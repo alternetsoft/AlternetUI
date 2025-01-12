@@ -261,7 +261,7 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="e">Additional arguments.</param>
         /// <returns></returns>
-        public virtual PanelSettingsItem AddSpacer(BaseEventArgs? e = null)
+        public virtual PanelSettingsItem AddSpacer(BaseEventArgsWithAttr? e = null)
         {
             PanelSettingsItem item
                 = CreateItemCore("Spacer", PanelSettingsItemKind.Spacer, null, e);
@@ -275,7 +275,7 @@ namespace Alternet.UI
         /// <param name="label">Text.</param>
         /// <param name="e">Additional arguments.</param>
         /// <returns></returns>
-        public virtual PanelSettingsItem AddLabel(object label, BaseEventArgs? e = null)
+        public virtual PanelSettingsItem AddLabel(object label, BaseEventArgsWithAttr? e = null)
         {
             PanelSettingsItem item
                 = CreateItemCore(label, PanelSettingsItemKind.Label, null, e);
@@ -293,7 +293,7 @@ namespace Alternet.UI
         public virtual PanelSettingsItem AddLinkLabel(
             object label,
             ItemActionDelegate? clickAction,
-            BaseEventArgs? e = null)
+            BaseEventArgsWithAttr? e = null)
         {
             PanelSettingsItem item
                 = CreateItemCore(label, PanelSettingsItemKind.LinkLabel, null, e);
@@ -312,7 +312,7 @@ namespace Alternet.UI
         public virtual PanelSettingsItem AddButton(
             object label,
             ItemActionDelegate? clickAction,
-            BaseEventArgs? e = null)
+            BaseEventArgsWithAttr? e = null)
         {
             PanelSettingsItem item
                 = CreateItemCore(label, PanelSettingsItemKind.Button, null, e);
@@ -335,7 +335,7 @@ namespace Alternet.UI
             object label,
             IEnumerable<T> pickList,
             IValueSource<object>? valueSource = null,
-            BaseEventArgs? e = null)
+            BaseEventArgsWithAttr? e = null)
         {
             var item
                 = CreateItemCore(label, PanelSettingsItemKind.Selector, valueSource, e);
@@ -357,7 +357,7 @@ namespace Alternet.UI
         public virtual PanelSettingsItem AddInput<T>(
             object label,
             IValueSource<object>? valueSource = null,
-            BaseEventArgs? e = null)
+            BaseEventArgsWithAttr? e = null)
         {
             PanelSettingsItem item
                 = CreateItemCore(label, PanelSettingsItemKind.Value, valueSource, e);
@@ -380,7 +380,7 @@ namespace Alternet.UI
             object label,
             Func<T> getValue,
             Action<T> setValue,
-            BaseEventArgs? e = null)
+            BaseEventArgsWithAttr? e = null)
         {
             var valueSource = new DelegatesValueSource<T>(getValue, setValue);
             PanelSettingsItem item
@@ -403,7 +403,7 @@ namespace Alternet.UI
             object label,
             object propContainer,
             string propName,
-            BaseEventArgs? e = null)
+            BaseEventArgsWithAttr? e = null)
         {
             var valueSource = new PropertyValueSource(propContainer, propName);
 
@@ -453,7 +453,7 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="e">Additional arguments.</param>
         /// <returns></returns>
-        internal virtual PanelSettingsItem AddHorizontalLine(BaseEventArgs? e = null)
+        internal virtual PanelSettingsItem AddHorizontalLine(BaseEventArgsWithAttr? e = null)
         {
             PanelSettingsItem item
                 = CreateItemCore("HorizontalLine", PanelSettingsItemKind.Line, null, e);
@@ -474,9 +474,10 @@ namespace Alternet.UI
             object label,
             PanelSettingsItemKind kind,
             IValueSource<object>? valueSource,
-            BaseEventArgs? e)
+            BaseEventArgsWithAttr? e)
         {
             PanelSettingsItem item = new();
+            item.CreateArg = e;
             item.Kind = kind;
             item.Label = label;
             if (valueSource is not null)
@@ -546,6 +547,7 @@ namespace Alternet.UI
             textBox.TextBox.AutoShowError = true;
             textBox.TextBox.Options |= TextBoxOptions.DefaultValidation;
             textBox.TextBox.TextAsValue = item.Value;
+            textBox.TextBox.IsRequired = GetFlagIsRequired(item.CreateArg);
 
             textBox.TextChanged -= TextChanged;
             textBox.TextChanged += TextChanged;
@@ -638,6 +640,13 @@ namespace Alternet.UI
             T? typedControl = control as T ?? new T();
             UpdateCommonProps(item, typedControl);
             return typedControl;
+        }
+
+        private static bool GetFlagIsRequired(BaseEventArgsWithAttr? e)
+        {
+            if (e is null)
+                return false;
+            return e.CustomFlags["IsRequired"];
         }
     }
 }

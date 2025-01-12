@@ -69,8 +69,29 @@ namespace ControlsSample
             panelSettings.AddInput("Allow Space Character", this, nameof(AllowSpaceChar));
 
             panelSettings.AddInput("Text Align", textBox, nameof(TextBox.TextAlign));
-            panelSettings.AddInput(MinLengthEditLabel, textBox, nameof(TextBox.MinLength));
-            panelSettings.AddInput(MaxLengthEditLabel, textBox, nameof(TextBox.MaxLength));
+
+            BaseEventArgsWithAttr e = new();
+            e.CustomFlags["IsRequired"] = true;
+            
+            var itemMinLengthEdit = panelSettings.AddInput(
+                MinLengthEditLabel,
+                textBox,
+                nameof(TextBox.MinLength),
+                e);
+            itemMinLengthEdit.ValueChanged += (s, e) =>
+            {
+                textBox.RunDefaultValidation();
+            };
+
+            var itemMaxLengthEdit = panelSettings.AddInput(
+                MaxLengthEditLabel,
+                textBox,
+                nameof(TextBox.MaxLength),
+                e);
+            itemMaxLengthEdit.ValueChanged += (s, e) =>
+            {
+                textBox.RunDefaultValidation();
+            };
 
             panelSettings.AddLinkLabel("Change Text", ChangeTextButton_Click);
             panelSettings.AddLinkLabel("Show All Properties", ShowProperties_Click);
@@ -141,9 +162,22 @@ namespace ControlsSample
             if (sender is not AbstractControl control)
                 return;
 
-            var exception = new BaseException("Input Validation Errors");
+            var errors = control.GetErrorsCollection(null);
 
-            var errors = control.GetErrors(null);
+            var errorCount = errors.Count();
+
+            if (errorCount == 0)
+                return;
+
+            if(errorCount == 1)
+            {
+                var firstError = errors.FirstOrDefault();
+                App.LogError(firstError);
+                return;
+            }
+
+            var exception = new BaseException($"Input Validation: {errorCount} errors");
+
             var index = 1;
             string? s = null;
             foreach (var error in errors)
