@@ -15,10 +15,11 @@ namespace Alternet.UI
         /// <summary>
         /// Rethrows the specified exception with the correct call stack information.
         /// </summary>
-        /// <param name="e"></param>
-        public static void Rethrow(Exception e)
+        /// <param name="e">Previously thrown exception.</param>
+        public static void Rethrow(Exception? e)
         {
-            ExceptionDispatchInfo.Capture(e).Throw();
+            if(e is not null)
+                ExceptionDispatchInfo.Capture(e).Throw();
         }
 
         /// <summary>

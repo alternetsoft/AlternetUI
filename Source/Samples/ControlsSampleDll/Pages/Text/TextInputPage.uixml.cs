@@ -18,9 +18,6 @@ namespace ControlsSample
         public static string TextBoxEmptyTextHint = "Sample Hint";
         public static string TextBoxSampleText = "Sample Text";
 
-        private readonly ValueEditorUInt32 minLengthEdit;
-        private readonly ValueEditorUInt32 maxLengthEdit;
-
         private PopupPropertyGrid? popup;
 
         static TextInputPage()
@@ -29,9 +26,6 @@ namespace ControlsSample
 
         public TextInputPage()
         {
-            minLengthEdit = new(MinLengthEditLabel, 0);
-            maxLengthEdit = new(MaxLengthEditLabel, 0);
-
             InitializeComponent();
 
             textBox.EmptyTextHint = TextBoxEmptyTextHint;
@@ -40,31 +34,18 @@ namespace ControlsSample
             textBox.TextMaxLength += TextBox_TextMaxLength;
             textBox.CurrentPositionChanged += TextBox_CurrentPositionChanged;
             textBox.Options |= TextBoxOptions.DefaultValidation;
-            textBox.TextChanged += ReportValueChanged;
+            
+            textBox.TextChanged += (s, e) =>
+            { 
+                if(LogText)
+                    ReportValueChanged(s,e);
+            };
+
             textBox.KeyPress += TextBox_KeyPress;
 
             ErrorsChanged += TextBox_ErrorsChanged;
 
-            // ==== Other initializations
-
-           textAlignEdit.ComboBox.BindEnumProp(textBox, nameof(TextBox.TextAlign));
-
-            readOnlyCheckBox.BindBoolProp(textBox, nameof(TextBox.ReadOnly));
-            passwordCheckBox.BindBoolProp(textBox, nameof(TextBox.IsPassword));
-            hasBorderCheckBox.BindBoolProp(textBox, nameof(TextBox.HasBorder));
-            logPositionCheckBox.BindBoolProp(this, nameof(LogPosition));
-
-            Group(textAlignEdit, minLengthEdit, maxLengthEdit)
-                .LabelSuggestedWidthToMax();
-
-            // ==== Min and Max length editors
-
-            Group(minLengthEdit, maxLengthEdit).Parent(textBoxOptionsPanel);
-
-            minLengthEdit.TextBox.TextChanged += MinLengthBox_TextChanged;
-            minLengthEdit.TextBox.IsRequired = true;
-            maxLengthEdit.TextBox.TextChanged += MaxLengthBox_TextChanged;
-            maxLengthEdit.TextBox.IsRequired = true;
+            // ==== Other
 
             Idle += TextInputPage_Idle;
 
@@ -81,6 +62,36 @@ namespace ControlsSample
                     ForeColor = Color.DarkRed;
                 });
             };
+
+            panelSettings.AddInput("ReadOnly", textBox, nameof(TextBox.ReadOnly));
+            panelSettings.AddInput("Password", textBox, nameof(TextBox.IsPassword));
+            panelSettings.AddInput("Has Border", textBox, nameof(TextBox.HasBorder));
+            panelSettings.AddInput("Allow Space Character", this, nameof(AllowSpaceChar));
+
+            panelSettings.AddInput("Text Align", textBox, nameof(TextBox.TextAlign));
+
+            var e = CustomEventArgs.CreateWithFlag("IsRequired");
+            
+            var itemMinLengthEdit = panelSettings.AddInput(
+                MinLengthEditLabel,
+                textBox,
+                nameof(TextBox.MinLength),
+                e);
+            itemMinLengthEdit.ValueChanged += (s, e) => textBox.RunDefaultValidation();
+
+            var itemMaxLengthEdit = panelSettings.AddInput(
+                MaxLengthEditLabel,
+                textBox,
+                nameof(TextBox.MaxLength),
+                e);
+            itemMaxLengthEdit.ValueChanged += (s, e) => textBox.RunDefaultValidation();
+            
+            panelSettings.AddLinkLabel("Change Text", ChangeTextButton_Click);
+            panelSettings.AddLinkLabel("Show All Properties", ShowProperties_Click);
+
+            panelSettings.AddInput("Log Text", this, nameof(LogText));
+            panelSettings.AddInput("Log Position", this, nameof(LogPosition));
+            panelSettings.AddInput("Log Selection", this, nameof(LogSelection));
         }
 
         private void TextBox_KeyDown(object? sender, KeyEventArgs e)
@@ -109,7 +120,7 @@ namespace ControlsSample
 
         private void TextBox_KeyPress(object? sender, KeyPressEventArgs e)
         {
-            if (e.KeyChar == ' ' && !allowSpaceCheckBox.IsChecked)
+            if (e.KeyChar == ' ' && !AllowSpaceChar)
                 e.Handled = true;
         }
 
@@ -118,14 +129,34 @@ namespace ControlsSample
             if (sender is not AbstractControl control)
                 return;
 
-            App.LogSection(() =>
+            var errors = control.GetErrorsCollection(null);
+
+            var errorCount = errors.Count();
+
+            if (errorCount == 0)
+                return;
+
+            if(errorCount == 1)
             {
-                App.LogNameValue("HasErrors", control.HasErrors);
-                var errors = control.GetErrors(null);
-                var index = 1;
-                foreach (var error in errors)
-                    App.LogNameValue($"Error {index++}", error);
-            });
+                var firstError = errors.FirstOrDefault();
+                App.LogError(firstError);
+                return;
+            }
+
+            var exception = new BaseException($"Input Validation: {errorCount} errors");
+
+            var index = 1;
+            string? s = null;
+            foreach (var error in errors)
+            {
+                if (s != null)
+                    s += Environment.NewLine;
+                s+=$"Error {index++}: {error}";
+            }
+
+            exception.AdditionalInformation = s;
+
+            App.LogError(exception);
         }
 
         internal bool UsePopup { get; set; } = false;
@@ -144,28 +175,36 @@ namespace ControlsSample
                 WindowPropertyGrid.ShowDefault(null, textBox, true);
             }
         }
-        
+
+        private string? reportedSelection;
+
         private void TextInputPage_Idle(object? sender, EventArgs e)
         {
-            if (memo.VisibleOnScreen)
+            textBox.IdleAction();
+
+            if (LogSelection)
             {
-                textBox.IdleAction();
+                var selLength = textBox.SelectedText.Length;
+                var selText = textBox.SelectedText;
+                var selStart = textBox.SelectionStart;
+                var selLength2 = textBox.SelectionLength;
+                var value = $"<{selText}>, Start = {selStart}, Length = {selLength}/{selLength2}";
 
-                object[] info =
-                    [
-                        "Text:", $"<{textBox.Text}>", Environment.NewLine,
-                        "SelectedText:", $"<{textBox.SelectedText}> ({textBox.SelectedText.Length})", 
-                        Environment.NewLine,
-                        "SelectionStart:", $"<{textBox.SelectionStart}>", Environment.NewLine,
-                        "SelectionLength:", $"<{textBox.SelectionLength}>", Environment.NewLine,
-                    ];
-
-                var s = StringUtils.ToStringSimple(info);
-                memo.Text = s;
+                if(reportedSelection != value)
+                {
+                    App.LogNameValueReplace("TextBox.SelectedText", value);
+                    reportedSelection = value;
+                }
             }
         }
 
         public static bool LogPosition { get; set; }
+
+        public static bool LogSelection { get; set; }
+
+        public static bool LogText { get; set; } = true;
+
+        public static bool AllowSpaceChar { get; set; } = true;
 
         private void TextBox_CurrentPositionChanged(object? sender, EventArgs e)
         {
@@ -178,40 +217,42 @@ namespace ControlsSample
             App.Log("TextBox: Text max length reached");
         }
 
-        private void MaxLengthBox_TextChanged(object? sender, EventArgs e)
-        {
-            var value = maxLengthEdit.TextBox.TextAsNumberOrDefault<uint>(0);
-            textBox.MaxLength = (int)value;
-            textBox.RunDefaultValidation();
-        }
-
-        private void MinLengthBox_TextChanged(object? sender, EventArgs e)
-        {
-            var value = minLengthEdit.TextBox.TextAsNumberOrDefault<uint>(0);
-            textBox.MinLength = (int)value;
-            textBox.RunDefaultValidation();
-        }
-
-        internal static void ReportValueChanged(object? sender, EventArgs e)
+        internal static void GetTextChangedInfo(
+            object? sender,
+            out string? varName,
+            out string? varValue)
         {
             var textBox = (sender as ValueEditorCustom)?.TextBox;
             textBox ??= sender as TextBox;
             if (textBox is null)
+            {
+                varName = null;
+                varValue = null;
                 return;
+            }
+
             var name = (sender as AbstractControl)?.Name;
             var value = textBox.Text;
             string prefix;
             if (name is null)
-                prefix = "TextBox: ";
+                prefix = "TextBox";
             else
-                prefix = $"{name}: ";
+                prefix = $"{name}";
 
             var asNumber = textBox.TextAsNumber;
 
             if (asNumber is not null)
                 asNumber = $" => {asNumber} | {asNumber.GetType().Name}";
 
-            App.LogReplace($"{prefix}{value}{asNumber}", prefix);
+            varValue = $"{value}{asNumber}";
+            varName = prefix;
+        }
+
+        internal static void ReportValueChanged(object? sender, EventArgs e)
+        {
+            GetTextChangedInfo(sender, out var varName, out var varValue);
+            if(varName is not null)
+                App.LogNameValueReplace(varName, varValue);
         }
 
         private void ChangeTextButton_Click(object? sender, EventArgs e)

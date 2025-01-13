@@ -8,7 +8,8 @@ namespace Alternet::UI
     {
     }
 
-    UnmanagedDataObject::UnmanagedDataObject(wxDataObjectComposite* dataObject) : _dataObject(dataObject)
+    UnmanagedDataObject::UnmanagedDataObject(wxDataObjectComposite* dataObject)
+        : _dataObject(dataObject)
     {
     }
 
@@ -72,7 +73,8 @@ namespace Alternet::UI
         return object->GetFilenames();
     }
 
-    /*static*/ optional<string> UnmanagedDataObject::TryGetFilesString(wxDataObjectComposite* dataObject)
+    /*static*/ optional<string> UnmanagedDataObject::TryGetFilesString(
+        wxDataObjectComposite* dataObject)
     {
         auto fileNames = TryGetFiles(dataObject);
 
@@ -136,7 +138,21 @@ namespace Alternet::UI
         if (format == DataFormats::Bitmap)
             return _dataObject->IsSupportedFormat(GetBitmapDataFormat());
 
-        return false;
+        auto frmt = wxDataFormat(wxStr(format));
+        return _dataObject->IsSupportedFormat(frmt);
+    }
+
+    bool UnmanagedDataObject::GetNativeDataPresent(int format)
+    {
+        auto fmt = wxDataFormat((wxDataFormatId)format);
+        return _dataObject->IsSupportedFormat(fmt);
+    }
+
+    bool IsStandardDataFormat(wxDataFormat& df)
+    {
+        auto m_format = df.GetType();
+
+        return m_format > 0 && m_format < wxDF_PRIVATE;
     }
 
     void* UnmanagedDataObject::OpenFormatsArray()
@@ -151,6 +167,22 @@ namespace Alternet::UI
 
         if (GetDataPresent(DataFormats::Bitmap))
             result->push_back(DataFormats::Bitmap);
+
+        auto fmtCount = _dataObject->GetFormatCount();
+
+        wxDataFormat* formats = new wxDataFormat[fmtCount];
+        _dataObject->GetAllFormats(formats);
+
+        size_t n;
+        for (n = 0; n < fmtCount; n++)
+        {
+            if (IsStandardDataFormat(formats[n]))
+                continue;
+            auto st = formats[n].GetId();
+            result->push_back(wxStr(st));
+        }
+
+        delete[] formats;
 
         return result;
     }

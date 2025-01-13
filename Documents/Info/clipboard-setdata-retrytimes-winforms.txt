@@ -1,0 +1,8 @@
+(int retryTimes, int retryDelay)
+Summary: Clears the Clipboard and then attempts to place data on it the specified
+ number of times and with the specified delay between attempts, optionally leaving the
+ data on the Clipboard after the application exits.
+data: The data to place on the Clipboard.
+copy: true if you want data to remain on the Clipboard after this application exits; otherwise, false.
+retryTimes: The number of times to attempt placing the data on the Clipboard.
+retryDelay: The number of milliseconds to pause between attempts.

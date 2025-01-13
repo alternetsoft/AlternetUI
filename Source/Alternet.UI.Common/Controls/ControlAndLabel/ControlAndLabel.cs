@@ -51,6 +51,7 @@ namespace Alternet.UI
         /// </summary>
         public ControlAndLabel()
         {
+            SuspendHandlerTextChange();
             ParentBackColor = true;
             ParentForeColor = true;
             Layout = LayoutStyle.Horizontal;
@@ -64,6 +65,26 @@ namespace Alternet.UI
             mainControl.Alignment = (HorizontalAlignment.Fill, VerticalAlignment.Center);
             mainControl.MinWidth = 50;
             mainControl.Parent = this;
+        }
+
+        /// <summary>
+        /// Occurs when <see cref="AbstractControl.TextChanged"/> event of the
+        /// inner control is changed.
+        /// </summary>
+        public new event EventHandler? TextChanged
+        {
+            add => MainControl.TextChanged += value;
+            remove => MainControl.TextChanged -= value;
+        }
+
+        /// <summary>
+        /// Occurs when <see cref="AbstractControl.DelayedTextChanged"/> event of the
+        /// inner control is changed.
+        /// </summary>
+        public new event EventHandler<EventArgs>? DelayedTextChanged
+        {
+            add => MainControl.DelayedTextChanged += value;
+            remove => MainControl.DelayedTextChanged -= value;
         }
 
         /// <summary>

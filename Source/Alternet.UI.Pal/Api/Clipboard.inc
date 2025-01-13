@@ -3,6 +3,9 @@
 public:
 UnmanagedDataObject* GetDataObject();
 void SetDataObject(UnmanagedDataObject* value);
+bool Flush();
+bool IsIntFormatSupported(int format);
+bool IsStrFormatSupported(const string& format);
 
 public:
 Clipboard();

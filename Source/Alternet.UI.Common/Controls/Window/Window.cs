@@ -1057,7 +1057,7 @@ namespace Alternet.UI
 
         /// <summary>
         /// Gets or sets action which is performed when window is closed using
-        /// <see cref="Close"/> method.
+        /// <see cref="Close()"/> method.
         /// </summary>
         public WindowCloseAction? CloseAction { get; set; }
 
@@ -1235,11 +1235,11 @@ namespace Alternet.UI
         /// a parameter to your event handler.
         /// If the window you are closing is the last open window of your application,
         /// your application ends.
-        /// The window is not disposed on <see cref="Close"/> when you have displayed the
+        /// The window is not disposed on close when you have displayed the
         /// window using <see cref="DialogWindow.ShowModal()"/>.
         /// In this case, you will need to call <see cref="IDisposable.Dispose"/> manually.
         /// </remarks>
-        public virtual void Close(WindowCloseAction? action = null)
+        public virtual void Close(WindowCloseAction? action)
         {
             if (DisposingOrDisposed)
                 return;
@@ -1263,6 +1263,9 @@ namespace Alternet.UI
                     break;
             }
         }
+
+        /// <inheritdoc cref="Close(WindowCloseAction?)"/>
+        public virtual void Close() => Close(null);
 
         /// <summary>
         /// Raises <see cref="StateChanged"/> event and <see cref="OnStateChanged"/> method.

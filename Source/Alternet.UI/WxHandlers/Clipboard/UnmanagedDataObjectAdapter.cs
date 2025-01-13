@@ -4,7 +4,7 @@ using Alternet.UI.Native;
 
 namespace Alternet.UI
 {
-    internal class UnmanagedDataObjectAdapter : IDataObject
+    internal class UnmanagedDataObjectAdapter : IDataObject, IDoCommand
     {
         private readonly UnmanagedDataObject dataObject;
 
@@ -32,6 +32,39 @@ namespace Alternet.UI
             return null;
         }
 
+        public object? DoCommand(string cmdName, params object?[] args)
+        {
+            if(cmdName == "log")
+            {
+                Log();
+            }
+
+            return null;
+        }
+
+        public void Log()
+        {
+            App.LogBeginSection();
+
+            for(int i = 1; i < (int)ClipboardDataFormatId.Max; i++)
+            {
+                var format = (ClipboardDataFormatId)i;
+                var present = GetNativeDataPresent(format);
+
+                if(present)
+                {
+                    App.Log($"Clipboard contains format: {format}");
+                }
+            }
+
+            App.LogEndSection();
+        }
+
+        internal bool GetNativeDataPresent(ClipboardDataFormatId format)
+        {
+            return dataObject.GetNativeDataPresent((int)format);
+        }
+
         public bool GetDataPresent(string format)
         {
             return dataObject.GetDataPresent(format);
@@ -50,6 +83,16 @@ namespace Alternet.UI
         public void SetData(object data)
         {
             SetData(ClipboardUtils.DetectFormatFromData(data), data);
+        }
+
+        public bool HasFormat(ClipboardDataFormatId format)
+        {
+            return dataObject.GetNativeDataPresent((int)format);
+        }
+
+        public bool HasFormat(string format)
+        {
+            return dataObject.GetDataPresent(format);
         }
     }
 }

@@ -4,21 +4,22 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+
 using Alternet.Base.Collections;
 
 namespace Alternet.UI
 {
     /// <summary>
-    /// Implements <see cref="UI.ComboBox"/> with attached <see cref="Label"/>.
+    /// Implements <see cref="UI.ComboBox"/> with additional buttons.
     /// </summary>
     [ControlCategory("Editors")]
-    public partial class ComboBoxAndLabel : ControlAndLabel
+    public partial class ComboBoxAndButton : ControlAndButton
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="ComboBoxAndLabel"/> class.
+        /// Initializes a new instance of the <see cref="ComboBoxAndButton"/> class.
         /// </summary>
         /// <param name="parent">Parent of the control.</param>
-        public ComboBoxAndLabel(Control parent)
+        public ComboBoxAndButton(Control parent)
             : this()
         {
             Parent = parent;
@@ -27,18 +28,9 @@ namespace Alternet.UI
         /// <summary>
         /// Initializes a new instance of the <see cref="ComboBoxAndLabel"/> class.
         /// </summary>
-        /// <param name="label">Label text.</param>
-        public ComboBoxAndLabel(string label)
-            : this()
+        public ComboBoxAndButton()
         {
-            Label.Text = label;
-        }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="ComboBoxAndLabel"/> class.
-        /// </summary>
-        public ComboBoxAndLabel()
-        {
+            SuspendHandlerTextChange();
         }
 
         /// <summary>
@@ -107,6 +99,9 @@ namespace Alternet.UI
             get => ComboBox.Items;
             set => ComboBox.Items = value;
         }
+
+        /// <inheritdoc/>
+        protected override bool NeedDefaultButton() => false;
 
         /// <inheritdoc/>
         protected override AbstractControl CreateControl() => new ComboBox();

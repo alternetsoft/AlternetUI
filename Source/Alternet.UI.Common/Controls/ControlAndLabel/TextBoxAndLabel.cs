@@ -43,7 +43,6 @@ namespace Alternet.UI
         /// </summary>
         public TextBoxAndLabel()
         {
-            SuspendHandlerTextChange();
             Init();
         }
 
@@ -99,6 +98,16 @@ namespace Alternet.UI
         /// </summary>
         [Browsable(false)]
         public TextBox TextBox => (TextBox)base.MainControl;
+
+        /// <summary>
+        /// <see cref="CustomTextBox.IsRequired"/>
+        /// </summary>
+        public virtual bool IsRequired
+        {
+            get => TextBox.IsRequired;
+
+            set => TextBox.IsRequired = value;
+        }
 
         /// <summary>
         /// Gets whether editor contains a valid e-mail address.

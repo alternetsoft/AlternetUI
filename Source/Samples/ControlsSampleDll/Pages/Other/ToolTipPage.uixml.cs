@@ -80,6 +80,7 @@ namespace ControlsSample
             tooltipPreview.Layout = LayoutStyle.Vertical;
             toolTip.VerticalAlignment = VerticalAlignment.Fill;
 
+            toolTip.ParentBackColor = false;
             toolTip.BackgroundColor = SystemColors.Window;
 
             toolTip.Parent = tooltipPreview;
@@ -125,6 +126,12 @@ namespace ControlsSample
             RunWhenIdle(() =>
             {
                 ShowToolTipButton_Click(this, EventArgs.Empty);
+
+                toolTip.ToolTipVisibleChanged += (s, e) =>
+                {
+                    var prefix = "ToolTip.Visible =";
+                    App.LogReplace($"{prefix} {toolTip.ToolTipVisible}", prefix);
+                };
             });
 
             tooltipTitleTextBox.DelayedTextChanged += (s, e) =>

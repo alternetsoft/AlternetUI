@@ -300,7 +300,8 @@ namespace Alternet.UI
         {
             if (updateScrollbars && container.IsScrollable)
             {
-                var totalSize = container.GetChildrenMaxPreferredSizePadded(SizeD.PositiveInfinity);
+                var totalSize = container.LayoutMaxSize
+                    ?? container.GetChildrenMaxPreferredSizePadded(SizeD.PositiveInfinity);
                 container.SetScrollBarInfo(getBounds().Size, totalSize);
             }
 

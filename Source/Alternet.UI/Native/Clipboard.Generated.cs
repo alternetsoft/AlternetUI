@@ -38,6 +38,24 @@ namespace Alternet.UI.Native
             NativeApi.Clipboard_SetDataObject_(NativePointer, value.NativePointer);
         }
         
+        public bool Flush()
+        {
+            CheckDisposed();
+            return NativeApi.Clipboard_Flush_(NativePointer);
+        }
+        
+        public bool IsIntFormatSupported(int format)
+        {
+            CheckDisposed();
+            return NativeApi.Clipboard_IsIntFormatSupported_(NativePointer, format);
+        }
+        
+        public bool IsStrFormatSupported(string format)
+        {
+            CheckDisposed();
+            return NativeApi.Clipboard_IsStrFormatSupported_(NativePointer, format);
+        }
+        
         
         [SuppressUnmanagedCodeSecurity]
         public class NativeApi : NativeApiProvider
@@ -52,6 +70,15 @@ namespace Alternet.UI.Native
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void Clipboard_SetDataObject_(IntPtr obj, IntPtr value);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool Clipboard_Flush_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool Clipboard_IsIntFormatSupported_(IntPtr obj, int format);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool Clipboard_IsStrFormatSupported_(IntPtr obj, string format);
             
         }
     }

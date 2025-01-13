@@ -231,6 +231,28 @@ namespace Alternet.UI
             Bounds = newBounds;
         }
 
+        internal static SizeD GetPreferredSizeWhenScroll(
+            AbstractControl container,
+            SizeD availableSize)
+        {
+            var result = container.LayoutMaxSize
+                ?? GetPreferredSizeDefaultLayout(container, availableSize);
+
+            var cornerSize = ScrollBar.GetCornerSize(container);
+
+            if (result.Width > availableSize.Width)
+            {
+                result.Width += cornerSize.Width;
+            }
+
+            if (result.Height > availableSize.Height)
+            {
+                result.Height += cornerSize.Height;
+            }
+
+            return result;
+        }
+
         internal static SizeD GetPreferredSizeWhenHorizontal(
             AbstractControl container,
             SizeD availableSize)

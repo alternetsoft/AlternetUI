@@ -85,6 +85,7 @@ namespace Alternet.UI
         private SizeD suggestedSize = DefaultControlSize;
 
         private PointD layoutOffset;
+        private SizeD? layoutMaxSize;
 
         private Collection<InputBinding>? inputBindings;
         private Caret? caret;
@@ -653,8 +654,8 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets offset of the layout which is applied to the position of
         /// the child controls.
-        /// This property is used only in some descendant's of the control and by default
-        /// doesn't affect the layout.
+        /// This property is used when layout of the child controls is
+        /// <see cref="LayoutStyle.Scroll"/>.
         /// </summary>
         [Browsable(false)]
         public virtual PointD LayoutOffset
@@ -666,7 +667,31 @@ namespace Alternet.UI
                 if (layoutOffset == value)
                     return;
                 layoutOffset = value;
-                PerformLayout();
+                PerformLayout(false);
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets maximal size of the layout which is used together with
+        /// <see cref="LayoutOffset"/> when scrollbar position is updated.
+        /// This property is used when layout of the child controls is
+        /// <see cref="LayoutStyle.Scroll"/>. If this property is Null (default value),
+        /// automatic calculation is performed.
+        /// </summary>
+        [Browsable(false)]
+        public virtual SizeD? LayoutMaxSize
+        {
+            get
+            {
+                return layoutMaxSize;
+            }
+
+            set
+            {
+                if (layoutMaxSize == value)
+                    return;
+                layoutMaxSize = value;
+                PerformLayout(false);
             }
         }
 

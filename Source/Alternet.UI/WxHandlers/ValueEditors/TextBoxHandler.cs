@@ -1,6 +1,8 @@
 using System;
 using System.Runtime.InteropServices;
+
 using Alternet.Drawing;
+using Alternet.UI.Extensions;
 
 namespace Alternet.UI
 {
@@ -227,16 +229,16 @@ namespace Alternet.UI
             }
         }
 
-        public GenericAlignment TextAlign
+        public TextHorizontalAlignment TextAlign
         {
             get
             {
-                return (GenericAlignment)NativeControl.TextAlign;
+                return ((GenericAlignment)NativeControl.TextAlign).AsTextHorizontalAlignment();
             }
 
             set
             {
-                NativeControl.TextAlign = (int)value;
+                NativeControl.TextAlign = (int)(value.AsGenericAlignment());
             }
         }
 

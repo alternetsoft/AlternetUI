@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ApiInfo>
-  <Assembly Name="Alternet.UI.Common, Version=0.9.701.0, Culture=neutral, PublicKeyToken=7fb0fe57212b4b74">
+  <Assembly Name="Alternet.UI.Common, Version=0.9.702.0, Culture=neutral, PublicKeyToken=7fb0fe57212b4b74">
     <Type Name="XamlX.Runtime.IXamlParentStackProviderV1" />
     <Type Name="XamlX.Runtime.IXamlXmlNamespaceInfoProviderV1" />
     <Type Name="XamlX.Runtime.XamlXmlNamespaceInfoV1" />
@@ -83,6 +83,7 @@
     <Type Name="Alternet.Drawing.RGBAValue" />
     <Type Name="Alternet.Drawing.RGBValue" />
     <Type Name="Alternet.Drawing.SystemColors" />
+    <Type Name="Alternet.Drawing.SystemColorsLight" />
     <Type Name="Alternet.Drawing.BaseDrawable" />
     <Type Name="Alternet.Drawing.BorderDrawable" />
     <Type Name="Alternet.Drawing.IBaseDrawable" />
@@ -495,6 +496,7 @@
     <Type Name="Alternet.UI.PlessDisplayHandler">
       <Event Name="Disposed" />
     </Type>
+    <Type Name="Alternet.UI.BaseEventArgsWithAttr" />
     <Type Name="Alternet.UI.BaseCancelEventArgs" />
     <Type Name="Alternet.UI.LogMessageEventArgs" />
     <Type Name="Alternet.UI.UrlEventHandler" />
@@ -513,6 +515,11 @@
     <Type Name="Alternet.UI.ErrorStatusEventHandler" />
     <Type Name="Alternet.UI.ErrorStatusEventArgs" />
     <Type Name="Alternet.UI.ExceptionCreatedEventArgs" />
+    <Type Name="Alternet.UI.BaseFocusEventArgs" />
+    <Type Name="Alternet.UI.GotFocusEventArgs" />
+    <Type Name="Alternet.UI.LostFocusEventArgs" />
+    <Type Name="Alternet.UI.BaseThreadExceptionEventHandler" />
+    <Type Name="Alternet.UI.BaseThreadExceptionEventArgs" />
     <Type Name="Alternet.UI.ControlAndButtonClickEventArgs" />
     <Type Name="Alternet.UI.DefaultLayoutEventArgs" />
     <Type Name="Alternet.UI.DefaultPreferredSizeEventArgs" />
@@ -637,6 +644,9 @@
     <Type Name="Alternet.UI.LengthConverter" />
     <Type Name="Alternet.UI.MenuItemRoleConverter" />
     <Type Name="Alternet.UI.ModifierKeysConverter" />
+    <Type Name="Alternet.UI.ValueContainer`1">
+      <Event Name="ValueChanged" />
+    </Type>
     <Type Name="Alternet.UI.Border">
       <Event Name="CellChanged" />
       <Event Name="Activated" />
@@ -791,6 +801,79 @@
       <Event Name="Disposed" />
     </Type>
     <Type Name="Alternet.UI.ContainerControl">
+      <Event Name="CellChanged" />
+      <Event Name="Activated" />
+      <Event Name="TitleChanged" />
+      <Event Name="MouseMove" />
+      <Event Name="Touch" />
+      <Event Name="MouseDown" />
+      <Event Name="MouseUp" />
+      <Event Name="MouseWheel" />
+      <Event Name="MouseLeftButtonDown" />
+      <Event Name="MouseRightButtonDown" />
+      <Event Name="MouseRightButtonUp" />
+      <Event Name="CustomLayout" />
+      <Event Name="MouseDoubleClick" />
+      <Event Name="DoubleClick" />
+      <Event Name="MouseLeftButtonUp" />
+      <Event Name="HandleCreated" />
+      <Event Name="HandleDestroyed" />
+      <Event Name="Deactivated" />
+      <Event Name="GotFocus" />
+      <Event Name="QueryContinueDrag" />
+      <Event Name="KeyDown" />
+      <Event Name="KeyUp" />
+      <Event Name="LostFocus" />
+      <Event Name="TextChanged" />
+      <Event Name="DelayedTextChanged" />
+      <Event Name="KeyPress" />
+      <Event Name="PreviewKeyDown" />
+      <Event Name="VisualStateChanged" />
+      <Event Name="ToolTipChanged" />
+      <Event Name="IsMouseOverChanged" />
+      <Event Name="LongTap" />
+      <Event Name="Click" />
+      <Event Name="ParentChanged" />
+      <Event Name="Paint" />
+      <Event Name="MarginChanged" />
+      <Event Name="PaddingChanged" />
+      <Event Name="VisibleChanged" />
+      <Event Name="AfterShow" />
+      <Event Name="AfterHide" />
+      <Event Name="MouseCaptureLost" />
+      <Event Name="MouseCaptureChanged" />
+      <Event Name="HelpRequested" />
+      <Event Name="ProcessException" />
+      <Event Name="MouseEnter" />
+      <Event Name="MouseLeave" />
+      <Event Name="ChildRemoved" />
+      <Event Name="ChildVisibleChanged" />
+      <Event Name="ChildInserted" />
+      <Event Name="EnabledChanged" />
+      <Event Name="BackgroundChanged" />
+      <Event Name="ForegroundChanged" />
+      <Event Name="FontChanged" />
+      <Event Name="VerticalAlignmentChanged" />
+      <Event Name="HorizontalAlignmentChanged" />
+      <Event Name="SizeChanged" />
+      <Event Name="Idle" />
+      <Event Name="Resize" />
+      <Event Name="LocationChanged" />
+      <Event Name="DragStart" />
+      <Event Name="DragDrop" />
+      <Event Name="DragOver" />
+      <Event Name="DragEnter" />
+      <Event Name="DragLeave" />
+      <Event Name="DpiChanged" />
+      <Event Name="SystemColorsChanged" />
+      <Event Name="ErrorsChanged" />
+      <Event Name="Invalidated" />
+      <Event Name="LayoutUpdated" />
+      <Event Name="Scroll" />
+      <Event Name="Disposed" />
+    </Type>
+    <Type Name="Alternet.UI.ErrorPictureBox">
+      <Event Name="ImageChanged" />
       <Event Name="CellChanged" />
       <Event Name="Activated" />
       <Event Name="TitleChanged" />
@@ -2188,7 +2271,10 @@
       <Event Name="Scroll" />
       <Event Name="Disposed" />
     </Type>
-    <Type Name="Alternet.UI.ControlAndButton">
+    <Type Name="Alternet.UI.ComboBoxAndButton">
+      <Event Name="SelectedIndexChanged" />
+      <Event Name="TextChanged" />
+      <Event Name="DelayedTextChanged" />
       <Event Name="ButtonClick" />
       <Event Name="CellChanged" />
       <Event Name="Activated" />
@@ -2213,8 +2299,79 @@
       <Event Name="KeyDown" />
       <Event Name="KeyUp" />
       <Event Name="LostFocus" />
+      <Event Name="KeyPress" />
+      <Event Name="PreviewKeyDown" />
+      <Event Name="VisualStateChanged" />
+      <Event Name="ToolTipChanged" />
+      <Event Name="IsMouseOverChanged" />
+      <Event Name="LongTap" />
+      <Event Name="Click" />
+      <Event Name="ParentChanged" />
+      <Event Name="Paint" />
+      <Event Name="MarginChanged" />
+      <Event Name="PaddingChanged" />
+      <Event Name="VisibleChanged" />
+      <Event Name="AfterShow" />
+      <Event Name="AfterHide" />
+      <Event Name="MouseCaptureLost" />
+      <Event Name="MouseCaptureChanged" />
+      <Event Name="HelpRequested" />
+      <Event Name="ProcessException" />
+      <Event Name="MouseEnter" />
+      <Event Name="MouseLeave" />
+      <Event Name="ChildRemoved" />
+      <Event Name="ChildVisibleChanged" />
+      <Event Name="ChildInserted" />
+      <Event Name="EnabledChanged" />
+      <Event Name="BackgroundChanged" />
+      <Event Name="ForegroundChanged" />
+      <Event Name="FontChanged" />
+      <Event Name="VerticalAlignmentChanged" />
+      <Event Name="HorizontalAlignmentChanged" />
+      <Event Name="SizeChanged" />
+      <Event Name="Idle" />
+      <Event Name="Resize" />
+      <Event Name="LocationChanged" />
+      <Event Name="DragStart" />
+      <Event Name="DragDrop" />
+      <Event Name="DragOver" />
+      <Event Name="DragEnter" />
+      <Event Name="DragLeave" />
+      <Event Name="DpiChanged" />
+      <Event Name="SystemColorsChanged" />
+      <Event Name="ErrorsChanged" />
+      <Event Name="Invalidated" />
+      <Event Name="LayoutUpdated" />
+      <Event Name="Scroll" />
+      <Event Name="Disposed" />
+    </Type>
+    <Type Name="Alternet.UI.ControlAndButton">
       <Event Name="TextChanged" />
       <Event Name="DelayedTextChanged" />
+      <Event Name="ButtonClick" />
+      <Event Name="CellChanged" />
+      <Event Name="Activated" />
+      <Event Name="TitleChanged" />
+      <Event Name="MouseMove" />
+      <Event Name="Touch" />
+      <Event Name="MouseDown" />
+      <Event Name="MouseUp" />
+      <Event Name="MouseWheel" />
+      <Event Name="MouseLeftButtonDown" />
+      <Event Name="MouseRightButtonDown" />
+      <Event Name="MouseRightButtonUp" />
+      <Event Name="CustomLayout" />
+      <Event Name="MouseDoubleClick" />
+      <Event Name="DoubleClick" />
+      <Event Name="MouseLeftButtonUp" />
+      <Event Name="HandleCreated" />
+      <Event Name="HandleDestroyed" />
+      <Event Name="Deactivated" />
+      <Event Name="GotFocus" />
+      <Event Name="QueryContinueDrag" />
+      <Event Name="KeyDown" />
+      <Event Name="KeyUp" />
+      <Event Name="LostFocus" />
       <Event Name="KeyPress" />
       <Event Name="PreviewKeyDown" />
       <Event Name="VisualStateChanged" />
@@ -2262,6 +2419,8 @@
       <Event Name="Disposed" />
     </Type>
     <Type Name="Alternet.UI.TextBoxAndButton">
+      <Event Name="TextChanged" />
+      <Event Name="DelayedTextChanged" />
       <Event Name="ButtonClick" />
       <Event Name="CellChanged" />
       <Event Name="Activated" />
@@ -2286,8 +2445,6 @@
       <Event Name="KeyDown" />
       <Event Name="KeyUp" />
       <Event Name="LostFocus" />
-      <Event Name="TextChanged" />
-      <Event Name="DelayedTextChanged" />
       <Event Name="KeyPress" />
       <Event Name="PreviewKeyDown" />
       <Event Name="VisualStateChanged" />
@@ -2335,6 +2492,9 @@
       <Event Name="Disposed" />
     </Type>
     <Type Name="Alternet.UI.ComboBoxAndLabel">
+      <Event Name="SelectedIndexChanged" />
+      <Event Name="TextChanged" />
+      <Event Name="DelayedTextChanged" />
       <Event Name="CellChanged" />
       <Event Name="Activated" />
       <Event Name="TitleChanged" />
@@ -2358,8 +2518,6 @@
       <Event Name="KeyDown" />
       <Event Name="KeyUp" />
       <Event Name="LostFocus" />
-      <Event Name="TextChanged" />
-      <Event Name="DelayedTextChanged" />
       <Event Name="KeyPress" />
       <Event Name="PreviewKeyDown" />
       <Event Name="VisualStateChanged" />
@@ -2407,6 +2565,8 @@
       <Event Name="Disposed" />
     </Type>
     <Type Name="Alternet.UI.ControlAndLabel">
+      <Event Name="TextChanged" />
+      <Event Name="DelayedTextChanged" />
       <Event Name="CellChanged" />
       <Event Name="Activated" />
       <Event Name="TitleChanged" />
@@ -2430,8 +2590,6 @@
       <Event Name="KeyDown" />
       <Event Name="KeyUp" />
       <Event Name="LostFocus" />
-      <Event Name="TextChanged" />
-      <Event Name="DelayedTextChanged" />
       <Event Name="KeyPress" />
       <Event Name="PreviewKeyDown" />
       <Event Name="VisualStateChanged" />
@@ -2479,6 +2637,8 @@
       <Event Name="Disposed" />
     </Type>
     <Type Name="Alternet.UI.ValueEditorDouble">
+      <Event Name="TextChanged" />
+      <Event Name="DelayedTextChanged" />
       <Event Name="CellChanged" />
       <Event Name="Activated" />
       <Event Name="TitleChanged" />
@@ -2502,8 +2662,6 @@
       <Event Name="KeyDown" />
       <Event Name="KeyUp" />
       <Event Name="LostFocus" />
-      <Event Name="TextChanged" />
-      <Event Name="DelayedTextChanged" />
       <Event Name="KeyPress" />
       <Event Name="PreviewKeyDown" />
       <Event Name="VisualStateChanged" />
@@ -2551,6 +2709,8 @@
       <Event Name="Disposed" />
     </Type>
     <Type Name="Alternet.UI.ValueEditorSingle">
+      <Event Name="TextChanged" />
+      <Event Name="DelayedTextChanged" />
       <Event Name="CellChanged" />
       <Event Name="Activated" />
       <Event Name="TitleChanged" />
@@ -2574,8 +2734,6 @@
       <Event Name="KeyDown" />
       <Event Name="KeyUp" />
       <Event Name="LostFocus" />
-      <Event Name="TextChanged" />
-      <Event Name="DelayedTextChanged" />
       <Event Name="KeyPress" />
       <Event Name="PreviewKeyDown" />
       <Event Name="VisualStateChanged" />
@@ -2623,6 +2781,8 @@
       <Event Name="Disposed" />
     </Type>
     <Type Name="Alternet.UI.ValueEditorUDouble">
+      <Event Name="TextChanged" />
+      <Event Name="DelayedTextChanged" />
       <Event Name="CellChanged" />
       <Event Name="Activated" />
       <Event Name="TitleChanged" />
@@ -2646,8 +2806,6 @@
       <Event Name="KeyDown" />
       <Event Name="KeyUp" />
       <Event Name="LostFocus" />
-      <Event Name="TextChanged" />
-      <Event Name="DelayedTextChanged" />
       <Event Name="KeyPress" />
       <Event Name="PreviewKeyDown" />
       <Event Name="VisualStateChanged" />
@@ -2695,6 +2853,8 @@
       <Event Name="Disposed" />
     </Type>
     <Type Name="Alternet.UI.ValueEditorUSingle">
+      <Event Name="TextChanged" />
+      <Event Name="DelayedTextChanged" />
       <Event Name="CellChanged" />
       <Event Name="Activated" />
       <Event Name="TitleChanged" />
@@ -2718,8 +2878,6 @@
       <Event Name="KeyDown" />
       <Event Name="KeyUp" />
       <Event Name="LostFocus" />
-      <Event Name="TextChanged" />
-      <Event Name="DelayedTextChanged" />
       <Event Name="KeyPress" />
       <Event Name="PreviewKeyDown" />
       <Event Name="VisualStateChanged" />
@@ -2767,6 +2925,8 @@
       <Event Name="Disposed" />
     </Type>
     <Type Name="Alternet.UI.ValueEditorInt16">
+      <Event Name="TextChanged" />
+      <Event Name="DelayedTextChanged" />
       <Event Name="CellChanged" />
       <Event Name="Activated" />
       <Event Name="TitleChanged" />
@@ -2790,8 +2950,6 @@
       <Event Name="KeyDown" />
       <Event Name="KeyUp" />
       <Event Name="LostFocus" />
-      <Event Name="TextChanged" />
-      <Event Name="DelayedTextChanged" />
       <Event Name="KeyPress" />
       <Event Name="PreviewKeyDown" />
       <Event Name="VisualStateChanged" />
@@ -2839,6 +2997,8 @@
       <Event Name="Disposed" />
     </Type>
     <Type Name="Alternet.UI.ValueEditorInt32">
+      <Event Name="TextChanged" />
+      <Event Name="DelayedTextChanged" />
       <Event Name="CellChanged" />
       <Event Name="Activated" />
       <Event Name="TitleChanged" />
@@ -2862,8 +3022,6 @@
       <Event Name="KeyDown" />
       <Event Name="KeyUp" />
       <Event Name="LostFocus" />
-      <Event Name="TextChanged" />
-      <Event Name="DelayedTextChanged" />
       <Event Name="KeyPress" />
       <Event Name="PreviewKeyDown" />
       <Event Name="VisualStateChanged" />
@@ -2911,6 +3069,8 @@
       <Event Name="Disposed" />
     </Type>
     <Type Name="Alternet.UI.ValueEditorInt64">
+      <Event Name="TextChanged" />
+      <Event Name="DelayedTextChanged" />
       <Event Name="CellChanged" />
       <Event Name="Activated" />
       <Event Name="TitleChanged" />
@@ -2934,8 +3094,6 @@
       <Event Name="KeyDown" />
       <Event Name="KeyUp" />
       <Event Name="LostFocus" />
-      <Event Name="TextChanged" />
-      <Event Name="DelayedTextChanged" />
       <Event Name="KeyPress" />
       <Event Name="PreviewKeyDown" />
       <Event Name="VisualStateChanged" />
@@ -2983,6 +3141,8 @@
       <Event Name="Disposed" />
     </Type>
     <Type Name="Alternet.UI.ValueEditorSByte">
+      <Event Name="TextChanged" />
+      <Event Name="DelayedTextChanged" />
       <Event Name="CellChanged" />
       <Event Name="Activated" />
       <Event Name="TitleChanged" />
@@ -3006,8 +3166,6 @@
       <Event Name="KeyDown" />
       <Event Name="KeyUp" />
       <Event Name="LostFocus" />
-      <Event Name="TextChanged" />
-      <Event Name="DelayedTextChanged" />
       <Event Name="KeyPress" />
       <Event Name="PreviewKeyDown" />
       <Event Name="VisualStateChanged" />
@@ -3056,6 +3214,8 @@
     </Type>
     <Type Name="Alternet.UI.ValueEditorEMail">
       <Event Name="TextValidation" />
+      <Event Name="TextChanged" />
+      <Event Name="DelayedTextChanged" />
       <Event Name="CellChanged" />
       <Event Name="Activated" />
       <Event Name="TitleChanged" />
@@ -3079,8 +3239,6 @@
       <Event Name="KeyDown" />
       <Event Name="KeyUp" />
       <Event Name="LostFocus" />
-      <Event Name="TextChanged" />
-      <Event Name="DelayedTextChanged" />
       <Event Name="KeyPress" />
       <Event Name="PreviewKeyDown" />
       <Event Name="VisualStateChanged" />
@@ -3129,6 +3287,8 @@
     </Type>
     <Type Name="Alternet.UI.ValueEditorString">
       <Event Name="TextValidation" />
+      <Event Name="TextChanged" />
+      <Event Name="DelayedTextChanged" />
       <Event Name="CellChanged" />
       <Event Name="Activated" />
       <Event Name="TitleChanged" />
@@ -3152,8 +3312,6 @@
       <Event Name="KeyDown" />
       <Event Name="KeyUp" />
       <Event Name="LostFocus" />
-      <Event Name="TextChanged" />
-      <Event Name="DelayedTextChanged" />
       <Event Name="KeyPress" />
       <Event Name="PreviewKeyDown" />
       <Event Name="VisualStateChanged" />
@@ -3202,6 +3360,8 @@
     </Type>
     <Type Name="Alternet.UI.ValueEditorUrl">
       <Event Name="TextValidation" />
+      <Event Name="TextChanged" />
+      <Event Name="DelayedTextChanged" />
       <Event Name="CellChanged" />
       <Event Name="Activated" />
       <Event Name="TitleChanged" />
@@ -3225,8 +3385,6 @@
       <Event Name="KeyDown" />
       <Event Name="KeyUp" />
       <Event Name="LostFocus" />
-      <Event Name="TextChanged" />
-      <Event Name="DelayedTextChanged" />
       <Event Name="KeyPress" />
       <Event Name="PreviewKeyDown" />
       <Event Name="VisualStateChanged" />
@@ -3274,6 +3432,8 @@
       <Event Name="Disposed" />
     </Type>
     <Type Name="Alternet.UI.TextBoxAndLabel">
+      <Event Name="TextChanged" />
+      <Event Name="DelayedTextChanged" />
       <Event Name="CellChanged" />
       <Event Name="Activated" />
       <Event Name="TitleChanged" />
@@ -3297,8 +3457,6 @@
       <Event Name="KeyDown" />
       <Event Name="KeyUp" />
       <Event Name="LostFocus" />
-      <Event Name="TextChanged" />
-      <Event Name="DelayedTextChanged" />
       <Event Name="KeyPress" />
       <Event Name="PreviewKeyDown" />
       <Event Name="VisualStateChanged" />
@@ -3346,6 +3504,8 @@
       <Event Name="Disposed" />
     </Type>
     <Type Name="Alternet.UI.HexEditorUInt32">
+      <Event Name="TextChanged" />
+      <Event Name="DelayedTextChanged" />
       <Event Name="CellChanged" />
       <Event Name="Activated" />
       <Event Name="TitleChanged" />
@@ -3369,8 +3529,6 @@
       <Event Name="KeyDown" />
       <Event Name="KeyUp" />
       <Event Name="LostFocus" />
-      <Event Name="TextChanged" />
-      <Event Name="DelayedTextChanged" />
       <Event Name="KeyPress" />
       <Event Name="PreviewKeyDown" />
       <Event Name="VisualStateChanged" />
@@ -3418,6 +3576,8 @@
       <Event Name="Disposed" />
     </Type>
     <Type Name="Alternet.UI.ValueEditorByte">
+      <Event Name="TextChanged" />
+      <Event Name="DelayedTextChanged" />
       <Event Name="CellChanged" />
       <Event Name="Activated" />
       <Event Name="TitleChanged" />
@@ -3441,8 +3601,6 @@
       <Event Name="KeyDown" />
       <Event Name="KeyUp" />
       <Event Name="LostFocus" />
-      <Event Name="TextChanged" />
-      <Event Name="DelayedTextChanged" />
       <Event Name="KeyPress" />
       <Event Name="PreviewKeyDown" />
       <Event Name="VisualStateChanged" />
@@ -3490,6 +3648,8 @@
       <Event Name="Disposed" />
     </Type>
     <Type Name="Alternet.UI.ValueEditorUInt16">
+      <Event Name="TextChanged" />
+      <Event Name="DelayedTextChanged" />
       <Event Name="CellChanged" />
       <Event Name="Activated" />
       <Event Name="TitleChanged" />
@@ -3513,8 +3673,6 @@
       <Event Name="KeyDown" />
       <Event Name="KeyUp" />
       <Event Name="LostFocus" />
-      <Event Name="TextChanged" />
-      <Event Name="DelayedTextChanged" />
       <Event Name="KeyPress" />
       <Event Name="PreviewKeyDown" />
       <Event Name="VisualStateChanged" />
@@ -3562,6 +3720,8 @@
       <Event Name="Disposed" />
     </Type>
     <Type Name="Alternet.UI.ValueEditorUInt32">
+      <Event Name="TextChanged" />
+      <Event Name="DelayedTextChanged" />
       <Event Name="CellChanged" />
       <Event Name="Activated" />
       <Event Name="TitleChanged" />
@@ -3585,8 +3745,6 @@
       <Event Name="KeyDown" />
       <Event Name="KeyUp" />
       <Event Name="LostFocus" />
-      <Event Name="TextChanged" />
-      <Event Name="DelayedTextChanged" />
       <Event Name="KeyPress" />
       <Event Name="PreviewKeyDown" />
       <Event Name="VisualStateChanged" />
@@ -3634,6 +3792,8 @@
       <Event Name="Disposed" />
     </Type>
     <Type Name="Alternet.UI.ValueEditorUInt64">
+      <Event Name="TextChanged" />
+      <Event Name="DelayedTextChanged" />
       <Event Name="CellChanged" />
       <Event Name="Activated" />
       <Event Name="TitleChanged" />
@@ -3657,8 +3817,6 @@
       <Event Name="KeyDown" />
       <Event Name="KeyUp" />
       <Event Name="LostFocus" />
-      <Event Name="TextChanged" />
-      <Event Name="DelayedTextChanged" />
       <Event Name="KeyPress" />
       <Event Name="PreviewKeyDown" />
       <Event Name="VisualStateChanged" />
@@ -3706,6 +3864,8 @@
       <Event Name="Disposed" />
     </Type>
     <Type Name="Alternet.UI.ValueEditorCustom">
+      <Event Name="TextChanged" />
+      <Event Name="DelayedTextChanged" />
       <Event Name="CellChanged" />
       <Event Name="Activated" />
       <Event Name="TitleChanged" />
@@ -3729,8 +3889,6 @@
       <Event Name="KeyDown" />
       <Event Name="KeyUp" />
       <Event Name="LostFocus" />
-      <Event Name="TextChanged" />
-      <Event Name="DelayedTextChanged" />
       <Event Name="KeyPress" />
       <Event Name="PreviewKeyDown" />
       <Event Name="VisualStateChanged" />
@@ -10194,6 +10352,7 @@
     <Type Name="Alternet.UI.IRichToolTip" />
     <Type Name="Alternet.UI.IToolTipProvider" />
     <Type Name="Alternet.UI.RichToolTip">
+      <Event Name="ToolTipVisibleChanged" />
       <Event Name="CellChanged" />
       <Event Name="Activated" />
       <Event Name="TitleChanged" />
@@ -11351,7 +11510,6 @@
     <Type Name="Alternet.UI.IComboBoxHandler" />
     <Type Name="Alternet.UI.IContextMenuHandler" />
     <Type Name="Alternet.UI.IDateTimePickerHandler" />
-    <Type Name="Alternet.UI.IGroupBoxHandler" />
     <Type Name="Alternet.UI.ILinkLabelHandler" />
     <Type Name="Alternet.UI.IListViewHandler" />
     <Type Name="Alternet.UI.IMainMenuHandler" />
@@ -11461,6 +11619,9 @@
     <Type Name="Alternet.UI.IReadOnlyStrings" />
     <Type Name="Alternet.UI.ITextProperty" />
     <Type Name="Alternet.UI.IValidatorReporter" />
+    <Type Name="Alternet.UI.IValueSource`1">
+      <Event Name="ValueChanged" />
+    </Type>
     <Type Name="Alternet.UI.IWin32Window" />
     <Type Name="Alternet.UI.IWindow">
       <Event Name="MenuChanged" />
@@ -11818,6 +11979,82 @@
       <Event Name="Scroll" />
       <Event Name="Disposed" />
     </Type>
+    <Type Name="Alternet.UI.PanelSettings">
+      <Event Name="CellChanged" />
+      <Event Name="Activated" />
+      <Event Name="TitleChanged" />
+      <Event Name="MouseMove" />
+      <Event Name="Touch" />
+      <Event Name="MouseDown" />
+      <Event Name="MouseUp" />
+      <Event Name="MouseWheel" />
+      <Event Name="MouseLeftButtonDown" />
+      <Event Name="MouseRightButtonDown" />
+      <Event Name="MouseRightButtonUp" />
+      <Event Name="CustomLayout" />
+      <Event Name="MouseDoubleClick" />
+      <Event Name="DoubleClick" />
+      <Event Name="MouseLeftButtonUp" />
+      <Event Name="HandleCreated" />
+      <Event Name="HandleDestroyed" />
+      <Event Name="Deactivated" />
+      <Event Name="GotFocus" />
+      <Event Name="QueryContinueDrag" />
+      <Event Name="KeyDown" />
+      <Event Name="KeyUp" />
+      <Event Name="LostFocus" />
+      <Event Name="TextChanged" />
+      <Event Name="DelayedTextChanged" />
+      <Event Name="KeyPress" />
+      <Event Name="PreviewKeyDown" />
+      <Event Name="VisualStateChanged" />
+      <Event Name="ToolTipChanged" />
+      <Event Name="IsMouseOverChanged" />
+      <Event Name="LongTap" />
+      <Event Name="Click" />
+      <Event Name="ParentChanged" />
+      <Event Name="Paint" />
+      <Event Name="MarginChanged" />
+      <Event Name="PaddingChanged" />
+      <Event Name="VisibleChanged" />
+      <Event Name="AfterShow" />
+      <Event Name="AfterHide" />
+      <Event Name="MouseCaptureLost" />
+      <Event Name="MouseCaptureChanged" />
+      <Event Name="HelpRequested" />
+      <Event Name="ProcessException" />
+      <Event Name="MouseEnter" />
+      <Event Name="MouseLeave" />
+      <Event Name="ChildRemoved" />
+      <Event Name="ChildVisibleChanged" />
+      <Event Name="ChildInserted" />
+      <Event Name="EnabledChanged" />
+      <Event Name="BackgroundChanged" />
+      <Event Name="ForegroundChanged" />
+      <Event Name="FontChanged" />
+      <Event Name="VerticalAlignmentChanged" />
+      <Event Name="HorizontalAlignmentChanged" />
+      <Event Name="SizeChanged" />
+      <Event Name="Idle" />
+      <Event Name="Resize" />
+      <Event Name="LocationChanged" />
+      <Event Name="DragStart" />
+      <Event Name="DragDrop" />
+      <Event Name="DragOver" />
+      <Event Name="DragEnter" />
+      <Event Name="DragLeave" />
+      <Event Name="DpiChanged" />
+      <Event Name="SystemColorsChanged" />
+      <Event Name="ErrorsChanged" />
+      <Event Name="Invalidated" />
+      <Event Name="LayoutUpdated" />
+      <Event Name="Scroll" />
+      <Event Name="Disposed" />
+    </Type>
+    <Type Name="Alternet.UI.PanelSettingsItem">
+      <Event Name="ValueChanged" />
+    </Type>
+    <Type Name="Alternet.UI.PanelSettingsItemKind" />
     <Type Name="Alternet.UI.PanelWebBrowser">
       <Event Name="CellChanged" />
       <Event Name="Activated" />
@@ -12329,6 +12566,9 @@
     <Type Name="Alternet.UI.FindReplaceControl+SearchScope" />
     <Type Name="Alternet.UI.FindReplaceControl+IFindReplaceConnect" />
     <Type Name="Alternet.UI.ToolBar+ItemKind" />
+    <Type Name="Alternet.UI.PanelSettings+ItemActionDelegate" />
+    <Type Name="Alternet.UI.PanelSettings+ItemToControlDelegate" />
+    <Type Name="Alternet.UI.PanelSettings+RegisterConversionDelegate" />
     <Type Name="Alternet.UI.DebugUtils+DebugTraceListener" />
     <Type Name="Alternet.UI.StringConverters+BaseToStringConverter" />
     <Type Name="Alternet.UI.StringConverters+SByteToStringConverter" />

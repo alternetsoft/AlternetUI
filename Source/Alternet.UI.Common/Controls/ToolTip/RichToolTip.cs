@@ -15,7 +15,7 @@ namespace Alternet.UI
     /// Additionally to the tooltip message <see cref="RichToolTip"/> allows to
     /// specify title, image and other options.
     /// </summary>
-    public class RichToolTip : HiddenBorder, IRichToolTip, IToolTipProvider
+    public class RichToolTip : ScrollViewer, IRichToolTip, IToolTipProvider
     {
         /// <summary>
         /// Gets or sets default tooltip border color.
@@ -82,7 +82,15 @@ namespace Alternet.UI
         public RichToolTip()
         {
             drawable.Visible = false;
+            ParentBackColor = true;
+            ParentForeColor = true;
         }
+
+        /// <summary>
+        /// Occurs when <see cref="ToolTipVisible"/> property is changed.
+        /// </summary>
+        [Category("Behavior")]
+        public event EventHandler? ToolTipVisibleChanged;
 
         /// <summary>
         /// Gets or sets default tooltip border.
@@ -452,13 +460,16 @@ namespace Alternet.UI
                 if (drawable.Visible)
                 {
                     drawable.Visible = false;
+                    RaiseToolTipVisibleChanged(EventArgs.Empty);
+                    LayoutMaxSize = null;
                     Invalidate();
                 }
 
                 return this;
             }
-            catch
+            catch(Exception e)
             {
+                App.LogError(e);
                 return this;
             }
         }
@@ -735,10 +746,7 @@ namespace Alternet.UI
 
             if (location is not null)
                 ToolTipLocation = location.Value;
-/*
-            picture.BackgroundColor = template.BackgroundColor;
-            picture.Background = template.BackgroundColor?.AsBrush;
-*/
+
             drawable.Image = image;
 
             if (showDelayInMilliseconds > 0)
@@ -757,6 +765,8 @@ namespace Alternet.UI
                 if (DisposingOrDisposed)
                     return;
                 drawable.Visible = true;
+                LayoutMaxSize = drawable.GetPreferredSize(this);
+                RaiseToolTipVisibleChanged(EventArgs.Empty);
                 Invalidate();
 
                 var timer = TimerForHide;
@@ -853,6 +863,17 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Raises <see cref="ToolTipVisibleChanged"/> event.
+        /// </summary>
+        /// <param name="e">Event arguments.</param>
+        public virtual void RaiseToolTipVisibleChanged(EventArgs e)
+        {
+            if (DisposingOrDisposed)
+                return;
+            ToolTipVisibleChanged?.Invoke(this, e);
+        }
+
+        /// <summary>
         /// Shows tooltip with contents filled from the template data.
         /// </summary>
         /// <param name="template">Template with tooltip data.</param>
@@ -887,6 +908,7 @@ namespace Alternet.UI
 
                 drawable.VisualState = Enabled
                     ? VisualControlState.Normal : VisualControlState.Disabled;
+                alignedRect.Location += LayoutOffset;
                 drawable.Bounds = alignedRect;
                 drawable.Draw(this, e.Graphics);
             }
@@ -897,6 +919,13 @@ namespace Alternet.UI
         IRichToolTip? IToolTipProvider.Get(object? sender)
         {
             return this;
+        }
+
+        /// <inheritdoc/>
+        protected override void OnScroll(ScrollEventArgs e)
+        {
+            base.OnScroll(e);
+            Invalidate();
         }
 
         /// <inheritdoc/>

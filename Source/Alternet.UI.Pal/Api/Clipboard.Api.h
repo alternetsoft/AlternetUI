@@ -42,3 +42,36 @@ ALTERNET_UI_API void Clipboard_SetDataObject_(Clipboard* obj, UnmanagedDataObjec
     #endif
 }
 
+ALTERNET_UI_API c_bool Clipboard_Flush_(Clipboard* obj)
+{
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    return MarshalExceptions<c_bool>([&](){
+    #endif
+        return obj->Flush();
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    });
+    #endif
+}
+
+ALTERNET_UI_API c_bool Clipboard_IsIntFormatSupported_(Clipboard* obj, int format)
+{
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    return MarshalExceptions<c_bool>([&](){
+    #endif
+        return obj->IsIntFormatSupported(format);
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    });
+    #endif
+}
+
+ALTERNET_UI_API c_bool Clipboard_IsStrFormatSupported_(Clipboard* obj, const char16_t* format)
+{
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    return MarshalExceptions<c_bool>([&](){
+    #endif
+        return obj->IsStrFormatSupported(format);
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    });
+    #endif
+}
+

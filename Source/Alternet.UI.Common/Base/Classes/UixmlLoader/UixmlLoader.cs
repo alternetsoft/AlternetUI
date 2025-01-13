@@ -220,7 +220,7 @@ namespace Alternet.UI
             }
 
             if (!flags.HasFlag(Flags.NoThrowException))
-                throw e;
+                ExceptionUtils.Rethrow(e);
 
             void BeginSection()
             {

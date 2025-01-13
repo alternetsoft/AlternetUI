@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Reflection;
 using System.Text;
 
 namespace Alternet.UI
@@ -224,5 +225,24 @@ namespace Alternet.UI
         /// Gets default value for the <see cref="DateTime"/> type as <see cref="object"/>.
         /// </summary>
         public static readonly object DefaultDateTime = default(DateTime);
+
+        private static PropertyInfo? specialDummyPropertyInfo;
+
+        /// <summary>
+        /// Special dummy property for the internal purposes.
+        /// </summary>
+        public static object? SpecialDummyProperty { get; set; }
+
+        /// <summary>
+        /// Property info for the <see cref="SpecialDummyProperty"/>.
+        /// </summary>
+        public static PropertyInfo SpecialDummyPropertyInfo
+        {
+            get
+            {
+                return specialDummyPropertyInfo
+                    ??= typeof(AssemblyUtils).GetProperty(nameof(SpecialDummyProperty));
+            }
+        }
     }
 }

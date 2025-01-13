@@ -59,5 +59,11 @@ namespace Alternet.UI
         /// the data stored in this object.
         /// </returns>
         string[] GetFormats();
+
+        /// <inheritdoc cref="Clipboard.HasFormat(ClipboardDataFormatId)"/>
+        bool HasFormat(ClipboardDataFormatId format);
+
+        /// <inheritdoc cref="Clipboard.HasFormat(string)"/>
+        bool HasFormat(string format);
     }
 }

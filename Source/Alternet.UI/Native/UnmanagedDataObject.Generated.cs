@@ -94,6 +94,12 @@ namespace Alternet.UI.Native
             return NativeApi.UnmanagedDataObject_GetDataPresent_(NativePointer, format);
         }
         
+        public bool GetNativeDataPresent(int format)
+        {
+            CheckDisposed();
+            return NativeApi.UnmanagedDataObject_GetNativeDataPresent_(NativePointer, format);
+        }
+        
         
         [SuppressUnmanagedCodeSecurity]
         public class NativeApi : NativeApiProvider
@@ -135,6 +141,9 @@ namespace Alternet.UI.Native
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern bool UnmanagedDataObject_GetDataPresent_(IntPtr obj, string format);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool UnmanagedDataObject_GetNativeDataPresent_(IntPtr obj, int format);
             
         }
     }

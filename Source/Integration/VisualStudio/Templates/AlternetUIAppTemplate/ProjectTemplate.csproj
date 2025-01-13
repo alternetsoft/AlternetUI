@@ -6,6 +6,6 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="Alternet.UI" Version="0.9.701-beta" />
+    <PackageReference Include="Alternet.UI" Version="0.9.702-beta" />
   </ItemGroup>
 </Project>

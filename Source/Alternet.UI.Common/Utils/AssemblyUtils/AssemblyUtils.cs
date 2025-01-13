@@ -68,9 +68,9 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Gets whether the speciffied type is nullable.
+        /// Gets whether the specified type is nullable.
         /// </summary>
-        /// <param name="type">Type to test</param>
+        /// <param name="type">Type to test.</param>
         /// <returns></returns>
         public static bool IsNullableType(Type type)
         {
@@ -78,9 +78,20 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets whether the specified type is enumeration.
+        /// </summary>
+        /// <param name="type">Type to test.</param>
+        /// <returns></returns>
+        public static bool IsEnumType(Type type)
+        {
+            var realType = GetRealType(type);
+            return realType.IsEnum;
+        }
+
+        /// <summary>
         /// Gets whether the speciffied type is internal.
         /// </summary>
-        /// <param name="type">Type to test</param>
+        /// <param name="type">Type to test.</param>
         /// <returns></returns>
         public static bool IsInternalType(Type type)
         {

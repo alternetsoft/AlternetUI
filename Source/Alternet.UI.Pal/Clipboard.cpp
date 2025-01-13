@@ -9,6 +9,33 @@ namespace Alternet::UI
     Clipboard::~Clipboard()
     {
     }
+
+    bool Clipboard::IsIntFormatSupported(int format)
+    {
+        wxClipboardLocker clipboardLocker;
+        if (!clipboardLocker)
+            return false;
+        return wxTheClipboard->IsSupported(wxDataFormat((wxDataFormatId)format));
+    }
+
+    bool Clipboard::IsStrFormatSupported(const string& format)
+    {
+        wxClipboardLocker clipboardLocker;
+        if (!clipboardLocker)
+            return false;
+        auto fmt = wxStr(format);
+        auto dataFmt = wxDataFormat(fmt);
+        auto result = wxTheClipboard->IsSupported(dataFmt);
+        return result;
+    }
+
+    bool Clipboard::Flush()
+    {
+        wxClipboardLocker clipboardLocker;
+        if (!clipboardLocker)
+            return false;
+        return wxTheClipboard->Flush();
+    }
     
     UnmanagedDataObject* Clipboard::GetDataObject()
     {

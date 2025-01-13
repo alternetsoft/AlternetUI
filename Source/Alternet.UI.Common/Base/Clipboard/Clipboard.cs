@@ -127,7 +127,7 @@ namespace Alternet.UI
         /// <param name="data">A data object (an object that implements <see cref="IDataObject" />)
         /// to place on the system Clipboard.</param>
         /// <param name="copy">
-        ///   <see langword="true" /> to leave the data on the system Clipboard when
+        ///   <see langword="true" /> to leave the data on the system clipboard when
         ///   the application exits; <see langword="false" /> to clear the data
         ///   from the system Clipboard when the application exits.</param>
         public static void SetDataObject(IDataObject? data, bool copy)
@@ -142,12 +142,52 @@ namespace Alternet.UI
 
         /// <summary>
         /// Indicates whether there is data on the <see cref='Clipboard'/>
+        /// that is in the specified format.
+        /// </summary>
+        /// <param name="format">The format of the data to look for.</param>
+        public static bool HasFormat(ClipboardDataFormatId format)
+        {
+            var present = Handler.HasFormat(format);
+            return present;
+        }
+
+        /// <summary>
+        /// Indicates whether there is data on the <see cref='Clipboard'/>
+        /// that is in the specified format.
+        /// </summary>
+        /// <param name="format">The format of the data to look for.</param>
+        /// <remarks>
+        /// This method is different from <see cref="ContainsData(string)"/> as
+        /// it doesn't get data from the clipboard, it only checks for the format.
+        /// This method works faster than <see cref="ContainsData(string)"/>.
+        /// </remarks>
+        public static bool HasFormat(string format)
+        {
+            var result = Handler.HasFormat(format);
+            return result;
+        }
+
+        /// <summary>
+        /// Flushes clipboard data so application leaves
+        /// the data on the system clipboard when the application exits.
+        /// </summary>
+        /// <returns></returns>
+        public static bool Flush()
+        {
+            var result = Handler.Flush();
+            return result;
+        }
+
+        /// <summary>
+        /// Indicates whether there is data on the <see cref='Clipboard'/>
         /// that is in the specified format or can be converted to that format.
         /// </summary>
         /// <param name="format">The format of the data to look for.
-        /// See DataFormats for predefined formats.</param>
-        public static bool ContainsData(string format) =>
-            GetDataObject()?.GetDataPresent(format) ?? false;
+        /// See <see cref="DataFormats"/> for predefined formats.</param>
+        public static bool ContainsData(string format)
+        {
+            return GetDataObject()?.GetDataPresent(format) ?? false;
+        }
 
         /// <summary>
         /// Retrieves data from the Clipboard in the specified format.
@@ -159,13 +199,19 @@ namespace Alternet.UI
         /// Clipboard does not contain any data
         /// that is in the specified format or can be converted to that format.
         /// </returns>
-        public static object? GetData(string format) => GetDataObject()?.GetData(format);
+        public static object? GetData(string format)
+        {
+            return GetDataObject()?.GetData(format);
+        }
 
         /// <summary>
         /// Retrieves an array of file names from the Clipboard in the
         /// <see cref="DataFormats.Files"/> format.
         /// </summary>
-        public static string[]? GetFiles() => GetData(DataFormats.Files) as string[];
+        public static string[]? GetFiles()
+        {
+            return GetData(DataFormats.Files) as string[];
+        }
 
         /// <summary>
         /// Retrieves bitmap data from the Clipboard in the
@@ -183,25 +229,37 @@ namespace Alternet.UI
         /// Retrieves text data from the Clipboard in the
         /// <see cref="DataFormats.Text"/> format.
         /// </summary>
-        public static string? GetText() => GetData(DataFormats.Text) as string;
+        public static string? GetText()
+        {
+            return GetData(DataFormats.Text) as string;
+        }
 
         /// <summary>
         /// Adds an array of file names to the data object in the
         /// <see cref="DataFormats.Files"/> format.
         /// </summary>
-        public static void SetFiles(string[] value) => SetData(DataFormats.Files, value);
+        public static void SetFiles(string[] value)
+        {
+            SetData(DataFormats.Files, value);
+        }
 
         /// <summary>
         /// Adds a bitmap to the data object in the
         /// <see cref="DataFormats.Bitmap"/> format.
         /// </summary>
-        public static void SetBitmap(Image value) => SetData(DataFormats.Bitmap, value);
+        public static void SetBitmap(Image value)
+        {
+            SetData(DataFormats.Bitmap, value);
+        }
 
         /// <summary>
         /// Adds a text string to the data object in the
         /// <see cref="DataFormats.Text"/> format.
         /// </summary>
-        public static void SetText(string value) => SetData(DataFormats.Text, value);
+        public static void SetText(string value)
+        {
+            SetData(DataFormats.Text, value);
+        }
 
         /// <summary>
         /// Clears the Clipboard and then adds data in the specified format.
@@ -209,7 +267,9 @@ namespace Alternet.UI
         /// <param name="format">The format of the data to set.
         /// See DataFormats for predefined formats.</param>
         /// <param name="data">An Object representing the data to add.</param>
-        public static void SetData(string format, object data) =>
+        public static void SetData(string format, object data)
+        {
             SetDataObject(new DataObject(format, data));
+        }
     }
 }

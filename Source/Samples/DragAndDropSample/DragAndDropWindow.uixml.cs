@@ -100,6 +100,12 @@ namespace DragAndDropSample
                 return;
             }
 
+            (Clipboard.Handler as IDoCommand)?.DoCommand("log");
+
+            /*
+            (value as IDoCommand)?.DoCommand("log");
+            */
+
             App.LogSeparator();
             App.Log("Paste from clipboard:");
             App.Log(GetStringFromDataObject(value));

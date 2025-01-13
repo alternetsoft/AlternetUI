@@ -24,7 +24,7 @@ namespace Alternet.UI
         private bool hasBorder = true;
         private bool readOnly = false;
         private TextBoxTextWrap textWrap;
-        private GenericAlignment textAlign;
+        private TextHorizontalAlignment textAlign;
 
         static TextBox()
         {
@@ -359,15 +359,11 @@ namespace Alternet.UI
         /// Gets or sets text alignment for the <see cref="TextBox"/> control.
         /// </summary>
         /// <remarks>
-        /// Only <see cref="GenericAlignment.Left"/>, <see cref="GenericAlignment.Right"/>
-        /// and <see cref="GenericAlignment.CenterHorizontal"/> are supported.
+        /// Default value is <see cref="TextHorizontalAlignment.Left"/>.
         /// </remarks>
-        /// <remarks>
-        /// Default value is <see cref="GenericAlignment.Left"/>.
-        /// </remarks>
-        [DefaultValue(GenericAlignment.Left)]
+        [DefaultValue(TextHorizontalAlignment.Left)]
         [Browsable(false)]
-        public virtual GenericAlignment TextAlign
+        public virtual TextHorizontalAlignment TextAlign
         {
             get
             {
@@ -381,6 +377,7 @@ namespace Alternet.UI
                 if (textAlign == value)
                     return;
                 textAlign = value;
+
                 Handler.TextAlign = value;
             }
         }

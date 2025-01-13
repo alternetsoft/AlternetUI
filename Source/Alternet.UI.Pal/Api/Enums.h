@@ -1267,6 +1267,9 @@ namespace Alternet::UI
     {
         CatchException = 0,
         ThrowException = 1,
+        CatchWithDialog = 2,
+        CatchWithDialogAndThrow = 3,
+        CatchWithThrow = 4,
     };
     
     enum class DialogResult
@@ -2869,7 +2872,7 @@ namespace Alternet::UI
         Avalonia = 2,
         WinForms = 3,
         WinUI = 4,
-        Plarformless = 5,
+        Platformless = 5,
     };
     
     enum class TabAlignment
@@ -3214,6 +3217,9 @@ namespace Alternet::UI
         Width = 1,
         Height = 2,
         WidthAndHeight = 3,
+        GrowWidth = 4,
+        GrowHeight = 5,
+        GrowWidthAndHeight = 6,
     };
     
     enum class WindowStartLocation
@@ -3233,31 +3239,6 @@ namespace Alternet::UI
         Normal = 0,
         Minimized = 1,
         Maximized = 2,
-    };
-    
-    enum class ClipboardDataFormatId
-    {
-        Invalid = 0,
-        Text = 1,
-        Bitmap = 2,
-        MetaFile = 3,
-        Sylk = 4,
-        Dif = 5,
-        Tiff = 6,
-        OemText = 7,
-        Dib = 8,
-        Palette = 9,
-        PenData = 10,
-        Riff = 11,
-        Wave = 12,
-        UnicodeText = 13,
-        EnhMetaFile = 14,
-        Filename = 15,
-        Locale = 16,
-        Private = 20,
-        Html = 30,
-        Png = 31,
-        Max = 32,
     };
     
 }
