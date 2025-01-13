@@ -36,7 +36,8 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="FontListBox"/> class.
+        /// Initializes a new instance of the <see cref="FontListBox"/> class
+        /// with default list of the fonts.
         /// </summary>
         /// <param name="defaultFonts">Specifies whether to add default fonts
         /// to the control.</param>

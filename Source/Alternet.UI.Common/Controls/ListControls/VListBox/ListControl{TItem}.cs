@@ -436,7 +436,10 @@ namespace Alternet.UI
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public virtual void SelectFirstItem()
         {
-            SelectedItem = FirstItem;
+            DoInsideUpdate(() =>
+            {
+                SelectedIndex = 0;
+            });
         }
 
         /// <summary>
@@ -513,15 +516,21 @@ namespace Alternet.UI
 
         /// <inheritdoc cref="StringSearch.FindString(string)"/>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public virtual int? FindString(string s) => Search.FindString(s);
+        public virtual int? FindString(string? s) => Search.FindString(s);
 
         /// <inheritdoc cref="StringSearch.FindString(string, int?)"/>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public virtual int? FindString(string s, int? startIndex) => Search.FindString(s, startIndex);
+        public virtual int? FindString(string? s, int? startIndex)
+        {
+            return Search.FindString(s, startIndex);
+        }
 
         /// <inheritdoc cref="StringSearch.FindStringExact(string)"/>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public virtual int? FindStringExact(string s) => Search.FindStringExact(s);
+        public virtual int? FindStringExact(string? s)
+        {
+            return Search.FindStringExact(s);
+        }
 
         /// <inheritdoc cref="StringSearch.FindStringEx(string?, int?, bool, bool)"/>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]

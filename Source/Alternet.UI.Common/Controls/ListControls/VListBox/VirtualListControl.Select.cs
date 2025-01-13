@@ -102,7 +102,10 @@ namespace Alternet.UI
 
             set
             {
-                SetSelectedIndex(value, true);
+                SetSelectedIndex(
+                    value,
+                    clearSelection: true,
+                    setSelected: true);
             }
         }
 
@@ -732,6 +735,8 @@ namespace Alternet.UI
         /// </summary>
         public virtual void SuspendSelectionEvents()
         {
+            BeginUpdate();
+
             if (ignoreSelectEvents == 0)
             {
                 selectionContext = SelectedItemsArray;
@@ -772,12 +777,13 @@ namespace Alternet.UI
                 var newSelection = SelectedItemsArray;
                 bool changed = ArrayUtils.AreNotEqual(selectionContext, newSelection);
 
-                Invalidate();
                 if (changed)
                 {
                     RaiseSelectionChanged(EventArgs.Empty);
                 }
             }
+
+            EndUpdate();
         }
 
         /// <summary>
@@ -814,8 +820,13 @@ namespace Alternet.UI
 
                 AnchorIndex = index;
 
-                if (index is not null && setSelected)
-                    SetSelected(index.Value, true);
+                if (index is not null)
+                {
+                    if (setSelected)
+                    {
+                        SetSelected(index.Value, true);
+                    }
+                }
             });
         }
 

@@ -405,7 +405,7 @@ namespace PropertyGridSample
                         panel.RemoveActions();
                         panel.AddActions(type);
 
-                        var methods = type.GetMethods().OrderBy(method => method.Name);
+                        var methods = AssemblyUtils.EnumMethods(type);
                         foreach (var method in methods)
                         {
                             if (method.IsSpecialName)
@@ -422,17 +422,45 @@ namespace PropertyGridSample
                             if (!browsable)
                                 continue;
                             var methodName = $"{method.Name}()";
-                            panel.AddAction(methodName, () =>
+                            var methodNameForDisplay = $"<b>{methodName}</b>";
+                            
+                            if (resultIsVoid)
+                            {
+                                methodNameForDisplay = $"{methodNameForDisplay} : void";
+                            }
+                            else
+                            {
+                                var retParamDisplayName =
+                                AssemblyUtils.GetTypeDisplayName(retParam.ParameterType);
+
+                                methodNameForDisplay
+                                = $"{methodNameForDisplay} : {retParamDisplayName}";
+                            }
+
+                            var item = panel.AddAction(methodName, () =>
                             {
                                 var selectedControl = GetSelectedControl<Control>();
                                 if (selectedControl is null)
                                     return;
                                 var result = method.Invoke(selectedControl, null);
-                                if(resultIsVoid)
-                                    App.Log($"Called {type.Name}.{methodName}");
-                                else
-                                    App.Log($"Called {type.Name}.{methodName} with result {result}");
+
+                                ListControlItem item = new();
+                                item.TextHasBold = true;
+
+                                var itemText = $"Called <b>{type.Name}.{methodName}</b>";
+
+                                if (!resultIsVoid)
+                                {
+                                    itemText += $" with result = <b>{result}</b>";
+                                }
+
+                                item.Text = itemText;
+                                
+                                App.AddLogItem(item);
                             });
+
+                            item.DisplayText = methodNameForDisplay;
+                            item.TextHasBold = true;
                         }
                     });
                 }

@@ -108,6 +108,19 @@ namespace PropertyGridSample
             }
         }
 
+        public static void AddManyItems(VirtualListBox listBox)
+        {
+            listBox.DoInsideUpdate(() =>
+            {
+                for(int i = 0; i < 5000; i++)
+                    listBox.Items.Add(new($"Item #{LogUtils.GenNewId()}"));
+
+                App.Log("Added 5000 items");
+            });
+
+            listBox.SelectLastItemAndScroll();
+        }
+
         public static void InitVListBox(object control)
         {
             if (control is not VirtualListBox listBox)
@@ -155,6 +168,15 @@ namespace PropertyGridSample
             comboBox.Items.AddRange(GetTenItems());
             comboBox.HorizontalAlignment = HorizontalAlignment.Left;
             comboBox.SuggestedWidth = 200;
+        }
+
+        public static void InitFontComboBox(object control)
+        {
+            if (control is not FontComboBox comboBox)
+                return;
+            comboBox.HorizontalAlignment = HorizontalAlignment.Left;
+            comboBox.SuggestedWidth = 200;
+            comboBox.Value = Control.DefaultFont.Name;
         }
 
         public static void InitColorComboBox(object control)
