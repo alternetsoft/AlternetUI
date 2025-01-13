@@ -38,6 +38,7 @@
     <PackageReference Include="SkiaSharp.NativeAssets.macOS" Version="$(SkiaSharpVersion)" />
     <PackageReference Include="SkiaSharp.NativeAssets.Win32" Version="$(SkiaSharpVersion)" />
     <PackageReference Include="Svg.Skia" Version="$(SvgSkiaVersion)" />
+    <PackageReference Include="System.CodeDom" Version="8.0.0" />
 
     <PackageReference Include="System.Configuration.ConfigurationManager" Version="8.0.1" />
     <PackageReference Include="System.Text.Json" Version="8.0.5" />
