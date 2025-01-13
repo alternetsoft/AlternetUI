@@ -99,6 +99,19 @@ namespace Alternet.UI
 
         /// <summary>
         /// Initializes a new instance of the <see cref='MenuItem'/> class with
+        /// the specified <paramref name="text"/> and <paramref name="onClick"/>
+        /// for the menu item.
+        /// </summary>
+        public MenuItem(string? text, Func<bool>? onClick)
+            : this()
+        {
+            Text = text ?? string.Empty;
+            if(onClick is not null)
+                ClickAction = () => onClick();
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref='MenuItem'/> class with
         /// the specified <paramref name="text"/>, <paramref name="onClick"/> and
         /// <paramref name="shortcut"/> for the menu item.
         /// </summary>
