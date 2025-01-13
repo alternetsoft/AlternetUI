@@ -79,7 +79,7 @@ namespace Alternet.UI
         /// <returns></returns>
         ModalResult ShowModal(IWindow? owner);
 
-        /// <inheritdoc cref="Window.Close"/>
+        /// <inheritdoc cref="Window.Close()"/>
         void Close();
 
         /// <inheritdoc cref="Window.Activate"/>
