@@ -14,25 +14,25 @@ namespace Alternet.UI
         private static IDataObject? data;
 
         /// <inheritdoc/>
-        public bool AsyncRequired => false;
+        public virtual bool AsyncRequired => false;
 
         /// <inheritdoc/>
-        public bool OnlyText => false;
+        public virtual bool OnlyText => false;
 
         /// <inheritdoc/>
-        public bool Flush()
+        public virtual bool Flush()
         {
             return false;
         }
 
         /// <inheritdoc/>
-        public bool HasFormat(ClipboardDataFormatId format)
+        public virtual bool HasFormat(ClipboardDataFormatId format)
         {
             return data?.HasFormat(format) ?? false;
         }
 
         /// <inheritdoc/>
-        public bool HasFormat(string format)
+        public virtual bool HasFormat(string format)
         {
             return data?.HasFormat(format) ?? false;
         }
@@ -44,14 +44,14 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        public Task<IDataObject?> GetDataAsync()
+        public virtual Task<IDataObject?> GetDataAsync()
         {
             var result = GetData();
             return Task.FromResult(result);
         }
 
         /// <inheritdoc/>
-        public void GetDataAsync(Action<IDataObject?> action)
+        public virtual void GetDataAsync(Action<IDataObject?> action)
         {
             var result = GetData();
             action(result);
