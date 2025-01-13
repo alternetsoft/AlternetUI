@@ -1498,7 +1498,8 @@ namespace Alternet::UI
         auto window = GetWxWindow();
         if (window->GetHandle() == nullptr)
         {
-            // On macOS, in case where the peer is not created, calling WindowToClientSize causes a crash.
+            // On macOS, in case where the peer is not created, calling
+            // WindowToClientSize causes a crash.
             return size;
         }
         
@@ -1644,7 +1645,8 @@ namespace Alternet::UI
         if (IsNullOrDeleting())
             return;
 
-        // For some reason this event is being called while destroying the window, despite the Unbind call prior to destruction.
+        // For some reason this event is being called while destroying the window,
+        // despite the Unbind call prior to destruction.
         auto window = dynamic_cast<wxWindow*>(event.GetEventObject());
         if (window->IsBeingDeleted())
             return;
