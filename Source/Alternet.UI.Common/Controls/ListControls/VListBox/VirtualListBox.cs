@@ -380,6 +380,9 @@ namespace Alternet.UI
         /// <returns></returns>
         public virtual int FindFirstVisibleFromLast(int unitLast, bool full = false)
         {
+            if (unitLast == 0)
+                return 0;
+
             MeasureItemEventArgs e = new(MeasureCanvas, 0);
 
             var sWindow = ClientSize.Height;

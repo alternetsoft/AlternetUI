@@ -83,6 +83,11 @@ namespace PropertyGridSample
 
             void InitTestsListBox()
             {
+                AddControlAction<VirtualListBox>("Add 5000 items", (c) =>
+                {
+                    ObjectInit.AddManyItems(c);
+                });
+
                 AddControlAction<VirtualListBox>("Set dark theme", (c) =>
                 {
                     c.SetColorThemeToDark();

@@ -428,17 +428,17 @@ namespace Alternet.UI
                     var data = XmlUtils.DeserializeFromString<AssertFailureExceptionData>(s);
                     var e = new AssertFailureException(data.Message ?? "WxWidgets assert failure");
                     e.AssertData = data;
-                    App.LogError(e);
+                    App.LogError(e, LogItemKind.Warning);
                 }
                 catch
                 {
                     var r = "NativeApplication_AssertFailure: Error getting AssertFailureExceptionData";
-                    App.LogError(new Exception(r));
+                    App.LogError(new Exception(r), LogItemKind.Warning);
                 }
             }
             else
             {
-                App.LogError(s);
+                App.LogError(s, LogItemKind.Warning);
             }
         }
 

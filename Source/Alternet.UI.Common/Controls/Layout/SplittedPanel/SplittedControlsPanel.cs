@@ -18,7 +18,7 @@ namespace Alternet.UI
         private VirtualListBox? leftListBox;
         private PropertyGrid? propertyGrid;
         private LogListBox? logControl;
-        private ListBox? actionsControl;
+        private VirtualListBox? actionsControl;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="SplittedControlsPanel"/> class.
@@ -65,7 +65,6 @@ namespace Alternet.UI
                         Visible = false,
                         HasBorder = false,
                     };
-                    actionsControl.MouseDoubleClick += Actions_MouseDoubleClick;
                     RightPanel.Add(CommonStrings.Default.NotebookTabTitleActions, actionsControl);
                     RightPanel.SelectFirstTab();
                 }
@@ -201,15 +200,23 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="title">Action title.</param>
         /// <param name="action">Action method.</param>
-        public virtual void AddAction(string title, Action? action)
+        public virtual ListControlItem AddAction(string title, Action? action)
         {
             ListControlItem item = new(title)
             {
-                Action = action,
+                DoubleClickAction = () =>
+                {
+                    BeginInvoke(() =>
+                    {
+                        logControl?.Log("Do action: " + title);
+                        action?.Invoke();
+                    });
+                },
             };
 
             ActionsControl.Required();
             actionsControl?.Add(item);
+            return item;
         }
 
         /// <summary>
@@ -252,18 +259,6 @@ namespace Alternet.UI
         protected override AbstractControl CreateRightPanel()
         {
             return new SideBarPanel();
-        }
-
-        private void Actions_MouseDoubleClick(object? sender, MouseEventArgs e)
-        {
-            var listBox = sender as ListBox;
-            if (listBox?.SelectedItem is not ListControlItem item || item.Action == null)
-                return;
-            logControl?.Log("Do action: " + item.Text);
-            BeginInvoke(() =>
-            {
-                item.Action();
-            });
         }
     }
 }

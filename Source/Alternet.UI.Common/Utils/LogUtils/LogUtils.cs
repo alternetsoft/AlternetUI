@@ -250,8 +250,10 @@ namespace Alternet.UI
         /// <summary>
         /// Logs <see cref="Exception"/> information.
         /// </summary>
+        /// <param name="kind">Message kind. Optional.
+        /// Default is <see cref="LogItemKind.Error"/>.</param>
         /// <param name="e">Exception to log.</param>
-        public static void LogException(Exception e)
+        public static void LogException(Exception e, LogItemKind kind = LogItemKind.Error)
         {
             var asString = e.ToString();
 
@@ -264,13 +266,14 @@ namespace Alternet.UI
             var separator = $"{SectionSeparator}";
             LogToExternalIfAllowed(
                 $"{separator}{Environment.NewLine}{asString}{Environment.NewLine}{separator}",
-                LogItemKind.Error);
+                kind);
 
             try
             {
-                var s = $"Error '{e.GetType().Name}': {e.Message}. [Double click...]";
+                var s = $"Error '{e.GetType().Name}': <b>{e.Message}</b>. [Double click...]";
 
                 ListControlItem item = new(s);
+                item.TextHasBold = true;
                 item.Tag = asString;
                 item.DoubleClickAction = () =>
                 {
@@ -280,7 +283,7 @@ namespace Alternet.UI
                     });
                 };
 
-                App.AddLogItem(item, LogItemKind.Error);
+                App.AddLogItem(item, kind);
             }
             catch
             {

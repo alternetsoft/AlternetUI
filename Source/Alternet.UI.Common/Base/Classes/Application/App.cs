@@ -1053,17 +1053,19 @@ namespace Alternet.UI
         /// Logs error message.
         /// </summary>
         /// <param name="obj">Message text or object to log.</param>
-        public static void LogError(object? obj)
+        /// <param name="kind">Message kind. Optional.
+        /// Default is <see cref="LogItemKind.Error"/>.</param>
+        public static void LogError(object? obj, LogItemKind kind = LogItemKind.Error)
         {
             try
             {
                 if (obj is Exception e)
-                    LogUtils.LogException(e);
+                    LogUtils.LogException(e, kind);
                 else
                 {
                     if (obj is null)
                         return;
-                    Log($"Error: {obj}", LogItemKind.Error);
+                    Log($"Error: {obj}", kind);
                 }
             }
             catch

@@ -40,12 +40,12 @@ namespace Alternet.UI
         /// If <see cref="Culture"/> is not assigned,
         /// <see cref="CultureInfo.CurrentCulture"/> is used.
         /// </remarks>
-        public CultureInfo? Culture { get; set; } = DefaultCulture;
+        public virtual CultureInfo? Culture { get; set; } = DefaultCulture;
 
         /// <summary>
         /// Gets or sets <see cref="CompareOptions"/> used in find string methods.
         /// </summary>
-        public CompareOptions CompareOptions { get; set; } = DefaultCompareOptions;
+        public virtual CompareOptions CompareOptions { get; set; } = DefaultCompareOptions;
 
         /// <summary>
         /// Gets or sets whether to use partial string comparison
@@ -54,7 +54,7 @@ namespace Alternet.UI
         /// search operation is successful if
         /// searched string occurrence is on any character position.
         /// </summary>
-        public bool UseContains { get; set; } = false;
+        public virtual bool UseContains { get; set; } = false;
 
         /// <summary>
         /// Returns the index of the first item in the control that starts
@@ -70,7 +70,7 @@ namespace Alternet.UI
         /// a partial match starting from the beginning of the text, and returning
         /// the first item in the list that matches the specified substring.
         /// </remarks>
-        public virtual int? FindString(string s)
+        public virtual int? FindString(string? s)
         {
             return FindStringInternal(
                 s,
@@ -96,7 +96,7 @@ namespace Alternet.UI
         /// starting from the beginning of the text, returning the first item in the
         /// list that matches the specified substring.
         /// </remarks>
-        public virtual int? FindString(string s, int? startIndex)
+        public virtual int? FindString(string? s, int? startIndex)
         {
             return FindStringInternal(
                 s,
@@ -114,7 +114,7 @@ namespace Alternet.UI
         /// <remarks>
         /// The search performed by this method is not case-sensitive.
         /// </remarks>
-        public virtual int? FindStringExact(string s)
+        public virtual int? FindStringExact(string? s)
         {
             return FindStringInternal(
                 s,
@@ -152,10 +152,10 @@ namespace Alternet.UI
          bool ignoreCase)
         {
             return FindStringInternal(
-             str,
-             startIndex,
-             exact,
-             ignoreCase);
+                str,
+                startIndex,
+                exact,
+                ignoreCase);
         }
 
         private int? FindStringInternal(

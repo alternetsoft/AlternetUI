@@ -1,4 +1,6 @@
 ﻿using System;
+using System.CodeDom;
+using System.CodeDom.Compiler;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
@@ -30,6 +32,7 @@ namespace Alternet.UI
         private static int resNameToAssemblySavedLength = 0;
         private static SortedList<string, EventInfo>? allControlEvents;
         private static SortedList<string, Type>? allControlDescendants;
+        private static CodeDomProvider? codeDomProvider;
 
         /// <summary>
         /// Gets or sets list of all <see cref="AbstractControl"/> descendants.
@@ -541,6 +544,32 @@ namespace Alternet.UI
         public static int CompareByName(PropertyInfo x, PropertyInfo y)
         {
             return string.Compare(x.Name, y.Name);
+        }
+
+        /// <summary>
+        /// Enumerates method information for the specified <see cref="Type"/>.
+        /// </summary>
+        /// <param name="type">Type which methods are enumerated.</param>
+        /// <param name="bindingFlags">Specifies flags that control the way in which
+        /// the search for methods is conducted.</param>
+        /// <returns></returns>
+        public static IEnumerable<MethodInfo> EnumMethods(
+            Type type,
+            BindingFlags bindingFlags = BindingFlags.Instance | BindingFlags.Public)
+        {
+            var items = type.GetMethods(bindingFlags);
+
+            SortedList<string, MethodInfo> addedNames = new();
+
+            foreach (var p in items)
+            {
+                var itemName = p.Name;
+                if (addedNames.ContainsKey(itemName))
+                    continue;
+                addedNames.Add(itemName, p);
+            }
+
+            return addedNames.Values;
         }
 
         /// <summary>
@@ -1688,179 +1717,48 @@ namespace Alternet.UI
             return false;
         }
 
-        internal static string? GetTypeConverterAttributeData(Type? type, out Type? converterType)
+        /// <summary>
+        /// Gets type name using <see cref="CodeDomProvider"/>.
+        /// </summary>
+        /// <param name="type">Type for which to get the name.</param>
+        /// <returns></returns>
+        /// <param name="providerName">Name of the provider. If not specified, c# is used.</param>
+        /// <returns></returns>
+        public static string GetTypeNameUsingCodeDom(Type type, string? providerName = null)
         {
-            bool foundTC = false;
-            return GetCustomAttributeData(
-                type,
-                typeof(TypeConverterAttribute),
-                true,
-                ref foundTC,
-                out converterType);
+            providerName ??= "C#";
+
+            codeDomProvider ??= CodeDomProvider.CreateProvider(providerName);
+            var typeReferenceExpression
+                = new CodeTypeReferenceExpression(new CodeTypeReference(type));
+            using var writer = new StringWriter();
+
+            codeDomProvider.GenerateCodeFromExpression(
+                typeReferenceExpression,
+                writer,
+                new CodeGeneratorOptions());
+            return writer.GetStringBuilder().ToString();
         }
 
-        internal static string GetTypeConverterAttributeData(MemberInfo mi, out Type? converterType)
+        /// <summary>
+        /// Gets user friendly type name.
+        /// </summary>
+        /// <param name="type">Type for which to get the user friendly name.</param>
+        /// <returns></returns>
+        public static string GetTypeDisplayName(Type type)
         {
-            return GetCustomAttributeData(
-                mi,
-                typeof(TypeConverterAttribute),
-                out converterType);
-        }
+            const string nullablePrefix = "System.Nullable<";
 
-        // Special version of type-based GetCustomAttributeData that does two
-        //  additional tasks:
-        //  1) Retrieves the attributes even if it's defined on a base type, and
-        //  2) Distinguishes between "attribute found and said null" and
-        //     "no attribute found at all" via the ref bool.
-        internal static string? GetCustomAttributeData(
-            Type? t,
-            Type attrType,
-            bool allowTypeAlso,
-            ref bool attributeDataFound,
-            out Type? typeValue)
-        {
-            typeValue = null;
-            attributeDataFound = false;
-            Type? currentType = t;
-            string? attributeDataString = null;
-            CustomAttributeData cad;
+            var result = GetTypeNameUsingCodeDom(type);
 
-            while (currentType != null && !attributeDataFound)
+            var indexOfNullable = result.IndexOf(nullablePrefix);
+
+            if (indexOfNullable == 0)
             {
-                IList<CustomAttributeData> list = CustomAttributeData.GetCustomAttributes(currentType);
-
-                for (int j = 0; j < list.Count && !attributeDataFound; j++)
-                {
-                    cad = list[j];
-
-                    if (cad.Constructor.ReflectedType == attrType)
-                    {
-                        attributeDataFound = true;
-                        attributeDataString = GetCustomAttributeData(
-                            cad,
-                            attrType,
-                            out typeValue,
-                            allowTypeAlso,
-                            false,
-                            false);
-                    }
-                }
-
-                if (!attributeDataFound)
-                {
-                    currentType = currentType.BaseType;
-
-                    // object.BaseType is null, used as terminating condition for the while() loop.
-                }
+                result = result.Remove(0, nullablePrefix.Length).TrimEnd('>') + "?";
             }
 
-            return attributeDataString;
-        }
-
-        // Helper that inspects a specific CustomAttributeData obtained via ReflectionOnlyLoad, and
-        // returns its value if the Type of the attribiutes matches the passed in attrType. It only
-        // looks for attributes with no values or a single value of Type string that is passed in via
-        // a ctor. If allowTypeAlso is true, then it looks for values of typeof(Type) as well in the
-        // single value case. If noArgs == false and zeroArgsAllowed = true, that means 0 or 1 args
-        // are permissible.
-        private static string? GetCustomAttributeData(
-            CustomAttributeData cad,
-            Type attrType,
-            out Type? typeValue,
-            bool allowTypeAlso,
-            bool noArgs,
-            bool zeroArgsAllowed)
-        {
-            string? attrValue = null;
-            typeValue = null;
-
-            // get the Constructor info
-            ConstructorInfo cinfo = cad.Constructor;
-            if (cinfo.ReflectedType == attrType)
-            {
-                // typedConstructorArguments (the Attribute constructor arguments)
-                // [MyAttribute("test", Name=Hello)]
-                // "test" is the Constructor Argument
-                IList<CustomAttributeTypedArgument> constructorArguments = cad.ConstructorArguments;
-                if (constructorArguments.Count == 1 && !noArgs)
-                {
-                    CustomAttributeTypedArgument tca = constructorArguments[0];
-                    attrValue = tca.Value as string;
-                    if (attrValue == null && allowTypeAlso && tca.ArgumentType == typeof(Type))
-                    {
-                        typeValue = tca.Value as Type;
-                        attrValue = typeValue?.AssemblyQualifiedName;
-                    }
-
-                    if (attrValue == null)
-                    {
-                        throw new ArgumentException(SR.Get(SRID.ParserAttributeArgsLow, attrType.Name));
-                    }
-                }
-                else if (constructorArguments.Count == 0)
-                {
-                    // zeroArgsAllowed = true for CPA for example.
-                    // CPA with no args is valid and would mean that this type is overriding a base CPA
-                    if (noArgs || zeroArgsAllowed)
-                    {
-                        attrValue = string.Empty;
-                    }
-                    else
-                    {
-                        throw new ArgumentException(SR.Get(SRID.ParserAttributeArgsLow, attrType.Name));
-                    }
-                }
-                else
-                {
-                    throw new ArgumentException(SR.Get(SRID.ParserAttributeArgsHigh, attrType.Name));
-                }
-            }
-
-            return attrValue;
-        }
-
-        // Given a ReflectionOnlyLoaded member, returns the value of a metadata attribute of
-        // Type attrType if set on that member. Looks only for attributes that have a ctor with
-        // one parameter that is of Type string or Type.
-        private static string GetCustomAttributeData(MemberInfo mi, Type attrType, out Type? typeValue)
-        {
-            IList<CustomAttributeData> list = CustomAttributeData.GetCustomAttributes(mi);
-            string? attrValue = GetCustomAttributeData(list, attrType, out typeValue, true, false);
-            return attrValue ?? string.Empty;
-        }
-
-        // Helper that enumerates a list of CustomAttributeData obtained
-        // via ReflectionOnlyLoad, and
-        // looks for a specific attribute of Type attrType.
-        // It only looks for attribiutes with a single
-        // value of Type string that is passed in via a ctor.
-        // If allowTypeAlso is true, then it looks for
-        // values of typeof(Type) as well.
-        private static string? GetCustomAttributeData(
-            IList<CustomAttributeData> list,
-            Type attrType,
-            out Type? typeValue,
-            bool allowTypeAlso,
-            bool allowZeroArgs)
-        {
-            typeValue = null;
-            string? attrValue = null;
-            for (int j = 0; j < list.Count; j++)
-            {
-                attrValue = GetCustomAttributeData(
-                    list[j],
-                    attrType,
-                    out typeValue,
-                    allowTypeAlso,
-                    false,
-                    allowZeroArgs);
-                if (attrValue != null)
-                {
-                    break;
-                }
-            }
-
-            return attrValue;
+            return result;
         }
     }
 }

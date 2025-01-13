@@ -70,7 +70,7 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="ListControlItem"/> class.
+        /// Initializes a new instance of the <see cref="ListControlItem"/> class
         /// with the default value for the <see cref="Text"/> property and an action associated
         /// with the item.
         /// </summary>
@@ -126,6 +126,22 @@ namespace Alternet.UI
         /// </remarks>
         [DefaultValue(false)]
         public virtual bool? CheckBoxThreeState { get; set; }
+
+        /// <summary>
+        /// Gets or sets whether text may contain html bold tags.
+        /// </summary>
+        public bool TextHasBold
+        {
+            get
+            {
+                return LabelFlags.HasFlag(DrawLabelFlags.TextHasBold);
+            }
+
+            set
+            {
+                SetLabelFlag(DrawLabelFlags.TextHasBold, value);
+            }
+        }
 
         /// <summary>
         /// Gets or sets whether user can set the checkbox to
@@ -1014,6 +1030,19 @@ namespace Alternet.UI
             {
                 DrawForegroundAction(container, e);
             }
+        }
+
+        /// <summary>
+        /// Turns on or off <see cref="LabelFlags"/> element(s).
+        /// </summary>
+        /// <param name="element">Element to add or remove.</param>
+        /// <param name="add"><c>true</c> to add, <c>false</c> to remove.</param>
+        public void SetLabelFlag(DrawLabelFlags element, bool add)
+        {
+            if (add)
+                LabelFlags |= element;
+            else
+                LabelFlags &= ~element;
         }
 
         /// <summary>

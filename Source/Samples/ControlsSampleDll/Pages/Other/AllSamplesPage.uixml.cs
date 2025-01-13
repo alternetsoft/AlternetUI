@@ -24,7 +24,7 @@ namespace ControlsSample
             {
             }
 
-            view.SelectFirstItem();
+            RunWhenIdle(view.SelectFirstItem);
             Group(runButton, buildButton, buildUIButton, buildPalButton).SuggestedWidthToMax();
             deleteBinCheckBox.BindBoolProp(this, nameof(DeleteBin));
         }
