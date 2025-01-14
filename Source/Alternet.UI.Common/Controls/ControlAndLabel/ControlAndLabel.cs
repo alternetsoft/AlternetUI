@@ -179,14 +179,14 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets a value which specifies label and control alignment.
         /// </summary>
-        public virtual ImageToText LabelToControl
+        public virtual StackPanelOrientation LabelToControl
         {
             get
             {
                 if (Layout == LayoutStyle.Horizontal)
-                    return ImageToText.Horizontal;
+                    return StackPanelOrientation.Horizontal;
                 else
-                    return ImageToText.Vertical;
+                    return StackPanelOrientation.Vertical;
             }
 
             set
@@ -195,7 +195,7 @@ namespace Alternet.UI
                     return;
                 PerformLayoutAndInvalidate(() =>
                 {
-                    if (value == ImageToText.Horizontal)
+                    if (value == StackPanelOrientation.Horizontal)
                     {
                         label.Margin = (0, 0, KnownMetrics.ControlLabelDistance, 0);
                         Layout = LayoutStyle.Horizontal;
@@ -254,7 +254,8 @@ namespace Alternet.UI
             if (!IsErrorPictureCreated)
                 return;
 
-            ErrorPicture.IsImageCentered = LabelToControl == ImageToText.Horizontal || !LabelVisible;
+            ErrorPicture.IsImageCentered = !LabelVisible
+                || LabelToControl == StackPanelOrientation.Horizontal;
         }
     }
 }
