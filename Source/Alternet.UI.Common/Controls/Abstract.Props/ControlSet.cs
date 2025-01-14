@@ -82,10 +82,9 @@ namespace Alternet.UI
 
         /// <summary>
         /// Gets the maximum inner label width among all controls in the set.
+        /// Control must implement <see cref="IControlAndLabel"/> interface in order
+        /// to allow this method to work.
         /// </summary>
-        /// <remarks>
-        /// Useful for <see cref="ControlAndLabel"/> and other controls that have inner label.
-        /// </remarks>
         public virtual Coord LabelMaxWidth
         {
             get
@@ -105,8 +104,9 @@ namespace Alternet.UI
         /// Gets the maximum inner control width among all controls in the set.
         /// </summary>
         /// <remarks>
-        /// Useful for <see cref="ControlAndLabel"/> and other controls that have inner controls.
-        /// This function works with <see cref="ControlAndLabel.MainControl"/>.
+        /// Control must implement <see cref="IControlAndLabel"/> interface in order
+        /// to allow this method to work.
+        /// This function works with <see cref="IControlAndLabel.MainControl"/>.
         /// </remarks>
         public virtual Coord InnerMaxWidth
         {
@@ -603,8 +603,10 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Sets <see cref="ControlAndLabel.LabelSuggestedWidth"/> property for all
-        /// the controls in the set.
+        /// Sets <see cref="AbstractControl.SuggestedWidth"/> property for
+        /// the inner labels of all controls in the set.
+        /// Control must implement <see cref="IControlAndLabel"/> interface in order
+        /// to allow this method to work.
         /// </summary>
         /// <returns>Returns this object instance for use in the call sequences.</returns>
         public virtual ControlSet LabelSuggestedWidth(Coord value)
@@ -696,8 +698,10 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Sets <see cref="ControlAndLabel.InnerSuggestedWidth"/> property for all
-        /// the controls in the set.
+        /// Sets <see cref="AbstractControl.SuggestedWidth"/> property for the
+        /// main child of all the controls in the set.
+        /// Control must implement <see cref="IControlAndLabel"/> interface in order
+        /// to allow this method to work.
         /// </summary>
         /// <returns>Returns this object instance for use in the call sequences.</returns>
         public virtual ControlSet InnerSuggestedWidth(Coord value)

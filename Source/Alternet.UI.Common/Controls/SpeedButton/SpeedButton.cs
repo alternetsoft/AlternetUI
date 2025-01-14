@@ -651,8 +651,7 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Gets or sets a value which specifies display modes for
-        /// item image and text.
+        /// Gets or sets a value which specifies label and control alignment.
         /// </summary>
         public virtual ImageToText ImageToText
         {
