@@ -11,7 +11,7 @@ namespace Alternet.UI
     /// <summary>
     /// Base abstract class for control with side buttons.
     /// </summary>
-    public abstract partial class ControlAndButton : HiddenBorder, INotifyDataErrorInfo
+    public abstract partial class ControlAndButton : ControlAndControl, INotifyDataErrorInfo
     {
         /// <summary>
         /// Gets or sets default image for the 'ComboBox' button.
@@ -53,7 +53,6 @@ namespace Alternet.UI
         private readonly ToolBar buttons;
         private readonly AbstractControl mainControl;
 
-        private PictureBox? errorPicture;
         private ObjectUniqueId? idButtonCombo;
         private ObjectUniqueId? idButtonEllipsis;
         private ObjectUniqueId? idButtonPlus;
@@ -303,47 +302,6 @@ namespace Alternet.UI
         /// </summary>
         [Browsable(false)]
         public ObjectUniqueId? IdButtonMinus => idButtonMinus;
-
-        /// <summary>
-        /// Gets attached <see cref="PictureBox"/> control which
-        /// displays validation error information.
-        /// </summary>
-        [Browsable(false)]
-        public PictureBox ErrorPicture
-        {
-            get
-            {
-                if(errorPicture is null)
-                {
-                    errorPicture = new();
-                    errorPicture.Visible = false;
-                    CustomTextBox.InitErrorPicture(errorPicture);
-                    errorPicture.Alignment = (HorizontalAlignment.Right, VerticalAlignment.Center);
-                    errorPicture.Parent = this;
-                }
-
-                return errorPicture;
-            }
-        }
-
-        /// <summary>
-        /// Gets or sets visibility of the attached <see cref="PictureBox"/> control which
-        /// displays validation error information.
-        /// </summary>
-        public virtual bool ErrorPictureVisible
-        {
-            get
-            {
-                return (errorPicture is not null) && ErrorPicture.Visible;
-            }
-
-            set
-            {
-                if (errorPicture is null && !value)
-                    return;
-                ErrorPicture.Visible = value;
-            }
-        }
 
         /// <summary>
         /// Gets or sets <see cref="AbstractControl.SuggestedWidth"/> property

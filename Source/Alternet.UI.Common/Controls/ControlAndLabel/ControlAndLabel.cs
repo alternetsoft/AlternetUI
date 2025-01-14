@@ -13,31 +13,29 @@ namespace Alternet.UI
     /// <summary>
     /// Implements labeled control.
     /// </summary>
-    /// <remarks> This is an abstract class. You can use <see cref="TextBoxAndLabel"/>,
-    /// <see cref="ComboBoxAndLabel"/> or derive from <see cref="ControlAndLabel"/>
+    /// <remarks> You can use <see cref="TextBoxAndLabel"/>,
+    /// <see cref="ComboBoxAndLabel"/> or derive from <see cref="ControlAndLabel{TControl,TLabel}"/>
     /// in order to implement your own custom labeled control.</remarks>
+    /// <typeparam name="TControl">Type of the inner control.</typeparam>
+    /// <typeparam name="TLabel">Type of the label.</typeparam>
     [ControlCategory("Hidden")]
-    public abstract partial class ControlAndLabel
-        : HiddenBorder, IControlAndLabel, INotifyDataErrorInfo
+    public partial class ControlAndLabel<TControl, TLabel>
+        : ControlAndControl, IControlAndLabel, INotifyDataErrorInfo
+        where TControl : AbstractControl, new()
+        where TLabel : AbstractControl, new()
     {
         /// <summary>
-        /// Gets or sets default distance between control and label.
+        /// Gets or sets function that creates default labels used in the control.
         /// </summary>
-        public static Coord DefaultControlLabelDistance = 5;
-
-        /// <summary>
-        /// Gets or sets function that creates default labels for the <see cref="ControlAndLabel"/>
-        /// controls.
-        /// </summary>
-        public static Func<AbstractControl> CreateDefaultLabel = () => new Label();
+        public static Func<AbstractControl> CreateDefaultLabel = () => new TLabel();
 
         private readonly AbstractControl label;
-        private readonly AbstractControl mainControl;
-
-        private PictureBox? errorPicture;
+        private readonly TControl mainControl;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="ControlAndLabel"/> class.
+        /// Initializes a new instance of the
+        /// <see cref="ControlAndLabel{TControl,TLabel}"/> class with
+        /// the specified parent control.
         /// </summary>
         /// <param name="parent">Parent of the control.</param>
         public ControlAndLabel(Control parent)
@@ -47,7 +45,7 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="ControlAndLabel"/> class.
+        /// Initializes a new instance of the <see cref="ControlAndLabel{TControl,TLabel}"/> class.
         /// </summary>
         public ControlAndLabel()
         {
@@ -57,13 +55,14 @@ namespace Alternet.UI
             Layout = LayoutStyle.Horizontal;
 
             label = CreateLabel();
-            label.Margin = new Thickness(0, 0, DefaultControlLabelDistance, 0);
             label.VerticalAlignment = UI.VerticalAlignment.Center;
+            label.HorizontalAlignment = HorizontalAlignment.Left;
+            label.Margin = (0, 0, KnownMetrics.ControlLabelDistance, 0);
             label.Parent = this;
 
             mainControl = CreateControl();
             mainControl.Alignment = (HorizontalAlignment.Fill, VerticalAlignment.Center);
-            mainControl.MinWidth = 50;
+            mainControl.MinWidth = KnownMetrics.InnerControlMinWidth;
             mainControl.Parent = this;
         }
 
@@ -143,17 +142,14 @@ namespace Alternet.UI
         public virtual bool LabelVisible
         {
             get => Label.Visible;
-            set => Label.Visible = value;
-        }
 
-        /// <summary>
-        /// Gets or sets visibility of the attached <see cref="PictureBox"/> control which
-        /// displays validation error information.
-        /// </summary>
-        public virtual bool ErrorPictureVisible
-        {
-            get => ErrorPicture.Visible;
-            set => ErrorPicture.Visible = value;
+            set
+            {
+                if (LabelVisible == value)
+                    return;
+                Label.Visible = value;
+                UpdateErrorPictureLayout();
+            }
         }
 
         /// <summary>
@@ -166,32 +162,10 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Gets attached <see cref="PictureBox"/> control which
-        /// displays validation error information.
-        /// </summary>
-        [Browsable(false)]
-        public PictureBox ErrorPicture
-        {
-            get
-            {
-                if (errorPicture is null)
-                {
-                    errorPicture = new();
-                    errorPicture.Visible = false;
-                    CustomTextBox.InitErrorPicture(errorPicture);
-                    errorPicture.Alignment = (HorizontalAlignment.Right, VerticalAlignment.Center);
-                    errorPicture.Parent = this;
-                }
-
-                return errorPicture;
-            }
-        }
-
-        /// <summary>
         /// Gets main child control.
         /// </summary>
         [Browsable(false)]
-        public AbstractControl MainControl => mainControl;
+        public TControl MainControl => mainControl;
 
         /// <inheritdoc/>
         public override bool HasErrors
@@ -202,6 +176,41 @@ namespace Alternet.UI
         AbstractControl IControlAndLabel.Label => Label;
 
         AbstractControl IControlAndLabel.MainControl => MainControl;
+
+        /// <summary>
+        /// Gets or sets a value which specifies label and control alignment.
+        /// </summary>
+        public virtual StackPanelOrientation LabelToControl
+        {
+            get
+            {
+                if (Layout == LayoutStyle.Horizontal)
+                    return StackPanelOrientation.Horizontal;
+                else
+                    return StackPanelOrientation.Vertical;
+            }
+
+            set
+            {
+                if (value == LabelToControl)
+                    return;
+                PerformLayoutAndInvalidate(() =>
+                {
+                    if (value == StackPanelOrientation.Horizontal)
+                    {
+                        label.Margin = (0, 0, KnownMetrics.ControlLabelDistance, 0);
+                        Layout = LayoutStyle.Horizontal;
+                    }
+                    else
+                    {
+                        label.Margin = (0, 0, 0, KnownMetrics.ControlLabelDistance);
+                        Layout = LayoutStyle.Vertical;
+                    }
+
+                    UpdateErrorPictureLayout();
+                });
+            }
+        }
 
         [Browsable(false)]
         internal new LayoutStyle? Layout
@@ -227,9 +236,10 @@ namespace Alternet.UI
         /// Creates main child control.
         /// </summary>
         /// <remarks>
-        /// For example, main control for the <see cref="TextBoxAndLabel"/> is <see cref="TextBox"/>.
+        /// For example, main control for the <see cref="TextBoxAndLabel"/>
+        /// is <see cref="TextBox"/>.
         /// </remarks>
-        protected abstract AbstractControl CreateControl();
+        protected virtual TControl CreateControl() => new();
 
         /// <summary>
         /// Creates label control.
@@ -238,5 +248,15 @@ namespace Alternet.UI
         /// By default <see cref="Label"/> is created.
         /// </remarks>
         protected virtual AbstractControl CreateLabel() => CreateDefaultLabel();
+
+        /// <inheritdoc/>
+        protected override void UpdateErrorPictureLayout()
+        {
+            if (!IsErrorPictureCreated)
+                return;
+
+            ErrorPicture.IsImageCentered = !LabelVisible
+                || LabelToControl == StackPanelOrientation.Horizontal;
+        }
     }
 }

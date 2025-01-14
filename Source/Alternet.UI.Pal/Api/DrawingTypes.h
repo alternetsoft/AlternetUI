@@ -571,6 +571,19 @@ namespace Alternet::UI
 
 	};
 
+	class wxParkingWindowFrame : public wxFrame2
+	{
+	public:
+		wxParkingWindowFrame()
+		{		
+		}
+
+		virtual bool Show(bool show = true) override
+		{
+			return false;
+		}
+	};
+
 	class ParkingWindow
 	{
 	public:
@@ -593,7 +606,7 @@ namespace Alternet::UI
 		{
 			if (s_parkingWindow == nullptr)
 			{
-				s_parkingWindow = new wxFrame2();
+				s_parkingWindow = new wxParkingWindowFrame();
 				s_parkingWindow->Create(0, wxID_ANY,
 					_T("AlterNET UI Parking Window"));
 				s_parkingWindow->Bind(wxEVT_CLOSE_WINDOW, &ParkingWindow::OnClose);

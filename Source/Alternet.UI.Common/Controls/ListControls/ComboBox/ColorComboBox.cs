@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
@@ -77,7 +78,8 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Gets or sets whether to use <see cref="DisabledImageColor"/> for painting of the color image
+        /// Gets or sets whether to use <see cref="DisabledImageColor"/>
+        /// for painting of the color image
         /// when control is disabled.
         /// </summary>
         public virtual bool UseDisabledImageColor
@@ -163,8 +165,15 @@ namespace Alternet.UI
             {
                 if (Value == value)
                     return;
-                var item = Find(value);
-                SelectedItem = item;
+                if(value is null)
+                {
+                    SelectedIndex = null;
+                }
+                else
+                {
+                    var item = FindOrAdd(value);
+                    SelectedItem = item;
+                }
             }
         }
 
@@ -185,6 +194,31 @@ namespace Alternet.UI
                 ComboBox.DefaultImageBorderColor);
 
             canvas.FillRectangle(color.AsBrush, colorRect);
+        }
+
+        /// <summary>
+        /// Finds item with the specified color in the collection of the color items.
+        /// </summary>
+        /// <param name="value">Color value.</param>
+        /// <param name="items">Collection of the color items.</param>
+        /// <returns></returns>
+        public static ListControlItem? Find(Color? value, IEnumerable items)
+        {
+            if (value is null)
+                return null;
+
+            foreach (var item in items)
+            {
+                if (item is not ListControlItem item2)
+                    continue;
+                if (item2.Value is not Color color)
+                    continue;
+                if (color.AsStruct != value.AsStruct)
+                    continue;
+                return item2;
+            }
+
+            return null;
         }
 
         /// <summary>
@@ -253,21 +287,7 @@ namespace Alternet.UI
         /// <returns></returns>
         public virtual ListControlItem? Find(Color? value)
         {
-            if (value is null)
-                return null;
-
-            foreach (var item in Items)
-            {
-                if (item is not ListControlItem item2)
-                    continue;
-                if (item2.Value is not Color color)
-                    continue;
-                if (color != value)
-                    continue;
-                return item2;
-            }
-
-            return null;
+            return Find(value, Items);
         }
 
         /// <summary>

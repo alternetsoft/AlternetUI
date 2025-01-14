@@ -299,13 +299,14 @@ namespace Alternet.UI
         // of the container (fill controls are not counted).
         // On return, 'result' has number of controls with Dock != None.
         internal static int LayoutWhenDocked(
+            AbstractControl container,
             ref RectD bounds,
             IReadOnlyList<AbstractControl> children)
         {
             if (UseLayoutMethod == DefaultLayoutMethod.Original)
-                return OldLayout.LayoutWhenDocked(ref bounds, children);
+                return OldLayout.LayoutWhenDocked(container, ref bounds, children);
             else
-                return OldLayout.LayoutWhenDocked(ref bounds, children);
+                return OldLayout.LayoutWhenDocked(container, ref bounds, children);
         }
 
         internal static SizeD GetMinStretchedSize(
@@ -351,6 +352,9 @@ namespace Alternet.UI
 
             foreach (var child in children)
             {
+                if (child.Dock != DockStyle.None)
+                    continue;
+
                 var childMargin = child.Margin;
 
                 if(isVert)

@@ -11,7 +11,7 @@ using Microsoft.Maui.Dispatching;
 
 namespace Alternet.UI
 {
-    internal class MauiDialogFactoryHandler : DisposableObject, IDialogFactoryHandler
+    internal partial class MauiDialogFactoryHandler : DisposableObject, IDialogFactoryHandler
     {
         public IColorDialogHandler CreateColorDialogHandler(ColorDialog dialog)
         {

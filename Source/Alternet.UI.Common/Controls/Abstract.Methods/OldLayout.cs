@@ -25,6 +25,9 @@ namespace Alternet.UI
             double maxHeight = 0;
             foreach (var control in container.AllChildrenInLayout)
             {
+                if (control.Dock != DockStyle.None)
+                    continue;
+
                 var margin = control.Margin;
                 var preferredSize = control.GetPreferredSizeLimited(
                     new SizeD(availableSize.Width - width, availableSize.Height));
@@ -50,6 +53,9 @@ namespace Alternet.UI
             double height = 0;
             foreach (var control in container.AllChildrenInLayout)
             {
+                if (control.Dock != DockStyle.None)
+                    continue;
+
                 var margin = control.Margin;
                 var preferredSize = control.GetPreferredSizeLimited(
                     new SizeD(availableSize.Width, availableSize.Height - height));
@@ -298,10 +304,20 @@ namespace Alternet.UI
             IReadOnlyList<AbstractControl> controls,
             bool updateScrollbars)
         {
+            const Coord sizeMultiplicator = 2;
+
             if (updateScrollbars && container.IsScrollable)
             {
                 var totalSize = container.LayoutMaxSize
                     ?? container.GetChildrenMaxPreferredSizePadded(SizeD.PositiveInfinity);
+
+                // This multiplication is here because:
+                // 1. We need to have the ability to scroll further than calculated
+                // max total size because there could be on-screen keyboard shown.
+                // 2. Currently totalSize is calculated incorrectly.
+                totalSize.Width *= sizeMultiplicator;
+                totalSize.Height *= sizeMultiplicator;
+
                 container.SetScrollBarInfo(getBounds().Size, totalSize);
             }
 
@@ -309,9 +325,17 @@ namespace Alternet.UI
 
             foreach (var control in controls)
             {
+                if (control.Dock != DockStyle.None || control.IgnoreLayout)
+                    continue;
+
                 var boundedPreferredSize = control.GetPreferredSize(childrenLayoutBounds.Size);
                 var unboundedPreferredSize =
                     control.GetPreferredSize(SizeD.PositiveInfinity);
+
+                boundedPreferredSize.Width *= sizeMultiplicator;
+                boundedPreferredSize.Height *= sizeMultiplicator;
+                unboundedPreferredSize.Width *= sizeMultiplicator;
+                unboundedPreferredSize.Height *= sizeMultiplicator;
 
                 var verticalAlignment = control.VerticalAlignment;
                 var horizontalAlignment = control.HorizontalAlignment;
@@ -375,11 +399,14 @@ namespace Alternet.UI
                 case DockStyle.Fill:
                     LayoutFill();
                     break;
+                case DockStyle.RightAutoSize:
+                    LayoutRight(true);
+                    break;
             }
 
             bounds = space;
 
-            void LayoutLeft()
+            void LayoutLeft(bool autoSize = false)
             {
                 if (autoSize)
                 {
@@ -398,7 +425,7 @@ namespace Alternet.UI
                 space.Width -= child_size.Width;
             }
 
-            void LayoutTop()
+            void LayoutTop(bool autoSize = false)
             {
                 if (autoSize)
                 {
@@ -417,25 +444,32 @@ namespace Alternet.UI
                 space.Height -= child_size.Height;
             }
 
-            void LayoutRight()
+            void LayoutRight(bool autoSize = false)
             {
+                Thickness margin;
+
                 if (autoSize)
                 {
                     child_size =
                         child.GetPreferredSizeLimited(
                             new SizeD(child_size.Width, space.Height));
+                    margin = child.Margin;
+                }
+                else
+                {
+                    margin = Thickness.Empty;
                 }
 
                 child.SetBounds(
-                    space.Right - child_size.Width,
+                    space.Right - child_size.Width - margin.Right,
                     space.Y,
                     child_size.Width,
                     space.Height,
                     BoundsSpecified.All);
-                space.Width -= child_size.Width;
+                space.Width -= child_size.Width + margin.Horizontal;
             }
 
-            void LayoutBottom()
+            void LayoutBottom(bool autoSize = false)
             {
                 if (autoSize)
                 {
@@ -453,7 +487,7 @@ namespace Alternet.UI
                 space.Height -= child_size.Height;
             }
 
-            void LayoutFill()
+            void LayoutFill(bool autoSize = false)
             {
                 child_size = new SizeD(space.Width, space.Height);
                 if (autoSize)
@@ -470,6 +504,7 @@ namespace Alternet.UI
         // On return, 'bounds' has an empty space left after docking the controls to sides
         // of the container (fill controls are not counted).
         internal static int LayoutWhenDocked(
+            AbstractControl container,
             ref RectD bounds,
             IReadOnlyList<AbstractControl> children)
         {
@@ -484,16 +519,16 @@ namespace Alternet.UI
                 AbstractControl child = children[i];
                 DockStyle dock = child.Dock;
 
-                if (dock == DockStyle.None || child.IgnoreLayout)
+                if (dock == DockStyle.None || container.ChildIgnoresLayout(child))
                     continue;
 
                 result++;
 
                 LayoutWhenDocked(
-                            ref space,
-                            child,
-                            dock,
-                            autoSize: false);
+                    ref space,
+                    child,
+                    dock,
+                    autoSize: false);
             }
 
             bounds = space;

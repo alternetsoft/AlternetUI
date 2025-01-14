@@ -5,7 +5,7 @@ using System.Drawing;
 namespace Alternet.UI
 {
     /// <summary>
-    /// Specifies display modes for toolbar item image and text.
+    /// Enumerates known layouts for image and text.
     /// </summary>
     public enum ImageToText
     {

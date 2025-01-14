@@ -96,6 +96,9 @@ namespace Alternet.UI
         {
             foreach (var control in childs)
             {
+                if (control.Dock != DockStyle.None || control.IgnoreLayout)
+                    continue;
+
                 var preferredSize = control.GetPreferredSizeLimited(childrenLayoutBounds.Size);
 
                 var horizontalPosition =
@@ -119,7 +122,9 @@ namespace Alternet.UI
             }
         }
 
-        internal static SizeD GetPreferredSizeDefaultLayout(AbstractControl container, SizeD availableSize)
+        internal static SizeD GetPreferredSizeDefaultLayout(
+            AbstractControl container,
+            SizeD availableSize)
         {
             if (container.HasChildren)
                 return container.GetBestSizeWithChildren(availableSize);

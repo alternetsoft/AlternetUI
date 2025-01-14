@@ -241,15 +241,6 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Gets whether child control ignores layout.
-        /// </summary>
-        /// <param name="control"></param>
-        protected virtual bool ChildIgnoresLayout(AbstractControl control)
-        {
-            return !control.Visible || control.IgnoreLayout;
-        }
-
-        /// <summary>
         /// Gets size of the native control without padding.
         /// </summary>
         /// <param name="availableSize">Available size for the control.</param>

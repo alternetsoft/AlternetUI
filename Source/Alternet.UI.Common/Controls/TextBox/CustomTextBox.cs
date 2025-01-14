@@ -683,7 +683,7 @@ namespace Alternet.UI
             picture.ImageVisible = false;
             picture.ImageStretch = false;
             picture.TabStop = false;
-            picture.Margin = (ControlAndLabel.DefaultControlLabelDistance, 1, 1, 1);
+            picture.Margin = (KnownMetrics.ControlLabelDistance, 1, 1, 1);
             picture.ParentBackColor = true;
 
             picture.MouseLeftButtonUp -= Picture_MouseLeftButtonUp;

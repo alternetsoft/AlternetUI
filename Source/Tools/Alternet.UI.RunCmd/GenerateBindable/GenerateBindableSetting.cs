@@ -40,7 +40,8 @@ namespace Alternet.UI
             
             paths.Add(typeof(object).Assembly.Location);
 
-            var runTimeAssemblies = Directory.GetFiles(RuntimeEnvironment.GetRuntimeDirectory(), "*.dll");
+            var runTimeAssemblies
+                = Directory.GetFiles(RuntimeEnvironment.GetRuntimeDirectory(), "*.dll");
 
             paths.AddRange(runTimeAssemblies);
 
@@ -148,14 +149,16 @@ namespace Alternet.UI
                         ? $"set => {SubPropertyName}.{prop.Name} = value; " : string.Empty;
                     var canRead = prop.CanRead
                         ? $"get => {SubPropertyName}.{prop.Name}; " : string.Empty;
-                    var propType = ChangeAliasedType(prop.PropertyType);
+                    
+                    var propType = TypeToCodeString(prop.PropertyType);
                     if (propType is null)
                         continue;
-                    if (!TypeNameIsValid(propType.TrimEnd('[', ']', ',')))
+                    
+                    /*if (!TypeNameIsValid(propType.TrimEnd('[', ']', ',')))
                     {
                         errors.Add($"ERROR: Property '{prop.Name}' has unsupported type: {propType}");
                         continue;
-                    }
+                    }*/
 
                     var realType = AssemblyUtils.GetRealType(prop.PropertyType);
                     var typeCode = Type.GetTypeCode(realType);
@@ -178,10 +181,13 @@ namespace Alternet.UI
 
             bool TypeNameIsValid(string? typeNameToCheck)
             {
-                return StringUtils.HasOnlyValidChars(typeNameToCheck, StringUtils.IsEnglishCharOrDot);
+                return true;
+                /*return StringUtils.HasOnlyValidChars(
+                    typeNameToCheck,
+                    StringUtils.IsEnglishCharOrDot);*/
             }
 
-            string? ChangeAliasedType(Type? type)
+            /*string? ChangeAliasedType(Type? type)
             {
                 var t = type?.FullName;
 
@@ -200,7 +206,7 @@ namespace Alternet.UI
                 }
 
                 return t;
-            }
+            }*/
 
             void GenerateBindUnbindCall(string bindName, string operation, string xmlHelp)
             {
@@ -262,6 +268,11 @@ namespace Alternet.UI
                 return true;
             }
 
+            string TypeToCodeString(Type type)
+            {
+                return AssemblyUtils.GetTypeNameUsingCodeDom(type);
+            }
+
             void GenerateEvents(bool first)
             {
                 var events = GetEvents();
@@ -284,7 +295,8 @@ namespace Alternet.UI
 
                     if (!EventIsOk(ev))
                     {
-                        errors.Add($"ERROR: Event '{ev.Name}' with type '{handlerType}' is unsupported.");
+                        errors.Add(
+                            $"ERROR: Event '{ev.Name}' of type '{handlerType}' is unsupported.");
                         continue;
                     }
 
@@ -292,7 +304,7 @@ namespace Alternet.UI
                         = $"{indent2}/// <inheritdoc cref=\"{TypeName}.{ev.Name}\"/>";
 
                     var generatedDecl
-                        = $"{indent2}public event {handlerType}? {ev.Name};";
+                        = $"{indent2}public event {TypeToCodeString(handlerType)}? {ev.Name};";
 
                     Console.WriteLine(generatedDecl);
                     if (first)
@@ -308,8 +320,10 @@ namespace Alternet.UI
 
                     void GenerateHandlerMethod()
                     {
+                        var tString = TypeToCodeString(eventArgsType);
+
                         var generatedDecl1
-                            = $"{indent2}private void {ev.Name}Handler(object? sender, {eventArgsType.FullName} e)";
+                            = $"{indent2}private void {ev.Name}Handler(object? sender, {tString} e)";
                         var generatedDecl2 = $"{indent2}{{";
                         var generatedDecl3 = $"{indent3}Raise{ev.Name}(e);";
                         var generatedDecl4 = $"{indent2}}}";
@@ -322,8 +336,10 @@ namespace Alternet.UI
 
                     void GenerateRaiseMethod()
                     {
+                        var tString = TypeToCodeString(eventArgsType);
+
                         var generatedDecl1
-                            = $"{indent2}internal void Raise{ev.Name}({eventArgsType.FullName} e)";
+                            = $"{indent2}internal void Raise{ev.Name}({tString} e)";
                         var generatedDecl2 = $"{indent2}{{";
                         var generatedDecl3 = $"{indent3}{ev.Name}?.Invoke(this, e);";
                         var generatedDecl4 = $"{indent3}On{ev.Name}(e);";
@@ -338,10 +354,12 @@ namespace Alternet.UI
 
                     void GenerateOnEventMethod()
                     {
+                        var tString = TypeToCodeString(eventArgsType);
+
                         var generatedDecl1
                             = $"{indent2}/// Raised when <see cref=\"{ev.Name}\"/> event is called.";
                         var generatedDecl2
-                            = $"{indent2}protected virtual void On{ev.Name}({eventArgsType.FullName} e)";
+                            = $"{indent2}protected virtual void On{ev.Name}({tString} e)";
                         var generatedDecl3 = $"{indent2}{{";
                         var generatedDecl4 = $"{indent2}}}";
                         protecteds.Add(string.Empty);

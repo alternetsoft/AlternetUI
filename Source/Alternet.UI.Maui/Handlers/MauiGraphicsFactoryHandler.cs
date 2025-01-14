@@ -11,7 +11,7 @@ using SkiaSharp;
 
 namespace Alternet.UI
 {
-    internal class MauiGraphicsFactoryHandler : DisposableObject, IGraphicsFactoryHandler
+    internal partial class MauiGraphicsFactoryHandler : DisposableObject, IGraphicsFactoryHandler
     {
         GenericImageLoadFlags IGraphicsFactoryHandler.GenericImageDefaultLoadFlags { get; set; }
 

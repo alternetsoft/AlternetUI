@@ -8,7 +8,7 @@ using Microsoft.Maui.ApplicationModel.DataTransfer;
 
 namespace Alternet.UI
 {
-    internal class MauiClipboardHandler : DisposableObject, IClipboardHandler
+    internal partial class MauiClipboardHandler : DisposableObject, IClipboardHandler
     {
         private IDataObject? lastData;
 
