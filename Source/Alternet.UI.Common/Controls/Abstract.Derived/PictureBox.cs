@@ -175,6 +175,27 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets or sets whether image is centered horizontally and vertically.
+        /// </summary>
+        [Browsable(false)]
+        public virtual bool IsImageCentered
+        {
+            get
+            {
+                return CenterVert && CenterHorz;
+            }
+
+            set
+            {
+                if (IsImageCentered == value)
+                    return;
+                primitive.CenterHorz = value;
+                primitive.CenterVert = value;
+                Invalidate();
+            }
+        }
+
+        /// <summary>
         /// Gets or sets whether to center image vertically in the control rectangle.
         /// Default is <c>true</c>. This property is used when image is not stretched.
         /// </summary>
@@ -445,6 +466,14 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets size of the image.
+        /// </summary>
+        public SizeD GetImagePreferredSize()
+        {
+            return primitive.GetPreferredSize(this);
+        }
+
+        /// <summary>
         /// Paints image in the default style.
         /// </summary>
         public virtual void DrawDefaultImage(Graphics dc, RectD rect)
@@ -487,7 +516,7 @@ namespace Alternet.UI
             }
             else
             {
-                result = primitive.GetPreferredSize(this);
+                result = GetImagePreferredSize();
             }
 
             return result;
