@@ -41,5 +41,12 @@ namespace Alternet.UI
         /// its containing control and sized appropriately.
         /// </summary>
         Fill = 5,
+
+        /// <summary>
+        /// The control's right edge is docked to the right edge
+        /// of its containing control. Size of the control is calculated using it's
+        /// preferred size.
+        /// </summary>
+        RightAutoSize = 6,
     }
 }
