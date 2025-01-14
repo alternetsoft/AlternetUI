@@ -14,7 +14,7 @@ using Windows.Devices.Input;
 
 namespace Alternet.UI
 {
-    internal class MauiMouseHandler : PlessMouseHandler
+    internal partial class MauiMouseHandler : PlessMouseHandler
     {
 #if WINDOWS
         private static MouseCapabilities? mouseCapabilities;

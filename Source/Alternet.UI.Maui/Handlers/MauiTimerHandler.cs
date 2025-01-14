@@ -9,7 +9,7 @@ using Microsoft.Maui.Dispatching;
 
 namespace Alternet.UI
 {
-    internal class MauiTimerHandler : DisposableObject, ITimerHandler
+    internal partial class MauiTimerHandler : DisposableObject, ITimerHandler
     {
         private readonly IDispatcherTimer timer;
 
