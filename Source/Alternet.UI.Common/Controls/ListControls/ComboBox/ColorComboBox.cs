@@ -77,7 +77,8 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Gets or sets whether to use <see cref="DisabledImageColor"/> for painting of the color image
+        /// Gets or sets whether to use <see cref="DisabledImageColor"/>
+        /// for painting of the color image
         /// when control is disabled.
         /// </summary>
         public virtual bool UseDisabledImageColor
@@ -163,8 +164,15 @@ namespace Alternet.UI
             {
                 if (Value == value)
                     return;
-                var item = Find(value);
-                SelectedItem = item;
+                if(value is null)
+                {
+                    SelectedIndex = null;
+                }
+                else
+                {
+                    var item = FindOrAdd(value);
+                    SelectedItem = item;
+                }
             }
         }
 
@@ -262,7 +270,7 @@ namespace Alternet.UI
                     continue;
                 if (item2.Value is not Color color)
                     continue;
-                if (color != value)
+                if (color.AsStruct != value.AsStruct)
                     continue;
                 return item2;
             }
