@@ -84,7 +84,7 @@ namespace Alternet.UI
 
             var space = getBounds();
 
-            var number = LayoutWhenDocked(ref space, items);
+            var number = LayoutWhenDocked(container, ref space, items);
 
             void UpdateItems()
             {
@@ -2313,6 +2313,15 @@ namespace Alternet.UI
         [Browsable(false)]
         public virtual void InvalidateBestSize()
         {
+        }
+
+        /// <summary>
+        /// Gets whether child control ignores layout.
+        /// </summary>
+        /// <param name="control"></param>
+        public virtual bool ChildIgnoresLayout(AbstractControl control)
+        {
+            return !control.Visible || control.IgnoreLayout;
         }
 
         /// <summary>
