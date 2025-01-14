@@ -59,7 +59,8 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Gets or sets whether to use <see cref="DisabledImageColor"/> for painting of the color image
+        /// Gets or sets whether to use <see cref="DisabledImageColor"/>
+        /// for painting of the color image
         /// when control is disabled.
         /// </summary>
         public virtual bool UseDisabledImageColor
@@ -124,8 +125,15 @@ namespace Alternet.UI
             {
                 if (Value == value)
                     return;
-                var item = Find(value);
-                SelectedItem = item;
+                if (value is null)
+                {
+                    SelectedIndex = null;
+                }
+                else
+                {
+                    var item = FindOrAdd(value);
+                    SelectedItem = item;
+                }
             }
         }
 
@@ -172,21 +180,7 @@ namespace Alternet.UI
         /// <returns></returns>
         public virtual ListControlItem? Find(Color? value)
         {
-            if (value is null)
-                return null;
-
-            foreach (var item in Items)
-            {
-                if (item is not ListControlItem item2)
-                    continue;
-                if (item2.Value is not Color color)
-                    continue;
-                if (color != value)
-                    continue;
-                return item2;
-            }
-
-            return null;
+            return ColorComboBox.Find(value, Items);
         }
 
         /// <summary>

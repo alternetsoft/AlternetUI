@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
@@ -196,6 +197,31 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Finds item with the specified color in the collection of the color items.
+        /// </summary>
+        /// <param name="value">Color value.</param>
+        /// <param name="items">Collection of the color items.</param>
+        /// <returns></returns>
+        public static ListControlItem? Find(Color? value, IEnumerable items)
+        {
+            if (value is null)
+                return null;
+
+            foreach (var item in items)
+            {
+                if (item is not ListControlItem item2)
+                    continue;
+                if (item2.Value is not Color color)
+                    continue;
+                if (color.AsStruct != value.AsStruct)
+                    continue;
+                return item2;
+            }
+
+            return null;
+        }
+
+        /// <summary>
         /// Adds color items to the <see cref="ColorComboBox"/>. This is default
         /// implementation of the initialization method. It is assigned to
         /// <see cref="InitColors"/> property by default.
@@ -261,21 +287,7 @@ namespace Alternet.UI
         /// <returns></returns>
         public virtual ListControlItem? Find(Color? value)
         {
-            if (value is null)
-                return null;
-
-            foreach (var item in Items)
-            {
-                if (item is not ListControlItem item2)
-                    continue;
-                if (item2.Value is not Color color)
-                    continue;
-                if (color.AsStruct != value.AsStruct)
-                    continue;
-                return item2;
-            }
-
-            return null;
+            return Find(value, Items);
         }
 
         /// <summary>
