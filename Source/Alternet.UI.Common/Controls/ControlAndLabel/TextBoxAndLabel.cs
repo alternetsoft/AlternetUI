@@ -10,10 +10,10 @@ using System.Threading.Tasks;
 namespace Alternet.UI
 {
     /// <summary>
-    /// Implements <see cref="TextBox"/> with attached <see cref="Label"/>.
+    /// Implements <see cref="TextBox"/> with attached label.
     /// </summary>
     [ControlCategory("Editors")]
-    public partial class TextBoxAndLabel : ControlAndLabel
+    public partial class TextBoxAndLabel : ControlAndLabel<TextBox, Label>
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="TextBoxAndLabel"/> class.
@@ -88,16 +88,10 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Gets main child control.
+        /// Gets main inner <see cref="TextBox"/> control.
         /// </summary>
         [Browsable(false)]
-        public new TextBox MainControl => (TextBox)base.MainControl;
-
-        /// <summary>
-        /// Gets main child control, same as <see cref="MainControl"/>.
-        /// </summary>
-        [Browsable(false)]
-        public TextBox TextBox => (TextBox)base.MainControl;
+        public TextBox TextBox => MainControl;
 
         /// <summary>
         /// <see cref="CustomTextBox.IsRequired"/>
@@ -159,9 +153,6 @@ namespace Alternet.UI
         /// </summary>
         [Browsable(false)]
         public virtual bool IsNullOrWhiteSpace => string.IsNullOrWhiteSpace(Text);
-
-        /// <inheritdoc/>
-        protected override AbstractControl CreateControl() => new TextBox();
 
         /// <summary>
         /// Initializes main child control.

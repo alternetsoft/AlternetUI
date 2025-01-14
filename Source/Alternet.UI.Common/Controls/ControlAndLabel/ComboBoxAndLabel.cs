@@ -9,10 +9,10 @@ using Alternet.Base.Collections;
 namespace Alternet.UI
 {
     /// <summary>
-    /// Implements <see cref="UI.ComboBox"/> with attached <see cref="Label"/>.
+    /// Implements <see cref="UI.ComboBox"/> with attached label.
     /// </summary>
     [ControlCategory("Editors")]
-    public partial class ComboBoxAndLabel : ControlAndLabel
+    public partial class ComboBoxAndLabel : ControlAndLabel<ComboBox, Label>
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="ComboBoxAndLabel"/> class.
@@ -68,16 +68,10 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Gets main child control.
+        /// Gets inner <see cref="ComboBox"/> control.
         /// </summary>
         [Browsable(false)]
-        public new ComboBox MainControl => (ComboBox)base.MainControl;
-
-        /// <summary>
-        /// Gets main child control, same as <see cref="MainControl"/>.
-        /// </summary>
-        [Browsable(false)]
-        public ComboBox ComboBox => (ComboBox)base.MainControl;
+        public ComboBox ComboBox => MainControl;
 
         /// <inheritdoc cref="ComboBox.SelectedItem"/>
         public virtual object? SelectedItem
@@ -107,8 +101,5 @@ namespace Alternet.UI
             get => ComboBox.Items;
             set => ComboBox.Items = value;
         }
-
-        /// <inheritdoc/>
-        protected override AbstractControl CreateControl() => new ComboBox();
     }
 }
