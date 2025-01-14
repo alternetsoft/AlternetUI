@@ -56,6 +56,7 @@ namespace Alternet.UI
 
             label = CreateLabel();
             label.VerticalAlignment = UI.VerticalAlignment.Center;
+            label.HorizontalAlignment = HorizontalAlignment.Left;
             label.Margin = (0, 0, KnownMetrics.ControlLabelDistance, 0);
             label.Parent = this;
 

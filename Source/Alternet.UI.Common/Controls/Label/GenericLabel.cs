@@ -45,6 +45,7 @@ namespace Alternet.UI
         /// </summary>
         public GenericLabel()
         {
+            HorizontalAlignment = HorizontalAlignment.Left;
             ParentBackColor = true;
             ParentForeColor = true;
             RefreshOptions = ControlRefreshOptions.RefreshOnBorder

@@ -70,6 +70,7 @@ namespace Alternet.UI
         /// </summary>
         public Label()
         {
+            HorizontalAlignment = HorizontalAlignment.Left;
             ParentBackColor = true;
             ParentForeColor = true;
             CanSelect = false;

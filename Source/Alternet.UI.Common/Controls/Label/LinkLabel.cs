@@ -27,6 +27,7 @@ namespace Alternet.UI
         /// </summary>
         public LinkLabel()
         {
+            HorizontalAlignment = HorizontalAlignment.Left;
             CanSelect = false;
             TabStop = false;
         }
@@ -35,6 +36,7 @@ namespace Alternet.UI
         /// Initializes a new instance of the <see cref="LinkLabel"/> class with the specified text.
         /// </summary>
         public LinkLabel(string? text)
+            : this()
         {
             Text = text ?? string.Empty;
         }
