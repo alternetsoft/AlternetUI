@@ -304,10 +304,20 @@ namespace Alternet.UI
             IReadOnlyList<AbstractControl> controls,
             bool updateScrollbars)
         {
+            const Coord sizeMultiplicator = 2;
+
             if (updateScrollbars && container.IsScrollable)
             {
                 var totalSize = container.LayoutMaxSize
                     ?? container.GetChildrenMaxPreferredSizePadded(SizeD.PositiveInfinity);
+
+                // This multiplication is here because:
+                // 1. We need to have the ability to scroll further than calculated
+                // max total size because there could be on-screen keyboard shown.
+                // 2. Currently totalSize is calculated incorrectly.
+                totalSize.Width *= sizeMultiplicator;
+                totalSize.Height *= sizeMultiplicator;
+
                 container.SetScrollBarInfo(getBounds().Size, totalSize);
             }
 
@@ -321,6 +331,11 @@ namespace Alternet.UI
                 var boundedPreferredSize = control.GetPreferredSize(childrenLayoutBounds.Size);
                 var unboundedPreferredSize =
                     control.GetPreferredSize(SizeD.PositiveInfinity);
+
+                boundedPreferredSize.Width *= sizeMultiplicator;
+                boundedPreferredSize.Height *= sizeMultiplicator;
+                unboundedPreferredSize.Width *= sizeMultiplicator;
+                unboundedPreferredSize.Height *= sizeMultiplicator;
 
                 var verticalAlignment = control.VerticalAlignment;
                 var horizontalAlignment = control.HorizontalAlignment;
