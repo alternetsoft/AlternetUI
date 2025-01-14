@@ -63,35 +63,41 @@ namespace ControlsSample
                 });
             };
 
-            panelSettings.AddInput("ReadOnly", textBox, nameof(TextBox.ReadOnly));
-            panelSettings.AddInput("Password", textBox, nameof(TextBox.IsPassword));
-            panelSettings.AddInput("Has Border", textBox, nameof(TextBox.HasBorder));
-            panelSettings.AddInput("Allow Space Character", this, nameof(AllowSpaceChar));
+            panelSettings.DoInsideUpdate(() =>
+            {
+                panelSettings.AddInput("ReadOnly", textBox, nameof(TextBox.ReadOnly));
+                panelSettings.AddInput("Password", textBox, nameof(TextBox.IsPassword));
+                panelSettings.AddInput("Has Border", textBox, nameof(TextBox.HasBorder));
+                panelSettings.AddInput("Allow Space Character", this, nameof(AllowSpaceChar));
 
-            panelSettings.AddInput("Text Align", textBox, nameof(TextBox.TextAlign));
+                panelSettings.AddInput("Text Align", textBox, nameof(TextBox.TextAlign));
 
-            var e = CustomEventArgs.CreateWithFlag("IsRequired");
-            
-            var itemMinLengthEdit = panelSettings.AddInput(
-                MinLengthEditLabel,
-                textBox,
-                nameof(TextBox.MinLength),
-                e);
-            itemMinLengthEdit.ValueChanged += (s, e) => textBox.RunDefaultValidation();
+                var e = CustomEventArgs.CreateWithFlag("IsRequired");
 
-            var itemMaxLengthEdit = panelSettings.AddInput(
-                MaxLengthEditLabel,
-                textBox,
-                nameof(TextBox.MaxLength),
-                e);
-            itemMaxLengthEdit.ValueChanged += (s, e) => textBox.RunDefaultValidation();
-            
-            panelSettings.AddLinkLabel("Change Text", ChangeTextButton_Click);
-            panelSettings.AddLinkLabel("Show All Properties", ShowProperties_Click);
+                var itemMinLengthEdit = panelSettings.AddInput(
+                    MinLengthEditLabel,
+                    textBox,
+                    nameof(TextBox.MinLength),
+                    e);
+                itemMinLengthEdit.ValueChanged += (s, e) => textBox.RunDefaultValidation();
 
-            panelSettings.AddInput("Log Text", this, nameof(LogText));
-            panelSettings.AddInput("Log Position", this, nameof(LogPosition));
-            panelSettings.AddInput("Log Selection", this, nameof(LogSelection));
+                var itemMaxLengthEdit = panelSettings.AddInput(
+                    MaxLengthEditLabel,
+                    textBox,
+                    nameof(TextBox.MaxLength),
+                    e);
+                itemMaxLengthEdit.ValueChanged += (s, e) => textBox.RunDefaultValidation();
+
+                panelSettings.AddLinkLabel("Change Text", ChangeTextButton_Click);
+                panelSettings.AddLinkLabel("Show All Properties", ShowProperties_Click);
+
+                panelSettings.AddInput("Foreground Color", textBox, nameof(ForeColor));
+                panelSettings.AddInput("Background Color", textBox, nameof(BackColor));
+
+                panelSettings.AddInput("Log Text", this, nameof(LogText));
+                panelSettings.AddInput("Log Position", this, nameof(LogPosition));
+                panelSettings.AddInput("Log Selection", this, nameof(LogSelection));
+            });
         }
 
         private void TextBox_KeyDown(object? sender, KeyEventArgs e)

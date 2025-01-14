@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Text;
 
 using Alternet.Base.Collections;
+using Alternet.Drawing;
 
 namespace Alternet.UI
 {
@@ -57,7 +58,8 @@ namespace Alternet.UI
                     PanelSettingsItemKind.Label,
                     (item, control) =>
                     {
-                        var result = CreateOrUpdateControl<Label>(item, control);
+                        var result = CreateOrUpdateControl<GenericLabel>(item, control);
+                        result.HorizontalAlignment = HorizontalAlignment.Left;
                         UpdateText(item, result);
                         return result;
                     });
@@ -71,6 +73,7 @@ namespace Alternet.UI
                         var result = CreateOrUpdateControl<LinkLabel>(item, control);
                         UpdateText(item, result);
 
+                        result.HorizontalAlignment = HorizontalAlignment.Left;
                         result.LinkClicked -= LinkLabelClicked;
                         result.LinkClicked += LinkLabelClicked;
 
@@ -95,21 +98,12 @@ namespace Alternet.UI
                     {
                         if (item.ValueType == typeof(bool))
                         {
-                            var checkBox = CreateOrUpdateControl<CheckBox>(item, control);
-                            UpdateText(item, checkBox);
+                            return CreateOrUpdateCheckBox(item, control);
+                        }
 
-                            if (item.Value is bool isChecked)
-                                checkBox.Checked = isChecked;
-
-                            checkBox.CheckedChanged -= CheckBoxChecked;
-                            checkBox.CheckedChanged += CheckBoxChecked;
-
-                            void CheckBoxChecked(object? sender, EventArgs e)
-                            {
-                                item.Value = checkBox.IsChecked;
-                            }
-
-                            return checkBox;
+                        if (item.ValueType == typeof(Color))
+                        {
+                            return CreateOrUpdateColorComboBox(item, control);
                         }
 
                         var result = CreateOrUpdateInput(item, control);
@@ -508,6 +502,51 @@ namespace Alternet.UI
             if (obj is not AbstractControl control)
                 return;
             control.Parent = this;
+        }
+
+        private static object? CreateOrUpdateCheckBox(
+            PanelSettingsItem item,
+            object? control)
+        {
+            var checkBox = CreateOrUpdateControl<CheckBox>(item, control);
+            UpdateText(item, checkBox);
+
+            if (item.Value is bool isChecked)
+                checkBox.Checked = isChecked;
+
+            checkBox.CheckedChanged -= CheckBoxChecked;
+            checkBox.CheckedChanged += CheckBoxChecked;
+
+            void CheckBoxChecked(object? sender, EventArgs e)
+            {
+                item.Value = checkBox.IsChecked;
+            }
+
+            return checkBox;
+        }
+
+        private static object? CreateOrUpdateColorComboBox(
+            PanelSettingsItem item,
+            object? control)
+        {
+            var result = CreateOrUpdateControl<ControlAndLabel<ColorComboBox, Label>>(item, control);
+            result.LabelToControl = StackPanelOrientation.Vertical;
+            UpdateText(item, result.Label);
+
+            var colorEditor = result.MainControl;
+
+            if (item.Value is not null)
+                colorEditor.Value = (Color)item.Value;
+
+            colorEditor.SelectedIndexChanged -= SelectorChaned;
+            colorEditor.SelectedIndexChanged += SelectorChaned;
+
+            void SelectorChaned(object? sender, EventArgs e)
+            {
+                item.Value = colorEditor.Value;
+            }
+
+            return result;
         }
 
         private static object? CreateOrUpdateInput(
