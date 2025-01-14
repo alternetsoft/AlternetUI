@@ -553,34 +553,13 @@ namespace Alternet.UI
             PanelSettingsItem item,
             object? control)
         {
-            const string magicName = "759A8BD1DD9E4B009E8A5AFB726FA594";
+            var result
+                = CreateOrUpdateControl<ControlAndLabel<TextBoxAndButton, Label>>(item, control);
+            result.LabelToControl = StackPanelOrientation.Vertical;
+            UpdateText(item, result.Label);
 
-            var result = CreateOrUpdateControl<Panel>(item, control);
-
-            TextBoxAndButton? textBox;
-
-            if (!result.HasChildren)
-            {
-                result.Layout = LayoutStyle.Vertical;
-
-                Label labelControl = new();
-                UpdateText(item, labelControl);
-
-                labelControl.Parent = result;
-                labelControl.MarginBottom = DefaultLabelToTextMargin;
-
-                textBox = new();
-                textBox.HasBtnComboBox = false;
-                textBox.Parent = result;
-                textBox.Name = magicName;
-            }
-            else
-            {
-                textBox = result.FindElement(magicName) as TextBoxAndButton;
-            }
-
-            if (textBox is null)
-                return result;
+            var textBox = result.MainControl;
+            textBox.HasBtnComboBox = false;
 
             textBox.TextBox.SetValidator(item.ValueType, false);
             textBox.TextBox.AutoShowError = true;
@@ -604,33 +583,12 @@ namespace Alternet.UI
             object? control,
             bool isEditable)
         {
-            const string magicName = "4BBB53EBB30A4D41803F8774E6307AA6";
+            var result
+                = CreateOrUpdateControl<ControlAndLabel<ComboBoxAndButton, Label>>(item, control);
+            result.LabelToControl = StackPanelOrientation.Vertical;
+            UpdateText(item, result.Label);
 
-            var result = CreateOrUpdateControl<Panel>(item, control);
-
-            ComboBoxAndButton? comboBox;
-
-            if (!result.HasChildren)
-            {
-                result.Layout = LayoutStyle.Vertical;
-
-                Label labelControl = new();
-                UpdateText(item, labelControl);
-
-                labelControl.Parent = result;
-                labelControl.MarginBottom = DefaultLabelToTextMargin;
-
-                comboBox = new();
-                comboBox.Parent = result;
-                comboBox.Name = magicName;
-            }
-            else
-            {
-                comboBox = result.FindElement(magicName) as ComboBoxAndButton;
-            }
-
-            if (comboBox is null)
-                return result;
+            var comboBox = result.MainControl;
 
             comboBox.IsEditable = isEditable;
 

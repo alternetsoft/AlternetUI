@@ -79,14 +79,20 @@ namespace ControlsSample
                     textBox,
                     nameof(TextBox.MinLength),
                     e);
-                itemMinLengthEdit.ValueChanged += (s, e) => textBox.RunDefaultValidation();
+                itemMinLengthEdit.ValueChanged += (s, e) =>
+                {
+                    textBox.RunDefaultValidation();
+                };
 
                 var itemMaxLengthEdit = panelSettings.AddInput(
                     MaxLengthEditLabel,
                     textBox,
                     nameof(TextBox.MaxLength),
                     e);
-                itemMaxLengthEdit.ValueChanged += (s, e) => textBox.RunDefaultValidation();
+                itemMaxLengthEdit.ValueChanged += (s, e) =>
+                {
+                    textBox.RunDefaultValidation();
+                };
 
                 panelSettings.AddLinkLabel("Change Text", ChangeTextButton_Click);
                 panelSettings.AddLinkLabel("Show All Properties", ShowProperties_Click);
