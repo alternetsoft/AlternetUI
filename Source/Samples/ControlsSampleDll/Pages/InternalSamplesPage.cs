@@ -18,8 +18,10 @@ namespace ControlsSample
             */
 
 
-            if (!App.IsLinuxOS)
+            if (App.IsWindowsOS)
+            {
                 InternalSamplesPage.Add("Action Simulator Sample", () => new ActionSimulatorPage());
+            }
 
             Add("Threading Sample", () => new ThreadingSample.ThreadingMainWindow());
             

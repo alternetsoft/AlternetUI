@@ -117,7 +117,10 @@ namespace ControlsSample
 
             /* panel.AddAction("Draw Native ComboBox", DrawNativeComboBox); */
             panel.AddAction("Draw Native Checkbox", DrawNativeCheckbox);
+            
+            /* Do not uncomment, this causes bad results.
             panel.AddAction("Test Bad Image Assert", TestBadImageAssert);
+            */
 
             AddDrawScrollBarAction(ScrollBar.KnownTheme.WindowsDark);
             AddDrawScrollBarAction(ScrollBar.KnownTheme.WindowsLight);
