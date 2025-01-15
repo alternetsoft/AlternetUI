@@ -174,6 +174,7 @@ namespace Alternet.UI
         [Browsable(false)]
         public void RaiseParentChanged(EventArgs e)
         {
+            stateFlags |= ControlFlags.ParentAssigned;
             if (DisposingOrDisposed)
                 return;
             ResetScaleFactor();
@@ -461,6 +462,8 @@ namespace Alternet.UI
         public virtual void RaiseHandleCreated(EventArgs e)
         {
             if (DisposingOrDisposed)
+                return;
+            if (!VisibleOnScreen)
                 return;
             OnHandleCreated(e);
             HandleCreated?.Invoke(this, e);
