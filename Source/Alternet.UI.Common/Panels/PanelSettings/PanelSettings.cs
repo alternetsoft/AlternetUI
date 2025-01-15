@@ -567,8 +567,8 @@ namespace Alternet.UI
             textBox.TextBox.TextAsValue = item.Value;
             textBox.TextBox.IsRequired = GetFlagIsRequired(item.CreateArg);
 
-            textBox.TextChanged -= TextChanged;
-            textBox.TextChanged += TextChanged;
+            textBox.DelayedTextChanged -= TextChanged;
+            textBox.DelayedTextChanged += TextChanged;
 
             void TextChanged(object? sender, EventArgs e)
             {
@@ -602,8 +602,8 @@ namespace Alternet.UI
 
             comboBox.SelectedItem = item.Value;
 
-            comboBox.SelectedIndexChanged -= SelectorChaned;
-            comboBox.SelectedIndexChanged += SelectorChaned;
+            comboBox.DelayedTextChanged -= SelectorChaned;
+            comboBox.DelayedTextChanged += SelectorChaned;
 
             void SelectorChaned(object? sender, EventArgs e)
             {
