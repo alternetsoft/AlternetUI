@@ -25,5 +25,15 @@ namespace Alternet.UI
         {
             get;
         }
+
+        /// <summary>
+        /// An element that an implementor may wish to target as the destination
+        /// for the command.
+        /// The property may be implemented as read-write if desired.
+        /// </summary>
+        object? CommandTarget
+        {
+            get;
+        }
     }
 }

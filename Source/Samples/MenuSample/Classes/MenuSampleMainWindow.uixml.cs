@@ -31,7 +31,11 @@ namespace MenuSample
 
             sampleCommand.ExecuteAction = (param) =>
             {
-                App.Log($"Sample command execute with param : {param}");
+                var target = Command.CurrentTarget?.GetType().ToString() ?? "null";
+                var s = $"Run sample command on target <b>'{target}'</b> with param <b>'{param}'</b>";
+                ListControlItem item = new(s);
+                item.TextHasBold = true;
+                App.AddLogItem(item);
             };
 
             NamedCommands.Default.Register("SampleCommand", sampleCommand);
