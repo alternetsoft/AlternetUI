@@ -17,7 +17,7 @@ namespace Alternet.UI
         private Action? action;
         private CachedSvgImage<ImageSet> svgImage = new();
         private bool shortcutEnabled = true;
-        private CommandSourceStruct commandSource = new();
+        private CommandSourceStruct commandSource;
 
         static MenuItem()
         {
@@ -28,6 +28,7 @@ namespace Alternet.UI
         /// </summary>
         public MenuItem()
         {
+            commandSource = new(this);
             commandSource.Changed = () =>
             {
                 Enabled = commandSource.CanExecute;
@@ -431,6 +432,21 @@ namespace Alternet.UI
             set
             {
                 commandSource.Command = value;
+            }
+        }
+
+        /// <inheritdoc/>
+        [Browsable(false)]
+        public virtual object? CommandTarget
+        {
+            get
+            {
+                return commandSource.CommandParameter;
+            }
+
+            set
+            {
+                commandSource.CommandParameter = value;
             }
         }
 

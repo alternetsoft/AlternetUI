@@ -117,7 +117,7 @@ namespace Alternet.UI
         private Timer? repeatTimer;
         private Timer? firstClickTimer;
         private int clickRepeatDelay = DefaultClickRepeatDelay;
-        private CommandSourceStruct commandSource = new();
+        private CommandSourceStruct commandSource;
 
         static SpeedButton()
         {
@@ -149,6 +149,8 @@ namespace Alternet.UI
         /// </summary>
         public SpeedButton()
         {
+            commandSource = new(this);
+
             ParentBackColor = true;
             ParentForeColor = true;
             Padding = DefaultPadding;
@@ -455,6 +457,21 @@ namespace Alternet.UI
 
         /// <inheritdoc/>
         public virtual object? CommandParameter
+        {
+            get
+            {
+                return commandSource.CommandParameter;
+            }
+
+            set
+            {
+                commandSource.CommandParameter = value;
+            }
+        }
+
+        /// <inheritdoc/>
+        [Browsable(false)]
+        public virtual object? CommandTarget
         {
             get
             {

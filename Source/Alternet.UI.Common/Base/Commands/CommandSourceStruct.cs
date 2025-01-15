@@ -19,6 +19,17 @@ namespace Alternet.UI
 
         private ICommand? command;
         private object? commandParameter;
+        private object? commandTarget;
+        private object? container;
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="CommandSourceStruct"/> struct.
+        /// </summary>
+        /// <param name="container">Container of the struct.</param>
+        public CommandSourceStruct(object container)
+        {
+            this.container = container;
+        }
 
         /// <summary>
         /// Gets whether command can be executed.
@@ -29,7 +40,25 @@ namespace Alternet.UI
             {
                 if (Command is null)
                     return true;
-                return CommandHelpers.CanExecuteCommandSource(this);
+                return CanExecuteCommandSource(this);
+            }
+        }
+
+        /// <summary>
+        /// Get or sets target object where the command should be raised.
+        /// </summary>
+        public object? CommandTarget
+        {
+            readonly get
+            {
+                return commandTarget ?? container;
+            }
+
+            set
+            {
+                if (commandTarget == value)
+                    return;
+                commandTarget = value;
             }
         }
 
@@ -68,11 +97,62 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets whether <paramref name="commandSource"/> can be executed.
+        /// </summary>
+        /// <param name="commandSource">Command source.</param>
+        /// <returns></returns>
+        public static bool CanExecuteCommandSource(ICommandSource commandSource)
+        {
+            try
+            {
+                UI.Command.CurrentTarget = commandSource.CommandTarget;
+                var command = commandSource.Command;
+                if (command != null)
+                {
+                    var parameter = commandSource.CommandParameter;
+                    return command.CanExecute(parameter);
+                }
+
+                return false;
+            }
+            finally
+            {
+                UI.Command.CurrentTarget = null;
+            }
+        }
+
+        /// <summary>
+        /// Executes command specified with <see cref="ICommandSource"/>
+        /// </summary>
+        /// <param name="commandSource">Command to execute.</param>
+        public static void ExecuteCommandSource(ICommandSource commandSource)
+        {
+            try
+            {
+                UI.Command.CurrentTarget = commandSource.CommandTarget;
+
+                var command = commandSource.Command;
+                if (command != null)
+                {
+                    var parameter = commandSource.CommandParameter;
+                    if (command.CanExecute(parameter))
+                    {
+                        command.Execute(parameter);
+                    }
+                }
+            }
+            finally
+            {
+                UI.Command.CurrentTarget = null;
+            }
+        }
+
+        /// <summary>
         /// Executes command if it is specified.
         /// </summary>
         public readonly void Execute()
         {
-            CommandHelpers.ExecuteCommandSource(this);
+            ExecuteCommandSource(this);
         }
 
         /// <summary>

@@ -9,7 +9,7 @@ namespace Alternet.UI
     public abstract class ButtonBase : Control, ICommandSource
     {
         private Action? clickAction;
-        private CommandSourceStruct commandSource = new();
+        private CommandSourceStruct commandSource;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ButtonBase"/> class.
@@ -26,6 +26,7 @@ namespace Alternet.UI
         /// </summary>
         public ButtonBase()
         {
+            commandSource = new(this);
             commandSource.Changed = () =>
             {
                 Enabled = commandSource.CanExecute;
@@ -48,6 +49,21 @@ namespace Alternet.UI
 
         /// <inheritdoc/>
         public virtual object? CommandParameter
+        {
+            get
+            {
+                return commandSource.CommandParameter;
+            }
+
+            set
+            {
+                commandSource.CommandParameter = value;
+            }
+        }
+
+        /// <inheritdoc/>
+        [Browsable(false)]
+        public virtual object? CommandTarget
         {
             get
             {

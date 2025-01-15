@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Linq;
+using System.Reflection;
 using System.Runtime.CompilerServices;
 using Alternet.Drawing;
 using Alternet.UI.Extensions;
@@ -2343,6 +2345,51 @@ namespace Alternet.UI
                     continue;
                 if(child.Bounds.Contains(point))
                     yield return child;
+            }
+        }
+
+        /// <summary>
+        /// Sets the specified generic property of this control.
+        /// </summary>
+        /// <param name="prop">Generic property identifier.</param>
+        /// <param name="value">New value for the generic property.</param>
+        public virtual void SetGenericProperty(GenericControlProperty prop, object value)
+        {
+            switch (prop)
+            {
+                case GenericControlProperty.Enabled:
+                    Enabled = (bool)value;
+                    break;
+                case GenericControlProperty.Visible:
+                    Visible = (bool)value;
+                    break;
+                case GenericControlProperty.Text:
+                    Text = value.SafeToString();
+                    break;
+                case GenericControlProperty.Title:
+                    TitleAsObject = value;
+                    break;
+            }
+        }
+
+        /// <summary>
+        /// Gets the specified generic property of this control.
+        /// </summary>
+        /// <param name="prop">Generic property identifier.</param>
+        public virtual object GetGenericProperty(GenericControlProperty prop)
+        {
+            switch (prop)
+            {
+                case GenericControlProperty.Enabled:
+                    return Enabled;
+                case GenericControlProperty.Visible:
+                    return Visible;
+                case GenericControlProperty.Text:
+                    return Text;
+                case GenericControlProperty.Title:
+                    return TitleAsObject ?? string.Empty;
+                default:
+                    return 0;
             }
         }
     }
