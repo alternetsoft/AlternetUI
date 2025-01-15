@@ -52,10 +52,10 @@ namespace Alternet.UI
         public static bool DefaultUseGeneric = true;
 
         /// <summary>
-        /// Gets or sets whether to apply theme colors in the constructor (true)
-        /// or to use the default colors (false). Default is True.
+        /// Gets or sets whether to apply theme colors after native calendar control
+        /// is created (true) or to use the default colors (false). Default is True.
         /// </summary>
-        public static bool SetThemeInConstructor = true;
+        public static bool SetThemeWhenHandleCreated = true;
 
         /// <summary>
         /// Gets or sets default value for the <see cref="ShowWeekNumbers"/> property.
@@ -103,8 +103,7 @@ namespace Alternet.UI
             SequentalMonthSelect = DefaultSequentalMonthSelect;
             ShowHolidays = DefaultShowHolidays;
 
-            if (!IsDarkBackground && SetThemeInConstructor)
-                SetColorThemeToLight();
+            UpdateThemeIfRequired();
         }
 
         /// <summary>
@@ -911,6 +910,18 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Called from constructor and after handle is created. Updates
+        /// theme colors if <see cref="SetThemeWhenHandleCreated"/> is True.
+        /// </summary>
+        public virtual void UpdateThemeIfRequired()
+        {
+            if (DisposingOrDisposed)
+                return;
+            if (!IsDarkBackground && SetThemeWhenHandleCreated)
+                SetColorThemeToLight();
+        }
+
+        /// <summary>
         /// Raises <see cref="DayHeaderClick"/> event and calls
         /// <see cref="OnDayHeaderClick"/> method.
         /// </summary>
@@ -1037,6 +1048,13 @@ namespace Alternet.UI
         /// the event data.</param>
         protected virtual void OnPageChanged(EventArgs e)
         {
+        }
+
+        /// <inheritdoc/>
+        protected override void OnHandleCreated(EventArgs e)
+        {
+            base.OnHandleCreated(e);
+            UpdateThemeIfRequired();
         }
 
         /// <summary>
