@@ -157,7 +157,7 @@ namespace Alternet.UI
         /// Gets default value of the <see cref="Window.HasTitleBar"/> property.
         /// </summary>
         [Browsable(false)]
-        public virtual bool DefaultHasTitleBar => false;
+        public virtual bool DefaultHasTitleBar => true;
 
         /// <summary>
         /// Gets default value of the <see cref="Window.TopMost"/> property.
