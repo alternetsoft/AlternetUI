@@ -1,6 +1,8 @@
 using System;
 using System.IO;
 using System.Linq;
+using System.Text;
+
 using Alternet.Drawing;
 
 namespace Alternet.UI
@@ -36,6 +38,15 @@ namespace Alternet.UI
             if (data == null)
                 return;
 
+            if(format == DataFormats.Rtf && data is string stringData)
+            {
+                using var stream = new MemoryStream();
+                StreamUtils.StringToStream(stream, stringData, Encoding.ASCII);
+                stream.Position = 0;
+                dataObject.SetStreamData(format, new Native.InputStream(stream));
+                return;
+            }
+
             if (format == DataFormats.Text || data is string)
             {
                 dataObject.SetStringData(
@@ -60,12 +71,30 @@ namespace Alternet.UI
                 return;
             }
 
-            if (format == DataFormats.Serializable)
+            if(data is System.Runtime.Serialization.ISerializable)
             {
+
+            }
+
+            if(data is Stream streamData)
+            {
+                if (streamData.CanSeek)
+                {
+                    streamData.Position = 0;
+                }
+                else
+                {
+                    App.LogWarning(
+                        new NotSupportedException(
+                            "UnmanagedDataObjectService.SetData: Stream doesn't support seeking"));
+                }
+
+                dataObject.SetStreamData(format, new Native.InputStream(streamData));
                 return;
             }
 
-            throw new NotSupportedException("This type of data is not supported: " + data.GetType());
+            App.LogError(
+                new NotSupportedException("This type of data is not supported: " + data.GetType()));
         }
 
         private static void CopyData(

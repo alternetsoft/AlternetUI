@@ -142,9 +142,6 @@ namespace Alternet.UI
                 case TextDataFormat.Text:
                     result = Text;
                     break;
-                /*case TextDataFormat.UnicodeText:
-                    result = UnicodeText;
-                    break;*/
                 case TextDataFormat.Rtf:
                     result = Rtf;
                     break;
@@ -178,6 +175,82 @@ namespace Alternet.UI
             }
 
             return false;
+        }
+
+        /// <summary>
+        /// Gets whether data format is supported on macOs (when <see cref="App.IsMacOS"/> is true).
+        /// </summary>
+        /// <param name="format">Data format identifier.</param>
+        /// <returns></returns>
+        public static bool IsValidOnMacOs(ClipboardDataFormatId format)
+        {
+            switch (format)
+            {
+                case ClipboardDataFormatId.UnicodeText:
+                case ClipboardDataFormatId.Text:
+                case ClipboardDataFormatId.Bitmap:
+                case ClipboardDataFormatId.MetaFile:
+                case ClipboardDataFormatId.Html:
+                case ClipboardDataFormatId.Filename:
+                    return true;
+                default:
+                    return false;
+            }
+        }
+
+        /// <summary>
+        /// Gets whether data format is supported on Linux (when <see cref="App.IsLinuxOS"/> is true).
+        /// </summary>
+        /// <param name="format">Data format identifier.</param>
+        /// <returns></returns>
+        public static bool IsValidOnLinux(ClipboardDataFormatId format)
+        {
+            switch (format)
+            {
+                case ClipboardDataFormatId.UnicodeText:
+                case ClipboardDataFormatId.Text:
+                case ClipboardDataFormatId.Bitmap:
+                case ClipboardDataFormatId.Html:
+                case ClipboardDataFormatId.Filename:
+                    return true;
+                default:
+                    return false;
+            }
+        }
+
+        /// <summary>
+        /// Gets whether data format is supported on Linux (when <see cref="App.IsLinuxOS"/> is true).
+        /// </summary>
+        /// <param name="format"></param>
+        /// <returns></returns>
+        public static bool IsValidOnWindows(ClipboardDataFormatId format)
+        {
+            switch (format)
+            {
+                case ClipboardDataFormatId.UnicodeText:
+                case ClipboardDataFormatId.Png:
+                case ClipboardDataFormatId.Dib:
+                case ClipboardDataFormatId.Text:
+                case ClipboardDataFormatId.OemText:
+                case ClipboardDataFormatId.Bitmap:
+                case ClipboardDataFormatId.Html:
+                case ClipboardDataFormatId.EnhMetaFile:
+                case ClipboardDataFormatId.MetaFile:
+                case ClipboardDataFormatId.Filename:
+                    return true;
+                default:
+                    return false;
+            }
+        }
+
+        /// <summary>
+        /// Gets whether data format is supported on macOs, Linux and Windows.
+        /// </summary>
+        /// <param name="format">Data format identifier.</param>
+        /// <returns></returns>
+        public static bool IsValidOnWindowsMacLinux(ClipboardDataFormatId format)
+        {
+            return IsValidOnLinux(format) && IsValidOnMacOs(format) && IsValidOnWindows(format);
         }
     }
 }

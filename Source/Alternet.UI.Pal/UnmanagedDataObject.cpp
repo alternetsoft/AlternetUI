@@ -282,7 +282,15 @@ namespace Alternet::UI
             _dataObject->Add(bitmapData);
             return;
         }
-       
-        throwEx(u"Data format not supported: " + format);
+
+        auto size = managedInputStream.GetLength();
+        unsigned char* pchBuffer = new unsigned char[size];
+        managedInputStream.Read(pchBuffer, size);
+
+        auto customData = new wxCustomDataObject();
+        customData->SetFormat(wxStr(format));
+        if(customData->SetData(size, pchBuffer))
+            _dataObject->Add(customData);
+        delete[] pchBuffer;
     }
 }
