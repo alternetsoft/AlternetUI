@@ -4,15 +4,20 @@
         xmlns:local="clr-namespace:ControlsSample;assembly=ControlsSample">
   <VerticalStackPanel Padding="10" HorizontalAlignment="Stretch" Name="tabControl">
 
-    <StackPanel Orientation="Horizontal" Name="tab1" Margin="5">
+    <StackPanel Orientation="Horizontal" Name="tab1" Margin="5" VerticalAlignment="Fill">
+      
       <ListBox
         SuggestedWidth="200" Name="listBox" SelectionChanged="ListBox_SelectionChanged"
         MouseLeftButtonDown="ListBox_MouseLeftButtonDown" Margin="0,0,0,5"/>
+      
       <StackPanel Orientation="Vertical" Margin="10,0,5,5">
-        <Button Text="Add Item" Name="addItemButton" Click="AddItemButton_Click" IsTextLocalized="true"/>
-        <Button Text="Remove Selected" Name="removeItemButton" Margin="0,3,0,0" IsTextLocalized="true"
+        <Button Text="Add Item" Name="addItemButton" Click="AddItemButton_Click" 
+                IsTextLocalized="true"/>
+        <Button Text="Remove Selected" Name="removeItemButton" Margin="0,3,0,0"
+                IsTextLocalized="true"
             Click="RemoveItemButton_Click"/>
-        <Button Text="Add 5000 Items" Name="addManyItemsButton" Margin="0,3,0,0" IsTextLocalized="true"
+        <Button Text="Add 5000 Items" Name="addManyItemsButton" Margin="0,3,0,0"
+                IsTextLocalized="true"
             Click="AddManyItemsButton_Click" />
         <Button Text="Last Item Visible" Name="ensureLastItemVisibleButton" IsTextLocalized="true"
             Margin="0,3,0,0" Click="EnsureLastItemVisibleButton_Click" />
@@ -28,8 +33,10 @@
         <Button Text="Has Border" Name="hasBorderButton" IsTextLocalized="true"
             Margin="0,3,0,5" Click="HasBorderButton_Click" />
       </StackPanel>
+      
       <StackPanel Orientation="Vertical" Margin="10,0,5,5">
-        <CheckBox Text="Multiple Selection" Name="allowMultipleSelectionCheckBox" IsTextLocalized="true"
+        <CheckBox Text="Multiple Selection" Name="allowMultipleSelectionCheckBox" 
+                  IsTextLocalized="true"
             Margin="0,0,0,5" CheckedChanged="AllowMultipleSelectionCheckBox_CheckedChanged"/>
         <CheckBox Text="Find Exact" Name="findExactCheckBox" Margin="0,0,0,5" IsTextLocalized="true"/> 
         <CheckBox Text="Find Ignore Case" Name="findIgnoreCaseCheckBox"
