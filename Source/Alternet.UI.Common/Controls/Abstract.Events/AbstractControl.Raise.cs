@@ -463,8 +463,6 @@ namespace Alternet.UI
         {
             if (DisposingOrDisposed)
                 return;
-            if (!VisibleOnScreen)
-                return;
             OnHandleCreated(e);
             HandleCreated?.Invoke(this, e);
 
@@ -676,8 +674,41 @@ namespace Alternet.UI
         /// </summary>
         public virtual void RaiseChildInserted(int index, AbstractControl childControl)
         {
+            childControl.SetParentInternal(this);
+            childControl.RaiseParentChanged(EventArgs.Empty);
+
             if (DisposingOrDisposed)
                 return;
+
+            childControl.RaiseHandleCreated(EventArgs.Empty);
+
+            if (childControl.Visible)
+            {
+                DoInsideLayout(UpdateFontAndColor);
+            }
+            else
+            {
+                UpdateFontAndColor();
+            }
+
+            void UpdateFontAndColor()
+            {
+                if (childControl.ParentFont)
+                {
+                    childControl.Font = RealFont;
+                }
+
+                if (childControl.ParentBackColor)
+                {
+                    childControl.BackColor = RealBackgroundColor;
+                }
+
+                if (childControl.ParentForeColor)
+                {
+                    childControl.ForeColor = RealForegroundColor;
+                }
+            }
+
             OnChildInserted(index, childControl);
             ChildInserted?.Invoke(this, new BaseEventArgs<AbstractControl>(childControl));
 
@@ -690,12 +721,17 @@ namespace Alternet.UI
         /// </summary>
         public virtual void RaiseChildRemoved(AbstractControl childControl)
         {
+            childControl.SetParentInternal(null);
+            childControl.RaiseParentChanged(EventArgs.Empty);
+
             if (DisposingOrDisposed)
                 return;
             OnChildRemoved(childControl);
             ChildRemoved?.Invoke(this, new BaseEventArgs<AbstractControl>(childControl));
 
             RaiseNotifications((n) => n.AfterChildRemoved(this, childControl));
+            if (childControl.Visible)
+                PerformLayout();
         }
 
         /// <summary>

@@ -1456,8 +1456,8 @@ namespace Alternet.UI
                 if (children == null)
                 {
                     children = new();
-                    children.ItemInserted += OnChildrenItemInserted;
-                    children.ItemRemoved += OnChildrenItemRemoved;
+                    children.ItemInserted += (s, index, item) => RaiseChildInserted(index, item);
+                    children.ItemRemoved += (s, index, item) => RaiseChildRemoved(item);
                 }
 
                 return children;
