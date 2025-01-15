@@ -797,8 +797,9 @@ namespace Alternet.UI
 
                 handler.Attach(this);
 
-                handler.Visible = Visible;
                 handler.SetEnabled(Enabled);
+                RaiseHandleCreated(EventArgs.Empty);
+                handler.Visible = Visible;
                 ApplyChildren();
 
                 OnHandlerAttached(EventArgs.Empty);

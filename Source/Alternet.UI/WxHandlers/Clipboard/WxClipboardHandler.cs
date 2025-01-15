@@ -91,6 +91,8 @@ namespace Alternet.UI
 
         public bool HasFormat(ClipboardDataFormatId format)
         {
+            if(!DataFormats.IsValidOnWindowsMacLinux(format))
+                return false;
             var present = WxApplicationHandler.NativeClipboard.IsIntFormatSupported((int)format);
             return present;
         }

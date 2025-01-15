@@ -37,7 +37,7 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="control">Owner.</param>
         /// <returns></returns>
-        IControlHandler CreateColorPickerHandler(ColorPicker control);
+        IControlHandler CreateColorPickerHandler(Control control);
 
         /// <summary>
         /// Creates <see cref="ISliderHandler"/> interface provider.

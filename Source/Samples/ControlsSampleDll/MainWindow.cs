@@ -112,7 +112,7 @@ namespace ControlsSample
             NameValue<Func<AbstractControl>>[] pagesDebug =
             {
                 new("Internal", CreateInternalSamplesPage),
-                new("External", CreateAllSamplesPage),
+                /*new("External", CreateAllSamplesPage),*/
             };
 
             NameValue<Func<AbstractControl>>[] pagesRelease =

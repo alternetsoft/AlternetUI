@@ -106,8 +106,13 @@ namespace ControlsSample
             actionsListBox.AddAction("Paint on SKCanvas", PaintOnCanvas);
             actionsListBox.AddAction("Draw text on SKSurface (alpha Bitmap)", DrawTextOnSkiaA);
             actionsListBox.AddAction("Draw text on SKSurface (opaque Bitmap)", DrawTextOnSkia);
-            actionsListBox.AddAction("Lock SKSurface (alpha GenericImage)", LockSurfaceOnGenericImageA);
-            actionsListBox.AddAction("Lock SKSurface (opaque GenericImage)", LockSurfaceOnGenericImage);
+            
+            actionsListBox.AddAction(
+                "Lock SKSurface (alpha GenericImage)",
+                LockSurfaceOnGenericImageA);
+            actionsListBox.AddAction(
+                "Lock SKSurface (opaque GenericImage)",
+                LockSurfaceOnGenericImage);
 
             propGrid.SuggestedInitDefaults();
 

@@ -273,22 +273,35 @@ namespace Alternet.UI
                 case ClipboardDataFormatId.Filename:
                     return ContainsFiles;
                 case ClipboardDataFormatId.Dib:
+                    return ContainsBitmap || GetDataPresent(DataFormats.Dib);
                 case ClipboardDataFormatId.Bitmap:
                     return ContainsBitmap;
-                case ClipboardDataFormatId.Invalid:
-                case ClipboardDataFormatId.MetaFile:
-                case ClipboardDataFormatId.Sylk:
-                case ClipboardDataFormatId.Dif:
-                case ClipboardDataFormatId.Tiff:
-                case ClipboardDataFormatId.Palette:
-                case ClipboardDataFormatId.PenData:
-                case ClipboardDataFormatId.Riff:
-                case ClipboardDataFormatId.Wave:
                 case ClipboardDataFormatId.EnhMetaFile:
+                    return GetDataPresent(DataFormats.EnhancedMetafile);
+                case ClipboardDataFormatId.MetaFile:
+                    return GetDataPresent(DataFormats.MetafilePicture);
+                case ClipboardDataFormatId.Dif:
+                    return GetDataPresent(DataFormats.Dif);
+                case ClipboardDataFormatId.Tiff:
+                    return GetDataPresent(DataFormats.Tiff);
+                case ClipboardDataFormatId.Palette:
+                    return GetDataPresent(DataFormats.Palette);
+                case ClipboardDataFormatId.PenData:
+                    return GetDataPresent(DataFormats.PenData);
+                case ClipboardDataFormatId.Riff:
+                    return GetDataPresent(DataFormats.Riff);
+                case ClipboardDataFormatId.Wave:
+                    return GetDataPresent(DataFormats.WaveAudio);
                 case ClipboardDataFormatId.Locale:
-                case ClipboardDataFormatId.Private:
+                    return GetDataPresent(DataFormats.Locale);
                 case ClipboardDataFormatId.Html:
+                    return GetDataPresent(DataFormats.Html);
                 case ClipboardDataFormatId.Png:
+                    return ContainsBitmap;
+                case ClipboardDataFormatId.Sylk:
+                    return GetDataPresent(DataFormats.SymbolicLink);
+                case ClipboardDataFormatId.Private:
+                    return data.Keys.Count > 0;
                 default:
                     return false;
             }

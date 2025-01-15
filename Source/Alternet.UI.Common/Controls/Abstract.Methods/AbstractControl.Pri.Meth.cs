@@ -9,22 +9,5 @@ namespace Alternet.UI
 {
     public partial class AbstractControl
     {
-        private void Children_ItemInserted(object? sender, int index, AbstractControl item)
-        {
-            item.SetParentInternal(this);
-            RaiseChildInserted(index, item);
-
-            if(item.Visible && !item.IgnoreLayout)
-                PerformLayout();
-        }
-
-        private void Children_ItemRemoved(object? sender, int index, AbstractControl item)
-        {
-            item.SetParentInternal(null);
-            RaiseChildRemoved(item);
-
-            if (item.Visible && !item.IgnoreLayout)
-                PerformLayout();
-        }
     }
 }

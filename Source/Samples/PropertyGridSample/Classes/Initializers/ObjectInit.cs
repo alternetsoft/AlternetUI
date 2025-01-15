@@ -301,12 +301,6 @@ namespace PropertyGridSample
                 control.SuggestedWidth = 200;
             });
 
-            Actions.Add(typeof(ColorPicker), (c) =>
-            {
-                ColorPicker control = (c as ColorPicker)!;
-                control.Value = Color.Red;
-            });            
-
             Actions.Add(typeof(PanelOkCancelButtons), (c) =>
             {
                 PanelOkCancelButtons control = (c as PanelOkCancelButtons)!;
@@ -398,9 +392,7 @@ namespace PropertyGridSample
 
         public static void InitStackPanel(object control)
         {
-            var panel = control as Control;
-
-            if (panel is null)
+            if (control is not Control panel)
                 return;
 
             panel.SuggestedHeight = 250;

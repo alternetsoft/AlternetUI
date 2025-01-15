@@ -62,6 +62,8 @@ namespace Alternet.UI
 
         internal bool GetNativeDataPresent(ClipboardDataFormatId format)
         {
+            if (!DataFormats.IsValidOnWindowsMacLinux(format))
+                return false;
             return dataObject.GetNativeDataPresent((int)format);
         }
 
@@ -87,6 +89,8 @@ namespace Alternet.UI
 
         public bool HasFormat(ClipboardDataFormatId format)
         {
+            if (!DataFormats.IsValidOnWindowsMacLinux(format))
+                return false;
             return dataObject.GetNativeDataPresent((int)format);
         }
 

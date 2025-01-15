@@ -137,7 +137,7 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        public IControlHandler CreateColorPickerHandler(ColorPicker control)
+        public IControlHandler CreateColorPickerHandler(Control control)
         {
             return new ColorPickerHandler();
         }

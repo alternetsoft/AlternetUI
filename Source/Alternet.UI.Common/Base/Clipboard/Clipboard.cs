@@ -147,6 +147,8 @@ namespace Alternet.UI
         /// <param name="format">The format of the data to look for.</param>
         public static bool HasFormat(ClipboardDataFormatId format)
         {
+            if (!DataFormats.IsValidOnWindowsMacLinux(format))
+                return false;
             var present = Handler.HasFormat(format);
             return present;
         }

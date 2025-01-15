@@ -9,6 +9,7 @@ namespace Alternet.UI
     /// Represents control that displays a selected color and allows to change it.
     /// </summary>
     [ControlCategory("Other")]
+    [Obsolete("Use ColorSpeedButton, ColorComboBox or ColorDialog instead of this control.")]
     public partial class ColorPicker : Control
     {
         private Color color = Color.Black;

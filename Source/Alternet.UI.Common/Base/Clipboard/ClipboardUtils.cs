@@ -37,7 +37,8 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="data">Object with data.</param>
         /// <returns></returns>
-        /// <exception cref="InvalidOperationException">Raised if format of the data can't be detected.</exception>
+        /// <exception cref="InvalidOperationException">Raised if format
+        /// of the data can't be detected.</exception>
         public static string DetectFormatFromData(object data) => data switch
         {
             string _ => DataFormats.Text,

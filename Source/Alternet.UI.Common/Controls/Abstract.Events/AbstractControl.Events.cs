@@ -17,7 +17,8 @@ namespace Alternet.UI
         public static event EventHandler? CaretControlChanged;
 
         /// <summary>
-        /// Occurs when hovered control is changed. Control is hovered when mouse pointer is over it.
+        /// Occurs when hovered control is changed. Control is
+        /// hovered when mouse pointer is over it.
         /// </summary>
         public static event EventHandler? HoveredControlChanged;
 

@@ -707,17 +707,23 @@ namespace Alternet.UI
                 || NativeControl.IsDisposed)
                 return;
 
+            UnbindEvents();
+
             NativeControl.DragOver += NativeControl_DragOver;
             NativeControl.DragEnter += NativeControl_DragEnter;
             NativeControl.DragDrop += NativeControl_DragDrop;
+
             NativeControl.VerticalScrollBarValueChanged = NativeVerticalScrollBarValueChanged;
             NativeControl.HorizontalScrollBarValueChanged = NativeHorizontalScrollBarValueChanged;
 
-            NativeControl.HandleCreated = OnNativeControlHandleCreated;
+            NativeControl.HandleCreated = ()=>
+            {
+                SafeHandleRecreate();
+                Control.RaiseHandleCreated(EventArgs.Empty);
+            };
 
             NativeControl.MouseEnter = ()=> Control.RaiseMouseEnterOnTarget(EventArgs.Empty);
             NativeControl.MouseLeave = () => Control.RaiseMouseLeaveOnTarget(EventArgs.Empty);
-            NativeControl.HandleCreated = () => Control.RaiseHandleCreated(EventArgs.Empty);
             NativeControl.HandleDestroyed = () => Control.RaiseHandleDestroyed(EventArgs.Empty);
             NativeControl.Activated = () => Control.RaiseActivated(EventArgs.Empty);
             NativeControl.Deactivated = () => Control.RaiseDeactivated(EventArgs.Empty);
@@ -740,10 +746,13 @@ namespace Alternet.UI
 
             NativeControl.SizeChanged =
                 () => Control.RaiseHandlerSizeChanged(EventArgs.Empty);
+
             NativeControl.LocationChanged =
                 () => Control.RaiseContainerLocationChanged(EventArgs.Empty);
+
             NativeControl.SystemColorsChanged =
                 () => Control.RaiseSystemColorsChanged(EventArgs.Empty);
+
             NativeControl.DpiChanged = OnHandlerDpiChanged;
 
             NativeControl.TextChanged = () =>
@@ -944,12 +953,6 @@ namespace Alternet.UI
 
         protected virtual void OnHandleCreated()
         {
-        }
-
-        private void OnNativeControlHandleCreated()
-        {
-            SafeHandleRecreate();
-            Control.RaiseHandleCreated(EventArgs.Empty);
         }
 
         public void InvalidateBestSize()

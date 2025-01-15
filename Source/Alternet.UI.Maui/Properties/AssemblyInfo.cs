@@ -16,3 +16,4 @@ using System.Runtime.CompilerServices;
 using Microsoft.Maui.Controls;
 
 [assembly: XmlnsDefinition("http://schemas.alternetsoft.com/alternetui/2024", "Alternet.UI")]
+[assembly: XmlnsDefinition("http://schemas.alternetsoft.com/alternetui/2024", "Alternet.Maui")]

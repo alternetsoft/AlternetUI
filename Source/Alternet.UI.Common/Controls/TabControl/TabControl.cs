@@ -850,7 +850,7 @@ namespace Alternet.UI
         /// <returns></returns>
         public virtual int? GetTabIndex(AbstractControl? control)
         {
-            if (control is null)
+            if (control is null || DisposingOrDisposed)
                 return null;
 
             var tabs = Header.Tabs;

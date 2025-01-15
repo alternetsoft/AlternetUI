@@ -1456,8 +1456,8 @@ namespace Alternet.UI
                 if (children == null)
                 {
                     children = new();
-                    children.ItemInserted += Children_ItemInserted;
-                    children.ItemRemoved += Children_ItemRemoved;
+                    children.ItemInserted += (s, index, item) => RaiseChildInserted(index, item);
+                    children.ItemRemoved += (s, index, item) => RaiseChildRemoved(item);
                 }
 
                 return children;
@@ -1540,28 +1540,7 @@ namespace Alternet.UI
 
                 if (!DisposingOrDisposed)
                 {
-                    if (value is not null)
-                    {
-                        value.Children.Add(this);
-
-                        if (ParentFont)
-                        {
-                            Font ??= value.RealFont;
-                        }
-
-                        if (ParentBackColor)
-                        {
-                            BackColor = value.RealBackgroundColor;
-                        }
-
-                        if (ParentForeColor)
-                        {
-                            ForeColor = value.RealForegroundColor;
-                        }
-                    }
-
-                    RaiseParentChanged(EventArgs.Empty);
-                    stateFlags |= ControlFlags.ParentAssigned;
+                    value?.Children.Add(this);
                 }
             }
         }
