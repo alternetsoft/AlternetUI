@@ -3,8 +3,10 @@ using Alternet.Drawing;
 
 namespace Alternet.UI
 {
+#pragma warning disable
     internal class ColorPickerHandler
         : WxControlHandler<ColorPicker, Native.ColorPicker>
+#pragma warning enable
     {
         public ColorPickerHandler()
         {

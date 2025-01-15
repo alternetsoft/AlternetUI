@@ -38,7 +38,7 @@ namespace Alternet.UI
             throw new NotImplementedException();
         }
 
-        IControlHandler IControlFactoryHandler.CreateColorPickerHandler(ColorPicker control)
+        IControlHandler IControlFactoryHandler.CreateColorPickerHandler(Control control)
         {
             throw new NotImplementedException();
         }
