@@ -20,18 +20,18 @@ namespace Alternet.UI
         {
             HideOnClick = false;
             HideOnDoubleClick = true;
-            MainControl.RecreateWindow();
-            MainControl.PerformLayout();
-            MainControl.BackgroundColor = SystemColors.Window;
+            SetSizeToContent();
         }
 
         /// <inheritdoc/>
         protected override Calendar CreateMainControl()
         {
-            return new Calendar()
+            var result = new Calendar()
             {
                 HasBorder = false,
             };
+
+            return result;
         }
 
         /// <inheritdoc/>
