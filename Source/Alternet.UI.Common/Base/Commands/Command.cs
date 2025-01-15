@@ -7,6 +7,8 @@ namespace Alternet.UI
     /// </summary>
     public class Command : BaseObject, ICommand
     {
+        private static WeakReferenceValue<object> currentTarget = new();
+
         private ExecuteDelegate? executeDelegate;
         private CanExecuteDelegate? canExecuteDelegate;
         private bool? canExecuteOverride;
@@ -59,6 +61,22 @@ namespace Alternet.UI
         /// Occurs before <see cref="Execute"/> method is called.
         /// </summary>
         public event ExecuteDelegate? BeforeExecute;
+
+        /// <summary>
+        /// Gets current target for the currently executed command.
+        /// </summary>
+        public static object? CurrentTarget
+        {
+            get
+            {
+                return currentTarget.Value;
+            }
+
+            set
+            {
+                currentTarget.Value = value;
+            }
+        }
 
         /// <summary>
         /// Gets or sets execute action.
