@@ -202,8 +202,11 @@ namespace Alternet.UI
                 value.Height = Math.Max(0, value.Height);
                 if (MinimumSize == value || DisposingOrDisposed)
                     return;
-                Handler.MinimumSize = value;
-                PerformLayout();
+                DoInsideLayout(() =>
+                {
+                    Handler.MinimumSize = value;
+                    base.MinimumSize = value;
+                });
             }
         }
 
@@ -221,9 +224,11 @@ namespace Alternet.UI
                 value.Height = Math.Max(0, value.Height);
                 if (MaximumSize == value || DisposingOrDisposed)
                     return;
-                base.MaximumSize = value;
-                Handler.MaximumSize = value;
-                PerformLayout();
+                DoInsideLayout(() =>
+                {
+                    base.MaximumSize = value;
+                    Handler.MaximumSize = value;
+                });
             }
         }
 
