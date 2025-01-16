@@ -191,6 +191,14 @@ namespace Alternet.UI
         public static AbstractControl? GetFocusedControl() => FocusedControl;
 
         /// <summary>
+        /// Internal method. Do not use it.
+        /// </summary>
+        public static bool FocusedControlEquals(AbstractControl? control)
+        {
+            return AbstractControl.focusedControl.Value == control;
+        }
+
+        /// <summary>
         /// Sets input focus to the control.
         /// </summary>
         /// <returns><see langword="true"/> if the input focus request was
@@ -431,14 +439,6 @@ namespace Alternet.UI
             {
                 FocusFirstOrLast(forward, items);
             }
-        }
-
-        /// <summary>
-        /// Internal method. Do not use it.
-        /// </summary>
-        public static bool FocusedControlEquals(AbstractControl? control)
-        {
-            return AbstractControl.focusedControl.Value == control;
         }
 
         /// <summary>

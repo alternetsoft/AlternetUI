@@ -15,9 +15,6 @@ namespace Alternet.UI
     public class PlessWindowHandler : PlessControlHandler, IWindowHandler
     {
         /// <inheritdoc/>
-        public Action<CancelEventArgs>? Closing { get; set; }
-
-        /// <inheritdoc/>
         public virtual bool ShowInTaskbar { get; set; }
 
         /// <inheritdoc/>
@@ -46,9 +43,6 @@ namespace Alternet.UI
 
         /// <inheritdoc/>
         public virtual bool HasSystemMenu { get; set; }
-
-        /// <inheritdoc/>
-        public Action? StateChanged { get; set; }
 
         /// <inheritdoc/>
         public virtual string Title { get; set; } = string.Empty;

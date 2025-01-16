@@ -12,9 +12,6 @@ namespace Alternet.UI
     public class PlessScrollBarHandler : PlessControlHandler, IScrollBarHandler
     {
         /// <inheritdoc/>
-        public Action? Scroll { get; set; }
-
-        /// <inheritdoc/>
         public int ThumbPosition { get; set; }
 
         /// <inheritdoc/>
@@ -25,15 +22,6 @@ namespace Alternet.UI
 
         /// <inheritdoc/>
         public bool IsVertical { get; set; }
-
-        /// <inheritdoc/>
-        public ScrollEventType EventTypeID { get; set; }
-
-        /// <inheritdoc/>
-        public int EventOldPos { get; set; }
-
-        /// <inheritdoc/>
-        public int EventNewPos { get; set; }
 
         /// <inheritdoc/>
         public void SetScrollbar(
