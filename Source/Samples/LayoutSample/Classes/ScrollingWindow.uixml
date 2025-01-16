@@ -1,22 +1,13 @@
 <Window xmlns="http://schemas.alternetsoft.com/ui/2021"
         xmlns:x="http://schemas.alternetsoft.com/ui/2021/uixml"
 		xmlns:local="clr-namespace:LayoutSample"
-        x:Class="LayoutSample.ScrollingWindow"
+        x:Class="LayoutSample.ScrollingWindow" MinimumSize="600,500"
         Title="Alternet UI Scrolling Sample" StartLocation="CenterScreen" Padding="10">
 
-  <Grid>
-    <Grid.RowDefinitions>
-      <RowDefinition />
-      <RowDefinition />
-    </Grid.RowDefinitions>
-    <Grid.ColumnDefinitions>
-      <ColumnDefinition />
-      <ColumnDefinition />
-    </Grid.ColumnDefinitions>
-
+  <TabControl Name="tabControl">
     <!-- ============= -->
 
-    <GroupBox Title="StackPanel" Padding="10" Grid.Row="0" Grid.Column="0">
+    <Panel Title="StackPanel" Padding="10" Grid.Row="0" Grid.Column="0">
       <StackPanel Orientation="Horizontal">
 
         <Border SuggestedWidth="200" SuggestedHeight="200" Padding="5"
@@ -24,8 +15,8 @@
           <ScrollViewer Name="scrollViewerStack">
             <StackPanel Name="stackPanel" Orientation="Vertical">
             </StackPanel>
-          </ScrollViewer>        
-      </Border>
+          </ScrollViewer>
+        </Border>
 
         <Grid Margin="10,0,0,0">
           <Grid.RowDefinitions>
@@ -70,11 +61,11 @@
                   Grid.Column="0" Grid.Row="4" Grid.ColumnSpan="2"/>
         </Grid>
       </StackPanel>
-    </GroupBox>
+    </Panel>
 
     <!-- ============= -->
 
-    <GroupBox Title="Grid" Padding="10" Grid.Row="1" Grid.Column="0">
+    <Panel Title="Grid" Padding="10" Grid.Row="1" Grid.Column="0">
       <StackPanel Orientation="Horizontal">
 
         <Border SuggestedWidth="200" SuggestedHeight="200" VerticalAlignment="Top"
@@ -130,31 +121,32 @@
                   Grid.Column="0" Grid.Row="5" Grid.ColumnSpan="2"/>
         </Grid>
       </StackPanel>
-    </GroupBox>
+    </Panel>
 
     <!-- ============= -->
 
-    <GroupBox Title="Drawing" IsTitleLocalized="true"
+    <Panel Title="Drawing" IsTitleLocalized="true"
               Padding="10" Grid.Row="0" Grid.Column="1" Margin="10,0,0,0">
-      <StackPanel Orientation="Vertical">
+      <StackPanel Orientation="Horizontal">
         <Border VerticalAlignment="Top" HorizontalAlignment="Left" HasBorder="true" Padding="5">
           <ScrollViewer SuggestedSize="200, 200" Name="imageScrollViewer">
           </ScrollViewer>
         </Border>
-        <Grid Margin="0,10,0,0">
+        <VerticalStackPanel>
+        <Grid Margin="10" HorizontalAlignment="Fill">
           <Grid.ColumnDefinitions>
             <ColumnDefinition Width="Auto" />
             <ColumnDefinition Width="*" />
           </Grid.ColumnDefinitions>
           <Label Text="Zoom:" IsTextLocalized="true" Margin="0,0,5,0" VerticalAlignment="Center"/>
           <Slider Name="zoomSlider" ValueChanged="ZoomSlider_ValueChanged" Minimum="1"
-                  Value="2" Maximum="10" Grid.Column="1"/>
+                  Value="2" Maximum="10" Grid.Column="1" MinWidth="150"/>
         </Grid>
+        </VerticalStackPanel>
       </StackPanel>
-    </GroupBox>
+    </Panel>
 
     <!-- ============= -->
-
-  </Grid>
+  </TabControl>
 
 </Window>
