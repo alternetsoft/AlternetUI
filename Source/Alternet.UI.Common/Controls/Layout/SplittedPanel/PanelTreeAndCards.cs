@@ -11,6 +11,7 @@ namespace Alternet.UI
     /// <see cref="CardPanel"/> on the right separated with splitter.
     /// </summary>
     [ControlCategory("Panels")]
+    [Obsolete("Please use PanelListBoxAndCards instead of this control.")]
     public partial class PanelTreeAndCards : SplittedControlsPanel
     {
         private readonly CardPanel cardPanel = new();
@@ -40,6 +41,11 @@ namespace Alternet.UI
         /// Gets used <see cref="CardPanel"/> control.
         /// </summary>
         public CardPanel CardPanel => cardPanel;
+
+        internal new VirtualListBox LeftListBox
+        {
+            get => base.LeftListBox;
+        }
 
         /// <summary>
         /// Adds new page.

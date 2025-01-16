@@ -1446,12 +1446,10 @@ namespace Alternet.UI
         /// </remarks>
         void SuspendLayout();
 
-        /// <summary>
-        /// Changes size of the control to fit the size of its content.
-        /// </summary>
-        /// <param name="mode">Specifies how a control will size itself to fit the size of
-        /// its content.</param>
-        void SetSizeToContent(WindowSizeToContentMode mode = WindowSizeToContentMode.WidthAndHeight);
+        /// <inheritdoc cref="AbstractControl.SetSizeToContent"/>
+        void SetSizeToContent(
+            WindowSizeToContentMode mode = WindowSizeToContentMode.WidthAndHeight,
+            SizeD? additionalSpace = null);
 
         /// <summary>
         /// Converts the screen coordinates of a specified point on the screen
