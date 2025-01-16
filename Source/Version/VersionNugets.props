@@ -13,5 +13,7 @@
 
 	<MicrosoftMauiVersion>9.0.30</MicrosoftMauiVersion>
 	<CommunityToolkitMauiVersion>10.0.0</CommunityToolkitMauiVersion>
+
+    	<WindowsSdkPackageVersion>10.0.19041.52</WindowsSdkPackageVersion>
   </PropertyGroup>
 </Project>
