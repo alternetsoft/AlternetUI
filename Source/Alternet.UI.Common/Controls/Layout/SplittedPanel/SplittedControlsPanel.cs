@@ -38,6 +38,11 @@ namespace Alternet.UI
             TopVisible = false;
         }
 
+        /// <summary>
+        /// Occurs after an action is double clicked in the <see cref="ActionsControl"/>.
+        /// </summary>
+        public event EventHandler? AfterDoubleClickAction;
+
         /// <inheritdoc/>
         public override Thickness DefaultPanelSize => (200, 5, 350, 150);
 
@@ -47,13 +52,13 @@ namespace Alternet.UI
         /// <remarks>
         /// This property must be assigned before first use of <see cref="LeftTreeView"/>
         /// </remarks>
-        public bool LeftTreeViewAsListBox { get; set; } = false;
+        public virtual bool LeftTreeViewAsListBox { get; set; } = false;
 
         /// <summary>
         /// Gets the control with actions list.
         /// </summary>
         [Browsable(false)]
-        public AbstractControl ActionsControl
+        public VirtualListBox ActionsControl
         {
             get
             {
@@ -210,6 +215,7 @@ namespace Alternet.UI
                     {
                         logControl?.Log("Do action: " + title);
                         action?.Invoke();
+                        AfterDoubleClickAction?.Invoke(this, EventArgs.Empty);
                     });
                 },
             };
