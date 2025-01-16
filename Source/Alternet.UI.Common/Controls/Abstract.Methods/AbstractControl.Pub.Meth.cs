@@ -1191,8 +1191,10 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="mode">Specifies how a control will size itself to fit the size of
         /// its content.</param>
+        /// <param name="additionalSpace">.</param>
         public virtual void SetSizeToContent(
-            WindowSizeToContentMode mode = WindowSizeToContentMode.WidthAndHeight)
+            WindowSizeToContentMode mode = WindowSizeToContentMode.WidthAndHeight,
+            SizeD? additionalSpace = null)
         {
             if (mode == WindowSizeToContentMode.None)
                 return;
@@ -1201,7 +1203,9 @@ namespace Alternet.UI
 
             var newSize2 = GetPaddedPreferredSize(GetPreferredSize(MaximumSize.InfinityIfEmpty));
 
-            newSize = SizeD.Max(newSize, newSize2);
+            additionalSpace ??= SizeD.Empty;
+
+            newSize = SizeD.Max(newSize, newSize2) + additionalSpace.Value;
 
             if (newSize != SizeD.Empty)
             {

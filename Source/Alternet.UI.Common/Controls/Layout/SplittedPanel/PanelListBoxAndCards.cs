@@ -7,34 +7,33 @@ using System.Threading.Tasks;
 namespace Alternet.UI
 {
     /// <summary>
-    /// Implements panel with <see cref="TreeView"/> on the left and
+    /// Implements panel with <see cref="VirtualListBox"/> on the left and
     /// <see cref="CardPanel"/> on the right separated with splitter.
     /// </summary>
     [ControlCategory("Panels")]
-    [Obsolete("Please use PanelListBoxAndCards instead of this control.")]
-    public partial class PanelTreeAndCards : SplittedControlsPanel
+    public partial class PanelListBoxAndCards : SplittedControlsPanel
     {
         private readonly CardPanel cardPanel = new();
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="PanelTreeAndCards"/> class.
+        /// Initializes a new instance of the <see cref="PanelListBoxAndCards"/> class.
         /// </summary>
         /// <param name="parent">Parent of the control.</param>
-        public PanelTreeAndCards(Control parent)
+        public PanelListBoxAndCards(Control parent)
             : this()
         {
             Parent = parent;
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="PanelTreeAndCards"/> class.
+        /// Initializes a new instance of the <see cref="PanelListBoxAndCards"/> class.
         /// </summary>
-        public PanelTreeAndCards()
+        public PanelListBoxAndCards()
         {
             RightVisible = false;
-            LeftTreeView.Required();
+            LeftListBox.Required();
             cardPanel.Parent = FillPanel;
-            LeftTreeView.SelectionChanged += LeftTreeView_SelectionChanged;
+            LeftListBox.SelectionChanged += LeftListBox_SelectionChanged;
         }
 
         /// <summary>
@@ -42,9 +41,9 @@ namespace Alternet.UI
         /// </summary>
         public CardPanel CardPanel => cardPanel;
 
-        internal new VirtualListBox LeftListBox
+        private new TreeView LeftTreeView
         {
-            get => base.LeftListBox;
+            get => base.LeftTreeView;
         }
 
         /// <summary>
@@ -58,8 +57,10 @@ namespace Alternet.UI
         public virtual int Add(string title, Func<AbstractControl> fnCreate)
         {
             var index = cardPanel.Add(title, fnCreate);
-            var item = LeftTreeView.Add(title);
-            item.Tag = index;
+            var id = cardPanel.Cards[index].UniqueId;
+            ListControlItem item = new(title);
+            item.Tag = id;
+            LeftListBox.Add(item);
             return index;
         }
 
@@ -74,15 +75,18 @@ namespace Alternet.UI
         public virtual int Add(string title, AbstractControl control)
         {
             var index = cardPanel.Add(title, control);
-            var item = LeftTreeView.Add(title);
-            item.Tag = index;
+            var id = cardPanel.Cards[index].UniqueId;
+            ListControlItem item = new(title);
+            item.Tag = id;
+            LeftListBox.Add(item);
             return index;
         }
 
-        private void LeftTreeView_SelectionChanged(object? sender, System.EventArgs e)
+        private void LeftListBox_SelectionChanged(object? sender, System.EventArgs e)
         {
-            var tag = LeftTreeView.SelectedItem?.Tag;
-            cardPanel.SelectCard(tag as int?);
+            var tag = LeftListBox.SelectedItem?.Tag;
+            if(tag is not null)
+                cardPanel.SelectCard((ObjectUniqueId)tag);
         }
     }
 }
