@@ -28,6 +28,13 @@ namespace Alternet.UI
 
         public CustomInternalSamplesPage()
         {
+            view.SelectedIndexChanged += (s, e) =>
+            {
+                App.DebugLogIf(
+                    $"InternalSamples.SelectedIndexChanged: {view.SelectedIndex}",
+                    false);
+            };
+
             view.Parent = this;
             buttonPanel.Parent = this;
             runButton.Parent = buttonPanel;
@@ -41,8 +48,7 @@ namespace Alternet.UI
                 view.Items.Add(SampleItems.Pop());
             }
 
-            view.SelectFirstItem();
-            view.EnsureVisible(0);
+            RunWhenIdle(view.SelectFirstItem);
         }
 
         public static Stack<ListControlItem> SampleItems = new();
