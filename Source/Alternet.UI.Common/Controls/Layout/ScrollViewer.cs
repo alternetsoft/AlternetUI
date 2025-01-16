@@ -37,6 +37,24 @@ namespace Alternet.UI
         /// <inheritdoc/>
         public override ControlTypeId ControlKind => ControlTypeId.ScrollViewer;
 
+        /// <summary>
+        /// Creates <see cref="ScrollViewer"/> with the specified child control.
+        /// </summary>
+        /// <param name="child">Child control.</param>
+        /// <returns></returns>
+        public static ScrollViewer CreateWithChild(AbstractControl? child)
+        {
+            ScrollViewer result = new();
+
+            if(child is not null)
+            {
+                child.Parent = result;
+                child.Visible = true;
+            }
+
+            return result;
+        }
+
         /// <inheritdoc/>
         protected override LayoutStyle GetDefaultLayout()
         {
