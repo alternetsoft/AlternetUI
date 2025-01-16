@@ -75,8 +75,13 @@ namespace Alternet.UI
 
         static PanelDevTools()
         {
-            LogUtils.RegisterLogAction("Show Props FirstWindow", ControlsActionMainForm);
-            LogUtils.RegisterLogAction("Show Props FocusedControl", ControlsActionFocusedControl);
+            LogUtils.RegisterLogAction("Show Props Main Window", ControlsActionMainForm);
+            LogUtils.RegisterLogAction("Show Props Second Window", ControlsActionSecondForm);
+            LogUtils.RegisterLogAction("Show Props Focused Control", ControlsActionFocusedControl);
+
+            LogUtils.RegisterLogAction(
+                "Show Props Focused Window",
+                ControlsActionFocusedControlForm);
         }
 
         public PanelDevTools()
@@ -324,7 +329,23 @@ namespace Alternet.UI
             if (DevPanel is null)
                 return;
             DevPanel.rightNotebook.SelectedControl = DevPanel.propGrid;
-            DevPanel.PropGridSetProps(App.FirstWindow());
+            DevPanel.PropGridSetProps(App.MainWindow);
+        }
+
+        private static void ControlsActionSecondForm()
+        {
+            if (DevPanel is null || App.Current.Windows.Count < 2)
+                return;
+            DevPanel.rightNotebook.SelectedControl = DevPanel.propGrid;
+            DevPanel.PropGridSetProps(App.Current.Windows[1]);
+        }
+
+        private static void ControlsActionFocusedControlForm()
+        {
+            if (DevPanel is null)
+                return;
+            DevPanel.rightNotebook.SelectedControl = DevPanel.propGrid;
+            DevPanel.PropGridSetProps((DevPanel.LastFocusedControl as AbstractControl)?.Root);
         }
 
         private static void ControlsActionFocusedControl()
