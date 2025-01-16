@@ -31,6 +31,12 @@ namespace Alternet.UI
         public event PropertyChangedEventHandler? PropertyChanged;
 
         /// <summary>
+        /// Gets or sets an action which is called when a property value changes.
+        /// </summary>
+        [Browsable(false)]
+        public Action<PropertyChangedEventArgs>? PropertyChangedAction { get; set; }
+
+        /// <summary>
         /// Gets or sets whether object is immutable (properties can not be changed).
         /// </summary>
         [Browsable(false)]
@@ -139,7 +145,9 @@ namespace Alternet.UI
             if (DisposingOrDisposed || suspendCounter > 0)
                 return;
             OnPropertyChanged(propertyName);
-            PropertyChanged?.Invoke(this, EventArgsUtils.GetPropertyChangedEventArgs(propertyName));
+            var e = EventArgsUtils.GetPropertyChangedEventArgs(propertyName);
+            PropertyChanged?.Invoke(this, e);
+            PropertyChangedAction?.Invoke(e);
         }
 
         /// <summary>
