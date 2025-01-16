@@ -36,11 +36,7 @@ namespace Alternet.UI
             ParentForeColor = true;
             RefreshOptions = ControlRefreshOptions.RefreshOnBorder
                 | ControlRefreshOptions.RefreshOnBackground;
-            Borders ??= new();
-            var settings = CreateBorderSettings(BorderSettings.Default);
-            Borders.SetAll(settings);
-            UpdatePadding();
-            Borders.Normal!.PropertyChanged += OnSettingsPropertyChanged;
+            ResetBorders();
         }
 
         /// <summary>
@@ -369,6 +365,20 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Resets border so it is returned to the initial state as it was specified
+        /// in the constructor.
+        /// </summary>
+        public virtual void ResetBorders()
+        {
+            Borders ??= new();
+            var settings = CreateBorderSettings(BorderSettings.Default);
+            Borders.SetAll(settings);
+            UpdatePadding();
+            Borders.Normal!.PropertyChangedAction = (e) => Refresh();
+            Invalidate();
+        }
+
+        /// <summary>
         /// Creates used <see cref="BorderSettings"/> instance. Override to use have border
         /// painting or non-default behavior.
         /// </summary>
@@ -404,11 +414,6 @@ namespace Alternet.UI
         {
             if (ShowDebugCorners)
                 BorderSettings.DrawDesignCorners(e.Graphics, e.ClipRectangle);
-        }
-
-        private void OnSettingsPropertyChanged(object? sender, PropertyChangedEventArgs e)
-        {
-            Refresh();
         }
     }
 }

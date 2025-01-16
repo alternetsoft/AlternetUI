@@ -181,6 +181,11 @@ namespace PropertyGridSample
                 panel.WriteWelcomeLogMessages();
                 updatePropertyGrid = true;
             }
+
+            panel.AfterDoubleClickAction += (s, e) =>
+            {
+                PropGrid.ReloadPropertyValues();
+            };
         }
 
         public VirtualListBox ToolBox => panel.LeftListBox;
