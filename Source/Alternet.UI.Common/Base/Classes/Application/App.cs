@@ -1065,7 +1065,12 @@ namespace Alternet.UI
                 {
                     if (obj is null)
                         return;
-                    Log($"Error: {obj}", kind);
+
+                    var prefix = "Error";
+                    if (kind == LogItemKind.Information)
+                        prefix = "Warning";
+
+                    Log($"{prefix}: {obj}", kind);
                 }
             }
             catch
