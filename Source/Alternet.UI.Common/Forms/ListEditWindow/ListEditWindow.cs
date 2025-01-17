@@ -14,7 +14,7 @@ using Alternet.UI.Localization;
 namespace Alternet.UI
 {
     [ControlCategory("Hidden")]
-    internal class ListEditWindow : DialogWindow
+    internal class ListEditWindow : Window
     {
         private readonly SplittedPanel panel = new()
         {
@@ -137,7 +137,7 @@ namespace Alternet.UI
 
         internal void SaveData()
         {
-            if (dataSource is null)
+            if (dataSource is null || dataSource.Instance is null)
                 return;
             dataSource.ApplyData(treeView);
         }
@@ -155,11 +155,6 @@ namespace Alternet.UI
         private void Window_Closing(object? sender, WindowClosingEventArgs e)
         {
             ComponentDesigner.Default!.PropertyChanged -= OnDesignerPropertyChanged;
-            if (ModalResult == ModalResult.Accepted)
-            {
-                SaveData();
-                Designer?.RaisePropertyChanged(DataSource?.Instance, DataSource?.PropInfo?.Name);
-            }
         }
 
         private void OnDesignerPropertyChanged(object? sender, ObjectPropertyChangedEventArgs e)
@@ -191,8 +186,6 @@ namespace Alternet.UI
 
         private void CancelButton_Click(object? sender, EventArgs e)
         {
-            if (Modal)
-                ModalResult = ModalResult.Canceled;
             Close();
         }
 
@@ -201,8 +194,13 @@ namespace Alternet.UI
             if (!propertyGrid.ClearSelection(true))
                 return;
             SetFocusIfPossible();
-            if (Modal)
-                ModalResult = ModalResult.Accepted;
+
+            if(DataSource?.Instance is not null)
+            {
+                SaveData();
+                Designer?.RaisePropertyChanged(DataSource?.Instance, DataSource?.PropInfo?.Name);
+            }
+
             Close();
         }
 

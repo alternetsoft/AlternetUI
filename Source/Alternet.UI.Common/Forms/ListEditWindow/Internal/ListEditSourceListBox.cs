@@ -55,6 +55,9 @@ namespace Alternet.UI
 
         public override void ApplyData(IEnumerableTree tree)
         {
+            if (Instance is null)
+                return;
+
             IList? items = null;
 
             if (RootItems is IListControlItems<ListControlItem> list1)

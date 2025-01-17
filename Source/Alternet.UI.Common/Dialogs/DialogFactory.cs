@@ -229,8 +229,18 @@ namespace Alternet.UI
             if (source == null)
                 return;
 
-            using ListEditWindow dialog = new(source);
-            dialog.ShowModal(Window.ActiveWindow);
+            var existing = App.FindVisibleWindow<ListEditWindow>();
+
+            if(existing is not null)
+            {
+                existing.ShowAndFocus();
+                App.LogWarning("List Editor is already shown. Please close it first.");
+            }
+            else
+            {
+                ListEditWindow dialog = new(source);
+                dialog.Show();
+            }
         }
 
         /// <summary>
