@@ -72,7 +72,26 @@ namespace Alternet.UI
             ShowInTaskbar = false;
             MinimizeEnabled = false;
             MaximizeEnabled = false;
-            Title = CommonStrings.Default.WindowTitleListEdit;
+
+            var s = CommonStrings.Default.WindowTitleListEdit;
+
+            string? elementName = null;
+
+            if (source.Instance is FrameworkElement element)
+            {
+                elementName = element.Name ?? element.GetType().FullName;
+            }
+            else
+                elementName = source.Instance?.GetType().FullName;
+
+            var propName = source.PropInfo?.Name;
+
+            if(propName is not null && elementName is not null)
+            {
+                s += " - " + elementName + " - " + propName;
+            }
+
+            Title = s;
             StartLocation = WindowStartLocation.CenterScreen;
 
             if (source.AllowAdd)
