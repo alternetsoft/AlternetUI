@@ -343,43 +343,36 @@ namespace Alternet.UI.Native
             {
                 case NativeApi.ComboBoxEvent.SelectedItemChanged:
                 {
-                    SelectedItemChanged?.Invoke(); return IntPtr.Zero;
+                    OnPlatformEventSelectedItemChanged(); return IntPtr.Zero;
                 }
                 case NativeApi.ComboBoxEvent.MeasureItem:
                 {
-                    MeasureItem?.Invoke(); return IntPtr.Zero;
+                    OnPlatformEventMeasureItem(); return IntPtr.Zero;
                 }
                 case NativeApi.ComboBoxEvent.MeasureItemWidth:
                 {
-                    MeasureItemWidth?.Invoke(); return IntPtr.Zero;
+                    OnPlatformEventMeasureItemWidth(); return IntPtr.Zero;
                 }
                 case NativeApi.ComboBoxEvent.DrawItem:
                 {
-                    DrawItem?.Invoke(); return IntPtr.Zero;
+                    OnPlatformEventDrawItem(); return IntPtr.Zero;
                 }
                 case NativeApi.ComboBoxEvent.DrawItemBackground:
                 {
-                    DrawItemBackground?.Invoke(); return IntPtr.Zero;
+                    OnPlatformEventDrawItemBackground(); return IntPtr.Zero;
                 }
                 case NativeApi.ComboBoxEvent.AfterShowPopup:
                 {
-                    AfterShowPopup?.Invoke(); return IntPtr.Zero;
+                    OnPlatformEventAfterShowPopup(); return IntPtr.Zero;
                 }
                 case NativeApi.ComboBoxEvent.AfterDismissPopup:
                 {
-                    AfterDismissPopup?.Invoke(); return IntPtr.Zero;
+                    OnPlatformEventAfterDismissPopup(); return IntPtr.Zero;
                 }
                 default: throw new Exception("Unexpected ComboBoxEvent value: " + e);
             }
         }
         
-        public Action? SelectedItemChanged;
-        public Action? MeasureItem;
-        public Action? MeasureItemWidth;
-        public Action? DrawItem;
-        public Action? DrawItemBackground;
-        public Action? AfterShowPopup;
-        public Action? AfterDismissPopup;
         
         [SuppressUnmanagedCodeSecurity]
         public class NativeApi : NativeApiProvider

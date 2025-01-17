@@ -70,7 +70,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets a <see cref="Window"/> this handler provides the implementation for.
         /// </summary>
-        Window Control { get; }
+        Window? Control { get; }
 
         /// <summary>
         /// Shows window as a modal dialog.

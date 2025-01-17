@@ -7,19 +7,10 @@ namespace Alternet.UI
 {
     internal class TreeViewHandler : WxControlHandler, ITreeViewHandler
     {
-        private readonly Dictionary<IntPtr, TreeViewItem> itemsByHandles = new();
-        private bool skipSetItemText;
-        private bool receivingSelection;
-        private bool applyingSelection;
-
-        public TreeViewHandler()
-        {
-        }
-
         /// <summary>
         /// Gets a <see cref="TreeView"/> this handler provides the implementation for.
         /// </summary>
-        public new TreeView Control => (TreeView)base.Control;
+        public new TreeView? Control => (TreeView?)base.Control;
 
         /// <inheritdoc cref="TreeView.HideRoot"/>
         public bool HideRoot
@@ -151,7 +142,7 @@ namespace Alternet.UI
                 if (item == IntPtr.Zero)
                     return null;
 
-                return GetItemFromHandle(item);
+                return NativeControl.GetItemFromHandle(item);
             }
         }
 
@@ -192,7 +183,8 @@ namespace Alternet.UI
                 if (needItem)
                 {
                     var itemHandle = NativeControl.GetHitTestResultItem(result);
-                    item = itemHandle == IntPtr.Zero ? null : GetItemFromHandle(itemHandle);
+                    item = itemHandle == IntPtr.Zero
+                        ? null : NativeControl.GetItemFromHandle(itemHandle);
                 }
                 else
                 {
@@ -229,10 +221,9 @@ namespace Alternet.UI
 
         public void BeginLabelEdit(TreeViewItem item)
         {
-            if (!Control.AllowLabelEdit)
+            if (!Control?.AllowLabelEdit ?? true)
             {
-                throw new InvalidOperationException(
-                    "Label editing is not allowed.");
+                return;
             }
 
             var p = GetHandleFromItem(item);
@@ -334,7 +325,7 @@ namespace Alternet.UI
 
         public void SetItemText(TreeViewItem item, string text)
         {
-            if (skipSetItemText)
+            if (NativeControl.skipSetItemText)
                 return;
             var p = GetHandleFromItem(item);
             if (p == IntPtr.Zero)
@@ -364,6 +355,9 @@ namespace Alternet.UI
             if (App.IsWindowsOS)
                 UserPaint = true;
 
+            if (Control is null)
+                return;
+
             bool? hasBorder = AllPlatformDefaults.GetHasBorderOverride(Control.ControlKind);
             if (hasBorder is not null)
                 HasBorder = hasBorder.Value;
@@ -377,129 +371,21 @@ namespace Alternet.UI
             Control.ItemRemoved += Control_ItemRemoved;
             Control.ImageListChanged += Control_ImageListChanged;
             Control.SelectionModeChanged += Control_SelectionModeChanged;
-
             Control.SelectionChanged += Control_SelectionChanged;
-            NativeControl.SelectionChanged = NativeControl_SelectionChanged;
-            NativeControl.ControlRecreated = NativeControl_ControlRecreated;
-            NativeControl.ItemExpanded += NativeControl_ItemExpanded;
-            NativeControl.ItemCollapsed += NativeControl_ItemCollapsed;
-            NativeControl.BeforeItemLabelEdit += NativeControl_BeforeItemLabelEdit;
-            NativeControl.AfterItemLabelEdit += NativeControl_AfterItemLabelEdit;
-            NativeControl.ItemExpanding += NativeControl_ItemExpanding;
-            NativeControl.ItemCollapsing += NativeControl_ItemCollapsing;
         }
 
         protected override void OnDetach()
         {
-            Control.ItemAdded -= Control_ItemAdded;
-            Control.ItemRemoved -= Control_ItemRemoved;
-            Control.ImageListChanged -= Control_ImageListChanged;
-            Control.SelectionModeChanged -= Control_SelectionModeChanged;
-
-            Control.SelectionChanged -= Control_SelectionChanged;
-            NativeControl.SelectionChanged = null;
-            NativeControl.ControlRecreated = null;
-            NativeControl.ItemExpanded -= NativeControl_ItemExpanded;
-            NativeControl.ItemCollapsed -= NativeControl_ItemCollapsed;
-            NativeControl.BeforeItemLabelEdit -= NativeControl_BeforeItemLabelEdit;
-            NativeControl.AfterItemLabelEdit -= NativeControl_AfterItemLabelEdit;
-            NativeControl.ItemExpanding -= NativeControl_ItemExpanding;
-            NativeControl.ItemCollapsing -= NativeControl_ItemCollapsing;
-
-            base.OnDetach();
-        }
-
-        private void NativeControl_ItemCollapsing(
-            object? sender,
-            Native.NativeEventArgs<Native.TreeViewItemEventData> e)
-        {
-            var item = GetItemFromHandle(e.Data.item);
-            if (item == null)
-                return;
-            var ea = new TreeViewCancelEventArgs(item);
-            Control.RaiseBeforeCollapse(ea);
-            e.Result = ea.Cancel ? (IntPtr)1 : IntPtr.Zero;
-        }
-
-        private void NativeControl_ItemExpanding(
-            object? sender,
-            Native.NativeEventArgs<Native.TreeViewItemEventData> e)
-        {
-            var item = GetItemFromHandle(e.Data.item);
-            if (item == null)
-                return;
-            var ea = new TreeViewCancelEventArgs(item);
-            Control.RaiseBeforeExpand(ea);
-            e.Result = ea.Cancel ? (IntPtr)1 : IntPtr.Zero;
-        }
-
-        private void NativeControl_AfterItemLabelEdit(
-            object? sender,
-            Native.NativeEventArgs<Native.TreeViewItemLabelEditEventData> e)
-        {
-            var item = GetItemFromHandle(e.Data.item);
-            if (item == null)
-                return;
-            var ea = new TreeViewEditEventArgs(
-                item,
-                e.Data.editCancelled ? null : e.Data.label);
-
-            Control.RaiseAfterLabelEdit(ea);
-
-            if (!e.Data.editCancelled && !ea.Cancel)
+            if (Control is not null)
             {
-                skipSetItemText = true;
-                ea.Item.Text = e.Data.label;
-                skipSetItemText = false;
+                Control.ItemAdded -= Control_ItemAdded;
+                Control.ItemRemoved -= Control_ItemRemoved;
+                Control.ImageListChanged -= Control_ImageListChanged;
+                Control.SelectionModeChanged -= Control_SelectionModeChanged;
+                Control.SelectionChanged -= Control_SelectionChanged;
             }
 
-            e.Result = ea.Cancel ? (IntPtr)1 : IntPtr.Zero;
-        }
-
-        private void NativeControl_BeforeItemLabelEdit(
-            object? sender,
-            Native.NativeEventArgs<Native.TreeViewItemLabelEditEventData> e)
-        {
-            var item = GetItemFromHandle(e.Data.item);
-            if (item == null)
-                return;
-
-            var ea = new TreeViewEditEventArgs(
-                item,
-                e.Data.editCancelled ? null : e.Data.label);
-            Control.RaiseBeforeLabelEdit(ea);
-            e.Result = ea.Cancel ? (IntPtr)1 : IntPtr.Zero;
-        }
-
-        private void NativeControl_ItemCollapsed(
-            object? sender,
-            Native.NativeEventArgs<Native.TreeViewItemEventData> e)
-        {
-            var item = GetItemFromHandle(e.Data.item);
-            if (item == null)
-                return;
-            var ea = new TreeViewEventArgs(item);
-            Control.RaiseAfterCollapse(ea);
-            Control.RaiseExpandedChanged(ea);
-        }
-
-        private void NativeControl_ItemExpanded(
-            object? sender,
-            Native.NativeEventArgs<Native.TreeViewItemEventData> e)
-        {
-            var item = GetItemFromHandle(e.Data.item);
-            if (item == null)
-                return;
-            var ea = new TreeViewEventArgs(item);
-            Control.RaiseAfterExpand(ea);
-            Control.RaiseExpandedChanged(ea);
-        }
-
-        private void NativeControl_ControlRecreated()
-        {
-            itemsByHandles.Clear();
-            ApplyItems();
-            ApplySelection();
+            base.OnDetach();
         }
 
         private void Control_ImageListChanged(object? sender, EventArgs e)
@@ -507,17 +393,9 @@ namespace Alternet.UI
             ApplyImageList();
         }
 
-        private void NativeControl_SelectionChanged()
-        {
-            if (applyingSelection)
-                return;
-
-            ReceiveSelection();
-        }
-
         private void Control_SelectionChanged(object? sender, EventArgs e)
         {
-            if (receivingSelection)
+            if (NativeControl.receivingSelection)
                 return;
 
             ApplySelection();
@@ -530,7 +408,8 @@ namespace Alternet.UI
 
         private void ApplySelectionMode()
         {
-            NativeControl.SelectionMode = Control.SelectionMode;
+            if(Control is not null)
+                NativeControl.SelectionMode = Control.SelectionMode;
         }
 
         private IntPtr GetHandleFromItem(TreeViewItem item)
@@ -538,16 +417,9 @@ namespace Alternet.UI
             return (IntPtr?)item.Handle ?? default;
         }
 
-        private TreeViewItem GetItemFromHandle(IntPtr handle)
+        internal void ApplySelection()
         {
-            if (itemsByHandles.TryGetValue(handle, out TreeViewItem? result))
-                return result;
-            return null!;
-        }
-
-        private void ApplySelection()
-        {
-            applyingSelection = true;
+            NativeControl.applyingSelection = true;
 
             try
             {
@@ -555,7 +427,7 @@ namespace Alternet.UI
                 nativeControl.ClearSelected();
 
                 var control = Control;
-                var handles = control.SelectedItems.Select(GetHandleFromItem);
+                var handles = control?.SelectedItems.Select(GetHandleFromItem) ?? [];
 
                 foreach (var handle in handles)
                 {
@@ -566,32 +438,39 @@ namespace Alternet.UI
             }
             finally
             {
-                applyingSelection = false;
+                NativeControl.applyingSelection = false;
             }
         }
 
-        private void ReceiveSelection()
+        internal void ReceiveSelection()
         {
-            receivingSelection = true;
+            if (Control is null)
+                return;
+
+            NativeControl.receivingSelection = true;
 
             try
             {
-                Control.SelectedItems =
-                    NativeControl.SelectedItems.Select(GetItemFromHandle).ToArray();
+                var selected =
+                    NativeControl.SelectedItems.Select(NativeControl.GetItemFromHandle).ToArray();
+
+                Control.SelectedItems = selected!;
             }
             finally
             {
-                receivingSelection = false;
+                NativeControl.receivingSelection = false;
             }
         }
 
         private void ApplyImageList()
         {
-            NativeControl.ImageList = (UI.Native.ImageList?)Control.ImageList?.Handler;
+            NativeControl.ImageList = (UI.Native.ImageList?)Control?.ImageList?.Handler;
         }
 
-        private void ApplyItems()
+        internal void ApplyItems()
         {
+            if (Control is null)
+                return;
             var nativeControl = NativeControl;
             nativeControl.ClearItems(nativeControl.RootItem);
 
@@ -601,6 +480,8 @@ namespace Alternet.UI
 
         private void InsertItem(TreeViewItem item)
         {
+            if (Control is null)
+                return;
             var parentCollection = item.Parent == null ?
                 Control.Items : item.Parent.Items;
             IntPtr insertAfter = IntPtr.Zero;
@@ -618,7 +499,7 @@ namespace Alternet.UI
                             item.ImageIndex ?? Control.ImageIndex ?? -1,
                             item.Parent?.IsExpanded ?? false);
 
-            itemsByHandles.Add(handle, item);
+            NativeControl.itemsByHandles.Add(handle, item);
             item.Handle = handle;
         }
 
@@ -671,7 +552,7 @@ namespace Alternet.UI
 
                 var handle = GetHandleFromItem(parentItem);
                 parentItem.Handle = default;
-                itemsByHandles.Remove(handle);
+                NativeControl.itemsByHandles.Remove(handle);
             }
         }
 

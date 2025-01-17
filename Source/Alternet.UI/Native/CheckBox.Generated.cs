@@ -123,10 +123,9 @@ namespace Alternet.UI.Native
         
         IntPtr OnEvent(NativeApi.CheckBoxEvent e, IntPtr parameter)
         {
-            CheckedChanged?.Invoke(); return IntPtr.Zero;
+            OnPlatformEventCheckedChanged(); return IntPtr.Zero;
         }
         
-        public Action? CheckedChanged;
         
         [SuppressUnmanagedCodeSecurity]
         public class NativeApi : NativeApiProvider

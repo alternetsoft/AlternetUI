@@ -494,54 +494,46 @@ namespace Alternet.UI.Native
             {
                 case NativeApi.TreeViewEvent.SelectionChanged:
                 {
-                    SelectionChanged?.Invoke(); return IntPtr.Zero;
+                    OnPlatformEventSelectionChanged(); return IntPtr.Zero;
                 }
                 case NativeApi.TreeViewEvent.ControlRecreated:
                 {
-                    ControlRecreated?.Invoke(); return IntPtr.Zero;
+                    OnPlatformEventControlRecreated(); return IntPtr.Zero;
                 }
                 case NativeApi.TreeViewEvent.ItemExpanded:
                 {
                     var ea = new NativeEventArgs<TreeViewItemEventData>(MarshalEx.PtrToStructure<TreeViewItemEventData>(parameter));
-                    ItemExpanded?.Invoke(this, ea); return ea.Result;
+                    OnPlatformEventItemExpanded(ea); return ea.Result;
                 }
                 case NativeApi.TreeViewEvent.ItemCollapsed:
                 {
                     var ea = new NativeEventArgs<TreeViewItemEventData>(MarshalEx.PtrToStructure<TreeViewItemEventData>(parameter));
-                    ItemCollapsed?.Invoke(this, ea); return ea.Result;
+                    OnPlatformEventItemCollapsed(ea); return ea.Result;
                 }
                 case NativeApi.TreeViewEvent.ItemExpanding:
                 {
                     var ea = new NativeEventArgs<TreeViewItemEventData>(MarshalEx.PtrToStructure<TreeViewItemEventData>(parameter));
-                    ItemExpanding?.Invoke(this, ea); return ea.Result;
+                    OnPlatformEventItemExpanding(ea); return ea.Result;
                 }
                 case NativeApi.TreeViewEvent.ItemCollapsing:
                 {
                     var ea = new NativeEventArgs<TreeViewItemEventData>(MarshalEx.PtrToStructure<TreeViewItemEventData>(parameter));
-                    ItemCollapsing?.Invoke(this, ea); return ea.Result;
+                    OnPlatformEventItemCollapsing(ea); return ea.Result;
                 }
                 case NativeApi.TreeViewEvent.BeforeItemLabelEdit:
                 {
                     var ea = new NativeEventArgs<TreeViewItemLabelEditEventData>(MarshalEx.PtrToStructure<TreeViewItemLabelEditEventData>(parameter));
-                    BeforeItemLabelEdit?.Invoke(this, ea); return ea.Result;
+                    OnPlatformEventBeforeItemLabelEdit(ea); return ea.Result;
                 }
                 case NativeApi.TreeViewEvent.AfterItemLabelEdit:
                 {
                     var ea = new NativeEventArgs<TreeViewItemLabelEditEventData>(MarshalEx.PtrToStructure<TreeViewItemLabelEditEventData>(parameter));
-                    AfterItemLabelEdit?.Invoke(this, ea); return ea.Result;
+                    OnPlatformEventAfterItemLabelEdit(ea); return ea.Result;
                 }
                 default: throw new Exception("Unexpected TreeViewEvent value: " + e);
             }
         }
         
-        public Action? SelectionChanged;
-        public Action? ControlRecreated;
-        public event NativeEventHandler<TreeViewItemEventData>? ItemExpanded;
-        public event NativeEventHandler<TreeViewItemEventData>? ItemCollapsed;
-        public event NativeEventHandler<TreeViewItemEventData>? ItemExpanding;
-        public event NativeEventHandler<TreeViewItemEventData>? ItemCollapsing;
-        public event NativeEventHandler<TreeViewItemLabelEditEventData>? BeforeItemLabelEdit;
-        public event NativeEventHandler<TreeViewItemLabelEditEventData>? AfterItemLabelEdit;
         
         [SuppressUnmanagedCodeSecurity]
         public class NativeApi : NativeApiProvider

@@ -12,6 +12,9 @@ namespace Alternet.UI
 
         public void Show(IControl control, PointD? position = null)
         {
+            if (Control is null)
+                return;
+
             if (position == null)
                 ShowUnder();
             else
@@ -69,36 +72,31 @@ namespace Alternet.UI
         {
             base.OnAttach();
 
+            if (Control is null)
+                return;
+
             ApplyItems();
 
             Control.Items.ItemInserted += Items_ItemInserted;
             Control.Items.ItemRemoved += Items_ItemRemoved;
-
-            NativeControl.Opened = NativeControlOpened;
-            NativeControl.Closed = NativeControlClosed;
         }
 
         protected override void OnDetach()
         {
             base.OnDetach();
 
+            if (Control is null)
+                return;
+
             Control.Items.ItemInserted -= Items_ItemInserted;
             Control.Items.ItemRemoved -= Items_ItemRemoved;
-
-            NativeControl.Opened = null;
-            NativeControl.Closed = null;
-        }
-
-        private void NativeControlOpened()
-        {
-        }
-
-        private void NativeControlClosed()
-        {
         }
 
         private void ApplyItems()
         {
+            if (Control is null)
+                return;
+
             for (var i = 0; i < Control.Items.Count; i++)
                 InsertItem(Control.Items[i], i);
         }

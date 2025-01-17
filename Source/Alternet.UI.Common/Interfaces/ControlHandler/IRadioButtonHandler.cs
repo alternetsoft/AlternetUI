@@ -12,11 +12,6 @@ namespace Alternet.UI
     public interface IRadioButtonHandler
     {
         /// <summary>
-        /// Gets or sets an action which is called when checked state is changed.
-        /// </summary>
-        Action? CheckedChanged { get; set; }
-
-        /// <summary>
         /// Gets or sets whether or not this control is checked.
         /// </summary>
         bool IsChecked { get; set; }

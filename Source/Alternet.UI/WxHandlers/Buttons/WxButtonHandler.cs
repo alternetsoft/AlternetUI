@@ -32,16 +32,10 @@ namespace Alternet.UI
             set => NativeControl.FocusedImage = (UI.Native.Image?)value?.Handler;
         }
 
-        public Action? Click
-        {
-            get => NativeControl.Click;
-            set => NativeControl.Click = value;
-        }
-
         /// <summary>
         /// Gets a <see cref="Button"/> this handler provides the implementation for.
         /// </summary>
-        public new Button Control => (Button)base.Control;
+        public new Button? Control => (Button?)base.Control;
 
         public override bool HasBorder
         {
@@ -90,13 +84,13 @@ namespace Alternet.UI
 
         public void SetImagePosition(GenericDirection dir)
         {
-            if(Control.Image != null)
+            if(Control?.Image != null)
                 NativeControl.SetImagePosition((int)dir);
         }
 
         public void SetImageMargins(double x, double y)
         {
-            if (App.IsWindowsOS && Control.Image != null)
+            if (App.IsWindowsOS && Control?.Image != null)
             {
                 var xPixels = PixelFromDip(x);
                 var yPixels = PixelFromDip(y);
@@ -107,15 +101,8 @@ namespace Alternet.UI
         protected override void OnAttach()
         {
             base.OnAttach();
-            if (App.IsWindowsOS)
+            if (App.IsWindowsOS && Control is not null)
                 Control.UserPaint = true;
-            NativeControl.Click = Control.RaiseClick;
-        }
-
-        protected override void OnDetach()
-        {
-            base.OnDetach();
-            NativeControl.Click = null;
         }
 
         internal override Native.Control CreateNativeControl()

@@ -551,14 +551,35 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        public override int BeginUpdate()
+        public override int EndUpdate()
         {
-            if (!DisposingOrDisposed)
+            var result = base.EndUpdate();
+
+            if (this is UserControl)
             {
-                Handler.BeginUpdate();
+                if (result == 0)
+                    Invalidate();
+            }
+            else
+            {
+                SafeHandler?.EndUpdate();
             }
 
-            return base.BeginUpdate();
+            return result;
+        }
+
+        /// <inheritdoc/>
+        public override int BeginUpdate()
+        {
+            var result = base.BeginUpdate();
+
+            if (!DisposingOrDisposed)
+            {
+                if (this is not UserControl)
+                    Handler.BeginUpdate();
+            }
+
+            return result;
         }
 
         /// <inheritdoc/>
@@ -714,13 +735,6 @@ namespace Alternet.UI
         public override IntPtr GetHandle()
         {
             return SafeHandler?.GetHandle() ?? default;
-        }
-
-        /// <inheritdoc/>
-        public override int EndUpdate()
-        {
-            SafeHandler?.EndUpdate();
-            return base.EndUpdate();
         }
 
         /// <inheritdoc/>
@@ -944,7 +958,6 @@ namespace Alternet.UI
         /// <inheritdoc/>
         protected override void DisposeManaged()
         {
-            Handler.UnbindEvents();
             base.DisposeManaged();
         }
 

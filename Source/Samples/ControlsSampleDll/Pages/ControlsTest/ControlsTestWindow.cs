@@ -7,7 +7,9 @@ namespace ControlsSample
     internal partial class ControlsTestWindow : Window
     {
         private readonly StatusBar statusbar = new();
+#pragma warning disable
         private readonly PanelTreeAndCards mainPanel;
+#pragma warning restore
 
         static ControlsTestWindow()
         {
@@ -60,7 +62,9 @@ namespace ControlsSample
             mainPanel.CardPanel.Name = "cardPanel";
         }
 
+#pragma warning disable
         internal PanelTreeAndCards MainPanel => mainPanel;
+#pragma warning restore
 
         private void LogSizeEvent(object? sender, string evName)
         {

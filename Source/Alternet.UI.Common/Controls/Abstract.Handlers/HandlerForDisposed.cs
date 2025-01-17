@@ -143,8 +143,6 @@ namespace Alternet.UI
 
         public ListViewGridLinesDisplayMode GridLinesDisplayMode { get; set; }
 
-        public Action? CheckedChanged { get; set; }
-
         public bool IsChecked { get; set; }
 
         public string? Name { get; set; }
@@ -241,10 +239,6 @@ namespace Alternet.UI
 
         public WebBrowserBackend Backend { get; }
 
-        public Action? StateChanged { get; set; }
-
-        public Action<CancelEventArgs>? Closing { get; set; }
-
         public bool ShowInTaskbar { get; set; }
 
         public bool MaximizeEnabled { get; set; }
@@ -276,8 +270,6 @@ namespace Alternet.UI
         public ModalResult ModalResult { get; set; }
 
         public object? StatusBar { get; set; }
-
-        public Action? Scroll { get; set; }
 
         public int ThumbPosition { get; set; }
 
@@ -323,7 +315,7 @@ namespace Alternet.UI
 
         TreeViewItem? ITreeViewHandler.TopItem { get; }
 
-        Window IWindowHandler.Control { get; }
+        Window? IWindowHandler.Control { get; }
 
         public void Activate()
         {

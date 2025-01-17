@@ -572,23 +572,20 @@ namespace Alternet.UI.Native
             {
                 case NativeApi.TextBoxEvent.TextEnter:
                 {
-                    TextEnter?.Invoke(); return IntPtr.Zero;
+                    OnPlatformEventTextEnter(); return IntPtr.Zero;
                 }
                 case NativeApi.TextBoxEvent.TextUrl:
                 {
-                    TextUrl?.Invoke(); return IntPtr.Zero;
+                    OnPlatformEventTextUrl(); return IntPtr.Zero;
                 }
                 case NativeApi.TextBoxEvent.TextMaxLength:
                 {
-                    TextMaxLength?.Invoke(); return IntPtr.Zero;
+                    OnPlatformEventTextMaxLength(); return IntPtr.Zero;
                 }
                 default: throw new Exception("Unexpected TextBoxEvent value: " + e);
             }
         }
         
-        public Action? TextEnter;
-        public Action? TextUrl;
-        public Action? TextMaxLength;
         
         [SuppressUnmanagedCodeSecurity]
         public class NativeApi : NativeApiProvider

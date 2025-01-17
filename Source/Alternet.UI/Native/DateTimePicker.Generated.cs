@@ -144,10 +144,9 @@ namespace Alternet.UI.Native
         
         IntPtr OnEvent(NativeApi.DateTimePickerEvent e, IntPtr parameter)
         {
-            ValueChanged?.Invoke(); return IntPtr.Zero;
+            OnPlatformEventValueChanged(); return IntPtr.Zero;
         }
         
-        public Action? ValueChanged;
         
         [SuppressUnmanagedCodeSecurity]
         public class NativeApi : NativeApiProvider

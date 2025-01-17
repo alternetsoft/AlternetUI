@@ -10,16 +10,6 @@ namespace Alternet.UI
             return new Native.Label();
         }
 
-        public override void BindEvents()
-        {
-            base.BindEvents();
-        }
-
-        public override void UnbindEvents()
-        {
-            base.UnbindEvents();
-        }
-
         protected override void OnAttach()
         {
             base.OnAttach();

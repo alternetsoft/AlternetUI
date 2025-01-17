@@ -20,12 +20,14 @@ namespace Alternet.UI
         {
             add
             {
-                Control.CurrentPositionChanged += value;
+                if(Control is not null)
+                    Control.CurrentPositionChanged += value;
             }
 
             remove
             {
-                Control.CurrentPositionChanged -= value;
+                if (Control is not null)
+                    Control.CurrentPositionChanged -= value;
             }
         }
 
@@ -37,29 +39,37 @@ namespace Alternet.UI
 
         string? ISimpleRichTextBox.Name
         {
-            get => Control.Name;
-            set => Control.Name = value;
+            get => Control?.Name ?? string.Empty;
+            set
+            {
+                if (Control is not null)
+                    Control.Name = value;
+            }
         }
 
         PointI? ISimpleRichTextBox.CurrentPosition
         {
-            get => Control.CurrentPosition;
-            set => Control.CurrentPosition = value;
+            get => Control?.CurrentPosition ?? null;
+            set
+            {
+                if (Control is not null)
+                    Control.CurrentPosition = value;
+            }
         }
 
         long ISimpleRichTextBox.LastLineNumber
         {
-            get => Control.LastLineNumber;
+            get => Control?.LastLineNumber ?? 0;
         }
 
         long ISimpleRichTextBox.InsertionPointLineNumber
         {
-            get => Control.InsertionPointLineNumber;
+            get => Control?.InsertionPointLineNumber ?? 0;
         }
 
         public new Native.RichTextBox NativeControl => (Native.RichTextBox)base.NativeControl!;
 
-        public new RichTextBox Control => (RichTextBox)base.Control;
+        public new RichTextBox? Control => (RichTextBox?)base.Control;
 
         public string ReportedUrl
         {
@@ -592,7 +602,10 @@ namespace Alternet.UI
             NativeControl.DoWriteText(value, (int)flags);
         }
 
-        bool IRichTextBox.ExtendSelection(long oldPosition, long newPosition, RichTextMoveCaretFlags flags)
+        bool IRichTextBox.ExtendSelection(
+            long oldPosition,
+            long newPosition,
+            RichTextMoveCaretFlags flags)
         {
             return NativeControl.ExtendSelection(oldPosition, newPosition, (int)flags);
         }
@@ -729,7 +742,7 @@ namespace Alternet.UI
 
         ITextBoxRichAttr IRichTextBox.CreateUrlAttr()
         {
-            return Control.CreateUrlAttr();
+            return Control?.CreateUrlAttr() ?? new PlessTextBoxRichAttr();
         }
 
         bool IRichTextBox.Delete(long startRange, long endRange)
@@ -2072,26 +2085,6 @@ namespace Alternet.UI
         internal override Native.Control CreateNativeControl()
         {
             return new Native.RichTextBox();
-        }
-
-        protected override void OnAttach()
-        {
-            base.OnAttach();
-            NativeControl.TextEnter = Control.OnEnterPressed;
-            NativeControl.TextUrl = NativeControl_TextUrl;
-        }
-
-        protected override void OnDetach()
-        {
-            base.OnDetach();
-            NativeControl.TextEnter = null;
-            NativeControl.TextUrl = null;
-        }
-
-        private void NativeControl_TextUrl()
-        {
-            var url = NativeControl.ReportedUrl;
-            Control.OnTextUrl(new UrlEventArgs(url));
         }
    }
 }

@@ -1581,18 +1581,16 @@ namespace Alternet.UI.Native
             {
                 case NativeApi.RichTextBoxEvent.TextEnter:
                 {
-                    TextEnter?.Invoke(); return IntPtr.Zero;
+                    OnPlatformEventTextEnter(); return IntPtr.Zero;
                 }
                 case NativeApi.RichTextBoxEvent.TextUrl:
                 {
-                    TextUrl?.Invoke(); return IntPtr.Zero;
+                    OnPlatformEventTextUrl(); return IntPtr.Zero;
                 }
                 default: throw new Exception("Unexpected RichTextBoxEvent value: " + e);
             }
         }
         
-        public Action? TextEnter;
-        public Action? TextUrl;
         
         [SuppressUnmanagedCodeSecurity]
         public class NativeApi : NativeApiProvider

@@ -172,28 +172,24 @@ namespace Alternet.UI.Native
             {
                 case NativeApi.MenuItemEvent.Click:
                 {
-                    Click?.Invoke(); return IntPtr.Zero;
+                    OnPlatformEventClick(); return IntPtr.Zero;
                 }
                 case NativeApi.MenuItemEvent.Highlight:
                 {
-                    Highlight?.Invoke(); return IntPtr.Zero;
+                    OnPlatformEventHighlight(); return IntPtr.Zero;
                 }
                 case NativeApi.MenuItemEvent.Opened:
                 {
-                    Opened?.Invoke(); return IntPtr.Zero;
+                    OnPlatformEventOpened(); return IntPtr.Zero;
                 }
                 case NativeApi.MenuItemEvent.Closed:
                 {
-                    Closed?.Invoke(); return IntPtr.Zero;
+                    OnPlatformEventClosed(); return IntPtr.Zero;
                 }
                 default: throw new Exception("Unexpected MenuItemEvent value: " + e);
             }
         }
         
-        public Action? Click;
-        public Action? Highlight;
-        public Action? Opened;
-        public Action? Closed;
         
         [SuppressUnmanagedCodeSecurity]
         public class NativeApi : NativeApiProvider

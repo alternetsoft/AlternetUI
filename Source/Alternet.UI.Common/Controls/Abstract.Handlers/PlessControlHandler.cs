@@ -50,12 +50,12 @@ namespace Alternet.UI
         {
             get
             {
-                return GraphicsFactory.PixelFromDip(Bounds, Control.ScaleFactor);
+                return GraphicsFactory.PixelFromDip(Bounds, Control?.ScaleFactor);
             }
 
             set
             {
-                Bounds = GraphicsFactory.PixelToDip(value, Control.ScaleFactor);
+                Bounds = GraphicsFactory.PixelToDip(value, Control?.ScaleFactor);
             }
         }
 
@@ -128,6 +128,9 @@ namespace Alternet.UI
 
         PointD IControlHandler.ClientToScreen(PointD point)
         {
+            if (Control is null)
+                return PointD.MinValue;
+
             PointD result;
             var parent = Control.Parent;
 
@@ -161,33 +164,33 @@ namespace Alternet.UI
 
         Color IControlHandler.GetDefaultAttributesBgColor()
         {
-            return Control.Parent?.GetDefaultAttributesBgColor() ?? SystemColors.Window;
+            return Control?.Parent?.GetDefaultAttributesBgColor() ?? SystemColors.Window;
         }
 
         Color IControlHandler.GetDefaultAttributesFgColor()
         {
-            return Control.Parent?.GetDefaultAttributesFgColor() ?? SystemColors.WindowText;
+            return Control?.Parent?.GetDefaultAttributesFgColor() ?? SystemColors.WindowText;
         }
 
         Font? IControlHandler.GetDefaultAttributesFont()
         {
-            return Control.Parent?.GetDefaultAttributesFont() ?? AbstractControl.DefaultFont;
+            return Control?.Parent?.GetDefaultAttributesFont() ?? AbstractControl.DefaultFont;
         }
 
         nint IControlHandler.GetHandle()
         {
-            return Control.Parent?.GetHandle() ?? default;
+            return Control?.Parent?.GetHandle() ?? default;
         }
 
         object IControlHandler.GetNativeControl()
         {
-            return Control.Parent?.NativeControl ?? AssemblyUtils.Default;
+            return Control?.Parent?.NativeControl ?? AssemblyUtils.Default;
         }
 
         /// <inheritdoc/>
         public Coord? GetPixelScaleFactor()
         {
-            return Control.Parent?.ScaleFactor ?? Display.Primary.ScaleFactor;
+            return Control?.Parent?.ScaleFactor ?? Display.Primary.ScaleFactor;
         }
 
         SizeD IControlHandler.GetPreferredSize(SizeD availableSize)
@@ -197,22 +200,22 @@ namespace Alternet.UI
 
         RectI IControlHandler.GetUpdateClientRectI()
         {
-            return new RectI((0, 0), Control.PixelFromDip(((IControlHandler)this).ClientSize));
+            return new RectI((0, 0), Control?.PixelFromDip(((IControlHandler)this).ClientSize) ?? 0);
         }
 
         void IControlHandler.HandleNeeded()
         {
-            Control.Parent?.HandleNeeded();
+            Control?.Parent?.HandleNeeded();
         }
 
         void IControlHandler.Invalidate()
         {
-            Control.Parent?.Invalidate(Control.Bounds);
+            Control?.Parent?.Invalidate(Control.Bounds);
         }
 
         bool IControlHandler.IsTransparentBackgroundSupported()
         {
-            return Control.Parent?.IsTransparentBackgroundSupported() ?? false;
+            return Control?.Parent?.IsTransparentBackgroundSupported() ?? false;
         }
 
         void IControlHandler.Lower()
@@ -242,12 +245,12 @@ namespace Alternet.UI
 
         void IControlHandler.RefreshRect(RectD rect, bool eraseBackground)
         {
-            Control.Parent?.Invalidate((rect.Location + Control.Location, rect.Size));
+            Control?.Parent?.Invalidate((rect.Location + Control.Location, rect.Size));
         }
 
         void IControlHandler.ReleaseMouseCapture()
         {
-            Control.Parent?.ReleaseMouseCapture();
+            Control?.Parent?.ReleaseMouseCapture();
         }
 
         void IControlHandler.ResetBackgroundColor()
@@ -262,6 +265,9 @@ namespace Alternet.UI
 
         PointD IControlHandler.ScreenToClient(PointD point)
         {
+            if (Control is null)
+                return PointD.MinValue;
+
             PointD result;
             var parent = Control.Parent;
 
@@ -303,12 +309,7 @@ namespace Alternet.UI
 
         void IControlHandler.Update()
         {
-            Control.Parent?.Update();
-        }
-
-        /// <inheritdoc/>
-        public virtual void UnbindEvents()
-        {
+            Control?.Parent?.Update();
         }
 
         /// <inheritdoc/>

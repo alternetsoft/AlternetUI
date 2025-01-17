@@ -97,27 +97,7 @@ namespace Alternet.UI
         {
             base.OnAttach();
 
-            NativeControl.MeasureItem = NativeControl_MeasureItem;
             NativeControl.ItemsCount = Control.Items.Count;
-        }
-
-        protected override void OnDetach()
-        {
-            NativeControl.MeasureItem = null;
-
-            base.OnDetach();
-        }
-
-        private void NativeControl_MeasureItem()
-        {
-            var itemIndex = NativeControl.EventItem;
-
-            MeasureItemEventArgs e = new(Control.MeasureCanvas, itemIndex);
-            Control.MeasureItemSize(e);
-
-            var heightDip = e.ItemHeight;
-            var height = Control.PixelFromDip(heightDip);
-            NativeControl.EventHeight = height;
         }
 
         private class NativeVListBox : Native.VListBox

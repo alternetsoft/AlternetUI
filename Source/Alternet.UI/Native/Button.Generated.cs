@@ -253,10 +253,9 @@ namespace Alternet.UI.Native
         
         IntPtr OnEvent(NativeApi.ButtonEvent e, IntPtr parameter)
         {
-            Click?.Invoke(); return IntPtr.Zero;
+            OnPlatformEventClick(); return IntPtr.Zero;
         }
         
-        public Action? Click;
         
         [SuppressUnmanagedCodeSecurity]
         public class NativeApi : NativeApiProvider

@@ -41,7 +41,7 @@ namespace Alternet.UI
         /// </summary>
         public CardPanel CardPanel => cardPanel;
 
-        private new TreeView LeftTreeView
+        internal new TreeView LeftTreeView
         {
             get => base.LeftTreeView;
         }

@@ -375,14 +375,6 @@ namespace Alternet.UI
             return new TextBoxTextAttr(NativeControl.GetDefaultStyle());
         }
 
-        public void SetValidator(IValueValidator? value)
-        {
-            if (value == null)
-                NativeControl.Validator = IntPtr.Zero;
-            else
-                NativeControl.Validator = value.Handle;
-        }
-
         bool ITextBoxHandler.SetStyle(long start, long end, ITextBoxTextAttr style)
         {
             if (style is not TextBoxTextAttr s)
@@ -472,29 +464,12 @@ namespace Alternet.UI
             return new NativeTextBox(Control);
         }
 
-        protected override void OnDetach()
-        {
-            base.OnDetach();
-            NativeControl.TextUrl = null;
-            NativeControl.TextMaxLength = null;
-        }
-
         protected override void OnAttach()
         {
             base.OnAttach();
 
             if (App.IsWindowsOS)
                 UserPaint = true;
-
-            NativeControl.TextEnter = Control.OnEnterPressed;
-            NativeControl.TextMaxLength = Control.OnTextMaxLength;
-            NativeControl.TextUrl = NativeControl_TextUrl;
-        }
-
-        private void NativeControl_TextUrl()
-        {
-            var url = ReportedUrl;
-            Control.OnTextUrl(new UrlEventArgs(url));
         }
 
         internal class NativeTextBox : Native.TextBox

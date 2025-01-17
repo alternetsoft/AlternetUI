@@ -100,12 +100,6 @@ namespace Alternet.UI
         UIPlatformKind GetPlatformKind();
 
         /// <summary>
-        /// Sets whether or not to supress bell on error.
-        /// </summary>
-        /// <param name="value"></param>
-        void SuppressBellOnError(bool value);
-
-        /// <summary>
         /// Gets default value of the control background color.
         /// </summary>
         /// <param name="controlType">Type of control.</param>

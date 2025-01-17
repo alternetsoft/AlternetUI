@@ -20,6 +20,9 @@ namespace Alternet.UI
 
             ApplyItems();
 
+            if (Control is null)
+                return;
+
             Control.Items.ItemInserted += Items_ItemInserted;
             Control.Items.ItemRemoved += Items_ItemRemoved;
         }
@@ -27,6 +30,9 @@ namespace Alternet.UI
         protected override void OnDetach()
         {
             base.OnDetach();
+
+            if (Control is null)
+                return;
 
             Control.Items.ItemInserted -= Items_ItemInserted;
             Control.Items.ItemRemoved -= Items_ItemRemoved;
@@ -37,6 +43,8 @@ namespace Alternet.UI
 
         private void ApplyItems()
         {
+            if (Control is null)
+                return;
             for (var i = 0; i < Control.Items.Count; i++)
                 InsertItem(Control.Items[i], i);
         }
@@ -55,6 +63,8 @@ namespace Alternet.UI
 
         private void Item_TextChanged(object? sender, EventArgs e)
         {
+            if (Control is null)
+                return;
             var item = (MenuItem)sender!;
             NativeControl.SetItemText(Control.Items.IndexOf(item), item.Text);
         }

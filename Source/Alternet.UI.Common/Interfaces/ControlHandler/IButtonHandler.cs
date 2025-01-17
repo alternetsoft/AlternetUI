@@ -38,11 +38,6 @@ namespace Alternet.UI
         /// </summary>
         Image? FocusedImage { set; }
 
-        /// <summary>
-        /// Gets or sets action which is called when button is clicked.
-        /// </summary>
-        Action? Click { get; set; }
-
         /// <inheritdoc cref="Button.IsDefault"/>
         bool IsDefault { get; set; }
 

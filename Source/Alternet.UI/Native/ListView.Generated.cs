@@ -374,42 +374,36 @@ namespace Alternet.UI.Native
             {
                 case NativeApi.ListViewEvent.ControlRecreated:
                 {
-                    ControlRecreated?.Invoke(); return IntPtr.Zero;
+                    OnPlatformEventControlRecreated(); return IntPtr.Zero;
                 }
                 case NativeApi.ListViewEvent.SelectionChanged:
                 {
-                    SelectionChanged?.Invoke(); return IntPtr.Zero;
+                    OnPlatformEventSelectionChanged(); return IntPtr.Zero;
                 }
                 case NativeApi.ListViewEvent.CompareItemsForCustomSort:
                 {
                     var ea = new NativeEventArgs<CompareListViewItemsEventData>(MarshalEx.PtrToStructure<CompareListViewItemsEventData>(parameter));
-                    CompareItemsForCustomSort?.Invoke(this, ea); return ea.Result;
+                    OnPlatformEventCompareItemsForCustomSort(ea); return ea.Result;
                 }
                 case NativeApi.ListViewEvent.ColumnClick:
                 {
                     var ea = new NativeEventArgs<ListViewColumnEventData>(MarshalEx.PtrToStructure<ListViewColumnEventData>(parameter));
-                    ColumnClick?.Invoke(this, ea); return ea.Result;
+                    OnPlatformEventColumnClick(ea); return ea.Result;
                 }
                 case NativeApi.ListViewEvent.BeforeItemLabelEdit:
                 {
                     var ea = new NativeEventArgs<ListViewItemLabelEditEventData>(MarshalEx.PtrToStructure<ListViewItemLabelEditEventData>(parameter));
-                    BeforeItemLabelEdit?.Invoke(this, ea); return ea.Result;
+                    OnPlatformEventBeforeItemLabelEdit(ea); return ea.Result;
                 }
                 case NativeApi.ListViewEvent.AfterItemLabelEdit:
                 {
                     var ea = new NativeEventArgs<ListViewItemLabelEditEventData>(MarshalEx.PtrToStructure<ListViewItemLabelEditEventData>(parameter));
-                    AfterItemLabelEdit?.Invoke(this, ea); return ea.Result;
+                    OnPlatformEventAfterItemLabelEdit(ea); return ea.Result;
                 }
                 default: throw new Exception("Unexpected ListViewEvent value: " + e);
             }
         }
         
-        public Action? ControlRecreated;
-        public Action? SelectionChanged;
-        public event NativeEventHandler<CompareListViewItemsEventData>? CompareItemsForCustomSort;
-        public event NativeEventHandler<ListViewColumnEventData>? ColumnClick;
-        public event NativeEventHandler<ListViewItemLabelEditEventData>? BeforeItemLabelEdit;
-        public event NativeEventHandler<ListViewItemLabelEditEventData>? AfterItemLabelEdit;
         
         [SuppressUnmanagedCodeSecurity]
         public class NativeApi : NativeApiProvider

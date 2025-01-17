@@ -73,10 +73,9 @@ namespace Alternet.UI.Native
         
         IntPtr OnEvent(NativeApi.StatusBarEvent e, IntPtr parameter)
         {
-            ControlRecreated?.Invoke(); return IntPtr.Zero;
+            OnPlatformEventControlRecreated(); return IntPtr.Zero;
         }
         
-        public Action? ControlRecreated;
         
         [SuppressUnmanagedCodeSecurity]
         public class NativeApi : NativeApiProvider

@@ -833,32 +833,6 @@ namespace Alternet::UI
         SomePages = 2,
     };
     
-    enum class AnchorStyles
-    {
-        None = 0,
-        Top = 1,
-        Bottom = 2,
-        TopBottom = 3,
-        Left = 4,
-        LeftTop = 5,
-        Right = 8,
-        LeftRight = 12,
-    };
-    
-    enum class ArrowDirection
-    {
-        Up = 0,
-        Down = 1,
-        Left = 2,
-        Right = 3,
-    };
-    
-    enum class AutoSizeMode
-    {
-        GrowAndShrink = 0,
-        GrowOnly = 1,
-    };
-    
     enum class ContentAlignment
     {
         TopLeft = 1,
@@ -870,25 +844,6 @@ namespace Alternet::UI
         BottomLeft = 256,
         BottomCenter = 512,
         BottomRight = 1024,
-    };
-    
-    enum class CoordAlignment
-    {
-        Near = 0,
-        Center = 1,
-        Far = 2,
-        Stretch = 3,
-        Fill = 4,
-    };
-    
-    enum class DockStyle
-    {
-        None = 0,
-        Top = 1,
-        Bottom = 2,
-        Left = 3,
-        Right = 4,
-        Fill = 5,
     };
     
     enum class GenericAlignment
@@ -922,6 +877,52 @@ namespace Alternet::UI
         BottomLeft = 144,
         BottomRight = 160,
         All = 240,
+    };
+    
+    enum class AnchorStyles
+    {
+        None = 0,
+        Top = 1,
+        Bottom = 2,
+        TopBottom = 3,
+        Left = 4,
+        LeftTop = 5,
+        Right = 8,
+        LeftRight = 12,
+    };
+    
+    enum class ArrowDirection
+    {
+        Up = 0,
+        Down = 1,
+        Left = 2,
+        Right = 3,
+    };
+    
+    enum class AutoSizeMode
+    {
+        GrowAndShrink = 0,
+        GrowOnly = 1,
+    };
+    
+    enum class CoordAlignment
+    {
+        Near = 0,
+        Center = 1,
+        Far = 2,
+        Stretch = 3,
+        Fill = 4,
+    };
+    
+    enum class DockStyle
+    {
+        None = 0,
+        Top = 1,
+        Bottom = 2,
+        Left = 3,
+        Right = 4,
+        Fill = 5,
+        RightAutoSize = 6,
     };
     
     enum class GenericOrientation
@@ -1031,6 +1032,31 @@ namespace Alternet::UI
         RoundSmall = 3,
     };
     
+    enum class ClipboardDataFormatId
+    {
+        Invalid = 0,
+        Text = 1,
+        Bitmap = 2,
+        MetaFile = 3,
+        Sylk = 4,
+        Dif = 5,
+        Tiff = 6,
+        OemText = 7,
+        Dib = 8,
+        Palette = 9,
+        PenData = 10,
+        Riff = 11,
+        Wave = 12,
+        UnicodeText = 13,
+        EnhMetaFile = 14,
+        Filename = 15,
+        Locale = 16,
+        Private = 20,
+        Html = 30,
+        Png = 31,
+        Max = 32,
+    };
+    
     enum class TextDataFormat
     {
         Text = 0,
@@ -1129,6 +1155,15 @@ namespace Alternet::UI
         HideKeyboard = 2,
         ShowKeyboardIfNoHardware = 3,
         ShowKeyboardIfUnknown = 4,
+    };
+    
+    enum class GenericControlProperty
+    {
+        None = 0,
+        Enabled = 1,
+        Visible = 2,
+        Text = 3,
+        Title = 4,
     };
     
     enum class KnownButton
@@ -3249,9 +3284,9 @@ template<> struct enable_bitmask_operators<Alternet::UI::FontWeight> { static co
 template<> struct enable_bitmask_operators<Alternet::UI::GenericImageLoadFlags> { static const bool enable = true; };
 template<> struct enable_bitmask_operators<Alternet::UI::GenericImagePngSetFilter> { static const bool enable = true; };
 template<> struct enable_bitmask_operators<Alternet::UI::TextFormatFlags> { static const bool enable = true; };
-template<> struct enable_bitmask_operators<Alternet::UI::AnchorStyles> { static const bool enable = true; };
 template<> struct enable_bitmask_operators<Alternet::UI::GenericAlignment> { static const bool enable = true; };
 template<> struct enable_bitmask_operators<Alternet::UI::GenericDirection> { static const bool enable = true; };
+template<> struct enable_bitmask_operators<Alternet::UI::AnchorStyles> { static const bool enable = true; };
 template<> struct enable_bitmask_operators<Alternet::UI::GenericOrientation> { static const bool enable = true; };
 template<> struct enable_bitmask_operators<Alternet::UI::Border3DSide> { static const bool enable = true; };
 template<> struct enable_bitmask_operators<Alternet::UI::BoundsSpecified> { static const bool enable = true; };

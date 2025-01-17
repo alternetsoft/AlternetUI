@@ -18,18 +18,6 @@ namespace Alternet.UI
             return new RichTextBoxHandler();
         }
 
-        public IValueValidatorText CreateValueValidatorText(ValueValidatorTextStyle style)
-        {
-            return new ValueValidatorText(style);
-        }
-
-        public IValueValidatorText CreateValueValidatorNum(
-            ValueValidatorNumStyle numericType,
-            int valueBase = 10)
-        {
-            return new ValueValidatorNumProp(numericType, valueBase);
-        }
-
         public IPropertyGridChoices CreateChoices()
         {
             return new PropertyGridChoices();

@@ -42,8 +42,6 @@ namespace Alternet.UI
             Control.TickFrequencyChanged += Control_TickFrequencyChanged;
             Control.OrientationChanged += Control_OrientationChanged;
             Control.TickStyleChanged += Control_TickStyleChanged;
-
-            NativeControl.ValueChanged = NativeControl_ValueChanged;
         }
 
         protected override void OnDetach()
@@ -58,8 +56,6 @@ namespace Alternet.UI
             Control.TickFrequencyChanged -= Control_TickFrequencyChanged;
             Control.OrientationChanged -= Control_OrientationChanged;
             Control.TickStyleChanged -= Control_TickStyleChanged;
-
-            NativeControl.ValueChanged = null;
         }
 
         private void Control_TickStyleChanged(object? sender, EventArgs e)
@@ -73,11 +69,6 @@ namespace Alternet.UI
         private void Control_OrientationChanged(object? sender, EventArgs e)
         {
             NativeControl.Orientation = Control.Orientation;
-        }
-
-        private void NativeControl_ValueChanged()
-        {
-            Control.Value = NativeControl.Value;
         }
 
         private void Control_ValueChanged(object? sender, System.EventArgs e)
