@@ -8,7 +8,7 @@ namespace Alternet.UI
     /// <summary>
     /// Specifies the contextual information about an application thread.
     /// </summary>
-    public class ApplicationContext : BaseComponent
+    public class ApplicationContext : FrameworkElement
     {
         private Window? mainForm;
 

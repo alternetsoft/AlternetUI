@@ -90,18 +90,16 @@ namespace Alternet.UI.Native
             {
                 case NativeApi.MenuEvent.Opened:
                 {
-                    Opened?.Invoke(); return IntPtr.Zero;
+                    OnPlatformEventOpened(); return IntPtr.Zero;
                 }
                 case NativeApi.MenuEvent.Closed:
                 {
-                    Closed?.Invoke(); return IntPtr.Zero;
+                    OnPlatformEventClosed(); return IntPtr.Zero;
                 }
                 default: throw new Exception("Unexpected MenuEvent value: " + e);
             }
         }
         
-        public Action? Opened;
-        public Action? Closed;
         
         [SuppressUnmanagedCodeSecurity]
         public class NativeApi : NativeApiProvider

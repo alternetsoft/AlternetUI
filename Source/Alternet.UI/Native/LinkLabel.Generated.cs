@@ -137,17 +137,12 @@ namespace Alternet.UI.Native
         IntPtr OnEvent(NativeApi.LinkLabelEvent e, IntPtr parameter)
         {
             {
-                if(HyperlinkClick is not null)
-                {
                 var cea = new CancelEventArgs();
-                HyperlinkClick.Invoke(this, cea);
+                OnPlatformEventHyperlinkClick(cea);
                 return cea.Cancel ? IntPtrUtils.One : IntPtr.Zero;
-                }
-                else return IntPtr.Zero;
             }
         }
         
-        public event EventHandler<CancelEventArgs>? HyperlinkClick;
         
         [SuppressUnmanagedCodeSecurity]
         public class NativeApi : NativeApiProvider

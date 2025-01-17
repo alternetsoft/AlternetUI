@@ -28,6 +28,9 @@ namespace Alternet.UI
             if (App.IsWindowsOS)
                 UserPaint = true;
 
+            if (Control is null)
+                return;
+
             NativeControl.Minimum = (int)Control.Minimum;
             NativeControl.Maximum = (int)Control.Maximum;
             NativeControl.Value = (int)Control.Value;
@@ -35,39 +38,35 @@ namespace Alternet.UI
             Control.MinimumChanged += Control_MinimumChanged;
             Control.MaximumChanged += Control_MaximumChanged;
             Control.ValueChanged += Control_ValueChanged;
-
-            NativeControl.ValueChanged = NativeControl_ValueChanged;
         }
 
         protected override void OnDetach()
         {
             base.OnDetach();
 
+            if (Control is null)
+                return;
             Control.MinimumChanged -= Control_MinimumChanged;
             Control.MaximumChanged -= Control_MaximumChanged;
             Control.ValueChanged -= Control_ValueChanged;
-
-            NativeControl.ValueChanged = null;
-        }
-
-        private void NativeControl_ValueChanged()
-        {
-            Control.Value = NativeControl.Value;
         }
 
         private void Control_ValueChanged(object? sender, System.EventArgs e)
         {
-            NativeControl.Value = (int)Control.Value;
+            if(Control is not null)
+                NativeControl.Value = (int)Control.Value;
         }
 
         private void Control_MaximumChanged(object? sender, System.EventArgs e)
         {
-            NativeControl.Maximum = (int)Control.Maximum;
+            if (Control is not null)
+                NativeControl.Maximum = (int)Control.Maximum;
         }
 
         private void Control_MinimumChanged(object? sender, System.EventArgs e)
         {
-            NativeControl.Minimum = (int)Control.Minimum;
+            if (Control is not null)
+                NativeControl.Minimum = (int)Control.Minimum;
         }
     }
 }

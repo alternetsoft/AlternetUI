@@ -83,19 +83,6 @@ namespace Alternet.UI
             set => NativeControl.Title = value;
         }
 
-        public Action? StateChanged
-        {
-            get
-            {
-                return NativeControl.StateChanged;
-            }
-
-            set
-            {
-                NativeControl.StateChanged = value;
-            }
-        }
-
         public WindowState State
         {
             get
@@ -131,6 +118,8 @@ namespace Alternet.UI
 
             set
             {
+                if (Control is null)
+                    return;
                 if (Control.GetWindowKind() == WindowKind.Dialog)
                 {
                     statusBar = value;
@@ -153,7 +142,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets a <see cref="Window"/> this handler provides the implementation for.
         /// </summary>
-        public new Window Control => (Window)base.Control;
+        public new Window? Control => (Window?)base.Control;
 
         public new Native.Window NativeControl => (Native.Window)base.NativeControl;
 
@@ -211,6 +200,9 @@ namespace Alternet.UI
                 NativeControl.Close();
             else
             {
+                if (Control is null)
+                    return;
+
                 if (!Control.Modal)
                     Control.Dispose();
             }
@@ -218,38 +210,7 @@ namespace Alternet.UI
 
         internal override Native.Control CreateNativeControl()
         {
-            return new NativeWindow((int)Control.GetWindowKind());
-        }
-
-        /// <summary>
-        /// Raised by the handler when it is going to be closed.
-        /// </summary>
-        public virtual void OnHandlerClosing(object? sender, CancelEventArgs e)
-        {
-            var canClose = Control.CanClose(true);
-
-            e.Cancel = e.Cancel || !canClose;
-
-            if (e.Cancel)
-                return;
-
-            Control.RaiseClosed();
-        }
-
-        protected override void OnDetach()
-        {
-            NativeControl.StateChanged = null;
-            NativeControl.Closing -= OnHandlerClosing;
-
-            base.OnDetach();
-        }
-
-        protected override void OnAttach()
-        {
-            base.OnAttach();
-
-            NativeControl.StateChanged = Control.RaiseStateChanged;
-            NativeControl.Closing += OnHandlerClosing;
+            return new NativeWindow((int)(Control?.GetWindowKind() ?? WindowKind.Control));
         }
 
         private void SetStatusBar(object? oldValue, object? value)

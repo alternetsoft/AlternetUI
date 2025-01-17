@@ -45,8 +45,10 @@ namespace Alternet.UI
 
         /// <summary>
         /// Iterates collection of the objects and changes the specified property value
-        /// for the each item. Old property values are returned.
+        /// for the each item. Old property values are pushed to the
+        /// <paramref name="oldValues"/> stack.
         /// </summary>
+        /// <param name="oldValues">The stack to save old property values.</param>
         /// <param name="objects">The collection of objects.</param>
         /// <param name="propInfo">Property information.</param>
         /// <param name="newValue">New value for the property.</param>
@@ -55,27 +57,24 @@ namespace Alternet.UI
         /// You can use <see cref="PopProperties"/> for restoring property values
         /// after saved them using <see cref="PushProperties"/>.
         /// </remarks>
-        public ConcurrentStack<PropInstanceAndValue>? PushProperties(
+        public void PushProperties(
             IEnumerable objects,
             PropertyInfo? propInfo,
-            object? newValue)
+            object? newValue,
+            ref ConcurrentStack<PropInstanceAndValue>? oldValues)
         {
             if (propInfo is null)
-                return null;
-
-            ConcurrentStack<PropInstanceAndValue>? result = null;
+                return;
 
             foreach (var obj in objects)
             {
                 var propValue = propInfo.GetValue(obj);
                 if (propValue == newValue)
                     continue;
-                result ??= new();
-                result.Push(new(obj, propInfo, propValue));
+                oldValues ??= new();
+                oldValues.Push(new(obj, propInfo, propValue));
                 propInfo.SetValue(obj, newValue);
             }
-
-            return result;
         }
 
         /// <summary>
@@ -95,31 +94,35 @@ namespace Alternet.UI
 
         /// <summary>
         /// Iterates children controls and changes the specified property value
-        /// for the each child. Old property values are returned.
+        /// for the each child. Old property values are pushed to the
+        /// <paramref name="oldValues"/> stack.
         /// </summary>
         /// <param name="control">The container control which childs are processed.</param>
         /// <param name="propInfo">Property information.</param>
+        /// <param name="oldValues">The stack to save old property values.</param>
         /// <param name="newValue">New value for the property.</param>
         /// <returns></returns>
         /// <remarks>
         /// You can use <see cref="PopProperties"/> for restoring property values
         /// after saved them using this method.
         /// </remarks>
-        public ConcurrentStack<PropInstanceAndValue>? PushChildrenProperties(
+        public void PushChildrenProperties(
             AbstractControl control,
             PropertyInfo? propInfo,
-            object? newValue)
+            object? newValue,
+            ref ConcurrentStack<PropInstanceAndValue>? oldValues)
         {
             if (!control.HasChildren)
-                return null;
-            var result = PushProperties(control.Children, propInfo, newValue);
-            return result;
+                return;
+            PushProperties(control.Children, propInfo, newValue, ref oldValues);
         }
 
         /// <summary>
         /// Iterates children controls and changes 'Enabled' property value
-        /// for the each child. Old property values are returned.
+        /// for the each child. Old property values are pushed to the
+        /// <paramref name="oldValues"/> stack.
         /// </summary>
+        /// <param name="oldValues">The stack to save old property values.</param>
         /// <param name="control">The container control which childs are processed.</param>
         /// <param name="newValue">New value for the property.</param>
         /// <returns></returns>
@@ -127,20 +130,24 @@ namespace Alternet.UI
         /// You can use <see cref="PopProperties"/> for restoring property values
         /// after saved them using this method.
         /// </remarks>
-        public ConcurrentStack<PropInstanceAndValue>? PushChildrenEnabled(
+        public void PushChildrenEnabled(
             AbstractControl control,
-            bool newValue)
+            bool newValue,
+            ref ConcurrentStack<PropInstanceAndValue>? oldValues)
         {
-            return PushChildrenProperties(
+            PushChildrenProperties(
                         control,
                         KnownProperties.AbstractControl.Enabled,
-                        BoolBoxes.Box(newValue));
+                        BoolBoxes.Box(newValue),
+                        ref oldValues);
         }
 
         /// <summary>
         /// Iterates children controls and changes 'Visible' property value
-        /// for the each child. Old property values are returned.
+        /// for the each child. Old property values are pushed to the
+        /// <paramref name="oldValues"/> stack.
         /// </summary>
+        /// <param name="oldValues">The stack to save old property values.</param>
         /// <param name="control">The container control which childs are processed.</param>
         /// <param name="newValue">New value for the property.</param>
         /// <returns></returns>
@@ -148,14 +155,16 @@ namespace Alternet.UI
         /// You can use <see cref="PopProperties"/> for restoring property values
         /// after saved them using this method.
         /// </remarks>
-        public ConcurrentStack<PropInstanceAndValue>? PushChildrenVisible(
+        public void PushChildrenVisible(
             AbstractControl control,
-            bool newValue)
+            bool newValue,
+            ref ConcurrentStack<PropInstanceAndValue>? oldValues)
         {
-            return PushChildrenProperties(
+            PushChildrenProperties(
                         control,
                         KnownProperties.AbstractControl.Visible,
-                        BoolBoxes.Box(newValue));
+                        BoolBoxes.Box(newValue),
+                        ref oldValues);
         }
     }
 }

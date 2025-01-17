@@ -67,15 +67,6 @@ namespace Alternet.UI
 
             if (App.IsWindowsOS)
                 UserPaint = true;
-
-            NativeControl.CheckedChanged = Control.RaiseCheckedChanged;
-        }
-
-        protected override void OnDetach()
-        {
-            base.OnDetach();
-
-            NativeControl.CheckedChanged = null;
         }
     }
 }

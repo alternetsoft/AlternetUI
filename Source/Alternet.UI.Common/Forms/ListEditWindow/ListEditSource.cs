@@ -11,7 +11,7 @@ namespace Alternet.UI
     /// </summary>
     public abstract class ListEditSource : IListEditSource
     {
-        private object? instance;
+        private WeakReferenceValue<object> instance;
         private PropertyInfo? propInfo;
 
         /// <inheritdoc/>
@@ -20,12 +20,13 @@ namespace Alternet.UI
         /// <inheritdoc/>
         public object? Instance
         {
-            get => instance;
+            get => instance.Value;
+
             set
             {
-                if (instance == value)
+                if (instance.Value == value)
                     return;
-                instance = value;
+                instance.Value = value;
             }
         }
 
@@ -46,6 +47,9 @@ namespace Alternet.UI
         {
             get
             {
+                if (Instance is null)
+                    return Array.Empty<object>();
+
                 var value = PropInfo?.GetValue(Instance);
                 var result = value as IEnumerable;
                 return result;
@@ -136,11 +140,13 @@ namespace Alternet.UI
         /// <param name="tree">Data to apply.</param>
         protected void ApplyDataAsArray<T>(IEnumerableTree tree)
         {
-#pragma warning disable
+            if (Instance is null)
+                return;
+
             List<T> value = new();
             value.AddRange(EnumerableUtils.GetItems<T>(tree));
             T[] asArray = value.ToArray();
-#pragma warning restore
+
             PropInfo?.SetValue(Instance, asArray);
         }
     }

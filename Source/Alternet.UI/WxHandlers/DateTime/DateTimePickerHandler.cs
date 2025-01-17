@@ -75,29 +75,26 @@ namespace Alternet.UI
             if (App.IsWindowsOS)
                 UserPaint = true;
 
+            if (Control is null)
+                return;
             NativeControl.Value = Control.Value;
 
             Control.ValueChanged += Control_ValueChanged;
-
-            NativeControl.ValueChanged = NativeControl_ValueChanged;
         }
 
         protected override void OnDetach()
         {
             base.OnDetach();
 
+            if (Control is null)
+                return;
             Control.ValueChanged -= Control_ValueChanged;
-
-            NativeControl.ValueChanged = null;
-        }
-
-        private void NativeControl_ValueChanged()
-        {
-            Control.Value = NativeControl.Value;
         }
 
         private void Control_ValueChanged(object? sender, System.EventArgs e)
         {
+            if (Control is null)
+                return;
             NativeControl.Value = Control.Value;
         }
     }

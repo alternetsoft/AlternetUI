@@ -270,7 +270,11 @@ namespace Alternet.UI
 
             try
             {
-                var s = $"Error '{e.GetType().Name}': <b>{e.Message}</b>. [Double click...]";
+                var prefix = "Error";
+                if (kind == LogItemKind.Information)
+                    prefix = "Warning";
+
+                var s = $"{prefix} '{e.GetType().Name}': <b>{e.Message}</b>. [Double click...]";
 
                 ListControlItem item = new(s);
                 item.TextHasBold = true;

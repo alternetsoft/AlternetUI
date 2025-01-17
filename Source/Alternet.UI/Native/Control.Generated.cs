@@ -1259,136 +1259,111 @@ namespace Alternet.UI.Native
             {
                 case NativeApi.ControlEvent.Idle:
                 {
-                    Idle?.Invoke(); return IntPtr.Zero;
+                    OnPlatformEventIdle(); return IntPtr.Zero;
                 }
                 case NativeApi.ControlEvent.Paint:
                 {
-                    Paint?.Invoke(); return IntPtr.Zero;
+                    OnPlatformEventPaint(); return IntPtr.Zero;
                 }
                 case NativeApi.ControlEvent.MouseEnter:
                 {
-                    MouseEnter?.Invoke(); return IntPtr.Zero;
+                    OnPlatformEventMouseEnter(); return IntPtr.Zero;
                 }
                 case NativeApi.ControlEvent.MouseLeave:
                 {
-                    MouseLeave?.Invoke(); return IntPtr.Zero;
+                    OnPlatformEventMouseLeave(); return IntPtr.Zero;
                 }
                 case NativeApi.ControlEvent.MouseClick:
                 {
-                    MouseClick?.Invoke(); return IntPtr.Zero;
+                    OnPlatformEventMouseClick(); return IntPtr.Zero;
                 }
                 case NativeApi.ControlEvent.VisibleChanged:
                 {
-                    VisibleChanged?.Invoke(); return IntPtr.Zero;
+                    OnPlatformEventVisibleChanged(); return IntPtr.Zero;
                 }
                 case NativeApi.ControlEvent.MouseCaptureLost:
                 {
-                    MouseCaptureLost?.Invoke(); return IntPtr.Zero;
+                    OnPlatformEventMouseCaptureLost(); return IntPtr.Zero;
                 }
                 case NativeApi.ControlEvent.DpiChanged:
                 {
-                    DpiChanged?.Invoke(); return IntPtr.Zero;
+                    OnPlatformEventDpiChanged(); return IntPtr.Zero;
                 }
                 case NativeApi.ControlEvent.Destroyed:
                 {
-                    Destroyed?.Invoke(); return IntPtr.Zero;
+                    OnPlatformEventDestroyed(); return IntPtr.Zero;
                 }
                 case NativeApi.ControlEvent.TextChanged:
                 {
-                    TextChanged?.Invoke(); return IntPtr.Zero;
+                    OnPlatformEventTextChanged(); return IntPtr.Zero;
                 }
                 case NativeApi.ControlEvent.GotFocus:
                 {
-                    GotFocus?.Invoke(); return IntPtr.Zero;
+                    OnPlatformEventGotFocus(); return IntPtr.Zero;
                 }
                 case NativeApi.ControlEvent.LostFocus:
                 {
-                    LostFocus?.Invoke(); return IntPtr.Zero;
+                    OnPlatformEventLostFocus(); return IntPtr.Zero;
                 }
                 case NativeApi.ControlEvent.DragLeave:
                 {
-                    DragLeave?.Invoke(); return IntPtr.Zero;
+                    OnPlatformEventDragLeave(); return IntPtr.Zero;
                 }
                 case NativeApi.ControlEvent.DragDrop:
                 {
                     var ea = new NativeEventArgs<DragEventData>(MarshalEx.PtrToStructure<DragEventData>(parameter));
-                    DragDrop?.Invoke(this, ea); return ea.Result;
+                    OnPlatformEventDragDrop(ea); return ea.Result;
                 }
                 case NativeApi.ControlEvent.DragOver:
                 {
                     var ea = new NativeEventArgs<DragEventData>(MarshalEx.PtrToStructure<DragEventData>(parameter));
-                    DragOver?.Invoke(this, ea); return ea.Result;
+                    OnPlatformEventDragOver(ea); return ea.Result;
                 }
                 case NativeApi.ControlEvent.DragEnter:
                 {
                     var ea = new NativeEventArgs<DragEventData>(MarshalEx.PtrToStructure<DragEventData>(parameter));
-                    DragEnter?.Invoke(this, ea); return ea.Result;
+                    OnPlatformEventDragEnter(ea); return ea.Result;
                 }
                 case NativeApi.ControlEvent.VerticalScrollBarValueChanged:
                 {
-                    VerticalScrollBarValueChanged?.Invoke(); return IntPtr.Zero;
+                    OnPlatformEventVerticalScrollBarValueChanged(); return IntPtr.Zero;
                 }
                 case NativeApi.ControlEvent.HorizontalScrollBarValueChanged:
                 {
-                    HorizontalScrollBarValueChanged?.Invoke(); return IntPtr.Zero;
+                    OnPlatformEventHorizontalScrollBarValueChanged(); return IntPtr.Zero;
                 }
                 case NativeApi.ControlEvent.SizeChanged:
                 {
-                    SizeChanged?.Invoke(); return IntPtr.Zero;
+                    OnPlatformEventSizeChanged(); return IntPtr.Zero;
                 }
                 case NativeApi.ControlEvent.LocationChanged:
                 {
-                    LocationChanged?.Invoke(); return IntPtr.Zero;
+                    OnPlatformEventLocationChanged(); return IntPtr.Zero;
                 }
                 case NativeApi.ControlEvent.Activated:
                 {
-                    Activated?.Invoke(); return IntPtr.Zero;
+                    OnPlatformEventActivated(); return IntPtr.Zero;
                 }
                 case NativeApi.ControlEvent.Deactivated:
                 {
-                    Deactivated?.Invoke(); return IntPtr.Zero;
+                    OnPlatformEventDeactivated(); return IntPtr.Zero;
                 }
                 case NativeApi.ControlEvent.HandleCreated:
                 {
-                    HandleCreated?.Invoke(); return IntPtr.Zero;
+                    OnPlatformEventHandleCreated(); return IntPtr.Zero;
                 }
                 case NativeApi.ControlEvent.HandleDestroyed:
                 {
-                    HandleDestroyed?.Invoke(); return IntPtr.Zero;
+                    OnPlatformEventHandleDestroyed(); return IntPtr.Zero;
                 }
                 case NativeApi.ControlEvent.SystemColorsChanged:
                 {
-                    SystemColorsChanged?.Invoke(); return IntPtr.Zero;
+                    OnPlatformEventSystemColorsChanged(); return IntPtr.Zero;
                 }
                 default: throw new Exception("Unexpected ControlEvent value: " + e);
             }
         }
         
-        public Action? Idle;
-        public Action? Paint;
-        public Action? MouseEnter;
-        public Action? MouseLeave;
-        public Action? MouseClick;
-        public Action? VisibleChanged;
-        public Action? MouseCaptureLost;
-        public Action? DpiChanged;
-        public Action? Destroyed;
-        public Action? TextChanged;
-        public Action? GotFocus;
-        public Action? LostFocus;
-        public Action? DragLeave;
-        public event NativeEventHandler<DragEventData>? DragDrop;
-        public event NativeEventHandler<DragEventData>? DragOver;
-        public event NativeEventHandler<DragEventData>? DragEnter;
-        public Action? VerticalScrollBarValueChanged;
-        public Action? HorizontalScrollBarValueChanged;
-        public Action? SizeChanged;
-        public Action? LocationChanged;
-        public Action? Activated;
-        public Action? Deactivated;
-        public Action? HandleCreated;
-        public Action? HandleDestroyed;
-        public Action? SystemColorsChanged;
         
         [SuppressUnmanagedCodeSecurity]
         public class NativeApi : NativeApiProvider

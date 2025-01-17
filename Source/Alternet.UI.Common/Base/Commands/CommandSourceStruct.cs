@@ -17,10 +17,11 @@ namespace Alternet.UI
         /// </summary>
         public Action? Changed;
 
+        private readonly object? container;
+
         private ICommand? command;
         private object? commandParameter;
         private object? commandTarget;
-        private object? container;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="CommandSourceStruct"/> struct.

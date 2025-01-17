@@ -144,10 +144,9 @@ namespace Alternet.UI.Native
         
         IntPtr OnEvent(NativeApi.ScrollBarEvent e, IntPtr parameter)
         {
-            Scroll?.Invoke(); return IntPtr.Zero;
+            OnPlatformEventScroll(); return IntPtr.Zero;
         }
         
-        public Action? Scroll;
         
         [SuppressUnmanagedCodeSecurity]
         public class NativeApi : NativeApiProvider

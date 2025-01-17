@@ -80,6 +80,9 @@ namespace Alternet.UI
         {
             get
             {
+                if (Control is null)
+                    return null;
+
                 var i = NativeControl.TopItemIndex;
                 return i < 0 || i >= Control.Items.Count ? null : Control.Items[(int)i];
             }
@@ -94,7 +97,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets a <see cref="ListView"/> this handler provides the implementation for.
         /// </summary>
-        public new ListView Control => (ListView)base.Control;
+        public new ListView? Control => (ListView?)base.Control;
 
         public ListViewHitTestInfo HitTest(PointD point)
         {
@@ -107,7 +110,7 @@ namespace Alternet.UI
                 var itemIndex = NativeControl.GetHitTestResultItemIndex(result);
                 var columnIndex = NativeControl.GetHitTestResultColumnIndex(result);
 
-                var item = itemIndex == -1 ? null : Control.Items[(int)itemIndex];
+                var item = itemIndex == -1 ? null : Control?.Items[(int)itemIndex];
                 var cell = item == null || columnIndex == -1 ? null :
                     item.Cells[(int)columnIndex];
                 var location =
@@ -132,8 +135,8 @@ namespace Alternet.UI
         {
             try
             {
-                Control.Items.Clear();
-                Control.Columns.Clear();
+                Control?.Items.Clear();
+                Control?.Columns.Clear();
             }
             finally
             {
@@ -178,6 +181,9 @@ namespace Alternet.UI
         {
             base.OnAttach();
 
+            if (Control is null)
+                return;
+
             ApplyItems();
             ApplyView();
             ApplySmallImageList();
@@ -193,83 +199,7 @@ namespace Alternet.UI
             Control.SmallImageListChanged += Control_SmallImageListChanged;
             Control.LargeImageListChanged += Control_LargeImageListChanged;
             Control.SelectionModeChanged += Control_SelectionModeChanged;
-
             Control.SelectionChanged += Control_SelectionChanged;
-
-            NativeControl.SelectionChanged = NativeControl_SelectionChanged;
-            NativeControl.ColumnClick += NativeControl_ColumnClick;
-            NativeControl.BeforeItemLabelEdit += NativeControl_BeforeItemLabelEdit;
-            NativeControl.AfterItemLabelEdit += NativeControl_AfterItemLabelEdit;
-            NativeControl.ControlRecreated = NativeControl_ControlRecreated;
-        }
-
-        protected override void OnDetach()
-        {
-            Control.Items.ItemInserted -= Items_ItemInserted;
-            Control.Items.ItemRemoved -= Items_ItemRemoved;
-            Control.ViewChanged -= Control_ViewChanged;
-            Control.Columns.ItemInserted -= Columns_ItemInserted;
-            Control.Columns.ItemRemoved -= Columns_ItemRemoved;
-            Control.SmallImageListChanged -= Control_SmallImageListChanged;
-            Control.LargeImageListChanged -= Control_LargeImageListChanged;
-            Control.SelectionModeChanged -= Control_SelectionModeChanged;
-
-            Control.SelectionChanged -= Control_SelectionChanged;
-
-            NativeControl.SelectionChanged = null;
-            NativeControl.ColumnClick -= NativeControl_ColumnClick;
-            NativeControl.BeforeItemLabelEdit -= NativeControl_BeforeItemLabelEdit;
-            NativeControl.AfterItemLabelEdit -= NativeControl_AfterItemLabelEdit;
-            NativeControl.ControlRecreated = null;
-
-            base.OnDetach();
-        }
-
-        private void NativeControl_ControlRecreated()
-        {
-            NativeControl.BeginUpdate();
-            ApplyColumns();
-            ApplyItems();
-            ApplySelection();
-            NativeControl.EndUpdate();
-        }
-
-        private void NativeControl_BeforeItemLabelEdit(
-            object? sender,
-            Native.NativeEventArgs<Native.ListViewItemLabelEditEventData> e)
-        {
-            var ea = new ListViewItemLabelEditEventArgs(
-                e.Data.itemIndex,
-                e.Data.editCancelled ? null : e.Data.label);
-            Control.RaiseBeforeLabelEdit(ea);
-            e.Result = ea.Cancel ? (IntPtr)1 : IntPtr.Zero;
-        }
-
-        private void NativeControl_AfterItemLabelEdit(
-            object? sender,
-            Native.NativeEventArgs<Native.ListViewItemLabelEditEventData> e)
-        {
-            var ea = new ListViewItemLabelEditEventArgs(
-                e.Data.itemIndex,
-                e.Data.editCancelled ? null : e.Data.label);
-
-            Control.RaiseAfterLabelEdit(ea);
-
-            if (!e.Data.editCancelled && !ea.Cancel)
-            {
-                /*skipSetItemText = true;*/
-                Control.Items[(int)e.Data.itemIndex].Text = e.Data.label;
-                /*skipSetItemText = false;*/
-            }
-
-            e.Result = ea.Cancel ? (IntPtr)1 : IntPtr.Zero;
-        }
-
-        private void NativeControl_ColumnClick(
-            object? sender,
-            Native.NativeEventArgs<Native.ListViewColumnEventData> e)
-        {
-            Control.RaiseColumnClick(new ListViewColumnEventArgs(e.Data.columnIndex));
         }
 
         private void Control_ViewChanged(object? sender, EventArgs e)
@@ -287,7 +217,7 @@ namespace Alternet.UI
             ApplyLargeImageList();
         }
 
-        private void NativeControl_SelectionChanged()
+        internal void NativeControl_SelectionChanged()
         {
             if (applyingSelection > 0)
                 return;
@@ -310,10 +240,11 @@ namespace Alternet.UI
 
         private void ApplySelectionMode()
         {
-            NativeControl.SelectionMode = Control.SelectionMode;
+            if (Control is not null)
+                NativeControl.SelectionMode = Control.SelectionMode;
         }
 
-        private void ApplySelection()
+        internal void ApplySelection()
         {
             applyingSelection++;
 
@@ -323,7 +254,7 @@ namespace Alternet.UI
                 nativeControl.ClearSelected();
 
                 var control = Control;
-                var indices = control.SelectedIndices;
+                var indices = control?.SelectedIndices ?? [];
 
                 for (var i = 0; i < indices.Count; i++)
                     NativeControl.SetSelected(indices[i], true);
@@ -340,7 +271,7 @@ namespace Alternet.UI
 
             try
             {
-                Control.SelectedIndicesAreDirty();
+                Control?.SelectedIndicesAreDirty();
             }
             finally
             {
@@ -350,30 +281,31 @@ namespace Alternet.UI
 
         private void ApplyView()
         {
-            NativeControl.CurrentView = Control.View;
+            if(Control is not null)
+                NativeControl.CurrentView = Control.View;
         }
 
         private void ApplySmallImageList()
         {
-            NativeControl.SmallImageList = (UI.Native.ImageList?)Control.SmallImageList?.Handler;
+            NativeControl.SmallImageList = (UI.Native.ImageList?)Control?.SmallImageList?.Handler;
         }
 
         private void ApplyLargeImageList()
         {
-            NativeControl.LargeImageList = (UI.Native.ImageList?)Control.LargeImageList?.Handler;
+            NativeControl.LargeImageList = (UI.Native.ImageList?)Control?.LargeImageList?.Handler;
         }
 
-        private void ApplyItems()
+        internal void ApplyItems()
         {
             var nativeControl = NativeControl;
             nativeControl.ClearItems();
 
             var control = Control;
-            var items = control.Items;
+            var items = control?.Items ?? [];
 
             for (var itemIndex = 0; itemIndex < items.Count; itemIndex++)
             {
-                var item = control.Items[itemIndex];
+                var item = items[itemIndex];
                 InsertItem(itemIndex, item);
             }
         }
@@ -403,6 +335,9 @@ namespace Alternet.UI
 
         private void UpdateItemIndices(int startIndex)
         {
+            if (Control is null)
+                return;
+
             for (int i = startIndex; i < Control.Items.Count; i++)
                 Control.Items[i].InternalSetListViewAndIndex(Control, i);
         }
@@ -423,8 +358,11 @@ namespace Alternet.UI
             return value;
         }
 
-        private void ApplyColumns()
+        internal void ApplyColumns()
         {
+            if (Control is null)
+                return;
+
             for (int i = 0; i < Control.Columns.Count; i++)
             {
                 var col = Control.Columns[i];
@@ -466,6 +404,9 @@ namespace Alternet.UI
 
         private void ApplyColumnsChangeToItems()
         {
+            if (Control is null)
+                return;
+
             foreach (var item in Control.Items)
                 item.ApplyColumns();
         }

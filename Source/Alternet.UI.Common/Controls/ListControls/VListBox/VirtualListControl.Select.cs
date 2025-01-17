@@ -735,8 +735,6 @@ namespace Alternet.UI
         /// </summary>
         public virtual void SuspendSelectionEvents()
         {
-            BeginUpdate();
-
             if (ignoreSelectEvents == 0)
             {
                 selectionContext = SelectedItemsArray;
@@ -780,10 +778,9 @@ namespace Alternet.UI
                 if (changed)
                 {
                     RaiseSelectionChanged(EventArgs.Empty);
+                    Invalidate();
                 }
             }
-
-            EndUpdate();
         }
 
         /// <summary>

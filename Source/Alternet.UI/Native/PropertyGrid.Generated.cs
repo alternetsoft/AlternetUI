@@ -1317,110 +1317,80 @@ namespace Alternet.UI.Native
             {
                 case NativeApi.PropertyGridEvent.Selected:
                 {
-                    Selected?.Invoke(); return IntPtr.Zero;
+                    OnPlatformEventSelected(); return IntPtr.Zero;
                 }
                 case NativeApi.PropertyGridEvent.Changed:
                 {
-                    Changed?.Invoke(); return IntPtr.Zero;
+                    OnPlatformEventChanged(); return IntPtr.Zero;
                 }
                 case NativeApi.PropertyGridEvent.Changing:
                 {
                     {
-                        if(Changing is not null)
-                        {
                         var cea = new CancelEventArgs();
-                        Changing.Invoke(this, cea);
+                        OnPlatformEventChanging(cea);
                         return cea.Cancel ? IntPtrUtils.One : IntPtr.Zero;
-                        }
-                        else return IntPtr.Zero;
                     }
                 }
                 case NativeApi.PropertyGridEvent.Highlighted:
                 {
-                    Highlighted?.Invoke(); return IntPtr.Zero;
+                    OnPlatformEventHighlighted(); return IntPtr.Zero;
                 }
                 case NativeApi.PropertyGridEvent.ButtonClick:
                 {
-                    ButtonClick?.Invoke(); return IntPtr.Zero;
+                    OnPlatformEventButtonClick(); return IntPtr.Zero;
                 }
                 case NativeApi.PropertyGridEvent.RightClick:
                 {
-                    RightClick?.Invoke(); return IntPtr.Zero;
+                    OnPlatformEventRightClick(); return IntPtr.Zero;
                 }
                 case NativeApi.PropertyGridEvent.DoubleClick:
                 {
-                    DoubleClick?.Invoke(); return IntPtr.Zero;
+                    OnPlatformEventDoubleClick(); return IntPtr.Zero;
                 }
                 case NativeApi.PropertyGridEvent.ItemCollapsed:
                 {
-                    ItemCollapsed?.Invoke(); return IntPtr.Zero;
+                    OnPlatformEventItemCollapsed(); return IntPtr.Zero;
                 }
                 case NativeApi.PropertyGridEvent.ItemExpanded:
                 {
-                    ItemExpanded?.Invoke(); return IntPtr.Zero;
+                    OnPlatformEventItemExpanded(); return IntPtr.Zero;
                 }
                 case NativeApi.PropertyGridEvent.LabelEditBegin:
                 {
                     {
-                        if(LabelEditBegin is not null)
-                        {
                         var cea = new CancelEventArgs();
-                        LabelEditBegin.Invoke(this, cea);
+                        OnPlatformEventLabelEditBegin(cea);
                         return cea.Cancel ? IntPtrUtils.One : IntPtr.Zero;
-                        }
-                        else return IntPtr.Zero;
                     }
                 }
                 case NativeApi.PropertyGridEvent.LabelEditEnding:
                 {
                     {
-                        if(LabelEditEnding is not null)
-                        {
                         var cea = new CancelEventArgs();
-                        LabelEditEnding.Invoke(this, cea);
+                        OnPlatformEventLabelEditEnding(cea);
                         return cea.Cancel ? IntPtrUtils.One : IntPtr.Zero;
-                        }
-                        else return IntPtr.Zero;
                     }
                 }
                 case NativeApi.PropertyGridEvent.ColBeginDrag:
                 {
                     {
-                        if(ColBeginDrag is not null)
-                        {
                         var cea = new CancelEventArgs();
-                        ColBeginDrag.Invoke(this, cea);
+                        OnPlatformEventColBeginDrag(cea);
                         return cea.Cancel ? IntPtrUtils.One : IntPtr.Zero;
-                        }
-                        else return IntPtr.Zero;
                     }
                 }
                 case NativeApi.PropertyGridEvent.ColDragging:
                 {
-                    ColDragging?.Invoke(); return IntPtr.Zero;
+                    OnPlatformEventColDragging(); return IntPtr.Zero;
                 }
                 case NativeApi.PropertyGridEvent.ColEndDrag:
                 {
-                    ColEndDrag?.Invoke(); return IntPtr.Zero;
+                    OnPlatformEventColEndDrag(); return IntPtr.Zero;
                 }
                 default: throw new Exception("Unexpected PropertyGridEvent value: " + e);
             }
         }
         
-        public Action? Selected;
-        public Action? Changed;
-        public event EventHandler<CancelEventArgs>? Changing;
-        public Action? Highlighted;
-        public Action? ButtonClick;
-        public Action? RightClick;
-        public Action? DoubleClick;
-        public Action? ItemCollapsed;
-        public Action? ItemExpanded;
-        public event EventHandler<CancelEventArgs>? LabelEditBegin;
-        public event EventHandler<CancelEventArgs>? LabelEditEnding;
-        public event EventHandler<CancelEventArgs>? ColBeginDrag;
-        public Action? ColDragging;
-        public Action? ColEndDrag;
         
         [SuppressUnmanagedCodeSecurity]
         public class NativeApi : NativeApiProvider

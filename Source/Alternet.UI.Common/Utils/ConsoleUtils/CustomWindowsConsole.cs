@@ -19,12 +19,12 @@ namespace Alternet.UI
     {
         private static CustomWindowsConsole? defaultConsole;
 
-        private readonly TwoDimensionalBuffer<WindowsUtils.NativeMethods.ConsoleCharInfo> screenBuf;
-        private readonly WindowsUtils.NativeMethods.SmallPoint screenCoord;
-        private readonly WindowsUtils.NativeMethods.SmallPoint topLeft = new() { X = 0, Y = 0 };
+        private readonly TwoDimensionalBuffer<MswUtils.NativeMethods.ConsoleCharInfo> screenBuf;
+        private readonly MswUtils.NativeMethods.SmallPoint screenCoord;
+        private readonly MswUtils.NativeMethods.SmallPoint topLeft = new() { X = 0, Y = 0 };
 
         private SafeFileHandle? consoleHandle;
-        private WindowsUtils.NativeMethods.SmallRect screenRect;
+        private MswUtils.NativeMethods.SmallRect screenRect;
         private int paintCounter;
 
         /// <summary>
@@ -32,14 +32,14 @@ namespace Alternet.UI
         /// </summary>
         public CustomWindowsConsole()
         {
-            WindowsUtils.ShowConsole();
+            MswUtils.ShowConsole();
 
             Width = (short)Console.WindowWidth;
             Height = (short)Console.WindowHeight;
 
-            screenBuf = new TwoDimensionalBuffer<WindowsUtils.NativeMethods.ConsoleCharInfo>(Width, Height);
+            screenBuf = new TwoDimensionalBuffer<MswUtils.NativeMethods.ConsoleCharInfo>(Width, Height);
 
-            screenRect = new WindowsUtils.NativeMethods.SmallRect()
+            screenRect = new MswUtils.NativeMethods.SmallRect()
             {
                 Left = 0,
                 Top = 0,
@@ -47,7 +47,7 @@ namespace Alternet.UI
                 Bottom = (short)Height,
             };
 
-            screenCoord = new WindowsUtils.NativeMethods.SmallPoint()
+            screenCoord = new MswUtils.NativeMethods.SmallPoint()
             {
                 X = (short)Width,
                 Y = (short)Height,
@@ -83,7 +83,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets screen buffer.
         /// </summary>
-        public TwoDimensionalBuffer<WindowsUtils.NativeMethods.ConsoleCharInfo> ScreenBuf => screenBuf;
+        public TwoDimensionalBuffer<MswUtils.NativeMethods.ConsoleCharInfo> ScreenBuf => screenBuf;
 
         /// <summary>
         /// Gets console width.
@@ -110,7 +110,7 @@ namespace Alternet.UI
         {
             if (paintCounter == 0)
             {
-                WindowsUtils.ShowConsole();
+                MswUtils.ShowConsole();
             }
 
             paintCounter++;
@@ -125,7 +125,7 @@ namespace Alternet.UI
 
             if (paintCounter == 0)
             {
-                consoleHandle ??= WindowsUtils.NativeMethods.CreateFile(
+                consoleHandle ??= MswUtils.NativeMethods.CreateFile(
                     "CONOUT$",
                     0x40000000,
                     0x02,
@@ -134,7 +134,7 @@ namespace Alternet.UI
                     0,
                     IntPtr.Zero);
 
-                WindowsUtils.NativeMethods.WriteConsoleOutput(
+                MswUtils.NativeMethods.WriteConsoleOutput(
                     consoleHandle,
                     screenBuf.Data,
                     screenCoord,

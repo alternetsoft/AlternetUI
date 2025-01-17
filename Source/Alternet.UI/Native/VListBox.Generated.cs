@@ -334,33 +334,28 @@ namespace Alternet.UI.Native
             {
                 case NativeApi.VListBoxEvent.SelectionChanged:
                 {
-                    SelectionChanged?.Invoke(); return IntPtr.Zero;
+                    OnPlatformEventSelectionChanged(); return IntPtr.Zero;
                 }
                 case NativeApi.VListBoxEvent.MeasureItem:
                 {
-                    MeasureItem?.Invoke(); return IntPtr.Zero;
+                    OnPlatformEventMeasureItem(); return IntPtr.Zero;
                 }
                 case NativeApi.VListBoxEvent.DrawItem:
                 {
-                    DrawItem?.Invoke(); return IntPtr.Zero;
+                    OnPlatformEventDrawItem(); return IntPtr.Zero;
                 }
                 case NativeApi.VListBoxEvent.DrawItemBackground:
                 {
-                    DrawItemBackground?.Invoke(); return IntPtr.Zero;
+                    OnPlatformEventDrawItemBackground(); return IntPtr.Zero;
                 }
                 case NativeApi.VListBoxEvent.ControlRecreated:
                 {
-                    ControlRecreated?.Invoke(); return IntPtr.Zero;
+                    OnPlatformEventControlRecreated(); return IntPtr.Zero;
                 }
                 default: throw new Exception("Unexpected VListBoxEvent value: " + e);
             }
         }
         
-        public Action? SelectionChanged;
-        public Action? MeasureItem;
-        public Action? DrawItem;
-        public Action? DrawItemBackground;
-        public Action? ControlRecreated;
         
         [SuppressUnmanagedCodeSecurity]
         public class NativeApi : NativeApiProvider

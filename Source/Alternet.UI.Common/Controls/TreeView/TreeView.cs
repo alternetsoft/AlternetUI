@@ -575,7 +575,12 @@ namespace Alternet.UI
 
                 selectedItems.Clear();
                 foreach (var item in value)
+                {
+                    if (item is null)
+                        continue;
                     selectedItems.Add(item);
+                }
+
                 RaiseSelectionChanged(EventArgs.Empty);
             }
         }

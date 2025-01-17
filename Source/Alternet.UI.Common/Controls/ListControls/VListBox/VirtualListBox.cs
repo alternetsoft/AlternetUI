@@ -120,6 +120,14 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
+        [Browsable(true)]
+        public override bool HasBorder
+        {
+            get => base.HasBorder;
+            set => base.HasBorder = value;
+        }
+
+        /// <inheritdoc/>
         public override bool UserPaint
         {
             get => base.UserPaint;

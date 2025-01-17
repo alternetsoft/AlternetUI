@@ -14,6 +14,19 @@ namespace ApiGenerator.Managed
 {
     internal class ManagedApiClassGenerator
     {
+
+        public static bool IsControlOrDescendant(ApiType managedApiType)
+        {
+            var type = managedApiType.Type;
+
+            var controlType = typeof(NativeApi.Api.Control);
+
+            var result = type == controlType
+                || Alternet.UI.AssemblyUtils.TypeIsDescendant(type, controlType);
+
+            return result;
+        }
+
         public static bool IsControl(ApiType managedApiType)
         {
             var type = managedApiType.Type;
@@ -491,8 +504,11 @@ using System.Security;");
 
             // ===========================
 
+            var isControlOrDescendant = IsControlOrDescendant(managedApiType);
+
             using (new BlockIndent(w))
             {
+
                 if (IsControl(managedApiType))
                 {
                     w.WriteLine("if(handler is null)");
@@ -513,7 +529,11 @@ using System.Security;");
                     if (dataType != null)
                     {
                         w.WriteLine($"var ea = new NativeEventArgs<{dataType.Name}>(MarshalEx.PtrToStructure<{dataType.Name}>(parameter));");
-                        w.WriteLine($"{e.Name}?.Invoke(this, ea); return ea.Result;");
+
+                        if(isControlOrDescendant)
+                            w.WriteLine($"OnPlatformEvent{e.Name}(ea); return ea.Result;");
+                        else
+                            w.WriteLine($"{e.Name}?.Invoke(this, ea); return ea.Result;");
                     }
                     else
                     {
@@ -522,21 +542,36 @@ using System.Security;");
                         {
                             using (new BlockIndent(w))
                             {
-                                w.WriteLine($"if({e.Name} is not null)");
-                                w.WriteLine("{");
+                                if (!isControlOrDescendant)
+                                {
+                                    w.WriteLine($"if({e.Name} is not null)");
+                                    w.WriteLine("{");
+                                }
 
                                 w.WriteLine($"var cea = new CancelEventArgs();");
-                                w.WriteLine($"{e.Name}.Invoke(this, cea);");
+
+                                if(isControlOrDescendant)
+                                    w.WriteLine($"OnPlatformEvent{e.Name}(cea);");
+                                else
+                                    w.WriteLine($"{e.Name}.Invoke(this, cea);");
+
                                 w.WriteLine(
                                     $"return cea.Cancel ? IntPtrUtils.One : IntPtr.Zero;");
 
-                                w.WriteLine("}");
-                                w.WriteLine("else return IntPtr.Zero;");
+                                if (!isControlOrDescendant)
+                                {
+                                    w.WriteLine("}");
+                                    w.WriteLine("else return IntPtr.Zero;");
+                                }
                             }
                         }
                         else
-                            w.WriteLine(
-                                $"{e.Name}?.Invoke(); return IntPtr.Zero;");
+                        {
+                            if(isControlOrDescendant)
+                                w.WriteLine($"OnPlatformEvent{e.Name}(); return IntPtr.Zero;");
+                            else
+                                w.WriteLine($"{e.Name}?.Invoke(); return IntPtr.Zero;");
+                        }
                     }
                 }
 
@@ -564,35 +599,38 @@ using System.Security;");
 
             w.WriteLine();
 
-            foreach (var e in events)
+            if(!isControlOrDescendant)
             {
-                string? argsType;
-                var dataType = MemberProvider.TryGetNativeEventDataType(e);
-                bool emitEvent;
-                if (dataType != null)
+                foreach (var e in events)
                 {
-                    argsType = "NativeEventHandler<" + dataType.Name + ">";
-                    emitEvent = true;
-                }
-                else
-                {
-                    var attribute = MemberProvider.GetEventAttribute(e);
-
-                    if (attribute.Cancellable)
+                    string? argsType;
+                    var dataType = MemberProvider.TryGetNativeEventDataType(e);
+                    bool emitEvent;
+                    if (dataType != null)
                     {
-                        argsType = "EventHandler<CancelEventArgs>";
+                        argsType = "NativeEventHandler<" + dataType.Name + ">";
                         emitEvent = true;
                     }
                     else
                     {
-                        argsType = "Action";
-                        emitEvent = false;
+                        var attribute = MemberProvider.GetEventAttribute(e);
+
+                        if (attribute.Cancellable)
+                        {
+                            argsType = "EventHandler<CancelEventArgs>";
+                            emitEvent = true;
+                        }
+                        else
+                        {
+                            argsType = "Action";
+                            emitEvent = false;
+                        }
                     }
+
+                    var eventStr = emitEvent ? "event " : "";
+
+                    w.WriteLine($"public {eventStr}{argsType}? {e.Name};");
                 }
-
-                var eventStr = emitEvent ? "event " : "";
-
-                w.WriteLine($"public {eventStr}{argsType}? {e.Name};");
             }
         }
 

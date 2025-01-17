@@ -11,7 +11,7 @@ namespace Alternet.UI
     /// <summary>
     /// Contains static methods and properties related to Windows operating system.
     /// </summary>
-    public static class WindowsUtils
+    public static class MswUtils
     {
         private static bool consoleAllocated = false;
 
@@ -28,10 +28,10 @@ namespace Alternet.UI
                 if (version.Version.Major >= 10)
                 {
                     IntPtr hWnd = window.GetHandle();
-                    var attribute = WindowsUtils.NativeMethods
+                    var attribute = MswUtils.NativeMethods
                     .DwmWindowAttribute.DWMWA_WINDOW_CORNER_PREFERENCE;
                     var preference = (int)value;
-                    WindowsUtils.NativeMethods.DwmSetWindowAttribute(
+                    MswUtils.NativeMethods.DwmSetWindowAttribute(
                         hWnd,
                         attribute,
                         ref preference,
@@ -47,7 +47,7 @@ namespace Alternet.UI
         {
             if (!consoleAllocated)
             {
-                WindowsUtils.NativeMethods.AllocConsole();
+                MswUtils.NativeMethods.AllocConsole();
                 consoleAllocated = true;
             }
         }

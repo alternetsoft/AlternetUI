@@ -148,11 +148,6 @@ namespace Alternet.UI
             Native.Application.SetSystemOptionInt(name, value);
         }
 
-        public void SuppressBellOnError(bool value)
-        {
-            Native.Validator.SuppressBellOnError(value);
-        }
-
         public UIPlatformKind GetPlatformKind()
         {
             return UIPlatformKind.WxWidgets;

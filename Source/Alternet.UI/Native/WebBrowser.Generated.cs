@@ -546,67 +546,57 @@ namespace Alternet.UI.Native
                 case NativeApi.WebBrowserEvent.Navigating:
                 {
                     var ea = new NativeEventArgs<WebBrowserEventData>(MarshalEx.PtrToStructure<WebBrowserEventData>(parameter));
-                    Navigating?.Invoke(this, ea); return ea.Result;
+                    OnPlatformEventNavigating(ea); return ea.Result;
                 }
                 case NativeApi.WebBrowserEvent.Navigated:
                 {
                     var ea = new NativeEventArgs<WebBrowserEventData>(MarshalEx.PtrToStructure<WebBrowserEventData>(parameter));
-                    Navigated?.Invoke(this, ea); return ea.Result;
+                    OnPlatformEventNavigated(ea); return ea.Result;
                 }
                 case NativeApi.WebBrowserEvent.Loaded:
                 {
                     var ea = new NativeEventArgs<WebBrowserEventData>(MarshalEx.PtrToStructure<WebBrowserEventData>(parameter));
-                    Loaded?.Invoke(this, ea); return ea.Result;
+                    OnPlatformEventLoaded(ea); return ea.Result;
                 }
                 case NativeApi.WebBrowserEvent.Error:
                 {
                     var ea = new NativeEventArgs<WebBrowserEventData>(MarshalEx.PtrToStructure<WebBrowserEventData>(parameter));
-                    Error?.Invoke(this, ea); return ea.Result;
+                    OnPlatformEventError(ea); return ea.Result;
                 }
                 case NativeApi.WebBrowserEvent.NewWindow:
                 {
                     var ea = new NativeEventArgs<WebBrowserEventData>(MarshalEx.PtrToStructure<WebBrowserEventData>(parameter));
-                    NewWindow?.Invoke(this, ea); return ea.Result;
+                    OnPlatformEventNewWindow(ea); return ea.Result;
                 }
                 case NativeApi.WebBrowserEvent.TitleChanged:
                 {
                     var ea = new NativeEventArgs<WebBrowserEventData>(MarshalEx.PtrToStructure<WebBrowserEventData>(parameter));
-                    TitleChanged?.Invoke(this, ea); return ea.Result;
+                    OnPlatformEventTitleChanged(ea); return ea.Result;
                 }
                 case NativeApi.WebBrowserEvent.FullScreenChanged:
                 {
                     var ea = new NativeEventArgs<WebBrowserEventData>(MarshalEx.PtrToStructure<WebBrowserEventData>(parameter));
-                    FullScreenChanged?.Invoke(this, ea); return ea.Result;
+                    OnPlatformEventFullScreenChanged(ea); return ea.Result;
                 }
                 case NativeApi.WebBrowserEvent.ScriptMessageReceived:
                 {
                     var ea = new NativeEventArgs<WebBrowserEventData>(MarshalEx.PtrToStructure<WebBrowserEventData>(parameter));
-                    ScriptMessageReceived?.Invoke(this, ea); return ea.Result;
+                    OnPlatformEventScriptMessageReceived(ea); return ea.Result;
                 }
                 case NativeApi.WebBrowserEvent.ScriptResult:
                 {
                     var ea = new NativeEventArgs<WebBrowserEventData>(MarshalEx.PtrToStructure<WebBrowserEventData>(parameter));
-                    ScriptResult?.Invoke(this, ea); return ea.Result;
+                    OnPlatformEventScriptResult(ea); return ea.Result;
                 }
                 case NativeApi.WebBrowserEvent.BeforeBrowserCreate:
                 {
                     var ea = new NativeEventArgs<WebBrowserEventData>(MarshalEx.PtrToStructure<WebBrowserEventData>(parameter));
-                    BeforeBrowserCreate?.Invoke(this, ea); return ea.Result;
+                    OnPlatformEventBeforeBrowserCreate(ea); return ea.Result;
                 }
                 default: throw new Exception("Unexpected WebBrowserEvent value: " + e);
             }
         }
         
-        public event NativeEventHandler<WebBrowserEventData>? Navigating;
-        public event NativeEventHandler<WebBrowserEventData>? Navigated;
-        public event NativeEventHandler<WebBrowserEventData>? Loaded;
-        public event NativeEventHandler<WebBrowserEventData>? Error;
-        public event NativeEventHandler<WebBrowserEventData>? NewWindow;
-        public event NativeEventHandler<WebBrowserEventData>? TitleChanged;
-        public event NativeEventHandler<WebBrowserEventData>? FullScreenChanged;
-        public event NativeEventHandler<WebBrowserEventData>? ScriptMessageReceived;
-        public event NativeEventHandler<WebBrowserEventData>? ScriptResult;
-        public event NativeEventHandler<WebBrowserEventData>? BeforeBrowserCreate;
         
         [SuppressUnmanagedCodeSecurity]
         public class NativeApi : NativeApiProvider

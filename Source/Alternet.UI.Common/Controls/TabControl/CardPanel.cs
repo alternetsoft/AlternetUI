@@ -237,8 +237,8 @@ namespace Alternet.UI
                 }
 
                 var control = card.Control;
-                control.Parent = this;
                 control.Visible = true;
+                control.Parent = this;
             }
             finally
             {

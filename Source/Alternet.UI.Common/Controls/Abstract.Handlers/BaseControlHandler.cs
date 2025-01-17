@@ -41,12 +41,11 @@ namespace Alternet.UI
         /// Gets a <see cref="Control"/> this handler provides the implementation for.
         /// If control is disposed or not attached to the handler, returns dummy control.
         /// </summary>
-        public Control Control
+        public Control? Control
         {
             get
             {
-                return control
-                ?? throw new InvalidOperationException("BaseControlHandler: Control is null");
+                return control;
             }
         }
 

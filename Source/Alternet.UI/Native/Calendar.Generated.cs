@@ -466,33 +466,28 @@ namespace Alternet.UI.Native
             {
                 case NativeApi.CalendarEvent.SelectionChanged:
                 {
-                    SelectionChanged?.Invoke(); return IntPtr.Zero;
+                    OnPlatformEventSelectionChanged(); return IntPtr.Zero;
                 }
                 case NativeApi.CalendarEvent.PageChanged:
                 {
-                    PageChanged?.Invoke(); return IntPtr.Zero;
+                    OnPlatformEventPageChanged(); return IntPtr.Zero;
                 }
                 case NativeApi.CalendarEvent.WeekNumberClick:
                 {
-                    WeekNumberClick?.Invoke(); return IntPtr.Zero;
+                    OnPlatformEventWeekNumberClick(); return IntPtr.Zero;
                 }
                 case NativeApi.CalendarEvent.DayHeaderClick:
                 {
-                    DayHeaderClick?.Invoke(); return IntPtr.Zero;
+                    OnPlatformEventDayHeaderClick(); return IntPtr.Zero;
                 }
                 case NativeApi.CalendarEvent.DayDoubleClick:
                 {
-                    DayDoubleClick?.Invoke(); return IntPtr.Zero;
+                    OnPlatformEventDayDoubleClick(); return IntPtr.Zero;
                 }
                 default: throw new Exception("Unexpected CalendarEvent value: " + e);
             }
         }
         
-        public Action? SelectionChanged;
-        public Action? PageChanged;
-        public Action? WeekNumberClick;
-        public Action? DayHeaderClick;
-        public Action? DayDoubleClick;
         
         [SuppressUnmanagedCodeSecurity]
         public class NativeApi : NativeApiProvider

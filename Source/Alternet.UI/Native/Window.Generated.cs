@@ -369,25 +369,19 @@ namespace Alternet.UI.Native
                 case NativeApi.WindowEvent.Closing:
                 {
                     {
-                        if(Closing is not null)
-                        {
                         var cea = new CancelEventArgs();
-                        Closing.Invoke(this, cea);
+                        OnPlatformEventClosing(cea);
                         return cea.Cancel ? IntPtrUtils.One : IntPtr.Zero;
-                        }
-                        else return IntPtr.Zero;
                     }
                 }
                 case NativeApi.WindowEvent.StateChanged:
                 {
-                    StateChanged?.Invoke(); return IntPtr.Zero;
+                    OnPlatformEventStateChanged(); return IntPtr.Zero;
                 }
                 default: throw new Exception("Unexpected WindowEvent value: " + e);
             }
         }
         
-        public event EventHandler<CancelEventArgs>? Closing;
-        public Action? StateChanged;
         
         [SuppressUnmanagedCodeSecurity]
         public class NativeApi : NativeApiProvider

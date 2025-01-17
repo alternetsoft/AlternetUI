@@ -38,7 +38,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets a <see cref="Control"/> this handler provides the implementation for.
         /// </summary>
-        Control Control { get; }
+        Control? Control { get; }
 
         /// <summary>
         /// Gets a value indicating whether handler is attached
@@ -138,11 +138,6 @@ namespace Alternet.UI
 
         /// <inheritdoc cref="AbstractControl.CaptureMouse"/>
         void CaptureMouse();
-
-        /// <summary>
-        /// Unbinds events from native control.
-        /// </summary>
-        void UnbindEvents();
 
         /// <inheritdoc cref="AbstractControl.ReleaseMouseCapture"/>
         void ReleaseMouseCapture();

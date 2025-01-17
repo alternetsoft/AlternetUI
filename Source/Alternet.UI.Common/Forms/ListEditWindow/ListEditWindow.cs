@@ -14,7 +14,7 @@ using Alternet.UI.Localization;
 namespace Alternet.UI
 {
     [ControlCategory("Hidden")]
-    internal class ListEditWindow : DialogWindow
+    internal class ListEditWindow : Window
     {
         private readonly SplittedPanel panel = new()
         {
@@ -72,7 +72,26 @@ namespace Alternet.UI
             ShowInTaskbar = false;
             MinimizeEnabled = false;
             MaximizeEnabled = false;
-            Title = CommonStrings.Default.WindowTitleListEdit;
+
+            var s = CommonStrings.Default.WindowTitleListEdit;
+
+            string? elementName = null;
+
+            if (source.Instance is FrameworkElement element)
+            {
+                elementName = element.Name ?? element.GetType().FullName;
+            }
+            else
+                elementName = source.Instance?.GetType().FullName;
+
+            var propName = source.PropInfo?.Name;
+
+            if(propName is not null && elementName is not null)
+            {
+                s += " - " + elementName + " - " + propName;
+            }
+
+            Title = s;
             StartLocation = WindowStartLocation.CenterScreen;
 
             if (source.AllowAdd)
@@ -137,7 +156,7 @@ namespace Alternet.UI
 
         internal void SaveData()
         {
-            if (dataSource is null)
+            if (dataSource is null || dataSource.Instance is null)
                 return;
             dataSource.ApplyData(treeView);
         }
@@ -155,11 +174,6 @@ namespace Alternet.UI
         private void Window_Closing(object? sender, WindowClosingEventArgs e)
         {
             ComponentDesigner.Default!.PropertyChanged -= OnDesignerPropertyChanged;
-            if (ModalResult == ModalResult.Accepted)
-            {
-                SaveData();
-                Designer?.RaisePropertyChanged(DataSource?.Instance, DataSource?.PropInfo?.Name);
-            }
         }
 
         private void OnDesignerPropertyChanged(object? sender, ObjectPropertyChangedEventArgs e)
@@ -191,8 +205,6 @@ namespace Alternet.UI
 
         private void CancelButton_Click(object? sender, EventArgs e)
         {
-            if (Modal)
-                ModalResult = ModalResult.Canceled;
             Close();
         }
 
@@ -201,8 +213,13 @@ namespace Alternet.UI
             if (!propertyGrid.ClearSelection(true))
                 return;
             SetFocusIfPossible();
-            if (Modal)
-                ModalResult = ModalResult.Accepted;
+
+            if(DataSource?.Instance is not null)
+            {
+                SaveData();
+                Designer?.RaisePropertyChanged(DataSource?.Instance, DataSource?.PropInfo?.Name);
+            }
+
             Close();
         }
 

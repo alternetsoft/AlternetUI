@@ -11,6 +11,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\Alternet.UI.Common\Alternet.UI.Common.csproj" />
     <ProjectReference Include="..\NativeApi\NativeApi.csproj" />
   </ItemGroup>
 </Project>
