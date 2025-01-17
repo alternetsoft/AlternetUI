@@ -9,7 +9,7 @@ namespace Alternet.UI
     /// This timer is optimized for use in AlterNET UI applications and must be used
     /// in a GUI environment instead of any other timers.
     /// </summary>
-    public class Timer : BaseComponent
+    public class Timer : FrameworkElement
     {
         private ITimerHandler? handler;
         private bool autoReset = true;
