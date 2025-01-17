@@ -133,10 +133,8 @@ namespace Alternet.UI
                 return ModalResult.Canceled;
             ModalResult = ModalResult.None;
             ApplyStartLocationOnce(owner);
-            App.AddIdleTask(() =>
-            {
-                ActiveControl?.SetFocusIfPossible();
-            });
+            ActiveControl?.SetFocusIfPossible();
+            App.DoEvents();
             return Handler.ShowModal(owner);
         }
 
