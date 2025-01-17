@@ -19,9 +19,6 @@ namespace ControlsSample
         private readonly Button showPopupButton = new("Show Calendar Popup");
 
         [IsTextLocalized(true)]
-        private readonly CheckBox modalPopupsCheckBox = new("Modal Popups");
-
-        [IsTextLocalized(true)]
         private readonly CheckBox UseGenericCheckBox = new("Use Generic");
 
         private readonly PopupCalendar popupCalendar = new();
@@ -32,10 +29,8 @@ namespace ControlsSample
             panel.Parent = this;
 
             showPopupButton.Parent = panel;
-            modalPopupsCheckBox.Parent = panel;
             UseGenericCheckBox.Visible = false;
             UseGenericCheckBox.Parent = panel;
-            modalPopupsCheckBox.BindBoolProp(this, nameof(ModalPopups));
             UseGenericCheckBox.BindBoolProp(this, nameof(UseGeneric));
 
             panel.ChildrenSet.Margin(10).HorizontalAlignment(HorizontalAlignment.Left);
@@ -43,19 +38,6 @@ namespace ControlsSample
             showPopupButton.Click += ShowPopupButton_Click;
 
             popupCalendar.AfterHide += PopupListBox_AfterHide;
-        }
-
-        public bool ModalPopups
-        {
-            get
-            {
-                return PopupWindow.ModalPopups;
-            }
-
-            set
-            {
-                PopupWindow.ModalPopups = value;
-            }
         }
 
         public bool UseGeneric

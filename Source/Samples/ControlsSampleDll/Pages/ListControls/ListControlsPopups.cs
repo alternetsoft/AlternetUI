@@ -42,15 +42,9 @@ namespace ControlsSample
             HorizontalAlignment = HorizontalAlignment.Left,
         };
 
-        private readonly CheckBox modalPopupsCheckBox = new()
-        {
-            Text = GenericStrings.ModalPopups,
-            HorizontalAlignment = HorizontalAlignment.Left,
-        };
-
         private readonly PopupListBox popupListBox = new();
         private readonly PopupCheckListBox popupCheckListBox = new();
-        private readonly PopupColorListBox popupColorListBox = new();
+        private readonly PopupColorListBox popupColors = new();
         private readonly PopupListBox<VirtualListBox> popupVListBox = new();
 
         static ListControlsPopups()
@@ -66,10 +60,8 @@ namespace ControlsSample
                 showPopupVListBoxButton,
                 showPopupListBoxButton,
                 showPopupCheckListBoxButton,
-                showPopupColorListBoxButton,
-                modalPopupsCheckBox).Parent(panel).SuggestedWidthToMax().Margin(10);
-
-            modalPopupsCheckBox.BindBoolProp(this, nameof(ModalPopups));
+                showPopupColorListBoxButton)
+            .Parent(panel).SuggestedWidthToMax().Margin(10);
 
             showPopupListBoxButton.Click += ShowPopupListBoxButton_Click;
             showPopupCheckListBoxButton.Click += ShowPopupCheckListBoxButton_Click;
@@ -79,7 +71,7 @@ namespace ControlsSample
             popupListBox.AfterHide += PopupListBox_AfterHide;
             popupCheckListBox.AfterHide += PopupCheckListBox_AfterHide;
             popupVListBox.AfterHide += PopupVListBox_AfterHide;
-            popupColorListBox.AfterHide+= PopupColorListBox_AfterHide;
+            popupColors.AfterHide+= PopupColorListBox_AfterHide;
 
             // These events are handled only for logging purposes.
             // They are normally not needed in order to work with popup windows
@@ -88,19 +80,6 @@ namespace ControlsSample
             popupListBox.MainControl.SelectionChanged += PopupListBox_SelectionChanged;
             popupListBox.MainControl.Click += PopupListBox_Click;
             popupListBox.MainControl.MouseDoubleClick += PopupListBox_MouseDoubleClick;
-        }
-
-        public bool ModalPopups
-        {
-            get
-            {
-                return PopupWindow.ModalPopups;
-            }
-
-            set
-            {
-                PopupWindow.ModalPopups = value;
-            }
         }
 
         private void PopupCheckListBox_AfterHide(object? sender, EventArgs e)
@@ -113,24 +92,26 @@ namespace ControlsSample
         private void PopupListBox_AfterHide(object? sender, EventArgs e)
         {
             var resultItem = popupListBox.ResultItem ?? GenericStrings.NoneInsideLessGreater;
-            App.Log($"AfterHide PopupResult: {popupListBox.PopupResult}, {GenericStrings.Item}: {resultItem}");
+            App.Log($"PopupResult: {popupListBox.PopupResult}, {GenericStrings.Item}: {resultItem}");
         }
 
         private void PopupVListBox_AfterHide(object? sender, EventArgs e)
         {
             var resultItem = popupVListBox.ResultItem ?? GenericStrings.NoneInsideLessGreater;
-            App.Log($"AfterHide PopupResult: {popupVListBox.PopupResult}, {GenericStrings.Item}: {resultItem}");
+            App.Log($"PopupResult: {popupVListBox.PopupResult}, {GenericStrings.Item}: {resultItem}");
         }
 
         private void PopupColorListBox_AfterHide(object? sender, EventArgs e)
         {
-            var resultItem = popupColorListBox.ResultValue?.ToString() ?? GenericStrings.NoneInsideLessGreater;
-            App.Log($"AfterHide PopupResult: {popupColorListBox.PopupResult}, {GenericStrings.Item}: {resultItem}");
+            var resultItem = popupColors.ResultValue?.ToString()
+                ?? GenericStrings.NoneInsideLessGreater;
+            App.Log($"PopupResult: {popupColors.PopupResult}, {GenericStrings.Item}: {resultItem}");
         }
 
         internal void LogPopupListBoxEvent(string eventName)
         {
-            var selectedItem = popupListBox.MainControl.SelectedItem?.ToString() ?? GenericStrings.NoneInsideLessGreater;
+            var selectedItem = popupListBox.MainControl.SelectedItem?.ToString()
+                ?? GenericStrings.NoneInsideLessGreater;
             App.Log($"Popup: {eventName}. {GenericStrings.SelectedItem}: {selectedItem}");
         }
 
@@ -202,9 +183,9 @@ namespace ControlsSample
 
         private void ShowPopupColorListBoxButton_Click(object? sender, EventArgs e)
         {
-            if(popupColorListBox.MainControl.SelectedItem is null)
-                popupColorListBox.MainControl.SelectFirstItem();
-            popupColorListBox.ShowPopup(showPopupColorListBoxButton);
+            if(popupColors.MainControl.SelectedItem is null)
+                popupColors.MainControl.SelectFirstItem();
+            popupColors.ShowPopup(showPopupColorListBoxButton);
         }
 
         private void ShowPopupCheckListBoxButton_Click(object? sender, EventArgs e)

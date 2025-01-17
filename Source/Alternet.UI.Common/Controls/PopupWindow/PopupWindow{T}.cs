@@ -68,6 +68,7 @@ namespace Alternet.UI
         /// </summary>
         public static Thickness DefaultPadding { get; set; } = (5, 5, 5, 10);
 
+/*
         /// <summary>
         /// Gets or sets whether popups are shown using <see cref="DialogWindow.ShowModal()"/>
         /// (true) or <see cref="AbstractControl.Show"/> (false).
@@ -80,6 +81,7 @@ namespace Alternet.UI
             get;
             set;
         }
+*/
 
         /// <summary>
         /// Gets or sets whether 'Ok' button is visible.
@@ -375,6 +377,8 @@ namespace Alternet.UI
             Show();
             WasShown = true;
             FocusMainControl();
+
+            /*
             if (App.IsLinuxOS || ModalPopups)
             {
                 if (ShowModal() == ModalResult.Accepted)
@@ -382,6 +386,7 @@ namespace Alternet.UI
                 else
                     HidePopup(ModalResult.Canceled);
             }
+            */
         }
 
         /// <summary>
