@@ -1,3 +1,34 @@
+# 0.9.703 (2025 January 17)
+
+- PanelSettings control is finished.
+- ControlAndLabel: LabelToControl property which allow to specify horizontal or vertical layout between label and control.
+- Return ICommandSource.CommandTarget and add Command.CurrentTarget property.
+- Create FontComboBox, PanelListBoxAndCards.
+- Maui: Add CheckBoxWithLabelView.
+- Maui: Update to the new nuget versions.
+- Maui: Update used WinRT version.
+- Clipboard: Flush, HasFormat.
+- IDataObject.HasFormat.
+- ListControlItem: TextHasBold, SetLabelFlag.
+- Fixed VirtualListBox.FindFirstVisibleFromLast for 0 item.
+- PictureBox: IsImageCentered, GetImagePreferredSize().
+- ColorComboBox and ColorListBox: Value property setter is fixed. Find(Color? value) method is fixed.
+- Fixed some issues in scroll layout.
+- PanelSettings: Color value editors.
+- PanelSettings: Fixed text and selector editor creation.
+- Set HorizontalAlignment = Left in constructor for some controls.
+- Clipboard formats handling improvement.
+- Clipboard: Fixed exception macos.
+- Calendar: Added update theme after handle created.
+- PopupCalendar: more correct initial size.
+- PopupWindow: By default title bar made visible as allows to move popup.
+- TabControl: Fixed not to create invisible pages on dispose.
+- Border.ResetBorders(), ScrollViewer.CreateWithChild.
+- Control: Fixed MinimumSize, MaximumSize setters.
+- Redo native controls events handling.
+- List editor now is non-modal.
+- BaseComponent merged into FrameworkElement.
+
 # 0.9.702 (2025 January 12)
 
 - VirtualListBox: Fixed not repatined after EndUpdate in some cases.
