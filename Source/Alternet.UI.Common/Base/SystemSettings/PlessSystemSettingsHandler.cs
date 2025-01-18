@@ -283,10 +283,5 @@ namespace Alternet.UI
         public virtual void SetUseBestVisual(bool flag, bool forceTrueColour = false)
         {
         }
-
-        /// <inheritdoc/>
-        public virtual void SuppressBellOnError(bool value)
-        {
-        }
     }
 }
