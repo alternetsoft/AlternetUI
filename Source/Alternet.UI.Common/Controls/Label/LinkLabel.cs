@@ -192,6 +192,31 @@ namespace Alternet.UI
             get => base.Layout;
         }
 
+        /// <inheritdoc/>
+        public override SizeD GetPreferredSize(SizeD availableSize)
+        {
+            var specifiedWidth = SuggestedWidth;
+            var specifiedHeight = SuggestedHeight;
+
+            SizeD result = 0;
+
+            var text = Text;
+            if (!string.IsNullOrEmpty(text))
+            {
+                result = MeasureCanvas.GetTextExtent(
+                    text,
+                    GetLabelFont(VisualControlState.Normal));
+            }
+
+            if (!Coord.IsNaN(specifiedWidth))
+                result.Width = Math.Max(result.Width, specifiedWidth);
+
+            if (!Coord.IsNaN(specifiedHeight))
+                result.Height = Math.Max(result.Height, specifiedHeight);
+
+            return result + Padding.Size;
+        }
+
         /// <summary>
         /// Raises <see cref="LinkClicked"/> event.
         /// </summary>
