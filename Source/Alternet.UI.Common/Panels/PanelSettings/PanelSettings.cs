@@ -297,6 +297,48 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Adds item with the link label.
+        /// </summary>
+        /// <param name="clickAction">Action which is invoked when link label is clicked.</param>
+        /// <param name="label">Text.</param>
+        /// <param name="e">Additional arguments.</param>
+        /// <returns></returns>
+        public virtual PanelSettingsItem AddLinkLabel(
+            object label,
+            Action? clickAction,
+            CustomEventArgs? e = null)
+        {
+            return AddLinkLabel(
+            label,
+            (item, e) =>
+            {
+                clickAction?.Invoke();
+            },
+            e);
+        }
+
+        /// <summary>
+        /// Adds item with the button.
+        /// </summary>
+        /// <param name="label">Text which will be shown next to the editor.</param>
+        /// <param name="clickAction">Action which is invoked when button is clicked.</param>
+        /// <param name="e">Additional arguments.</param>
+        /// <returns></returns>
+        public virtual PanelSettingsItem AddButton(
+            object label,
+            Action? clickAction,
+            CustomEventArgs? e = null)
+        {
+            return AddButton(
+            label,
+            (item, e) =>
+            {
+                clickAction?.Invoke();
+            },
+            e);
+        }
+
+        /// <summary>
         /// Adds item with the button.
         /// </summary>
         /// <param name="label">Text which will be shown next to the editor.</param>
@@ -440,6 +482,12 @@ namespace Alternet.UI
             item.ValueType = valueSource.ValueType;
             Items.Add(item);
             return item;
+        }
+
+        internal static void UpdateTitle(PanelSettingsItem item, AbstractControl control)
+        {
+            var text = item.Label?.ToString() ?? string.Empty;
+            control.Title = text;
         }
 
         /// <summary>
@@ -623,12 +671,6 @@ namespace Alternet.UI
         {
             var text = item.Label?.ToString() ?? string.Empty;
             control.Text = text;
-        }
-
-        private static void UpdateTitle(PanelSettingsItem item, AbstractControl control)
-        {
-            var text = item.Label?.ToString() ?? string.Empty;
-            control.Title = text;
         }
 
         private static T CreateOrUpdateControl<T>(PanelSettingsItem item, object? control)
