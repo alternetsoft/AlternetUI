@@ -31,6 +31,18 @@ namespace Alternet::UI
         {
             return false;
         }
+/*
+        virtual wxWindow* GetMainWindowOfCompositeControl() override
+        {
+            auto result = wxFrame::GetMainWindowOfCompositeControl();
+            if (result == nullptr)
+                return nullptr;
+            if(!result->IsEnabled())
+                return nullptr;
+            return result;
+        }
+*/
+
     private:
     };
 
@@ -98,6 +110,7 @@ namespace Alternet::UI
     protected:
         void OnBeforeDestroyWxWindow() override;
         void OnWxWindowDestroyed(wxWindow* window) override;
+        virtual void OnActivate(wxActivateEvent& event) override;
 
         void UpdateWxWindowParent() override;
     private:
