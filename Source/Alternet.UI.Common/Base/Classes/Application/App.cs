@@ -1765,6 +1765,18 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets all visible windows in the application except the specified window.
+        /// </summary>
+        /// <value>A <see cref="IEnumerable{Window}"/> that contains
+        /// references to all visible <see cref="Window"/> objects in the application
+        /// except the specified window.</value>
+        public static IEnumerable<Window> VisibleWindowsWithExcept(Window exceptWindow)
+        {
+            var result = Current?.Windows.Where(x => (x.Visible && x != exceptWindow)) ?? [];
+            return result;
+        }
+
+        /// <summary>
         /// Raises <see cref="Idle"/> event.
         /// </summary>
         public static void RaiseIdle()

@@ -137,7 +137,7 @@ namespace Alternet.UI
         {
             PushChildrenProperties(
                         control,
-                        KnownProperties.AbstractControl.Enabled,
+                        KnownProperties.AbstractControlProperties.Enabled,
                         BoolBoxes.Box(newValue),
                         ref oldValues);
         }
@@ -162,7 +162,7 @@ namespace Alternet.UI
         {
             PushChildrenProperties(
                         control,
-                        KnownProperties.AbstractControl.Visible,
+                        KnownProperties.AbstractControlProperties.Visible,
                         BoolBoxes.Box(newValue),
                         ref oldValues);
         }
@@ -175,9 +175,12 @@ namespace Alternet.UI
         /// which childs are processed.</param>
         /// <param name="newValue">New value for the property.</param>
         /// <returns>Old values of the properties, it allows to restore them later.</returns>
+        /// <param name="doInsideUpdate">Whether to call
+        /// <see cref="AbstractControl.DoInsideUpdate"/> when properties are restored.</param>
         public static ConcurrentStack<SavedPropertiesItem>? PushChildrenEnabledMultiple(
             IEnumerable<AbstractControl> containers,
-            bool newValue)
+            bool newValue,
+            bool doInsideUpdate = true)
         {
             ConcurrentStack<SavedPropertiesItem>? result = null;
 
@@ -185,12 +188,20 @@ namespace Alternet.UI
             {
                 ConcurrentStack<PropInstanceAndValue>? oldValues = null;
 
-                PushChildrenEnabled(
-                            container,
-                            newValue,
-                            ref oldValues);
+                if (doInsideUpdate)
+                    container.DoInsideUpdate(Fn);
+                else
+                    Fn();
 
-                if(oldValues is not null)
+                void Fn()
+                {
+                    PushChildrenEnabled(
+                                container,
+                                newValue,
+                                ref oldValues);
+                }
+
+                if (oldValues is not null)
                 {
                     SavedPropertiesItem item = new(container, oldValues);
                     result ??= new();
