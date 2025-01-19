@@ -182,6 +182,14 @@ namespace Alternet.UI
             Fn("Log system colors", LogUtils.LogSystemColors);
             Fn("Log constraint checks", LogUtils.LogCheckConstraints);
             Fn("Log used Alternet assemblies", LogUtils.LogUsedAlternetAssemblies);
+            Fn("Log system paths", () =>
+            {
+                App.LogNameValue(
+                    "RuntimeEnvironment.GetRuntimeDirectory",
+                    System.Runtime.InteropServices.RuntimeEnvironment.GetRuntimeDirectory());
+
+                App.LogNameValue("GetSystemDllPath", CodeGeneratorUtils.GetSystemDllPath());
+            });
 
             Fn("Set Height = (Width / 3) * 2", () =>
             {
