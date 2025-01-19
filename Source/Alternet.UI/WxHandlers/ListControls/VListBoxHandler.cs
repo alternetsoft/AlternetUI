@@ -22,7 +22,7 @@ namespace Alternet.UI
         /// Gets a <see cref="VirtualListBox"/> this handler provides the
         /// implementation for.
         /// </summary>
-        public new VirtualListBox Control => (VirtualListBox)base.Control;
+        public new VirtualListBox? Control => (VirtualListBox?)base.Control;
 
         /// <summary>
         /// Gets or sets a value indicating whether the control has a border.
@@ -53,7 +53,7 @@ namespace Alternet.UI
             var resultI = NativeControl.GetItemRectI(index);
             if (resultI.SizeIsEmpty)
                 return null;
-            var resultD = Control.PixelToDip(resultI);
+            var resultD = Control?.PixelToDip(resultI);
             return resultD;
         }
 
@@ -97,7 +97,7 @@ namespace Alternet.UI
         {
             base.OnAttach();
 
-            NativeControl.ItemsCount = Control.Items.Count;
+            NativeControl.ItemsCount = Control?.Items.Count ?? 0;
         }
 
         private class NativeVListBox : Native.VListBox

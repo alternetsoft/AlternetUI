@@ -15,9 +15,10 @@ namespace Alternet.UI
             this.useGeneric = useGeneric;
         }
 
-        public new Native.AnimationControl NativeControl => (Native.AnimationControl)base.NativeControl;
+        public new Native.AnimationControl NativeControl
+            => (Native.AnimationControl)base.NativeControl;
 
-        public new AnimationPlayer Control => (AnimationPlayer)base.Control;
+        public new AnimationPlayer? Control => (AnimationPlayer?)base.Control;
 
         [Browsable(false)]
         public virtual uint FrameCount
@@ -101,7 +102,7 @@ namespace Alternet.UI
             base.OnAttach();
             if (useGeneric)
                 UseGeneric = true;
-            Control.DoInsideLayout(() =>
+            Control?.DoInsideLayout(() =>
             {
                 Control.VerticalAlignment = VerticalAlignment.Top;
                 Control.HorizontalAlignment = HorizontalAlignment.Left;

@@ -12,6 +12,6 @@ namespace Alternet.UI
         /// <summary>
         /// Gets a <see cref="Control"/> this handler provides the implementation for.
         /// </summary>
-        public new T Control => (T)base.Control;
+        public new T? Control => (T?)base.Control;
     }
 }

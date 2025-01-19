@@ -93,7 +93,7 @@ namespace Alternet.UI
         protected override void OnAttach()
         {
             base.OnAttach();
-            Control.UpdateScrollInfo();
+            Control?.UpdateScrollInfo();
         }
 
         internal override Native.Control CreateNativeControl()

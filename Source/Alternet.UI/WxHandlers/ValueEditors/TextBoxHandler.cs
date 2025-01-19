@@ -474,7 +474,7 @@ namespace Alternet.UI
 
         internal class NativeTextBox : Native.TextBox
         {
-            public NativeTextBox(TextBox control)
+            public NativeTextBox(TextBox? control)
             {
                 IntPtr ptr = default;
                 SetNativePointer(NativeApi.TextBox_CreateTextBox_(ptr));
