@@ -19,6 +19,9 @@ namespace Alternet.UI
         {
             base.OnAttach();
 
+            if (Control is null)
+                return;
+
             NativeControl.Minimum = Control.Minimum;
             NativeControl.Maximum = Control.Maximum;
             NativeControl.Value = Control.Value;
@@ -36,6 +39,9 @@ namespace Alternet.UI
         {
             base.OnDetach();
 
+            if (Control is null)
+                return;
+
             Control.MinimumChanged -= Control_MinimumChanged;
             Control.MaximumChanged -= Control_MaximumChanged;
             Control.ValueChanged -= Control_ValueChanged;
@@ -45,27 +51,32 @@ namespace Alternet.UI
 
         private void Control_IsIndeterminateChanged(object? sender, EventArgs e)
         {
-            NativeControl.IsIndeterminate = Control.IsIndeterminate;
+            if(Control is not null)
+                NativeControl.IsIndeterminate = Control.IsIndeterminate;
         }
 
         private void Control_OrientationChanged(object? sender, EventArgs e)
         {
-            NativeControl.Orientation = Control.Orientation;
+            if (Control is not null)
+                NativeControl.Orientation = Control.Orientation;
         }
 
         private void Control_ValueChanged(object? sender, System.EventArgs e)
         {
-            NativeControl.Value = Control.Value;
+            if (Control is not null)
+                NativeControl.Value = Control.Value;
         }
 
         private void Control_MaximumChanged(object? sender, System.EventArgs e)
         {
-            NativeControl.Maximum = Control.Maximum;
+            if (Control is not null)
+                NativeControl.Maximum = Control.Maximum;
         }
 
         private void Control_MinimumChanged(object? sender, System.EventArgs e)
         {
-            NativeControl.Minimum = Control.Minimum;
+            if (Control is not null)
+                NativeControl.Minimum = Control.Minimum;
         }
     }
 }
