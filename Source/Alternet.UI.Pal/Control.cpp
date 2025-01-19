@@ -2573,6 +2573,19 @@ namespace Alternet::UI
         return new wxWindow2();
     }
 
+    bool Control::HasEnabledChilds()
+    {
+        const wxWindowList& list = GetWxWindow()->GetChildren();
+        for (wxWindowList::compatibility_iterator node = list.GetFirst(); node; node = node->GetNext())
+        {
+            auto current = node->GetData();
+            if (current->IsEnabled())
+                return true;
+        }
+
+        return false;
+    }
+
     long Control::GetDefaultStyle()
     {
         long style = wxNO_BORDER;

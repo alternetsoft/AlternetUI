@@ -214,7 +214,7 @@ namespace Alternet.UI
                     data = (IntPtr)clientData;
 
                 e.ClientData = data;
-                Control.RaiseScriptResult(e);
+                Control?.RaiseScriptResult(e);
                 return;
             }
 
@@ -303,7 +303,7 @@ namespace Alternet.UI
 
         internal override Native.Control CreateNativeControl()
         {
-            var browser = new NativeWebBrowser(Control.DefaultUrl);
+            var browser = new NativeWebBrowser(Control?.DefaultUrl ?? WebBrowser.AboutBlankUrl);
             return browser;
         }
  

@@ -13,7 +13,7 @@ namespace Alternet.UI
         /// <summary>
         /// Contains property information for some of the <see cref="AbstractControl"/> properties.
         /// </summary>
-        public static class AbstractControl
+        public static class AbstractControlProperties
         {
             private static PropertyInfo? enabled;
             private static PropertyInfo? visible;
@@ -25,7 +25,7 @@ namespace Alternet.UI
             {
                 get
                 {
-                    return visible ??= GetControlProperty("Visible");
+                    return visible ??= GetControlProperty("IsVisible");
                 }
             }
 
@@ -36,7 +36,7 @@ namespace Alternet.UI
             {
                 get
                 {
-                    return enabled ??= GetControlProperty("Enabled");
+                    return enabled ??= GetControlProperty("IsEnabled");
                 }
             }
 

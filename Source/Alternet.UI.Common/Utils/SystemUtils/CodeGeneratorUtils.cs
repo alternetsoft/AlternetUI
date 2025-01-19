@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Reflection.Emit;
@@ -15,6 +16,18 @@ namespace Alternet.UI
     {
         private static AdvDictionary<EventInfo, Delegate>? eventDelegates;
         private static ModuleBuilder? moduleBuilder;
+
+        /// <summary>
+        /// Gets path to folder with System.dll.
+        /// </summary>
+        /// <returns></returns>
+        public static string? GetSystemDllPath()
+        {
+            var assembly = typeof(object).Assembly;
+            var location = assembly.Location;
+            var asmPath = Path.GetDirectoryName(location);
+            return asmPath;
+        }
 
         /// <summary>
         /// Gets <see cref="ModuleBuilder"/> for dynamic assembly generation.

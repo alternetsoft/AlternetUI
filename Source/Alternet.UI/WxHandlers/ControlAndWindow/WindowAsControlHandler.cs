@@ -53,7 +53,7 @@ namespace Alternet.UI
         
         public object? StatusBar { get; set; }
         
-        Window IWindowHandler.Control => (Window)base.Control;
+        Window? IWindowHandler.Control => (Window?)base.Control;
 
         public void Activate()
         {

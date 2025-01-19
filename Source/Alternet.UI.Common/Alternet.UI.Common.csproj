@@ -30,6 +30,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="Microsoft.CodeAnalysis.CSharp.Scripting" Version="4.12.0" />
     <PackageReference Include="SkiaSharp" Version="$(SkiaSharpVersion)" />
     <PackageReference Include="SkiaSharp.Extended" Version="$(SkiaSharpExtendedVersion)" />
     <PackageReference Include="SkiaSharp.Extended.Iconify" Version="$(SkiaSharpExtendedIconifyVersion)" />

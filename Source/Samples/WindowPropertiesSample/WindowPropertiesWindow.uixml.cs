@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Concurrent;
 using System.IO;
 
 using Alternet.Drawing;
@@ -16,6 +17,7 @@ namespace WindowPropertiesSample
         private readonly SetBoundsProperties setBoundsProperties;
 
         private Window? testWindow;
+        ConcurrentStack<PropInstanceAndValue.SavedPropertiesItem>? SavedEnabledProperties;
 
         public WindowPropertiesWindow()
         {
@@ -48,6 +50,21 @@ namespace WindowPropertiesSample
 
             Icon1 = new(GetIconUrl("TestIcon1.ico"));
             Icon2 = new(GetIconUrl("TestIcon2.ico"));
+
+            panelSettings.ParentBackColor = false;
+            panelSettings.BackColor = SystemColors.Window;
+
+            panelSettings.AddLinkLabel("Disable all children except this window", () =>
+            {
+                var forms = App.VisibleWindowsWithExcept(this);
+                SavedEnabledProperties
+                = PropInstanceAndValue.PushChildrenEnabledMultiple(forms, false);
+            });
+
+            panelSettings.AddLinkLabel("Restore children enabled", () =>
+            {
+                PropInstanceAndValue.PopPropertiesMultiple(SavedEnabledProperties);
+            });
         }
 
         internal string GetIconUrl(string name)

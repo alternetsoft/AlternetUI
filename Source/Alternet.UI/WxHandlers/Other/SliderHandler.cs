@@ -25,6 +25,9 @@ namespace Alternet.UI
         {
             base.OnAttach();
 
+            if (Control is null)
+                return;
+
             NativeControl.Minimum = Control.Minimum;
             NativeControl.Maximum = Control.Maximum;
             NativeControl.Value = Control.Value;
@@ -48,6 +51,9 @@ namespace Alternet.UI
         {
             base.OnDetach();
 
+            if (Control is null)
+                return;
+
             Control.MinimumChanged -= Control_MinimumChanged;
             Control.MaximumChanged -= Control_MaximumChanged;
             Control.ValueChanged -= Control_ValueChanged;
@@ -60,6 +66,9 @@ namespace Alternet.UI
 
         private void Control_TickStyleChanged(object? sender, EventArgs e)
         {
+            if (Control is null)
+                return;
+
             var v = Control.TickStyle;
             NativeControl.TickStyle = v;
             if (v == SliderTickStyle.None)
@@ -68,36 +77,50 @@ namespace Alternet.UI
 
         private void Control_OrientationChanged(object? sender, EventArgs e)
         {
+            if (Control is null)
+                return;
             NativeControl.Orientation = Control.Orientation;
         }
 
         private void Control_ValueChanged(object? sender, System.EventArgs e)
         {
+            if (Control is null)
+                return;
             NativeControl.Value = Control.Value;
         }
 
         private void Control_SmallChangeChanged(object? sender, System.EventArgs e)
         {
+            if (Control is null)
+                return;
             NativeControl.SmallChange = Control.SmallChange;
         }
 
         private void Control_LargeChangeChanged(object? sender, System.EventArgs e)
         {
+            if (Control is null)
+                return;
             NativeControl.LargeChange = Control.LargeChange;
         }
 
         private void Control_TickFrequencyChanged(object? sender, System.EventArgs e)
         {
+            if (Control is null)
+                return;
             NativeControl.TickFrequency = Control.TickFrequency;
         }
 
         private void Control_MaximumChanged(object? sender, System.EventArgs e)
         {
+            if (Control is null)
+                return;
             NativeControl.Maximum = Control.Maximum;
         }
 
         private void Control_MinimumChanged(object? sender, System.EventArgs e)
         {
+            if (Control is null)
+                return;
             NativeControl.Minimum = Control.Minimum;
         }
     }

@@ -300,6 +300,8 @@ namespace Alternet.UI
 
         public virtual IPropertyGridItem? GetHitTestProp(PointD point)
         {
+            if (Control is null)
+                return null;
             var pointI = Control.PixelFromDip(point);
             var ptr = NativeControl.GetHitTestProp(pointI);
             var item = PtrToItem(ptr);
@@ -1550,7 +1552,7 @@ namespace Alternet.UI
 
         private IPropertyGridItem? PtrToItem(IntPtr ptr)
         {
-            return Control.HandleToItem(new WxPropertyGridItemHandle(ptr));
+            return Control?.HandleToItem(new WxPropertyGridItemHandle(ptr));
         }
 
         public class WxPropertyGridItemHandle : PropertyGridItemHandle
