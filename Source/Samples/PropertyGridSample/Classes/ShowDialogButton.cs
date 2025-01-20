@@ -17,8 +17,10 @@ namespace PropertyGridSample
 
         private void ShowDialogButton_Click(object? sender, EventArgs e)
         {
-            Dialog?.ShowModal(ParentWindow);
-            ComponentDesigner.SafeDefault.RaisePropertyChanged(null, null);
+            Dialog?.ShowAsync(ParentWindow, (result) =>
+            {
+                ComponentDesigner.SafeDefault.RaisePropertyChanged(null, null);
+            });
         }
 
         public CommonDialog? Dialog { get; set; }

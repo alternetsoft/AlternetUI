@@ -1,4 +1,4 @@
-﻿// #define ObsoleteModalDialogs
+﻿#define ObsoleteModalDialogs
 
 using System;
 using System.Collections.Generic;

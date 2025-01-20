@@ -88,9 +88,8 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        public virtual ModalResult ShowModal(IWindow? owner)
+        public void ShowModalAsync(Window? owner, Action<ModalResult> onResult)
         {
-            return ModalResult.Canceled;
         }
     }
 }

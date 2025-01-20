@@ -1,6 +1,4 @@
-﻿// #define ObsoleteModalDialogs
-
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
@@ -70,10 +68,8 @@ namespace Alternet.UI
         public virtual ModalResult EnterModalResult { get; set; } = ModalResult.None;
 
         /// <summary>
-        /// Gets or sets the modal result value, which is the value that is returned from the
-        /// <see cref="ShowModal()"/> method.
-        /// This property is set to <see cref="ModalResult.None"/> at the moment
-        /// <see cref="ShowModal()"/> is called.
+        /// Gets or sets the modal result value, which is the value that is used when dialog
+        /// is shown in order to close it immediately.
         /// </summary>
         [Browsable(false)]
         public virtual ModalResult ModalResult
@@ -95,50 +91,6 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Opens a window and returns only when the newly opened window is closed.
-        /// User interaction with all other windows in the application is disabled until the
-        /// modal window is closed.
-        /// </summary>
-        /// <returns>
-        /// The return value is the value of the <see cref="ModalResult"/> property before
-        /// window closes.
-        /// </returns>
-#if ObsoleteModalDialogs
-        [Obsolete("Method is deprecated.")]
-#endif
-        public virtual ModalResult ShowModal()
-        {
-            return ShowModal(Owner);
-        }
-
-        /// <summary>
-        /// Opens a window and returns only when the newly opened window is closed.
-        /// User interaction with all other windows in the application is disabled until the
-        /// modal window is closed.
-        /// </summary>
-        /// <param name="owner">
-        /// A window that will own this window.
-        /// </param>
-        /// <returns>
-        /// The return value is the value of the <see cref="ModalResult"/> property before
-        /// window closes.
-        /// </returns>
-#if ObsoleteModalDialogs
-        [Obsolete("Method is deprecated.")]
-#endif
-        public virtual ModalResult ShowModal(Window? owner)
-        {
-            App.DoEvents();
-            if (DisposingOrDisposed)
-                return ModalResult.Canceled;
-            ModalResult = ModalResult.None;
-            ApplyStartLocationOnce(owner);
-            ActiveControl?.SetFocusIfPossible();
-            App.DoEvents();
-            return Handler.ShowModal(owner);
-        }
-
-        /// <summary>
         /// Runs a dialog asynchroniously.
         /// </summary>
         /// <param name="onClose">Action to call after dialog is closed.</param>
@@ -151,8 +103,16 @@ namespace Alternet.UI
         {
             if (DisposingOrDisposed)
                 return;
-            var result = ShowModal(owner);
-            onClose?.Invoke(result == ModalResult.Accepted);
+
+            App.DoEvents();
+            ApplyStartLocationOnce(owner);
+            ActiveControl?.SetFocusIfPossible();
+            App.DoEvents();
+
+            Handler.ShowModalAsync(owner, (result) =>
+            {
+                onClose?.Invoke(result == ModalResult.Accepted);
+            });
         }
 
         /// <inheritdoc/>

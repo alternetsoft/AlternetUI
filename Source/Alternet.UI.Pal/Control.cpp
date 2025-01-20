@@ -211,7 +211,7 @@ namespace Alternet::UI
     {
         SetExtraStyle(wxWS_EX_PROCESS_UI_UPDATES, value);
     }
-
+    
     Control::Control() :
         _flags(ControlFlags::TabStop),
         _delayedFlags(

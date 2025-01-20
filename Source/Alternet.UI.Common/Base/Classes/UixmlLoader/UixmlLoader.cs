@@ -202,6 +202,8 @@ namespace Alternet.UI
                     return;
             }
 
+            var rethrow = true;
+
             if (flags.HasFlag(Flags.ReportError))
             {
                 if (flags.HasFlag(Flags.LogError))
@@ -212,15 +214,23 @@ namespace Alternet.UI
                 if (App.Initialized && !App.Current.InUixmlPreviewerMode
                     && ShowExceptionDialog)
                 {
-                    if (!App.ShowExceptionWindow(e))
+                    rethrow = false;
+
+                    App.ShowExceptionWindow(e, (result) =>
                     {
-                        App.Exit();
-                    }
+                        if (!result)
+                            App.Exit();
+                        else
+                        {
+                            if (!flags.HasFlag(Flags.NoThrowException))
+                                ExceptionUtils.Rethrow(e);
+                        }
+                    });
                 }
             }
 
-            if (!flags.HasFlag(Flags.NoThrowException))
-                ExceptionUtils.Rethrow(e);
+            if (!flags.HasFlag(Flags.NoThrowException) && rethrow)
+                    ExceptionUtils.Rethrow(e);
 
             void BeginSection()
             {

@@ -87,5 +87,9 @@ namespace Alternet.UI
         {
             return ModalResult.Canceled;
         }
+
+        public void ShowModalAsync(Window? owner, Action<ModalResult> onResult)
+        {
+        }
     }
 }

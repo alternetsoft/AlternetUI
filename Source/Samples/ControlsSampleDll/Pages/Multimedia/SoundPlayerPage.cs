@@ -18,7 +18,6 @@ namespace ControlsSample
         internal static readonly string audioCustom = "Open audio file (*.wav)...";
 
         private SimpleSoundPlayer? player;
-        private OpenFileDialog? dialog;
         
         private readonly ComboBox selectComboBox = new()
         {
@@ -87,11 +86,11 @@ namespace ControlsSample
 
             if (url == audioCustom)
             {
-                dialog ??= new OpenFileDialog();
+                var dialog = OpenFileDialog.Default;
                 dialog.FileMustExist = true;
                 dialog.Filter = "Audio Files (*.wav)|*.wav";
-                var result = dialog.ShowModal(this.ParentWindow);
-                if (result == ModalResult.Accepted)
+
+                dialog.ShowAsync(this.ParentWindow, () =>
                 {
                     if (File.Exists(dialog.FileName))
                     {
@@ -102,7 +101,7 @@ namespace ControlsSample
                     }
                     else
                         App.Log($"File not found: {dialog.FileName}");
-                }
+                });
             }
             else
             {
