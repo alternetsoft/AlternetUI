@@ -560,7 +560,10 @@ namespace Alternet::UI
 
     void Window::Activate()
     {
-        GetWxWindow()->SetFocus();
+        auto wxWindow = GetWxWindow();
+        wxWindow->Show();
+        wxWindow->SetFocus();
+        wxWindow->Raise();
     }
 
     bool Window::GetAlwaysOnTop()
