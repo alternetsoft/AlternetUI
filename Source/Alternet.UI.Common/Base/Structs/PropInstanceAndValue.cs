@@ -213,6 +213,20 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Disables children controls for all windows in the application
+        /// except the specified window.
+        /// </summary>
+        /// <param name="window">Window to ignore during the operation. Optional.</param>
+        /// <returns></returns>
+        public static ConcurrentStack<SavedPropertiesItem>? DisableAllFormsChildrenExcept(
+            Window? window = null)
+        {
+            var forms = App.WindowsWithExcept(window);
+            var result = PushChildrenEnabledMultiple(forms, false);
+            return result;
+        }
+
+        /// <summary>
         /// Restores property values which were previously saved using
         /// <see cref="PushChildrenEnabledMultiple"/> or similar methods.
         /// </summary>

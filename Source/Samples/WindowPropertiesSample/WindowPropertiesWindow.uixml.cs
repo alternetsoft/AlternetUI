@@ -56,9 +56,7 @@ namespace WindowPropertiesSample
 
             panelSettings.AddLinkLabel("Disable all children except this window", () =>
             {
-                var forms = App.VisibleWindowsWithExcept(this);
-                SavedEnabledProperties
-                = PropInstanceAndValue.PushChildrenEnabledMultiple(forms, false);
+                SavedEnabledProperties = PropInstanceAndValue.DisableAllFormsChildrenExcept(this);
             });
 
             panelSettings.AddLinkLabel("Restore children enabled", () =>
