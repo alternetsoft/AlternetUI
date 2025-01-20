@@ -426,8 +426,6 @@ namespace Alternet.UI
         /// </summary>
         protected virtual void OnColorImageChanged(bool refresh = true)
         {
-            var size = GraphicsFactory.PixelFromDip(colorImageSize, ScaleFactor);
-
             var imageColor = color ?? Color.Transparent;
 
             if (!Enabled && useDisabledImageColor)
@@ -437,7 +435,7 @@ namespace Alternet.UI
                     imageColor = disabledColor;
             }
 
-            Image = (Bitmap)imageColor.AsImage(size);
+            Image = imageColor.AsImageWithBorder(colorImageSize, ScaleFactor);
 
             if(refresh)
                 Refresh();
