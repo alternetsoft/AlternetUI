@@ -227,7 +227,8 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Gets or sets whether to use <see cref="DisabledImageColor"/> for painting of the color image
+        /// Gets or sets whether to use <see cref="DisabledImageColor"/> for painting
+        /// of the color image
         /// when control is disabled.
         /// </summary>
         public virtual bool UseDisabledImageColor
@@ -337,7 +338,7 @@ namespace Alternet.UI
 
             ColorDialog.ShowAsync((dlg, dlgResult) =>
             {
-                if (IsDisposed)
+                if (DisposingOrDisposed)
                     return;
                 if (dlgResult)
                     Value = ColorDialog.Color;
@@ -409,6 +410,15 @@ namespace Alternet.UI
         {
             if (PopupWindow.PopupResult == ModalResult.Accepted)
                 Value = PopupWindow.ResultValue ?? Color.Black;
+        }
+
+        /// <inheritdoc/>
+        protected override void DisposeManaged()
+        {
+            SafeDispose(ref colorDialog);
+            SafeDispose(ref popupWindow);
+
+            base.DisposeManaged();
         }
 
         /// <summary>
