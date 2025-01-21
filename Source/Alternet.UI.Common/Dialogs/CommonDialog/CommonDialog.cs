@@ -1,4 +1,4 @@
-// #define ObsoleteModalDialogs
+#define ObsoleteModalDialogs
 
 using System;
 using System.ComponentModel;
@@ -110,7 +110,7 @@ namespace Alternet.UI
         /// On some platforms dialogs are shown synchroniously and application waits
         /// until dialog is closed.
         /// </remarks>
-        public void ShowAsync(Action? onAccepted)
+        public void ShowAsync(Action? onAccepted = null)
         {
             ShowAsync(null, onAccepted);
         }

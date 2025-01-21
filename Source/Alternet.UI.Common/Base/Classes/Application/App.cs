@@ -1560,33 +1560,51 @@ namespace Alternet.UI
         /// <summary>
         /// Shows <see cref="ThreadExceptionWindow"/> on the screen.
         /// </summary>
+        /// <param name="onClose">Action to call when dialog is closed.</param>
         /// <param name="exception">Exception information.</param>
         /// <param name="additionalInfo">Additional information.</param>
         /// <param name="canContinue">Whether 'Continue' button is visible.</param>
         /// <param name="canQuit">Whether 'Quit' button is visible.</param>
         /// <returns><c>true</c> if continue pressed, <c>false</c> otherwise.</returns>
-        public static bool ShowExceptionWindow(
+        public static void ShowExceptionWindow(
             Exception exception,
             string? additionalInfo = null,
             bool canContinue = true,
-            bool canQuit = true)
+            bool canQuit = true,
+            Action<bool>? onClose = null)
         {
             using var errorWindow =
                 new ThreadExceptionWindow(exception, additionalInfo, canContinue, canQuit);
             if (App.IsRunning)
             {
-                return errorWindow.ShowModal() == ModalResult.Accepted;
+                errorWindow.ShowDialogAsync(null, onClose);
             }
             else
             {
                 if (App.current is null)
-                    return false;
+                    return;
 
                 errorWindow.CanContinue = false;
                 errorWindow.CanQuit = true;
                 App.Current.Run(errorWindow);
-                return false;
             }
+        }
+
+        /// <summary>
+        /// Shows <see cref="ThreadExceptionWindow"/> on the screen.
+        /// </summary>
+        /// <param name="onClose">Action to call when dialog is closed.</param>
+        /// <param name="exception">Exception information.</param>
+        public static void ShowExceptionWindow(
+            Exception exception,
+            Action<bool>? onClose)
+        {
+            ShowExceptionWindow(
+            exception,
+            additionalInfo: null,
+            canContinue: true,
+            canQuit: true,
+            onClose);
         }
 
         /// <summary>
@@ -1644,27 +1662,22 @@ namespace Alternet.UI
                 return false;
             }
 
-            bool HandleWithDialog()
+            void HandleWithDialog(Action<bool>? onResult = null)
             {
                 var td = new ThreadExceptionWindow(exception);
-                var result = ModalResult.Accepted;
 
-                try
-                {
-                    result = td.ShowModal();
-                }
-                finally
+                td.ShowDialogAsync(null, (result) =>
                 {
                     td.Dispose();
-                }
 
-                if (result == ModalResult.Canceled)
-                {
-                    ExitAndTerminate(ThreadExceptionExitCode);
-                    return true;
-                }
+                    if (!result)
+                    {
+                        ExitAndTerminate(ThreadExceptionExitCode);
+                        onResult?.Invoke(true);
+                    }
 
-                return false;
+                    onResult?.Invoke(false);
+                });
             }
 
             if (inOnThreadException)
@@ -1707,10 +1720,15 @@ namespace Alternet.UI
                     case UnhandledExceptionMode.CatchWithDialogAndThrow:
                         if (HandleWithEvent())
                             return;
-                        if (HandleWithDialog())
-                            return;
-                        LastUnhandledExceptionThrown = true;
-                        ExceptionUtils.Rethrow(exception);
+                        HandleWithDialog((result) =>
+                        {
+                            if (!result)
+                            {
+                                LastUnhandledExceptionThrown = true;
+                                ExceptionUtils.Rethrow(exception);
+                            }
+                        });
+
                         break;
                     case UnhandledExceptionMode.CatchWithThrow:
                         if (HandleWithEvent())
@@ -1770,9 +1788,25 @@ namespace Alternet.UI
         /// <value>A <see cref="IEnumerable{Window}"/> that contains
         /// references to all visible <see cref="Window"/> objects in the application
         /// except the specified window.</value>
-        public static IEnumerable<Window> VisibleWindowsWithExcept(Window exceptWindow)
+        public static IEnumerable<Window> VisibleWindowsWithExcept(Window? exceptWindow = null)
         {
+            if (exceptWindow is null)
+                return Current.VisibleWindows;
             var result = Current?.Windows.Where(x => (x.Visible && x != exceptWindow)) ?? [];
+            return result;
+        }
+
+        /// <summary>
+        /// Gets all windows in the application except the specified window.
+        /// </summary>
+        /// <value>A <see cref="IEnumerable{Window}"/> that contains
+        /// references to all <see cref="Window"/> objects in the application
+        /// except the specified window.</value>
+        public static IEnumerable<Window> WindowsWithExcept(Window? exceptWindow = null)
+        {
+            if (exceptWindow is null)
+                return Current.Windows;
+            var result = Current?.Windows.Where(x => (x != exceptWindow)) ?? [];
             return result;
         }
 

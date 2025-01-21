@@ -177,18 +177,6 @@ namespace Alternet.UI
             NativeControl.IsPopupWindow = value;
         }
 
-        public ModalResult ShowModal(IWindow? owner)
-        {
-            if(owner is not null)
-            {
-                if (owner.GetWindowKind() == WindowKind.Control)
-                    owner = null;
-            }
-
-            NativeControl.ShowModal(WxApplicationHandler.WxWidget(owner));
-            return ModalResult;
-        }
-
         public void Activate()
         {
             NativeControl.Activate();
@@ -257,6 +245,24 @@ namespace Alternet.UI
         public void SetMenu(object? value)
         {
             NativeControl.Menu = (value as IControl)?.NativeControl as Native.MainMenu;
+        }
+
+        public ModalResult ShowModal(IWindow? owner)
+        {
+            if (owner is not null)
+            {
+                if (owner.GetWindowKind() == WindowKind.Control)
+                    owner = null;
+            }
+
+            NativeControl.ShowModal(WxApplicationHandler.WxWidget(owner));
+            return ModalResult;
+        }
+
+        public void ShowModalAsync(Window? owner, Action<ModalResult> onResult)
+        {
+            var result = ShowModal(owner);
+            onResult?.Invoke(result);
         }
 
         private class NativeWindow : Native.Window

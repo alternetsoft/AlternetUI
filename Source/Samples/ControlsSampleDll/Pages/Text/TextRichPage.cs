@@ -467,23 +467,22 @@ namespace ControlsSample
                 }
             }
 
-            using SaveFileDialog dialog = new()
-            {
-                Filter = SaveFileDialogFilter,
-                OverwritePrompt = true,
-                FileName = richPanel.TextBox.FileName,
-            };
+            var saveDialog = SaveFileDialog.Default;
 
-            if (dialog.ShowModal(this.ParentWindow) != ModalResult.Accepted)
-                return;
+            saveDialog.Filter = SaveFileDialogFilter;
+            saveDialog.OverwritePrompt = true;
+            saveDialog.FileName = richPanel.TextBox.FileName;
 
-            if (SaveFile(dialog.FileName!))
+            saveDialog.ShowAsync(this.ParentWindow, () =>
             {
-                richPanel.TextBox.FileName = dialog.FileName!;
-                App.Log($"Saved to file: {dialog.FileName}");
-            }
-            else
-                App.Log($"Error saving to file: {dialog.FileName}");
+                if (SaveFile(saveDialog.FileName!))
+                {
+                    richPanel.TextBox.FileName = saveDialog.FileName!;
+                    App.Log($"Saved to file: {saveDialog.FileName}");
+                }
+                else
+                    App.Log($"Error saving to file: {saveDialog.FileName}");
+            });
         }
 
         private void RichPanel_FileOpenClick(object? sender, EventArgs e)
@@ -505,22 +504,20 @@ namespace ControlsSample
                 }
             }
 
-            using OpenFileDialog dialog = new()
-            {
-                Filter = OpenFileDialogFilter,
-                FileMustExist = true,
-            };
+            var dialog = OpenFileDialog.Default;
+            dialog.Filter = OpenFileDialogFilter;
+            dialog.FileMustExist = true;
 
-            if (dialog.ShowModal(this.ParentWindow) != ModalResult.Accepted)
-                return;
-
-            if (LoadFile(dialog.FileName!))
+            dialog.ShowAsync(this.ParentWindow, () =>
             {
-                richPanel.TextBox.FileName = dialog.FileName!;
-                App.Log($"Loaded from file: {dialog.FileName}");
-            }
-            else
-                App.Log($"Error loading from file: {dialog.FileName}");
+                if (LoadFile(dialog.FileName!))
+                {
+                    richPanel.TextBox.FileName = dialog.FileName!;
+                    App.Log($"Loaded from file: {dialog.FileName}");
+                }
+                else
+                    App.Log($"Error loading from file: {dialog.FileName}");
+            });
         }
 
         private void RichPanel_FileNewClick(object? sender, EventArgs e)

@@ -9,6 +9,7 @@ namespace Alternet::UI
     Control::~Control()
     {
         _destroyed = true;
+        _destroying = true;
         DestroyDropTarget(false);
         DestroyWxWindow();
 
@@ -210,7 +211,7 @@ namespace Alternet::UI
     {
         SetExtraStyle(wxWS_EX_PROCESS_UI_UPDATES, value);
     }
-
+    
     Control::Control() :
         _flags(ControlFlags::TabStop),
         _delayedFlags(
@@ -427,6 +428,7 @@ namespace Alternet::UI
 
     void Control::Destroy()
     {
+        _destroying = true;
         DestroyWxWindow();
     }
 
@@ -1169,7 +1171,8 @@ namespace Alternet::UI
     void Control::OnBeforeDestroyWxWindow()
     {
         _flags.Set(ControlFlags::DestroyingWxWindow, true);
-        _delayedValues.ReceiveIfPossible();
+        if(!_destroying && !_destroyed)
+            _delayedValues.ReceiveIfPossible();
     }
 
     void Control::OnWxWindowDestroyed(wxWindow* window)

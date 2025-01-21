@@ -13,7 +13,7 @@ namespace Alternet.UI
     /// over the current application window.
     /// </summary>
     /// <typeparam name="T">Type of the main control.</typeparam>
-    public partial class PopupWindow<T> : DialogWindow
+    public partial class PopupWindow<T> : Window
         where T : AbstractControl, new()
     {
         private readonly VerticalStackPanel mainPanel = new();
@@ -67,21 +67,6 @@ namespace Alternet.UI
         /// Gets or sets default popup window padding.
         /// </summary>
         public static Thickness DefaultPadding { get; set; } = (5, 5, 5, 10);
-
-/*
-        /// <summary>
-        /// Gets or sets whether popups are shown using <see cref="DialogWindow.ShowModal()"/>
-        /// (true) or <see cref="AbstractControl.Show"/> (false).
-        /// </summary>
-        /// <remarks>
-        /// Under Linux popups are always shown as modal dialogs.
-        /// </remarks>
-        public static bool ModalPopups
-        {
-            get;
-            set;
-        }
-*/
 
         /// <summary>
         /// Gets or sets whether 'Ok' button is visible.
@@ -377,16 +362,6 @@ namespace Alternet.UI
             Show();
             WasShown = true;
             FocusMainControl();
-
-            /*
-            if (App.IsLinuxOS || ModalPopups)
-            {
-                if (ShowModal() == ModalResult.Accepted)
-                    HidePopup(ModalResult.Accepted);
-                else
-                    HidePopup(ModalResult.Canceled);
-            }
-            */
         }
 
         /// <summary>
@@ -401,10 +376,7 @@ namespace Alternet.UI
 
             BeginInvoke(() =>
             {
-                if (Modal)
-                    ModalResult = result;
-                else
-                    Hide();
+                Hide();
                 App.DoEvents();
                 if (PopupOwner is not null && FocusPopupOwnerOnHide)
                 {

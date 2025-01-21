@@ -121,17 +121,22 @@ namespace Alternet.UI
 
         static SpeedButton()
         {
+            var tabControlBorderColor = ColorUtils.GetTabControlInteriorBorderColor();
+
             InitThemeLight(DefaultTheme.Light);
             InitThemeDark(DefaultTheme.Dark);
 
             StaticBorderTheme = DefaultTheme.Clone();
             StaticBorderTheme.NormalBorderAsHovered();
+            StaticBorderTheme.SetBorderColor(tabControlBorderColor);
 
             StickyBorderTheme = DefaultTheme.Clone();
             StickyBorderTheme
-                .SetBorderFromBorder(VisualControlState.Normal, VisualControlState.Hovered);
+                .SetBorderFromBorder(
+                stateToChange: VisualControlState.Normal,
+                assignFromState: VisualControlState.Hovered);
             StickyBorderTheme.SetBorderWidth(2);
-            StickyBorderTheme.SetBorderColor(ColorUtils.GetTabControlInteriorBorderColor());
+            StickyBorderTheme.SetBorderColor(tabControlBorderColor);
         }
 
         /// <summary>

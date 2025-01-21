@@ -384,7 +384,7 @@ namespace Alternet.UI
         {
             using var detailsWindow =
                 new ThreadExceptionDetailsWindow(GetDetailsText());
-            detailsWindow.ShowModal(this);
+            detailsWindow.ShowDialogAsync(this);
         }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Globalization;
 using System.Linq;
 using System.Text;
@@ -8,6 +9,7 @@ using System.Threading.Tasks;
 using Alternet.Drawing;
 
 using Microsoft.CodeAnalysis.CSharp.Scripting;
+using Microsoft.CodeAnalysis.Scripting;
 
 /*
 
@@ -25,6 +27,21 @@ namespace Alternet.UI
     /// </summary>
     public partial class Calculator : HiddenBorder
     {
+        /// <summary>
+        /// Gets or sets default minimum button size.
+        /// </summary>
+        public static SizeD DefaultMinButtonSize = (50, 40);
+
+        /// <summary>
+        /// Gets or sets default distance between buttons of the calculator.
+        /// </summary>
+        public static Coord DefaultButtonDistance = 2;
+
+        /// <summary>
+        /// Gets or sets default distance between calculator display and buttons.
+        /// </summary>
+        public static Coord DefaultDistanceToDisplay = 10;
+
         private const string ButtonTextPlusMinus = " \u00B1";
         private const string ButtonTextDivide = "/";
         private const string ButtonTextMultiply = "*";
@@ -34,39 +51,39 @@ namespace Alternet.UI
         private static bool engineInitialized;
 
         private readonly TextBoxAndButton displayTextBox;
+        private readonly Grid buttonGrid;
+        private readonly List<AbstractControl> buttons = new();
+        private readonly ControlSet buttonSet;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Calculator"/> class.
         /// </summary>
         public Calculator()
         {
-            if (!engineInitialized)
-            {
-                CSharpScript.EvaluateAsync("2");
-                engineInitialized = true;
-            }
+            InitFormulaEngine();
 
-            Layout = LayoutStyle.Vertical;
             HorizontalAlignment = HorizontalAlignment.Left;
             VerticalAlignment = VerticalAlignment.Top;
             Padding = 10;
-            MinChildMargin = 10;
+
+            buttonGrid = new Grid
+            {
+                RowColumnCount = (6, 4),
+            };
 
             displayTextBox = new TextBoxAndButton
             {
                 ButtonsVisible = false,
-                SuggestedWidth = 300,
-                Parent = this,
+                InnerOuterBorder = InnerOuterSelector.Outer,
+                RowColumn = (0, 0),
+                ColumnSpan = 4,
+                Parent = buttonGrid,
+                Margin = (0, 0, 0, DefaultDistanceToDisplay),
             };
 
             displayTextBox.DelayedTextChanged += (s, e) =>
             {
                 displayTextBox.MainControl.ReportValidatorError(false);
-            };
-
-            var buttonGrid = new Grid
-            {
-                RowColumnCount = (5, 4),
             };
 
             string[] buttonLabels =
@@ -80,16 +97,27 @@ namespace Alternet.UI
 
             for (int i = 0; i < buttonLabels.Length; i++)
             {
-                var button = new Button
-                {
-                    Text = buttonLabels[i],
-                    Margin = 2,
-                };
+                var button = CreateButton();
+                buttons.Add(button);
+                button.Text = buttonLabels[i];
 
                 int row = i / 4;
                 int col = i % 4;
 
-                Grid.SetRowColumn(button, row, col);
+                Thickness margin = Thickness.Empty;
+
+                if (col != 0)
+                    margin.Left = DefaultButtonDistance;
+                if (col != 3)
+                    margin.Right = DefaultButtonDistance;
+                if (row != 0)
+                    margin.Top = DefaultButtonDistance;
+                if (row != 4)
+                    margin.Bottom = DefaultButtonDistance;
+
+                button.Margin = margin;
+
+                Grid.SetRowColumn(button, row + 1, col);
                 button.Parent = buttonGrid;
 
                 button.Click += (sender, e) =>
@@ -98,15 +126,99 @@ namespace Alternet.UI
                 };
             }
 
+            buttonSet = new(buttons);
+
             buttonGrid.Parent = this;
         }
 
         /// <summary>
+        /// Gets or sets script options used in <see cref="CSharpScript.EvaluateAsync"/>
+        /// which is called from <see cref="Evaluate"/>. Default is Null.
+        /// </summary>
+        [Browsable(false)]
+        public virtual ScriptOptions? FormulaOptions { get; set; } = null;
+
+        /// <summary>
+        /// Gets or sets script globals used in <see cref="CSharpScript.EvaluateAsync"/>
+        /// which is called from <see cref="Evaluate"/>. Default is Null.
+        /// </summary>
+        [Browsable(false)]
+        public virtual object? FormulaGlobals { get; set; } = null;
+
+        /// <summary>
+        /// Gets or sets script globals type used in <see cref="CSharpScript.EvaluateAsync"/>
+        /// which is called from <see cref="Evaluate"/>. Default is Null.
+        /// </summary>
+        [Browsable(false)]
+        public virtual Type? FormulaGlobalsType { get; set; } = null;
+
+        /// <summary>
         /// Gets display control.
         /// </summary>
+        [Browsable(false)]
         public TextBoxAndButton DisplayTextBox => displayTextBox;
 
-        private static void ButtonClickHandler(string buttonText, TextBoxAndButton displayTextBox)
+        /// <summary>
+        /// Gets panel with buttons.
+        /// </summary>
+        [Browsable(false)]
+        public AbstractControl ButtonsPanel => buttonGrid;
+
+        /// <summary>
+        /// Gets collection of calculator buttons.
+        /// </summary>
+        [Browsable(false)]
+        public IReadOnlyList<AbstractControl> Buttons => buttons;
+
+        /// <summary>
+        /// Gets collection of calculator buttons as <see cref="ControlSet"/>.
+        /// </summary>
+        [Browsable(false)]
+        public ControlSet SetOfButtons => buttonSet;
+
+        /// <summary>
+        /// Initializes formula engine. Do not need to call it directly. It
+        /// can be called from the application startup in order to preload formula
+        /// engine libraries.
+        /// </summary>
+        public static void InitFormulaEngine()
+        {
+            if (!engineInitialized)
+            {
+                CSharpScript.EvaluateAsync("2");
+                engineInitialized = true;
+            }
+        }
+
+        /// <summary>
+        /// Evaluates formula.
+        /// </summary>
+        /// <param name="formula">Formula to evaluate.</param>
+        /// <returns></returns>
+        public virtual object? Evaluate(string formula)
+        {
+            var result = CSharpScript.EvaluateAsync(
+                formula,
+                FormulaOptions,
+                FormulaGlobals,
+                FormulaGlobalsType).Result;
+            return result;
+        }
+
+        /// <summary>
+        /// Creates button used in the calculator.
+        /// </summary>
+        /// <returns></returns>
+        public virtual AbstractControl CreateButton()
+        {
+            var result = new SpeedTextButton();
+            result.UseTheme = SpeedButton.KnownTheme.StaticBorder;
+            result.Padding = 5;
+            result.MinimumSize = DefaultMinButtonSize;
+            return result;
+        }
+
+        private void ButtonClickHandler(string buttonText, TextBoxAndButton displayTextBox)
         {
             switch (buttonText)
             {
@@ -122,8 +234,8 @@ namespace Alternet.UI
                 case "=":
                     try
                     {
-                        object? result = CSharpScript.EvaluateAsync(displayTextBox.Text).Result;
-                        displayTextBox.Text = result?.ToString() ?? string.Empty;
+                        object? result = Evaluate(displayTextBox.Text);
+                        displayTextBox.TextBox.TextAsNumber = result;
                         displayTextBox.MainControl.ReportValidatorError(false);
                     }
                     catch (Exception e)

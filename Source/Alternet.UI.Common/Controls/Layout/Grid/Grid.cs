@@ -159,71 +159,9 @@ namespace Alternet.UI
             OnChildrenChanged();
         }
 
-        /// <inheritdoc/>
-        public override void OnLayout()
-        {
-            GetPreferredSize(SizeD.PositiveInfinity); // yezo
-
-            var arrangeSize = ChildrenLayoutBounds.Size;
-            try
-            {
-                ArrangeOverrideInProgress = true;
-
-                if (_data == null)
-                {
-                    var children = Children;
-
-                    for (int i = 0, count = children.Count; i < count; ++i)
-                    {
-                        var child = children[i];
-                        if (child != null)
-                        {
-                            child.Bounds = new RectD(new PointD(), arrangeSize);
-                        }
-                    }
-                }
-                else
-                {
-                    Debug.Assert(DefinitionsU.Length > 0 && DefinitionsV.Length > 0);
-
-                    SetFinalSize(DefinitionsU, arrangeSize.Width, true);
-                    SetFinalSize(DefinitionsV, arrangeSize.Height, false);
-
-                    var children = Children;
-
-                    for (int currentCell = 0; currentCell < PrivateCells.Length; ++currentCell)
-                    {
-                        var cell = children[currentCell];
-                        if (cell == null)
-                        {
-                            continue;
-                        }
-
-                        int columnIndex = PrivateCells[currentCell].ColumnIndex;
-                        int rowIndex = PrivateCells[currentCell].RowIndex;
-                        int columnSpan = PrivateCells[currentCell].ColumnSpan;
-                        int rowSpan = PrivateCells[currentCell].RowSpan;
-
-                        var cellRect = new RectD(
-                            columnIndex == 0 ? 0.0f : DefinitionsU[columnIndex].FinalOffset,
-                            rowIndex == 0 ? 0.0f : DefinitionsV[rowIndex].FinalOffset,
-                            GetFinalSizeForRange(DefinitionsU, columnIndex, columnSpan),
-                            GetFinalSizeForRange(DefinitionsV, rowIndex, rowSpan));
-
-                        SetControlBounds(cell, cellRect);
-                    }
-                }
-            }
-            finally
-            {
-                SetValid();
-                ArrangeOverrideInProgress = false;
-            }
-        }
-
         void SetControlBounds(AbstractControl control, RectD bounds)
         {
-            var preferredSize = control.GetPreferredSize(bounds.Size);
+            var preferredSize = control.GetPreferredSizeLimited(bounds.Size);
 
             var horizontalPosition =
                 AlignHorizontal(
@@ -664,7 +602,7 @@ namespace Alternet.UI
             do
             {
                 var child = children[i];
-                var s = child.GetPreferredSize(referenceSize);
+                var s = child.GetPreferredSizeLimited(referenceSize);
                 var childPreferredSize = new SizeD(
                     s.Width + child.Margin.Horizontal,
                     s.Height + child.Margin.Vertical);

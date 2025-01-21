@@ -225,6 +225,7 @@ namespace Alternet::UI
     private:
         string _textValue = u"";
         RectD _eventBounds;
+        bool _destroying = false;
 
         bool CanSetScrollbar();
 

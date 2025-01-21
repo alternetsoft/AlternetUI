@@ -402,18 +402,19 @@ namespace PaintSample
             });
         }
 
-        string? PromptForSaveFileName()
+        void PromptForSaveFileName(Action<string?> onResult)
         {
-            using var dialog = new SaveFileDialog
+            var dialog = SaveFileDialog.Default;
+            
+            dialog.Filter = FileMaskUtils.GetFileDialogFilterForImageSave();
+            dialog.InitialDirectory = PathUtils.GetAppSubFolder("SampleImages");
+
+            dialog.ShowAsync(this, (result) =>
             {
-                Filter = FileMaskUtils.GetFileDialogFilterForImageSave(),
-                InitialDirectory = PathUtils.GetAppSubFolder("SampleImages"),
-            };
-
-            if (dialog.ShowModal(this) != ModalResult.Accepted || dialog.FileName == null)
-                return null;
-
-            return dialog.FileName;
+                if (!result || dialog.FileName == null)
+                    onResult(null);
+                onResult(dialog.FileName);
+            });
         }
 
         private void SaveMenuItem_Click(object? sender, EventArgs e)
@@ -421,23 +422,33 @@ namespace PaintSample
             Save();
         }
 
+        private void SaveAs()
+        {
+            PromptForSaveFileName((fileName) =>
+            {
+                if (fileName == null)
+                    return;
+                Document.Save(fileName);
+            });
+        }
+
         private void Save()
         {
             var fileName = Document.FileName;
-            fileName ??= PromptForSaveFileName();
-            if (fileName == null)
-                return;
 
-            Document.Save(fileName);
+            if(fileName is null)
+            {
+                SaveAs();
+            }
+            else
+            {
+                Document.Save(fileName);
+            }
         }
 
         private void SaveAsMenuItem_Click(object? sender, EventArgs e)
         {
-            var fileName = PromptForSaveFileName();
-            if (fileName == null)
-                return;
-
-            Document.Save(fileName);
+            SaveAs();
         }
 
         private void PromptToSaveDocument(out bool cancel)
@@ -464,7 +475,11 @@ namespace PaintSample
             }
 
             if (result == DialogResult.Yes)
+            {
+                // This in general is incorrect as dialogs are async
+                // need to be fixed
                 Save();
+            }
         }
 
         protected override void OnClosing(WindowClosingEventArgs e)

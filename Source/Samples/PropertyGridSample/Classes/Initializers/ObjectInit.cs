@@ -284,6 +284,15 @@ namespace PropertyGridSample
                 GroupBox groupBox = (c as GroupBox)!;
                 groupBox.Title = "GroupBox";
                 groupBox.SuggestedSize = 150;
+                groupBox.MinChildMargin = 10;
+
+                groupBox.Layout = LayoutStyle.Vertical;
+
+                Label label = new("Label 1");
+                label.Parent = groupBox;
+
+                CheckBox checkBox = new("CheckBox 1");
+                checkBox.Parent = groupBox;
             });
 
             Actions.Add(typeof(Panel), InitPanel);

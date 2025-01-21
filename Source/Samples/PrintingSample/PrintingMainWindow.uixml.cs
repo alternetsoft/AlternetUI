@@ -133,8 +133,10 @@ namespace PrintingSample
 
             document.PrintPage += Document_PrintPage;
 
-            if (dialog.ShowModal() == ModalResult.Accepted)
+            dialog.ShowAsync(() =>
+            {
                 document.Print();
+            });
         }
 
         private void PageSetupMenuItem_Click(object sender, System.EventArgs e)
@@ -148,14 +150,14 @@ namespace PrintingSample
             //setupDlg.AllowPaper = false;
             //setupDlg.AllowPrinter = false;
 
-            if (pageSetupDialog.ShowModal() == ModalResult.Accepted)
+            pageSetupDialog.ShowAsync(() =>
             {
                 //document.DefaultPageSettings = pageSetupDialog.PageSettings;
                 //document.PrinterSettings = pageSetupDialog.PrinterSettings;
 
                 document.PrintPage += Document_PrintPage;
                 document.Print();
-            }
+            });
         }
 
         private void PrintPreviewMenuItem_Click(object sender, System.EventArgs e)
@@ -166,7 +168,7 @@ namespace PrintingSample
             document.PrintPage += Document_PrintPage;
             
             dialog.Document = document;
-            dialog.ShowModal();
+            dialog.ShowAsync();
         }
 
         private void Document_PrintPage(object? sender, PrintPageEventArgs e)

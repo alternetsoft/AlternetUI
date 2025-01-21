@@ -1598,6 +1598,37 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
+        /// Creates <see cref="Image"/> of the specified <paramref name="size"/>
+        /// filled with this color.
+        /// </summary>
+        /// <param name="size">Size of the created image in dips.</param>
+        /// <param name="scaleFactor">Scaling factor used to convert dips to/from pixels.</param>
+        /// <param name="borderColor">Border color. Optional. If not specified,
+        /// default border color is used.</param>
+        /// <returns></returns>
+        public Image AsImageWithBorder(
+            SizeD size,
+            Coord scaleFactor,
+            Color? borderColor = null)
+        {
+            borderColor ??= ComboBox.DefaultImageBorderColor;
+
+            var graphics = SkiaUtils.CreateBitmapCanvas(size, scaleFactor, true);
+
+            RectD rect = (PointD.Empty, size);
+
+            RectD colorRect = DrawingUtils.DrawDoubleBorder(
+                graphics,
+                rect,
+                Color.Empty,
+                borderColor);
+
+            graphics.FillRectangle(this.AsBrush, colorRect);
+
+            return (Image)graphics.Bitmap!;
+        }
+
+        /// <summary>
         /// Creates <see cref="ImageSet"/> of the specified <paramref name="size"/>
         /// filled with this color.
         /// </summary>

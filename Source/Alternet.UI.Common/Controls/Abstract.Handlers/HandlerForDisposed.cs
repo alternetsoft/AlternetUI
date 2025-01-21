@@ -1876,5 +1876,9 @@ namespace Alternet.UI
         {
             return default;
         }
+
+        public void ShowModalAsync(Window? owner, Action<ModalResult> onResult)
+        {
+        }
     }
 }

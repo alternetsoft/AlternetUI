@@ -56,9 +56,7 @@ namespace WindowPropertiesSample
 
             panelSettings.AddLinkLabel("Disable all children except this window", () =>
             {
-                var forms = App.VisibleWindowsWithExcept(this);
-                SavedEnabledProperties
-                = PropInstanceAndValue.PushChildrenEnabledMultiple(forms, false);
+                SavedEnabledProperties = PropInstanceAndValue.DisableAllFormsChildrenExcept(this);
             });
 
             panelSettings.AddLinkLabel("Restore children enabled", () =>
@@ -147,11 +145,12 @@ namespace WindowPropertiesSample
             if (testWindow is not DialogWindow dialogWindow)
                 throw new InvalidOperationException();
 
-            dialogWindow.ShowModal(this);
-
-            App.Log("ModalResult: " + dialogWindow.ModalResult);
-            dialogWindow.Dispose();
-            OnWindowClosed();
+            dialogWindow.ShowDialogAsync(this, (result) =>
+            {
+                App.Log("Modal Result: " + (result ? "Accepted" : "Canceled"));
+                dialogWindow.Dispose();
+                OnWindowClosed();
+            });
         }
 
         private void CreateWindowAndSetProperties(Type type, Window? parent = null)

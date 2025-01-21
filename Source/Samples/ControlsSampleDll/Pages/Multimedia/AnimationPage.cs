@@ -85,10 +85,10 @@ namespace ControlsSample
 
             if (url == AnimationCustom)
             {
-                using var dialog = new OpenFileDialog();
+                var dialog = OpenFileDialog.Default;
                 dialog.FileMustExist = true;
-                var result = dialog.ShowModal(this.ParentWindow);
-                if (result == ModalResult.Accepted)
+                dialog.Filter = FileMaskUtils.FileDialogFilterAllFiles;
+                dialog.ShowAsync(this.ParentWindow, () =>
                 {
                     if (File.Exists(dialog.FileName))
                     {
@@ -101,7 +101,7 @@ namespace ControlsSample
                     }
                     else
                         App.Log($"File not found: {dialog.FileName}");
-                }
+                });
             }
             else
             {

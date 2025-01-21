@@ -76,8 +76,9 @@ namespace Alternet.UI
         /// Shows window as a modal dialog.
         /// </summary>
         /// <param name="owner">Window owner.</param>
+        /// <param name="onResult">Action to call when modal dialog is closed.</param>
         /// <returns></returns>
-        ModalResult ShowModal(IWindow? owner);
+        void ShowModalAsync(Window? owner, Action<ModalResult> onResult);
 
         /// <inheritdoc cref="Window.Close()"/>
         void Close();
