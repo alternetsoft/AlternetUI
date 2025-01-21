@@ -826,6 +826,23 @@ namespace Alternet.UI
         /// <param name="instance">Instance which contains the property or field.
         /// Specify Null, for the static properties.</param>
         /// <param name="propName">Property name.</param>
+        /// <param name="value">New property value.</param>
+        public static bool TrySetMemberValue(
+            object? instance,
+            string propName,
+            object? value)
+        {
+            return TrySetMemberValue(null, instance, propName, value);
+        }
+
+        /// <summary>
+        /// Sets property or field value using the specified object type
+        /// (or instance) and property name.
+        /// Type of the object or the object itself must be specified.
+        /// </summary>
+        /// <param name="instance">Instance which contains the property or field.
+        /// Specify Null, for the static properties.</param>
+        /// <param name="propName">Property name.</param>
         /// <param name="type">Type of the object with the property.</param>
         /// <param name="value">New property value.</param>
         public static bool TrySetMemberValue(
