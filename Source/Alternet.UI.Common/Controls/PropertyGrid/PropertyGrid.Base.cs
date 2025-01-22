@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
@@ -18,6 +19,7 @@ namespace Alternet.UI
 
         private static AdvDictionary<Type, IPropertyGridChoices>? choicesCache = null;
         private static StaticStateFlags staticStateFlags;
+        private static ConcurrentStack<Action>? initializers;
 
         /// <summary>
         /// Occurs when collection editor is called in the property grid.
@@ -386,6 +388,17 @@ namespace Alternet.UI
             var realType = AssemblyUtils.GetRealType(propType);
             choices ??= CreateChoicesOnce(realType);
             return choices;
+        }
+
+        /// <summary>
+        /// Adds initialization action which is called before <see cref="PropertyGrid"/>
+        /// is created for the first time.
+        /// </summary>
+        /// <param name="action"></param>
+        public static void AddInitializer(Action action)
+        {
+            initializers ??= new();
+            initializers.Push(action);
         }
 
         /// <summary>

@@ -15,6 +15,8 @@ public partial class ToolBarTestPage : ContentPage
 
         InitializeComponent();
 
+        PropertyGridSample.ObjectInit.InitGenericToolBar(toolBarView.Control, onlyButtons: true);
+
         if (!Alternet.UI.App.IsDesktopDevice)
         {
         }

@@ -44,10 +44,13 @@ namespace Alternet.UI
 
         static PropertyGrid()
         {
-            RegisterPropCreateFunc(typeof(Color), FuncCreatePropertyAsColor);
-            RegisterPropCreateFunc(typeof(Font), FuncCreatePropertyAsFont);
-            RegisterPropCreateFunc(typeof(Brush), FuncCreatePropertyAsBrush);
-            RegisterPropCreateFunc(typeof(Pen), FuncCreatePropertyAsPen);
+            AddInitializer(() =>
+            {
+                RegisterPropCreateFunc(typeof(Color), FuncCreatePropertyAsColor);
+                RegisterPropCreateFunc(typeof(Font), FuncCreatePropertyAsFont);
+                RegisterPropCreateFunc(typeof(Brush), FuncCreatePropertyAsBrush);
+                RegisterPropCreateFunc(typeof(Pen), FuncCreatePropertyAsPen);
+            });
         }
 
         /// <summary>
@@ -65,6 +68,13 @@ namespace Alternet.UI
         /// </summary>
         public PropertyGrid()
         {
+            if(initializers is not null)
+            {
+                while (initializers.TryPop(out var action))
+                {
+                    action();
+                }
+            }
         }
 
         /// <summary>

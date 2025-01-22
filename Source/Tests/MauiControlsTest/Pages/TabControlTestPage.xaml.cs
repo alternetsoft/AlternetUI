@@ -15,6 +15,8 @@ public partial class TabControlTestPage : ContentPage
 
         InitializeComponent();
 
+        PropertyGridSample.ObjectInit.InitGenericTabControl(tabControlView.Control, false);
+
         if (!Alternet.UI.App.IsDesktopDevice)
         {
         }

@@ -15,6 +15,8 @@ public partial class SpeedButtonTestPage : ContentPage
 
         InitializeComponent();
 
+        PropertyGridSample.ObjectInit.InitSpeedButton(speedButtonView.Control);
+
         if (!Alternet.UI.App.IsDesktopDevice)
         {
         }

@@ -274,6 +274,7 @@ namespace Alternet.UI
             Color? color2)
         {
             var image1 = ImageSet.FromSvgStream(stream, size.Width, size.Height, color1);
+            stream.Seek(0, SeekOrigin.Begin);
             var image2 = ImageSet.FromSvgStream(stream, size.Width, size.Height, color2);
             return (image1, image2);
         }
