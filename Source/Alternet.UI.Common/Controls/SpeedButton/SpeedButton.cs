@@ -36,6 +36,11 @@ namespace Alternet.UI
         public static Coord DefaultPadding = 4;
 
         /// <summary>
+        /// Gets or sets default border width of the <see cref="SpeedButton"/> in the sticky state.
+        /// </summary>
+        public static Coord DefaultStickyBorderWidth = 1;
+
+        /// <summary>
         /// Gets ot sets default value of <see cref="UseTheme"/> property.
         /// </summary>
         public static KnownTheme DefaultUseTheme = KnownTheme.Default;
@@ -65,6 +70,13 @@ namespace Alternet.UI
         /// which have <see cref="UseTheme"/> equal to <see cref="KnownTheme.StickyBorder"/>.
         /// </summary>
         public static ControlColorAndStyle StickyBorderTheme;
+
+        /// <summary>
+        /// Gets or sets default color and style settings
+        /// for all <see cref="SpeedButton"/> controls
+        /// which have <see cref="UseTheme"/> equal to <see cref="KnownTheme.NoBorder"/>.
+        /// </summary>
+        public static ControlColorAndStyle NoBorderTheme = new();
 
         /// <summary>
         /// Gets or sets default color and style settings
@@ -135,7 +147,7 @@ namespace Alternet.UI
                 .SetBorderFromBorder(
                 stateToChange: VisualControlState.Normal,
                 assignFromState: VisualControlState.Hovered);
-            StickyBorderTheme.SetBorderWidth(2);
+            StickyBorderTheme.SetBorderWidth(DefaultStickyBorderWidth);
             StickyBorderTheme.SetBorderColor(tabControlBorderColor);
         }
 
@@ -204,6 +216,11 @@ namespace Alternet.UI
             /// Theme <see cref="StickyBorderTheme"/> is used.
             /// </summary>
             StickyBorder,
+
+            /// <summary>
+            /// Theme <see cref="NoBorderTheme"/> is used.
+            /// </summary>
+            NoBorder,
         }
 
         /// <summary>
@@ -1100,6 +1117,8 @@ namespace Alternet.UI
                     return StaticBorderTheme;
                 case KnownTheme.StickyBorder:
                     return StickyBorderTheme;
+                case KnownTheme.NoBorder:
+                    return NoBorderTheme;
                 case KnownTheme.Default:
                 default:
                     return DefaultTheme;

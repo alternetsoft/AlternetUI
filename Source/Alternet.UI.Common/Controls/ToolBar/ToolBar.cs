@@ -45,7 +45,6 @@ namespace Alternet.UI
             Layout = LayoutStyle.Horizontal;
             itemSize = Math.Max(DefaultSize, DefaultMinItemSize);
             IsGraphicControl = true;
-            MinimumSize = itemSize;
         }
 
         /// <summary>
@@ -101,8 +100,7 @@ namespace Alternet.UI
 
         /// <summary>
         /// Gets or sets default minimal item size in dips. You should not normally
-        /// set this value
-        /// to lower than 24.
+        /// set this value to lower than 24.
         /// </summary>
         public static Coord DefaultMinItemSize { get; set; } = 24;
 
@@ -114,7 +112,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets default margin of the sticky button item.
         /// </summary>
-        public static Thickness DefaultSpeedBtnMargin { get; set; } = 0;
+        public static Thickness DefaultSpeedBtnMargin { get; set; } = (1, 0, 1, 0);
 
         /// <summary>
         /// Gets or sets default margin of the sticky button item.
@@ -130,6 +128,11 @@ namespace Alternet.UI
         /// Gets or sets default margin of the static text item.
         /// </summary>
         public static Thickness DefaultTextMargin { get; set; } = (4, 0, 4, 0);
+
+        /// <summary>
+        /// Gets or sets default item padding.
+        /// </summary>
+        public static Coord DefaultItemPadding { get; set; } = 4;
 
         /// <summary>
         /// Gets or sets default color of the separator item.
@@ -266,6 +269,21 @@ namespace Alternet.UI
                             item.SuggestedSize = GetItemSuggestedSize(item);
                     }
                 });
+            }
+        }
+
+        /// <inheritdoc/>
+        public override SizeD MinimumSize
+        {
+            get
+            {
+                var result = SizeD.Max(base.MinimumSize, itemSize);
+                return result;
+            }
+
+            set
+            {
+                base.MinimumSize = value;
             }
         }
 
@@ -555,7 +573,7 @@ namespace Alternet.UI
         /// <returns><see cref="ObjectUniqueId"/> of the added item.</returns>
         public virtual SpeedButton AddSpeedBtnCore(
             string? text,
-            SvgImage? image,
+            SvgImage? image = null,
             string? toolTip = null,
             EventHandler? action = null)
         {
@@ -787,7 +805,8 @@ namespace Alternet.UI
         /// <returns></returns>
         public ImageSet? ToNormal(SvgImage? image)
         {
-            var result = image?.AsNormal(GetImageSize(), IsDarkBackground);
+            var imageSize = GetImageSize();
+            var result = image?.AsNormal(imageSize, IsDarkBackground);
             return result;
         }
 
@@ -966,15 +985,23 @@ namespace Alternet.UI
         /// <returns><see cref="ObjectUniqueId"/> of the added item.</returns>
         public virtual ObjectUniqueId AddText(string text)
         {
-            GenericLabel label = new(text)
-            {
-                Margin = DefaultTextMargin,
-                VerticalAlignment = UI.VerticalAlignment.Center,
-            };
-
-            UpdateItemProps(label, ItemKind.Text);
-            label.Parent = this;
+            var label = AddTextCore(text);
             return label.UniqueId;
+        }
+
+        /// <summary>
+        /// Adds static text to the control.
+        /// </summary>
+        /// <param name="text">Text string.</param>
+        /// <returns><see cref="AbstractControl"/> which is used to show text
+        /// for the added item.</returns>
+        public virtual AbstractControl AddTextCore(string text)
+        {
+            var label = AddSpeedBtnCore(text);
+            label.ToolTip = string.Empty;
+            label.UseTheme = SpeedButton.KnownTheme.NoBorder;
+
+            return label;
         }
 
         /// <summary>
@@ -1621,22 +1648,35 @@ namespace Alternet.UI
         /// and <see cref="DefaultImageSize"/> properties.
         /// </summary>
         /// <returns></returns>
-        public virtual int GetImageSize() =>
-            ImageSize ?? DefaultImageSize ?? ToolBarUtils.GetDefaultImageSize(this).Width;
+        public virtual int GetImageSize()
+        {
+            return ImageSize ?? DefaultImageSize ?? Internal();
+
+            int Internal()
+            {
+                var result = ToolBarUtils.GetDefaultImageSize(this).Width;
+                return result;
+            }
+        }
 
         /// <summary>
         /// Gets image color in the normal state taking into account <see cref="NormalImageColor"/>
         /// and <see cref="DefaultNormalImageColor"/> properties.
         /// </summary>
-        public virtual Color GetNormalImageColor() =>
-            NormalImageColor ?? DefaultNormalImageColor ?? GetSvgColor(KnownSvgColor.Normal);
+        public virtual Color GetNormalImageColor()
+        {
+            return NormalImageColor ?? DefaultNormalImageColor ?? GetSvgColor(KnownSvgColor.Normal);
+        }
 
         /// <summary>
         /// Gets image color in the disabled state  taking into account
         /// <see cref="DisabledImageColor"/> and <see cref="DefaultDisabledImageColor"/> properties.
         /// </summary>
-        public virtual Color GetDisabledImageColor() =>
-            DisabledImageColor ?? DefaultDisabledImageColor ?? GetSvgColor(KnownSvgColor.Disabled);
+        public virtual Color GetDisabledImageColor()
+        {
+            return DisabledImageColor ?? DefaultDisabledImageColor
+                ?? GetSvgColor(KnownSvgColor.Disabled);
+        }
 
         /// <summary>
         /// Gets item control as <see cref="SpeedButton"/>. If tool doesn't use
@@ -1650,7 +1690,7 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Adds <see cref="SpeedButton"/> to the control.
+        /// Adds text only <see cref="SpeedButton"/> to the control.
         /// </summary>
         /// <param name="text">Item text.</param>
         /// <param name="action">Click action.</param>
@@ -1661,10 +1701,26 @@ namespace Alternet.UI
             string? toolTip = null,
             EventHandler? action = null)
         {
+            var speedButton = AddTextBtnCore(text, toolTip, action);
+            return speedButton.UniqueId;
+        }
+
+        /// <summary>
+        /// Adds text only <see cref="SpeedButton"/> to the control.
+        /// </summary>
+        /// <param name="text">Item text.</param>
+        /// <param name="action">Click action.</param>
+        /// <param name="toolTip">Item tooltip.</param>
+        public virtual SpeedTextButton AddTextBtnCore(
+            string? text,
+            string? toolTip = null,
+            EventHandler? action = null)
+        {
             text ??= string.Empty;
 
             var speedButton = CreateToolSpeedTextButton();
 
+            speedButton.Padding = DefaultItemPadding;
             speedButton.ToolTip = toolTip ?? string.Empty;
             speedButton.Text = text;
             speedButton.VerticalAlignment = UI.VerticalAlignment.Center;
@@ -1676,7 +1732,7 @@ namespace Alternet.UI
                 speedButton.Click += action;
             speedButton.Parent = this;
 
-            return speedButton.UniqueId;
+            return speedButton;
         }
 
         /// <summary>
@@ -1714,6 +1770,7 @@ namespace Alternet.UI
 
             var speedButton = CreateToolSpeedButton();
 
+            speedButton.Padding = DefaultItemPadding;
             speedButton.ImageVisible = imageVisible;
             speedButton.TextVisible = textVisible;
             speedButton.ImageToText = imageToText;
@@ -1737,6 +1794,16 @@ namespace Alternet.UI
             speedButton.Parent = this;
 
             return speedButton;
+        }
+
+        /// <summary>
+        /// Creates control for use in the toolbar as a label.
+        /// Override to create customized label controls.
+        /// </summary>
+        /// <returns></returns>
+        protected virtual AbstractControl CreateToolLabel()
+        {
+            return new GenericLabel();
         }
 
         /// <summary>
@@ -1782,7 +1849,8 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="control">Control to check</param>
         /// <returns></returns>
-        protected virtual bool NeedUpdateBackColor(AbstractControl control) => NeedUpdateForeColor(control);
+        protected virtual bool NeedUpdateBackColor(AbstractControl control)
+            => NeedUpdateForeColor(control);
 
         /// <summary>
         /// Gets whether child control foreground color need to be updated when
