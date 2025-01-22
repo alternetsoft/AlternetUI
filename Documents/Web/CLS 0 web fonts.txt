@@ -1,0 +1,24 @@
+﻿CLS 0 - this is the result I understand!
+
+
+The problem was solved using the resources mentioned in the Cart:
+
+
+Modern Font Stacks
+https://modernfontstacks.com/
+
+
+system-fonts/modern-font-stacks: System font stack CSS organized by typeface classification for every modern operating system
+https://github.com/system-fonts/modern-font-stacks
+
+
+I chose the Humanist font set:
+
+
+font-family: Seravek, 'Gill Sans Nova', Ubuntu, Calibri, 'DejaVu Sans', source-sans-pro, sans-serif;
+
+
+When I switched to these in my experiments, I immediately realized that my eyes somehow felt better right away. This was probably the main selection criterion. Later I read in the description of this font family:
+
+
+These typefaces are inspired by the handwriting of the Renaissance period and are often considered to be more legible and easier to read than other sans-serif typefaces.
