@@ -65,6 +65,16 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Alias for <see cref="Debugger.IsAttached"/>.
+        /// </summary>
+        public static bool IsDebuggerAttached => Debugger.IsAttached;
+
+        /// <summary>
+        /// Gets whether "DEBUG" is defined and debugger is attached.
+        /// </summary>
+        public static bool IsDebugDefinedAndAttached => IsDebugDefined && IsDebuggerAttached;
+
+        /// <summary>
         /// Sets whether exceptions of the specified type are ignored in the exception logger.
         /// </summary>
         /// <typeparam name="T">Type of the exception to ignore.</typeparam>
