@@ -73,6 +73,7 @@ namespace MenuSample
             toolbar.TextVisible = true;
             toolbar.ItemSize = 32;
             toolbar.Margin = (0, 0, 0, ToolBar.DefaultDistanceToContent);
+            toolbar.Padding = 1;
 
             toolbar.Parent = this;
 
