@@ -15,7 +15,9 @@ public partial class PictureBoxTestPage : ContentPage
 
         InitializeComponent();
 
-        PropertyGridSample.ObjectInit.SetBackgrounds(pictureBoxView.Control);
+        /* require generic image which is not yet ported to maui
+        PropertyGridSample.ObjectInit.InitPictureBox(pictureBoxView.Control);
+        */
 
         if (!Alternet.UI.App.IsDesktopDevice)
         {

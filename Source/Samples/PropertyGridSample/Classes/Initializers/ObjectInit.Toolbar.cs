@@ -58,7 +58,11 @@ namespace PropertyGridSample
         {
             if (control is not ToolBar toolbar)
                 return;
+            InitGenericToolBar(toolbar);
+        }
 
+        public static void InitGenericToolBar(ToolBar toolbar, bool onlyButtons = false)
+        {
             toolbar.Margin = (0, 0, 0, 4);
 
             var buttonIdNew = toolbar.AddSpeedBtn(
@@ -96,13 +100,16 @@ namespace PropertyGridSample
             var idText = toolbar.AddText("text");
             toolbar.AddToolAction(idText, ButtonClick);
 
-            var textBox = new TextBox();
-            textBox.VerticalAlignment = VerticalAlignment.Center;
-            textBox.Text = "text1";
-            textBox.MinWidth = 100;
-            textBox.HorizontalAlignment = HorizontalAlignment.Fill;
+            if (!onlyButtons)
+            {
+                var textBox = new TextBox();
+                textBox.VerticalAlignment = VerticalAlignment.Center;
+                textBox.Text = "text1";
+                textBox.MinWidth = 100;
+                textBox.HorizontalAlignment = HorizontalAlignment.Fill;
 
-            var idEdit = toolbar.AddControl(textBox);
+                var idEdit = toolbar.AddControl(textBox);
+            }
 
             var itemPicture = toolbar.AddPicture(
                 KnownSvgImages.ImgMessageBoxWarning,

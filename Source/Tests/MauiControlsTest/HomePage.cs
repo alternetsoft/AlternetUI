@@ -8,6 +8,10 @@ public partial class HomePage : ContentPage
 
     public HomePage()
     {
+        Alternet.UI.DebugUtils.RegisterExceptionsLogger((e) =>
+        {
+        });
+
         Content = new VerticalStackLayout
         {
             Children = {
