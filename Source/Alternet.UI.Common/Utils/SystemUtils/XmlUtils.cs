@@ -172,6 +172,19 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Deserializes object from the specified stream.
+        /// </summary>
+        /// <param name="stream">Stream with xml data.</param>
+        /// <param name="encoding">Encoding of the stream. Optional. If not specified, uses
+        /// UTF8 encoding.</param>
+        /// <returns></returns>
+        public static object DeserializeObject(Stream stream, Encoding? encoding = null)
+        {
+            var reader = new StreamReader(stream, encoding ?? Encoding.UTF8);
+            return new XmlSerializer(typeof(object)).Deserialize(reader);
+        }
+
+        /// <summary>
         /// Deserializes object from the specified file.
         /// </summary>
         /// <typeparam name="T">Type of the deserialized object.</typeparam>
@@ -184,6 +197,35 @@ namespace Alternet.UI
 
             using var stream = FileSystem.OpenRead(filename);
             return Deserialize<T>(stream);
+        }
+
+        /// <summary>
+        /// Serializes object to the specified <see cref="TextWriter"/>.
+        /// </summary>
+        /// <param name="writer"><see cref="TextWriter"/> object.</param>
+        /// <param name="obj">Object to serialize.</param>
+        /// <returns></returns>
+        public static void SerializeObject(TextWriter writer, object obj)
+        {
+            new XmlSerializer(obj.GetType()).Serialize(writer, obj);
+        }
+
+        /// <summary>
+        /// Serializes object to the specified stream.
+        /// </summary>
+        /// <param name="obj">Object to serialize.</param>
+        /// <returns></returns>
+        /// <param name="stream">Stream to which object is serialized.</param>
+        /// <param name="encoding">Encoding of the stream. Optional. If not specified, uses
+        /// UTF8 encoding.</param>
+        public static void SerializeObjectToStream(
+            Stream stream,
+            object obj,
+            Encoding? encoding = null)
+        {
+            var writer = new StreamWriter(stream, encoding ?? Encoding.UTF8);
+            SerializeObject(writer, obj);
+            writer.Flush();
         }
 
         /// <summary>
@@ -211,6 +253,30 @@ namespace Alternet.UI
             try
             {
                 Serialize(writer, obj);
+            }
+            finally
+            {
+                writer.Close();
+            }
+        }
+
+        /// <summary>
+        /// Serializes object to the specified file.
+        /// </summary>
+        /// <param name="filename">Path to file.</param>
+        /// <param name="obj">Object to serialize.</param>
+        /// <param name="encoding">Encoding of the file. Optional. If not specified, uses
+        /// UTF8 encoding.</param>
+        /// <returns></returns>
+        public static void SerializeObjectToFile(
+            string filename,
+            object obj,
+            Encoding? encoding = null)
+        {
+            var writer = new StreamWriter(filename, append: false, encoding ?? Encoding.UTF8);
+            try
+            {
+                SerializeObject(writer, obj);
             }
             finally
             {

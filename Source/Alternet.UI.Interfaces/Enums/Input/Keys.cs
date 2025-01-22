@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 namespace Alternet.UI
 {
     /// <summary>Specifies key codes and modifiers.</summary>
+    [Serializable]
     [Flags]
     public enum Keys
     {

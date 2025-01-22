@@ -100,6 +100,12 @@ namespace Alternet.UI
                 .AppendLine("All Formats: " + allFormats)
                 .AppendLine();
 
+            if (value.GetDataPresent(DataFormats.Serializable))
+            {
+                result.AppendLine("[Serializable]: "
+                    + value.GetData(DataFormats.Serializable)?.ToString());
+            }
+
             if (value.GetDataPresent(DataFormats.Text))
                 result.AppendLine("[Text]: " + value.GetData(DataFormats.Text));
 
