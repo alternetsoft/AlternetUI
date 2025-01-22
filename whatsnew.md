@@ -1,3 +1,19 @@
+# 0.9.704 (2025 January 22)
+
+- Added Calculator control.
+- PanelSettings: overloads for AddLinkLabel, AddButton.
+- LinkLabel: Fixed preferred size.
+- Grid: Fixed layout to use child's min and max size.
+- Window.Activate now works on macOs.
+- SpeedButton: Changed static border theme color.
+- SpeedColorButton: dispose used popup and dialog.
+- SpeedColorButton: Draw border around color image.
+- PopupWindow: inherit from Window.
+- Color.AsImageWithBorder.
+- ToolBar: DefaultItemPadding, AddTextCore, AddTextBtnCore.
+- ToolBar: MinimumSize is updated when ItemSize is changed.
+- ToolBar: Simple text item is now added with settings similar to SpeedButton item. As a result height of toolbars with only text items will be equal to the toolbars with speedbuttons.
+
 # 0.9.703 (2025 January 17)
 
 - PanelSettings control is finished.
