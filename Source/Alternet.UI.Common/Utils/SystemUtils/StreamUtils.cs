@@ -36,6 +36,23 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Creates <see cref="MemoryStream"/> with data copied from the specified stream.
+        /// </summary>
+        /// <param name="stream">Stream with data.</param>
+        /// <returns></returns>
+        public static MemoryStream CreateMemoryStream(Stream? stream)
+        {
+            MemoryStream memoryStream = new();
+
+            if (stream is null)
+                return memoryStream;
+
+            stream.CopyTo(memoryStream);
+            memoryStream.Seek(0, SeekOrigin.Begin);
+            return memoryStream;
+        }
+
+        /// <summary>
         /// Compares two streams using byte to byte comparison.
         /// </summary>
         /// <param name="stream1">First stream to compare.</param>
