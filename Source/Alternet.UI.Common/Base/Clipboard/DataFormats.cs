@@ -130,6 +130,11 @@ namespace Alternet.UI
         public static readonly string XamlPackage = "XamlPackage";
 
         /// <summary>
+        /// Specifies internal name for data stored as the <see cref="Serializable"/>.
+        /// </summary>
+        public static readonly string AlternetUISerializable = "AlternetUI10PersistentObject";
+
+        /// <summary>
         /// Gets string representation of the <see cref="TextDataFormat"/>.
         /// </summary>
         /// <param name="textDataformat">Data format.</param>

@@ -71,9 +71,15 @@ namespace Alternet.UI
                 return;
             }
 
-            if(data is System.Runtime.Serialization.ISerializable)
+            if(format == DataFormats.Serializable)
             {
-
+                using var stream = new MemoryStream();
+                DataObject.SerializeDataObject(stream, data);
+                stream.Position = 0;
+                dataObject.SetStreamData(
+                    DataFormats.AlternetUISerializable,
+                    new Native.InputStream(stream));
+                return;
             }
 
             if(data is Stream streamData)

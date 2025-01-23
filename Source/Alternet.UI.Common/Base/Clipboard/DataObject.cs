@@ -5,6 +5,8 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Xml;
+using System.Xml.Serialization;
 
 using Alternet.Drawing;
 
@@ -70,6 +72,18 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Occurs when <see cref="DataObject"/> is serialized to the stream
+        /// using <see cref="DataFormats.Serializable"/> format.
+        /// </summary>
+        public static event EventHandler<SerializeDataObjectEventArgs>? GlobalSerializeDataObject;
+
+        /// <summary>
+        /// Occurs when <see cref="DataObject"/> is deserialized from the stream
+        /// using <see cref="DataFormats.Serializable"/> format.
+        /// </summary>
+        public static event EventHandler<SerializeDataObjectEventArgs>? GlobalDeserializeDataObject;
+
+        /// <summary>
         /// Gets a value indicating whether the data object contains data in the
         /// <see cref="DataFormats.Files"/> format.
         /// </summary>
@@ -100,6 +114,13 @@ namespace Alternet.UI
                 .AppendLine("All Formats: " + allFormats)
                 .AppendLine();
 
+            if (value.GetDataPresent(DataFormats.Serializable))
+            {
+                var serializableData = value.GetData(DataFormats.Serializable);
+                result.AppendLine(
+                    $"[Serializable {serializableData?.GetType()}]: {serializableData}");
+            }
+
             if (value.GetDataPresent(DataFormats.Text))
                 result.AppendLine("[Text]: " + value.GetData(DataFormats.Text));
 
@@ -127,6 +148,104 @@ namespace Alternet.UI
             }
 
             return result.ToString();
+        }
+
+        /// <summary>
+        /// Serializes data object to the specified stream. This method is called
+        /// when serialization with <see cref="DataFormats.Serializable"/> format
+        /// is performed.
+        /// </summary>
+        /// <remarks>
+        /// This method calls <see cref="GlobalSerializeDataObject"/> event
+        /// if it is specified or uses default serialization method.
+        /// </remarks>
+        /// <param name="dataObject">Data object to serialize.</param>
+        /// <param name="stream">Stream where to serialize.</param>
+        public static void SerializeDataObject(Stream stream, object dataObject)
+        {
+            if (dataObject is null)
+                return;
+
+            if (GlobalSerializeDataObject is not null)
+            {
+                SerializeDataObjectEventArgs e = new(dataObject, stream);
+
+                GlobalSerializeDataObject?.Invoke(null, e);
+                if (e.Handled)
+                    return;
+            }
+
+            XmlRootAttribute xRoot = new();
+            xRoot.ElementName = dataObject.GetType().FullName;
+            xRoot.Namespace = XmlUtils.UIXmlNamespace;
+            xRoot.IsNullable = false;
+
+            var writer = new StreamWriter(stream, Encoding.UTF8);
+            new XmlSerializer(dataObject.GetType(), xRoot).Serialize(writer, dataObject);
+        }
+
+        /// <summary>
+        /// Deserializes data object from the specified stream. This method is called
+        /// when deserialization with <see cref="DataFormats.Serializable"/> format
+        /// is performed.
+        /// </summary>
+        /// <remarks>
+        /// This method calls <see cref="GlobalDeserializeDataObject"/> event
+        /// if it is specified or uses default deserialization method.
+        /// </remarks>
+        /// <param name="stream">Stream with data for the deserialization.</param>
+        public static object? DeserializeDataObject(Stream stream)
+        {
+            if (stream is null)
+                return null;
+
+            if (GlobalDeserializeDataObject is not null)
+            {
+                SerializeDataObjectEventArgs e = new(null, stream);
+
+                GlobalDeserializeDataObject?.Invoke(null, e);
+                if (e.Handled)
+                    return e.Data;
+            }
+
+            Type? type = null;
+
+            var memoryStream = StreamUtils.CreateMemoryStream(stream);
+            var reader = new StreamReader(memoryStream, Encoding.UTF8);
+            var xmlReader = XmlReader.Create(reader);
+            xmlReader.MoveToContent();
+
+            while (!xmlReader.EOF && xmlReader.ReadState == ReadState.Interactive)
+            {
+                if (xmlReader.NodeType == XmlNodeType.Element)
+                {
+                    var uri = xmlReader.NamespaceURI;
+
+                    if (uri == XmlUtils.UIXmlNamespace)
+                    {
+                        var typeName = xmlReader.Name;
+                        type = UixmlLoader.FindType(typeName);
+                        break;
+                    }
+                    else
+                        reader.Read();
+                }
+                else
+                    reader.Read();
+            }
+
+            if (type is null)
+                return null;
+
+            XmlRootAttribute xRoot = new();
+            xRoot.ElementName = type.FullName;
+            xRoot.Namespace = XmlUtils.UIXmlNamespace;
+            xRoot.IsNullable = false;
+
+            memoryStream.Seek(0, SeekOrigin.Begin);
+            reader = new StreamReader(memoryStream, Encoding.UTF8);
+            var data = new XmlSerializer(type, xRoot).Deserialize(reader);
+            return data;
         }
 
         /// <summary>

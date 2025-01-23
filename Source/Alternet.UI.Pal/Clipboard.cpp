@@ -131,6 +131,13 @@ namespace Alternet::UI
         else
             delete bitmapData;
 
+        wxDataFormat dataFormat = wxDataFormat(wxStr(DataFormats::Persistent));
+        auto customData = new wxCustomDataObject(dataFormat);
+        if (wxTheClipboard->GetData(*customData))
+            result->Add(customData);
+        else
+            delete customData;
+
         return result;
     }
 }

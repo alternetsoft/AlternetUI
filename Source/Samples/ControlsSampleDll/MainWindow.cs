@@ -15,6 +15,8 @@ namespace ControlsSample
             {
             });
 
+            UixmlLoader.Initialize();
+
             DefaultUseParentFont = true;
 
             AddGlobalWindowNotification(new GlobalFormActivity());
@@ -222,7 +224,7 @@ namespace ControlsSample
         }
 
         AbstractControl CreateWebBrowserPage() => new WebBrowserPage();
-        AbstractControl CreateAllSamplesPage() => new AllSamplesPage();
+        /*AbstractControl CreateAllSamplesPage() => new AllSamplesPage();*/
         AbstractControl CreateInternalSamplesPage() => new InternalSamplesPage();
         AbstractControl CreateWelcomePage() => new WelcomePage();
 

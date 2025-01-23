@@ -1,4 +1,6 @@
 using System;
+using System.IO;
+
 using Alternet.Drawing;
 using Alternet.UI.Native;
 
@@ -26,7 +28,10 @@ namespace Alternet.UI
 
             if (format == DataFormats.Serializable)
             {
-                return null;
+                var stream = new UnmanagedStreamAdapter(
+                    dataObject.GetStreamData(DataFormats.AlternetUISerializable));
+                var data = DataObject.DeserializeDataObject(stream);
+                return data;
             }
 
             return null;
@@ -69,6 +74,9 @@ namespace Alternet.UI
 
         public bool GetDataPresent(string format)
         {
+            if (format == DataFormats.Serializable)
+                format = DataFormats.AlternetUISerializable;
+
             return dataObject.GetDataPresent(format);
         }
 

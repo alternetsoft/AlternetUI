@@ -168,6 +168,11 @@ namespace Alternet::UI
         if (GetDataPresent(DataFormats::Bitmap))
             result->push_back(DataFormats::Bitmap);
 
+        /*
+        if (GetDataPresent(DataFormats::Persistent))
+            result->push_back(DataFormats::Persistent);
+        */
+
         auto fmtCount = _dataObject->GetFormatCount();
 
         wxDataFormat* formats = new wxDataFormat[fmtCount];
@@ -229,19 +234,39 @@ namespace Alternet::UI
     UnmanagedStream* UnmanagedDataObject::GetStreamData(const string& format)
     {
         if (!GetDataPresent(format))
-            throwExInvalidArg(format, FormatNotPresentErrorMessage);
+            return nullptr;
 
-        auto bitmap = TryGetBitmap(_dataObject);
-        if (bitmap.has_value())
+        if (format == DataFormats::Bitmap)
         {
-            auto image = bitmap.value().ConvertToImage();
-            auto stream = new wxMemoryOutputStream();
-            image.SaveFile(*stream, wxBitmapType::wxBITMAP_TYPE_PNG);
+            auto bitmap = TryGetBitmap(_dataObject);
+            if (bitmap.has_value())
+            {
+                auto image = bitmap.value().ConvertToImage();
+                auto stream = new wxMemoryOutputStream();
+                image.SaveFile(*stream, wxBitmapType::wxBITMAP_TYPE_PNG);
 
-            return new UnmanagedStream(stream);
+                return new UnmanagedStream(stream);
+            }
         }
 
-        throwExNoInfo;
+        if (format == DataFormats::Persistent)
+        {
+            auto fmt = wxDataFormat(wxStr(DataFormats::Persistent));
+            if (_dataObject->IsSupportedFormat(fmt))
+            {
+                auto dobject = static_cast<wxCustomDataObject*>(_dataObject->GetObject(fmt));
+                auto stream = new wxMemoryOutputStream();
+                auto size = dobject->GetDataSize();
+                auto ptr = dobject->GetData();
+                stream->Write(ptr, size);
+                stream->SeekO(0);
+                return new UnmanagedStream(stream);
+            }
+            else
+                return nullptr;
+        }
+
+        return nullptr;
     }
 
     void UnmanagedDataObject::SetStringData(const string& format, const string& value)

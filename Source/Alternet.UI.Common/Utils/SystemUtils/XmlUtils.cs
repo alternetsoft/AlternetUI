@@ -15,6 +15,11 @@ namespace Alternet.UI
     public static class XmlUtils
     {
         /// <summary>
+        /// Gets uixml namespace uri.
+        /// </summary>
+        public const string UIXmlNamespace = "http://schemas.alternetsoft.com/ui/2021/uixml";
+
+        /// <summary>
         /// Creates <see cref="XmlWriter"/> using the specified <see cref="StringBuilder"/>
         /// and optional <see cref="XmlWriterSettings"/>.
         /// </summary>
@@ -34,7 +39,9 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="builder"><see cref="StringBuilder"/> object.</param>
         /// <param name="stream">Output stream.</param>
-        public static void Save(StringBuilder builder, Stream stream)
+        public static void Save(
+            StringBuilder builder,
+            Stream stream)
         {
             string s = builder.ToString();
             byte[] bytes = Encoding.UTF8.GetBytes(s);
@@ -47,7 +54,10 @@ namespace Alternet.UI
         /// <param name="document">Xml document.</param>
         /// <param name="stream">Output stream.</param>
         /// <param name="settings">Save settings. Optional.</param>
-        public static void Save(XmlDocument document, Stream stream, XmlWriterSettings? settings = null)
+        public static void Save(
+            XmlDocument document,
+            Stream stream,
+            XmlWriterSettings? settings = null)
         {
             StringBuilder builder = new();
             using XmlWriter writer = CreateWriter(builder, settings);
@@ -84,7 +94,8 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="node">Xml node.</param>
         /// <param name="name">Attribute name.</param>
-        /// <returns><c>true</c> if attribute was found and removed, <c>false</c> otherwise.</returns>
+        /// <returns><c>true</c> if attribute was found and removed;
+        /// <c>false</c> otherwise.</returns>
         public static bool RemoveAttr(XmlNode node, string name)
         {
             if (node.Attributes is null)
@@ -189,6 +200,59 @@ namespace Alternet.UI
         /// <summary>
         /// Serializes object to the specified <see cref="TextWriter"/>.
         /// </summary>
+        /// <param name="writer"><see cref="TextWriter"/> object.</param>
+        /// <param name="obj">Object to serialize.</param>
+        /// <returns></returns>
+        public static void SerializeObject(TextWriter writer, object obj)
+        {
+            new XmlSerializer(obj.GetType()).Serialize(writer, obj);
+        }
+
+        /// <summary>
+        /// Creates <see cref="XmlAttributeOverrides"/> for use with
+        /// <see cref="XmlSerializer"/>.
+        /// </summary>
+        /// <param name="type">Type for which property name overrides are registered.</param>
+        /// <param name="overrides"><see cref="XmlAttributeOverrides"/> where
+        /// to add override declarations.</param>
+        /// <param name="decl">Override declarations.</param>
+        /// <returns></returns>
+        public static void AddPropertyNameOverrides(
+            XmlAttributeOverrides overrides,
+            Type type,
+            params NameValue<string>[] decl)
+        {
+            foreach(var item in decl)
+            {
+                XmlElementAttribute myElementAttribute = new();
+                myElementAttribute.ElementName = item.Value;
+                XmlAttributes myAttributes = new();
+                myAttributes.XmlElements.Add(myElementAttribute);
+                overrides.Add(type, item.Name, myAttributes);
+            }
+        }
+
+        /// <summary>
+        /// Serializes object to the specified stream.
+        /// </summary>
+        /// <param name="obj">Object to serialize.</param>
+        /// <returns></returns>
+        /// <param name="stream">Stream to which object is serialized.</param>
+        /// <param name="encoding">Encoding of the stream. Optional. If not specified, uses
+        /// UTF8 encoding.</param>
+        public static void SerializeObjectToStream(
+            Stream stream,
+            object obj,
+            Encoding? encoding = null)
+        {
+            var writer = new StreamWriter(stream, encoding ?? Encoding.UTF8);
+            SerializeObject(writer, obj);
+            writer.Flush();
+        }
+
+        /// <summary>
+        /// Serializes object to the specified <see cref="TextWriter"/>.
+        /// </summary>
         /// <typeparam name="T">Type of the serialized object.</typeparam>
         /// <param name="writer"><see cref="TextWriter"/> object.</param>
         /// <param name="obj">Object to serialize.</param>
@@ -211,6 +275,30 @@ namespace Alternet.UI
             try
             {
                 Serialize(writer, obj);
+            }
+            finally
+            {
+                writer.Close();
+            }
+        }
+
+        /// <summary>
+        /// Serializes object to the specified file.
+        /// </summary>
+        /// <param name="filename">Path to file.</param>
+        /// <param name="obj">Object to serialize.</param>
+        /// <param name="encoding">Encoding of the file. Optional. If not specified, uses
+        /// UTF8 encoding.</param>
+        /// <returns></returns>
+        public static void SerializeObjectToFile(
+            string filename,
+            object obj,
+            Encoding? encoding = null)
+        {
+            var writer = new StreamWriter(filename, append: false, encoding ?? Encoding.UTF8);
+            try
+            {
+                SerializeObject(writer, obj);
             }
             finally
             {
@@ -390,7 +478,8 @@ namespace Alternet.UI
             /// <summary>
             /// Initializes a new instance of the <see cref="XmlStreamConvertParams"/> class.
             /// </summary>
-            /// <param name="nodeAction">Function to call for the every node of the xml document.</param>
+            /// <param name="nodeAction">Function to call for the every node
+            /// of the xml document.</param>
             /// <param name="writerSettings">Xml writer settings.</param>
             public XmlStreamConvertParams(
                 Func<XmlNode, object?, bool> nodeAction,

@@ -37,6 +37,16 @@ namespace Alternet.UI.Markup.Xaml.XamlIl
         private static AssemblyBuilder _sreAsm;
         private static bool _sreCanSave;
 
+        public static SreTypeSystem TypeSystem
+        {
+            get
+            {
+                if (_sreTypeSystem is null)
+                    InitializeSre();
+                return _sreTypeSystem;
+            }
+        }
+
         public static void DumpRuntimeCompilationResults()
         {
             if (_sreBuilder == null)
@@ -56,7 +66,7 @@ namespace Alternet.UI.Markup.Xaml.XamlIl
             }
         }
 
-        static void InitializeSre()
+        public static void InitializeSre()
         {
             if (_sreTypeSystem == null)
                 _sreTypeSystem = new SreTypeSystem();

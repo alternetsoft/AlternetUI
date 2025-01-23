@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Alternet.UI
@@ -16,6 +17,40 @@ namespace Alternet.UI
         /// Gets an empty stream.
         /// </summary>
         public static readonly Stream Empty = new MemoryStream();
+
+        private static volatile Encoding? uTF8NoBOM;
+
+        internal static Encoding UTF8NoBOM
+        {
+            get
+            {
+                if (uTF8NoBOM == null)
+                {
+                    UTF8Encoding noBOM = new(false, true);
+                    Thread.MemoryBarrier();
+                    uTF8NoBOM = noBOM;
+                }
+
+                return uTF8NoBOM;
+            }
+        }
+
+        /// <summary>
+        /// Creates <see cref="MemoryStream"/> with data copied from the specified stream.
+        /// </summary>
+        /// <param name="stream">Stream with data.</param>
+        /// <returns></returns>
+        public static MemoryStream CreateMemoryStream(Stream? stream)
+        {
+            MemoryStream memoryStream = new();
+
+            if (stream is null)
+                return memoryStream;
+
+            stream.CopyTo(memoryStream);
+            memoryStream.Seek(0, SeekOrigin.Begin);
+            return memoryStream;
+        }
 
         /// <summary>
         /// Compares two streams using byte to byte comparison.

@@ -37,5 +37,6 @@ namespace Alternet::UI
         const string Text = u"Text";
         const string Files = u"Files";
         const string Bitmap = u"Bitmap";
+        const string Persistent = u"AlternetUI10PersistentObject";
     }
 }
