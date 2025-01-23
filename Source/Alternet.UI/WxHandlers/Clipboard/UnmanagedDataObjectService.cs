@@ -74,7 +74,7 @@ namespace Alternet.UI
             if(format == DataFormats.Serializable)
             {
                 using var stream = new MemoryStream();
-                XmlUtils.SerializeObjectToStream(stream, data);
+                DataObject.SerializeDataObject(stream, data);
                 stream.Position = 0;
                 dataObject.SetStreamData(
                     DataFormats.AlternetUISerializable,

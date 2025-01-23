@@ -30,10 +30,7 @@ namespace Alternet.UI
             {
                 var stream = new UnmanagedStreamAdapter(
                     dataObject.GetStreamData(DataFormats.AlternetUISerializable));
-                MemoryStream memoryStream = new();
-                stream.CopyTo(memoryStream);
-                memoryStream.Seek(0, SeekOrigin.Begin);
-                var data = XmlUtils.DeserializeObject(memoryStream);
+                var data = DataObject.DeserializeDataObject(stream);
                 return data;
             }
 

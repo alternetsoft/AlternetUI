@@ -15,6 +15,11 @@ namespace Alternet.UI
     public static class XmlUtils
     {
         /// <summary>
+        /// Gets uixml namespace uri.
+        /// </summary>
+        public const string UIXmlNamespace = "http://schemas.alternetsoft.com/ui/2021/uixml";
+
+        /// <summary>
         /// Creates <see cref="XmlWriter"/> using the specified <see cref="StringBuilder"/>
         /// and optional <see cref="XmlWriterSettings"/>.
         /// </summary>
@@ -34,7 +39,9 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="builder"><see cref="StringBuilder"/> object.</param>
         /// <param name="stream">Output stream.</param>
-        public static void Save(StringBuilder builder, Stream stream)
+        public static void Save(
+            StringBuilder builder,
+            Stream stream)
         {
             string s = builder.ToString();
             byte[] bytes = Encoding.UTF8.GetBytes(s);
@@ -47,7 +54,10 @@ namespace Alternet.UI
         /// <param name="document">Xml document.</param>
         /// <param name="stream">Output stream.</param>
         /// <param name="settings">Save settings. Optional.</param>
-        public static void Save(XmlDocument document, Stream stream, XmlWriterSettings? settings = null)
+        public static void Save(
+            XmlDocument document,
+            Stream stream,
+            XmlWriterSettings? settings = null)
         {
             StringBuilder builder = new();
             using XmlWriter writer = CreateWriter(builder, settings);
@@ -84,7 +94,8 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="node">Xml node.</param>
         /// <param name="name">Attribute name.</param>
-        /// <returns><c>true</c> if attribute was found and removed, <c>false</c> otherwise.</returns>
+        /// <returns><c>true</c> if attribute was found and removed;
+        /// <c>false</c> otherwise.</returns>
         public static bool RemoveAttr(XmlNode node, string name)
         {
             if (node.Attributes is null)
@@ -172,19 +183,6 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Deserializes object from the specified stream.
-        /// </summary>
-        /// <param name="stream">Stream with xml data.</param>
-        /// <param name="encoding">Encoding of the stream. Optional. If not specified, uses
-        /// UTF8 encoding.</param>
-        /// <returns></returns>
-        public static object DeserializeObject(Stream stream, Encoding? encoding = null)
-        {
-            var reader = new StreamReader(stream, encoding ?? Encoding.UTF8);
-            return new XmlSerializer(typeof(object)).Deserialize(reader);
-        }
-
-        /// <summary>
         /// Deserializes object from the specified file.
         /// </summary>
         /// <typeparam name="T">Type of the deserialized object.</typeparam>
@@ -208,6 +206,30 @@ namespace Alternet.UI
         public static void SerializeObject(TextWriter writer, object obj)
         {
             new XmlSerializer(obj.GetType()).Serialize(writer, obj);
+        }
+
+        /// <summary>
+        /// Creates <see cref="XmlAttributeOverrides"/> for use with
+        /// <see cref="XmlSerializer"/>.
+        /// </summary>
+        /// <param name="type">Type for which property name overrides are registered.</param>
+        /// <param name="overrides"><see cref="XmlAttributeOverrides"/> where
+        /// to add override declarations.</param>
+        /// <param name="decl">Override declarations.</param>
+        /// <returns></returns>
+        public static void AddPropertyNameOverrides(
+            XmlAttributeOverrides overrides,
+            Type type,
+            params NameValue<string>[] decl)
+        {
+            foreach(var item in decl)
+            {
+                XmlElementAttribute myElementAttribute = new();
+                myElementAttribute.ElementName = item.Value;
+                XmlAttributes myAttributes = new();
+                myAttributes.XmlElements.Add(myElementAttribute);
+                overrides.Add(type, item.Name, myAttributes);
+            }
         }
 
         /// <summary>
@@ -456,7 +478,8 @@ namespace Alternet.UI
             /// <summary>
             /// Initializes a new instance of the <see cref="XmlStreamConvertParams"/> class.
             /// </summary>
-            /// <param name="nodeAction">Function to call for the every node of the xml document.</param>
+            /// <param name="nodeAction">Function to call for the every node
+            /// of the xml document.</param>
             /// <param name="writerSettings">Xml writer settings.</param>
             public XmlStreamConvertParams(
                 Func<XmlNode, object?, bool> nodeAction,

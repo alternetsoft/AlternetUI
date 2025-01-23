@@ -23,6 +23,8 @@ namespace XamlX.TypeSystem
 
         string FullName { get; }
 
+        Type Type { get; }
+
         IXamlAssembly Assembly { get; }
 
         IReadOnlyList<IXamlProperty> Properties { get; }
@@ -302,6 +304,8 @@ namespace XamlX.TypeSystem
         {
             Name = name;
         }
+
+        public Type Type => null;
 
         public bool Equals(IXamlType other) => other == this;
 
