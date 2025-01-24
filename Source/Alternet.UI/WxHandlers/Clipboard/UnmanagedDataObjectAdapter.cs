@@ -28,8 +28,10 @@ namespace Alternet.UI
 
             if (format == DataFormats.Serializable)
             {
-                var stream = new UnmanagedStreamAdapter(
-                    dataObject.GetStreamData(DataFormats.AlternetUISerializable));
+                var nativeStream = dataObject.GetStreamData(DataFormats.AlternetUISerializable);
+                if (nativeStream is null)
+                    return null;
+                var stream = new UnmanagedStreamAdapter(nativeStream);
                 var data = DataObject.DeserializeDataObject(stream);
                 return data;
             }
