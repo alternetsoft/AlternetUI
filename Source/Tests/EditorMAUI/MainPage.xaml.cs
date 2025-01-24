@@ -5,29 +5,50 @@ using SkiaSharp.Views.Maui;
 using SkiaSharp.Views.Maui.Controls;
 using Alternet.Editor;
 using Alternet.Drawing;
+using Alternet.Scripter;
+using Alternet.Scripter.Debugger;
 
 namespace EditorMAUI;
 
-public partial class MainPage : Alternet.UI.DisposableContentPage
+public partial class MainPage : Alternet.UI.DisposableContentPage, EditorUI.IDocumentContainer
 {
     public bool LogToWindowTitle = false;
 
     private static int counter = 0;
 
     internal string NewFileNameNoExt = "embres:EditorMAUI.Content.newfile";
-
+    
     private readonly Alternet.Syntax.Parsers.Advanced.CsParser? parserCs;
     private readonly Alternet.Syntax.Parsers.Roslyn.CsParser? roslynParser;
-
     private readonly Button button = new();
+    private readonly EditorUI.CSharpDocument documentCs;
+
+    private EditorUI.CustomDocument documentCurrent;
+    private ExecutionPosition? executionPosition;
 
     static MainPage()
     {
+        SyntaxEditView.SyntaxEditTypeOverride = typeof(EditorUI.PoweredSyntaxEdit);
+
+        Alternet.UI.DebugUtils.RegisterExceptionsLogger((e) =>
+        {
+            /*
+            if (global::System.Diagnostics.Debugger.IsAttached)
+                global::System.Diagnostics.Debugger.Break();
+            */
+        });
+
+        EditorUI.ScripterUtils.Initialize();
+
+        if (Alternet.UI.App.IsWindowsOS)
+        {
+            Alternet.UI.App.LogFileIsEnabled = true;
+        }
     }
 
     public MainPage()
     {
-        Alternet.UI.DebugUtils.RegisterExceptionsLogger();
+        /*var editorUI = new EditorUI.MainWindow();*/
 
         Alternet.UI.PlessMouse.ShowTestMouseInControl = false;
 
@@ -37,7 +58,7 @@ public partial class MainPage : Alternet.UI.DisposableContentPage
 
         if (Alternet.UI.App.IsWindowsOS)
         {
-            roslynParser = new();
+            roslynParser = new(new Alternet.Syntax.Parsers.Roslyn.CodeCompletion.CsSolution());
             editor.Editor.Lexer = roslynParser;
         }
         else
@@ -102,6 +123,71 @@ public partial class MainPage : Alternet.UI.DisposableContentPage
         editor.Editor.SizeChanged+=(s,e)=>
         {
         };
+
+        EditorUI.ScripterUtils.RunningProcessDisposed += ScripterUtils_RunningProcessDisposed;
+        EditorUI.ScripterUtils.RunningProcessExited += ScripterUtils_RunningProcessDisposed;
+
+        documentCs = new(this);
+        documentCs.StateChanged += Document_StateChanged;
+        documentCurrent = documentCs;
+        documentCs.InitEditor(Editor);
+
+        runWithoutDebugMenuItem.Clicked += (s, e) =>
+        {
+            ActiveDocument.RunWithoutDebug();
+        };
+
+        runWithDebugMenuItem.Clicked += (s, e) =>
+        {
+            ActiveDocument.Run();
+        };
+
+        Alternet.UI.App.LogMessage += (s, e) =>
+        {
+            Debug.WriteLine(e.Message);
+        };
+
+        Alternet.UI.ConsoleUtils.BindConsoleOutput();
+        Alternet.UI.ConsoleUtils.BindConsoleError();
+    }
+
+    public EditorUI.IDocumentContainer Container => this;
+
+    public EditorUI.CustomDocument ActiveDocument => documentCurrent;
+
+    private void Document_StateChanged(object? sender, EventArgs e)
+    {
+        if (sender != documentCurrent)
+            return;
+
+        var notRunning = documentCurrent.State == EditorUI.CustomDocument.RunningState.NotRunning;
+
+        Editor.ReadOnly = !notRunning;
+        
+        /* UpdateToolBar(); */
+
+        switch (documentCurrent.State)
+        {
+            case EditorUI.CustomDocument.RunningState.NotRunning:
+                Container.ExecutionPosition = null;
+                Editor.SwitchStackFrame(null, null);
+                /* statusBar.Text = "Ready"; */
+                break;
+            case EditorUI.CustomDocument.RunningState.RunWithDebug:
+                /* statusBar.Text = "Running with debug..."; */
+                break;
+            case EditorUI.CustomDocument.RunningState.RunWithoutDebug:
+                /* statusBar.Text = "Running without debug..."; */
+                break;
+            case EditorUI.CustomDocument.RunningState.Paused:
+                /* statusBar.Text = "Debugging..."; */
+                break;
+        }
+    }
+
+    private void ScripterUtils_RunningProcessDisposed(object? sender, EventArgs e)
+    {
+        documentCurrent.State = EditorUI.CustomDocument.RunningState.NotRunning;
     }
 
     private void SetHeight_Clicked(object? sender, EventArgs e)
@@ -157,6 +243,41 @@ public partial class MainPage : Alternet.UI.DisposableContentPage
     private void Control_FocusedControlChanged(object? sender, EventArgs e)
     {
         Alternet.UI.App.LogIf($"FocusedControlChanged: {sender?.GetType()}", false);
+    }
+
+    void EditorUI.IDocumentContainer.ClearErrors()
+    {
+    }
+
+    void EditorUI.IDocumentContainer.SelectErrorPanel()
+    {
+    }
+
+    void EditorUI.IDocumentContainer.AddError(
+        ScriptCompilationDiagnostic error)
+    {
+        Alternet.UI.App.Log($"{error}", EditorUI.ErrorListPanel.GetErrorKind(error));
+    }
+
+    string EditorUI.IDocumentContainer.DocumentText
+    {
+        get => Editor.Text;
+    }
+
+    string? EditorUI.IDocumentContainer.CommandLineArgs { get; set; }
+
+    public EditorUI.PoweredSyntaxEdit Editor => (EditorUI.PoweredSyntaxEdit)editor.Editor;
+
+    public ExecutionPosition? ExecutionPosition
+    {
+        get => executionPosition;
+
+        set
+        {
+            Editor.ClearDebugStyles(executionPosition);
+            executionPosition = value;
+            Editor.ExecutionStopped(value);
+        }
     }
 
     private void InitEdit()
@@ -234,11 +355,6 @@ public partial class MainPage : Alternet.UI.DisposableContentPage
             Alternet.UI.Display.Log();
             Alternet.UI.LogUtils.LogFontsInformation();
         }
-
-        /*
-        var page = new Alternet.MAUI.SelectDevToolsActionPage();
-        await Navigation.PushModalAsync(page);
-        */
     }
 
     private void Button3_Clicked(object? sender, EventArgs e)

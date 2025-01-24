@@ -196,56 +196,69 @@ namespace Alternet.UI
         /// <param name="stream">Stream with data for the deserialization.</param>
         public static object? DeserializeDataObject(Stream stream)
         {
-            if (stream is null)
-                return null;
-
-            if (GlobalDeserializeDataObject is not null)
+            try
             {
-                SerializeDataObjectEventArgs e = new(null, stream);
-
-                GlobalDeserializeDataObject?.Invoke(null, e);
-                if (e.Handled)
-                    return e.Data;
+                return Internal();
+            }
+            catch (Exception e)
+            {
+                App.LogError(e);
+                return null;
             }
 
-            Type? type = null;
-
-            var memoryStream = StreamUtils.CreateMemoryStream(stream);
-            var reader = new StreamReader(memoryStream, Encoding.UTF8);
-            var xmlReader = XmlReader.Create(reader);
-            xmlReader.MoveToContent();
-
-            while (!xmlReader.EOF && xmlReader.ReadState == ReadState.Interactive)
+            object? Internal()
             {
-                if (xmlReader.NodeType == XmlNodeType.Element)
-                {
-                    var uri = xmlReader.NamespaceURI;
+                if (stream is null)
+                    return null;
 
-                    if (uri == XmlUtils.UIXmlNamespace)
+                if (GlobalDeserializeDataObject is not null)
+                {
+                    SerializeDataObjectEventArgs e = new(null, stream);
+
+                    GlobalDeserializeDataObject?.Invoke(null, e);
+                    if (e.Handled)
+                        return e.Data;
+                }
+
+                Type? type = null;
+
+                var memoryStream = StreamUtils.CreateMemoryStream(stream);
+                var reader = new StreamReader(memoryStream, Encoding.UTF8);
+                var xmlReader = XmlReader.Create(reader);
+                xmlReader.MoveToContent();
+
+                while (!xmlReader.EOF && xmlReader.ReadState == ReadState.Interactive)
+                {
+                    if (xmlReader.NodeType == XmlNodeType.Element)
                     {
-                        var typeName = xmlReader.Name;
-                        type = UixmlLoader.FindType(typeName);
-                        break;
+                        var uri = xmlReader.NamespaceURI;
+
+                        if (uri == XmlUtils.UIXmlNamespace)
+                        {
+                            var typeName = xmlReader.Name;
+                            type = UixmlLoader.FindType(typeName);
+                            break;
+                        }
+                        else
+                            reader.Read();
                     }
                     else
                         reader.Read();
                 }
-                else
-                    reader.Read();
+
+                if (type is null)
+                    return null;
+
+                XmlRootAttribute xRoot = new();
+                xRoot.ElementName = type.FullName;
+                xRoot.Namespace = XmlUtils.UIXmlNamespace;
+                xRoot.IsNullable = false;
+
+                memoryStream.Seek(0, SeekOrigin.Begin);
+                reader = new StreamReader(memoryStream, Encoding.UTF8);
+                var data = new XmlSerializer(type, xRoot).Deserialize(reader);
+                return data;
             }
-
-            if (type is null)
-                return null;
-
-            XmlRootAttribute xRoot = new();
-            xRoot.ElementName = type.FullName;
-            xRoot.Namespace = XmlUtils.UIXmlNamespace;
-            xRoot.IsNullable = false;
-
-            memoryStream.Seek(0, SeekOrigin.Begin);
-            reader = new StreamReader(memoryStream, Encoding.UTF8);
-            var data = new XmlSerializer(type, xRoot).Deserialize(reader);
-            return data;
         }
 
         /// <summary>

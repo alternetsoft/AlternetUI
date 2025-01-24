@@ -17,6 +17,10 @@
                                         x:Name="setHeight"/>
                     <MenuFlyoutItem Text="Hide extra controls"
                                         x:Name="hideExtra"/>
+                    <MenuFlyoutItem Text="Run Without Debug"
+                                        x:Name="runWithoutDebugMenuItem"/>
+                    <MenuFlyoutItem Text="Run or Continue Run"
+                                        x:Name="runWithDebugMenuItem"/>
                 </MenuFlyout>
             </FlyoutBase.ContextFlyout>
         </StackLayout>
