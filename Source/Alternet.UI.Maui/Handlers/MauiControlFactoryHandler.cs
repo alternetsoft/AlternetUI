@@ -10,7 +10,7 @@ namespace Alternet.UI
     {
         public IControlHandler CreatePanelHandler(ContainerControl control)
         {
-            return new HandlerForDisposed();
+            return new MauiControlHandler();
         }
 
         IControlHandler IControlFactoryHandler.CreateAnimationPlayerHandler(AnimationPlayer control)
@@ -45,17 +45,17 @@ namespace Alternet.UI
 
         IControlHandler IControlFactoryHandler.CreateComboBoxHandler(ComboBox control)
         {
-            return new HandlerForDisposed();
+            return new MauiComboBoxHandler();
         }
 
         IContextMenuHandler IControlFactoryHandler.CreateContextMenuHandler(ContextMenu control)
         {
-            return new HandlerForDisposed();
+            return new PlessContextMenuHandler();
         }
 
         IControlHandler IControlFactoryHandler.CreateControlHandler(AbstractControl control)
         {
-            return new HandlerForDisposed();
+            return new MauiControlHandler();
         }
 
         IControlHandler IControlFactoryHandler.CreateDateTimePickerHandler(DateTimePicker control)
@@ -85,12 +85,12 @@ namespace Alternet.UI
 
         IMainMenuHandler IControlFactoryHandler.CreateMainMenuHandler(MainMenu control)
         {
-            return new HandlerForDisposed();
+            return new PlessMainMenuHandler();
         }
 
         IMenuItemHandler IControlFactoryHandler.CreateMenuItemHandler(MenuItem control)
         {
-            return new HandlerForDisposed();
+            return new PlessMenuItemHandler();
         }
 
         IControlHandler IControlFactoryHandler.CreateNumericUpDownHandler(NumericUpDown control)
@@ -120,7 +120,7 @@ namespace Alternet.UI
 
         IControlHandler IControlFactoryHandler.CreateScrollBarHandler(ScrollBar control)
         {
-            return new HandlerForDisposed();
+            return new PlessScrollBarHandler();
         }
 
         IControlHandler IControlFactoryHandler.CreateSliderHandler(Slider control)
