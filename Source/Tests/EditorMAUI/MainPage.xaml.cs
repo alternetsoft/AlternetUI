@@ -23,11 +23,18 @@ public partial class MainPage : Alternet.UI.DisposableContentPage
 
     static MainPage()
     {
+        Alternet.UI.DebugUtils.RegisterExceptionsLogger((e) =>
+        {
+            /*
+            if (global::System.Diagnostics.Debugger.IsAttached)
+                global::System.Diagnostics.Debugger.Break();
+            */
+        });
     }
 
     public MainPage()
     {
-        Alternet.UI.DebugUtils.RegisterExceptionsLogger();
+        /*var editorUI = new EditorUI.MainWindow();*/
 
         Alternet.UI.PlessMouse.ShowTestMouseInControl = false;
 
@@ -37,7 +44,7 @@ public partial class MainPage : Alternet.UI.DisposableContentPage
 
         if (Alternet.UI.App.IsWindowsOS)
         {
-            roslynParser = new();
+            roslynParser = new(new Alternet.Syntax.Parsers.Roslyn.CodeCompletion.CsSolution());
             editor.Editor.Lexer = roslynParser;
         }
         else
