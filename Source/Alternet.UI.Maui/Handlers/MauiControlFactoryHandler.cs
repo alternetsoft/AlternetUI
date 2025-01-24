@@ -10,27 +10,27 @@ namespace Alternet.UI
     {
         public IControlHandler CreatePanelHandler(ContainerControl control)
         {
-            return new MauiControlHandler();
+            return new HandlerForDisposed();
         }
 
         IControlHandler IControlFactoryHandler.CreateAnimationPlayerHandler(AnimationPlayer control)
         {
-            throw new NotImplementedException();
+            return new HandlerForDisposed();
         }
 
         IControlHandler IControlFactoryHandler.CreateButtonHandler(Button control)
         {
-            throw new NotImplementedException();
+            return new HandlerForDisposed();
         }
 
         IControlHandler IControlFactoryHandler.CreateCalendarHandler(Calendar control)
         {
-            throw new NotImplementedException();
+            return new HandlerForDisposed();
         }
 
         IControlHandler IControlFactoryHandler.CreateCheckBoxHandler(CheckBox control)
         {
-            throw new NotImplementedException();
+            return new HandlerForDisposed();
         }
 
         IPropertyGridChoices IControlFactoryHandler.CreateChoices()
@@ -40,107 +40,107 @@ namespace Alternet.UI
 
         IControlHandler IControlFactoryHandler.CreateColorPickerHandler(Control control)
         {
-            throw new NotImplementedException();
+            return new HandlerForDisposed();
         }
 
         IControlHandler IControlFactoryHandler.CreateComboBoxHandler(ComboBox control)
         {
-            return new MauiComboBoxHandler();
+            return new HandlerForDisposed();
         }
 
         IContextMenuHandler IControlFactoryHandler.CreateContextMenuHandler(ContextMenu control)
         {
-            return new PlessContextMenuHandler();
+            return new HandlerForDisposed();
         }
 
         IControlHandler IControlFactoryHandler.CreateControlHandler(AbstractControl control)
         {
-            return new MauiControlHandler();
+            return new HandlerForDisposed();
         }
 
         IControlHandler IControlFactoryHandler.CreateDateTimePickerHandler(DateTimePicker control)
         {
-            throw new NotImplementedException();
+            return new HandlerForDisposed();
         }
 
         IControlHandler IControlFactoryHandler.CreateGroupBoxHandler(GroupBox control)
         {
-            throw new NotImplementedException();
+            return new HandlerForDisposed();
         }
 
         IControlHandler IControlFactoryHandler.CreateLabelHandler(Label control)
         {
-            throw new NotImplementedException();
+            return new HandlerForDisposed();
         }
 
         IControlHandler IControlFactoryHandler.CreateLinkLabelHandler(LinkLabel control)
         {
-            throw new NotImplementedException();
+            return new HandlerForDisposed();
         }
 
         IControlHandler IControlFactoryHandler.CreateListViewHandler(ListView control)
         {
-            throw new NotImplementedException();
+            return new HandlerForDisposed();
         }
 
         IMainMenuHandler IControlFactoryHandler.CreateMainMenuHandler(MainMenu control)
         {
-            return new PlessMainMenuHandler();
+            return new HandlerForDisposed();
         }
 
         IMenuItemHandler IControlFactoryHandler.CreateMenuItemHandler(MenuItem control)
         {
-            return new PlessMenuItemHandler();
+            return new HandlerForDisposed();
         }
 
         IControlHandler IControlFactoryHandler.CreateNumericUpDownHandler(NumericUpDown control)
         {
-            throw new NotImplementedException();
+            return new HandlerForDisposed();
         }
 
         IControlHandler IControlFactoryHandler.CreateProgressBarHandler(ProgressBar control)
         {
-            throw new NotImplementedException();
+            return new HandlerForDisposed();
         }
 
         IControlHandler IControlFactoryHandler.CreatePropertyGridHandler(PropertyGrid control)
         {
-            throw new NotImplementedException();
+            return new HandlerForDisposed();
         }
 
         IControlHandler IControlFactoryHandler.CreateRadioButtonHandler(RadioButton control)
         {
-            throw new NotImplementedException();
+            return new HandlerForDisposed();
         }
 
         IControlHandler IControlFactoryHandler.CreateRichTextBoxHandler(RichTextBox editor)
         {
-            throw new NotImplementedException();
+            return new HandlerForDisposed();
         }
 
         IControlHandler IControlFactoryHandler.CreateScrollBarHandler(ScrollBar control)
         {
-            return new PlessScrollBarHandler();
+            return new HandlerForDisposed();
         }
 
         IControlHandler IControlFactoryHandler.CreateSliderHandler(Slider control)
         {
-            throw new NotImplementedException();
+            return new HandlerForDisposed();
         }
 
         IStatusBarHandler IControlFactoryHandler.CreateStatusBarHandler(StatusBar control)
         {
-            throw new NotImplementedException();
+            return new PlessStatusBarHandler();
         }
 
         IControlHandler IControlFactoryHandler.CreateTextBoxHandler(TextBox control)
         {
-            throw new NotImplementedException();
+            return new HandlerForDisposed();
         }
 
         IControlHandler IControlFactoryHandler.CreateTreeViewHandler(TreeView control)
         {
-            throw new NotImplementedException();
+            return new HandlerForDisposed();
         }
 
         IPropertyGridVariant IControlFactoryHandler.CreateVariant()
@@ -150,7 +150,7 @@ namespace Alternet.UI
 
         IControlHandler IControlFactoryHandler.CreateVListBoxHandler(VirtualListBox control)
         {
-            throw new NotImplementedException();
+            return new MauiVListBoxHandler();
         }
 
         IWebBrowserFactoryHandler IControlFactoryHandler.CreateWebBrowserFactoryHandler()

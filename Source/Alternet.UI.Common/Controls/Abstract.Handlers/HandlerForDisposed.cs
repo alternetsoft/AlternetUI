@@ -8,7 +8,10 @@ using Alternet.Drawing;
 
 namespace Alternet.UI
 {
-    internal class HandlerForDisposed : PlessControlHandler,
+    /// <summary>
+    /// This is dummy handler used for the disposed controls in some cases.
+    /// </summary>
+    public class HandlerForDisposed : PlessControlHandler,
         IAnimationPlayerHandler,
         IButtonHandler,
         ICalendarHandler,
