@@ -17,10 +17,41 @@
                                         x:Name="setHeight"/>
                     <MenuFlyoutItem Text="Hide extra controls"
                                         x:Name="hideExtra"/>
+                    
                     <MenuFlyoutItem Text="Run Without Debug"
-                                        x:Name="runWithoutDebugMenuItem"/>
-                    <MenuFlyoutItem Text="Run or Continue Run"
-                                        x:Name="runWithDebugMenuItem"/>
+                                        x:Name="runWithoutDebugMenuItem">
+                        <MenuFlyoutItem.KeyboardAccelerators>
+                            <KeyboardAccelerator Key="F5" Modifiers="Ctrl"/>
+                        </MenuFlyoutItem.KeyboardAccelerators>
+                    </MenuFlyoutItem>
+                    
+                    <MenuFlyoutItem Text="Run or Continue"
+                                        x:Name="runWithDebugMenuItem">
+                        <MenuFlyoutItem.KeyboardAccelerators>
+                            <KeyboardAccelerator Key="F5"/>
+                        </MenuFlyoutItem.KeyboardAccelerators>
+                    </MenuFlyoutItem>
+
+                    <MenuFlyoutItem Text="Step Into"
+                                        x:Name="stepIntoMenuItem">
+                        <MenuFlyoutItem.KeyboardAccelerators>
+                            <KeyboardAccelerator Key="F11"/>
+                        </MenuFlyoutItem.KeyboardAccelerators>
+                    </MenuFlyoutItem>
+
+                    <MenuFlyoutItem Text="Step Over"
+                                        x:Name="stepOverMenuItem">
+                        <MenuFlyoutItem.KeyboardAccelerators>
+                            <KeyboardAccelerator Key="F10"/>
+                        </MenuFlyoutItem.KeyboardAccelerators>
+                    </MenuFlyoutItem>
+
+                    <MenuFlyoutItem Text="Step Out"
+                                        x:Name="stepOutMenuItem">
+                        <MenuFlyoutItem.KeyboardAccelerators>
+                            <KeyboardAccelerator Key="F11" Modifiers="Shift"/>
+                        </MenuFlyoutItem.KeyboardAccelerators>
+                    </MenuFlyoutItem>
                 </MenuFlyout>
             </FlyoutBase.ContextFlyout>
         </StackLayout>

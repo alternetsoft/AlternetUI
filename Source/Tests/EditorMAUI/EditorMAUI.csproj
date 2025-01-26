@@ -105,7 +105,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\..\..\AlternetStudio\Demo\Editor.AlternetUI\EditorUI\EditorUI.csproj" />
+    <ProjectReference Include="..\..\..\..\AlternetStudio\Demo\Editor.AlternetUI\EditorUI\EditorUI.Dll.csproj" />
     <ProjectReference Include="..\..\..\..\AlternetStudio\Source\Parsers\Roslyn\Alternet.Syntax.Parsers.Roslyn.csproj" />
     <ProjectReference Include="..\..\Alternet.UI.Maui\Alternet.UI.Maui.csproj" />
 

@@ -1,3 +1,11 @@
+# 0.9.705 (2025 January 26)
+
+- ImageSet: Fixed FromSvgStream.
+- PropertyGrid.AddInitializer.
+- Clipboard: Implement support for DataFormats.Serializable.
+- UixmlLoader: FindType, Initialize.
+- Clipboard: Fixed exception on get data occured in some cases.
+
 # 0.9.704 (2025 January 22)
 
 - Added Calculator control.

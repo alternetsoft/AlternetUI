@@ -142,6 +142,21 @@ public partial class MainPage : Alternet.UI.DisposableContentPage, EditorUI.IDoc
             ActiveDocument.Run();
         };
 
+        stepIntoMenuItem.Clicked += (s, e) =>
+        {
+            ActiveDocument.StepInto();
+        };
+
+        stepOverMenuItem.Clicked += (s, e) =>
+        {
+            ActiveDocument.StepOver();
+        };
+
+        stepOutMenuItem.Clicked += (s, e) =>
+        {
+            ActiveDocument.StepOut();
+        };
+
         Alternet.UI.App.LogMessage += (s, e) =>
         {
             Debug.WriteLine(e.Message);
