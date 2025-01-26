@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ApiInfo>
-  <Assembly Name="Alternet.UI.Common, Version=0.9.704.0, Culture=neutral, PublicKeyToken=7fb0fe57212b4b74">
+  <Assembly Name="Alternet.UI.Common, Version=0.9.705.0, Culture=neutral, PublicKeyToken=d211ec79d306281b">
     <Type Name="XamlX.Runtime.IXamlParentStackProviderV1" />
     <Type Name="XamlX.Runtime.IXamlXmlNamespaceInfoProviderV1" />
     <Type Name="XamlX.Runtime.XamlXmlNamespaceInfoV1" />
@@ -529,6 +529,7 @@
     <Type Name="Alternet.UI.HandledEventArgs" />
     <Type Name="Alternet.UI.HandledEventArgsWithResult`2" />
     <Type Name="Alternet.UI.HandledEventArgs`1" />
+    <Type Name="Alternet.UI.SerializeDataObjectEventArgs" />
     <Type Name="Alternet.UI.StreamFromUrlEventArgs" />
     <Type Name="Alternet.UI.ValueConvertEventArgs`2" />
     <Type Name="Alternet.UI.HelpEventHandler" />
@@ -1808,6 +1809,10 @@
       <Event Name="Disposed" />
     </Type>
     <Type Name="Alternet.UI.BaseControlHandler">
+      <Event Name="Disposed" />
+    </Type>
+    <Type Name="Alternet.UI.HandlerForDisposed">
+      <Event Name="CurrentPositionChanged" />
       <Event Name="Disposed" />
     </Type>
     <Type Name="Alternet.UI.PlessControlHandler">
@@ -9796,6 +9801,9 @@
       <Event Name="Invalidated" />
       <Event Name="LayoutUpdated" />
       <Event Name="Scroll" />
+      <Event Name="Disposed" />
+    </Type>
+    <Type Name="Alternet.UI.PlessStatusBarHandler">
       <Event Name="Disposed" />
     </Type>
     <Type Name="Alternet.UI.StatusBar">
