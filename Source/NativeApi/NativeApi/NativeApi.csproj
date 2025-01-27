@@ -7,12 +7,14 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\Alternet.UI.Interfaces\Alternet.UI.Interfaces.csproj" />
-    <ProjectReference Include="..\NativeApi.Common\NativeApi.Common.csproj" />
+    <Compile Remove="Api\Validator\**" />
+    <EmbeddedResource Remove="Api\Validator\**" />
+    <None Remove="Api\Validator\**" />
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Api\Validator\" />
+    <ProjectReference Include="..\..\Alternet.UI.Interfaces\Alternet.UI.Interfaces.csproj" />
+    <ProjectReference Include="..\NativeApi.Common\NativeApi.Common.csproj" />
   </ItemGroup>
 
 </Project>

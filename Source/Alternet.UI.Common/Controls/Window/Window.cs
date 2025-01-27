@@ -1563,6 +1563,50 @@ namespace Alternet.UI
             return GetParentWindow(c.Parent);
         }
 
+        /// <summary>
+        /// Checks whether ESC or ENTER is pressed and raises default buttons
+        /// click event if window is shown as a modal dialog.
+        /// </summary>
+        /// <param name="e">Key event arguments.</param>
+        /// <returns></returns>
+        protected virtual bool EscapeOrEnterToDefaultButtonClick(KeyEventArgs e)
+        {
+            bool ClickDefaultButton(Func<Button, bool> func)
+            {
+                var child = FindChild(
+                (c) =>
+                {
+                    if (!c.Visible || c is not Button button)
+                        return false;
+                    return func(button);
+                },
+                true);
+                if (child is Button button)
+                {
+                    button.RaiseClick();
+                    e.Suppressed();
+                    return true;
+                }
+
+                return false;
+            }
+
+            if (Modal && !e.HasModifiers)
+            {
+                if (e.IsEscape)
+                {
+                    return ClickDefaultButton((button) => button.IsCancel);
+                }
+                else
+                if (e.IsEnter)
+                {
+                    return ClickDefaultButton((button) => button.IsDefault);
+                }
+            }
+
+            return false;
+        }
+
         /// <inheritdoc/>
         protected override void OnKeyDown(KeyEventArgs e)
         {
@@ -1570,9 +1614,11 @@ namespace Alternet.UI
                 return;
             base.OnKeyDown(e);
 
-            if (e.Key == Key.Enter)
-            {
-            }
+            if (e.IsHandledOrSupressed)
+                return;
+
+            if (EscapeOrEnterToDefaultButtonClick(e))
+                return;
 
             if (e.Key == Key.Escape)
             {
@@ -1592,7 +1638,15 @@ namespace Alternet.UI
             if (DisposingOrDisposed)
                 return;
             base.OnAfterChildKeyDown(sender, e);
-            e.Handled = e.Handled || ExecuteKeyBinding(e.Key, e.ModifierKeys, true);
+
+            if (e.IsHandledOrSupressed)
+                return;
+
+            if (EscapeOrEnterToDefaultButtonClick(e))
+                return;
+
+            if (ExecuteKeyBinding(e.Key, e.ModifierKeys, true))
+                e.Suppressed();
         }
 
         /// <inheritdoc/>

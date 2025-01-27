@@ -38,14 +38,8 @@ namespace Alternet.UI
         /// </summary>
         Image? FocusedImage { set; }
 
-        /// <inheritdoc cref="Button.IsDefault"/>
-        bool IsDefault { get; set; }
-
         /// <inheritdoc cref="Button.ExactFit"/>
         bool ExactFit { get; set; }
-
-        /// <inheritdoc cref="Button.IsCancel"/>
-        bool IsCancel { get; set; }
 
         /// <inheritdoc cref="Button.TextVisible"/>
         bool TextVisible { get; set; }
