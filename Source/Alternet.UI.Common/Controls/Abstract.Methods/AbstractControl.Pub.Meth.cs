@@ -1823,6 +1823,36 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Searches for the child control that meets the specified criteria.
+        /// </summary>
+        /// <param name="testFunc">Function that returns True if the child control
+        /// meets the specified criteria.</param>
+        /// <param name="recursive">Whether to search for the child control recursively.</param>
+        /// <returns></returns>
+        public AbstractControl? FindChild(
+            Func<AbstractControl, bool> testFunc,
+            bool recursive = false)
+        {
+            if (!HasChildren)
+                return null;
+
+            foreach (var child in Children)
+            {
+                var found = testFunc(child);
+                if (found)
+                    return child;
+                if (recursive)
+                {
+                    var result = child.FindChild(testFunc, true);
+                    if (result is not null)
+                        return result;
+                }
+            }
+
+            return null;
+        }
+
+        /// <summary>
         /// Performs some action for the each visible child of the control.
         /// </summary>
         /// <param name="action">Specifies action which will be called
