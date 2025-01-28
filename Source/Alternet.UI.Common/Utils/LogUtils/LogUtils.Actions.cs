@@ -710,6 +710,7 @@ namespace Alternet.UI
             App.LogNameValue("App.IsIOS", App.IsIOS);
             App.LogNameValue("App.Is64BitProcess", App.Is64BitProcess);
             App.LogNameValue("App.Is64BitOS", App.Is64BitOS);
+            App.LogNameValue("C++ CPU", WebBrowser.DoCommandGlobal("CPU"));
 
             App.LogNameValue("AppUtils.FrameworkIdentifier", AppUtils.FrameworkIdentifier);
 
