@@ -10,6 +10,16 @@ namespace Alternet.UI
     public class OpenFileDialog : FileDialog
     {
         /// <summary>
+        /// Gets or sets default value for the <see cref="AllowMultipleSelection"/> property.
+        /// </summary>
+        public static bool DefaultAllowMultipleSelection = false;
+
+        /// <summary>
+        /// Gets or sets default value for the <see cref="FileMustExist"/> property.
+        /// </summary>
+        public static bool DefaultFileMustExist = true;
+
+        /// <summary>
         /// Gets default <see cref="OpenFileDialog"/> instance.
         /// </summary>
         public static OpenFileDialog Default = defaultDialog ??= new OpenFileDialog();
@@ -28,13 +38,15 @@ namespace Alternet.UI
         {
             get
             {
-                CheckDisposed();
+                if (DisposingOrDisposed)
+                    return default;
                 return Handler.FileMustExist;
             }
 
             set
             {
-                CheckDisposed();
+                if (DisposingOrDisposed)
+                    return;
                 Handler.FileMustExist = value;
             }
         }
@@ -52,13 +64,15 @@ namespace Alternet.UI
         {
             get
             {
-                CheckDisposed();
+                if (DisposingOrDisposed)
+                    return default;
                 return Handler.AllowMultipleSelection;
             }
 
             set
             {
-                CheckDisposed();
+                if (DisposingOrDisposed)
+                    return;
                 Handler.AllowMultipleSelection = value;
             }
         }
@@ -71,7 +85,8 @@ namespace Alternet.UI
         {
             get
             {
-                CheckDisposed();
+                if (DisposingOrDisposed)
+                    return [];
                 return Handler.FileNames;
             }
         }
@@ -81,6 +96,14 @@ namespace Alternet.UI
         /// </summary>
         [Browsable(false)]
         public new IOpenFileDialogHandler Handler => (IOpenFileDialogHandler)base.Handler;
+
+        /// <inheritdoc/>
+        public override void Reset()
+        {
+            base.Reset();
+            AllowMultipleSelection = DefaultAllowMultipleSelection;
+            FileMustExist = DefaultFileMustExist;
+        }
 
         /// <inheritdoc/>
         protected override IDialogHandler CreateHandler()
