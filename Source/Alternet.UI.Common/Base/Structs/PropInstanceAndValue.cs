@@ -15,9 +15,9 @@ namespace Alternet.UI
     public readonly struct PropInstanceAndValue
     {
         /// <summary>
-        /// The object instance which contains the property.
+        /// The property information.
         /// </summary>
-        public readonly object? Instance;
+        public readonly PropertyInfo PropInfo;
 
         /// <summary>
         /// The property value.
@@ -25,9 +25,9 @@ namespace Alternet.UI
         public readonly object? Value;
 
         /// <summary>
-        /// The property information.
+        /// The object instance which contains the property.
         /// </summary>
-        public readonly PropertyInfo PropInfo;
+        private readonly WeakReferenceValue<object> instanceContainer;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="PropInstanceAndValue"/> struct
@@ -38,9 +38,21 @@ namespace Alternet.UI
         /// <param name="propInfo">The property information.</param>
         public PropInstanceAndValue(object? instance, PropertyInfo propInfo, object? value)
         {
-            Instance = instance;
+            if(instance is not null)
+                instanceContainer = new(instance);
             PropInfo = propInfo;
             Value = value;
+        }
+
+        /// <summary>
+        /// The object instance which contains the property.
+        /// </summary>
+        private readonly object? Instance
+        {
+            get
+            {
+                return instanceContainer.Value;
+            }
         }
 
         /// <summary>
@@ -88,7 +100,8 @@ namespace Alternet.UI
                 return;
             while (savedProperties.TryPop(out var item))
             {
-                item.PropInfo.SetValue(item.Instance, item.Value);
+                if(item.Instance is not null)
+                    item.PropInfo.SetValue(item.Instance, item.Value);
             }
         }
 
@@ -241,8 +254,12 @@ namespace Alternet.UI
                 return;
             foreach(var item in saved)
             {
+                var container = item.Container;
+                if (container is null)
+                    continue;
+
                 if (doInsideUpdate)
-                    item.Container.DoInsideUpdate(Pop);
+                    container.DoInsideUpdate(Pop);
                 else
                     Pop();
 
@@ -257,17 +274,14 @@ namespace Alternet.UI
         /// Item which is used in <see cref="PushChildrenEnabledMultiple"/>
         /// and <see cref="PopPropertiesMultiple"/>.
         /// </summary>
-        public readonly struct SavedPropertiesItem
+        public class SavedPropertiesItem
         {
-            /// <summary>
-            /// Container control which properties are saved.
-            /// </summary>
-            public readonly AbstractControl Container;
-
             /// <summary>
             /// Information about the saved properties.
             /// </summary>
             public readonly ConcurrentStack<PropInstanceAndValue> SavedProperties;
+
+            private readonly WeakReferenceValue<AbstractControl> containerValue;
 
             /// <summary>
             /// Initializes a new instance of the <see cref="SavedPropertiesItem"/> struct
@@ -279,8 +293,19 @@ namespace Alternet.UI
                 AbstractControl container,
                 ConcurrentStack<PropInstanceAndValue> savedProps)
             {
-                Container = container;
+                containerValue = new(container);
                 SavedProperties = savedProps;
+            }
+
+            /// <summary>
+            /// Container control which properties are saved.
+            /// </summary>
+            public AbstractControl? Container
+            {
+                get
+                {
+                    return containerValue.Value;
+                }
             }
         }
     }

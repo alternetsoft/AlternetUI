@@ -120,12 +120,6 @@ namespace Alternet.UI
             {
                 if (Control is null)
                     return;
-                if (Control.GetWindowKind() == WindowKind.Dialog)
-                {
-                    statusBar = value;
-                    return;
-                }
-
                 SetStatusBar(statusBar, value);
                 statusBar = value;
             }
