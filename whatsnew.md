@@ -1,3 +1,12 @@
+# 0.9.706 (2025 January 30)
+
+- Implement modal dialogs internally so under macOs and Linux problems with modal dialogs are fixed.
+- Moved ShowDialogAsync, ModalResult and other members related to modal dialogs handling from DialogWindow to Window.
+- From now the only method for modal dialog showing is ShowDialogAsync as legacy methods are not compatible with Maui and not worked properly on macOs and Linux.
+- Add AbstractControl.FindChild oveload.
+- FileDialog.Reset and static props with default values for the dialog properties.
+- App: TopModalDialog, ModalDialogs.
+
 # 0.9.705 (2025 January 26)
 
 - ImageSet: Fixed FromSvgStream.
