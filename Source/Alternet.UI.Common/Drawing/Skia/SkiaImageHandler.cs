@@ -187,7 +187,7 @@ namespace Alternet.UI
 
             set
             {
-                throw new NotImplementedException();
+                scaleFactor = value;
             }
         }
 
@@ -196,7 +196,7 @@ namespace Alternet.UI
         {
             get
             {
-                return PixelSize;
+                return ScaledSize;
             }
         }
 
@@ -205,14 +205,17 @@ namespace Alternet.UI
         {
             get
             {
-                return PixelSize.Height;
+                return bitmap.Height / ScaleFactor;
             }
         }
 
         /// <inheritdoc/>
         public virtual SizeI ScaledSize
         {
-            get => new((int)ScaledHeight, (int)ScaledWidth);
+            get
+            {
+                return new((int)ScaledHeight, (int)ScaledWidth);
+            }
         }
 
         /// <inheritdoc/>
@@ -220,7 +223,7 @@ namespace Alternet.UI
         {
             get
             {
-                return PixelSize.Width;
+                return bitmap.Width / ScaleFactor;
             }
         }
 

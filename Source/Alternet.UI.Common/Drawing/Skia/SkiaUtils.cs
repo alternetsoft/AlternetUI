@@ -169,6 +169,18 @@ namespace Alternet.Drawing
                 bitmap = new(boundsInPixels.Width, boundsInPixels.Height, !isTransparent);
             }
 
+            var result = CreateBitmapCanvas(bitmap, scaleFactor);
+            return result;
+        }
+
+        /// <summary>
+        /// Creates canvas on the specified bitmap.
+        /// </summary>
+        /// <param name="bitmap">Bitmap to create canvas on.</param>
+        /// <param name="scaleFactor">Initial scale factor for the canvas.</param>
+        /// <returns></returns>
+        public static SkiaGraphics CreateBitmapCanvas(SKBitmap bitmap, Coord scaleFactor)
+        {
             var result = new SkiaGraphics(bitmap);
             result.OriginalScaleFactor = (float)scaleFactor;
             result.Canvas.Scale((float)scaleFactor);
