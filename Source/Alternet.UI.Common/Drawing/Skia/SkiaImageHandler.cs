@@ -24,6 +24,7 @@ namespace Alternet.UI
         public static SKSamplingOptions? DefaultSamplingOptions;
 
         private SKBitmap bitmap;
+        private Coord scaleFactor = 1;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="SkiaImageHandler"/> class using the
@@ -157,10 +158,22 @@ namespace Alternet.UI
         public virtual SKAlphaType AlphaType => bitmap.AlphaType;
 
         /// <inheritdoc/>
-        public virtual int Width => bitmap.Width;
+        public virtual int Width
+        {
+            get
+            {
+                return bitmap.Width;
+            }
+        }
 
         /// <inheritdoc/>
-        public virtual int Height => bitmap.Height;
+        public virtual int Height
+        {
+            get
+            {
+                return bitmap.Height;
+            }
+        }
 
         /// <summary>
         /// Gets internal <see cref="SKBitmap"/>.
@@ -170,7 +183,7 @@ namespace Alternet.UI
         /// <inheritdoc/>
         public virtual Coord ScaleFactor
         {
-            get => 1;
+            get => scaleFactor;
 
             set
             {
@@ -181,13 +194,19 @@ namespace Alternet.UI
         /// <inheritdoc/>
         public virtual SizeI DipSize
         {
-            get => PixelSize;
+            get
+            {
+                return PixelSize;
+            }
         }
 
         /// <inheritdoc/>
         public virtual Coord ScaledHeight
         {
-            get => PixelSize.Height;
+            get
+            {
+                return PixelSize.Height;
+            }
         }
 
         /// <inheritdoc/>
@@ -199,7 +218,10 @@ namespace Alternet.UI
         /// <inheritdoc/>
         public virtual Coord ScaledWidth
         {
-            get => PixelSize.Width;
+            get
+            {
+                return PixelSize.Width;
+            }
         }
 
         /// <inheritdoc/>
