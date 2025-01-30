@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
@@ -392,6 +393,24 @@ namespace Alternet.UI
                 Handler.HasTitleBar = value;
             }
         }
+
+        /// <summary>
+        /// Gets or sets <see cref="ModalResult"/> of the ESC key.
+        /// </summary>
+        /// <remarks>
+        /// Set this property to <see cref="ModalResult.Canceled"/> if you want to
+        /// close modal dialog when ESC key is pressed.
+        /// </remarks>
+        public virtual ModalResult EscModalResult { get; set; } = ModalResult.None;
+
+        /// <summary>
+        /// Gets or sets <see cref="ModalResult"/> of the ENTER key.
+        /// </summary>
+        /// <remarks>
+        /// Set this property to <see cref="ModalResult.Accepted"/> if you want to
+        /// close modal dialog when ENTER key is pressed.
+        /// </remarks>
+        public virtual ModalResult EnterModalResult { get; set; } = ModalResult.None;
 
         /// <summary>
         /// Gets or sets border style of the window.
@@ -860,18 +879,6 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Gets a value indicating whether this window is displayed modally.
-        /// </summary>
-        [Browsable(false)]
-        public virtual bool Modal
-        {
-            get
-            {
-                return false;
-            }
-        }
-
-        /// <summary>
         /// Gets or sets the <see cref="MainMenu"/> that is displayed in the window.
         /// </summary>
         /// <value>
@@ -893,9 +900,6 @@ namespace Alternet.UI
 
                 var oldValue = menu;
                 menu = value;
-
-                if (GetWindowKind() == WindowKind.Dialog)
-                    return;
 
                 (oldValue as AbstractControl)?.SetParentInternal(null);
                 (menu as AbstractControl)?.SetParentInternal(this);
@@ -1185,8 +1189,15 @@ namespace Alternet.UI
             {
                 Show();
                 Raise();
-                if (CanFocus)
-                    SetFocus();
+                if(ActiveControl is not null)
+                {
+                    ActiveControl?.SetFocusIfPossible();
+                }
+                else
+                {
+                    if (CanFocus)
+                        SetFocus();
+                }
             }
         }
 
@@ -1284,6 +1295,21 @@ namespace Alternet.UI
         /// </summary>
         public virtual bool CanClose(bool askOwned)
         {
+            var modalDialog = App.TopModalDialog;
+            if(modalDialog is not null)
+            {
+                if (modalDialog != this)
+                    return false;
+                else
+                {
+                    RunWhenIdle(() =>
+                    {
+                        ModalResult = ModalResult.Canceled;
+                    });
+                    return false;
+                }
+            }
+
             bool CanClose()
             {
                 WindowClosingEventArgs e = new();
@@ -1563,6 +1589,64 @@ namespace Alternet.UI
             return GetParentWindow(c.Parent);
         }
 
+        /// <summary>
+        /// Checks whether ESC or ENTER is pressed and raises default buttons
+        /// click event if window is shown as a modal dialog.
+        /// </summary>
+        /// <param name="e">Key event arguments.</param>
+        /// <returns></returns>
+        protected virtual bool EscapeOrEnterToDefaultButtonClick(KeyEventArgs e)
+        {
+            bool ClickDefaultButton(Func<Button, bool> func)
+            {
+                var child = FindChild(
+                (c) =>
+                {
+                    if (!c.Visible || c is not Button button)
+                        return false;
+                    return func(button);
+                },
+                true);
+                if (child is Button button)
+                {
+                    button.RaiseClick();
+                    e.Suppressed();
+                    return true;
+                }
+
+                return false;
+            }
+
+            if (Modal && !e.HasModifiers)
+            {
+                if (e.IsEscape)
+                {
+                    if (EscModalResult != ModalResult.None)
+                    {
+                        ModalResult = EscModalResult;
+                        e.Suppressed();
+                        return true;
+                    }
+
+                    return ClickDefaultButton((button) => button.IsCancel);
+                }
+                else
+                if (e.IsEnter)
+                {
+                    if (EnterModalResult != ModalResult.None)
+                    {
+                        ModalResult = EnterModalResult;
+                        e.Suppressed();
+                        return true;
+                    }
+
+                    return ClickDefaultButton((button) => button.IsDefault);
+                }
+            }
+
+            return false;
+        }
+
         /// <inheritdoc/>
         protected override void OnKeyDown(KeyEventArgs e)
         {
@@ -1570,9 +1654,11 @@ namespace Alternet.UI
                 return;
             base.OnKeyDown(e);
 
-            if (e.Key == Key.Enter)
-            {
-            }
+            if (e.IsHandledOrSupressed)
+                return;
+
+            if (EscapeOrEnterToDefaultButtonClick(e))
+                return;
 
             if (e.Key == Key.Escape)
             {
@@ -1592,7 +1678,15 @@ namespace Alternet.UI
             if (DisposingOrDisposed)
                 return;
             base.OnAfterChildKeyDown(sender, e);
-            e.Handled = e.Handled || ExecuteKeyBinding(e.Key, e.ModifierKeys, true);
+
+            if (e.IsHandledOrSupressed)
+                return;
+
+            if (EscapeOrEnterToDefaultButtonClick(e))
+                return;
+
+            if (ExecuteKeyBinding(e.Key, e.ModifierKeys, true))
+                e.Suppressed();
         }
 
         /// <inheritdoc/>
@@ -1894,6 +1988,15 @@ namespace Alternet.UI
         /// <param name="e">An <see cref="EventArgs"/> that contains the event data.</param>
         protected virtual void OnStateChanged(EventArgs e)
         {
+        }
+
+        /// <inheritdoc/>
+        protected override void OnActivated(EventArgs e)
+        {
+            base.OnActivated(e);
+
+            var dialog = App.TopModalDialog;
+            dialog?.ShowAndFocus(true);
         }
 
         /// <summary>

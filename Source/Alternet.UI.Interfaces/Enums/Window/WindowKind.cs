@@ -16,10 +16,12 @@ namespace Alternet.UI
         /// </summary>
         Window = 0,
 
+/*
         /// <summary>
         /// Dialog.
         /// </summary>
         Dialog = 1,
+*/
 
         /// <summary>
         /// Mini frame.

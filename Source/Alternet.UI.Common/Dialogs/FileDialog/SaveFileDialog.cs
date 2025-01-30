@@ -10,6 +10,16 @@ namespace Alternet.UI
     public class SaveFileDialog : FileDialog
     {
         /// <summary>
+        /// Gets or sets default value for the <see cref="AllowNullFileName"/> property.
+        /// </summary>
+        public static bool DefaultAllowNullFileName = false;
+
+        /// <summary>
+        /// Gets or sets default value for the <see cref="OverwritePrompt"/> property.
+        /// </summary>
+        public static bool DefaultOverwritePrompt = true;
+
+        /// <summary>
         /// Gets default <see cref="SaveFileDialog"/> instance.
         /// </summary>
         public static SaveFileDialog Default = defaultDialog ??= new SaveFileDialog();
@@ -46,13 +56,21 @@ namespace Alternet.UI
         /// result is set to <see cref="ModalResult.Canceled"/> when file name is empty or
         /// <c>null</c>.
         /// </remarks>
-        public virtual bool AllowNullFileName { get; set; } = false;
+        public virtual bool AllowNullFileName { get; set; } = DefaultAllowNullFileName;
 
         /// <summary>
         /// Gets dialog handler.
         /// </summary>
         [Browsable(false)]
         public new ISaveFileDialogHandler Handler => (ISaveFileDialogHandler)base.Handler;
+
+        /// <inheritdoc/>
+        public override void Reset()
+        {
+            base.Reset();
+            AllowNullFileName = DefaultAllowNullFileName;
+            OverwritePrompt = DefaultOverwritePrompt;
+        }
 
         /// <inheritdoc/>
         protected override bool CoerceDialogResult(bool dialogResult)

@@ -48,9 +48,6 @@ namespace Alternet.UI
         public virtual string Title { get; set; } = string.Empty;
 
         /// <inheritdoc/>
-        public virtual bool IsModal { get; }
-
-        /// <inheritdoc/>
         public virtual bool IsPopupWindow { get; set; }
 
         /// <inheritdoc/>
@@ -58,9 +55,6 @@ namespace Alternet.UI
 
         /// <inheritdoc/>
         public virtual WindowState State { get; set; }
-
-        /// <inheritdoc/>
-        public virtual ModalResult ModalResult { get; set; }
 
         /// <inheritdoc/>
         public virtual object? StatusBar { get; set; }
@@ -84,11 +78,6 @@ namespace Alternet.UI
 
         /// <inheritdoc/>
         public virtual void SetMenu(object? value)
-        {
-        }
-
-        /// <inheritdoc/>
-        public void ShowModalAsync(Window? owner, Action<ModalResult> onResult)
         {
         }
     }

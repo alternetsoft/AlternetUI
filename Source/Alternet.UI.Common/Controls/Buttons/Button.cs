@@ -14,6 +14,8 @@ namespace Alternet.UI
         private static bool imagesEnabled = true;
 
         private ControlStateImages? stateImages;
+        private bool isDefault;
+        private bool isCancel;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Button"/> class
@@ -247,16 +249,12 @@ namespace Alternet.UI
         {
             get
             {
-                if (DisposingOrDisposed)
-                    return default;
-                return Handler.IsDefault;
+                return isDefault;
             }
 
             set
             {
-                if (DisposingOrDisposed)
-                    return;
-                Handler.IsDefault = value;
+                isDefault = value;
             }
         }
 
@@ -303,16 +301,12 @@ namespace Alternet.UI
         {
             get
             {
-                if (DisposingOrDisposed)
-                    return default;
-                return Handler.IsCancel;
+                return isCancel;
             }
 
             set
             {
-                if (DisposingOrDisposed)
-                    return;
-                Handler.IsCancel = value;
+                isCancel = value;
             }
         }
 

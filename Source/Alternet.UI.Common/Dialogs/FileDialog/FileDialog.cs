@@ -11,10 +11,46 @@ namespace Alternet.UI
     public abstract class FileDialog : CommonDialog
     {
         /// <summary>
+        /// Gets or sets default value for the <see cref="NoShortcutFollow"/> property.
+        /// </summary>
+        public static bool DefaultNoShortcutFollow = false;
+
+        /// <summary>
+        /// Gets or sets default value for the <see cref="ChangeDir"/> property.
+        /// </summary>
+        public static bool DefaultChangeDir = false;
+
+        /// <summary>
+        /// Gets or sets default value for the <see cref="PreviewFiles"/> property.
+        /// </summary>
+        public static bool DefaultPreviewFiles = false;
+
+        /// <summary>
+        /// Gets or sets default value for the <see cref="ShowHiddenFiles"/> property.
+        /// </summary>
+        public static bool DefaultShowHiddenFiles = false;
+
+        /// <summary>
+        /// Gets or sets default value for the <see cref="InitialDirectory"/> property.
+        /// </summary>
+        public static string? DefaultInitialDirectory = null;
+
+        /// <summary>
+        /// Gets or sets default value for the <see cref="Filter"/> property.
+        /// </summary>
+        public static string? DefaultFilter = null;
+
+        /// <summary>
+        /// Gets or sets default value for the <see cref="FileName"/> property.
+        /// </summary>
+        public static string? DefaultFileName = null;
+
+        /// <summary>
         /// Initializes a new instance of <see cref="FileDialog"/>.
         /// </summary>
         public FileDialog()
         {
+            Reset();
         }
 
         /// <summary>
@@ -32,13 +68,15 @@ namespace Alternet.UI
         {
             get
             {
-                CheckDisposed();
+                if (DisposingOrDisposed)
+                    return default;
                 return Handler.NoShortcutFollow;
             }
 
             set
             {
-                CheckDisposed();
+                if (DisposingOrDisposed)
+                    return;
                 Handler.NoShortcutFollow = value;
             }
         }
@@ -51,13 +89,15 @@ namespace Alternet.UI
         {
             get
             {
-                CheckDisposed();
+                if (DisposingOrDisposed)
+                    return default;
                 return Handler.ChangeDir;
             }
 
             set
             {
-                CheckDisposed();
+                if (DisposingOrDisposed)
+                    return;
                 Handler.ChangeDir = value;
             }
         }
@@ -70,13 +110,15 @@ namespace Alternet.UI
         {
             get
             {
-                CheckDisposed();
+                if (DisposingOrDisposed)
+                    return default;
                 return Handler.PreviewFiles;
             }
 
             set
             {
-                CheckDisposed();
+                if (DisposingOrDisposed)
+                    return;
                 Handler.PreviewFiles = value;
             }
         }
@@ -88,13 +130,15 @@ namespace Alternet.UI
         {
             get
             {
-                CheckDisposed();
+                if (DisposingOrDisposed)
+                    return default;
                 return Handler.ShowHiddenFiles;
             }
 
             set
             {
-                CheckDisposed();
+                if (DisposingOrDisposed)
+                    return;
                 Handler.ShowHiddenFiles = value;
             }
         }
@@ -106,13 +150,15 @@ namespace Alternet.UI
         {
             get
             {
-                CheckDisposed();
+                if (DisposingOrDisposed)
+                    return default;
                 return Handler.InitialDirectory;
             }
 
             set
             {
-                CheckDisposed();
+                if (DisposingOrDisposed)
+                    return;
                 Handler.InitialDirectory = value;
             }
         }
@@ -140,13 +186,15 @@ namespace Alternet.UI
         {
             get
             {
-                CheckDisposed();
+                if (DisposingOrDisposed)
+                    return default;
                 return Handler.Filter;
             }
 
             set
             {
-                CheckDisposed();
+                if (DisposingOrDisposed)
+                    return;
                 Handler.Filter = value;
             }
         }
@@ -175,13 +223,15 @@ namespace Alternet.UI
         {
             get
             {
-                CheckDisposed();
+                if (DisposingOrDisposed)
+                    return default;
                 return Handler.SelectedFilterIndex;
             }
 
             set
             {
-                CheckDisposed();
+                if (DisposingOrDisposed)
+                    return;
                 Handler.SelectedFilterIndex = value;
             }
         }
@@ -193,13 +243,15 @@ namespace Alternet.UI
         {
             get
             {
-                CheckDisposed();
+                if (DisposingOrDisposed)
+                    return default;
                 return Handler.FileName;
             }
 
             set
             {
-                CheckDisposed();
+                if (DisposingOrDisposed)
+                    return;
                 Handler.FileName = value;
             }
         }
@@ -209,5 +261,19 @@ namespace Alternet.UI
         /// </summary>
         [Browsable(false)]
         public new IFileDialogHandler Handler => (IFileDialogHandler)base.Handler;
+
+        /// <summary>
+        /// Resets properties to the default values.
+        /// </summary>
+        public virtual void Reset()
+        {
+            NoShortcutFollow = DefaultNoShortcutFollow;
+            ChangeDir = DefaultChangeDir;
+            PreviewFiles = DefaultPreviewFiles;
+            ShowHiddenFiles = DefaultShowHiddenFiles;
+            InitialDirectory = DefaultInitialDirectory;
+            Filter = DefaultFilter;
+            FileName = DefaultFileName;
+        }
     }
 }

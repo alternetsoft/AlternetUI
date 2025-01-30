@@ -33,7 +33,23 @@ namespace Alternet.UI
         /// </summary>
         public static string GetFileDialogFilterForImageOpen(bool addAllFiles = false)
         {
-            return GetFileDialogFilter(Image.ExtensionsForLoad, addAllFiles);
+            return GetFileDialogFilterForImages(Image.ExtensionsForLoad, addAllFiles);
+        }
+
+        /// <summary>
+        /// Builds string for the <see cref="FileDialog.Filter"/> property
+        /// of <see cref="OpenFileDialog"/> and <see cref="SaveFileDialog"/>.
+        /// Sample: "PNG Files (*.png)|*.png".
+        /// </summary>
+        /// <param name="text">Text part of the filter.</param>
+        /// <param name="ext">File extension used in the filter. Can be specified
+        /// with or without '.' character at the beginning.</param>
+        /// <returns></returns>
+        public static string GetFileDialogFilter(string text, string ext)
+        {
+            var extensionStr = $"*.{ext.TrimStart('.')}";
+            var result = $"{text} ({extensionStr})|{extensionStr}";
+            return result;
         }
 
         /// <summary>
@@ -42,7 +58,7 @@ namespace Alternet.UI
         /// </summary>
         public static string GetFileDialogFilterForImageSave()
         {
-            return GetFileDialogFilter(Image.ExtensionsForSave);
+            return GetFileDialogFilterForImages(Image.ExtensionsForSave);
         }
 
         /// <summary>
@@ -53,7 +69,9 @@ namespace Alternet.UI
         /// in the beginning (like ".exe").</param>
         /// <param name="addAllFiles"></param>
         /// <returns></returns>
-        public static string GetFileDialogFilter(IEnumerable<string> extensions, bool addAllFiles = false)
+        public static string GetFileDialogFilterForImages(
+            IEnumerable<string> extensions,
+            bool addAllFiles = false)
         {
             var withAsterix = EnumerableUtils.InsertPrefix(extensions, "*");
 

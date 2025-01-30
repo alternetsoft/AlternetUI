@@ -298,6 +298,35 @@ namespace Alternet.UI
         public static bool IsAppThread => Thread.CurrentThread.ManagedThreadId == AppThreadId;
 
         /// <summary>
+        /// Gets top-most modal dialog or Null if no modal dialogs are shown.
+        /// </summary>
+        public static Window? TopModalDialog
+        {
+            get
+            {
+                return ModalDialogs?.FirstOrDefault();
+            }
+        }
+
+        /// <summary>
+        /// Gets collection of the visible modal dialogs.
+        /// </summary>
+        public static IEnumerable<Window> ModalDialogs
+        {
+            get
+            {
+                if (current is null)
+                    yield break;
+
+                foreach(var window in Current.LastActivatedWindows)
+                {
+                    if (window.Modal)
+                        yield return window;
+                }
+            }
+        }
+
+        /// <summary>
         /// Gets last unhandled exception.
         /// </summary>
         public static Exception? LastUnhandledException

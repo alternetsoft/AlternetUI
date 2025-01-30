@@ -123,7 +123,7 @@ namespace Alternet.UI
 
         /// <summary>
         /// Gets or sets whether 'Ok' and 'Cancel' buttons change
-        /// <see cref="DialogWindow.ModalResult"/> when they are clicked.
+        /// <see cref="Window.ModalResult"/> when they are clicked.
         /// </summary>
         public virtual bool UseModalResult { get; set; }
 
