@@ -24,6 +24,7 @@ namespace Alternet.UI
         public static SKSamplingOptions? DefaultSamplingOptions;
 
         private SKBitmap bitmap;
+        private Coord scaleFactor = 1;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="SkiaImageHandler"/> class using the
@@ -157,10 +158,22 @@ namespace Alternet.UI
         public virtual SKAlphaType AlphaType => bitmap.AlphaType;
 
         /// <inheritdoc/>
-        public virtual int Width => bitmap.Width;
+        public virtual int Width
+        {
+            get
+            {
+                return bitmap.Width;
+            }
+        }
 
         /// <inheritdoc/>
-        public virtual int Height => bitmap.Height;
+        public virtual int Height
+        {
+            get
+            {
+                return bitmap.Height;
+            }
+        }
 
         /// <summary>
         /// Gets internal <see cref="SKBitmap"/>.
@@ -170,36 +183,48 @@ namespace Alternet.UI
         /// <inheritdoc/>
         public virtual Coord ScaleFactor
         {
-            get => 1;
+            get => scaleFactor;
 
             set
             {
-                throw new NotImplementedException();
+                scaleFactor = value;
             }
         }
 
         /// <inheritdoc/>
         public virtual SizeI DipSize
         {
-            get => PixelSize;
+            get
+            {
+                return ScaledSize;
+            }
         }
 
         /// <inheritdoc/>
         public virtual Coord ScaledHeight
         {
-            get => PixelSize.Height;
+            get
+            {
+                return bitmap.Height / ScaleFactor;
+            }
         }
 
         /// <inheritdoc/>
         public virtual SizeI ScaledSize
         {
-            get => new((int)ScaledHeight, (int)ScaledWidth);
+            get
+            {
+                return new((int)ScaledHeight, (int)ScaledWidth);
+            }
         }
 
         /// <inheritdoc/>
         public virtual Coord ScaledWidth
         {
-            get => PixelSize.Width;
+            get
+            {
+                return bitmap.Width / ScaleFactor;
+            }
         }
 
         /// <inheritdoc/>

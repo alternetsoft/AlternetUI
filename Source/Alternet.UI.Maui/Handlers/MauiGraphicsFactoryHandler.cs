@@ -125,7 +125,11 @@ namespace Alternet.UI
 
         Graphics IGraphicsFactoryHandler.CreateGraphicsFromImage(Image image)
         {
-            throw new NotImplementedException();
+            if (image.Handler is not SkiaImageHandler skiaImageHandler)
+                throw new Exception("SkiaImageHandler is required as handler");
+            var bitmap = skiaImageHandler.Bitmap;
+            var result = SkiaUtils.CreateBitmapCanvas(bitmap, image.ScaleFactor);
+            return result;
         }
 
         Graphics IGraphicsFactoryHandler.CreateGraphicsFromScreen()
