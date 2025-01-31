@@ -19,14 +19,13 @@ namespace ControlsSample
 
         private readonly int counter;
         private readonly ObjectUniqueId statusPanelId;
+        private readonly AbstractControl? statusPanel;
 
         private string? lastReportedText;
-        private AbstractControl? statusPanel;
         private VirtualListBox.AddRangeController<MemberInfo>? controller;
 
-        private readonly TextBox textBox = new()
+        private readonly TextBoxAndButton textBox = new()
         {
-            EmptyTextHint = "Type here to search for classes and members...",
         };
 
         private readonly VirtualListBox listBox = new()
@@ -38,22 +37,22 @@ namespace ControlsSample
             VerticalAlignment = VerticalAlignment.Bottom,
         };
 
-        private readonly ProgressBar longOperationProgressBar = new()
-        {
-        };
-
         public ListBoxBigDataWindow()
         {
+            textBox.InitSearchEdit();
+            textBox.TextBox.EmptyTextHint = "Type here to search for classes and members...";
+
             counter = ++globalCounter;
 
             Size = (800, 600);
-            Title = "VirtualListBox with BigData";
+            Title = "Search for classes and members";
             StartLocation = WindowStartLocation.ScreenTopRight;
             Layout = LayoutStyle.Vertical;
-            MinChildMargin = 10;
 
+            textBox.Margin = 10;
             textBox.Parent = this;
 
+            listBox.Margin = 10;
             listBox.VerticalAlignment = VerticalAlignment.Fill;
             listBox.Parent = this;
             listBox.SelectionUnderImage = false;
@@ -62,14 +61,15 @@ namespace ControlsSample
 
             statusBar.Parent = this;
 
-            longOperationProgressBar.Visible = false;
-            statusBar.AddControl(longOperationProgressBar);
-            statusBar.SetVisibleBorders(false, true, false, false);
+            statusBar.SetBorderAndMargin(AnchorStyles.Top);
+
             statusBar.MinHeight = 24;
-            statusPanelId = statusBar.AddText("Ready");
-            statusPanel = statusBar.GetToolControl(statusPanelId);
+            statusPanel = new Label("Ready");
+            statusPanelId = statusBar.AddControl(statusPanel);
 
             LoadImages();
+
+            ActiveControl = textBox;
         }
 
         private static void LoadImages()
@@ -126,7 +126,11 @@ namespace ControlsSample
                 {
                     if (IsDisposed || containsText != lastReportedText)
                         return false;
-                    statusPanel?.SetText(listBox.Items.Count);
+                    Invoke(() =>
+                    {
+                        statusPanel?.SetText(listBox.Items.Count);
+                        statusPanel?.Refresh();
+                    });
                     return true;
                 });
 
