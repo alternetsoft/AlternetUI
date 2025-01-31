@@ -121,16 +121,16 @@
         <VerticalStackPanel VerticalAlignment="Stretch" Name="stackPanel3" Visible="false"
                              Title="Events" Padding="10" IsTitleLocalized="true">
 
-          <GroupBox Title="Cancel Events" Margin="0,5,0,5" Padding="5"  IsTitleLocalized="true">
-            <VerticalStackPanel>
+          <TabControl Margin="0,5,0,5" >
+            <VerticalStackPanel Title="Cancel Events" Padding="5"  >
               <CheckBox Text="Before Label Edit" IsTextLocalized="true"
                         Name="cancelBeforeLabelEditEventsCheckBox"
-                        Margin="0,0,0,0" IsChecked="False" />
+                        Margin="5" IsChecked="False" />
               <CheckBox Text="After Label Edit" IsTextLocalized="true"
                         Name="cancelAfterLabelEditEventsCheckBox"
-                        Margin="0,5,0,0" IsChecked="False" />
+                        Margin="5" IsChecked="False" />
             </VerticalStackPanel>
-          </GroupBox>
+          </TabControl>
 
           <Button Text="Log Selected" Margin="0,5,0,0" IsTextLocalized="true"
                   Name="viewSelectedButton" Click="Button_SelectionChanged"/>

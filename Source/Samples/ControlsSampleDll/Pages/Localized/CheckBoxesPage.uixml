@@ -3,14 +3,12 @@
         xmlns:x="http://schemas.alternetsoft.com/ui/2021/uixml"
         xmlns:local="clr-namespace:ControlsSample;assembly=ControlsSample">
   <StackPanel Orientation="Vertical" Padding="10" >
-    <GroupBox Title="CheckBox" Padding="5"  IsTitleLocalized="true">
-      <StackPanel Orientation="Vertical" Margin="5">
-        <CheckBox Text="Some Text" Margin="0,0,0,5" IsChecked="true" IsTextLocalized="true"
+
+        <CheckBox Text="This is CheckBox" Margin="5" IsChecked="true"
                   Name="checkBox"/>
-      </StackPanel>
-    </GroupBox>
-    <GroupBox Title="Options" Margin="0,5,0,0" Padding="5" IsTitleLocalized="true">
-      <VerticalStackPanel>
+    
+    <TabControl  Margin="5,10,5,5">
+      <VerticalStackPanel Title="Options" Padding="5">
         <StackPanel Orientation="Horizontal" Margin="5">
           <CheckBox Text="Three States" Margin="0,0,0,0" IsChecked="false"
                     Name="threeStatesCheckBox"  IsTextLocalized="true"/>
@@ -20,16 +18,22 @@
                     Name="allowAllStatesForUserCheckBox" IsTextLocalized="true"/>
         </StackPanel>
         <HorizontalStackPanel>
-          <Button Text="IsChecked = false" Margin="5" Name="isCheckedFalseButton" IsTextLocalized="true"/>
-          <Button Text="IsChecked = true" Margin="5" Name="isCheckedTrueButton" IsTextLocalized="true"/>
+          <Button Text="IsChecked = false" Margin="5" Name="isCheckedFalseButton" 
+                  IsTextLocalized="true"/>
+          <Button Text="IsChecked = true" Margin="5" Name="isCheckedTrueButton"
+                  IsTextLocalized="true"/>
           <Button Text="Text = empty" Margin="5" Name="textEmptyButton" IsTextLocalized="true"/>
         </HorizontalStackPanel>
         <HorizontalStackPanel>
-          <Button Text="State = Unchecked" Margin="5" Name="checkStateUncheckedButton" IsTextLocalized="true"/>
-          <Button Text="State = Checked" Margin="5" Name="checkStateCheckedButton" IsTextLocalized="true"/>
-          <Button Text="State = Indeterm" Margin="5" Name="checkStateIndeterminateButton" IsTextLocalized="true"/>
+          <Button Text="State = Unchecked" Margin="5"
+                  Name="checkStateUncheckedButton" IsTextLocalized="true"/>
+          <Button Text="State = Checked" Margin="5"
+                  Name="checkStateCheckedButton" IsTextLocalized="true"/>
+          <Button Text="State = Indeterm" Margin="5"
+                  Name="checkStateIndeterminateButton" IsTextLocalized="true"/>
         </HorizontalStackPanel>
       </VerticalStackPanel>
-    </GroupBox>
+    </TabControl>
+    
   </StackPanel>
 </Control>

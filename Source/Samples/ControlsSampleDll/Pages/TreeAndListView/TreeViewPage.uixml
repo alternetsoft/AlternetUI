@@ -112,8 +112,8 @@
                             Padding="10" IsTitleLocalized="true">
           <Button Text="Log Selected" Margin="0,3,0,0" IsTextLocalized="true"
                   Name="viewSelectedButton" Click="TreeView_SelectionChanged"/>
-          <GroupBox Title="Cancel Events" Margin="0,3,0,3" Padding="3"  IsTitleLocalized="true">
-            <VerticalStackPanel>
+          <TabControl Margin="0,3,0,3" >
+            <VerticalStackPanel Title="Cancel Events" Padding="3"  IsTitleLocalized="true">
               <CheckBox Text="Before Expand" Name="cancelBeforeExpandEventsCheckBox"
                         IsChecked="False"  IsTextLocalized="true"/>
               <CheckBox Text="Before Collapse" Name="cancelBeforeCollapseEventsCheckBox"
@@ -126,7 +126,7 @@
                         Margin="0,5,0,0"
                         IsChecked="False" />
             </VerticalStackPanel>
-          </GroupBox>
+          </TabControl>
         </VerticalStackPanel>
         <!-- ========================= -->
 
