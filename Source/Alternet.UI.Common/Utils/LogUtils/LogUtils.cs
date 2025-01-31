@@ -257,7 +257,7 @@ namespace Alternet.UI
         {
             var asString = e.ToString();
 
-            if(e is BaseException baseException)
+            if (e is BaseException baseException)
             {
                 if (baseException.AdditionalInformation is not null)
                     asString += Environment.NewLine + baseException.AdditionalInformation;
@@ -271,7 +271,7 @@ namespace Alternet.UI
             try
             {
                 var prefix = "Error";
-                if (kind == LogItemKind.Information)
+                if (kind != LogItemKind.Error)
                     prefix = "Warning";
 
                 var s = $"{prefix} '{e.GetType().Name}': <b>{e.Message}</b>. [Double click...]";
@@ -487,7 +487,7 @@ namespace Alternet.UI
         public static void LogAndToFile(object? obj = null)
         {
             App.Log(obj);
-            if(!App.LogFileIsEnabled)
+            if (!App.LogFileIsEnabled)
                 LogUtils.LogToFile(obj);
         }
 
@@ -537,7 +537,7 @@ namespace Alternet.UI
         [Conditional("DEBUG")]
         public static void DebugLogToFileIf(object? obj, bool conditional, string? filename = null)
         {
-            if(conditional)
+            if (conditional)
                 LogToFile(obj, filename);
         }
 
