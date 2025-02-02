@@ -306,6 +306,17 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Changes visual style of the control to look like <see cref="LinkLabel"/>.
+        /// </summary>
+        public virtual void MakeAsLinkLabel()
+        {
+            IsUnderline = true;
+            ParentForeColor = false;
+            ForeColor = LightDarkColors.Blue;
+            Cursor = Cursors.Hand;
+        }
+
+        /// <summary>
         /// Draws text in the default style.
         /// </summary>
         /// <param name="dc">Drawing context.</param>
