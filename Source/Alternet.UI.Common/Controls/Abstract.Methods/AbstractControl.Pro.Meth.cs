@@ -367,10 +367,7 @@ namespace Alternet.UI
         protected virtual Font GetLabelFont(VisualControlState state)
         {
             var font = StateObjects?.Colors?.GetObjectOrNull(state)?.Font;
-
-            var result = font ?? Font ?? UI.AbstractControl.DefaultFont;
-            if (IsBold)
-                result = result.AsBold;
+            var result = font ?? RealFont;
             return result;
         }
 
