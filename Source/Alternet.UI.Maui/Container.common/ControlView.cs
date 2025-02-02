@@ -245,7 +245,8 @@ namespace Alternet.UI
         /// </summary>
         public virtual void Invalidate()
         {
-            InvalidateSurface();
+            if(GetPlatformView() is not null)
+                InvalidateSurface();
         }
 
         /// <summary>
