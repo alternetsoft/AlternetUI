@@ -19,7 +19,7 @@ namespace PropertyGridSample
         {
             Dialog?.ShowAsync(ParentWindow, (result) =>
             {
-                ComponentDesigner.SafeDefault.RaisePropertyChanged(null, null);
+                ComponentDesigner.SafeDefault.RaisePropertyChanged(Dialog, null);
             });
         }
 

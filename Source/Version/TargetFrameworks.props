@@ -3,10 +3,22 @@
 
 <!-- Also edit \Source\Samples\CommonData\TargetFrameworks.props -->	
 
+<PropertyGroup>
+  <OSARCH>$([System.Runtime.InteropServices.RuntimeInformation]::OSArchitecture)</OSARCH>
+  <IsLinuxX64 Condition="$([MSBuild]::IsOsPlatform('Linux')) And $(OSARCH) == X64">true</IsLinuxX64>
+  <IsOsxArm64 Condition="$([MSBuild]::IsOsPlatform('OSX')) And $(OSARCH) == Arm64">true</IsOsxArm64>
+  <IsOsxX64 Condition="$([MSBuild]::IsOsPlatform('OSX')) And $(OSARCH) == X64">true</IsOsxX64>
+  <IsWindowsX64 Condition="$([MSBuild]::IsOsPlatform('Windows')) And $(OSARCH) == X64">true</IsWindowsX64>
+</PropertyGroup>
+
   <PropertyGroup>
     	<FrameworkOverridesName>FrameworksOverride.props</FrameworkOverridesName>
   	<BoolNet9>true</BoolNet9>
   	<BoolNet8>true</BoolNet8>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="$(IsOsxX64)=='true'">
+  	<BoolNet9>false</BoolNet9>
   </PropertyGroup>
 
   <PropertyGroup Condition="$([MSBuild]::IsOsPlatform('Windows'))">

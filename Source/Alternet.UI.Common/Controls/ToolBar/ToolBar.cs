@@ -1660,6 +1660,49 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Sets border and margin using the specified parameters.
+        /// </summary>
+        /// <param name="borders">The flags that specify visible borders of the toolbar.
+        /// If Null, border will not be changed.</param>
+        /// <param name="margins">The flags that specify borders for which default margin
+        /// is assigned. If Null, margins will not be set.</param>
+        /// <param name="setDefaultPadding">Whether to set default padding for the toolbar.</param>
+        public virtual void SetBorderAndMargin(
+            AnchorStyles? borders = null,
+            AnchorStyles? margins = null,
+            bool setDefaultPadding = true)
+        {
+            if (borders is not null)
+            {
+                bool left = borders.Value.HasFlag(AnchorStyles.Left);
+                bool top = borders.Value.HasFlag(AnchorStyles.Top);
+                bool right = borders.Value.HasFlag(AnchorStyles.Right);
+                bool bottom = borders.Value.HasFlag(AnchorStyles.Bottom);
+
+                SetVisibleBorders(left, top, right, bottom);
+            }
+
+            if (margins is not null)
+            {
+                Margin = (
+                    Distance(AnchorStyles.Left),
+                    Distance(AnchorStyles.Top),
+                    Distance(AnchorStyles.Right),
+                    Distance(AnchorStyles.Bottom));
+
+                Coord Distance(AnchorStyles flag)
+                {
+                    if (margins is null)
+                        return 0;
+                    return margins.Value.HasFlag(flag) ? ToolBar.DefaultDistanceToContent : 0;
+                }
+            }
+
+            if (setDefaultPadding)
+                Padding = 1;
+        }
+
+        /// <summary>
         /// Gets image color in the normal state taking into account <see cref="NormalImageColor"/>
         /// and <see cref="DefaultNormalImageColor"/> properties.
         /// </summary>

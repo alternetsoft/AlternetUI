@@ -70,21 +70,21 @@ namespace Alternet.UI
                     PanelSettingsItemKind.LinkLabel,
                     (item, control) =>
                     {
-                        var result = CreateOrUpdateControl<LinkLabel>(item, control);
+                        var result = CreateOrUpdateControl<GenericLabel>(item, control);
                         UpdateText(item, result);
 
-                        result.HorizontalAlignment = HorizontalAlignment.Left;
-                        result.LinkClicked -= LinkLabelClicked;
-                        result.LinkClicked += LinkLabelClicked;
+                        result.MakeAsLinkLabel();
 
-                        void LinkLabelClicked(object? sender, CancelEventArgs e)
+                        result.HorizontalAlignment = HorizontalAlignment.Left;
+                        result.Click -= LinkLabelClicked;
+                        result.Click += LinkLabelClicked;
+
+                        void LinkLabelClicked(object? sender, EventArgs e)
                         {
                             result.RunWhenIdle(() =>
                             {
                                 item.ClickAction?.Invoke(item, EventArgs.Empty);
                             });
-
-                            e.Cancel = true;
                         }
 
                         return result;

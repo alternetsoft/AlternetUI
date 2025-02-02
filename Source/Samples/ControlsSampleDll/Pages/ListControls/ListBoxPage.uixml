@@ -28,13 +28,13 @@
                 Enabled="false"/>
         <Button Text="Unselect All" Name="deselectAllButton" Margin="0,3,0,0" IsTextLocalized="true"
             Click="DeselectAllButton_Click" />
-        <Button Text="Edit Items..." Margin="0,3,0,0" IsTextLocalized="true"
-            Click="EditorButton_Click" Name="buttonEditItems"/>
         <Button Text="Has Border" Name="hasBorderButton" IsTextLocalized="true"
             Margin="0,3,0,5" Click="HasBorderButton_Click" />
       </StackPanel>
       
       <StackPanel Orientation="Vertical" Margin="10,0,5,5">
+        <Button Text="Edit Items..." Margin="0,0,0,10" IsTextLocalized="true"
+            Click="EditorButton_Click" Name="buttonEditItems"/>
         <CheckBox Text="Multiple Selection" Name="allowMultipleSelectionCheckBox" 
                   IsTextLocalized="true"
             Margin="0,0,0,5" CheckedChanged="AllowMultipleSelectionCheckBox_CheckedChanged"/>

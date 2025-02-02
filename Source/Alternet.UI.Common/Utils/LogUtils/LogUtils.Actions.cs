@@ -729,6 +729,18 @@ namespace Alternet.UI
             }
 
             App.LogNameValue("CommonUtils.GetAppExePath()", CommonUtils.GetAppExePath());
+
+            App.LogEmptyLine();
+            App.Log("Installed net runtimes:");
+            DotNetUtils.LogInstalledRuntimes();
+
+            App.LogEmptyLine();
+            App.Log("Installed net sdks:");
+            DotNetUtils.LogInstalledSdks();
+
+            App.LogEmptyLine();
+
+            App.LogNameValue("Is Net 9 Runtime installed", DotNetUtils.IsNetCoreRuntimeInstalled(9));
         }
 
         internal static void LogCulture(string sectionName, CultureInfo culture)
