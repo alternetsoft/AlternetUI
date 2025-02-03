@@ -182,13 +182,34 @@ namespace Alternet.UI
             Fn("Log system colors", LogUtils.LogSystemColors);
             Fn("Log constraint checks", LogUtils.LogCheckConstraints);
             Fn("Log used Alternet assemblies", LogUtils.LogUsedAlternetAssemblies);
-            Fn("Log system paths", () =>
+            Fn("Log dotnet information", () =>
             {
                 App.LogNameValue(
                     "RuntimeEnvironment.GetRuntimeDirectory",
                     System.Runtime.InteropServices.RuntimeEnvironment.GetRuntimeDirectory());
 
                 App.LogNameValue("GetSystemDllPath", CodeGeneratorUtils.GetSystemDllPath());
+
+                App.LogNameValue(
+                    "GetDotNetPathFromSystemDllPath()",
+                    CodeGeneratorUtils.GetDotNetPathFromSystemDllPath());
+
+                DotNetUtils.LogDefaultLocation();
+
+                App.LogNameValue(
+                    "Is Net 9 Runtime installed",
+                    DotNetUtils.IsNetCoreRuntimeInstalled(9));
+
+                DotNetUtils.LogEnvironmentVars();
+
+                App.LogEmptyLine();
+                App.Log("Installed net runtimes:");
+                DotNetUtils.LogInstalledRuntimes();
+
+                App.LogEmptyLine();
+                App.Log("Installed net sdks:");
+                DotNetUtils.LogInstalledSdks();
+                App.LogEmptyLine();
             });
 
             Fn("Set Height = (Width / 3) * 2", () =>
@@ -729,18 +750,6 @@ namespace Alternet.UI
             }
 
             App.LogNameValue("CommonUtils.GetAppExePath()", CommonUtils.GetAppExePath());
-
-            App.LogEmptyLine();
-            App.Log("Installed net runtimes:");
-            DotNetUtils.LogInstalledRuntimes();
-
-            App.LogEmptyLine();
-            App.Log("Installed net sdks:");
-            DotNetUtils.LogInstalledSdks();
-
-            App.LogEmptyLine();
-
-            App.LogNameValue("Is Net 9 Runtime installed", DotNetUtils.IsNetCoreRuntimeInstalled(9));
         }
 
         internal static void LogCulture(string sectionName, CultureInfo culture)
