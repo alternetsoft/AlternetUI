@@ -12,8 +12,6 @@ namespace Alternet.UI
     /// <summary>
     /// Represents a window that makes up an application's user interface.
     /// </summary>
-    /// <remarks>A <see cref="Window"/> is a representation of any window displayed in
-    /// your application.</remarks>
     [DesignerCategory("Code")]
     [ControlCategory("Hidden")]
     public partial class Window : Control, IWindow
@@ -291,6 +289,16 @@ namespace Alternet.UI
 
                 return Handler.IsActive;
             }
+        }
+
+        /// <summary>
+        /// Gets time when window was last time shown as modal dialog.
+        /// </summary>
+        [Browsable(false)]
+        public virtual DateTime? LastShownAsDialogTime
+        {
+            get;
+            set;
         }
 
         /// <summary>
@@ -1482,8 +1490,10 @@ namespace Alternet.UI
         /// Aligns window location inside the specified display's client area using given
         /// horizontal and vertical alignment.
         /// </summary>
-        /// <param name="horz">Horizontal alignment of the window inside display's client area.</param>
-        /// <param name="vert">Vertical alignment of the window inside display's client area.</param>
+        /// <param name="horz">Horizontal alignment of the window
+        /// inside display's client area.</param>
+        /// <param name="vert">Vertical alignment of the window
+        /// inside display's client area.</param>
         /// <param name="display">Display which client area is used
         /// as a container for the window.</param>
         /// <param name="shrinkSize">Whether to shrink size of the window
@@ -1995,8 +2005,12 @@ namespace Alternet.UI
         {
             base.OnActivated(e);
 
-            var dialog = App.TopModalDialog;
-            dialog?.ShowAndFocus(true);
+            RunWhenIdle(() =>
+            {
+                var dialog = App.TopModalDialog;
+                if(dialog != this)
+                    dialog?.ShowAndFocus(true);
+            });
         }
 
         /// <summary>

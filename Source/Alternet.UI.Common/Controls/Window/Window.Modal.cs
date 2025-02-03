@@ -47,6 +47,7 @@ namespace Alternet.UI
 
                 PropInstanceAndValue.PopPropertiesMultiple(disabledControls);
                 disabledControls = null;
+                LastShownAsDialogTime = null;
                 Close(WindowCloseAction.Hide);
                 isModal = false;
                 onCloseModal?.Invoke(modalResult == ModalResult.Accepted);
@@ -72,6 +73,7 @@ namespace Alternet.UI
             isModal = true;
             disabledControls = PropInstanceAndValue.DisableAllFormsChildrenExcept(this);
             onCloseModal = onClose;
+            LastShownAsDialogTime = DateTime.Now;
 
             try
             {
