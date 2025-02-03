@@ -895,6 +895,15 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Scrolls the buffer so that the caret position becomes visible in the view.
+        /// </summary>
+        public virtual void ScrollToCaret()
+        {
+            var caretPosition = GetCaretPosition();
+            ShowPosition(caretPosition);
+        }
+
+        /// <summary>
         /// Scrolls the buffer so that the given position is in view.
         /// </summary>
         public virtual void ShowPosition(long pos)
