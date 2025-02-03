@@ -26,6 +26,12 @@ namespace Alternet.UI
     /// You can add controls to the <see cref="GroupBox"/> by using the Add
     /// method of the <see cref="AbstractControl.Children"/> property.
     /// </remarks>
+    /// <remarks>
+    /// <see cref="GroupBox"/> looks different on the different operating systems. We suggest
+    /// to use <see cref="TabControl"/> with single page instead of labeled <see cref="GroupBox"/>
+    /// and <see cref="Border"/> instead of unlabeled <see cref="GroupBox"/>. In this case
+    /// you application will have the same look on the different operating systems.
+    /// </remarks>
     [DefaultEvent("Enter")]
     [DefaultProperty("Text")]
     [ControlCategory("Containers")]
