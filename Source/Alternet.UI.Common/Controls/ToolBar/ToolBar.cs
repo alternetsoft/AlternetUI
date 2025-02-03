@@ -135,9 +135,9 @@ namespace Alternet.UI
         public static Coord DefaultItemPadding { get; set; } = 4;
 
         /// <summary>
-        /// Gets or sets default color of the separator item.
+        /// Gets or sets default color of the separator item. If Null, default border color is used.
         /// </summary>
-        public static Color DefaultSeparatorColor { get; set; } = SystemColors.GrayText;
+        public static Color? DefaultSeparatorColor { get; set; }
 
         /// <summary>
         /// Gets or sets default width of the separator item.
@@ -1030,11 +1030,13 @@ namespace Alternet.UI
         {
             Border border = new()
             {
-                BorderColor = DefaultSeparatorColor,
                 BorderWidth = (DefaultSeparatorWidth, 0, 0, 0),
                 SuggestedWidth = DefaultSeparatorWidth,
                 Margin = DefaultSeparatorMargin,
             };
+
+            if(DefaultSeparatorColor is not null)
+                border.BorderColor = DefaultSeparatorColor;
 
             UpdateItemProps(border, ItemKind.Separator);
 

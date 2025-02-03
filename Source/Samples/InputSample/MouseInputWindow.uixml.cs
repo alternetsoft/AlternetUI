@@ -74,6 +74,7 @@ namespace InputSample
             mouseCaptureBorder.CaptureMouse();
             mouseCaptureLabel.Text = MouseCapturedLabel;
             mouseCaptureLabel.Refresh();
+            UpdateMouseButtons();
         }
 
         private void MouseCaptureBorder_MouseUp(object sender, MouseEventArgs e)
@@ -81,6 +82,7 @@ namespace InputSample
             mouseCaptureBorder.ReleaseMouseCapture();
             mouseCaptureLabel.Text = MouseUncapturedLabel;
             mouseCaptureLabel.Refresh();
+            UpdateMouseButtons();
         }
 
         private void MouseCaptureBorder_MouseCaptureLost(object sender, EventArgs e)
@@ -91,11 +93,13 @@ namespace InputSample
         private void MouseCaptureBorder_MouseEnter(object sender, EventArgs e)
         {
             App.Log("MouseCaptureBorder_MouseEnter");
+            UpdateMouseButtons();
         }
 
         private void MouseCaptureBorder_MouseLeave(object sender, EventArgs e)
         {
             App.Log("MouseCaptureBorder_MouseLeave");
+            UpdateMouseButtons();
         }
 
         private void LogMouseMove(
@@ -110,23 +114,30 @@ namespace InputSample
             var prefix = $"{ objectName }.{ eventName}";
 
             App.LogReplace($"{prefix} [{FormatPoint(Mouse.GetPosition(element as AbstractControl))}]", prefix);
+            UpdateMouseButtons();
         }
 
         private void LogMouseButton(
             MouseEventArgs e,
             string objectName,
             string eventName,
-            object? element) =>
+            object? element)
+        {
             App.Log(
                 $"{objectName}.{eventName} [{e.ChangedButton}, {FormatPoint(Mouse.GetPosition(element as AbstractControl))}]");
+            UpdateMouseButtons();
+        }
 
         private void LogMouseWheel(
             MouseEventArgs e,
             string objectName,
             string eventName,
-            object? element) =>
+            object? element)
+        {
             App.Log(
                 $"{objectName}.{eventName} [{e.Delta}, {FormatPoint(Mouse.GetPosition(element as AbstractControl))}]");
+            UpdateMouseButtons();
+        }
 
         private void HelloButton_MouseMove(object sender, MouseEventArgs e) =>
             LogMouseMove(e, "HelloButton", "Move", (AbstractControl)sender);
@@ -139,20 +150,6 @@ namespace InputSample
 
         static string FormatPoint(PointD pt) => FormatPoint(new PointI((int)pt.X, (int)pt.Y));
         static string FormatPoint(PointI pt) => $"{pt.X}, {pt.Y}";
-
-        /*internal void UpdateMousePositionLabel(Control control, PointD clientPosition)
-        {
-            var screenPosition = control.ClientToScreen(clientPosition);
-            var devicePosition = control.ScreenToDevice(screenPosition);
-
-            var text = $"Mouse position: " +
-                $"[Client: {FormatPoint(clientPosition)}], " +
-                $"[Screen: {FormatPoint(screenPosition)}], " +
-                $"[Device: {FormatPoint(devicePosition)}]]";
-
-            mousePositionLabel.Text = text;
-            mousePositionLabel.Refresh();
-        }*/
 
         private void GroupBox_MouseMove(object? sender, MouseEventArgs e)
         {

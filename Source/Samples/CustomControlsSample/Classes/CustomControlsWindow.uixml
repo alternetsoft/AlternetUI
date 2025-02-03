@@ -3,38 +3,34 @@
         xmlns:x="http://schemas.alternetsoft.com/ui/2021/uixml"
         xmlns:local="clr-namespace:CustomControlsSample;assembly=CustomControlsSample"
         Title="Alternet UI Custom Controls Sample"
-        MinWidth="900" MinHeight="700" StartLocation="CenterScreen">
-    
-  <StackPanel Orientation="Vertical" VerticalAlignment="Stretch" Padding="10"
-              HorizontalAlignment="Stretch">
-        
-		<GroupBox Title="Color Picker" Margin="0,0,0,10" IsTitleLocalized="true" >
-          <HorizontalStackPanel MinChildMargin="5" Name="colorGroupBox" Padding="10">
-          </HorizontalStackPanel>
-        </GroupBox>
+        MinWidth="900" MinHeight="700" StartLocation="CenterScreen"
+        Layout="Vertical" Padding="10" MinChildMargin="5">
 
-			<GroupBox Title="Native Sliders and Progress Bars" IsTitleLocalized="true"
-                      Margin="0,0,0,10" Padding="10">
-				<StackPanel Orientation="Horizontal">
-					<Slider Minimum="0" Maximum="100" Value="25"
-                            TickFrequency="25" Name="slider1" ValueChanged="Slider_ValueChanged"
-						VerticalAlignment="Center" Margin="0,0,10,0" SuggestedWidth="200"/>
-					<ProgressBar Name="progressBar1"
-                      Minimum="0" Maximum="100"
-						VerticalAlignment="Center" Margin="0,0,10,0" SuggestedWidth="200"/>
-					<Label VerticalAlignment="Center" Name="intValueLabel" IsTextLocalized="true" />
-				</StackPanel>
-			</GroupBox>
-			
-			<GroupBox Title="Custom Sliders and Progress Bars" Padding="5" IsTitleLocalized="true" >
-				<StackPanel Orientation="Horizontal" Name="slidersStackPanel">
-				</StackPanel>
-			</GroupBox>
+    <HorizontalStackPanel MinChildMargin="5" Name="colorGroupBox" Padding="10"
+                          Margin="0,0,0,10" HasBorder="true">
+      <Label Text="Color Picker:" VerticalAlignment="Center"/>
+    </HorizontalStackPanel>
 
-        <GroupBox Title="Tic Tac Toe" VerticalAlignment="Top" IsTitleLocalized="true" >
-            <StackPanel Orientation="Horizontal" Margin="5" Name="ticTacToeStackPanel">
-            </StackPanel>
-        </GroupBox>
-		
+    <StackPanel Orientation="Horizontal" Margin="0,0,0,10" Padding="10"
+                MinChildMargin="5" HasBorder="true">
+      <Label Text="Native Slider and Progress:" VerticalAlignment="Center"/>
+      <Slider Minimum="0" Maximum="100" Value="25"
+              TickFrequency="25" Name="slider1" ValueChanged="Slider_ValueChanged"
+          VerticalAlignment="Center" Margin="0,0,10,0" SuggestedWidth="200"/>
+      <ProgressBar Name="progressBar1"
+        Minimum="0" Maximum="100"
+          VerticalAlignment="Center" Margin="0,0,10,0" SuggestedWidth="200"/>
+      <Label VerticalAlignment="Center" Name="intValueLabel" IsTextLocalized="true" />
     </StackPanel>
+
+    <StackPanel Orientation="Horizontal" Name="slidersStackPanel" Padding="5"
+                MinChildMargin="5" HasBorder="true">
+      <Label Text="Custom Slider and Progress:" VerticalAlignment="Center"/>
+    </StackPanel>
+
+    <StackPanel Orientation="Vertical" Padding="5" Name="ticTacToeStackPanel" HasBorder="true"
+                MinChildMargin="5">
+      <Label Text="Tic Tac Toe:"/>
+    </StackPanel>
+
 </Window>

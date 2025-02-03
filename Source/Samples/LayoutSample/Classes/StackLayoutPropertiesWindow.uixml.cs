@@ -11,6 +11,7 @@ namespace LayoutSample
         private readonly ListBox dockedControl = new()
         {
             Dock = DockStyle.Left,
+            MinWidth = 150,
         };
         private readonly Splitter splitter = new()
         {

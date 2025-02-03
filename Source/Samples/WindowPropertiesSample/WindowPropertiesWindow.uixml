@@ -14,7 +14,7 @@
     <HorizontalStackPanel Name="actionsPanel" Title="Actions" IsTitleLocalized="true"
                           HorizontalAlignment="Stretch">
 
-      <GroupBox Title="Create" Margin="5" IsTextLocalized="true" >
+      <Border Margin="5" IsTextLocalized="true" >
         <StackPanel Padding="10" >
           <Button Text="Create Window" Name="createAndShowWindowButton"
               Click="CreateAndShowWindowButton_Click" IsTextLocalized="true"
@@ -36,9 +36,9 @@
             <ComboBox IsEditable="false" Name="startLocationComboBox" Margin="0,0,0,5"/>
           </HorizontalStackPanel>
         </StackPanel>
-      </GroupBox>
+      </Border>
       <VerticalStackPanel>
-        <GroupBox Title="Activation" HorizontalAlignment="Stretch" IsTitleLocalized="true"
+        <Border HorizontalAlignment="Stretch" IsTitleLocalized="true"
             Grid.ColumnSpan="2"  Margin="5">
           <StackPanel Padding="10" HorizontalAlignment="Stretch" SuggestedWidth="400">
             <Label Text="Active window title:" Margin="0,0,0,3" IsTextLocalized="true" />
@@ -47,7 +47,7 @@
             <Button Name="activateButton" Click="ActivateButton_Click"
                     Text="Activate" IsTextLocalized="true" />
           </StackPanel>
-        </GroupBox>
+        </Border>
 
         <Button Text="All Properties..." IsTextLocalized="true"
                 Name="propertiesButton" Click="PropertiesButton_Click"/>
@@ -110,39 +110,36 @@
     <!-- ========================= -->
     <HorizontalStackPanel Name="boundsPanel" Visible="false" Title="Bounds" IsTitleLocalized="true" >
 
-      <GroupBox Title="Bounds" Margin="5" IsTitleLocalized="true" >
-        <StackPanel Padding="10" >
-          <Button Name="setSizeButton" Click="SetSizeButton_Click"
-              Text="Size = (300, 300)" Margin="0,0,0,5" IsTextLocalized="true" />
-          <Button Name="setClientSizeButton" Click="SetClientSizeButton_Click"
-              Text="Client Size = (300, 300)" IsTextLocalized="true"
-              Margin="0,0,0,5"/>
-          <Button Name="increaseLocationButton" Click="IncreaseLocationButton_Click"
-              Text="Location += (10, 10)" Margin="0,0,0,5" IsTextLocalized="true" />
-          <Button Name="setBoundsButton" Click="SetBoundsButton_Click"
-              Text="Bounds = (0, 0, 400, 400)" IsTextLocalized="true"
-              Margin="0,0,0,5"/>
-          <Button Name="setMinMaxSizeButton" Click="SetMinMaxSizeButton_Click"
-              Text="Set MinMax Size" Margin="0,0,0,5" IsTextLocalized="true" />
-          <Label Name="currentBoundsLabel" Margin="0,0,0,10" Visible="false"/>
-        </StackPanel>
-      </GroupBox>
+      <Border Margin="5" IsTitleLocalized="true" Padding="10" Layout="Vertical" 
+              VerticalAlignment="Top">
+        <Label Text="Bounds" Margin="0,0,0,5"/>
+        <Button Name="setSizeButton" Click="SetSizeButton_Click"
+            Text="Size = (300, 300)" Margin="0,0,0,5" IsTextLocalized="true" />
+        <Button Name="setClientSizeButton" Click="SetClientSizeButton_Click"
+            Text="Client Size = (300, 300)" IsTextLocalized="true"
+            Margin="0,0,0,5"/>
+        <Button Name="increaseLocationButton" Click="IncreaseLocationButton_Click"
+            Text="Location += (10, 10)" Margin="0,0,0,5" IsTextLocalized="true" />
+        <Button Name="setBoundsButton" Click="SetBoundsButton_Click"
+            Text="Bounds = (0, 0, 400, 400)" IsTextLocalized="true"
+            Margin="0,0,0,5"/>
+        <Button Name="setMinMaxSizeButton" Click="SetMinMaxSizeButton_Click"
+            Text="Set MinMax Size" Margin="0,0,0,5" IsTextLocalized="true" />
+        <Label Name="currentBoundsLabel" Margin="0,0,0,10" Visible="false"/>
+      </Border>
 
-      <GroupBox Title="Size to Content"  Margin="5" IsTitleLocalized="true" >
-        <VerticalStackPanel Padding="10">
-          <HorizontalStackPanel Margin="0,0,0,10">
+      <Border Margin="5" IsTitleLocalized="true" 
+                VerticalAlignment="Top" Padding="10" Layout="Vertical">
             <ComboBox IsEditable="false" Name="sizeToContentModeComboBox" VerticalAlignment="Center"/>
             <Button Name="setSizeToContentButton" Click="SetSizeToContentButton_Click"
-                Text="Size to Content" VerticalAlignment="Center" IsTextLocalized="true" />
-          </HorizontalStackPanel>
-        </VerticalStackPanel>
-      </GroupBox>
+                Text="Set Size to Content" VerticalAlignment="Center" IsTextLocalized="true" />
+      </Border>
 
     </HorizontalStackPanel>
     <!-- ========================= -->
     <PanelSettings Title="Actions" Name="panelSettings"
                    HasBorder="true" Margin="5">
-      
+
     </PanelSettings>
     <!-- ========================= -->
 

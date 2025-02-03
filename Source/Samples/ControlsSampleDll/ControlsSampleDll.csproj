@@ -127,6 +127,10 @@
     <Compile Include="..\InputSample\MouseInputWindow.uixml.cs" Link="Links\InputSample\MouseInputWindow.uixml.cs" />
     <UIXml Include="..\InputSample\KeyboardInputWindow.uixml" Link="Links\InputSample\KeyboardInputWindow.uixml" />
     <UIXml Include="..\InputSample\MouseInputWindow.uixml" Link="Links\InputSample\MouseInputWindow.uixml" />
+    <None Include="..\InputSample\**\*.uixml">
+      <Link>Links\InputSample\%(RecursiveDir)/%(FileName)%(Extension)</Link>
+    </None>
+
   </ItemGroup>
 
   <ItemGroup>
@@ -138,6 +142,9 @@
   <ItemGroup>
     <Compile Include="..\ThreadingSample\ThreadingMainWindow.uixml.cs" Link="Links\ThreadingSample\ThreadingMainWindow.uixml.cs" />
     <UIXml Include="..\ThreadingSample\ThreadingMainWindow.uixml" Link="Links\ThreadingSample\ThreadingMainWindow.uixml" />
+    <None Include="..\ThreadingSample\**\*.uixml">
+      <Link>Links\ThreadingSample\%(RecursiveDir)/%(FileName)%(Extension)</Link>
+    </None>
   </ItemGroup>
 
   <ItemGroup>
@@ -158,11 +165,17 @@
     <UIXml Include="..\CustomControlsSample\Classes\**\*.uixml">
       <Link>Links\CustomControlsSample\%(RecursiveDir)/%(FileName)%(Extension)</Link>
     </UIXml>
+    <None Include="..\CustomControlsSample\Classes\**\*.uixml">
+      <Link>Links\CustomControlsSample\%(RecursiveDir)/%(FileName)%(Extension)</Link>
+    </None>
   </ItemGroup>
 
   <ItemGroup>
     <Compile Include="..\ExplorerUISample\ExplorerMainWindow.uixml.cs" Link="Links\ExplorerUISample\ExplorerMainWindow.uixml.cs" />
     <UIXml Include="..\ExplorerUISample\ExplorerMainWindow.uixml" Link="Links\ExplorerUISample\ExplorerMainWindow.uixml" />
+    <None Include="..\ExplorerUISample\**\*.uixml">
+      <Link>Links\ExplorerUISample\%(RecursiveDir)/%(FileName)%(Extension)</Link>
+    </None>
   </ItemGroup>
 
   <ItemGroup>
