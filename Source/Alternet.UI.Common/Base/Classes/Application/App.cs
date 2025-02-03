@@ -282,6 +282,30 @@ namespace Alternet.UI
         public static bool IsDesktopDevice => DeviceType == GenericDeviceType.Desktop;
 
         /// <summary>
+        /// Gets whether the process architecture of the currently running app is Arm.
+        /// </summary>
+        public static bool IsArmProcess
+        {
+            get
+            {
+                var arch = System.Runtime.InteropServices.RuntimeInformation.ProcessArchitecture;
+                return arch == Architecture.Arm || arch == Architecture.Arm64;
+            }
+        }
+
+        /// <summary>
+        /// Gets whether the operating system architecture is Arm.
+        /// </summary>
+        public static bool IsArmOS
+        {
+            get
+            {
+                var arch = System.Runtime.InteropServices.RuntimeInformation.OSArchitecture;
+                return arch == Architecture.Arm || arch == Architecture.Arm64;
+            }
+        }
+
+        /// <summary>
         /// Gets whether device the app is running on is tablet.
         /// </summary>
         public static bool IsTabletDevice => DeviceType == GenericDeviceType.Tablet;

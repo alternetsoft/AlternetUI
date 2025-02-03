@@ -19,6 +19,8 @@ namespace Alternet.UI
 
         /// <summary>
         /// Gets path to folder with System.dll.
+        /// Returned value is similar to this:
+        /// 'C:\Program Files\dotnet\shared\Microsoft.NETCore.App\9.0.1'.
         /// </summary>
         /// <returns></returns>
         public static string? GetSystemDllPath()
@@ -27,6 +29,17 @@ namespace Alternet.UI
             var location = assembly.Location;
             var asmPath = Path.GetDirectoryName(location);
             return asmPath;
+        }
+
+        /// <summary>
+        /// Gets dotnet path based on the <see cref="GetSystemDllPath"/> result.
+        /// </summary>
+        /// <returns></returns>
+        public static string GetDotNetPathFromSystemDllPath()
+        {
+            var combined = Path.Combine(GetSystemDllPath(), "..", "..", "..");
+            var result = Path.GetFullPath(combined);
+            return result;
         }
 
         /// <summary>
