@@ -318,7 +318,9 @@ namespace Alternet.UI
                 if (current is null)
                     yield break;
 
-                foreach(var window in Current.LastActivatedWindows)
+                var windows = Current.VisibleWindows.OrderByDescending(x => x.LastShownAsDialogTime);
+
+                foreach (var window in windows)
                 {
                     if (window.Modal)
                         yield return window;
@@ -1602,11 +1604,15 @@ namespace Alternet.UI
             bool canQuit = true,
             Action<bool>? onClose = null)
         {
-            using var errorWindow =
+            var errorWindow =
                 new ThreadExceptionWindow(exception, additionalInfo, canContinue, canQuit);
             if (App.IsRunning)
             {
-                errorWindow.ShowDialogAsync(null, onClose);
+                errorWindow.ShowDialogAsync(null, (result) =>
+                {
+                    errorWindow.Dispose();
+                    onClose?.Invoke(result);
+                });
             }
             else
             {
@@ -1629,11 +1635,11 @@ namespace Alternet.UI
             Action<bool>? onClose)
         {
             ShowExceptionWindow(
-            exception,
-            additionalInfo: null,
-            canContinue: true,
-            canQuit: true,
-            onClose);
+                exception,
+                additionalInfo: null,
+                canContinue: true,
+                canQuit: true,
+                onClose);
         }
 
         /// <summary>
