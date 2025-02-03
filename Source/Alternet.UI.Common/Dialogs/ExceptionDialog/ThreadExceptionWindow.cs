@@ -382,9 +382,12 @@ namespace Alternet.UI
 
         private void DetailsButton_Click(object? sender, EventArgs e)
         {
-            using var detailsWindow =
+            var detailsWindow =
                 new ThreadExceptionDetailsWindow(GetDetailsText());
-            detailsWindow.ShowDialogAsync(this);
+            detailsWindow.ShowDialogAsync(this, (result) =>
+            {
+                detailsWindow.Dispose();
+            });
         }
     }
 }
