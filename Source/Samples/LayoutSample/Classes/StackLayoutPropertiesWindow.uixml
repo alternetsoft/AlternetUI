@@ -31,14 +31,14 @@
 
       </TabControl>
 
-      <GroupBox Grid.Column="1" Title="Container" Name="subjectGroupBox" IsTitleLocalized="true"
+      <Border Grid.Column="1" Name="subjectGroupBox" IsTitleLocalized="true"
                 Margin="15" HorizontalAlignment="Fill" Padding="15">
         <StackPanel Orientation="Vertical" Name="subjectPanel">
           <Label Text="Before" IsTextLocalized="true" Margin="5"/>
           <Button Text="Button" IsTextLocalized="true" Name="subjectButton" Margin="5"/>
           <Label Text="After" IsTextLocalized="true" Margin="5"/>
         </StackPanel>
-      </GroupBox>
+      </Border>
     </HorizontalStackPanel>
   </Control>
 </Window>

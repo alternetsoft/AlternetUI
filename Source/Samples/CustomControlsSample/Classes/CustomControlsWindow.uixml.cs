@@ -30,14 +30,12 @@ namespace CustomControlsSample
 
         private readonly TicTacToeControl ticTacToe = new()
         {
-            Margin = 10,
         };
         
         private readonly FancySlider knobControl = new()
         {
             Minimum = 0,
             Maximum = 100,
-            Margin = new Thickness(0, 0, 5, 0),
         };
         
         private readonly FancyProgressBar gaugeControl = new()
@@ -45,7 +43,6 @@ namespace CustomControlsSample
             Minimum = 0,
             Maximum = 100,
             VerticalAlignment = VerticalAlignment.Center,
-            Margin = new Thickness(5, 0, 0, 0),
         };
 
         public CustomControlsWindow()
@@ -62,7 +59,9 @@ namespace CustomControlsSample
 
                 colorComboLabel.Parent = colorGroupBox;
                 colorCombo.Parent = colorGroupBox;
+                
                 ticTacToe.Parent = ticTacToeStackPanel;
+                
                 knobControl.Parent = slidersStackPanel;
                 gaugeControl.Parent = slidersStackPanel;
             }

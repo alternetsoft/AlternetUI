@@ -29,8 +29,9 @@
     <CheckBox Text="Key Handled in StackPanel" Name="checkBoxHandledInStackPanel" Margin="5"/>
     <CheckBox Text="Log Repeated Keys" Name="checkBoxLogRepeated" Margin="5"/>
 
-    <TextBox
-      Name="buttonInfo" Margin="5" ReadOnly="true" SuggestedWidth="400"/>
+    <TextBoxAndButton
+      Name="buttonInfo" Margin="5" Enabled="false" SuggestedWidth="400"
+      InnerOuterBorder="Outer" ButtonsVisible="false"/>
 
     <LogListBox
       Name="lb" Margin="5"  SuggestedWidth="400"  SuggestedHeight="300" />

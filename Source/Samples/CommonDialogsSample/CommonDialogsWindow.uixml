@@ -2,7 +2,7 @@
         xmlns:x="http://schemas.alternetsoft.com/ui/2021/uixml"
         x:Class="ControlsSample.CommonDialogsWindow"
         Title="Alternet.UI Common Dialogs Sample"
-        Width="850" Height="550" StartLocation="CenterScreen">
+        Width="850" Height="550" StartLocation="CenterScreen" Margin="10">
   <Window.StatusBar>
     <StatusBar Name="statusBar">
       <StatusBarPanel/>
@@ -25,14 +25,14 @@
 
           <CheckBox Text="Set Filter" Name="setFilterCheckBox" Margin="5" IsTextLocalized="true" />
 
-          <GroupBox Title="Open File Dialog" Margin="10" IsTitleLocalized="true" >
-            <StackPanel>
+          <Border Margin="10" Layout="Vertical" >
+              <Label Text="Open File Dialog:" Margin="5"/>
               <CheckBox Text="Allow Multiple Selection" IsTextLocalized="true"
                   Name="allowMultipleSelectionCheckBox" Margin="5" />
-              <Button Text="Show Open File Dialog" Name="showOpenFileDialogButton" IsTextLocalized="true"
+              <Button Text="Show Open File Dialog" Name="showOpenFileDialogButton"
+                      IsTextLocalized="true"
                     HorizontalAlignment="Left" Click ="ShowOpenFileDialogButton_Click" Margin="5"/>
-            </StackPanel>
-          </GroupBox>
+          </Border>
 
           <Button Text="Save File Dialog" Name="showSaveFileDialogButton" IsTextLocalized="true"
                       HorizontalAlignment="Left" Click="ShowSaveFileDialogButton_Click" Margin="5"/>
@@ -44,57 +44,55 @@
 
       <!-- =============================== -->
 
-      <GroupBox Title="Message Box" Margin="10" VerticalAlignment="Top" Padding="5" IsTitleLocalized="true" >
-        <StackPanel Orientation="Vertical" Padding="5">
-          <Label Text="Buttons:" Margin="5,0,5,10" VerticalAlignment="Center" IsTextLocalized="true" />
-          <ComboBox Name="messageBoxButtonsComboBox" IsEditable="false" Margin="5,0,0,10"
-                    HorizontalAlignment="Left" />
+      <StackPanel Orientation="Vertical" Padding="5" Title="Message Box" Margin="10">
 
-          <Label Text="Icon:" Margin="5,0,5,10" VerticalAlignment="Center" IsTextLocalized="true" />
-          <ComboBox Name="messageBoxIconComboBox" IsEditable="false" Margin="5,0,0,10"
-                    HorizontalAlignment="Left" />
+        <Label Text="Buttons:" Margin="5,0,5,10" VerticalAlignment="Center" IsTextLocalized="true" />
+        <ComboBox Name="messageBoxButtonsComboBox" IsEditable="false" Margin="5,0,0,10"
+                  HorizontalAlignment="Left" />
 
-          <Label Text="Default Button:" Margin="5,0,5,10"
-                 VerticalAlignment="Center" IsTextLocalized="true" />
-          <ComboBox Name="messageBoxDefaultButtonComboBox" IsEditable="false" Margin="5,0,0,10"
-                    HorizontalAlignment="Left" />
+        <Label Text="Icon:" Margin="5,0,5,10" VerticalAlignment="Center" IsTextLocalized="true" />
+        <ComboBox Name="messageBoxIconComboBox" IsEditable="false" Margin="5,0,0,10"
+                  HorizontalAlignment="Left" />
 
-          <Button Text="Show Message" Name="showMessageBoxButton" IsTextLocalized="true"
-            Click="ShowMessageBoxButton_Click" Margin="5,0,0,10" HorizontalAlignment="Left" />
-        </StackPanel>
-      </GroupBox>
+        <Label Text="Default Button:" Margin="5,0,5,10"
+               VerticalAlignment="Center" IsTextLocalized="true" />
+        <ComboBox Name="messageBoxDefaultButtonComboBox" IsEditable="false" Margin="5,0,0,10"
+                  HorizontalAlignment="Left" />
+
+        <Button Text="Show Message" Name="showMessageBoxButton" IsTextLocalized="true"
+          Click="ShowMessageBoxButton_Click" Margin="5,0,0,10" HorizontalAlignment="Left" />
+      </StackPanel>
 
       <!-- =============================== -->
 
       <VerticalStackPanel Title="Other" IsTitleLocalized="true" >
-        <GroupBox Margin="10" VerticalAlignment="Top" Padding="5">
-          <StackPanel>
-            <Button Text="Color Dialog" Name="showColorDialogButton" IsTextLocalized="true"
-              Click="ShowColorDialogButton_Click" Margin="5" HorizontalAlignment="Left" />
-            <Button Text="Font Dialog" Name="showFontDialogButton" IsTextLocalized="true"
-              Click="ShowFontDialogButton_Click" Margin="5" HorizontalAlignment="Left" />
-          </StackPanel>
-        </GroupBox>
 
-        <GroupBox Title="Thread Exception Window" Margin="10" IsTitleLocalized="true"
-                  VerticalAlignment="Top" Padding="5">
-          <StackPanel Orientation="Vertical" Padding="5" Enabled="true">
-            <Label Text="Exception:" Margin="5,5,5,10" VerticalAlignment="Center" IsTextLocalized="true" />
-            <ComboBox Name="exceptionTypeComboBox"
-                      IsEditable="false" Margin="5,0,0,10" HorizontalAlignment="Left" />
+        <Border Margin="10" IsTitleLocalized="true"
+                  VerticalAlignment="Top" Padding="5" Layout="Horizontal">
+          <Button Text="Color Dialog" Name="showColorDialogButton" IsTextLocalized="true"
+          Click="ShowColorDialogButton_Click" Margin="5" HorizontalAlignment="Left" />
+          <Button Text="Font Dialog" Name="showFontDialogButton" IsTextLocalized="true"
+            Click="ShowFontDialogButton_Click" Margin="5" HorizontalAlignment="Left" />
+          <Label Text="Sample Label" Name="sampleLabel" Margin="5" IsTextLocalized="true"
+                 HorizontalAlignment="Center"/>
+        </Border>
 
-            <Button Text="Throw Exception" Name="buttonThrowException" IsTextLocalized="true"
-              Click="ThrowExceptionButton_Click" Margin="5,0,0,10" HorizontalAlignment="Left" />
-          </StackPanel>
-        </GroupBox>
+        <Border Margin="10" IsTitleLocalized="true"
+                  VerticalAlignment="Top" Padding="5" Layout="Vertical">
+          <Label Text="Thread Exception Window:" Margin="5,5,5,10"
+                   IsTextLocalized="true" />
+          <Button Text="Throw Exception" Name="buttonThrowException" IsTextLocalized="true"
+            Click="ThrowExceptionButton_Click" Margin="5,0,0,10" HorizontalAlignment="Left" />
+          <Label Text="Exception:" Margin="5,5,5,10" VerticalAlignment="Center"
+                   IsTextLocalized="true" />
+          <ComboBox Name="exceptionTypeComboBox"
+                    IsEditable="false" Margin="5,0,0,10" HorizontalAlignment="Left" />
+        </Border>
 
       </VerticalStackPanel>
       <!-- =============================== -->
 
     </TabControl>
-
-    <Label Text="Sample Label" Name="sampleLabel" Margin="10,20,10,10" IsTextLocalized="true"
-           HorizontalAlignment="Center"/>
 
   </VerticalStackPanel>
 

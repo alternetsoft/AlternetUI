@@ -11,7 +11,7 @@
 		>
     <VerticalStackPanel InputTransparent="true">
 
-      <GroupBox Margin="10" Padding="5" Title="GroupBox" Name="mainGroupBox"
+      <Border Margin="10" Padding="5" Name="mainGroupBox"
                     MouseMove="GroupBox_MouseMove"
                     MouseDown="GroupBox_MouseDown"
                     MouseUp="GroupBox_MouseUp"
@@ -38,7 +38,11 @@
 
           <HorizontalStackPanel InputTransparent="true">
             <Label Text="Mouse Buttons:" Margin="5" IsTextLocalized="true"/>
-            <TextBox Name="buttonInfo" Margin="5" ReadOnly="true" SuggestedWidth="350"/>
+            
+            <TextBoxAndButton
+              Name="buttonInfo" Margin="5" Enabled="false" SuggestedWidth="350"
+              InnerOuterBorder="Outer" ButtonsVisible="false"/>
+
           </HorizontalStackPanel>
 
           <CheckBox Text="Log Mouse Move" Name="logMoveCheckBox" IsTextLocalized="true"/>
@@ -46,7 +50,7 @@
           <LogListBox Name="lb" Margin="5"  SuggestedHeight="200"/>
 
         </StackPanel>
-      </GroupBox>
+      </Border>
       
     </VerticalStackPanel>
 </Window>

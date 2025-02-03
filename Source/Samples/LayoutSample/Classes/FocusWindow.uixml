@@ -4,7 +4,7 @@
         x:Class="LayoutSample.FocusWindow" StartLocation="CenterScreen"
         Title="ALternet UI Focus Window Sample" MinWidth="500" MinHeight="400">
     <StackPanel Padding="10">
-        <GroupBox Margin="0,0,0,10" Padding="5">
+        <Border Margin="0,0,0,10" Padding="5">
             <StackPanel>
                 <Label Text="TextBox1 (TabStop = true):" Margin="0,0,0,3"/>
                 <TextBox Name="textBox1" Text="TextBox1" Margin="0,0,0,15" TabStop="true"
@@ -16,9 +16,9 @@
                 <Label Text="TextBox3 (TabStop = true):" Margin="0,0,0,3"/>
                 <TextBox Name="textBox3" Text="TextBox3" Margin="0,0,0,15" TabStop="true"/>
             </StackPanel>
-        </GroupBox>
+        </Border>
 
-        <GroupBox Padding="5">
+        <Border Padding="5">
             <StackPanel>
                 <StackPanel Orientation="Horizontal" Margin="0,0,0,5">
                     <Label Text="TextBox1.IsFocused: " Margin="0,0,2,0" />
@@ -30,6 +30,6 @@
                         Click="SetFocusToTextBox1Button_Click" Margin="0,0,0,5" />
                 <Label Text="Press 'N' key to focus next control." Margin="0,0,0,5"/>
             </StackPanel>
-        </GroupBox>
+        </Border>
     </StackPanel>
 </Window>

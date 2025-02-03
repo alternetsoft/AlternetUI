@@ -10,8 +10,23 @@ namespace PrintingSample
         private static readonly Font font = new(FontFamily.GenericSerif, 20);
         private static readonly Pen thickGrayPen = Color.Gray.GetAsPen(4);
 
+        private ToolBar toolBar = new()
+        {
+        };
+
         public PrintingMainWindow()
         {
+            toolBar.Parent = this;
+            toolBar.SetBorderAndMargin(AnchorStyles.Bottom, AnchorStyles.Bottom);
+
+            toolBar.AddTextBtn("Print Immediately", null, PrintImmediatelyMenuItem_Click);
+            toolBar.AddSeparator();
+            toolBar.AddTextBtn("Print...", null, PrintMenuItem_Click);
+            toolBar.AddSeparator();
+            toolBar.AddTextBtn("Page Setup...", null, PageSetupMenuItem_Click);
+            toolBar.AddSeparator();
+            toolBar.AddTextBtn("Print Preview...", null, PrintPreviewMenuItem_Click);
+
             Icon = App.DefaultIcon;
             InitializeComponent();
 
