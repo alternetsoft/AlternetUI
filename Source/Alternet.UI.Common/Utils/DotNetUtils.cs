@@ -195,7 +195,7 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="x64onArm">Whether to return x64 runtime on arm OS.</param>
         /// <returns></returns>
-        public static string? GetDefaultLocation(bool x64onArm = false)
+        public static string GetDefaultLocation(bool x64onArm = false)
         {
             string? ExistingOrNull(string? path)
             {
@@ -249,7 +249,7 @@ namespace Alternet.UI
                     return result;
             }
 
-            return ExistingOrNull(CodeGeneratorUtils.GetDotNetPathFromSystemDllPath());
+            return CodeGeneratorUtils.GetDotNetPathFromSystemDllPath();
         }
 
         internal static void LogInstalledRuntimes()
