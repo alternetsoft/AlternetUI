@@ -13,6 +13,19 @@ namespace Alternet.UI
     public static class FileUtils
     {
         /// <summary>
+        /// Returns <paramref name="path"/> if such directory exists;
+        /// otherwise returns Null.
+        /// </summary>
+        /// <param name="path">Path to return if it exists.</param>
+        /// <returns></returns>
+        public static string? ExistingDirOrNull(string? path)
+        {
+            if (!string.IsNullOrWhiteSpace(path) && Directory.Exists(path))
+                return path;
+            return null;
+        }
+
+        /// <summary>
         /// Saves string to the specified file only if its contents is different from the saved string.
         /// </summary>
         /// <param name="path">Path to file where string will be saved.</param>

@@ -190,6 +190,20 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets dotnet location using <see cref="Environment.SpecialFolder.Programs"/>.
+        /// Returns Null if not found.
+        /// </summary>
+        /// <returns></returns>
+        public static string? GetDefaultLocationUsingSpecialFolder()
+        {
+            var path = Environment.GetFolderPath(Environment.SpecialFolder.ProgramFiles);
+
+            var dotnetPath = Path.Combine(path, "dotnet");
+
+            return FileUtils.ExistingDirOrNull(dotnetPath);
+        }
+
+        /// <summary>
         /// Gets dotnet location. Returns value from the environment variables if they are specified;
         /// otherwise returns default dotnet location. Returned value is specific to the OS.
         /// </summary>
@@ -197,14 +211,12 @@ namespace Alternet.UI
         /// <returns></returns>
         public static string GetDefaultLocation(bool x64onArm = false)
         {
-            string? ExistingOrNull(string? path)
+            string? Ep(string? path)
             {
-                if (!string.IsNullOrWhiteSpace(path) && Directory.Exists(path))
-                    return path;
-                return null;
+                return FileUtils.ExistingDirOrNull(path);
             }
 
-            var result = ExistingOrNull(GetLocationFromEnvironmentVars());
+            var result = Ep(GetLocationFromEnvironmentVars());
             if (result is not null)
                 return result;
 
@@ -212,11 +224,11 @@ namespace Alternet.UI
             {
                 if (App.IsArmOS && x64onArm)
                 {
-                    result = ExistingOrNull(DefaultLocationWindowsArmX64);
+                    result = Ep(DefaultLocationWindowsArmX64);
                 }
                 else
                 {
-                    result = ExistingOrNull(DefaultLocationWindows);
+                    result = Ep(DefaultLocationWindows);
                 }
 
                 if (result is not null)
@@ -227,11 +239,11 @@ namespace Alternet.UI
             {
                 if (App.IsArmOS && x64onArm)
                 {
-                    result = ExistingOrNull(DefaultLocationMacOsArmX64);
+                    result = Ep(DefaultLocationMacOsArmX64);
                 }
                 else
                 {
-                    result = ExistingOrNull(DefaultLocationMacOs);
+                    result = Ep(DefaultLocationMacOs);
                 }
 
                 if (result is not null)
@@ -240,14 +252,18 @@ namespace Alternet.UI
 
             if (App.IsLinuxOS)
             {
-                result = ExistingOrNull(DefaultLocationUbuntuV1);
+                result = Ep(DefaultLocationUbuntuV1);
                 if (result is not null)
                     return result;
 
-                result = ExistingOrNull(DefaultLocationUbuntuV2);
+                result = Ep(DefaultLocationUbuntuV2);
                 if (result is not null)
                     return result;
             }
+
+            result = GetDefaultLocationUsingSpecialFolder();
+            if (result is not null)
+                return result;
 
             return CodeGeneratorUtils.GetDotNetPathFromSystemDllPath();
         }

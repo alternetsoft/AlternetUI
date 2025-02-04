@@ -210,6 +210,10 @@ namespace Alternet.UI
                 App.Log("Installed net sdks:");
                 DotNetUtils.LogInstalledSdks();
                 App.LogEmptyLine();
+
+                App.LogNameValue(
+                    "DotNetUtils.GetDefaultLocationUsingSpecialFolder()",
+                    DotNetUtils.GetDefaultLocationUsingSpecialFolder());
             });
 
             Fn("Set Height = (Width / 3) * 2", () =>
