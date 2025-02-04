@@ -181,11 +181,15 @@ namespace Alternet.UI
                         HasBorder = false,
                     };
 
-                    IEnumerable<Type> result = AssemblyUtils.GetTypeDescendants(typeof(AbstractControl));
+                    IEnumerable<Type> result
+                        = AssemblyUtils.GetTypeDescendants(typeof(AbstractControl));
 
                     void AddControl(Type type)
                     {
-                        ListControlItem item = new(type.Name, type);
+                        var typeName = AssemblyUtils.GetTypeDisplayName(type);
+                        if (typeName.Contains("<"))
+                            return;
+                        ListControlItem item = new(typeName, type);
                         typesListBox.Add(item);
                     }
 
