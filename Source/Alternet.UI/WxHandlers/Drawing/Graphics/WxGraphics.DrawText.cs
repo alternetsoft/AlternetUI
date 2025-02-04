@@ -99,7 +99,7 @@ namespace Alternet.Drawing
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         private bool GetNoTransformForDrawText()
         {
-            return !App.IsLinuxOS || !HasTransform || WxGlobals.NoTransformForDrawText;
+            return App.IsWindowsOS || !HasTransform || WxGlobals.NoTransformForDrawText;
         }
 
         private PointD TransformPointForDrawText(PointD value)
