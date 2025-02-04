@@ -27,8 +27,6 @@
                 ToolTip="Allow the user to set the checkboxes to the third state by clicking."/>
       <CheckBox Margin="0,3,0,0" Text="CheckBox AllowClick" IsTextLocalized="true"
                 Name="allowClickCheckCheckBox"/>
-      <CheckBox Margin="0,3,0,5" Text="Round Selection" IsTextLocalized="true"
-                Name="roundSelectionCheckBox"/>
     </StackPanel>
 
     <StackPanel Orientation="Vertical" Padding="10" Name="vertPanel2" Title="More"
@@ -42,6 +40,8 @@
       <TextBox Name="findText" Margin="0,0,0,5" IsTextLocalized="true"/>
       <CheckBox Text="Use other color theme" Name="otherThemeCheckBox"
                 Margin="0,0,0,5" IsTextLocalized="true" IsEnabled="false"/>
+      <CheckBox Margin="0,0,0,5" Text="Round Selection" IsTextLocalized="true"
+                Name="roundSelectionCheckBox"/>
     </StackPanel>
   </TabControl>
 </Control>

@@ -52,22 +52,25 @@ namespace ControlsSample
             var logoImage = Image.FromUrl("embres:ControlsSampleDll.Resources.logo128x128.png");
             r.WriteImage(logoImage);
 
-            r.NewLine();
-
-            r.WriteText(
-                "Use established .NET standards and productivity tools for your cross-platform" +
-                " desktop application. Keep up good engineering practices. Deliver your application" +
-                " quickly. Be native on the desktop, whether it is Windows, macOS, or Linux.");
-
             r.NewLine(2);
 
-            var urlStyle = r.CreateUrlAttr();
-            r.WriteUrl(urlStyle, homePage, "Home page");
-            r.WriteText("    ");
-            r.WriteUrl(urlStyle, docsUrl, "Documentation");
+            r.BeginFontSize(baseFontSize + 1);
+            r.WriteLineText(
+                "Use established .NET standards and productivity tools for your cross-platform" +
+                " desktop application. ");
+            r.WriteLineText(
+                "Keep up good engineering practices. Deliver your application quickly.");
+            r.WriteLineText("Be native on the desktop, whether it is Windows, macOS, or Linux.");
+            r.EndFontSize();
 
             r.NewLine();
-            r.WriteUrl(urlStyle, "PropertyGrid", "Run Property Grid Demo");
+
+            var urlStyle = r.CreateUrlAttr();
+            r.WriteUrl(urlStyle, homePage, "Home");
+            r.WriteText("    ");
+            r.WriteUrl(urlStyle, docsUrl, "Help");
+            r.WriteText("    ");
+            r.WriteUrl(urlStyle, "PropertyGrid", "Property Grid");
 
             r.EndSuppressUndo();
             r.EndUpdate();

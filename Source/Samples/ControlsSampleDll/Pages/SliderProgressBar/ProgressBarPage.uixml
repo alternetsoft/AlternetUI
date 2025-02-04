@@ -10,7 +10,7 @@
       </Grid.ColumnDefinitions>
 
       <TabControl>
-        <StackPanel Title="Horizontal Progresss"
+        <StackPanel Title="Horizontal"
           Orientation="Vertical" Margin="5" Name="horizontalProgressBarsPanel">
           <Label Text="0 [0-100]" Margin="0,0,0,5" />
           <ProgressBar Value="0" Margin="0,0,0,5" />
@@ -32,7 +32,7 @@
 
       <TabControl Grid.Column="1" Margin="10,0,10,0"
                 Name="VerticalProgressBarsGroupBox" IsTitleLocalized="true">
-        <Grid Name="verticalProgressBarsGrid" Title="Vertical Progress Bars" >
+        <Grid Name="verticalProgressBarsGrid" Title="Vertical" >
           <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="*"/>

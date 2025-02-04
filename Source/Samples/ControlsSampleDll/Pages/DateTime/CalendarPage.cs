@@ -22,6 +22,7 @@ namespace ControlsSample
             calendar.Alignment = (HorizontalAlignment.Left, VerticalAlignment.Top);
             calendar.Parent = this;
             tabControl.Margin = 5;
+            tabControl.MinSizeGrowMode = WindowSizeToContentMode.Width;
             tabControl.Parent = this;
 
             DoInsideLayout(Fn);

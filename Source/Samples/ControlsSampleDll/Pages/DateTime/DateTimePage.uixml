@@ -21,42 +21,42 @@
         <Label Text="Selected:" Margin="0,10,0,5" Name="timeLabel" IsTextLocalized="true"/>
       </VerticalStackPanel>
 
-      <VerticalStackPanel Margin="5">
-        <Border Layout="Vertical" Margin="5" Padding="5">
-          <Label Text="Date Editor:" Margin="0,0,0,5"/>
-          <RadioButton Text="Default" Margin="0,0,0,5" IsChecked="True"  IsTextLocalized="true"
-                       Name="DefaultRadioButton"
-                       CheckedChanged="Popup_CheckedChanged" />
-          <RadioButton Text="Spin" Margin="0,0,0,5"  IsTextLocalized="true"
-                       Name="SpinRadioButton"
-                       CheckedChanged="Popup_CheckedChanged" />
-          <RadioButton Text="DropDown" Margin="0,0,0,5" IsTextLocalized="true"
-                       Name="DropDownRadioButton"
-                       CheckedChanged="Popup_CheckedChanged" />
-        </Border>
-        <Button Text="Set Date/Time" Click="SetNow_Click" Margin="0,0,0,5" IsTextLocalized="true"
-                Name="buttonSetNow"/>
-        <Button Text="Set Date" Click="SetNowDate_Click" Margin="0,0,0,5" IsTextLocalized="true"
-                Name="buttonSetOnlyDate"/>
-      </VerticalStackPanel>
+      <TabControl Name="tabControl2">
 
-      <VerticalStackPanel Margin="5">
+        <VerticalStackPanel Margin="5" Title="Options">
+          <Border Layout="Vertical" Margin="5" Padding="5">
+            <Label Text="Date Editor:" Margin="0,0,0,5"/>
+            <RadioButton Text="Default" Margin="0,0,0,5" IsChecked="True"  IsTextLocalized="true"
+                         Name="DefaultRadioButton"
+                         CheckedChanged="Popup_CheckedChanged" />
+            <RadioButton Text="Spin" Margin="0,0,0,5"  IsTextLocalized="true"
+                         Name="SpinRadioButton"
+                         CheckedChanged="Popup_CheckedChanged" />
+            <RadioButton Text="DropDown" Margin="0,0,0,5" IsTextLocalized="true"
+                         Name="DropDownRadioButton"
+                         CheckedChanged="Popup_CheckedChanged" />
+          </Border>
+          <Button Text="Set Date/Time" Click="SetNow_Click" Margin="0,0,0,5" IsTextLocalized="true"
+                  Name="buttonSetNow"/>
+          <Button Text="Set Date" Click="SetNowDate_Click" Margin="0,0,0,5" IsTextLocalized="true"
+                  Name="buttonSetOnlyDate"/>
+          <Button Text="Has Border" Margin="0,0,0,5" Name="hasBorderButton" IsTextLocalized="true"
+            Click="HasBorderButton_Click" Visible="false"/>
+        </VerticalStackPanel>
 
-        <Border Margin="5" Layout="Vertical" Padding="5">
-          <Label Text="Allow Date Range:" Margin="0,0,0,5"/>
-          <Button Text="Any Date" Margin="0,0,0,5" IsTextLocalized="true"
-                  Click="RangeAnyDate_Click" Name="buttonAnyDate"/>
-          <Button Text="Allow &lt;= Tomorrow" Margin="0,0,0,5" IsTextLocalized="true"
-                  Click="RangeTomorrow_Click" Name="buttonRangeTomorrow"/>
-          <Button Text="Allow &gt;= Yesterday" Margin="0,0,0,5" IsTextLocalized="true"
-                  Click="RangeYesterday_Click" Name="buttonRangeYesterday"/>
-          <Button Text="Yesterday..Tomorrow" Margin="0,0,0,5" IsTextLocalized="true"
-                  Click="RangeYesterdayTomorrow_Click" Name="buttonRangeYesterdayTomorrow"/>
-        </Border>
+        <VerticalStackPanel Margin="5" Title="Range" Padding="5">
+            <Label Text="Allow Date Range:" Margin="0,0,0,5"/>
+            <Button Text="Any Date" Margin="0,0,0,5" IsTextLocalized="true"
+                    Click="RangeAnyDate_Click" Name="buttonAnyDate"/>
+            <Button Text="Allow &lt;= Tomorrow" Margin="0,0,0,5" IsTextLocalized="true"
+                    Click="RangeTomorrow_Click" Name="buttonRangeTomorrow"/>
+            <Button Text="Allow &gt;= Yesterday" Margin="0,0,0,5" IsTextLocalized="true"
+                    Click="RangeYesterday_Click" Name="buttonRangeYesterday"/>
+            <Button Text="Yesterday..Tomorrow" Margin="0,0,0,5" IsTextLocalized="true"
+                    Click="RangeYesterdayTomorrow_Click" Name="buttonRangeYesterdayTomorrow"/>
+        </VerticalStackPanel>
 
-        <Button Text="Has Border" Margin="0,0,0,5" Name="hasBorderButton" IsTextLocalized="true"
-                Click="HasBorderButton_Click" Visible="false"/>
-      </VerticalStackPanel>
+      </TabControl>
 
     </HorizontalStackPanel>
   </StackPanel>

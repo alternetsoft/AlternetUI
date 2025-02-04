@@ -9,6 +9,9 @@ namespace ControlsSample
         public DateTimePage()
         {
             InitializeComponent();
+
+            tabControl2.MinSizeGrowMode = WindowSizeToContentMode.Width;
+
             datePicker.Value = DateTime.Now;
             timePicker.Value = DateTime.Now;
         }
