@@ -253,7 +253,12 @@ namespace Alternet.UI
         /// <param name="kind">Message kind. Optional.
         /// Default is <see cref="LogItemKind.Error"/>.</param>
         /// <param name="e">Exception to log.</param>
-        public static void LogException(Exception e, LogItemKind kind = LogItemKind.Error)
+        /// <param name="allowReplace">Whether to allow replace last log item
+        /// if last item has the same text.</param>
+        public static void LogException(
+            Exception e,
+            LogItemKind kind = LogItemKind.Error,
+            bool allowReplace = false)
         {
             var asString = e.ToString();
 

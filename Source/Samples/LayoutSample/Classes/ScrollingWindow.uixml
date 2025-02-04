@@ -13,7 +13,7 @@
         <Border SuggestedWidth="200" SuggestedHeight="200" Padding="5"
                         VerticalAlignment="Top" HorizontalAlignment="Left" HasBorder="true">
           <ScrollViewer Name="scrollViewerStack">
-            <StackPanel Name="stackPanel" Orientation="Vertical">
+            <StackPanel Name="stackPanel" Orientation="Vertical" MinChildMargin="3">
             </StackPanel>
           </ScrollViewer>
         </Border>
@@ -76,7 +76,7 @@
           </ScrollViewer>
         </Border>
 
-        <Grid Margin="10,0,0,0">
+        <Grid Margin="10,0,0,0" MinChildMargin="3">
           <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
@@ -140,7 +140,7 @@
           </Grid.ColumnDefinitions>
           <Label Text="Zoom:" IsTextLocalized="true" Margin="0,0,5,0" VerticalAlignment="Center"/>
           <Slider Name="zoomSlider" ValueChanged="ZoomSlider_ValueChanged" Minimum="1"
-                  Value="2" Maximum="10" Grid.Column="1" MinWidth="150"/>
+                  Maximum="20" Value="2" Grid.Column="1" MinWidth="150"/>
         </Grid>
         </VerticalStackPanel>
       </StackPanel>

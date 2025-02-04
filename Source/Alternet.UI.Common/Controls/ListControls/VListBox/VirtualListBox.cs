@@ -1072,7 +1072,7 @@ namespace Alternet.UI
         {
             base.OnGotFocus(e);
 
-            if(SelectedIndex is null)
+            if (SelectedIndex is null)
             {
                 if (Count > 0)
                     SelectItemsAndScroll(0);
@@ -1084,11 +1084,19 @@ namespace Alternet.UI
         {
             if (DisposingOrDisposed)
                 return;
+
+            bool fullPaint = App.IsMacOS && App.PlatformKind == UIPlatformKind.WxWidgets;
+
             var clientSize = ClientSize;
 
             var dc = e.Graphics;
 
-            var rectUpdate = GetUpdateClientRect();
+            RectD rectUpdate;
+
+            if (fullPaint)
+                rectUpdate = e.ClipRectangle;
+            else
+                rectUpdate = GetUpdateClientRect();
 
             dc.FillRectangle(RealBackgroundColor.AsBrush, rectUpdate);
 
@@ -1109,7 +1117,7 @@ namespace Alternet.UI
 
                 rectRow.Height = hRow;
 
-                if (rectRow.IntersectsWith(rectUpdate))
+                if (fullPaint || rectRow.IntersectsWith(rectUpdate))
                 {
                     var isCurrentItem = IsCurrent(line);
                     var isSelectedItem = IsSelected(line);
@@ -1174,8 +1182,11 @@ namespace Alternet.UI
                 }
                 else
                 {
-                    if (rectRow.Top > rectUpdate.Bottom)
-                        break;
+                    if (!fullPaint)
+                    {
+                        if (rectRow.Top > rectUpdate.Bottom)
+                            break;
+                    }
                 }
 
                 rectRow.Top += hRow;

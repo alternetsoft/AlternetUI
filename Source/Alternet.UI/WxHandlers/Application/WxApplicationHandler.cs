@@ -27,6 +27,8 @@ namespace Alternet.UI
         private static readonly KeyboardInputProvider keyboardInputProvider;
         private static readonly MouseInputProvider mouseInputProvider;
 
+        private static string? previousAssertMessage;
+
         static WxApplicationHandler()
         {
             Native.Application.GetEventIdentifiers(eventIdentifiers);
@@ -421,6 +423,12 @@ namespace Alternet.UI
         private static void NativeApplication_AssertFailure()
         {
             var s = NativeApplication.EventArgString;
+
+            if (s == previousAssertMessage)
+                return;
+
+            previousAssertMessage = s;
+
             if (s.StartsWith("<?xml"))
             {
                 try
@@ -428,17 +436,17 @@ namespace Alternet.UI
                     var data = XmlUtils.DeserializeFromString<AssertFailureExceptionData>(s);
                     var e = new AssertFailureException(data.Message ?? "WxWidgets assert failure");
                     e.AssertData = data;
-                    App.LogError(e, LogItemKind.Warning);
+                    App.LogError(e, LogItemKind.Warning, true);
                 }
                 catch
                 {
                     var r = "NativeApplication_AssertFailure: Error getting AssertFailureExceptionData";
-                    App.LogError(new Exception(r), LogItemKind.Warning);
+                    App.LogError(new Exception(r), LogItemKind.Warning, true);
                 }
             }
             else
             {
-                App.LogError(s, LogItemKind.Warning);
+                App.LogError(s, LogItemKind.Warning, true);
             }
         }
 

@@ -875,6 +875,18 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Writes text at the current position and moves caret
+        /// to the beginning of the next line.
+        /// </summary>
+        public virtual void WriteLineText(string text)
+        {
+            if (DisposingOrDisposed)
+                return;
+            WriteText(text);
+            Handler.NewLine();
+        }
+
+        /// <summary>
         /// Sets the insertion point to the end of the buffer and writes the text.
         /// </summary>
         public virtual void AppendText(string text)
@@ -1112,12 +1124,12 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Inserts new paragraphs at the current insertion point. See <see cref="LineBreak"/>.
+        /// Inserts a new paragraph at the current insertion point. See <see cref="LineBreak"/>.
         /// </summary>
         public virtual bool NewLine() => NewLine(1);
 
         /// <summary>
-        /// Inserts a new paragraph at the current insertion point. See <see cref="LineBreak"/>.
+        /// Inserts new paragraphs at the current insertion point. See <see cref="LineBreak"/>.
         /// </summary>
         public virtual bool NewLine(int count)
         {

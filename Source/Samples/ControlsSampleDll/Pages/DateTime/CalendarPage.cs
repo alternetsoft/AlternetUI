@@ -22,6 +22,7 @@ namespace ControlsSample
             calendar.Alignment = (HorizontalAlignment.Left, VerticalAlignment.Top);
             calendar.Parent = this;
             tabControl.Margin = 5;
+            tabControl.MinSizeGrowMode = WindowSizeToContentMode.Width;
             tabControl.Parent = this;
 
             DoInsideLayout(Fn);
@@ -69,6 +70,7 @@ namespace ControlsSample
                 var setDayColorsButton
                     = buttonPanel.AddButton($"{GenericStrings.DaysStyle} (5, 7)", SetDayColors);
                 setDayColorsButton.Enabled = useGenericCheckBox.IsChecked;
+                setDayColorsButton.Margin = 5;
 
                 (string, Action?)[] buttons = [
                     ($"{GenericStrings.MarkDays} (2, 3)", MarkDays),

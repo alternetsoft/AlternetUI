@@ -74,7 +74,7 @@
           <Button Text="Font Dialog" Name="showFontDialogButton" IsTextLocalized="true"
             Click="ShowFontDialogButton_Click" Margin="5" HorizontalAlignment="Left" />
           <Label Text="Sample Label" Name="sampleLabel" Margin="5" IsTextLocalized="true"
-                 HorizontalAlignment="Center"/>
+                 VerticalAlignment="Center"/>
         </Border>
 
         <Border Margin="10" IsTitleLocalized="true"

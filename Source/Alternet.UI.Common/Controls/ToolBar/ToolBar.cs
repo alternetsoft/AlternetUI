@@ -997,7 +997,7 @@ namespace Alternet.UI
         /// for the added item.</returns>
         public virtual AbstractControl AddTextCore(string text)
         {
-            var label = AddSpeedBtnCore(text);
+            var label = AddTextBtnCore(text);
             label.ToolTip = string.Empty;
             label.UseTheme = SpeedButton.KnownTheme.NoBorder;
 

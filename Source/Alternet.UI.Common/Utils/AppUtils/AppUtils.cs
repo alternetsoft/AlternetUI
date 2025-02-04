@@ -138,9 +138,23 @@ namespace Alternet.UI
             bool logStdOut = true)
         {
             if (App.IsWindowsOS)
-                return ExecuteApp("cmd.exe", "/c " + command, folder, waitResult, logStdOut);
+            {
+                return ExecuteApp(
+                    "cmd.exe",
+                    @"/c """ + command + @"""",
+                    folder,
+                    waitResult,
+                    logStdOut);
+            }
             else
-                return ExecuteApp("/bin/bash", "-c " + command, folder, waitResult, logStdOut);
+            {
+                return ExecuteApp(
+                    "/bin/bash",
+                    @"-c """ + command + @"""",
+                    folder,
+                    waitResult,
+                    logStdOut);
+            }
         }
 
         /// <summary>
