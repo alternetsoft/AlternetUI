@@ -70,6 +70,7 @@ namespace ControlsSample
                 var setDayColorsButton
                     = buttonPanel.AddButton($"{GenericStrings.DaysStyle} (5, 7)", SetDayColors);
                 setDayColorsButton.Enabled = useGenericCheckBox.IsChecked;
+                setDayColorsButton.Margin = 5;
 
                 (string, Action?)[] buttons = [
                     ($"{GenericStrings.MarkDays} (2, 3)", MarkDays),

@@ -15,7 +15,6 @@ namespace LayoutSample
         {
             InitializeComponent();
 
-            imageControl.Zoom = 2;
             imageControl.Image = Image.FromAssemblyUrl(GetType().Assembly,"Resources.logo128x128.png");
             imageScrollViewer.Children.Add(imageControl);
 
@@ -81,7 +80,8 @@ namespace LayoutSample
             InitializeEnumComboBox(gridHorizontalAlignmentComboBox, HorizontalAlignment.Stretch);
         }
 
-        private void InitializeEnumComboBox<TEnum>(ComboBox comboBox, TEnum defaultValue) where TEnum : Enum
+        private void InitializeEnumComboBox<TEnum>(ComboBox comboBox, TEnum defaultValue)
+            where TEnum : Enum
         {
             foreach (var item in Enum.GetValues(typeof(TEnum)))
                 comboBox.Items.Add(item ?? throw new Exception());
@@ -94,13 +94,17 @@ namespace LayoutSample
             stackPanel.Orientation = (StackPanelOrientation)orientationComboBox.SelectedItem!;
         }
 
-        private void StackPanelVerticalAlignmentComboBox_SelectedItemChanged(object? sender, EventArgs e)
+        private void StackPanelVerticalAlignmentComboBox_SelectedItemChanged(
+            object? sender,
+            EventArgs e)
         {
             stackPanel.VerticalAlignment
                 = (VerticalAlignment)stackPanelVerticalAlignmentComboBox.SelectedItem!;
         }
 
-        private void StackPanelHorizontalAlignmentComboBox_SelectedItemChanged(object? sender, EventArgs e)
+        private void StackPanelHorizontalAlignmentComboBox_SelectedItemChanged(
+            object? sender,
+            EventArgs e)
         {
             stackPanel.HorizontalAlignment
                 = (HorizontalAlignment)stackPanelHorizontalAlignmentComboBox.SelectedItem!;
@@ -171,7 +175,7 @@ namespace LayoutSample
         private void UpdateImageZoom()
         {
             if(imageControl != null && zoomSlider!=null)
-                imageControl.Zoom = zoomSlider.Value;
+                imageControl.Zoom = 1 + 0.1 * zoomSlider.Value;
         }
 
         private void ZoomSlider_ValueChanged(object sender, EventArgs e)
