@@ -1110,12 +1110,17 @@ namespace Alternet.UI
         /// <param name="obj">Message text or object to log.</param>
         /// <param name="kind">Message kind. Optional.
         /// Default is <see cref="LogItemKind.Error"/>.</param>
-        public static void LogError(object? obj, LogItemKind kind = LogItemKind.Error)
+        /// <param name="allowReplace">Whether to allow replace last log item
+        /// if last item has the same text.</param>
+        public static void LogError(
+            object? obj,
+            LogItemKind kind = LogItemKind.Error,
+            bool allowReplace = false)
         {
             try
             {
                 if (obj is Exception e)
-                    LogUtils.LogException(e, kind);
+                    LogUtils.LogException(e, kind, allowReplace);
                 else
                 {
                     if (obj is null)
@@ -1125,7 +1130,12 @@ namespace Alternet.UI
                     if (kind == LogItemKind.Information)
                         prefix = "Warning";
 
-                    Log($"{prefix}: {obj}", kind);
+                    var s = $"{prefix}: {obj}";
+
+                    if (allowReplace)
+                        LogReplace(s, s, kind);
+                    else
+                        Log(s, kind);
                 }
             }
             catch
