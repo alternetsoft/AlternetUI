@@ -1,3 +1,21 @@
+# 0.9.707 (2025 February 4)
+
+- ToolBar: default separator color made the same as border color.
+- Maui: Improved bitmap handler to support ScaleFactor and canvas on bitmap creation.
+- Maui: Fix exception in ControlView when disposed PlatformView was invalidated.
+- Toolbar.SetBorderAndMargin - initializes default toolbar border, padding and margin.
+- Demo: Improved layout and fixed minor bugs.
+- Install scripts: Do not use Net 9 on old maxOs x64.
+- Remove SkiaSharp alpha nuget source as no longer needed.
+- AbstractControl.GetLabelFont - fixed to support all font style overrides.
+- GenericLabel.MakeAsLinkLabel() - initialized control to look like LinkLabel.
+- PanelSettings: Use GenericLabel instead of LinkLabel because LinkLabel shows strange empty tooltip on Linux when mouse is over the control.
+- ThreadExceptionWindow: Fixed Details dialog show.
+- App: Fixed Error dialog show.
+- Window: Fixed issues in modal dialogs behavior.
+- RichTextBox.ScrollToCaret().
+- App: IsArmOS, IsArmProcess.
+
 # 0.9.706 (2025 January 30)
 
 - Implement modal dialogs internally so under macOs and Linux problems with modal dialogs are fixed.
