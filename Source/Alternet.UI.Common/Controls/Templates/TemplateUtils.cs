@@ -182,24 +182,6 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Draws control template on the specified canvas.
-        /// </summary>
-        /// <param name="control">Control template.</param>
-        /// <param name="canvas">Canvas where to draw the template.</param>
-        /// <param name="translate">Value on which to translate the top-left
-        /// corner of the control.</param>
-        public static void DrawControlTemplate(
-            TemplateControl control,
-            Graphics canvas,
-            PointD? translate = null)
-        {
-            var pt = translate ?? PointD.Empty;
-            control.SetSizeToContent();
-            RaisePaintRecursive(control, canvas, pt);
-            DefaultPaintDebug(canvas, (pt, control.Size));
-        }
-
-        /// <summary>
         /// Creates template with text which has a middle part with bold font.
         /// </summary>
         /// <param name="prefix">First part of the text.</param>
@@ -253,6 +235,24 @@ namespace Alternet.UI
             if(fontAndColor is not null)
                 result.AsFontAndColor = fontAndColor;
             return result;
+        }
+
+        /// <summary>
+        /// Draws control template on the specified canvas.
+        /// </summary>
+        /// <param name="control">Control template.</param>
+        /// <param name="canvas">Canvas where to draw the template.</param>
+        /// <param name="translate">Value on which to translate the top-left
+        /// corner of the control.</param>
+        internal static void DrawControlTemplate(
+            TemplateControl control,
+            Graphics canvas,
+            PointD? translate = null)
+        {
+            var pt = translate ?? PointD.Empty;
+            control.SetSizeToContent();
+            RaisePaintRecursive(control, canvas, pt);
+            DefaultPaintDebug(canvas, (pt, control.Size));
         }
 
         [Conditional("DEBUG")]
