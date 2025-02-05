@@ -25,11 +25,10 @@ namespace Alternet.UI
                 new RowDefinition { Height = new GridLength(1, GridUnitType.Star) });
             mainGrid.RowDefinitions.Add(new RowDefinition { Height = GridLength.Auto });
 
-            var detailsTextBox = new TextBox
+            var detailsTextBox = new MultilineTextBox
             {
                 Text = details,
                 ReadOnly = true,
-                Multiline = true,
             };
             mainGrid.Children.Add(detailsTextBox);
 

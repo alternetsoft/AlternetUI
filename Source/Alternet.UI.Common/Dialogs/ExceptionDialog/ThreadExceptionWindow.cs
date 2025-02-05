@@ -312,11 +312,10 @@ namespace Alternet.UI
                         Margin = new Thickness(0, 15, 0, 5),
                     });
 
-                messageTextBox = new TextBox
+                messageTextBox = new MultilineTextBox
                 {
                     Text = " ",
                     ReadOnly = true,
-                    Multiline = true,
                     MinHeight = 150,
                     VerticalAlignment = VerticalAlignment.Fill,
                 };
