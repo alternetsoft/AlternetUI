@@ -449,6 +449,25 @@ namespace Alternet.UI
         protected abstract AbstractControl CreateControl();
 
         /// <summary>
+        /// Called when combobox image needs to be updated. Assigns combobox image
+        /// using different properties of the control.
+        /// </summary>
+        protected virtual void UpdateComboBoxImage()
+        {
+            if (idButtonCombo is null)
+                return;
+
+            if (comboBoxSvg is null)
+            {
+                Buttons.SetToolImage(
+                    idButtonCombo.Value,
+                    comboBoxKnownImage ?? DefaultBtnComboBoxImage);
+            }
+            else
+                Buttons.SetToolSvg(idButtonCombo.Value, comboBoxSvg ?? DefaultBtnComboBoxSvg);
+        }
+
+        /// <summary>
         /// Sets whether button with the specified id is visible.
         /// </summary>
         /// <param name="btn">Known button.</param>
@@ -501,21 +520,6 @@ namespace Alternet.UI
                     return;
                 Buttons.SetToolVisible(id.Value, false);
             }
-        }
-
-        private void UpdateComboBoxImage()
-        {
-            if (idButtonCombo is null)
-                return;
-            var svg = comboBoxSvg ?? DefaultBtnComboBoxSvg;
-            if(svg is null)
-            {
-                Buttons.SetToolImage(
-                    idButtonCombo.Value,
-                    comboBoxKnownImage ?? DefaultBtnComboBoxImage);
-            }
-            else
-                Buttons.SetToolSvg(idButtonCombo.Value, svg);
         }
     }
 }
