@@ -43,8 +43,8 @@ namespace Alternet.UI
                     return;
                 if (modalResult == value)
                     return;
-                modalResult = value;
 
+                modalResult = value;
                 PropInstanceAndValue.PopPropertiesMultiple(disabledControls);
                 disabledControls = null;
                 LastShownAsDialogTime = null;
