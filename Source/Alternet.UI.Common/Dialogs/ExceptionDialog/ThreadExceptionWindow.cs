@@ -222,6 +222,7 @@ namespace Alternet.UI
         {
             BeginInit();
 
+            CloseEnabled = false;
             Size = (700, 500);
             Layout = LayoutStyle.Vertical;
             Padding = 10;
@@ -347,12 +348,15 @@ namespace Alternet.UI
                 buttonsGrid.Children.Add(continueButton);
                 continueButton.Visible = CanContinue;
 
-                var quitButton = new Button { Text = CommonStrings.Default.ButtonQuit };
+                var quitButton = new Button
+                {
+                    Text = CommonStrings.Default.ButtonQuit,
+                    IsDefault = true,
+                    Visible = canQuit,
+                    HorizontalAlignment = HorizontalAlignment.Right,
+                    Margin = (5, 0, 0, 0),
+                };
                 quitButton.Click += QuitButton_Click;
-                quitButton.IsDefault = true;
-                quitButton.IsCancel = true;
-                quitButton.Visible = canQuit;
-                quitButton.HorizontalAlignment = HorizontalAlignment.Right;
                 buttonsGrid.Children.Add(quitButton);
 
                 return buttonsGrid;
