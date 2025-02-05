@@ -44,13 +44,18 @@ namespace Alternet.UI
         /// <param name="control">Control instance which items will be filled with color names.</param>
         /// <param name="defaultValue">Select this color name in <see cref="ListControl"/>.</param>
         /// <param name="select">Specifies whether to select default item in the control.</param>
+        /// <param name="onlyVisible">Whether to process only
+        /// colors which are visible to the end-user. Optional. Default is True.</param>
         public static void AddColorNames(
             ListControl control,
             bool select = true,
-            Color? defaultValue = null)
+            Color? defaultValue = null,
+            bool onlyVisible = true)
         {
             var knownColors =
-                Color.GetKnownColors(KnownColorCategory.Standard, KnownColorCategory.Web);
+                Color.GetKnownColors(
+                    [KnownColorCategory.Standard, KnownColorCategory.Web],
+                    onlyVisible);
 
             var colorsNames = new List<string>();
             colorsNames.AddRange(knownColors.Select(x => x.Name));
@@ -80,15 +85,18 @@ namespace Alternet.UI
         /// <param name="select">Specifies whether to select default item in the control.</param>
         /// <param name="cats">Array of categories to add colors from. Optional. If not specified,
         /// standard and web colors will be added.</param>
+        /// <param name="onlyVisible">Whether to process only
+        /// colors which are visible to the end-user. Optional. Default is True.</param>
         public static void AddColors(
             IListControl control,
             bool select = true,
             Color? defaultValue = null,
-            KnownColorCategory[]? cats = null)
+            KnownColorCategory[]? cats = null,
+            bool onlyVisible = true)
         {
             cats ??= [KnownColorCategory.Standard, KnownColorCategory.Web];
 
-            var knownColors = Color.GetKnownColors(cats);
+            var knownColors = Color.GetKnownColors(cats, onlyVisible);
 
             foreach (var item in knownColors)
             {

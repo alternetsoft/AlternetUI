@@ -97,6 +97,12 @@ namespace PropertyGridSample
                 {
                     c.SetColorThemeToDefault();
                 });
+
+                AddControlAction<ColorListBox>("Set system colors", (c) =>
+                {
+                    c.RemoveAll();
+                    c.AddColors([KnownColorCategory.System], false);
+                });
             }
 
             PropertyGrid.AddSimpleAction<PanelOkCancelButtons>("Reorder buttons", ReorderButtonsTest);
