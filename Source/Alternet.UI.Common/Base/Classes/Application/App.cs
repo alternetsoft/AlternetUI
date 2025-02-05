@@ -1737,7 +1737,10 @@ namespace Alternet.UI
 
                 td.ShowDialogAsync(null, (result) =>
                 {
-                    td.Dispose();
+                    AddIdleTask(() =>
+                    {
+                        td.Dispose();
+                    });
 
                     if (!result)
                     {

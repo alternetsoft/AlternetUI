@@ -1260,7 +1260,7 @@ namespace Alternet.UI
         /// </remarks>
         public virtual void Close(WindowCloseAction? action)
         {
-            if (DisposingOrDisposed)
+            if (DisposingOrDisposed || !Visible)
                 return;
 
             action ??= CloseAction ?? WindowCloseAction.Dispose;
