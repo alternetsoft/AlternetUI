@@ -31,6 +31,7 @@ namespace Alternet.UI
         {
             Layout = LayoutStyle.Vertical;
             toolBar.Parent = this;
+            toolBar.SetBorderAndMargin(AnchorStyles.Bottom, null);
             CreateToolbarItems();
         }
 
