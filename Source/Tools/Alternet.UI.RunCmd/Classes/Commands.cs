@@ -180,10 +180,52 @@ namespace Alternet.UI
             CommonProcs.DeleteBinObjFiles(path);
         }
 
+        public static string GetOSArchitectureAsString()
+        {
+            if (App.IsWindowsOS)
+            {
+                if (App.IsArmOS)
+                    return "win-arm64";
+                else
+                {
+                    if (App.Is64BitOS)
+                        return "win-x64";
+                    else
+                        return "win-x86";
+                }
+            }
+
+            if (App.IsMacOS)
+            {
+                if(App.IsArmOS)
+                    return "maccatalyst-arm64";
+                else
+                    return "maccatalyst-x64";
+            }
+
+            if (App.IsLinuxOS)
+            {
+                if (App.IsArmOS)
+                    return "linux-arm64";
+                else
+                {
+                    return "linux-x64";
+                }
+            }
+
+            return "other";
+        }
+
         public static void CmdZipFile(CommandLineArgs args)
         {
             string pathToFile = args.AsString("File");
-            string pathToArch = args.AsString("Result");
+            var pathToArch = args.AsString("Result");
+
+            var s = GetOSArchitectureAsString();
+            pathToArch = ReplaceInFilesSetting.ReplaceParam(
+                pathToArch, 
+                "OSArchitecture",
+                s);
 
             var compressionType = CompressionType.Deflate;
 
@@ -193,7 +235,7 @@ namespace Alternet.UI
             Console.WriteLine($"CompressionType: {compressionType}");
 
             pathToFile = Path.GetFullPath(pathToFile);
-            pathToArch = Path.GetFullPath(pathToArch);
+            pathToArch = Path.GetFullPath(pathToArch ?? string.Empty);
 
             if (!File.Exists(pathToFile))
             {

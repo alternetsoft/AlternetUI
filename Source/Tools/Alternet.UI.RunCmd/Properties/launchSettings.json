@@ -33,7 +33,7 @@
     },
     "ZipFile": {
       "commandName": "Project",
-      "commandLineArgs": "-r=zipFile File=\"e:\\file.txt\" Result=\"e:\\result.zip\""
+      "commandLineArgs": "-r=zipFile File=\"e:\\file.txt\" Result=\"e:\\result-$[OSArchitecture].zip\""
     }
   }
 }

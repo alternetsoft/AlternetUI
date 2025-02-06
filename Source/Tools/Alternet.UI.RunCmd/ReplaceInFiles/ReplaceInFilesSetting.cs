@@ -18,6 +18,25 @@ namespace Alternet.UI
 
         public Collection<ReplaceInFileSetting> ReplaceItems { get; } = new();
 
+        public static string? ReplaceParam(
+            string? s,
+            string prmName,
+            string? prmValue,
+            string paramPrefixChars = "$")
+        {
+            if (s is null)
+                return null;
+
+            if (!string.IsNullOrEmpty(prmValue))
+            {
+                var result = s.Replace($"{paramPrefixChars}({prmName})", prmValue);
+                result = result.Replace($"{paramPrefixChars}[{prmName}]", prmValue);
+                return result;
+            }
+
+            return s;
+        }
+
         public void Prepare(ReplaceInFilesSettings globals, string pathToConfig)
         {
             var thisFileDirectory = Path.GetDirectoryName(pathToConfig);
@@ -28,20 +47,6 @@ namespace Alternet.UI
 
             if (!string.IsNullOrEmpty(PathToFile))
                 PathToFile = Path.GetFullPath(PathToFile);
-
-            string? ReplaceParam(string? s, string prmName, string? prmValue)
-            {
-                if (s is null)
-                    return null;
-
-                if (!string.IsNullOrEmpty(prmValue))
-                {
-                    var result = s.Replace($"$({prmName})", prmValue);
-                    return result;
-                }
-
-                return s;
-            }
 
             string? ReplaceParams(string? s)
             {
