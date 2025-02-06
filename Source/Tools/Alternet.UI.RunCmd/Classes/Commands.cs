@@ -180,6 +180,38 @@ namespace Alternet.UI
             CommonProcs.DeleteBinObjFiles(path);
         }
 
+        public static void CmdZipFile(CommandLineArgs args)
+        {
+            string pathToFile = args.AsString("File");
+            string pathToArch = args.AsString("Result");
+
+            var compressionType = CompressionType.Deflate;
+
+            Console.WriteLine($"Command: zipFile");
+            Console.WriteLine($"File: {pathToFile}");
+            Console.WriteLine($"Result: {pathToArch}");
+            Console.WriteLine($"CompressionType: {compressionType}");
+
+            pathToFile = Path.GetFullPath(pathToFile);
+            pathToArch = Path.GetFullPath(pathToArch);
+
+            if (!File.Exists(pathToFile))
+            {
+                Console.WriteLine($"File doesn't exist: [{pathToFile}]");
+                return;
+            }
+
+            if (File.Exists(pathToArch))
+                File.Delete(pathToArch);
+
+            SharpCompressUtils.ZipFile(
+                pathToFile,
+                pathToArch,
+                compressionType);
+
+            Console.WriteLine("Completed");
+        }
+
         public static void CmdZipFolder(CommandLineArgs args)
         {
             string pathToFolder = args.AsString("Folder");
@@ -366,7 +398,12 @@ namespace Alternet.UI
             RegisterCommand(
                 "zipFolder",
                 CmdZipFolder,
-                "");
+                "-r=zipFolder Folder=\"d:\\testFolder\" Result=\"d:\\result.zip\"");
+
+            RegisterCommand(
+                "zipFile",
+                CmdZipFile,
+                "-r=zipFile File=\"d:\\testFile.txt\" Result=\"d:\\result.zip\"");
 
             RegisterCommand(
                 "unzip",

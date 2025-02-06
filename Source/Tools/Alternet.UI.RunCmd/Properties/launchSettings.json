@@ -30,6 +30,10 @@
     "ReplaceInFiles": {
       "commandName": "Project",
       "commandLineArgs": "-r=replaceInFiles Settings=\"E:\\DIMA\\AlternetUI\\Source\\Tools\\Alternet.UI.RunCmd\\ReplaceInFilesSettings.xml\" Names=\"test.setup.h;test.richtextbuffer.h\""
+    },
+    "ZipFile": {
+      "commandName": "Project",
+      "commandLineArgs": "-r=zipFile File=\"e:\\file.txt\" Result=\"e:\\result.zip\""
     }
   }
 }

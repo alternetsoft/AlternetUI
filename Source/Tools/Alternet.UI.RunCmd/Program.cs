@@ -14,7 +14,7 @@ if (CommandLineArgs.Default.HasArgument("-hr"))
     Console.WriteLine("==================================================");
 }
 
-Console.WriteLine("Alternet.UI.RunCmd (c) 2023-2024 AlterNET Software");
+Console.WriteLine("Alternet.UI.RunCmd (c) 2023-2025 AlterNET Software");
 
 Console.WriteLine();
 
