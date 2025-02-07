@@ -17,11 +17,25 @@ namespace PropertyGridSample
         void InitTestsTreeView()
         {
             AddControlAction<TreeView>("Load png from resources", TestTreeViewLoadPngFromResource);
+            
             AddControlAction<TreeView>(
                 "Load all small *.png in folder...",
                 TestTreeViewLoadAllPngInFolder);
+
             AddControlAction<TreeView>("Load all *.svg in folder...", TestTreeViewLoadAllSvgInFolder);
             AddControlAction<TreeView>("Load known svg", TestTreeViewLoadKnownSvg);
+
+            AddControlAction<TreeView>("BackColor = Black", (c) =>
+            {
+                c.BackColor = Color.Black;
+            });
+
+            AddControlAction<TreeView>("Lighten images", (c) =>
+            {
+                var images = c.ImageList;
+                var converted = images?.WithConvertedColors(ControlPaint.LightLight);
+                c.ImageList = converted;
+            });
         }
 
         void TestTreeViewLoadPngFromResource(TreeView control)
