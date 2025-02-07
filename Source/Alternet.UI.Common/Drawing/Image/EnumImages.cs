@@ -205,7 +205,8 @@ namespace Alternet.UI
                 {
                     var svg = new MonoSvgImage(url);
                     var size = GetSvgSize(isSmallImage);
-                    image = svg.ImageWithColor(size, svgColors[imageKey]);
+                    var svgColor = svgColors[imageKey];
+                    image = svg.ImageWithColor(size, svgColor);
                 }
                 else
                 {

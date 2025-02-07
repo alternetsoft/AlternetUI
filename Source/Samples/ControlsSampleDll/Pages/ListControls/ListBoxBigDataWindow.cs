@@ -87,6 +87,10 @@ namespace ControlsSample
             images.SetSvgColor(SymbolKind.Field, LightDarkColors.Green);
             images.SetSvgColor(SymbolKind.Event, LightDarkColors.Yellow);
             images.SetSvgColor(SymbolKind.Method, LightDarkColors.Blue);
+            
+            images.SetSvgColor(
+                SymbolKind.Property,
+                new LightDarkColor(KnownSvgColor.Normal));            
 
             images.AssignImageNames(true);
 
