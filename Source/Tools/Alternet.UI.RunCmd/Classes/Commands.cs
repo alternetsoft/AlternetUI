@@ -4,18 +4,19 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+using Alternet.Drawing;
+
 using SharpCompress.Common;
 
 namespace Alternet.UI
 {
-    internal static partial class Commands
+    public static partial class Commands
     {
         private static readonly Dictionary<string, Action<CommandLineArgs>> commands = new();
         private static readonly List<string> originalCommandNames = new();
 
         static Commands()
         {
-            RegisterCommands();
         }
 
         public static IEnumerable<string> CommandNames
@@ -24,6 +25,68 @@ namespace Alternet.UI
             {
                 return originalCommandNames;
             }
+        }
+
+        public static void RunApplication(string[] args, bool adv = false)
+        {
+            RegisterCommands(adv);
+
+            Console.WriteLine();
+
+            CommandLineArgs.Default.Parse(args);
+
+            var commandNames = CommandLineArgs.Default.AsString("-r");
+
+            if (CommandLineArgs.Default.HasArgument("-hr"))
+            {
+                Console.WriteLine("==================================================");
+            }
+
+            var appName = adv ? "Alternet.UI.RunCmdAdv" : "Alternet.UI.RunCmd";
+            Console.WriteLine($"{appName} (c) 2023-{DateTime.Now.ToString("YYYY")} AlterNET Software");
+
+            Console.WriteLine();
+
+            if (string.IsNullOrWhiteSpace(commandNames))
+            {
+                Console.WriteLine("No commands are specified.");
+                Console.WriteLine();
+                Console.WriteLine("Known commands:");
+                Console.WriteLine();
+
+                var commands = Commands.CommandNames;
+
+                foreach (var command in commands)
+                {
+                    Console.WriteLine(command);
+                }
+
+                Console.WriteLine();
+                Console.WriteLine("Usage:");
+                Console.WriteLine("Alternet.UI.RunCmd.exe -r=<CommandName> [Parameters]");
+
+                Console.WriteLine();
+                Console.WriteLine("Usage example:");
+                Console.WriteLine("Alternet.UI.RunCmd.exe -r=zipFolder Folder=\"d:\\testFolder\" Result=\"d:\\result.zip\"");
+
+                return;
+            }
+
+            if (CommandLineArgs.Default.HasArgument("-details"))
+            {
+                Console.WriteLine($"Commands: {commandNames}");
+                Console.WriteLine();
+                Console.WriteLine("Arguments:");
+
+                foreach (var a in args)
+                {
+                    Console.WriteLine($"[{a}]");
+                }
+
+                Console.WriteLine();
+            }
+
+            Commands.RunCommand(commandNames, CommandLineArgs.Default);
         }
 
         public static void CmdDownload(CommandLineArgs args)
@@ -254,6 +317,60 @@ namespace Alternet.UI
             Console.WriteLine("Completed");
         }
 
+        public static void CmdDarkImages(CommandLineArgs args)
+        {
+            string pathToFolder = args.AsString("Path");
+            string pathToResult = args.AsString("Result");
+
+            if (string.IsNullOrWhiteSpace(pathToResult))
+                pathToResult = pathToFolder;
+
+            Console.WriteLine($"Command: lightImages");
+            Console.WriteLine($"Folder: {pathToFolder}");
+            Console.WriteLine($"Result: {pathToResult}");
+
+            pathToFolder = Path.GetFullPath(pathToFolder);
+            pathToResult = Path.GetFullPath(pathToResult);
+
+            if (!Directory.Exists(pathToFolder))
+            {
+                Console.WriteLine($"Folder doesn't exist: [{pathToFolder}]");
+                return;
+            }
+
+            if (!Directory.Exists(pathToResult))
+            {
+                Console.WriteLine($"Output folder doesn't exist: [{pathToResult}]");
+                return;
+            }
+
+            pathToFolder = PathUtils.AddDirectorySeparatorChar(Path.GetFullPath(pathToFolder));
+
+            var files = Directory.EnumerateFiles(
+                pathToFolder,
+                "*",
+                SearchOption.TopDirectoryOnly);
+
+            foreach (var file in files)
+            {
+                var name = Path.GetFileNameWithoutExtension(file);
+                var ext = Path.GetExtension(file);
+                name += "_Dark"+ext;                
+
+                var resultPath = Path.Combine(pathToResult, name);
+
+                if (File.Exists(resultPath))
+                    File.Delete(resultPath);
+
+                var image = new Bitmap(file);
+                var converted = image.WithLightLightColors();
+                converted.Save(resultPath);
+            }
+
+            Console.WriteLine("Completed");
+        }
+
+
         public static void CmdZipFolder(CommandLineArgs args)
         {
             string pathToFolder = args.AsString("Folder");
@@ -420,8 +537,16 @@ namespace Alternet.UI
             commands.Add(name.ToLower(), action);
         }
 
-        public static void RegisterCommands()
+        public static void RegisterCommands(bool adv)
         {
+            if (adv)
+            {
+                RegisterCommand(
+                    "darkImages",
+                    CmdDarkImages,
+                    "-r=darkImages Path=\"d:\\Images\" Result=\"d:\\ImagesConverted\"");
+            }
+
             RegisterCommand(
                 "replaceInFiles",
                 CmdReplaceInFiles,

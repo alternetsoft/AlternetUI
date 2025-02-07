@@ -23,15 +23,14 @@ namespace Alternet.UI
             string pathToArch,
             CompressionType compressionType = CompressionType.Deflate)
         {
-            using (var archive = ZipArchive.Create())
-            {
-                var fileInArchive = pathToFile;
-                fileInArchive = Path.GetFileName(fileInArchive);
+            using var archive = ZipArchive.Create();
+            
+            var fileInArchive = pathToFile;
+            fileInArchive = Path.GetFileName(fileInArchive);
 
-                archive.AddEntry(fileInArchive, pathToFile);
+            archive.AddEntry(fileInArchive, pathToFile);
 
-                archive.SaveTo(pathToArch, compressionType);
-            }
+            archive.SaveTo(pathToArch, compressionType);
         }
 
         public static void ZipFolderWithRootSubFolder(
@@ -82,11 +81,9 @@ namespace Alternet.UI
             string pathToArch,
             CompressionType compressionType = CompressionType.Deflate)
         {
-            using (var archive = ZipArchive.Create())
-            {
-                archive.AddAllFromDirectory(pathToFolder);
-                archive.SaveTo(pathToArch, compressionType);
-            }
+            using var archive = ZipArchive.Create();
+            archive.AddAllFromDirectory(pathToFolder);
+            archive.SaveTo(pathToArch, compressionType);
         }
 
         public static void Unzip(

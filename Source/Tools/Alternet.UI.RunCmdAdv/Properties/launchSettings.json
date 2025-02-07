@@ -1,0 +1,43 @@
+{
+  "profiles": {
+    "FilterLog": {
+      "commandName": "Project",
+      "commandLineArgs": "-r=filterLog Filter=\"CS1591\" Log=\"..\\..\\..\\..\\..\\Alternet.UI\\Build.Result.Log\" Result=\"..\\..\\..\\..\\..\\Alternet.UI\\Find.Not.Documented.log\""
+    },
+    "downloadAndUnzip": {
+      "commandName": "Project",
+      "commandLineArgs": "-r=downloadAndUnzip Url=\"http://localhost/wxWidgets-bin-noobjpch-3.2.5.7z\" Path=\"e:/file.7z\" ExtractTo=\"e:/ExtractedZip\""
+    },
+    "WaitEnter": {
+      "commandName": "Project",
+      "commandLineArgs": "-r=waitEnter"
+    },
+    "ZipFolder": {
+      "commandName": "Project",
+      "commandLineArgs": "-r=zipFolder Folder=\"d:\\testFolder\" Result=\"d:\\result.zip\" RootSubFolder=\"SubF1\""
+    },
+    "Help": {
+      "commandName": "Project"
+    },
+    "DeleteBinObjSubFolders": {
+      "commandName": "Project",
+      "commandLineArgs": "-r=deleteBinObjSubFolders Path=\"E:\\DIMA\\AlternetUI\\Source\\Samples\\ControlsSample\""
+    },
+    "GenerateBindable": {
+      "commandName": "Project",
+      "commandLineArgs": "-r=generateBindable Settings=\"E:\\DIMA\\AlternetUI\\Source\\Tools\\Alternet.UI.RunCmd\\GenerateBindableSettings.xml\""
+    },
+    "ReplaceInFiles": {
+      "commandName": "Project",
+      "commandLineArgs": "-r=replaceInFiles Settings=\"E:\\DIMA\\AlternetUI\\Source\\Tools\\Alternet.UI.RunCmd\\ReplaceInFilesSettings.xml\" Names=\"test.setup.h;test.richtextbuffer.h\""
+    },
+    "ZipFile": {
+      "commandName": "Project",
+      "commandLineArgs": "-r=zipFile File=\"e:\\file.txt\" Result=\"e:\\result-$[OSArchitecture].zip\""
+    },
+    "darkImages": {
+      "commandName": "Project",
+      "commandLineArgs": "-r=darkImages Path=\"e:\\Images\" Result=\"e:\\ImagesConverted\""
+    }
+  }
+}
