@@ -920,6 +920,38 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
+        /// Creates an new image from this image with all pixels lighter
+        /// (this method makes 2x lighter than <see cref="WithLightColors"/>).
+        /// </summary>
+        /// <returns></returns>
+        public virtual Image WithLightLightColors()
+        {
+            return WithConvertedColors(ControlPaint.LightLight);
+        }
+
+        /// <summary>
+        /// Creates an new image from this image with all pixels lighter
+        /// </summary>
+        /// <returns></returns>
+        public virtual Image WithLightColors()
+        {
+            return WithConvertedColors(ControlPaint.Light);
+        }
+
+        /// <summary>
+        /// Creates an new image from this image with all pixels converted using
+        /// the specified function.
+        /// </summary>
+        /// <param name="func">Function used to convert color of the pixel.</param>
+        /// <returns></returns>
+        public virtual Image WithConvertedColors(Func<ColorStruct, ColorStruct> func)
+        {
+            var generic = (GenericImage)this;
+            generic.ConvertColors(func);
+            return (Image)generic;
+        }
+
+        /// <summary>
         /// Saves this image to the specified stream in the specified format.
         /// </summary>
         /// <param name="stream">The <see cref="Stream"/> where the image will be
@@ -1012,7 +1044,7 @@ namespace Alternet.Drawing
         public virtual ISkiaSurface LockSurface(ImageLockMode lockMode = ImageLockMode.ReadWrite)
         {
             if (Immutable && lockMode != ImageLockMode.ReadOnly)
-                throw new Exception($"LockSurface({lockMode}) is not possible on the immutable image.");
+                throw new Exception($"LockSurface({lockMode}) failed on the immutable image.");
 
             return GraphicsFactory.CreateSkiaSurface(this, lockMode);
         }
