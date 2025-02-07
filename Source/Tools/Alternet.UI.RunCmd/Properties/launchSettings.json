@@ -33,7 +33,7 @@
     },
     "ZipFile": {
       "commandName": "Project",
-      "commandLineArgs": "-r=zipFile File=\"e:\\file.txt\" Result=\"e:\\result-$[OSArchitecture].zip\""
+      "commandLineArgs": "-r=zipFile File=\"e:\\file.txt\" Result=\"e:\\result-$[UIVersion]-$[OSArchitectureX86].zip\""
     }
   }
 }
