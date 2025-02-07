@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using Alternet.UI;
@@ -10,7 +11,7 @@ namespace Alternet.Drawing
     /// <summary>
     /// Provides methods used to paint common controls and their elements.
     /// </summary>
-    public static class ControlPaint
+    public static partial class ControlPaint
     {
         private static IControlPainterHandler? handler;
 
@@ -24,6 +25,60 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
+        ///  Creates a new color that is a object of the given color.
+        /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static ColorStruct Light(ColorStruct baseColor, float percOfLightLight)
+            => new HLSColor(baseColor).Lighter(percOfLightLight);
+
+        /// <summary>
+        ///  Creates a new color that is a object of the given color.
+        /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static ColorStruct Dark(ColorStruct baseColor, float percOfDarkDark)
+            => new HLSColor(baseColor).Darker(percOfDarkDark);
+
+        /// <summary>
+        ///  Creates a new color that is a object of the given color.
+        /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static ColorStruct Dark(ColorStruct baseColor) => Dark(baseColor, 0.5f);
+
+        /// <summary>
+        ///  Creates a new darker color from <paramref name="baseColor"/>.
+        /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static ColorStruct DarkDark(ColorStruct baseColor) => Dark(baseColor, 1.0f);
+
+        /// <summary>
+        /// Returns True if is dark (it's brightness is less than 0.5).
+        /// </summary>
+        /// <param name="color">Color to test.</param>
+        /// <returns></returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static bool IsDark(Color color) => color.GetBrightness() <= .5;
+
+        /// <summary>
+        ///  Returns true if the luminosity of <paramref name="c1"/> is less
+        ///  than <paramref name="c2"/>.
+        /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static bool IsDarker(Color c1, Color c2)
+            => new HLSColor(c1).Luminosity < new HLSColor(c2).Luminosity;
+
+        /// <summary>
+        ///  Creates a new color that is a object of the given color.
+        /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static ColorStruct Light(ColorStruct baseColor) => Light(baseColor, 0.5f);
+
+        /// <summary>
+        ///  Creates a new color that is a object of the given color.
+        /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static ColorStruct LightLight(ColorStruct baseColor) => Light(baseColor, 1.0f);
+
+        /// <summary>
         /// Draws a border with the specified style and color, on the specified canvas,
         /// and within the specified bounds.
         /// </summary>
@@ -33,7 +88,11 @@ namespace Alternet.Drawing
         /// <param name="color">The <see cref="Color" /> of the border.</param>
         /// <param name="style">One of the <see cref="ButtonBorderStyle" /> values
         /// that specifies the style of the border.</param>
-        public static void DrawBorder(Graphics graphics, RectD bounds, Color color, ButtonBorderStyle style)
+        public static void DrawBorder(
+            Graphics graphics,
+            RectD bounds,
+            Color color,
+            ButtonBorderStyle style)
         {
             switch (style)
             {
