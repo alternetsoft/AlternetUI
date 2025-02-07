@@ -154,7 +154,11 @@ namespace ControlsSample
                 }),
             };
 
-            return CreateCustomPage(pages);
+            var result = CreateCustomPage(pages);
+
+            result.ContentPadding = 0;
+
+            return result;
         }
 
         AbstractControl CreateLayoutPage()

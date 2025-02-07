@@ -1,6 +1,8 @@
 #include "TreeView.h"
 #include "Application.h"
 
+#include <wx/generic/treectlg.h>
+
 namespace Alternet::UI
 {
 	class TreeViewItemData : public wxTreeItemData
@@ -113,9 +115,9 @@ namespace Alternet::UI
 		return _selectionMode;
 	}
 
-	wxTreeCtrl* TreeView::GetTreeCtrl()
+	wxTreeCtrlBase* TreeView::GetTreeCtrl()
 	{
-		return dynamic_cast<wxTreeCtrl*>(GetWxWindow());
+		return dynamic_cast<wxTreeCtrlBase*>(GetWxWindow());
 	}
 
 	void TreeView::SetSelectionMode(TreeViewSelectionMode value)
@@ -205,11 +207,27 @@ namespace Alternet::UI
 		GetTreeCtrl()->SelectItem(itemId, value);
 	}
 
-	void TreeView::ApplyImageList(wxTreeCtrl* value)
+	void TreeView::ApplyImageList(wxTreeCtrlBase* value)
 	{
 		value->SetImageList(_imageList == nullptr ? nullptr :
 			_imageList->GetImageList());
 	}
+
+	class wxGenericTreeCtrl2 : public wxGenericTreeCtrl, public wxWidgetExtender
+	{
+	public:
+		wxGenericTreeCtrl2() {}
+		wxGenericTreeCtrl2(wxWindow* parent, wxWindowID id = wxID_ANY,
+			const wxPoint& pos = wxDefaultPosition,
+			const wxSize& size = wxDefaultSize,
+			long style = wxTR_HAS_BUTTONS | wxTR_LINES_AT_ROOT,
+			const wxValidator& validator = wxDefaultValidator,
+			const wxString& name = wxASCII_STR(wxTreeCtrlNameStr))
+		{
+			Create(parent, id, pos, size, style, validator, name);
+		}
+	protected:
+	};
 
 	class wxTreeCtrl2 : public wxTreeCtrl, public wxWidgetExtender
 	{
@@ -225,28 +243,6 @@ namespace Alternet::UI
 			Create(parent, id, pos, size, style, validator, name);
 		}
 	protected:
-		/*
-				WXLRESULT MSWDefWindowProc(WXUINT nMsg, WXWPARAM wParam, WXLPARAM lParam) override
-				{
-					return wxTreeCtrl::MSWDefWindowProc(nMsg, wParam, lParam);
-				}
-
-				bool MSWShouldPreProcessMessage(WXMSG* msg) override
-				{
-
-					return wxTreeCtrl::MSWShouldPreProcessMessage(msg);
-				}
-
-				WXLRESULT MSWWindowProc(WXUINT nMsg, WXWPARAM wParam, WXLPARAM lParam) override
-				{
-					return wxTreeCtrl::MSWWindowProc(nMsg, wParam, lParam);
-				}
-
-				bool ProcessEvent(wxEvent& event) override
-				{
-					return wxTreeCtrl::ProcessEvent(event);
-				}
-		*/
 	};
 
 	wxWindow* TreeView::CreateWxWindowUnparented()

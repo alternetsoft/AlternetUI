@@ -21,7 +21,7 @@ namespace Alternet::UI
         void OnItemEndLabelEdit(wxTreeEvent& event);
 
     private:
-        void ApplyImageList(wxTreeCtrl* value);
+        void ApplyImageList(wxTreeCtrlBase* value);
 
         void OnItemLabelEditEvent(wxTreeEvent& event, TreeViewEvent e);
 
@@ -29,7 +29,7 @@ namespace Alternet::UI
 
         virtual void RecreateWxWindowIfNeeded() override;
 
-        wxTreeCtrl* GetTreeCtrl();
+        wxTreeCtrlBase* GetTreeCtrl();
 
         TreeViewSelectionMode _selectionMode = TreeViewSelectionMode::Single;
 

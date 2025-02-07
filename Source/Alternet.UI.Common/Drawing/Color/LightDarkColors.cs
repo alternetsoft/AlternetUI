@@ -12,6 +12,7 @@ namespace Alternet.Drawing
     /// </summary>
     public static class LightDarkColors
     {
+        private static LightDarkColor? yellow;
         private static LightDarkColor? red;
         private static LightDarkColor? green;
         private static LightDarkColor? blue;
@@ -27,6 +28,19 @@ namespace Alternet.Drawing
             }
 
             set => red = value;
+        }
+
+        /// <summary>
+        /// Gets default yellow colors pair.
+        /// </summary>
+        public static LightDarkColor Yellow
+        {
+            get
+            {
+                return yellow ??= Color.LightDark(light: (239, 184, 57), dark: (239, 184, 57));
+            }
+
+            set => yellow = value;
         }
 
         /// <summary>

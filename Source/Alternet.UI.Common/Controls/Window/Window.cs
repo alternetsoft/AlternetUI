@@ -1260,7 +1260,7 @@ namespace Alternet.UI
         /// </remarks>
         public virtual void Close(WindowCloseAction? action)
         {
-            if (DisposingOrDisposed)
+            if (DisposingOrDisposed || !Visible)
                 return;
 
             action ??= CloseAction ?? WindowCloseAction.Dispose;
@@ -2045,6 +2045,8 @@ namespace Alternet.UI
 
             SetVisibleValue(false);
             ProcessIdle = true;
+            BackColor = SystemColors.Control;
+            ForeColor = SystemColors.ControlText;
 
             if (GetWindowKind() != WindowKind.Control)
                 App.Current.RegisterWindow(this);

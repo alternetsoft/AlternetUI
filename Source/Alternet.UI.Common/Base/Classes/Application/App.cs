@@ -1644,7 +1644,11 @@ namespace Alternet.UI
             {
                 errorWindow.ShowDialogAsync(null, (result) =>
                 {
-                    errorWindow.Dispose();
+                    App.AddIdleTask(() =>
+                    {
+                        errorWindow.Dispose();
+                    });
+
                     onClose?.Invoke(result);
                 });
             }
@@ -1737,7 +1741,10 @@ namespace Alternet.UI
 
                 td.ShowDialogAsync(null, (result) =>
                 {
-                    td.Dispose();
+                    AddIdleTask(() =>
+                    {
+                        td.Dispose();
+                    });
 
                     if (!result)
                     {

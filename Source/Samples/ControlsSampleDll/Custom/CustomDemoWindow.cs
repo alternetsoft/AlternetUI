@@ -198,7 +198,7 @@ namespace Alternet.UI
             App.Log($"Size changed: {Size}, {this.State}");
         }
 
-        protected AbstractControl CreateCustomPage(NameValue<Func<AbstractControl>>?[] pages)
+        protected TabControl CreateCustomPage(NameValue<Func<AbstractControl>>?[] pages)
         {
             TabControl result = new()
             {

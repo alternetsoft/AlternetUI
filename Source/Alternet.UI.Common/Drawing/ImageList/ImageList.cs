@@ -2,6 +2,8 @@ using System;
 using Alternet.Base.Collections;
 using Alternet.UI;
 
+using SkiaSharp;
+
 namespace Alternet.Drawing
 {
     /// <summary>
@@ -103,7 +105,8 @@ namespace Alternet.Drawing
         /// </summary>
         /// <param name="svg">Svg to add.</param>
         /// <returns></returns>
-        /// <param name="color">Svg color. Optional. If not specified, svg colors are not changed.</param>
+        /// <param name="color">Svg color. Optional. If not specified, svg colors
+        /// are not changed.</param>
         /// <returns></returns>
         public virtual bool AddSvg(SvgImage svg, Color? color = null)
         {
@@ -123,7 +126,8 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
-        /// Draws an image on the specified graphic surface at the location specified by a coordinate pair.
+        /// Draws an image on the specified graphic surface at the location specified
+        /// by a coordinate pair.
         /// </summary>
         /// <param name="g">The Graphics object to draw on.</param>
         /// <param name="x">X-coordinate of the upper-left corner of the image to be drawn.</param>
@@ -136,6 +140,48 @@ namespace Alternet.Drawing
 
             g.DrawImageUnscaled(Images[index], new(x, y));
             return true;
+        }
+
+        /// <summary>
+        /// Creates an new <see cref="ImageList"/> from this object
+        /// with all pixels converted using
+        /// the specified function.
+        /// </summary>
+        /// <param name="func">Function used to convert color of the pixel.</param>
+        /// <returns></returns>
+        public virtual ImageList WithConvertedColors(Func<ColorStruct, ColorStruct> func)
+        {
+            ImageList result = new();
+            result.ImageSize = ImageSize;
+
+            foreach(var image in Images)
+            {
+                var converted = image.WithConvertedColors(func);
+                result.Add(converted);
+            }
+
+            return result;
+        }
+
+        /// <summary>
+        /// Creates an new <see cref="ImageList"/> from this <see cref="ImageList"/>
+        /// with all pixels lighter
+        /// (this method makes 2x lighter than <see cref="WithLightColors"/>).
+        /// </summary>
+        /// <returns></returns>
+        public virtual ImageList WithLightLightColors()
+        {
+            return WithConvertedColors(ControlPaint.LightLight);
+        }
+
+        /// <summary>
+        /// Creates an new <see cref="ImageList"/> from this <see cref="ImageList"/>
+        /// with all pixels lighter.
+        /// </summary>
+        /// <returns></returns>
+        public virtual ImageList WithLightColors()
+        {
+            return WithConvertedColors(ControlPaint.Light);
         }
 
         /// <inheritdoc/>

@@ -699,8 +699,11 @@ namespace Alternet.UI
         /// <param name="value"><see cref="ImageSet"/> to use as item image.</param>
         public virtual void SetToolSvg(ObjectUniqueId id, SvgImage? value)
         {
-            var image = value?.AsImageSet(GetImageSize());
-            SetToolImage(id, image);
+            var item = FindTool(id);
+            if (item is null)
+                return;
+            item.ImageSet = ToNormal(value);
+            item.DisabledImageSet = ToDisabled(value);
         }
 
         /// <summary>
@@ -803,7 +806,7 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="image">Svg image.</param>
         /// <returns></returns>
-        public ImageSet? ToNormal(SvgImage? image)
+        public virtual ImageSet? ToNormal(SvgImage? image)
         {
             var imageSize = GetImageSize();
             var result = image?.AsNormal(imageSize, IsDarkBackground);
@@ -816,7 +819,7 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="image">Svg image.</param>
         /// <returns></returns>
-        public ImageSet? ToDisabled(SvgImage? image)
+        public virtual ImageSet? ToDisabled(SvgImage? image)
         {
             var result = image?.AsDisabled(GetImageSize(), IsDarkBackground);
             return result;

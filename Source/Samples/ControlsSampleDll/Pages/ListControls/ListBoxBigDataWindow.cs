@@ -18,7 +18,6 @@ namespace ControlsSample
         private static int globalCounter;
 
         private readonly int counter;
-        private readonly ObjectUniqueId statusPanelId;
         private readonly AbstractControl? statusPanel;
 
         private string? lastReportedText;
@@ -65,7 +64,7 @@ namespace ControlsSample
 
             statusBar.MinHeight = 24;
             statusPanel = new Label("Ready");
-            statusPanelId = statusBar.AddControl(statusPanel);
+            statusBar.AddControl(statusPanel);
 
             LoadImages();
 
@@ -79,22 +78,17 @@ namespace ControlsSample
             images = new();
 
             string prefix = "Resources.CodeComletionSymbols.";
-            images.SetImageName(SymbolKind.Namespace, $"{prefix}NamespaceAlpha");
-            images.SetImageName(SymbolKind.Struct, $"{prefix}StructAlpha");
-            images.SetImageName(SymbolKind.Field, $"{prefix}FieldAlpha");
-            images.SetImageName(SymbolKind.Constant, $"{prefix}ConstantAlpha");
-            images.SetImageName(SymbolKind.Class, $"{prefix}ClassAlpha");
-            images.SetImageName(SymbolKind.Delegate, $"{prefix}DelegateAlpha");
-            images.SetImageName(SymbolKind.Event, $"{prefix}EventAlpha");
-            images.SetImageName(SymbolKind.GenericParameter, $"{prefix}GenericParameterAlpha");
-            images.SetImageName(SymbolKind.Interface, $"{prefix}InterfaceAlpha");
-            images.SetImageName(SymbolKind.Keyword, $"{prefix}KeywordAlpha");
-            images.SetImageName(SymbolKind.LocalOrParameter, $"{prefix}LocalOrParameterAlpha");
-            images.SetImageName(SymbolKind.Method, $"{prefix}MethodAlpha");
-            images.SetImageName(SymbolKind.Property, $"{prefix}PropertyAlpha");
+
+            images.SetImageName(SymbolKind.Field, $"{prefix}Field.svg");
+            images.SetImageName(SymbolKind.Event, $"{prefix}Event.svg");
+            images.SetImageName(SymbolKind.Method, $"{prefix}Method1.svg");
+            images.SetImageName(SymbolKind.Property, $"{prefix}Property.svg");
+
+            images.SetSvgColor(SymbolKind.Field, LightDarkColors.Green);
+            images.SetSvgColor(SymbolKind.Event, LightDarkColors.Yellow);
+            images.SetSvgColor(SymbolKind.Method, LightDarkColors.Blue);
+
             images.AssignImageNames(true);
-            images.FormatImageNames("{0}_HighDpi.png", false);
-            images.FormatImageNames("{0}.png", true);
 
             images.LoadImagesFromResource(typeof(ListBoxBigDataWindow).Assembly, true);
             images.LoadImagesFromResource(typeof(ListBoxBigDataWindow).Assembly, false);
@@ -213,10 +207,14 @@ namespace ControlsSample
         public enum SymbolKind
         {
             Other,
-            Class,
-            Method,
-            Property,
+
             Field,
+            Property,
+            Method,
+            Event,
+
+            /*
+            Class,
             Namespace,
             Constant,
             Keyword,
@@ -224,8 +222,8 @@ namespace ControlsSample
             Interface,
             Delegate,
             LocalOrParameter,
-            Event,
             GenericParameter,
+            */
         }
     }
 }

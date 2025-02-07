@@ -34,6 +34,10 @@
     "ZipFile": {
       "commandName": "Project",
       "commandLineArgs": "-r=zipFile File=\"e:\\file.txt\" Result=\"e:\\result-$[OSArchitecture].zip\""
+    },
+    "darkImages": {
+      "commandName": "Project",
+      "commandLineArgs": "-r=darkImages Path=\"e:\\Images\" Result=\"e:\\ImagesConverted\""
     }
   }
 }

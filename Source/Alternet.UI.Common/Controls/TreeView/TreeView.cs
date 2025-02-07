@@ -1295,6 +1295,12 @@ namespace Alternet.UI
         {
         }
 
+        /// <inheritdoc/>
+        protected override void OnHandleCreated(EventArgs e)
+        {
+            base.OnHandleCreated(e);
+        }
+
         /// <summary>
         /// Called when the <see cref="SelectedItem"/> property or the
         /// <see cref="SelectedItems"/> collection has changed.

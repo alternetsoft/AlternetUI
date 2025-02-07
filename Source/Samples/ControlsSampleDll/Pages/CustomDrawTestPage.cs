@@ -56,6 +56,7 @@ namespace ControlsSample
         private readonly TemplateControl toolTemplate;
 
         private readonly InteriorDrawable interiorDrawable;
+        private readonly Image templateImage;
 
         static CustomDrawTestPage()
         {
@@ -67,7 +68,12 @@ namespace ControlsSample
                 "This text has ",
                 "bold",
                 " fragment",
-                new FontAndColor(Color.Red, Color.LightGoldenrodYellow, Control.DefaultFont.Scaled(1.5)));
+                new FontAndColor(
+                    Color.Red,
+                    Color.LightGoldenrodYellow,
+                    Control.DefaultFont.Scaled(1.5)));
+            controlTemplate.HasBorder = true;
+            templateImage = TemplateUtils.GetTemplateAsImage(controlTemplate);
 
             toolTemplate = TemplateUtils.CreateTemplateWithBoldText(
                 "This tool has ",
@@ -80,7 +86,6 @@ namespace ControlsSample
             toolTemplate.HasBorder = true;
             toolTemplate.BorderColor = Color.Red;
 
-            controlTemplate.Parent = this;
             toolTemplate.Parent = this;
             interiorDrawable = CreateInteriorDrawable(false);
 
@@ -212,10 +217,7 @@ namespace ControlsSample
 
             void DrawTemplate(AbstractControl container, Graphics canvas, RectD rect)
             {
-                controlTemplate.HasBorder = true;
-                TemplateUtils.DrawControlTemplate(controlTemplate, canvas, (100, 250)); 
-                controlTemplate.HasBorder = false;
-
+                canvas.DrawImage(templateImage, (100, 250));
                 var font = controlTemplate.Font ?? AbstractControl.DefaultFont;
                 canvas.DrawText("Hello", font, Brushes.Green, (15, 15));
             }

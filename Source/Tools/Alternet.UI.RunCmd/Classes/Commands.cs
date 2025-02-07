@@ -4,18 +4,19 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+using Alternet.Drawing;
+
 using SharpCompress.Common;
 
 namespace Alternet.UI
 {
-    internal static partial class Commands
+    public static partial class Commands
     {
         private static readonly Dictionary<string, Action<CommandLineArgs>> commands = new();
         private static readonly List<string> originalCommandNames = new();
 
         static Commands()
         {
-            RegisterCommands();
         }
 
         public static IEnumerable<string> CommandNames
@@ -24,6 +25,68 @@ namespace Alternet.UI
             {
                 return originalCommandNames;
             }
+        }
+
+        public static void RunApplication(string[] args, bool adv = false)
+        {
+            RegisterCommands(adv);
+
+            Console.WriteLine();
+
+            CommandLineArgs.Default.Parse(args);
+
+            var commandNames = CommandLineArgs.Default.AsString("-r");
+
+            if (CommandLineArgs.Default.HasArgument("-hr"))
+            {
+                Console.WriteLine("==================================================");
+            }
+
+            var appName = adv ? "Alternet.UI.RunCmdAdv" : "Alternet.UI.RunCmd";
+            Console.WriteLine($"{appName} (c) 2023-{DateTime.Now.ToString("YYYY")} AlterNET Software");
+
+            Console.WriteLine();
+
+            if (string.IsNullOrWhiteSpace(commandNames))
+            {
+                Console.WriteLine("No commands are specified.");
+                Console.WriteLine();
+                Console.WriteLine("Known commands:");
+                Console.WriteLine();
+
+                var commands = Commands.CommandNames;
+
+                foreach (var command in commands)
+                {
+                    Console.WriteLine(command);
+                }
+
+                Console.WriteLine();
+                Console.WriteLine("Usage:");
+                Console.WriteLine("Alternet.UI.RunCmd.exe -r=<CommandName> [Parameters]");
+
+                Console.WriteLine();
+                Console.WriteLine("Usage example:");
+                Console.WriteLine("Alternet.UI.RunCmd.exe -r=zipFolder Folder=\"d:\\testFolder\" Result=\"d:\\result.zip\"");
+
+                return;
+            }
+
+            if (CommandLineArgs.Default.HasArgument("-details"))
+            {
+                Console.WriteLine($"Commands: {commandNames}");
+                Console.WriteLine();
+                Console.WriteLine("Arguments:");
+
+                foreach (var a in args)
+                {
+                    Console.WriteLine($"[{a}]");
+                }
+
+                Console.WriteLine();
+            }
+
+            Commands.RunCommand(commandNames, CommandLineArgs.Default);
         }
 
         public static void CmdDownload(CommandLineArgs args)
@@ -179,6 +242,134 @@ namespace Alternet.UI
                 CommonUtils.GetAppFolder(), "..", "..", "..", "..", "..");
             CommonProcs.DeleteBinObjFiles(path);
         }
+
+        public static string GetOSArchitectureAsString()
+        {
+            if (App.IsWindowsOS)
+            {
+                if (App.IsArmOS)
+                    return "win-arm64";
+                else
+                {
+                    if (App.Is64BitOS)
+                        return "win-x64";
+                    else
+                        return "win-x86";
+                }
+            }
+
+            if (App.IsMacOS)
+            {
+                if(App.IsArmOS)
+                    return "maccatalyst-arm64";
+                else
+                    return "maccatalyst-x64";
+            }
+
+            if (App.IsLinuxOS)
+            {
+                if (App.IsArmOS)
+                    return "linux-arm64";
+                else
+                {
+                    return "linux-x64";
+                }
+            }
+
+            return "other";
+        }
+
+        public static void CmdZipFile(CommandLineArgs args)
+        {
+            string pathToFile = args.AsString("File");
+            var pathToArch = args.AsString("Result");
+
+            var s = GetOSArchitectureAsString();
+            pathToArch = ReplaceInFilesSetting.ReplaceParam(
+                pathToArch, 
+                "OSArchitecture",
+                s);
+
+            var compressionType = CompressionType.Deflate;
+
+            Console.WriteLine($"Command: zipFile");
+            Console.WriteLine($"File: {pathToFile}");
+            Console.WriteLine($"Result: {pathToArch}");
+            Console.WriteLine($"CompressionType: {compressionType}");
+
+            pathToFile = Path.GetFullPath(pathToFile);
+            pathToArch = Path.GetFullPath(pathToArch ?? string.Empty);
+
+            if (!File.Exists(pathToFile))
+            {
+                Console.WriteLine($"File doesn't exist: [{pathToFile}]");
+                return;
+            }
+
+            if (File.Exists(pathToArch))
+                File.Delete(pathToArch);
+
+            SharpCompressUtils.ZipFile(
+                pathToFile,
+                pathToArch,
+                compressionType);
+
+            Console.WriteLine("Completed");
+        }
+
+        public static void CmdDarkImages(CommandLineArgs args)
+        {
+            string pathToFolder = args.AsString("Path");
+            string pathToResult = args.AsString("Result");
+
+            if (string.IsNullOrWhiteSpace(pathToResult))
+                pathToResult = pathToFolder;
+
+            Console.WriteLine($"Command: lightImages");
+            Console.WriteLine($"Folder: {pathToFolder}");
+            Console.WriteLine($"Result: {pathToResult}");
+
+            pathToFolder = Path.GetFullPath(pathToFolder);
+            pathToResult = Path.GetFullPath(pathToResult);
+
+            if (!Directory.Exists(pathToFolder))
+            {
+                Console.WriteLine($"Folder doesn't exist: [{pathToFolder}]");
+                return;
+            }
+
+            if (!Directory.Exists(pathToResult))
+            {
+                Console.WriteLine($"Output folder doesn't exist: [{pathToResult}]");
+                return;
+            }
+
+            pathToFolder = PathUtils.AddDirectorySeparatorChar(Path.GetFullPath(pathToFolder));
+
+            var files = Directory.EnumerateFiles(
+                pathToFolder,
+                "*",
+                SearchOption.TopDirectoryOnly);
+
+            foreach (var file in files)
+            {
+                var name = Path.GetFileNameWithoutExtension(file);
+                var ext = Path.GetExtension(file);
+                name += "_Dark"+ext;                
+
+                var resultPath = Path.Combine(pathToResult, name);
+
+                if (File.Exists(resultPath))
+                    File.Delete(resultPath);
+
+                var image = new Bitmap(file);
+                var converted = image.WithLightLightColors();
+                converted.Save(resultPath);
+            }
+
+            Console.WriteLine("Completed");
+        }
+
 
         public static void CmdZipFolder(CommandLineArgs args)
         {
@@ -346,8 +537,16 @@ namespace Alternet.UI
             commands.Add(name.ToLower(), action);
         }
 
-        public static void RegisterCommands()
+        public static void RegisterCommands(bool adv)
         {
+            if (adv)
+            {
+                RegisterCommand(
+                    "darkImages",
+                    CmdDarkImages,
+                    "-r=darkImages Path=\"d:\\Images\" Result=\"d:\\ImagesConverted\"");
+            }
+
             RegisterCommand(
                 "replaceInFiles",
                 CmdReplaceInFiles,
@@ -366,7 +565,12 @@ namespace Alternet.UI
             RegisterCommand(
                 "zipFolder",
                 CmdZipFolder,
-                "");
+                "-r=zipFolder Folder=\"d:\\testFolder\" Result=\"d:\\result.zip\"");
+
+            RegisterCommand(
+                "zipFile",
+                CmdZipFile,
+                "-r=zipFile File=\"d:\\testFile.txt\" Result=\"d:\\result.zip\"");
 
             RegisterCommand(
                 "unzip",

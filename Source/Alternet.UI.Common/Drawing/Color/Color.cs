@@ -1441,7 +1441,9 @@ namespace Alternet.Drawing
         /// Enumerates colors defined in <see cref="KnownColor"/> for the specified
         /// color categories.
         /// </summary>
-        public static IReadOnlyList<Color> GetKnownColors(params KnownColorCategory[] cats)
+        public static IReadOnlyList<Color> GetKnownColors(
+            KnownColorCategory[] cats,
+            bool onlyVisible = true)
         {
             List<Color> colors = new();
 
@@ -1449,8 +1451,12 @@ namespace Alternet.Drawing
 
             foreach (var item in items)
             {
-                if (!item.Visible)
-                    continue;
+                if (onlyVisible)
+                {
+                    if (!item.Visible)
+                        continue;
+                }
+
                 if (!item.CategoryIs(cats))
                     continue;
                 colors.Add(new Color(item.KnownColor));

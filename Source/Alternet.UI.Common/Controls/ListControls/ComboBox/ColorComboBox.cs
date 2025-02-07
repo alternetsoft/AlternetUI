@@ -262,9 +262,13 @@ namespace Alternet.UI
         /// Adds colors from the specified color categories.
         /// </summary>
         /// <param name="categories">Array of categories to add colors from.</param>
-        public virtual void AddColors(KnownColorCategory[]? categories)
+        /// <param name="onlyVisible">Whether to process only
+        /// colors which are visible to the end-user. Optional. Default is True.</param>
+        public virtual void AddColors(
+            KnownColorCategory[]? categories,
+            bool onlyVisible = true)
         {
-            ListControlUtils.AddColors(this, false, null, categories);
+            ListControlUtils.AddColors(this, false, null, categories, onlyVisible);
         }
 
         /// <summary>
