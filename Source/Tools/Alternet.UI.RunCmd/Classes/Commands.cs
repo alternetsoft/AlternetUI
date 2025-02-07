@@ -348,7 +348,7 @@ namespace Alternet.UI
 
             var files = Directory.EnumerateFiles(
                 pathToFolder,
-                "*",
+                "*.png",
                 SearchOption.TopDirectoryOnly);
 
             foreach (var file in files)
