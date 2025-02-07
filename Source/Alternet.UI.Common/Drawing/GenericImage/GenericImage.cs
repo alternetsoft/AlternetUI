@@ -70,7 +70,10 @@ namespace Alternet.Drawing
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public GenericImage(SizeI size, bool clear = false)
         {
-            Handler = GraphicsFactory.Handler.CreateGenericImageHandler(size.Width, size.Height, clear);
+            Handler = GraphicsFactory.Handler.CreateGenericImageHandler(
+                size.Width,
+                size.Height,
+                clear);
         }
 
         /// <summary>
@@ -937,6 +940,40 @@ namespace Alternet.Drawing
         public virtual void SetMaskColor(RGBValue rgb)
         {
             Handler.SetMaskColor(rgb);
+        }
+
+        /// <summary>
+        /// Converts all pixels using the specified function.
+        /// </summary>
+        /// <param name="func">Function used to convert color of the pixel.</param>
+        /// <returns></returns>
+        public virtual bool ConvertColors(Func<ColorStruct, ColorStruct> func)
+        {
+            void ChangePixel(ref SKColor rgb, int value)
+            {
+                rgb = func(rgb);
+            }
+
+            return ForEachPixel<int>(ChangePixel, 0);
+        }
+
+        /// <summary>
+        /// Makes pixels of the image lighter
+        /// (this method makes 2x lighter than <see cref="LightColors"/>).
+        /// </summary>
+        /// <returns></returns>
+        public virtual bool LightLightColors()
+        {
+            return ConvertColors(ControlPaint.LightLight);
+        }
+
+        /// <summary>
+        /// Makes pixels of the image lighter.
+        /// </summary>
+        /// <returns></returns>
+        public virtual bool LightColors()
+        {
+            return ConvertColors(ControlPaint.Light);
         }
 
         /// <summary>
