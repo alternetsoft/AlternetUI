@@ -11,8 +11,6 @@ namespace ControlsSample
 {
     internal class ListBoxBigDataWindow : Window
     {
-        private static EnumImages<SymbolKind>? images;
-
         internal bool IsDebugInfoLogged = false;
 
         private static int globalCounter;
@@ -20,6 +18,7 @@ namespace ControlsSample
         private readonly int counter;
         private readonly AbstractControl? statusPanel;
 
+        private EnumImages<SymbolKind>? images;
         private string? lastReportedText;
         private VirtualListBox.AddRangeController<MemberInfo>? controller;
 
@@ -66,12 +65,12 @@ namespace ControlsSample
             statusPanel = new Label("Ready");
             statusBar.AddControl(statusPanel);
 
-            LoadImages();
+            LoadImages(this.IsDarkBackground);
 
             ActiveControl = textBox;
         }
 
-        private static void LoadImages()
+        private void LoadImages(bool isDark)
         {
             if (images != null)
                 return;
@@ -84,13 +83,13 @@ namespace ControlsSample
             images.SetImageName(SymbolKind.Method, $"{prefix}Method1.svg");
             images.SetImageName(SymbolKind.Property, $"{prefix}Property.svg");
 
-            images.SetSvgColor(SymbolKind.Field, LightDarkColors.Green);
-            images.SetSvgColor(SymbolKind.Event, LightDarkColors.Yellow);
-            images.SetSvgColor(SymbolKind.Method, LightDarkColors.Blue);
+            images.SetSvgColor(SymbolKind.Field, LightDarkColors.Green.LightOrDark(isDark));
+            images.SetSvgColor(SymbolKind.Event, LightDarkColors.Yellow.LightOrDark(isDark));
+            images.SetSvgColor(SymbolKind.Method, LightDarkColors.Blue.LightOrDark(isDark));
             
             images.SetSvgColor(
                 SymbolKind.Property,
-                new LightDarkColor(KnownSvgColor.Normal));            
+                new LightDarkColor(KnownSvgColor.Normal).LightOrDark(isDark));            
 
             images.AssignImageNames(true);
 
