@@ -246,6 +246,19 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
+        /// Returns a new color based on this current instance, but with the new alpha channel value.
+        /// </summary>
+        /// <param name="alpha">The new alpha component.</param>
+        /// <returns></returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public readonly ColorStruct WithAlpha(byte alpha)
+        {
+            var result = this;
+            result.A = alpha;
+            return new(result);
+        }
+
+        /// <summary>
         /// Serves as the default hash function.
         /// </summary>
         /// <returns>A hash code for the current object.</returns>
