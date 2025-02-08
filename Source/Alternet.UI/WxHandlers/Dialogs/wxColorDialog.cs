@@ -29,7 +29,7 @@ namespace Alternet.UI.Native
             {
                 if(result != ModalResult.Accepted)
                 {
-                    if (oldColor != Color)
+                    if (oldColor.AsStruct != Color.AsStruct)
                         result = ModalResult.Accepted;
                 }
             }
