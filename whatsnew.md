@@ -1,3 +1,27 @@
+# 0.9.708 (2025 February 8)
+
+- Window: set default BackColor and ForeColor in contstructor as it will improve look on macOs.
+- RichTextBox.WriteLineText - Writes text at the current position and moves caret to the beginning of the next line.
+- Do not log wxWidgets asserts if same msg was just reported.
+- ToolBar: Fixed AddTextCore.
+- AppUtils: Fixed ExecuteTerminalCommand.
+- TemplateUtils: Fixed macOs related bug.
+- Fixed exception when ThreadExceptionWindow was closed in some cases.
+- ColorListBox, ColorComboBox: Add optional param to AddColors.
+- ThreadExceptionWindow: Use MultilineTextBox as it looks better on macOs.
+- PanelWithToolBar: underline toolbar in the constructor as it looks better on dark themes.
+- App: Fix error when exception-dialog is closed in some cases.
+- ToolBar: Fix SetToolSvg to work properly on dark theme.
+- ThreadExceptionWindow: improve layout.
+- LightDarkColors.Yellow.
+- EnumImages: add svg support when images are loaded.
+- Demo: Use svg images in ListBoxBigDataWindow instead of png (so now it looks good on dark theme).
+- ControlPaint: add Light, Dark, LightLight, DarkDark, IsDark, IsDarker.
+- Add new members to Image and ImageList: WithLightLightColors, WithLightColors, WithConvertedColors.
+- GenericImage: ConvertColors, LightLightColors(), LightColors().
+- ColorDialog: now works properly on macOs.
+- CommonDialog: Remove old style ShowDialog method. Use ShowAsync instead of it.
+
 # 0.9.707 (2025 February 4)
 
 - ToolBar: default separator color made the same as border color.
