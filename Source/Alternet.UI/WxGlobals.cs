@@ -18,5 +18,33 @@ namespace Alternet.UI
         /// when Graphics.DrawText is performed.
         /// </summary>
         public static bool NoTransformForDrawText = false;
+
+        /// <summary>
+        /// Contains macOs related settings.
+        /// </summary>
+        public static class MacOs
+        {
+            /// <summary>
+            /// Gets or sets whether <see cref="ColorDialog"/> show method
+            /// returns OK if color is changed. On macOs color dialog has no
+            /// OK and CANCEL buttons, so the only way is to check for color change.
+            /// </summary>
+            public static bool ColorDialogAcceptIfChanged = true;
+        }
+
+        /// <summary>
+        /// Contains MSW related settings.
+        /// </summary>
+        public static class Msw
+        {
+
+        }
+
+        /// <summary>
+        /// Contains Linux related settings.
+        /// </summary>
+        public static class Linux
+        {
+        }
     }
 }

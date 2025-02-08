@@ -243,7 +243,7 @@ namespace Alternet.UI
             CommonProcs.DeleteBinObjFiles(path);
         }
 
-        public static string GetOSArchitectureAsString()
+        public static string GetOSArchitectureAsString(bool x64)
         {
             if (App.IsWindowsOS)
             {
@@ -251,7 +251,7 @@ namespace Alternet.UI
                     return "win-arm64";
                 else
                 {
-                    if (App.Is64BitOS)
+                    if (x64)
                         return "win-x64";
                     else
                         return "win-x86";
@@ -284,11 +284,18 @@ namespace Alternet.UI
             string pathToFile = args.AsString("File");
             var pathToArch = args.AsString("Result");
 
-            var s = GetOSArchitectureAsString();
             pathToArch = ReplaceInFilesSetting.ReplaceParam(
                 pathToArch, 
                 "OSArchitecture",
-                s);
+                GetOSArchitectureAsString(true));
+            pathToArch = ReplaceInFilesSetting.ReplaceParam(
+                pathToArch,
+                "OSArchitectureX86",
+                GetOSArchitectureAsString(false));
+            pathToArch = ReplaceInFilesSetting.ReplaceParam(
+                pathToArch,
+                "UIVersion",
+                AppUtils.GetUIVersion());            
 
             var compressionType = CompressionType.Deflate;
 

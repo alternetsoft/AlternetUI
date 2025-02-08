@@ -43,6 +43,17 @@ namespace Alternet.Drawing
 
         /// <summary>
         /// Initializes a new instance of the <see cref="LightDarkColor"/> class
+        /// with the light and dark colors assigned from <see cref="KnownSvgColor"/>.
+        /// </summary>
+        /// <param name="knownSvgColor">Known svg color identifier.</param>
+        public LightDarkColor(KnownSvgColor knownSvgColor)
+        {
+            this.light = SvgColors.GetSvgColor(knownSvgColor, false);
+            this.dark = SvgColors.GetSvgColor(knownSvgColor, true);
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="LightDarkColor"/> class
         /// with the specified light and dark color values.
         /// </summary>
         /// <param name="light">Light color.</param>

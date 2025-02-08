@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ApiInfo>
-  <Assembly Name="Alternet.UI.Common, Version=0.9.707.0, Culture=neutral, PublicKeyToken=d211ec79d306281b">
+  <Assembly Name="Alternet.UI.Common, Version=0.9.708.0, Culture=neutral, PublicKeyToken=d211ec79d306281b">
     <Type Name="XamlX.Runtime.IXamlParentStackProviderV1" />
     <Type Name="XamlX.Runtime.IXamlXmlNamespaceInfoProviderV1" />
     <Type Name="XamlX.Runtime.XamlXmlNamespaceInfoV1" />
