@@ -109,12 +109,14 @@
   </ItemGroup>
   <Target Name="SignPackage" AfterTargets="Build" Condition="'$(Configuration)' == 'Release'">
     <PropertyGroup>
+	<PFX>$(MSBuildThisFileDirectory)\..\..\..\Keys\Alternet.pfx</PFX>
       <VsixSignTool>$(NuGetPackageRoot)Microsoft.VSSDK.Vsixsigntool\16.2.29116.78\tools\vssdk\vsixsigntool.exe</VsixSignTool>
       <!-- To get the hash, use 'certutil -p ****** -dump ./Alternet.pfx' -->
-      <VsixSignCommand>$(VsixSignTool) sign /f $(MSBuildThisFileDirectory)\..\..\..\Keys\Alternet.pfx  /p $(VsixSignPassword) /sha1 $(VsixSignSha) /fd sha256 /tr http://timestamp.digicert.com</VsixSignCommand>
+      <VsixSignCommand>$(VsixSignTool) sign /f $(PFX) /p $(VsixSignPassword) /sha1 $(VsixSignSha) /fd sha256 /tr http://timestamp.digicert.com</VsixSignCommand>
     </PropertyGroup>
     <Message Text="Signing $(TargetVsixContainer)" Importance="High" />
-    <Exec Command="$(VsixSignCommand) $(MSBuildProjectDirectory)\$(TargetVsixContainer)" />
+    <Exec Command="$(VsixSignCommand) $(MSBuildProjectDirectory)\$(TargetVsixContainer)" IgnoreExitCode="true"
+	 Condition="Exists('$(PFX)')"/>
   </Target>
   <!-- ========================================== -->
   <PropertyGroup>

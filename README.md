@@ -85,8 +85,7 @@ This could be useful when, for example, we switch to the new WxWidgets builds.
 
 <b>STEP 6.</b> (Optional) Build NuGet packages on Windows Machine:
 
-- Run Install.Scripts/MSW.Publish.1.Build.Nuget.Pal.bat.
-- Run Install.Scripts/MSW.Publish.2.Build.NuGet.Managed.bat.
+- Run Install2.Build.Nugets.bat.
 - The results will be in Publish/Packages.
 
 ## Important:

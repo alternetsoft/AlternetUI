@@ -35,7 +35,6 @@ if not !ERRORLEVEL! EQU 0 (exit /b !ERRORLEVEL!)
 :: Publish PAL packages.
 
 copy "%SOURCE_DIR%\Build\Alternet.UI.Pal\bin\NuGet\*.nupkg" "%PackagesPublishDirectory%"
-if not !ERRORLEVEL! EQU 0 (exit /b !ERRORLEVEL!)
 
 :: Build managed packages.
 
@@ -89,13 +88,6 @@ echo ====================================5
 
 call "MSW.Publish.SubTool.4.Gen.Public.Samples.bat"
 if not !ERRORLEVEL! EQU 0 (exit /b !ERRORLEVEL!)
-
-echo ====================================5
-
-pushd "%PackagesPublishDirectory%"
-call "%SCRIPT_HOME%\Unzip.All.Nupkg.ps1"
-call "%SCRIPT_HOME%\Unzip.All.Vsix.ps1"
-popd
 
 echo ====================================5
 

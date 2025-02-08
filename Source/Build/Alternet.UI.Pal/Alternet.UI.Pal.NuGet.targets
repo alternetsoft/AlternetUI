@@ -111,8 +111,9 @@
 		<Message Text="========================" Importance="high" />
 		<Message Text="Create Nuget Alternet.UI.Pal started" Importance="high" />
 	
-        <Error Text="To build the NuGet package, the build result files for all the platforms (Windows, MacOS, Linux) must be present in Bin directory."  
-            Condition="@(NugetPayload_Native_Windows_X86->Count()) == 0 or @(NugetPayload_Native_Windows_X64->Count()) == 0 or @(NugetPayload_Native_MacOS->Count()) == 0 or @(NugetPayload_Native_Linux->Count()) == 0" />
+        <Message Text="To build the NuGet package correctly, the build result files for all the platforms (Windows, MacOS, Linux) must be present in Bin directory."  
+                Importance="high" 
+		Condition="@(NugetPayload_Native_Windows_X86->Count()) == 0 or @(NugetPayload_Native_Windows_X64->Count()) == 0 or @(NugetPayload_Native_MacOS->Count()) == 0 or @(NugetPayload_Native_Linux->Count()) == 0" />
 
         <CallTarget Targets="NuGet_PrepareSource;NuGet_Pack;NuGet_CopyBuildResults" />
 		<Message Text="Create Nuget Alternet.UI.Pal done." Importance="high" />
