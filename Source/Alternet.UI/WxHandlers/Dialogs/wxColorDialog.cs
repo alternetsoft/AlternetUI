@@ -25,13 +25,13 @@ namespace Alternet.UI.Native
             var oldColor = Color;
 
             var result = ShowModal(GetNativeWindow(owner));
+            
             if (App.IsMacOS && WxGlobals.MacOs.ColorDialogAcceptIfChanged)
             {
-                if(result != ModalResult.Accepted)
-                {
-                    if (oldColor.AsStruct != Color.AsStruct)
-                        result = ModalResult.Accepted;
-                }
+                if (oldColor.AsStruct == Color.AsStruct)
+                    result = ModalResult.Canceled;
+                else
+                    result = ModalResult.Accepted;
             }
 
             return result;
