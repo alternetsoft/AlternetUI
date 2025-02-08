@@ -24,16 +24,6 @@ namespace Alternet.UI
         bool ShowHelp { get; set; }
 
         /// <summary>
-        /// Shows modal dialog on screen.
-        /// </summary>
-        /// <param name="owner">Dialog owner.</param>
-        /// <returns></returns>
-#if ObsoleteModalDialogs
-        [Obsolete("Method is deprecated. Use ShowAsync method instead of it.")]
-#endif
-        ModalResult ShowModal(Window? owner);
-
-        /// <summary>
         /// Shows dialog on screen asynchroniusly.
         /// </summary>
         /// <param name="owner">Dialog owner.</param>

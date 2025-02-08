@@ -1,5 +1,3 @@
-#define ObsoleteModalDialogs
-
 using System;
 using System.ComponentModel;
 
@@ -134,20 +132,6 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Same as <see cref="ShowModal"/>. Added for compatibility.
-        /// </summary>
-        /// <returns></returns>
-#if ObsoleteModalDialogs
-        [Obsolete("Method is deprecated. Use ShowAsync method instead of it.")]
-#endif
-        public DialogResult ShowDialog()
-        {
-#pragma warning disable
-            return EnumUtils.Convert(ShowModal(null));
-#pragma warning restore
-        }
-
-        /// <summary>
         /// Runs a common dialog window with the specified owner asynchroniously.
         /// </summary>
         /// <param name="onClose">Action to call after dialog is closed.</param>
@@ -171,42 +155,6 @@ namespace Alternet.UI
                 var coercedResult = CoerceDialogResult(result);
                 onClose?.Invoke(this, coercedResult);
             });
-        }
-
-        /// <summary>
-        /// Runs a common dialog window with the specified owner.
-        /// </summary>
-        /// <param name="owner">
-        /// A window that will own the modal dialog.
-        /// </param>
-        /// <returns>
-        /// <see cref="ModalResult.Accepted"/> if the user clicks OK in the dialog window;
-        /// otherwise, <see cref="ModalResult.Canceled"/>.
-        /// </returns>
-#if ObsoleteModalDialogs
-        [Obsolete("Method is deprecated. Use ShowAsync method instead of it.")]
-#endif
-        public ModalResult ShowModal(Window? owner = null)
-        {
-            if (!IsValidShowDialog())
-                return ModalResult.Canceled;
-            CheckDisposed();
-
-            var result = Handler.ShowModal(owner);
-
-            if (result == ModalResult.Accepted)
-            {
-                var boolResult = CoerceDialogResult(true);
-
-                if (boolResult)
-                    result = ModalResult.Accepted;
-                else
-                    result = ModalResult.Canceled;
-            }
-            else
-                result = ModalResult.Canceled;
-
-            return result;
         }
 
         /// <summary>
