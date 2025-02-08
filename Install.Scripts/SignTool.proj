@@ -24,7 +24,7 @@
 
     <DllPathForSignTool>$([System.IO.Path]::GetFullPath('$(DllPathForSignTool)'))</DllPathForSignTool>
 
-    <SignCommand>&quot;$(SignToolExe)&quot; sign /f &quot;$(ALTERNET_PFX)&quot; /p $(VsixSignPassword) /fd sha256 /tr http://timestamp.digicert.com /td SHA256 /v &quot;$(DllPathForSignTool)&quot;</SignCommand>
+    <SignCommand>&quot;$(SignToolExe)&quot; sign /f &quot;$(ALTERNET_PFX)&quot; /p $(VsixSignPassword) /fd SHA256 /tr http://timestamp.digicert.com /td SHA256 /v &quot;$(DllPathForSignTool)&quot;</SignCommand>
     <SignVerifyCommand>&quot;$(SignToolExe)&quot; verify /q /pa &quot;$(DllPathForSignTool)&quot;</SignVerifyCommand>
 
 </PropertyGroup>
@@ -43,7 +43,7 @@
 		<CallTarget Targets="WriteInfo" />	
 		<Message Text="Action: Sign" Importance="high" />
 		<Message Text="=======================" Importance="high" />
-        	<Exec Command="$(SignCommand)"/>
+        	<Exec Command="$(SignCommand)" IgnoreExitCode="true" Condition="Exists('$(ALTERNET_PFX)')"/>
 	</Target>
 
 	<Target Name="SignVerify" Condition="$([MSBuild]::IsOsPlatform('Windows'))">

@@ -23,28 +23,28 @@ if not !ERRORLEVEL! EQU 0 (exit /b !ERRORLEVEL!)
 echo ====================================
 ::Alternet.UI
 pushd "%SOURCE_DIR%\Alternet.UI\"
-dotnet msbuild /restore /t:Clean,Build /p:Configuration=Release /p:AlternetUIPackagesBuild=true /p:WarningLevel=0
+dotnet msbuild -tl:off /restore /t:Clean,Build /p:Configuration=Release /p:AlternetUIPackagesBuild=true /p:WarningLevel=0
 popd
 if not !ERRORLEVEL! EQU 0 (exit /b !ERRORLEVEL!)
 
 echo ====================================BM1
 ::Alternet.UI.Build.Tasks.ApiInfoCollector
 pushd "%SOURCE_DIR%\Alternet.UI.Build.Tasks\Alternet.UI.Build.Tasks.ApiInfoCollector\"
-dotnet msbuild /restore /t:Clean,Build /p:Configuration=Release /p:WarningLevel=0 
+dotnet msbuild -tl:off /restore /t:Clean,Build /p:Configuration=Release /p:WarningLevel=0 
 popd
 if not !ERRORLEVEL! EQU 0 (exit /b !ERRORLEVEL!)
 
 echo ====================================BM2
 ::Alternet.UI.Build.Tasks.csproj
 pushd "%SOURCE_DIR%\Alternet.UI.Build.Tasks\"
-dotnet msbuild /restore /t:Clean,Build /p:Configuration=Release /p:WarningLevel=0
+dotnet msbuild -tl:off /restore /t:Clean,Build /p:Configuration=Release /p:WarningLevel=0
 popd
 if not !ERRORLEVEL! EQU 0 (exit /b !ERRORLEVEL!)
 
 echo ====================================BM3
 ::Alternet.UI Pack
 pushd "%SOURCE_DIR%\Alternet.UI\"
-dotnet msbuild /restore /t:Pack /p:Configuration=Release /p:AlternetUIPackagesBuild=true /p:WarningLevel=0
+dotnet msbuild -tl:off /restore /t:Pack /p:Configuration=Release /p:AlternetUIPackagesBuild=true /p:WarningLevel=0
 popd
 if not !ERRORLEVEL! EQU 0 (exit /b !ERRORLEVEL!)
 
@@ -52,4 +52,4 @@ echo ====================================BM4
 
 :: call MSW.Publish.SubTool.3.Nuget.Sign.bat "%SOURCE_DIR%\Alternet.UI\bin\Release\*.nupkg" %CERT_PASSWORD%
 
-dotnet msbuild /t:DotNetNugetSign /p:NUGET_PATH="%SOURCE_DIR%\Alternet.UI\bin\Release\*.nupkg" "%SCRIPT_HOME%\Dotnet.Nuget.Sign.proj"
+dotnet msbuild -tl:off /t:DotNetNugetSign /p:NUGET_PATH="%SOURCE_DIR%\Alternet.UI\bin\Release\*.nupkg" "%SCRIPT_HOME%\Dotnet.Nuget.Sign.proj"

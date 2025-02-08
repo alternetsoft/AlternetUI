@@ -42,7 +42,7 @@ echo ====================================
 
 set UITemplates=%SOURCE_DIR%\Integration\Templates\Alternet.UI.Templates.csproj
 
-dotnet msbuild /restore /t:Clean,Build,Pack /p:Configuration=Release /p:WarningLevel=0 "%UITemplates%"
+dotnet msbuild -tl:off /restore /t:Clean,Build,Pack /p:Configuration=Release /p:WarningLevel=0 "%UITemplates%"
 if not !ERRORLEVEL! EQU 0 (exit /b !ERRORLEVEL!)
 
 ::::::::::::::::::::::::::::::::::::::
@@ -53,7 +53,7 @@ echo ====================================
 
 set NugetSignProj=%SCRIPT_HOME%\Dotnet.Nuget.Sign.proj
 
-dotnet msbuild /t:DotNetNugetSign /p:NUGET_PATH="%SOURCE_DIR%\Integration\Templates\bin\Release\*.nupkg" "%NugetSignProj%"
+dotnet msbuild -tl:off /t:DotNetNugetSign /p:NUGET_PATH="%SOURCE_DIR%\Integration\Templates\bin\Release\*.nupkg" "%NugetSignProj%"
 
 ::::::::::::::::::::::::::::::::::::::
 
@@ -77,7 +77,7 @@ set UIXmlHostApp=%SOURCE_DIR%\Integration\Components\Alternet.UI.Integration.UIX
 
 :: "%MSBUILD_2022%" /restore /t:Clean,Build /p:Configuration=Release /p:WarningLevel=0 "%UIXmlHostApp%"
 
-dotnet msbuild /restore /t:Clean,Build /p:Configuration=Release /p:WarningLevel=0 "%UIXmlHostApp%"
+dotnet msbuild -tl:off /restore /t:Clean,Build /p:Configuration=Release /p:WarningLevel=0 "%UIXmlHostApp%"
 
 if not !ERRORLEVEL! EQU 0 (exit /b !ERRORLEVEL!)
 
