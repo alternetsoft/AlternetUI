@@ -56,15 +56,14 @@ namespace Alternet::UI
 
         auto result = GetDialog()->ShowModal();
 
+        _color = GetDialog()->GetColourData().GetColour();
+
         if (result == wxID_OK)
         {
-            _color = GetDialog()->GetColourData().GetColour();
             return ModalResult::Accepted;
         }
-        else if (result == wxID_CANCEL)
-            return ModalResult::Canceled;
         else
-            throwExNoInfo;
+            return ModalResult::Canceled;
     }
 
     void ColorDialog::RecreateDialog()

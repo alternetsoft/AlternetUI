@@ -228,6 +228,9 @@ namespace ControlsSample
 
             dialog.ShowAsync(this, (result) =>
             {
+                sampleLabel.ParentBackColor = false;
+                sampleLabel.ParentForeColor = false;
+
                 if (result)
                 {
                     LogResult(
@@ -236,7 +239,7 @@ namespace ControlsSample
                 }
                 else
                 {
-                    LogResult("Color Dialog Result: " + result.ToString());
+                    LogResult("Color Dialog Result: Cancel, Color = " + dialog.Color);
                     sampleLabel.BackgroundColor = null;
                 }
             });
