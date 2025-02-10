@@ -21,14 +21,34 @@ namespace Alternet.UI
         public static void ZipFile(
             string pathToFile,
             string pathToArch,
-            CompressionType compressionType = CompressionType.Deflate)
+            CompressionType compressionType = CompressionType.Deflate,
+            string? otherExtensions = null)
         {
+            List<string> files = new();
+            files.Add(pathToFile);
+
+            if(otherExtensions is not null)
+            {
+                var extList = otherExtensions.Split(',');
+
+                foreach(var ext in extList)
+                {
+                    var extension = "." + ext.Trim().Trim('.');
+                    var fileWithOtherExt = Path.ChangeExtension(pathToFile, extension);
+                    if (!File.Exists(fileWithOtherExt))
+                        continue;
+                    files.Add(fileWithOtherExt);
+                }
+            }
+
             using var archive = ZipArchive.Create();
             
-            var fileInArchive = pathToFile;
-            fileInArchive = Path.GetFileName(fileInArchive);
-
-            archive.AddEntry(fileInArchive, pathToFile);
+            foreach (var file in files)
+            {
+                var fileInArchive = file;
+                fileInArchive = Path.GetFileName(fileInArchive);
+                archive.AddEntry(fileInArchive, file);
+            }
 
             archive.SaveTo(pathToArch, compressionType);
         }
@@ -52,28 +72,27 @@ namespace Alternet.UI
                 "*",
                 SearchOption.AllDirectories);
 
-            using (var archive = ZipArchive.Create())
+            using var archive = ZipArchive.Create();
+
+            foreach(var file in files)
             {
-                foreach(var file in files)
+                var fileInArchive = file;
+
+                if(fileInArchive.StartsWith(pathToFolder))
                 {
-                    var fileInArchive = file;
-
-                    if(fileInArchive.IndexOf(pathToFolder) == 0)
-                    {
-                        fileInArchive = fileInArchive.Remove(0, pathToFolder.Length);
-                    }
-                    else
-                    {
-                        fileInArchive = Path.GetFileName(fileInArchive);
-                    }
-
-                    fileInArchive = Path.Combine(rootSubFolder, fileInArchive);
-
-                    archive.AddEntry(fileInArchive, file);
+                    fileInArchive = fileInArchive.Remove(0, pathToFolder.Length);
+                }
+                else
+                {
+                    fileInArchive = Path.GetFileName(fileInArchive);
                 }
 
-                archive.SaveTo(pathToArch, compressionType);
+                fileInArchive = Path.Combine(rootSubFolder, fileInArchive);
+
+                archive.AddEntry(fileInArchive, file);
             }
+
+            archive.SaveTo(pathToArch, compressionType);
         }
 
         public static void ZipFolder(
