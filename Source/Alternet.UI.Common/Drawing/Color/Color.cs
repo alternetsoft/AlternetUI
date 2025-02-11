@@ -1604,6 +1604,60 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
+        /// Creates a new darker color from this color.
+        /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public Color Darker(float percOfDark)
+        {
+            return new(ControlPaint.Dark(AsStruct, percOfDark));
+        }
+
+        /// <summary>
+        /// Creates a new lighter color from this color.
+        /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public Color Lighter(float percOfLight)
+        {
+            return new(ControlPaint.Light(AsStruct, percOfLight));
+        }
+
+        /// <summary>
+        /// Creates a new lighter color from this color.
+        /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public Color Lighter()
+        {
+            return new(ControlPaint.Light(AsStruct));
+        }
+
+        /// <summary>
+        /// Creates a new much lighter color from this color.
+        /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public Color LighterLighter()
+        {
+            return new(ControlPaint.LightLight(AsStruct));
+        }
+
+        /// <summary>
+        /// Creates a new darker color from this color.
+        /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public Color Darker()
+        {
+            return new(ControlPaint.Dark(AsStruct));
+        }
+
+        /// <summary>
+        /// Creates a new much darker color from this color.
+        /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public Color DarkerDarker()
+        {
+            return new(ControlPaint.DarkDark(AsStruct));
+        }
+
+        /// <summary>
         /// Creates <see cref="Image"/> of the specified <paramref name="size"/>
         /// filled with this color.
         /// </summary>
