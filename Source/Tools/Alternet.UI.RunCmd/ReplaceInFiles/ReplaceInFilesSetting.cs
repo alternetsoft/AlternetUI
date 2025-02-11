@@ -31,6 +31,7 @@ namespace Alternet.UI
             {
                 var result = s.Replace($"{paramPrefixChars}({prmName})", prmValue);
                 result = result.Replace($"{paramPrefixChars}[{prmName}]", prmValue);
+                result = result.Replace($"{paramPrefixChars}{paramPrefixChars}{prmName}", prmValue);
                 return result;
             }
 
