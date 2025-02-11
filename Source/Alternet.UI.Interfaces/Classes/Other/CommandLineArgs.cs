@@ -66,6 +66,28 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets command line argument as boolean.
+        /// </summary>
+        /// <param name="argName">Argument name.</param>
+        /// <param name="defaultValue">Default value.
+        /// Used if argument is not specified in the command line.</param>
+        /// <returns></returns>
+        public virtual bool AsBool(string argName, bool defaultValue = false)
+        {
+            try
+            {
+                if (args.TryGetValue(argName, out string? value))
+                    return value.ToLower().Trim() == "true";
+                return defaultValue;
+            }
+            catch (Exception e)
+            {
+                OnError(e);
+                return defaultValue;
+            }
+        }
+
+        /// <summary>
         /// Gets command line argument as string.
         /// </summary>
         /// <param name="argName">Argument name.</param>
@@ -147,6 +169,25 @@ namespace Alternet.UI
             }
 
             return result;
+        }
+
+        /// <summary>
+        /// Parses command line arguments from <see cref="Environment.GetCommandLineArgs"/>.
+        /// </summary>
+        public virtual void Parse(bool reset = true)
+        {
+            if (reset)
+                Reset();
+            var args = Environment.GetCommandLineArgs();
+            Parse(args);
+        }
+
+        /// <summary>
+        /// Resets parsed command line arguments as if no arguments were specified.
+        /// </summary>
+        public virtual void Reset()
+        {
+            args.Clear();
         }
 
         /// <summary>
