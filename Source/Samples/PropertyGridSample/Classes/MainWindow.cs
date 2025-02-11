@@ -491,10 +491,12 @@ namespace PropertyGridSample
 
         private void SetBackground(Color? color)
         {
+            /*
             if (PropertyGridSettings.Default!.DemoBackgroundIsWhite)
                 color = Color.White;
 
             ControlParent.BackgroundColor = color;
+            */
         }
 
         public class SettingsControl : Control

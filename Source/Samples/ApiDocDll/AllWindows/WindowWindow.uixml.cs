@@ -1,5 +1,6 @@
 using Alternet.UI;
 using System;
+using System.Diagnostics;
 
 namespace ApiDoc
 {
@@ -8,7 +9,6 @@ namespace ApiDoc
         public WindowWindow()
         {
             InitializeComponent();
-            window.Background = Alternet.Drawing.Brushes.LightGray;
             window.TitleChanged += Window_TitleChanged;
         }
 
@@ -20,11 +20,10 @@ namespace ApiDoc
         }
 
         #region WindowEventHandler
-
         private void Window_TitleChanged(object? sender, EventArgs e)
         {
             var text = window.Title == "" ? "\"\"" : window.Title;
-            MessageBox.Show(text, string.Empty);
+            Debug.WriteLine(text, string.Empty);
         }
         #endregion    
     }

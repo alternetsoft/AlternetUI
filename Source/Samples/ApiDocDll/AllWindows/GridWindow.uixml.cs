@@ -8,7 +8,8 @@ namespace ApiDoc
         public GridWindow()
         {
             InitializeComponent();
-            grid.Background = Alternet.Drawing.Brushes.LightGray;
+            grid.HasBorder = true;
+            grid.Padding = 5;
         }
 
         public void GridExample1()
