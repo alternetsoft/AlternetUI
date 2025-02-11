@@ -30,11 +30,34 @@
     <Target Name="BuildNative_Windows_X86" Condition="$([MSBuild]::IsOsPlatform('Windows'))">
         <Exec Command="&quot;$(CppMsBuildPath)&quot; &quot;$(Bindings_NativeVcProjectFilePath)&quot; -maxcpucount -p:Configuration=Debug;Platform=x86;OutDir=&quot;$(OutputDirectoryPath_X86_Debug)\&quot;" />
         <Exec Command="&quot;$(CppMsBuildPath)&quot; &quot;$(Bindings_NativeVcProjectFilePath)&quot; -maxcpucount -p:Configuration=Release;Platform=x86;OutDir=&quot;$(OutputDirectoryPath_X86_Release)\&quot;" />
+
+        <Exec
+            WorkingDirectory="$(RootDirectoryPath)/Source/Tools/Alternet.UI.RunCmd"
+            Command="dotnet run -- -r=zipFile Ext=&quot;exp,lib&quot; File=&quot;$(OutputDirectoryPath_X86_Release)/Alternet.UI.Pal.dll&quot; Result=&quot;$(UI_PUBLISH_PACKAGES)/Alternet.UI.Pal-$[UIVersion]-$[OSArchitectureX86]-release.zip&quot;" />
+
+        <Exec
+            WorkingDirectory="$(RootDirectoryPath)/Source/Tools/Alternet.UI.RunCmd"
+            Command="dotnet run -- -r=zipFile Ext=&quot;exp,lib&quot; File=&quot;$(OutputDirectoryPath_X86_Debug)/Alternet.UI.Pal.dll&quot; Result=&quot;$(UI_PUBLISH_PACKAGES)/Alternet.UI.Pal-$[UIVersion]-$[OSArchitectureX86]-debug.zip&quot;" />
+
     </Target>
+
+    <Target Name="Zip_Pal_64">
+        <Exec
+            WorkingDirectory="$(RootDirectoryPath)/Source/Tools/Alternet.UI.RunCmd"
+	    Condition="'$(OnlyDebug)' != 'true'"
+            Command="dotnet run -- -r=zipFile Ext=&quot;exp,lib&quot; File=&quot;$(OutputDirectoryPath_X64_Release)/Alternet.UI.Pal.$(UI_PAL_EXT)&quot; Result=&quot;$(UI_PUBLISH_PACKAGES)/Alternet.UI.Pal-$[UIVersion]-$[OSArchitecture]-release.zip&quot;" />
+
+        <Exec
+            WorkingDirectory="$(RootDirectoryPath)/Source/Tools/Alternet.UI.RunCmd"
+            Command="dotnet run -- -r=zipFile Ext=&quot;exp,lib&quot; File=&quot;$(OutputDirectoryPath_X64_Debug)/Alternet.UI.Pal.$(UI_PAL_EXT)&quot; Result=&quot;$(UI_PUBLISH_PACKAGES)/Alternet.UI.Pal-$[UIVersion]-$[OSArchitecture]-debug.zip&quot;" />
+    </Target>
+
     <!-- ========================================== -->
     <Target Name="BuildNative_Windows_X64" Condition="$([MSBuild]::IsOsPlatform('Windows'))">
         <Exec Command="&quot;$(CppMsBuildPath)&quot; &quot;$(Bindings_NativeVcProjectFilePath)&quot; -maxcpucount -t:Rebuild -p:Configuration=Debug;Platform=x64;OutDir=&quot;$(OutputDirectoryPath_X64_Debug)\&quot;" />
         <Exec Command="&quot;$(CppMsBuildPath)&quot; &quot;$(Bindings_NativeVcProjectFilePath)&quot; -maxcpucount -t:Rebuild -p:Configuration=Release;Platform=x64;OutDir=&quot;$(OutputDirectoryPath_X64_Release)\&quot;" Condition="'$(OnlyDebug)' != 'true'"/>
+
+        <CallTarget Targets="Zip_Pal_64" />
     </Target>
     <!-- ========================================== -->
     <Target Name="BuildNative_Windows_CleanupAfterBuild" Condition="$([MSBuild]::IsOsPlatform('Windows'))">
@@ -108,6 +131,7 @@
               WorkingDirectory="$(Bindings_NativeUnixProjectBuildPath)" Condition="'$(OnlyDebug)' != 'true'"/>
         <Copy SourceFiles="@(NativeBuildResultFilesRelease)" DestinationFolder="$(OutputDirectoryPath_X64_Release)" 
 		Condition="'$(OnlyDebug)' != 'true'"/>
+        <CallTarget Targets="Zip_Pal_64" />
     </Target>
     <!-- ========================================== -->
     <Target Name="BuildNative" DependsOnTargets="BuildNative_Windows;BuildNative_Unix">

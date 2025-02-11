@@ -9,24 +9,28 @@
 		<UI_MACOS_ARTIFACTS_PATH>$(UI_ROOT_ARTIFACTS_PATH)\macOS\UI\</UI_MACOS_ARTIFACTS_PATH>
 		<UI_LINUX_ARTIFACTS_PATH>$(UI_ROOT_ARTIFACTS_PATH)\Linux\UI\</UI_LINUX_ARTIFACTS_PATH>
 		<UI_PAL_B>$(RootDirectoryPath)\Source\Alternet.UI.Pal\bin</UI_PAL_B>
+		<UI_PUBLISH_PACKAGES>$(RootDirectoryPath)/Publish/Packages/</UI_PUBLISH_PACKAGES>
     </PropertyGroup>
     <!-- ========================================== -->
     <PropertyGroup Condition="$([MSBuild]::IsOsPlatform('Windows'))">
 		<UI_ARTIFACTS_PATH>$(UI_ROOT_ARTIFACTS_PATH)\Windows\UI\</UI_ARTIFACTS_PATH>
 		<UI_PAL_ARTIFACTS_PATH>$(UI_WINDOWS_ARTIFACTS_PATH)\PAL</UI_PAL_ARTIFACTS_PATH>
 		<UI_PAL_BIN>$(RootDirectoryPath)\Source\Build\Alternet.UI.Pal\bin\Windows</UI_PAL_BIN>
+		<UI_PAL_EXT>dll</UI_PAL_EXT>
 	</PropertyGroup>		
     <!-- ========================================== -->
     <PropertyGroup Condition="$([MSBuild]::IsOsPlatform('OSX'))">
 		<UI_ARTIFACTS_PATH>$(UI_ROOT_ARTIFACTS_PATH)\macOS\UI\</UI_ARTIFACTS_PATH>
 		<UI_PAL_ARTIFACTS_PATH>$(UI_MACOS_ARTIFACTS_PATH)\PAL</UI_PAL_ARTIFACTS_PATH>
 		<UI_PAL_BIN>$(RootDirectoryPath)\Source\Build\Alternet.UI.Pal\bin\MacOS</UI_PAL_BIN>
+		<UI_PAL_EXT>dylib</UI_PAL_EXT>
 	</PropertyGroup>		
     <!-- ========================================== -->
     <PropertyGroup Condition="$([MSBuild]::IsOsPlatform('Linux'))">
 		<UI_ARTIFACTS_PATH>=$(UI_ROOT_ARTIFACTS_PATH)\Linux\UI\</UI_ARTIFACTS_PATH>
 		<UI_PAL_ARTIFACTS_PATH>$(UI_LINUX_ARTIFACTS_PATH)\PAL</UI_PAL_ARTIFACTS_PATH>
 		<UI_PAL_BIN>$(RootDirectoryPath)\Source\Build\Alternet.UI.Pal\bin\Linux</UI_PAL_BIN>
+		<UI_PAL_EXT>so</UI_PAL_EXT>
 	</PropertyGroup>		
     <!-- ========================================== -->
 </Project>
