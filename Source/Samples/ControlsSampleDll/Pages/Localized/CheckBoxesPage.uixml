@@ -22,13 +22,15 @@
                   IsTextLocalized="true"/>
           <Button Text="IsChecked = true" Margin="5" Name="isCheckedTrueButton"
                   IsTextLocalized="true"/>
-          <Button Text="Text = empty" Margin="5" Name="textEmptyButton" IsTextLocalized="true"/>
         </HorizontalStackPanel>
         <HorizontalStackPanel>
           <Button Text="State = Unchecked" Margin="5"
                   Name="checkStateUncheckedButton" IsTextLocalized="true"/>
           <Button Text="State = Checked" Margin="5"
                   Name="checkStateCheckedButton" IsTextLocalized="true"/>
+        </HorizontalStackPanel>
+        <HorizontalStackPanel>
+          <Button Text="Text = empty" Margin="5" Name="textEmptyButton" IsTextLocalized="true"/>
           <Button Text="State = Indeterm" Margin="5"
                   Name="checkStateIndeterminateButton" IsTextLocalized="true"/>
         </HorizontalStackPanel>

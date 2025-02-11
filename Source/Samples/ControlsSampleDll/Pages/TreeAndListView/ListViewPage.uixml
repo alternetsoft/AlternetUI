@@ -41,9 +41,9 @@
           </HorizontalStackPanel>
 
           <HorizontalStackPanel>
-            <Button Name="editItemsButton" Text="Edit Items..." Margin="0,3,0,0"
+            <Button Name="editItemsButton" Text="Items..." Margin="0,3,0,0"
                     Click="EditItemsButton_Click" IsTextLocalized="true"/>
-            <Button Name="editColumnsButton" Text="Edit Columns..." Margin="3,3,0,0"
+            <Button Name="editColumnsButton" Text="Columns..." Margin="3,3,0,0"
                     Click="EditColumnsButton_Click" IsTextLocalized="true"/>
           </HorizontalStackPanel>
 

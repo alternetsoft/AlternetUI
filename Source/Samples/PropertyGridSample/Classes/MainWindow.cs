@@ -470,6 +470,11 @@ namespace PropertyGridSample
                         }
                     });
                 }
+
+                App.AddIdleTask(() =>
+                {
+                    ControlParent.Refresh();
+                });
             }
 
             DoAction();

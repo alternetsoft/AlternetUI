@@ -87,8 +87,8 @@ namespace PropertyGridSample
             var separatorId = toolbar.AddSeparator();
 
             var saveClone = KnownSvgImages.ImgFileSave.Clone();
-            saveClone.SetColorOverride(KnownSvgColor.Normal, true, Color.Red);
-            saveClone.SetColorOverride(KnownSvgColor.Normal, false, Color.IndianRed);
+            saveClone.SetColorOverride(KnownSvgColor.Normal, isDark: true, Color.Yellow);
+            saveClone.SetColorOverride(KnownSvgColor.Normal, false, Color.Red);
 
             var buttonIdSave = toolbar.AddSpeedBtn(
                 CommonStrings.Default.ButtonSave,
