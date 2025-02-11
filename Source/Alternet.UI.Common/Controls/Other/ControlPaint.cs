@@ -25,27 +25,27 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
-        ///  Creates a new color that is a object of the given color.
+        /// Creates a new lighter color from the specified color.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static ColorStruct Light(ColorStruct baseColor, float percOfLightLight)
-            => new HLSColor(baseColor).Lighter(percOfLightLight);
+        public static ColorStruct Light(ColorStruct baseColor, float percOfLight)
+            => new HLSColor(baseColor).Lighter(percOfLight);
 
         /// <summary>
-        ///  Creates a new color that is a object of the given color.
+        /// Creates a new darker color from the specified color.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static ColorStruct Dark(ColorStruct baseColor, float percOfDarkDark)
-            => new HLSColor(baseColor).Darker(percOfDarkDark);
+        public static ColorStruct Dark(ColorStruct baseColor, float percOfDark)
+            => new HLSColor(baseColor).Darker(percOfDark);
 
         /// <summary>
-        ///  Creates a new color that is a object of the given color.
+        /// Creates a new darker color from the specified color.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static ColorStruct Dark(ColorStruct baseColor) => Dark(baseColor, 0.5f);
 
         /// <summary>
-        ///  Creates a new darker color from <paramref name="baseColor"/>.
+        /// Creates a new much darker color from the specified color.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static ColorStruct DarkDark(ColorStruct baseColor) => Dark(baseColor, 1.0f);
@@ -59,21 +59,21 @@ namespace Alternet.Drawing
         public static bool IsDark(Color color) => color.GetBrightness() <= .5;
 
         /// <summary>
-        ///  Returns true if the luminosity of <paramref name="c1"/> is less
-        ///  than <paramref name="c2"/>.
+        /// Returns true if the luminosity of <paramref name="c1"/> is less
+        /// than <paramref name="c2"/>.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool IsDarker(Color c1, Color c2)
             => new HLSColor(c1).Luminosity < new HLSColor(c2).Luminosity;
 
         /// <summary>
-        ///  Creates a new color that is a object of the given color.
+        /// Creates a new lighter color from the specified color.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static ColorStruct Light(ColorStruct baseColor) => Light(baseColor, 0.5f);
 
         /// <summary>
-        ///  Creates a new color that is a object of the given color.
+        /// Creates a new much lighter color from the specified color.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static ColorStruct LightLight(ColorStruct baseColor) => Light(baseColor, 1.0f);
