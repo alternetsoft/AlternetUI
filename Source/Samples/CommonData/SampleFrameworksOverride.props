@@ -2,7 +2,7 @@
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
 
   <PropertyGroup>
-  	<BoolNet9>false</BoolNet9>
+  	<BoolNet9>true</BoolNet9>
   	<BoolNet8>true</BoolNet8>
   	<BoolNet7>false</BoolNet7>
   	<BoolNet6>false</BoolNet6>
