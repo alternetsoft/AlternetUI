@@ -57,6 +57,51 @@ namespace Alternet.UI
         /// </summary>
         public static class NativeMethods
         {
+            private const string User32 = "user32.dll";
+            private const string UxTheme = "uxtheme.dll";
+            private const string DwmApi = "dwmapi.dll";
+
+            internal enum AppThemeMode
+            {
+                Default,
+                AllowDark,
+                ForceDark,
+                ForceLight,
+                Max,
+            }
+
+            internal enum WindowCompositionAttribute : uint
+            {
+                Undefined = 0,
+                NcrenderingEnabled = 1,
+                NcrenderingPolicy = 2,
+                TransitionsForcedisabled = 3,
+                AllowNcpaint = 4,
+                CaptionButtonBounds = 5,
+                NonclientRtlLayout = 6,
+                ForceIconicRepresentation = 7,
+                ExtendedFrameBounds = 8,
+                HasIconicBitmap = 9,
+                ThemeAttributes = 10,
+                NcrenderingExiled = 11,
+                Ncadornmentinfo = 12,
+                ExcludedFromLivepreview = 13,
+                VideoOverlayActive = 14,
+                ForceActivewindowAppearance = 15,
+                DisallowPeek = 16,
+                Cloak = 17,
+                Cloaked = 18,
+                AccentPolicy = 19,
+                FreezeRepresentation = 20,
+                EverUncloaked = 21,
+                VisualOwner = 22,
+                Holographic = 23,
+                ExcludedFromDda = 24,
+                Passiveupdatemode = 25,
+                Usedarkmodecolors = 26,
+                Last = 27,
+            }
+
             /// <summary>
             /// Sets the value of Desktop Window Manager (DWM) non-client rendering
             /// attributes for a window.
@@ -138,7 +183,11 @@ namespace Alternet.UI
             /// <param name="dwBufferCoord"></param>
             /// <param name="lpWriteRegion"></param>
             /// <returns></returns>
-            [DllImport("kernel32.dll", SetLastError = true, CharSet = CharSet.Auto, EntryPoint = "WriteConsoleOutputW")]
+            [DllImport(
+                "kernel32.dll",
+                SetLastError = true,
+                CharSet = CharSet.Auto,
+                EntryPoint = "WriteConsoleOutputW")]
             public static extern bool WriteConsoleOutput(
                 SafeFileHandle hConsoleOutput,
                 ConsoleCharInfo[] lpBuffer,
@@ -166,6 +215,76 @@ namespace Alternet.UI
             /// <returns></returns>
             [DllImport("kernel32.dll")]
             public static extern IntPtr GetConsoleWindow();
+
+            [return: MarshalAs(UnmanagedType.Bool)]
+            [DllImport(User32, SetLastError = true)]
+            internal static extern bool GetWindowInfo(IntPtr hwnd, ref WindowInfo pwi);
+
+            [DllImport(UxTheme, EntryPoint = "#104")]
+            internal static extern void RefreshImmersiveColorPolicyState();
+
+            [DllImport(UxTheme, EntryPoint = "#133", SetLastError = true)]
+            internal static extern bool AllowDarkModeForWindow(IntPtr window, bool isDarkModeAllowed);
+
+            /// <remarks>Available in Windows 10 build 1903 (May 2019 Update) and later</remarks>
+            [DllImport(UxTheme, EntryPoint = "#135", SetLastError = true)]
+            internal static extern bool SetPreferredAppMode(AppThemeMode preferredAppMode);
+
+            /// <remarks>Available only in Windows 10 build 1809 (October 2018 Update)</remarks>
+            [DllImport(UxTheme, EntryPoint = "#135", SetLastError = true)]
+            internal static extern bool AllowDarkModeForApp(bool isDarkModeAllowed);
+
+            [DllImport(UxTheme, EntryPoint = "#137", SetLastError = true)]
+            [return: MarshalAs(UnmanagedType.Bool)]
+            internal static extern bool IsDarkModeAllowedForWindow(IntPtr window);
+
+            [DllImport(UxTheme, EntryPoint = "#139", SetLastError = true)]
+            [return: MarshalAs(UnmanagedType.Bool)]
+            internal static extern bool IsDarkModeAllowedForApp();
+
+            [DllImport(User32, SetLastError = true)]
+            internal static extern bool SetWindowCompositionAttribute(
+                IntPtr window,
+                ref WindowCompositionAttributeData windowCompositionAttribute);
+
+            [DllImport(User32, SetLastError = true, CharSet = CharSet.Auto)]
+            internal static extern bool SetProp(
+                IntPtr window,
+                string propertyName,
+                IntPtr propertyValue);
+
+            [DllImport(DwmApi, SetLastError = false)]
+            internal static extern int DwmSetWindowAttribute(
+                IntPtr window,
+                DwmWindowAttribute attribute,
+                IntPtr valuePointer,
+                int valuePointerSize);
+
+            [DllImport(User32, CharSet = CharSet.Unicode, SetLastError = true)]
+            internal static extern bool SystemParametersInfo(
+                uint uiAction,
+                uint uiParam,
+                ref HighContrastData callback,
+                uint fwinini);
+
+            [DllImport(User32, SetLastError = true)]
+            internal static extern uint SendMessage(
+                IntPtr hWnd,
+                uint message,
+                IntPtr wParam,
+                IntPtr lParam);
+
+            [DllImport(UxTheme, EntryPoint = "#136")]
+            internal static extern void FlushMenuThemes();
+
+            [DllImport(User32)]
+            internal static extern IntPtr GetForegroundWindow();
+
+            [DllImport(UxTheme, CharSet = CharSet.Unicode, SetLastError = true)]
+            internal static extern int SetWindowTheme(
+                IntPtr window,
+                string? substituteAppName,
+                string? substituteIdList);
 
             /// <summary>
             /// Represents X and Y coordinates.
@@ -258,6 +377,39 @@ namespace Alternet.UI
                 /// Bottom bound of the rectangle.
                 /// </summary>
                 public short Bottom;
+            }
+
+            [StructLayout(LayoutKind.Sequential)]
+            internal readonly struct HighContrastData
+            {
+                internal readonly uint size;
+                internal readonly uint flags;
+                internal readonly IntPtr schemeNamePointer;
+
+                public HighContrastData(object? _ = null)
+                {
+                    size = (uint)Marshal.SizeOf(typeof(HighContrastData));
+                    flags = 0;
+                    schemeNamePointer = IntPtr.Zero;
+                }
+            }
+
+            [StructLayout(LayoutKind.Sequential)]
+            internal readonly struct WindowCompositionAttributeData
+            {
+                internal readonly WindowCompositionAttribute attribute;
+                internal readonly IntPtr data;
+                internal readonly int size;
+
+                public WindowCompositionAttributeData(
+                    WindowCompositionAttribute attribute,
+                    IntPtr data,
+                    int size)
+                {
+                    this.attribute = attribute;
+                    this.data = data;
+                    this.size = size;
+                }
             }
         }
     }

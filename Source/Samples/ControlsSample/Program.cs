@@ -2,6 +2,7 @@
 using System.ComponentModel;
 using System.IO;
 using System.Reflection;
+using System.Runtime.InteropServices;
 
 using Alternet.Drawing;
 
@@ -11,6 +12,10 @@ namespace ControlsSample
 {
     internal class Program
     {
+        static Program()
+        {
+        }
+
         public static void InitSamples()
         {
             PropertyGridSample.MainWindow.LimitedTypesStatic.Add(
