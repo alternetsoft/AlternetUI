@@ -13,6 +13,29 @@ namespace Alternet.UI
     public static class FileUtils
     {
         /// <summary>
+        /// Deletes the specified file if it exists.
+        /// </summary>
+        /// <param name="pathToFile">Path to file.</param>
+        public static void DeleteIfExists(string pathToFile)
+        {
+            if (File.Exists(pathToFile))
+                File.Delete(pathToFile);
+        }
+
+        /// <summary>
+        /// Gets directory name of the specified file path and creates
+        /// that directory if it is not exists.
+        /// </summary>
+        /// <param name="pathToFile">Path to file.</param>
+        public static void CreateFilePath(string pathToFile)
+        {
+            var dir = Path.GetDirectoryName(pathToFile);
+            if (Directory.Exists(dir))
+                return;
+            Directory.CreateDirectory(dir);
+        }
+
+        /// <summary>
         /// Returns <paramref name="path"/> if such directory exists;
         /// otherwise returns Null.
         /// </summary>
