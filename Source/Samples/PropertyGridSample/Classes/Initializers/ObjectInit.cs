@@ -45,14 +45,28 @@ namespace PropertyGridSample
 
         public static void SetBackgrounds(AbstractControl control)
         {
-            control.Backgrounds = new()
+            if(control.IsDarkBackground)
             {
-                Normal = Color.PaleTurquoise.AsBrush,
-                Hovered = Color.IndianRed.AsBrush,
-                Disabled = Color.DarkGray.AsBrush,
-                Pressed = Color.Cornsilk.AsBrush,
-                Focused = Color.DarkOrange.AsBrush,
-            };
+                control.Backgrounds = new()
+                {
+                    Normal = Color.PaleTurquoise.Darker().AsBrush,
+                    Hovered = Color.IndianRed.Darker().AsBrush,
+                    Disabled = Color.DarkGray.Darker().AsBrush,
+                    Pressed = Color.Cornsilk.Darker().AsBrush,
+                    Focused = Color.DarkOrange.Darker().AsBrush,
+                };                
+            }
+            else
+            {
+                control.Backgrounds = new()
+                {
+                    Normal = Color.PaleTurquoise.AsBrush,
+                    Hovered = Color.IndianRed.AsBrush,
+                    Disabled = Color.DarkGray.AsBrush,
+                    Pressed = Color.Cornsilk.AsBrush,
+                    Focused = Color.DarkOrange.AsBrush,
+                };
+            }            
         }
 
         public static void InitPageSetupDialog(object control)
@@ -227,6 +241,8 @@ namespace PropertyGridSample
             Actions.Add(typeof(Border), (c) =>
             {
                 var border = (c as Border)!;
+                border.ParentBackColor = false;
+                border.ParentForeColor = false;
                 border.SuggestedSize = defaultListSize;
                 SetBackgrounds(border);
 

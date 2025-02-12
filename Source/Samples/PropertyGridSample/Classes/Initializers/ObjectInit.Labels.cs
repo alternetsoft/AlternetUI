@@ -66,6 +66,7 @@ namespace PropertyGridSample
             var s = "https://www.google.com";
             label.Text = "LinkLabel";
             label.Url = s;
+            label.IsUnderline = true;
         }
     }
 }

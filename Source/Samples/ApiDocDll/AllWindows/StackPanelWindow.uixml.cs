@@ -8,7 +8,7 @@ namespace ApiDoc
         public StackPanelWindow()
         {
             InitializeComponent();
-            stackPanel.Background = Alternet.Drawing.Brushes.LightGray;
+            stackPanel.HasBorder = true;
         }
 
         public void StackPanelExample1()

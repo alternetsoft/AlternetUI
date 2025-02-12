@@ -429,25 +429,28 @@ namespace Alternet.UI
 
             previousAssertMessage = s;
 
-            if (s.StartsWith("<?xml"))
+            App.AddIdleTask(() =>
             {
-                try
+                if (s.StartsWith("<?xml"))
                 {
-                    var data = XmlUtils.DeserializeFromString<AssertFailureExceptionData>(s);
-                    var e = new AssertFailureException(data.Message ?? "WxWidgets assert failure");
-                    e.AssertData = data;
-                    App.LogError(e, LogItemKind.Warning, true);
+                    try
+                    {
+                        var data = XmlUtils.DeserializeFromString<AssertFailureExceptionData>(s);
+                        var e = new AssertFailureException(data.Message ?? "WxWidgets assert failure");
+                        e.AssertData = data;
+                        App.LogError(e, LogItemKind.Warning, true);
+                    }
+                    catch
+                    {
+                        var r = "AssertFailure: Error getting AssertFailureExceptionData";
+                        App.LogError(new Exception(r), LogItemKind.Warning, true);
+                    }
                 }
-                catch
+                else
                 {
-                    var r = "NativeApplication_AssertFailure: Error getting AssertFailureExceptionData";
-                    App.LogError(new Exception(r), LogItemKind.Warning, true);
+                    App.LogError(s, LogItemKind.Warning, true);
                 }
-            }
-            else
-            {
-                App.LogError(s, LogItemKind.Warning, true);
-            }
+            });
         }
 
         /// <summary>

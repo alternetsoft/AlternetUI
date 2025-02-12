@@ -41,6 +41,29 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Parses command line args of the application and gets "-IsDark"
+        /// argument value.
+        /// </summary>
+        /// <returns></returns>
+        public static bool ParseAndGetIsDark()
+        {
+            return ParseAndGetBool("-IsDark");
+        }
+
+        /// <summary>
+        /// Parses command line args of the application and gets
+        /// value of the argument specified by the name.
+        /// </summary>
+        /// <returns></returns>
+        /// <param name="prmName">Command line argument name. Example: -IsDark.</param>
+        public static bool ParseAndGetBool(string prmName)
+        {
+            Default.Parse();
+            var result = Default.AsBool(prmName);
+            return result;
+        }
+
+        /// <summary>
         /// Gets whether argument with the specified name exists in the command line.
         /// </summary>
         /// <param name="argName">Argument name.</param>

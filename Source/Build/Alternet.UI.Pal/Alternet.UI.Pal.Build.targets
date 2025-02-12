@@ -33,11 +33,11 @@
 
         <Exec
             WorkingDirectory="$(RootDirectoryPath)/Source/Tools/Alternet.UI.RunCmd"
-            Command="dotnet run -- -r=zipFile Ext=&quot;exp,lib&quot; File=&quot;$(OutputDirectoryPath_X86_Release)/Alternet.UI.Pal.dll&quot; Result=&quot;$(UI_PUBLISH_PACKAGES)/Alternet.UI.Pal-$[UIVersion]-$[OSArchitectureX86]-release.zip&quot;" />
+            Command="dotnet run -- -r=zipFile Ext=&quot;exp,lib&quot; File=&quot;$(OutputDirectoryPath_X86_Release)/Alternet.UI.Pal.dll&quot; Result=&quot;$(UI_PUBLISH_PACKAGES)/Alternet.UI.Pal-_UIVersion_-_OSArchitectureX86_-release.zip&quot;" />
 
         <Exec
             WorkingDirectory="$(RootDirectoryPath)/Source/Tools/Alternet.UI.RunCmd"
-            Command="dotnet run -- -r=zipFile Ext=&quot;exp,lib&quot; File=&quot;$(OutputDirectoryPath_X86_Debug)/Alternet.UI.Pal.dll&quot; Result=&quot;$(UI_PUBLISH_PACKAGES)/Alternet.UI.Pal-$[UIVersion]-$[OSArchitectureX86]-debug.zip&quot;" />
+            Command="dotnet run -- -r=zipFile Ext=&quot;exp,lib&quot; File=&quot;$(OutputDirectoryPath_X86_Debug)/Alternet.UI.Pal.dll&quot; Result=&quot;$(UI_PUBLISH_PACKAGES)/Alternet.UI.Pal-_UIVersion_-_OSArchitectureX86_-debug.zip&quot;" />
 
     </Target>
 
@@ -45,11 +45,11 @@
         <Exec
             WorkingDirectory="$(RootDirectoryPath)/Source/Tools/Alternet.UI.RunCmd"
 	    Condition="'$(OnlyDebug)' != 'true'"
-            Command="dotnet run -- -r=zipFile Ext=&quot;exp,lib&quot; File=&quot;$(OutputDirectoryPath_X64_Release)/Alternet.UI.Pal.$(UI_PAL_EXT)&quot; Result=&quot;$(UI_PUBLISH_PACKAGES)/Alternet.UI.Pal-$[UIVersion]-$[OSArchitecture]-release.zip&quot;" />
+            Command="dotnet run -- -r=zipFile Ext=&quot;exp,lib&quot; File=&quot;$(OutputDirectoryPath_X64_Release)/Alternet.UI.Pal.$(UI_PAL_EXT)&quot; Result=&quot;$(UI_PUBLISH_PACKAGES)/Alternet.UI.Pal-_UIVersion_-_OSArchitecture_-release.zip&quot;" />
 
         <Exec
             WorkingDirectory="$(RootDirectoryPath)/Source/Tools/Alternet.UI.RunCmd"
-            Command="dotnet run -- -r=zipFile Ext=&quot;exp,lib&quot; File=&quot;$(OutputDirectoryPath_X64_Debug)/Alternet.UI.Pal.$(UI_PAL_EXT)&quot; Result=&quot;$(UI_PUBLISH_PACKAGES)/Alternet.UI.Pal-$[UIVersion]-$[OSArchitecture]-debug.zip&quot;" />
+            Command="dotnet run -- -r=zipFile Ext=&quot;exp,lib&quot; File=&quot;$(OutputDirectoryPath_X64_Debug)/Alternet.UI.Pal.$(UI_PAL_EXT)&quot; Result=&quot;$(UI_PUBLISH_PACKAGES)/Alternet.UI.Pal-_UIVersion_-_OSArchitecture_-debug.zip&quot;" />
     </Target>
 
     <!-- ========================================== -->

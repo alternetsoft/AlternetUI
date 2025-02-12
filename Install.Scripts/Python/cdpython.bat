@@ -1,0 +1,1 @@
+cd C:\Users\user\AppData\Local\Programs\Python\Python312

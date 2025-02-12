@@ -1,3 +1,12 @@
+# 0.9.709 (2025 February 12)
+
+- ColorDialog: macOs related fixes.
+- Improve installation scripts.
+- CommandLineArgs: AsBool, Reset, Parse().
+- Color: Darker, DarkerDarker, Lighter, LighterLighter.
+- Demo: MacOs and Linux dark theme related improvements.
+- Demo: Improve layout and fix minor bugs.
+
 # 0.9.708 (2025 February 8)
 
 - Window: set default BackColor and ForeColor in contstructor as it will improve look on macOs.
