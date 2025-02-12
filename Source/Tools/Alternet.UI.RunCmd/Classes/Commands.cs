@@ -322,8 +322,8 @@ namespace Alternet.UI
                 return;
             }
 
-            if (File.Exists(pathToArch))
-                File.Delete(pathToArch);
+            FileUtils.CreateFilePath(pathToArch);
+            FileUtils.DeleteIfExists(pathToArch);
 
             SharpCompressUtils.ZipFile(
                 pathToFile,
@@ -368,6 +368,8 @@ namespace Alternet.UI
                 "*.png",
                 SearchOption.TopDirectoryOnly);
 
+            FileUtils.CreateFilePath(pathToResult);
+
             foreach (var file in files)
             {
                 var name = Path.GetFileNameWithoutExtension(file);
@@ -376,8 +378,7 @@ namespace Alternet.UI
 
                 var resultPath = Path.Combine(pathToResult, name);
 
-                if (File.Exists(resultPath))
-                    File.Delete(resultPath);
+                FileUtils.DeleteIfExists(resultPath);
 
                 var image = new Bitmap(file);
                 var converted = image.WithLightLightColors();
@@ -411,8 +412,8 @@ namespace Alternet.UI
                 return;
             }
 
-            if (File.Exists(pathToArch))
-                File.Delete(pathToArch);
+            FileUtils.CreateFilePath(pathToArch);
+            FileUtils.DeleteIfExists(pathToArch);
 
             SharpCompressUtils.ZipFolderWithRootSubFolder(
                 pathToFolder,
