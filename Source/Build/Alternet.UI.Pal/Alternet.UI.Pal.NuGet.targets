@@ -18,16 +18,24 @@
             Include="$(NugetPayloadDirectoryPath_Windows_X64)\$(NugetNativeDllFileName)" />
         <NugetPayload_Native_Windows_X86
             Include="$(NugetPayloadDirectoryPath_Windows_X86)\$(NugetNativeDllFileName)" />
+        <NugetPayload_Native_Windows_Arm64
+            Include="$(NugetPayloadDirectoryPath_Windows_Arm64)\$(NugetNativeDllFileName)" />
 
         <!-- MacOS -->
 
         <NugetPayload_Native_MacOS
             Include="$(NugetPayloadDirectoryPath_MacOS)\$(NugetNativeDllFileName)" />
 
+        <NugetPayload_Native_MacOS_Arm64
+            Include="$(NugetPayloadDirectoryPath_MacOS_Arm64)\$(NugetNativeDllFileName)" />
+
         <!-- Linux -->
 
         <NugetPayload_Native_Linux
             Include="$(NugetPayloadDirectoryPath_Linux)\$(NugetNativeDllFileName)" />
+
+        <NugetPayload_Native_Linux_Arm64
+            Include="$(NugetPayloadDirectoryPath_Linux_Arm64)\$(NugetNativeDllFileName)" />
     </ItemGroup>
 <!-- ========================================== -->
     <Target Name="NuGet_Clean">
@@ -54,17 +62,44 @@
         <Copy SourceFiles="@(NugetPayload_Native_Windows_X64)"
 		 DestinationFolder="$(NuGetSourceRuntimesDirectoryPath)\$(NuGetRuntimeId_Windows_X64)\native" />
 
+        <MakeDir Directories="$(NuGetSourceRuntimesDirectoryPath)\$(NuGetRuntimeId_Windows_Arm64)\native"/>
+        <Copy SourceFiles="@(NugetPayload_Native_Windows_Arm64)"
+		 DestinationFolder="$(NuGetSourceRuntimesDirectoryPath)\$(NuGetRuntimeId_Windows_Arm64)\native" />
+
         <!-- MacOS  ============================ -->
 
         <MakeDir Directories="$(NuGetSourceRuntimesDirectoryPath)\$(NuGetRuntimeId_MacOS)\native"/>
         <Copy SourceFiles="@(NugetPayload_Native_MacOS)"
 		 DestinationFolder="$(NuGetSourceRuntimesDirectoryPath)\$(NuGetRuntimeId_MacOS)\native" />
 
+	<ItemGroup>
+    		<MacOs_Arm64_PalZipFiles Include="$(UI_PUBLISH_PACKAGES)/Alternet.UI.Pal*maccatalyst-arm64-release.zip" />
+	</ItemGroup>
+
+	<PropertyGroup>
+		<MacOs_Arm64_NugetDestFolder>$(NuGetSourceRuntimesDirectoryPath)\$(NuGetRuntimeId_MacOS_Arm64)\native</MacOs_Arm64_NugetDestFolder>
+	</PropertyGroup>
+        
+	<Unzip SourceFiles="@(MacOs_Arm64_PalZipFiles)" DestinationFolder="$(MacOs_Arm64_NugetDestFolder)" />
+
+<!--
+  
+
+-->
+
+        <MakeDir Directories="$(MacOs_Arm64_NugetDestFolder)"/>
+        <Copy SourceFiles="@(NugetPayload_Native_MacOS_Arm64)"
+		 DestinationFolder="$(MacOs_Arm64_NugetDestFolder)" />
+
         <!-- Linux  ============================ -->
 
         <MakeDir Directories="$(NuGetSourceRuntimesDirectoryPath)\$(NuGetRuntimeId_Linux)\native"/>
         <Copy SourceFiles="@(NugetPayload_Native_Linux)"
 		 DestinationFolder="$(NuGetSourceRuntimesDirectoryPath)\$(NuGetRuntimeId_Linux)\native" />
+
+        <MakeDir Directories="$(NuGetSourceRuntimesDirectoryPath)\$(NuGetRuntimeId_Linux_Arm64)\native"/>
+        <Copy SourceFiles="@(NugetPayload_Native_Linux_Arm64)"
+		 DestinationFolder="$(NuGetSourceRuntimesDirectoryPath)\$(NuGetRuntimeId_Linux_Arm64)\native" />
 
         <!-- Sign dll, so, dylib  ============================ -->
 

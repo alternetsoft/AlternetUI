@@ -31,6 +31,10 @@
         <NugetPayloadDirectoryPath_Windows_X64>$(BinDirectoryPath)\$(PlatformName_Windows)\x64\$(ManagedBuildConfiguration)\</NugetPayloadDirectoryPath_Windows_X64>
         <NugetPayloadDirectoryPath_MacOS>$(BinDirectoryPath)\$(PlatformName_MacOS)\x64\$(ManagedBuildConfiguration)\</NugetPayloadDirectoryPath_MacOS>
         <NugetPayloadDirectoryPath_Linux>$(BinDirectoryPath)\$(PlatformName_Linux)\x64\$(ManagedBuildConfiguration)\</NugetPayloadDirectoryPath_Linux>
+
+        <NugetPayloadDirectoryPath_MacOS_Arm64>$(BinDirectoryPath)\$(PlatformName_MacOS)\arm64\$(ManagedBuildConfiguration)\</NugetPayloadDirectoryPath_MacOS_Arm64>
+        <NugetPayloadDirectoryPath_Linux_Arm64>$(BinDirectoryPath)\$(PlatformName_Linux)\arm64\$(ManagedBuildConfiguration)\</NugetPayloadDirectoryPath_Linux_Arm64>
+        <NugetPayloadDirectoryPath_Windows_Arm64>$(BinDirectoryPath)\$(PlatformName_Windows)\arm64\$(ManagedBuildConfiguration)\</NugetPayloadDirectoryPath_Windows_Arm64>
     </PropertyGroup>
 
     <PropertyGroup>
