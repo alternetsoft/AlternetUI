@@ -20,7 +20,6 @@
 *.db 
 *.ipch 
 *.ilk 
-*.zip
 *.dat
 *.dex
 *.apks
