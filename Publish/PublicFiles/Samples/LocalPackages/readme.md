@@ -1,5 +1,2 @@
-You can copy these nugets (or later versions):
-Alternet.UI.0.9.613-beta.nupkg
-Alternet.UI.0.9.613-beta.snupkg
-Alternet.UI.Pal.613-beta.nupkg
-to this folder.
+You can copy Alternet.UI nugets to this folder.
+When Alternet.UI nugets are present in this folder, they will be used in the demos.
