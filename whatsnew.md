@@ -1,3 +1,9 @@
+# 0.9.710 (2025 February 14)
+
+- Fixes related to arm64 support.
+- Fixes related to nuget packages build.
+- SplittedTreeAndCards: Do not use DelayedSelectionChanged.
+
 # 0.9.709 (2025 February 12)
 
 - ColorDialog: macOs related fixes.
