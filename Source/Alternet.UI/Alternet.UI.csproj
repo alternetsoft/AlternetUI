@@ -3,6 +3,7 @@
   <Import Project="..\Version\VersionNugets.props" />
   <Import Project="..\Version\TargetFrameworks.props" />
   <Import Project="..\Keys\Keys.props" />
+  <Import Project="..\Version\CommonPackages.props" />
 
 <!-- ================================================= -->
 
