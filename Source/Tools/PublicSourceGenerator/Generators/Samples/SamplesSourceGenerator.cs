@@ -140,9 +140,15 @@ namespace Alternet.UI.PublicSourceGenerator.Generators.Samples
         {
             var csproj = new CsprojFile(csprojPath);
 
-            csproj.RemoveProjectReference("Alternet.UI.csproj", debug);
-            csproj.RemoveProjectReference("Alternet.UI.Interfaces.csproj");
-            csproj.RemoveProjectReference("Alternet.UI.Common.csproj");
+            void Remove(string packageName)
+            {
+                if (!csproj.RemoveProjectReference($"{packageName}.csproj", debug))
+                    return;
+            }
+
+            Remove("Alternet.UI");
+            Remove("Alternet.UI.Interfaces");
+            Remove("Alternet.UI.Common");
 
             if (addPackage)
                 csproj.AddPackageReference("Alternet.UI", version);
