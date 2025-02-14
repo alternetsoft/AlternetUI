@@ -1,6 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
 
+<PropertyGroup>
+  <OSARCH>$([System.Runtime.InteropServices.RuntimeInformation]::OSArchitecture)</OSARCH>
+  <IsLinuxX64 Condition="$([MSBuild]::IsOsPlatform('Linux')) And $(OSARCH) == X64">true</IsLinuxX64>
+  <IsOsxArm64 Condition="$([MSBuild]::IsOsPlatform('OSX')) And $(OSARCH) == Arm64">true</IsOsxArm64>
+  <IsOsxX64 Condition="$([MSBuild]::IsOsPlatform('OSX')) And $(OSARCH) == X64">true</IsOsxX64>
+  <IsWindowsX64 Condition="$([MSBuild]::IsOsPlatform('Windows')) And $(OSARCH) == X64">true</IsWindowsX64>
+</PropertyGroup>
+
     <PropertyGroup>
 	<UseFullAlternetUI Condition="'$(UseFullAlternetUI)'==''">true</UseFullAlternetUI>
     </PropertyGroup>
@@ -114,17 +122,21 @@
    <!-- ====================================================== -->
 
     <ItemGroup Condition="$([MSBuild]::IsOsPlatform('OSX'))">
-        <None Include="$(MSBuildThisFileDirectory)\..\Alternet.UI.Pal\bin\x64\Debug\Alternet.UI.Pal.dylib" Link="Alternet.UI.Pal.dylib">
+        <None Include="$(MSBuildThisFileDirectory)\..\Alternet.UI.Pal\bin\x64\Debug\Alternet.UI.Pal.dylib"
+		 Link="Alternet.UI.Pal.dylib">
             <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
         </None>
+
     </ItemGroup>
 
    <!-- ====================================================== -->
 
     <ItemGroup Condition="$([MSBuild]::IsOsPlatform('Linux'))">
-        <None Include="$(MSBuildThisFileDirectory)\..\Alternet.UI.Pal\bin\x64\Debug\Alternet.UI.Pal.so" Link="Alternet.UI.Pal.so">
+        <None Include="$(MSBuildThisFileDirectory)\..\Alternet.UI.Pal\bin\x64\Debug\Alternet.UI.Pal.so"
+		 Link="Alternet.UI.Pal.so">
             <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
         </None>
+
     </ItemGroup>
 
    <!-- ====================================================== -->
