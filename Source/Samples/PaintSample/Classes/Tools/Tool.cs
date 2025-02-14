@@ -78,7 +78,7 @@ namespace PaintSample
         {
         }
 
-        private void Canvas_KeyDown(object sender, KeyEventArgs e)
+        private void Canvas_KeyDown(object? sender, KeyEventArgs e)
         {
             OnKeyDown(e);
         }

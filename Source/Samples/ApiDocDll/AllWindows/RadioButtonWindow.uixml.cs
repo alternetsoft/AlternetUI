@@ -24,7 +24,9 @@ namespace ApiDoc
         #region RadioButtonEventHandler
         private static void RadioButton_CheckedChanged(object? sender, EventArgs e)
         {
-            var text = ((Alternet.UI.RadioButton)sender).IsChecked.ToString();
+            if (sender is not Alternet.UI.RadioButton radioButton)
+                return;
+            var text = radioButton.IsChecked.ToString();
             MessageBox.Show(text, string.Empty);
         }
 

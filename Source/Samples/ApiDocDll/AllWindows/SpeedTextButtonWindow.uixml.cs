@@ -34,7 +34,7 @@ namespace ApiDoc
             return result;
         }
 
-        private void MainWindow_KeyDown(object sender, KeyEventArgs e)
+        private void MainWindow_KeyDown(object? sender, KeyEventArgs e)
         {
             // Shortcuts in SpeedButton are not handled by default, they are only shown in hint,
             // so here we need to handle speedbutton shortcut.
