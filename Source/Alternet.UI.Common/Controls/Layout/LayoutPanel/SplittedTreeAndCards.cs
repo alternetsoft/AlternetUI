@@ -224,7 +224,7 @@ namespace Alternet.UI
                 HasBorder = false,
             };
 
-            listBox.DelayedSelectionChanged += OnSelectionChanged;
+            listBox.SelectionChanged += OnSelectionChanged;
 
             return listBox;
         }
