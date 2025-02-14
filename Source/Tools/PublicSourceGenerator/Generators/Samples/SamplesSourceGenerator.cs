@@ -1,4 +1,5 @@
 ﻿using Alternet.UI.Versioning;
+
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -8,10 +9,16 @@ namespace Alternet.UI.PublicSourceGenerator.Generators.Samples
 {
     static class SamplesSourceGenerator
     {
-        public static int Generate(Repository repository, ProductVersion productVersion, int buildNumber, string targetDirectoryPath)
+        public static int Generate(
+            Repository repository,
+            ProductVersion productVersion,
+            int buildNumber,
+            string targetDirectoryPath)
         {
             try
             {
+                targetDirectoryPath = Path.GetFullPath(targetDirectoryPath);
+
                 if (Directory.Exists(targetDirectoryPath))
                     Directory.Delete(targetDirectoryPath, recursive: true);
                 Directory.CreateDirectory(targetDirectoryPath);
@@ -19,14 +26,20 @@ namespace Alternet.UI.PublicSourceGenerator.Generators.Samples
                 var samplesRootRelativePath = @"Source\Samples";
                 var samplesRootFullPath
                     = Path.GetFullPath(Path.Combine(repository.RootPath, samplesRootRelativePath));
-                var sampleDirectoryNames1
-                    = Directory.GetDirectories(samplesRootFullPath, "*Sample").Select(x => Path.GetFileName(x)!);
-                var sampleDirectoryNames2
-                    = Directory.GetDirectories(samplesRootFullPath, "*SampleDll").Select(x => Path.GetFileName(x)!);
 
                 List<string> sampleDirectoryNames = new();
-                sampleDirectoryNames.AddRange(sampleDirectoryNames1);
-                sampleDirectoryNames.AddRange(sampleDirectoryNames2);
+
+                void AddToSampleDirectoryNames(string mask)
+                {
+                    var sampleDirectoryNames1
+                        = Directory.GetDirectories(samplesRootFullPath, mask)
+                        .Select(x => Path.GetFileName(x)!);
+                    sampleDirectoryNames.AddRange(sampleDirectoryNames1);
+                }
+
+                AddToSampleDirectoryNames("*Sample");
+                AddToSampleDirectoryNames("*SampleDll");
+                AddToSampleDirectoryNames("ApiDocDll");
 
                 foreach (var sampleDirectoryName in sampleDirectoryNames)
                 {
@@ -37,16 +50,19 @@ namespace Alternet.UI.PublicSourceGenerator.Generators.Samples
                         targetName: sampleDirectoryName,
                         ignoredDirectores: new[] { "build", "Testing" });
 
-                    var projectFiles1 = Directory.GetFiles(
-                        Path.Combine(targetDirectoryPath, sampleDirectoryName),
-                        "*Sample.csproj");
-                    var projectFiles2 = Directory.GetFiles(
-                        Path.Combine(targetDirectoryPath, sampleDirectoryName),
-                        "*SampleDll.csproj");
-
                     List<string> projectFiles = new();
-                    projectFiles.AddRange(projectFiles1);
-                    projectFiles.AddRange(projectFiles2);
+
+                    void AddToProjectFiles(string mask)
+                    {
+                        var projectFiles1 = Directory.GetFiles(
+                            Path.Combine(targetDirectoryPath, sampleDirectoryName),
+                            mask);
+                        projectFiles.AddRange(projectFiles1);
+                    }
+
+                    AddToProjectFiles("*Sample.csproj");
+                    AddToProjectFiles("*SampleDll.csproj");
+                    AddToProjectFiles("ApiDocDll.csproj");
 
                     PatchSampleProjectFile(
                         projectFiles.Single(),
@@ -67,7 +83,7 @@ namespace Alternet.UI.PublicSourceGenerator.Generators.Samples
 
                 File.Copy(
                     Path.Combine(repository.RootPath, @"Publish\PublicFiles\Samples\NuGet.config"),
-                    Path.Combine(targetDirectoryPath, "NuGet.config"));                
+                    Path.Combine(targetDirectoryPath, "NuGet.config"));
 
                 Directory.CreateDirectory(Path.Combine(targetDirectoryPath, "CommonData"));
                 Directory.CreateDirectory(Path.Combine(targetDirectoryPath, "LocalPackages"));
@@ -90,7 +106,7 @@ namespace Alternet.UI.PublicSourceGenerator.Generators.Samples
                 }
 
                 var commonDataFiles = Directory.GetFiles(sourceCommonDataPath, "*");
-                foreach(var commonDataFile in commonDataFiles)
+                foreach (var commonDataFile in commonDataFiles)
                 {
                     var commonDataFileName = Path.GetFileName(commonDataFile);
                     CopyCommonData(commonDataFileName);
@@ -123,12 +139,18 @@ namespace Alternet.UI.PublicSourceGenerator.Generators.Samples
             bool debug = false)
         {
             var csproj = new CsprojFile(csprojPath);
-            
-            csproj.RemoveProjectReference("Alternet.UI.csproj", debug);
-            csproj.RemoveProjectReference("Alternet.UI.Interfaces.csproj");
-            csproj.RemoveProjectReference("Alternet.UI.Common.csproj");
 
-            if(addPackage)
+            void Remove(string packageName)
+            {
+                if (!csproj.RemoveProjectReference($"{packageName}.csproj", debug))
+                    return;
+            }
+
+            Remove("Alternet.UI");
+            Remove("Alternet.UI.Interfaces");
+            Remove("Alternet.UI.Common");
+
+            if (addPackage)
                 csproj.AddPackageReference("Alternet.UI", version);
 
             csproj.Save();

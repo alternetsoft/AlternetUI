@@ -3,6 +3,7 @@
   <Import Project="..\Version\VersionNugets.props" />
   <Import Project="..\Version\TargetFrameworks.props" />
   <Import Project="..\Keys\Keys.props" />
+  <Import Project="..\Version\CommonPackages.props" />
 
 <!-- ================================================= -->
 
@@ -73,6 +74,8 @@
 
     <None Include="..\Alternet.UI.Common\bin\Release\netstandard2.0\Alternet.UI.Common.dll" Pack="True" PackagePath="lib\netstandard2.0" />
     <None Include="..\Alternet.UI.Interfaces\bin\Release\netstandard2.0\Alternet.UI.Interfaces.dll" Pack="True" PackagePath="lib\netstandard2.0" />
+    <None Include="..\Alternet.UI.Common\bin\Release\netstandard2.0\Alternet.UI.Common.xml" Pack="True" PackagePath="lib\netstandard2.0" />
+    <None Include="..\Alternet.UI.Interfaces\bin\Release\netstandard2.0\Alternet.UI.Interfaces.xml" Pack="True" PackagePath="lib\netstandard2.0" />
 
   </ItemGroup>
 

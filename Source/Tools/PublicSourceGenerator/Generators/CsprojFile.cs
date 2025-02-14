@@ -48,7 +48,7 @@ namespace Alternet.UI.PublicSourceGenerator.Generators
             }
         }
 
-        public void RemoveProjectReference(string projectName, bool debug = false)
+        public bool RemoveProjectReference(string projectName, bool debug = false)
         {
             if(debug)
             {
@@ -75,9 +75,11 @@ namespace Alternet.UI.PublicSourceGenerator.Generators
                     if (!attrValue.EndsWith(projectName))
                         continue;
                     reference.Remove();
-                    return;
+                    return true;
                 }
             }
+
+            return false;
         }
 
         public void SetPackageReferenceVersion(string name, string version)
