@@ -6,12 +6,16 @@
         <NuGetExeDownloadUrl>https://alternetsoftware.blob.core.windows.net/ui-dev/build/nuget/nuget.exe</NuGetExeDownloadUrl>
         <NuGetRuntimeId_Windows_X64>win-x64</NuGetRuntimeId_Windows_X64>
         <NuGetRuntimeId_Windows_X86>win-x86</NuGetRuntimeId_Windows_X86>
-        <NuGetRuntimeId_MacOS>osx-x64</NuGetRuntimeId_MacOS>
-        <NuGetRuntimeId_Linux>linux-x64</NuGetRuntimeId_Linux>
-
         <NuGetRuntimeId_Windows_Arm64>win-arm64</NuGetRuntimeId_Windows_Arm64>
-        <NuGetRuntimeId_Linux_Arm64>linux-arm64</NuGetRuntimeId_Linux_Arm64>
+
+        <NuGetRuntimeId_MacOS>osx-x64</NuGetRuntimeId_MacOS>
         <NuGetRuntimeId_MacOS_Arm64>osx-arm64</NuGetRuntimeId_MacOS_Arm64>
+        <NuGetRuntimeId_MacOS_X64>osx-x64</NuGetRuntimeId_MacOS_X64>
+
+        <NuGetRuntimeId_Linux>linux-x64</NuGetRuntimeId_Linux>
+        <NuGetRuntimeId_Linux_Arm64>linux-arm64</NuGetRuntimeId_Linux_Arm64>
+        <NuGetRuntimeId_Linux_X64>linux-x64</NuGetRuntimeId_Linux_X64>
+
     </PropertyGroup>
 
 </Project>

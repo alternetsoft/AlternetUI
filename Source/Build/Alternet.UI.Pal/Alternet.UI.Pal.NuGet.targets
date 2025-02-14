@@ -23,8 +23,8 @@
 
         <!-- MacOS -->
 
-        <NugetPayload_Native_MacOS
-            Include="$(NugetPayloadDirectoryPath_MacOS)\$(NugetNativeDllFileName)" />
+        <NugetPayload_Native_MacOS_X64
+            Include="$(NugetPayloadDirectoryPath_MacOS_X64)\$(NugetNativeDllFileName)" />
 
         <NugetPayload_Native_MacOS_Arm64
             Include="$(NugetPayloadDirectoryPath_MacOS_Arm64)\$(NugetNativeDllFileName)" />
@@ -68,38 +68,56 @@
 
         <!-- MacOS  ============================ -->
 
-        <MakeDir Directories="$(NuGetSourceRuntimesDirectoryPath)\$(NuGetRuntimeId_MacOS)\native"/>
+        <MakeDir Directories="$(NuGetSourceRuntimesDirectoryPath)\$(NuGetRuntimeId_MacOS_X64)\native"/>
+        <MakeDir Directories="$(NuGetSourceRuntimesDirectoryPath)\$(NuGetRuntimeId_MacOS_Arm64)\native"/>
+<!--
         <Copy SourceFiles="@(NugetPayload_Native_MacOS)"
 		 DestinationFolder="$(NuGetSourceRuntimesDirectoryPath)\$(NuGetRuntimeId_MacOS)\native" />
+-->
 
 	<ItemGroup>
     		<MacOs_Arm64_PalZipFiles Include="$(UI_PUBLISH_PACKAGES)/Alternet.UI.Pal*maccatalyst-arm64-release.zip" />
+    		<MacOs_X64_PalZipFiles Include="$(UI_PUBLISH_PACKAGES)/Alternet.UI.Pal*maccatalyst-x64-release.zip" />
 	</ItemGroup>
 
 	<PropertyGroup>
 		<MacOs_Arm64_NugetDestFolder>$(NuGetSourceRuntimesDirectoryPath)\$(NuGetRuntimeId_MacOS_Arm64)\native</MacOs_Arm64_NugetDestFolder>
+		<MacOs_X64_NugetDestFolder>$(NuGetSourceRuntimesDirectoryPath)\$(NuGetRuntimeId_MacOS_X64)\native</MacOs_X64_NugetDestFolder>
 	</PropertyGroup>
         
 	<Unzip SourceFiles="@(MacOs_Arm64_PalZipFiles)" DestinationFolder="$(MacOs_Arm64_NugetDestFolder)" />
-
-<!--
-  
-
--->
+	<Unzip SourceFiles="@(MacOs_X64_PalZipFiles)" DestinationFolder="$(MacOs_X64_NugetDestFolder)" />
 
         <MakeDir Directories="$(MacOs_Arm64_NugetDestFolder)"/>
-        <Copy SourceFiles="@(NugetPayload_Native_MacOS_Arm64)"
-		 DestinationFolder="$(MacOs_Arm64_NugetDestFolder)" />
+        <MakeDir Directories="$(MacOs_X64_NugetDestFolder)"/>
+        <Copy SourceFiles="@(NugetPayload_Native_MacOS_Arm64)" DestinationFolder="$(MacOs_Arm64_NugetDestFolder)" />
+        <Copy SourceFiles="@(NugetPayload_Native_MacOS_X64)" DestinationFolder="$(MacOs_X64_NugetDestFolder)" />
 
         <!-- Linux  ============================ -->
 
-        <MakeDir Directories="$(NuGetSourceRuntimesDirectoryPath)\$(NuGetRuntimeId_Linux)\native"/>
+        <MakeDir Directories="$(NuGetSourceRuntimesDirectoryPath)\$(NuGetRuntimeId_Linux_X64)\native"/>
+        <MakeDir Directories="$(NuGetSourceRuntimesDirectoryPath)\$(NuGetRuntimeId_Linux_Arm64)\native"/>
+<!--
         <Copy SourceFiles="@(NugetPayload_Native_Linux)"
 		 DestinationFolder="$(NuGetSourceRuntimesDirectoryPath)\$(NuGetRuntimeId_Linux)\native" />
+-->
+	<ItemGroup>
+    		<Linux_Arm64_PalZipFiles Include="$(UI_PUBLISH_PACKAGES)/Alternet.UI.Pal*linux-arm64-release.zip" />
+    		<Linux_X64_PalZipFiles Include="$(UI_PUBLISH_PACKAGES)/Alternet.UI.Pal*linux-x64-release.zip" />
+	</ItemGroup>
 
-        <MakeDir Directories="$(NuGetSourceRuntimesDirectoryPath)\$(NuGetRuntimeId_Linux_Arm64)\native"/>
-        <Copy SourceFiles="@(NugetPayload_Native_Linux_Arm64)"
-		 DestinationFolder="$(NuGetSourceRuntimesDirectoryPath)\$(NuGetRuntimeId_Linux_Arm64)\native" />
+	<PropertyGroup>
+		<Linux_Arm64_NugetDestFolder>$(NuGetSourceRuntimesDirectoryPath)\$(NuGetRuntimeId_Linux_Arm64)\native</Linux_Arm64_NugetDestFolder>
+		<Linux_X64_NugetDestFolder>$(NuGetSourceRuntimesDirectoryPath)\$(NuGetRuntimeId_Linux_X64)\native</Linux_X64_NugetDestFolder>
+	</PropertyGroup>
+        
+	<Unzip SourceFiles="@(Linux_Arm64_PalZipFiles)" DestinationFolder="$(Linux_Arm64_NugetDestFolder)" />
+	<Unzip SourceFiles="@(Linux_X64_PalZipFiles)" DestinationFolder="$(Linux_X64_NugetDestFolder)" />
+
+        <MakeDir Directories="$(Linux_Arm64_NugetDestFolder)"/>
+        <MakeDir Directories="$(Linux_X64_NugetDestFolder)"/>
+        <Copy SourceFiles="@(NugetPayload_Native_Linux_Arm64)" DestinationFolder="$(Linux_Arm64_NugetDestFolder)" />
+        <Copy SourceFiles="@(NugetPayload_Native_Linux_X64)" DestinationFolder="$(Linux_X64_NugetDestFolder)" />
 
         <!-- Sign dll, so, dylib  ============================ -->
 
@@ -146,9 +164,8 @@
 		<Message Text="========================" Importance="high" />
 		<Message Text="Create Nuget Alternet.UI.Pal started" Importance="high" />
 	
-        <Message Text="To build the NuGet package correctly, the build result files for all the platforms (Windows, MacOS, Linux) must be present in Bin directory."  
-                Importance="high" 
-		Condition="@(NugetPayload_Native_Windows_X86->Count()) == 0 or @(NugetPayload_Native_Windows_X64->Count()) == 0 or @(NugetPayload_Native_MacOS->Count()) == 0 or @(NugetPayload_Native_Linux->Count()) == 0" />
+        <Message Text="To build the NuGet package correctly, the build result files for all the platforms (Windows, MacOS, Linux) must exist."  
+                Importance="high" />
 
         <CallTarget Targets="NuGet_PrepareSource;NuGet_Pack;NuGet_CopyBuildResults" />
 		<Message Text="Create Nuget Alternet.UI.Pal done." Importance="high" />
