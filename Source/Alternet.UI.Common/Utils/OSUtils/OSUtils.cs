@@ -42,10 +42,18 @@ namespace Alternet.UI
                 return "unknown";
             }
 
-            string GetRuntimesFolderSuffix()
+            string GetRuntimesFolderSuffix(bool withArm = true)
             {
-                var ptrSuffix = IntPtr.Size == 8 ? "x64" : "x86";
-                return ptrSuffix;
+                if (App.IsArmProcess && withArm)
+                {
+                    var ptrSuffix = IntPtr.Size == 8 ? "arm64" : "arm32";
+                    return ptrSuffix;
+                }
+                else
+                {
+                    var ptrSuffix = IntPtr.Size == 8 ? "x64" : "x86";
+                    return ptrSuffix;
+                }
             }
 
             string GetRuntimesFolder()
@@ -71,16 +79,21 @@ namespace Alternet.UI
                 return result;
             }
 
-            var testPath1 = GetDllPath(GetRuntimesFolder());
-            var testPath2 = GetDllPath(GetRuntimesFolderSuffix());
-            var testPath3 = GetDllPath(null);
+            var testPath = GetDllPath(GetRuntimesFolder());
+            if (File.Exists(testPath))
+                return testPath;
 
-            if (File.Exists(testPath1))
-                return testPath1;
-            if (File.Exists(testPath2))
-                return testPath2;
-            if (File.Exists(testPath3))
-                return testPath3;
+            testPath = GetDllPath(GetRuntimesFolderSuffix());
+            if (File.Exists(testPath))
+                return testPath;
+
+            testPath = GetDllPath(null);
+            if (File.Exists(testPath))
+                return testPath;
+
+            testPath = GetDllPath(GetRuntimesFolderSuffix(false));
+            if (File.Exists(testPath))
+                return testPath;
 
             return FileUtils.FindFileRecursiveInAppFolder(nativeModuleNameWithExt);
         }

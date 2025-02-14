@@ -166,7 +166,10 @@ namespace Alternet.UI
                 eventsControl.Parent = splitterPanel;
             }
 
-            pageContainer.ListBox!.HorizontalScrollbar = true;
+            if(pageContainer.LeftControlKind == SplittedTreeAndCards.TreeKind.ListBox)
+            {
+                pageContainer.ListBox!.HorizontalScrollbar = true;
+            }
 
             var logSizeChanged = false;
 
@@ -176,7 +179,7 @@ namespace Alternet.UI
                 StateChanged += MainWindow_StateChanged;
             }
 
-            ActiveControl = pageContainer.ListBox;
+            ActiveControl = pageContainer.LeftControl;
 
             App.AddIdleTask(() =>
             {
