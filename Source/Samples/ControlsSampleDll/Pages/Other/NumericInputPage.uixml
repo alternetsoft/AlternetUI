@@ -49,8 +49,8 @@
 
     </VerticalStackPanel>
 
-    <VerticalStackPanel Padding="10" Title="Calculator">
-      <Calculator HasBorder="true"/>
+    <VerticalStackPanel Padding="10" Title="Calculator" Name="calcPanel">
+      <Calculator HasBorder="true" Name="calculator"/>
     </VerticalStackPanel>
 
   </TabControl>

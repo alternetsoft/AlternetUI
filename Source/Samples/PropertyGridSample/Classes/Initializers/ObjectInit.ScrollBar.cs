@@ -9,6 +9,8 @@ namespace PropertyGridSample
 {
     public partial class ObjectInit
     {
+        public static bool LogScrollBarPosition = false;
+
         public static void InitScrollBar(object control)
         {
             if (control is not ScrollBar scrollBar)
@@ -19,6 +21,8 @@ namespace PropertyGridSample
 
             static void ScrollBar_Scroll(object sender, ScrollEventArgs e)
             {
+                if (!LogScrollBarPosition)
+                    return;
                 App.AddIdleTask(() =>
                 {
                     App.LogBeginSection();

@@ -4,12 +4,12 @@
         xmlns:local="clr-namespace:ControlsSample;assembly=ControlsSample" Padding="5">
   <StackPanel Orientation="Vertical" Padding="5">
     <Border HorizontalAlignment="Stretch" Padding="5" Layout="Vertical">
-      <Label Text="Linked Progress Bar:" Margin="0,0,0,10"/>
       <StackPanel Orientation="Horizontal" Margin="5">
-        <Slider Margin="0,0,0,10" Name="progressBarControlSlider" TickStyle="None"  
+        <Label Text="Linked:" Margin="0,0,10,0"/>
+        <Slider Name="progressBarControlSlider" TickStyle="None"  
                 VerticalAlignment="Center"
             ValueChanged="ProgressBarControlSlider_ValueChanged" SuggestedWidth="200"/>
-        <ProgressBar Maximum="10" Margin="10,0,0,10" Name="progressBar"
+        <ProgressBar Maximum="10" Margin="10,0,0,0" Name="progressBar"
                      SuggestedWidth="200"  VerticalAlignment="Center"/>
       </StackPanel>
     </Border>

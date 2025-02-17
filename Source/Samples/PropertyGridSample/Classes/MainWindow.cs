@@ -303,12 +303,17 @@ namespace PropertyGridSample
 
         private void Designer_PropertyChanged(object? sender, ObjectPropertyChangedEventArgs e)
         {
-            var item = ToolBox.SelectedItem as ControlListBoxItem;
-            var type = item?.InstanceType;
-            if (type == typeof(WelcomePage))
-                return;
-            if (item?.PropInstance == e.Instance || e.Instance is null)
-                updatePropertyGrid = true;
+            RunWhenIdle(() =>
+            {
+                if (DisposingOrDisposed)
+                    return;
+                var item = ToolBox.SelectedItem as ControlListBoxItem;
+                var type = item?.InstanceType;
+                if (type == typeof(WelcomePage))
+                    return;
+                if (item?.PropInstance == e.Instance || e.Instance is null)
+                    updatePropertyGrid = true;
+            });
         }
 
         private void PropertyGrid_ProcessException(object? sender, ThrowExceptionEventArgs e)

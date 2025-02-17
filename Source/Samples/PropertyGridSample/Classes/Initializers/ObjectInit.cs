@@ -322,8 +322,21 @@ namespace PropertyGridSample
             Actions.Add(typeof(ProgressBar), (c) =>
             {
                 ProgressBar control = (c as ProgressBar)!;
+                control.OrientationChanged += OrientationChanged;
                 control.Value = 50;
                 control.SuggestedWidth = 200;
+
+                static void OrientationChanged(object? sender, EventArgs e)
+                {
+                    if (sender is not ProgressBar control)
+                        return;
+                    if (control.Orientation == ProgressBarOrientation.Vertical)
+                        control.SuggestedSize = (Double.NaN, 250);
+                    else
+                        control.SuggestedSize = (250, Double.NaN);
+                    control.PerformLayout();
+                }
+
             });
 
             Actions.Add(typeof(PanelOkCancelButtons), (c) =>
