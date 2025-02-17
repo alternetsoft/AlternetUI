@@ -28,4 +28,5 @@ Examples of how a <xref:Alternet.UI.ProgressBar> can look on different platforms
 ***
 
 Set <xref:Alternet.UI.ProgressBar.Value> property to specify the current position of the progress bar.
-A <xref:Alternet.UI.ProgressBar>, like any other <xref:Alternet.UI.Control>, can be disabled by setting its <xref:Alternet.UI.Control.Enabled> property to `false`.
+A <xref:Alternet.UI.ProgressBar>, like any other <xref:Alternet.UI.Control>, can be disabled by setting 
+its <xref:Alternet.UI.AbstractControl.Enabled> property to `false`.

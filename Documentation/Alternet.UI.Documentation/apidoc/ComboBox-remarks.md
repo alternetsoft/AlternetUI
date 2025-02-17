@@ -6,8 +6,10 @@ A <xref:Alternet.UI.ComboBox> displays a text box combined with a <xref:Alternet
 to select items from the list or enter a new value.
 The <xref:Alternet.UI.ComboBox.IsEditable> property specifies whether the text portion can be edited.
 
-To add or remove objects in the list at run time, use methods of the object returned by the <xref:Alternet.UI.ListControl.Items> property of the <xref:Alternet.UI.ComboBox>.
-The list then displays the default string value for each object. You can add individual objects with the Add method of the <xref:Alternet.UI.ComboBox>.<xref:Alternet.UI.ListControl.Items> object.
+To add or remove objects in the list at run time, use methods of the object returned by 
+the Items property of the <xref:Alternet.UI.ComboBox>.
+The list then displays the default string value for each object. You can add individual objects 
+with the Add method of the Items object.
 You can delete items with the Remove method or clear the entire list with the Clear method.
 
 In addition to display and selection functionality, the <xref:Alternet.UI.ComboBox> also provides features that enable you to
