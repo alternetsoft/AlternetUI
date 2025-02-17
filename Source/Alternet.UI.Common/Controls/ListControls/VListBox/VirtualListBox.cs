@@ -12,9 +12,24 @@ using Alternet.UI.Extensions;
 namespace Alternet.UI
 {
     /// <summary>
-    /// Advanced list box control with ability to customize item painting. Works fine with
+    /// Advanced list box control with ability to customize item painting.
+    /// This control enables you to display a list of items
+    /// to the user that the user can select by clicking.
+    /// Works fine with
     /// large number of the items. You can add <see cref="ListControlItem"/> items to this control.
     /// </summary>
+    /// <remarks>
+    /// This control can provide single or multiple selections
+    /// using the <see cref="VirtualListControl.SelectionMode"/> property.
+    /// The <see cref="AbstractControl.BeginUpdate"/>
+    /// and <see cref="AbstractControl.EndUpdate"/> methods enable
+    /// you to add a large number of items without the control being repainted each
+    /// time an item is added to the list.
+    /// The <see cref="ListControl{T}.Items"/>, <see cref="VirtualListControl.SelectedItems"/>
+    /// and <see cref="VirtualListControl.SelectedIndices"/>
+    /// properties provide access to
+    /// the three collections that are used by the control.
+    /// </remarks>
     public class VirtualListBox : VirtualListControl, IListControl
     {
         private static SetItemsKind defaultSetItemsKind = SetItemsKind.ChangeField;

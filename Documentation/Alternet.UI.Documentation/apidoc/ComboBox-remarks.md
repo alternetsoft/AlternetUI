@@ -6,8 +6,10 @@ A <xref:Alternet.UI.ComboBox> displays a text box combined with a <xref:Alternet
 to select items from the list or enter a new value.
 The <xref:Alternet.UI.ComboBox.IsEditable> property specifies whether the text portion can be edited.
 
-To add or remove objects in the list at run time, use methods of the object returned by the <xref:Alternet.UI.ListControl.Items> property of the <xref:Alternet.UI.ComboBox>.
-The list then displays the default string value for each object. You can add individual objects with the Add method of the <xref:Alternet.UI.ComboBox>.<xref:Alternet.UI.ListControl.Items> object.
+To add or remove objects in the list at run time, use methods of the object returned by 
+the Items property of the <xref:Alternet.UI.ComboBox>.
+The list then displays the default string value for each object. You can add individual objects 
+with the Add method of the Items object.
 You can delete items with the Remove method or clear the entire list with the Clear method.
 
 In addition to display and selection functionality, the <xref:Alternet.UI.ComboBox> also provides features that enable you to
@@ -30,4 +32,11 @@ Examples of how a <xref:Alternet.UI.ComboBox> can look on different platforms:
 ***
 
 Set <xref:Alternet.UI.ComboBox.Text> property to specify the text displayed on the control.
-A <xref:Alternet.UI.ComboBox>, like any other <xref:Alternet.UI.Control>, can be disabled by setting its <xref:Alternet.UI.AbstractControl.Enabled> property to `false`.
+A <xref:Alternet.UI.ComboBox>, like any other <xref:Alternet.UI.Control>, can be disabled by setting 
+its <xref:Alternet.UI.AbstractControl.Enabled> property to `false`.
+
+A <xref:Alternet.UI.ComboBox> can have owner-draw and styled items with custom colors, font, border and image.
+Use <xref:Alternet.UI.ListControlItem> as an item of a <xref:Alternet.UI.ComboBox> in order to 
+have the ability to customize style and behavior options.
+
+![ComboBox with styled items](images/combobox-styled.png)

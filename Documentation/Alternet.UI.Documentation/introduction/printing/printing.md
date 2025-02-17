@@ -19,7 +19,7 @@ method prints the document.
 
 ## Working with the component
 
-Use the [PrintDialog.ShowModal](xref:Alternet.UI.CommonDialog.ShowModal%2A) method to display the dialog at
+Use the [PrintDialog.ShowAsync](xref:Alternet.UI.CommonDialog.ShowAsync%2A) method to display the dialog at
 run time. This component has properties that relate to either a single print job
 (<xref:Alternet.Drawing.Printing.PrintDocument> class) or the settings of an individual printer
 (<xref:Alternet.Drawing.Printing.PrinterSettings> class). One of the two, in turn, may be shared by multiple printers.
@@ -42,12 +42,14 @@ steps demonstrate displaying the print dialog for a document:
     ```
 
 01. Display the <xref:Alternet.UI.PrintDialog> component by using the
-    <xref:Alternet.UI.CommonDialog.ShowModal%2A> method.
+    <xref:Alternet.UI.CommonDialog.ShowAsync%2A> method.
 
     ```csharp
     // display show dialog, and if the user selects "Ok" the document is printed
-    if (printDialog1.ShowDialog() == DialogResult.OK)
+    dialog.ShowAsync(() =>
+    {
         printDocument1.Print();
+    });
     ```
 
 01. The user's printing choices from the dialog will be copied to the <xref:Alternet.Drawing.Printing.PrinterSettings>

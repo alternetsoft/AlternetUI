@@ -9,8 +9,12 @@ set DOCS_DIR=%SCRIPT_HOME%\..\Documentation\Alternet.UI.Documentation\site\
 pushd %DOCS_DIR%
 
 del %PACKAGES_DIR%\PublicDocumentation*.zip
+del %PACKAGES_DIR%\PublicDocumentation*.7z
 "C:\Program Files\WinRar\WinRAR.exe" a -r "%PACKAGES_DIR%\PublicDocumentation.zip" "*.*"
 
+"C:\Program Files\7-Zip\7z.exe" a -r "%PACKAGES_DIR%\PublicDocumentation.7z" "*.*"
+
 dotnet run --project "%VersionToolProject%" --property WarningLevel=0 -- append-version-suffix "%PACKAGES_DIR%\PublicDocumentation.zip"
+dotnet run --project "%VersionToolProject%" --property WarningLevel=0 -- append-version-suffix "%PACKAGES_DIR%\PublicDocumentation.7z"
 
 popd

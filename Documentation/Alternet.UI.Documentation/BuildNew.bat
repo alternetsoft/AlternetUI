@@ -9,14 +9,14 @@ set RESULT_MANUAL=%SCRIPT_HOME%\site\pdf\alternet-ui-manual.pdf
 
 call Del.AllResults.bat
 
-dotnet build /p:LatestDocFx=true Alternet.UI.Documentation.csproj
+dotnet build -tl:off /p:LatestDocFx=true Alternet.UI.Documentation.csproj
 
 del "%RESULT_MANUAL%"
 copy "%PDF_MANUAL%" "%RESULT_MANUAL%"
 
 call Publish.Pdf.bat
 
-call calljobdone.bat "UI Documentation was built ok"
+
 
 
 
