@@ -17,6 +17,8 @@ namespace Alternet.UI
     /// </summary>
     public class VirtualListBox : VirtualListControl, IListControl
     {
+        private static SetItemsKind defaultSetItemsKind = SetItemsKind.ChangeField;
+
         private TransformMatrix matrix = new();
 
         private Coord scrollOffset;
@@ -91,6 +93,31 @@ namespace Alternet.UI
             /// Internal field is changed to the new value. This is the fastest method.
             /// </summary>
             ChangeField,
+
+            /// <summary>
+            /// Uses <see cref="DefaultSetItemsKind"/> to get the desired method.
+            /// </summary>
+            Default,
+        }
+
+        /// <summary>
+        /// Gets or sets the way how items are set when <see cref="SetItemsKind.Default"/>
+        /// is specified in <see cref="SetItemsFast"/>. Default is
+        /// <see cref="SetItemsKind.ChangeField"/>.
+        /// </summary>
+        public static SetItemsKind DefaultSetItemsKind
+        {
+            get
+            {
+                return defaultSetItemsKind;
+            }
+
+            set
+            {
+                if (value == SetItemsKind.Default)
+                    return;
+                defaultSetItemsKind = value;
+            }
         }
 
         /// <summary>
@@ -460,6 +487,11 @@ namespace Alternet.UI
         {
             if (DisposingOrDisposed)
                 return default;
+
+            if (kind == SetItemsKind.Default)
+                kind = DefaultSetItemsKind;
+            if (kind == SetItemsKind.Default)
+                kind = SetItemsKind.ChangeField;
 
             switch (kind)
             {
