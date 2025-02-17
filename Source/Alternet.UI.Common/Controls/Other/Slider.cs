@@ -456,9 +456,9 @@ namespace Alternet.UI
         {
             if (DisposingOrDisposed)
                 return;
-            Designer?.RaisePropertyChanged(this, nameof(Value));
             OnValueChanged(EventArgs.Empty);
             ValueChanged?.Invoke(this, EventArgs.Empty);
+            Designer?.RaisePropertyChanged(this, nameof(Value));
         }
 
         /// <summary>

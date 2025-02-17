@@ -371,6 +371,7 @@ namespace Alternet.UI
         {
             OnValueChanged(EventArgs.Empty);
             ValueChanged?.Invoke(this, EventArgs.Empty);
+            Designer?.RaisePropertyChanged(this, nameof(Value));
         }
 
         /// <summary>
