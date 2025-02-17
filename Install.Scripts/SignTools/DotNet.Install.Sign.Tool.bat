@@ -1,0 +1,1 @@
+dotnet tool install sign --global --prerelease
