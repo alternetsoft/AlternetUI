@@ -30,4 +30,11 @@ Examples of how a <xref:Alternet.UI.ComboBox> can look on different platforms:
 ***
 
 Set <xref:Alternet.UI.ComboBox.Text> property to specify the text displayed on the control.
-A <xref:Alternet.UI.ComboBox>, like any other <xref:Alternet.UI.Control>, can be disabled by setting its <xref:Alternet.UI.AbstractControl.Enabled> property to `false`.
+A <xref:Alternet.UI.ComboBox>, like any other <xref:Alternet.UI.Control>, can be disabled by setting 
+its <xref:Alternet.UI.AbstractControl.Enabled> property to `false`.
+
+A <xref:Alternet.UI.ComboBox> can have owner-draw and styled items with custom colors, font, border and image.
+Use <xref:Alternet.UI.ListControlItem> as an item of a <xref:Alternet.UI.ComboBox> in order to 
+have the ability to customize style and behavior options.
+
+![ComboBox with styled items](images/combobox-styled.png)
