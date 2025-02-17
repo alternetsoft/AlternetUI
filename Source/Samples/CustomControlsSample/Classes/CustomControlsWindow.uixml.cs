@@ -48,6 +48,7 @@ namespace CustomControlsSample
         public CustomControlsWindow()
         {
             Icon = App.DefaultIcon;
+            colorPicker.PopupWindow.Required();
 
             InitializeComponent();
 

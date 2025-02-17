@@ -10,6 +10,15 @@ namespace ControlsSample
         {
             InitializeComponent();
             progressBarControlNumericUpDown.Value = 1;
+
+            calcPanel.Click += (s, e) =>
+            {
+                if (!Keyboard.IsAltShiftPressed)
+                    return;
+
+                calculator.ParentBackColor = false;
+                calcPanel.BackColor = SystemColors.Window;
+            };
         }
 
         private void NumericUpDown_ValueChanged(object? sender, EventArgs e)

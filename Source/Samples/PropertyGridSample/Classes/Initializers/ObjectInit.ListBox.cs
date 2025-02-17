@@ -9,6 +9,23 @@ namespace PropertyGridSample
 {
     public partial class ObjectInit
     {
+        public static void SetDefaultOwnerDrawItems(
+            VirtualListBox control,
+            bool addLong = true)
+        {
+            VirtualListBoxItems items = new();
+
+            AddDefaultOwnerDrawItems(
+                control,
+                (item) =>
+                {
+                    items.Add(item);
+                },
+                addLong);
+
+            control.SetItemsFast(items, VirtualListBox.SetItemsKind.ChangeField);
+        }
+
         public static void AddDefaultOwnerDrawItems(
             Control control,
             Action<ListControlItem> addAction,
@@ -19,37 +36,27 @@ namespace PropertyGridSample
             string PencilUrl = $"{ResPrefix2}Pencil32.png";
             string PhotoUrl = $"{ResPrefix2}Photo32.png";
 
-            var imageSize = 24; /* image sizes are always in pixels */
+            var svgImageSize = 24; /* image sizes are always in pixels */
 
             ListControlItem item = new();
             item.Alignment = HVAlignment.Center;
             item.DisplayText = string.Empty;
             item.Text = "This is some text";
-            item.Image = new Bitmap(PhotoUrl);
+            item.Image = Image.FromUrlCached(PhotoUrl);
             addAction(item);
 
             item = new();
             item.Text = "Bold item CenterRight";
             item.Alignment = (HorizontalAlignment.Right, VerticalAlignment.Center);
             item.FontStyle = FontStyle.Bold;
-            item.MinHeight = control.PixelToDip(imageSize);
+            item.MinHeight = control.PixelToDip(svgImageSize);
             item.SvgImage = KnownSvgImages.ImgBold;
-            item.SvgImageSize = imageSize;
-/*
-            item.Image = KnownSvgImages.ImgBold.AsNormalImage(imageSize, control.IsDarkBackground);
-            item.SelectedImage =
-                KnownSvgImages.ImgBold.AsImageSet(
-                    imageSize,
-                    KnownSvgColor.HighlightText,
-                    control.IsDarkBackground)?.AsImage();
-            item.DisabledImage =
-                KnownSvgImages.ImgBold.AsDisabledImage(imageSize, control.IsDarkBackground);
-*/
+            item.SvgImageSize = svgImageSize;
             addAction(item);
 
             item = new();
             item.Alignment = HVAlignment.Center;
-            item.Image = new Bitmap(CalendarUrl);
+            item.Image = Image.FromUrlCached(CalendarUrl);
             item.CheckState = CheckState.Indeterminate;
             item.DisabledImage = item.Image?.ToGrayScale();
             item.ForegroundColor = Color.Green;
@@ -63,8 +70,8 @@ namespace PropertyGridSample
             item.CheckBoxVisible = false;
             item.MinHeight = 60;
             item.Alignment = (HorizontalAlignment.Center, VerticalAlignment.Bottom);
-            item.Image = new Bitmap(PencilUrl);
-            item.DisabledImage = item!.Image.ToGrayScale();
+            item.Image = Image.FromUrlCached(PencilUrl);
+            item.DisabledImage = item.Image?.ToGrayScale();
             item.ForegroundColor = Color.Indigo;
             item.BackgroundColor = Color.LightSkyBlue;
             addAction(item);
@@ -126,10 +133,7 @@ namespace PropertyGridSample
             if (control is not VirtualListBox listBox)
                 return;
 
-            AddDefaultOwnerDrawItems(listBox, (s) =>
-            {
-                listBox.Add(s);
-            });
+            SetDefaultOwnerDrawItems(listBox);
 
             listBox.HorizontalScrollbar = true;
             listBox.Count = 200;

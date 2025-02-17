@@ -148,8 +148,8 @@ namespace WindowPropertiesSample
             dialogWindow.ShowDialogAsync(this, (result) =>
             {
                 App.Log("Modal Result: " + (result ? "Accepted" : "Canceled"));
-                dialogWindow.Dispose();
                 OnWindowClosed();
+                dialogWindow.Dispose();
             });
         }
 

@@ -41,6 +41,8 @@ namespace Alternet.UI
         /// <remarks>
         /// This is a delayed event. If multiple events are occurred during the delay,
         /// they are ignored.
+        /// Currently this event works in the same way as <see cref="SelectionChanged"/>,
+        /// but in the future it will be implemented properly.
         /// </remarks>
         public event EventHandler<EventArgs>? DelayedSelectionChanged
         {
@@ -668,7 +670,7 @@ namespace Alternet.UI
             OnSelectedIndexChanged(EventArgs.Empty);
             SelectionChanged?.Invoke(this, EventArgs.Empty);
             SelectedIndexChanged?.Invoke(this, EventArgs.Empty);
-            delayedSelectionChanged.Raise(this, EventArgs.Empty, () => IsDisposed);
+            delayedSelectionChanged.RaiseWithoutDelay(this, EventArgs.Empty, () => IsDisposed);
         }
 
         /// <summary>

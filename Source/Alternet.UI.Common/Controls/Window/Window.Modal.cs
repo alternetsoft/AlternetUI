@@ -44,14 +44,19 @@ namespace Alternet.UI
                 if (modalResult == value)
                     return;
 
-                modalResult = value;
-                PropInstanceAndValue.PopPropertiesMultiple(disabledControls);
-                disabledControls = null;
-                LastShownAsDialogTime = null;
-                Close(WindowCloseAction.Hide);
-                isModal = false;
-                onCloseModal?.Invoke(modalResult == ModalResult.Accepted);
-                onCloseModal = null;
+                RunWhenIdle(() =>
+                {
+                    if (DisposingOrDisposed)
+                        return;
+                    modalResult = value;
+                    PropInstanceAndValue.PopPropertiesMultiple(disabledControls);
+                    disabledControls = null;
+                    LastShownAsDialogTime = null;
+                    Close(WindowCloseAction.Hide);
+                    isModal = false;
+                    onCloseModal?.Invoke(modalResult == ModalResult.Accepted);
+                    onCloseModal = null;
+                });
             }
         }
 

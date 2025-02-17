@@ -63,6 +63,7 @@ namespace Alternet.Drawing
             ".xpm",
         };
 
+        private static AdvDictionary<string, Image>? cachedBitmaps;
         private static IEnumerable<string>? extensionsForLoad;
         private static IEnumerable<string>? extensionsForSave;
 
@@ -444,6 +445,45 @@ namespace Alternet.Drawing
             var result = new Bitmap(stream, bitmapType);
             result.url = url;
             return result;
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Image"/> class
+        /// from the specified url. Do not raise exceptions on errors, just returns Null image.
+        /// Uses image cache, so the bitmap with the same url is loaded faster for second time.
+        /// </summary>
+        /// <param name="url">The file or embedded resource url used
+        /// to load the image.
+        /// </param>
+        /// <example>
+        /// <code>
+        /// var ImageSize = 16;
+        /// var ResPrefix = $"embres:ControlsTest.Resources.Png._{ImageSize}.";
+        /// var url = $"{ResPrefix}arrow-left-{ImageSize}.png";
+        /// button1.Image = Bitmap.FromUrl(url);
+        /// </code>
+        /// </example>
+        /// <returns></returns>
+        public static Image? FromUrlCached(string url)
+        {
+            cachedBitmaps ??= new();
+            if (cachedBitmaps.TryGetValue(url, out var result))
+                return result;
+            result = FromUrlOrNull(url);
+            if (result is null)
+                return null;
+            else
+                result.SetImmutable();
+            cachedBitmaps.Add(url, result);
+            return result;
+        }
+
+        /// <summary>
+        /// Clears images cache used in <see cref="FromUrlCached"/>.
+        /// </summary>
+        public static void ClearCachedImages()
+        {
+            cachedBitmaps?.Clear();
         }
 
         /// <summary>

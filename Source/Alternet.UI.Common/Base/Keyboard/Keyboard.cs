@@ -43,6 +43,17 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets whether ALT and SHIFT keys are currently pressed.
+        /// </summary>
+        public static bool IsAltShiftPressed
+        {
+            get
+            {
+                return IsKeyDown(Key.Alt) && IsKeyDown(Key.Shift);
+            }
+        }
+
+        /// <summary>
         /// Gets the set of modifier keys currently pressed (Control, Alt, Shift, etc.).
         /// </summary>
         public static ModifierKeys Modifiers

@@ -5,10 +5,12 @@ namespace ControlsSample
 {
     internal partial class ComboBoxPage : Control, IComboBoxItemPainter
     {
-        private readonly bool ignoreEvents = false;
         private const bool supressUpDown = false;
+
+        private readonly bool ignoreEvents = false;
+        private readonly IComboBoxItemPainter painter = new ComboBox.DefaultItemPainter();
+
         private int newItemIndex = 0;
-        private IComboBoxItemPainter painter = new ComboBox.DefaultItemPainter();
 
         public ComboBoxPage()
         {
@@ -33,6 +35,29 @@ namespace ControlsSample
             comboBox.KeyDown += ComboBox_KeyDown;
             comboBox.TextChanged += (_, _) =>
             {
+            };
+
+            comboPanel.Click += (s, e) =>
+            {
+                void PrepareForPrintScreen(Control container)
+                {
+                    container.BackColor = SystemColors.Window;
+
+                    container.ForEachChild((c) =>
+                    {
+                        if (c != comboBox)
+                            c.Visible = !c.Visible;
+                    });
+                }
+
+                if (!Keyboard.IsAltShiftPressed)
+                    return;
+
+                PrepareForPrintScreen(comboPanel);
+                PrepareForPrintScreen(buttonsPanel);
+                comboPanel.VerticalAlignment = VerticalAlignment.Fill;
+                comboPanel.MinWidth = 250;
+                comboContainer.BackColor = SystemColors.Window;
             };
         }
 

@@ -910,6 +910,35 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Sets colors used in the control to the auto theme (takes colors from the
+        /// system colors).
+        /// </summary>
+        public virtual void SetColorThemeToAuto()
+        {
+            DoInsideUpdate(() =>
+            {
+                ParentForeColor = false;
+                ParentBackColor = false;
+                BackgroundColor = SystemColors.Window;
+                ForegroundColor = SystemColors.WindowText;
+
+                Color headerColorBg = SystemColors.Window;
+                Color headerColorFg = SystemColors.WindowText;
+
+                Color highlightColorBg = SystemColors.Highlight;
+                Color highlightColorFg = SystemColors.HighlightText;
+
+                Color holidayColorBg = BackgroundColor;
+
+                Color holidayColorFg = LightDarkColors.Red.LightOrDark(IsDarkBackground);
+
+                SetHeaderColors(headerColorFg, headerColorBg);
+                SetHighlightColors(highlightColorFg, highlightColorBg);
+                SetHolidayColors(holidayColorFg, holidayColorBg);
+            });
+        }
+
+        /// <summary>
         /// Called from constructor and after handle is created. Updates
         /// theme colors if <see cref="SetThemeWhenHandleCreated"/> is True.
         /// </summary>
@@ -917,8 +946,17 @@ namespace Alternet.UI
         {
             if (DisposingOrDisposed)
                 return;
-            if (!IsDarkBackground && SetThemeWhenHandleCreated)
-                SetColorThemeToLight();
+            if (SetThemeWhenHandleCreated)
+            {
+                if (IsDarkBackground)
+                {
+                    HolidayColorBg = Color.Firebrick;
+                }
+                else
+                {
+                    SetColorThemeToLight();
+                }
+            }
         }
 
         /// <summary>

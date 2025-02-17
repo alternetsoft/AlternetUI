@@ -40,12 +40,14 @@ namespace Alternet.UI
         public static List<NewItemInfo>? AdditionalSpecialFolders;
 
         /// <summary>
-        /// Gets or sets whether to add all drives (c:\, d:\, etc.) to the list of the special folders.
+        /// Gets or sets whether to add all drives (c:\, d:\, etc.) to
+        /// the list of the special folders.
         /// </summary>
         public static bool AddDrivesToRootFolder = true;
 
         /// <summary>
-        /// Gets or sets template for the drive item when it is added to the list of the special folders.
+        /// Gets or sets template for the drive item when it is added to the
+        /// list of the special folders.
         /// Default is "{0}".
         /// </summary>
         public static string DriveItemTemplate = "{0}";
@@ -472,6 +474,30 @@ namespace Alternet.UI
                 return;
             }
 
+            if (VisibleSpecialFolders is not null)
+            {
+                foreach(var item in VisibleSpecialFolders)
+                    AddSpecialFolder(item);
+                return;
+            }
+
+            AddSpecialFolder(Environment.SpecialFolder.Desktop);
+            AddSpecialFolder(Environment.SpecialFolder.MyComputer, "My Computer");
+            AddSpecialFolder(Environment.SpecialFolder.MyDocuments, "Documents");
+            AddSpecialFolder(Environment.SpecialFolder.MyMusic, "Music");
+            AddSpecialFolder(Environment.SpecialFolder.MyPictures, "Pictures");
+            AddSpecialFolder(Environment.SpecialFolder.MyVideos, "Videos");
+
+            AddSpecialFolder(Environment.SpecialFolder.Favorites);
+            AddSpecialFolder(Environment.SpecialFolder.Programs);
+            AddSpecialFolder(Environment.SpecialFolder.Recent);
+
+            if (AdditionalSpecialFolders is not null)
+            {
+                foreach (var item in AdditionalSpecialFolders)
+                    AddFolder(item);
+            }
+
             if (AddDrivesToRootFolder)
             {
                 DriveInfo[] allDrives = DriveInfo.GetDrives();
@@ -497,30 +523,6 @@ namespace Alternet.UI
                 {
                     AddFolder(item);
                 }
-            }
-
-            if (VisibleSpecialFolders is not null)
-            {
-                foreach(var item in VisibleSpecialFolders)
-                    AddSpecialFolder(item);
-                return;
-            }
-
-            AddSpecialFolder(Environment.SpecialFolder.Desktop);
-            AddSpecialFolder(Environment.SpecialFolder.MyComputer, "My Computer");
-            AddSpecialFolder(Environment.SpecialFolder.MyDocuments, "Documents");
-            AddSpecialFolder(Environment.SpecialFolder.MyMusic, "Music");
-            AddSpecialFolder(Environment.SpecialFolder.MyPictures, "Pictures");
-            AddSpecialFolder(Environment.SpecialFolder.MyVideos, "Videos");
-
-            AddSpecialFolder(Environment.SpecialFolder.Favorites);
-            AddSpecialFolder(Environment.SpecialFolder.Programs);
-            AddSpecialFolder(Environment.SpecialFolder.Recent);
-
-            if (AdditionalSpecialFolders is not null)
-            {
-                foreach (var item in AdditionalSpecialFolders)
-                    AddFolder(item);
             }
         }
 
