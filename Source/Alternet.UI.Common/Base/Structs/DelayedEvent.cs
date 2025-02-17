@@ -43,6 +43,22 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Raises <see cref="Delayed"/> event immediately.
+        /// </summary>
+        /// <param name="sender">Sender of the event.</param>
+        /// <param name="e">Event arguments.</param>
+        /// <param name="isSuspended">Whether event is suspended (will not be called).</param>
+        public readonly void RaiseWithoutDelay(
+            object? sender,
+            TArgs e,
+            Func<bool>? isSuspended = null)
+        {
+            if (isSuspended?.Invoke() ?? false)
+                return;
+            Delayed?.Invoke(sender, e);
+        }
+
+        /// <summary>
         /// Raises delayed event.
         /// </summary>
         /// <param name="sender">Sender of the event.</param>
