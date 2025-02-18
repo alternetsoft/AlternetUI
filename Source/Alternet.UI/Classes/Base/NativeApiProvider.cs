@@ -185,12 +185,8 @@ namespace Alternet.UI.Native
             Assembly assembly,
             DllImportSearchPath? searchPath)
         {
-            var ext = Path.GetExtension(libraryName)?.ToLower();
-            if (ext == ".dll")
-            {
-                var withoutExtension = Path.ChangeExtension(libraryName, null);
-                libraryName = OSUtils.GetNativeModuleName(withoutExtension);
-            }
+            if (libraryName == NativeModuleName && libHandle != default)
+                return libHandle;
 
             var debugResolver = DebugUtils.DebugLoading && libHandle == default;
 
@@ -222,6 +218,8 @@ namespace Alternet.UI.Native
                 {
                     if (libHandle == default)
                     {
+                        libraryName = NativeModuleNameWithExt;
+
                         var libraryFileName = OSUtils.FindNativeDll(NativeModuleNameWithExt);
 
                         if (debugResolver)
