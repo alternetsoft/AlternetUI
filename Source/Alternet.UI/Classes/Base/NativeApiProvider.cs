@@ -17,13 +17,12 @@ namespace Alternet.UI.Native
     {
         internal const string NativeModuleNameNoExt = "Alternet.UI.Pal";
 
-#if NETCOREAPP
-        internal const string NativeModuleName = NativeModuleNameNoExt;
-#else
         internal const string NativeModuleName = $"{NativeModuleNameNoExt}.dll";
-#endif
 
         internal static IntPtr libHandle = default;
+
+        private static MethodInfo? methodNativeLibrarySetDllImportResolver;
+        private static MethodInfo? methodNativeLibraryLoad;
 
         private static bool initialized;
         private static GCHandle unhandledExceptionCallbackHandle;
@@ -54,13 +53,36 @@ namespace Alternet.UI.Native
         {
             if (!initialized)
             {
-#if NETCOREAPP
-                NativeLibrary.SetDllImportResolver(
-                    typeof(NativeApiProvider).Assembly,
-                    ImportResolver);
-#else
-                WindowsNativeModulesLocator.SetNativeModulesDirectory();
-#endif
+                if (App.IsNetOrCoreApp)
+                {
+                    var myType = typeof(NativeApiProvider);
+
+                    var method = myType.GetMethod(
+                        nameof(ImportResolver),
+                        BindingFlags.Static | BindingFlags.NonPublic | BindingFlags.Public);
+                    if(method is null)
+                        return;
+
+                    var delegateType = KnownTypes.InteropServicesDllImportResolver.Value;
+                    if (delegateType is null)
+                        return;
+
+                    var func = Delegate.CreateDelegate(delegateType, method);
+
+                    if (func is null)
+                        return;
+
+                    AssemblyUtils.InvokeMethodWithResult(
+                                KnownTypes.InteropServicesNativeLibrary.Value,
+                                "SetDllImportResolver",
+                                ref methodNativeLibrarySetDllImportResolver,
+                                null,
+                                [typeof(NativeApiProvider).Assembly, func]);
+                }
+                else
+                {
+                    WindowsNativeModulesLocator.SetNativeModulesDirectory();
+                }
 
                 Debug.Assert(
                     !unhandledExceptionCallbackHandle.IsAllocated,
@@ -115,12 +137,15 @@ namespace Alternet.UI.Native
 
         internal static bool NativeLibraryTryLoad(string libraryPath, out IntPtr handle)
         {
+            if (App.IsNetOrCoreApp)
+            {
 #if NETCOREAPP
-            return NativeLibrary.TryLoad(libraryPath, out handle);
-#else
+                return NativeLibrary.TryLoad(libraryPath, out handle);
+#endif
+            }
+
             handle = default;
             return false;
-#endif
         }
 
         internal static IntPtr NativeLibraryLoad(
@@ -128,23 +153,31 @@ namespace Alternet.UI.Native
             Assembly assembly,
             DllImportSearchPath? searchPath)
         {
-#if NETCOREAPP
-            return NativeLibrary.Load(
-                libraryName,
-                assembly,
-                searchPath);
-#else
+            if (App.IsNetOrCoreApp)
+            {
+                return (IntPtr?)AssemblyUtils.InvokeMethodWithResult(
+                            KnownTypes.InteropServicesNativeLibrary.Value,
+                            "Load",
+                            ref methodNativeLibraryLoad,
+                            null,
+                            [libraryName, assembly, searchPath!],
+                            [typeof(string), typeof(Assembly), typeof(DllImportSearchPath?)])
+                    ?? default;
+            }
+
             return default;
-#endif
         }
 
         internal static IntPtr NativeLibraryLoad(string libraryPath)
         {
+            if (App.IsNetOrCoreApp)
+            {
 #if NETCOREAPP
-            return NativeLibrary.Load(libraryPath);
-#else
-            return default;
+                return NativeLibrary.Load(libraryPath);
 #endif
+            }
+
+            return default;
         }
 
         internal static IntPtr ImportResolver(
@@ -152,6 +185,13 @@ namespace Alternet.UI.Native
             Assembly assembly,
             DllImportSearchPath? searchPath)
         {
+            var ext = Path.GetExtension(libraryName)?.ToLower();
+            if (ext == ".dll")
+            {
+                var withoutExtension = Path.ChangeExtension(libraryName, null);
+                libraryName = OSUtils.GetNativeModuleName(withoutExtension);
+            }
+
             var debugResolver = DebugUtils.DebugLoading && libHandle == default;
 
             try
