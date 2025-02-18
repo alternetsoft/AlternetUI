@@ -6,7 +6,7 @@ Summary:
 - Improved MAUI support across the library alongside with WxWidgets.
 - New controls: TextBoxAndButton (TextBox with buttons and image on the right side), RichToolTip (reimplemented inside the library), PopupControl (popups inside the parent control), and others.
 - Generic controls (can be used as parts of native controls and are handled internally in the library without operating system resources allocation) and Template controls that can be rendered to Graphics or Bitmap.
-- VirtualListView: Improved painting in owner-draw mode, with different methods for thread-safe operations that allow fast loading of a large number of items.
+- VirtualListBox: Improved painting in owner-draw mode, with different methods for thread-safe operations that allow fast loading of a large number of items.
 
 More details:
 
