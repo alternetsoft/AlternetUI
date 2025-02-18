@@ -120,21 +120,21 @@ namespace Alternet.Drawing
         MACMAX = MACKEYBOARD,
 /*
         // aliases for endian-dependent UTF encodings
-# ifdef WORDS_BIGENDIAN
+ifdef WORDS_BIGENDIAN
         UTF16 = UTF16BE,  // native UTF-16
         UTF32 = UTF32BE,  // native UTF-32
-#else // WORDS_BIGENDIAN
+else // WORDS_BIGENDIAN
         UTF16 = UTF16LE,  // native UTF-16
         UTF32 = UTF32LE,  // native UTF-32
-#endif // WORDS_BIGENDIAN
+endif // WORDS_BIGENDIAN
 
         // alias for the native Unicode encoding on this platform
         // (this is used by wxEncodingConverter and wxUTFFile only for now)
-#if SIZEOF_WCHAR_T == 2
+if SIZEOF_WCHAR_T == 2
         UNICODE = UTF16,
-#else // SIZEOF_WCHAR_T == 4
+else // SIZEOF_WCHAR_T == 4
     UNICODE = UTF32,
-#endif
+endif
 */
 
         // alternative names for Far Eastern encodings
