@@ -28,7 +28,7 @@
 		<RUNCMD_HOME>$(SOURCE_HOME)\Tools\Alternet.UI.RunCmd\</RUNCMD_HOME>
 		<RUNCMD_PROJECT>$(RUNCMD_HOME)\Alternet.UI.RunCmd.csproj</RUNCMD_PROJECT>
 
-		<EXE_EXT>.exe</EXE_EXT>
+		<EXE_EXT Condition="$([MSBuild]::IsOsPlatform('Windows'))">.exe</EXE_EXT>
 		<VERSIONTOOL_BIN>$(VERSIONTOOL_HOME)\bin\Debug\net8.0\Alternet.UI.VersionTool.Cli$(EXE_EXT)</VERSIONTOOL_BIN>
 		
 		<SCRIPT_HOME>$([System.IO.Path]::GetFullPath('$(SCRIPT_HOME)'))</SCRIPT_HOME>
@@ -189,6 +189,14 @@
             <DeleteFoldersWindows Include="$(PUBLISH_FOLDER_SFX)\runtimes\linux-x64"/>
             <DeleteFoldersWindows Include="$(PUBLISH_FOLDER_SFX)\runtimes\osx"/>
 
+            <DeleteFoldersLinux Include="$(PUBLISH_FOLDER_SFX)\runtimes\win-x64\native\"/>
+            <DeleteFoldersLinux Include="$(PUBLISH_FOLDER_SFX)\runtimes\win-x86\native\"/>
+            <DeleteFoldersLinux Include="$(PUBLISH_FOLDER_SFX)\runtimes\osx"/>
+
+            <DeleteFoldersMacOs Include="$(PUBLISH_FOLDER_SFX)\runtimes\win-x64\native\"/>
+            <DeleteFoldersMacOs Include="$(PUBLISH_FOLDER_SFX)\runtimes\win-x86\native\"/>
+            <DeleteFoldersMacOs Include="$(PUBLISH_FOLDER_SFX)\runtimes\linux-x64"/>
+
             <DeleteFolders32bit Include="$(PUBLISH_FOLDER_SFX)\x64"/>
 
             <DeleteFolders64bit Include="$(PUBLISH_FOLDER_SFX)\x86"/>
@@ -205,6 +213,12 @@
 
 		<Exec Command="$(RUNCMD_PREFIX) -r=rmdir -hr Path=&quot;%(DeleteFoldersWindows.Identity)&quot;"
 			 Condition="$([MSBuild]::IsOsPlatform('Windows'))"/>
+
+		<Exec Command="$(RUNCMD_PREFIX) -r=rmdir -hr Path=&quot;%(DeleteFoldersMacOs.Identity)&quot;"
+			 Condition="$([MSBuild]::IsOsPlatform('OSX'))"/>
+
+		<Exec Command="$(RUNCMD_PREFIX) -r=rmdir -hr Path=&quot;%(DeleteFoldersLinux.Identity)&quot;"
+			 Condition="$([MSBuild]::IsOsPlatform('Linux'))"/>
 
 		<Exec Command="$(RUNCMD_PREFIX) -r=rmdir -hr Path=&quot;%(DeleteFolders64bit.Identity)&quot;"
 			 Condition="'$(DEMO_PLATFORM)'=='x64'"/>
