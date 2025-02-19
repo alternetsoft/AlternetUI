@@ -1,5 +1,9 @@
 {
   "profiles": {
+    "silent": {
+      "commandName": "Project",
+	"dotnetRunMessages": "false",
+    },
     "set-build-number": {
       "commandName": "Project",
       "commandLineArgs": "set-build-number 22"

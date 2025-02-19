@@ -10,6 +10,6 @@ DEMO_PLATFORM=$3
 pushd $SCRIPT_HOME
 
 export DOTNET_SKIP_FIRST_TIME_EXPERIENCE=true
-dotnet msbuild /t:BuildExeDemo -property:DEMO_NAME=$DEMO_NAME";"DEMO_FRAMEWORK=$DEMO_FRAMEWORK";"DEMO_PLATFORM=$DEMO_PLATFORM build-demo.proj
+dotnet msbuild /t:BuildExeDemo -tl:off -property:DEMO_NAME=$DEMO_NAME";"DEMO_FRAMEWORK=$DEMO_FRAMEWORK";"DEMO_PLATFORM=$DEMO_PLATFORM build-demo.proj
 
 popd

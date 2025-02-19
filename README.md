@@ -43,7 +43,7 @@ are required.
 <b>STEP 1.</b> Windows Machine Setup:
 
 - Windows 7 or newer is supported (Windows 11 is preferred).
-- Install Visual Studio 2022 Version 17.8.0 or later, with C# Desktop development, C++ Desktop development workloads, 
+- Install Visual Studio 2022 Version 17.12.4 or later, with C# Desktop development, C++ Desktop development workloads, 
 VS Extenstion Development installed. Net 9.0, 8.0, 6.0, 7.0, 4.62, 4.81 targeting packs are required.
 - For development with Alternet.UI for Maui, install these dotnet workloads: android, ios, maccatalyst, macos, maui-windows.
 - Clone the AlterNET UI repo.
@@ -60,15 +60,14 @@ this [page](https://developer.apple.com/support/xcode/).
 
 <b>STEP 3.</b> Linux Machine Setup:
 
-- Install Ubuntu 23.10 or newer.
+- Install Ubuntu 24 or newer.
 - Install CMake and C compilers.
 - Install required packages, run Install.Scripts/Ubuntu.Install.Packages.sh.
 - Make folder with Windows Alternet.UI installation accessible for Linux Machine.
 
-<b>STEP 4.</b> (Optional) Specify target frameworks:
-You can modify list of target frameworks in files
-"Source\Samples\CommonData\TargetFrameworks.props" and "Source\Version\TargetFrameworks.props".
-This will speed up the build process.
+<b>STEP 4.</b> (Optional) Specify target frameworks for samples:
+You can modify list of target frameworks in file
+"Source\Samples\CommonData\TargetFrameworks.props".
 
 <b>STEP 5.</b> Build:
 
@@ -93,7 +92,7 @@ This could be useful when, for example, we switch to the new WxWidgets builds.
 Please run the Install script each time you switch development platform 
 (for example, when you switch from Linux to MSW, run Install.bat on MSW).
 
-## How to use with latest source from GitHub:
+## Sample template for use with latest source from GitHub instead of nuget:
 
 If you want to develop with latest AlterNET.UI source from GitHub instead of using it from 
 [NuGet](https://www.nuget.org/packages/Alternet.UI), you can use 

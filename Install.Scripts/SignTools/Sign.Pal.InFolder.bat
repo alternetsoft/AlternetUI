@@ -13,7 +13,10 @@ ECHO Folder: %1%
 
 pushd "%1%"
 
-for /R %%f in (Alternet.UI.Pal.dl?) do call "%SIGNTOOL%" "%%f"
+for /R %%f in (Alternet.UI.Pal.dl?) do (
+echo sign "%%f"
+call "%SIGNTOOL%" "%%f"
+)
 
 popd
 
