@@ -1,3 +1,17 @@
+# 0.9.711 (2025 February 19)
+
+- Target Alternet.UI.csproj to netstandard2.0 (#173).
+- Image: FromUrlCached, ClearCachedImages.
+- Window: Fix exception in ModalResult setter which was raised in some situations.
+- FilesListBox: Show drives list after known folders as it looks better on Linux and macOs.
+- Keyboard.IsAltShiftPressed, DelayedEvent.RaiseWithoutDelay, Calendar.SetColorThemeToAuto, VirtualListBox.DefaultSetItemsKind.
+- VirtualListBox.DelayedSelectionChanged now works similar to SelectionChanged as had some problems on macOs. Will be reimplemented in future builds.
+- ScrollBar: calls Designer.RaisePropertyChanged on value change.
+- Demo: Bug fixes and minor improvements.
+- Updated documentation in order to reflect latest api changes.
+- AssemblyUtils: GetOrLoadAssemblyByName.
+- KnownAssemblies.LibraryInteropServices, KnownTypes: InteropServicesNativeLibrary, InteropServicesDllImportResolver.
+
 # 0.9.710 (2025 February 14)
 
 - Fixes related to arm64 support.
