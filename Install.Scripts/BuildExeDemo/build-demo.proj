@@ -1,6 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
 
+<PropertyGroup>
+  <OSARCH>$([System.Runtime.InteropServices.RuntimeInformation]::OSArchitecture)</OSARCH>
+  <IsLinuxX64 Condition="$([MSBuild]::IsOsPlatform('Linux')) And $(OSARCH) == X64">true</IsLinuxX64>
+  <IsOsxArm64 Condition="$([MSBuild]::IsOsPlatform('OSX')) And $(OSARCH) == Arm64">true</IsOsxArm64>
+  <IsOsxX64 Condition="$([MSBuild]::IsOsPlatform('OSX')) And $(OSARCH) == X64">true</IsOsxX64>
+  <IsWindowsX64 Condition="$([MSBuild]::IsOsPlatform('Windows')) And $(OSARCH) == X64">true</IsWindowsX64>
+</PropertyGroup>
+
 	<PropertyGroup>
 		<SCRIPT_HOME>$(MSBuildProjectDirectory)</SCRIPT_HOME>
 		<SOURCE_HOME>$(SCRIPT_HOME)\..\..\Source</SOURCE_HOME>
@@ -17,10 +25,11 @@
 		<PUBLISH_FOLDER>$(PUBLISH_FOLDER_PARENT)\$(DEMO_NAME)</PUBLISH_FOLDER>
 		<VERSIONTOOL_HOME>$(SOURCE_HOME)\Tools\Versioning\Alternet.UI.VersionTool.Cli</VERSIONTOOL_HOME>
 		<VERSIONTOOL_PROJECT>$(VERSIONTOOL_HOME)\Alternet.UI.VersionTool.Cli.csproj</VERSIONTOOL_PROJECT>
-		<VERSIONTOOL_BIN>$(VERSIONTOOL_HOME)\bin\Debug\net8.0\Alternet.UI.VersionTool.Cli.exe</VERSIONTOOL_BIN>
 		<RUNCMD_HOME>$(SOURCE_HOME)\Tools\Alternet.UI.RunCmd\</RUNCMD_HOME>
 		<RUNCMD_PROJECT>$(RUNCMD_HOME)\Alternet.UI.RunCmd.csproj</RUNCMD_PROJECT>
 
+		<EXE_EXT>.exe</EXE_EXT>
+		<VERSIONTOOL_BIN>$(VERSIONTOOL_HOME)\bin\Debug\net8.0\Alternet.UI.VersionTool.Cli$(EXE_EXT)</VERSIONTOOL_BIN>
 		
 		<SCRIPT_HOME>$([System.IO.Path]::GetFullPath('$(SCRIPT_HOME)'))</SCRIPT_HOME>
 		<SOURCE_HOME>$([System.IO.Path]::GetFullPath('$(SOURCE_HOME)'))</SOURCE_HOME>
