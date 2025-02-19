@@ -119,7 +119,7 @@
 
 		<PropertyGroup>
 			<DemoPlatformArg Condition="'$(DEMO_PLATFORM)'!=''">/p:Platform=$(DEMO_PLATFORM)</DemoPlatformArg>
-			<DemoBuildCmd>dotnet build -c Release -o &quot;$(PUBLISH_FOLDER_SFX)&quot; --framework $(DEMO_FRAMEWORK) $() $(DEMO_ADD_PARAMS)</DemoBuildCmd>
+			<DemoBuildCmd>dotnet build -c Release -o &quot;$(PUBLISH_FOLDER_SFX)&quot; --framework $(DEMO_FRAMEWORK) $(DemoPlatformArg) $(DEMO_ADD_PARAMS)</DemoBuildCmd>
 		</PropertyGroup>
 		<Message Text="Run: $(DemoBuildCmd)" Importance="high"/>
 		<Exec WorkingDirectory="$(DEMO_HOME)"
@@ -129,13 +129,12 @@
 
 		<Message Text="Signing exe demo..." Importance="high" />
 
-<!--
 		<Exec WorkingDirectory="$(PUBLISH_FOLDER_SFX)"
 			Command="call $(SIGN_PAL_IN_FOLDER) $(PUBLISH_FOLDER_SFX)" Condition="$([MSBuild]::IsOsPlatform('Windows'))"/>
 
 		<Exec WorkingDirectory="$(PUBLISH_FOLDER_SFX)"
 			Command="call $(SIGN_EXE_IN_FOLDER) $(PUBLISH_FOLDER_SFX)" Condition="$([MSBuild]::IsOsPlatform('Windows'))"/>
--->		
+
 		<Message Text="===========================================" Importance="high" />
 
 		<Message Text="Copying additional files..." Importance="high" />
