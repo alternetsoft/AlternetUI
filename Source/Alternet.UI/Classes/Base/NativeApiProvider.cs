@@ -146,7 +146,7 @@ namespace Alternet.UI.Native
                             [typeof(string), typeof(IntPtr).MakeByRefType()])
                     ?? default;
 
-                handle = h;
+                handle = (IntPtr)parameters[1];
                 return result;
             }
 
