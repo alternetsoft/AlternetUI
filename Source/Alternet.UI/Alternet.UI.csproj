@@ -1,7 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <Import Project="..\Version\Version.props" />
   <Import Project="..\Version\VersionNugets.props" />
-  <Import Project="..\Version\TargetFrameworks.props" />
   <Import Project="..\Keys\Keys.props" />
   <Import Project="..\Version\CommonPackages.props" />
 
@@ -10,7 +9,7 @@
   <PropertyGroup>
     <NuGetAuditMode>direct</NuGetAuditMode>
     <NoWarn>$(NoWarn);CS8032</NoWarn>
-    <Platforms>AnyCPU;x64;x86</Platforms>
+    <TargetFramework>netstandard2.0</TargetFramework>
     <LangVersion>12.0</LangVersion>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <Nullable>enable</Nullable>
@@ -71,12 +70,6 @@
 
   <ItemGroup Condition="'$(Configuration)'=='Release'">
     <None Include="..\Alternet.UI.Build.Tasks\bin\Release\netstandard2.0\Alternet.UI.Build.Tasks.dll" Visible="false" Pack="True" PackagePath="tools\netstandard2.0" />
-
-    <None Include="..\Alternet.UI.Common\bin\Release\netstandard2.0\Alternet.UI.Common.dll" Pack="True" PackagePath="lib\netstandard2.0" />
-    <None Include="..\Alternet.UI.Interfaces\bin\Release\netstandard2.0\Alternet.UI.Interfaces.dll" Pack="True" PackagePath="lib\netstandard2.0" />
-    <None Include="..\Alternet.UI.Common\bin\Release\netstandard2.0\Alternet.UI.Common.xml" Pack="True" PackagePath="lib\netstandard2.0" />
-    <None Include="..\Alternet.UI.Interfaces\bin\Release\netstandard2.0\Alternet.UI.Interfaces.xml" Pack="True" PackagePath="lib\netstandard2.0" />
-
   </ItemGroup>
 
   <ItemGroup>

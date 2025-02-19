@@ -23,6 +23,7 @@ namespace Alternet.UI.Native
 
         private static MethodInfo? methodNativeLibrarySetDllImportResolver;
         private static MethodInfo? methodNativeLibraryLoad;
+        private static MethodInfo? methodNativeLibraryTryLoad;
 
         private static bool initialized;
         private static GCHandle unhandledExceptionCallbackHandle;
@@ -139,9 +140,20 @@ namespace Alternet.UI.Native
         {
             if (App.IsNetOrCoreApp)
             {
-#if NETCOREAPP
-                return NativeLibrary.TryLoad(libraryPath, out handle);
-#endif
+                IntPtr h = IntPtr.Zero;
+                object[] parameters = new object[] { libraryPath, h };
+
+                var result = (bool?)AssemblyUtils.InvokeMethodWithResult(
+                            KnownTypes.InteropServicesNativeLibrary.Value,
+                            "TryLoad",
+                            ref methodNativeLibraryTryLoad,
+                            null,
+                            parameters,
+                            [typeof(string), typeof(IntPtr).MakeByRefType()])
+                    ?? default;
+
+                handle = h;
+                return result;
             }
 
             handle = default;
@@ -172,9 +184,14 @@ namespace Alternet.UI.Native
         {
             if (App.IsNetOrCoreApp)
             {
-#if NETCOREAPP
-                return NativeLibrary.Load(libraryPath);
-#endif
+                return (IntPtr?)AssemblyUtils.InvokeMethodWithResult(
+                            KnownTypes.InteropServicesNativeLibrary.Value,
+                            "Load",
+                            ref methodNativeLibraryLoad,
+                            null,
+                            [libraryPath],
+                            [typeof(string)])
+                    ?? default;
             }
 
             return default;
@@ -269,8 +286,9 @@ namespace Alternet.UI.Native
 
                 if (App.IsLinuxOS && DebugUtils.UseDlOpenOnLinux)
                 {
-                    handle =
-                        LinuxUtils.NativeMethods.dlopen(libraryPath, LinuxUtils.NativeMethods.RTLD_NOW);
+                    handle = LinuxUtils.NativeMethods.dlopen(
+                            libraryPath,
+                            LinuxUtils.NativeMethods.RTLD_NOW);
                     result = handle != default;
                 }
                 else
