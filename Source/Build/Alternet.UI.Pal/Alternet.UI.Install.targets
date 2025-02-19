@@ -165,17 +165,6 @@
 	</Target>
 
     <!-- ========================================== -->
-	<Target Name="BuildUI_MacOsOrLinux">
-		<Message Text="MacOs or Linux specific UI build..." Importance="high" />
-
-		<Exec WorkingDirectory="$(RootDirectoryPath)/Source/Alternet.UI" 
-			Command="$(DotNetBuildDebugCmdNoIncremental) --framework net8.0" Condition="$(BoolNet8)"/>
-		<Exec WorkingDirectory="$(RootDirectoryPath)/Source/Alternet.UI" 
-			Command="$(DotNetBuildReleaseCmdNoIncremental) --framework net8.0"
-			Condition="$(BoolNet8) and '$(OnlyDebug)' != 'true'"
-			/>
-	</Target>
-    <!-- ========================================== -->
     <Target Name="InstallAlternetUI">
 		<Message Text="========================" Importance="high" />
 		<Message Text="Alternet.UI Installation started" Importance="high" />
@@ -214,13 +203,12 @@
 		<Message Text="Exec Build Alternet.UI..." Importance="high" />
 		<Exec 
 			WorkingDirectory="$(RootDirectoryPath)/Source/Alternet.UI" 
-			Command="$(DotNetBuildDebugCmdNoIncremental)"
-			Condition="$([MSBuild]::IsOsPlatform('Windows'))" />
+			Command="$(DotNetBuildDebugCmdNoIncremental)"/>
 		<Exec 
 			WorkingDirectory="$(RootDirectoryPath)/Source/Alternet.UI" 
 			Command="$(DotNetBuildReleaseCmdNoIncremental)"
-			Condition="$([MSBuild]::IsOsPlatform('Windows')) and '$(OnlyDebug)' != 'true'" />
-		<CallTarget Targets="BuildUI_MacOsOrLinux" Condition="!$([MSBuild]::IsOsPlatform('Windows'))"/>
+			Condition="'$(OnlyDebug)' != 'true'" />
+
     <!-- ========================================== -->
 		<CallTarget Targets="BuildAlternetUIBuildTasks"/>
     <!-- ========================================== -->

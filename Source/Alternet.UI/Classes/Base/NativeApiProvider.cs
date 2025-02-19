@@ -31,12 +31,6 @@ namespace Alternet.UI.Native
 
         static NativeApiProvider()
         {
-            /*
-            if(App.IsMacOS)
-            {
-               Environment.SetEnvironmentVariable("NSDebugEnabled", "NO");
-            }
-            */
         }
 
         [UnmanagedFunctionPointer(CallingConvention.Cdecl, CharSet = CharSet.Unicode)]
