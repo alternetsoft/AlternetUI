@@ -22,10 +22,12 @@ namespace Alternet.UI.Native
 
         ~NativeObject()
         {
-#if NETFRAMEWORK  // Issue #27
-            if (Alternet.UI.Application.Terminating)
-                return;
-#endif
+            if (!App.IsNetOrCoreApp)
+            {
+                if (Alternet.UI.Application.Terminating)
+                    return;
+            }
+
             Dispose(disposing: false);
         }
 

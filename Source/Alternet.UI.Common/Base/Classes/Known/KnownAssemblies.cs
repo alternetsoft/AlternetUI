@@ -19,6 +19,14 @@ namespace Alternet.UI
         });
 
         /// <summary>
+        /// Gets 'System.Runtime.InteropServices' assembly if it is referenced by the application.
+        /// </summary>
+        public static readonly LazyStruct<Assembly?> LibraryInteropServices = new(() =>
+        {
+            return AssemblyUtils.GetOrLoadAssemblyByName("System.Runtime.InteropServices");
+        });
+
+        /// <summary>
         /// Gets 'Alternet.UI.Common' assembly.
         /// </summary>
         public static readonly Assembly LibraryCommon = typeof(AbstractControl).Assembly;

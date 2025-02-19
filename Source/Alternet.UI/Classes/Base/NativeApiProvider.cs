@@ -17,13 +17,13 @@ namespace Alternet.UI.Native
     {
         internal const string NativeModuleNameNoExt = "Alternet.UI.Pal";
 
-#if NETCOREAPP
-        internal const string NativeModuleName = NativeModuleNameNoExt;
-#else
         internal const string NativeModuleName = $"{NativeModuleNameNoExt}.dll";
-#endif
 
         internal static IntPtr libHandle = default;
+
+        private static MethodInfo? methodNativeLibrarySetDllImportResolver;
+        private static MethodInfo? methodNativeLibraryLoad;
+        private static MethodInfo? methodNativeLibraryTryLoad;
 
         private static bool initialized;
         private static GCHandle unhandledExceptionCallbackHandle;
@@ -54,13 +54,36 @@ namespace Alternet.UI.Native
         {
             if (!initialized)
             {
-#if NETCOREAPP
-                NativeLibrary.SetDllImportResolver(
-                    typeof(NativeApiProvider).Assembly,
-                    ImportResolver);
-#else
-                WindowsNativeModulesLocator.SetNativeModulesDirectory();
-#endif
+                if (App.IsNetOrCoreApp)
+                {
+                    var myType = typeof(NativeApiProvider);
+
+                    var method = myType.GetMethod(
+                        nameof(ImportResolver),
+                        BindingFlags.Static | BindingFlags.NonPublic | BindingFlags.Public);
+                    if(method is null)
+                        return;
+
+                    var delegateType = KnownTypes.InteropServicesDllImportResolver.Value;
+                    if (delegateType is null)
+                        return;
+
+                    var func = Delegate.CreateDelegate(delegateType, method);
+
+                    if (func is null)
+                        return;
+
+                    AssemblyUtils.InvokeMethodWithResult(
+                                KnownTypes.InteropServicesNativeLibrary.Value,
+                                "SetDllImportResolver",
+                                ref methodNativeLibrarySetDllImportResolver,
+                                null,
+                                [typeof(NativeApiProvider).Assembly, func]);
+                }
+                else
+                {
+                    WindowsNativeModulesLocator.SetNativeModulesDirectory();
+                }
 
                 Debug.Assert(
                     !unhandledExceptionCallbackHandle.IsAllocated,
@@ -115,12 +138,26 @@ namespace Alternet.UI.Native
 
         internal static bool NativeLibraryTryLoad(string libraryPath, out IntPtr handle)
         {
-#if NETCOREAPP
-            return NativeLibrary.TryLoad(libraryPath, out handle);
-#else
+            if (App.IsNetOrCoreApp)
+            {
+                IntPtr h = IntPtr.Zero;
+                object[] parameters = new object[] { libraryPath, h };
+
+                var result = (bool?)AssemblyUtils.InvokeMethodWithResult(
+                            KnownTypes.InteropServicesNativeLibrary.Value,
+                            "TryLoad",
+                            ref methodNativeLibraryTryLoad,
+                            null,
+                            parameters,
+                            [typeof(string), typeof(IntPtr).MakeByRefType()])
+                    ?? default;
+
+                handle = h;
+                return result;
+            }
+
             handle = default;
             return false;
-#endif
         }
 
         internal static IntPtr NativeLibraryLoad(
@@ -128,23 +165,36 @@ namespace Alternet.UI.Native
             Assembly assembly,
             DllImportSearchPath? searchPath)
         {
-#if NETCOREAPP
-            return NativeLibrary.Load(
-                libraryName,
-                assembly,
-                searchPath);
-#else
+            if (App.IsNetOrCoreApp)
+            {
+                return (IntPtr?)AssemblyUtils.InvokeMethodWithResult(
+                            KnownTypes.InteropServicesNativeLibrary.Value,
+                            "Load",
+                            ref methodNativeLibraryLoad,
+                            null,
+                            [libraryName, assembly, searchPath!],
+                            [typeof(string), typeof(Assembly), typeof(DllImportSearchPath?)])
+                    ?? default;
+            }
+
             return default;
-#endif
         }
 
         internal static IntPtr NativeLibraryLoad(string libraryPath)
         {
-#if NETCOREAPP
-            return NativeLibrary.Load(libraryPath);
-#else
+            if (App.IsNetOrCoreApp)
+            {
+                return (IntPtr?)AssemblyUtils.InvokeMethodWithResult(
+                            KnownTypes.InteropServicesNativeLibrary.Value,
+                            "Load",
+                            ref methodNativeLibraryLoad,
+                            null,
+                            [libraryPath],
+                            [typeof(string)])
+                    ?? default;
+            }
+
             return default;
-#endif
         }
 
         internal static IntPtr ImportResolver(
@@ -152,6 +202,9 @@ namespace Alternet.UI.Native
             Assembly assembly,
             DllImportSearchPath? searchPath)
         {
+            if (libraryName == NativeModuleName && libHandle != default)
+                return libHandle;
+
             var debugResolver = DebugUtils.DebugLoading && libHandle == default;
 
             try
@@ -182,6 +235,8 @@ namespace Alternet.UI.Native
                 {
                     if (libHandle == default)
                     {
+                        libraryName = NativeModuleNameWithExt;
+
                         var libraryFileName = OSUtils.FindNativeDll(NativeModuleNameWithExt);
 
                         if (debugResolver)
@@ -231,8 +286,9 @@ namespace Alternet.UI.Native
 
                 if (App.IsLinuxOS && DebugUtils.UseDlOpenOnLinux)
                 {
-                    handle =
-                        LinuxUtils.NativeMethods.dlopen(libraryPath, LinuxUtils.NativeMethods.RTLD_NOW);
+                    handle = LinuxUtils.NativeMethods.dlopen(
+                            libraryPath,
+                            LinuxUtils.NativeMethods.RTLD_NOW);
                     result = handle != default;
                 }
                 else

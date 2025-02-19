@@ -235,6 +235,28 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets <see cref="Assembly"/> with the specified name
+        /// searching it through all assemblies of the current domain.
+        /// If assembly is not found, tries to load it.
+        /// </summary>
+        /// <param name="name">Name of the assembly.</param>
+        /// <returns></returns>
+        public static Assembly? GetOrLoadAssemblyByName(string name)
+        {
+            try
+            {
+                var result = GetAssemblyByName(name);
+                if (result is null)
+                    result = Assembly.Load(name);
+                return result;
+            }
+            catch (Exception)
+            {
+                return null;
+            }
+        }
+
+        /// <summary>
         /// Enumerates members of all types in the loaded assemblies.
         /// </summary>
         /// <param name="bindingAttr">The bindings constraint. Optional.
@@ -1631,6 +1653,49 @@ namespace Alternet.UI
                 if (method is not null)
                 {
                     var result = method.Invoke(obj, param);
+                    return result;
+                }
+
+                return null;
+            }
+            catch
+            {
+                return null;
+            }
+        }
+
+        /// <summary>
+        /// Invokes method with object result through the reflection.
+        /// </summary>
+        /// <param name="type">Type where to search the method.</param>
+        /// <param name="methodName">Method name</param>
+        /// <param name="obj">Object instance. Optional. Default is null.</param>
+        /// <param name="param">Method parameters. Optional. Default is null.</param>
+        /// <param name="paramTypes">Types of prameters. Optional. Default is null.</param>
+        /// <returns>
+        /// <c>null</c> if method not found; otherwise result of the method invoke.
+        /// </returns>
+        /// <param name="methodInfo">Reference to the variable which stores
+        /// found method. Used in order to speed up the calls. Updated by this function
+        /// if equals Null.</param>
+        public static object? InvokeMethodWithResult(
+            Type? type,
+            string methodName,
+            ref MethodInfo? methodInfo,
+            object? obj = null,
+            object[]? param = null,
+            Type[]? paramTypes = null)
+        {
+            try
+            {
+                if(paramTypes == null)
+                    methodInfo ??= type?.GetMethod(methodName);
+                else
+                    methodInfo ??= type?.GetMethod(methodName, paramTypes);
+
+                if (methodInfo is not null)
+                {
+                    var result = methodInfo.Invoke(obj, param);
                     return result;
                 }
 
