@@ -17,6 +17,7 @@
 		<PUBLISH_FOLDER>$(PUBLISH_FOLDER_PARENT)\$(DEMO_NAME)</PUBLISH_FOLDER>
 		<VERSIONTOOL_HOME>$(SOURCE_HOME)\Tools\Versioning\Alternet.UI.VersionTool.Cli</VERSIONTOOL_HOME>
 		<VERSIONTOOL_PROJECT>$(VERSIONTOOL_HOME)\Alternet.UI.VersionTool.Cli.csproj</VERSIONTOOL_PROJECT>
+		<VERSIONTOOL_BIN>$(VERSIONTOOL_HOME)\bin\Debug\net8.0\Alternet.UI.VersionTool.Cli.exe</VERSIONTOOL_BIN>
 		<RUNCMD_HOME>$(SOURCE_HOME)\Tools\Alternet.UI.RunCmd\</RUNCMD_HOME>
 		<RUNCMD_PROJECT>$(RUNCMD_HOME)\Alternet.UI.RunCmd.csproj</RUNCMD_PROJECT>
 
@@ -36,11 +37,12 @@
 		<PUBLISH_FOLDER>$([System.IO.Path]::GetFullPath('$(PUBLISH_FOLDER)'))</PUBLISH_FOLDER>
 		<VERSIONTOOL_HOME>$([System.IO.Path]::GetFullPath('$(VERSIONTOOL_HOME)'))</VERSIONTOOL_HOME>
 		<VERSIONTOOL_PROJECT>$([System.IO.Path]::GetFullPath('$(VERSIONTOOL_PROJECT)'))</VERSIONTOOL_PROJECT>
+		<VERSIONTOOL_BIN>$([System.IO.Path]::GetFullPath('$(VERSIONTOOL_BIN)'))</VERSIONTOOL_BIN>
 		<RUNCMD_HOME>$([System.IO.Path]::GetFullPath('$(RUNCMD_HOME)'))</RUNCMD_HOME>
 		<RUNCMD_PROJECT>$([System.IO.Path]::GetFullPath('$(RUNCMD_PROJECT)'))</RUNCMD_PROJECT>
 
 		<RUNCMD_PREFIX>dotnet run --no-restore --no-build --project &quot;$(RUNCMD_PROJECT)&quot; --</RUNCMD_PREFIX>
-		<VERSIONTOOL_PREFIX>dotnet run --project &quot;$(VERSIONTOOL_PROJECT)&quot; --</VERSIONTOOL_PREFIX>
+		<VERSIONTOOL_PREFIX>&quot;$(VERSIONTOOL_BIN)&quot;</VERSIONTOOL_PREFIX>
 
 	</PropertyGroup>
 
@@ -72,15 +74,19 @@
 		<Message Text="===========================================" Importance="high" />
 		<CallTarget Targets="ShowProps" Condition="true"/>
 
-		<Message Text="Building Alternet.UI.RunCmd.csproj..." Importance="high" />
+		<Message Text="Building tools..." Importance="high" />
 
 		<Exec WorkingDirectory="$(SCRIPT_HOME)"
 			Command="dotnet build &quot;$(RUNCMD_PROJECT)&quot;" />
 
-		<Message Text="Building Alternet.UI.RunCmd.csproj done." Importance="high" />
+		<Exec WorkingDirectory="$(SCRIPT_HOME)"
+			Command="dotnet build &quot;$(VERSIONTOOL_PROJECT)&quot;" />
+
+		<Message Text="Building tools done." Importance="high" />
 
 		<Message Text="===========================================" Importance="high" />
 		<Message Text="Deleting bin and obj files..." Importance="high" />
+		<Message Text="in folder [$(DEMO_HOME)]" Importance="high" />
 		<Exec Command="$(RUNCMD_PREFIX) -r=deleteBinObjSubFolders Path=&quot;$(DEMO_HOME)&quot;" />
 
 		<Message Text="===========================================" Importance="high" />
@@ -110,19 +116,26 @@
 		<Message Text="===========================================" Importance="high" />
 
 		<Message Text="Building exe demo..." Importance="high" />
+
+		<PropertyGroup>
+			<DemoPlatformArg Condition="'$(DEMO_PLATFORM)'!=''">/p:Platform=$(DEMO_PLATFORM)</DemoPlatformArg>
+			<DemoBuildCmd>dotnet build -c Release -o &quot;$(PUBLISH_FOLDER_SFX)&quot; --framework $(DEMO_FRAMEWORK) $() $(DEMO_ADD_PARAMS)</DemoBuildCmd>
+		</PropertyGroup>
+		<Message Text="Run: $(DemoBuildCmd)" Importance="high"/>
 		<Exec WorkingDirectory="$(DEMO_HOME)"
-			Command="dotnet build -c Release -o &quot;$(PUBLISH_FOLDER_SFX)&quot; --framework $(DEMO_FRAMEWORK) /p:Platform=$(DEMO_PLATFORM) $(DEMO_ADD_PARAMS)" />
+			Command="$(DemoBuildCmd)" />
 
 		<Message Text="===========================================" Importance="high" />
 
 		<Message Text="Signing exe demo..." Importance="high" />
 
+<!--
 		<Exec WorkingDirectory="$(PUBLISH_FOLDER_SFX)"
 			Command="call $(SIGN_PAL_IN_FOLDER) $(PUBLISH_FOLDER_SFX)" Condition="$([MSBuild]::IsOsPlatform('Windows'))"/>
 
 		<Exec WorkingDirectory="$(PUBLISH_FOLDER_SFX)"
 			Command="call $(SIGN_EXE_IN_FOLDER) $(PUBLISH_FOLDER_SFX)" Condition="$([MSBuild]::IsOsPlatform('Windows'))"/>
-		
+-->		
 		<Message Text="===========================================" Importance="high" />
 
 		<Message Text="Copying additional files..." Importance="high" />

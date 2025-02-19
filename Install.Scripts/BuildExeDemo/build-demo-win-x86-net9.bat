@@ -1,0 +1,1 @@
+call build-demo-win-xxx.bat net9.0 alternet-ui-demo-win10-x86-net9 x86
