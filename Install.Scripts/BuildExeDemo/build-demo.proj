@@ -128,6 +128,9 @@
 
 		<PropertyGroup>
 			<DemoPlatformArg Condition="'$(DEMO_PLATFORM)'!=''">/p:Platform=$(DEMO_PLATFORM)</DemoPlatformArg>
+			<DemoPlatformArg Condition="$([MSBuild]::IsOsPlatform('OSX'))"></DemoPlatformArg>
+			<DemoPlatformArg Condition="$([MSBuild]::IsOsPlatform('Linux'))"></DemoPlatformArg>
+
 			<DemoBuildCmd>dotnet build -c Release -o &quot;$(PUBLISH_FOLDER_SFX)&quot; --framework $(DEMO_FRAMEWORK) $(DemoPlatformArg) $(DEMO_ADD_PARAMS)</DemoBuildCmd>
 		</PropertyGroup>
 		<Message Text="Run: $(DemoBuildCmd)" Importance="high"/>

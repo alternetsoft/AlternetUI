@@ -950,7 +950,7 @@ namespace Alternet.UI
             {
                 if (IsDarkBackground)
                 {
-                    HolidayColorBg = Color.Firebrick;
+                    HolidayColorFg = Color.Firebrick;
                 }
                 else
                 {

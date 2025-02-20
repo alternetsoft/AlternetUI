@@ -1,1 +1,1 @@
-./build-demo-ubuntu-xxx.sh net9.0 alternet-ui-demo-macos-arm64-net9 arm64
+./build-demo-ubuntu-xxx.sh net9.0 alternet-ui-demo-macos-arm64-net9 osx-arm64
