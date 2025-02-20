@@ -1,3 +1,9 @@
+# 0.9.712 (2025 February 20)
+
+- Fixed bugs introduced with change Alternet.UI.csproj target to netstandard2.0.
+- Updated install scripts.
+- Fixed Calendar foreground color on dark theme.
+
 # 0.9.711 (2025 February 19)
 
 - Target Alternet.UI.csproj to netstandard2.0 (#173).
