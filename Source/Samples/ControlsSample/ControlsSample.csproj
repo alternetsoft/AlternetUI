@@ -14,6 +14,13 @@
       <ApplicationManifest>app.manifest</ApplicationManifest>
     </PropertyGroup>                 
 
+  <ItemGroup>
+    <Content Include="Alternet.Demo.Run.sh">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    </ItemGroup>
+
+
     <ItemGroup>
         <ProjectReference Include="..\ControlsSampleDll\ControlsSampleDll.csproj" />
         <ProjectReference Include="..\..\Alternet.UI\Alternet.UI.csproj" />
