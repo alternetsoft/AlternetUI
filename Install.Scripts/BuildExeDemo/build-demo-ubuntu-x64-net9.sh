@@ -1,0 +1,1 @@
+./build-demo-ubuntu-xxx.sh net9.0 alternet-ui-demo-ubuntu-x64-net9 x64
