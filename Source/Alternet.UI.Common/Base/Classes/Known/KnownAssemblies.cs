@@ -11,7 +11,7 @@ namespace Alternet.UI
     public static class KnownAssemblies
     {
         /// <summary>
-        /// Gets 'Alternet.UI.Maui' assembly if it is referenced by the application.
+        /// Gets 'Alternet.UI.Maui' assembly if it is used in the application.
         /// </summary>
         public static readonly LazyStruct<Assembly?> LibraryMaui = new(() =>
         {
@@ -19,7 +19,23 @@ namespace Alternet.UI
         });
 
         /// <summary>
-        /// Gets 'System.Runtime.InteropServices' assembly if it is referenced by the application.
+        /// Gets 'Microsoft.Maui' assembly if it is used in the application.
+        /// </summary>
+        public static readonly LazyStruct<Assembly?> LibraryMicrosoftMaui = new(() =>
+        {
+            return AssemblyUtils.GetAssemblyByName("Microsoft.Maui");
+        });
+
+        /// <summary>
+        /// Gets or loads 'Microsoft.Maui.Essentials' assembly.
+        /// </summary>
+        public static readonly LazyStruct<Assembly?> LibraryMicrosoftMauiEssentials = new(() =>
+        {
+            return AssemblyUtils.GetOrLoadAssemblyByName("Microsoft.Maui.Essentials");
+        });
+
+        /// <summary>
+        /// Gets or loads 'System.Runtime.InteropServices' assembly.
         /// </summary>
         public static readonly LazyStruct<Assembly?> LibraryInteropServices = new(() =>
         {

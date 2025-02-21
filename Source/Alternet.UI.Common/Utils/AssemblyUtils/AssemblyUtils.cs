@@ -1545,14 +1545,45 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Gets whether device platform is MacCatalyst using invoke of 'MauiUtils.IsMacCatalyst'.
+        /// Gets whether device platform is MacCatalyst using invoke
+        /// of Maui platform code if it is present.
         /// </summary>
         /// <returns></returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static bool? InvokeMauiUtilsIsMacCatalyst()
+        public static bool InvokeMauiUtilsIsMacCatalyst()
         {
-            var result = InvokeBoolMethod(KnownTypes.MauiUtils.Value, "IsMacCatalyst");
+            var asm = KnownAssemblies.LibraryMicrosoftMaui.Value;
+            if (asm is null)
+                return false;
+
+            var essentials = KnownAssemblies.LibraryMicrosoftMauiEssentials.Value;
+            if (essentials is null)
+                return false;
+
+            var devicePlatform = essentials.GetType("Microsoft.Maui.Devices.DevicePlatform");
+            if (devicePlatform is null)
+                return false;
+
+            var deviceinfo = essentials.GetType("Microsoft.Maui.Devices.DeviceInfo");
+            if (deviceinfo is null)
+                return false;
+
+            var devicePlatformMacCatalyst =
+                devicePlatform.GetProperty("MacCatalyst")?.GetValue(null);
+            if (devicePlatformMacCatalyst is null)
+                return false;
+
+            var deviceInfoCurrent = deviceinfo.GetProperty("Current")?.GetValue(null);
+
+            var deviceInfoCurrentPlatform = deviceInfoCurrent?.GetType()
+                .GetProperty("Platform")?.GetValue(deviceInfoCurrent);
+
+            var result = deviceInfoCurrentPlatform == devicePlatformMacCatalyst;
             return result;
+
+            /*
+            return DeviceInfo.Current.Platform == DevicePlatform.MacCatalyst;
+            */
         }
 
         /// <summary>

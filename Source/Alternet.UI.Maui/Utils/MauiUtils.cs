@@ -223,7 +223,10 @@ namespace Alternet.UI
         /// Checks whether device platform is MacCatalyst.
         /// </summary>
         /// <returns></returns>
-        public static bool IsMacCatalyst() => DeviceInfo.Current.Platform == DevicePlatform.MacCatalyst;
+        public static bool IsMacCatalyst()
+        {
+            return DeviceInfo.Current.Platform == DevicePlatform.MacCatalyst;
+        }
 
         /// <summary>
         /// Sets soft input mode for the window.
