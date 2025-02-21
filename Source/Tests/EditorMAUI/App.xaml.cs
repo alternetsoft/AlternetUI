@@ -10,6 +10,8 @@ public partial class App : Application
     protected override Window CreateWindow(IActivationState? activationState)
     {
         var window = new Window(new NavigationPage(new AppShell()));
+        var isMacCatalyst = Alternet.UI.AssemblyUtils.InvokeMauiUtilsIsMacCatalyst();
+        window.Title = $"IsMacCatalyst: {isMacCatalyst}";
 
         window.Created += (s, e) =>
         {

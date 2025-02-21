@@ -12,7 +12,7 @@
                                    SelectionChanged="editor_SelectionChanged">
             </editor:SyntaxEditView>
             <FlyoutBase.ContextFlyout>
-                <MenuFlyout>
+                <MenuFlyout x:Name="contextMenu">
                     <MenuFlyoutItem Text="Set Height = (Width / 3) * 2"
                                         x:Name="setHeight"/>
                     <MenuFlyoutItem Text="Hide extra controls"
