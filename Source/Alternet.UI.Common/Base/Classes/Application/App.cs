@@ -1203,7 +1203,7 @@ namespace Alternet.UI
                     return;
             }
 
-            Log(s);
+            IdleLog(s);
             Debug.WriteLine(s);
         }
 

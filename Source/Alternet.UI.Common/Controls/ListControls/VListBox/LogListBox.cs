@@ -321,10 +321,16 @@ namespace Alternet.UI
 
         private void LogRefresh()
         {
+            if (DisposingOrDisposed)
+                return;
+
             Invoke(Fn);
 
             void Fn()
             {
+                if (DisposingOrDisposed)
+                    return;
+
                 if (!App.LogInUpdates() || !BoundToApplicationLog)
                 {
                     var index = Items.Count - 1;
@@ -425,6 +431,9 @@ namespace Alternet.UI
 
             void Fn()
             {
+                if (DisposingOrDisposed)
+                    return;
+
                 var item = e.Item?.Item;
 
                 if(item is not null)
