@@ -1,12 +1,18 @@
+using System;
+using System.Threading.Tasks;
+
 using Microsoft.Maui.Controls;
+using Microsoft.Maui.Dispatching;
 
 namespace Alternet.Maui;
 
 /// <summary>
 /// <see cref="ContentPage"/> descendant with 'Please wait' label.
 /// </summary>
-public partial class WaitContentPage : ContentPage
+public partial class WaitContentPage : Alternet.UI.DisposableContentPage
 {
+    private static WaitContentPage? defaultPage;
+
     /// <summary>
     /// Initializes a new instance of the <see cref="WaitContentPage"/> class.
     /// </summary>
@@ -24,5 +30,50 @@ public partial class WaitContentPage : ContentPage
                 },
             },
         };
+    }
+
+    /// <summary>
+    /// Gets default <see cref="WaitContentPage"/>.
+    /// </summary>
+    public static WaitContentPage Default
+    {
+        get
+        {
+            return defaultPage ??= new WaitContentPage();
+        }
+    }
+
+    /// <summary>
+    /// Shows wait page, pushes page returned by <paramref name="getPageFunc"/>
+    /// and hides wait page.
+    /// </summary>
+    /// <param name="navigation">Navigation interface used to show pages.</param>
+    /// <param name="getPageFunc">Function which returns page to show.</param>
+    /// <param name="useWaitPage">Whether to show wait page.</param>
+    /// <returns></returns>
+    public async Task NavigationPush(
+        INavigation navigation,
+        Func<Page> getPageFunc,
+        bool useWaitPage = true)
+    {
+        if (useWaitPage)
+        {
+            await Dispatcher.DispatchAsync(() =>
+            {
+                return navigation.PushAsync(this);
+            });
+        }
+
+        var page = getPageFunc();
+
+        await Dispatcher.DispatchAsync(() =>
+        {
+            return navigation.PushAsync(page);
+        });
+
+        if (useWaitPage)
+        {
+            navigation.RemovePage(this);
+        }
     }
 }

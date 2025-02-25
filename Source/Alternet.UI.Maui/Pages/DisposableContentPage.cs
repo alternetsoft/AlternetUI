@@ -104,7 +104,9 @@ namespace Alternet.UI
                 throw new ObjectDisposedException(null);
         }
 
-        /// <inheritdoc/>
+        /// <summary>
+        /// Does nothing.
+        /// </summary>
         public void Required()
         {
         }
