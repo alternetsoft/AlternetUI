@@ -282,7 +282,10 @@ namespace Alternet.UI
                 return;
 
             if (caretInfo.IsDisposed)
+            {
                 CaretInfo = null;
+                return;
+            }
 
             if (!caretInfo.Visible)
                 return;
