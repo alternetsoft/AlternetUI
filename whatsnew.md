@@ -1,3 +1,9 @@
+# 0.9.713 (2025 February 25)
+
+- AbstractControl: Fix exception in PaintCaret occured in some cases.
+- Maui: LogContentPage, EnumPickerView.
+- LogUtils: CreateDeveloperTools, ShowDeveloperTools.
+
 # 0.9.712 (2025 February 20)
 
 - Fixed bugs introduced with change Alternet.UI.csproj target to netstandard2.0.
