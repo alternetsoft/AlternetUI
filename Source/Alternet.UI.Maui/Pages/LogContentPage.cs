@@ -31,7 +31,7 @@ public partial class LogContentPage : Alternet.UI.DisposableContentPage
                     new Label
                     {
                         Text = "Application Log",
-                        FontSize = 24,
+                        FontAttributes = FontAttributes.Bold,
                         Margin = 10,
                         VerticalOptions = LayoutOptions.Center,
                     },
@@ -62,6 +62,8 @@ public partial class LogContentPage : Alternet.UI.DisposableContentPage
 
         Alternet.UI.App.LogMessage += OnLogMessage;
         Alternet.UI.App.LogRefresh += OnLogRefresh;
+
+        Alternet.UI.App.Log("Hello, this is log.");
     }
 
     /// <summary>
