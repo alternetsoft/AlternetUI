@@ -29,6 +29,22 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Shows developer tools window.
+        /// </summary>
+        public static void ShowDeveloperTools()
+        {
+            PanelDevTools.ShowDeveloperTools();
+        }
+
+        /// <summary>
+        /// Creates developer tools window.
+        /// </summary>
+        public static void CreateDeveloperTools()
+        {
+            PanelDevTools.CreateDeveloperTools();
+        }
+
+        /// <summary>
         /// Logs environment versions.
         /// </summary>
         /// <remarks>

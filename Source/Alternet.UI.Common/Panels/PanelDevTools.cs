@@ -231,10 +231,7 @@ namespace Alternet.UI
             }
         }
 
-        /// <summary>
-        /// Shows developer tools window.
-        /// </summary>
-        public static void ShowDeveloperTools()
+        public static void CreateDeveloperTools()
         {
             if (devToolsWindow is null)
             {
@@ -242,8 +239,6 @@ namespace Alternet.UI
                 devToolsWindow.Closing += DevToolsWindow_Closing;
                 devToolsWindow.Disposed += DevToolsWindow_Disposed;
             }
-
-            devToolsWindow.Show();
 
             static void DevToolsWindow_Closing(object? sender, WindowClosingEventArgs e)
             {
@@ -253,6 +248,16 @@ namespace Alternet.UI
             {
                 devToolsWindow = null;
             }
+        }
+
+        /// <summary>
+        /// Shows developer tools window.
+        /// </summary>
+        public static void ShowDeveloperTools()
+        {
+            CreateDeveloperTools();
+
+            devToolsWindow!.Show();
         }
 
         /// <summary>
