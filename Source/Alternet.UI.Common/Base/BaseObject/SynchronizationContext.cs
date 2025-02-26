@@ -91,6 +91,8 @@ namespace Alternet.UI
         {
             if (!AutoInstall || contextInstallationInProgress)
                 return;
+            if (App.IsMaui)
+                return;
 
             if (Current == null)
                 previousSynchronizationContext = null;
