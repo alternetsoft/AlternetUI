@@ -91,7 +91,7 @@ namespace Alternet.UI
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
             get
             {
-                var result = App.Handler?.IsInvokeRequired ?? !App.IsAppThread;
+                var result = !App.IsAppThread /*|| (App.Handler?.IsInvokeRequired ?? false)*/;
                 return result;
             }
         }
