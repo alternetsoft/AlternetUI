@@ -219,7 +219,7 @@ namespace Alternet.UI
             if (handler is not null)
                 Handler = handler;
             Handler ??= CreateDefaultHandler();
-            SynchronizationContext.InstallIfNeeded();
+            UISynchronizationContext.InstallIfNeeded();
             App.Current = this;
 
             Initialized = true;
@@ -1971,7 +1971,7 @@ namespace Alternet.UI
                     }
                 }
 
-                SynchronizationContext.Uninstall();
+                UISynchronizationContext.Uninstall();
             }
             finally
             {

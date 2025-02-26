@@ -7,7 +7,7 @@ namespace Alternet.UI
     /// <summary>
     /// SynchronizationContext subclass used by AlterNET UI.
     /// </summary>
-    public class SynchronizationContext : System.Threading.SynchronizationContext
+    public class UISynchronizationContext : System.Threading.SynchronizationContext
     {
         [ThreadStatic]
         private static bool doNotAutoInstall;
@@ -21,21 +21,21 @@ namespace Alternet.UI
         private WeakReference? destinationThreadReference;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="SynchronizationContext"/> class.
+        /// Initializes a new instance of the <see cref="UISynchronizationContext"/> class.
         /// </summary>
-        public SynchronizationContext()
+        public UISynchronizationContext()
         {
             // store the current thread to ensure its still alive during an invoke.
             DestinationThread = Thread.CurrentThread;
         }
 
-        private SynchronizationContext(Thread? destinationThread)
+        private UISynchronizationContext(Thread? destinationThread)
         {
             DestinationThread = destinationThread;
         }
 
         /// <summary>
-        /// Determines whether we install the <see cref="SynchronizationContext"/>
+        /// Determines whether we install the <see cref="UISynchronizationContext"/>
         /// when we create a control, or
         /// when we start a message loop. Default: true.
         /// </summary>
@@ -73,14 +73,14 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Uninstalls the currently installed <see cref="SynchronizationContext"/> and
+        /// Uninstalls the currently installed <see cref="UISynchronizationContext"/> and
         /// replaces it with the previously installed context.
         /// </summary>
         /// <remarks>
-        /// If the previously installed <see cref="SynchronizationContext"/> is <c>null</c>,
+        /// If the previously installed <see cref="UISynchronizationContext"/> is <c>null</c>,
         /// the current context is set to <c>null</c>.
         /// If the currently installed synchronization context is not
-        /// a <see cref="SynchronizationContext"/>, this method does nothing.
+        /// a <see cref="UISynchronizationContext"/>, this method does nothing.
         /// </remarks>
         public static void Uninstall() => Uninstall(false);
 
@@ -111,7 +111,7 @@ namespace Alternet.UI
                     || currentContext.GetType() == typeof(System.Threading.SynchronizationContext))
                 {
                     previousSynchronizationContext = currentContext;
-                    AsyncOperationManager.SynchronizationContext = new SynchronizationContext();
+                    AsyncOperationManager.SynchronizationContext = new UISynchronizationContext();
                 }
             }
             finally
@@ -145,7 +145,7 @@ namespace Alternet.UI
         /// </summary>
         /// <returns>A copy of the synchronization context.</returns>
         public override System.Threading.SynchronizationContext CreateCopy()
-            => new SynchronizationContext(DestinationThread);
+            => new UISynchronizationContext(DestinationThread);
 
         /// <summary>
         /// Dispatches an asynchronous message to a synchronization context.
@@ -164,7 +164,7 @@ namespace Alternet.UI
         {
             if (AutoInstall)
             {
-                if (AsyncOperationManager.SynchronizationContext is SynchronizationContext)
+                if (AsyncOperationManager.SynchronizationContext is UISynchronizationContext)
                 {
                     try
                     {
