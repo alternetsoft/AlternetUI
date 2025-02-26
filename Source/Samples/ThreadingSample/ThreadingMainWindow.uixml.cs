@@ -175,9 +175,9 @@ namespace ThreadingSample
                     if (ct.IsCancellationRequested)
                         break;
                     await Task.Delay(100, ct);
-                    BeginInvoke(() =>
+                    Invoke(() =>
                     {
-                        if (IsDisposed)
+                        if (DisposingOrDisposed)
                         {
                             App.IdleLog($"Form {counter} is already disposed");
                         }

@@ -211,8 +211,10 @@ namespace Alternet.UI
             {
                 DoubleClickAction = () =>
                 {
-                    BeginInvoke(() =>
+                    RunWhenIdle(() =>
                     {
+                        if (DisposingOrDisposed)
+                            return;
                         logControl?.Log("Do action: " + title);
                         action?.Invoke();
                         AfterDoubleClickAction?.Invoke(this, EventArgs.Empty);

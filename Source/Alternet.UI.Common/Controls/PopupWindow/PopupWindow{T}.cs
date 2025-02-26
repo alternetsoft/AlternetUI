@@ -329,9 +329,10 @@ namespace Alternet.UI
             var szDip = control.Size;
             var sz = (0, szDip.Height);
 
-            BeginInvoke(() =>
+            RunWhenIdle(() =>
             {
-                ShowPopup(posDip, sz);
+                if(!DisposingOrDisposed)
+                    ShowPopup(posDip, sz);
             });
         }
 
@@ -374,7 +375,7 @@ namespace Alternet.UI
                 return;
             PopupResult = result;
 
-            BeginInvoke(() =>
+            RunWhenIdle(() =>
             {
                 Hide();
                 App.DoEvents();
