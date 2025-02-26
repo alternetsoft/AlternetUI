@@ -157,7 +157,7 @@ namespace Alternet.UI
         /// </remarks>
         public override void Post(SendOrPostCallback d, object? state)
         {
-            BaseObject.BeginInvoke(d, new object?[] { state });
+            BaseObject.Invoke(d, new object?[] { state });
         }
 
         internal static void Uninstall(bool turnOffAutoInstall)
