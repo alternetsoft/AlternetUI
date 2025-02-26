@@ -16,6 +16,8 @@ namespace Alternet.UI
     {
         private static ICursorFactoryHandler? factory;
 
+        private CursorType? cursorType;
+
         /// <summary>
         /// Initializes a new instance of the <see cref="Cursor"/> class.
         /// </summary>
@@ -38,6 +40,7 @@ namespace Alternet.UI
         /// <param name="cursor">Built in cursor type.</param>
         public Cursor(CursorType cursor)
         {
+            cursorType = cursor;
             Handler = Factory.CreateCursorHandler(cursor);
         }
 
@@ -104,6 +107,11 @@ namespace Alternet.UI
             else
                 Handler = Factory.CreateCursorHandler(CursorType.Arrow);
         }
+
+        /// <summary>
+        /// Gets type of the cursor if it is known.
+        /// </summary>
+        public CursorType? KnownCursorType => cursorType;
 
         /// <summary>
         /// Gets or sets whether custom cursors are allowed. Default is <c>false</c>.
@@ -182,6 +190,14 @@ namespace Alternet.UI
                     return false;
             }
 #pragma warning restore
+        }
+
+        /// <inheritdoc/>
+        public override string ToString()
+        {
+            if(cursorType is not null)
+                return Enum.GetName(typeof(Cursor), cursorType);
+            return base.ToString();
         }
 
         /// <inheritdoc/>
