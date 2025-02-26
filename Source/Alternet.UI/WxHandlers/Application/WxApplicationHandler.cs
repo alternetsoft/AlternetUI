@@ -37,8 +37,12 @@ namespace Alternet.UI
             var maxEventIdentifier = eventIdentifiers.Max();
             var length = maxEventIdentifier - minEventIdentifier + 1;
             eventIdentifierToEnum = new WxEventIdentifiers[length];
+            
             for (int i = 0; i < eventIdentifiers.Length; i++)
-                eventIdentifierToEnum[eventIdentifiers[i] - minEventIdentifier] = (WxEventIdentifiers)i;
+            {
+                eventIdentifierToEnum[eventIdentifiers[i] - minEventIdentifier]
+                    = (WxEventIdentifiers)i;
+            }
 
             if (App.SupressDiagnostics)
                 Native.Application.SuppressDiagnostics(-1);

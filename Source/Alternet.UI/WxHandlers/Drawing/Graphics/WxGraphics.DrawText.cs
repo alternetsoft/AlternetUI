@@ -17,12 +17,30 @@ namespace Alternet.Drawing
             if (text is null || text.Length == 0)
                 return SizeD.Empty;
 
-            var dpi = GetDPI().Width;
-
             var result = dc.GetTextExtentSimple(
                 text,
                 (UI.Native.Font)font.Handler,
                 default);
+            return result;
+        }
+
+        public SizeD GetTextExtent(string text, Font font, Control? control)
+        {
+            if (text is null || text.Length == 0)
+                return SizeD.Empty;
+
+            IntPtr controlPtr = default;
+
+            if(control is not null)
+            {
+                var wxHandler = control.Handler as WxControlHandler;
+                controlPtr = wxHandler?.NativeControl.WxWidget ?? default;
+            }
+
+            var result = dc.GetTextExtentSimple(
+                text,
+                (UI.Native.Font)font.Handler,
+                controlPtr);
             return result;
         }
 
