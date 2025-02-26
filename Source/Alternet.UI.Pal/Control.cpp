@@ -1534,6 +1534,11 @@ namespace Alternet::UI
         {
             auto cursor = (wxCursor*)handle;
             _cursor = wxCursor(*cursor);
+
+            if (_wxWindow != nullptr)
+            {
+                _wxWindow->SetCursor(_cursor);
+            }
         }
     }
 
