@@ -19,12 +19,17 @@
     </PropertyGroup>
 
     <Message Text="ThisDllPath: $(ThisDllPath)" Importance="high" Condition="$(DebugMessages)" />
-    <Message Text="ThisDllFullPath: $(ThisDllFullPath)" Importance="high" Condition="$(DebugMessages)" />
-    <Message Text="Exists ThisDllFullPath: $(ExistsThisDllPath)" Importance="high" Condition="$(DebugMessages)" />
-    <Message Text="Exists ThisExeFullPath: $(ExistsThisExePath)" Importance="high" Condition="$(DebugMessages)" />
+    <Message Text="ThisDllFullPath: $(ThisDllFullPath)" Importance="high" 
+             Condition="$(DebugMessages)" />
+    <Message Text="Exists ThisDllFullPath: $(ExistsThisDllPath)" Importance="high" 
+             Condition="$(DebugMessages)" />
+    <Message Text="Exists ThisExeFullPath: $(ExistsThisExePath)" Importance="high" 
+             Condition="$(DebugMessages)" />
 
-    <Exec Command="call &quot;$(SignToolBat)&quot; &quot;$(ThisDllFullPath)&quot;" Condition="Exists($(ThisDllFullPath))"/>
-    <Exec Command="call &quot;$(SignToolBat)&quot; &quot;$(ThisExeFullPath)&quot;" Condition="Exists($(ThisExeFullPath))"/>
+    <Exec Command="call &quot;$(SignToolBat)&quot; &quot;$(ThisDllFullPath)&quot;"
+          Condition="Exists($(ThisDllFullPath))" ContinueOnError="true" />
+    <Exec Command="call &quot;$(SignToolBat)&quot; &quot;$(ThisExeFullPath)&quot;"
+          Condition="Exists($(ThisExeFullPath))" ContinueOnError="true" />
 
   </Target>
   <!-- ================================================= -->
