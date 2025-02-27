@@ -587,6 +587,47 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Logs file names found in the specified folder.
+        /// </summary>
+        /// <param name="path">Path to folder.</param>
+        /// <param name="title">Title to log. Optional.
+        /// If not specified <paramref name="path"/> is logged.</param>
+        public static void LogFilenamesOfFolder(string path, string? title = null)
+        {
+            if(title is not null)
+                App.Log(title);
+            else
+                App.Log(title);
+
+            if (path is null)
+            {
+                App.Log("Empty");
+                return;
+            }
+            else
+            {
+                App.Log(path);
+            }
+
+            var files = Directory.GetFiles(path).Select(System.IO.Path.GetFileName);
+            Alternet.UI.LogUtils.LogRangeAsSection(files);
+        }
+
+        /// <summary>
+        /// Logs <see cref="IEnumerable"/> as section (enclosed in separators).
+        /// </summary>
+        /// <param name="kind">Log item kind.</param>
+        /// <param name="items">Items to log.</param>
+        public static void LogRangeAsSection(
+            IEnumerable items,
+            LogItemKind kind = LogItemKind.Information)
+        {
+            App.LogBeginSection();
+            LogRange(items, kind);
+            App.LogEndSection();
+        }
+
+        /// <summary>
         /// Logs <see cref="IEnumerable"/>.
         /// </summary>
         /// <param name="kind">Log item kind.</param>

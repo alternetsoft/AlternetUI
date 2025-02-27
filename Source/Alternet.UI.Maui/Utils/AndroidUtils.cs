@@ -1,5 +1,7 @@
 namespace Alternet.UI;
 
+using System.Linq;
+
 using Microsoft.Maui.Devices;
 using Microsoft.Maui.Platform;
 
@@ -11,9 +13,106 @@ using Android.App;
 using Android.Content;
 using Android.Content.Res;
 using Android.Views;
+using System.IO;
+using System.Collections.Generic;
 
 public static class AndroidUtils
 {
+    /// <summary>
+    /// Gets application's private storage folder.
+    /// </summary>
+    /// <returns></returns>
+    public static string? GetPrivateStoragePath()
+    {
+        // Get the application context
+        Context context = Application.Context;
+
+        // Get the private storage path
+        var privateStoragePath = context?.FilesDir?.AbsolutePath;
+
+        return privateStoragePath;
+    }
+
+    public static void LogDirs()
+    {
+        // Get the application context
+        Context context = Application.Context;
+
+        // Return the primary external storage directory where this application's OBB files
+        // (if there are any) can be found.
+        LogDir("ObbDir", context.ObbDir?.AbsolutePath);
+
+        // Returns the absolute path to the directory on the
+        // filesystem similar to Android.Content.Context.FilesDir.
+        LogDir("NoBackupFilesDir", context.NoBackupFilesDir?.AbsolutePath);
+
+        // Returns the absolute path to the directory on the filesystem where files created
+        // with Android.Content.Context.OpenFileOutput
+        // (System.String,Android.Content.FileCreationMode)
+        // are stored.
+        LogDir("FilesDir", context.FilesDir?.AbsolutePath);
+
+        var packagename = GetPackageName();
+
+        // The.NET libraries are usually stored
+        // in the app's private storage directory, which is located at
+        // /data/data/[your.package.name]/files/. This directory contains the
+        // app's files, including the .NET runtime and libraries.
+        LogDir(
+            "/data/data/[your.package.name]/files/",
+            $"/data/data/{packagename}/files/");
+
+        // Native Libraries: If your app uses native libraries, they are typically
+        // located in the lib directory within the app's APK. When the app
+        // is installed, these libraries are extracted
+        // to the /data/app/[your.package.name]/lib/ directory.
+        LogDir(
+            "/data/data/[your.package.name]/lib/",
+            $"/data/data/{packagename}/lib/");
+
+        // Temporary Storage: Temporary files and libraries might
+        // be stored in the app's cache directory,
+        // located at /data/data/[your.package.name]/cache/.
+        LogDir(
+            "/data/data/[your.package.name]/cache/",
+            $"/data/data/{packagename}/cache/");
+
+        // External Storage: If your app has permissions to
+        // access external storage, you can also store and access
+        // libraries from there. However, this is less common
+        // for .NET libraries and more for user-generated content or large data files.
+
+        // Returns the absolute path to the directory on the primary external filesystem
+        // (that is somewhere on Android.OS.Environment.ExternalStorageDirectory where the
+        // application can place cache files it owns.
+        LogDir("FilesDir", context.ExternalCacheDir?.AbsolutePath);
+
+        void LogDir(string title, string? path)
+        {
+            Alternet.UI.App.LogBeginSection();
+
+            if (path is null)
+            {
+                Alternet.UI.App.LogNameValue(title, "null");
+                return;
+            }
+
+            Alternet.UI.App.Log(title);
+            Alternet.UI.App.Log(path);
+
+            var hasDll = Alternet.UI.FileUtils.HasFiles(path, "*.dll");
+
+            Alternet.UI.App.LogNameValue("Has Dll", hasDll);
+
+            Alternet.UI.App.LogEndSection();
+        }
+    }
+
+    public static string? GetPackageName()
+    {
+        return Android.App.Application.Context.PackageName;
+    }
+
     public static Android.Views.View? GetDecorView(Android.Views.View view)
     {
         if (view == null || view.Context?.GetActivity() is not Activity nativeActivity)

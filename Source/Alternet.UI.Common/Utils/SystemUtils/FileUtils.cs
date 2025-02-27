@@ -13,6 +13,21 @@ namespace Alternet.UI
     public static class FileUtils
     {
         /// <summary>
+        /// Gets whether the specified folder has files with the given mask.
+        /// </summary>
+        /// <param name="path">Path to files.</param>
+        /// <param name="mask">File mask.</param>
+        /// <returns></returns>
+        public static bool HasFiles(string path, string mask)
+        {
+            if (!Directory.Exists(path))
+                return false;
+
+            var result = Directory.EnumerateFiles(path, mask).FirstOrDefault();
+            return result is not null;
+        }
+
+        /// <summary>
         /// Deletes the specified file if it exists.
         /// </summary>
         /// <param name="pathToFile">Path to file.</param>
