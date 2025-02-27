@@ -119,6 +119,18 @@ public partial class LogContentPage : Alternet.UI.DisposableContentPage
 
             Alternet.UI.LogUtils.EnumLogActions(Fn);
 
+            var members = Alternet.UI.AssemblyUtils.GetAllPublicMembers(
+                "Test",
+                Alternet.UI.KnownAssemblies.AllAlternet).ToArray();
+
+            foreach(var member in members)
+            {
+                var item = Alternet.UI.LogUtils.ActionAndTitleFromTestMethod(member);
+                if (item is null)
+                    continue;
+                testActions!.TryAdd(item.Value.Title, item.Value.Action);
+            }
+
             void Fn(string title, Action action)
             {
                 if (!title.StartsWith("Test "))
@@ -153,7 +165,7 @@ public partial class LogContentPage : Alternet.UI.DisposableContentPage
         if (actionTitle is null)
             return;
 
-        if (!ActionsDictionary.TryGetValue(actionTitle, out var action))
+        if (!actions.TryGetValue(actionTitle, out var action))
         {
             Alternet.UI.App.Log("Action not found: " + actionTitle);
             return;

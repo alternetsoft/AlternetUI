@@ -79,6 +79,11 @@ namespace Alternet.UI
 
                 return allAlternet;
             }
+
+            set
+            {
+                allAlternet = value;
+            }
         }
     }
 }
