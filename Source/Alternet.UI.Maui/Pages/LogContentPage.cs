@@ -162,7 +162,7 @@ public partial class LogContentPage : Alternet.UI.DisposableContentPage
             null,
             buttons);
 
-        if (actionTitle is null)
+        if (actionTitle is null || actionTitle == "Cancel")
             return;
 
         if (!actions.TryGetValue(actionTitle, out var action))
