@@ -186,7 +186,10 @@ namespace Alternet.UI
                 items.Add(new(title, a));
             }
 
-            Fn("> Show Test Actions Dialog", ShowTestActionsDialog);
+            if (!App.IsMaui)
+            {
+                Fn("> Show Test Actions Dialog", ShowTestActionsDialog);
+            }
 
             Fn("Log system settings", LogUtils.LogSystemSettings);
             Fn("Log font families", LogUtils.LogFontFamilies);
@@ -981,76 +984,6 @@ namespace Alternet.UI
                 {
                     method.Invoke(null, null);
                 });
-            }
-        }
-
-        private class TestActionsWindow : Window
-        {
-            private readonly ActionsListBox listBox;
-            private readonly VirtualListBox.AddRangeController<MemberInfo> controller;
-
-            public TestActionsWindow()
-            {
-                Title = "Test Actions";
-                StartLocation = WindowStartLocation.ScreenTopRight;
-
-                MinimumSize = (400, 500);
-                HasTitleBar = true;
-                CloseEnabled = true;
-
-                listBox = new ActionsListBox();
-                listBox.Parent = this;
-
-                SetLocationOnDisplay(HorizontalAlignment.Left, VerticalAlignment.Fill);
-
-                LogUtils.EnumLogActions(Fn);
-
-                void Fn(string title, Action action)
-                {
-                    if (title.StartsWith("Test "))
-                        listBox.AddBusyAction(title, action);
-                }
-
-                ListControlItem? ConvertItem(MemberInfo member)
-                {
-                    if (member.MemberType != MemberTypes.Method)
-                        return null;
-                    var method = (MethodInfo)member;
-                    if (!method.IsStatic)
-                        return null;
-                    if (method.ContainsGenericParameters)
-                        return null;
-                    var prm = method.GetParameters();
-                    if (prm.Length > 0)
-                        return null;
-                    if (!member.Name.StartsWith("Test"))
-                        return null;
-
-                    var fullName = $"{member.DeclaringType.FullName}.{member.Name}";
-
-                    var desc = AssemblyUtils.GetDescription(member);
-
-                    if (desc is not null)
-                        fullName = desc;
-
-                    var result = new ListControlItem(fullName);
-                    result.DoubleClickAction = () =>
-                    {
-                        method.Invoke(null, null);
-                    };
-
-                    return result;
-                }
-
-                controller = new(
-                    listBox,
-                    () => AssemblyUtils.GetAllPublicMembers("Test", KnownAssemblies.AllAlternet),
-                    ConvertItem,
-                    () =>
-                    {
-                        return !IsDisposed;
-                    });
-                controller.Start();
             }
         }
     }

@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Linq;
+using System.Threading.Tasks;
 
 using Microsoft.Maui;
 using Microsoft.Maui.Controls;
@@ -14,28 +16,25 @@ namespace Alternet.Maui;
 public partial class LogContentPage : Alternet.UI.DisposableContentPage
 {
     private static LogContentPage? defaultPage;
+    private static Alternet.UI.AdvDictionary<string, Action>? actions;
+    private static Alternet.UI.AdvDictionary<string, Action>? testActions;
 
     private readonly ObservableCollection<string> items = new();
     private readonly ListView listView;
+    private readonly TitleWithTwoButtonsView titleView;
 
     /// <summary>
     /// Initializes a new instance of the <see cref="LogContentPage"/> class.
     /// </summary>
     public LogContentPage()
     {
-        var titleView = new StackLayout
+        titleView = new("Application Log", this);
+        titleView.SettingsButton.IsVisible = true;
+        titleView.KeyboardButton.IsVisible = false;
+
+        titleView.SettingsButtonClick += async (s, e) =>
         {
-            Orientation = StackOrientation.Horizontal,
-            Children =
-                {
-                    new Label
-                    {
-                        Text = "Application Log",
-                        FontAttributes = FontAttributes.Bold,
-                        Margin = 10,
-                        VerticalOptions = LayoutOptions.Center,
-                    },
-                },
+            await ShowActionsDialog("Run debug action", ActionsDictionary);
         };
 
         NavigationPage.SetTitleView(this, titleView);
@@ -75,6 +74,92 @@ public partial class LogContentPage : Alternet.UI.DisposableContentPage
         {
             return defaultPage ??= new LogContentPage();
         }
+    }
+
+    /// <summary>
+    /// Gets debug actions dictionary.
+    /// </summary>
+    public Alternet.UI.AdvDictionary<string, Action> ActionsDictionary
+    {
+        get
+        {
+            if (actions is not null)
+                return actions;
+
+            actions = new();
+
+            Alternet.UI.LogUtils.EnumLogActions(Fn);
+
+            Fn(
+                "> Show Test Actions Dialog",
+                async () => await ShowActionsDialog("Test actions", TestActionsDictionary));
+
+            void Fn(string title, Action action)
+            {
+                if (title.StartsWith("Test "))
+                    return;
+                actions!.TryAdd(title, action);
+            }
+
+            return actions;
+        }
+    }
+
+    /// <summary>
+    /// Gets test actions dictionary.
+    /// </summary>
+    public Alternet.UI.AdvDictionary<string, Action> TestActionsDictionary
+    {
+        get
+        {
+            if (testActions is not null)
+                return testActions;
+
+            testActions = new();
+
+            Alternet.UI.LogUtils.EnumLogActions(Fn);
+
+            void Fn(string title, Action action)
+            {
+                if (!title.StartsWith("Test "))
+                    return;
+                testActions!.TryAdd(title, action);
+            }
+
+            return testActions;
+        }
+    }
+
+    /// <summary>
+    /// Gets title view.
+    /// </summary>
+    public TitleWithTwoButtonsView TitleView => titleView;
+
+    /// <summary>
+    /// Shows actions dialog.
+    /// </summary>
+    public async Task ShowActionsDialog(
+        string title,
+        Alternet.UI.AdvDictionary<string, Action> actions)
+    {
+        string[] buttons = actions.Keys.Order().ToArray();
+
+        string actionTitle = await DisplayActionSheet(
+            title,
+            "Cancel",
+            null,
+            buttons);
+
+        if (actionTitle is null)
+            return;
+
+        if (!ActionsDictionary.TryGetValue(actionTitle, out var action))
+        {
+            Alternet.UI.App.Log("Action not found: " + actionTitle);
+            return;
+        }
+
+        action?.Invoke();
     }
 
     /// <inheritdoc/>
