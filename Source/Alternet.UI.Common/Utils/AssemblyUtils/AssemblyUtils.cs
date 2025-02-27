@@ -34,6 +34,19 @@ namespace Alternet.UI
         private static SortedList<string, Type>? allControlDescendants;
         private static CodeDomProvider? codeDomProvider;
 
+        static AssemblyUtils()
+        {
+            /*
+            unsafe
+            {
+                var result = TryGetRawMetadataViaReflection(
+                                KnownAssemblies.LibraryCommon,
+                                out var blob,
+                                out var length);
+            }
+            */
+        }
+
         /// <summary>
         /// Gets or sets list of all <see cref="AbstractControl"/> descendants.
         /// </summary>
@@ -1873,5 +1886,37 @@ namespace Alternet.UI
 
             return result;
         }
+
+        /*
+        public static unsafe bool TryGetRawMetadataViaReflection(
+            Assembly assembly,
+            out byte* blob,
+            out int length)
+        {
+            blob = default;
+            length = 0;
+
+            var tp = Type.GetType("System.Reflection.Metadata.AssemblyExtensions");
+
+            if (tp is null)
+                return false;
+
+            // Get the method info
+            var method =
+                tp.GetMethod("TryGetRawMetadata", BindingFlags.Static | BindingFlags.Public);
+
+            if (method is null)
+                return false;
+
+            object[] parameters = new object[] { assembly, blob, 0 };
+
+            bool result = (bool)method.Invoke(null, parameters);
+
+            blob = (byte*)(IntPtr)parameters[1];
+            length = (int)parameters[2];
+
+            return result;
+        }
+        */
     }
 }
