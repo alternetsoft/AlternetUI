@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -12,6 +13,86 @@ namespace Alternet.UI
     /// </summary>
     public static class FileUtils
     {
+        /// <summary>
+        /// Checks whether executable with the specified name exists on path.
+        /// Uses 'where' or similar command.
+        /// </summary>
+        /// <param name="exeName">Executable name with or without extension.</param>
+        /// <param name="whereCmd">Command name used to find path to the executable.
+        /// Optional. If not specified or Null, uses 'where' command.</param>
+        /// <returns></returns>
+        public static bool ExistsOnPathUsingWhere(string exeName, string? whereCmd = null)
+        {
+            try
+            {
+                if (App.IsWindowsOS)
+                {
+                    whereCmd ??= "where";
+                }
+                else
+                {
+                    whereCmd ??= "which";
+                }
+
+                using (Process p = new())
+                {
+                    p.StartInfo.UseShellExecute = false;
+                    p.StartInfo.FileName = whereCmd;
+                    p.StartInfo.Arguments = exeName;
+                    p.Start();
+                    p.WaitForExit();
+                    return p.ExitCode == 0;
+                }
+            }
+            catch
+            {
+                return false;
+            }
+        }
+
+        /// <summary>
+        /// Finds path to executable by it's name using 'where' or similar command.
+        /// </summary>
+        /// <param name="exeName">Executable name with or without extension.</param>
+        /// <param name="whereCmd">Command name used to find path to the executable.
+        /// Optional. If not specified or Null, uses 'where' command on Windows,
+        /// and 'which' on other os.</param>
+        /// <returns></returns>
+        public static string? GetFullPathUsingWhere(string exeName, string? whereCmd = null)
+        {
+            try
+            {
+                if (App.IsWindowsOS)
+                {
+                    whereCmd ??= "where";
+                }
+                else
+                {
+                    whereCmd ??= "which";
+                }
+
+                using (Process p = new())
+                {
+                    p.StartInfo.UseShellExecute = false;
+                    p.StartInfo.FileName = whereCmd;
+                    p.StartInfo.Arguments = exeName;
+                    p.StartInfo.RedirectStandardOutput = true;
+                    p.Start();
+                    string output = p.StandardOutput.ReadToEnd();
+                    p.WaitForExit();
+
+                    if (p.ExitCode != 0)
+                        return null;
+
+                    return output.Substring(0, output.IndexOf(Environment.NewLine));
+                }
+            }
+            catch
+            {
+                return null;
+            }
+        }
+
         /// <summary>
         /// Gets whether the specified folder has files with the given mask.
         /// </summary>
