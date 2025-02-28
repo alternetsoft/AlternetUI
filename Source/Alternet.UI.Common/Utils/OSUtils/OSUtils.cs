@@ -99,6 +99,21 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets dynamic library extension depending on the current operating system.
+        /// </summary>
+        /// <returns></returns>
+        public static string GetLibraryExtension()
+        {
+            if (App.IsWindowsOS)
+                return ".dll";
+            if (App.IsLinuxOS || App.IsAndroidOS)
+                return ".so";
+            if (App.IsMacOS || App.IsIOS)
+                return ".dylib";
+            throw new Exception("GetLibraryExtension");
+        }
+
+        /// <summary>
         /// Adds an extension to the specified native module name. The extension depends on the
         /// operating system.
         /// </summary>
