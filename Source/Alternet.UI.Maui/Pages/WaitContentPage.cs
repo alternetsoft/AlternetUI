@@ -51,29 +51,33 @@ public partial class WaitContentPage : Alternet.UI.DisposableContentPage
     /// <param name="getPageFunc">Function which returns page to show.</param>
     /// <param name="useWaitPage">Whether to show wait page.</param>
     /// <returns></returns>
-    public async Task NavigationPush(
+    public void NavigationPush(
         INavigation navigation,
         Func<Page> getPageFunc,
         bool useWaitPage = true)
     {
         if (useWaitPage)
         {
-            await Dispatcher.DispatchAsync(() =>
-            {
-                return navigation.PushAsync(this);
-            });
+            navigation.PushAsync(this)
+            .ContinueWith(
+                (t) =>
+                {
+                    Dispatcher.Dispatch(() =>
+                    {
+                        var page = getPageFunc();
+                        navigation.PushAsync(page);
+                    });
+                })
+            .ContinueWith(
+                (t) =>
+                {
+                    navigation.RemovePage(this);
+                });
         }
-
-        var page = getPageFunc();
-
-        await Dispatcher.DispatchAsync(() =>
+        else
         {
-            return navigation.PushAsync(page);
-        });
-
-        if (useWaitPage)
-        {
-            navigation.RemovePage(this);
+            var page = getPageFunc();
+            navigation.PushAsync(page).Wait();
         }
     }
 }
