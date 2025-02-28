@@ -7,10 +7,10 @@ namespace Alternet.UI
     /// <summary>
     /// SynchronizationContext subclass used by AlterNET UI.
     /// </summary>
-    public class UISynchronizationContext : System.Threading.SynchronizationContext
+    internal class UISynchronizationContext : System.Threading.SynchronizationContext
     {
         [ThreadStatic]
-        private static bool doNotAutoInstall;
+        private static bool doNotAutoInstall = true;
 
         [ThreadStatic]
         private static bool contextInstallationInProgress;
@@ -35,9 +35,7 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Determines whether we install the <see cref="UISynchronizationContext"/>
-        /// when we create a control, or
-        /// when we start a message loop. Default: true.
+        /// Determines whether we install the <see cref="UISynchronizationContext"/>.
         /// </summary>
         [EditorBrowsable(EditorBrowsableState.Advanced)]
         public static bool AutoInstall
@@ -82,7 +80,32 @@ namespace Alternet.UI
         /// If the currently installed synchronization context is not
         /// a <see cref="UISynchronizationContext"/>, this method does nothing.
         /// </remarks>
-        public static void Uninstall() => Uninstall(false);
+        public static void Uninstall()
+        {
+            if (AutoInstall)
+            {
+                if (AsyncOperationManager.SynchronizationContext is UISynchronizationContext)
+                {
+                    try
+                    {
+                        if (previousSynchronizationContext == null)
+                        {
+                            AsyncOperationManager.SynchronizationContext =
+                                new System.Threading.SynchronizationContext();
+                        }
+                        else
+                        {
+                            AsyncOperationManager.SynchronizationContext =
+                                previousSynchronizationContext;
+                        }
+                    }
+                    finally
+                    {
+                        previousSynchronizationContext = null;
+                    }
+                }
+            }
+        }
 
         /// <summary>
         /// Instantiate and install a op sync context, and save off the old one.
@@ -158,36 +181,6 @@ namespace Alternet.UI
         public override void Post(SendOrPostCallback d, object? state)
         {
             BaseObject.Invoke(d, new object?[] { state });
-        }
-
-        internal static void Uninstall(bool turnOffAutoInstall)
-        {
-            if (AutoInstall)
-            {
-                if (AsyncOperationManager.SynchronizationContext is UISynchronizationContext)
-                {
-                    try
-                    {
-                        if (previousSynchronizationContext == null)
-                        {
-                            AsyncOperationManager.SynchronizationContext =
-                                new System.Threading.SynchronizationContext();
-                        }
-                        else
-                        {
-                            AsyncOperationManager.SynchronizationContext =
-                                previousSynchronizationContext;
-                        }
-                    }
-                    finally
-                    {
-                        previousSynchronizationContext = null;
-                    }
-                }
-            }
-
-            if (turnOffAutoInstall)
-                AutoInstall = false;
         }
     }
 }
