@@ -109,11 +109,6 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Gets type of the cursor if it is known.
-        /// </summary>
-        public CursorType? KnownCursorType => cursorType;
-
-        /// <summary>
         /// Gets or sets whether custom cursors are allowed. Default is <c>false</c>.
         /// </summary>
         /// <remarks>
@@ -136,9 +131,14 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets type of the cursor if it is known.
+        /// </summary>
+        public virtual CursorType? KnownCursorType => cursorType;
+
+        /// <summary>
         /// Returns true if cursor data is present.
         /// </summary>
-        public bool IsOk
+        public virtual bool IsOk
         {
             get
             {
@@ -149,7 +149,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets hot spot of the cursor.
         /// </summary>
-        public PointI HotSpot
+        public virtual PointI HotSpot
         {
             get
             {
