@@ -22,8 +22,8 @@ public partial class MainPage : Alternet.UI.DisposableContentPage, EditorUI.IDoc
     private readonly Alternet.Syntax.Parsers.Roslyn.CsParser? roslynParser;
     private readonly Button button = new();
     private readonly EditorUI.CSharpDocument documentCs;
+    private readonly EditorUI.CustomDocument documentCurrent;
 
-    private EditorUI.CustomDocument documentCurrent;
     private ExecutionPosition? executionPosition;
 
     static MainPage()
@@ -124,8 +124,8 @@ public partial class MainPage : Alternet.UI.DisposableContentPage, EditorUI.IDoc
         {
         };
 
-        EditorUI.ScripterUtils.RunningProcessDisposed += ScripterUtils_RunningProcessDisposed;
-        EditorUI.ScripterUtils.RunningProcessExited += ScripterUtils_RunningProcessDisposed;
+        ScripterDemoUtils.RunningProcessDisposed += ScripterUtils_RunningProcessDisposed;
+        ScripterDemoUtils.RunningProcessExited += ScripterUtils_RunningProcessDisposed;
 
         documentCs = new(this);
         documentCs.StateChanged += Document_StateChanged;

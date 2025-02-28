@@ -170,6 +170,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EditorUI.Dll", "..\..\..\..
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DebuggerIntegration.Python", "..\..\..\..\AlternetStudio\Demo\Scripter.AlternetUI\QuickStarts\Debugger\DebuggerIntegration.Python\DebuggerIntegration.Python.csproj", "{441D5A49-ADB5-4F61-8B5E-A477ACF2083C}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ScripterDemoUtils", "..\..\..\..\AlternetStudio\Demo\Scripter.AlternetUI\ScripterDemoUtils\ScripterDemoUtils.csproj", "{0DA509DD-EC29-443E-9753-73704B569E2E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PythonDemoUtils", "..\..\..\..\AlternetStudio\Demo\Scripter.AlternetUI\PythonDemoUtils\PythonDemoUtils.csproj", "{045673F8-57D1-4A06-87AE-891A90E42605}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -1080,6 +1084,30 @@ Global
 		{441D5A49-ADB5-4F61-8B5E-A477ACF2083C}.Release|x64.Build.0 = Release|x64
 		{441D5A49-ADB5-4F61-8B5E-A477ACF2083C}.Release|x86.ActiveCfg = Release|Any CPU
 		{441D5A49-ADB5-4F61-8B5E-A477ACF2083C}.Release|x86.Build.0 = Release|Any CPU
+		{0DA509DD-EC29-443E-9753-73704B569E2E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0DA509DD-EC29-443E-9753-73704B569E2E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0DA509DD-EC29-443E-9753-73704B569E2E}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{0DA509DD-EC29-443E-9753-73704B569E2E}.Debug|x64.Build.0 = Debug|Any CPU
+		{0DA509DD-EC29-443E-9753-73704B569E2E}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{0DA509DD-EC29-443E-9753-73704B569E2E}.Debug|x86.Build.0 = Debug|Any CPU
+		{0DA509DD-EC29-443E-9753-73704B569E2E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0DA509DD-EC29-443E-9753-73704B569E2E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0DA509DD-EC29-443E-9753-73704B569E2E}.Release|x64.ActiveCfg = Release|Any CPU
+		{0DA509DD-EC29-443E-9753-73704B569E2E}.Release|x64.Build.0 = Release|Any CPU
+		{0DA509DD-EC29-443E-9753-73704B569E2E}.Release|x86.ActiveCfg = Release|Any CPU
+		{0DA509DD-EC29-443E-9753-73704B569E2E}.Release|x86.Build.0 = Release|Any CPU
+		{045673F8-57D1-4A06-87AE-891A90E42605}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{045673F8-57D1-4A06-87AE-891A90E42605}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{045673F8-57D1-4A06-87AE-891A90E42605}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{045673F8-57D1-4A06-87AE-891A90E42605}.Debug|x64.Build.0 = Debug|Any CPU
+		{045673F8-57D1-4A06-87AE-891A90E42605}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{045673F8-57D1-4A06-87AE-891A90E42605}.Debug|x86.Build.0 = Debug|Any CPU
+		{045673F8-57D1-4A06-87AE-891A90E42605}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{045673F8-57D1-4A06-87AE-891A90E42605}.Release|Any CPU.Build.0 = Release|Any CPU
+		{045673F8-57D1-4A06-87AE-891A90E42605}.Release|x64.ActiveCfg = Release|Any CPU
+		{045673F8-57D1-4A06-87AE-891A90E42605}.Release|x64.Build.0 = Release|Any CPU
+		{045673F8-57D1-4A06-87AE-891A90E42605}.Release|x86.ActiveCfg = Release|Any CPU
+		{045673F8-57D1-4A06-87AE-891A90E42605}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -1152,6 +1180,8 @@ Global
 		{0F4D6B4A-D817-442B-A55B-375ED92ED87C} = {244F8BFE-0438-4B3D-BB0D-C37B91C9BE04}
 		{00F34308-78E4-48FB-B200-2039E2858DD0} = {244F8BFE-0438-4B3D-BB0D-C37B91C9BE04}
 		{CC1723EB-DAEE-470A-B60F-3CC804DC1F4A} = {244F8BFE-0438-4B3D-BB0D-C37B91C9BE04}
+		{0DA509DD-EC29-443E-9753-73704B569E2E} = {B2A9BC6A-3E80-4D51-A37B-9DA316EABDC0}
+		{045673F8-57D1-4A06-87AE-891A90E42605} = {B2A9BC6A-3E80-4D51-A37B-9DA316EABDC0}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {F95CA668-BA7A-4B96-BAC6-3B0B1B4A50DC}
