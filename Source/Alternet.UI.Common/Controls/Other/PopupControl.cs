@@ -12,6 +12,9 @@ namespace Alternet.UI
     /// </summary>
     public partial class PopupControl : Border
     {
+        private PointD? minLocation;
+        private bool allowNegativeLocation;
+        private bool fitIntoParent = true;
         private Control? container;
         private ModalResult popupResult = ModalResult.None;
         private bool cancelOnLostFocus;
@@ -61,21 +64,6 @@ namespace Alternet.UI
             /// </summary>
             Other,
         }
-
-/*
-        /// <summary>
-        /// Get or sets the rectangle which should not be overlapped when popup is shown.
-        /// </summary>
-        /// <remarks>
-        /// This could be useful when more than one popup is shown at the same moment
-        /// and popups should not intersect.
-        /// </remarks>
-        public virtual RectD? NoOverlap
-        {
-            get;
-            set;
-        }
-*/
 
         /// <summary>
         /// Gets or sets container where popup will be shown.
@@ -177,6 +165,102 @@ namespace Alternet.UI
                 cancelOnLostFocus = value;
                 if (cancelOnLostFocus)
                     acceptOnLostFocus = false;
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets whether negative X or Y location is allowed.
+        /// Default is False.
+        /// </summary>
+        public virtual bool AllowNegativeLocation
+        {
+            get => allowNegativeLocation;
+
+            set
+            {
+                if (allowNegativeLocation == value)
+                    return;
+                allowNegativeLocation = value;
+                if (!allowNegativeLocation)
+                {
+                    var location = Location;
+                    if(location.X < 0 || location.Y < 0)
+                        Location = location;
+                }
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets whether to adjust size of the popup to fit into
+        /// the parent's client area.
+        /// </summary>
+        public virtual bool FitIntoParent
+        {
+            get
+            {
+                return fitIntoParent;
+            }
+
+            set
+            {
+                if (fitIntoParent == value)
+                    return;
+                fitIntoParent = value;
+                UpdateMaxPopupSize();
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets minimal possible popup window location.
+        /// </summary>
+        public virtual PointD? MinLocation
+        {
+            get
+            {
+                return minLocation;
+            }
+
+            set
+            {
+                if (minLocation == value)
+                    return;
+                minLocation = value;
+                Bounds = Bounds;
+            }
+        }
+
+        /// <inheritdoc/>
+        public override RectD Bounds
+        {
+            get => base.Bounds;
+            set
+            {
+                if (MinLocation is not null)
+                {
+                    var mx = MinLocation.Value.X;
+                    var my = MinLocation.Value.Y;
+
+                    if (value.X < mx)
+                        value.X = mx;
+
+                    if (value.Y < my)
+                        value.Y = my;
+                }
+
+                if (!allowNegativeLocation)
+                {
+                    if (value.X < 0)
+                        value.X = 0;
+
+                    if (value.Y < 0)
+                        value.Y = 0;
+                }
+
+                var sz = GetMaxPopupSize();
+                if (sz is not null)
+                    value.Size = SizeD.Min(sz.Value, value.Size);
+
+                base.Bounds = value;
             }
         }
 
@@ -365,6 +449,30 @@ namespace Alternet.UI
         {
             RemoveGlobalNotification(subscriber);
             base.DisposeManaged();
+        }
+
+        /// <summary>
+        /// Gets maximal size of the popup.
+        /// Returns Null if size is not limited.
+        /// </summary>
+        /// <returns></returns>
+        protected virtual SizeD? GetMaxPopupSize()
+        {
+            if (!fitIntoParent || Parent is null)
+                return null;
+            return Parent.ClientSize;
+        }
+
+        /// <summary>
+        /// Updates maximal popup size.
+        /// </summary>
+        protected virtual void UpdateMaxPopupSize()
+        {
+            if (!fitIntoParent || Parent is null)
+                return;
+            var sz = GetMaxPopupSize();
+            if (sz is not null)
+                Size = SizeD.Min(sz.Value, Size);
         }
     }
 }
