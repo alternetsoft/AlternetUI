@@ -398,6 +398,18 @@ namespace Alternet.Drawing
             return new SizeD(Math.Max(v1.width, v2.width), Math.Max(v1.height, v2.height));
         }
 
+        /// <summary>
+        /// Gets minimal width and height from the two specified <see cref="SizeD"/> values.
+        /// </summary>
+        /// <param name="v1">First <see cref="SizeD"/> value.</param>
+        /// <param name="v2">Second <see cref="SizeD"/> value.</param>
+        /// <returns></returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static SizeD Min(SizeD v1, SizeD v2)
+        {
+            return new SizeD(Math.Min(v1.width, v2.width), Math.Min(v1.height, v2.height));
+        }
+
         /// <summary>Determines whether the specified value is (NaN, NaN).</summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool IsNaN(SizeD d) => Coord.IsNaN(d.width) && Coord.IsNaN(d.height);
