@@ -311,7 +311,7 @@ namespace Alternet.UI
         /// related to the memory scheme handling.
         /// </returns>
         [Browsable(false)]
-        public IWebBrowserMemoryFS MemoryFS
+        public virtual IWebBrowserMemoryFS MemoryFS
         {
             get
             {
@@ -1984,6 +1984,17 @@ namespace Alternet.UI
             }
 
             return s!;
+        }
+
+        /// <summary>
+        /// Scrolls document opened in the browser to the bottom.
+        /// Uses js script and <see cref="RunScriptAsync"/>. Works asynchronously.
+        /// Requires loaded document, can be used in the <see cref="Loaded"/> event handler.
+        /// </summary>
+        public virtual void ScrollToBottomAsyncJs()
+        {
+            string script = @"window.scrollTo(0, document.body.scrollHeight);";
+            RunScriptAsync(script);
         }
 
         /// <summary>
