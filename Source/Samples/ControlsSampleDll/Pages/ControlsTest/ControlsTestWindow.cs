@@ -8,7 +8,7 @@ namespace ControlsSample
     {
         private readonly StatusBar statusbar = new();
 #pragma warning disable
-        private readonly PanelTreeAndCards mainPanel;
+        private readonly PanelListBoxAndCards mainPanel;
 #pragma warning restore
 
         static ControlsTestWindow()
@@ -22,7 +22,6 @@ namespace ControlsSample
             StartLocation = WindowStartLocation.CenterScreen;
 
             mainPanel = new();
-            mainPanel.LeftTreeViewAsListBox = true;
             mainPanel.RightPanel.MinWidth = 150;
 
             Icon = new("embres:ControlsSampleDll.Sample.ico");
@@ -55,7 +54,7 @@ namespace ControlsSample
 
             CreateWebBrowserPages();
 
-            mainPanel.LeftTreeView.SelectedItem = mainPanel.LeftTreeView.FirstItem;
+            mainPanel.LeftListBox.SelectedIndex = 0;
 
             mainPanel.Name = "mainPanel";
             Name = "MainTestWindow";
@@ -63,7 +62,7 @@ namespace ControlsSample
         }
 
 #pragma warning disable
-        internal PanelTreeAndCards MainPanel => mainPanel;
+        internal PanelListBoxAndCards MainPanel => mainPanel;
 #pragma warning restore
 
         private void LogSizeEvent(object? sender, string evName)

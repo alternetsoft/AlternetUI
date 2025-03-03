@@ -42,6 +42,22 @@ namespace ControlsSample
             };
 
             rootPanel.ActionsControl.Required();
+            rootPanel.Parent = this;
+
+            RunWhenIdle(() =>
+            {
+                scriptMessageHandlerAdded = WebBrowser.AddScriptMessageHandler("wx_msg");
+                if (scriptMessageHandlerAdded)
+                    Log($"{PageName}: AddScriptMessageHandler added");
+                else
+                    Log($"{PageName}: AddScriptMessageHandler not supported");
+                AddTestActions();
+                if (rootPanel.IsIEBackend)
+                    WebBrowser.DoCommand("IE.SetScriptErrorsSuppressed", "true");
+
+                WebBrowser.Loaded += WebBrowser_Loaded;
+                WebBrowser.DocumentTitleChanged += WebBrowser_TitleChanged;
+            });
         }
 
         public PanelWebBrowser PanelWebBrowser => rootPanel;
@@ -143,6 +159,11 @@ namespace ControlsSample
         internal void DoTestRunScriptArray()
         {
             DoRunScript("function f(){ return [\"foo\", \"bar\"]; }f();");
+        }
+
+        internal void DoTestScrollToBottomAsyncJs()
+        {
+            WebBrowser.ScrollToBottomAsyncJs();
         }
 
         internal void DoTestRunScriptDOM()
@@ -284,20 +305,6 @@ namespace ControlsSample
 
             if (Parent == null || StateFlags.HasFlag(ControlFlags.ParentAssigned))
                 return;
-
-            scriptMessageHandlerAdded = WebBrowser.AddScriptMessageHandler("wx_msg");
-            if (scriptMessageHandlerAdded)
-                Log($"{PageName}: AddScriptMessageHandler added");
-            else
-                Log($"{PageName}: AddScriptMessageHandler not supported");
-            AddTestActions();
-            if (rootPanel.IsIEBackend)
-                WebBrowser.DoCommand("IE.SetScriptErrorsSuppressed", "true");
-
-            rootPanel.Parent = this;
-
-            WebBrowser.Loaded += WebBrowser_Loaded;
-            WebBrowser.DocumentTitleChanged += WebBrowser_TitleChanged;
         }
 
         private static string GetPandaFileName()

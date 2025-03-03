@@ -28,7 +28,7 @@ namespace ControlsSample
             AddIfDebug("Draw Test Page: Custom", () => new CustomDrawTestPage());
             AddIfDebug("Draw Test Page: Skia", () => new SkiaDrawingWindow());
             
-            // AddIfDebug("Controls Test Window", () => new ControlsTestWindow());           
+            AddIfDebug("Controls Test Window", () => new ControlsTestWindow());           
 
             Add("Documentation Samples", () => new ApiDoc.MainWindowSimple());
             Add("Preview File Sample", () => new PreviewSample.PreviewSampleWindow());
