@@ -3366,5 +3366,44 @@ namespace Alternet.UI
                 return notifications;
             }
         }
+
+        /// <summary>
+        /// Gets difference between width and client width.
+        /// This property allows to get width of the interior elements.
+        /// </summary>
+        [Browsable(false)]
+        public Coord InteriorWidth => Width - ClientSize.Width;
+
+        /// <summary>
+        /// Gets difference between height and client height.
+        /// This property allows to get height of the interior elements.
+        /// </summary>
+        [Browsable(false)]
+        public Coord InteriorHeight => Height - ClientSize.Height;
+
+        /// <summary>
+        /// Gets difference between size and client size.
+        /// This property allows to get size of the interior elements.
+        /// </summary>
+        [Browsable(false)]
+        public SizeD InteriorSize => (InteriorWidth, InteriorHeight);
+
+        /// <summary>
+        /// Gets sum of width and horizontal margin (includes right and left margins).
+        /// </summary>
+        [Browsable(false)]
+        public Coord WidthAndMargin => Width + Margin.Horizontal;
+
+        /// <summary>
+        /// Gets sum of height and vertical margin (includes top an bottom margins).
+        /// </summary>
+        [Browsable(false)]
+        public Coord HeightAndMargin => Height + Margin.Vertical;
+
+        /// <summary>
+        /// Gets size incremented with horizontal and vertical margins.
+        /// </summary>
+        [Browsable(false)]
+        public SizeD SizeAndMargin => (WidthAndMargin, HeightAndMargin);
     }
 }
