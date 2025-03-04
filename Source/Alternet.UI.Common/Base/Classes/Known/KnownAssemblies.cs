@@ -108,14 +108,20 @@ namespace Alternet.UI
         /// </summary>
         public static void PreloadReferenced()
         {
-            var allReferenced = Alternet.UI.KnownAssemblies.AllReferenced;
-
-            foreach (var asm in allReferenced)
+            try
             {
-                ThreadPool.QueueUserWorkItem((object? state) =>
+                var allReferenced = Alternet.UI.KnownAssemblies.AllReferenced;
+
+                foreach (var asm in allReferenced)
                 {
-                    var asmLoaded = Assembly.Load(asm);
-                });
+                    ThreadPool.QueueUserWorkItem((object? state) =>
+                    {
+                        var asmLoaded = Assembly.Load(asm);
+                    });
+                }
+            }
+            catch
+            {
             }
         }
     }

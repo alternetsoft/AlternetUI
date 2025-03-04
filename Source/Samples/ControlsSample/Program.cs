@@ -14,6 +14,7 @@ namespace ControlsSample
     {
         static Program()
         {
+            KnownAssemblies.PreloadReferenced();
         }
 
         public static void InitSamples()
