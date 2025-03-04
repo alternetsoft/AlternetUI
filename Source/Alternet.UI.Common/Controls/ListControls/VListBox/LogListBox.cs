@@ -83,24 +83,23 @@ namespace Alternet.UI
         /// Gets or sets whether debug welcome message is logged at the application start.
         /// Default value is <c>false</c>.
         /// </summary>
-        public bool ShowDebugWelcomeMessage
+        public virtual bool ShowDebugWelcomeMessage
         {
             get => showDebugWelcomeMessage;
 
             set
             {
-                if (showDebugWelcomeMessage == value || showDebugWelcomeMessage)
+                if (showDebugWelcomeMessage == value)
                     return;
                 showDebugWelcomeMessage = value;
-                LogUtils.ShowDebugWelcomeMessage = true;
-                LogUtils.DebugLogVersion();
+                LogUtils.ShowDebugWelcomeMessage = value;
             }
         }
 
         /// <summary>
         /// Gets or sets whether to bind this control to the application log.
         /// </summary>
-        public bool BoundToApplicationLog
+        public virtual bool BoundToApplicationLog
         {
             get
             {
@@ -193,7 +192,7 @@ namespace Alternet.UI
             ContextMenu.Required();
             App.LogMessage += Application_LogMessage;
             App.LogRefresh += Application_LogRefresh;
-            LogUtils.DebugLogVersion();
+            LogUtils.DebugLogVersion(ShowDebugWelcomeMessage);
         }
 
         /// <summary>

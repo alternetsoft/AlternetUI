@@ -72,7 +72,11 @@ namespace Alternet.UI
                 Padding = 5,
             };
 
-            eventsControl?.BindApplicationLog();
+            if(eventsControl is not null)
+            {
+                eventsControl.ShowDebugWelcomeMessage = true;
+                eventsControl.BindApplicationLog();
+            }
 
             if (BindConsole)
             {
@@ -151,8 +155,6 @@ namespace Alternet.UI
             Icon = IconSet.FromUrlOrDefault("embres:ControlsSampleDll.Sample.ico", App.DefaultIcon);
 
             AddPages();
-
-            LogUtils.DebugLogVersion();
 
             splitterPanel.Parent = panel;
             pageContainer.Dock = DockStyle.Fill;

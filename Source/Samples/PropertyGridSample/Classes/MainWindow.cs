@@ -179,7 +179,6 @@ namespace PropertyGridSample
                 panel.FillPanel.MouseDown += ControlPanel_MouseDown;
                 panel.FillPanel.DragStart += ControlPanel_DragStart;
 
-                panel.WriteWelcomeLogMessages();
                 updatePropertyGrid = true;
             }
 

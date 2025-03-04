@@ -350,7 +350,6 @@ public partial class MainPage : Alternet.UI.DisposableContentPage, EditorUI.IDoc
         try
         {
             ed.Lines.Clear();
-            AppendText(Alternet.UI.LogUtils.GetLogVersionText());
             Alternet.UI.LogUtils.LogActionToAction(action, AppendText);
         }
         finally

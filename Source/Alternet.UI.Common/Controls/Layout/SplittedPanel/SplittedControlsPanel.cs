@@ -228,16 +228,6 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Writes some debug related welcome messages to the log if called in the
-        /// debug environment.
-        /// </summary>
-        [Conditional("DEBUG")]
-        public virtual void WriteWelcomeLogMessages()
-        {
-            LogUtils.DebugLogVersion();
-        }
-
-        /// <summary>
         /// Adds simple actions for <paramref name="type"/>.
         /// </summary>
         /// <param name="type">Type for which required simple actions are registered.</param>

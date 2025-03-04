@@ -145,7 +145,8 @@ namespace Alternet.UI
                 return;
             LogUtils.Flags |= LogUtils.LogFlags.VersionLogged;
 
-            App.Log(GetLogVersionText());
+            var s = GetLogVersionText();
+            App.Log(s);
             if (App.LogFileIsEnabled)
                 App.DebugLog($"Log File = {App.LogFilePath}");
             if (Display.MinScaleFactor != Display.MaxScaleFactor)
