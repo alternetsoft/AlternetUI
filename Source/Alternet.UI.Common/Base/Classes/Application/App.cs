@@ -1182,7 +1182,7 @@ namespace Alternet.UI
 
                 if (LogMessage is null || LogInUpdates())
                     return;
-                ProcessLogQueue(true);
+                ProcessLogQueue();
             }
             catch
             {
@@ -1852,6 +1852,31 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Processes log queue.
+        /// </summary>
+        public static void ProcessLogQueue()
+        {
+            if (LogQueue.IsEmpty || LogInUpdates())
+                return;
+
+            LogBeginUpdate();
+            try
+            {
+                while (true)
+                {
+                    if (LogQueue.TryDequeue(out var queueItem))
+                        LogToEvent(queueItem);
+                    else
+                        break;
+                }
+            }
+            finally
+            {
+                LogEndUpdate();
+            }
+        }
+
+        /// <summary>
         /// Gets current unhandled exception mode.
         /// </summary>
         /// <returns></returns>
@@ -1925,7 +1950,7 @@ namespace Alternet.UI
 
             if (HasForms)
             {
-                ProcessLogQueue(true);
+                ProcessLogQueue();
                 ProcessIdleTasks();
             }
 
@@ -2067,32 +2092,6 @@ namespace Alternet.UI
         {
             foreach (var window in Windows)
                 window.RecreateAllHandlers();
-        }
-
-        /// <summary>
-        /// Processes log queue.
-        /// </summary>
-        /// <param name="refresh">Specifies whether to refresh attached log controls.</param>
-        protected static void ProcessLogQueue(bool refresh)
-        {
-            if (LogQueue.IsEmpty || LogInUpdates())
-                return;
-
-            LogBeginUpdate();
-            try
-            {
-                while (true)
-                {
-                    if (LogQueue.TryDequeue(out var queueItem))
-                        LogToEvent(queueItem);
-                    else
-                        break;
-                }
-            }
-            finally
-            {
-                LogEndUpdate();
-            }
         }
 
         /// <summary>
