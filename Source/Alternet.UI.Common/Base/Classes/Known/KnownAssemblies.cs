@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Reflection;
 using System.Text;
+using System.Threading;
 
 namespace Alternet.UI
 {
@@ -59,7 +60,7 @@ namespace Alternet.UI
         /// <see cref="LibraryCommon"/> and all loaded assemblies which
         /// use <see cref="LibraryCommon"/>.
         /// </summary>
-        public static List<Assembly> AllAlternet
+        public static List<Assembly> AllLoadedAlternet
         {
             get
             {
@@ -83,6 +84,38 @@ namespace Alternet.UI
             set
             {
                 allAlternet = value;
+            }
+        }
+
+        /// <summary>
+        /// Gets list of assemblies which includes <see cref="LibraryInterfaces"/>,
+        /// <see cref="LibraryCommon"/> and all loaded assemblies which
+        /// use <see cref="LibraryCommon"/>.
+        /// </summary>
+        public static IEnumerable<AssemblyName> AllReferenced
+        {
+            get
+            {
+                Assembly executingAssembly = Assembly.GetEntryAssembly();
+                AssemblyName[] referencedAssemblies = executingAssembly.GetReferencedAssemblies();
+                return referencedAssemblies;
+            }
+        }
+
+        /// <summary>
+        /// Preloads all referenced assemblies in the current application domain.
+        /// This method queues the loading of each referenced assembly to the thread pool.
+        /// </summary>
+        public static void PreloadReferenced()
+        {
+            var allReferenced = Alternet.UI.KnownAssemblies.AllReferenced;
+
+            foreach (var asm in allReferenced)
+            {
+                ThreadPool.QueueUserWorkItem((object? state) =>
+                {
+                    var asmLoaded = Assembly.Load(asm);
+                });
             }
         }
     }
