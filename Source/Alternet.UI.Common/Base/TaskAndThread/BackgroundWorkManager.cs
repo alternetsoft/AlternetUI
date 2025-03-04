@@ -10,27 +10,27 @@ namespace Alternet.UI.Threading
     /// Use <see cref="Start"/> and <see cref="Stop"/> methods to control
     /// background worker execution.
     /// </summary>
-    public class BackgroundWorker
+    public class BackgroundWorkManager
     {
-        private static BackgroundWorker? defaultWorker;
+        private static BackgroundWorkManager? defaultWorker;
 
         private readonly BackgroundTaskQueue taskQueue;
         private readonly CancellationTokenSource cancellationTokenSource = new ();
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="BackgroundWorker"/> class
+        /// Initializes a new instance of the <see cref="BackgroundWorkManager"/> class
         /// </summary>
-        public BackgroundWorker()
+        public BackgroundWorkManager()
             : this(new BackgroundTaskQueue())
         {
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="BackgroundWorker"/> class
+        /// Initializes a new instance of the <see cref="BackgroundWorkManager"/> class
         /// with the specified tasks queue.
         /// </summary>
         /// <param name="taskQueue">Tasks queue.</param>
-        public BackgroundWorker(BackgroundTaskQueue taskQueue)
+        public BackgroundWorkManager(BackgroundTaskQueue taskQueue)
         {
             this.taskQueue = taskQueue;
         }
@@ -39,7 +39,7 @@ namespace Alternet.UI.Threading
         /// Get default background worker. <see cref="Start"/> is called automatically when
         /// it is first accessed.
         /// </summary>
-        public static BackgroundWorker Default
+        public static BackgroundWorkManager Default
         {
             get
             {
@@ -50,6 +50,11 @@ namespace Alternet.UI.Threading
                 }
 
                 return defaultWorker;
+            }
+
+            set
+            {
+                defaultWorker = value;
             }
         }
 
