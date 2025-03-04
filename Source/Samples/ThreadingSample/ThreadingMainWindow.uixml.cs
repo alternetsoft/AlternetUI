@@ -152,7 +152,7 @@ namespace ThreadingSample
             StartCounterThread2();
         }
 
-        private async void StartLongOperationButton_Click(object? sender, EventArgs e)
+        private void StartLongOperationButton_Click(object? sender, EventArgs e)
         {
             startLongOperationButton.Enabled = false;
             CancellationToken ct = tokenSource.Token;
@@ -162,7 +162,7 @@ namespace ThreadingSample
                 const int Maximum = 150;
                 Invoke(() =>
                 {
-                    if (IsDisposed)
+                    if (DisposingOrDisposed)
                     {
                         App.IdleLog($"Form {counter} is already disposed");
                     }
@@ -170,7 +170,7 @@ namespace ThreadingSample
                         longOperationProgressBar.Maximum = Maximum;
                 });
 
-                for (int i = 0; i < Maximum; i++)
+                for (int i = 1; i <= Maximum; i++)
                 {
                     if (ct.IsCancellationRequested)
                         break;
@@ -188,20 +188,24 @@ namespace ThreadingSample
                         }
                     });
                 }
-            }, ct);
-
-            try
+            }, ct)
+            .ContinueWith((t)=>
             {
-                await task;
-            }
-            catch (OperationCanceledException ex)
-            {
-                App.IdleLog(
-                    $"Long operation canceled with message: {ex.Message}");
-            }
+                if (t.IsFaulted)
+                {
+                    App.IdleLog(
+                        $"Long operation canceled with message: {t.Exception.Message}");
+                }
 
-            startLongOperationButton.Enabled = true;
-            longOperationProgressBar.Value = 0;
+                Invoke(() =>
+                {
+                    if (DisposingOrDisposed)
+                        return;
+                    startLongOperationButton.Enabled = true;
+                    longOperationProgressBar.Value = 0;
+                });
+            });
+
         }
     }
 }
