@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ApiInfo>
-  <Assembly Name="Alternet.UI.Common, Version=0.9.713.0, Culture=neutral, PublicKeyToken=7fb0fe57212b4b74">
+  <Assembly Name="Alternet.UI.Common, Version=0.9.714.0, Culture=neutral, PublicKeyToken=7fb0fe57212b4b74">
     <Type Name="XamlX.Runtime.IXamlParentStackProviderV1" />
     <Type Name="XamlX.Runtime.IXamlXmlNamespaceInfoProviderV1" />
     <Type Name="XamlX.Runtime.XamlXmlNamespaceInfoV1" />
@@ -326,7 +326,6 @@
       <Event Name="PropertyChanged" />
       <Event Name="Disposed" />
     </Type>
-    <Type Name="Alternet.UI.SynchronizationContext" />
     <Type Name="Alternet.UI.AbstractCharValidator">
       <Event Name="PropertyChanged" />
       <Event Name="Disposed" />
@@ -12540,6 +12539,7 @@
     <Type Name="Alternet.UI.OSUtils" />
     <Type Name="Alternet.UI.RegistryUtils" />
     <Type Name="Alternet.UI.PlessUtils" />
+    <Type Name="Alternet.UI.PythonUtils" />
     <Type Name="Alternet.UI.CharUtils" />
     <Type Name="Alternet.UI.RegexUtils" />
     <Type Name="Alternet.UI.StringTokenizer" />
@@ -12577,6 +12577,8 @@
     <Type Name="Alternet.UI.Localization.PropCategoryStrings" />
     <Type Name="Alternet.UI.Localization.PropNameStrings" />
     <Type Name="Alternet.UI.Tests.Tests" />
+    <Type Name="Alternet.UI.Threading.BackgroundTaskQueue" />
+    <Type Name="Alternet.UI.Threading.BackgroundWorkManager" />
     <Type Name="Alternet.UI.Port.IUixmlPortXamlIlParentStackProvider" />
     <Type Name="Alternet.UI.Port.IUixmlPortXamlIlXmlNamespaceInfoProvider" />
     <Type Name="Alternet.UI.Port.UixmlPortXamlIlXmlNamespaceInfo" />
