@@ -121,7 +121,7 @@ public partial class LogContentPage : Alternet.UI.DisposableContentPage
 
             var members = Alternet.UI.AssemblyUtils.GetAllPublicMembers(
                 "Test",
-                Alternet.UI.KnownAssemblies.AllAlternet).ToArray();
+                Alternet.UI.KnownAssemblies.AllLoadedAlternet).ToArray();
 
             foreach(var member in members)
             {

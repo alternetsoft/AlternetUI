@@ -82,7 +82,7 @@ namespace Alternet.UI
 
                 controller = new(
                     listBox,
-                    () => AssemblyUtils.GetAllPublicMembers("Test", KnownAssemblies.AllAlternet),
+                    () => AssemblyUtils.GetAllPublicMembers("Test", KnownAssemblies.AllLoadedAlternet),
                     ConvertItem,
                     () =>
                     {

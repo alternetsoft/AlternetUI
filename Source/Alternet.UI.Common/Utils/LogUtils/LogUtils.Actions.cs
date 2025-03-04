@@ -888,7 +888,7 @@ namespace Alternet.UI
 
         internal static void LogUsedAlternetAssemblies()
         {
-            var list = KnownAssemblies.AllAlternet;
+            var list = KnownAssemblies.AllLoadedAlternet;
             foreach (var item in list)
             {
                 App.Log(item.FullName);
