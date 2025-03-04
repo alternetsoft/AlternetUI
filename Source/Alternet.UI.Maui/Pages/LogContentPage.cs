@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
@@ -15,13 +16,18 @@ namespace Alternet.Maui;
 /// </summary>
 public partial class LogContentPage : Alternet.UI.DisposableContentPage
 {
-    private static LogContentPage? defaultPage;
+    private static readonly ConcurrentQueue<string> items = new();
+
     private static Alternet.UI.AdvDictionary<string, Action>? actions;
     private static Alternet.UI.AdvDictionary<string, Action>? testActions;
 
-    private readonly ObservableCollection<string> items = new();
     private readonly ListView listView;
     private readonly TitleWithTwoButtonsView titleView;
+
+    static LogContentPage()
+    {
+        Alternet.UI.App.LogMessage += OnLogMessage;
+    }
 
     /// <summary>
     /// Initializes a new instance of the <see cref="LogContentPage"/> class.
@@ -39,9 +45,11 @@ public partial class LogContentPage : Alternet.UI.DisposableContentPage
 
         NavigationPage.SetTitleView(this, titleView);
 
+        ObservableCollection<string> itemsClone = new(items.ToArray());
+
         listView = new ListView
         {
-            ItemsSource = items,
+            ItemsSource = itemsClone,
             ItemTemplate = new DataTemplate(() =>
             {
                 var label = new Label
@@ -58,22 +66,6 @@ public partial class LogContentPage : Alternet.UI.DisposableContentPage
         };
 
         Content = listView;
-
-        Alternet.UI.App.LogMessage += OnLogMessage;
-        Alternet.UI.App.LogRefresh += OnLogRefresh;
-
-        Alternet.UI.App.Log("Hello, this is log.");
-    }
-
-    /// <summary>
-    /// Gets default <see cref="LogContentPage"/>.
-    /// </summary>
-    public static LogContentPage Default
-    {
-        get
-        {
-            return defaultPage ??= new LogContentPage();
-        }
     }
 
     /// <summary>
@@ -177,19 +169,13 @@ public partial class LogContentPage : Alternet.UI.DisposableContentPage
     /// <inheritdoc/>
     protected override void DisposeResources()
     {
-        Alternet.UI.App.LogMessage -= OnLogMessage;
-        Alternet.UI.App.LogRefresh -= OnLogRefresh;
         base.DisposeResources();
     }
 
-    private void OnLogMessage(object? sender, UI.LogMessageEventArgs e)
+    private static void OnLogMessage(object? sender, UI.LogMessageEventArgs e)
     {
         if (e.Message is null)
             return;
-        items.Add(e.Message);
-    }
-
-    private void OnLogRefresh(object? sender, EventArgs e)
-    {
+        items.Enqueue(e.Message);
     }
 }
