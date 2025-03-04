@@ -96,6 +96,25 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Loads a string from the specified resource URL or returns null if failed.
+        /// </summary>
+        /// <param name="url">The resource URL used to load the data.</param>
+        /// <returns>The string loaded from the URL, or <c>null</c> if an error occurs.</returns>
+        public static string? StringFromUrlOrNull(string url)
+        {
+            try
+            {
+                var stream = StreamFromUrlOrDefault(url);
+                var str = StreamUtils.StringFromStreamOrNull(stream);
+                return str;
+            }
+            catch (Exception)
+            {
+                return null;
+            }
+        }
+
+        /// <summary>
         /// Calls <see cref="StreamFromUrlOrDefault"/> and if it returns <c>null</c>,
         /// calls <paramref name="func"/>.
         /// </summary>
