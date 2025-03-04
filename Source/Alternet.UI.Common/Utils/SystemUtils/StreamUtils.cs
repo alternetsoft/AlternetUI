@@ -125,6 +125,31 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Reads a string from the specified stream using the specified encoding.
+        /// Returns null if the stream is null or if an error occurs during reading.
+        /// </summary>
+        /// <param name="stream">The stream to read from. If null, the method returns null.</param>
+        /// <param name="encoding">The encoding to use for reading the stream.
+        /// Optional. If not specified, <see cref="Encoding.UTF8"/> is used.</param>
+        /// <returns>The string read from the stream, or null if the stream
+        /// is null or an error occurs.</returns>
+        public static string? StringFromStreamOrNull(Stream? stream, Encoding? encoding = null)
+        {
+            if (stream is null)
+                return null;
+            try
+            {
+                var reader = new StreamReader(stream, encoding ?? Encoding.UTF8);
+                var result = reader.ReadToEnd();
+                return result;
+            }
+            catch
+            {
+                return null;
+            }
+        }
+
+        /// <summary>
         /// Writes <see cref="string"/> to <see cref="Stream"/> using the specified encoding.
         /// </summary>
         /// <param name="stream">Stream with data.</param>
