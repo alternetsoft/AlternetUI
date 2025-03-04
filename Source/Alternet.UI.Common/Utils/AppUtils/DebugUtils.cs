@@ -48,6 +48,7 @@ namespace Alternet.UI
 
         private static bool insideUnhandledException;
         private static bool hookedExceptionEvents;
+        private static bool? ignoreSomeExceptionsInLogger;
 
         static DebugUtils()
         {
@@ -58,10 +59,32 @@ namespace Alternet.UI
 #endif
 
             DebugLoading = DebugUtils.IsDebugDefined && false;
+        }
 
-            ExceptionLoggerSetIgnore<ThreadInterruptedException>();
-            ExceptionLoggerSetIgnore<ThreadAbortException>();
-            ExceptionLoggerSetIgnore<OperationCanceledException>();
+        /// <summary>
+        /// Gets or sets whether exceptions registered with
+        /// <see cref="ExceptionLoggerSetIgnore"/> are ignored in the exceptions logger.
+        /// </summary>
+        public static bool IgnoreSomeExceptionsInLogger
+        {
+            get
+            {
+                return ignoreSomeExceptionsInLogger ?? false;
+            }
+
+            set
+            {
+                if (ignoreSomeExceptionsInLogger == value)
+                    return;
+                if (value && ignoreSomeExceptionsInLogger is null)
+                {
+                    ExceptionLoggerSetIgnore<ThreadInterruptedException>();
+                    ExceptionLoggerSetIgnore<ThreadAbortException>();
+                    ExceptionLoggerSetIgnore<OperationCanceledException>();
+                }
+
+                ignoreSomeExceptionsInLogger = value;
+            }
         }
 
         /// <summary>
@@ -95,9 +118,14 @@ namespace Alternet.UI
         /// False if it is processed.</returns>
         public static bool ExceptionLoggerIgnored(Type t)
         {
-            var item = exceptionRegister.GetValue(t);
-            var result = item?.IgnoredInLogger ?? false;
-            return result;
+            if (IgnoreSomeExceptionsInLogger)
+            {
+                var item = exceptionRegister.GetValue(t);
+                var result = item?.IgnoredInLogger ?? false;
+                return result;
+            }
+
+            return false;
         }
 
         /// <summary>
@@ -160,9 +188,24 @@ namespace Alternet.UI
                         return;
 
                     if (ExceptionsLoggerDebugWriteLine)
-                        LogExceptionToAction(title, e, (s) => Debug.WriteLine(s));
+                    {
+                        Task.Run(() =>
+                        {
+                            LogExceptionToAction(title, e, (s) =>
+                            {
+                                Debug.WriteLine(s);
+                            });
+                        });
+                    }
+
                     if (ExceptionsLoggerAppLog)
-                        LogExceptionToAction(title, e, (s) => App.Log(s));
+                    {
+                        Task.Run(() =>
+                        {
+                            LogExceptionToAction(title, e, (s) => App.IdleLog(s));
+                        });
+                    }
+
                     callback?.Invoke(exception);
                 }
                 finally
