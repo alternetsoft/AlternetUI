@@ -13,6 +13,7 @@ namespace Alternet.UI.Threading
     public class BackgroundWorkManager
     {
         private static BackgroundWorkManager? defaultWorker;
+        private static object defaultWorkerLocker = new();
 
         private readonly BackgroundTaskQueue taskQueue;
         private readonly CancellationTokenSource cancellationTokenSource = new ();
@@ -43,10 +44,13 @@ namespace Alternet.UI.Threading
         {
             get
             {
-                if(defaultWorker is null)
+                lock (defaultWorkerLocker)
                 {
-                    defaultWorker = new();
-                    defaultWorker.Start();
+                    if (defaultWorker is null)
+                    {
+                        defaultWorker = new();
+                        defaultWorker.Start();
+                    }
                 }
 
                 return defaultWorker;
@@ -77,7 +81,10 @@ namespace Alternet.UI.Threading
                     {
                         try
                         {
-                            await task();
+                            var t = task();
+                            if (t.Status == TaskStatus.Created)
+                                t.Start();
+                            await t;
                         }
                         catch (Exception ex)
                         {

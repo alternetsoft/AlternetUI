@@ -1635,7 +1635,8 @@ namespace Alternet.UI
         {
             AddBackgroundTask(() =>
             {
-                return new Task(taskAction);
+                var result = new Task(taskAction);
+                return result;
             });
         }
 
