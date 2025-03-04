@@ -1,3 +1,21 @@
+# 0.9.714 (2025 March 4)
+
+- Maui: Do not use own SynchronizationContext.
+- AbstractControl.Cursor: Fixed to update on screen immediately when set (previously updated when mouse was moved).
+- Cursor: KnownCursorType, ToString.
+- Maui: TitleWithTwoButtonsView.
+- Maui: Add run debug action button to LogContentPage.
+- Do not stop release build on sign tool error.
+- PopupControl: AllowNegativeLocation, FitIntoParent, MinLocation.
+- AbstractControl: InteriorWidth, InteriorHeight, InteriorSize, WidthAndMargin, HeightAndMargin, SizeAndMargin.
+- WebBrowser.ScrollToBottomAsyncJs.
+- Return 'Controls Test Window' in demo with WebBrowser page.
+- App: AddBakgroundTask, AddBackgroundAction.
+- KnownAssemblies: AllReferenced, PreloadReferenced().
+- DebugUtils: Faster logged exceptions processing.
+- Demo: Fix ThreadingMainWindow.
+- Add PythonUtils, BackgroundTaskQueue, BackgroundWorkManager.
+
 # 0.9.713 (2025 February 25)
 
 - AbstractControl: Fix exception in PaintCaret occured in some cases.
