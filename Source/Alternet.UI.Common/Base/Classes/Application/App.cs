@@ -1590,10 +1590,13 @@ namespace Alternet.UI
             if (msg is null)
                 return;
 
-            string[] result = LogUtils.LogToExternalIfAllowed(msg, kind);
+            AddBackgroundAction(() =>
+            {
+                string[] result = LogUtils.LogToExternalIfAllowed(msg, kind);
 
-            foreach (string s2 in result)
-                LogQueue.Enqueue(new(s2, kind));
+                foreach (string s2 in result)
+                    LogQueue.Enqueue(new(s2, kind));
+            });
         }
 
         /// <summary>
@@ -1609,6 +1612,31 @@ namespace Alternet.UI
             LogItemKind kind = LogItemKind.Information)
         {
             LogQueue.Enqueue(new(item, kind));
+        }
+
+        /// <summary>
+        /// Schedules the specified task to run in the background.
+        /// Uses <see cref="Alternet.UI.Threading.BackgroundWorkManager.Default"/>
+        /// </summary>
+        /// <param name="task">Task to run in the background.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static void AddBackgroundTask(Func<Task> task)
+        {
+            Alternet.UI.Threading.BackgroundWorkManager.Default.TaskQueue.Enqueue(task);
+        }
+
+        /// <summary>
+        /// Schedules the specified action to run in the background.
+        /// Uses <see cref="Alternet.UI.Threading.BackgroundWorkManager.Default"/>
+        /// </summary>
+        /// <param name="taskAction">Action to run in the background.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static void AddBackgroundAction(Action taskAction)
+        {
+            AddBackgroundTask(() =>
+            {
+                return new Task(taskAction);
+            });
         }
 
         /// <inheritdoc cref="LogReplace"/>
