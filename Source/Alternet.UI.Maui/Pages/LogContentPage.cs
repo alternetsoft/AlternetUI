@@ -26,7 +26,6 @@ public partial class LogContentPage : Alternet.UI.DisposableContentPage
 
     static LogContentPage()
     {
-        Alternet.UI.App.LogMessage += OnLogMessage;
     }
 
     /// <summary>
@@ -45,7 +44,10 @@ public partial class LogContentPage : Alternet.UI.DisposableContentPage
 
         NavigationPage.SetTitleView(this, titleView);
 
-        ObservableCollection<string> itemsClone = new(items.ToArray());
+        Alternet.UI.App.ProcessLogQueue();
+        var itemsArray = items.ToArray();
+
+        ObservableCollection<string> itemsClone = new(itemsArray);
 
         listView = new ListView
         {
@@ -138,6 +140,15 @@ public partial class LogContentPage : Alternet.UI.DisposableContentPage
     /// Gets title view.
     /// </summary>
     public TitleWithTwoButtonsView TitleView => titleView;
+
+    /// <summary>
+    /// Binds the application log to the log message event handler.
+    /// </summary>
+    public static void BindApplicationLog()
+    {
+        Alternet.UI.App.LogMessage -= OnLogMessage;
+        Alternet.UI.App.LogMessage += OnLogMessage;
+    }
 
     /// <summary>
     /// Shows actions dialog.
