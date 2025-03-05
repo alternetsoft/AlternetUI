@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using System.Text;
+
 using Alternet.Drawing;
 
 namespace Alternet.UI
@@ -99,8 +101,10 @@ namespace Alternet.UI
         /// Loads a string from the specified resource URL or returns null if failed.
         /// </summary>
         /// <param name="url">The resource URL used to load the data.</param>
+        /// <param name="encoding">The encoding to use for reading the stream.
+        /// Optional. If not specified, <see cref="Encoding.UTF8"/> is used.</param>
         /// <returns>The string loaded from the URL, or <c>null</c> if an error occurs.</returns>
-        public static string? StringFromUrlOrNull(string url)
+        public static string? StringFromUrlOrNull(string url, Encoding? encoding = null)
         {
             try
             {
