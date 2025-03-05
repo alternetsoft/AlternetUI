@@ -89,15 +89,15 @@ public partial class MainPage : Alternet.UI.DisposableContentPage, EditorUI.IDoc
 
         Alternet.UI.App.LogMessage += App_LogMessage;
 
-        var ho = editor.HorizontalOptions;
+        var ho = editorPanel.HorizontalOptions;
         ho.Expands = true;
         ho.Alignment = LayoutAlignment.Fill;
-        editor.HorizontalOptions = ho;
+        editorPanel.HorizontalOptions = ho;
 
-        var vo = editor.VerticalOptions;
+        var vo = editorPanel.VerticalOptions;
         vo.Expands = true;
         vo.Alignment = LayoutAlignment.Fill;
-        editor.VerticalOptions = vo;
+        editorPanel.VerticalOptions = vo;
 
         button1.Clicked += Button1_Clicked;
 

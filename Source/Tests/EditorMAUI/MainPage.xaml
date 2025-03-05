@@ -8,23 +8,67 @@
     <Grid RowDefinitions="*,Auto">
         <StackLayout x:Name="panel" 
                            Grid.Row="0">
-            <editor:SyntaxEditView x:Name="editor" ReadOnly="False" 
-                                   SelectionChanged="editor_SelectionChanged">
-            </editor:SyntaxEditView>
+
+            <AbsoluteLayout x:Name="editorPanel">
+                <editor:SyntaxEditView x:Name="editor" ReadOnly="False" 
+                    AbsoluteLayout.LayoutFlags="All"
+                    AbsoluteLayout.LayoutBounds="0, 0, 1, 1"
+                    SelectionChanged="editor_SelectionChanged">
+                </editor:SyntaxEditView>
+
+                    <Border 
+                        AbsoluteLayout.LayoutFlags="None"
+                        AbsoluteLayout.LayoutBounds="50, 100, 300, 250"                    
+                        BackgroundColor="{DynamicResource BackgroundColor}"
+                        StrokeShape="RoundRectangle 10"
+                        Stroke="{DynamicResource BorderColor}"
+                        StrokeThickness="1"
+                        Padding="10"
+                        Margin="20">
+                        <VerticalStackLayout>
+                            <Label Text="Enter your text:"
+                            Margin="5"
+                            TextColor="{DynamicResource PrimaryTextColor}" />
+
+                        <Border Stroke="{DynamicResource BorderColor}"
+                            StrokeThickness="1"
+                            BackgroundColor="White"
+                            Margin="5"
+                            Padding="0"
+                            StrokeShape="RoundRectangle 5"
+                            >
+                            <Entry Placeholder="Type here"
+                                TextColor="{DynamicResource PrimaryTextColor}"
+                                PlaceholderColor="{DynamicResource SecondaryTextColor}" />
+                        </Border>
+                            
+                        <HorizontalStackLayout
+                            Margin="5"
+                            HorizontalOptions="End"                            
+                            Spacing="10">
+                            <Button Text="OK"
+                            />
+                            <Button Text="Cancel"
+                            />
+                        </HorizontalStackLayout>
+                    </VerticalStackLayout>
+                    </Border>
+            </AbsoluteLayout>
+
             <FlyoutBase.ContextFlyout>
                 <MenuFlyout x:Name="contextMenu">
                     <MenuFlyoutItem Text="Set Height = (Width / 3) * 2"
                                         x:Name="setHeight"/>
                     <MenuFlyoutItem Text="Hide extra controls"
                                         x:Name="hideExtra"/>
-                    
+
                     <MenuFlyoutItem Text="Run Without Debug"
                                         x:Name="runWithoutDebugMenuItem">
                         <MenuFlyoutItem.KeyboardAccelerators>
                             <KeyboardAccelerator Key="F5" Modifiers="Ctrl"/>
                         </MenuFlyoutItem.KeyboardAccelerators>
                     </MenuFlyoutItem>
-                    
+
                     <MenuFlyoutItem Text="Run or Continue"
                                         x:Name="runWithDebugMenuItem">
                         <MenuFlyoutItem.KeyboardAccelerators>
