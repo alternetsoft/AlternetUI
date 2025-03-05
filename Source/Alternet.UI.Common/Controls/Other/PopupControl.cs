@@ -29,6 +29,7 @@ namespace Alternet.UI
             IgnoreLayout = true;
             Visible = false;
             ParentFont = true;
+            Cursor = Cursors.Arrow;
 
             subscriber.AfterControlIsMouseOverChanged += (s, e) =>
             {
