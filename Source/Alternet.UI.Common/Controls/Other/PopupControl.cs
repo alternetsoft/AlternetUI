@@ -87,7 +87,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets whether to focus parent control when popup is shown.
         /// </summary>
-        public bool FocusParentOnShow { get; set; }
+        public virtual bool FocusParentOnShow { get; set; }
 
         /// <summary>
         /// Gets or sets the popup result value, which is updated when popup is closed.
