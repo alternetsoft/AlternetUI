@@ -1,5 +1,6 @@
 using System;
 using System.ComponentModel;
+using System.Runtime.CompilerServices;
 using System.Timers;
 
 namespace Alternet.UI
@@ -13,6 +14,11 @@ namespace Alternet.UI
     {
         private ITimerHandler? handler;
         private bool autoReset = true;
+        private int interval = 100;
+
+        static Timer()
+        {
+        }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Timer"/> class.
@@ -149,13 +155,13 @@ namespace Alternet.UI
         {
             get
             {
-                CheckDisposed();
-                return Handler.Interval;
+                return interval;
             }
 
             set
             {
-                CheckDisposed();
+                if (interval == value || DisposingOrDisposed)
+                    return;
                 Handler.Interval = value;
             }
         }
@@ -208,13 +214,19 @@ namespace Alternet.UI
                 if (Enabled == value)
                     return;
                 CheckDisposed();
-                Handler.Enabled = value;
+
+                Invoke(() =>
+                {
+                    if(Handler is not null)
+                        Handler.Enabled = value;
+                });
             }
         }
 
         /// <summary>
         /// Starts the timer which will raise tick events repeatedly.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void StartRepeated()
         {
             AutoReset = true;
@@ -224,6 +236,7 @@ namespace Alternet.UI
         /// <summary>
         /// Starts the timer which will raise tick event only once.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void StartOnce()
         {
             AutoReset = false;
@@ -235,6 +248,7 @@ namespace Alternet.UI
         /// </summary>
         /// <remarks>You can also start the timer by setting the <see cref="Enabled"/>
         /// property to <see langword="true"/>.</remarks>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void Start()
         {
             Enabled = true;
@@ -260,6 +274,7 @@ namespace Alternet.UI
         /// milliseconds before raising the <see cref="Tick"/> event.
         /// </para>
         /// </remarks>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void Stop()
         {
             Enabled = false;
@@ -295,8 +310,7 @@ namespace Alternet.UI
                 return;
 
             handler.Tick = null;
-            handler.Dispose();
-            handler = null;
+            SafeDispose(ref handler);
         }
 
         private void NativeTimerTick()
