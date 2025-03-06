@@ -53,6 +53,7 @@ namespace Alternet.UI
         /// </summary>
         public static readonly Assembly LibraryInterfaces = typeof(DockStyle).Assembly;
 
+        private static bool preloadReferencedCalled;
         private static List<Assembly>? allAlternet;
 
         /// <summary>
@@ -110,6 +111,10 @@ namespace Alternet.UI
         {
             try
             {
+                if (preloadReferencedCalled)
+                    return;
+                preloadReferencedCalled = true;
+
                 var allReferenced = Alternet.UI.KnownAssemblies.AllReferenced;
 
                 foreach (var asm in allReferenced)
