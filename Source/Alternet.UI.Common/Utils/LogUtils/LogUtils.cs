@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Numerics;
@@ -757,6 +758,111 @@ namespace Alternet.UI
             {
                 LogEndSectionToFile(filename);
             }
+        }
+
+        /// <summary>
+        /// Gets the exception message text.
+        /// </summary>
+        /// <param name="e">The exception.</param>
+        /// <param name="additionalInfo">Additional information to include in the message.</param>
+        /// <returns>A string containing the exception message text
+        /// and additional information.</returns>
+        public static string GetExceptionMessageText(
+            Exception? e,
+            string? additionalInfo = null)
+        {
+            string text = string.Empty;
+
+            if (e is not null)
+            {
+                text = "Type: " + e.GetType().FullName;
+
+                if (e.Message != null)
+                    text += "\n" + "Message: " + e.Message;
+
+                if (e is BaseException baseException)
+                {
+                    var s = baseException.AdditionalInformation;
+                    if (!string.IsNullOrEmpty(s))
+                    {
+                        text += "\n" + s;
+                    }
+                }
+            }
+
+            if (additionalInfo is not null)
+            {
+                text += "\n" + additionalInfo;
+            }
+
+            return text;
+        }
+
+        /// <summary>
+        /// Gets detailed text information about the specified exception.
+        /// </summary>
+        /// <param name="e">The exception to get details for.</param>
+        /// <returns>A string containing detailed information about the exception.</returns>
+        public static string GetExceptionDetailsText(Exception? e)
+        {
+            if (e is null)
+                return string.Empty;
+
+            StringBuilder detailsTextBuilder = new();
+            string newline = "\n";
+            string separator = "----------------------------------------\n";
+            string sectionseparator = "\n************** {0} **************\n";
+
+            detailsTextBuilder.Append(string.Format(
+                CultureInfo.CurrentCulture,
+                sectionseparator,
+                "Exception Text"));
+            detailsTextBuilder.Append(e.ToString());
+            detailsTextBuilder.Append(newline);
+            detailsTextBuilder.Append(newline);
+            detailsTextBuilder.Append(
+                string.Format(
+                    CultureInfo.CurrentCulture,
+                    sectionseparator,
+                    "Loaded Assemblies"));
+
+            foreach (Assembly asm in AppDomain.CurrentDomain.GetAssemblies())
+            {
+                AssemblyName name = asm.GetName();
+                string? location = asm.Location;
+                string? fileVer = "n/a";
+
+                try
+                {
+                    if (location is not null &&
+                        location.Length > 0)
+                    {
+                        fileVer =
+                            FileVersionInfo.GetVersionInfo(location).FileVersion;
+                    }
+                }
+                catch (FileNotFoundException)
+                {
+                }
+
+                const string ExDlgMsgLoadedAssembliesEntry =
+                    "{0}\n    Assembly Version: {1}\n" +
+                    "    Win32 Version: {2}\n    CodeBase: {3}\n";
+
+                detailsTextBuilder.Append(
+                    string.Format(
+                        ExDlgMsgLoadedAssembliesEntry,
+                        name.Name,
+                        name.Version,
+                        fileVer,
+                        location));
+                detailsTextBuilder.Append(separator);
+            }
+
+            detailsTextBuilder.Append(newline);
+            detailsTextBuilder.Append(newline);
+
+            return detailsTextBuilder.ToString();
         }
 
         /// <summary>

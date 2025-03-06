@@ -123,31 +123,8 @@ namespace Alternet.UI
         /// <returns></returns>
         protected virtual string GetMessageText()
         {
-            string text = string.Empty;
-
-            if (Exception is not null)
-            {
-                text = "Type: " + Exception.GetType().FullName;
-
-                if (Exception.Message != null)
-                    text += "\n" + "Message: " + Exception.Message;
-
-                if(Exception is BaseException baseException)
-                {
-                    var s = baseException.AdditionalInformation;
-                    if (!string.IsNullOrEmpty(s))
-                    {
-                        text += "\n" + s;
-                    }
-                }
-            }
-
-            if (additionalInfo is not null)
-            {
-                text += "\n" + additionalInfo;
-            }
-
-            return text;
+            var result = LogUtils.GetExceptionMessageText(Exception, additionalInfo);
+            return result;
         }
 
         /// <summary>
@@ -156,66 +133,8 @@ namespace Alternet.UI
         /// <returns></returns>
         protected virtual string GetDetailsText()
         {
-            var e = Exception;
-
-            if (e is null)
-                return string.Empty;
-
-            StringBuilder detailsTextBuilder = new();
-            string newline = "\n";
-            string separator = "----------------------------------------\n";
-            string sectionseparator = "\n************** {0} **************\n";
-
-            detailsTextBuilder.Append(string.Format(
-                CultureInfo.CurrentCulture,
-                sectionseparator,
-                "Exception Text"));
-            detailsTextBuilder.Append(e.ToString());
-            detailsTextBuilder.Append(newline);
-            detailsTextBuilder.Append(newline);
-            detailsTextBuilder.Append(
-                string.Format(
-                    CultureInfo.CurrentCulture,
-                    sectionseparator,
-                    "Loaded Assemblies"));
-
-            foreach (Assembly asm in AppDomain.CurrentDomain.GetAssemblies())
-            {
-                AssemblyName name = asm.GetName();
-                string? location = asm.Location;
-                string? fileVer = "n/a";
-
-                try
-                {
-                    if (location is not null &&
-                        location.Length > 0)
-                    {
-                        fileVer =
-                            FileVersionInfo.GetVersionInfo(location).FileVersion;
-                    }
-                }
-                catch (FileNotFoundException)
-                {
-                }
-
-                const string ExDlgMsgLoadedAssembliesEntry =
-                    "{0}\n    Assembly Version: {1}\n" +
-                    "    Win32 Version: {2}\n    CodeBase: {3}\n";
-
-                detailsTextBuilder.Append(
-                    string.Format(
-                        ExDlgMsgLoadedAssembliesEntry,
-                        name.Name,
-                        name.Version,
-                        fileVer,
-                        location));
-                detailsTextBuilder.Append(separator);
-            }
-
-            detailsTextBuilder.Append(newline);
-            detailsTextBuilder.Append(newline);
-
-            return detailsTextBuilder.ToString();
+            var result = LogUtils.GetExceptionDetailsText(Exception);
+            return result;
         }
 
         private void InitializeControls()
