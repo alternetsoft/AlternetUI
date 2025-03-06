@@ -215,11 +215,8 @@ namespace Alternet.UI
                     return;
                 CheckDisposed();
 
-                Invoke(() =>
-                {
-                    if(Handler is not null)
-                        Handler.Enabled = value;
-                });
+                if(!DisposingOrDisposed)
+                    Handler.Enabled = value;
             }
         }
 

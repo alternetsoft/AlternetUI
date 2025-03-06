@@ -13,5 +13,21 @@ namespace Alternet.UI.Native
             get => Tick;
             set => Tick = value;
         }
+
+        bool ITimerHandler.Enabled
+        {
+            get
+            {
+                return Enabled;
+            }
+
+            set
+            {
+                Invoke(() =>
+                {
+                    Enabled = value;
+                });
+            }
+        }
     }
 }
