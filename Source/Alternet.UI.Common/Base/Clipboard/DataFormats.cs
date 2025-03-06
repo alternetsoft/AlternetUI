@@ -85,9 +85,10 @@ namespace Alternet.UI
         public static readonly string WaveAudio = "WaveAudio";
 
         /// <summary>
-        /// Specifies the Windows file drop format.
+        /// Specifies the Windows file drop format. This is added for the compatibility
+        /// with legacy code and is the same as <see cref="Files"/>.
         /// </summary>
-        public static readonly string FileDrop = "FileDrop";
+        public static readonly string FileDrop = "Files";
 
         /// <summary>
         /// Specifies the Windows locale (culture) data format.
