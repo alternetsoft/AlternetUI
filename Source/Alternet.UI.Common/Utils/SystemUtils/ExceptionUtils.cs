@@ -13,6 +13,18 @@ namespace Alternet.UI
     public static class ExceptionUtils
     {
         /// <summary>
+        /// Rethrows the specified exception with the correct call stack information
+        /// if the condition is true.
+        /// </summary>
+        /// <param name="e">The exception to rethrow.</param>
+        /// <param name="condition">The condition to check.</param>
+        public static void RethrowIf(Exception? e, bool condition)
+        {
+            if (condition)
+                Rethrow(e);
+        }
+
+        /// <summary>
         /// Rethrows the specified exception with the correct call stack information.
         /// </summary>
         /// <param name="e">Previously thrown exception.</param>

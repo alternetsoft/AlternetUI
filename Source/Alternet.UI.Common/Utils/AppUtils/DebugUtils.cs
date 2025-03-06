@@ -181,10 +181,19 @@ namespace Alternet.UI
 
                 try
                 {
+                    Exception GetException()
+                    {
+                        if (e is Exception exception)
+                            return exception;
+
+                        var result = new Exception(e.ToString());
+                        e = result;
+                        return result;
+                    }
+
                     Task.Run(() =>
                     {
-                        if (e is not Exception exception)
-                            exception = new(e.ToString());
+                        var exception = GetException();
 
                         if (ExceptionLoggerIgnored(exception.GetType()))
                             return;
@@ -201,9 +210,9 @@ namespace Alternet.UI
                         {
                             LogExceptionToAction(title, e, (s) => App.IdleLog(s));
                         }
-
-                        callback?.Invoke(exception);
                     });
+
+                    callback?.Invoke(GetException());
                 }
                 finally
                 {
