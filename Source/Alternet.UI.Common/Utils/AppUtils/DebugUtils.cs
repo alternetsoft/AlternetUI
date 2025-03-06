@@ -30,7 +30,7 @@ namespace Alternet.UI
         /// <see cref="RegisterExceptionsLogger"/>)
         /// outputs messages to <see cref="Debug.WriteLine(string)"/>.
         /// </summary>
-        public static bool ExceptionsLoggerDebugWriteLine = true;
+        public static bool ExceptionsLoggerDebugWriteLine = false;
 
         /// <summary>
         /// Gets or sets whether exception logger (registered with
@@ -181,32 +181,29 @@ namespace Alternet.UI
 
                 try
                 {
-                    if (e is not Exception exception)
-                        exception = new(e.ToString());
-
-                    if (ExceptionLoggerIgnored(exception.GetType()))
-                        return;
-
-                    if (ExceptionsLoggerDebugWriteLine)
+                    Task.Run(() =>
                     {
-                        Task.Run(() =>
+                        if (e is not Exception exception)
+                            exception = new(e.ToString());
+
+                        if (ExceptionLoggerIgnored(exception.GetType()))
+                            return;
+
+                        if (ExceptionsLoggerDebugWriteLine)
                         {
                             LogExceptionToAction(title, e, (s) =>
                             {
                                 Debug.WriteLine(s);
                             });
-                        });
-                    }
+                        }
 
-                    if (ExceptionsLoggerAppLog)
-                    {
-                        Task.Run(() =>
+                        if (ExceptionsLoggerAppLog)
                         {
                             LogExceptionToAction(title, e, (s) => App.IdleLog(s));
-                        });
-                    }
+                        }
 
-                    callback?.Invoke(exception);
+                        callback?.Invoke(exception);
+                    });
                 }
                 finally
                 {
