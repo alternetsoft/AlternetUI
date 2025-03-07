@@ -51,6 +51,18 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Parses command line args of the application and checks if the specified argument exists.
+        /// </summary>
+        /// <param name="prmName">Command line argument name. Example: -IsDark.</param>
+        /// <returns>True if the argument exists, otherwise false.</returns>
+        public static bool ParseAndHasArgument(string prmName)
+        {
+            Default.Parse();
+            var result = Default.HasArgument(prmName);
+            return result;
+        }
+
+        /// <summary>
         /// Parses command line args of the application and gets
         /// value of the argument specified by the name.
         /// </summary>
