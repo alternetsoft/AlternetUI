@@ -6,6 +6,10 @@ public partial class HomePage : ContentPage
 {
     private readonly WaitPage waitPage = new();
 
+    static HomePage()
+    {
+    }
+
     public HomePage()
     {
         Alternet.UI.DebugUtils.RegisterExceptionsLogger((e) =>
@@ -25,6 +29,7 @@ public partial class HomePage : ContentPage
             }
         };
 
+        AddPage("TabbedPage", typeof(TabbedPageTest));
         AddPage("LabelView", typeof(LabelTestPage));
         AddPage("ColorPickerView", typeof(ColorPickerTestPage));
         AddPage("BorderView", typeof(BorderTestPage));
