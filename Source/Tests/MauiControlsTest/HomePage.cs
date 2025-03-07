@@ -4,7 +4,7 @@ namespace AllQuickStarts;
 
 public partial class HomePage : ContentPage
 {
-    private readonly WaitPage waitPage = new();
+    private readonly Alternet.Maui.WaitContentPage waitPage = new();
 
     static HomePage()
     {
