@@ -77,6 +77,17 @@ namespace ControlsSample
             LogSizeEvent(sender, "SizeChanged");
         }
 
+        private int AddPage<T>(string? title = null)
+            where T : AbstractControl, new()
+        {
+            return AddPage(title ?? typeof(T).ToString(), () => new T());
+        }
+
+        private int AddPage(string title, Func<AbstractControl> createFn)
+        {
+            return mainPanel.Add(title, createFn);
+        }
+
         private int AddWebBrowserPage(string title, WebBrowserBackend backend)
         {
             AbstractControl Fn()
@@ -95,7 +106,7 @@ namespace ControlsSample
                 return result;
             }
 
-            return mainPanel.Add(title, Fn);
+            return AddPage(title, Fn);
         }
     }
 }
