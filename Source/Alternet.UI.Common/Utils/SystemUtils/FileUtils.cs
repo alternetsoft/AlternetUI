@@ -77,6 +77,7 @@ namespace Alternet.UI
                     p.StartInfo.FileName = whereCmd;
                     p.StartInfo.Arguments = exeName;
                     p.StartInfo.RedirectStandardOutput = true;
+                    p.StartInfo.CreateNoWindow = true;
                     p.Start();
                     string output = p.StandardOutput.ReadToEnd();
                     p.WaitForExit();
@@ -84,7 +85,9 @@ namespace Alternet.UI
                     if (p.ExitCode != 0)
                         return null;
 
-                    return output.Substring(0, output.IndexOf(Environment.NewLine));
+                    var result = output.Substring(0, output.IndexOf(Environment.NewLine));
+
+                    return result;
                 }
             }
             catch
