@@ -28,16 +28,6 @@ namespace Alternet.Maui
     /// </summary>
     public partial class TitleWithTwoButtonsView : ContentView
     {
-        /// <summary>
-        /// Gets ot sets default size of the button image on mobile platform.
-        /// </summary>
-        public static int DefaultImageButtonSize = 32;
-
-        /// <summary>
-        /// Gets ot sets default size of the button image on desktop platform.
-        /// </summary>
-        public static int DefaultImageButtonSizeDesktop = 24;
-
         private readonly Label label = new()
         {
             Margin = new Thickness(5, 5, 5, 5),
@@ -79,43 +69,25 @@ namespace Alternet.Maui
                 new ColumnDefinition { Width = new GridLength(1, GridUnitType.Auto) },
             };
 
-            int size;
-
-            if (Alternet.UI.App.IsDesktopDevice)
-            {
-                size = DefaultImageButtonSizeDesktop;
-            }
-            else
-            {
-                size = DefaultImageButtonSize;
-            }
+            int size = SimpleToolBarView.GetDefaultImageSize();
 
             grid.Children.Add(label);
-
-            if (Alternet.UI.SystemSettings.AppearanceIsDark && Alternet.UI.App.IsWindowsOS)
-                BackgroundColor = Color.FromRgb(61, 61, 61);
 
             label.VerticalOptions = LayoutOptions.Center;
 
             ToolTipProperties.SetText(settingsButton, "Show settings");
 
-            var imageSource = Alternet.UI.MauiUtils.ImageSourceFromSvg(
-                Alternet.UI.KnownSvgImages.ImgGear,
-                size,
-                Alternet.UI.MauiUtils.IsDarkTheme ?? false);
             settingsButton.Aspect = Aspect.Center;
-            settingsButton.Source = imageSource;
+            Alternet.UI.MauiUtils
+                .SetButtonImage(settingsButton, Alternet.UI.KnownSvgImages.ImgGear, size);
             settingsButton.HorizontalOptions = LayoutOptions.End;
             settingsButton.VerticalOptions = LayoutOptions.Center;
             grid.Children.Add(settingsButton);
 
             ToolTipProperties.SetText(keyboardButton, "Toggle keyboard visibility");
-            imageSource = Alternet.UI.MauiUtils.ImageSourceFromSvg(
-                Alternet.UI.KnownSvgImages.ImgKeyboard,
-                size,
-                Alternet.UI.MauiUtils.IsDarkTheme ?? false);
             keyboardButton.Aspect = Aspect.Center;
-            keyboardButton.Source = imageSource;
+            Alternet.UI.MauiUtils
+                .SetButtonImage(keyboardButton, Alternet.UI.KnownSvgImages.ImgKeyboard, size);
             keyboardButton.HorizontalOptions = LayoutOptions.End;
             keyboardButton.VerticalOptions = LayoutOptions.Center;
             grid.Children.Add(keyboardButton);

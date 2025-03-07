@@ -78,11 +78,12 @@ namespace Alternet.UI
             {
                 SystemSettings.ResetColors();
 
-                var elements = MauiUtils.ControlViews;
+                var elements = MauiUtils.GetAllChildren<View>();
 
                 foreach(var element in elements)
                 {
-                    element.RaiseSystemColorsChanged();
+                    if(element is IRaiseSystemColorsChanged responder)
+                        responder.RaiseSystemColorsChanged();
                 }
             };
         }

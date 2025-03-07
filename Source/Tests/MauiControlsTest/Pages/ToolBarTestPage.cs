@@ -11,7 +11,15 @@ public partial class ToolBarTestPage : ContentPage
     public ToolBarTestPage()
     {
         var toolbar = new SimpleToolBarView();
-        toolbar.AddButton("Search");
+        toolbar.AddButton(
+            "Search",
+            "This is tooltip",
+            Alternet.UI.KnownSvgImages.ImgArrowDown,
+            async () =>
+            {
+                await DisplayAlert("Alert", "Hello", "OK");
+            });
+
         toolbar.AddButton("Settings");
 
         var panel = new VerticalStackLayout();

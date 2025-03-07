@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+using Microsoft.Maui;
 using Microsoft.Maui.Controls;
 using Microsoft.Maui.Graphics;
 
@@ -15,6 +16,18 @@ namespace Alternet.Maui
     public partial class SimpleToolBarView
         : HorizontalStackLayout, Alternet.UI.IRaiseSystemColorsChanged
     {
+        public static int DefaultButtonMargin = 5;
+
+        /// <summary>
+        /// Gets ot sets default size of the button image on mobile platform.
+        /// </summary>
+        public static int DefaultImageButtonSize = 24;
+
+        /// <summary>
+        /// Gets ot sets default size of the button image on desktop platform.
+        /// </summary>
+        public static int DefaultImageButtonSizeDesktop = 16;
+
         public static Color DefaultHotBorderColorDark = Color.FromRgb(112, 112, 112);
 
         public static Color DefaultTextColorDark = Color.FromRgb(214, 214, 214);
@@ -37,13 +50,43 @@ namespace Alternet.Maui
             Alternet.UI.MauiApplicationHandler.RegisterThemeChangedHandler();
         }
 
-        public virtual Button AddButton(string text)
+        public static int GetDefaultImageSize()
+        {
+            int size;
+
+            if (Alternet.UI.App.IsDesktopDevice)
+            {
+                size = DefaultImageButtonSizeDesktop;
+            }
+            else
+            {
+                size = DefaultImageButtonSize;
+            }
+
+            return size;
+        }
+
+        public virtual Button AddButton(
+            string? text,
+            string? toolTip = null,
+            Drawing.SvgImage? image = null,
+            Action? onClick = null)
         {
             var button = new Button
             {
-                Text = text,
-                Margin = 5,
+                Margin = DefaultButtonMargin,
             };
+
+            if (text is not null)
+                button.Text = text;
+
+            if (onClick is not null)
+                button.Clicked += (s, e) => onClick();
+
+            if(toolTip is not null)
+                ToolTipProperties.SetText(button, toolTip);
+
+            Alternet.UI.MauiUtils.SetButtonImage(button, image, GetDefaultImageSize());
 
             Children.Add(button);
             InitVisualStates(button);

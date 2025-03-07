@@ -24,7 +24,7 @@ namespace Alternet.UI
     /// Implements <see cref="Alternet.UI.AbstractControl"/>
     /// container using <see cref="SKCanvasView"/>.
     /// </summary>
-    public partial class ControlView : SKCanvasView
+    public partial class ControlView : SKCanvasView, IRaiseSystemColorsChanged
     {
         private SwipeGestureRecognizer? swipeGesture;
         private PanGestureRecognizer? panGesture;
