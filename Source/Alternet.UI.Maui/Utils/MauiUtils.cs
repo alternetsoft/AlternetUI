@@ -348,6 +348,22 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets collection of <see cref="View"/> elements
+        /// added to pages of the application.
+        /// </summary>
+        public static IEnumerable<T> GetAllChildren<T>()
+            where T : View
+        {
+            foreach (var page in Pages)
+            {
+                var elements = GetChildren<T>(page, true);
+
+                foreach (var element in elements)
+                    yield return element;
+            }
+        }
+
+        /// <summary>
         /// Gets collection of the child elements in the specified container.
         /// </summary>
         /// <typeparam name="T">Type of the child element.</typeparam>
