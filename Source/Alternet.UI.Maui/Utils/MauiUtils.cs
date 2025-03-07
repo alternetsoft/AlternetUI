@@ -307,7 +307,7 @@ namespace Alternet.UI
         /// <param name="sizeInPixels">Image size in pixels.</param>
         /// <param name="isDark">Whether background is dark.</param>
         /// <returns></returns>
-        public static ImageSource? ImageSourceFromSvg(
+        public static SKBitmapImageSource? ImageSourceFromSvg(
             SvgImage? svgImage,
             int sizeInPixels,
             bool isDark)
@@ -323,6 +323,51 @@ namespace Alternet.UI
 
             return null;
         }
+
+        public static void SetButtonImage(
+            Microsoft.Maui.Controls.Button button,
+            Drawing.SvgImage? svg,
+            int size)
+        {
+            var images = Alternet.UI.MauiUtils.ImageSourceFromSvg(svg, size);
+
+            if (images is not null)
+            {
+                button.SetAppTheme<ImageSource>(
+                    Microsoft.Maui.Controls.Button.ImageSourceProperty,
+                    images.Value.Light,
+                    images.Value.Dark);
+            }
+        }
+
+        public static void SetButtonImage(ImageButton button, Drawing.SvgImage? svg, int size)
+        {
+            var images = Alternet.UI.MauiUtils.ImageSourceFromSvg(svg, size);
+
+            if (images is not null)
+            {
+                button.SetAppTheme<ImageSource>(
+                    Microsoft.Maui.Controls.ImageButton.SourceProperty,
+                    images.Value.Light,
+                    images.Value.Dark);
+            }
+        }
+
+        public static (SKBitmapImageSource Light, SKBitmapImageSource Dark)? ImageSourceFromSvg(
+            SvgImage? svgImage,
+            int sizeInPixels)
+        {
+            if (svgImage is null)
+                return null;
+
+            var darkImage = ImageSourceFromSvg(svgImage, sizeInPixels, isDark: true);
+            var lightImage = ImageSourceFromSvg(svgImage, sizeInPixels, isDark: false);
+
+            if (darkImage is null || lightImage is null)
+                return null;
+
+            return (lightImage, darkImage);
+         }
 
         /// <summary>
         /// Gets device platform.
