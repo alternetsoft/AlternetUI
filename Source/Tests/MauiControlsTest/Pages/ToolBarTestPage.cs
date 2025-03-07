@@ -22,6 +22,8 @@ public partial class ToolBarTestPage : ContentPage
 
         toolbar.AddButton("Settings");
 
+        toolbar.AddButton(null, null, Alternet.UI.KnownSvgImages.ImgBold);
+
         var panel = new VerticalStackLayout();
 
         panel.Children.Add(toolbar);

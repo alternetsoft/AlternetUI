@@ -16,7 +16,7 @@ namespace Alternet.Maui
     public partial class SimpleToolBarView
         : HorizontalStackLayout, Alternet.UI.IRaiseSystemColorsChanged
     {
-        public static int DefaultButtonMargin = 5;
+        public static int DefaultButtonMargin = 1;
 
         /// <summary>
         /// Gets ot sets default size of the button image on mobile platform.
