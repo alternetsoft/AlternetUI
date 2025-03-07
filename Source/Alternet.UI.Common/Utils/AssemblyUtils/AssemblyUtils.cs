@@ -1887,6 +1887,24 @@ namespace Alternet.UI
             return result;
         }
 
+        /// <summary>
+        /// Creates an instance of the given type using the default constructor.
+        /// Type is specified using its name and assembly name where it is located.
+        /// </summary>
+        /// <typeparam name="T">The type to which created object is casted.</typeparam>
+        /// <param name="asmName">The name of the assembly containing the type.</param>
+        /// <param name="typeName">The name of the type to create.</param>
+        /// <returns>An instance of the specified type, or null if the type cannot be found.</returns>
+        public static T? ActivatorCreateInstance<T>(string asmName, string typeName)
+        {
+            var asm = AssemblyUtils.GetOrLoadAssemblyByName(asmName);
+            var objType = asm?.GetType(typeName);
+            if (objType is null)
+                return default;
+            var result = Activator.CreateInstance(objType);
+            return (T)result;
+        }
+
         /*
         public static unsafe bool TryGetRawMetadataViaReflection(
             Assembly assembly,
