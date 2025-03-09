@@ -28,12 +28,12 @@ namespace Alternet.Maui
         public static Setter AddSetter<T>(
             this VisualState state,
             BindableProperty prop,
-            Func<T> getFunc)
+            T value)
         {
             var setter = new Setter
             {
                 Property = prop,
-                Value = getFunc(),
+                Value = value,
             };
 
             state.Setters.Add(setter);
@@ -41,32 +41,24 @@ namespace Alternet.Maui
             return setter;
         }
 
-        public static Setter AddSetterForBackgroundColor(
-            this VisualState state,
-            Func<Color> getFunc)
+        public static Setter AddSetterForBackgroundColor(this VisualState state, Color value)
         {
-            return AddSetter<Color>(state, VisualElement.BackgroundColorProperty, getFunc);
+            return AddSetter<Color>(state, VisualElement.BackgroundColorProperty, value);
         }
 
-        public static Setter AddSetterForButtonBorderColor(
-            this VisualState state,
-            Func<Color> getFunc)
+        public static Setter AddSetterForButtonBorderColor(this VisualState state, Color value)
         {
-            return AddSetter<Color>(state, Button.BorderColorProperty, getFunc);
+            return AddSetter<Color>(state, Button.BorderColorProperty, value);
         }
 
-        public static Setter AddSetterForButtonTextColor(
-            this VisualState state,
-            Func<Color> getFunc)
+        public static Setter AddSetterForButtonTextColor(this VisualState state, Color value)
         {
-            return AddSetter(state, Button.TextColorProperty, getFunc);
+            return AddSetter(state, Button.TextColorProperty, value);
         }
 
-        public static Setter AddSetterForButtonBorderWidth(
-            this VisualState state,
-            Func<double> getFunc)
+        public static Setter AddSetterForButtonBorderWidth(this VisualState state, double value)
         {
-            return AddSetter(state, Button.BorderWidthProperty, getFunc);
+            return AddSetter(state, Button.BorderWidthProperty, value);
         }
 
         public static VisualState CreateNormalState()

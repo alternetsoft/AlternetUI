@@ -22,7 +22,7 @@ public partial class ToolBarTestPage : ContentPage
 
         toolbar.AddButton("Settings");
 
-        toolbar.AddButton(null, null, Alternet.UI.KnownSvgImages.ImgBold);
+        toolbar.AddStickyButton(null, null, Alternet.UI.KnownSvgImages.ImgBold);
 
         var panel = new VerticalStackLayout();
 
