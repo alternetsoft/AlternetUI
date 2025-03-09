@@ -24,6 +24,8 @@ public partial class ToolBarTestPage : ContentPage
 
         toolbar.AddStickyButton(null, null, Alternet.UI.KnownSvgImages.ImgBold);
 
+        toolbar.AddLabel("Label");
+
         var panel = new VerticalStackLayout();
 
         panel.Children.Add(toolbar);

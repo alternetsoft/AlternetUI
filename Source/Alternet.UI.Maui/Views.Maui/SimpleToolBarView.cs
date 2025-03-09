@@ -106,6 +106,55 @@ namespace Alternet.Maui
             Alternet.UI.MauiApplicationHandler.RegisterThemeChangedHandler();
         }
 
+        /// <summary>
+        /// Represents an item in the toolbar.
+        /// </summary>
+        public interface IToolBarItem
+        {
+            /// <summary>
+            /// Occurs when the button is clicked/tapped.
+            /// </summary>
+            public event EventHandler Clicked;
+
+            /// <summary>
+            /// Gets or sets a value indicating whether the item is in a sticky state
+            /// (remains pressed even if mouse is not pressed over the item).
+            /// </summary>
+            bool IsSticky { get; set; }
+
+            /// <summary>
+            /// Gets or sets a value indicating whether the item has border.
+            /// </summary>
+            bool HasBorder { get; set; }
+
+            /// <summary>
+            /// Gets or sets the text associated with the toolbar item.
+            /// </summary>
+            string Text { get; set; }
+
+            /// <summary>
+            /// Updates the visual states of the item.
+            /// </summary>
+            /// <param name="setNormalState">If set to <c>true</c>,
+            /// the normal state will be set.</param>
+            void UpdateVisualStates(bool setNormalState);
+        }
+
+        /// <summary>
+        /// Gets a value indicating whether the current theme is dark.
+        /// </summary>
+        private static bool IsDark
+        {
+            get
+            {
+                return Alternet.UI.SystemSettings.AppearanceIsDark;
+            }
+        }
+
+        /// <summary>
+        /// Gets the default size of the button image based on the device type.
+        /// </summary>
+        /// <returns>The default size of the button image.</returns>
         public static int GetDefaultImageSize()
         {
             int size;
@@ -122,13 +171,16 @@ namespace Alternet.Maui
             return size;
         }
 
-        public virtual ToolBarButton CreateToolBarButton()
-        {
-            var button = new ToolBarButton();
-            return button;
-        }
-
-        public virtual ToolBarButton AddStickyButton(
+        /// <summary>
+        /// Adds a sticky button to the toolbar.
+        /// </summary>
+        /// <param name="text">The text to display on the button.</param>
+        /// <param name="toolTip">The tooltip text to display when the mouse
+        /// hovers over the button.</param>
+        /// <param name="image">The image to display on the button.</param>
+        /// <param name="onClick">The action to perform when the button is clicked.</param>
+        /// <returns>The created sticky button item.</returns>
+        public virtual IToolBarItem AddStickyButton(
             string? text,
             string? toolTip = null,
             Drawing.SvgImage? image = null,
@@ -142,14 +194,55 @@ namespace Alternet.Maui
             return result;
         }
 
-        public virtual ToolBarButton AddButton(
+        /// <summary>
+        /// Adds a button to the toolbar.
+        /// </summary>
+        /// <param name="text">The text to display on the button.</param>
+        /// <param name="toolTip">The tooltip text to display when the mouse
+        /// hovers over the button.</param>
+        /// <param name="image">The image to display on the button.</param>
+        /// <param name="onClick">The action to perform when the button is clicked.</param>
+        /// <returns>The created button item.</returns>
+        public virtual IToolBarItem AddButton(
             string? text,
             string? toolTip = null,
             Drawing.SvgImage? image = null,
             Action? onClick = null)
         {
             var button = CreateToolBarButton();
+            InitButtonProps(button, text, toolTip, image, onClick);
+            Children.Add(button);
+            return button;
+        }
 
+        /// <summary>
+        /// Adds a label to the toolbar.
+        /// </summary>
+        /// <param name="text">The text to display on the label.</param>
+        /// <param name="toolTip">The tooltip text to display when the mouse
+        /// hovers over the label.</param>
+        /// <param name="image">The image to display on the label.</param>
+        /// <param name="onClick">The action to perform when the label is clicked.</param>
+        /// <returns>The created label item.</returns>
+        public virtual IToolBarItem AddLabel(
+            string? text,
+            string? toolTip = null,
+            Drawing.SvgImage? image = null,
+            Action? onClick = null)
+        {
+            var button = new ToolBarLabel();
+            InitButtonProps(button, text, toolTip, image, onClick);
+            Children.Add(button);
+            return button;
+        }
+
+        internal virtual void InitButtonProps(
+            ToolBarButton button,
+            string? text,
+            string? toolTip = null,
+            Drawing.SvgImage? image = null,
+            Action? onClick = null)
+        {
             button.Margin = DefaultButtonMargin;
 
             if (text is not null)
@@ -163,11 +256,18 @@ namespace Alternet.Maui
 
             Alternet.UI.MauiUtils.SetButtonImage(button, image, GetDefaultImageSize());
 
-            button.InitVisualStates();
-            VisualStateManager.GoToState(button, VisualStateUtils.NameNormal);
-            Children.Add(button);
+            button.UpdateVisualStates(true);
+        }
 
+        internal virtual ToolBarButton CreateToolBarButton()
+        {
+            var button = new ToolBarButton();
             return button;
+        }
+
+        private static double GetButtonBorder(object? control)
+        {
+            return DefaultButtonBorder;
         }
 
         private static Color GetRealHotBorderColor(object? control)
@@ -197,39 +297,51 @@ namespace Alternet.Maui
         }
 
         /// <summary>
-        /// Gets a value indicating whether the current theme is dark.
+        /// Represents a label in the toolbar.
         /// </summary>
-        private static bool IsDark
-        {
-            get
-            {
-                return Alternet.UI.SystemSettings.AppearanceIsDark;
-            }
-        }
-
-        private static double GetButtonBorder(object? control)
-        {
-            return DefaultButtonBorder;
-        }
-
-        public class ToolBarLabel : Label, Alternet.UI.IRaiseSystemColorsChanged
+        public partial class ToolBarLabel : ToolBarButton
         {
             /// <inheritdoc/>
-            public virtual void RaiseSystemColorsChanged()
+            public override bool HasBorder
             {
-                InitVisualStates();
-                VisualStateManager.GoToState(this, VisualStateUtils.NameNormal);
-            }
+                get
+                {
+                    return false;
+                }
 
-            public virtual void InitVisualStates()
-            {
+                set
+                {
+                }
             }
         }
 
-        public class ToolBarButton : Button, Alternet.UI.IRaiseSystemColorsChanged
+        /// <summary>
+        /// Represents a button in the toolbar.
+        /// </summary>
+        public partial class ToolBarButton : Button, Alternet.UI.IRaiseSystemColorsChanged,
+            IToolBarItem
         {
             private bool isSticky;
+            private bool hasBorder = true;
 
+            /// <inheritdoc/>
+            public virtual bool HasBorder
+            {
+                get
+                {
+                    return hasBorder;
+                }
+
+                set
+                {
+                    if (hasBorder == value)
+                        return;
+                    hasBorder = value;
+                    UpdateVisualStates(true);
+                }
+            }
+
+            /// <inheritdoc/>
             public virtual bool IsSticky
             {
                 get
@@ -242,44 +354,50 @@ namespace Alternet.Maui
                     if (isSticky == value)
                         return;
                     isSticky = value;
-                    UpdateVisualStates();
+                    UpdateVisualStates(true);
                 }
             }
 
             /// <inheritdoc/>
             public virtual void RaiseSystemColorsChanged()
             {
-                UpdateVisualStates();
+                UpdateVisualStates(true);
             }
 
-            public virtual void InitVisualStates()
+            /// <inheritdoc/>
+            public virtual void UpdateVisualStates(bool setNormalState)
             {
                 var visualStateGroup = VisualStateUtils.CreateCommonStatesGroup();
 
                 var normalState = VisualStateUtils.CreateNormalState();
-                if(IsSticky)
+                if(IsSticky && HasBorder)
                     ButtonPressedState.InitState(this, normalState);
                 else
                     ButtonNormalState.InitState(this, normalState);
                 visualStateGroup.States.Add(normalState);
 
                 var pointerOverState = VisualStateUtils.CreatePointerOverState();
-                ButtonHotState.InitState(this, pointerOverState);
+                if(HasBorder)
+                    ButtonHotState.InitState(this, pointerOverState);
+                else
+                    ButtonNormalState.InitState(this, pointerOverState);
+
                 visualStateGroup.States.Add(pointerOverState);
 
                 var pressedState = VisualStateUtils.CreatePressedState();
-                ButtonPressedState.InitState(this, pressedState);
+                if(HasBorder)
+                    ButtonPressedState.InitState(this, pressedState);
+                else
+                    ButtonNormalState.InitState(this, pressedState);
+
                 visualStateGroup.States.Add(pressedState);
 
                 var vsGroups = VisualStateManager.GetVisualStateGroups(this);
                 vsGroups.Clear();
                 vsGroups.Add(visualStateGroup);
-            }
 
-            private void UpdateVisualStates()
-            {
-                InitVisualStates();
-                VisualStateManager.GoToState(this, VisualStateUtils.NameNormal);
+                if(setNormalState)
+                    VisualStateManager.GoToState(this, VisualStateUtils.NameNormal);
             }
         }
 
@@ -287,7 +405,7 @@ namespace Alternet.Maui
         {
             public Func<object?, Color>? BackgroundColor;
 
-            public virtual void InitState(object? control, VisualState state, bool clear = true)
+            public virtual void InitState(View control, VisualState state, bool clear = true)
             {
                 if (clear)
                     state.Setters.Clear();
@@ -298,13 +416,13 @@ namespace Alternet.Maui
 
         internal class ButtonVisualStateSetters : VisualStateSetters
         {
-            public Func<object?, Color>? BorderColor;
+            public Func<View, Color>? BorderColor;
 
-            public Func<object?, Color>? TextColor;
+            public Func<View, Color>? TextColor;
 
-            public Func<object?, double>? BorderWidth;
+            public Func<View, double>? BorderWidth;
 
-            public override void InitState(object? control, VisualState state, bool clear = true)
+            public override void InitState(View control, VisualState state, bool clear = true)
             {
                 base.InitState(control, state);
 
