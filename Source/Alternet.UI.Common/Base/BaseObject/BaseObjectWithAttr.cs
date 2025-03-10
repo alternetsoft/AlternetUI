@@ -11,7 +11,7 @@ namespace Alternet.UI
     /// <see cref="FlagsAndAttributes"/> properties and other related
     /// to custom attributes features.
     /// </summary>
-    public partial class BaseObjectWithAttr : BaseObjectWithId
+    public partial class BaseObjectWithAttr : BaseObjectWithId, IBaseObjectWithAttr
     {
         private FlagsAndAttributesStruct attr = new();
 
