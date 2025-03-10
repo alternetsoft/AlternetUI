@@ -42,6 +42,16 @@ namespace Alternet.Maui
         public static Color DefaultTextColorDark = Color.FromRgb(214, 214, 214);
 
         /// <summary>
+        /// Gets ot sets default disabled text color for dark theme.
+        /// </summary>
+        public static Color DefaultDisabledTextColorDark = Colors.Gray;
+
+        /// <summary>
+        /// Gets ot sets default disabled text color for light theme.
+        /// </summary>
+        public static Color DefaultDisabledTextColorLight = Colors.Gray;
+
+        /// <summary>
         /// Gets ot sets default pressed border color for dark theme.
         /// </summary>
         public static Color DefaultPressedBorderColorDark = Colors.DarkGray;
@@ -71,6 +81,14 @@ namespace Alternet.Maui
             BackgroundColor = GetTransparent,
             BorderColor = GetTransparent,
             TextColor = GetRealTextColor,
+            BorderWidth = GetButtonBorder,
+        };
+
+        internal static ButtonVisualStateSetters ButtonDisabledState = new()
+        {
+            BackgroundColor = GetTransparent,
+            BorderColor = GetTransparent,
+            TextColor = GetRealDisabledTextColor,
             BorderWidth = GetButtonBorder,
         };
 
@@ -114,7 +132,12 @@ namespace Alternet.Maui
             /// <summary>
             /// Occurs when the button is clicked/tapped.
             /// </summary>
-            public event EventHandler Clicked;
+            public event EventHandler? Clicked;
+
+            /// <summary>
+            /// Gets or sets a value indicating whether the toolbar item is enabled.
+            /// </summary>
+            bool IsEnabled { get; set; }
 
             /// <summary>
             /// Gets or sets a value indicating whether the item is in a sticky state
@@ -254,7 +277,7 @@ namespace Alternet.Maui
             if (toolTip is not null)
                 ToolTipProperties.SetText(button, toolTip);
 
-            Alternet.UI.MauiUtils.SetButtonImage(button, image, GetDefaultImageSize());
+            button.SvgImage = image;
 
             button.UpdateVisualStates(true);
         }
@@ -265,33 +288,40 @@ namespace Alternet.Maui
             return button;
         }
 
-        private static double GetButtonBorder(object? control)
+        private static double GetButtonBorder(View control)
         {
             return DefaultButtonBorder;
         }
 
-        private static Color GetRealHotBorderColor(object? control)
+        private static Color GetRealHotBorderColor(View control)
         {
             if (IsDark)
                 return DefaultHotBorderColorDark;
             return DefaultHotBorderColorLight;
         }
 
-        private static Color GetRealPressedBorderColor(object? control)
+        private static Color GetRealPressedBorderColor(View control)
         {
             if (IsDark)
                 return DefaultPressedBorderColorDark;
             return DefaultPressedBorderColorLight;
         }
 
-        private static Color GetRealTextColor(object? control)
+        private static Color GetRealDisabledTextColor(View control)
+        {
+            if (IsDark)
+                return DefaultDisabledTextColorDark;
+            return DefaultDisabledTextColorLight;
+        }
+
+        private static Color GetRealTextColor(View control)
         {
             if (IsDark)
                 return DefaultTextColorDark;
             return DefaultTextColorLight;
         }
 
-        private static Color GetTransparent(object? control)
+        private static Color GetTransparent(View control)
         {
             return Colors.Transparent;
         }
@@ -323,6 +353,38 @@ namespace Alternet.Maui
         {
             private bool isSticky;
             private bool hasBorder = true;
+            private Drawing.SvgImage? svgImage;
+
+            /// <summary>
+            /// Initializes a new instance of the <see cref="ToolBarButton"/> class.
+            /// </summary>
+            public ToolBarButton()
+            {
+            }
+
+            /// <summary>
+            /// Occurs when the sticky state of the button changes.
+            /// </summary>
+            public event EventHandler? StickyChanged;
+
+            /// <summary>
+            /// Gets or sets the SVG image associated with the toolbar button.
+            /// </summary>
+            public virtual Drawing.SvgImage? SvgImage
+            {
+                get
+                {
+                    return svgImage;
+                }
+
+                set
+                {
+                    if (svgImage == value)
+                        return;
+                    svgImage = value;
+                    UpdateImage();
+                }
+            }
 
             /// <inheritdoc/>
             public virtual bool HasBorder
@@ -355,6 +417,7 @@ namespace Alternet.Maui
                         return;
                     isSticky = value;
                     UpdateVisualStates(true);
+                    StickyChanged?.Invoke(this, EventArgs.Empty);
                 }
             }
 
@@ -381,7 +444,6 @@ namespace Alternet.Maui
                     ButtonHotState.InitState(this, pointerOverState);
                 else
                     ButtonNormalState.InitState(this, pointerOverState);
-
                 visualStateGroup.States.Add(pointerOverState);
 
                 var pressedState = VisualStateUtils.CreatePressedState();
@@ -389,8 +451,11 @@ namespace Alternet.Maui
                     ButtonPressedState.InitState(this, pressedState);
                 else
                     ButtonNormalState.InitState(this, pressedState);
-
                 visualStateGroup.States.Add(pressedState);
+
+                var disabledState = VisualStateUtils.CreateDisabledState();
+                ButtonDisabledState.InitState(this, disabledState);
+                visualStateGroup.States.Add(disabledState);
 
                 var vsGroups = VisualStateManager.GetVisualStateGroups(this);
                 vsGroups.Clear();
@@ -399,11 +464,30 @@ namespace Alternet.Maui
                 if(setNormalState)
                     VisualStateManager.GoToState(this, VisualStateUtils.NameNormal);
             }
+
+            internal void UpdateImage()
+            {
+                Alternet.UI.MauiUtils.SetButtonImage(this, svgImage, GetDefaultImageSize(), !IsEnabled);
+            }
+
+            /// <inheritdoc/>
+            protected override void OnPropertyChanged(string propertyName)
+            {
+                base.OnPropertyChanged(propertyName);
+
+                if(svgImage is not null)
+                {
+                    if (propertyName == IsEnabledProperty.PropertyName)
+                    {
+                        UpdateImage();
+                    }
+                }
+            }
         }
 
         internal class VisualStateSetters
         {
-            public Func<object?, Color>? BackgroundColor;
+            public Func<View, Color>? BackgroundColor;
 
             public virtual void InitState(View control, VisualState state, bool clear = true)
             {

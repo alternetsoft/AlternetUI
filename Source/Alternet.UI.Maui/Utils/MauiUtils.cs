@@ -300,22 +300,16 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Creates <see cref="ImageSource"/> from the specified <see cref="SvgImage"/>.
-        /// Default normal color is used for the single color svg images.
+        /// Converts an <see cref="Drawing.Image"/> to an <see cref="SKBitmapImageSource"/>.
         /// </summary>
-        /// <param name="svgImage">Svg image.</param>
-        /// <param name="sizeInPixels">Image size in pixels.</param>
-        /// <param name="isDark">Whether background is dark.</param>
-        /// <returns></returns>
-        public static SKBitmapImageSource? ImageSourceFromSvg(
-            SvgImage? svgImage,
-            int sizeInPixels,
-            bool isDark)
+        /// <param name="image">The image to convert.</param>
+        /// <returns>An <see cref="SKBitmapImageSource"/> if the image is not null;
+        /// otherwise, null.</returns>
+        public static SKBitmapImageSource? ImageSourceFromImage(Drawing.Image? image)
         {
-            var img = svgImage?.AsNormalImage(sizeInPixels, isDark);
-            if (img is not null)
+            if (image is not null)
             {
-                var skiaImg = (SKBitmap)img;
+                var skiaImg = (SKBitmap)image;
                 var imageSource = new SKBitmapImageSource();
                 imageSource.Bitmap = skiaImg;
                 return imageSource;
@@ -324,12 +318,50 @@ namespace Alternet.UI
             return null;
         }
 
+        /// <summary>
+        /// Creates <see cref="ImageSource"/> from the specified <see cref="SvgImage"/>.
+        /// </summary>
+        /// <param name="svgImage">Svg image.</param>
+        /// <param name="sizeInPixels">Image size in pixels.</param>
+        /// <param name="isDark">Whether background is dark.</param>
+        /// <param name="isDisabled">Whether to use disabled or normal color for the single
+        /// color SVG images.</param>
+        /// <returns></returns>
+        public static SKBitmapImageSource? ImageSourceFromSvg(
+            SvgImage? svgImage,
+            int sizeInPixels,
+            bool isDark,
+            bool isDisabled = false)
+        {
+            Drawing.Image? img;
+
+            if(isDisabled)
+                img = svgImage?.AsDisabledImage(sizeInPixels, isDark);
+            else
+                img = svgImage?.AsNormalImage(sizeInPixels, isDark);
+            return ImageSourceFromImage(img);
+        }
+
+        /// <summary>
+        /// Sets the image for a <see cref="Button"/> using the specified SVG image and size.
+        /// </summary>
+        /// <param name="button">The button to set the image for.</param>
+        /// <param name="svg">The SVG image to use.</param>
+        /// <param name="size">The size of the image.</param>
+        /// <param name="disabled">Whether to use the disabled image.</param>
         public static void SetButtonImage(
             Microsoft.Maui.Controls.Button button,
             Drawing.SvgImage? svg,
-            int size)
+            int size,
+            bool disabled = false)
         {
-            var images = Alternet.UI.MauiUtils.ImageSourceFromSvg(svg, size);
+            if(svg is null)
+            {
+                button.RemoveBinding(Microsoft.Maui.Controls.Button.ImageSourceProperty);
+                return;
+            }
+
+            var images = Alternet.UI.MauiUtils.ImageSourceFromSvg(svg, size, disabled);
 
             if (images is not null)
             {
@@ -340,8 +372,20 @@ namespace Alternet.UI
             }
         }
 
+        /// <summary>
+        /// Sets the image for a <see cref="ImageButton"/> using the specified SVG image and size.
+        /// </summary>
+        /// <param name="button">The button to set the image for.</param>
+        /// <param name="svg">The SVG image to use.</param>
+        /// <param name="size">The size of the image.</param>
         public static void SetButtonImage(ImageButton button, Drawing.SvgImage? svg, int size)
         {
+            if (svg is null)
+            {
+                button.RemoveBinding(Microsoft.Maui.Controls.ImageButton.SourceProperty);
+                return;
+            }
+
             var images = Alternet.UI.MauiUtils.ImageSourceFromSvg(svg, size);
 
             if (images is not null)
@@ -353,21 +397,40 @@ namespace Alternet.UI
             }
         }
 
+        /// <summary>
+        /// Creates <see cref="ImageSource"/> with disabled images
+        /// from the specified <see cref="SvgImage"/>.
+        /// </summary>
+        /// <param name="svgImage">The SVG image to convert.</param>
+        /// <param name="sizeInPixels">The size of the image in pixels.</param>
+        /// <returns>A tuple containing the light and
+        /// dark <see cref="SKBitmapImageSource"/> with disabled images.</returns>
+        /// <param name="isDisabled">Whether to use disabled or normal color for the single
+        /// color SVG images.</param>
         public static (SKBitmapImageSource Light, SKBitmapImageSource Dark)? ImageSourceFromSvg(
             SvgImage? svgImage,
-            int sizeInPixels)
+            int sizeInPixels,
+            bool isDisabled = false)
         {
             if (svgImage is null)
                 return null;
 
-            var darkImage = ImageSourceFromSvg(svgImage, sizeInPixels, isDark: true);
-            var lightImage = ImageSourceFromSvg(svgImage, sizeInPixels, isDark: false);
+            var darkImage = ImageSourceFromSvg(
+                svgImage,
+                sizeInPixels,
+                isDark: true,
+                isDisabled);
+            var lightImage = ImageSourceFromSvg(
+                svgImage,
+                sizeInPixels,
+                isDark: false,
+                isDisabled);
 
             if (darkImage is null || lightImage is null)
                 return null;
 
             return (lightImage, darkImage);
-         }
+        }
 
         /// <summary>
         /// Gets device platform.

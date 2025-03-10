@@ -20,11 +20,19 @@ public partial class ToolBarTestPage : ContentPage
                 await DisplayAlert("Alert", "Hello", "OK");
             });
 
-        toolbar.AddButton("Settings");
+        var btn2 = toolbar.AddButton("Settings");
 
         toolbar.AddStickyButton(null, null, Alternet.UI.KnownSvgImages.ImgBold);
 
         toolbar.AddLabel("Label");
+
+        var btn1 = toolbar.AddButton("Disabled", null, Alternet.UI.KnownSvgImages.ImgItalic);
+        btn1.IsEnabled = false;
+
+        btn2.Clicked += (s, e) =>
+        {
+            btn1.IsEnabled = !btn1.IsEnabled;
+        };
 
         var panel = new VerticalStackLayout();
 
