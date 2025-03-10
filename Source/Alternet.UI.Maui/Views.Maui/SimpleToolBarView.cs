@@ -17,6 +17,21 @@ namespace Alternet.Maui
     public partial class SimpleToolBarView : StackLayout
     {
         /// <summary>
+        /// Gets or sets the default underline color for sticky buttons in dark theme.
+        /// </summary>
+        public static Color DefaultStickyUnderlineColorDark = Color.FromRgb(76, 194, 255);
+
+        /// <summary>
+        /// Gets or sets the default underline color for sticky buttons in light theme.
+        /// </summary>
+        public static Color DefaultStickyUnderlineColorLight = Color.FromRgb(0, 120, 212);
+
+        /// <summary>
+        /// Gets or sets the default size of the sticky button underline.
+        /// </summary>
+        public static Size DefaultStickyUnderlineSize = new(16, 3);
+
+        /// <summary>
         /// Gets or sets the default margin for buttons.
         /// </summary>
         public static int DefaultButtonMargin = 1;
@@ -117,6 +132,7 @@ namespace Alternet.Maui
         };
 
         private bool allowMultipleSticky = true;
+        private StickyButtonStyle stickyStyle = StickyButtonStyle.Border;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="SimpleToolBarView"/> class.
@@ -128,6 +144,27 @@ namespace Alternet.Maui
         }
 
         /// <summary>
+        /// Specifies the paint mode for sticky buttons.
+        /// </summary>
+        public enum StickyButtonStyle
+        {
+            /// <summary>
+            /// Paints the border of the sticky button.
+            /// </summary>
+            Border,
+
+            /// <summary>
+            /// Paints the full underline of the sticky button.
+            /// </summary>
+            UnerlineFull,
+
+            /// <summary>
+            /// Paints a partial underline of the sticky button.
+            /// </summary>
+            UnderlinePartial,
+        }
+
+        /// <summary>
         /// Represents an item in the toolbar.
         /// </summary>
         public interface IToolBarItem
@@ -136,6 +173,11 @@ namespace Alternet.Maui
             /// Occurs when the button is clicked/tapped.
             /// </summary>
             public event EventHandler? Clicked;
+
+            /// <summary>
+            /// Gets or sets the attributes provider for the toolbar item.
+            /// </summary>
+            Alternet.UI.IBaseObjectWithAttr AttributesProvider { get; set; }
 
             /// <summary>
             /// Gets or sets a value indicating whether the toolbar item is enabled.
@@ -174,6 +216,24 @@ namespace Alternet.Maui
             /// <param name="setNormalState">If set to <c>true</c>,
             /// the normal state will be set.</param>
             void UpdateVisualStates(bool setNormalState);
+        }
+
+        /// <summary>
+        /// Gets or sets the style of the sticky button.
+        /// </summary>
+        public virtual StickyButtonStyle StickyStyle
+        {
+            get
+            {
+                return stickyStyle;
+            }
+
+            set
+            {
+                if (stickyStyle == value)
+                    return;
+                stickyStyle = value;
+            }
         }
 
         /// <summary>
@@ -416,12 +476,13 @@ namespace Alternet.Maui
         /// <summary>
         /// Represents a button in the toolbar.
         /// </summary>
-        public partial class ToolBarButton : Button, Alternet.UI.IRaiseSystemColorsChanged,
-            IToolBarItem
+        public partial class ToolBarButton
+            : Button, Alternet.UI.IRaiseSystemColorsChanged, IToolBarItem
         {
             private bool isSticky;
             private bool hasBorder = true;
             private Drawing.SvgImage? svgImage;
+            private Alternet.UI.IBaseObjectWithAttr? attributesProvider;
 
             /// <summary>
             /// Initializes a new instance of the <see cref="ToolBarButton"/> class.
@@ -468,6 +529,17 @@ namespace Alternet.Maui
                         return;
                     hasBorder = value;
                     UpdateVisualStates(true);
+                }
+            }
+
+            /// <inheritdoc/>
+            public virtual Alternet.UI.IBaseObjectWithAttr AttributesProvider
+            {
+                get => attributesProvider ??= new Alternet.UI.BaseObjectWithAttr();
+
+                set
+                {
+                    attributesProvider = value;
                 }
             }
 
