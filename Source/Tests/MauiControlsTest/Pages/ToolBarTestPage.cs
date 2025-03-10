@@ -10,7 +10,13 @@ public partial class ToolBarTestPage : ContentPage
 {
     public ToolBarTestPage()
     {
+        var setBackgroundColor = false;
+
         var toolbar = new SimpleToolBarView();
+
+        if(setBackgroundColor)
+            toolbar.BackgroundColor = Colors.DarkKhaki;
+
         toolbar.AddButton(
             "Search",
             "This is tooltip",
@@ -24,6 +30,10 @@ public partial class ToolBarTestPage : ContentPage
 
         toolbar.AddStickyButton(null, null, Alternet.UI.KnownSvgImages.ImgBold);
 
+        toolbar.AddStickyButton(null, null, Alternet.UI.KnownSvgImages.ImgBold);
+
+        toolbar.AllowMultipleSticky = false;
+
         toolbar.AddLabel("Label");
 
         var btn1 = toolbar.AddButton("Disabled", null, Alternet.UI.KnownSvgImages.ImgItalic);
@@ -33,6 +43,10 @@ public partial class ToolBarTestPage : ContentPage
         {
             btn1.IsEnabled = !btn1.IsEnabled;
         };
+
+        toolbar.AddExpandingSpace();
+
+        var btnRight = toolbar.AddButton("AtRight");
 
         var panel = new VerticalStackLayout();
 

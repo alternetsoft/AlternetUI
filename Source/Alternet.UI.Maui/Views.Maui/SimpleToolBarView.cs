@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -13,8 +14,7 @@ namespace Alternet.Maui
     /// <summary>
     /// Represents a simple toolbar view with speed buttons and other controls.
     /// </summary>
-    public partial class SimpleToolBarView
-        : HorizontalStackLayout
+    public partial class SimpleToolBarView : StackLayout
     {
         /// <summary>
         /// Gets or sets the default margin for buttons.
@@ -116,11 +116,14 @@ namespace Alternet.Maui
             BorderWidth = GetButtonBorder,
         };
 
+        private bool allowMultipleSticky = true;
+
         /// <summary>
         /// Initializes a new instance of the <see cref="SimpleToolBarView"/> class.
         /// </summary>
         public SimpleToolBarView()
         {
+            Orientation = StackOrientation.Horizontal;
             Alternet.UI.MauiApplicationHandler.RegisterThemeChangedHandler();
         }
 
@@ -156,11 +159,57 @@ namespace Alternet.Maui
             string Text { get; set; }
 
             /// <summary>
+            /// Gets or sets the horizontal layout options of the toolbar item.
+            /// </summary>
+            LayoutOptions HorizontalOptions { get; set; }
+
+            /// <summary>
+            /// Gets or sets the vertical layout options of the toolbar item.
+            /// </summary>
+            LayoutOptions VerticalOptions { get; set; }
+
+            /// <summary>
             /// Updates the visual states of the item.
             /// </summary>
             /// <param name="setNormalState">If set to <c>true</c>,
             /// the normal state will be set.</param>
             void UpdateVisualStates(bool setNormalState);
+        }
+
+        /// <summary>
+        /// Gets pr sets a value indicating whether multiple sticky buttons are
+        /// allowed in the toolbar.
+        /// </summary>
+        public virtual bool AllowMultipleSticky
+        {
+            get
+            {
+                return allowMultipleSticky;
+            }
+
+            set
+            {
+                if (allowMultipleSticky == value)
+                    return;
+                allowMultipleSticky = value;
+
+                var hasSticky = false;
+
+                foreach(var child in Children)
+                {
+                    if (child is not IToolBarItem item)
+                        continue;
+                    if (!item.IsSticky)
+                        continue;
+                    if (!hasSticky)
+                    {
+                        hasSticky = true;
+                        continue;
+                    }
+
+                    item.IsSticky = false;
+                }
+            }
         }
 
         /// <summary>
@@ -192,6 +241,25 @@ namespace Alternet.Maui
             }
 
             return size;
+        }
+
+        /// <summary>
+        /// Adds an expanding space to the toolbar.
+        /// </summary>
+        /// <returns>The created expanding space view.</returns>
+        public virtual View AddExpandingSpace()
+        {
+            var spacer = new BoxView
+            {
+#pragma warning disable
+                HorizontalOptions = LayoutOptions.FillAndExpand,
+#pragma warning restore
+                Color = Colors.Transparent,
+            };
+
+            Children.Add(spacer);
+
+            return spacer;
         }
 
         /// <summary>
@@ -416,10 +484,37 @@ namespace Alternet.Maui
                     if (isSticky == value)
                         return;
                     isSticky = value;
+
+                    if(value && !AllowMultipleSticky && ToolBar is not null)
+                    {
+                        foreach(var sibling in ToolBar.Children)
+                        {
+                            if (sibling == this)
+                                continue;
+                            if (sibling is ToolBarButton buttonSibling)
+
+                                buttonSibling.IsSticky = false;
+                        }
+                    }
+
                     UpdateVisualStates(true);
+
                     StickyChanged?.Invoke(this, EventArgs.Empty);
                 }
             }
+
+            /// <summary>
+            /// Gets a value indicating whether the toolbar (in which button is inserted)
+            /// allows multiple sticky buttons.
+            /// </summary>
+            [Browsable(false)]
+            internal bool AllowMultipleSticky => ToolBar?.AllowMultipleSticky ?? true;
+
+            /// <summary>
+            /// Gets the parent toolbar view.
+            /// </summary>
+            [Browsable(false)]
+            internal SimpleToolBarView? ToolBar => Parent as SimpleToolBarView;
 
             /// <inheritdoc/>
             public virtual void RaiseSystemColorsChanged()
