@@ -29,13 +29,15 @@ public partial class HomePage : ContentPage
             }
         };
 
+        AddPage("CollectionView", typeof(CollectionViewExamplePage));
+        AddPage("ToolBarView", typeof(ToolBarTestPage));
+
         AddPage("TabbedPage", typeof(TabbedPageTest));
         AddPage("LabelView", typeof(LabelTestPage));
         AddPage("ColorPickerView", typeof(ColorPickerTestPage));
         AddPage("BorderView", typeof(BorderTestPage));
         AddPage("PictureBoxView", typeof(PictureBoxTestPage));
         AddPage("SpeedButtonView", typeof(SpeedButtonTestPage));
-        AddPage("ToolBarView", typeof(ToolBarTestPage));
         AddPage("TabControlView", typeof(TabControlTestPage));
         (Content as IView).InvalidateArrange();
     }
