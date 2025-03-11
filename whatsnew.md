@@ -1,3 +1,15 @@
+# 0.9.715 (2025 March 11)
+
+- Maui: SimpleToolBarView - simple toolbar with speed buttons.
+- Timer: Fixed exception when Start called from non UI thread.
+- #185 Made DataFormats.FileDrop to be the same as DataFormats.Files.
+- IBaseObjectWithAttr.
+- Use 4.13 CodeAnalysis nuget in the library.
+- Optimize unhandled exception logging.
+- App.ProcessLogQueue, ResourceLoader.StringFromUrlOrNull, StreamUtils.StringFromStreamOrNull.
+- LogUtils: GetExceptionMessageText, GetExceptionDetailsText.
+- Maui: Add CollectionViewExamplePage which shows how to work with CollectionView.
+
 # 0.9.714 (2025 March 4)
 
 - Maui: Do not use own SynchronizationContext.
