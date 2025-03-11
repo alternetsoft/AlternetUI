@@ -11,6 +11,7 @@ namespace AllQuickStarts
         private Item? selectedItem;
         private int? selectedIndex;
         private CollectionView collectionView;
+        private BoxView underline;
 
         private ObservableCollection<Item> items = new()
             {
@@ -209,7 +210,7 @@ namespace AllQuickStarts
                 {
                 });
 
-            var underline = new BoxView
+            underline = new BoxView
             {
                 HeightRequest = 1,
                 BackgroundColor = toolbar.GetSeparatorColor(),
@@ -228,6 +229,11 @@ namespace AllQuickStarts
             grid.Add(toolbar, 0, 0);
             grid.Add(underline, 0, 1);            
             grid.Add(collectionView, 0, 2);
+
+            toolbar.SystemColorsChanged += (s, e) =>
+            {
+                underline.BackgroundColor = toolbar.GetSeparatorColor();
+            };
 
             Content = grid;
         }

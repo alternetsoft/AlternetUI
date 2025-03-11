@@ -24,7 +24,7 @@ namespace Alternet.Maui
         /// <summary>
         /// Gets or sets the default toolbar separator color in light theme.
         /// </summary>
-        public static Color DefaultSeparatorColorLight = Color.FromRgb(204, 206, 19);
+        public static Color DefaultSeparatorColorLight = Color.FromRgb(204, 206, 219);
 
         /// <summary>
         /// Gets or sets the default underline color for sticky buttons in dark theme.
@@ -154,6 +154,11 @@ namespace Alternet.Maui
             Alternet.UI.MauiApplicationHandler.RegisterThemeChangedHandler();
             Add(buttons);
         }
+
+        /// <summary>
+        /// Occurs when the system colors change.
+        /// </summary>
+        public event EventHandler? SystemColorsChanged;
 
         /// <summary>
         /// Specifies the paint mode for sticky buttons.
@@ -364,6 +369,7 @@ namespace Alternet.Maui
         /// <inheritdoc/>
         public virtual void RaiseSystemColorsChanged()
         {
+            SystemColorsChanged?.Invoke(this, EventArgs.Empty);
         }
 
         /// <summary>
