@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -15,7 +16,7 @@ namespace Alternet.UI
     /// </summary>
     public partial class ColorPickerView : Picker
     {
-        private readonly List<ColorPickerItem> colors = new();
+        private readonly ObservableCollection<ColorPickerItem> colors = new();
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ColorPickerView"/> class.
@@ -41,29 +42,36 @@ namespace Alternet.UI
 
             set
             {
-                if (value is null)
-                {
-                    SelectedIndex = -1;
-                    return;
-                }
-
-                for (int i = 0; i < colors.Count; i++)
-                {
-                    if (colors[i].Color == value)
-                    {
-                        SelectedIndex = i;
-                        return;
-                    }
-                }
-
-                SelectedIndex = -1;
+                var newIndex = GetColorIndex(value);
+                SelectedIndex = newIndex;
             }
+        }
+
+        /// <summary>
+        /// Gets the index of the specified color in the list of colors.
+        /// </summary>
+        /// <param name="color">The color to find the index of.</param>
+        /// <returns>The index of the specified color, or -1 if the color is not found.</returns>
+        public virtual int GetColorIndex(Color? color)
+        {
+            if (color is null)
+                return -1;
+
+            for (int i = 0; i < colors.Count; i++)
+            {
+                if (colors[i].Color.AsStruct == color.AsStruct)
+                {
+                    return i;
+                }
+            }
+
+            return -1;
         }
 
         /// <summary>
         /// Clears list of the colors.
         /// </summary>
-        public void ClearColors()
+        public virtual void ClearColors()
         {
             colors.Clear();
         }
@@ -72,7 +80,7 @@ namespace Alternet.UI
         /// Adds color to the list of colors.
         /// </summary>
         /// <param name="color">Color to add.</param>
-        public void AddColor(Color color)
+        public virtual void AddColor(Color color)
         {
             ColorPickerItem controlItem = new(color);
             colors.Add(controlItem);
