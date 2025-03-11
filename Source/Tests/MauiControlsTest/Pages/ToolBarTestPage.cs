@@ -21,9 +21,8 @@ public partial class ToolBarTestPage : ContentPage
             "Search",
             "This is tooltip",
             Alternet.UI.KnownSvgImages.ImgArrowDown,
-            async () =>
+            () =>
             {
-                await DisplayAlert("Alert", "Hello", "OK");
             });
 
         var btn2 = toolbar.AddButton("Settings");
@@ -31,8 +30,6 @@ public partial class ToolBarTestPage : ContentPage
         toolbar.AddStickyButton(null, null, Alternet.UI.KnownSvgImages.ImgBold);
 
         toolbar.AddStickyButton(null, null, Alternet.UI.KnownSvgImages.ImgBold);
-
-        toolbar.AllowMultipleSticky = false;
 
         toolbar.AddLabel("Label");
 
@@ -48,8 +45,16 @@ public partial class ToolBarTestPage : ContentPage
 
         var btnRight = toolbar.AddButton("AtRight");
 
+
+        var tabControl = new SimpleTabControlView();
+
+        tabControl.Header.AddStickyButton("Tab 1");
+        tabControl.Header.AddStickyButton("Tab 2");
+        tabControl.SelectFirstTab();
+
         var panel = new VerticalStackLayout();
 
+        panel.Children.Add(tabControl);
         panel.Children.Add(toolbar);
 
         Content = panel;

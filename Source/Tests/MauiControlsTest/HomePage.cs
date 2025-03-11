@@ -33,8 +33,8 @@ public partial class HomePage : ContentPage
         AddPage("SimpleToolBarView", typeof(ToolBarTestPage));
         AddPage("ColorPickerView", typeof(ColorPickerTestPage));
 
-        /*
         AddPage("TabbedPage", typeof(TabbedPageTest));
+        /*
         AddPage("LabelView", typeof(LabelTestPage));
         AddPage("BorderView", typeof(BorderTestPage));
         AddPage("PictureBoxView", typeof(PictureBoxTestPage));
