@@ -141,9 +141,10 @@ namespace Alternet.Maui
             BorderWidth = GetButtonBorder,
         };
 
+        private readonly StackLayout buttons = new();
+
         private bool allowMultipleSticky = true;
         private StickyButtonStyle stickyStyle = StickyButtonStyle.Border;
-        private StackLayout buttons = new();
 
         /// <summary>
         /// Initializes a new instance of the <see cref="SimpleToolBarView"/> class.

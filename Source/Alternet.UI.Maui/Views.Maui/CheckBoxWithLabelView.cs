@@ -107,12 +107,3 @@ namespace Alternet.Maui
         }
     }
 }
-
-/*
-                <StackLayout >
-                    <CheckBox x:Name="chbTransparent"
-                        ToolTipProperties.Text = "Draw edit control background" Margin="0"/>
-                    <Label Text="Transparent" Margin="10,10,10,10"/>
-                </StackLayout>
-
-*/

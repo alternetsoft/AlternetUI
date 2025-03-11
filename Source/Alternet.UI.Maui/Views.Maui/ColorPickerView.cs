@@ -48,6 +48,36 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Adds the specified color to the list if it is not already present.
+        /// </summary>
+        /// <param name="color">The color to add.</param>
+        /// <returns>The index of the color in the list.</returns>
+        public virtual int AddIfMissing(Color? color)
+        {
+            if (color is null)
+            {
+                return -1;
+            }
+
+            var index = GetColorIndex(color);
+            if (index < 0)
+                index = AddColor(color);
+
+            return index;
+        }
+
+        /// <summary>
+        /// Ensures the specified color is added to the list and selects it.
+        /// </summary>
+        /// <param name="color">The color to add and select.</param>
+        public virtual void EnsureAddedAndSelect(Color? color)
+        {
+            var index = AddIfMissing(color);
+            if (index >= 0)
+                SelectedIndex = index;
+        }
+
+        /// <summary>
         /// Gets the index of the specified color in the list of colors.
         /// </summary>
         /// <param name="color">The color to find the index of.</param>
@@ -80,10 +110,11 @@ namespace Alternet.UI
         /// Adds color to the list of colors.
         /// </summary>
         /// <param name="color">Color to add.</param>
-        public virtual void AddColor(Color color)
+        public virtual int AddColor(Color color)
         {
             ColorPickerItem controlItem = new(color);
             colors.Add(controlItem);
+            return colors.Count - 1;
         }
 
         /// <summary>
