@@ -14,8 +14,18 @@ namespace Alternet.Maui
     /// <summary>
     /// Represents a simple toolbar view with speed buttons and other controls.
     /// </summary>
-    public partial class SimpleToolBarView : StackLayout
+    public partial class SimpleToolBarView : Grid, Alternet.UI.IRaiseSystemColorsChanged
     {
+        /// <summary>
+        /// Gets or sets the default toolbar separator color in dark theme.
+        /// </summary>
+        public static Color DefaultSeparatorColorDark = Color.FromRgb(61, 61, 61);
+
+        /// <summary>
+        /// Gets or sets the default toolbar separator color in light theme.
+        /// </summary>
+        public static Color DefaultSeparatorColorLight = Color.FromRgb(204, 206, 19);
+
         /// <summary>
         /// Gets or sets the default underline color for sticky buttons in dark theme.
         /// </summary>
@@ -133,14 +143,16 @@ namespace Alternet.Maui
 
         private bool allowMultipleSticky = true;
         private StickyButtonStyle stickyStyle = StickyButtonStyle.Border;
+        private StackLayout buttons = new();
 
         /// <summary>
         /// Initializes a new instance of the <see cref="SimpleToolBarView"/> class.
         /// </summary>
         public SimpleToolBarView()
         {
-            Orientation = StackOrientation.Horizontal;
+            buttons.Orientation = StackOrientation.Horizontal;
             Alternet.UI.MauiApplicationHandler.RegisterThemeChangedHandler();
+            Add(buttons);
         }
 
         /// <summary>
@@ -304,6 +316,66 @@ namespace Alternet.Maui
         }
 
         /// <summary>
+        /// Gets the button border width.
+        /// </summary>
+        /// <returns>The button border width.</returns>
+        public double GetButtonBorder()
+        {
+            return GetButtonBorder(this);
+        }
+
+        /// <summary>
+        /// Gets the hot border color based on the current theme.
+        /// </summary>
+        /// <returns>The hot border color.</returns>
+        public Color GetHotBorderColor()
+        {
+            return GetRealHotBorderColor(this);
+        }
+
+        /// <summary>
+        /// Gets the pressed border color based on the current theme.
+        /// </summary>
+        /// <returns>The pressed border color.</returns>
+        public Color GetPressedBorderColor()
+        {
+            return GetRealPressedBorderColor(this);
+        }
+
+        /// <summary>
+        /// Gets the default toolbar separator color based on the current theme.
+        /// </summary>
+        public Color GetSeparatorColor()
+        {
+            if (IsDark)
+                return DefaultSeparatorColorDark;
+            return DefaultSeparatorColorLight;
+        }
+
+        /// <summary>
+        /// Gets the disabled text color based on the current theme.
+        /// </summary>
+        /// <returns>The disabled text color.</returns>
+        public Color GetDisabledTextColor()
+        {
+            return GetRealDisabledTextColor(this);
+        }
+
+        /// <inheritdoc/>
+        public virtual void RaiseSystemColorsChanged()
+        {
+        }
+
+        /// <summary>
+        /// Gets the text color based on the current theme.
+        /// </summary>
+        /// <returns>The text color.</returns>
+        public Color GetTextColor()
+        {
+            return GetRealTextColor(this);
+        }
+
+        /// <summary>
         /// Adds an expanding space to the toolbar.
         /// </summary>
         /// <returns>The created expanding space view.</returns>
@@ -317,7 +389,7 @@ namespace Alternet.Maui
                 Color = Colors.Transparent,
             };
 
-            Children.Add(spacer);
+            buttons.Children.Add(spacer);
 
             return spacer;
         }
@@ -362,7 +434,7 @@ namespace Alternet.Maui
         {
             var button = CreateToolBarButton();
             InitButtonProps(button, text, toolTip, image, onClick);
-            Children.Add(button);
+            buttons.Children.Add(button);
             return button;
         }
 
@@ -383,7 +455,7 @@ namespace Alternet.Maui
         {
             var button = new ToolBarLabel();
             InitButtonProps(button, text, toolTip, image, onClick);
-            Children.Add(button);
+            buttons.Children.Add(button);
             return button;
         }
 

@@ -1,3 +1,5 @@
+using Alternet.Maui;
+
 using Microsoft.Maui.Controls;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
@@ -23,6 +25,37 @@ namespace AllQuickStarts
                 new Item { Name = "Carol", Title = "Manager", Description = "Focuses on team productivity" },
             };
 
+        public void CollectionAdd()
+        {
+            var newItem = new Item
+            {
+                Name = "Carol",
+                Title = "Manager",
+                Description = "Focuses on team productivity"
+            };
+
+            items.Add(newItem);
+        }
+
+        public void CollectionRemove()
+        {
+            if (SelectedIndex is null)
+                return;
+            items.RemoveAt(SelectedIndex.Value);
+        }
+
+        public void CollectionClear()
+        {
+            items.Clear();
+        }
+
+        public void CollectionRename()
+        {
+            if (SelectedItem is null)
+                return;
+            SelectedItem.Name = SelectedItem.Name + "1";
+        }
+
         public CollectionViewExamplePage()
         {
             var menuFlyout = new MenuFlyout();
@@ -31,14 +64,7 @@ namespace AllQuickStarts
                 Text = "Add",
                 Command = new Command(() =>
                 {
-                    var newItem = new Item
-                    {
-                        Name = "Carol",
-                        Title = "Manager",
-                        Description = "Focuses on team productivity"
-                    };
-
-                    items.Add(newItem);
+                    CollectionAdd();
                 }),
             });
             menuFlyout.Add(new MenuFlyoutItem
@@ -46,9 +72,7 @@ namespace AllQuickStarts
                 Text = "Remove",
                 Command = new Command(() =>
                 {
-                    if (SelectedIndex is null)
-                        return;
-                    items.RemoveAt(SelectedIndex.Value);
+                    CollectionRemove();
                 }),
             });
             menuFlyout.Add(new MenuFlyoutItem
@@ -56,7 +80,7 @@ namespace AllQuickStarts
                 Text = "Clear",
                 Command = new Command(() =>
                 {
-                    items.Clear();
+                    CollectionClear();
                 }),
             });
             menuFlyout.Add(new MenuFlyoutItem
@@ -64,9 +88,7 @@ namespace AllQuickStarts
                 Text = "Rename",
                 Command = new Command(() =>
                 {
-                    if (SelectedItem is null)
-                        return;
-                    SelectedItem.Name = SelectedItem.Name + "1";
+                    CollectionRename();
                 }),
             });
 
@@ -139,10 +161,75 @@ namespace AllQuickStarts
             collectionView.SelectionChanged += OnSelectionChanged;
             collectionView.SelectionMode = SelectionMode.Single;
 
-            Content = new Grid
+            var toolbar = new SimpleToolBarView();
+
+            toolbar.AddButton(
+                "Add",
+                "Add new item",
+                Alternet.UI.KnownSvgImages.ImgAdd,
+                () =>
+                {
+                    CollectionAdd();
+                });
+
+            toolbar.AddButton(
+                "Remove",
+                "Remove current item",
+                Alternet.UI.KnownSvgImages.ImgRemove,
+                () =>
+                {
+                    CollectionRemove();
+                });
+
+            toolbar.AddButton(
+                "Clear",
+                "Clear items",
+                Alternet.UI.KnownSvgImages.ImgRemove,
+                () =>
+                {
+                    CollectionClear();
+                });
+
+            toolbar.AddButton(
+                "Rename",
+                "Rename current item",
+                Alternet.UI.KnownSvgImages.ImgGear,
+                () =>
+                {
+                    CollectionRename();
+                });
+
+            toolbar.AddExpandingSpace();
+
+            toolbar.AddButton(
+                null,
+                "More actions",
+                Alternet.UI.KnownSvgImages.ImgMoreActions,
+                () =>
+                {
+                });
+
+            var underline = new BoxView
             {
-                Children = { collectionView }
+                HeightRequest = 1,
+                BackgroundColor = toolbar.GetSeparatorColor(),
             };
+            
+            var grid = new Grid
+            {
+                RowDefinitions =
+                {
+                    new RowDefinition { Height = GridLength.Auto },
+                    new RowDefinition { Height = GridLength.Auto },
+                    new RowDefinition { Height = GridLength.Star }
+                }
+            };
+
+            grid.Add(toolbar, 0, 0);
+            grid.Add(underline, 0, 1);            
+            grid.Add(collectionView, 0, 2);
+
+            Content = grid;
         }
 
         public int? SelectedIndex
