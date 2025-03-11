@@ -14,7 +14,7 @@ namespace Alternet.Maui
     /// <summary>
     /// Represents a simple toolbar view with speed buttons and other controls.
     /// </summary>
-    public partial class SimpleToolBarView : Grid, Alternet.UI.IRaiseSystemColorsChanged
+    public partial class SimpleToolBarView : ContentView, Alternet.UI.IRaiseSystemColorsChanged
     {
         /// <summary>
         /// Gets or sets the default toolbar separator color in dark theme.
@@ -142,6 +142,7 @@ namespace Alternet.Maui
         };
 
         private readonly StackLayout buttons = new();
+        private readonly Grid grid = new();
 
         private bool allowMultipleSticky = true;
         private StickyButtonStyle stickyStyle = StickyButtonStyle.Border;
@@ -153,7 +154,8 @@ namespace Alternet.Maui
         {
             buttons.Orientation = StackOrientation.Horizontal;
             Alternet.UI.MauiApplicationHandler.RegisterThemeChangedHandler();
-            Add(buttons);
+            grid.Add(buttons);
+            Content = grid;
         }
 
         /// <summary>
@@ -174,7 +176,7 @@ namespace Alternet.Maui
             /// <summary>
             /// Paints the full underline of the sticky button.
             /// </summary>
-            UnerlineFull,
+            UnderlineFull,
 
             /// <summary>
             /// Paints a partial underline of the sticky button.
@@ -201,6 +203,11 @@ namespace Alternet.Maui
             /// Gets or sets a value indicating whether the toolbar item is enabled.
             /// </summary>
             bool IsEnabled { get; set; }
+
+            /// <summary>
+            /// Gets or sets the style of the sticky button.
+            /// </summary>
+            StickyButtonStyle StickyStyle { get; set; }
 
             /// <summary>
             /// Gets or sets a value indicating whether the item is in a sticky state
@@ -237,7 +244,7 @@ namespace Alternet.Maui
         }
 
         /// <summary>
-        /// Gets or sets the style of the sticky button.
+        /// Gets or sets the style of the sticky buttons.
         /// </summary>
         public virtual StickyButtonStyle StickyStyle
         {
@@ -251,6 +258,13 @@ namespace Alternet.Maui
                 if (stickyStyle == value)
                     return;
                 stickyStyle = value;
+
+                foreach (var child in Children)
+                {
+                    if (child is not IToolBarItem item)
+                        continue;
+                    item.StickyStyle = value;
+                }
             }
         }
 
@@ -485,6 +499,7 @@ namespace Alternet.Maui
                 ToolTipProperties.SetText(button, toolTip);
 
             button.SvgImage = image;
+            button.StickyStyle = StickyStyle;
 
             button.UpdateVisualStates(true);
         }
@@ -562,6 +577,7 @@ namespace Alternet.Maui
             private bool hasBorder = true;
             private Drawing.SvgImage? svgImage;
             private Alternet.UI.IBaseObjectWithAttr? attributesProvider;
+            private StickyButtonStyle stickyStyle = StickyButtonStyle.Border;
 
             /// <summary>
             /// Initializes a new instance of the <see cref="ToolBarButton"/> class.
@@ -574,6 +590,24 @@ namespace Alternet.Maui
             /// Occurs when the sticky state of the button changes.
             /// </summary>
             public event EventHandler? StickyChanged;
+
+            /// <summary>
+            /// Gets or sets the style of the sticky button.
+            /// </summary>
+            public virtual StickyButtonStyle StickyStyle
+            {
+                get
+                {
+                    return stickyStyle;
+                }
+
+                set
+                {
+                    if (stickyStyle == value)
+                        return;
+                    stickyStyle = value;
+                }
+            }
 
             /// <summary>
             /// Gets or sets the SVG image associated with the toolbar button.

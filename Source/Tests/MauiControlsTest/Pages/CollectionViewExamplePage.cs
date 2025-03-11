@@ -185,7 +185,7 @@ namespace AllQuickStarts
             toolbar.AddButton(
                 "Clear",
                 "Clear items",
-                Alternet.UI.KnownSvgImages.ImgRemove,
+                Alternet.UI.KnownSvgImages.ImgRemoveAll,
                 () =>
                 {
                     CollectionClear();
