@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ApiInfo>
-  <Assembly Name="Alternet.UI.Common, Version=0.9.714.0, Culture=neutral, PublicKeyToken=7fb0fe57212b4b74">
+  <Assembly Name="Alternet.UI.Common, Version=0.9.715.0, Culture=neutral, PublicKeyToken=7fb0fe57212b4b74">
     <Type Name="XamlX.Runtime.IXamlParentStackProviderV1" />
     <Type Name="XamlX.Runtime.IXamlXmlNamespaceInfoProviderV1" />
     <Type Name="XamlX.Runtime.XamlXmlNamespaceInfoV1" />
@@ -317,7 +317,6 @@
       <Event Name="PropertyChanged" />
       <Event Name="Disposed" />
     </Type>
-    <Type Name="Alternet.UI.IBaseObjectWithId" />
     <Type Name="Alternet.UI.ImmutableObject">
       <Event Name="PropertyChanged" />
       <Event Name="Disposed" />
@@ -11805,6 +11804,9 @@
       <Event Name="Scroll" />
       <Event Name="Disposed" />
     </Type>
+    <Type Name="Alternet.UI.IBaseObject" />
+    <Type Name="Alternet.UI.IBaseObjectWithAttr" />
+    <Type Name="Alternet.UI.IBaseObjectWithId" />
     <Type Name="Alternet.UI.ICustomTypeProvider" />
     <Type Name="Alternet.UI.IControlHandler" />
     <Type Name="Alternet.UI.IAnimationPlayerHandler" />
@@ -11843,7 +11845,6 @@
     <Type Name="Alternet.UI.IStatusBarHandler" />
     <Type Name="Alternet.UI.IToolTipFactoryHandler" />
     <Type Name="Alternet.UI.IWebBrowserFactoryHandler" />
-    <Type Name="Alternet.UI.IBaseObject" />
     <Type Name="Alternet.UI.IComponentDesigner">
       <Event Name="PropertyChanged" />
       <Event Name="MouseLeftButtonDown" />
@@ -11921,6 +11922,7 @@
     <Type Name="Alternet.UI.IObjectToString" />
     <Type Name="Alternet.UI.IObjectToStringOptions" />
     <Type Name="Alternet.UI.IPropInfoAndInstance" />
+    <Type Name="Alternet.UI.IRaiseSystemColorsChanged" />
     <Type Name="Alternet.UI.IReadOnlyStrings" />
     <Type Name="Alternet.UI.ITextProperty" />
     <Type Name="Alternet.UI.IValidatorReporter" />
