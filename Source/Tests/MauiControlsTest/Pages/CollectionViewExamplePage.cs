@@ -173,6 +173,8 @@ namespace AllQuickStarts
                     CollectionAdd();
                 });
 
+            toolbar.AddSeparator();
+
             toolbar.AddButton(
                 "Remove",
                 "Remove current item",

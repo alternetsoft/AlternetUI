@@ -17,6 +17,16 @@ namespace Alternet.Maui
     public partial class SimpleToolBarView : ContentView, Alternet.UI.IRaiseSystemColorsChanged
     {
         /// <summary>
+        /// Gets or sets the default width of the toolbar separator.
+        /// </summary>
+        public static int DefaultSeparatorWidth = 1;
+
+        /// <summary>
+        /// Gets or sets the default margin of the toolbar separator.
+        /// </summary>
+        public static Thickness DefaultSeparatorMargin = new(2, 4);
+
+        /// <summary>
         /// Gets or sets the default toolbar separator color in dark theme.
         /// </summary>
         public static Color DefaultSeparatorColorDark = Color.FromRgb(61, 61, 61);
@@ -287,7 +297,7 @@ namespace Alternet.Maui
 
                 var hasSticky = false;
 
-                foreach(var child in Children)
+                foreach (var child in Children)
                 {
                     if (child is not IToolBarItem item)
                         continue;
@@ -365,7 +375,7 @@ namespace Alternet.Maui
         /// <summary>
         /// Gets the default toolbar separator color based on the current theme.
         /// </summary>
-        public Color GetSeparatorColor()
+        public virtual Color GetSeparatorColor()
         {
             if (IsDark)
                 return DefaultSeparatorColorDark;
@@ -480,6 +490,17 @@ namespace Alternet.Maui
             return button;
         }
 
+        /// <summary>
+        /// Adds a separator to the toolbar.
+        /// </summary>
+        public virtual IToolBarItem AddSeparator()
+        {
+            var button = new ToolBarSeparator();
+            buttons.Children.Add(button);
+            button.UpdateVisualStates(true);
+            return button;
+        }
+
         internal virtual void InitButtonProps(
             ToolBarButton button,
             string? text,
@@ -564,6 +585,117 @@ namespace Alternet.Maui
                 set
                 {
                 }
+            }
+        }
+
+        /// <summary>
+        /// Represents a separator in the toolbar.
+        /// </summary>
+        public partial class ToolBarSeparator
+            : BoxView, Alternet.UI.IRaiseSystemColorsChanged, IToolBarItem
+        {
+            private Alternet.UI.IBaseObjectWithAttr? attributesProvider;
+
+            /// <summary>
+            /// Initializes a new instance of the <see cref="ToolBarSeparator"/> class.
+            /// </summary>
+            public ToolBarSeparator()
+            {
+                WidthRequest = DefaultSeparatorWidth;
+                Margin = DefaultSeparatorMargin;
+                BackgroundColor = GetLineColor();
+            }
+
+            /// <inheritdoc/>
+            public event EventHandler? Clicked;
+
+            /// <inheritdoc/>
+            public virtual Alternet.UI.IBaseObjectWithAttr AttributesProvider
+            {
+                get => attributesProvider ??= new Alternet.UI.BaseObjectWithAttr();
+
+                set
+                {
+                    attributesProvider = value;
+                }
+            }
+
+            /// <inheritdoc/>
+            public StickyButtonStyle StickyStyle
+            {
+                get => StickyButtonStyle.Border;
+
+                set
+                {
+                }
+            }
+
+            /// <inheritdoc/>
+            public bool IsSticky
+            {
+                get => false;
+
+                set
+                {
+                }
+            }
+
+            /// <inheritdoc/>
+            public bool HasBorder
+            {
+                get => true;
+
+                set
+                {
+                }
+            }
+
+            /// <inheritdoc/>
+            public string Text
+            {
+                get => string.Empty;
+                set
+                {
+                }
+            }
+
+            /// <summary>
+            /// Gets the parent toolbar view.
+            /// </summary>
+            [Browsable(false)]
+            internal SimpleToolBarView? ToolBar => Parent as SimpleToolBarView;
+
+            /// <inheritdoc/>
+            public virtual void RaiseSystemColorsChanged()
+            {
+                UpdateVisualStates(false);
+            }
+
+            /// <summary>
+            /// Gets color of the separator line.
+            /// </summary>
+            /// <returns></returns>
+            public virtual Color GetLineColor()
+            {
+                Color color;
+
+                if (ToolBar is null)
+                {
+                    if (IsDark)
+                        color = DefaultSeparatorColorDark;
+                    else
+                        color = DefaultSeparatorColorLight;
+                }
+                else
+                    color = ToolBar.GetSeparatorColor();
+
+                return color;
+            }
+
+            /// <inheritdoc/>
+            public virtual void UpdateVisualStates(bool setNormalState)
+            {
+                BackgroundColor = GetLineColor();
             }
         }
 
@@ -670,9 +802,9 @@ namespace Alternet.Maui
                         return;
                     isSticky = value;
 
-                    if(value && !AllowMultipleSticky && ToolBar is not null)
+                    if (value && !AllowMultipleSticky && ToolBar is not null)
                     {
-                        foreach(var sibling in ToolBar.Children)
+                        foreach (var sibling in ToolBar.Children)
                         {
                             if (sibling == this)
                                 continue;
@@ -713,21 +845,21 @@ namespace Alternet.Maui
                 var visualStateGroup = VisualStateUtils.CreateCommonStatesGroup();
 
                 var normalState = VisualStateUtils.CreateNormalState();
-                if(IsSticky && HasBorder)
+                if (IsSticky && HasBorder)
                     ButtonPressedState.InitState(this, normalState);
                 else
                     ButtonNormalState.InitState(this, normalState);
                 visualStateGroup.States.Add(normalState);
 
                 var pointerOverState = VisualStateUtils.CreatePointerOverState();
-                if(HasBorder)
+                if (HasBorder)
                     ButtonHotState.InitState(this, pointerOverState);
                 else
                     ButtonNormalState.InitState(this, pointerOverState);
                 visualStateGroup.States.Add(pointerOverState);
 
                 var pressedState = VisualStateUtils.CreatePressedState();
-                if(HasBorder)
+                if (HasBorder)
                     ButtonPressedState.InitState(this, pressedState);
                 else
                     ButtonNormalState.InitState(this, pressedState);
@@ -741,7 +873,7 @@ namespace Alternet.Maui
                 vsGroups.Clear();
                 vsGroups.Add(visualStateGroup);
 
-                if(setNormalState)
+                if (setNormalState)
                     VisualStateManager.GoToState(this, VisualStateUtils.NameNormal);
             }
 
@@ -755,7 +887,7 @@ namespace Alternet.Maui
             {
                 base.OnPropertyChanged(propertyName);
 
-                if(svgImage is not null)
+                if (svgImage is not null)
                 {
                     if (propertyName == IsEnabledProperty.PropertyName)
                     {
