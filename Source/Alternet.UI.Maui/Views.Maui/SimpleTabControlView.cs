@@ -32,10 +32,22 @@ namespace Alternet.Maui
             base.Content = grid;
         }
 
+        /// <summary>
+        /// Gets the header of the tab control view.
+        /// </summary>
         public SimpleToolBarView Header => tabs;
 
+        /// <summary>
+        /// Gets the collection of tabs in the tab control view.
+        /// </summary>
         public IList<IView> Tabs => Header.Buttons;
 
+        /// <summary>
+        /// Gets or sets the content of the tab control view.
+        /// You can use this property to set the active tab contents.
+        /// Normally, it is updated automatically when a new tab is selected
+        /// with the control that was specified when the tab was added.
+        /// </summary>
         public new View? Content
         {
             get
@@ -49,14 +61,26 @@ namespace Alternet.Maui
             }
         }
 
+        /// <summary>
+        /// Selects the tab at the specified index.
+        /// </summary>
+        /// <param name="index">The index of the tab to select.</param>
         public virtual void SelectTab(int index)
         {
             var tab = GetTab(index);
             tab?.ClickedAction?.Invoke();
         }
 
+        /// <summary>
+        /// Selects the first tab.
+        /// </summary>
         public virtual void SelectFirstTab() => SelectTab(0);
 
+        /// <summary>
+        /// Gets the tab at the specified index.
+        /// </summary>
+        /// <param name="index">The index of the tab to get.</param>
+        /// <returns>The tab at the specified index, or null if the index is out of range.</returns>
         public virtual SimpleToolBarView.IToolBarItem? GetTab(int index)
         {
             if (Header.Buttons.Count > index)
@@ -64,6 +88,13 @@ namespace Alternet.Maui
             return null;
         }
 
+        /// <summary>
+        /// Adds a new tab to the tab control view.
+        /// </summary>
+        /// <param name="text">The text to display on the tab.</param>
+        /// <param name="getView">A function that returns the content view for the tab.</param>
+        /// <param name="toolTip">The tooltip text for the tab.</param>
+        /// <param name="image">The image to display on the tab.</param>
         public virtual void Add(
             string? text,
             Func<View>? getView = null,

@@ -619,8 +619,9 @@ namespace Alternet.Maui
         internal partial class ToolBarSeparator
             : BoxView, Alternet.UI.IRaiseSystemColorsChanged, IToolBarItem
         {
+            private readonly SimpleToolBarView toolbar;
+
             private Alternet.UI.IBaseObjectWithAttr? attributesProvider;
-            private SimpleToolBarView toolbar;
 
             /// <summary>
             /// Initializes a new instance of the <see cref="ToolBarSeparator"/> class.
@@ -726,6 +727,11 @@ namespace Alternet.Maui
             {
                 BackgroundColor = GetLineColor();
             }
+
+            internal void RaiseClicked()
+            {
+                Clicked?.Invoke(this, EventArgs.Empty);
+            }
         }
 
         /// <summary>
@@ -734,12 +740,13 @@ namespace Alternet.Maui
         internal partial class ToolBarButton
             : Button, Alternet.UI.IRaiseSystemColorsChanged, IToolBarItem
         {
+            private readonly SimpleToolBarView toolBar;
+
             private bool isSticky;
             private bool hasBorder = true;
             private Drawing.SvgImage? svgImage;
             private Alternet.UI.IBaseObjectWithAttr? attributesProvider;
             private StickyButtonStyle stickyStyle = StickyButtonStyle.Border;
-            private SimpleToolBarView toolBar;
 
             /// <summary>
             /// Initializes a new instance of the <see cref="ToolBarButton"/> class.
