@@ -36,7 +36,7 @@ namespace Alternet.Maui
 
         public IList<IView> Tabs => Header.Buttons;
 
-        public new View Content
+        public new View? Content
         {
             get
             {
@@ -51,21 +51,32 @@ namespace Alternet.Maui
 
         public virtual void SelectTab(int index)
         {
-            if (Header.Buttons.Count > index)
-                ((SimpleToolBarView.IToolBarItem)Header.Buttons[index]).IsSticky = true;
+            var tab = GetTab(index);
+            tab?.ClickedAction?.Invoke();
         }
 
-        public virtual void SelectFirstTab()
-        {
-            if(Header.Buttons.Count > 0)
-                ((SimpleToolBarView.IToolBarItem)Header.Buttons[0]).IsSticky = true;
-        }
+        public virtual void SelectFirstTab() => SelectTab(0);
 
         public virtual SimpleToolBarView.IToolBarItem? GetTab(int index)
         {
             if (Header.Buttons.Count > index)
                 return (SimpleToolBarView.IToolBarItem)Header.Buttons[index];
             return null;
+        }
+
+        public virtual void Add(
+            string? text,
+            Func<View>? getView = null,
+            string? toolTip = null,
+            Drawing.SvgImage? image = null)
+        {
+            var btn = Header.AddButton(text, toolTip, image);
+
+            btn.ClickedAction = () =>
+            {
+                btn.IsSticky = true;
+                Content = getView?.Invoke();
+            };
         }
     }
 }

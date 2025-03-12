@@ -10,6 +10,7 @@ public partial class ToolBarTestPage : ContentPage
 {
     public ToolBarTestPage()
     {
+       
         var setBackgroundColor = false;
 
         var toolbar = new SimpleToolBarView();
@@ -21,8 +22,9 @@ public partial class ToolBarTestPage : ContentPage
             "Search",
             "This is tooltip",
             Alternet.UI.KnownSvgImages.ImgArrowDown,
-            () =>
+            async () =>
             {
+                await DisplayAlert("Title", "Message", "OK");
             });
 
         var btn2 = toolbar.AddButton("Settings");
@@ -45,17 +47,42 @@ public partial class ToolBarTestPage : ContentPage
 
         var btnRight = toolbar.AddButton("AtRight");
 
+        var underline = new BoxView
+        {
+            HeightRequest = 1,
+            BackgroundColor = toolbar.GetSeparatorColor(),
+        };
+
+        toolbar.SystemColorsChanged += (s, e) =>
+        {
+            underline.BackgroundColor = toolbar.GetSeparatorColor();
+        };
+
+        var panel1 = new VerticalStackLayout();
+        panel1.Children.Add(toolbar);
+        var collectionView1 = CollectionViewExamplePage.CreateSampleCollectionView();
+        collectionView1.ItemsSource = CollectionViewExamplePage.SampleItems;
+        collectionView1.HeightRequest = 300;
+        collectionView1.SelectionMode = SelectionMode.Single;
+        panel1.Children.Add(underline);
+        panel1.Children.Add(collectionView1);
+
+        var panel2 = new VerticalStackLayout();
+        var collectionView2 = CollectionViewExamplePage.CreateSampleCollectionView();
+        collectionView2.ItemsSource = CollectionViewExamplePage.SampleItems2;
+        collectionView2.HeightRequest = 300;
+        collectionView2.SelectionMode = SelectionMode.Single;
+        panel2.Children.Add(collectionView2);
 
         var tabControl = new SimpleTabControlView();
 
-        tabControl.Header.AddStickyButton("Tab 1");
-        tabControl.Header.AddStickyButton("Tab 2");
+        tabControl.Add("Tab 1", () => panel1);
+        tabControl.Add("Tab 2", () => panel2);
         tabControl.SelectFirstTab();
 
         var panel = new VerticalStackLayout();
 
         panel.Children.Add(tabControl);
-        panel.Children.Add(toolbar);
 
         Content = panel;
     }

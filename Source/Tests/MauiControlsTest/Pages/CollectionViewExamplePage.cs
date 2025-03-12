@@ -1,19 +1,49 @@
 using Alternet.Maui;
 
 using Microsoft.Maui.Controls;
+
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 
 namespace AllQuickStarts
 {
-    public class CollectionViewExamplePage : ContentPage
+    public partial class CollectionViewExamplePage : ContentPage
     {
-        private Item? selectedItem;
-        private int? selectedIndex;
-        private CollectionView collectionView;
-        private BoxView underline;
+        public static ObservableCollection<Item> SampleItems2 = new()
+        {
+            new Item
+            {
+                Name = "TaskManager",
+                Title = "Task Management Tool",
+                Description = "Helps organize and prioritize daily tasks efficiently."
+            },
+            new Item
+            {
+                Name = "BudgetPlanner",
+                Title = "Financial Budget Planner",
+                Description = "Assists in managing and tracking personal finances."
+            },
+            new Item
+            {
+                Name = "WeatherApp",
+                Title = "Weather Forecast App",
+                Description = "Provides accurate weather updates and alerts."
+            },
+            new Item
+            {
+                Name = "CodeEditor",
+                Title = "Lightweight Code Editor",
+                Description = "An editor for writing and editing code with syntax highlighting."
+            },
+            new Item
+            {
+                Name = "RecipeHelper",
+                Title = "Recipe Management Tool",
+                Description = "Organizes recipes and generates shopping lists."
+            }
+        };
 
-        private ObservableCollection<Item> items = new()
+        public static ObservableCollection<Item> SampleItems = new()
             {
                 new Item { Name = "Alice", Title = "Developer", Description = "Loves coding and coffee" },
                 new Item { Name = "Bob", Title = "Designer", Description = "Passionate about UI/UX" },
@@ -25,6 +55,11 @@ namespace AllQuickStarts
                 new Item { Name = "Bob", Title = "Designer", Description = "Passionate about UI/UX" },
                 new Item { Name = "Carol", Title = "Manager", Description = "Focuses on team productivity" },
             };
+
+        private Item? selectedItem;
+        private int? selectedIndex;
+        private CollectionView collectionView;
+        private BoxView underline;
 
         public void CollectionAdd()
         {
@@ -35,19 +70,19 @@ namespace AllQuickStarts
                 Description = "Focuses on team productivity"
             };
 
-            items.Add(newItem);
+            SampleItems.Add(newItem);
         }
 
         public void CollectionRemove()
         {
             if (SelectedIndex is null)
                 return;
-            items.RemoveAt(SelectedIndex.Value);
+            SampleItems.RemoveAt(SelectedIndex.Value);
         }
 
         public void CollectionClear()
         {
-            items.Clear();
+            SampleItems.Clear();
         }
 
         public void CollectionRename()
@@ -105,56 +140,8 @@ namespace AllQuickStarts
                 }
             };
 
-            collectionView = new CollectionView
-            {
-                ItemsSource = items,
-                ItemTemplate = new DataTemplate(() =>
-                {
-                    Grid grid = new Grid { Padding = 5 };
-                    
-                    grid.RowDefinitions.Add(new RowDefinition { Height = GridLength.Auto });
-                    
-                    grid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(50)});
-                    grid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(150) });
-                    grid.ColumnDefinitions.Add(new ColumnDefinition { Width = GridLength.Auto });
-
-                    Label nameLabel = new()
-                    {
-                        Margin=5,
-                        HorizontalTextAlignment = TextAlignment.Center,
-                        VerticalTextAlignment = TextAlignment.Center,
-                    };
-
-                    nameLabel.SetBinding(Label.TextProperty, static (Item item) => item.Name);
-
-                    Label titleLabel = new()
-                    {
-                        Margin = 5,
-                        HorizontalTextAlignment = TextAlignment.Center,
-                        VerticalTextAlignment = TextAlignment.Center,
-                    };
-                    titleLabel.SetBinding(Label.TextProperty, static (Item item) => item.Title);
-
-                    Label descriptionLabel = new()
-                    {
-                        Margin = 5,
-                        HorizontalTextAlignment = TextAlignment.Center,
-                        VerticalTextAlignment = TextAlignment.Center,
-                    };
-                    descriptionLabel.SetBinding(Label.TextProperty, static (Item item) => item.Description);
-
-                    Grid.SetColumn(titleLabel, 1);
-                    Grid.SetColumn(descriptionLabel, 2);
-
-                    grid.Add(nameLabel);
-                    grid.Add(titleLabel);
-                    grid.Add(descriptionLabel);
-
-                    grid.GestureRecognizers.Add(tapGesture);
-
-                    return grid;
-                })
-            };
+            collectionView = CreateSampleCollectionView(tapGesture);
+            collectionView.ItemsSource = SampleItems;
 
             FlyoutBase.SetContextFlyout(collectionView, menuFlyout);
 
@@ -217,7 +204,7 @@ namespace AllQuickStarts
                 HeightRequest = 1,
                 BackgroundColor = toolbar.GetSeparatorColor(),
             };
-            
+
             var grid = new Grid
             {
                 RowDefinitions =
@@ -229,7 +216,7 @@ namespace AllQuickStarts
             };
 
             grid.Add(toolbar, 0, 0);
-            grid.Add(underline, 0, 1);            
+            grid.Add(underline, 0, 1);
             grid.Add(collectionView, 0, 2);
 
             toolbar.SystemColorsChanged += (s, e) =>
@@ -253,11 +240,70 @@ namespace AllQuickStarts
             }
         }
 
+        public static CollectionView CreateSampleCollectionView(GestureRecognizer? tapGesture = null)
+        {
+            var collectionView = new CollectionView
+            {
+                ItemTemplate = new DataTemplate(() =>
+                {
+                    Grid grid = new()
+                    {
+                        Padding = 5,
+                    };
+
+                    grid.RowDefinitions.Add(new RowDefinition { Height = GridLength.Auto });
+
+                    grid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(50) });
+                    grid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(150) });
+                    grid.ColumnDefinitions.Add(new ColumnDefinition { Width = GridLength.Auto });
+
+                    Label nameLabel = new()
+                    {
+                        Margin = 5,
+                        HorizontalTextAlignment = TextAlignment.Center,
+                        VerticalTextAlignment = TextAlignment.Center,
+                    };
+
+                    nameLabel.SetBinding(Label.TextProperty, static (Item item) => item.Name);
+
+                    Label titleLabel = new()
+                    {
+                        Margin = 5,
+                        HorizontalTextAlignment = TextAlignment.Center,
+                        VerticalTextAlignment = TextAlignment.Center,
+                    };
+                    titleLabel.SetBinding(Label.TextProperty, static (Item item) => item.Title);
+
+                    Label descriptionLabel = new()
+                    {
+                        Margin = 5,
+                        HorizontalTextAlignment = TextAlignment.Center,
+                        VerticalTextAlignment = TextAlignment.Center,
+                    };
+                    descriptionLabel.SetBinding(Label.TextProperty, static (Item item) => item.Description);
+
+                    Grid.SetColumn(titleLabel, 1);
+                    Grid.SetColumn(descriptionLabel, 2);
+
+                    grid.Add(nameLabel);
+                    grid.Add(titleLabel);
+                    grid.Add(descriptionLabel);
+
+                    if (tapGesture is not null)
+                        grid.GestureRecognizers.Add(tapGesture);
+
+                    return grid;
+                })
+            };
+
+            return collectionView;
+        }
+
         private void OnSelectionChanged(object? sender, SelectionChangedEventArgs e)
         {
             if (e.CurrentSelection.FirstOrDefault() is Item selectedItem)
             {
-                SelectedIndex = items.IndexOf(selectedItem);
+                SelectedIndex = SampleItems.IndexOf(selectedItem);
             }
             else
             {

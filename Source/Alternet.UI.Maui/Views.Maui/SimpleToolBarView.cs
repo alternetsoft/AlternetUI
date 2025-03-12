@@ -210,6 +210,11 @@ namespace Alternet.Maui
             public event EventHandler? Clicked;
 
             /// <summary>
+            /// Gets or sets the action which is invoked when the button is clicked/tapped.
+            /// </summary>
+            public Action? ClickedAction { get; set; }
+
+            /// <summary>
             /// Gets or sets the attributes provider for the toolbar item.
             /// </summary>
             Alternet.UI.IBaseObjectWithAttr AttributesProvider { get; set; }
@@ -319,6 +324,9 @@ namespace Alternet.Maui
             }
         }
 
+        /// <summary>
+        /// Gets the collection of buttons in the toolbar.
+        /// </summary>
         public IList<IView> Buttons => buttons.Children;
 
         /// <summary>
@@ -518,12 +526,12 @@ namespace Alternet.Maui
             Action? onClick = null)
         {
             button.Margin = DefaultButtonMargin;
+            button.ClickedAction = onClick;
 
             if (text is not null)
                 button.Text = text;
 
-            if (onClick is not null)
-                button.Clicked += (s, e) => onClick();
+            button.Clicked += (s, e) => button.RaiseClickedAction();
 
             if (toolTip is not null)
                 ToolTipProperties.SetText(button, toolTip);
@@ -627,6 +635,8 @@ namespace Alternet.Maui
 
             /// <inheritdoc/>
             public event EventHandler? Clicked;
+
+            public Action? ClickedAction { get; set; }
 
             /// <inheritdoc/>
             public virtual Alternet.UI.IBaseObjectWithAttr AttributesProvider
@@ -743,6 +753,8 @@ namespace Alternet.Maui
             /// Occurs when the sticky state of the button changes.
             /// </summary>
             public event EventHandler? StickyChanged;
+
+            public virtual Action? ClickedAction { get; set; }
 
             /// <summary>
             /// Gets or sets the style of the sticky button.
@@ -867,6 +879,11 @@ namespace Alternet.Maui
                 UpdateVisualStates(true);
             }
 
+            public virtual void RaiseClickedAction()
+            {
+                ClickedAction?.Invoke();
+            }
+
             /// <inheritdoc/>
             public virtual void UpdateVisualStates(bool setNormalState)
             {
@@ -968,6 +985,12 @@ namespace Alternet.Maui
             {
                 add => button.Clicked += value;
                 remove => button.Clicked -= value;
+            }
+
+            public Action? ClickedAction
+            {
+                get => button.ClickedAction;
+                set => button.ClickedAction = value;
             }
 
             public virtual UI.IBaseObjectWithAttr AttributesProvider
