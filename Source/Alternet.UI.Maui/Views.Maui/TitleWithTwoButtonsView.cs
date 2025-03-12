@@ -78,6 +78,7 @@ namespace Alternet.Maui
             ToolTipProperties.SetText(settingsButton, "Show settings");
 
             settingsButton.Aspect = Aspect.Center;
+            settingsButton.BackgroundColor = Colors.Transparent;
             Alternet.UI.MauiUtils
                 .SetButtonImage(settingsButton, Alternet.UI.KnownSvgImages.ImgGear, size);
             settingsButton.HorizontalOptions = LayoutOptions.End;
@@ -86,6 +87,7 @@ namespace Alternet.Maui
 
             ToolTipProperties.SetText(keyboardButton, "Toggle keyboard visibility");
             keyboardButton.Aspect = Aspect.Center;
+            keyboardButton.BackgroundColor = Colors.Transparent;
             Alternet.UI.MauiUtils
                 .SetButtonImage(keyboardButton, Alternet.UI.KnownSvgImages.ImgKeyboard, size);
             keyboardButton.HorizontalOptions = LayoutOptions.End;

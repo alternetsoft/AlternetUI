@@ -48,8 +48,6 @@ public partial class MainPage : Alternet.UI.DisposableContentPage, EditorUI.IDoc
 
     public MainPage()
     {
-        /*var editorUI = new EditorUI.MainWindow();*/
-
         Alternet.UI.PlessMouse.ShowTestMouseInControl = false;
 
         InitializeComponent();
@@ -59,25 +57,25 @@ public partial class MainPage : Alternet.UI.DisposableContentPage, EditorUI.IDoc
         if (Alternet.UI.App.IsWindowsOS)
         {
             roslynParser = new(new Alternet.Syntax.Parsers.Roslyn.CodeCompletion.CsSolution());
-            editor.Editor.Lexer = roslynParser;
+            Editor.Lexer = roslynParser;
         }
         else
         {
             parserCs = new();
-            editor.Editor.Lexer = parserCs;
+            Editor.Lexer = parserCs;
         }
 
         LoadFile(NewFileNameNoExt + ".cs");
 
         button.Text = "Hello";
 
-        editor.Interior.HasBorder = false;
+        EditorView.Interior.HasBorder = false;
 
         if (!Alternet.UI.App.IsDesktopDevice)
         {
-            editor.Editor.RunAfterGotFocus = Alternet.UI.GenericControlAction.ShowKeyboardIfUnknown;
+            Editor.RunAfterGotFocus = Alternet.UI.GenericControlAction.ShowKeyboardIfUnknown;
 
-            editor.Editor.Selection.Options |= SelectionOptions.DisableSelectionByMouse;
+            Editor.Selection.Options |= SelectionOptions.DisableSelectionByMouse;
             Alternet.UI.BaseObject.UseNamesInToString = false;
         }
         else
@@ -105,11 +103,11 @@ public partial class MainPage : Alternet.UI.DisposableContentPage, EditorUI.IDoc
 
         Alternet.UI.PlessMouse.LastMousePositionChanged += PlessMouse_LastMousePositionChanged;
 
-        editor.Interior.CornerClick += Interior_CornerClick;
-        editor.Interior.Scroll += Interior_Scroll;
-        editor.Editor.LongTap += Editor_LongTap;
+        EditorView.Interior.CornerClick += Interior_CornerClick;
+        EditorView.Interior.Scroll += Interior_Scroll;
+        Editor.LongTap += Editor_LongTap;
 
-        editor.Editor.CanLongTap = true;
+        Editor.CanLongTap = true;
 
         extraControls.IsVisible = false;
 
@@ -117,10 +115,10 @@ public partial class MainPage : Alternet.UI.DisposableContentPage, EditorUI.IDoc
 
         if(Alternet.UI.App.IsMacOS)
         {
-            editor.Editor.Font = editor.Editor.RealFont.IncSize(2);    
+            Editor.Font = Editor.RealFont.IncSize(2);    
         }
 
-        editor.Editor.SizeChanged+=(s,e)=>
+        Editor.SizeChanged+=(s,e)=>
         {
         };
 
@@ -216,12 +214,12 @@ public partial class MainPage : Alternet.UI.DisposableContentPage, EditorUI.IDoc
     private void Editor_LongTap(object? sender, Alternet.UI.LongTapEventArgs e)
     {
         LogToEntry("LongTap", e, true);
-        var caret = editor.Editor.CaretInfo;
+        var caret = Editor.CaretInfo;
         if(caret is not null)
         {
             caret.OverlayColor = LightDarkColors.Blue;
             caret.TopAndBottomOverlayVisible = true;
-            editor.Editor.InvalidateCaret();
+            Editor.InvalidateCaret();
         }
     }
 
@@ -240,7 +238,7 @@ public partial class MainPage : Alternet.UI.DisposableContentPage, EditorUI.IDoc
 
     private void Interior_CornerClick(object? sender, EventArgs e)
     {
-        Alternet.UI.Keyboard.ToggleKeyboardVisibility(editor.Editor);
+        Alternet.UI.Keyboard.ToggleKeyboardVisibility(Editor);
 
         /*
         editor.Editor.Font = editor.Editor.Font.Larger();
@@ -281,7 +279,9 @@ public partial class MainPage : Alternet.UI.DisposableContentPage, EditorUI.IDoc
 
     string? EditorUI.IDocumentContainer.CommandLineArgs { get; set; }
 
-    public EditorUI.PoweredSyntaxEdit Editor => (EditorUI.PoweredSyntaxEdit)editor.Editor;
+    public EditorUI.PoweredSyntaxEdit Editor => (EditorUI.PoweredSyntaxEdit)(editorPanel.Editor);
+
+    public SyntaxEditView EditorView => editorPanel.EditorView;
 
     public ExecutionPosition? ExecutionPosition
     {
@@ -297,7 +297,7 @@ public partial class MainPage : Alternet.UI.DisposableContentPage, EditorUI.IDoc
 
     private void InitEdit()
     {
-        var ed = editor.Editor;
+        var ed = Editor;
         ed.Outlining.AllowOutlining = true;
         ed.Gutter.Options |= GutterOptions.PaintLineNumbers
             | GutterOptions.PaintLineModificators
@@ -312,7 +312,7 @@ public partial class MainPage : Alternet.UI.DisposableContentPage, EditorUI.IDoc
 
     public void LoadFile(string url)
     {
-        var ed = editor.Editor;
+        var ed = Editor;
         ed.Text = string.Empty;
         ed.Source.BookMarks.Clear();
         ed.Source.LineStyles.Clear();
@@ -328,7 +328,7 @@ public partial class MainPage : Alternet.UI.DisposableContentPage, EditorUI.IDoc
 
     internal void InsertText(string s)
     {
-        var ed = editor.Editor;
+        var ed = Editor;
         var position = ed.Position;
         ed.Lines.Insert(0, s);
         ed.Position = position;
@@ -336,7 +336,7 @@ public partial class MainPage : Alternet.UI.DisposableContentPage, EditorUI.IDoc
 
     void AppendText(string s)
     {
-        var ed = editor.Editor;
+        var ed = Editor;
         var position = ed.Position;
         ed.Lines.Add(s);
         ed.Position = position;
@@ -344,7 +344,7 @@ public partial class MainPage : Alternet.UI.DisposableContentPage, EditorUI.IDoc
 
     void LogToEditor(Action action)
     {
-        var ed = editor.Editor;
+        var ed = Editor;
         ed.Lexer = null;
         ed.BeginUpdate();
         try
@@ -373,12 +373,12 @@ public partial class MainPage : Alternet.UI.DisposableContentPage, EditorUI.IDoc
 
     private void Button3_Clicked(object? sender, EventArgs e)
     {
-        Alternet.UI.Keyboard.HideKeyboard(editor.Editor);
+        Alternet.UI.Keyboard.HideKeyboard(Editor);
     }
 
     private void Button2_Clicked(object? sender, EventArgs e)
     {
-        Alternet.UI.Keyboard.ShowKeyboard(editor.Editor);
+        Alternet.UI.Keyboard.ShowKeyboard(Editor);
     }
 
     public ObservableCollection<SimpleItem> MyItems { get; set; } = [];

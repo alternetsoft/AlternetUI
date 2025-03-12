@@ -9,14 +9,8 @@
         <StackLayout x:Name="panel" 
                            Grid.Row="0">
 
-            <AbsoluteLayout x:Name="editorPanel">
-                <editor:SyntaxEditView x:Name="editor" ReadOnly="False" 
-                    AbsoluteLayout.LayoutFlags="All"
-                    AbsoluteLayout.LayoutBounds="0, 0, 1, 1"
-                    SelectionChanged="editor_SelectionChanged">
-                </editor:SyntaxEditView>
-
-                    <Border 
+            <editor:SyntaxEditLayout x:Name="editorPanel">
+                <Border IsVisible="true" x:Name="innerForm"
                         AbsoluteLayout.LayoutFlags="None"
                         AbsoluteLayout.LayoutBounds="50, 100, 300, 250"                    
                         BackgroundColor="{DynamicResource BackgroundColor}"
@@ -25,8 +19,8 @@
                         StrokeThickness="1"
                         Padding="10"
                         Margin="20">
-                        <VerticalStackLayout>
-                            <Label Text="Enter your text:"
+                    <VerticalStackLayout>
+                        <Label Text="Enter your text:"
                             Margin="5"
                             TextColor="{DynamicResource PrimaryTextColor}" />
 
@@ -41,7 +35,7 @@
                                 TextColor="{DynamicResource PrimaryTextColor}"
                                 PlaceholderColor="{DynamicResource SecondaryTextColor}" />
                         </Border>
-                            
+
                         <HorizontalStackLayout
                             Margin="5"
                             HorizontalOptions="End"                            
@@ -52,8 +46,8 @@
                             />
                         </HorizontalStackLayout>
                     </VerticalStackLayout>
-                    </Border>
-            </AbsoluteLayout>
+                </Border>
+            </editor:SyntaxEditLayout>
 
             <FlyoutBase.ContextFlyout>
                 <MenuFlyout x:Name="contextMenu">
