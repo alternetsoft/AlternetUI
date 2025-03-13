@@ -5,7 +5,7 @@
              xmlns:editor="http://schemas.alternetsoft.com/editor/2024"
              x:Class="EditorMAUI.MainPage"
              Title="Alternet.Editor Demo">
-    <Grid RowDefinitions="*,Auto">
+    <Grid RowDefinitions="*,Auto, Auto, 200">
         <StackLayout x:Name="panel" 
                            Grid.Row="0">
 
@@ -18,41 +18,6 @@
                                         x:Name="setHeight"/>
                     <MenuFlyoutItem Text="Hide extra controls"
                                         x:Name="hideExtra"/>
-
-                    <MenuFlyoutItem Text="Run Without Debug"
-                                        x:Name="runWithoutDebugMenuItem">
-                        <MenuFlyoutItem.KeyboardAccelerators>
-                            <KeyboardAccelerator Key="F5" Modifiers="Ctrl"/>
-                        </MenuFlyoutItem.KeyboardAccelerators>
-                    </MenuFlyoutItem>
-
-                    <MenuFlyoutItem Text="Run or Continue"
-                                        x:Name="runWithDebugMenuItem">
-                        <MenuFlyoutItem.KeyboardAccelerators>
-                            <KeyboardAccelerator Key="F5"/>
-                        </MenuFlyoutItem.KeyboardAccelerators>
-                    </MenuFlyoutItem>
-
-                    <MenuFlyoutItem Text="Step Into"
-                                        x:Name="stepIntoMenuItem">
-                        <MenuFlyoutItem.KeyboardAccelerators>
-                            <KeyboardAccelerator Key="F11"/>
-                        </MenuFlyoutItem.KeyboardAccelerators>
-                    </MenuFlyoutItem>
-
-                    <MenuFlyoutItem Text="Step Over"
-                                        x:Name="stepOverMenuItem">
-                        <MenuFlyoutItem.KeyboardAccelerators>
-                            <KeyboardAccelerator Key="F10"/>
-                        </MenuFlyoutItem.KeyboardAccelerators>
-                    </MenuFlyoutItem>
-
-                    <MenuFlyoutItem Text="Step Out"
-                                        x:Name="stepOutMenuItem">
-                        <MenuFlyoutItem.KeyboardAccelerators>
-                            <KeyboardAccelerator Key="F11" Modifiers="Shift"/>
-                        </MenuFlyoutItem.KeyboardAccelerators>
-                    </MenuFlyoutItem>
                 </MenuFlyout>
             </FlyoutBase.ContextFlyout>
         </StackLayout>
@@ -62,5 +27,8 @@
             <Button Text="Action 1" x:Name="button1" WidthRequest="150">
             </Button>
         </StackLayout>
+
+        <alternet:SimpleToolBarView x:Name="toolbar" Grid.Row="2"/>
+        <CollectionView x:Name="logListBox" Grid.Row="3"/>
     </Grid>
 </alternet:DisposableContentPage>

@@ -73,7 +73,7 @@ public class Person
         Console.WriteLine("Name: {0}, Age: {1}", person.Name, person.Age);
         int i;   // Unused variable
 
-        Console.WriteLine("Press Enter key to continue...");
-        System.Console.Read();
+        /* Console.WriteLine("Press Enter key to continue...");*/
+        /* System.Console.Read(); */
     }
 }

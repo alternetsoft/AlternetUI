@@ -18,8 +18,6 @@ public partial class MainPage : Alternet.UI.DisposableContentPage, EditorUI.IDoc
 {
     public bool LogToWindowTitle = false;
 
-    private static int counter = 0;
-
     internal string NewFileNameNoExt = "embres:EditorMAUI.Content.newfile";
 
     private readonly Alternet.Syntax.Parsers.Advanced.CsParser? parserCs;
@@ -27,6 +25,13 @@ public partial class MainPage : Alternet.UI.DisposableContentPage, EditorUI.IDoc
     private readonly Button button = new();
     private readonly EditorUI.CSharpDocument documentCs;
     private readonly EditorUI.CustomDocument documentCurrent;
+    private readonly ObservableCollection<string> logItems = new();
+    private readonly SimpleToolBarView.IToolBarItem buttonRun;
+    private readonly SimpleToolBarView.IToolBarItem buttonRunNoDebug;
+    private readonly SimpleToolBarView.IToolBarItem buttonStepInto;
+    private readonly SimpleToolBarView.IToolBarItem buttonStepOver;
+    private readonly SimpleToolBarView.IToolBarItem buttonStepOut;
+    private readonly SimpleToolBarView.IToolBarItem buttonStop;
 
     private ExecutionPosition? executionPosition;
 
@@ -44,7 +49,7 @@ public partial class MainPage : Alternet.UI.DisposableContentPage, EditorUI.IDoc
 
         EditorUI.ScripterUtils.Initialize();
 
-        if (Alternet.UI.App.IsWindowsOS)
+        if (Alternet.UI.App.IsWindowsOS && Alternet.UI.DebugUtils.IsDebugDefined)
         {
             Alternet.UI.App.LogFileIsEnabled = true;
         }
@@ -55,6 +60,12 @@ public partial class MainPage : Alternet.UI.DisposableContentPage, EditorUI.IDoc
         Alternet.UI.PlessMouse.ShowTestMouseInControl = false;
 
         InitializeComponent();
+
+        logListBox.SelectionMode = SelectionMode.Single;
+        logListBox.ItemsSource = logItems;
+        logListBox.ItemsUpdatingScrollMode = ItemsUpdatingScrollMode.KeepLastItemInView;
+        logListBox.VerticalScrollBarVisibility = ScrollBarVisibility.Always;
+        logListBox.HorizontalScrollBarVisibility = ScrollBarVisibility.Always;
 
         InitEdit();
 
@@ -134,40 +145,45 @@ public partial class MainPage : Alternet.UI.DisposableContentPage, EditorUI.IDoc
         documentCurrent = documentCs;
         documentCs.InitEditor(Editor);
 
-        runWithoutDebugMenuItem.Clicked += (s, e) =>
-        {
-            ActiveDocument.RunWithoutDebug();
-        };
 
-        runWithDebugMenuItem.Clicked += (s, e) =>
+        toolbar.IsBottomBorderVisible = true;
+
+        buttonRun = toolbar.AddDialogButton("Run", null, null, () =>
         {
             ActiveDocument.Run();
-        };
+        });
 
-        stepIntoMenuItem.Clicked += (s, e) =>
+        buttonRunNoDebug= toolbar.AddDialogButton("Run No Debug", null, null, () =>
+        {
+            ActiveDocument.RunWithoutDebug();
+        });
+
+        buttonStepInto = toolbar.AddDialogButton("Step Into", null, null, () =>
         {
             ActiveDocument.StepInto();
-        };
+        });
 
-        stepOverMenuItem.Clicked += (s, e) =>
+        buttonStepOver = toolbar.AddDialogButton("Step Over", null, null, () =>
         {
             ActiveDocument.StepOver();
-        };
+        });
 
-        stepOutMenuItem.Clicked += (s, e) =>
+        buttonStepOut = toolbar.AddDialogButton("Step Out", null, null, () =>
         {
-            ActiveDocument.StepOut();
-        };
+            ActiveDocument.StepOver();
+        });
 
-        Alternet.UI.App.LogMessage += (s, e) =>
+        buttonStop = toolbar.AddDialogButton("Stop", null, null, () =>
         {
-            Debug.WriteLine(e.Message);
-        };
+            ActiveDocument.Stop();
+        });
 
         Alternet.UI.ConsoleUtils.BindConsoleOutput();
         Alternet.UI.ConsoleUtils.BindConsoleError();
 
         CreateInnerForm();
+
+        UpdateToolBar(documentCs);
     }
 
     public void CreateInnerForm()
@@ -267,12 +283,12 @@ public partial class MainPage : Alternet.UI.DisposableContentPage, EditorUI.IDoc
         {
             editorPanel.SetLayoutBounds(
                 innerForm,
-                new Rect(150, 100, -1, -1));
+                new Rect(650, 100, -1, -1));
         };
 
         editorPanel.SetLayoutBounds(
             innerForm,
-            new Rect(150, 100, -1, -1));
+            new Rect(650, 100, -1, -1));
 
         editorPanel.Add(innerForm);
     }
@@ -281,33 +297,54 @@ public partial class MainPage : Alternet.UI.DisposableContentPage, EditorUI.IDoc
 
     public EditorUI.CustomDocument ActiveDocument => documentCurrent;
 
+    internal void UpdateToolBar(EditorUI.CustomDocument document)
+    {
+        /*
+        SetToolEnabled(ButtonIdNew, document.State == EditorUI.CustomDocument.RunningState.NotRunning);
+        SetToolEnabled(ButtonIdBreakAll, document.CanPause);
+        SetToolEnabled(ButtonIdRestart, document.CanRestart);
+        */
+
+        buttonRun.IsEnabled = document.CanRun;
+        buttonRunNoDebug.IsEnabled = document.CanRunWithoutDebug;
+        buttonStepInto.IsEnabled = document.CanStepInto;
+        buttonStepOver.IsEnabled = document.CanStepOver;
+        buttonStepOut.IsEnabled = document.CanStepOut;
+        buttonStop.IsEnabled = document.CanStop;
+    }
+
     private void Document_StateChanged(object? sender, EventArgs e)
     {
         if (sender != documentCurrent)
             return;
 
-        var notRunning = documentCurrent.State == EditorUI.CustomDocument.RunningState.NotRunning;
+        Alternet.UI.App.Invoke(Fn);
 
-        Editor.ReadOnly = !notRunning;
-
-        /* UpdateToolBar(); */
-
-        switch (documentCurrent.State)
+        void Fn()
         {
-            case EditorUI.CustomDocument.RunningState.NotRunning:
-                Container.ExecutionPosition = null;
-                Editor.SwitchStackFrame(null, null);
-                /* statusBar.Text = "Ready"; */
-                break;
-            case EditorUI.CustomDocument.RunningState.RunWithDebug:
-                /* statusBar.Text = "Running with debug..."; */
-                break;
-            case EditorUI.CustomDocument.RunningState.RunWithoutDebug:
-                /* statusBar.Text = "Running without debug..."; */
-                break;
-            case EditorUI.CustomDocument.RunningState.Paused:
-                /* statusBar.Text = "Debugging..."; */
-                break;
+            var notRunning = documentCurrent.State == EditorUI.CustomDocument.RunningState.NotRunning;
+
+            Editor.ReadOnly = !notRunning;
+
+            UpdateToolBar(documentCurrent);
+
+            switch (documentCurrent.State)
+            {
+                case EditorUI.CustomDocument.RunningState.NotRunning:
+                    Container.ExecutionPosition = null;
+                    Editor.SwitchStackFrame(null, null);
+                    Alternet.UI.App.Log("Execution stopped...");
+                    break;
+                case EditorUI.CustomDocument.RunningState.RunWithDebug:
+                    Alternet.UI.App.Log("Running with debug...");
+                    break;
+                case EditorUI.CustomDocument.RunningState.RunWithoutDebug:
+                    Alternet.UI.App.Log("Running without debug...");
+                    break;
+                case EditorUI.CustomDocument.RunningState.Paused:
+                    Alternet.UI.App.Log("Debugging paused...");
+                    break;
+            }
         }
     }
 
@@ -494,34 +531,25 @@ public partial class MainPage : Alternet.UI.DisposableContentPage, EditorUI.IDoc
         Alternet.UI.Keyboard.ShowKeyboard(Editor);
     }
 
-    public ObservableCollection<SimpleItem> MyItems { get; set; } = [];
-
-    private void LogToTitle(string? s)
-    {
-        if (s is null)
-            return;
-
-        if (Window is not null)
-            Window.Title = $"{counter++} {s}";
-    }
-
     private void App_LogMessage(object? sender, Alternet.UI.LogMessageEventArgs e)
     {
         try
         {
-            if (!LogToWindowTitle)
+            if (e.Message is null)
                 return;
 
-            LogToTitle(e.Message);
+            Debug.WriteLine(e.Message);
+
+            Alternet.UI.App.Invoke(() =>
+            {
+                logItems.Add(e.Message);
+                logListBox.SelectedItem = logItems[logItems.Count - 1];
+                logListBox.ScrollTo(logItems.Count - 1, -1, ScrollToPosition.End, true);
+            });
         }
         catch
         {
         }
-    }
-
-    public class SimpleItem
-    {
-        public string Text { get; set; } = "";
     }
 
     private void editor_SelectionChanged(object sender, EventArgs e)
