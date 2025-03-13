@@ -190,6 +190,8 @@ namespace AllQuickStarts
                 });
 
             toolbar.AddExpandingSpace();
+            toolbar.IsTopBorderVisible = true;
+            toolbar.IsBottomBorderVisible = true;
 
             toolbar.AddButton(
                 null,
@@ -199,30 +201,17 @@ namespace AllQuickStarts
                 {
                 });
 
-            underline = new BoxView
-            {
-                HeightRequest = 1,
-                BackgroundColor = toolbar.GetSeparatorColor(),
-            };
-
             var grid = new Grid
             {
                 RowDefinitions =
                 {
-                    new RowDefinition { Height = GridLength.Auto },
                     new RowDefinition { Height = GridLength.Auto },
                     new RowDefinition { Height = GridLength.Star }
                 }
             };
 
             grid.Add(toolbar, 0, 0);
-            grid.Add(underline, 0, 1);
-            grid.Add(collectionView, 0, 2);
-
-            toolbar.SystemColorsChanged += (s, e) =>
-            {
-                underline.BackgroundColor = toolbar.GetSeparatorColor();
-            };
+            grid.Add(collectionView, 0, 1);
 
             Content = grid;
         }

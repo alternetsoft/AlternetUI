@@ -17,6 +17,11 @@ namespace Alternet.Maui
     public partial class SimpleToolBarView : ContentView, Alternet.UI.IRaiseSystemColorsChanged
     {
         /// <summary>
+        /// Gets or sets the default width of the toolbar border.
+        /// </summary>
+        public static int DefaultBorderWidth = 1;
+
+        /// <summary>
         /// Gets or sets the default width of the toolbar separator.
         /// </summary>
         public static int DefaultSeparatorWidth = 1;
@@ -99,7 +104,7 @@ namespace Alternet.Maui
         /// <summary>
         /// Gets ot sets default button border width.
         /// </summary>
-        public static double DefaultButtonBorder = 1;
+        public static double DefaultButtonBorderWidth = 1;
 
         /// <summary>
         /// Gets ot sets default hot border color for light theme.
@@ -161,15 +166,26 @@ namespace Alternet.Maui
 
         private bool allowMultipleSticky = true;
         private StickyButtonStyle stickyStyle = StickyButtonStyle.Border;
+        private bool isBottomBorderVisible;
+        private bool isTopBorderVisible;
+        private BoxView? topBorder;
+        private BoxView? bottomBorder;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="SimpleToolBarView"/> class.
         /// </summary>
         public SimpleToolBarView()
         {
+            grid.RowDefinitions =
+            [
+                new RowDefinition { Height = GridLength.Auto },
+                new RowDefinition { Height = GridLength.Auto },
+                new RowDefinition { Height = GridLength.Auto },
+            ];
+
             buttons.Orientation = StackOrientation.Horizontal;
             Alternet.UI.MauiApplicationHandler.RegisterThemeChangedHandler();
-            grid.Add(buttons);
+            grid.Add(buttons, 0, 1);
             Content = grid;
         }
 
@@ -261,6 +277,61 @@ namespace Alternet.Maui
             /// <param name="setNormalState">If set to <c>true</c>,
             /// the normal state will be set.</param>
             void UpdateVisualStates(bool setNormalState);
+        }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether the top border is visible.
+        /// </summary>
+        public virtual bool IsTopBorderVisible
+        {
+            get
+            {
+                return isTopBorderVisible;
+            }
+
+            set
+            {
+                if (isTopBorderVisible == value)
+                    return;
+                isTopBorderVisible = value;
+                if(topBorder is null)
+                {
+                    topBorder = CreateToolBarBorder();
+                    grid.Add(topBorder);
+                }
+                else
+                {
+                    topBorder.IsVisible = value;
+                }
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether the bottom border is visible.
+        /// </summary>
+        public virtual bool IsBottomBorderVisible
+        {
+            get
+            {
+                return isBottomBorderVisible;
+            }
+
+            set
+            {
+                if (isBottomBorderVisible == value)
+                    return;
+                isBottomBorderVisible = value;
+                if (bottomBorder is null)
+                {
+                    bottomBorder = CreateToolBarBorder();
+                    Grid.SetRow(bottomBorder, 2);
+                    grid.Add(bottomBorder);
+                }
+                else
+                {
+                    bottomBorder.IsVisible = value;
+                }
+            }
         }
 
         /// <summary>
@@ -409,6 +480,16 @@ namespace Alternet.Maui
         /// <inheritdoc/>
         public virtual void RaiseSystemColorsChanged()
         {
+            if(bottomBorder is not null)
+            {
+                bottomBorder.BackgroundColor = GetSeparatorColor();
+            }
+
+            if (topBorder is not null)
+            {
+                topBorder.BackgroundColor = GetSeparatorColor();
+            }
+
             SystemColorsChanged?.Invoke(this, EventArgs.Empty);
         }
 
@@ -542,6 +623,17 @@ namespace Alternet.Maui
             button.UpdateVisualStates(true);
         }
 
+        internal virtual BoxView CreateToolBarBorder()
+        {
+            var result = new BoxView
+            {
+                HeightRequest = DefaultBorderWidth,
+                BackgroundColor = GetSeparatorColor(),
+            };
+
+            return result;
+        }
+
         internal virtual ToolBarButton CreateToolBarButton()
         {
             var button = new ToolBarButton(this);
@@ -550,7 +642,7 @@ namespace Alternet.Maui
 
         private static double GetButtonBorder(View control)
         {
-            return DefaultButtonBorder;
+            return DefaultButtonBorderWidth;
         }
 
         private static Color GetRealHotBorderColor(View control)
@@ -586,374 +678,6 @@ namespace Alternet.Maui
             return Colors.Transparent;
         }
 
-        /// <summary>
-        /// Represents a label in the toolbar.
-        /// </summary>
-        internal partial class ToolBarLabel : ToolBarButton
-        {
-            /// <summary>
-            /// Initializes a new instance of the <see cref="ToolBarLabel"/> class.
-            /// </summary>
-            public ToolBarLabel(SimpleToolBarView toolBar)
-                : base(toolBar)
-            {
-            }
-
-            /// <inheritdoc/>
-            public override bool HasBorder
-            {
-                get
-                {
-                    return false;
-                }
-
-                set
-                {
-                }
-            }
-        }
-
-        /// <summary>
-        /// Represents a separator in the toolbar.
-        /// </summary>
-        internal partial class ToolBarSeparator
-            : BoxView, Alternet.UI.IRaiseSystemColorsChanged, IToolBarItem
-        {
-            private readonly SimpleToolBarView toolbar;
-
-            private Alternet.UI.IBaseObjectWithAttr? attributesProvider;
-
-            /// <summary>
-            /// Initializes a new instance of the <see cref="ToolBarSeparator"/> class.
-            /// </summary>
-            public ToolBarSeparator(SimpleToolBarView toolbar)
-            {
-                this.toolbar = toolbar;
-                WidthRequest = DefaultSeparatorWidth;
-                Margin = DefaultSeparatorMargin;
-                BackgroundColor = GetLineColor();
-            }
-
-            /// <inheritdoc/>
-            public event EventHandler? Clicked;
-
-            public Action? ClickedAction { get; set; }
-
-            /// <inheritdoc/>
-            public virtual Alternet.UI.IBaseObjectWithAttr AttributesProvider
-            {
-                get => attributesProvider ??= new Alternet.UI.BaseObjectWithAttr();
-
-                set
-                {
-                    attributesProvider = value;
-                }
-            }
-
-            /// <inheritdoc/>
-            public StickyButtonStyle StickyStyle
-            {
-                get => StickyButtonStyle.Border;
-
-                set
-                {
-                }
-            }
-
-            /// <inheritdoc/>
-            public bool IsSticky
-            {
-                get => false;
-
-                set
-                {
-                }
-            }
-
-            /// <inheritdoc/>
-            public bool HasBorder
-            {
-                get => true;
-
-                set
-                {
-                }
-            }
-
-            /// <inheritdoc/>
-            public string Text
-            {
-                get => string.Empty;
-                set
-                {
-                }
-            }
-
-            /// <summary>
-            /// Gets the parent toolbar view.
-            /// </summary>
-            [Browsable(false)]
-            internal SimpleToolBarView ToolBar => toolbar;
-
-            /// <inheritdoc/>
-            public virtual void RaiseSystemColorsChanged()
-            {
-                UpdateVisualStates(false);
-            }
-
-            /// <summary>
-            /// Gets color of the separator line.
-            /// </summary>
-            /// <returns></returns>
-            public virtual Color GetLineColor()
-            {
-                Color color;
-
-                if (ToolBar is null)
-                {
-                    if (IsDark)
-                        color = DefaultSeparatorColorDark;
-                    else
-                        color = DefaultSeparatorColorLight;
-                }
-                else
-                    color = ToolBar.GetSeparatorColor();
-
-                return color;
-            }
-
-            /// <inheritdoc/>
-            public virtual void UpdateVisualStates(bool setNormalState)
-            {
-                BackgroundColor = GetLineColor();
-            }
-
-            internal void RaiseClicked()
-            {
-                Clicked?.Invoke(this, EventArgs.Empty);
-            }
-        }
-
-        /// <summary>
-        /// Represents a button in the toolbar.
-        /// </summary>
-        internal partial class ToolBarButton
-            : Button, Alternet.UI.IRaiseSystemColorsChanged, IToolBarItem
-        {
-            private readonly SimpleToolBarView toolBar;
-
-            private bool isSticky;
-            private bool hasBorder = true;
-            private Drawing.SvgImage? svgImage;
-            private Alternet.UI.IBaseObjectWithAttr? attributesProvider;
-            private StickyButtonStyle stickyStyle = StickyButtonStyle.Border;
-
-            /// <summary>
-            /// Initializes a new instance of the <see cref="ToolBarButton"/> class.
-            /// </summary>
-            public ToolBarButton(SimpleToolBarView toolBar)
-            {
-                this.toolBar = toolBar;
-            }
-
-            /// <summary>
-            /// Occurs when the sticky state of the button changes.
-            /// </summary>
-            public event EventHandler? StickyChanged;
-
-            public virtual Action? ClickedAction { get; set; }
-
-            /// <summary>
-            /// Gets or sets the style of the sticky button.
-            /// </summary>
-            public virtual StickyButtonStyle StickyStyle
-            {
-                get
-                {
-                    return stickyStyle;
-                }
-
-                set
-                {
-                    if (stickyStyle == value)
-                        return;
-                    stickyStyle = value;
-                }
-            }
-
-            /// <summary>
-            /// Gets or sets the SVG image associated with the toolbar button.
-            /// </summary>
-            public virtual Drawing.SvgImage? SvgImage
-            {
-                get
-                {
-                    return svgImage;
-                }
-
-                set
-                {
-                    if (svgImage == value)
-                        return;
-                    svgImage = value;
-                    UpdateImage();
-                }
-            }
-
-            /// <inheritdoc/>
-            public virtual bool HasBorder
-            {
-                get
-                {
-                    return hasBorder;
-                }
-
-                set
-                {
-                    if (hasBorder == value)
-                        return;
-                    hasBorder = value;
-                    UpdateVisualStates(true);
-                }
-            }
-
-            /// <inheritdoc/>
-            public virtual Alternet.UI.IBaseObjectWithAttr AttributesProvider
-            {
-                get => attributesProvider ??= new Alternet.UI.BaseObjectWithAttr();
-
-                set
-                {
-                    attributesProvider = value;
-                }
-            }
-
-            /// <inheritdoc/>
-            public virtual bool IsSticky
-            {
-                get
-                {
-                    return isSticky;
-                }
-
-                set
-                {
-                    if (isSticky == value)
-                        return;
-                    isSticky = value;
-
-                    if (value && !AllowMultipleSticky)
-                    {
-                        foreach (var sibling in ToolBar.Buttons)
-                        {
-                            if (sibling is not IToolBarItem buttonSibling)
-                                continue;
-                            if (buttonSibling.AttributesProvider.UniqueId == AttributesProvider.UniqueId)
-                                buttonSibling.IsSticky = true;
-                            else
-                                buttonSibling.IsSticky = false;
-                        }
-                    }
-
-                    UpdateVisualStates(true);
-
-                    StickyChanged?.Invoke(this, EventArgs.Empty);
-                }
-            }
-
-            /// <summary>
-            /// Gets a value indicating whether the toolbar (in which button is inserted)
-            /// allows multiple sticky buttons.
-            /// </summary>
-            [Browsable(false)]
-            internal bool AllowMultipleSticky => ToolBar.AllowMultipleSticky;
-
-            /// <summary>
-            /// Gets the parent toolbar view.
-            /// </summary>
-            [Browsable(false)]
-            internal SimpleToolBarView ToolBar
-            {
-                get
-                {
-                    return toolBar;
-                }
-            }
-
-            /// <inheritdoc/>
-            public virtual void RaiseSystemColorsChanged()
-            {
-                UpdateVisualStates(true);
-            }
-
-            public virtual void RaiseClickedAction()
-            {
-                ClickedAction?.Invoke();
-            }
-
-            /// <inheritdoc/>
-            public virtual void UpdateVisualStates(bool setNormalState)
-            {
-                var visualStateGroup = VisualStateUtils.CreateCommonStatesGroup();
-
-                var normalState = VisualStateUtils.CreateNormalState();
-                if (IsSticky && HasBorder && StickyStyle == StickyButtonStyle.Border)
-                {
-                    ButtonPressedState.InitState(this, normalState);
-                }
-                else
-                {
-                    ButtonNormalState.InitState(this, normalState);
-                }
-
-                visualStateGroup.States.Add(normalState);
-
-                var pointerOverState = VisualStateUtils.CreatePointerOverState();
-                if (HasBorder)
-                    ButtonHotState.InitState(this, pointerOverState);
-                else
-                    ButtonNormalState.InitState(this, pointerOverState);
-                visualStateGroup.States.Add(pointerOverState);
-
-                var pressedState = VisualStateUtils.CreatePressedState();
-                if (HasBorder)
-                    ButtonPressedState.InitState(this, pressedState);
-                else
-                    ButtonNormalState.InitState(this, pressedState);
-                visualStateGroup.States.Add(pressedState);
-
-                var disabledState = VisualStateUtils.CreateDisabledState();
-                ButtonDisabledState.InitState(this, disabledState);
-                visualStateGroup.States.Add(disabledState);
-
-                var vsGroups = VisualStateManager.GetVisualStateGroups(this);
-                vsGroups.Clear();
-                vsGroups.Add(visualStateGroup);
-
-                if (setNormalState)
-                    VisualStateManager.GoToState(this, VisualStateUtils.NameNormal);
-            }
-
-            internal void UpdateImage()
-            {
-                Alternet.UI.MauiUtils.SetButtonImage(this, svgImage, GetDefaultImageSize(), !IsEnabled);
-            }
-
-            /// <inheritdoc/>
-            protected override void OnPropertyChanged(string propertyName)
-            {
-                base.OnPropertyChanged(propertyName);
-
-                if (svgImage is not null)
-                {
-                    if (propertyName == IsEnabledProperty.PropertyName)
-                    {
-                        UpdateImage();
-                    }
-                }
-            }
-        }
-
         internal class VisualStateSetters
         {
             public Func<View, Color>? BackgroundColor;
@@ -964,101 +688,6 @@ namespace Alternet.Maui
                     state.Setters.Clear();
                 if (BackgroundColor is not null)
                     state.AddSetterForBackgroundColor(BackgroundColor(control));
-            }
-        }
-
-        internal partial class ToolbarButtonContainer
-            : VerticalStackLayout, Alternet.UI.IRaiseSystemColorsChanged, IToolBarItem
-        {
-            private readonly ToolBarButton button;
-            private readonly BoxView underline = new();
-
-            public ToolbarButtonContainer(ToolBarButton button)
-            {
-                this.button = button;
-
-                Padding = 5;
-
-                underline.IsVisible = false;
-                underline.Margin = DefaultStickyUnderlineMargin;
-                underline.Color = Colors.Transparent;
-                underline.HeightRequest = DefaultStickyUnderlineSize.Height;
-
-                Children.Add(button);
-                Children.Add(underline);
-            }
-
-            public event EventHandler? Clicked
-            {
-                add => button.Clicked += value;
-                remove => button.Clicked -= value;
-            }
-
-            public Action? ClickedAction
-            {
-                get => button.ClickedAction;
-                set => button.ClickedAction = value;
-            }
-
-            public virtual UI.IBaseObjectWithAttr AttributesProvider
-            {
-                get => button.AttributesProvider;
-                set => button.AttributesProvider = value;
-            }
-
-            public virtual StickyButtonStyle StickyStyle
-            {
-                get => button.StickyStyle;
-
-                set
-                {
-                    if (StickyStyle == value)
-                        return;
-                    button.StickyStyle = value;
-                    UpdateVisualStates(false);
-                }
-            }
-
-            public virtual bool IsSticky
-            {
-                get => button.IsSticky;
-
-                set
-                {
-                    button.IsSticky = value;
-                    UpdateVisualStates(false);
-                }
-            }
-
-            public virtual bool HasBorder
-            {
-                get => button.HasBorder;
-                set => button.HasBorder = value;
-            }
-
-            public virtual string Text
-            {
-                get => button.Text;
-                set => button.Text = value;
-            }
-
-            public virtual void RaiseSystemColorsChanged()
-            {
-                UpdateVisualStates(false);
-            }
-
-            public virtual void UpdateVisualStates(bool setNormalState)
-            {
-                Color color;
-
-                if (IsDark)
-                    color = DefaultStickyUnderlineColorDark;
-                else
-                    color = DefaultStickyUnderlineColorLight;
-
-                underline.Color = IsSticky ? color : Colors.Transparent;
-                underline.IsVisible = StickyStyle == StickyButtonStyle.UnderlineFull ||
-                    StickyStyle == StickyButtonStyle.UnderlinePartial;
             }
         }
 

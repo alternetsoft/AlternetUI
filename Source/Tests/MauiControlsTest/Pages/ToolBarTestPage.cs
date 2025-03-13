@@ -44,19 +44,9 @@ public partial class ToolBarTestPage : ContentPage
         };
 
         toolbar.AddExpandingSpace();
+        toolbar.IsBottomBorderVisible = true;
 
         var btnRight = toolbar.AddButton("AtRight");
-
-        var underline = new BoxView
-        {
-            HeightRequest = 1,
-            BackgroundColor = toolbar.GetSeparatorColor(),
-        };
-
-        toolbar.SystemColorsChanged += (s, e) =>
-        {
-            underline.BackgroundColor = toolbar.GetSeparatorColor();
-        };
 
         var panel1 = new VerticalStackLayout();
         panel1.Children.Add(toolbar);
@@ -64,7 +54,6 @@ public partial class ToolBarTestPage : ContentPage
         collectionView1.ItemsSource = CollectionViewExamplePage.SampleItems;
         collectionView1.HeightRequest = 300;
         collectionView1.SelectionMode = SelectionMode.Single;
-        panel1.Children.Add(underline);
         panel1.Children.Add(collectionView1);
 
         var panel2 = new VerticalStackLayout();
