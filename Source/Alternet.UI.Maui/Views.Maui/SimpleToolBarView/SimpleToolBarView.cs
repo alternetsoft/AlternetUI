@@ -241,6 +241,11 @@ namespace Alternet.Maui
             bool IsEnabled { get; set; }
 
             /// <summary>
+            /// Gets or sets a value indicating whether the toolbar item is visible.
+            /// </summary>
+            bool IsVisible { get; set; }
+
+            /// <summary>
             /// Gets or sets the style of the sticky button.
             /// </summary>
             StickyButtonStyle StickyStyle { get; set; }
@@ -564,6 +569,38 @@ namespace Alternet.Maui
             var container = new ToolbarButtonContainer(button);
             buttons.Children.Add(container);
             return button;
+        }
+
+        /// <summary>
+        /// Adds an 'Ok' button to the toolbar.
+        /// </summary>
+        /// <param name="onClick">The action to perform when the button is clicked.</param>
+        /// <returns>The created button item.</returns>
+        public virtual IToolBarItem AddButtonOk(Action? onClick = null)
+        {
+            var result = AddButton(
+                Alternet.UI.Localization.CommonStrings.Default.ButtonOk,
+                null,
+                null,
+                onClick);
+            result.IsSticky = true;
+            return result;
+        }
+
+        /// <summary>
+        /// Adds a 'Cancel' button to the toolbar.
+        /// </summary>
+        /// <param name="onClick">The action to perform when the button is clicked.</param>
+        /// <returns>The created button item.</returns>
+        public virtual IToolBarItem AddButtonCancel(Action? onClick = null)
+        {
+            var result = AddButton(
+                Alternet.UI.Localization.CommonStrings.Default.ButtonCancel,
+                null,
+                null,
+                onClick);
+            result.IsSticky = true;
+            return result;
         }
 
         /// <summary>

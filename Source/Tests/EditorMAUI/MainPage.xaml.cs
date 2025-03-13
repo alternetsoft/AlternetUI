@@ -172,7 +172,8 @@ public partial class MainPage : Alternet.UI.DisposableContentPage, EditorUI.IDoc
 
     public void CreateInnerForm()
     {
-        var toolbar = new SimpleToolBarView();
+        var dialogTitle = new SimpleDialogTitleView();
+        dialogTitle.Title = "Title";
 
         Color backColor;
         Color textColor;
@@ -188,7 +189,7 @@ public partial class MainPage : Alternet.UI.DisposableContentPage, EditorUI.IDoc
             textColor = Colors.Black;
         }
 
-        var borderColor = toolbar.GetPressedBorderColor();
+        var borderColor = dialogTitle.GetPressedBorderColor();
         var placeHolderColor = textColor;
 
         var innerForm = new Border
@@ -201,16 +202,15 @@ public partial class MainPage : Alternet.UI.DisposableContentPage, EditorUI.IDoc
             MinimumWidthRequest = 300,
         };
 
+        dialogTitle.CloseClicked += (s, e) =>
+        {
+            innerForm.IsVisible = false;
+        };
+
         var formContent = new VerticalStackLayout();
         formContent.VerticalOptions = LayoutOptions.Start;
 
-        toolbar.IsBottomBorderVisible = true;
-        toolbar.AddLabel("Title");
-        toolbar.AddExpandingSpace();
-        toolbar.AddButton(null, "Close", Alternet.UI.KnownSvgImages.ImgCancel);
-        toolbar.Margin = new Thickness(0, 0, 0, 0);
-
-        formContent.Children.Add(toolbar);
+        formContent.Children.Add(dialogTitle);
 
         var verticalStack = new VerticalStackLayout();
         verticalStack.Padding = 10;
@@ -248,15 +248,14 @@ public partial class MainPage : Alternet.UI.DisposableContentPage, EditorUI.IDoc
         buttons.Margin = new(0, 5, 0, 0);
 
         buttons.AddExpandingSpace();
-        var okButton = buttons.AddButton("Ok", null, null, () =>
+        buttons.AddButtonOk(() =>
         {
+            innerForm.IsVisible = false;
         });
-        okButton.IsSticky = true;
-
-        var cancelButton = buttons.AddButton("Cancel", null, null, () =>
+        buttons.AddButtonCancel(() =>
         {
+            innerForm.IsVisible = false;
         });
-        cancelButton.IsSticky = true;
 
         verticalStack.Children.Add(buttons);
 
