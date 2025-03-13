@@ -77,11 +77,6 @@ namespace Alternet.Maui
         public static int DefaultImageButtonSizeDesktop = 16;
 
         /// <summary>
-        /// Gets ot sets default hot border color for dark theme.
-        /// </summary>
-        public static Color DefaultHotBorderColorDark = Color.FromRgb(112, 112, 112);
-
-        /// <summary>
         /// Gets ot sets default text color for dark theme.
         /// </summary>
         public static Color DefaultTextColorDark = Color.FromRgb(214, 214, 214);
@@ -97,9 +92,14 @@ namespace Alternet.Maui
         public static Color DefaultDisabledTextColorLight = Colors.Gray;
 
         /// <summary>
+        /// Gets ot sets default hot border color for dark theme.
+        /// </summary>
+        public static Color DefaultHotBorderColorDark = Colors.DarkGray;
+
+        /// <summary>
         /// Gets ot sets default pressed border color for dark theme.
         /// </summary>
-        public static Color DefaultPressedBorderColorDark = Colors.DarkGray;
+        public static Color DefaultPressedBorderColorDark = Color.FromRgb(61, 61, 61);
 
         /// <summary>
         /// Gets ot sets default button border width.
@@ -280,6 +280,17 @@ namespace Alternet.Maui
         }
 
         /// <summary>
+        /// Gets a value indicating whether the current theme is dark.
+        /// </summary>
+        public static bool IsDark
+        {
+            get
+            {
+                return Alternet.UI.SystemSettings.AppearanceIsDark;
+            }
+        }
+
+        /// <summary>
         /// Gets or sets a value indicating whether the top border is visible.
         /// </summary>
         public virtual bool IsTopBorderVisible
@@ -399,17 +410,6 @@ namespace Alternet.Maui
         /// Gets the collection of buttons in the toolbar.
         /// </summary>
         public IList<IView> Buttons => buttons.Children;
-
-        /// <summary>
-        /// Gets a value indicating whether the current theme is dark.
-        /// </summary>
-        private static bool IsDark
-        {
-            get
-            {
-                return Alternet.UI.SystemSettings.AppearanceIsDark;
-            }
-        }
 
         /// <summary>
         /// Gets the default size of the button image based on the device type.

@@ -127,7 +127,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets whether current application theme is dark.
         /// </summary>
-        public static bool? IsDarkTheme
+        public static bool IsDarkTheme
         {
             get
             {

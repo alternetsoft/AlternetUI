@@ -3,10 +3,14 @@ using System.Diagnostics;
 using SkiaSharp;
 using SkiaSharp.Views.Maui;
 using SkiaSharp.Views.Maui.Controls;
+
 using Alternet.Editor;
-using Alternet.Drawing;
 using Alternet.Scripter;
 using Alternet.Scripter.Debugger;
+
+using Microsoft.Maui.Controls;
+using Microsoft.Maui.Controls.Shapes;
+using Alternet.Maui;
 
 namespace EditorMAUI;
 
@@ -17,7 +21,7 @@ public partial class MainPage : Alternet.UI.DisposableContentPage, EditorUI.IDoc
     private static int counter = 0;
 
     internal string NewFileNameNoExt = "embres:EditorMAUI.Content.newfile";
-    
+
     private readonly Alternet.Syntax.Parsers.Advanced.CsParser? parserCs;
     private readonly Alternet.Syntax.Parsers.Roslyn.CsParser? roslynParser;
     private readonly Button button = new();
@@ -113,12 +117,12 @@ public partial class MainPage : Alternet.UI.DisposableContentPage, EditorUI.IDoc
 
         setHeight.Clicked += SetHeight_Clicked;
 
-        if(Alternet.UI.App.IsMacOS)
+        if (Alternet.UI.App.IsMacOS)
         {
-            Editor.Font = Editor.RealFont.IncSize(2);    
+            Editor.Font = Editor.RealFont.IncSize(2);
         }
 
-        Editor.SizeChanged+=(s,e)=>
+        Editor.SizeChanged += (s, e) =>
         {
         };
 
@@ -162,6 +166,116 @@ public partial class MainPage : Alternet.UI.DisposableContentPage, EditorUI.IDoc
 
         Alternet.UI.ConsoleUtils.BindConsoleOutput();
         Alternet.UI.ConsoleUtils.BindConsoleError();
+
+        CreateInnerForm();
+    }
+
+    public void CreateInnerForm()
+    {
+        var toolbar = new SimpleToolBarView();
+
+        Color backColor;
+        Color textColor;
+
+        if (Alternet.UI.MauiUtils.IsDarkTheme)
+        {
+            backColor = Color.FromRgb(30, 30, 30);
+            textColor = Color.FromRgb(220, 220, 220);
+        }
+        else
+        {
+            backColor = Colors.White;
+            textColor = Colors.Black;
+        }
+
+        var borderColor = toolbar.GetPressedBorderColor();
+        var placeHolderColor = textColor;
+
+        var innerForm = new Border
+        {
+            IsVisible = true,
+            BackgroundColor = backColor,
+            StrokeShape = new RoundRectangle { CornerRadius = 10 },
+            Stroke = borderColor,
+            StrokeThickness = 1,
+            MinimumWidthRequest = 300,
+        };
+
+        var formContent = new VerticalStackLayout();
+        formContent.VerticalOptions = LayoutOptions.Start;
+
+        toolbar.IsBottomBorderVisible = true;
+        toolbar.AddLabel("Title");
+        toolbar.AddExpandingSpace();
+        toolbar.AddButton(null, "Close", Alternet.UI.KnownSvgImages.ImgCancel);
+        toolbar.Margin = new Thickness(0, 0, 0, 0);
+
+        formContent.Children.Add(toolbar);
+
+        var verticalStack = new VerticalStackLayout();
+        verticalStack.Padding = 10;
+
+        var label = new Label
+        {
+            Text = "Enter your text:",
+            Margin = new Thickness(5, 5, 5, 5),
+            TextColor = textColor,
+        };
+
+        verticalStack.Children.Add(label);
+
+        var entryBorder = new Border
+        {
+            Stroke = borderColor,
+            StrokeThickness = 1,
+            BackgroundColor = backColor,
+            Margin = new Thickness(5),
+            Padding = new Thickness(0),
+            StrokeShape = new RoundRectangle { CornerRadius = 5 }
+        };
+
+        var entry = new Entry
+        {
+            Placeholder = "Type here",
+            TextColor = textColor,
+            PlaceholderColor = placeHolderColor,
+        };
+
+        entryBorder.Content = entry;
+        verticalStack.Children.Add(entryBorder);
+
+        var buttons = new SimpleToolBarView();
+        buttons.Margin = new(0, 5, 0, 0);
+
+        buttons.AddExpandingSpace();
+        var okButton = buttons.AddButton("Ok", null, null, () =>
+        {
+        });
+        okButton.IsSticky = true;
+
+        var cancelButton = buttons.AddButton("Cancel", null, null, () =>
+        {
+        });
+        cancelButton.IsSticky = true;
+
+        verticalStack.Children.Add(buttons);
+
+        formContent.Children.Add(verticalStack);
+
+        innerForm.Content = formContent;
+
+        formContent.SizeChanged += (s, e) =>
+        {
+            editorPanel.SetLayoutBounds(
+                innerForm,
+                new Rect(150, 100, -1, -1));
+        };
+
+        editorPanel.SetLayoutBounds(
+            innerForm,
+            new Rect(150, 100, -1, -1));
+
+        editorPanel.Add(innerForm);
     }
 
     public EditorUI.IDocumentContainer Container => this;
@@ -176,7 +290,7 @@ public partial class MainPage : Alternet.UI.DisposableContentPage, EditorUI.IDoc
         var notRunning = documentCurrent.State == EditorUI.CustomDocument.RunningState.NotRunning;
 
         Editor.ReadOnly = !notRunning;
-        
+
         /* UpdateToolBar(); */
 
         switch (documentCurrent.State)
@@ -215,9 +329,9 @@ public partial class MainPage : Alternet.UI.DisposableContentPage, EditorUI.IDoc
     {
         LogToEntry("LongTap", e, true);
         var caret = Editor.CaretInfo;
-        if(caret is not null)
+        if (caret is not null)
         {
-            caret.OverlayColor = LightDarkColors.Blue;
+            caret.OverlayColor = Alternet.Drawing.LightDarkColors.Blue;
             caret.TopAndBottomOverlayVisible = true;
             Editor.InvalidateCaret();
         }
