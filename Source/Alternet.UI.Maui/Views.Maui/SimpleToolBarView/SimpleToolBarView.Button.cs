@@ -199,10 +199,12 @@ namespace Alternet.Maui
             /// <inheritdoc/>
             public virtual void UpdateVisualStates(bool setNormalState)
             {
+                bool hasStickyBorder = IsSticky && HasBorder && StickyStyle == StickyButtonStyle.Border;
+
                 var visualStateGroup = VisualStateUtils.CreateCommonStatesGroup();
 
                 var normalState = VisualStateUtils.CreateNormalState();
-                if (IsSticky && HasBorder && StickyStyle == StickyButtonStyle.Border)
+                if (hasStickyBorder)
                 {
                     ButtonPressedState.InitState(this, normalState);
                 }
@@ -215,9 +217,14 @@ namespace Alternet.Maui
 
                 var pointerOverState = VisualStateUtils.CreatePointerOverState();
                 if (HasBorder)
+                {
                     ButtonHotState.InitState(this, pointerOverState);
+                }
                 else
+                {
                     ButtonNormalState.InitState(this, pointerOverState);
+                }
+
                 visualStateGroup.States.Add(pointerOverState);
 
                 var pressedState = VisualStateUtils.CreatePressedState();
@@ -228,7 +235,15 @@ namespace Alternet.Maui
                 visualStateGroup.States.Add(pressedState);
 
                 var disabledState = VisualStateUtils.CreateDisabledState();
-                ButtonDisabledState.InitState(this, disabledState);
+                if (hasStickyBorder)
+                {
+                    ButtonStickyDisabledState.InitState(this, disabledState);
+                }
+                else
+                {
+                    ButtonDisabledState.InitState(this, disabledState);
+                }
+
                 visualStateGroup.States.Add(disabledState);
 
                 var vsGroups = VisualStateManager.GetVisualStateGroups(this);

@@ -137,6 +137,14 @@ namespace Alternet.Maui
             BorderWidth = GetButtonBorder,
         };
 
+        internal static ButtonVisualStateSetters ButtonStickyDisabledState = new()
+        {
+            BackgroundColor = GetTransparent,
+            BorderColor = GetRealPressedBorderColor,
+            TextColor = GetRealDisabledTextColor,
+            BorderWidth = GetButtonBorder,
+        };
+
         internal static ButtonVisualStateSetters ButtonPressedState = new()
         {
             BackgroundColor = GetTransparent,
@@ -572,18 +580,37 @@ namespace Alternet.Maui
         }
 
         /// <summary>
+        /// Adds a button with the border in the normal state to the toolbar.
+        /// </summary>
+        /// <param name="text">The text to display on the button.</param>
+        /// <param name="toolTip">The tooltip text to display when the mouse
+        /// hovers over the button.</param>
+        /// <param name="image">The image to display on the button.</param>
+        /// <param name="onClick">The action to perform when the button is clicked.</param>
+        /// <returns>The created button item.</returns>
+        public virtual IToolBarItem AddDialogButton(
+            string? text,
+            string? toolTip = null,
+            Drawing.SvgImage? image = null,
+            Action? onClick = null)
+        {
+            var result = AddButton(text, toolTip, image, onClick);
+            result.IsSticky = true;
+            return result;
+        }
+
+        /// <summary>
         /// Adds an 'Ok' button to the toolbar.
         /// </summary>
         /// <param name="onClick">The action to perform when the button is clicked.</param>
         /// <returns>The created button item.</returns>
         public virtual IToolBarItem AddButtonOk(Action? onClick = null)
         {
-            var result = AddButton(
+            var result = AddDialogButton(
                 Alternet.UI.Localization.CommonStrings.Default.ButtonOk,
                 null,
                 null,
                 onClick);
-            result.IsSticky = true;
             return result;
         }
 
@@ -594,12 +621,11 @@ namespace Alternet.Maui
         /// <returns>The created button item.</returns>
         public virtual IToolBarItem AddButtonCancel(Action? onClick = null)
         {
-            var result = AddButton(
+            var result = AddDialogButton(
                 Alternet.UI.Localization.CommonStrings.Default.ButtonCancel,
                 null,
                 null,
                 onClick);
-            result.IsSticky = true;
             return result;
         }
 
