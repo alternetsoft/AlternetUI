@@ -148,32 +148,42 @@ public partial class MainPage : Alternet.UI.DisposableContentPage, EditorUI.IDoc
 
         toolbar.IsBottomBorderVisible = true;
 
-        buttonRun = toolbar.AddDialogButton("Run", null, null, () =>
+        EditorUI.MainToolBar.ResPrefix = "embres:EditorUI.Dll.Resources.Svg.";
+
+        var svgRestart = EditorUI.MainToolBar.CreateRestartSvgImage();
+        var svgStepOver = EditorUI.MainToolBar.CreateStepOverSvgImage();
+        var svgStop = EditorUI.MainToolBar.CreateStopSvgImage();
+        var svgStepOut = EditorUI.MainToolBar.CreateStepOutSvgImage();
+        var svgStartNoDebug = EditorUI.MainToolBar.CreateStartNoDebugSvgImage();
+        var svgStart = EditorUI.MainToolBar.CreateStartSvgImage();
+        var svgStepInto = EditorUI.MainToolBar.CreateStepIntoSvgImage();        
+
+        buttonRun = toolbar.AddDialogButton(null, "Run", svgStart, () =>
         {
             ActiveDocument.Run();
         });
 
-        buttonRunNoDebug= toolbar.AddDialogButton("Run No Debug", null, null, () =>
+        buttonRunNoDebug= toolbar.AddDialogButton(null, "Run No Debug", svgStartNoDebug, () =>
         {
             ActiveDocument.RunWithoutDebug();
         });
 
-        buttonStepInto = toolbar.AddDialogButton("Step Into", null, null, () =>
+        buttonStepInto = toolbar.AddDialogButton(null, "Step Into", svgStepInto, () =>
         {
             ActiveDocument.StepInto();
         });
 
-        buttonStepOver = toolbar.AddDialogButton("Step Over", null, null, () =>
+        buttonStepOver = toolbar.AddDialogButton(null, "Step Over", svgStepOver, () =>
         {
             ActiveDocument.StepOver();
         });
 
-        buttonStepOut = toolbar.AddDialogButton("Step Out", null, null, () =>
+        buttonStepOut = toolbar.AddDialogButton(null, "Step Out", svgStepOut, () =>
         {
             ActiveDocument.StepOver();
         });
 
-        buttonStop = toolbar.AddDialogButton("Stop", null, null, () =>
+        buttonStop = toolbar.AddDialogButton(null, "Stop", svgStop, () =>
         {
             ActiveDocument.Stop();
         });
