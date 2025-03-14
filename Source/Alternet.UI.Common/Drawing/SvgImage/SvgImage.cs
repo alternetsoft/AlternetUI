@@ -16,10 +16,17 @@ namespace Alternet.Drawing
     /// </summary>
     public class SvgImage : BaseObject
     {
+        /// <summary>
+        /// Gets or sets the XML content for an SVG that was loaded with an error.
+        /// </summary>
+        public static string? XmlForSvgLoadedWithError;
+
         private string? url;
         private string? svg;
         private Data?[] data = new Data?[16];
         private bool wasLoaded;
+        private bool throwException;
+        private Exception? loadingError;
         private Color?[]? colorOverridesLight;
         private Color?[]? colorOverridesDark;
 
@@ -32,8 +39,14 @@ namespace Alternet.Drawing
         /// </summary>
         /// <param name="urlOrData">Image url or data.</param>
         /// <param name="kind">Image data kind.</param>
-        protected SvgImage(string urlOrData, SvgImageDataKind kind = SvgImageDataKind.Url)
+        /// <param name="throwException">Indicates whether to throw an exception if loading fails.</param>
+        protected SvgImage(
+            string urlOrData,
+            SvgImageDataKind kind = SvgImageDataKind.Url,
+            bool throwException = true)
         {
+            this.throwException = throwException;
+
             switch (kind)
             {
                 case SvgImageDataKind.Url:
@@ -50,12 +63,48 @@ namespace Alternet.Drawing
         /// Initializes a new instance of the <see cref="SvgImage"/> class.
         /// </summary>
         /// <param name="stream">Stream with image data.</param>
-        protected SvgImage(Stream stream)
+        /// <param name="throwException">Indicates whether to throw an
+        /// exception if loading fails.</param>
+        protected SvgImage(Stream stream, bool throwException = true)
         {
+            this.throwException = throwException;
             wasLoaded = true;
-            using var reader = new StreamReader(stream);
-            svg = reader.ReadToEnd();
+
+            try
+            {
+                using var reader = new StreamReader(stream);
+                svg = reader.ReadToEnd();
+            }
+            catch (Exception e)
+            {
+                loadingError = e;
+                svg = GetXmlForSvgLoadedWithError();
+                if(throwException)
+                    throw;
+            }
         }
+
+        /// <summary>
+        /// Gets a value indicating whether the image was loaded.
+        /// </summary>
+        public virtual bool WasLoaded => wasLoaded;
+
+        /// <summary>
+        /// Gets the SVG XML content.
+        /// </summary>
+        public virtual string? Xml
+        {
+            get
+            {
+                LoadImage();
+                return svg;
+            }
+        }
+
+        /// <summary>
+        /// Gets the exception that occurred during the loading process.
+        /// </summary>
+        public virtual Exception? LoadingError => loadingError;
 
         /// <summary>
         /// Gets whether image has single color.
@@ -71,6 +120,25 @@ namespace Alternet.Drawing
         /// Gets image url.
         /// </summary>
         public virtual string? Url => url;
+
+        /// <summary>
+        /// Gets the XML content for an SVG that was loaded with an error.
+        /// </summary>
+        /// <returns>The XML content for an SVG that was loaded with an error.</returns>
+        public static string GetXmlForSvgLoadedWithError()
+        {
+            const string s =
+                "<svg xmlns='http://www.w3.org/2000/svg' version='1.1' width='24' height='24'></svg>";
+
+            try
+            {
+                return XmlForSvgLoadedWithError ?? KnownSvgImages.ImgEyeOn.Xml ?? s;
+            }
+            catch
+            {
+                return s;
+            }
+        }
 
         /// <summary>
         /// Gets svg image as <see cref="ImageSet"/> with default toolbar image size.
@@ -396,9 +464,19 @@ namespace Alternet.Drawing
             if (svg is null && url is not null && !wasLoaded)
             {
                 wasLoaded = true;
-                using var stream = ResourceLoader.StreamFromUrl(url);
-                using var reader = new StreamReader(stream);
-                svg = reader.ReadToEnd();
+                try
+                {
+                    using var stream = ResourceLoader.StreamFromUrl(url);
+                    using var reader = new StreamReader(stream);
+                    svg = reader.ReadToEnd();
+                }
+                catch(Exception e)
+                {
+                    loadingError = e;
+                    svg = GetXmlForSvgLoadedWithError();
+                    if (throwException)
+                        throw;
+                }
             }
         }
 
