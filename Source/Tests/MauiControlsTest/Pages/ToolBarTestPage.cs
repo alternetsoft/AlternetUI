@@ -29,11 +29,13 @@ public partial class ToolBarTestPage : ContentPage
 
         var btn2 = toolbar.AddButton("Settings");
 
-        toolbar.AddStickyButton(null, null, Alternet.UI.KnownSvgImages.ImgBold);
+        var bold1 = toolbar.AddStickyButton(null, "1", Alternet.UI.KnownSvgImages.ImgBold);
 
-        toolbar.AddStickyButton(null, null, Alternet.UI.KnownSvgImages.ImgBold);
+        var bold2 = toolbar.AddStickyButton(null, "2", Alternet.UI.KnownSvgImages.ImgBold);
 
-        toolbar.AddLabel("Label");
+        var bold3 = toolbar.AddStickyButton(null, "3", Alternet.UI.KnownSvgImages.ImgBold);
+
+        var labelItem = toolbar.AddLabel("Label");
 
         var btn1 = toolbar.AddButton("Disabled", null, Alternet.UI.KnownSvgImages.ImgItalic);
         btn1.IsEnabled = false;
@@ -42,6 +44,8 @@ public partial class ToolBarTestPage : ContentPage
         {
             btn1.IsEnabled = !btn1.IsEnabled;
         };
+
+        toolbar.Remove(bold3);
 
         toolbar.AddExpandingSpace();
         toolbar.IsBottomBorderVisible = true;
@@ -65,9 +69,9 @@ public partial class ToolBarTestPage : ContentPage
 
         var tabControl = new SimpleTabControlView();
 
-        tabControl.Add("Tab 1", () => panel1);
-        tabControl.Add("Tab 2", () => panel2);
-        tabControl.SelectFirstTab();
+        var tab1 = tabControl.Add("Tab 1", () => panel1);
+        var tab2 = tabControl.Add("Tab 2", () => panel2);
+        tabControl.SelectedTab = tab2;
 
         var panel = new VerticalStackLayout();
 

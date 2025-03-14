@@ -43,6 +43,11 @@ namespace Alternet.Maui
         public IList<IView> Tabs => Header.Buttons;
 
         /// <summary>
+        /// Gets the number of tabs in the tab control view.
+        /// </summary>
+        public int TabCount => Tabs.Count;
+
+        /// <summary>
         /// Gets or sets the content of the tab control view.
         /// You can use this property to set the active tab contents.
         /// Normally, it is updated automatically when a new tab is selected
@@ -62,12 +67,80 @@ namespace Alternet.Maui
         }
 
         /// <summary>
+        /// Gets or sets the selected tab control item.
+        /// </summary>
+        public virtual TabControlItem? SelectedTab
+        {
+            get
+            {
+                return GetTab(SelectedIndex);
+            }
+
+            set
+            {
+                SelectTab(value);
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets the index of the selected tab.
+        /// </summary>
+        public virtual int SelectedIndex
+        {
+            get
+            {
+                for(int i = 0; i < TabCount; i++)
+                {
+                    if (GetTabButton(i)?.IsSticky ?? false)
+                        return i;
+                }
+
+                return -1;
+            }
+
+            set
+            {
+                var item = GetTab(value);
+                SelectTab(item);
+            }
+        }
+
+        /// <summary>
+        /// Removes the specified tab control item.
+        /// </summary>
+        /// <param name="item">The tab control item to remove.</param>
+        public virtual void RemoveTab(TabControlItem? item)
+        {
+            if (item is null)
+                return;
+
+            var isSelected = item == SelectedTab;
+
+            tabs.Remove(item.Button);
+
+            if (isSelected)
+                SelectFirstTab();
+        }
+
+        /// <summary>
+        /// Selects the specified tab control item.
+        /// </summary>
+        /// <param name="item">The tab control item to select.</param>
+        public virtual void SelectTab(TabControlItem? item)
+        {
+            if (item is null)
+                return;
+            item.Button.IsSticky = true;
+            Content = item.PageResolver?.Invoke();
+        }
+
+        /// <summary>
         /// Selects the tab at the specified index.
         /// </summary>
         /// <param name="index">The index of the tab to select.</param>
         public virtual void SelectTab(int index)
         {
-            var tab = GetTab(index);
+            var tab = GetTabButton(index);
             tab?.ClickedAction?.Invoke();
         }
 
@@ -77,15 +150,33 @@ namespace Alternet.Maui
         public virtual void SelectFirstTab() => SelectTab(0);
 
         /// <summary>
+        /// Gets the tab button at the specified index.
+        /// </summary>
+        /// <param name="index">The index of the tab button to get.</param>
+        /// <returns>The tab button at the specified index,
+        /// or null if the index is out of range.</returns>
+        public virtual SimpleToolBarView.IToolBarItem? GetTabButton(int index)
+        {
+            if (Header.Buttons.Count > index && index >= 0)
+            {
+                var result = (SimpleToolBarView.IToolBarItem)Header.Buttons[index];
+                return result;
+            }
+
+            return null;
+        }
+
+        /// <summary>
         /// Gets the tab at the specified index.
         /// </summary>
         /// <param name="index">The index of the tab to get.</param>
         /// <returns>The tab at the specified index, or null if the index is out of range.</returns>
-        public virtual SimpleToolBarView.IToolBarItem? GetTab(int index)
+        public virtual TabControlItem? GetTab(int index)
         {
-            if (Header.Buttons.Count > index)
-                return (SimpleToolBarView.IToolBarItem)Header.Buttons[index];
-            return null;
+            var button = GetTabButton(index);
+            if (button is null)
+                return null;
+            return new TabControlItem(button);
         }
 
         /// <summary>
@@ -95,19 +186,135 @@ namespace Alternet.Maui
         /// <param name="getView">A function that returns the content view for the tab.</param>
         /// <param name="toolTip">The tooltip text for the tab.</param>
         /// <param name="image">The image to display on the tab.</param>
-        public virtual void Add(
+        public virtual TabControlItem Add(
             string? text,
             Func<View>? getView = null,
             string? toolTip = null,
             Drawing.SvgImage? image = null)
         {
             var btn = Header.AddButton(text, toolTip, image);
+            var result = new TabControlItem(btn);
+            result.PageResolver = getView;
 
             btn.ClickedAction = () =>
             {
-                btn.IsSticky = true;
-                Content = getView?.Invoke();
+                SelectedTab = result;
             };
+
+            if (TabCount == 1)
+                SelectFirstTab();
+
+            return result;
+        }
+
+        /// <summary>
+        /// Represents an item in the tab control view.
+        /// </summary>
+        public class TabControlItem
+        {
+            private const string resolverPropName = "CDF756F1-D3A3-4077-A2E4-13199C821EB9";
+
+            private readonly SimpleToolBarView.IToolBarItem button;
+
+            /// <summary>
+            /// Initializes a new instance of the <see cref="TabControlItem"/> class.
+            /// </summary>
+            /// <param name="button">The button associated with the tab control item.</param>
+            public TabControlItem(SimpleToolBarView.IToolBarItem button)
+            {
+                this.button = button;
+            }
+
+            /// <summary>
+            /// Gets the button associated with the tab control item.
+            /// </summary>
+            public SimpleToolBarView.IToolBarItem Button => button;
+
+            /// <summary>
+            /// Gets the custom attributes for the tab control item.
+            /// </summary>
+            public UI.ICustomAttributes<string, object> CustomAttr
+                => button.AttributesProvider.CustomAttr;
+
+            /// <summary>
+            /// Gets or sets the page resolver function for the tab control item.
+            /// </summary>
+            public Func<View>? PageResolver
+            {
+                get => (Func<View>?)CustomAttr[resolverPropName];
+                set => CustomAttr[resolverPropName] = value;
+            }
+
+            /// <summary>
+            /// Gets the attributes provider for the item.
+            /// </summary>
+            public UI.IBaseObjectWithAttr AttributesProvider => button.AttributesProvider;
+
+            /// <summary>
+            /// Gets unique id of this object.
+            /// </summary>
+            public UI.ObjectUniqueId UniqueId => button.AttributesProvider.UniqueId;
+
+            /// <summary>
+            /// Determines whether two specified instances of <see cref="TabControlItem"/> are equal.
+            /// </summary>
+            /// <param name="left">The first <see cref="TabControlItem"/> to compare.</param>
+            /// <param name="right">The second <see cref="TabControlItem"/> to compare.</param>
+            /// <returns>true if the two <see cref="TabControlItem"/> instances
+            /// are equal; otherwise, false.</returns>
+            public static bool operator ==(TabControlItem? left, TabControlItem? right)
+            {
+                if (ReferenceEquals(left, right))
+                {
+                    return true;
+                }
+
+                if (left is null || right is null)
+                {
+                    return false;
+                }
+
+                return left.UniqueId == right.UniqueId;
+            }
+
+            /// <summary>
+            /// Determines whether two specified instances of <see cref="TabControlItem"/> are not equal.
+            /// </summary>
+            /// <param name="left">The first <see cref="TabControlItem"/> to compare.</param>
+            /// <param name="right">The second <see cref="TabControlItem"/> to compare.</param>
+            /// <returns>true if the two <see cref="TabControlItem"/> instances are not equal;
+            /// otherwise, false.</returns>
+            public static bool operator !=(TabControlItem? left, TabControlItem? right)
+            {
+                return !(left == right);
+            }
+
+            /// <summary>
+            /// Determines whether the specified object is equal to the current
+            /// <see cref="TabControlItem"/>.
+            /// </summary>
+            /// <param name="obj">The object to compare with the current
+            /// <see cref="TabControlItem"/>.</param>
+            /// <returns>true if the specified object is equal to the current
+            /// <see cref="TabControlItem"/>; otherwise, false.</returns>
+            public override bool Equals(object? obj)
+            {
+                if (obj is TabControlItem item)
+                {
+                    return this == item;
+                }
+
+                return false;
+            }
+
+            /// <summary>
+            /// Serves as the default hash function.
+            /// </summary>
+            /// <returns>A hash code for the current <see cref="TabControlItem"/>.</returns>
+            public override int GetHashCode()
+            {
+                return UniqueId.GetHashCode();
+            }
         }
     }
 }
