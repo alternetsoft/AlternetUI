@@ -241,7 +241,7 @@ namespace Alternet.Maui
             /// <summary>
             /// Gets or sets the attributes provider for the toolbar item.
             /// </summary>
-            Alternet.UI.IBaseObjectWithAttr AttributesProvider { get; set; }
+            Alternet.UI.IBaseObjectWithAttr AttributesProvider { get; }
 
             /// <summary>
             /// Gets or sets a value indicating whether the toolbar item is enabled.
@@ -577,6 +577,48 @@ namespace Alternet.Maui
             var container = new ToolbarButtonContainer(button);
             buttons.Children.Add(container);
             return button;
+        }
+
+        /// <summary>
+        /// Gets a button from the toolbar by its unique identifier.
+        /// </summary>
+        /// <param name="id">The unique identifier of the button.</param>
+        /// <returns>The toolbar button with the specified unique identifier,
+        /// or <c>null</c> if no button is found.</returns>
+        public virtual IToolBarItem? GetButton(UI.ObjectUniqueId id)
+        {
+            foreach (var btn in Buttons)
+            {
+                if (btn is not IToolBarItem button)
+                    continue;
+                if (button.AttributesProvider.UniqueId == id)
+                    return button;
+            }
+
+            return null;
+        }
+
+        /// <summary>
+        /// Removes a toolbar item.
+        /// </summary>
+        /// <param name="item">The toolbar item to remove.</param>
+        public virtual void Remove(IToolBarItem? item)
+        {
+            if (item is null)
+                return;
+
+            var id = item.AttributesProvider.UniqueId;
+
+            foreach (var btn in Buttons)
+            {
+                if (btn is not IToolBarItem button)
+                    continue;
+                if (button.AttributesProvider.UniqueId == id)
+                {
+                    Buttons.Remove(btn);
+                    return;
+                }
+            }
         }
 
         /// <summary>
