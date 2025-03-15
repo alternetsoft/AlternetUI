@@ -133,7 +133,7 @@ namespace Alternet.UI
 
         static SpeedButton()
         {
-            var tabControlBorderColor = ColorUtils.GetTabControlInteriorBorderColor();
+            var tabControlBorderColor = DefaultColors.BorderColor;
 
             InitThemeLight(DefaultTheme.Light);
             InitThemeDark(DefaultTheme.Dark);

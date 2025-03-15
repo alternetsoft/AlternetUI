@@ -129,32 +129,12 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
-        /// Gets default interior border color of the tab control as <see cref="LightDarkColor"/>.
-        /// </summary>
-        /// <returns></returns>
-        public static LightDarkColor GetTabControlInteriorBorderColor()
-        {
-            return Color.LightDark(
-                GetTabControlInteriorBorderColor(false),
-                GetTabControlInteriorBorderColor(true));
-        }
-
-        /// <summary>
         /// Gets default interior border color of the tab control.
         /// </summary>
         /// <returns></returns>
         public static Color GetTabControlInteriorBorderColor(bool isDark)
         {
-            if (isDark)
-            {
-                return Color.FromRgb(123, 123, 123);
-            }
-            else
-            {
-                // This is used to get default disabled svg image color for light theme.
-                // So please do not change this value unless you completely sure.
-                return Color.FromRgb(204, 206, 219);
-            }
+            return DefaultColors.GetBorderColor(isDark);
         }
 
         /// <summary>
