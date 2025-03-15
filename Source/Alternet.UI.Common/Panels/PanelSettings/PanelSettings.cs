@@ -44,6 +44,16 @@ namespace Alternet.UI
                 /* registration call */
 
                 register(
+                    PanelSettingsItemKind.Line,
+                    (item, control) =>
+                    {
+                        var spacer = CreateOrUpdateControl<HorizontalLine>(item, control);
+                        return spacer;
+                    });
+
+                /* registration call */
+
+                register(
                     PanelSettingsItemKind.Spacer,
                     (item, control) =>
                     {
@@ -427,6 +437,19 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Adds horizontal line.
+        /// </summary>
+        /// <param name="e">Additional arguments.</param>
+        /// <returns></returns>
+        public virtual PanelSettingsItem AddHorizontalLine(CustomEventArgs? e = null)
+        {
+            PanelSettingsItem item
+                = CreateItemCore("HorizontalLine", PanelSettingsItemKind.Line, null, e);
+            Items.Add(item);
+            return item;
+        }
+
+        /// <summary>
         /// Adds item with the editor for the property of the specified object.
         /// Value is specified using property name and property container.
         /// </summary>
@@ -488,19 +511,6 @@ namespace Alternet.UI
         {
             var text = item.Label?.ToString() ?? string.Empty;
             control.Title = text;
-        }
-
-        /// <summary>
-        /// Adds horizontal line.
-        /// </summary>
-        /// <param name="e">Additional arguments.</param>
-        /// <returns></returns>
-        internal virtual PanelSettingsItem AddHorizontalLine(CustomEventArgs? e = null)
-        {
-            PanelSettingsItem item
-                = CreateItemCore("HorizontalLine", PanelSettingsItemKind.Line, null, e);
-            Items.Add(item);
-            throw new NotImplementedException();
         }
 
         /// <summary>

@@ -70,6 +70,8 @@ namespace ControlsSample
                 panelSettings.AddInput("Has Border", textBox, nameof(TextBox.HasBorder));
                 panelSettings.AddInput("Allow Space Character", this, nameof(AllowSpaceChar));
 
+                panelSettings.AddHorizontalLine();
+
                 panelSettings.AddInput("Text Align", textBox, nameof(TextBox.TextAlign));
 
                 var e = CustomEventArgs.CreateWithFlag("IsRequired");
@@ -94,11 +96,13 @@ namespace ControlsSample
                     textBox.RunDefaultValidation();
                 };
 
+                panelSettings.AddInput("Foreground Color", textBox, nameof(ForeColor));
+                panelSettings.AddInput("Background Color", textBox, nameof(BackColor));
+
                 panelSettings.AddLinkLabel("Change Text", ChangeTextButton_Click);
                 panelSettings.AddLinkLabel("Show All Properties", ShowProperties_Click);
 
-                panelSettings.AddInput("Foreground Color", textBox, nameof(ForeColor));
-                panelSettings.AddInput("Background Color", textBox, nameof(BackColor));
+                panelSettings.AddHorizontalLine();
 
                 panelSettings.AddInput("Log Text", this, nameof(LogText));
                 panelSettings.AddInput("Log Position", this, nameof(LogPosition));
