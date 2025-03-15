@@ -220,7 +220,7 @@ namespace Alternet.Maui
             /// Initializes a new instance of the <see cref="TabControlItem"/> class.
             /// </summary>
             /// <param name="button">The button associated with the tab control item.</param>
-            public TabControlItem(SimpleToolBarView.IToolBarItem button)
+            internal TabControlItem(SimpleToolBarView.IToolBarItem button)
             {
                 this.button = button;
             }
