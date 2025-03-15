@@ -21,11 +21,12 @@ namespace Alternet.Drawing
         /// </summary>
         public static string? XmlForSvgLoadedWithError;
 
+        private readonly bool throwException;
+
         private string? url;
         private string? svg;
         private Data?[] data = new Data?[16];
         private bool wasLoaded;
-        private bool throwException;
         private Exception? loadingError;
         private Color?[]? colorOverridesLight;
         private Color?[]? colorOverridesDark;
@@ -70,6 +71,16 @@ namespace Alternet.Drawing
             this.throwException = throwException;
             wasLoaded = true;
 
+            if (!throwException)
+            {
+                if(stream is null)
+                {
+                    loadingError = new ArgumentNullException(nameof(stream));
+                    svg = GetXmlForSvgLoadedWithError();
+                    return;
+                }
+            }
+
             try
             {
                 using var reader = new StreamReader(stream);
@@ -104,7 +115,18 @@ namespace Alternet.Drawing
         /// <summary>
         /// Gets the exception that occurred during the loading process.
         /// </summary>
-        public virtual Exception? LoadingError => loadingError;
+        public virtual Exception? LoadingError
+        {
+            get
+            {
+                 return loadingError;
+            }
+
+            internal set
+            {
+                loadingError = value;
+            }
+        }
 
         /// <summary>
         /// Gets whether image has single color.

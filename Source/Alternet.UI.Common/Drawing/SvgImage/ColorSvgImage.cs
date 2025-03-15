@@ -16,22 +16,26 @@ namespace Alternet.Drawing
         /// <summary>
         /// Initializes a new instance of the <see cref="ColorSvgImage"/> class.
         /// </summary>
-        /// <remarks>
-        /// See <see cref="SvgImage.SvgImage(string, SvgImageDataKind)"/> for the details.
-        /// </remarks>
-        public ColorSvgImage(string urlOrData, SvgImageDataKind kind = SvgImageDataKind.Url)
-            : base(urlOrData, kind)
+        /// <param name="urlOrData">Image url or data.</param>
+        /// <param name="kind">Image data kind.</param>
+        /// <param name="throwException">Indicates whether to throw an exception
+        /// if loading fails.</param>
+        public ColorSvgImage(
+            string urlOrData,
+            SvgImageDataKind kind = SvgImageDataKind.Url,
+            bool throwException = true)
+            : base(urlOrData, kind, throwException)
         {
         }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ColorSvgImage"/> class.
         /// </summary>
-        /// <remarks>
-        /// See <see cref="SvgImage.SvgImage(Stream)"/> for the details.
-        /// </remarks>
-        public ColorSvgImage(Stream stream)
-            : base(stream)
+        /// <param name="stream">Stream with image data.</param>
+        /// <param name="throwException">Indicates whether to throw an
+        /// exception if loading fails.</param>
+        public ColorSvgImage(Stream stream, bool throwException = true)
+            : base(stream, throwException)
         {
         }
 
@@ -49,12 +53,28 @@ namespace Alternet.Drawing
         /// Creates <see cref="ColorSvgImage"/> from the specified svg file.
         /// </summary>
         /// <param name="path">Path to file.</param>
+        /// <param name="throwException">Indicates whether to throw an
+        /// exception if loading fails.</param>
         /// <returns></returns>
-        public static ColorSvgImage FromFile(string path)
+        public static ColorSvgImage FromFile(string path, bool throwException = true)
         {
-            using var stream = FileSystem.Default.OpenRead(path);
-            var result = new ColorSvgImage(stream);
-            return result;
+            try
+            {
+                using var stream = FileSystem.Default.OpenRead(path);
+                var result = new ColorSvgImage(stream, throwException);
+                return result;
+            }
+            catch (Exception e)
+            {
+                if (!throwException)
+                {
+                    var result = new ColorSvgImage(null!, false);
+                    result.LoadingError = e;
+                    return result;
+                }
+
+                throw;
+            }
         }
     }
 }
