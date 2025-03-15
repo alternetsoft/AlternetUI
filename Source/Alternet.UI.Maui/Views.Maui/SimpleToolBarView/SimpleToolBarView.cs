@@ -14,7 +14,7 @@ namespace Alternet.Maui
     /// <summary>
     /// Represents a simple toolbar view with speed buttons and other controls.
     /// </summary>
-    public partial class SimpleToolBarView : ContentView, Alternet.UI.IRaiseSystemColorsChanged
+    public partial class SimpleToolBarView : BaseContentView, Alternet.UI.IRaiseSystemColorsChanged
     {
         /// <summary>
         /// Gets or sets the default width of the toolbar border.

@@ -12,7 +12,7 @@ namespace Alternet.Maui
     /// <summary>
     /// Displays a list of enum members, from which the user can select a value.
     /// </summary>
-    public class EnumPickerView : Picker
+    public class EnumPickerView : BasePickerView
     {
         /// <summary>
         /// Defines bindable property for enum type.

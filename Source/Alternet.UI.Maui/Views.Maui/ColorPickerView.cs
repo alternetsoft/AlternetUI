@@ -9,12 +9,12 @@ using Alternet.Drawing;
 
 using Microsoft.Maui.Controls;
 
-namespace Alternet.UI
+namespace Alternet.Maui
 {
     /// <summary>
     /// Displays a list of colors, from which the user can select a color.
     /// </summary>
-    public partial class ColorPickerView : Picker
+    public partial class ColorPickerView : BasePickerView
     {
         private readonly ObservableCollection<ColorPickerItem> colors = new();
 

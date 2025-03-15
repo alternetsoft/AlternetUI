@@ -26,7 +26,7 @@ namespace Alternet.Maui
     /// Implements title with label and two buttons.
     /// By default buttons are 'Settings' and 'Show keyboard'.
     /// </summary>
-    public partial class TitleWithTwoButtonsView : ContentView
+    public partial class TitleWithTwoButtonsView : BaseContentView
     {
         private readonly Label label = new()
         {
