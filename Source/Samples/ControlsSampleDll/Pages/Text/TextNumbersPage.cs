@@ -51,7 +51,12 @@ namespace ControlsSample
                 .ParentForeColor(true).ParentBackColor(true)
                 .Action<ValueEditorCustom>(BindTextChanged).LabelSuggestedWidthToMax();
 
+            var horzLine = new HorizontalLine();
+            horzLine.Parent = this;
+            horzLine.Margin = (0,10,0,10);
+
             label.Parent = this;
+            
             RichToolTip toolTip = new();
             toolTip.Margin = (0,10,0,10);
             toolTip.VerticalAlignment = VerticalAlignment.Fill;
