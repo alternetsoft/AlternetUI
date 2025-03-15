@@ -9,7 +9,7 @@ namespace Alternet.UI
     /// <summary>
     /// Represents a horizontal line control.
     /// </summary>
-    public partial class HorizontalLine : UserControl
+    public partial class HorizontalLine : GraphicControl
     {
         private Coord lineHeight = 1;
 
