@@ -1,3 +1,15 @@
+# 0.9.716 (2025 March 16)
+
+- Maui: Fixes and improvements in SimpleToolBarView, ColorPickerView.
+- Maui: Implemented SimpleTabControlView, SimpleDialogTitleView. 
+- SvgImage: WasLoaded, Xml, LoadingError, GetXmlForSvgLoadedWithError, XmlForSvgLoadedWithError.
+- SvgImage: New parameter in constructor which allows to specify whether to throw exceptions when image is loaded.
+- New controls: HorizontalLine, VerticalLine.
+- New class: DefaultColors.
+- PanelSettings.AddHorizontalLine.
+- SvgImageDataKind.PreloadUrl - allows to preload svg image in constructor.
+- Fix App.DeviceType determination in non-maui application.
+
 # 0.9.715 (2025 March 11)
 
 - Maui: SimpleToolBarView - simple toolbar with speed buttons.
