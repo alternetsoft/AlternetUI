@@ -40,7 +40,8 @@ namespace Alternet.Drawing
         /// </summary>
         /// <param name="urlOrData">Image url or data.</param>
         /// <param name="kind">Image data kind.</param>
-        /// <param name="throwException">Indicates whether to throw an exception if loading fails.</param>
+        /// <param name="throwException">Indicates whether to throw an
+        /// exception if loading fails.</param>
         protected SvgImage(
             string urlOrData,
             SvgImageDataKind kind = SvgImageDataKind.Url,
@@ -50,6 +51,10 @@ namespace Alternet.Drawing
 
             switch (kind)
             {
+                case SvgImageDataKind.PreloadUrl:
+                    url = urlOrData;
+                    LoadImage();
+                    break;
                 case SvgImageDataKind.Url:
                     url = urlOrData;
                     break;

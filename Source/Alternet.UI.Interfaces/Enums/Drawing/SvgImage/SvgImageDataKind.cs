@@ -7,18 +7,27 @@ using System.Threading.Tasks;
 namespace Alternet.Drawing
 {
     /// <summary>
+    /// Specifies the kind of SVG data contained in a string.
     /// Enumerates known data parameter types for the constructor of svg image.
     /// </summary>
     public enum SvgImageDataKind
     {
         /// <summary>
-        /// String is url.
+        /// The string represents a URL pointing to SVG data that does not require
+        /// immediate loading in the constructor.
+        /// The SVG will be loaded the first time it is used in the application.
         /// </summary>
         Url,
 
         /// <summary>
-        /// String contains data.
+        /// The string contains SVG data in XML format.
         /// </summary>
         Data,
+
+        /// <summary>
+        /// The string represents a URL pointing to SVG data.
+        /// The SVG requires immediate loading in the constructor.
+        /// </summary>
+        PreloadUrl,
     }
 }
