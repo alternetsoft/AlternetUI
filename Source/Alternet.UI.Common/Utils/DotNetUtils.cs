@@ -107,12 +107,12 @@ namespace Alternet.UI
             {
                 if (runtimesResult is null)
                 {
-                    var (output, _, _) = AppUtils.ExecuteTerminalCommand(
+                    var result = AppUtils.ExecuteTerminalCommand(
                             $"dotnet {CmdListRuntimes}",
                             null,
                             true,
                             false);
-                    runtimesResult = output ?? string.Empty;
+                    runtimesResult = result.Output ?? string.Empty;
                 }
 
                 return runtimesResult;
@@ -135,12 +135,12 @@ namespace Alternet.UI
             {
                 if (sdksResult is null)
                 {
-                    var (output, _, _) = AppUtils.ExecuteTerminalCommand(
+                    var result = AppUtils.ExecuteTerminalCommand(
                             $"dotnet {CmdListSdks}",
                             null,
                             true,
                             false);
-                    sdksResult = output ?? string.Empty;
+                    sdksResult = result.Output ?? string.Empty;
                 }
 
                 return sdksResult;

@@ -7,6 +7,7 @@ using System.Reflection;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
+
 using Alternet.UI.Extensions;
 
 namespace Alternet.UI
@@ -75,7 +76,7 @@ namespace Alternet.UI
         {
             var type = App.FirstWindow()?.GetType() ?? typeof(Window);
             var instance = (Window)Activator.CreateInstance(type);
-            if(show)
+            if (show)
                 instance.Show();
             return instance;
         }
@@ -125,7 +126,7 @@ namespace Alternet.UI
 
             string result;
 
-            if(FrameworkIdentifier == NetFrameworkIdentifier.NetFramework)
+            if (FrameworkIdentifier == NetFrameworkIdentifier.NetFramework)
                 result = $"net{version.Major}{version.Minor}";
             else
                 result = $"net{version.Major}.{version.Minor}";
@@ -144,7 +145,7 @@ namespace Alternet.UI
         /// Result of the command execution in case when <paramref name="waitResult"/> is <c>true</c>;
         /// otherwise <c>null</c>.
         /// </returns>
-        public static (string? Output, string? Error, int ExitCode) ExecuteTerminalCommand(
+        public static ExecuteTerminalCommandResult ExecuteTerminalCommand(
             string command,
             string? folder = null,
             bool waitResult = false,
@@ -202,7 +203,7 @@ namespace Alternet.UI
 
             if (App.IsWindowsOS)
             {
-                if(command is not null)
+                if (command is not null)
                     command = "/k" + command;
                 return ShellExecute("cmd.exe", command, folder);
             }
@@ -217,7 +218,7 @@ namespace Alternet.UI
         /// <summary>
         /// Executes application with the specified parameters.
         /// </summary>
-        public static (string? Output, string? Error, int ExitCode) ExecuteApp(
+        public static ExecuteTerminalCommandResult ExecuteApp(
             string fileName,
             string arguments,
             string? folder = null,
@@ -228,7 +229,7 @@ namespace Alternet.UI
             string? outputData = null;
 
             Process process = new();
-            if(logStdOut)
+            if (logStdOut)
                 App.IdleLog("Run: " + fileName + " " + arguments);
             ProcessStartInfo processInfo = new(fileName, arguments)
             {
@@ -279,11 +280,11 @@ namespace Alternet.UI
                 // Read the output stream first and then wait.
                 // string output = process.StandardOutput.ReadToEnd();
                 process.WaitForExit();
-                return (outputData?.TrimEndEol(), errorData?.TrimEndEol(), process.ExitCode);
+                return new(outputData?.TrimEndEol(), errorData?.TrimEndEol(), process.ExitCode);
             }
             else
             {
-                return (null, null, 0);
+                return new(null, null, 0);
             }
         }
 
@@ -344,7 +345,7 @@ namespace Alternet.UI
             process.StartInfo.FileName = filePath;
             process.StartInfo.CreateNoWindow = true;
             process.StartInfo.UseShellExecute = true;
-            if(args is not null)
+            if (args is not null)
                 process.StartInfo.Arguments = args;
             if (folder != null)
                 process.StartInfo.WorkingDirectory = folder;
@@ -391,7 +392,7 @@ namespace Alternet.UI
         {
             var result = SegmentCommandLine(cmdLine);
 
-            for(int i = 0; i < result.Length; i++)
+            for (int i = 0; i < result.Length; i++)
             {
                 if (result[i].Contains(StringUtils.OneSpace))
                 {
@@ -415,7 +416,7 @@ namespace Alternet.UI
 
             var s = cmdLine.Trim();
 
-            if(useSplit)
+            if (useSplit)
                 return cmdLine.Split(' ');
             else
             {
@@ -563,6 +564,49 @@ namespace Alternet.UI
             }
 
             return arrayBuilder.ToArray();
+        }
+
+        /// <summary>
+        /// Represents the result of executing a terminal command,
+        /// including output, error messages, and the exit code.
+        /// </summary>
+        public struct ExecuteTerminalCommandResult
+        {
+            /// <summary>
+            /// The standard output from the terminal command.
+            /// </summary>
+            public string? Output;
+
+            /// <summary>
+            /// The error messages, if any, from the terminal command.
+            /// </summary>
+            public string? Error;
+
+            /// <summary>
+            /// The exit code returned by the terminal command, indicating its success or failure.
+            /// </summary>
+            public int ExitCode;
+
+            /// <summary>
+            /// Initializes a new instance of the <see cref="ExecuteTerminalCommandResult"/>
+            /// struct with the specified output, error messages, and exit code.
+            /// </summary>
+            /// <param name="output">The standard output from the terminal command.</param>
+            /// <param name="error">The error messages, if any, from the terminal command.</param>
+            /// <param name="exitCode">The exit code returned by the terminal command.</param>
+            public ExecuteTerminalCommandResult(string? output, string? error, int exitCode)
+            {
+                Output = output;
+                Error = error;
+                ExitCode = exitCode;
+            }
+
+            /// <summary>
+            /// Initializes a new instance of the <see cref="ExecuteTerminalCommandResult"/> struct.
+            /// </summary>
+            public ExecuteTerminalCommandResult()
+            {
+            }
         }
     }
 }

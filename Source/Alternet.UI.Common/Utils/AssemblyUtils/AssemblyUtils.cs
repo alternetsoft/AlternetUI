@@ -259,8 +259,10 @@ namespace Alternet.UI
             try
             {
                 var result = GetAssemblyByName(name);
+#pragma warning disable
                 if (result is null)
                     result = Assembly.Load(name);
+#pragma warning restore
                 return result;
             }
             catch (Exception)
@@ -517,8 +519,7 @@ namespace Alternet.UI
         {
             List<EventInfo> result = new();
 
-            IList<EventInfo> props =
-                new List<EventInfo>(type.GetEvents(bindingFlags));
+            var props = new List<EventInfo>(type.GetEvents(bindingFlags));
 
             SortedList<string, EventInfo> addedNames = new();
 
@@ -622,8 +623,7 @@ namespace Alternet.UI
         {
             List<PropertyInfo> result = new();
 
-            IList<PropertyInfo> props =
-                new List<PropertyInfo>(type.GetProperties(bindingFlags));
+            var props = new List<PropertyInfo>(type.GetProperties(bindingFlags));
 
             SortedList<string, PropertyInfo> addedNames = new();
 
@@ -685,8 +685,7 @@ namespace Alternet.UI
         {
             List<FieldInfo> result = new();
 
-            IList<FieldInfo> fields =
-                new List<FieldInfo>(type.GetFields(bindingFlags));
+            var fields = new List<FieldInfo>(type.GetFields(bindingFlags));
 
             SortedList<string, FieldInfo> addedNames = new();
 
@@ -1542,7 +1541,13 @@ namespace Alternet.UI
         {
             var result = InvokeMethodWithResult(KnownTypes.MauiUtils.Value, "GetDeviceType");
             if (result is null)
-                return GenericDeviceType.Unknown;
+            {
+                if(App.IsLinuxOS || App.IsWindowsOS || App.IsMacOS)
+                    return GenericDeviceType.Desktop;
+                else
+                    return GenericDeviceType.Unknown;
+            }
+
             return (GenericDeviceType)result;
         }
 
