@@ -81,7 +81,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets device the app is running on, such as a desktop computer or a tablet.
         /// </summary>
-        public static readonly GenericDeviceType DeviceType;
+        public static GenericDeviceType DeviceType;
 
         /// <summary>
         /// Gets or sets application exit code used when application terminates
@@ -148,66 +148,69 @@ namespace Alternet.UI
             Is64BitOS = Environment.Is64BitOperatingSystem;
             Is64BitProcess = Environment.Is64BitProcess;
 
-            DeviceType = AssemblyUtils.InvokeMauiUtilsGetDeviceType();
-
             IsWindowsOS = RuntimeInformation.IsOSPlatform(OSPlatform.Windows);
 
-            if (IsWindowsOS)
+            try
             {
-                if (!DebugUtils.IsDebugDefined)
+                if (IsWindowsOS)
                 {
-                    FastThreadExceptions = true;
+                    if (!DebugUtils.IsDebugDefined)
+                    {
+                        FastThreadExceptions = true;
+                    }
+
+                    BackendOS = OperatingSystems.Windows;
+                    return;
                 }
 
-                BackendOS = OperatingSystems.Windows;
-                return;
-            }
+                IsMacOS = RuntimeInformation.IsOSPlatform(OSPlatform.OSX);
 
-            IsMacOS = RuntimeInformation.IsOSPlatform(OSPlatform.OSX);
-
-            if (IsMacOS)
-            {
-                BackendOS = OperatingSystems.MacOs;
-                return;
-            }
-
-            IsLinuxOS = RuntimeInformation.IsOSPlatform(OSPlatform.Linux);
-
-            if (IsLinuxOS)
-            {
-                BackendOS = OperatingSystems.Linux;
-                return;
-            }
-
-            if (AssemblyUtils.InvokeIsAndroid() == true)
-            {
-                App.IsAndroidOS = true;
-                App.IsUnknownOS = false;
-                App.BackendOS = OperatingSystems.Android;
-                return;
-            }
-
-            if (AssemblyUtils.InvokeIsIOS() == true)
-            {
-                var isCatalyst = AssemblyUtils.InvokeMauiUtilsIsMacCatalyst();
-
-                if (isCatalyst == true)
+                if (IsMacOS)
                 {
-                    App.IsMacOS = true;
                     BackendOS = OperatingSystems.MacOs;
+                    return;
                 }
-                else
+
+                IsLinuxOS = RuntimeInformation.IsOSPlatform(OSPlatform.Linux);
+
+                if (IsLinuxOS)
                 {
-                    App.IsIOS = true;
-                    App.BackendOS = OperatingSystems.IOS;
+                    BackendOS = OperatingSystems.Linux;
+                    return;
                 }
 
-                App.IsUnknownOS = false;
-                return;
-            }
+                if (AssemblyUtils.InvokeIsAndroid() == true)
+                {
+                    App.IsAndroidOS = true;
+                    App.BackendOS = OperatingSystems.Android;
+                    return;
+                }
 
-            BackendOS = OperatingSystems.Unknown;
-            IsUnknownOS = true;
+                if (AssemblyUtils.InvokeIsIOS() == true)
+                {
+                    var isCatalyst = AssemblyUtils.InvokeMauiUtilsIsMacCatalyst();
+
+                    if (isCatalyst == true)
+                    {
+                        App.IsMacOS = true;
+                        BackendOS = OperatingSystems.MacOs;
+                    }
+                    else
+                    {
+                        App.IsIOS = true;
+                        App.BackendOS = OperatingSystems.IOS;
+                    }
+
+                    return;
+                }
+
+                BackendOS = OperatingSystems.Unknown;
+                IsUnknownOS = true;
+            }
+            finally
+            {
+                DeviceType = AssemblyUtils.InvokeMauiUtilsGetDeviceType();
+            }
         }
 
         /// <summary>
