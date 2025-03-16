@@ -13,5 +13,18 @@ namespace Alternet.Maui
     /// </summary>
     public partial class BasePickerView : Picker
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="BasePickerView"/> class.
+        /// </summary>
+        public BasePickerView()
+        {
+        }
+
+        /// <summary>
+        /// Marks object as required.
+        /// </summary>
+        public void Required()
+        {
+        }
     }
 }

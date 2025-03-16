@@ -13,5 +13,18 @@ namespace Alternet.Maui
     /// </summary>
     public partial class BaseContentView : ContentView
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="BaseContentView"/> class.
+        /// </summary>
+        public BaseContentView()
+        {
+        }
+
+        /// <summary>
+        /// Marks object as required.
+        /// </summary>
+        public void Required()
+        {
+        }
     }
 }

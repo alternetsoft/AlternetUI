@@ -11,6 +11,7 @@ using Alternet.Scripter.Debugger;
 using Microsoft.Maui.Controls;
 using Microsoft.Maui.Controls.Shapes;
 using Alternet.Maui;
+using Alternet.Scripter.Python;
 
 namespace EditorMAUI;
 
@@ -20,12 +21,12 @@ public partial class MainPage : Alternet.UI.DisposableContentPage, EditorUI.IDoc
 
     internal string NewFileNameNoExt = "embres:EditorMAUI.Content.newfile";
 
-    private readonly Alternet.Syntax.Parsers.Advanced.CsParser? parserCs;
-    private readonly Alternet.Syntax.Parsers.Roslyn.CsParser? roslynParser;
     private readonly Button button = new();
+    private readonly EditorUI.PythonDocument documentPy;
     private readonly EditorUI.CSharpDocument documentCs;
-    private readonly EditorUI.CustomDocument documentCurrent;
     private readonly ObservableCollection<string> logItems = new();
+
+    private readonly SimpleToolBarView.IToolBarItem buttonNew;
     private readonly SimpleToolBarView.IToolBarItem buttonRun;
     private readonly SimpleToolBarView.IToolBarItem buttonRunNoDebug;
     private readonly SimpleToolBarView.IToolBarItem buttonStepInto;
@@ -34,6 +35,7 @@ public partial class MainPage : Alternet.UI.DisposableContentPage, EditorUI.IDoc
     private readonly SimpleToolBarView.IToolBarItem buttonStop;
 
     private ExecutionPosition? executionPosition;
+    private EditorUI.CustomDocument documentCurrent;
 
     static MainPage()
     {
@@ -47,7 +49,8 @@ public partial class MainPage : Alternet.UI.DisposableContentPage, EditorUI.IDoc
             */
         });
 
-        EditorUI.ScripterUtils.Initialize();
+        ScripterDemoUtils.Initialize();
+        PythonDemoUtils.Initialize();
 
         if (Alternet.UI.App.IsWindowsOS && Alternet.UI.DebugUtils.IsDebugDefined)
         {
@@ -61,6 +64,69 @@ public partial class MainPage : Alternet.UI.DisposableContentPage, EditorUI.IDoc
 
         InitializeComponent();
 
+        EditorUI.MainToolBar.ResPrefix = "embres:EditorUI.Dll.Resources.Svg.";
+
+        var svgRestart = EditorUI.MainToolBar.CreateRestartSvgImage();
+        var svgStepOver = EditorUI.MainToolBar.CreateStepOverSvgImage();
+        var svgStop = EditorUI.MainToolBar.CreateStopSvgImage();
+        var svgStepOut = EditorUI.MainToolBar.CreateStepOutSvgImage();
+        var svgStartNoDebug = EditorUI.MainToolBar.CreateStartNoDebugSvgImage();
+        var svgStart = EditorUI.MainToolBar.CreateStartSvgImage();
+        var svgStepInto = EditorUI.MainToolBar.CreateStepIntoSvgImage();
+
+        buttonNew = toolbar.AddDialogButton(null, "New", Alternet.UI.KnownSvgImages.ImgFileNew, () =>
+        {
+            if (IsPython)
+            {
+                LoadFile(NewFileNameNoExt, "cs");
+            }
+            else
+            {
+                LoadFile(NewFileNameNoExt, "py");
+            }
+        });
+
+        buttonRun = toolbar.AddDialogButton(null, "Run", svgStart, () =>
+        {
+            ActiveDocument.Run();
+        });
+
+        buttonRunNoDebug = toolbar.AddDialogButton(null, "Run No Debug", svgStartNoDebug, () =>
+        {
+            ActiveDocument.RunWithoutDebug();
+        });
+
+        buttonStepInto = toolbar.AddDialogButton(null, "Step Into", svgStepInto, () =>
+        {
+            ActiveDocument.StepInto();
+        });
+
+        buttonStepOver = toolbar.AddDialogButton(null, "Step Over", svgStepOver, () =>
+        {
+            ActiveDocument.StepOver();
+        });
+
+        buttonStepOut = toolbar.AddDialogButton(null, "Step Out", svgStepOut, () =>
+        {
+            ActiveDocument.StepOver();
+        });
+
+        buttonStop = toolbar.AddDialogButton(null, "Stop", svgStop, () =>
+        {
+            ActiveDocument.Stop();
+        });
+
+        var innerForm = CreateInnerForm();
+
+        var showDialog = toolbar.AddDialogButton(
+            null,
+            "Test Dialog",
+            Alternet.UI.KnownSvgImages.ImgDiamondFilled,
+            () =>
+            {
+                innerForm.IsVisible = !innerForm.IsVisible;
+            });
+
         logListBox.SelectionMode = SelectionMode.Single;
         logListBox.ItemsSource = logItems;
         logListBox.ItemsUpdatingScrollMode = ItemsUpdatingScrollMode.KeepLastItemInView;
@@ -68,19 +134,6 @@ public partial class MainPage : Alternet.UI.DisposableContentPage, EditorUI.IDoc
         logListBox.HorizontalScrollBarVisibility = ScrollBarVisibility.Always;
 
         InitEdit();
-
-        if (Alternet.UI.App.IsWindowsOS)
-        {
-            roslynParser = new(new Alternet.Syntax.Parsers.Roslyn.CodeCompletion.CsSolution());
-            Editor.Lexer = roslynParser;
-        }
-        else
-        {
-            parserCs = new();
-            Editor.Lexer = parserCs;
-        }
-
-        LoadFile(NewFileNameNoExt + ".cs");
 
         button.Text = "Hello";
 
@@ -143,60 +196,21 @@ public partial class MainPage : Alternet.UI.DisposableContentPage, EditorUI.IDoc
         documentCs = new(this);
         documentCs.StateChanged += Document_StateChanged;
         documentCurrent = documentCs;
-        documentCs.InitEditor(Editor);
 
+        documentPy = new(this);
+        documentPy.StateChanged += Document_StateChanged;
+
+        LoadFile(NewFileNameNoExt, "cs");
 
         toolbar.IsBottomBorderVisible = true;
-
-        EditorUI.MainToolBar.ResPrefix = "embres:EditorUI.Dll.Resources.Svg.";
-
-        var svgRestart = EditorUI.MainToolBar.CreateRestartSvgImage();
-        var svgStepOver = EditorUI.MainToolBar.CreateStepOverSvgImage();
-        var svgStop = EditorUI.MainToolBar.CreateStopSvgImage();
-        var svgStepOut = EditorUI.MainToolBar.CreateStepOutSvgImage();
-        var svgStartNoDebug = EditorUI.MainToolBar.CreateStartNoDebugSvgImage();
-        var svgStart = EditorUI.MainToolBar.CreateStartSvgImage();
-        var svgStepInto = EditorUI.MainToolBar.CreateStepIntoSvgImage();        
-
-        buttonRun = toolbar.AddDialogButton(null, "Run", svgStart, () =>
-        {
-            ActiveDocument.Run();
-        });
-
-        buttonRunNoDebug= toolbar.AddDialogButton(null, "Run No Debug", svgStartNoDebug, () =>
-        {
-            ActiveDocument.RunWithoutDebug();
-        });
-
-        buttonStepInto = toolbar.AddDialogButton(null, "Step Into", svgStepInto, () =>
-        {
-            ActiveDocument.StepInto();
-        });
-
-        buttonStepOver = toolbar.AddDialogButton(null, "Step Over", svgStepOver, () =>
-        {
-            ActiveDocument.StepOver();
-        });
-
-        buttonStepOut = toolbar.AddDialogButton(null, "Step Out", svgStepOut, () =>
-        {
-            ActiveDocument.StepOver();
-        });
-
-        buttonStop = toolbar.AddDialogButton(null, "Stop", svgStop, () =>
-        {
-            ActiveDocument.Stop();
-        });
 
         Alternet.UI.ConsoleUtils.BindConsoleOutput();
         Alternet.UI.ConsoleUtils.BindConsoleError();
 
-        CreateInnerForm();
-
         UpdateToolBar(documentCs);
     }
 
-    public void CreateInnerForm()
+    public View CreateInnerForm()
     {
         var dialogTitle = new SimpleDialogTitleView();
         dialogTitle.Title = "Title";
@@ -220,7 +234,7 @@ public partial class MainPage : Alternet.UI.DisposableContentPage, EditorUI.IDoc
 
         var innerForm = new Border
         {
-            IsVisible = true,
+            IsVisible = false,
             BackgroundColor = backColor,
             StrokeShape = new RoundRectangle { CornerRadius = 10 },
             Stroke = borderColor,
@@ -301,6 +315,8 @@ public partial class MainPage : Alternet.UI.DisposableContentPage, EditorUI.IDoc
             new Rect(650, 100, -1, -1));
 
         editorPanel.Add(innerForm);
+
+        return innerForm;
     }
 
     public EditorUI.IDocumentContainer Container => this;
@@ -310,11 +326,11 @@ public partial class MainPage : Alternet.UI.DisposableContentPage, EditorUI.IDoc
     internal void UpdateToolBar(EditorUI.CustomDocument document)
     {
         /*
-        SetToolEnabled(ButtonIdNew, document.State == EditorUI.CustomDocument.RunningState.NotRunning);
         SetToolEnabled(ButtonIdBreakAll, document.CanPause);
         SetToolEnabled(ButtonIdRestart, document.CanRestart);
         */
 
+        buttonNew.IsEnabled = document.State == EditorUI.CustomDocument.RunningState.NotRunning;
         buttonRun.IsEnabled = document.CanRun;
         buttonRunNoDebug.IsEnabled = document.CanRunWithoutDebug;
         buttonStepInto.IsEnabled = document.CanStepInto;
@@ -470,20 +486,55 @@ public partial class MainPage : Alternet.UI.DisposableContentPage, EditorUI.IDoc
         ed.Gutter.Options &= ~GutterOptions.PaintCodeActionsOnGutter;
     }
 
-    public void LoadFile(string url)
+    public bool IsPython
     {
-        var ed = Editor;
-        ed.Text = string.Empty;
-        ed.Source.BookMarks.Clear();
-        ed.Source.LineStyles.Clear();
+        get
+        {
+            return documentCurrent == documentPy;
+        }
+    }
+
+    public void LoadFile(string urlPrefix, string extension)
+    {
+        Container.ExecutionPosition = null;
+        Editor.SwitchStackFrame(null, null);
+        Editor.Text = string.Empty;
+        Editor.Lexer = null;
+        Editor.Source.BookMarks.Clear();
+        Editor.Source.LineStyles.Clear();
+        documentCs.ClearBreakPoints();
+        documentPy.ClearBreakPoints();
+        Editor.Source.OptimizedForMemory = false;
+
+        var url = urlPrefix + "."+ extension;
 
         var stream = Alternet.UI.ResourceLoader.StreamFromUrlOrDefault(url);
 
-        if (stream is null || !ed.LoadStream(stream))
+        if (stream is null || !Editor.LoadStream(stream))
         {
-            ed.Text = $"Error loading text: {url}";
+            Editor.Text = $"Error loading text: {url}";
             return;
         }
+
+        switch (extension)
+        {
+            case "cs":
+                documentCs.InitEditor(Editor);
+                documentCurrent = documentCs;
+                UpdateToolBar(documentCurrent);
+                break;
+            case "py":
+                documentPy.InitEditor(Editor);
+                documentCurrent = documentPy;
+                UpdateToolBar(documentCurrent);
+                break;
+            default:
+                throw new Exception("Unknown script type");
+        }
+
+        Editor.Source.FileName = documentCurrent.FileName;
+        Editor.Source.HighlightReferences = true;
+
     }
 
     internal void InsertText(string s)

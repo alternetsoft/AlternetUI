@@ -1,14 +1,3 @@
-#region Copyright
-/*
-	AlterNET Code Editor Library
-
-	Copyright (c) 2016-2024 Alternet Software
-	ALL RIGHTS RESERVED
-
-	http://www.alternetsoft.com
-	contact@alternetsoft.com
-*/
-#endregion Copyright
 using System;
 
 /// <summary>
@@ -19,39 +8,6 @@ public class Person
 {
     private string myName = "N/A";
     private int myAge = 0;
-
-    /// <summary>
-    /// Declare a Name property of type string:
-    /// </summary>
-    public string Name
-    {
-        get
-        {
-            return myName;
-        }
-        set
-        {
-            myName = value;
-        }
-    }
-    /// <summary>
-    /// Declare an Age property of type int:
-    /// </summary>
-    public int Age
-    {
-        get
-        {
-            return myAge;
-        }
-        set
-        {
-            myAge = value;
-        }
-    }
-    public override string ToString()
-    {
-        return "Name = " + Name + ", Age = " + Age;
-    }
 
     public static void Main()
     {
@@ -76,4 +32,39 @@ public class Person
         /* Console.WriteLine("Press Enter key to continue...");*/
         /* System.Console.Read(); */
     }
+
+    /// <summary>
+    /// Declare a Name property of type string:
+    /// </summary>
+    public string Name
+    {
+        get
+        {
+            return myName;
+        }
+        set
+        {
+            myName = value;
+        }
+    }
+
+    /// <summary>
+    /// Declare an Age property of type int:
+    /// </summary>
+    public int Age
+    {
+        get
+        {
+            return myAge;
+        }
+        set
+        {
+            myAge = value;
+        }
+    }
+
+    public override string ToString()
+    {
+        return "Name = " + Name + ", Age = " + Age;
+    } 
 }
