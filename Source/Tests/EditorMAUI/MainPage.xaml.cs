@@ -60,6 +60,14 @@ public partial class MainPage : Alternet.UI.DisposableContentPage, EditorUI.IDoc
 
     public MainPage()
     {
+        if (App.MainWindow is not null)
+        {
+            App.MainWindow.Destroying += (s, e) =>
+            {
+                ActiveDocument.Stop();
+            };
+        }
+
         Alternet.UI.PlessMouse.ShowTestMouseInControl = false;
 
         InitializeComponent();

@@ -2,6 +2,8 @@
 
 public partial class App : Application
 {
+    public static Window? MainWindow;
+
     public App()
 	{
 		InitializeComponent();
@@ -10,11 +12,7 @@ public partial class App : Application
     protected override Window CreateWindow(IActivationState? activationState)
     {
         var window = new Window(new NavigationPage(new AppShell()));
-
-        /*
-        var isMacCatalyst = Alternet.UI.AssemblyUtils.InvokeMauiUtilsIsMacCatalyst();
-        window.Title = $"IsMacCatalyst: {isMacCatalyst}";
-        */
+        MainWindow = window;
 
         window.Created += (s, e) =>
         {
@@ -22,6 +20,7 @@ public partial class App : Application
 
         window.Destroying += (s, e) =>
         {
+            MainWindow = null;
         };
 
         window.Stopped += (s, e) =>
