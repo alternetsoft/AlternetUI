@@ -52,18 +52,23 @@ public partial class ToolBarTestPage : ContentPage
 
         var btnRight = toolbar.AddButton("AtRight");
 
-        var panel1 = new VerticalStackLayout();
-        panel1.Children.Add(toolbar);
+        var panel1 = new Grid();
+
+        panel1.RowDefinitions =
+        [
+            new RowDefinition { Height = GridLength.Auto },
+            new RowDefinition { Height = GridLength.Star },
+        ];
+
+        panel1.Add(toolbar, 0, 0);
         var collectionView1 = CollectionViewExamplePage.CreateSampleCollectionView();
         collectionView1.ItemsSource = CollectionViewExamplePage.SampleItems;
-        collectionView1.HeightRequest = 300;
         collectionView1.SelectionMode = SelectionMode.Single;
-        panel1.Children.Add(collectionView1);
+        panel1.Add(collectionView1, 0, 1);
 
-        var panel2 = new VerticalStackLayout();
+        var panel2 = new Grid();
         var collectionView2 = CollectionViewExamplePage.CreateSampleCollectionView();
         collectionView2.ItemsSource = CollectionViewExamplePage.SampleItems2;
-        collectionView2.HeightRequest = 300;
         collectionView2.SelectionMode = SelectionMode.Single;
         panel2.Children.Add(collectionView2);
 
@@ -73,10 +78,6 @@ public partial class ToolBarTestPage : ContentPage
         var tab2 = tabControl.Add("Tab 2", () => panel2);
         tabControl.SelectedTab = tab2;
 
-        var panel = new VerticalStackLayout();
-
-        panel.Children.Add(tabControl);
-
-        Content = panel;
+        Content = tabControl;
     }
 }

@@ -27,6 +27,12 @@ namespace Alternet.Maui
             tabs.AllowMultipleSticky = false;
             tabs.StickyStyle = SimpleToolBarView.StickyButtonStyle.UnderlineFull;
 
+            grid.RowDefinitions =
+            [
+                new RowDefinition { Height = GridLength.Auto },
+                new RowDefinition { Height = GridLength.Star },
+            ];
+
             grid.Add(tabs, 0, 0);
             grid.Add(content, 0, 1);
             base.Content = grid;
@@ -244,6 +250,11 @@ namespace Alternet.Maui
                 get => (Func<View>?)CustomAttr[resolverPropName];
                 set => CustomAttr[resolverPropName] = value;
             }
+
+            /// <summary>
+            /// Gets the page associated with the tab control item.
+            /// </summary>
+            public View? Page => PageResolver?.Invoke();
 
             /// <summary>
             /// Gets the attributes provider for the item.

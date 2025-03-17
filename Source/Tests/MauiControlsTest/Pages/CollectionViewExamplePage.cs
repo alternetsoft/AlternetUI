@@ -59,7 +59,6 @@ namespace AllQuickStarts
         private Item? selectedItem;
         private int? selectedIndex;
         private CollectionView collectionView;
-        private BoxView underline;
 
         public void CollectionAdd()
         {
