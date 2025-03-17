@@ -79,6 +79,11 @@ namespace Alternet.UI
         public static readonly bool IsIOS;
 
         /// <summary>
+        /// Gets the log queue.
+        /// </summary>
+        public static readonly ConcurrentQueue<LogUtils.LogItem> LogQueue = new();
+
+        /// <summary>
         /// Gets device the app is running on, such as a desktop computer or a tablet.
         /// </summary>
         public static GenericDeviceType DeviceType;
@@ -117,8 +122,6 @@ namespace Alternet.UI
 
         private static readonly
             ConcurrentQueue<(Action<object?> Action, object? Data)> IdleTasks = new();
-
-        private static readonly ConcurrentQueue<LogUtils.LogItem> LogQueue = new();
 
         private static bool? isMono;
 
@@ -1173,6 +1176,21 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Adds log item using the specified <see cref="ListControlItem"/>.
+        /// <see cref="LogListBox"/> controls binded to the log will paint added item
+        /// with image, font and color properties specified in the <paramref name="item"/>.
+        /// </summary>
+        /// <param name="item">Item to add.</param>
+        /// <param name="kind">Item kind.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static void AddLogItem(
+            ListControlItem item,
+            LogItemKind kind = LogItemKind.Information)
+        {
+            AddLogItem(new(item, kind));
+        }
+
+        /// <summary>
         /// Calls <see cref="LogMessage"/> event.
         /// </summary>
         /// <param name="obj">Message text or object to log.</param>
@@ -1181,15 +1199,45 @@ namespace Alternet.UI
         {
             try
             {
-                IdleLog(obj, kind);
-
-                if (LogMessage is null || LogInUpdates())
+                if (Terminating)
                     return;
-                ProcessLogQueue();
+
+                var msg = obj?.ToString();
+
+                if (msg is null)
+                    return;
+
+                AddBackgroundAction(() =>
+                {
+                    string[] result = LogUtils.LogToExternalIfAllowed(msg, kind);
+
+                    if(LogMessage is not null)
+                    {
+                        foreach (string s2 in result)
+                        {
+                            var item = new LogUtils.LogItem(s2, kind);
+                            AddLogItem(item);
+                        }
+                    }
+                });
             }
             catch
             {
             }
+        }
+
+        /// <summary>
+        /// Adds log item.
+        /// </summary>
+        /// <param name="item"></param>
+        public static void AddLogItem(LogUtils.LogItem item)
+        {
+            LogQueue.Enqueue(item);
+
+            AddBackgroundInvokeAction(() =>
+            {
+                LogToEvent(item);
+            });
         }
 
         /// <summary>
@@ -1570,51 +1618,10 @@ namespace Alternet.UI
         /// </remarks>
         public static void IdleLog(object? obj, LogItemKind kind = LogItemKind.Information)
         {
-            if (Terminating)
-                return;
-
-            DebugUtils.DebugCall(() =>
+            AddIdleTask(() =>
             {
-                if (kind == LogItemKind.Error)
-                {
-                }
-
-                if (kind == LogItemKind.Information)
-                {
-                }
-
-                if (kind == LogItemKind.Warning)
-                {
-                }
+                Log(obj, kind);
             });
-
-            var msg = obj?.ToString();
-
-            if (msg is null)
-                return;
-
-            AddBackgroundAction(() =>
-            {
-                string[] result = LogUtils.LogToExternalIfAllowed(msg, kind);
-
-                foreach (string s2 in result)
-                    LogQueue.Enqueue(new(s2, kind));
-            });
-        }
-
-        /// <summary>
-        /// Adds log item using the specified <see cref="ListControlItem"/>.
-        /// <see cref="LogListBox"/> controls binded to the log will paint added item
-        /// with image, font and color properties specified in the <paramref name="item"/>.
-        /// </summary>
-        /// <param name="item">Item to add.</param>
-        /// <param name="kind">Item kind.</param>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static void AddLogItem(
-            ListControlItem item,
-            LogItemKind kind = LogItemKind.Information)
-        {
-            LogQueue.Enqueue(new(item, kind));
         }
 
         /// <summary>
@@ -1626,6 +1633,23 @@ namespace Alternet.UI
         public static void AddBackgroundTask(Func<Task> task)
         {
             Alternet.UI.Threading.BackgroundWorkManager.Default.TaskQueue.Enqueue(task);
+        }
+
+        /// <summary>
+        /// Schedules the specified action to run in the background.
+        /// Action is called using <see cref="BaseObject.Invoke"/>.
+        /// Uses <see cref="Alternet.UI.Threading.BackgroundWorkManager.Default"/>
+        /// </summary>
+        /// <param name="taskAction">Action to run in the background.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static void AddBackgroundInvokeAction(Action taskAction)
+        {
+            void Fn()
+            {
+                Invoke(taskAction);
+            }
+
+            AddBackgroundAction(Fn);
         }
 
         /// <summary>
@@ -1730,7 +1754,6 @@ namespace Alternet.UI
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static void LogBeginUpdate()
         {
-            logUpdateCount++;
         }
 
         /// <summary>
@@ -1739,9 +1762,6 @@ namespace Alternet.UI
         /// </summary>
         public static void LogEndUpdate()
         {
-            logUpdateCount--;
-            if (logUpdateCount == 0)
-                OnLogRefresh();
         }
 
         /// <summary>
@@ -1855,31 +1875,6 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Processes log queue.
-        /// </summary>
-        public static void ProcessLogQueue()
-        {
-            if (LogQueue.IsEmpty || LogInUpdates())
-                return;
-
-            LogBeginUpdate();
-            try
-            {
-                while (true)
-                {
-                    if (LogQueue.TryDequeue(out var queueItem))
-                        LogToEvent(queueItem);
-                    else
-                        break;
-                }
-            }
-            finally
-            {
-                LogEndUpdate();
-            }
-        }
-
-        /// <summary>
         /// Gets current unhandled exception mode.
         /// </summary>
         /// <returns></returns>
@@ -1953,7 +1948,6 @@ namespace Alternet.UI
 
             if (HasForms)
             {
-                ProcessLogQueue();
                 ProcessIdleTasks();
             }
 
