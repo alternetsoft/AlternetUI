@@ -134,10 +134,11 @@ namespace Alternet.Maui
         /// <param name="item">The tab control item to select.</param>
         public virtual void SelectTab(TabControlItem? item)
         {
-            if (item is null)
+            var btn = item?.Button;
+            if (btn is null)
                 return;
-            item.Button.IsSticky = true;
-            Content = item.PageResolver?.Invoke();
+            btn.IsSticky = true;
+            Content = item!.PageResolver?.Invoke();
         }
 
         /// <summary>
@@ -220,7 +221,9 @@ namespace Alternet.Maui
         {
             private const string resolverPropName = "CDF756F1-D3A3-4077-A2E4-13199C821EB9";
 
-            private readonly SimpleToolBarView.IToolBarItem button;
+            private readonly UI.ObjectUniqueId uniqueId;
+            private Alternet.UI.WeakReferenceValue<SimpleToolBarView.IToolBarItem> buttonRef
+                = new();
 
             /// <summary>
             /// Initializes a new instance of the <see cref="TabControlItem"/> class.
@@ -228,27 +231,33 @@ namespace Alternet.Maui
             /// <param name="button">The button associated with the tab control item.</param>
             internal TabControlItem(SimpleToolBarView.IToolBarItem button)
             {
-                this.button = button;
+                this.buttonRef.Value = button;
+                uniqueId = button.AttributesProvider.UniqueId;
             }
 
             /// <summary>
             /// Gets the button associated with the tab control item.
             /// </summary>
-            public SimpleToolBarView.IToolBarItem Button => button;
+            public SimpleToolBarView.IToolBarItem? Button => buttonRef.Value;
 
             /// <summary>
             /// Gets the custom attributes for the tab control item.
             /// </summary>
-            public UI.ICustomAttributes<string, object> CustomAttr
-                => button.AttributesProvider.CustomAttr;
+            public UI.ICustomAttributes<string, object>? CustomAttr
+                => Button?.AttributesProvider?.CustomAttr;
 
             /// <summary>
             /// Gets or sets the page resolver function for the tab control item.
             /// </summary>
             public Func<View>? PageResolver
             {
-                get => (Func<View>?)CustomAttr[resolverPropName];
-                set => CustomAttr[resolverPropName] = value;
+                get => (Func<View>?)CustomAttr?[resolverPropName];
+
+                set
+                {
+                    if (CustomAttr is not null)
+                        CustomAttr[resolverPropName] = value;
+                }
             }
 
             /// <summary>
@@ -259,12 +268,12 @@ namespace Alternet.Maui
             /// <summary>
             /// Gets the attributes provider for the item.
             /// </summary>
-            public UI.IBaseObjectWithAttr AttributesProvider => button.AttributesProvider;
+            public UI.IBaseObjectWithAttr? AttributesProvider => Button?.AttributesProvider;
 
             /// <summary>
             /// Gets unique id of this object.
             /// </summary>
-            public UI.ObjectUniqueId UniqueId => button.AttributesProvider.UniqueId;
+            public UI.ObjectUniqueId UniqueId => uniqueId;
 
             /// <summary>
             /// Determines whether two specified instances of <see cref="TabControlItem"/> are equal.
