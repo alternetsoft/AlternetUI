@@ -131,15 +131,12 @@ namespace Alternet.UI
 
             void ConsoleMessageReceived(object? sender, LogMessageEventArgs e)
             {
-                App.AddIdleTask(() =>
-                {
-                    var s = e.Message?.TrimEndEol();
+                var s = e.Message?.TrimEndEol();
 
-                    if (string.IsNullOrWhiteSpace(s))
-                        return;
+                if (string.IsNullOrWhiteSpace(s))
+                    return;
 
-                    App.Log($"{prefix}{s}");
-                });
+                App.Log($"{prefix}{s}");
             }
         }
 

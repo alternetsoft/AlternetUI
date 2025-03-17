@@ -44,7 +44,6 @@ public partial class LogContentPage : Alternet.UI.DisposableContentPage
 
         NavigationPage.SetTitleView(this, titleView);
 
-        Alternet.UI.App.ProcessLogQueue();
         var itemsArray = items.ToArray();
 
         ObservableCollection<string> itemsClone = new(itemsArray);

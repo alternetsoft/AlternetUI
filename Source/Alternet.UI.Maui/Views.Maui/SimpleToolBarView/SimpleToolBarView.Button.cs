@@ -256,7 +256,11 @@ namespace Alternet.Maui
 
             internal void UpdateImage()
             {
-                Alternet.UI.MauiUtils.SetButtonImage(this, svgImage, GetDefaultImageSize(), !IsEnabled);
+                Alternet.UI.MauiUtils.SetButtonImage(
+                    this,
+                    svgImage,
+                    GetDefaultImageSize(),
+                    !IsEnabled);
             }
 
             /// <inheritdoc/>
