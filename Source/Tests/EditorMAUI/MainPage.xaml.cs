@@ -21,7 +21,6 @@ public partial class MainPage : Alternet.UI.DisposableContentPage, EditorUI.IDoc
 
     internal string NewFileNameNoExt = "embres:EditorMAUI.Content.newfile";
 
-    private readonly Button button = new();
     private readonly EditorUI.PythonDocument documentPy;
     private readonly EditorUI.CSharpDocument documentCs;
     private readonly ObservableCollection<LogItem> logItems = new();
@@ -33,6 +32,7 @@ public partial class MainPage : Alternet.UI.DisposableContentPage, EditorUI.IDoc
     private readonly SimpleToolBarView.IToolBarItem buttonStepOver;
     private readonly SimpleToolBarView.IToolBarItem buttonStepOut;
     private readonly SimpleToolBarView.IToolBarItem buttonStop;
+    private readonly SimpleToolBarView.IToolBarItem buttonStatus;
 
     private ExecutionPosition? executionPosition;
     private EditorUI.CustomDocument documentCurrent;
@@ -135,6 +135,8 @@ public partial class MainPage : Alternet.UI.DisposableContentPage, EditorUI.IDoc
                 innerForm.IsVisible = !innerForm.IsVisible;
             });
 
+        buttonStatus = toolbar.AddLabel("Ready");
+
         logListBox.SelectionMode = SelectionMode.Single;
         logListBox.ItemsSource = logItems;
         logListBox.ItemsUpdatingScrollMode = ItemsUpdatingScrollMode.KeepLastItemInView;
@@ -142,8 +144,6 @@ public partial class MainPage : Alternet.UI.DisposableContentPage, EditorUI.IDoc
         logListBox.HorizontalScrollBarVisibility = ScrollBarVisibility.Always;
 
         InitEdit();
-
-        button.Text = "Hello";
 
         EditorView.Interior.HasBorder = false;
 
@@ -173,19 +173,14 @@ public partial class MainPage : Alternet.UI.DisposableContentPage, EditorUI.IDoc
         vo.Alignment = LayoutAlignment.Fill;
         editorPanel.VerticalOptions = vo;
 
-        button1.Clicked += Button1_Clicked;
-
         Alternet.UI.Control.FocusedControlChanged += Control_FocusedControlChanged;
 
         Alternet.UI.PlessMouse.LastMousePositionChanged += PlessMouse_LastMousePositionChanged;
 
         EditorView.Interior.CornerClick += Interior_CornerClick;
-        EditorView.Interior.Scroll += Interior_Scroll;
         Editor.LongTap += Editor_LongTap;
 
         Editor.CanLongTap = true;
-
-        extraControls.IsVisible = false;
 
         setHeight.Clicked += SetHeight_Clicked;
 
@@ -216,6 +211,11 @@ public partial class MainPage : Alternet.UI.DisposableContentPage, EditorUI.IDoc
         Alternet.UI.ConsoleUtils.BindConsoleError();
 
         UpdateToolBar(documentCs);
+
+        clearLogItem.Clicked += (s, e) =>
+        {
+            logItems.Clear();
+        };
     }
 
     public View CreateInnerForm()
@@ -362,21 +362,29 @@ public partial class MainPage : Alternet.UI.DisposableContentPage, EditorUI.IDoc
 
             UpdateToolBar(documentCurrent);
 
+            void UpdateStatus(string s)
+            {
+                Alternet.UI.App.Invoke(() =>
+                {
+                    buttonStatus.Text = s;
+                });
+            }
+
             switch (documentCurrent.State)
             {
                 case EditorUI.CustomDocument.RunningState.NotRunning:
                     Container.ExecutionPosition = null;
                     Editor.SwitchStackFrame(null, null);
-                    Alternet.UI.App.Log("Execution stopped...");
+                    UpdateStatus("Execution stopped");
                     break;
                 case EditorUI.CustomDocument.RunningState.RunWithDebug:
-                    Alternet.UI.App.Log("Running with debug...");
+                    UpdateStatus("Run with debug");
                     break;
                 case EditorUI.CustomDocument.RunningState.RunWithoutDebug:
-                    Alternet.UI.App.Log("Running without debug...");
+                    UpdateStatus("Run without debug");
                     break;
                 case EditorUI.CustomDocument.RunningState.Paused:
-                    Alternet.UI.App.Log("Debugging paused...");
+                    UpdateStatus("Debug paused");
                     break;
             }
         }
@@ -397,7 +405,6 @@ public partial class MainPage : Alternet.UI.DisposableContentPage, EditorUI.IDoc
 
     private void Editor_LongTap(object? sender, Alternet.UI.LongTapEventArgs e)
     {
-        LogToEntry("LongTap", e, true);
         var caret = Editor.CaretInfo;
         if (caret is not null)
         {
@@ -407,26 +414,9 @@ public partial class MainPage : Alternet.UI.DisposableContentPage, EditorUI.IDoc
         }
     }
 
-    private void Interior_Scroll(object? sender, Alternet.UI.ScrollEventArgs e)
-    {
-        LogToEntry("Scroll", e, false);
-    }
-
-    private void LogToEntry(string prefix, object obj, bool condition)
-    {
-        Alternet.UI.DebugUtils.DebugCallIf(condition, () =>
-        {
-            entry1.Text = $"({Alternet.UI.LogUtils.GenNewId()}){prefix}: {obj}";
-        });
-    }
-
     private void Interior_CornerClick(object? sender, EventArgs e)
     {
         Alternet.UI.Keyboard.ToggleKeyboardVisibility(Editor);
-
-        /*
-        editor.Editor.Font = editor.Editor.Font.Larger();
-        */
     }
 
     private void PlessMouse_LastMousePositionChanged(object? sender, EventArgs e)
@@ -607,15 +597,14 @@ public partial class MainPage : Alternet.UI.DisposableContentPage, EditorUI.IDoc
             if (e.Message is null)
                 return;
 
-            Debug.WriteLine(e.Message);
+            var s = e.Message;
 
-            Alternet.UI.App.AddBackgroundAction(() =>
+            Debug.WriteLine(s);
+
+            Alternet.UI.App.AddBackgroundInvokeAction(() =>
             {
-                Alternet.UI.App.Invoke(() =>
-                {
-                    logItems.Add(new(e.Message));
-                    logListBox.SelectedItem = logItems[logItems.Count - 1];
-                });
+                logItems.Add(new(s));
+                logListBox.SelectedItem = logItems[logItems.Count - 1];
             });
         }
         catch

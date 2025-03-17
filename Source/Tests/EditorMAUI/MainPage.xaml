@@ -5,7 +5,7 @@
              xmlns:editor="http://schemas.alternetsoft.com/editor/2024"
              x:Class="EditorMAUI.MainPage"
              Title="Alternet.Editor Demo">
-    <Grid RowDefinitions="*,Auto, Auto, 200">
+    <Grid RowDefinitions="*, Auto, 200">
         <StackLayout x:Name="panel" 
                            Grid.Row="0">
 
@@ -18,17 +18,13 @@
                                         x:Name="setHeight"/>
                     <MenuFlyoutItem Text="Hide extra controls"
                                         x:Name="hideExtra"/>
+                    <MenuFlyoutItem Text="Clear log"
+                                        x:Name="clearLogItem"/>
                 </MenuFlyout>
             </FlyoutBase.ContextFlyout>
         </StackLayout>
 
-        <StackLayout Margin="0,20" Grid.Row="1" x:Name="extraControls">
-            <Entry Text="some text" x:Name="entry1"/>
-            <Button Text="Action 1" x:Name="button1" WidthRequest="150">
-            </Button>
-        </StackLayout>
-
-        <alternet:SimpleToolBarView x:Name="toolbar" Grid.Row="2"/>
-        <CollectionView x:Name="logListBox" Grid.Row="3"/>
+        <alternet:SimpleToolBarView x:Name="toolbar" Grid.Row="1"/>
+        <CollectionView x:Name="logListBox" Grid.Row="2"/>
     </Grid>
 </alternet:DisposableContentPage>
