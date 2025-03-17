@@ -24,7 +24,7 @@ public partial class MainPage : Alternet.UI.DisposableContentPage, EditorUI.IDoc
     private readonly Button button = new();
     private readonly EditorUI.PythonDocument documentPy;
     private readonly EditorUI.CSharpDocument documentCs;
-    private readonly ObservableCollection<string> logItems = new();
+    private readonly ObservableCollection<LogItem> logItems = new();
 
     private readonly SimpleToolBarView.IToolBarItem buttonNew;
     private readonly SimpleToolBarView.IToolBarItem buttonRun;
@@ -609,11 +609,13 @@ public partial class MainPage : Alternet.UI.DisposableContentPage, EditorUI.IDoc
 
             Debug.WriteLine(e.Message);
 
-            Alternet.UI.App.Invoke(() =>
+            Alternet.UI.App.AddBackgroundAction(() =>
             {
-                logItems.Add(e.Message);
-                logListBox.SelectedItem = logItems[logItems.Count - 1];
-                logListBox.ScrollTo(logItems.Count - 1, -1, ScrollToPosition.End, true);
+                Alternet.UI.App.Invoke(() =>
+                {
+                    logItems.Add(new(e.Message));
+                    logListBox.SelectedItem = logItems[logItems.Count - 1];
+                });
             });
         }
         catch
@@ -623,5 +625,20 @@ public partial class MainPage : Alternet.UI.DisposableContentPage, EditorUI.IDoc
 
     private void editor_SelectionChanged(object sender, EventArgs e)
     {
+    }
+
+    private class LogItem
+    {
+        public string Message = string.Empty;
+
+        public LogItem(string message)
+        {
+            Message = message;
+        } 
+
+        public override string ToString()
+        {
+            return Message;
+        }
     }
 }
