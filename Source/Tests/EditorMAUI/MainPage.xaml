@@ -20,6 +20,8 @@
                                         x:Name="hideExtra"/>
                     <MenuFlyoutItem Text="Clear log"
                                         x:Name="clearLogItem"/>
+                    <MenuFlyoutItem Text="Enter string to stdin"
+                                        x:Name="enterStrToStdInput"/>
                 </MenuFlyout>
             </FlyoutBase.ContextFlyout>
         </StackLayout>

@@ -216,6 +216,11 @@ public partial class MainPage : Alternet.UI.DisposableContentPage, EditorUI.IDoc
         {
             logItems.Clear();
         };
+
+        enterStrToStdInput.Clicked += (s, e) =>
+        {
+            EditorUI.MainWindow.EnterStringToStdin();
+        };
     }
 
     public View CreateInnerForm()
