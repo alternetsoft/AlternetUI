@@ -72,19 +72,19 @@ namespace MenuSample
 
             toolbar.TextVisible = true;
             toolbar.ItemSize = 32;
-            toolbar.Margin = (0, 0, 0, ToolBar.DefaultDistanceToContent);
+            toolbar.SetMargins(false, false, false, true);
             toolbar.Padding = 1;
 
-            toolbar.Parent = this;
-
             InitializeComponent();
+
+            rootPanel.Layout = LayoutStyle.Vertical;
+            rootPanel.Children.Prepend(toolbar);
 
             noDividerCheckBox.Enabled = true;
             noDividerCheckBox.IsChecked = false;
             toolbar.SetVisibleBorders(false, false, false, true);
 
-            verticalCheckBox.Enabled = false;
-            isRightCheckBox.Enabled = false;
+            verticalCheckBox.Enabled = true;
             isBottomCheckBox.Enabled = true;
             imageToTextDisplayModeComboBox.Enabled = true;
 
@@ -471,25 +471,7 @@ namespace MenuSample
             EventArgs e)
         {
             toolbar.TextVisible = (sender as CheckBox)?.IsChecked ?? true;
-        }
-
-        /*private void ImageTextVertical()
-        {
-            if (toolbar == null)
-                return;
-            if (toolbar.IsVertical || toolbar.IsRight)
-            {
-                imageToTextDisplayModeComboBox.SelectedItem =
-                    ImageToText.Vertical;
-                toolbar.ImageToText = ImageToText.Vertical;
-            }
-        }*/
-
-        private void IsRightCheckBox_Changed(object? sender, EventArgs e)
-        {
-            /*if (toolbar != null)
-                toolbar.IsRight = isRightCheckBox.IsChecked;
-            ImageTextVertical();*/
+            VerticalCheckBox_Changed(null, EventArgs.Empty);
         }
 
         private void NoDividerCheckBox_Changed(object? sender, EventArgs e)
@@ -503,15 +485,40 @@ namespace MenuSample
             }
             else
             {
-                toolbar.SetVisibleBorders(false, false, false, true);
+                if(toolbar.IsVertical)
+                    toolbar.SetVisibleBorders(false, false, true, false);
+                else
+                    toolbar.SetVisibleBorders(false, false, false, true);
             }
         }
 
         private void VerticalCheckBox_Changed(object? sender, EventArgs e)
         {
-            /*if (toolbar != null)
-                toolbar.IsVertical = verticalCheckBox.IsChecked;
-            ImageTextVertical();*/
+            if (toolbar == null)
+                return;
+
+                var isVertical = verticalCheckBox.IsChecked;
+
+                if (isVertical)
+                {
+                    toolbar.VerticalAlignment = VerticalAlignment.Stretch;
+                    rootPanel.Layout = LayoutStyle.Horizontal;
+                    toolbar.SetVisibleBorders(false, false, true, false);
+                    toolbar.SetMargins(true, false, true, false);
+                    if(!toolbar.TextVisible || toolbar.ImageToText == ImageToText.Vertical)
+                        toolbar.SetToolContentAlignment(HVAlignment.Center);
+                    else
+                        toolbar.SetToolContentAlignment(HVAlignment.CenterLeft);
+                }
+                else
+                {
+                    rootPanel.Layout = LayoutStyle.Vertical;
+                    toolbar.SetVisibleBorders(false, IsBottom, false, !IsBottom);
+                    toolbar.SetMargins(false, IsBottom, false, !IsBottom);
+                    toolbar.SetToolContentAlignment(HVAlignment.Center);
+                }
+
+                toolbar.IsVertical = isVertical;
         }
 
         private void ShowToolbarImagesCheckBox_CheckedChanged(
@@ -530,6 +537,7 @@ namespace MenuSample
         private void ImageToTextDisplayModeComboBox_SelectedItemChanged(object sender, EventArgs e)
         {
             toolbar.ImageToText = (ImageToText)imageToTextDisplayModeComboBox.SelectedItem!;
+            VerticalCheckBox_Changed(null, EventArgs.Empty);
         }
 
         private int GenItemIndex()
@@ -546,10 +554,21 @@ namespace MenuSample
                 s.SizingGripVisible = !s.SizingGripVisible;
         }
 
+        private bool IsBottom => isBottomCheckBox.IsChecked;
+
+        private bool IsVertical => verticalCheckBox.IsChecked;
+
         private void IsBottomCheckBox_Changed(object? sender, EventArgs e)
         {
             if (toolbar == null)
                 return;
+
+            if (IsVertical)
+            {
+                toolbar.VerticalAlignment = VerticalAlignment.Stretch;
+                return;
+            }
+
             if (isBottomCheckBox.IsChecked)
             {
 

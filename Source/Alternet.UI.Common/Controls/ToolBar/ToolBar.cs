@@ -220,6 +220,24 @@ namespace Alternet.UI
         public virtual int? ImageSize { get; set; }
 
         /// <summary>
+        /// Gets or sets a value indicating whether the toolbar is vertical.
+        /// </summary>
+        public virtual bool IsVertical
+        {
+            get
+            {
+                return Layout == LayoutStyle.Vertical;
+            }
+
+            set
+            {
+                if (IsVertical == value)
+                    return;
+                Layout = value ? LayoutStyle.Vertical : LayoutStyle.Horizontal;
+            }
+        }
+
+        /// <summary>
         /// Gets or sets a value which specifies display modes for
         /// item image and text.
         /// </summary>
@@ -1530,6 +1548,23 @@ namespace Alternet.UI
                 Margin = (0, ToolBar.DefaultDistanceToContent, 0, 0);
         }
 
+        public virtual void SetMargins(
+            bool left,
+            bool top = false,
+            bool right = false,
+            bool bottom = false,
+            Coord? value = null)
+        {
+            value ??= ToolBar.DefaultDistanceToContent;
+
+            Coord GetWidth(bool visible)
+            {
+                return visible ? value.Value : 0;
+            }
+
+            Margin = (GetWidth(left), GetWidth(top), GetWidth(right), GetWidth(bottom));
+        }
+
         /// <summary>
         /// Moves toolbar to the top of the container. This is done
         /// by setting it's <see cref="AbstractControl.VerticalAlignment"/> to
@@ -1790,6 +1825,52 @@ namespace Alternet.UI
                 null);
             result.Enabled = false;
             return result;
+        }
+
+        public void SetToolContentAlignment(HVAlignment alignment)
+        {
+            DoInsideLayout(() =>
+            {
+                SetToolSpacerAlignment(alignment);
+                SetToolImageAlignment(alignment);
+                SetToolTextAlignment(alignment);
+            });
+        }
+
+        public void SetToolSpacerAlignment(HVAlignment alignment)
+        {
+            foreach (var control in Children)
+            {
+                if (control is SpeedButton button)
+                {
+                    button.SpacerHorizontalAlignment = alignment.Horizontal;
+                    button.SpacerVerticalAlignment = alignment.Vertical;
+                }
+            }
+        }
+
+        public void SetToolImageAlignment(HVAlignment alignment)
+        {
+            foreach(var control in Children)
+            {
+                if(control is SpeedButton button)
+                {
+                    button.ImageHorizontalAlignment = alignment.Horizontal;
+                    button.ImageVerticalAlignment = alignment.Vertical;
+                }
+            }
+        }
+
+        public void SetToolTextAlignment(HVAlignment alignment)
+        {
+            foreach (var control in Children)
+            {
+                if (control is SpeedButton button)
+                {
+                    button.LabelHorizontalAlignment = alignment.Horizontal;
+                    button.LabelVerticalAlignment = alignment.Vertical;
+                }
+            }
         }
 
         /// <summary>

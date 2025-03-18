@@ -10,7 +10,7 @@
                 Command="App.Log"
                 CommandParameter="Sample binding message from Window"/>
   </Window.InputBindings>
-  
+
   <Window.Menu>
     <MainMenu>
       <MenuItem Text="_File" IsTextLocalized="true" Name="fileMenu">
@@ -62,16 +62,18 @@
 
   <!-- ========================= -->
 
-  <TabControl Name="mainPanel" Margin="10" VerticalAlignment="Fill">
+  <Panel VerticalAlignment="Fill" Name="rootPanel">
 
-    <TabControl.InputBindings>
-      <KeyBinding Key="R" Modifiers="Control"
-                  Command="App.Log"
-                  CommandParameter="Sample binding message from TabControl"/>
-    </TabControl.InputBindings>
+    <TabControl Name="mainPanel" Margin="10" HorizontalAlignment="Fill">
 
-    <!-- ========================= -->
-    
+      <TabControl.InputBindings>
+        <KeyBinding Key="R" Modifiers="Control"
+                    Command="App.Log"
+                    CommandParameter="Sample binding message from TabControl"/>
+      </TabControl.InputBindings>
+
+      <!-- ========================= -->
+
       <HorizontalStackPanel Margin="10" Name="menuPanel" Title="Menu" IsTitleLocalized="true">
         <VerticalStackPanel>
           <Button Text="Add Menu Item" IsTextLocalized="true"
@@ -112,8 +114,8 @@
           </Border>
         </VerticalStackPanel>
       </HorizontalStackPanel>
-      
-    <!-- ========================= -->
+
+      <!-- ========================= -->
 
       <HorizontalStackPanel Margin="10" Name="toolbarPanel" Title="ToolBar" IsTitleLocalized="true">
         <StackPanel>
@@ -142,9 +144,6 @@
           <CheckBox Text="Vertical" Name="verticalCheckBox" IsTextLocalized="true"
               CheckedChanged="VerticalCheckBox_Changed"
               Margin="5,5,0,5" IsChecked="false"/>
-          <CheckBox Text="Is Right" Name="isRightCheckBox" IsTextLocalized="true"
-              CheckedChanged="IsRightCheckBox_Changed"
-              Margin="5,5,0,5" IsChecked="false"/>
           <CheckBox Text="Is Bottom" Name="isBottomCheckBox" IsTextLocalized="true"
               CheckedChanged="IsBottomCheckBox_Changed"
               Margin="5,5,0,5" IsChecked="false"/>
@@ -165,7 +164,7 @@
         </StackPanel>
       </HorizontalStackPanel>
 
-    <!-- ========================= -->
+      <!-- ========================= -->
 
       <HorizontalStackPanel Margin="10" Name="statusPanel" Title="StatusBar">
         <VerticalStackPanel>
@@ -187,11 +186,14 @@
         <VerticalStackPanel Margin="5,0,0,0">
           <Button Text="Edit..." Margin="0,0,0,10" Name="statusEditButton" IsTextLocalized="true"/>
         </VerticalStackPanel>
-      </HorizontalStackPanel> 
+      </HorizontalStackPanel>
 
-    <!-- ========================= -->
+      <!-- ========================= -->
 
-  </TabControl>
+    </TabControl>
+
+  </Panel>
+
 
   <LogListBox Name="eventsListBox" Margin="10,5,10,10" MinHeight="200"/>
 
