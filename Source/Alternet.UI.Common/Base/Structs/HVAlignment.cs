@@ -25,6 +25,12 @@ namespace Alternet.UI
             = new(HorizontalAlignment.Left, VerticalAlignment.Top);
 
         /// <summary>
+        /// Gets <see cref="HVAlignment"/> with alignment set to center-left.
+        /// </summary>
+        public static readonly HVAlignment CenterLeft
+            = new(HorizontalAlignment.Left, VerticalAlignment.Center);
+
+        /// <summary>
         /// Gets horizontal alignment.
         /// </summary>
         public readonly HorizontalAlignment Horizontal;
