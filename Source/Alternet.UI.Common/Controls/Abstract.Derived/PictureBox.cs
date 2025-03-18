@@ -119,6 +119,7 @@ namespace Alternet.UI
                 }
 
                 StateObjects ??= new();
+                StateObjects.ImageSets = null;
                 StateObjects.Images ??= new();
                 StateObjects.Images.Normal = value;
                 RaiseImageChanged(EventArgs.Empty);
@@ -142,6 +143,7 @@ namespace Alternet.UI
                 if (DisabledImage == value)
                     return;
                 StateObjects ??= new();
+                StateObjects.ImageSets = null;
                 StateObjects.Images ??= new();
                 StateObjects.Images.Disabled = value;
                 RaiseImageChanged(EventArgs.Empty);
@@ -293,6 +295,7 @@ namespace Alternet.UI
                 if (ImageSet == value)
                     return;
                 StateObjects ??= new();
+                StateObjects.Images = null;
                 StateObjects.ImageSets ??= new();
                 StateObjects.ImageSets.Normal = value;
                 RaiseImageChanged(EventArgs.Empty);
@@ -316,6 +319,7 @@ namespace Alternet.UI
                 if (DisabledImageSet == value)
                     return;
                 StateObjects ??= new();
+                StateObjects.Images = null;
                 StateObjects.ImageSets ??= new();
                 StateObjects.ImageSets.Disabled = value;
                 RaiseImageChanged(EventArgs.Empty);
