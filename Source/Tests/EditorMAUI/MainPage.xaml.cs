@@ -139,7 +139,6 @@ public partial class MainPage : Alternet.UI.DisposableContentPage, EditorUI.IDoc
 
         logListBox.SelectionMode = SelectionMode.Single;
         logListBox.ItemsSource = logItems;
-        logListBox.ItemsUpdatingScrollMode = ItemsUpdatingScrollMode.KeepLastItemInView;
         logListBox.VerticalScrollBarVisibility = ScrollBarVisibility.Always;
         logListBox.HorizontalScrollBarVisibility = ScrollBarVisibility.Always;
 
@@ -610,6 +609,7 @@ public partial class MainPage : Alternet.UI.DisposableContentPage, EditorUI.IDoc
             {
                 logItems.Add(new(s));
                 logListBox.SelectedItem = logItems[logItems.Count - 1];
+                logListBox.ScrollTo(logItems.Count - 1);
             });
         }
         catch
