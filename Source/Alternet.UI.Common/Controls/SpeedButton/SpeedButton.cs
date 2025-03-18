@@ -294,6 +294,44 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets or sets horizontal alignment of the spacer.
+        /// </summary>
+        public virtual HorizontalAlignment SpacerHorizontalAlignment
+        {
+            get
+            {
+                return spacer.HorizontalAlignment;
+            }
+
+            set
+            {
+                if (SpacerHorizontalAlignment == value)
+                    return;
+                spacer.HorizontalAlignment = value;
+                PerformLayoutAndInvalidate(null, false);
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets vertical alignment of the spacer.
+        /// </summary>
+        public virtual VerticalAlignment SpacerVerticalAlignment
+        {
+            get
+            {
+                return spacer.VerticalAlignment;
+            }
+
+            set
+            {
+                if (SpacerVerticalAlignment == value)
+                    return;
+                spacer.VerticalAlignment = value;
+                PerformLayoutAndInvalidate(null, false);
+            }
+        }
+
+        /// <summary>
         /// Gets or sets horizontal alignment of the label.
         /// </summary>
         public virtual HorizontalAlignment LabelHorizontalAlignment
