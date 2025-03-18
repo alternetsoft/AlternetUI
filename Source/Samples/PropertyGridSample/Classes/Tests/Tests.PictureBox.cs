@@ -9,6 +9,7 @@ using Alternet.Drawing;
 using System.Diagnostics;
 using System.ComponentModel;
 using System.IO;
+using SkiaSharp;
 
 namespace PropertyGridSample
 {
@@ -16,8 +17,24 @@ namespace PropertyGridSample
     {
         void InitTestsPictureBox()
         {
-            AddControlAction<PictureBox>("Set MessageBoxIcon.Error", TestPictureBoxSetMessageBoxIconError);
+            AddControlAction<PictureBox>(
+                "Set MessageBoxIcon.Error",
+                TestPictureBoxSetMessageBoxIconError);
             AddControlAction<PictureBox>("Set ToolTip image", TestPictureBoxSetToolTipImage);
+
+            AddControlAction<PictureBox>("Load ErrorPngICCP", TestPictureBoxErrorPngICCP);            
+        }
+
+        void TestPictureBoxErrorPngICCP(PictureBox control)
+        {
+            var resFolder = "Resources.Tests.ErrorPngICCP.";
+            var resPrefix = AssemblyUtils.GetImageUrlInAssembly(GetType().Assembly, resFolder);
+            var url = $"{resPrefix}Pencil.png";
+
+            using var stream = ResourceLoader.StreamFromUrl(url);
+            var image = new ImageSet(stream);
+
+            control.ImageSet = image;
         }
 
         void TestPictureBoxSetToolTipImage(PictureBox control)

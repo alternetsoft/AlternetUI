@@ -7,6 +7,8 @@ using Alternet.Base.Collections;
 using Alternet.Drawing;
 using Alternet.UI.Localization;
 
+using SkiaSharp;
+
 namespace Alternet.UI
 {
     /// <summary>
@@ -19,6 +21,12 @@ namespace Alternet.UI
         /// Gets an empty <see cref="ImageSet"/>.
         /// </summary>
         public static readonly ImageSet Empty = new(immutable: true);
+
+        /// <summary>
+        /// Gets or sets a value indicating whether to use SkiaSharp for loading images.
+        /// Default is True. If this value is False, platform specific image loading will be used.
+        /// </summary>
+        public static bool UseSkiaSharpForLoading = true;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ImageSet"/> with default values.
@@ -57,7 +65,7 @@ namespace Alternet.UI
         public ImageSet(Stream stream)
             : this()
         {
-            Handler.LoadFromStream(stream);
+            InternalLoadFromStream(stream);
         }
 
         /// <summary>
@@ -85,7 +93,7 @@ namespace Alternet.UI
                 return;
             }
 
-            Handler.LoadFromStream(stream);
+            InternalLoadFromStream(stream);
         }
 
         /// <summary>
@@ -376,5 +384,30 @@ namespace Alternet.UI
         {
             return GraphicsFactory.Handler.CreateImageSetHandler() ?? PlessImageSetHandler.Default;
         }
-   }
+
+        /// <summary>
+        /// Loads image data from the specified stream.
+        /// </summary>
+        /// <param name="stream">The data stream used to load the image.</param>
+        protected virtual bool InternalLoadFromStream(Stream stream)
+        {
+            if (UseSkiaSharpForLoading)
+            {
+                try
+                {
+                    var bitmap = SKBitmap.Decode(stream);
+                    Images.Add((Image)bitmap);
+                    return true;
+                }
+                catch
+                {
+                    return false;
+                }
+            }
+            else
+            {
+                return Handler.LoadFromStream(stream);
+            }
+        }
+    }
 }

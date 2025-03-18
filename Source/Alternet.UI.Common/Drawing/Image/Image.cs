@@ -20,6 +20,12 @@ namespace Alternet.Drawing
     public partial class Image : HandledObject<IImageHandler>
     {
         /// <summary>
+        /// Gets or sets a value indicating whether to use SkiaSharp for loading images.
+        /// Default is True. If this value is False, platform specific image loading will be used.
+        /// </summary>
+        public static bool UseSkiaSharpForLoading = true;
+
+        /// <summary>
         /// Gets or sets default quality used when images are saved and quality parameter is omitted.
         /// </summary>
         public static int DefaultSaveQuality = 70;
@@ -770,7 +776,7 @@ namespace Alternet.Drawing
                 using var stream = ResourceLoader.StreamFromUrl(url);
                 if (stream is null)
                     return false;
-                var result = Handler.LoadFromStream(stream, type);
+                var result = InternalLoadFromStream(stream, type);
                 if(result)
                     this.url = url;
                 return result;
@@ -848,7 +854,7 @@ namespace Alternet.Drawing
             if (Immutable)
                 return false;
 
-            return Handler.LoadFromStream(stream, type);
+            return InternalLoadFromStream(stream, type);
         }
 
         /// <summary>
@@ -1136,6 +1142,32 @@ namespace Alternet.Drawing
         protected override IImageHandler CreateHandler()
         {
             return GraphicsFactory.Handler.CreateImageHandler();
+        }
+
+        /// <summary>
+        /// Loads image data from the specified stream.
+        /// </summary>
+        /// <param name="stream">The data stream used to load the image.</param>
+        /// <param name="type">One of the <see cref="BitmapType"/> values</param>
+        protected virtual bool InternalLoadFromStream(Stream stream, BitmapType type = BitmapType.Any)
+        {
+            if (UseSkiaSharpForLoading)
+            {
+                try
+                {
+                    var bitmap = SKBitmap.Decode(stream);
+                    Assign(bitmap);
+                    return true;
+                }
+                catch
+                {
+                    return false;
+                }
+            }
+            else
+            {
+                return Handler.LoadFromStream(stream, type);
+            }
         }
     }
 }

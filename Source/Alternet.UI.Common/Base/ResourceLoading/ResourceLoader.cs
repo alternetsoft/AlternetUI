@@ -247,7 +247,7 @@ namespace Alternet.UI
         /// no assembly is specified.
         /// </summary>
         /// <param name="assembly">The default assembly.</param>
-        public void SetDefaultAssembly(Assembly assembly)
+        public virtual void SetDefaultAssembly(Assembly assembly)
         {
             defaultEmbresAssembly = new AssemblyDescriptor(assembly);
         }
@@ -260,7 +260,7 @@ namespace Alternet.UI
         /// A base URI to use if <paramref name="uri"/> is relative.
         /// </param>
         /// <returns>True if the asset could be found; otherwise false.</returns>
-        public bool Exists(Uri uri, Uri? baseUri = null)
+        public virtual bool Exists(Uri uri, Uri? baseUri = null)
         {
             return GetAsset(uri, baseUri) != null;
         }
@@ -276,7 +276,7 @@ namespace Alternet.UI
         /// <exception cref="FileNotFoundException">
         /// The asset could not be found.
         /// </exception>
-        public Stream Open(Uri uri, Uri? baseUri = null)
+        public virtual Stream Open(Uri uri, Uri? baseUri = null)
             => OpenAndGetAssembly(uri, baseUri).stream;
 
         /// <summary>
@@ -293,7 +293,7 @@ namespace Alternet.UI
         /// <exception cref="FileNotFoundException">
         /// The asset could not be found.
         /// </exception>
-        public (Stream stream, Assembly assembly) OpenAndGetAssembly(
+        public virtual (Stream stream, Assembly assembly) OpenAndGetAssembly(
             Uri uri,
             Uri? baseUri = null)
         {
