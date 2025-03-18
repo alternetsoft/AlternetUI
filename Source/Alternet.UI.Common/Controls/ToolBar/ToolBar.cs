@@ -239,6 +239,8 @@ namespace Alternet.UI
                         if (item is SpeedButton speedButton)
                             speedButton.ImageToText = value;
                     }
+
+                    OnItemSizeChanged();
                 });
             }
         }
@@ -260,15 +262,7 @@ namespace Alternet.UI
                 if (itemSize == value)
                     return;
                 itemSize = value;
-
-                DoInsideLayout(() =>
-                {
-                    foreach (var item in Children)
-                    {
-                        if (item is SpeedButton || item is PictureBox)
-                            item.SuggestedSize = GetItemSuggestedSize(item);
-                    }
-                });
+                OnItemSizeChanged();
             }
         }
 
@@ -951,6 +945,7 @@ namespace Alternet.UI
             else
             {
                 picture.SuggestedSize = GetItemSuggestedSize(picture);
+                picture.MinimumSize = itemSize;
             }
 
             if (imageDisabled is not null)
@@ -1829,6 +1824,7 @@ namespace Alternet.UI
             speedButton.Margin = DefaultSpeedBtnMargin;
 
             speedButton.SuggestedSize = GetItemSuggestedSize(speedButton);
+            speedButton.MinimumSize = itemSize;
 
             if (imageSetDisabled is not null)
             {
@@ -1927,6 +1923,25 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Called when <see cref="ItemSize"/> property is changed.
+        /// </summary>
+        protected virtual void OnItemSizeChanged()
+        {
+            DoInsideLayout(() =>
+            {
+                foreach (var item in Children)
+                {
+                    if (item is SpeedButton || item is PictureBox)
+                    {
+                        var size = GetItemSuggestedSize(item);
+                        item.SuggestedSize = size;
+                        item.MinimumSize = itemSize;
+                    }
+                }
+            });
+        }
+
+        /// <summary>
         /// Gets item's suggested size.
         /// </summary>
         /// <param name="control">Child control for which to get the suggested size.</param>
@@ -1939,7 +1954,10 @@ namespace Alternet.UI
             }
 
             if (TextVisible)
-                return (Coord.NaN, itemSize);
+            {
+                return SizeD.NaN;
+            }
+
             return itemSize;
         }
     }

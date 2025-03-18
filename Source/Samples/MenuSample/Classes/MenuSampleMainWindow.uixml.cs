@@ -86,7 +86,7 @@ namespace MenuSample
             verticalCheckBox.Enabled = false;
             isRightCheckBox.Enabled = false;
             isBottomCheckBox.Enabled = true;
-            imageToTextDisplayModeComboBox.Enabled = false;
+            imageToTextDisplayModeComboBox.Enabled = true;
 
             InitToolbar();
 

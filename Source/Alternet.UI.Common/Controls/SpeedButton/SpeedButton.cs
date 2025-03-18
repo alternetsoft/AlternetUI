@@ -130,6 +130,7 @@ namespace Alternet.UI
         private Timer? firstClickTimer;
         private int clickRepeatDelay = DefaultClickRepeatDelay;
         private CommandSourceStruct commandSource;
+        private ImageToText imageToText = ImageToText.Horizontal;
 
         static SpeedButton()
         {
@@ -180,6 +181,9 @@ namespace Alternet.UI
             {
                 Enabled = commandSource.CanExecute;
             };
+
+            drawable.CenterHorz = true;
+            drawable.CenterVert = true;
         }
 
         /// <summary>
@@ -630,7 +634,7 @@ namespace Alternet.UI
                 if (textVisible == value)
                     return;
                 textVisible = value;
-                PerformLayoutAndInvalidate();
+                PerformLayoutAndInvalidate(OnImageToTextChanged);
             }
         }
 
@@ -685,7 +689,7 @@ namespace Alternet.UI
                 if (imageVisible == value)
                     return;
                 imageVisible = value;
-                PerformLayoutAndInvalidate();
+                PerformLayoutAndInvalidate(OnImageToTextChanged);
             }
         }
 
@@ -696,20 +700,15 @@ namespace Alternet.UI
         {
             get
             {
-                if (Layout == LayoutStyle.Horizontal)
-                    return ImageToText.Horizontal;
-                else
-                    return ImageToText.Vertical;
+                return imageToText;
             }
 
             set
             {
-                if (value == ImageToText)
+                if (value == imageToText)
                     return;
-                if (value == ImageToText.Horizontal)
-                    Layout = LayoutStyle.Horizontal;
-                else
-                    Layout = LayoutStyle.Vertical;
+                imageToText = value;
+                OnImageToTextChanged();
                 Invalidate();
             }
         }
@@ -1151,6 +1150,17 @@ namespace Alternet.UI
                 RaiseClick(EventArgs.Empty);
                 ShowDropDownMenu();
             }
+        }
+
+        /// <summary>
+        /// Called when <see cref="ImageToText"/> property is changed.
+        /// </summary>
+        protected virtual void OnImageToTextChanged()
+        {
+            if (ImageToText == ImageToText.Horizontal || !TextVisible || !ImageVisible)
+                Layout = LayoutStyle.Horizontal;
+            else
+                Layout = LayoutStyle.Vertical;
         }
 
         /// <inheritdoc/>
