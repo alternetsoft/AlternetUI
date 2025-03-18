@@ -52,10 +52,10 @@ namespace Alternet::UI
 #if defined(__WXGTK__)
         wxApp::GTKAllowDiagnosticsControl();
 #endif
-#ifdef _DEBUG
+
         wxLog::SetActiveTarget(new wxAlternetLog());
         wxLog::GetActiveTarget()->SetFormatter(new wxAlternetLogFormatter());
-#endif
+
         return wxApp::OnInit();
     }
 
