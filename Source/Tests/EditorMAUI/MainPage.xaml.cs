@@ -23,7 +23,6 @@ public partial class MainPage : Alternet.UI.DisposableContentPage, EditorUI.IDoc
 
     private readonly EditorUI.PythonDocument documentPy;
     private readonly EditorUI.CSharpDocument documentCs;
-    private readonly ObservableCollection<LogItem> logItems = new();
 
     private readonly SimpleToolBarView.IToolBarItem buttonNew;
     private readonly SimpleToolBarView.IToolBarItem buttonRun;
@@ -137,10 +136,12 @@ public partial class MainPage : Alternet.UI.DisposableContentPage, EditorUI.IDoc
 
         buttonStatus = toolbar.AddLabel("Ready");
 
-        logListBox.SelectionMode = SelectionMode.Single;
-        logListBox.ItemsSource = logItems;
-        logListBox.VerticalScrollBarVisibility = ScrollBarVisibility.Always;
-        logListBox.HorizontalScrollBarVisibility = ScrollBarVisibility.Always;
+        CollectionLogView.IsDebugWriteLineCalled = true;
+
+        var logListBox = new SyntaxEditLogView();
+
+        logListBox.BindApplicationLog();
+        rootGrid.Add(logListBox, 0, 2);
 
         InitEdit();
 
@@ -159,8 +160,6 @@ public partial class MainPage : Alternet.UI.DisposableContentPage, EditorUI.IDoc
         }
 
         BindingContext = this;
-
-        Alternet.UI.App.LogMessage += App_LogMessage;
 
         var ho = editorPanel.HorizontalOptions;
         ho.Expands = true;
@@ -213,7 +212,7 @@ public partial class MainPage : Alternet.UI.DisposableContentPage, EditorUI.IDoc
 
         clearLogItem.Clicked += (s, e) =>
         {
-            logItems.Clear();
+            logListBox.Clear();
         };
 
         enterStrToStdInput.Clicked += (s, e) =>
@@ -594,45 +593,7 @@ public partial class MainPage : Alternet.UI.DisposableContentPage, EditorUI.IDoc
         Alternet.UI.Keyboard.ShowKeyboard(Editor);
     }
 
-    private void App_LogMessage(object? sender, Alternet.UI.LogMessageEventArgs e)
-    {
-        try
-        {
-            if (e.Message is null)
-                return;
-
-            var s = e.Message;
-
-            Debug.WriteLine(s);
-
-            Alternet.UI.App.AddBackgroundInvokeAction(() =>
-            {
-                logItems.Add(new(s));
-                logListBox.SelectedItem = logItems[logItems.Count - 1];
-                logListBox.ScrollTo(logItems.Count - 1);
-            });
-        }
-        catch
-        {
-        }
-    }
-
     private void editor_SelectionChanged(object sender, EventArgs e)
     {
-    }
-
-    private class LogItem
-    {
-        public string Message = string.Empty;
-
-        public LogItem(string message)
-        {
-            Message = message;
-        } 
-
-        public override string ToString()
-        {
-            return Message;
-        }
     }
 }

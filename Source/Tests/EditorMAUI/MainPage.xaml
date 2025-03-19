@@ -5,7 +5,7 @@
              xmlns:editor="http://schemas.alternetsoft.com/editor/2024"
              x:Class="EditorMAUI.MainPage"
              Title="Alternet.Editor Demo">
-    <Grid RowDefinitions="*, Auto, 200">
+    <Grid RowDefinitions="*, Auto, 200" x:Name="rootGrid">
         <StackLayout x:Name="panel" 
                            Grid.Row="0">
 
@@ -27,6 +27,5 @@
         </StackLayout>
 
         <alternet:SimpleToolBarView x:Name="toolbar" Grid.Row="1"/>
-        <CollectionView x:Name="logListBox" Grid.Row="2"/>
     </Grid>
 </alternet:DisposableContentPage>
