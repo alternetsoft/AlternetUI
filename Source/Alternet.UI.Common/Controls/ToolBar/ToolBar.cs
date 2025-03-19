@@ -1548,6 +1548,15 @@ namespace Alternet.UI
                 Margin = (0, ToolBar.DefaultDistanceToContent, 0, 0);
         }
 
+        /// <summary>
+        /// Sets the margins of the toolbar.
+        /// </summary>
+        /// <param name="left">Whether to set the left margin.</param>
+        /// <param name="top">Whether to set the top margin.</param>
+        /// <param name="right">Whether to set the right margin.</param>
+        /// <param name="bottom">Whether to set the bottom margin.</param>
+        /// <param name="value">The value to set for the margins.
+        /// If null, <see cref="DefaultDistanceToContent"/> is used.</param>
         public virtual void SetMargins(
             bool left,
             bool top = false,
@@ -1827,6 +1836,10 @@ namespace Alternet.UI
             return result;
         }
 
+        /// <summary>
+        /// Sets the alignment for the content of all toolbar items.
+        /// </summary>
+        /// <param name="alignment">The alignment to set for the toolbar items.</param>
         public void SetToolContentAlignment(HVAlignment alignment)
         {
             DoInsideLayout(() =>
@@ -1837,6 +1850,10 @@ namespace Alternet.UI
             });
         }
 
+        /// <summary>
+        /// Sets the alignment for the spacer of all toolbar items.
+        /// </summary>
+        /// <param name="alignment">The alignment to set for the toolbar items.</param>
         public void SetToolSpacerAlignment(HVAlignment alignment)
         {
             foreach (var control in Children)
@@ -1849,6 +1866,10 @@ namespace Alternet.UI
             }
         }
 
+        /// <summary>
+        /// Sets the alignment for the image of all toolbar items.
+        /// </summary>
+        /// <param name="alignment">The alignment to set for the toolbar items.</param>
         public void SetToolImageAlignment(HVAlignment alignment)
         {
             foreach(var control in Children)
@@ -1861,6 +1882,10 @@ namespace Alternet.UI
             }
         }
 
+        /// <summary>
+        /// Sets the alignment for the text of all toolbar items.
+        /// </summary>
+        /// <param name="alignment">The alignment to set for the toolbar items.</param>
         public void SetToolTextAlignment(HVAlignment alignment)
         {
             foreach (var control in Children)
