@@ -12,6 +12,7 @@ using Microsoft.Maui.Controls;
 using Microsoft.Maui.Controls.Shapes;
 using Alternet.Maui;
 using Alternet.Scripter.Python;
+using Alternet.Scripter.Integration.AlternetUI;
 
 namespace EditorMAUI;
 
@@ -191,8 +192,8 @@ public partial class MainPage : Alternet.UI.DisposableContentPage, EditorUI.IDoc
         {
         };
 
-        ScripterDemoUtils.RunningProcessDisposed += ScripterUtils_RunningProcessDisposed;
-        ScripterDemoUtils.RunningProcessExited += ScripterUtils_RunningProcessDisposed;
+        ProcessRunner.RunningProcessDisposed += ScripterUtils_RunningProcessDisposed;
+        ProcessRunner.RunningProcessExited += ScripterUtils_RunningProcessDisposed;
 
         documentCs = new(this);
         documentCs.StateChanged += Document_StateChanged;
