@@ -32,6 +32,17 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets whether SHIFT key is currently pressed.
+        /// </summary>
+        public static bool IsShiftPressed
+        {
+            get
+            {
+                return IsKeyDown(Key.Shift);
+            }
+        }
+
+        /// <summary>
         /// Gets whether ALT key is currently pressed.
         /// </summary>
         public static bool IsAltPressed
