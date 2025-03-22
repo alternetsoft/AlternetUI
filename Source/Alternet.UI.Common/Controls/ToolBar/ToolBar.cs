@@ -233,7 +233,17 @@ namespace Alternet.UI
             {
                 if (IsVertical == value)
                     return;
-                Layout = value ? LayoutStyle.Vertical : LayoutStyle.Horizontal;
+
+                DoInsideLayout(() =>
+                {
+                    Layout = value ? LayoutStyle.Vertical : LayoutStyle.Horizontal;
+
+                    foreach (var item in Children)
+                    {
+                        if (item is SeparatorItem separator)
+                            separator.IsVertical = value;
+                    }
+                });
             }
         }
 
@@ -1044,12 +1054,7 @@ namespace Alternet.UI
         /// <returns><see cref="ObjectUniqueId"/> of the added item.</returns>
         public virtual ObjectUniqueId AddSeparator()
         {
-            Border border = new()
-            {
-                BorderWidth = (DefaultSeparatorWidth, 0, 0, 0),
-                SuggestedWidth = DefaultSeparatorWidth,
-                Margin = DefaultSeparatorMargin,
-            };
+            SeparatorItem border = new();
 
             if(DefaultSeparatorColor is not null)
                 border.BorderColor = DefaultSeparatorColor;
@@ -2065,6 +2070,48 @@ namespace Alternet.UI
             }
 
             return itemSize;
+        }
+
+        private class SeparatorItem : Border
+        {
+            private bool isVertical;
+
+            public SeparatorItem()
+            {
+                VerticalChanged();
+            }
+
+            public bool IsVertical
+            {
+                get
+                {
+                    return isVertical;
+                }
+
+                set
+                {
+                    if (isVertical == value)
+                        return;
+                    isVertical = value;
+                    VerticalChanged();
+                }
+            }
+
+            private void VerticalChanged()
+            {
+                if (isVertical)
+                {
+                    BorderWidth = (0, DefaultSeparatorWidth, 0, 0);
+                    SuggestedSize = (Coord.NaN, DefaultSeparatorWidth);
+                    Margin = DefaultSeparatorMargin;
+                }
+                else
+                {
+                    BorderWidth = (DefaultSeparatorWidth, 0, 0, 0);
+                    SuggestedSize = (DefaultSeparatorWidth, Coord.NaN);
+                    Margin = DefaultSeparatorMargin;
+                }
+            }
         }
     }
 }
