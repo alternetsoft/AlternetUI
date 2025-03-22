@@ -34,6 +34,12 @@ namespace Alternet.UI
             ParentForeColor = true;
         }
 
+        /// <summary>
+        /// Gets or sets a value indicating whether the scroll
+        /// viewer is scrolled with the mouse wheel.
+        /// </summary>
+        public virtual bool IsScrolledWithMouseWheel { get; set; } = true;
+
         /// <inheritdoc/>
         public override ControlTypeId ControlKind => ControlTypeId.ScrollViewer;
 
@@ -53,6 +59,40 @@ namespace Alternet.UI
             }
 
             return result;
+        }
+
+        /// <summary>
+        /// Determines whether the mouse wheel event should be ignored for
+        /// the specified child control.
+        /// </summary>
+        /// <param name="child">The child control to check.</param>
+        /// <returns>True if the mouse wheel event should be ignored; otherwise, false.</returns>
+        protected virtual bool IgnoreChildMouseWheel(AbstractControl? child)
+        {
+            return child is ComboBox;
+        }
+
+        /// <inheritdoc/>
+        protected override void OnBeforeChildMouseWheel(object? sender, MouseEventArgs e)
+        {
+            if (e.Handled || IgnoreChildMouseWheel(sender as AbstractControl)
+                || !IsScrolledWithMouseWheel)
+                return;
+
+            var sign = Math.Sign(e.Delta);
+
+            if (Keyboard.IsShiftPressed)
+            {
+                var w = (int)MeasureCanvas.GetTextExtent("W", RealFont).Width;
+                IncHorizontalLayoutOffset(sign * w);
+            }
+            else
+            {
+                var h = (int)MeasureCanvas.GetTextExtent("Wg", RealFont).Height;
+                IncVerticalLayoutOffset(sign * h);
+            }
+
+            e.Handled = true;
         }
 
         /// <inheritdoc/>
