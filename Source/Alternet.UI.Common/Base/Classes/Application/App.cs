@@ -135,7 +135,6 @@ namespace Alternet.UI
         private static bool inOnThreadException;
         private static IconSet? icon;
         private static bool terminating = false;
-        private static int logUpdateCount;
         private static bool logFileIsEnabled;
         private static App? current;
         private static string? logFilePath;
@@ -1419,7 +1418,7 @@ namespace Alternet.UI
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool LogInUpdates()
         {
-            return logUpdateCount > 0;
+            return false;
         }
 
         /// <summary>

@@ -1210,6 +1210,7 @@ namespace Alternet.Drawing
 
         /// <summary>
         /// Measures the specified string when drawn with the specified <see cref="Font"/>.
+        /// Calls internally <see cref="GetTextExtent"/>.
         /// </summary>
         /// <param name="text">String to measure.</param>
         /// <param name="font"><see cref="Font"/> that defines the text format of the string.</param>

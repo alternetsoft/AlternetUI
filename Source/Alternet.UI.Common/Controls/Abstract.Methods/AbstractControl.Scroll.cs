@@ -338,6 +338,58 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Increases the horizontal layout offset by the specified value.
+        /// </summary>
+        /// <param name="value">The value to increase the horizontal layout offset by.</param>
+        /// <param name="minValue">The minimum value for the horizontal layout offset.</param>
+        /// <param name="updateScrollBar">Indicates whether to update the
+        /// scroll bar position.</param>
+        public virtual void IncHorizontalLayoutOffset(
+            Coord value,
+            Coord minValue = 0,
+            bool updateScrollBar = true)
+        {
+            var offset = LayoutOffset;
+            offset.X += value;
+            offset.X = Math.Min(minValue, offset.X);
+            LayoutOffset = offset;
+            if (updateScrollBar)
+                SetScrollBarPosition(false, (int)Math.Abs(LayoutOffset.X));
+        }
+
+        /// <summary>
+        /// Increases the vertical layout offset by the specified value.
+        /// </summary>
+        /// <param name="value">The value to increase the vertical layout offset by.</param>
+        /// <param name="minValue">The minimum value for the vertical layout offset.</param>
+        /// <param name="updateScrollBar">Indicates whether to update the
+        /// scroll bar position.</param>
+        public virtual void IncVerticalLayoutOffset(
+            Coord value,
+            Coord minValue = 0,
+            bool updateScrollBar = true)
+        {
+            var offset = LayoutOffset;
+            offset.Y += value;
+            offset.Y = Math.Min(minValue, offset.Y);
+            LayoutOffset = offset;
+            if (updateScrollBar)
+                SetScrollBarPosition(true, (int)Math.Abs(LayoutOffset.Y));
+        }
+
+        /// <summary>
+        /// Sets system scrollbar thumb position.
+        /// </summary>
+        /// <param name="isVertical">Vertical or horizontal scrollbar.</param>
+        /// <param name="value">The thumb position of the system scrollbar.</param>
+        /// <returns></returns>
+        public void SetScrollBarPosition(bool isVertical, int value)
+        {
+            var info = GetScrollBarInfo(isVertical).WithPosition(value);
+            SetScrollBarInfo(isVertical, info);
+        }
+
+        /// <summary>
         /// Gets system scrollbar large change value.
         /// </summary>
         /// <param name="isVertical">Vertical or horizontal scroll bar.</param>

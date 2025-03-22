@@ -1007,7 +1007,12 @@ namespace Alternet.UI
             DebugUtils.DebugCall(() =>
             {
                 if (!e.Handled)
-                    KeyInfo.Run(KnownShortcuts.ShowDeveloperTools, e, DialogFactory.ShowDeveloperTools);
+                {
+                    KeyInfo.Run(
+                        KnownShortcuts.ShowDeveloperTools,
+                        e,
+                        DialogFactory.ShowDeveloperTools);
+                }
             });
 
             if (ForEachVisibleChild(e, (control, e) => control.OnAfterParentKeyDown(this, e)))
@@ -1077,10 +1082,17 @@ namespace Alternet.UI
                 return;
             HoveredControl = this;
             OnMouseWheel(e);
+
+            if (ForEachParent(e, (control, e) => control.OnBeforeChildMouseWheel(this, e)))
+                return;
+
             MouseWheel?.Invoke(this, e);
 
             RaiseNotifications((n) => n.AfterMouseWheel(this, e));
             ForEachVisibleChild(e, (control, e) => control.OnAfterParentMouseWheel(this, e));
+
+            if (ForEachParent(e, (control, e) => control.OnAfterChildMouseWheel(this, e)))
+                return;
         }
 
         /// <summary>
