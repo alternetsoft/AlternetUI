@@ -1,3 +1,20 @@
+# 0.9.717 (2025 March 22)
+
+- ToolBar: IsVertical, SetMargins, SetToolContentAlignment, SetToolSpacerAlignment, SetToolImageAlignment, SetToolTextAlignment.
+- ToolBar: Fix wrong layout in some cases.
+- Critical: Application.cpp: Use wxAlternetLog in all cases. This supresses strange modal dialogs appeared in some cases.
+- Use SkiaSharp for image loading #174. This fixes problems with png image loading in some cases.
+- ScrollViewer: mouse wheel optionally scrolls children.
+- SpeedButton: SpacerHorizontalAlignment, SpacerVerticalAlignment.
+- SpeedButton and ToolBar: Fix ImageToText behavior.
+- PictureBox: Clears the state of Images when ImageSets are assigned, and vice versa.
+- App: Simplify and speed up log related code.
+- Maui: Fix layout and use weak references in SimpleTabControlView.
+- Maui: Created views: BaseLogView, CollectionLogView.
+- GridLength: optimize Value.
+- AbstractControl: OnBeforeChildMouseWheel, OnAfterChildMouseWheel, IncHorizontalLayoutOffset, IncVerticalLayoutOffset.
+- Keyboard.IsShiftPressed, HVAlignment.CenterLeft.
+
 # 0.9.716 (2025 March 16)
 
 - Maui: Fixes and improvements in SimpleToolBarView, ColorPickerView.
