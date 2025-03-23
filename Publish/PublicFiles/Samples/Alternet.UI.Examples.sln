@@ -37,8 +37,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PropertyGridSample", "Prope
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ControlsSampleDll", "ControlsSampleDll\ControlsSampleDll.csproj", "{3AE86D98-336B-4DB1-ADFE-02084044BB5A}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SkiaSharpSampleDll", "SkiaSharpSampleDll\SkiaSharpSampleDll.csproj", "{2F2373A4-333E-4955-9B6D-52E7D84A9FE8}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PreviewSample", "PreviewSample\PreviewSample.csproj", "{25857F16-1B05-42B8-901D-2F54DC03F538}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ApiDocDll", "ApiDocDll\ApiDocDll.csproj", "{6BAE86B2-4F41-4188-92E1-7805D0E396B4}"
