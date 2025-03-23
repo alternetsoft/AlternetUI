@@ -74,7 +74,7 @@
     <!-- ========================================== -->
     <WxWidgetsDirectory>$(ExternalComponentsDirectory)\WxWidgets</WxWidgetsDirectory>
 
-    <WxWidgetsDownloadUrlLocalHost>http://localhost/wxWidgets-3.2.6.zip</WxWidgetsDownloadUrlLocalHost>
+    <WxWidgetsDownloadUrlLocalHost>http://localhost/wxWidgets-3.2.7.zip</WxWidgetsDownloadUrlLocalHost>
     <WxWidgetsDownloadUrl>https://alternetsoftware.blob.core.windows.net/alternet-ui/wxWidgets-3.2.6.zip</WxWidgetsDownloadUrl>
     <WxWidgetsDownloadDirectory>$(ExternalComponentsDirectory)</WxWidgetsDownloadDirectory>
     <WxWidgetsDownloadFileName>WxWidgets.zip</WxWidgetsDownloadFileName>
