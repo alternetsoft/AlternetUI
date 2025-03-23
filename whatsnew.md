@@ -69,7 +69,7 @@
 - Updated install scripts.
 - Fixed Calendar foreground color on dark theme.
 
-# 0.9.711 (2025 February 19)
+# 0.9.711 (2025 February 19) 
 
 - Target Alternet.UI.csproj to netstandard2.0 (#173).
 - Image: FromUrlCached, ClearCachedImages.
@@ -83,7 +83,7 @@
 - AssemblyUtils: GetOrLoadAssemblyByName.
 - KnownAssemblies.LibraryInteropServices, KnownTypes: InteropServicesNativeLibrary, InteropServicesDllImportResolver.
 
-# 0.9.710 (2025 February 14)
+# 0.9.710 (2025 February 14) Nugets Released
 
 - Fixes related to arm64 support.
 - Fixes related to nuget packages build.
