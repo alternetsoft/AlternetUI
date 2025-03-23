@@ -7,7 +7,7 @@ namespace TestDotNetNew
         public MainWindow()
         {
             InitializeComponent();
-	    mainLabel.Text = WebBrowser.DoCommandGlobal("UIVersion");		
+	    mainLabel.Text = SystemSettings.Handler.GetUIVersion() ?? "Hello from Alternet.UI";		
         }
     }
 }
