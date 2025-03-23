@@ -1,8 +1,6 @@
 ﻿using Alternet.Drawing;
 using Alternet.UI;
 
-using ControlsSample;
-
 using System;
 
 namespace DrawingSample
@@ -149,7 +147,7 @@ namespace DrawingSample
             DrawFrame();
             DrawFigure();
 
-            var drawTexts = false;
+            var drawTexts = App.IsWindowsOS;
 
             if (drawTexts)
             {
@@ -178,7 +176,7 @@ namespace DrawingSample
                     Control.DefaultFont,
                     Color.LightSkyBlue,
                     Color.Olive,
-                    NotifyIconPage.Image,
+                    KnownColorSvgImages.ImgInformation.AsImage(64),
                     innerFrame.InflatedBy(-250, -250));
             }
 

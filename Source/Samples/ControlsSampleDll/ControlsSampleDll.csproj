@@ -111,6 +111,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Include="..\CommonData\GlobalUsing.cs" Link="GlobalUsing.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Compile Include="..\CommonDialogsSample\CommonDialogsWindow.uixml.cs" Link="Links\CommonDialogsSample\CommonDialogsWindow.uixml.cs" />
     <None Include="..\CommonDialogsSample\CommonDialogsWindow.uixml" Link="Links\CommonDialogsSample\CommonDialogsWindow.uixml" />
     <UIXml Include="..\CommonDialogsSample\CommonDialogsWindow.uixml" Link="Links\CommonDialogsSample\CommonDialogsWindow.uixml" />

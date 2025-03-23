@@ -7,7 +7,7 @@
       <OutputType>WinExe</OutputType>
       <Platforms>AnyCPU</Platforms>
       <ApplicationManifest>$(MSBuildThisFileDirectory)\app.manifest</ApplicationManifest>
-      <LangVersion>11.0</LangVersion>
+      <LangVersion>12.0</LangVersion>
       <Nullable>enable</Nullable>
       <ApplicationIcon>$(MSBuildThisFileDirectory)\Sample.ico</ApplicationIcon>
     </PropertyGroup>
@@ -17,5 +17,11 @@
         <ProjectReference Include="$(MSBuildThisFileDirectory)\..\..\Alternet.UI.Common\Alternet.UI.Common.csproj" />
         <ProjectReference Include="$(MSBuildThisFileDirectory)\..\..\Alternet.UI.Interfaces\Alternet.UI.Interfaces.csproj" />
     </ItemGroup>
+
+  <ItemGroup>
+    <Compile Include="..\CommonData\GlobalUsing.cs" Link="GlobalUsing.cs" />
+  </ItemGroup>
+
+
 </Project>
 
