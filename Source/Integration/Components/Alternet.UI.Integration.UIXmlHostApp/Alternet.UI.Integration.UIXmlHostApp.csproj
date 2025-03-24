@@ -19,6 +19,6 @@
     <Folder Include="Utils\" />
   </ItemGroup>
 
-  <Import Project="$(MSBuildThisFileDirectory)\..\..\..\Alternet.UI.Interfaces\SignDll.proj" />
+  <Import Project="$(MSBuildThisFileDirectory)\..\..\..\Alternet.UI.Common\SignDll.proj" />
 
 </Project>

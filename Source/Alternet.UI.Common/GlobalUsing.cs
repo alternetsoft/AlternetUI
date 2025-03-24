@@ -1,4 +1,5 @@
-﻿global using EnumArrayStateImages
+﻿global using Coord = double;
+global using EnumArrayStateImages
     = Alternet.UI.EnumArray<Alternet.UI.VisualControlState, Alternet.Drawing.Image?>;
 
 global using ObjectToStringEventArgs = Alternet.UI.ValueConvertEventArgs<object?, string?>;
@@ -12,6 +13,10 @@ namespace Alternet.UI.Internal
 
 #pragma warning disable
 namespace Alternet.UI.Threading
+{
+}
+
+namespace Alternet.UI.Markup
 {
 }
 #pragma warning restore

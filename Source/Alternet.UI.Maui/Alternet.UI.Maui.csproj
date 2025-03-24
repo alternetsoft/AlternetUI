@@ -88,7 +88,7 @@
     <ProjectReference Include="..\Alternet.UI.Common\Alternet.UI.Common.csproj" />
   </ItemGroup>
 
-  <Import Project="$(MSBuildThisFileDirectory)\..\Alternet.UI.Interfaces\SignDll.proj" />
+  <Import Project="$(MSBuildThisFileDirectory)\..\Alternet.UI.Common\SignDll.proj" />
 
   <ItemGroup>
     <None Include="Package\readme.md" Pack="true" PackagePath="" />

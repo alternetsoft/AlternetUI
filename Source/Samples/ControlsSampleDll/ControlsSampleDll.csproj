@@ -100,7 +100,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\Alternet.UI.Common\Alternet.UI.Common.csproj" />
-    <ProjectReference Include="..\..\Alternet.UI.Interfaces\Alternet.UI.Interfaces.csproj" />
     <ProjectReference Include="..\ApiDocDll\ApiDocDll.csproj" />
   </ItemGroup>
 
@@ -271,7 +270,7 @@
   </ItemGroup>
 
   <PropertyGroup>
-    <SignToolPath>$(MSBuildThisFileDirectory)\..\..\Alternet.UI.Interfaces\SignDll.proj</SignToolPath>
+    <SignToolPath>$(MSBuildThisFileDirectory)\..\..\Alternet.UI.Common\SignDll.proj</SignToolPath>
   </PropertyGroup>
 
   <Import Project="$(SignToolPath)" Condition="Exists('$(SignToolPath)')" />

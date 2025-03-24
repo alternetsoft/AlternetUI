@@ -25,8 +25,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Alternet.Editor.AlternetUI"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Alternet.UI.Common", "..\..\Alternet.UI.Common\Alternet.UI.Common.csproj", "{EAF2185C-F586-490A-BCFE-D5B83A81486D}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Alternet.UI.Interfaces", "..\..\Alternet.UI.Interfaces\Alternet.UI.Interfaces.csproj", "{BDD712B8-F279-45B6-A8CB-BE79B8E560A5}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Alternet.Syntax.Parsers.Advanced", "..\..\..\..\AlternetStudio\Source\Parsers\Advanced\Alternet.Syntax.Parsers.Advanced.csproj", "{977B5DAA-DCC3-4ADC-929A-3DED0C039421}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Alternet.UI.Pal", "..\..\Alternet.UI.Pal\Alternet.UI.Pal.vcxproj", "{79F2529C-C711-457A-9087-325C333CDE60}"

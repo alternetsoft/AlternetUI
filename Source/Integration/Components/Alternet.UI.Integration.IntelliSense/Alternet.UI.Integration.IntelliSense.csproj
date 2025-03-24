@@ -15,6 +15,6 @@
     <PackageReference Include="System.CodeDom" Version="8.0.0" />
   </ItemGroup>
 
-  <Import Project="$(MSBuildThisFileDirectory)\..\..\..\Alternet.UI.Interfaces\SignDll.proj" />
+  <Import Project="$(MSBuildThisFileDirectory)\..\..\..\Alternet.UI.Common\SignDll.proj" />
 
 </Project>

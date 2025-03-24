@@ -62,8 +62,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Alternet.UI.WxWidgets", "Al
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MauiTest", "Tests\MauiTest\MauiTest.csproj", "{CE51F87B-CC9C-4080-8FEF-B50F4A89FFDA}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Alternet.UI.Interfaces", "Alternet.UI.Interfaces\Alternet.UI.Interfaces.csproj", "{F6527A55-377B-437F-A7CD-BF3E3D722CC0}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ControlsSampleDll", "Samples\ControlsSampleDll\ControlsSampleDll.csproj", "{3AE86D98-336B-4DB1-ADFE-02084044BB5A}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ControlsSample", "Samples\ControlsSample\ControlsSample.csproj", "{25399770-EC6C-4C7C-9573-5CB32D002B2A}"

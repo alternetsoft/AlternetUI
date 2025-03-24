@@ -31,8 +31,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AlternetUIAppTemplate", "Vi
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Alternet.UI.Build.Tasks", "..\Alternet.UI.Build.Tasks\Alternet.UI.Build.Tasks.csproj", "{1598F549-5758-4069-8D55-76EB43398EDC}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Alternet.UI.Interfaces", "..\Alternet.UI.Interfaces\Alternet.UI.Interfaces.csproj", "{1AE9B557-2F50-4674-8883-4A9A97EEA39C}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Alternet.UI", "..\Alternet.UI\Alternet.UI.csproj", "{8F3A3489-9F8B-409B-905A-87D33E083121}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Alternet.UI.Common", "..\Alternet.UI.Common\Alternet.UI.Common.csproj", "{9236A98A-DE72-402F-8EDC-84506312F5A1}"

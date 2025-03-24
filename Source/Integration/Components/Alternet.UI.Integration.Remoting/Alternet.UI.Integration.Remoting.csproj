@@ -7,6 +7,6 @@
     <LangVersion>latest</LangVersion>
   </PropertyGroup>
 
-  <Import Project="$(MSBuildThisFileDirectory)\..\..\..\Alternet.UI.Interfaces\SignDll.proj" />
+  <Import Project="$(MSBuildThisFileDirectory)\..\..\..\Alternet.UI.Common\SignDll.proj" />
 
 </Project>

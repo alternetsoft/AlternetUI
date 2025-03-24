@@ -15,8 +15,6 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Alternet.UI.Pal", "..\..\So
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Alternet.UI.Common", "..\..\Source\Alternet.UI.Common\Alternet.UI.Common.csproj", "{0FF3E37E-42E3-4B4D-AF47-2ADF5D258584}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Alternet.UI.Interfaces", "..\..\Source\Alternet.UI.Interfaces\Alternet.UI.Interfaces.csproj", "{BAAC53E7-5FA9-4FDC-9C94-1794DFD14094}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
