@@ -28,6 +28,7 @@ namespace Alternet.UI
         private static readonly MouseInputProvider mouseInputProvider;
 
         private static string? previousAssertMessage;
+        private static bool assertedWxWidgetsVersion;
 
         static WxApplicationHandler()
         {
@@ -78,17 +79,6 @@ namespace Alternet.UI
         /// </summary>
         public WxApplicationHandler()
         {
-            var wxWidgets = WebBrowserHandlerApi.WebBrowser_GetLibraryVersionString_();
-
-            var condition = wxWidgets.ToLower().Replace("wxwidgets ", string.Empty) != RequireVersion;
-            if (condition)
-            {
-                App.LogSeparator();
-                App.LogError($"Requires WxWidgets {RequireVersion}, yours is {wxWidgets}");
-                App.Log(@"Delete External\WxWidgets\ sub-folder and call Install script");
-                App.LogSeparator();
-            }
-
             if (DebugUtils.IsDebugDefined)
             {
                 LogUtils.RegisterLogAction(
@@ -105,6 +95,39 @@ namespace Alternet.UI
         /// This can be used for testing purposes.
         /// </summary>
         public static bool UseDummyTimer { get; set; } = false;
+
+        /// <summary>
+        /// Gets the version of the used WxWidgets library.
+        /// </summary>
+        /// <returns>A string representing the version of the WxWidgets library.</returns>
+        public static string GetWxWidgetsVersion()
+        {
+            var wxWidgets = WebBrowserHandlerApi.WebBrowser_GetLibraryVersionString_();
+            var s = wxWidgets.ToLower().Replace("wxwidgets ", string.Empty);
+            return s;
+        }
+
+        /// <summary>
+        /// Asserts that the version of the WxWidgets library being used
+        /// matches the required version.
+        /// Logs an error if the versions do not match.
+        /// </summary>
+        public static void AssertWxWidgetsVersion()
+        {
+            if (assertedWxWidgetsVersion)
+                return;
+            assertedWxWidgetsVersion = true;
+
+            var s = GetWxWidgetsVersion();
+            var condition = s != RequireVersion;
+            if (condition)
+            {
+                App.LogSeparator();
+                App.LogError($"Requires WxWidgets {RequireVersion}, yours is {s}");
+                App.Log(@"Delete External\WxWidgets\ sub-folder and call Install script");
+                App.LogSeparator();
+            }
+        }
 
         internal static WxEventIdentifiers MapToEventIdentifier(int eventId)
         {
@@ -188,6 +211,8 @@ namespace Alternet.UI
         /// <inheritdoc/>
         public void Run(Window window)
         {
+            AssertWxWidgetsVersion();
+
             var nativeWindow = UI.Native.NativeObject.GetNativeWindow(window)
                 ?? throw new Exception("Not a window");
             nativeApplication.Run(nativeWindow);
