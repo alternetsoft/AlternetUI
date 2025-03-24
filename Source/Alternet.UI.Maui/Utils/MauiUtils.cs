@@ -45,9 +45,9 @@ namespace Alternet.UI
         {
             get
             {
-                if (Application.Current is not null)
+                if (Microsoft.Maui.Controls.Application.Current is not null)
                 {
-                    foreach (var window in Application.Current.Windows)
+                    foreach (var window in Microsoft.Maui.Controls.Application.Current.Windows)
                     {
                         yield return window;
                     }
@@ -131,7 +131,7 @@ namespace Alternet.UI
         {
             get
             {
-                var currentTheme = Application.Current?.RequestedTheme;
+                var currentTheme = Microsoft.Maui.Controls.Application.Current?.RequestedTheme;
                 if (currentTheme == AppTheme.Dark)
                     return true;
                 return false;

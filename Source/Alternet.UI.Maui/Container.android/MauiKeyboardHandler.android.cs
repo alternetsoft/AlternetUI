@@ -43,7 +43,8 @@ namespace Alternet.UI
         /// Gets input method manager.
         /// </summary>
         public static InputMethodManager? InputMethodManager =>
-            Application.Context.GetSystemService(Context.InputMethodService) as InputMethodManager;
+            Android.App.Application.Context
+            .GetSystemService(Context.InputMethodService) as InputMethodManager;
 
         public virtual Alternet.UI.KeyEventArgs ToKeyEventArgs(
                     UI.AbstractControl control,

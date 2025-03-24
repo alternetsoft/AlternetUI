@@ -15,7 +15,7 @@ namespace Alternet.UI
 
         public MauiTimerHandler()
         {
-            timer = Application.Current?.Dispatcher.CreateTimer()!;
+            timer = Microsoft.Maui.Controls.Application.Current?.Dispatcher.CreateTimer()!;
             timer.Tick += Timer_Tick;
 
             if (timer is null)

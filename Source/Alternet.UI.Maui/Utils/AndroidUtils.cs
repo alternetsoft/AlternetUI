@@ -25,7 +25,7 @@ public static class AndroidUtils
     public static string? GetPrivateStoragePath()
     {
         // Get the application context
-        Context context = Application.Context;
+        Context context = Android.App.Application.Context;
 
         // Get the private storage path
         var privateStoragePath = context?.FilesDir?.AbsolutePath;
@@ -36,7 +36,7 @@ public static class AndroidUtils
     public static void LogDirs()
     {
         // Get the application context
-        Context context = Application.Context;
+        Context context = Android.App.Application.Context;
 
         // Return the primary external storage directory where this application's OBB files
         // (if there are any) can be found.

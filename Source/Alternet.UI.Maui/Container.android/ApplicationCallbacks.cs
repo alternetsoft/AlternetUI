@@ -21,7 +21,8 @@ using SkiaSharp.Views.Android;
 namespace Alternet.UI
 {
     /// <summary>
-    /// Default implementation of the <see cref="Application.IActivityLifecycleCallbacks"/>
+    /// Default implementation
+    /// of the <see cref="Android.App.Application.IActivityLifecycleCallbacks"/>
     /// interface.
     /// </summary>
     public partial class ApplicationCallbacks
@@ -62,7 +63,7 @@ namespace Alternet.UI
         {
             get
             {
-                return Activity ?? Application.Context;
+                return Activity ?? Android.App.Application.Context;
             }
         }
 
@@ -72,7 +73,7 @@ namespace Alternet.UI
             set => currentActivity.SetTarget(value);
         }
 
-        public static void Init(Application application)
+        public static void Init(Android.App.Application application)
         {
             if (callbacks != null)
                 return;

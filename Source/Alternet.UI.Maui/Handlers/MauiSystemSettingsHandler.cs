@@ -30,7 +30,7 @@ namespace Alternet.UI
 
         public override bool GetAppearanceIsDark()
         {
-            var currentTheme = Application.Current?.RequestedTheme;
+            var currentTheme = Microsoft.Maui.Controls.Application.Current?.RequestedTheme;
 
             if (currentTheme == AppTheme.Dark)
                 return true;

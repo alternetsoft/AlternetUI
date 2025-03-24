@@ -63,18 +63,19 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Registers <see cref="Application.RequestedThemeChanged"/> event handler.
+        /// Registers <see cref="Microsoft.Maui.Controls.Application.RequestedThemeChanged"/>
+        /// event handler.
         /// </summary>
         public static void RegisterThemeChangedHandler()
         {
-            if (Application.Current is null)
+            if (Microsoft.Maui.Controls.Application.Current is null)
                 return;
 
             if (themeChangedHandlerRegistered)
                 return;
             themeChangedHandlerRegistered = true;
 
-            Application.Current.RequestedThemeChanged += (s, a) =>
+            Microsoft.Maui.Controls.Application.Current.RequestedThemeChanged += (s, a) =>
             {
                 SystemSettings.ResetColors();
 
@@ -94,7 +95,7 @@ namespace Alternet.UI
         /// <returns></returns>
         public static Page? GetMainPageFromApplication()
         {
-            var app = Application.Current;
+            var app = Microsoft.Maui.Controls.Application.Current;
             if (app is null)
                 return null;
             var windows = app.Windows;

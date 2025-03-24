@@ -29,8 +29,8 @@ if not !ERRORLEVEL! EQU 0 (exit /b !ERRORLEVEL!)
 del "%PackagesPublishDirectory%\*.vsix"
 if not !ERRORLEVEL! EQU 0 (exit /b !ERRORLEVEL!)
 
-del "%PackagesPublishDirectory%\*.zip"
-if not !ERRORLEVEL! EQU 0 (exit /b !ERRORLEVEL!)
+:: del "%PackagesPublishDirectory%\*.zip"
+:: if not !ERRORLEVEL! EQU 0 (exit /b !ERRORLEVEL!)
 
 :: Publish PAL packages.
 
@@ -41,14 +41,6 @@ copy "%SOURCE_DIR%\Build\Alternet.UI.Pal\bin\NuGet\*.nupkg" "%PackagesPublishDir
 echo ====================================1
 
 call "%SCRIPT_HOME%\MSW.Publish.SubTool.1.Build.Managed.bat" %CERT_PASSWORD%
-if not !ERRORLEVEL! EQU 0 (exit /b !ERRORLEVEL!)
-
-:: Publish managed packages.
-
-copy "%SOURCE_DIR%\Alternet.UI\bin\Release\*.nupkg" "%PackagesPublishDirectory%"
-if not !ERRORLEVEL! EQU 0 (exit /b !ERRORLEVEL!)
-
-copy "%SOURCE_DIR%\Alternet.UI\bin\Release\*.snupkg" "%PackagesPublishDirectory%"
 if not !ERRORLEVEL! EQU 0 (exit /b !ERRORLEVEL!)
 
 :: Build integration components.
@@ -78,11 +70,11 @@ if not !ERRORLEVEL! EQU 0 (exit /b !ERRORLEVEL!)
 
 :: Generate public source.
 
-echo ====================================4
+:: echo ====================================4
 
-call "MSW.Publish.SubTool.3.Gen.Public.Components.bat"
+:: call "MSW.Publish.SubTool.3.Gen.Public.Components.bat"
 
-if not !ERRORLEVEL! EQU 0 (exit /b !ERRORLEVEL!)
+:: if not !ERRORLEVEL! EQU 0 (exit /b !ERRORLEVEL!)
 
 echo ====================================5
 
