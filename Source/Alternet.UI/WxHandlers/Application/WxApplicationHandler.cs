@@ -18,7 +18,7 @@ namespace Alternet.UI
     /// </summary>
     public class WxApplicationHandler : DisposableObject, IApplicationHandler
     {
-        private const string RequireVersion = "3.2.6";
+        private const string RequireVersion = "3.2.7";
 
         private static readonly int[] eventIdentifiers = new int[(int)WxEventIdentifiers.Max + 1];
         private static readonly int minEventIdentifier;
