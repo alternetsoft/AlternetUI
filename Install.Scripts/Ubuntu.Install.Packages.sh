@@ -22,8 +22,8 @@ sudo apt-get install -y gstreamer1.0-plugins-good gstreamer1.0-plugins-bad gstre
 sudo apt-get install -y gstreamer1.0-libav gstreamer1.0-tools gstreamer1.0-x gstreamer1.0-alsa 
 sudo apt-get install -y gstreamer1.0-gl 
 sudo apt-get install -y gstreamer1.0-gtk3 gstreamer1.0-qt5 gstreamer1.0-pulseaudio
+sudo apt-get install -y osspd mesa-utils libjpeg-dev liblzma-dev
 
-sudo apt-get -y install osspd
 
 #wxWidgets Cross-platform C++ GUI toolkit
 #sudo apt-get install -y libwxgtk3.0-gtk3-dev libwxgtk-media3.0-gtk3-dev libwxgtk-webview3.0-gtk3-dev
