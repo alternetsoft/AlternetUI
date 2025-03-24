@@ -54,7 +54,7 @@
   </ItemGroup>
 
   <ItemGroup>
-	<ProjectReference Include="..\Alternet.UI.Interfaces\Alternet.UI.Interfaces.csproj" PrivateAssets="All">
+	<ProjectReference Include="..\Alternet.UI.Interfaces\Alternet.UI.Interfaces.csproj">
 		<ReferenceOutputAssembly>true</ReferenceOutputAssembly>
 		<IncludeAssets>all</IncludeAssets>
 	</ProjectReference>
