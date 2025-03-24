@@ -12,9 +12,10 @@ namespace Alternet.UI
     public class ListControlSeparatorItem : ListControlItem
     {
         /// <summary>
-        /// Gets or sets default separator color.
+        /// Gets or sets default separator color. Default is Null and
+        /// <see cref="DefaultColors.BorderColor"/> is used.
         /// </summary>
-        public static LightDarkColor DefaultSeparatorColor = new(SystemColors.GrayText);
+        public static LightDarkColor? DefaultSeparatorColor;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ListControlSeparatorItem"/> class.
@@ -22,7 +23,7 @@ namespace Alternet.UI
         public ListControlSeparatorItem()
         {
             this.HideSelection = true;
-            ForegroundColor = DefaultSeparatorColor;
+            ForegroundColor = DefaultSeparatorColor ?? DefaultColors.BorderColor;
             DrawForegroundAction = DefaultDrawSeparator;
             DrawBackgroundAction = (s, e) => { };
         }
