@@ -62,7 +62,5 @@ The following file(s) are considered redistributables under this license agreeme
 
 Alternet.UI.dll
 Alternet.UI.Pal.dll
-Alternet.UI.dylib
 Alternet.UI.Pal.dylib
-Alternet.UI.so
 Alternet.UI.Pal.so

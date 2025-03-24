@@ -71,7 +71,6 @@
     <PackageReference Include="SkiaSharp.Views.Maui.Controls" Version="$(SkiaSharpVersion)" />
     <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="9.0.0" />
 
-    <PackageReference Include="Alternet.UI" Version="0.9.718-beta" />
     <PackageReference Include="Alternet.UI.Maui" Version="0.9.718-beta" />
   </ItemGroup>
 

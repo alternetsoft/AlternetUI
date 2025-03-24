@@ -16,7 +16,6 @@ public partial class LabelTestPage : ContentPage
         InitializeComponent();
 
         labelView.Control.Text = "Hello";
-        PropertyGridSample.ObjectInit.SetBackgrounds(labelView.Control);
 
         if (!Alternet.UI.App.IsDesktopDevice)
         {
