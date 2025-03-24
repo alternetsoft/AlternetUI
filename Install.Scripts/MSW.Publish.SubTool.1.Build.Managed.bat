@@ -44,7 +44,7 @@ if not !ERRORLEVEL! EQU 0 (exit /b !ERRORLEVEL!)
 echo ====================================
 ::Alternet.UI.Common
 pushd "%SOURCE_DIR%\Alternet.UI.Common\"
-dotnet msbuild -tl:off /restore /t:Clean,Build,Pack /p:Configuration=Release /p:AlternetUIPackagesBuild=true /p:WarningLevel=0
+dotnet msbuild Alternet.UI.Common.csproj -tl:off /restore /t:Clean,Build,Pack /p:Configuration=Release /p:AlternetUIPackagesBuild=true /p:WarningLevel=0
 popd
 if not !ERRORLEVEL! EQU 0 (exit /b !ERRORLEVEL!)
 
