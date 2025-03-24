@@ -6,6 +6,8 @@ namespace ControlsSample
 {
     internal partial class ControlsTestWindow : Window
     {
+        public static bool TestEdgeBackend = false;
+
         private readonly StatusBar statusbar = new();
 #pragma warning disable
         private readonly PanelListBoxAndCards mainPanel;
@@ -32,24 +34,11 @@ namespace ControlsSample
 
             int CreateWebBrowserPages()
             {
-                int result = -1;
+                var result1 = AddWebBrowserPage("Browser IE", WebBrowserBackend.IELatest);
+                var result2 = AddWebBrowserPage("Browser WebKit", WebBrowserBackend.WebKit);
+                var result3 = AddEdgePage("Browser Edge");
 
-                if (WebBrowser.IsBackendAvailable(WebBrowserBackend.Edge))
-                {
-                    result = AddWebBrowserPage("Browser Edge", WebBrowserBackend.Edge);
-                }
-
-                if (WebBrowser.IsBackendAvailable(WebBrowserBackend.WebKit))
-                {
-                    result = AddWebBrowserPage("Browser WebKit", WebBrowserBackend.WebKit);
-                }
-
-                if (WebBrowser.IsBackendAvailable(WebBrowserBackend.IELatest))
-                {
-                    result = AddWebBrowserPage("Browser IE", WebBrowserBackend.IELatest);
-                }
-
-                return result;
+                return MathUtils.Max(result1, result2, result3);
             }
 
             CreateWebBrowserPages();
@@ -65,31 +54,64 @@ namespace ControlsSample
         internal PanelListBoxAndCards MainPanel => mainPanel;
 #pragma warning restore
 
-        private void LogSizeEvent(object? sender, string evName)
-        {
-            var control = sender as AbstractControl;
-            var name = control?.Name ?? control?.GetType().Name;
-            App.LogIf($"{evName}: {name}, Bounds: {control!.Bounds}", false);
-        }
-
-        private void Log_SizeChanged(object? sender, EventArgs e)
-        {
-            LogSizeEvent(sender, "SizeChanged");
-        }
-
-        private int AddPage<T>(string? title = null)
+        public int AddPage<T>(string? title = null)
             where T : AbstractControl, new()
         {
             return AddPage(title ?? typeof(T).ToString(), () => new T());
         }
 
-        private int AddPage(string title, Func<AbstractControl> createFn)
+        public int AddPage(string title, Func<AbstractControl> createFn)
         {
             return mainPanel.Add(title, createFn);
         }
 
-        private int AddWebBrowserPage(string title, WebBrowserBackend backend)
+        public int AddEdgePage(string title)
         {
+            var savedValue = WebBrowser.IsEdgeBackendEnabled;
+            if (DebugUtils.IsDebuggerAttached && TestEdgeBackend)
+                WebBrowser.IsEdgeBackendEnabled = true;
+
+            if (!WebBrowser.IsBackendAvailable(WebBrowserBackend.Edge))
+                return -1;
+
+            AbstractControl Fn()
+            {
+                PanelWebBrowser.UseBackend = WebBrowserBackend.Edge;
+
+                var result = new WebBrowserTestPage
+                {
+                    PageName = title,
+                };
+
+                result.Name = result.GetType().Name;
+
+                result.SizeChanged += Log_SizeChanged;
+
+                return result;
+            }
+
+            AbstractControl OuterFn()
+            {
+                try
+                {
+                    return Fn();
+                }
+                finally
+                {
+                    WebBrowser.IsEdgeBackendEnabled = savedValue;
+                }
+            }
+
+            return AddPage(title, OuterFn);
+        }
+
+        public int AddWebBrowserPage(
+            string title,
+            WebBrowserBackend backend)
+        {
+            if (!WebBrowser.IsBackendAvailable(backend))
+                return -1;
+
             AbstractControl Fn()
             {
                 PanelWebBrowser.UseBackend = backend;
@@ -107,6 +129,18 @@ namespace ControlsSample
             }
 
             return AddPage(title, Fn);
+        }
+
+        private void LogSizeEvent(object? sender, string evName)
+        {
+            var control = sender as AbstractControl;
+            var name = control?.Name ?? control?.GetType().Name;
+            App.LogIf($"{evName}: {name}, Bounds: {control!.Bounds}", false);
+        }
+
+        private void Log_SizeChanged(object? sender, EventArgs e)
+        {
+            LogSizeEvent(sender, "SizeChanged");
         }
     }
 }
