@@ -84,7 +84,7 @@
     </PackageReference>
   </ItemGroup>
 
-  <ItemGroup Condition="'$(AlternetUIPackagesBuild)' == ''">
+  <ItemGroup>
     <ProjectReference Include="..\Alternet.UI.Common\Alternet.UI.Common.csproj" />
   </ItemGroup>
 

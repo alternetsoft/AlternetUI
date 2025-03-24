@@ -20,32 +20,35 @@ set PackagesPublishDirectory=%PublishRoot%\Packages\
 if not exist "%PackagesPublishDirectory%" (mkdir "%PackagesPublishDirectory%")
 if not !ERRORLEVEL! EQU 0 (exit /b !ERRORLEVEL!)
 
-del "%PackagesPublishDirectory%\*.nupkg"
-if not !ERRORLEVEL! EQU 0 (exit /b !ERRORLEVEL!)
-
-del "%PackagesPublishDirectory%\*.snupkg"
-if not !ERRORLEVEL! EQU 0 (exit /b !ERRORLEVEL!)
-
 del "%PackagesPublishDirectory%\*.vsix"
 if not !ERRORLEVEL! EQU 0 (exit /b !ERRORLEVEL!)
 
 :: del "%PackagesPublishDirectory%\*.zip"
 :: if not !ERRORLEVEL! EQU 0 (exit /b !ERRORLEVEL!)
 
-:: Publish PAL packages.
-
-copy "%SOURCE_DIR%\Build\Alternet.UI.Pal\bin\NuGet\*.nupkg" "%PackagesPublishDirectory%"
-
 :: Build managed packages.
 
-echo ====================================1
-
-call "%SCRIPT_HOME%\MSW.Publish.SubTool.1.Build.Managed.bat" %CERT_PASSWORD%
+echo ====================================2
+echo SubTool.2
+call "%SCRIPT_HOME%\MSW.Publish.SubTool.2.Build.Integration.bat" %CERT_PASSWORD%
 if not !ERRORLEVEL! EQU 0 (exit /b !ERRORLEVEL!)
 
-echo ====================================5
+:: Publish Visual Studio extension.
 
-call "MSW.Publish.SubTool.4.Gen.Public.Samples.bat"
+set VersionToolProject=%SOURCE_DIR%\Tools\Versioning\Alternet.UI.VersionTool.Cli\Alternet.UI.VersionTool.Cli.csproj
+
+copy "%SOURCE_DIR%\Integration\VisualStudio\Alternet.UI.Integration.VisualStudio\bin\VS2022\Release\*.vsix" "%PackagesPublishDirectory%"
+if not !ERRORLEVEL! EQU 0 (exit /b !ERRORLEVEL!)
+
+echo ====================================3
+echo SET VSIX VERSION
+
+dotnet run --project "%VersionToolProject%" --property WarningLevel=0 -- append-version-suffix "%PackagesPublishDirectory%\Alternet.UI.Integration.VisualStudio.VS2022.vsix"
+if not !ERRORLEVEL! EQU 0 (exit /b !ERRORLEVEL!)
+
+:: Publish command line templates.
+
+copy "%SOURCE_DIR%\Integration\Templates\bin\Release\*.nupkg" "%PackagesPublishDirectory%"
 if not !ERRORLEVEL! EQU 0 (exit /b !ERRORLEVEL!)
 
 echo ====================================5
