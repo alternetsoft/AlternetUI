@@ -1,5 +1,4 @@
-﻿global using Coord = double;
-global using EnumArrayStateImages
+﻿global using EnumArrayStateImages
     = Alternet.UI.EnumArray<Alternet.UI.VisualControlState, Alternet.Drawing.Image?>;
 
 global using ObjectToStringEventArgs = Alternet.UI.ValueConvertEventArgs<object?, string?>;
