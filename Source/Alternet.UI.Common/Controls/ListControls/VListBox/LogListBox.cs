@@ -376,10 +376,20 @@ namespace Alternet.UI
 
             lastLogMessage = message;
 
-            var item = CreateItem();
-            item.Text = ConstructLogMessage(id, message);
-            item.SvgImage = GetImage(kind);
-            item.SvgImageSize = ToolBarUtils.GetDefaultImageSize(this);
+            ListControlItem item;
+
+            if(message == LogUtils.SectionSeparator || message == "-")
+            {
+                item = new ListControlSeparatorItem();
+            }
+            else
+            {
+                item = CreateItem();
+                item.Text = ConstructLogMessage(id, message);
+                item.SvgImage = GetImage(kind);
+                item.SvgImageSize = ToolBarUtils.GetDefaultImageSize(this);
+            }
+
             Add(item);
             SelectedIndex = Count - 1;
             RefreshRow(Count - 1);
