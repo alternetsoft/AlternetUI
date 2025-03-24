@@ -8,4 +8,4 @@ fi
 
 cd $TargetDirectory
 cmake -DCMAKE_BUILD_TYPE=Debug ../../..
-make -j 6
+make
