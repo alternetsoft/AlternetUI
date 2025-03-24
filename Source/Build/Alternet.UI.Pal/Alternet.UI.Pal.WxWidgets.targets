@@ -107,7 +107,7 @@
         <Exec 	WorkingDirectory="$(WxWidgetsGtkBuildDirectory)" 
 				Command="$(ConfigureCommand) $(ConfigureCommandParameters)" 
 				Condition="'$(DebugWxWidgetsBuild)' != 'true'"/>
-        <Exec WorkingDirectory="$(WxWidgetsGtkBuildDirectory)" Command="make -j20" />
+        <Exec WorkingDirectory="$(WxWidgetsGtkBuildDirectory)" Command="make" />
     </Target>
     <!-- ========================================== -->
 	<!-- MacOS -->
