@@ -1,3 +1,9 @@
+# 0.9.718 (2025 March 24)
+
+- Update library to use WxWidgets 3.2.7 and microsoft.web.webview2.1.0.3124.44.
+- LogListBox: draw horizontal line as log separator.
+- ListControlSeparatorItem: Change default color.
+
 # 0.9.717 (2025 March 22)
 
 - ToolBar: IsVertical, SetMargins, SetToolContentAlignment, SetToolSpacerAlignment, SetToolImageAlignment, SetToolTextAlignment.
