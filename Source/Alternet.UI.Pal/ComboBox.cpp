@@ -462,9 +462,20 @@ namespace Alternet::UI
         ownerDrawStyle = value;
     }
 
+    bool ComboBox::GetAllowMouseWheel()
+    {
+        return _allowMouseWheel;
+    }
+
+    void ComboBox::SetAllowMouseWheel(bool value)
+    {
+        _allowMouseWheel = value;
+    }
+
     void ComboBox::OnMouseWheel(wxMouseEvent& event)
     {
-        event.Skip();
+        if(_allowMouseWheel)
+            event.Skip();
     }
 
     wxVListBoxComboPopup2* ComboBox::GetPopup()

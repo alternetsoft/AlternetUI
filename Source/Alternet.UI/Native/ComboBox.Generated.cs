@@ -24,6 +24,21 @@ namespace Alternet.UI.Native
         {
         }
         
+        public bool AllowMouseWheel
+        {
+            get
+            {
+                CheckDisposed();
+                return NativeApi.ComboBox_GetAllowMouseWheel_(NativePointer);
+            }
+            
+            set
+            {
+                CheckDisposed();
+                NativeApi.ComboBox_SetAllowMouseWheel_(NativePointer, value);
+            }
+        }
+        
         public string EmptyTextHint
         {
             get
@@ -398,6 +413,12 @@ namespace Alternet.UI.Native
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern IntPtr ComboBox_Create_();
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool ComboBox_GetAllowMouseWheel_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void ComboBox_SetAllowMouseWheel_(IntPtr obj, bool value);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern string ComboBox_GetEmptyTextHint_(IntPtr obj);

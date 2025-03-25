@@ -20,6 +20,28 @@ ALTERNET_UI_API ComboBox* ComboBox_Create_()
     #endif
 }
 
+ALTERNET_UI_API c_bool ComboBox_GetAllowMouseWheel_(ComboBox* obj)
+{
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    return MarshalExceptions<c_bool>([&](){
+    #endif
+        return obj->GetAllowMouseWheel();
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    });
+    #endif
+}
+
+ALTERNET_UI_API void ComboBox_SetAllowMouseWheel_(ComboBox* obj, c_bool value)
+{
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    MarshalExceptions<void>([&](){
+    #endif
+        obj->SetAllowMouseWheel(value);
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    });
+    #endif
+}
+
 ALTERNET_UI_API char16_t* ComboBox_GetEmptyTextHint_(ComboBox* obj)
 {
     #if !defined(__WXMSW__) || defined(_DEBUG)

@@ -320,6 +320,8 @@ namespace Alternet.UI
 
         Window? IWindowHandler.Control { get; }
 
+        public bool AllowMouseWheel { get; set; }
+
         public void Activate()
         {
         }

@@ -234,6 +234,7 @@ namespace Alternet::UI
         int eventResultInt = 0;
         bool eventCalled = false;
         int ownerDrawStyle = 0;
+        bool _allowMouseWheel = true;
 
         void UpdateDc(wxDC& dc);
         void ReleaseEventDc();

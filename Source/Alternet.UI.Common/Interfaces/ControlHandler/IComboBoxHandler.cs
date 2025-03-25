@@ -13,6 +13,9 @@ namespace Alternet.UI
     /// </summary>
     public interface IComboBoxHandler
     {
+        /// <inheritdoc cref="ComboBox.AllowMouseWheel"/>
+        bool AllowMouseWheel { set; }
+
         /// <inheritdoc cref="ComboBox.PopupControl"/>
         VirtualListBox? PopupControl { set; }
 

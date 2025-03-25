@@ -20,6 +20,7 @@ namespace NativeApi.Api
 
         public void ShowPopup() { }
 
+        public bool AllowMouseWheel { get; set; }
         public string EmptyTextHint { get; set; }
         public bool HasBorder { get; set; }
         public int ItemsCount { get; }

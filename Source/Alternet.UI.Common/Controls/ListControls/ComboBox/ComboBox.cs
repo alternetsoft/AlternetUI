@@ -72,6 +72,7 @@ namespace Alternet.UI
 
         private ValueContainer<VirtualListBox> listBox;
 
+        private bool allowMouseWheel = true;
         private int? selectedIndex;
         private bool isEditable = true;
         private IComboBoxItemPainter? painter;
@@ -581,6 +582,26 @@ namespace Alternet.UI
                 {
                     OwnerDrawStyle = OwnerDrawFlags.ItemBackground;
                 }
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether the mouse wheel can
+        /// be used to change the selected item.
+        /// </summary>
+        public virtual bool AllowMouseWheel
+        {
+            get
+            {
+                return allowMouseWheel;
+            }
+
+            set
+            {
+                if (allowMouseWheel == value)
+                    return;
+                allowMouseWheel = value;
+                PlatformControl.AllowMouseWheel = value;
             }
         }
 

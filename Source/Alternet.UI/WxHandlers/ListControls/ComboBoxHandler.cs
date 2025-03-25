@@ -18,6 +18,14 @@ namespace Alternet.UI
 
         public int TextSelectionLength => NativeControl.TextSelectionLength;
 
+        public bool AllowMouseWheel
+        {
+            set
+            {
+                NativeControl.AllowMouseWheel = value;
+            }
+        }
+
         public VirtualListBox? PopupControl
         {
             set
