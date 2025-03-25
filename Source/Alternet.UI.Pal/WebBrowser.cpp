@@ -634,7 +634,7 @@ namespace Alternet::UI
     
     int WebBrowser::GetBackendOS()
     {
-        return WebBrowserBackendOS::MacOS;
+        return (int)WebBrowserBackendOS::MacOS;
     }
     
 #endif
@@ -643,7 +643,7 @@ namespace Alternet::UI
     
     int WebBrowser::GetBackendOS()
     {
-        return WebBrowserBackendOS::Unix;
+        return (int)WebBrowserBackendOS::Unix;
     }
     
 #endif
