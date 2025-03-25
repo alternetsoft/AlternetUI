@@ -280,13 +280,6 @@
     <ClCompile Include="TreeView.cpp" />
     <ClCompile Include="UnmanagedDataObject.cpp" />
     <ClCompile Include="UnmanagedStream.cpp" />
-    <ClCompile Include="Validator.cpp" />
-    <ClCompile Include="ValidatorFloat.cpp" />
-    <ClCompile Include="ValidatorGeneric.cpp" />
-    <ClCompile Include="ValidatorInteger.cpp" />
-    <ClCompile Include="ValidatorNumeric.cpp" />
-    <ClCompile Include="ValidatorNumericProperty.cpp" />
-    <ClCompile Include="ValidatorText.cpp" />
     <ClCompile Include="VListBox.cpp" />
     <ClCompile Include="WebBrowser.cpp" />
     <ClCompile Include="WebBrowserApiPal.cpp" />
@@ -483,13 +476,6 @@
     <ClInclude Include="TypedEnumFlags.h" />
     <ClInclude Include="UnmanagedDataObject.h" />
     <ClInclude Include="UnmanagedStream.h" />
-    <ClInclude Include="Validator.h" />
-    <ClInclude Include="ValidatorFloat.h" />
-    <ClInclude Include="ValidatorGeneric.h" />
-    <ClInclude Include="ValidatorInteger.h" />
-    <ClInclude Include="ValidatorNumeric.h" />
-    <ClInclude Include="ValidatorNumericProperty.h" />
-    <ClInclude Include="ValidatorText.h" />
     <ClInclude Include="VListBox.h" />
     <ClInclude Include="WebBrowser.h" />
     <ClInclude Include="WindowsVisualThemeSupport.h" />
