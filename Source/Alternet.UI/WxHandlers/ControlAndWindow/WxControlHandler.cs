@@ -19,6 +19,9 @@ namespace Alternet.UI
 
         private Native.Control? nativeControl;
         private bool needDispose;
+        private bool vertScrollBarInfoAssigned;
+        private bool horzScrollBarInfoAssigned;
+
         public WxControlHandler()
         {
         }
@@ -28,24 +31,6 @@ namespace Alternet.UI
             get => NativeControl.BoundsI;
             set => NativeControl.BoundsI = value;
         }
-
-        public SizeI EventOldDpi
-        {
-            get
-            {
-                return NativeControl.EventOldDpi;
-            }
-        }
-
-        public SizeI EventNewDpi
-        {
-            get
-            {
-                return NativeControl.EventNewDpi;
-            }
-        }
-
-        public RectD EventBounds => NativeControl.EventBounds;
 
         /// <summary>
         /// Gets a value indicating whether the control has a native control associated with it.
@@ -149,12 +134,6 @@ namespace Alternet.UI
             set => NativeControl.Font = (UI.Native.Font?)value?.Handler;
         }
 
-        public bool IsBold
-        {
-            get => NativeControl.IsBold;
-            set => NativeControl.IsBold = value;
-        }
-
         public bool WantChars
         {
             get => NativeControl.WantChars;
@@ -162,26 +141,6 @@ namespace Alternet.UI
             set
             {
                 NativeControl.WantChars = value;
-            }
-        }
-
-        public bool ShowHorzScrollBar
-        {
-            get => NativeControl.ShowHorzScrollBar;
-
-            set
-            {
-                NativeControl.ShowHorzScrollBar = value;
-            }
-        }
-
-        public bool ShowVertScrollBar
-        {
-            get => NativeControl.ShowVertScrollBar;
-
-            set
-            {
-                NativeControl.ShowVertScrollBar = value;
             }
         }
 
@@ -193,12 +152,6 @@ namespace Alternet.UI
             {
                 NativeControl.ScrollBarAlwaysVisible = value;
             }
-        }
-
-        public bool TabStop
-        {
-            get => NativeControl.TabStop;
-            set => NativeControl.TabStop = value;
         }
 
         public bool AllowDrop
@@ -237,34 +190,10 @@ namespace Alternet.UI
             set => NativeControl.SetBackgroundStyle((int)value);
         }
 
-        public bool AcceptsFocusFromKeyboard
-        {
-            get => NativeControl.AcceptsFocusFromKeyboard;
-            set => NativeControl.AcceptsFocusFromKeyboard = value;
-        }
-
-        public bool AcceptsFocusRecursively
-        {
-            get => NativeControl.AcceptsFocusRecursively;
-            set => NativeControl.AcceptsFocusRecursively = value;
-        }
-
-        public bool AcceptsFocusAll
-        {
-            get => NativeControl.AcceptsFocusAll;
-            set => NativeControl.AcceptsFocusAll = value;
-        }
-
         public bool ProcessIdle
         {
             get => NativeControl.ProcessIdle;
             set => NativeControl.ProcessIdle = value;
-        }
-
-        public bool BindScrollEvents
-        {
-            get => NativeControl.BindScrollEvents;
-            set => NativeControl.BindScrollEvents = value;
         }
 
         public SizeD ClientSize
@@ -272,10 +201,6 @@ namespace Alternet.UI
             get => NativeControl.ClientSize;
             set => NativeControl.ClientSize = value;
         }
-
-        public bool CanAcceptFocus => NativeControl.CanAcceptFocus;
-
-        public bool IsMouseOver => NativeControl.IsMouseOver;
 
         public bool ProcessUIUpdates
         {
@@ -286,8 +211,6 @@ namespace Alternet.UI
         public bool IsMouseCaptured => NativeControl.IsMouseCaptured;
 
         public bool IsHandleCreated => NativeControl.IsHandleCreated;
-
-        public bool IsFocusable => NativeControl.IsFocusable;
 
         internal Native.Control? NativeControlOrNull
         {
@@ -408,16 +331,6 @@ namespace Alternet.UI
             NativeControl.SetMouseCapture(false);
         }
 
-        public void DisableRecreate()
-        {
-            NativeControl.DisableRecreate();
-        }
-
-        public void EnableRecreate()
-        {
-            NativeControl.EnableRecreate();
-        }
-
         public Graphics CreateDrawingContext()
         {
             return new WxGraphics(NativeControl.OpenClientDrawingContext());
@@ -431,10 +344,6 @@ namespace Alternet.UI
         public PointD ClientToScreen(PointD point)
         {
             return NativeControl.ClientToScreen(point);
-        }
-        public void FocusNextControl(bool forward = true, bool nested = true)
-        {
-            NativeControl.FocusNextControl(forward, nested);
         }
 
         public DragDropEffects DoDragDrop(object data, DragDropEffects allowedEffects)
@@ -509,37 +418,18 @@ namespace Alternet.UI
             int largeChange,
             int maximum)
         {
+            if (isVertical)
+            {
+                vertScrollBarInfoAssigned = true;
+            }
+            else
+            {
+                horzScrollBarInfoAssigned = true;
+            }
+
             ScrollBarOrientation orientation = isVertical
                 ? ScrollBarOrientation.Vertical : ScrollBarOrientation.Horizontal;
             NativeControl.SetScrollBar(orientation, visible, value, largeChange, maximum);
-        }
-
-        public bool IsScrollBarVisible(bool isVertical)
-        {
-            ScrollBarOrientation orientation = isVertical
-                ? ScrollBarOrientation.Vertical : ScrollBarOrientation.Horizontal;
-            return NativeControl.IsScrollBarVisible(orientation);
-        }
-
-        public int GetScrollBarValue(bool isVertical)
-        {
-            ScrollBarOrientation orientation = isVertical
-                ? ScrollBarOrientation.Vertical : ScrollBarOrientation.Horizontal;
-            return NativeControl.GetScrollBarValue(orientation);
-        }
-
-        public int GetScrollBarLargeChange(bool isVertical)
-        {
-            ScrollBarOrientation orientation = isVertical
-                ? ScrollBarOrientation.Vertical : ScrollBarOrientation.Horizontal;
-            return NativeControl.GetScrollBarLargeChange(orientation);
-        }
-
-        public int GetScrollBarMaximum(bool isVertical)
-        {
-            ScrollBarOrientation orientation = isVertical
-                ? ScrollBarOrientation.Vertical : ScrollBarOrientation.Horizontal;
-            return NativeControl.GetScrollBarMaximum(orientation);
         }
 
         public void ResetBackgroundColor()
@@ -689,29 +579,55 @@ namespace Alternet.UI
             NativeControl.SetFocusFlags(canSelect, tabStop, acceptsFocusRecursively);
         }
 
-        public bool CanScroll(bool isVertical)
-        {
-            return NativeControl.CanScroll(isVertical ? wxVERTICAL : wxHORIZONTAL);
-        }
-
-        public bool HasScrollbar(bool isVertical)
-        {
-            return NativeControl.HasScrollbar(isVertical ? wxVERTICAL : wxHORIZONTAL);
-        }
-
         public ScrollBarInfo GetScrollBarInfo(bool isVertical)
         {
-            ScrollBarInfo result = new();
+            ScrollBarOrientation orientation;
+            bool scrollbarAssigned;
 
-            result.Range = GetScrollBarMaximum(isVertical);
-            result.PageSize = GetScrollBarLargeChange(isVertical);
-            result.Position = GetScrollBarValue(isVertical);
-
-            if (ScrollBarAlwaysVisible)
-                result.Visibility = HiddenOrVisible.Visible;
+            if (isVertical)
+            {
+                orientation = ScrollBarOrientation.Vertical;
+                scrollbarAssigned = vertScrollBarInfoAssigned;
+            }
             else
             {
-                result.Visibility = IsScrollBarVisible(isVertical)
+                orientation = ScrollBarOrientation.Horizontal;
+                scrollbarAssigned = horzScrollBarInfoAssigned;
+            }
+
+            if (!scrollbarAssigned)
+            {
+                return ScrollBarInfo.Default;
+            }
+
+            bool canScroll = NativeControl.CanScroll(isVertical ? wxVERTICAL : wxHORIZONTAL);
+
+            if (!canScroll)
+            {
+                return ScrollBarInfo.Default;
+            }
+
+            /*
+                        bool hasScrollBar = NativeControl.HasScrollbar(isVertical ? wxVERTICAL : wxHORIZONTAL);
+
+                        if (!hasScrollBar)
+                        {
+                            return ScrollBarInfo.Default;
+                        }
+            */
+            ScrollBarInfo result = new();
+
+            result.Range = NativeControl.GetScrollBarMaximum(orientation);
+            result.PageSize = NativeControl.GetScrollBarLargeChange(orientation);
+            result.Position = NativeControl.GetScrollBarValue(orientation);
+
+            if (ScrollBarAlwaysVisible)
+            {
+                result.Visibility = HiddenOrVisible.Visible;
+            }
+            else
+            {
+                result.Visibility = NativeControl.IsScrollBarVisible(orientation)
                     ? HiddenOrVisible.Auto : HiddenOrVisible.Hidden;
             }
 
