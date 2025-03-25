@@ -6,7 +6,7 @@ namespace Alternet::UI
     ALTERNET_UI_API int WebBrowser_GetBackend_(WebBrowser* obj)
     {
         return MarshalExceptions<int>([&]() {
-            return obj->GetBackend();
+            return (int)obj->GetBackend();
             });
     }
     

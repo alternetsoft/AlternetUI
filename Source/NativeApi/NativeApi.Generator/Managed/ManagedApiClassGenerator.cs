@@ -14,6 +14,41 @@ namespace ApiGenerator.Managed
 {
     internal class ManagedApiClassGenerator
     {
+        /// <summary>
+        /// Returns <c>true</c> if specified type is a descendant of another type.
+        /// </summary>
+        /// <remarks>This method checks all base types recursively not only
+        /// the first <see cref="Type.BaseType"/> value.</remarks>
+        /// <param name="type">Descendant type.</param>
+        /// <param name="baseTypeToCheck">Base type.</param>
+        /// <returns></returns>
+        public static bool TypeIsDescendant(Type type, Type baseTypeToCheck)
+        {
+            while (true)
+            {
+                if (type == null)
+                    return false;
+
+                var baseType = type.BaseType;
+
+                if (baseType == baseTypeToCheck)
+                    return true;
+
+                if (type.IsInterface)
+                {
+                    if (baseType == null)
+                        return false;
+                }
+
+                if (type.IsClass)
+                {
+                    if (baseType == typeof(object))
+                        return false;
+                }
+
+                type = baseType!;
+            }
+        }
 
         public static bool IsControlOrDescendant(ApiType managedApiType)
         {
@@ -22,7 +57,7 @@ namespace ApiGenerator.Managed
             var controlType = typeof(NativeApi.Api.Control);
 
             var result = type == controlType
-                || Alternet.UI.AssemblyUtils.TypeIsDescendant(type, controlType);
+                || TypeIsDescendant(type, controlType);
 
             return result;
         }

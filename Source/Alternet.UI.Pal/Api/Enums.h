@@ -647,6 +647,7 @@ namespace Alternet::UI
     {
         Url = 0,
         Data = 1,
+        PreloadUrl = 2,
     };
     
     enum class SvgImageNumOfColors
@@ -3224,6 +3225,128 @@ namespace Alternet::UI
         Space = 2048,
     };
     
+    enum class WebBrowserBackend
+    {
+        Default = 0,
+        IE = 1,
+        IELatest = 2,
+        Edge = 3,
+        WebKit = 4,
+    };
+    
+    enum class WebBrowserBackendOS
+    {
+        Other = 0,
+        MacOS = 1,
+        Unix = 2,
+        Windows = 3,
+    };
+    
+    enum class WebBrowserEvent
+    {
+        Unknown = 0,
+        Navigating = 1,
+        Navigated = 2,
+        Loaded = 3,
+        Error = 4,
+        NewWindow = 5,
+        TitleChanged = 6,
+        FullScreenChanged = 7,
+        ScriptMessageReceived = 8,
+        ScriptResult = 9,
+        BeforeBrowserCreate = 10,
+    };
+    
+    enum class WebBrowserHostResourceAccessKind
+    {
+        Deny = 0,
+        Allow = 1,
+        DenyCors = 2,
+    };
+    
+    enum class WebBrowserNavigationAction
+    {
+        None = 0,
+        User = 1,
+        Other = 2,
+    };
+    
+    enum class WebBrowserNavigationError
+    {
+        Connection = 0,
+        Certificate = 1,
+        Auth = 2,
+        Security = 3,
+        NotFound = 4,
+        Request = 5,
+        UserCancelled = 6,
+        Other = 7,
+    };
+    
+    enum class WebBrowserNavigationErrorEx
+    {
+        ErrorFirst = 0,
+        InvalidUrl = 1,
+        NoSession = 2,
+        CannotConnect = 3,
+        ResourceNotFound = 4,
+        ObjectNotFound = 5,
+        DataNotAvailable = 6,
+        DownloadFailure = 7,
+        AuthenticationRequired = 8,
+        NoValidMedia = 9,
+        ConnectionTimeout = 10,
+        InvalidRequest = 11,
+        UnknownProtocol = 12,
+        SecurityProblem = 13,
+        CannotLoadData = 14,
+        CannotInstantiateObject = 15,
+        QueryoptionUnknown = 16,
+        RedirectFailed = 17,
+        RedirectToDir = 18,
+        CannotLockRequest = 19,
+        UseExtendBinding = 20,
+        TerminatedBind = 21,
+        InvalidCertificate = 22,
+        CodeDownloadDeclined = 23,
+        ResultDispatched = 24,
+        CannotReplaceSfpFile = 25,
+        CodeInstallBlockedByHashPolicy = 26,
+        CodeInstallSuppressed = 27,
+    };
+    
+    enum class WebBrowserPreferredColorScheme
+    {
+        Auto = 0,
+        Light = 1,
+        Dark = 2,
+    };
+    
+    enum class WebBrowserSearchFlags
+    {
+        Default = 0,
+        Wrap = 1,
+        EntireWord = 2,
+        MatchCase = 4,
+        HighlightResult = 8,
+        Backwards = 16,
+    };
+    
+    enum class WebBrowserZoomType
+    {
+        Layout = 0,
+        Text = 1,
+    };
+    
+    enum class WebBrowserZoom
+    {
+        Tiny = 0,
+        Small = 1,
+        Medium = 2,
+        Large = 3,
+        Largest = 4,
+    };
+    
     enum class ModalResult
     {
         None = 0,
@@ -3241,7 +3364,6 @@ namespace Alternet::UI
     enum class WindowKind
     {
         Window = 0,
-        Dialog = 1,
         MiniFrame = 2,
         Control = 3,
     };
@@ -3337,3 +3459,4 @@ template<> struct enable_bitmask_operators<Alternet::UI::TextBoxTextAttrEffects>
 template<> struct enable_bitmask_operators<Alternet::UI::TextBoxTextAttrFlags> { static const bool enable = true; };
 template<> struct enable_bitmask_operators<Alternet::UI::TreeViewHitTestLocations> { static const bool enable = true; };
 template<> struct enable_bitmask_operators<Alternet::UI::ValueValidatorTextStyle> { static const bool enable = true; };
+template<> struct enable_bitmask_operators<Alternet::UI::WebBrowserSearchFlags> { static const bool enable = true; };

@@ -36,6 +36,8 @@ namespace ApiGenerator.Api
 
             bool IsMyType(Type x)
             {
+                if (x.IsNested)
+                    return false;
                 if (checkApiType)
                     return IsApiType(x);
                 return true;
@@ -50,16 +52,16 @@ namespace ApiGenerator.Api
             if (managed)
                 return result;
 
-            var assembly2 = typeof(Alternet.UI.CommonUtils).Assembly;
+            var assembly2 = LibraryEnums;
             var result2 = GetEnumTypes(assembly2, false);
 
             return result.Concat(result2);
         }
 
         /// <summary>
-        /// Gets 'Alternet.UI.Interfaces' assembly.
+        /// Gets 'Alternet.UI.Enums' assembly.
         /// </summary>
-        public static readonly Assembly LibraryInterfaces = typeof(Alternet.UI.CommonUtils).Assembly;
+        public static readonly Assembly LibraryEnums = typeof(Alternet.UI.Keys).Assembly;
 
         public static bool IsStruct(Type type) => type.IsValueType && !type.IsPrimitive && !type.IsEnum;
 
@@ -90,7 +92,7 @@ namespace ApiGenerator.Api
 
         public static string GetManagedName(Type type, string defaultName)
         {
-            if (type.Assembly == LibraryInterfaces)
+            if (type.Assembly == LibraryEnums)
                 return type.FullName!;
 
             return GetCustomManagedName<ManagedNameAttribute>(
@@ -100,7 +102,7 @@ namespace ApiGenerator.Api
 
         public static string GetManagedExternName(Type type, string defaultName)
         {
-            if (type.Assembly == LibraryInterfaces)
+            if (type.Assembly == LibraryEnums)
                 return type.FullName!;
 
             return GetCustomManagedName<ManagedExternNameAttribute>(

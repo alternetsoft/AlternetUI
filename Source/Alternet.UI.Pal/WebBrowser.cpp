@@ -44,7 +44,7 @@
 namespace Alternet::UI
 {
 
-    WebBrowserBackend WebBrowser::DefaultBackend = WEBBROWSER_BACKEND_DEFAULT;
+    WebBrowserBackend WebBrowser::DefaultBackend = WebBrowserBackend::Default;
     wxString WebBrowser::DefaultPage = "about:blank";
     bool WebBrowser::IELatest = false;
 
@@ -207,12 +207,12 @@ namespace Alternet::UI
 
         switch (id)
         {
-        case WEBBROWSER_BACKEND_DEFAULT:
+        case WebBrowserBackend::Default:
             break;
-        case WEBBROWSER_BACKEND_IE:
+        case WebBrowserBackend::IE:
             backend = wxASCII_STR(wxWebViewBackendIE);
             break;
-        case WEBBROWSER_BACKEND_IELATEST:
+        case WebBrowserBackend::IELatest:
             backend = wxASCII_STR(wxWebViewBackendIE);
             if (!WebBrowser::IELatest)
             {
@@ -222,10 +222,10 @@ namespace Alternet::UI
                 WebBrowser::IELatest = true;
             }
             break;
-        case WEBBROWSER_BACKEND_EDGE:
+        case WebBrowserBackend::Edge:
             backend = wxASCII_STR(wxWebViewBackendEdge);
             break;
-        case WEBBROWSER_BACKEND_WEBKIT:
+        case WebBrowserBackend::WebKit:
             backend = wxASCII_STR(wxWebViewBackendWebKit);
             break;
         }
@@ -260,10 +260,10 @@ namespace Alternet::UI
     {
         auto realBackend = Backend; 
         
-        auto isMacOS = WebBrowser::GetBackendOS() == WEBBROWSER_BACKEND_OS_OSX;
+        auto isMacOS = WebBrowser::GetBackendOS() == (int)WebBrowserBackendOS::MacOS;
         auto isIE = IsBackendIE();
-        auto isEdge = WebBrowser::GetBackend() == WEBBROWSER_BACKEND_EDGE;
-        auto isWebkit = WebBrowser::GetBackend() == WEBBROWSER_BACKEND_WEBKIT;
+        auto isEdge = WebBrowser::GetBackend() == WebBrowserBackend::Edge;
+        auto isWebkit = WebBrowser::GetBackend() == WebBrowserBackend::WebKit;
 
         auto registerHandlerBeforeCreate = isMacOS && isWebkit;
         auto registerHandlerSupported = !isEdge;
@@ -421,16 +421,16 @@ namespace Alternet::UI
     {
         Backend = WebBrowser::DefaultBackend;
 
-        if (Backend == WEBBROWSER_BACKEND_DEFAULT) 
+        if (Backend == WebBrowserBackend::Default)
         {
             if (WebBrowser::IsBackendEdgeAvailable())
-                Backend = WEBBROWSER_BACKEND_EDGE;
+                Backend = WebBrowserBackend::Edge;
             else
             if (WebBrowser::IsBackendWebKitAvailable())
-                Backend = WEBBROWSER_BACKEND_WEBKIT;
+                Backend = WebBrowserBackend::WebKit;
             else
             if (WebBrowser::IsBackendIEAvailable())
-                Backend = WEBBROWSER_BACKEND_IELATEST;
+                Backend = WebBrowserBackend::IELatest;
         }
 
         webView = nullptr;
@@ -439,10 +439,10 @@ namespace Alternet::UI
 #ifdef wxUSE_WEBVIEW_EDGE
         if (!_isEdgeBackendEnabled)
         {
-            Backend = WEBBROWSER_BACKEND_IELATEST;
+            Backend = WebBrowserBackend::IELatest;
         }
         else
-        if (Backend == WEBBROWSER_BACKEND_EDGE)
+        if (Backend == WebBrowserBackend::Edge)
         {
             webView = new wxWebViewEdge2();
         }
@@ -610,7 +610,7 @@ namespace Alternet::UI
     
     bool WebBrowser::IsBackendIE()
     {
-        if (Backend == WEBBROWSER_BACKEND_IE || Backend == WEBBROWSER_BACKEND_IELATEST)
+        if (Backend == WebBrowserBackend::IE || Backend == WebBrowserBackend::IELatest)
             return TRUE;
         return FALSE;
     }
@@ -744,7 +744,7 @@ namespace Alternet::UI
     
     int WebBrowser::GetBackendOS()
     {
-        return WEBBROWSER_BACKEND_OS_MSW;
+        return (int)WebBrowserBackendOS::Windows;
     }
     
     int WebBrowser::IEGetScriptErrorsSuppressed()
@@ -1066,7 +1066,7 @@ namespace Alternet::UI
         const string& folderPath, int accessKind) 
     {
 #if defined(_MSW_EGDE_)
-        if (Backend != WEBBROWSER_BACKEND_EDGE)
+        if (Backend != WebBrowserBackend::Edge)
             return;
         wxCOMPtr<ICoreWebView2_3> webView3(GetWebView2_3(GetNativeBackend()));
         if (webView3 != NULL)
@@ -1079,7 +1079,7 @@ namespace Alternet::UI
     {
         preferredColorScheme = value;
 #if defined(_MSW_EGDE_)
-        if (Backend != WEBBROWSER_BACKEND_EDGE)
+        if (Backend != WebBrowserBackend::Edge)
             return;
         wxCOMPtr<ICoreWebView2Profile> profile(GetProfile(GetNativeBackend()));
         if(profile != NULL)
