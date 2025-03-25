@@ -500,6 +500,7 @@ namespace Alternet::UI
         wxWindow->Unbind(wxEVT_SET_FOCUS, &Control::OnGotFocus, this);
         wxWindow->Unbind(wxEVT_KILL_FOCUS, &Control::OnLostFocus, this);
         wxWindow->Unbind(wxEVT_LEFT_UP, &Control::OnMouseLeftUp, this);
+        wxWindow->Unbind(wxEVT_MOUSEWHEEL, &Control::OnMouseWheel, this);
         wxWindow->Unbind(wxEVT_SYS_COLOUR_CHANGED, &Control::OnSysColorChanged, this);
 
         if (bindScrollEvents) 
@@ -1087,6 +1088,7 @@ namespace Alternet::UI
         _wxWindow->Bind(wxEVT_MOVE, &Control::OnLocationChanged, this);
         _wxWindow->Bind(wxEVT_SET_FOCUS, &Control::OnGotFocus, this);
         _wxWindow->Bind(wxEVT_KILL_FOCUS, &Control::OnLostFocus, this);
+        _wxWindow->Bind(wxEVT_MOUSEWHEEL, &Control::OnMouseWheel, this);
         _wxWindow->Bind(wxEVT_LEFT_UP, &Control::OnMouseLeftUp, this);
         _wxWindow->Bind(wxEVT_IDLE, &Control::OnIdle, this);
         _wxWindow->Bind(wxEVT_SYS_COLOUR_CHANGED, &Control::OnSysColorChanged, this);
@@ -1623,6 +1625,11 @@ namespace Alternet::UI
 
             window = window->GetParent();
         }
+    }
+
+    void Control::OnMouseWheel(wxMouseEvent& event)
+    {
+        event.Skip();
     }
 
     void Control::OnMouseLeftUp(wxMouseEvent& event)

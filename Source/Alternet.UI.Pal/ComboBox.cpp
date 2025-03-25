@@ -462,6 +462,11 @@ namespace Alternet::UI
         ownerDrawStyle = value;
     }
 
+    void ComboBox::OnMouseWheel(wxMouseEvent& event)
+    {
+        event.Skip();
+    }
+
     wxVListBoxComboPopup2* ComboBox::GetPopup()
     {
         auto combo = GetComboBox();

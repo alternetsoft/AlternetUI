@@ -208,6 +208,8 @@ namespace Alternet::UI
         void OnPopup();
         void OnDismiss();
 
+        virtual void OnMouseWheel(wxMouseEvent& event) override;
+
         virtual Size GetPreferredSize(const Size& availableSize) override
         {
             return Control::GetPreferredSize(availableSize);
