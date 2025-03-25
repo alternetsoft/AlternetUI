@@ -22,6 +22,8 @@ namespace Alternet.UI
 
         public VirtualListBox? PopupControl { get;  set; }
 
+        public bool AllowMouseWheel { get; set; }
+
         public void DefaultOnDrawBackground()
         {
         }
