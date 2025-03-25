@@ -19,8 +19,8 @@
     <PackageId>Alternet.UI.Common</PackageId>
     <Description>AlterNET UI Common: Common classes for multi-platform use.</Description>
     <SymbolPackageFormat>snupkg</SymbolPackageFormat>
-    <PackageLicenseFile>License.txt</PackageLicenseFile>
-    <PackageRequireLicenseAcceptance>True</PackageRequireLicenseAcceptance>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <PackageRequireLicenseAcceptance>False</PackageRequireLicenseAcceptance>
     <PackageReadmeFile>readme.md</PackageReadmeFile>
     <PackageIcon>icon.png</PackageIcon>
   </PropertyGroup>
@@ -28,10 +28,6 @@
   <ItemGroup>
     <None Include="Package\readme.md" Pack="true" PackagePath="" />
     <None Include="Package\icon.png" Pack="true" PackagePath="" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <None Include="..\Licenses\License.txt" Pack="true" PackagePath="" />
   </ItemGroup>
 
   <ItemGroup>

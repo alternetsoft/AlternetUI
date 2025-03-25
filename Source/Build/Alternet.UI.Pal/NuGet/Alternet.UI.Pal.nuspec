@@ -5,12 +5,11 @@
     <version>$version$</version>
     <authors>AlterNET Software</authors>
     <owners>AlterNET Software</owners>
-    <requireLicenseAcceptance>true</requireLicenseAcceptance>
     <description>Platform Abstraction Layer for AlterNET UI: a cross-platform graphical user interface framework.</description>
     <projectUrl>https://alternet-ui.com</projectUrl>
-    <license type="file">License.txt</license>
+    <license type="expression">MIT</license>
     <icon>icon.png</icon>
     <readme>readme.md</readme>
-    <copyright>Copyright © 2021-2023 AlterNET Software</copyright>
+    <copyright>Copyright (c) 2021-2025 AlterNET Software</copyright>
   </metadata>
 </package>

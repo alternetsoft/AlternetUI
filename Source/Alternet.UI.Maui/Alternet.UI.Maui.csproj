@@ -17,15 +17,11 @@
     <Description>AlterNET UI.Maui: Includes Maui platform related classes.</Description>
     <IncludeSymbols>true</IncludeSymbols>
     <SymbolPackageFormat>snupkg</SymbolPackageFormat>
-    <PackageLicenseFile>License.txt</PackageLicenseFile>
-    <PackageRequireLicenseAcceptance>True</PackageRequireLicenseAcceptance>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <PackageRequireLicenseAcceptance>False</PackageRequireLicenseAcceptance>
     <PackageReadmeFile>readme.md</PackageReadmeFile>
     <PackageIcon>icon.png</PackageIcon>
   </PropertyGroup>
-
-  <ItemGroup>
-    <None Include="..\Licenses\License.txt" Pack="true" PackagePath="" />
-  </ItemGroup>
 
   <ItemGroup>
     <Compile Remove="Tests\**" />

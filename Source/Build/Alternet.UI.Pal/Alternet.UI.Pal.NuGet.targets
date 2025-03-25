@@ -6,8 +6,6 @@
 
 <!-- ========================================== -->
     <ItemGroup>
-        <NugetPayload_License Include="$(LicensesDirectoryPath)\$(LicenseFileName)" />
-        <LicenseTarget Include="$(NuGetDirectoryPath)\$(LicenseFileName)" />
 
         <SourceIcon Include="$(MediaDirectoryPath)\$(SourceIconFileName)" />
         <TargetIcon Include="$(NuGetDirectoryPath)\$(TargetIconFileName)" />
@@ -50,7 +48,6 @@
 <!-- ========================================== -->
     <Target Name="NuGet_PrepareSource" >
         <Copy SourceFiles="@(SourceIcon)" DestinationFiles="@(TargetIcon)" />
-        <Copy SourceFiles="@(NugetPayload_License)" DestinationFiles="@(LicenseTarget)" />
 
         <!-- Windows ============================ -->
         

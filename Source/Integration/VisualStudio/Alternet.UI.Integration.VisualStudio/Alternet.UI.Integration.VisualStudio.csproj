@@ -4,6 +4,7 @@
   <Import Project="..\..\..\Version\TargetFrameworks.props" />
   <Import Project="..\..\..\Keys\Keys.props" />
   <Import Project="..\..\..\Keys\Private.props" Condition="Exists('..\..\..\Keys\Private.props')" />
+
   <PropertyGroup>
     <MinimumVisualStudioVersion>16.0</MinimumVisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
@@ -12,7 +13,9 @@
     <GenerateAssemblyInfo>true</GenerateAssemblyInfo>
     <LangVersion>latest</LangVersion>
   </PropertyGroup>
+
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
@@ -38,6 +41,7 @@
     <StartProgram Condition="'$(DevEnvDir)' != ''">$(DevEnvDir)devenv.exe</StartProgram>
     <StartArguments>/rootsuffix Exp</StartArguments>
   </PropertyGroup>
+
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
@@ -46,6 +50,7 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
@@ -53,7 +58,14 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+
   <ItemGroup>
+    <Content Include="..\..\..\Licenses\License.txt">
+      <Link>License.txt</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <IncludeInVSIX>true</IncludeInVSIX>
+    </Content>
+
     <Compile Include="AlternetUIPackage.cs" />
     <Compile Include="Converters\EnumToIntConverter.cs" />
     <Compile Include="Converters\EnumValuesConverter.cs" />
@@ -150,11 +162,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Content Include="..\..\..\Licenses\License.txt">
-      <Link>License.txt</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      <IncludeInVSIX>true</IncludeInVSIX>
-    </Content>
 
     <!--
     <Content Include="..\..\Components\Alternet.UI.Integration.UIXmlHostApp\bin\$(Configuration)\$(TargetFramework46Version)\**\*.*" Exclude="..\..\Components\Alternet.UI.Integration.UIXmlHostApp\bin\$(Configuration)\$(TargetFramework46Version)\**\*.pdb">
