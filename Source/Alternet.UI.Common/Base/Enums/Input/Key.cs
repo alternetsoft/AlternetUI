@@ -2306,3 +2306,9 @@ namespace Alternet.UI
         Max = MediaRecord,
     }
 }
+
+#pragma warning disable
+namespace Alternet.UI.Markup
+{
+}
+#pragma warning restore

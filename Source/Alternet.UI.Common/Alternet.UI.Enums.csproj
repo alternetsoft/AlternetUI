@@ -1,0 +1,22 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <Import Project="..\Version\Version.props" />
+  <Import Project="..\Version\VersionNugets.props" />
+  <Import Project="..\Keys\Keys.props" />
+  <Import Project="..\Version\CommonPackages.props" />
+
+  <PropertyGroup>
+    <Nullable>enable</Nullable>
+    <LangVersion>12.0</LangVersion>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <IncludeSymbols>true</IncludeSymbols>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="**" />
+    <Compile Remove="**" />
+    <None Include="Base/Enums/**" />
+    <Compile Include="Base/Enums/**" />
+  </ItemGroup>
+
+</Project>
