@@ -17,6 +17,12 @@ namespace Alternet.UI
     public partial class PanelSettings : HiddenBorder
     {
         /// <summary>
+        /// Gets or sets a value indicating whether the <see cref="ComboBox"/> mouse
+        /// wheel is allowed by default when it is used in the <see cref="PanelSettings"/>.
+        /// </summary>
+        public static bool DefaultAllowComboBoxMouseWheel = false;
+
+        /// <summary>
         /// Gets or sets default spacer size.
         /// Real spacer size equals to this value plus
         /// <see cref="AbstractControl.MinChildMargin"/> of the container.
@@ -593,6 +599,8 @@ namespace Alternet.UI
 
             var colorEditor = result.MainControl;
 
+            colorEditor.AllowMouseWheel = DefaultAllowComboBoxMouseWheel;
+
             if (item.Value is not null)
                 colorEditor.Value = (Color)item.Value;
 
@@ -647,6 +655,8 @@ namespace Alternet.UI
             UpdateText(item, result.Label);
 
             var comboBox = result.MainControl;
+
+            comboBox.MainControl.AllowMouseWheel = DefaultAllowComboBoxMouseWheel;
 
             comboBox.IsEditable = isEditable;
 
