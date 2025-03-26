@@ -67,7 +67,14 @@ namespace Alternet::UI
     wxWindow* Panel::CreateWxWindowCore(wxWindow* parent)
     {
         auto style = GetDefaultStyle();
-
+        /*
+        if (GetIsScrollable())
+        {
+            auto p = new wxScrolledWindow2(
+                this, parent, wxID_ANY, wxDefaultPosition, wxDefaultSize, style);
+            return p;
+        }
+        */
         auto p = new wxPanel2(this, parent, wxID_ANY, wxDefaultPosition, wxDefaultSize, style);
         return p;
     }

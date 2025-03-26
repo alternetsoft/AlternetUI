@@ -4,15 +4,6 @@ public:
 bool GetWantChars();
 void SetWantChars(bool value);
 
-bool GetShowVertScrollBar();
-void SetShowVertScrollBar(bool value);
-
-bool GetShowHorzScrollBar();
-void SetShowHorzScrollBar(bool value);
-
-bool GetScrollBarAlwaysVisible();
-void SetScrollBarAlwaysVisible(bool value);
-
 bool GetBindScrollEvents();
 void SetBindScrollEvents(bool value);
 
@@ -139,9 +130,12 @@ void SetMinimumSize(const SizeD& value);
 SizeD GetMaximumSize();
 void SetMaximumSize(const SizeD& value);
 
+void SetScrollBar(ScrollBarOrientation orientation, bool visible, int value, int largeChange, int maximum);
+bool IsScrollBarVisible(ScrollBarOrientation orientation);
+int GetScrollBarValue(ScrollBarOrientation orientation);
+int GetScrollBarLargeChange(ScrollBarOrientation orientation);
+int GetScrollBarMaximum(ScrollBarOrientation orientation);
 static void* CreateControl();
-bool CanScroll(int orient);
-bool HasScrollbar(int orient);
 bool EnableTouchEvents(int flag);
 bool BeginRepositioningChildren();
 void EndRepositioningChildren();
@@ -159,7 +153,6 @@ void UnsetToolTip();
 bool IsTransparentBackgroundSupported();
 bool SetBackgroundStyle(int style);
 int GetBackgroundStyle();
-void AlwaysShowScrollbars(bool hflag, bool vflag);
 Color GetDefaultAttributesBgColor();
 Color GetDefaultAttributesFgColor();
 Font* GetDefaultAttributesFont();
@@ -214,11 +207,6 @@ void* GetContainingSizer();
 void* GetSizer();
 void SetSizer(void* sizer, bool deleteOld);
 void SetSizerAndFit(void* sizer, bool deleteOld);
-void SetScrollBar(ScrollBarOrientation orientation, bool visible, int value, int largeChange, int maximum);
-bool IsScrollBarVisible(ScrollBarOrientation orientation);
-int GetScrollBarValue(ScrollBarOrientation orientation);
-int GetScrollBarLargeChange(ScrollBarOrientation orientation);
-int GetScrollBarMaximum(ScrollBarOrientation orientation);
 int GetScrollBarEvtKind();
 int GetScrollBarEvtPosition();
 

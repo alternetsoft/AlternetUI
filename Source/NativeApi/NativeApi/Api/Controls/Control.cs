@@ -10,19 +10,17 @@ namespace NativeApi.Api
 
     public abstract class Control
     {
+        public void SetScrollBar(ScrollBarOrientation orientation, bool visible,
+            int value, int largeChange, int maximum)
+        { }
+        public bool IsScrollBarVisible(ScrollBarOrientation orientation) => default;
+        public int GetScrollBarValue(ScrollBarOrientation orientation) => default;
+        public int GetScrollBarLargeChange(ScrollBarOrientation orientation) => default;
+        public int GetScrollBarMaximum(ScrollBarOrientation orientation) => default;
+
         public static IntPtr CreateControl() => default;
 
-        // Returns true if this window can have a scroll bar in this orientation.
-        // wxHORIZONTAL = 0x0004,  wxVERTICAL = 0x0008,
-        public bool CanScroll(int orient) => default;
-
-        // Returns true if this window currently has a scroll bar for this orientation.
-        public bool HasScrollbar(int orient) => default;
-
         public bool WantChars { get; set; }
-        public bool ShowVertScrollBar { get; set; }
-        public bool ShowHorzScrollBar { get; set; }
-        public bool ScrollBarAlwaysVisible { get; set; }
 
         public bool EnableTouchEvents(int flag) => default;
 
@@ -49,7 +47,6 @@ namespace NativeApi.Api
         public bool IsTransparentBackgroundSupported() => default;
         public bool SetBackgroundStyle(int style) => default;
         public int GetBackgroundStyle() => default;
-        public void AlwaysShowScrollbars(bool hflag = true, bool vflag = true) { }
         public Color GetDefaultAttributesBgColor() => default;
         public Color GetDefaultAttributesFgColor() => default;
         public Font GetDefaultAttributesFont() => default;
@@ -200,12 +197,6 @@ namespace NativeApi.Api
         public void SetSizer(IntPtr sizer, bool deleteOld) { }
         public void SetSizerAndFit(IntPtr sizer, bool deleteOld) { }
 
-        public void SetScrollBar(ScrollBarOrientation orientation, bool visible, 
-            int value, int largeChange, int maximum) { }
-        public bool IsScrollBarVisible(ScrollBarOrientation orientation) => default;
-        public int GetScrollBarValue(ScrollBarOrientation orientation) => default;
-        public int GetScrollBarLargeChange(ScrollBarOrientation orientation) => default;
-        public int GetScrollBarMaximum(ScrollBarOrientation orientation) => default;
         public int GetScrollBarEvtKind() => default;
         public int GetScrollBarEvtPosition() => default;
     }

@@ -33,72 +33,6 @@ ALTERNET_UI_API void Control_SetWantChars_(Control* obj, c_bool value)
     #endif
 }
 
-ALTERNET_UI_API c_bool Control_GetShowVertScrollBar_(Control* obj)
-{
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    return MarshalExceptions<c_bool>([&](){
-    #endif
-        return obj->GetShowVertScrollBar();
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    });
-    #endif
-}
-
-ALTERNET_UI_API void Control_SetShowVertScrollBar_(Control* obj, c_bool value)
-{
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    MarshalExceptions<void>([&](){
-    #endif
-        obj->SetShowVertScrollBar(value);
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    });
-    #endif
-}
-
-ALTERNET_UI_API c_bool Control_GetShowHorzScrollBar_(Control* obj)
-{
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    return MarshalExceptions<c_bool>([&](){
-    #endif
-        return obj->GetShowHorzScrollBar();
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    });
-    #endif
-}
-
-ALTERNET_UI_API void Control_SetShowHorzScrollBar_(Control* obj, c_bool value)
-{
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    MarshalExceptions<void>([&](){
-    #endif
-        obj->SetShowHorzScrollBar(value);
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    });
-    #endif
-}
-
-ALTERNET_UI_API c_bool Control_GetScrollBarAlwaysVisible_(Control* obj)
-{
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    return MarshalExceptions<c_bool>([&](){
-    #endif
-        return obj->GetScrollBarAlwaysVisible();
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    });
-    #endif
-}
-
-ALTERNET_UI_API void Control_SetScrollBarAlwaysVisible_(Control* obj, c_bool value)
-{
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    MarshalExceptions<void>([&](){
-    #endif
-        obj->SetScrollBarAlwaysVisible(value);
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    });
-    #endif
-}
-
 ALTERNET_UI_API c_bool Control_GetBindScrollEvents_(Control* obj)
 {
     #if !defined(__WXMSW__) || defined(_DEBUG)
@@ -957,34 +891,67 @@ ALTERNET_UI_API void Control_SetMaximumSize_(Control* obj, SizeD value)
     #endif
 }
 
+ALTERNET_UI_API void Control_SetScrollBar_(Control* obj, ScrollBarOrientation orientation, c_bool visible, int value, int largeChange, int maximum)
+{
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    MarshalExceptions<void>([&](){
+    #endif
+        obj->SetScrollBar(orientation, visible, value, largeChange, maximum);
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    });
+    #endif
+}
+
+ALTERNET_UI_API c_bool Control_IsScrollBarVisible_(Control* obj, ScrollBarOrientation orientation)
+{
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    return MarshalExceptions<c_bool>([&](){
+    #endif
+        return obj->IsScrollBarVisible(orientation);
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    });
+    #endif
+}
+
+ALTERNET_UI_API int Control_GetScrollBarValue_(Control* obj, ScrollBarOrientation orientation)
+{
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    return MarshalExceptions<int>([&](){
+    #endif
+        return obj->GetScrollBarValue(orientation);
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    });
+    #endif
+}
+
+ALTERNET_UI_API int Control_GetScrollBarLargeChange_(Control* obj, ScrollBarOrientation orientation)
+{
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    return MarshalExceptions<int>([&](){
+    #endif
+        return obj->GetScrollBarLargeChange(orientation);
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    });
+    #endif
+}
+
+ALTERNET_UI_API int Control_GetScrollBarMaximum_(Control* obj, ScrollBarOrientation orientation)
+{
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    return MarshalExceptions<int>([&](){
+    #endif
+        return obj->GetScrollBarMaximum(orientation);
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    });
+    #endif
+}
+
 ALTERNET_UI_API void* Control_CreateControl_()
 {
     #if !defined(__WXMSW__) || defined(_DEBUG)
     return MarshalExceptions<void*>([&](){
     #endif
         return Control::CreateControl();
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    });
-    #endif
-}
-
-ALTERNET_UI_API c_bool Control_CanScroll_(Control* obj, int orient)
-{
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    return MarshalExceptions<c_bool>([&](){
-    #endif
-        return obj->CanScroll(orient);
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    });
-    #endif
-}
-
-ALTERNET_UI_API c_bool Control_HasScrollbar_(Control* obj, int orient)
-{
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    return MarshalExceptions<c_bool>([&](){
-    #endif
-        return obj->HasScrollbar(orient);
     #if !defined(__WXMSW__) || defined(_DEBUG)
     });
     #endif
@@ -1172,17 +1139,6 @@ ALTERNET_UI_API int Control_GetBackgroundStyle_(Control* obj)
     return MarshalExceptions<int>([&](){
     #endif
         return obj->GetBackgroundStyle();
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    });
-    #endif
-}
-
-ALTERNET_UI_API void Control_AlwaysShowScrollbars_(Control* obj, c_bool hflag, c_bool vflag)
-{
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    MarshalExceptions<void>([&](){
-    #endif
-        obj->AlwaysShowScrollbars(hflag, vflag);
     #if !defined(__WXMSW__) || defined(_DEBUG)
     });
     #endif
@@ -1777,61 +1733,6 @@ ALTERNET_UI_API void Control_SetSizerAndFit_(Control* obj, void* sizer, c_bool d
     MarshalExceptions<void>([&](){
     #endif
         obj->SetSizerAndFit(sizer, deleteOld);
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    });
-    #endif
-}
-
-ALTERNET_UI_API void Control_SetScrollBar_(Control* obj, ScrollBarOrientation orientation, c_bool visible, int value, int largeChange, int maximum)
-{
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    MarshalExceptions<void>([&](){
-    #endif
-        obj->SetScrollBar(orientation, visible, value, largeChange, maximum);
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    });
-    #endif
-}
-
-ALTERNET_UI_API c_bool Control_IsScrollBarVisible_(Control* obj, ScrollBarOrientation orientation)
-{
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    return MarshalExceptions<c_bool>([&](){
-    #endif
-        return obj->IsScrollBarVisible(orientation);
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    });
-    #endif
-}
-
-ALTERNET_UI_API int Control_GetScrollBarValue_(Control* obj, ScrollBarOrientation orientation)
-{
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    return MarshalExceptions<int>([&](){
-    #endif
-        return obj->GetScrollBarValue(orientation);
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    });
-    #endif
-}
-
-ALTERNET_UI_API int Control_GetScrollBarLargeChange_(Control* obj, ScrollBarOrientation orientation)
-{
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    return MarshalExceptions<int>([&](){
-    #endif
-        return obj->GetScrollBarLargeChange(orientation);
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    });
-    #endif
-}
-
-ALTERNET_UI_API int Control_GetScrollBarMaximum_(Control* obj, ScrollBarOrientation orientation)
-{
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    return MarshalExceptions<int>([&](){
-    #endif
-        return obj->GetScrollBarMaximum(orientation);
     #if !defined(__WXMSW__) || defined(_DEBUG)
     });
     #endif

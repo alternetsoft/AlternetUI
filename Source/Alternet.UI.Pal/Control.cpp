@@ -232,13 +232,7 @@ namespace Alternet::UI
                     &Control::RetrieveMinimumSize, &Control::ApplyMinimumSize),
             _maximumSize(*this, Size(), &Control::IsWxWindowCreated,
                 &Control::RetrieveMaximumSize, &Control::ApplyMaximumSize),
-            _horizontalScrollBarInfo(*this, ScrollInfo(), &Control::CanSetScrollbar,
-                &Control::RetrieveHorizontalScrollBarInfo, &Control::ApplyHorizontalScrollBarInfo),
-            _verticalScrollBarInfo(*this, ScrollInfo(), &Control::CanSetScrollbar,
-                &Control::RetrieveVerticalScrollBarInfo, &Control::ApplyVerticalScrollBarInfo),
-            _delayedValues({&_delayedFlags, &_bounds, 
-                &_horizontalScrollBarInfo,
-                &_verticalScrollBarInfo,&_minimumSize,&_maximumSize})
+            _delayedValues({&_delayedFlags, &_bounds, &_minimumSize,&_maximumSize})
     {
     }
 
@@ -584,12 +578,25 @@ namespace Alternet::UI
         event.Skip();
     }
 
+    ScrollBarOrientation GetOrientation(wxScrollWinEvent& event)
+    {
+        auto wxOrientation = event.GetOrientation();
+
+        switch (wxOrientation)
+        {
+        case wxHORIZONTAL:
+            return ScrollBarOrientation::Horizontal;
+        case wxVERTICAL:
+        default:
+            return ScrollBarOrientation::Vertical;
+        }
+    }
+
     void Control::OnScrollBottom(wxScrollWinEvent& event)
     {
         if (IsNullOrDeleting())
             return;
-        auto scrollInfo = GetScrollInfoDelayedValue(event).Get();
-        ApplyScroll(ScrollEventType_Last, event, scrollInfo.maximum);
+        ApplyScroll(ScrollEventType_Last, event, GetScrollBarMaximum(GetOrientation(event)));
         event.Skip();
     }
 
@@ -597,8 +604,8 @@ namespace Alternet::UI
     {
         if (IsNullOrDeleting())
             return;
-        auto scrollInfo = GetScrollInfoDelayedValue(event).Get();
-        ApplyScroll(ScrollEventType_SmallDecrement, event, scrollInfo.value - 1);
+        auto value = GetScrollBarValue(GetOrientation(event));
+        ApplyScroll(ScrollEventType_SmallDecrement, event, value - 1);
         event.Skip();
     }
 
@@ -606,8 +613,8 @@ namespace Alternet::UI
     {
         if (IsNullOrDeleting())
             return;
-        auto scrollInfo = GetScrollInfoDelayedValue(event).Get();
-        ApplyScroll(ScrollEventType_SmallIncrement, event, scrollInfo.value + 1);
+        auto value = GetScrollBarValue(GetOrientation(event));
+        ApplyScroll(ScrollEventType_SmallIncrement, event, value + 1);
         event.Skip();
     }
 
@@ -615,8 +622,9 @@ namespace Alternet::UI
     {
         if (IsNullOrDeleting())
             return;
-        auto scrollInfo = GetScrollInfoDelayedValue(event).Get();
-        ApplyScroll(ScrollEventType_LargeDecrement, event, scrollInfo.value - scrollInfo.largeChange);
+        auto value = GetScrollBarValue(GetOrientation(event));
+        auto largeChange = GetScrollBarLargeChange(GetOrientation(event));
+        ApplyScroll(ScrollEventType_LargeDecrement, event, value - largeChange);
         event.Skip();
     }
 
@@ -624,8 +632,9 @@ namespace Alternet::UI
     {
         if (IsNullOrDeleting())
             return;
-        auto scrollInfo = GetScrollInfoDelayedValue(event).Get();
-        ApplyScroll(ScrollEventType_LargeIncrement, event, scrollInfo.value + scrollInfo.largeChange);
+        auto value = GetScrollBarValue(GetOrientation(event));
+        auto largeChange = GetScrollBarLargeChange(GetOrientation(event));
+        ApplyScroll(ScrollEventType_LargeIncrement, event, value + largeChange);
     }
 
     void Control::OnScrollThumbTrack(wxScrollWinEvent& event)
@@ -644,14 +653,6 @@ namespace Alternet::UI
         event.Skip();
     }
 
-    DelayedValue<Control, Control::ScrollInfo>& Control::GetScrollInfoDelayedValue(
-        const wxScrollWinEvent& event)
-    {
-        return GetScrollInfoDelayedValue(
-            event.GetOrientation() == wxHORIZONTAL ?
-            ScrollBarOrientation::Horizontal : ScrollBarOrientation::Vertical);
-    }
-
     void Control::ApplyScroll(int evtKind, wxScrollWinEvent& event, int position)
     {
         auto wxOrientation = event.GetOrientation();
@@ -666,12 +667,14 @@ namespace Alternet::UI
             case wxVERTICAL:
                 return ControlEvent::VerticalScrollBarValueChanged;
             default:
-                throwExNoInfo;
+                return ControlEvent::Idle;
             }
         };
         _scrollbarEvtKind = evtKind;
         _scrollbarEvtPosition = event.GetPosition();
-        RaiseEvent(getEvent());
+        auto evt = getEvent();
+        if(evt != ControlEvent::Idle)
+            RaiseEvent(evt);
     }
 
     int Control::GetScrollBarEvtPosition()
@@ -2086,106 +2089,10 @@ namespace Alternet::UI
         }
     }
 
-    DelayedValue<Control, Control::ScrollInfo>& Control::GetScrollInfoDelayedValue(
-        ScrollBarOrientation orientation)
-    {
-        switch (orientation)
-        {
-        case ScrollBarOrientation::Vertical:
-            return _verticalScrollBarInfo;
-        case ScrollBarOrientation::Horizontal:
-            return _horizontalScrollBarInfo;
-        default:
-            throwExNoInfo;
-        }
-    }
-
-    Control::ScrollInfo Control::GetScrollInfo(ScrollBarOrientation orientation)
-    {
-        auto window = GetWxWindow();
-        auto wxOrientation = GetWxScrollOrientation(orientation);
-        
-        ScrollInfo info;
-        info.value = window->GetScrollPos(wxOrientation);
-        info.largeChange = window->GetScrollThumb(wxOrientation);
-        info.maximum = window->GetScrollRange(wxOrientation);
-        info.visible = info.maximum > 0;
-
-        return info;
-    }
-
     bool Control::EnableTouchEvents(int flag)
     {
         auto window = GetWxWindow();
         return window->EnableTouchEvents(flag);
-    }
-
-    void Control::SetScrollInfo(ScrollBarOrientation orientation, const ScrollInfo& value)
-    {
-        auto window = GetWxWindow();
-        auto wxOrientation = GetWxScrollOrientation(orientation);
-
-        if (!value.visible)
-        {
-            window->SetScrollbar(wxOrientation, 0, 0, 0);
-            return;
-        }
-
-        window->SetScrollbar(wxOrientation, value.value, value.largeChange, value.maximum);
-    }
-
-    Control::ScrollInfo Control::RetrieveVerticalScrollBarInfo()
-    {
-        return GetScrollInfo(ScrollBarOrientation::Vertical);
-    }
-
-    void Control::ApplyVerticalScrollBarInfo(const ScrollInfo& value)
-    {
-        SetScrollInfo(ScrollBarOrientation::Vertical, value);
-    }
-
-    Control::ScrollInfo Control::RetrieveHorizontalScrollBarInfo()
-    {
-        return GetScrollInfo(ScrollBarOrientation::Horizontal);
-    }
-
-    void Control::ApplyHorizontalScrollBarInfo(const ScrollInfo& value)
-    {
-        SetScrollInfo(ScrollBarOrientation::Horizontal, value);
-    }
-
-    void Control::SetScrollBar(ScrollBarOrientation orientation,
-        bool visible, int value, int largeChange, int maximum)
-    {
-        auto& delayedValue = GetScrollInfoDelayedValue(orientation);
-        
-        ScrollInfo info;
-        info.value = value;
-        info.largeChange = largeChange;
-        info.maximum = maximum;
-        info.visible = visible;
-
-        delayedValue.Set(info);
-    }
-
-    bool Control::IsScrollBarVisible(ScrollBarOrientation orientation)
-    {
-        return GetScrollInfoDelayedValue(orientation).Get().visible;
-    }
-
-    int Control::GetScrollBarValue(ScrollBarOrientation orientation)
-    {
-        return GetScrollInfoDelayedValue(orientation).Get().value;
-    }
-
-    int Control::GetScrollBarLargeChange(ScrollBarOrientation orientation)
-    {
-        return GetScrollInfoDelayedValue(orientation).Get().largeChange;
-    }
-
-    int Control::GetScrollBarMaximum(ScrollBarOrientation orientation)
-    {
-        return GetScrollInfoDelayedValue(orientation).Get().maximum;
     }
 
     bool Control::GetUserPaint()
@@ -2286,16 +2193,6 @@ namespace Alternet::UI
         return toDip(wxPoint(point.X, point.Y), GetWxWindow());
     }
 
-    bool Control::CanScroll(int orient)
-    {
-        return GetWxWindow()->CanScroll(orient);
-    }
-
-    bool Control::HasScrollbar(int orient)
-    {
-        return GetWxWindow()->HasScrollbar(orient);
-    }
-
     void* Control::GetContainingSizer() 
     {
         return GetWxWindow()->GetContainingSizer();
@@ -2374,11 +2271,6 @@ namespace Alternet::UI
     int Control::GetBackgroundStyle()
     {
         return GetWxWindow()->GetBackgroundStyle();
-    }
-
-    void Control::AlwaysShowScrollbars(bool hflag, bool vflag)
-    {
-        return GetWxWindow()->AlwaysShowScrollbars(hflag, vflag);
     }
 
     Color Control::GetDefaultAttributesBgColor()
@@ -2529,45 +2421,6 @@ namespace Alternet::UI
         _wantChars = value;
     }
 
-    bool Control::GetShowVertScrollBar()
-    {
-        return _showVertScrollBar;
-    }
-
-    void Control::SetShowVertScrollBar(bool value)
-    {
-        if (_showVertScrollBar == value)
-            return;
-        _showVertScrollBar = value;
-        RecreateWxWindowIfNeeded();
-    }
-
-    bool Control::GetShowHorzScrollBar()
-    {
-        return _showHorzScrollBar;
-    }
-
-    void Control::SetShowHorzScrollBar(bool value)
-    {
-        if (_showHorzScrollBar == value)
-            return;
-        _showHorzScrollBar = value;
-        RecreateWxWindowIfNeeded();
-    }
-
-    bool Control::GetScrollBarAlwaysVisible()
-    {
-        return _scrollBarAlwaysVisible;
-    }
-
-    void Control::SetScrollBarAlwaysVisible(bool value)
-    {
-        if (_scrollBarAlwaysVisible == value)
-            return;
-        _scrollBarAlwaysVisible = value;
-        RecreateWxWindowIfNeeded();
-    }
-
     class ControlNonAbstract : public Control
     {
     public:
@@ -2622,9 +2475,115 @@ namespace Alternet::UI
 
     wxWindow* ControlNonAbstract::CreateWxWindowCore(wxWindow* parent)
     {
+/*
+        if (GetIsScrollable())
+        {
+            auto style = GetDefaultStyle();
+            auto p = new wxScrolledWindow2(
+                this, parent, wxID_ANY, wxDefaultPosition, wxDefaultSize, style);
+            return p;
+        }
+*/
         auto style = GetDefaultStyle();
-
         auto p = new wxWindow2(this, parent, wxID_ANY, wxDefaultPosition, wxDefaultSize, style);
         return p;
+    }
+
+    bool wxScrolledCanvas2::AcceptsFocus() const
+    {
+        if (_owner == nullptr)
+            return wxWindow::AcceptsFocus();
+        else
+            return _owner->_acceptsFocus;
+    }
+
+    bool wxScrolledCanvas2::AcceptsFocusFromKeyboard() const
+    {
+        if (_owner == nullptr)
+            return wxWindow::AcceptsFocusFromKeyboard();
+        else
+            return _owner->_acceptsFocusFromKeyboard;
+    }
+
+    bool wxScrolledCanvas2::AcceptsFocusRecursively() const
+    {
+        if (_owner == nullptr)
+            return wxWindow::AcceptsFocusRecursively();
+        else
+            return _owner->_acceptsFocusRecursively;
+    }
+
+    bool wxScrolledWindow2::AcceptsFocus() const
+    {
+        if (_owner == nullptr)
+            return wxWindow::AcceptsFocus();
+        else
+            return _owner->_acceptsFocus;
+    }
+
+    bool wxScrolledWindow2::AcceptsFocusFromKeyboard() const
+    {
+        if (_owner == nullptr)
+            return wxWindow::AcceptsFocusFromKeyboard();
+        else
+            return _owner->_acceptsFocusFromKeyboard;
+    }
+
+    bool wxScrolledWindow2::AcceptsFocusRecursively() const
+    {
+        if (_owner == nullptr)
+            return wxWindow::AcceptsFocusRecursively();
+        else
+            return _owner->_acceptsFocusRecursively;
+    }
+
+    void Control::SetScrollBar(ScrollBarOrientation orientation,
+        bool visible, int value, int largeChange, int maximum)
+    {
+        auto window = GetWxWindow();
+        auto wxOrientation = GetWxScrollOrientation(orientation);
+
+        if (!window->HasScrollbar(wxOrientation))
+            return;
+
+        if (!visible)
+        {
+            window->SetScrollbar(wxOrientation, 0, 0, 0);
+            return;
+        }
+
+        window->SetScrollbar(wxOrientation, value, largeChange, maximum);
+    }
+
+    bool Control::IsScrollBarVisible(ScrollBarOrientation orientation)
+    {
+        auto window = GetWxWindow();
+        auto wxOrientation = GetWxScrollOrientation(orientation);
+        auto result = window->HasScrollbar(wxOrientation);
+        return result;
+    }
+
+    int Control::GetScrollBarValue(ScrollBarOrientation orientation)
+    {
+        auto window = GetWxWindow();
+        auto wxOrientation = GetWxScrollOrientation(orientation);
+        auto value = window->GetScrollPos(wxOrientation);
+        return value;
+    }
+
+    int Control::GetScrollBarLargeChange(ScrollBarOrientation orientation)
+    {
+        auto window = GetWxWindow();
+        auto wxOrientation = GetWxScrollOrientation(orientation);
+        auto largeChange = window->GetScrollThumb(wxOrientation);
+        return largeChange;
+    }
+
+    int Control::GetScrollBarMaximum(ScrollBarOrientation orientation)
+    {
+        auto window = GetWxWindow();
+        auto wxOrientation = GetWxScrollOrientation(orientation);
+        auto result = window->GetScrollRange(wxOrientation);
+        return result;
     }
 }

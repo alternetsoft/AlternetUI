@@ -61,6 +61,54 @@ namespace Alternet::UI
         }
     };
 
+    class wxScrolledWindow2 : public wxScrolledWindow, public wxWidgetExtender
+    {
+    public:
+        Control* _owner = nullptr;
+
+        virtual bool AcceptsFocus() const override;
+        virtual bool AcceptsFocusFromKeyboard() const override;
+        virtual bool AcceptsFocusRecursively() const override;
+
+        wxScrolledWindow2() {}
+        wxScrolledWindow2(
+            Control* owner,
+            wxWindow* parent,
+            wxWindowID winid = wxID_ANY,
+            const wxPoint& pos = wxDefaultPosition,
+            const wxSize& size = wxDefaultSize,
+            long style = wxNO_BORDER)
+        {
+            _owner = owner;
+            Create(parent, winid, pos, size, style);
+        }
+    protected:
+    };
+
+    class wxScrolledCanvas2 : public wxScrolled<wxWindow>, public wxWidgetExtender
+    {
+    public:
+        Control* _owner = nullptr;
+
+        virtual bool AcceptsFocus() const override;
+        virtual bool AcceptsFocusFromKeyboard() const override;
+        virtual bool AcceptsFocusRecursively() const override;
+
+        wxScrolledCanvas2() {}
+        wxScrolledCanvas2(
+            Control* owner,
+            wxWindow* parent,
+            wxWindowID winid = wxID_ANY,
+            const wxPoint& pos = wxDefaultPosition,
+            const wxSize& size = wxDefaultSize,
+            long style = wxNO_BORDER)
+        {
+            _owner = owner;
+            Create(parent, winid, pos, size, style);
+        }
+    protected:
+    };
+
     // Control ===========================================
                                       
     class Control : public Object
@@ -189,19 +237,14 @@ namespace Alternet::UI
         virtual Rect RetrieveBounds();
         virtual void ApplyBounds(const Rect& value);
 
+        /*
         struct ScrollInfo
         {
             bool visible = false;
             int value = 0;
             int largeChange = 0;
             int maximum = 0;
-        };
-
-        virtual ScrollInfo RetrieveVerticalScrollBarInfo();
-        virtual void ApplyVerticalScrollBarInfo(const ScrollInfo& value);
-
-        virtual ScrollInfo RetrieveHorizontalScrollBarInfo();
-        virtual void ApplyHorizontalScrollBarInfo(const ScrollInfo& value);
+        };*/
 
         bool EventsSuspended() override;
 
@@ -270,8 +313,6 @@ namespace Alternet::UI
         Size _clientSizeCache;
 
         DelayedFlags<Control, DelayedControlFlags> _delayedFlags;
-        DelayedValue<Control, ScrollInfo> _verticalScrollBarInfo;
-        DelayedValue<Control, ScrollInfo> _horizontalScrollBarInfo;
         DelayedValue<Control, Rect> _bounds;
 
         DelayedValue<Control, Size> _minimumSize;
@@ -310,9 +351,6 @@ namespace Alternet::UI
         bool RetrieveFrozen();
         void ApplyFrozen(bool value);
 
-        DelayedValue<Control, Control::ScrollInfo>& GetScrollInfoDelayedValue(
-            const wxScrollWinEvent& event);
-
         void ApplyScroll(int evtKind, wxScrollWinEvent& event, int position);
 
         void OnGotFocus(wxFocusEvent& event);
@@ -329,11 +367,8 @@ namespace Alternet::UI
         static void AssociateControlWithWxWindow(wxWindow* wxWindow, Control* control);
         static void RemoveWxWindowControlAssociation(wxWindow* wxWindow);
 
-        ScrollInfo GetScrollInfo(ScrollBarOrientation orientation);
-        void SetScrollInfo(ScrollBarOrientation orientation, const ScrollInfo& value);
         wxOrientation GetWxScrollOrientation(ScrollBarOrientation orientation);
         ScrollBarOrientation GetScrollOrientation(wxOrientation orientation);
-        DelayedValue<Control, ScrollInfo>& GetScrollInfoDelayedValue(ScrollBarOrientation orientation);
     public:
         void LogSizeMethod(std::string methodName, const Size& value);
         void LogRectMethod(wxString name, const Rect& value, const wxRect& wx);

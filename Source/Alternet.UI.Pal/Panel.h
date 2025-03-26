@@ -11,8 +11,5 @@ namespace Alternet::UI
     public:
         wxWindow* CreateWxWindowCore(wxWindow* parent) override;
         wxWindow* CreateWxWindowUnparented() override;
-
-    protected:
-    private:
     };
 }
