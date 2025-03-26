@@ -12,15 +12,10 @@ namespace Alternet.UI
     /// Provides base functionality for implementing
     /// a specific <see cref="AbstractControl"/> behavior and appearance.
     /// </summary>
-    internal class WxControlHandler : BaseControlHandler, IControlHandler
+    internal partial class WxControlHandler : BaseControlHandler, IControlHandler
     {
-        const int wxHORIZONTAL = 0x0004;
-        const int wxVERTICAL = 0x0008;
-
         private Native.Control? nativeControl;
         private bool needDispose;
-        private bool vertScrollBarInfoAssigned;
-        private bool horzScrollBarInfoAssigned;
 
         public WxControlHandler()
         {
@@ -56,12 +51,6 @@ namespace Alternet.UI
         }
 
         public bool IsFocused => NativeControl.IsFocused;
-
-        public bool IsScrollable
-        {
-            get => NativeControl.IsScrollable;
-            set => NativeControl.IsScrollable = value;
-        }
 
         public string Text
         {
@@ -141,16 +130,6 @@ namespace Alternet.UI
             set
             {
                 NativeControl.WantChars = value;
-            }
-        }
-
-        public bool ScrollBarAlwaysVisible
-        {
-            get => NativeControl.ScrollBarAlwaysVisible;
-
-            set
-            {
-                NativeControl.ScrollBarAlwaysVisible = value;
             }
         }
 
@@ -238,32 +217,6 @@ namespace Alternet.UI
         }
 
         internal bool NativeControlCreated => nativeControl != null;
-
-        public ScrollBarInfo VertScrollBarInfo
-        {
-            get
-            {
-                return GetScrollBarInfo(true);
-            }
-
-            set
-            {
-                SetScrollBarInfo(true, value);
-            }
-        }
-
-        public ScrollBarInfo HorzScrollBarInfo
-        {
-            get
-            {
-                return GetScrollBarInfo(false);
-            }
-
-            set
-            {
-                SetScrollBarInfo(false, value);
-            }
-        }
 
         public virtual bool VisibleOnScreen
         {
@@ -411,27 +364,6 @@ namespace Alternet.UI
             return Native.Control.DrawingFromDip(value, NativeControl.WxWidget);
         }
 
-        public void SetScrollBar(
-            bool isVertical,
-            bool visible,
-            int value,
-            int largeChange,
-            int maximum)
-        {
-            if (isVertical)
-            {
-                vertScrollBarInfoAssigned = true;
-            }
-            else
-            {
-                horzScrollBarInfoAssigned = true;
-            }
-
-            ScrollBarOrientation orientation = isVertical
-                ? ScrollBarOrientation.Vertical : ScrollBarOrientation.Horizontal;
-            NativeControl.SetScrollBar(orientation, visible, value, largeChange, maximum);
-        }
-
         public void ResetBackgroundColor()
         {
             NativeControl.ResetBackgroundColor();
@@ -577,71 +509,6 @@ namespace Alternet.UI
         public void SetFocusFlags(bool canSelect, bool tabStop, bool acceptsFocusRecursively)
         {
             NativeControl.SetFocusFlags(canSelect, tabStop, acceptsFocusRecursively);
-        }
-
-        public ScrollBarInfo GetScrollBarInfo(bool isVertical)
-        {
-            ScrollBarOrientation orientation;
-            bool scrollbarAssigned;
-
-            if (isVertical)
-            {
-                orientation = ScrollBarOrientation.Vertical;
-                scrollbarAssigned = vertScrollBarInfoAssigned;
-            }
-            else
-            {
-                orientation = ScrollBarOrientation.Horizontal;
-                scrollbarAssigned = horzScrollBarInfoAssigned;
-            }
-
-            if (!scrollbarAssigned)
-            {
-                return ScrollBarInfo.Default;
-            }
-
-            bool canScroll = NativeControl.CanScroll(isVertical ? wxVERTICAL : wxHORIZONTAL);
-
-            if (!canScroll)
-            {
-                return ScrollBarInfo.Default;
-            }
-
-            /*
-                        bool hasScrollBar = NativeControl.HasScrollbar(isVertical ? wxVERTICAL : wxHORIZONTAL);
-
-                        if (!hasScrollBar)
-                        {
-                            return ScrollBarInfo.Default;
-                        }
-            */
-            ScrollBarInfo result = new();
-
-            result.Range = NativeControl.GetScrollBarMaximum(orientation);
-            result.PageSize = NativeControl.GetScrollBarLargeChange(orientation);
-            result.Position = NativeControl.GetScrollBarValue(orientation);
-
-            if (ScrollBarAlwaysVisible)
-            {
-                result.Visibility = HiddenOrVisible.Visible;
-            }
-            else
-            {
-                result.Visibility = NativeControl.IsScrollBarVisible(orientation)
-                    ? HiddenOrVisible.Auto : HiddenOrVisible.Hidden;
-            }
-
-            return result;
-        }
-
-        public void SetScrollBarInfo(bool isVertical, ScrollBarInfo value)
-        {
-            SetScrollBar(
-                       isVertical,
-                       value.IsVisible,
-                       value.Position,
-                       value.PageSize,
-                       value.Range);
         }
 
         public bool EnableTouchEvents(TouchEventsMask flag)
