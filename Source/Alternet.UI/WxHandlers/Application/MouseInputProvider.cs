@@ -71,7 +71,7 @@ namespace Alternet.UI
             if ((int)mappedEvent >= events.Length)
                 return;
 
-            InsideTryCatchIfDebug(events[(int)mappedEvent]);
+            InsideTryCatch(events[(int)mappedEvent]);
 
             e.Handled = false;
         }

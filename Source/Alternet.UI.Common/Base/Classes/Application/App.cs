@@ -142,6 +142,7 @@ namespace Alternet.UI
         private static bool wakeUpIdleWithTimer = true;
         private static Timer? wakeUpIdleTimer;
         private static bool? isNetOrCoreApp;
+        private static string? previousNativeMessage;
 
         private readonly List<Window> windows = new();
 
@@ -1243,18 +1244,55 @@ namespace Alternet.UI
         /// Calls <see cref="Log"/> after calling <see cref="BeforeNativeLogMessage"/> event.
         /// </summary>
         /// <param name="s">Message to log.</param>
-        public static void LogNativeMessage(string s)
+        /// <param name="kind">Message kind.</param>
+        public static void LogNativeMessage(string s, LogItemKind kind)
         {
-            if (BeforeNativeLogMessage is not null)
-            {
-                LogMessageEventArgs e = new(s);
-                BeforeNativeLogMessage(current, e);
-                if (e.Cancel)
-                    return;
-            }
+            if (s == "-")
+                s = LogUtils.SectionSeparator;
 
-            IdleLog(s);
-            Debug.WriteLine(s);
+            App.AddBackgroundInvokeAction(() =>
+            {
+                if (s.StartsWith("<?xml"))
+                {
+                    try
+                    {
+                        var data = XmlUtils.DeserializeFromString<AssertFailureExceptionData>(s);
+                        var e = new AssertFailureException(data.Message ?? "Native assert failure");
+                        e.AssertData = data;
+                        logMessage(data.Message, e);
+                    }
+                    catch
+                    {
+                        var r = "AssertFailure: Error getting AssertFailureExceptionData";
+                        logMessage(r);
+                    }
+                }
+                else
+                {
+                    logMessage(s);
+                }
+            });
+
+            void logMessage(string? txt, Exception? e = null)
+            {
+                if (txt == previousNativeMessage || txt is null)
+                    return;
+
+                previousNativeMessage = txt;
+
+                if (BeforeNativeLogMessage is not null)
+                {
+                    LogMessageEventArgs args = new(txt);
+                    BeforeNativeLogMessage(current, args);
+                    if (args.Cancel)
+                        return;
+                }
+
+                if (e is not null)
+                    App.LogError(e, kind, true);
+                else
+                    App.Log(txt, kind);
+            }
         }
 
         /// <summary>

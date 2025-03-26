@@ -175,7 +175,8 @@ namespace Alternet::UI
     {
         Application::LogSeparator();
         Application::Log(s);
-        Application::Log(Exception::_exception);
+        wxString exceptionInfo = Exception::_exception;
+        Application::Log(exceptionInfo);
         Application::LogSeparator();
     }
 

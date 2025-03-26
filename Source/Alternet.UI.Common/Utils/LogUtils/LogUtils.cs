@@ -45,6 +45,7 @@ namespace Alternet.UI
         private static List<(string Name, Action Action)>? registeredLogActions;
         private static int id;
         private static int logUseMaxLength;
+        private static string sectionSeparator = "=========";
 
         /// <summary>
         /// Enumerates log related flags.
@@ -71,7 +72,18 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets <see cref="string"/> which is logged before and after log section.
         /// </summary>
-        public static string SectionSeparator { get; set; } = "=========";
+        public static string SectionSeparator
+        {
+            get
+            {
+                return sectionSeparator;
+            }
+
+            set
+            {
+                sectionSeparator = value;
+            }
+        }
 
         /// <summary>
         /// Gets or sets max property value length for the <see cref="LogPropLimitLength"/>

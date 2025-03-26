@@ -27,7 +27,6 @@ namespace Alternet.UI
         private static readonly KeyboardInputProvider keyboardInputProvider;
         private static readonly MouseInputProvider mouseInputProvider;
 
-        private static string? previousAssertMessage;
         private static bool assertedWxWidgetsVersion;
 
         static WxApplicationHandler()
@@ -264,7 +263,14 @@ namespace Alternet.UI
         {
             var s = nativeApplication.EventArgString;
 
-            App.LogNativeMessage(s);
+            App.LogNativeMessage(s, LogItemKind.Information);
+        }
+
+        private static void NativeApplication_AssertFailure()
+        {
+            var s = NativeApplication.EventArgString;
+
+            App.LogNativeMessage(s, LogItemKind.Warning);
         }
 
         /// <inheritdoc/>
@@ -447,129 +453,6 @@ namespace Alternet.UI
         public IKeyboardHandler CreateKeyboardHandler()
         {
             return new WxKeyboardHandler();
-        }
-
-        private static void NativeApplication_AssertFailure()
-        {
-            var s = NativeApplication.EventArgString;
-
-            if (s == previousAssertMessage)
-                return;
-
-            previousAssertMessage = s;
-
-            App.AddIdleTask(() =>
-            {
-                if (s.StartsWith("<?xml"))
-                {
-                    try
-                    {
-                        var data = XmlUtils.DeserializeFromString<AssertFailureExceptionData>(s);
-                        var e = new AssertFailureException(data.Message ?? "WxWidgets assert failure");
-                        e.AssertData = data;
-                        App.LogError(e, LogItemKind.Warning, true);
-                    }
-                    catch
-                    {
-                        var r = "AssertFailure: Error getting AssertFailureExceptionData";
-                        App.LogError(new Exception(r), LogItemKind.Warning, true);
-                    }
-                }
-                else
-                {
-                    App.LogError(s, LogItemKind.Warning, true);
-                }
-            });
-        }
-
-        /// <summary>
-        /// Contains properties that describe assert failure.
-        /// </summary>
-        public class AssertFailureExceptionData : BaseObject
-        {
-            /// <summary>
-            /// Gets or sets assert failure message.
-            /// </summary>
-            public string? Message { get; set; }
-
-            /// <summary>
-            /// Gets or sets source code file name.
-            /// </summary>
-            public string? File { get; set; }
-
-            /// <summary>
-            /// Gets or sets source code line number in the file.
-            /// </summary>
-            public string? Line { get; set; }
-
-            /// <summary>
-            /// Gets or sets function name where error occured.
-            /// </summary>
-            public string? Function { get; set; }
-
-            /// <summary>
-            /// Gets or sets assert condition.
-            /// </summary>
-            public string? Condition { get; set; }
-
-            internal static void TestSerialize()
-            {
-                AssertFailureExceptionData e = new()
-                {
-                    Message = "value",
-                    Condition = "value",
-                    File = "value",
-                    Function = "value",
-                    Line = "value",
-                };
-
-                XmlUtils.SerializeToFile(@"e:\sample.xml", e);
-            }
-        }
-
-        /// <summary>
-        /// Extends <see cref="Exception"/> with additional properties related to the
-        /// assert failure error details.
-        /// </summary>
-        public class AssertFailureException : BaseException
-        {
-            private AssertFailureExceptionData? assertData;
-
-            /// <summary>
-            /// Initializes a new instance of the <see cref="AssertFailureException"/> class.
-            /// </summary>
-            public AssertFailureException()
-            {
-            }
-
-            /// <summary>
-            /// Initializes a new instance of the <see cref="AssertFailureException"/> class.
-            /// </summary>
-            public AssertFailureException(string message)
-                : base(message)
-            {
-            }
-
-            /// <summary>
-            /// Gets or sets assert failure data.
-            /// </summary>
-            public AssertFailureExceptionData? AssertData
-            {
-                get => assertData;
-                set
-                {
-                    assertData = value;
-
-                    if (AssertData is not null)
-                    {
-                        AdditionalInformation =
-                            "Assert.File: " + AssertData.File + Environment.NewLine +
-                            "Assert.Line: " + AssertData.Line + Environment.NewLine +
-                            "Assert.Function: " + AssertData.Function + Environment.NewLine +
-                            "Assert.Condition: " + AssertData.Condition + Environment.NewLine;
-                    }
-                }
-            }
         }
     }
 }

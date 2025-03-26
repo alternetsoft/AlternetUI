@@ -61,7 +61,7 @@ namespace Alternet::UI
 
         static void LogSeparator()
         {
-            Log("============");
+            Log("-");
         }
 
         bool OnFatalException();

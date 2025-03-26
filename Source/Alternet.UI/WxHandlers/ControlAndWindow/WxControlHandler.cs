@@ -17,6 +17,17 @@ namespace Alternet.UI
         private Native.Control? nativeControl;
         private bool needDispose;
 
+        static WxControlHandler()
+        {
+            App.BeforeNativeLogMessage += (s, e) =>
+            {
+                const string s1 = "this window is not scrollable";
+
+                if (e.Message?.Contains(s1) ?? false)
+                    e.Cancel = true;
+            };
+        }
+
         public WxControlHandler()
         {
         }
