@@ -32,12 +32,6 @@
 		<ReferenceOutputAssembly>true</ReferenceOutputAssembly>
 		<IncludeAssets>all</IncludeAssets>
 	</ProjectReference>
-
-	<ProjectReference Include="$(MSBuildThisFileDirectory)\..\Alternet.UI.Interfaces\Alternet.UI.Interfaces.csproj" PrivateAssets="All">
-		<ReferenceOutputAssembly>true</ReferenceOutputAssembly>
-		<IncludeAssets>all</IncludeAssets>
-	</ProjectReference>
-
   </ItemGroup>
 
   <ItemGroup>

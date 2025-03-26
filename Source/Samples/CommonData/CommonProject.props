@@ -15,7 +15,6 @@
     <ItemGroup>
         <ProjectReference Include="$(MSBuildThisFileDirectory)\..\..\Alternet.UI\Alternet.UI.csproj" />
         <ProjectReference Include="$(MSBuildThisFileDirectory)\..\..\Alternet.UI.Common\Alternet.UI.Common.csproj" />
-        <ProjectReference Include="$(MSBuildThisFileDirectory)\..\..\Alternet.UI.Interfaces\Alternet.UI.Interfaces.csproj" />
     </ItemGroup>
 
   <ItemGroup>

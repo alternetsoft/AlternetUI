@@ -90,7 +90,6 @@ namespace Alternet.UI.Localization
 
                 var registerForType
                     = Resolve(asm, registerForTypeName)
-                    ?? Resolve(KnownAssemblies.LibraryInterfaces, registerForTypeName)
                     ?? Resolve(KnownAssemblies.LibraryCommon, registerForTypeName);
 
                 if (registerForType is null)

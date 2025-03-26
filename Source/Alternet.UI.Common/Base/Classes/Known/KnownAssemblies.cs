@@ -48,18 +48,12 @@ namespace Alternet.UI
         /// </summary>
         public static readonly Assembly LibraryCommon = typeof(AbstractControl).Assembly;
 
-        /// <summary>
-        /// Gets 'Alternet.UI.Interfaces' assembly.
-        /// </summary>
-        public static readonly Assembly LibraryInterfaces = typeof(DockStyle).Assembly;
-
         private static bool preloadReferencedCalled;
         private static List<Assembly>? allAlternet;
 
         /// <summary>
-        /// Gets list of assemblies which includes <see cref="LibraryInterfaces"/>,
-        /// <see cref="LibraryCommon"/> and all loaded assemblies which
-        /// use <see cref="LibraryCommon"/>.
+        /// Gets list of assemblies which includes <see cref="LibraryCommon"/> and
+        /// all loaded assemblies which use <see cref="LibraryCommon"/>.
         /// </summary>
         public static List<Assembly> AllLoadedAlternet
         {
@@ -69,7 +63,6 @@ namespace Alternet.UI
                 {
                     allAlternet = new();
                     allAlternet.Add(LibraryCommon);
-                    allAlternet.Add(LibraryInterfaces);
 
                     var assemblies = AppDomain.CurrentDomain.GetAssemblies();
                     foreach (var assembly in assemblies)
@@ -89,8 +82,8 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Gets list of assemblies which includes <see cref="LibraryInterfaces"/>,
-        /// <see cref="LibraryCommon"/> and all loaded assemblies which
+        /// Gets list of assemblies which includes <see cref="LibraryCommon"/>
+        /// and all loaded assemblies which
         /// use <see cref="LibraryCommon"/>.
         /// </summary>
         public static IEnumerable<AssemblyName> AllReferenced
