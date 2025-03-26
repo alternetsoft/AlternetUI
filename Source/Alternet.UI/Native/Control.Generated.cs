@@ -678,7 +678,7 @@ namespace Alternet.UI.Native
             }
         }
         
-        public void SetScrollBar(Alternet.UI.ScrollBarOrientation orientation, bool visible, int value, int largeChange, int maximum)
+        public void SetScrollBar(Alternet.UI.ScrollBarOrientation orientation, Alternet.UI.HiddenOrVisible visible, int value, int largeChange, int maximum)
         {
             CheckDisposed();
             NativeApi.Control_SetScrollBar_(NativePointer, orientation, visible, value, largeChange, maximum);
@@ -1583,7 +1583,7 @@ namespace Alternet.UI.Native
             public static extern void Control_SetMaximumSize_(IntPtr obj, Alternet.Drawing.SizeD value);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void Control_SetScrollBar_(IntPtr obj, Alternet.UI.ScrollBarOrientation orientation, bool visible, int value, int largeChange, int maximum);
+            public static extern void Control_SetScrollBar_(IntPtr obj, Alternet.UI.ScrollBarOrientation orientation, Alternet.UI.HiddenOrVisible visible, int value, int largeChange, int maximum);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern bool Control_IsScrollBarVisible_(IntPtr obj, Alternet.UI.ScrollBarOrientation orientation);

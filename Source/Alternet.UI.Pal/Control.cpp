@@ -2538,19 +2538,10 @@ namespace Alternet::UI
     }
 
     void Control::SetScrollBar(ScrollBarOrientation orientation,
-        bool visible, int value, int largeChange, int maximum)
+        HiddenOrVisible visibility, int value, int largeChange, int maximum)
     {
         auto window = GetWxWindow();
         auto wxOrientation = GetWxScrollOrientation(orientation);
-
-        if (!window->HasScrollbar(wxOrientation))
-            return;
-
-        if (!visible)
-        {
-            window->SetScrollbar(wxOrientation, 0, 0, 0);
-            return;
-        }
 
         window->SetScrollbar(wxOrientation, value, largeChange, maximum);
     }

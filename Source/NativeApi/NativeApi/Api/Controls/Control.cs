@@ -10,7 +10,7 @@ namespace NativeApi.Api
 
     public abstract class Control
     {
-        public void SetScrollBar(ScrollBarOrientation orientation, bool visible,
+        public void SetScrollBar(ScrollBarOrientation orientation, HiddenOrVisible visible,
             int value, int largeChange, int maximum)
         { }
         public bool IsScrollBarVisible(ScrollBarOrientation orientation) => default;

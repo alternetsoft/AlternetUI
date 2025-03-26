@@ -80,7 +80,7 @@ namespace Alternet.UI
 
             NativeControl.SetScrollBar(
                 orientation,
-                value.IsVisible,
+                value.Visibility,
                 value.Position,
                 value.PageSize,
                 value.Range);
