@@ -5,6 +5,8 @@
   <Import Project="..\Keys\Keys.props" />
   <Import Project="..\Version\CommonPackages.props" />
 
+  <Import Project="..\Version\StyleCopAnalyzers.props" />  
+
   <PropertyGroup>
     <NuGetAuditMode>direct</NuGetAuditMode>
     <Nullable>enable</Nullable>
@@ -43,19 +45,14 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="StyleCop.Analyzers" Version="1.1.118">
-      <PrivateAssets>all</PrivateAssets>
-      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-    </PackageReference>
-  </ItemGroup>
-
-  <ItemGroup>
     <EmbeddedResource Update="Resources\Strings.resx">
       <SubType>Designer</SubType>
       <Generator>MSBuild:_GenerateResxSource</Generator>
     </EmbeddedResource>
   </ItemGroup>
 
+  <ItemGroup>
+  </ItemGroup>
 
   <Import Project="$(MSBuildThisFileDirectory)\SignDll.proj" />
 

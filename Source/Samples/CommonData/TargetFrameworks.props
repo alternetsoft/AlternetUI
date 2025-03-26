@@ -26,7 +26,7 @@
 
   <PropertyGroup Condition="$([MSBuild]::IsOsPlatform('Windows'))">
   	<BoolNet7>false</BoolNet7>
-  	<BoolNet6>true</BoolNet6>
+  	<BoolNet6>false</BoolNet6>
   	<BoolNet48>false</BoolNet48>
   	<BoolNet46>true</BoolNet46>
   </PropertyGroup>

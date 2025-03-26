@@ -3,6 +3,8 @@
   <Import Project="..\Version\Version.props" />
   <Import Project="..\Version\VersionNugets.props" />
   <Import Project="..\Keys\Keys.props" />
+  <Import Project="..\Version\CommonPackages.props" />
+  <Import Project="..\Version\StyleCopAnalyzers.props" />
 
   <PropertyGroup>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
@@ -48,32 +50,7 @@
     <PackageReference Include="CommunityToolkit.Maui" Version="$(CommunityToolkitMauiVersion)" />
 
     <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="9.0.0" />
-    <PackageReference Include="System.Configuration.ConfigurationManager" Version="9.0.0" />
-    <PackageReference Include="System.Drawing.Primitives" Version="4.3.0" />
-    <PackageReference Include="System.Memory" Version="4.6.0" />
-    <PackageReference Include="System.Runtime.InteropServices.RuntimeInformation" Version="4.3.0" />
-    <PackageReference Include="System.ValueTuple" Version="4.5.0" />
-    <PackageReference Include="System.IO.Packaging" Version="9.0.0" />
-    <PackageReference Include="System.Reflection.Emit" Version="4.7.0" />
-    <PackageReference Include="System.Runtime" Version="4.3.1" />
-    <PackageReference Include="System.Numerics.Vectors" Version="4.6.0" />
   </ItemGroup>
-
-  <ItemGroup>
-    <PackageReference Include="StyleCop.Analyzers" Version="1.1.118">
-      <PrivateAssets>all</PrivateAssets>
-      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-    </PackageReference>
-  </ItemGroup>
-
-  <ItemGroup>
-  </ItemGroup>
-
-  <!--
-  <PropertyGroup>
-    <AlternetUIPackagesBuild>true</AlternetUIPackagesBuild>
-  </PropertyGroup>
-  -->
 
   <ItemGroup Condition="'$(AlternetUIPackagesBuild)' != ''">
     <PackageReference Include="Alternet.UI.Common" Version="$(Version)">
