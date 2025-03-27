@@ -11,6 +11,7 @@ namespace ControlsSample
         protected override void AddDefaultItems()
         {
             Add("VirtualListBox with BigData", () => new ListBoxBigDataWindow());
+            Add("VirtualListBox as TreeView Sample", () => new ListBoxAsTreeWindow());
         }
     }
 }
