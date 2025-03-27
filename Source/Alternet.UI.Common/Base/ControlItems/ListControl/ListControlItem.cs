@@ -404,6 +404,11 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets or sets foreground margins of the item.
+        /// </summary>
+        public virtual Thickness ForegroundMargin { get; set; }
+
+        /// <summary>
         /// Gets or sets draw label flags.
         /// </summary>
         public virtual DrawLabelFlags LabelFlags { get; set; }
@@ -838,18 +843,27 @@ namespace Alternet.UI
             ListBoxItemPaintEventArgs e)
         {
             var item = e.Item;
+            Thickness padding;
+
+            if (item is null)
+            {
+                padding = Thickness.Empty;
+            }
+            else
+            {
+                padding = item.ForegroundMargin;
+            }
+
+            var paintRectangle = e.ClipRectangle;
+            paintRectangle.ApplyMargin(padding);
 
             if (item is not null)
             {
-                var info = item.GetCheckBoxInfo(container, e.ClipRectangle);
+                var info = item.GetCheckBoxInfo(container, paintRectangle);
                 if (info is not null)
                 {
-                    e.Graphics.DrawCheckBox(
-                        ControlUtils.SafeControl(container),
-                        info.CheckRect,
-                        info.CheckState,
-                        info.PartState);
-                    e.ClipRectangle = info.TextRect;
+                    DefaultDrawCheckBox(e.Graphics, ControlUtils.SafeControl(container), info);
+                    paintRectangle = info.TextRect;
                 }
             }
 
@@ -868,7 +882,7 @@ namespace Alternet.UI
 
             var textVisible = container?.Defaults.TextVisible ?? true;
 
-            var s = textVisible ? e.ItemTextForDisplay.Trim() : string.Empty;
+            var s = textVisible ? e.ItemTextForDisplay : string.Empty;
 
             var itemColor = e.GetTextColor(isSelected) ?? SystemColors.WindowText;
 
@@ -878,7 +892,7 @@ namespace Alternet.UI
                 itemColor,
                 Color.Empty,
                 image,
-                e.ClipRectangle,
+                paintRectangle,
                 e.ItemAlignment);
 
             prm.Visible = e.Visible;
@@ -1196,6 +1210,52 @@ namespace Alternet.UI
             return Text ?? base.ToString();
         }
 
+        internal static void DefaultDrawCheckBox(
+            Graphics canvas,
+            AbstractControl control,
+            ItemCheckBoxInfo info)
+        {
+            var useSvg = info.ImageChecked is not null && info.ImageUnchecked is not null;
+
+            if (useSvg)
+            {
+                SvgImage? svgImage = null;
+
+                switch (info.CheckState)
+                {
+                    case CheckState.Unchecked:
+                        svgImage = info.ImageUnchecked;
+                        break;
+                    case CheckState.Checked:
+                        svgImage = info.ImageChecked;
+                        break;
+                    case CheckState.Indeterminate:
+                        svgImage = info.ImageIndeterminate;
+                        break;
+                }
+
+                svgImage ??= KnownSvgImages.ImgEmpty;
+
+                var size = control.PixelFromDip(info.CheckSize.Width);
+
+                var image = control.IsEnabled
+                    ? svgImage.AsNormalImage(size, control.IsDarkBackground)
+                    : svgImage.AsDisabledImage(size, control.IsDarkBackground);
+
+                if(image is not null)
+                {
+                    canvas.DrawImage(image, info.CheckRect.Location);
+                    return;
+                }
+            }
+
+            canvas.DrawCheckBox(
+                control,
+                info.CheckRect,
+                info.CheckState,
+                info.PartState);
+        }
+
         internal virtual ItemCheckBoxInfo? GetCheckBoxInfo(
             IListControlItemContainer? container,
             RectD rect)
@@ -1211,6 +1271,14 @@ namespace Alternet.UI
                 container?.Control ?? App.SafeWindow ?? ControlUtils.Empty,
                 result.CheckState,
                 result.PartState);
+
+            if(container is not null)
+            {
+                result.ImageChecked = container.CheckImageChecked;
+                result.ImageUnchecked = container.CheckImageUnchecked;
+                result.ImageIndeterminate = container.CheckImageIndeterminate;
+            }
+
             var (checkRect, textRect) = ListControlItem.GetItemImageRect(rect, result.CheckSize);
             result.CheckRect = checkRect;
             result.TextRect = textRect;
@@ -1254,6 +1322,9 @@ namespace Alternet.UI
             public RectD CheckRect;
             public RectD TextRect;
             public CheckState CheckState;
+            public SvgImage? ImageUnchecked;
+            public SvgImage? ImageChecked;
+            public SvgImage? ImageIndeterminate;
         }
     }
 }
