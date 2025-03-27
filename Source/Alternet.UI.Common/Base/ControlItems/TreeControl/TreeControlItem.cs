@@ -19,7 +19,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets a value indicating whether this item is visible.
         /// </summary>
-        public virtual bool IsVisible { get; set; }
+        public virtual bool IsVisible { get; set; } = true;
 
         /// <summary>
         /// Gets or sets a value indicating whether this item is expanded.
@@ -56,6 +56,13 @@ namespace Alternet.UI
         /// <returns>true if the item was successfully removed; otherwise, false.</returns>
         public virtual bool Remove(TreeControlItem item)
         {
+            if (item.Parent == this)
+            {
+                item.Parent = null;
+            }
+            else
+                return false;
+
             return items?.Remove(item) ?? false;
         }
 
@@ -66,6 +73,7 @@ namespace Alternet.UI
         public virtual void Add(TreeControlItem item)
         {
             items ??= new();
+            item.Parent = this;
             items.Add(item);
         }
 
@@ -74,7 +82,14 @@ namespace Alternet.UI
         /// </summary>
         public virtual void Clear()
         {
-            items?.Clear();
+            if (items is null)
+                return;
+            foreach(var item in items)
+            {
+                item.Parent = null;
+            }
+
+            items.Clear();
         }
 
         /// <summary>
@@ -85,10 +100,12 @@ namespace Alternet.UI
         /// <returns>An enumerable collection containing all child items.</returns>
         /// <param name="prm">The parameters that define which items should be
         /// included in the result.</param>
-        public virtual IEnumerable<TreeControlItem> EnumExpandedItems(EnumExpandedItemsParams prm)
+        public virtual IEnumerable<TreeControlItem> EnumExpandedItems(EnumExpandedItemsParams? prm = null)
         {
             if (items is null)
                 yield break;
+
+            prm ??= EnumExpandedItemsParams.Default;
 
             foreach (var item in items)
             {
@@ -102,8 +119,8 @@ namespace Alternet.UI
 
                 foreach(var subItem in subItems)
                 {
-                    if (Condition(item))
-                        yield return item;
+                    if (Condition(subItem))
+                        yield return subItem;
                 }
             }
 
@@ -129,6 +146,11 @@ namespace Alternet.UI
         /// </summary>
         public record EnumExpandedItemsParams
         {
+            /// <summary>
+            /// The default instance of <see cref="EnumExpandedItemsParams"/>.
+            /// </summary>
+            public static readonly EnumExpandedItemsParams Default = new();
+
             /// <summary>
             /// Specifies whether to include only visible items in the enumeration.
             /// Defaults to <c>true</c>.

@@ -14,6 +14,56 @@ namespace Alternet.UI
     public static class ListControlUtils
     {
         /// <summary>
+        /// Adds test child items to the specified <see cref="TreeControlItem"/>.
+        /// </summary>
+        /// <param name="tree">The tree control item to which test items will be added.</param>
+        /// <param name="count">The number of test items to add.</param>
+        /// <param name="initAction">The initialize action.</param>
+        public static void AddTestItems(
+            TreeControlItem tree,
+            int count,
+            Action<TreeControlItem>? initAction = null)
+        {
+            try
+            {
+                void Initialize(TreeControlItem item)
+                {
+                    initAction?.Invoke(item);
+                }
+
+                for (int i = 0; i < count; i++)
+                {
+                    var item = new TreeControlItem();
+                    item.Text = "Item " + LogUtils.GenNewId();
+                    Initialize(item);
+                    for (int j = 0; j < 3; j++)
+                    {
+                        var childItem = new TreeControlItem();
+                        childItem.Text = item.Text + "." + j;
+                        Initialize(childItem);
+                        item.Add(childItem);
+
+                        if (i < 5)
+                        {
+                            for (int k = 0; k < 2; k++)
+                            {
+                                var childOfChildItem = new TreeControlItem();
+                                childOfChildItem.Text = childItem.Text + "." + k;
+                                Initialize(childOfChildItem);
+                                childItem.Add(childOfChildItem);
+                            }
+                        }
+                    }
+
+                    tree.Add(item);
+                }
+            }
+            finally
+            {
+            }
+        }
+
+        /// <summary>
         /// Initializes <see cref="ListControl"/> with list of font names.
         /// </summary>
         /// <param name="control">Control instance which items will be filled with font names.</param>

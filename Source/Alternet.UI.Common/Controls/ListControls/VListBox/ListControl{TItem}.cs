@@ -8,6 +8,7 @@ using System.Runtime.CompilerServices;
 using System.Threading;
 
 using Alternet.Base.Collections;
+using Alternet.Drawing;
 
 namespace Alternet.UI
 {
@@ -22,6 +23,9 @@ namespace Alternet.UI
     {
         private StringSearch? search;
         private ListControlItems<TItem>? items;
+        private SvgImage? checkImageUnchecked;
+        private SvgImage? checkImageChecked;
+        private SvgImage? checkImageIndeterminate;
 
         /// <summary>
         /// Occurs when controls needs to get string representation of the item for the display
@@ -64,6 +68,63 @@ namespace Alternet.UI
                 var count = Count;
                 if (count > 0 && value is not null)
                     SetItem(count - 1, value);
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets the unchecked state image for the checkbox.
+        /// </summary>
+        public virtual SvgImage? CheckImageUnchecked
+        {
+            get
+            {
+                return checkImageUnchecked;
+            }
+
+            set
+            {
+                if (checkImageUnchecked == value)
+                    return;
+                checkImageUnchecked = value;
+                Invalidate();
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets the checked state image for the checkbox.
+        /// </summary>
+        public virtual SvgImage? CheckImageChecked
+        {
+            get
+            {
+                return checkImageChecked;
+            }
+
+            set
+            {
+                if (checkImageChecked == value)
+                    return;
+                checkImageChecked = value;
+                Invalidate();
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets the indeterminate state image for the checkbox.
+        /// </summary>
+        public virtual SvgImage? CheckImageIndeterminate
+        {
+            get
+            {
+                return checkImageIndeterminate;
+            }
+
+            set
+            {
+                if (checkImageIndeterminate == value)
+                    return;
+                checkImageIndeterminate = value;
+                Invalidate();
             }
         }
 

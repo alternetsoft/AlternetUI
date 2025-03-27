@@ -12,6 +12,22 @@ namespace Alternet.UI
     /// </summary>
     public interface IListControlItemContainer
     {
+
+        /// <summary>
+        /// Gets the unchecked state image for the checkbox.
+        /// </summary>
+        SvgImage? CheckImageUnchecked { get; }
+
+        /// <summary>
+        /// Gets the checked state image for the checkbox.
+        /// </summary>
+        SvgImage? CheckImageChecked { get; }
+
+        /// <summary>
+        /// Gets the indeterminate state image for the checkbox.
+        /// </summary>
+        SvgImage? CheckImageIndeterminate { get; }
+
         /// <summary>
         /// Gets unique id of the container.
         /// </summary>

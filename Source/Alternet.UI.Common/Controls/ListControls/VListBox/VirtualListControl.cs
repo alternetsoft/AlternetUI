@@ -117,12 +117,6 @@ namespace Alternet.UI
         AbstractControl? IListControlItemContainer.Control => this;
 
         /// <summary>
-        /// Gets or sets a value indicating whether the checkbox should be
-        /// toggled when an item is clicked on the checkbox area.
-        /// </summary>
-        public virtual bool CheckOnClick { get; set; } = true;
-
-        /// <summary>
         /// Gets or sets default size of the svg images.
         /// </summary>
         /// <remarks>
@@ -133,6 +127,12 @@ namespace Alternet.UI
         /// </remarks>
         [Browsable(false)]
         public virtual SizeI? SvgImageSize { get; set; }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether the checkbox should be
+        /// toggled when an item is clicked on the checkbox area.
+        /// </summary>
+        public virtual bool CheckOnClick { get; set; } = true;
 
         /// <summary>
         /// Gets or sets current item border. If it is <c>null</c> (default value),
@@ -1177,6 +1177,7 @@ namespace Alternet.UI
             var item = SafeItem(itemIndex);
             if (item is null)
                 return null;
+            rect.ApplyMargin(item.ForegroundMargin);
             return item.GetCheckBoxInfo(this, rect);
         }
 
