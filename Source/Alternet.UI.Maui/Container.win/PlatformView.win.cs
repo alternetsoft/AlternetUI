@@ -9,9 +9,10 @@ using System.Threading.Tasks;
 namespace Alternet.UI
 {
     /// <summary>
-    /// Adds additional functionality to the <see cref="SkiaSharp.Views.Windows.SKXamlCanvas"/> control.
+    /// Adds additional functionality
+    /// to the <see cref="SkiaSharp.Views.Windows.SKXamlCanvas"/> control.
     /// </summary>
-    public class PlatformView : SkiaSharp.Views.Windows.SKXamlCanvas
+    public partial class PlatformView : SkiaSharp.Views.Windows.SKXamlCanvas
     {
     }
 }

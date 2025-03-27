@@ -25,7 +25,7 @@ namespace Alternet.UI
                 return data switch
                 {
                     FileInfo[] x => x.Select(x => x.FullName).ToArray(),
-                    _ => data
+                    _ => data,
                 };
             }
 

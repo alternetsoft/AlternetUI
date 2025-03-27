@@ -67,8 +67,8 @@ namespace Alternet.Drawing
         /// </summary>
         /// <param name="d">New <see cref="RGBValue"/>.</param>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static implicit operator RGBValue((byte, byte, byte) d) =>
-            new(d.Item1, d.Item2, d.Item3);
+        public static implicit operator RGBValue((byte Red, byte Green, byte Blue) d) =>
+            new(d.Red, d.Green, d.Blue);
 
         /// <summary>
         /// Converts the specified <see cref='SKColor'/> to a <see cref='RGBValue'/>.

@@ -78,7 +78,6 @@ namespace Alternet.UI
 
             void InitLinuxOrMacOs()
             {
-                var platform = PlatformCurrent;
             }
 
             void InitLinux()

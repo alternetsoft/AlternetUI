@@ -22,7 +22,8 @@ namespace Alternet.UI
     /// <summary>
     /// Implements <see cref="IKeyboardHandler"/> for MAUI under Windows.
     /// </summary>
-    public class MauiKeyboardHandler : PlatformKeyboardHandler<Windows.System.VirtualKey>, IKeyboardHandler
+    public partial class MauiKeyboardHandler
+        : PlatformKeyboardHandler<Windows.System.VirtualKey>, IKeyboardHandler
     {
         /// <summary>
         /// Max supported value of <see cref="Windows.System.VirtualKey"/>.

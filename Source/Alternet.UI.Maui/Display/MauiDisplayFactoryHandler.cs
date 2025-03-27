@@ -10,7 +10,8 @@ using Microsoft.Maui.Devices;
 
 namespace Alternet.UI
 {
-    internal class MauiDisplayFactoryHandler : PlessDisplayFactoryHandler, IDisplayFactoryHandler
+    internal partial class MauiDisplayFactoryHandler
+        : PlessDisplayFactoryHandler, IDisplayFactoryHandler
     {
         private IDisplayHandler? primaryDisplay;
 

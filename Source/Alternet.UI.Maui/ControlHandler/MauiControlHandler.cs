@@ -86,9 +86,9 @@ namespace Alternet.UI
                 bounds = value;
 
                 if(oldBounds.Location != value.Location)
-                    Control.RaiseContainerLocationChanged(EventArgs.Empty);
+                    Control?.RaiseContainerLocationChanged(EventArgs.Empty);
                 if(oldBounds.Size != value.Size)
-                    Control.RaiseHandlerSizeChanged(EventArgs.Empty);
+                    Control?.RaiseHandlerSizeChanged(EventArgs.Empty);
 
                 InvalidateContainer();
             }
@@ -242,6 +242,8 @@ namespace Alternet.UI
 
         public virtual RectI GetUpdateClientRectI()
         {
+            if (Control is null)
+                return RectI.Empty;
             return new RectI((0, 0), Control.PixelFromDip(ClientSize));
         }
 
@@ -277,12 +279,12 @@ namespace Alternet.UI
 
         public virtual int PixelFromDip(Coord value)
         {
-            return GraphicsFactory.PixelFromDip(value, Control.ScaleFactor);
+            return GraphicsFactory.PixelFromDip(value, Control?.ScaleFactor);
         }
 
         public virtual Coord PixelToDip(int value)
         {
-            return GraphicsFactory.PixelToDip(value, Control.ScaleFactor);
+            return GraphicsFactory.PixelToDip(value, Control?.ScaleFactor);
         }
 
         public virtual void Raise()
@@ -370,7 +372,7 @@ namespace Alternet.UI
 
         private MauiControlHandler? GetRootHandler()
         {
-            var result = (Control.Root as Control)?.Handler as MauiControlHandler;
+            var result = (Control?.Root as Control)?.Handler as MauiControlHandler;
             return result;
         }
 

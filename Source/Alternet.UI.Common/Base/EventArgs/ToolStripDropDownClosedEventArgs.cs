@@ -27,6 +27,10 @@ namespace Alternet.UI
         /// <returns>
         /// One of the <see cref="ToolStripDropDownCloseReason" /> values.
         /// </returns>
-        public ToolStripDropDownCloseReason CloseReason => closeReason;
+        public ToolStripDropDownCloseReason CloseReason
+        {
+            get => closeReason;
+            set => closeReason = value;
+        }
     }
 }

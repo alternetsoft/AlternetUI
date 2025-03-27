@@ -16,7 +16,7 @@ namespace Alternet.UI
     {
         private static ICursorFactoryHandler? factory;
 
-        private CursorType? cursorType;
+        private readonly CursorType? cursorType;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Cursor"/> class.

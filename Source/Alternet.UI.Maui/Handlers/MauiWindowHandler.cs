@@ -131,7 +131,7 @@ namespace Alternet.UI
             set;
         }
 
-        Window IWindowHandler.Control => (Window)Control;
+        Window? IWindowHandler.Control => (Window?)Control;
 
         public virtual void Activate()
         {

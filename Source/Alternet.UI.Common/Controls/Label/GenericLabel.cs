@@ -445,7 +445,9 @@ namespace Alternet.UI
         /// <returns></returns>
         protected virtual string GetFormattedText()
         {
+#pragma warning disable
             var image = GetImage();
+#pragma warning restore
             var prefix = TextPrefix;
             var labelText = Text;
 

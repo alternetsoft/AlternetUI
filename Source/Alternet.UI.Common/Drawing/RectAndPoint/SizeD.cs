@@ -274,7 +274,7 @@ namespace Alternet.Drawing
         /// </summary>
         /// <param name="d">New size value.</param>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static implicit operator SizeD((Coord, Coord) d) => new(d.Item1, d.Item2);
+        public static implicit operator SizeD((Coord Width, Coord Height) d) => new(d.Width, d.Height);
 
         /// <summary>
         /// Converts the specified <see cref="SizeD"/> to a

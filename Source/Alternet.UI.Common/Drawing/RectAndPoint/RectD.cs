@@ -445,8 +445,8 @@ namespace Alternet.Drawing
         /// </summary>
         /// <param name="d">New rectangle value.</param>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static implicit operator RectD((Coord, Coord, Coord, Coord) d) =>
-            new(d.Item1, d.Item2, d.Item3, d.Item4);
+        public static implicit operator RectD((Coord X, Coord Y, Coord Width, Coord Height) d) =>
+            new(d.X, d.Y, d.Width, d.Height);
 
         /// <summary>
         /// Implicit operator convertion from <see cref="RectD"/>
@@ -502,7 +502,8 @@ namespace Alternet.Drawing
         /// </summary>
         /// <param name="d">New rectangle value.</param>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static implicit operator RectD((PointD, SizeD) d) => new(d.Item1, d.Item2);
+        public static implicit operator RectD((PointD Location, SizeD Size) d)
+            => new(d.Location, d.Size);
 
         /// <summary>
         /// Converts the specified <see cref='Drawing.RectI'/> to a

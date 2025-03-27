@@ -127,7 +127,7 @@ namespace Alternet.UI
             return parsed;
         }
 
-        private (Func<IServiceProvider?, object> create, Action<IServiceProvider?, object> populate, Assembly assembly)
+        private (Func<IServiceProvider?, object> Create, Action<IServiceProvider?, object> Populate, Assembly Assembly)
             GetCallbacks(Type created, Assembly assembly)
         {
             var isp = System.Linq.Expressions.Expression.Parameter(typeof(IServiceProvider));

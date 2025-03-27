@@ -10,7 +10,7 @@ using Microsoft.Maui.Devices;
 
 namespace Alternet.UI
 {
-    internal class MauiDisplayHandler : DisposableObject, IDisplayHandler
+    internal partial class MauiDisplayHandler : DisposableObject, IDisplayHandler
     {
         static MauiDisplayHandler()
         {

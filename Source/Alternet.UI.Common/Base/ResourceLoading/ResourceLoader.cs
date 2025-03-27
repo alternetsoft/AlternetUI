@@ -277,7 +277,7 @@ namespace Alternet.UI
         /// The asset could not be found.
         /// </exception>
         public virtual Stream Open(Uri uri, Uri? baseUri = null)
-            => OpenAndGetAssembly(uri, baseUri).stream;
+            => OpenAndGetAssembly(uri, baseUri).Stream;
 
         /// <summary>
         /// Opens the asset with the requested URI and returns the asset stream and the
@@ -293,7 +293,7 @@ namespace Alternet.UI
         /// <exception cref="FileNotFoundException">
         /// The asset could not be found.
         /// </exception>
-        public virtual (Stream stream, Assembly assembly) OpenAndGetAssembly(
+        public virtual (Stream Stream, Assembly Assembly) OpenAndGetAssembly(
             Uri uri,
             Uri? baseUri = null)
         {
@@ -331,7 +331,7 @@ namespace Alternet.UI
             return GetAssembly(uri)?.Assembly;
         }
 
-        private static (IAssemblyDescriptor asm, string path) GetResAsmAndPath(Uri uri)
+        private static (IAssemblyDescriptor Asm, string Path) GetResAsmAndPath(Uri uri)
         {
             var asm = assemblyDescriptorResolver.GetAssembly(uri.Authority);
             return (asm, uri.GetUnescapeAbsolutePath());
@@ -344,7 +344,7 @@ namespace Alternet.UI
                 if (!uri.IsAbsoluteUri)
                     return null;
                 if (uri.IsUires())
-                    return GetResAsmAndPath(uri).asm;
+                    return GetResAsmAndPath(uri).Asm;
 
                 if (uri.IsEmbres())
                 {

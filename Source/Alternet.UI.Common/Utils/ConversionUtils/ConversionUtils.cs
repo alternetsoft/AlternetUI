@@ -125,7 +125,7 @@ namespace Alternet.UI
         /// string format settings. If not specified, <see cref="App.InvariantEnglishUS"/>
         /// is used.</param>
         /// <returns></returns>
-        public static (float, float) ParseTwoFloats(
+        public static (float Item1, float Item2) ParseTwoFloats(
             string? source,
             IFormatProvider? formatProvider = null)
         {
@@ -167,7 +167,7 @@ namespace Alternet.UI
         /// string format settings. If not specified, <see cref="App.InvariantEnglishUS"/>
         /// is used.</param>
         /// <returns></returns>
-        public static (float, float, float, float) ParseFourFloats(
+        public static (float Item1, float Item2, float Item3, float Item4) ParseFourFloats(
             string? source,
             IFormatProvider? formatProvider = null)
         {

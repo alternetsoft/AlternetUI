@@ -153,7 +153,7 @@ namespace Alternet.Drawing
         /// </summary>
         /// <param name="d">New point value.</param>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static implicit operator PointD((Coord, Coord) d) => new(d.Item1, d.Item2);
+        public static implicit operator PointD((Coord X, Coord Y) d) => new(d.X, d.Y);
 
         /// <summary>
         /// Converts the specified <see cref="SKPoint"/> to a

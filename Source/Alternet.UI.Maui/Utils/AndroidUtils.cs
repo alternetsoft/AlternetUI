@@ -1,20 +1,21 @@
 namespace Alternet.UI;
 
-using System.Linq;
+#if ANDROID
 
-using Microsoft.Maui.Devices;
-using Microsoft.Maui.Platform;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
 
 using Alternet.Drawing;
 
-#if ANDROID
-using Android.Graphics;
 using Android.App;
 using Android.Content;
 using Android.Content.Res;
+using Android.Graphics;
 using Android.Views;
-using System.IO;
-using System.Collections.Generic;
+
+using Microsoft.Maui.Devices;
+using Microsoft.Maui.Platform;
 
 public static class AndroidUtils
 {

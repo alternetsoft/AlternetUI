@@ -8,7 +8,7 @@ using Alternet.Drawing;
 
 namespace Alternet.UI
 {
-    internal class MauiVListBoxHandler : MauiControlHandler, IVListBoxHandler
+    internal partial class MauiVListBoxHandler : MauiControlHandler, IVListBoxHandler
     {
         public int ItemsCount
         {

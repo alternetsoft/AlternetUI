@@ -10,8 +10,8 @@ namespace Alternet.UI.Threading
     /// </summary>
     public class BackgroundTaskQueue
     {
-        private readonly ConcurrentQueue<Func<Task>> tasks = new ConcurrentQueue<Func<Task>>();
-        private readonly SemaphoreSlim signal = new SemaphoreSlim(0);
+        private readonly ConcurrentQueue<Func<Task>> tasks = new ();
+        private readonly SemaphoreSlim signal = new (0);
 
         /// <summary>
         /// Enqueue a task.

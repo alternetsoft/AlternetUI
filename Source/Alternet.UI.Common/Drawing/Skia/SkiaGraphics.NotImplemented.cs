@@ -79,15 +79,19 @@ namespace Alternet.Drawing
         /// <inheritdoc/>
         public override void Path(Pen pen, Brush brush, GraphicsPath path)
         {
+            /*
             var paint = GetFillAndStrokePaint(pen, brush);
+            */
             throw new NotImplementedException();
         }
 
         /// <inheritdoc/>
         public override void Polygon(Pen pen, Brush brush, PointD[] points, FillMode fillMode)
         {
+            /*
             var paint = GetFillAndStrokePaint(pen, brush);
             var skiaPoints = points.ToSkia();
+            */
             throw new NotImplementedException();
         }
 
@@ -175,7 +179,9 @@ namespace Alternet.Drawing
             Coord startAngle,
             Coord sweepAngle)
         {
+            /*
             var paint = GetFillAndStrokePaint(pen, brush);
+            */
             throw new NotImplementedException();
         }
     }

@@ -49,7 +49,8 @@ namespace Alternet.UI
                     {
                         if (control is T tt)
                             result = tt;
-                    }, true);
+                    },
+                    true);
 
                 if (result is not null)
                     break;

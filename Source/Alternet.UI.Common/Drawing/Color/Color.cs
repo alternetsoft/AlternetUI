@@ -817,8 +817,8 @@ namespace Alternet.Drawing
         /// </summary>
         /// <param name="d">New color value specified as tuple with three <see cref="byte"/> values.</param>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static implicit operator Color((byte, byte, byte) d) =>
-            new(d.Item1, d.Item2, d.Item3);
+        public static implicit operator Color((byte Red, byte Green, byte Blue) d) =>
+            new(d.Red, d.Green, d.Blue);
 
         /// <summary>
         /// Implicit operator convertion from tuple with four <see cref="byte"/> values
@@ -826,8 +826,8 @@ namespace Alternet.Drawing
         /// </summary>
         /// <param name="d">New color value specified as tuple with four <see cref="byte"/> values.</param>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static implicit operator Color((byte, byte, byte, byte) d) =>
-            new(d.Item1, d.Item2, d.Item3, d.Item4);
+        public static implicit operator Color((byte Alpha, byte Red, byte Green, byte Blue) d) =>
+            new(d.Alpha, d.Red, d.Green, d.Blue);
 
         /// <summary>
         /// Converts the specified <see cref='string'/> to a <see cref='Color'/>.

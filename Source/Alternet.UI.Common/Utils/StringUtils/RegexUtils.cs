@@ -76,7 +76,8 @@ namespace Alternet.UI
                 {
                     App.Log($"<{s}>");
                     LogUtils.LogEnumerable(result);
-                }, nameof(TestGetBoldTagSplitted));
+                },
+                nameof(TestGetBoldTagSplitted));
         }
 
         [Conditional("DEBUG")]

@@ -12,8 +12,8 @@ namespace Alternet.UI.Threading
     /// </summary>
     public class BackgroundWorkManager
     {
+        private static readonly object defaultWorkerLocker = new();
         private static BackgroundWorkManager? defaultWorker;
-        private static object defaultWorkerLocker = new();
 
         private readonly BackgroundTaskQueue taskQueue;
         private readonly CancellationTokenSource cancellationTokenSource = new ();

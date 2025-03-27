@@ -229,7 +229,9 @@ namespace Alternet.UI
 
             if (keyCode == Keycode.Unknown)
             {
+#pragma warning disable
                 var ch = e?.Characters;
+#pragma warning restore
                 if (ch is null || ch.Length == 0)
                     return false;
 

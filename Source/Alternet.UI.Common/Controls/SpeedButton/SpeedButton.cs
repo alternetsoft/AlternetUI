@@ -1181,7 +1181,7 @@ namespace Alternet.UI
         {
             if (shortcut is null)
                 return null;
-            return new (ShortcutInfo Shortcut, Action action)[] { (shortcut, Fn) };
+            return new (ShortcutInfo Shortcut, Action Action)[] { (shortcut, Fn) };
 
             void Fn()
             {

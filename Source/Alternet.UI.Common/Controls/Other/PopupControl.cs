@@ -12,6 +12,8 @@ namespace Alternet.UI
     /// </summary>
     public partial class PopupControl : Border
     {
+        private readonly ControlSubscriber subscriber = new();
+
         private PointD? minLocation;
         private bool allowNegativeLocation;
         private bool fitIntoParent = true;
@@ -19,7 +21,6 @@ namespace Alternet.UI
         private ModalResult popupResult = ModalResult.None;
         private bool cancelOnLostFocus;
         private bool acceptOnLostFocus;
-        private ControlSubscriber subscriber = new();
 
         /// <summary>
         /// Initializes a new instance of the <see cref="PopupControl"/> class.

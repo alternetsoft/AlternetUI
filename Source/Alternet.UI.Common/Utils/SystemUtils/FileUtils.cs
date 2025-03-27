@@ -34,15 +34,15 @@ namespace Alternet.UI
                     whereCmd ??= "which";
                 }
 
-                using (Process p = new())
-                {
-                    p.StartInfo.UseShellExecute = false;
-                    p.StartInfo.FileName = whereCmd;
-                    p.StartInfo.Arguments = exeName;
-                    p.Start();
-                    p.WaitForExit();
-                    return p.ExitCode == 0;
-                }
+                using Process p = new();
+
+                p.StartInfo.UseShellExecute = false;
+                p.StartInfo.FileName = whereCmd;
+                p.StartInfo.Arguments = exeName;
+                p.Start();
+                p.WaitForExit();
+
+                return p.ExitCode == 0;
             }
             catch
             {
@@ -71,24 +71,24 @@ namespace Alternet.UI
                     whereCmd ??= "which";
                 }
 
-                using (Process p = new())
-                {
-                    p.StartInfo.UseShellExecute = false;
-                    p.StartInfo.FileName = whereCmd;
-                    p.StartInfo.Arguments = exeName;
-                    p.StartInfo.RedirectStandardOutput = true;
-                    p.StartInfo.CreateNoWindow = true;
-                    p.Start();
-                    string output = p.StandardOutput.ReadToEnd();
-                    p.WaitForExit();
+                using Process p = new();
 
-                    if (p.ExitCode != 0)
-                        return null;
+                p.StartInfo.UseShellExecute = false;
+                p.StartInfo.FileName = whereCmd;
+                p.StartInfo.Arguments = exeName;
+                p.StartInfo.RedirectStandardOutput = true;
+                p.StartInfo.CreateNoWindow = true;
+                p.Start();
 
-                    var result = output.Substring(0, output.IndexOf(Environment.NewLine));
+                string output = p.StandardOutput.ReadToEnd();
+                p.WaitForExit();
 
-                    return result;
-                }
+                if (p.ExitCode != 0)
+                    return null;
+
+                var result = output.Substring(0, output.IndexOf(Environment.NewLine));
+
+                return result;
             }
             catch
             {

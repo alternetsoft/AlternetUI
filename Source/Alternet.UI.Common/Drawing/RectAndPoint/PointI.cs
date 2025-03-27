@@ -179,7 +179,7 @@ namespace Alternet.Drawing
         /// </summary>
         /// <param name="d">New point value.</param>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static implicit operator PointI((int, int) d) => new(d.Item1, d.Item2);
+        public static implicit operator PointI((int X, int Y) d) => new(d.X, d.Y);
 
         /// <summary>
         /// Translates a <see cref='PointI'/> by a given
@@ -241,7 +241,8 @@ namespace Alternet.Drawing
         /// </remarks>
         public static PointI Ceiling(PointD value)
         {
-            return new(unchecked((int)Math.Ceiling(value.X)),
+            return new(
+                unchecked((int)Math.Ceiling(value.X)),
                 unchecked((int)Math.Ceiling(value.Y)));
         }
 

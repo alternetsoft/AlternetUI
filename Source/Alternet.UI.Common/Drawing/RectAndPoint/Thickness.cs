@@ -241,8 +241,8 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="d">New thickness value.</param>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static implicit operator Thickness((Coord, Coord, Coord, Coord) d) =>
-            new(d.Item1, d.Item2, d.Item3, d.Item4);
+        public static implicit operator Thickness((Coord Left, Coord Top, Coord Right, Coord Bottom) d) =>
+            new(d.Left, d.Top, d.Right, d.Bottom);
 
         /// <summary>
         /// Overloaded operator to compare two Thicknesses for equality.

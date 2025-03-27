@@ -169,7 +169,7 @@ namespace Alternet.Drawing
         /// </summary>
         /// <param name="d">New size value.</param>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static implicit operator SizeI((int, int) d) => new(d.Item1, d.Item2);
+        public static implicit operator SizeI((int Width, int Height) d) => new(d.Width, d.Height);
 
         /// <summary>
         /// Creates a <see cref='System.Drawing.Size'/> with the coordinates of the
@@ -310,7 +310,8 @@ namespace Alternet.Drawing
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static SizeI Add(SizeI sz1, SizeI sz2) =>
-            new(unchecked(sz1.Width + sz2.Width),
+            new(
+                unchecked(sz1.Width + sz2.Width),
                 unchecked(sz1.Height + sz2.Height));
 
         /// <summary>
@@ -319,7 +320,8 @@ namespace Alternet.Drawing
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static SizeI Ceiling(SizeD value) =>
-            new(unchecked((int)Math.Ceiling(value.Width)),
+            new(
+                unchecked((int)Math.Ceiling(value.Width)),
                 unchecked((int)Math.Ceiling(value.Height)));
 
         /// <summary>
@@ -331,7 +333,8 @@ namespace Alternet.Drawing
         /// <returns>Product of type <see cref="SizeI"/>.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static SizeI Multiply(SizeI size, int multiplier) =>
-            new(unchecked(size.width * multiplier),
+            new(
+                unchecked(size.width * multiplier),
                 unchecked(size.height * multiplier));
 
         /// <summary>
@@ -350,7 +353,8 @@ namespace Alternet.Drawing
         /// <see cref='SizeI'/> .
         /// </summary>
         public static SizeI Subtract(SizeI sz1, SizeI sz2) =>
-            new(unchecked(sz1.Width - sz2.Width),
+            new(
+                unchecked(sz1.Width - sz2.Width),
                 unchecked(sz1.Height - sz2.Height));
 
         /// <summary>
@@ -367,7 +371,8 @@ namespace Alternet.Drawing
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static SizeI Round(SizeD value) =>
-            new(unchecked((int)Math.Round(value.Width)),
+            new(
+                unchecked((int)Math.Round(value.Width)),
                 unchecked((int)Math.Round(value.Height)));
 
         /// <summary>

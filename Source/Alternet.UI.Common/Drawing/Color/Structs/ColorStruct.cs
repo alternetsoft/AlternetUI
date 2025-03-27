@@ -186,8 +186,8 @@ namespace Alternet.Drawing
         /// <see cref="Color.FromRgb(byte, byte, byte)"/> internally.
         /// </remarks>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static implicit operator ColorStruct((byte, byte, byte) d) =>
-            new(d.Item1, d.Item2, d.Item3);
+        public static implicit operator ColorStruct((byte Red, byte Green, byte Blue) d) =>
+            new(d.Red, d.Green, d.Blue);
 
         /// <summary>
         /// Implicit operator convertion from tuple with three <see cref="byte"/> values
@@ -199,8 +199,8 @@ namespace Alternet.Drawing
         /// <see cref="Color.FromArgb(byte, byte, byte, byte)"/> internally.
         /// </remarks>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static implicit operator ColorStruct((byte, byte, byte, byte) d) =>
-            new(d.Item1, d.Item2, d.Item3, d.Item4);
+        public static implicit operator ColorStruct((byte Alpha, byte Red, byte Green, byte Blue) d) =>
+            new(d.Alpha, d.Red, d.Green, d.Blue);
 
         /// <summary>
         /// Tests whether two specified <see cref="ColorStruct"/> structures are equivalent.

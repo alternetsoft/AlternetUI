@@ -234,7 +234,7 @@ namespace Alternet.UI
             /// Returns last error description.
             /// </summary>
             /// <returns></returns>
-            public static (string, IntPtr) GetLastError()
+            public static (string LastErrorText, IntPtr LastError) GetLastError()
             {
                 var errPtr = dlerror();
                 if (errPtr != IntPtr.Zero)

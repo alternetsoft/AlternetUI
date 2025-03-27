@@ -279,8 +279,8 @@ namespace Alternet.Drawing
         /// </summary>
         /// <param name="d">New rectangle value.</param>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static implicit operator RectI((int, int, int, int) d) =>
-            new(d.Item1, d.Item2, d.Item3, d.Item4);
+        public static implicit operator RectI((int X, int Y, int Width, int Height) d) =>
+            new(d.X, d.Y, d.Width, d.Height);
 
         /// <summary>
         /// Implicit operator convertion from tuple (<see cref="PointI"/>, <see cref="SizeI"/>)
@@ -288,7 +288,8 @@ namespace Alternet.Drawing
         /// </summary>
         /// <param name="d">New rectangle value.</param>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static implicit operator RectI((PointI, SizeI) d) => new(d.Item1, d.Item2);
+        public static implicit operator RectI((PointI Location, SizeI Size) d)
+            => new(d.Location, d.Size);
 
         /// <summary>
         /// Implicit operator convertion from <see cref="RectI"/> to <see cref="SKRectI"/>.

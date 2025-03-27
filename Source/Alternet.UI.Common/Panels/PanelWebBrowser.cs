@@ -360,11 +360,13 @@ namespace Alternet.UI
 
             MenuItem itemSearch = new(
                 CommonStrings.Default.ButtonFind + "...",
-                () => { FindWithDialog(); }, new(Key.F, UI.ModifierKeys.Control));
+                () => { FindWithDialog(); },
+                new(Key.F, UI.ModifierKeys.Control));
 
             MenuItem itemPrint = new(
                 CommonStrings.Default.ButtonPrint + "...",
-                () => { WebBrowser.Print(); }, new(Key.P, UI.ModifierKeys.Control));
+                () => { WebBrowser.Print(); },
+                new(Key.P, UI.ModifierKeys.Control));
 
             MoreActionsMenu.Add(itemSearch);
             MoreActionsMenu.Add(itemPrint);

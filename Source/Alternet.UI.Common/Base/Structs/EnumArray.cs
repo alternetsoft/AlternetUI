@@ -4,6 +4,8 @@ using System.Diagnostics;
 using System.Runtime.CompilerServices;
 using System.Text;
 
+#pragma warning disable IDE0251
+
 namespace Alternet.UI
 {
     /// <summary>
