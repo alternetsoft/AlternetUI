@@ -162,6 +162,7 @@ namespace Alternet.UI
             {
                 if (interval == value || DisposingOrDisposed)
                     return;
+                interval = value;
                 Handler.Interval = value;
             }
         }
