@@ -65,22 +65,20 @@ namespace ControlsSample
 
             void LoadItems()
             {
-                var collection = rootItem.EnumExpandedItems().ToArray();
+                VirtualListBoxItems collection = new(rootItem.EnumExpandedItems());
 
-                const int indentPx = 16;
+                int indentPx = VirtualTreeControl.DefaultLevelMargin;
 
-                foreach (var item in collection)
+                foreach (TreeControlItem item in collection)
                 {
                     var indentLevel = item.IndentLelel - 1;
 
                     item.ForegroundMargin = (indentPx * indentLevel, 0, 0, 0);
                     item.CheckBoxVisible = item.HasItems;
-                    item.CheckState = item.IsExpanded ? CheckState.Checked : CheckState.Unchecked;
-                    item.SvgImage = KnownColorSvgImages.ImgLogo;
+                    item.IsChecked = item.IsExpanded;
                 }
 
-                VirtualListBoxItems items = new(collection);
-                listBox.SetItemsFast(items, VirtualListBox.SetItemsKind.ChangeField);
+                listBox.SetItemsFast(collection, VirtualListBox.SetItemsKind.ChangeField);
             }
 
             LoadItems();

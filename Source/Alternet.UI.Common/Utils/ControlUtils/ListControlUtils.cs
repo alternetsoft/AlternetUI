@@ -28,6 +28,7 @@ namespace Alternet.UI
             {
                 void Initialize(TreeControlItem item)
                 {
+                    item.SvgImage = KnownColorSvgImages.ImgLogo;
                     initAction?.Invoke(item);
                 }
 
@@ -36,14 +37,14 @@ namespace Alternet.UI
                     var item = new TreeControlItem();
                     item.Text = "Item " + LogUtils.GenNewId();
                     Initialize(item);
-                    for (int j = 0; j < 3; j++)
+                    for (int j = 0; j < 10; j++)
                     {
                         var childItem = new TreeControlItem();
                         childItem.Text = item.Text + "." + j;
                         Initialize(childItem);
                         item.Add(childItem);
 
-                        if (i < 5)
+                        if (i < 10)
                         {
                             for (int k = 0; k < 2; k++)
                             {

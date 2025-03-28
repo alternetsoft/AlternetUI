@@ -9,59 +9,25 @@ namespace AllQuickStarts
 {
     public partial class TreeViewExamplePage : ContentPage
     {
-        public static ObservableCollection<Item> SampleItems = new()
-        {
-            new Item
-            {
-                Name = "TaskManager",
-            },
-            new Item
-            {
-                Name = "BudgetPlanner",
-            },
-            new Item
-            {
-                Name = "WeatherApp",
-            },
-            new Item
-            {
-                Name = "CodeEditor",
-            },
-            new Item
-            {
-                Name = "RecipeHelper",
-            }
-        };
+        private readonly Alternet.Maui.SimpleTreeView treeView = new ();
 
-        private Item? selectedItem;
         private int? selectedIndex;
-        private CollectionView collectionView;
-
-        public void CollectionAdd()
-        {
-        }
-
-        public void CollectionRemove()
-        {
-        }
-
-        public void CollectionClear()
-        {
-        }
-
-        public void CollectionRename()
-        {
-        }
+        private Alternet.UI.TreeControlItem? selectedItem;
 
         public TreeViewExamplePage()
         {
+            Alternet.UI.ListControlUtils.AddTestItems(treeView.RootItem, 10, ItemInitialize);
+
+            void ItemInitialize(Alternet.UI.TreeControlItem item)
+            {
+            }
+
             var menuFlyout = new MenuFlyout();
             menuFlyout.Add(new MenuFlyoutItem
             {
                 Text = "Add",
                 Command = new Command(() =>
                 {
-                    CollectionAdd();
                 }),
             });
             menuFlyout.Add(new MenuFlyoutItem
@@ -69,7 +35,6 @@ namespace AllQuickStarts
                 Text = "Remove",
                 Command = new Command(() =>
                 {
-                    CollectionRemove();
                 }),
             });
             menuFlyout.Add(new MenuFlyoutItem
@@ -77,7 +42,6 @@ namespace AllQuickStarts
                 Text = "Clear",
                 Command = new Command(() =>
                 {
-                    CollectionClear();
                 }),
             });
             menuFlyout.Add(new MenuFlyoutItem
@@ -85,30 +49,21 @@ namespace AllQuickStarts
                 Text = "Rename",
                 Command = new Command(() =>
                 {
-                    CollectionRename();
                 }),
             });
 
-            var tapGesture = new TapGestureRecognizer
-            {
-                Buttons = ButtonsMask.Secondary,
-            };
-            tapGesture.Tapped += (sender, e) =>
-            {
-                if (sender is View tappedFrame && tappedFrame.BindingContext is Item item)
-                {
-                    collectionView!.SelectedItem = item;
-                }
-            };
-
+            /*
             collectionView = CreateSampleCollectionView(tapGesture);
             collectionView.ItemsSource = SampleItems;
+            */
 
-            FlyoutBase.SetContextFlyout(collectionView, menuFlyout);
+            FlyoutBase.SetContextFlyout(treeView, menuFlyout);
 
+            /*
             collectionView.SetBinding(CollectionView.SelectedItemProperty, new Binding(nameof(SelectedItem), source: this));
             collectionView.SelectionChanged += OnSelectionChanged;
             collectionView.SelectionMode = SelectionMode.Single;
+            */
 
             var toolbar = new SimpleToolBarView();
 
@@ -118,7 +73,6 @@ namespace AllQuickStarts
                 Alternet.UI.KnownSvgImages.ImgAdd,
                 () =>
                 {
-                    CollectionAdd();
                 });
 
             toolbar.AddSeparator();
@@ -129,7 +83,6 @@ namespace AllQuickStarts
                 Alternet.UI.KnownSvgImages.ImgRemove,
                 () =>
                 {
-                    CollectionRemove();
                 });
 
             toolbar.AddButton(
@@ -138,7 +91,6 @@ namespace AllQuickStarts
                 Alternet.UI.KnownSvgImages.ImgRemoveAll,
                 () =>
                 {
-                    CollectionClear();
                 });
 
             toolbar.AddButton(
@@ -147,7 +99,6 @@ namespace AllQuickStarts
                 Alternet.UI.KnownSvgImages.ImgGear,
                 () =>
                 {
-                    CollectionRename();
                 });
 
             toolbar.AddExpandingSpace();
@@ -172,9 +123,11 @@ namespace AllQuickStarts
             };
 
             grid.Add(toolbar, 0, 0);
-            grid.Add(collectionView, 0, 1);
-
+            grid.Add(treeView, 0, 1);         
+            
             Content = grid;
+
+            treeView.TreeChanged();
         }
 
         public int? SelectedIndex
@@ -230,7 +183,9 @@ namespace AllQuickStarts
         {
             if (e.CurrentSelection.FirstOrDefault() is Item selectedItem)
             {
+                /*
                 SelectedIndex = SampleItems.IndexOf(selectedItem);
+                */
             }
             else
             {
@@ -238,7 +193,7 @@ namespace AllQuickStarts
             }
         }
 
-        public Item? SelectedItem
+        public Alternet.UI.TreeControlItem? SelectedItem
         {
             get => selectedItem;
             set
