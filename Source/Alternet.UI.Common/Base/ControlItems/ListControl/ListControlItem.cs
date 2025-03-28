@@ -111,6 +111,28 @@ namespace Alternet.UI
         public virtual CheckState CheckState { get; set; }
 
         /// <summary>
+        /// Gets or sets a value indicating whether the item is checked.
+        /// Uses <see cref="CheckState"/> internally.
+        /// </summary>
+        public bool IsChecked
+        {
+            get
+            {
+                if (CheckState == CheckState.Checked)
+                    return true;
+                return false;
+            }
+
+            set
+            {
+                if (value)
+                    CheckState = CheckState.Checked;
+                else
+                    CheckState = CheckState.Unchecked;
+            }
+        }
+
+        /// <summary>
         /// Gets or sets a value indicating whether checkbox will
         /// allow three check states rather than two. If property is null (default),
         /// control's setting is used.
@@ -404,9 +426,22 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Gets or sets foreground margins of the item.
+        /// Gets or sets margin of the item when foreground is painted.
         /// </summary>
         public virtual Thickness ForegroundMargin { get; set; }
+
+        /// <summary>
+        /// Gets or sets left margin of the item when foreground is painted.
+        /// </summary>
+        public Coord ForegroundMarginLeft
+        {
+            get => ForegroundMargin.Left;
+
+            set
+            {
+                ForegroundMargin = ForegroundMargin.WithLeft(value);
+            }
+        }
 
         /// <summary>
         /// Gets or sets draw label flags.
