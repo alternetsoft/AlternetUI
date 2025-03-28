@@ -81,7 +81,7 @@ namespace Alternet.UI
 
             var sign = Math.Sign(e.Delta);
 
-            if (Keyboard.IsShiftPressed)
+            if (Keyboard.IsShiftPressed && App.IsWindowsOS)
             {
                 var w = (int)MeasureCanvas.GetTextExtent("W", RealFont).Width;
                 IncHorizontalLayoutOffset(sign * w);
