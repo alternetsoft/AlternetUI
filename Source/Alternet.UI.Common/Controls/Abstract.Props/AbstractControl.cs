@@ -597,26 +597,39 @@ namespace Alternet.UI
 
         /// <summary>
         /// Gets or sets the <see cref="ContextMenuStrip" /> associated
-        /// with this control.
-        /// Usage of this property depends on the control. Not all controls support it.
+        /// with this control. This property is auto-created and is always not null.
+        /// Usage of this property depends on the control.
         /// </summary>
         /// <returns>
-        /// The <see cref="ContextMenuStrip" /> for this control,
-        /// or <see langword="null" /> if there is no attached <see cref="ContextMenuStrip"/>.
-        /// The default is <see langword="null" />.
+        /// The <see cref="ContextMenuStrip" /> for this control.
         /// </returns>
         [Category("Behavior")]
-        [DefaultValue(null)]
         [Browsable(false)]
-        public virtual ContextMenuStrip? ContextMenuStrip
+        public virtual ContextMenuStrip ContextMenuStrip
         {
-            get => contextMenuStrip;
+            get
+            {
+                if (contextMenuStrip == null)
+                {
+                    contextMenuStrip = new();
+                    InitContextMenu();
+                }
+
+                return contextMenuStrip;
+            }
 
             set
             {
                 contextMenuStrip = value;
             }
         }
+
+        /// <summary>
+        /// Gets whether this control has attached context menu.
+        /// </summary>
+        [Category("Behavior")]
+        [Browsable(false)]
+        public virtual bool HasContextMenu => contextMenuStrip is not null;
 
         /// <summary>
         /// Gets or sets the Input Method Editor (IME) mode of the control.

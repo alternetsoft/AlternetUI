@@ -2209,6 +2209,14 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Resets <see cref="ContextMenuStrip"/> property.
+        /// </summary>
+        public virtual void ResetContextMenuStrip()
+        {
+            contextMenuStrip = null;
+        }
+
+        /// <summary>
         /// Gets child control at the specified index in the collection of child controls.
         /// </summary>
         /// <param name="index">Index of the child control.</param>
