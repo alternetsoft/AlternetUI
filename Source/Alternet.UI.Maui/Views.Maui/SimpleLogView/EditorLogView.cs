@@ -11,7 +11,7 @@ namespace Alternet.Maui
     /// <summary>
     /// Represents a log view which internally uses <see cref="Editor"/>.
     /// </summary>
-    internal partial class EditorLogView : BaseLogView
+    public partial class EditorLogView : BaseLogView
     {
         private readonly StringBuilder builder = new();
         private readonly Editor editor = new();
