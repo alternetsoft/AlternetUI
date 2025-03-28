@@ -11,12 +11,17 @@ namespace Alternet.Maui
     /// <summary>
     /// Represents a base class for content views in the library.
     /// </summary>
-    public partial class BaseContentView : ContentView
+    public partial class BaseContentView : ContentView, UI.IRaiseSystemColorsChanged
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="BaseContentView"/> class.
         /// </summary>
         public BaseContentView()
+        {
+        }
+
+        /// <inheritdoc/>
+        public virtual void RaiseSystemColorsChanged()
         {
         }
 

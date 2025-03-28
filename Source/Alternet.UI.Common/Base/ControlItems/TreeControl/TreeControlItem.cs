@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Text;
 
 namespace Alternet.UI
@@ -10,11 +11,62 @@ namespace Alternet.UI
     public partial class TreeControlItem : ListControlItem
     {
         private List<TreeControlItem>? items;
+        private object? owner;
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="TreeControlItem"/> class.
+        /// </summary>
+        public TreeControlItem()
+        {
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="TreeControlItem"/> class
+        /// with the specified owner. Use this constructor only for the root items.
+        /// </summary>
+        /// <param name="owner">The owner of the item.</param>
+        public TreeControlItem(object owner)
+        {
+            this.owner = owner;
+        }
 
         /// <summary>
         /// Gets or sets the parent item of this tree control item.
         /// </summary>
         public virtual TreeControlItem? Parent { get; set; }
+
+        /// <summary>
+        /// Gets whether this control is the root control (has no parent).
+        /// </summary>
+        [Browsable(false)]
+        public bool IsRoot => Parent == null;
+
+        /// <summary>
+        /// Gets the root parent control in the chain of parent controls.
+        /// If parent control is null, returns this control.
+        /// </summary>
+        [Browsable(false)]
+        public TreeControlItem Root
+        {
+            get
+            {
+                var parent = Parent;
+                if (parent is null)
+                    return this;
+                var result = parent.Root;
+                return result;
+            }
+        }
+
+        public virtual object? Owner
+        {
+            get
+            {
+                if (IsRoot)
+                    return owner;
+                return Root.Owner;
+            }
+        }
 
         /// <summary>
         /// Gets or sets a value indicating whether this item is visible.
