@@ -51,10 +51,17 @@ namespace Alternet.UI
         private static SvgImage? imgRetry;
         private static SvgImage? imgIgnore;
         private static SvgImage? imgHelp;
+
         private static SvgImage? imgAngleDown;
         private static SvgImage? imgAngleUp;
+        private static SvgImage? imgAngleLeft;
+        private static SvgImage? imgAngleRight;
+
         private static SvgImage? imgArrowDown;
         private static SvgImage? imgArrowUp;
+        private static SvgImage? imgArrowRight;
+        private static SvgImage? imgArrowLeft;
+
         private static SvgImage? imgGear;
         private static SvgImage? imgCircle;
         private static SvgImage? imgRegularExpr;
@@ -219,6 +226,24 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets or sets 'Arrow Right' image.
+        /// </summary>
+        public static SvgImage ImgArrowRight
+        {
+            get => imgArrowRight ??= new MonoSvgImage(KnownSvgUrls.UrlImageArrowRight);
+            set => imgArrowRight = value;
+        }
+
+        /// <summary>
+        /// Gets or sets 'Arrow Left' image.
+        /// </summary>
+        public static SvgImage ImgArrowLeft
+        {
+            get => imgArrowLeft ??= new MonoSvgImage(KnownSvgUrls.UrlImageArrowLeft);
+            set => imgArrowLeft = value;
+        }
+
+        /// <summary>
         /// Gets or sets 'Arrow Up' image.
         /// </summary>
         public static SvgImage ImgArrowUp
@@ -297,6 +322,24 @@ namespace Alternet.UI
         {
             get => imgAngleDown ??= new MonoSvgImage(KnownSvgUrls.UrlImageAngleDown);
             set => imgAngleDown = value;
+        }
+
+        /// <summary>
+        /// Gets or sets 'Angle Right' image.
+        /// </summary>
+        public static SvgImage ImgAngleRight
+        {
+            get => imgAngleRight ??= new MonoSvgImage(KnownSvgUrls.UrlImageAngleRight);
+            set => imgAngleRight = value;
+        }
+
+        /// <summary>
+        /// Gets or sets 'Angle Left' image.
+        /// </summary>
+        public static SvgImage ImgAngleLeft
+        {
+            get => imgAngleLeft ??= new MonoSvgImage(KnownSvgUrls.UrlImageAngleLeft);
+            set => imgAngleLeft = value;
         }
 
         /// <summary>
@@ -653,5 +696,33 @@ namespace Alternet.UI
                     return ImgEmpty;
             }
         }
-     }
+
+        /// <summary>
+        /// Gets tree view button images based on the specified kind.
+        /// </summary>
+        /// <param name="kind">The kind of tree view buttons.</param>
+        /// <returns>A tuple containing the closed and opened images for the tree view buttons.</returns>
+        public static (SvgImage? Closed, SvgImage? Opened) GetTreeViewButtonImages(
+            TreeViewButtonsKind kind)
+        {
+            switch (kind)
+            {
+                default:
+                case TreeViewButtonsKind.Null:
+                    return (null, null);
+                case TreeViewButtonsKind.Empty:
+                    return (KnownSvgImages.ImgEmpty, KnownSvgImages.ImgEmpty);
+                case TreeViewButtonsKind.Arrow:
+                    return (ImgArrowRight, ImgArrowDown);
+                case TreeViewButtonsKind.Angle:
+                    return (ImgAngleRight, ImgAngleDown);
+                case TreeViewButtonsKind.TriangleArrow:
+                    return (ImgTriangleArrowRight, ImgTriangleArrowDown);
+                case TreeViewButtonsKind.PlusMinus:
+                    return (KnownSvgImages.ImgPlus, KnownSvgImages.ImgMinus);
+                case TreeViewButtonsKind.PlusMinusSquare:
+                    return (KnownSvgImages.ImgSquarePlus, KnownSvgImages.ImgSquareMinus);
+            }
+        }
+    }
 }
