@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -14,6 +15,34 @@ namespace Alternet.UI
     /// </summary>
     public static class OSUtils
     {
+        private static ConcurrentDictionary<string, string?> commandPath { get; } = new();
+
+        /// <summary>
+        /// Tries to get the full path for a given command.
+        /// </summary>
+        /// <param name="command">The command to find the full path for.</param>
+        /// <returns>The full path of the command if found; otherwise, null.</returns>
+        public static string? TryGetFullPathForCommand(string command)
+        {
+            if (commandPath.TryGetValue(command, out string? result))
+            {
+                return result;
+            }
+
+            if (App.IsWindowsOS)
+            {
+                result = FileUtils.GetFullPathUsingWhere(command);
+            }
+            else
+            {
+                var result1 = AppUtils.ExecuteTerminalCommand($"which {command}", null, true, false);
+                result = result1.Output;
+            }
+
+            commandPath[command] = result;
+            return result;
+        }
+
         /// <summary>
         /// Tries to find native library in the subfolder of the application.
         /// </summary>
