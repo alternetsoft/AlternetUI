@@ -106,11 +106,12 @@ namespace Alternet.UI
         private DockStyle dock;
         private LayoutStyle? layout;
         private List<IControlNotification>? notifications;
-        private int paintCounter;
+        private ContextMenuStrip? contextMenuStrip;
 
         private RectD reportedBounds = RectD.MinusOne;
         private RectD bounds;
 
+        private int paintCounter;
         private int rowIndex;
         private int columnIndex;
         private int columnSpan = 1;
@@ -596,22 +597,39 @@ namespace Alternet.UI
 
         /// <summary>
         /// Gets or sets the <see cref="ContextMenuStrip" /> associated
-        /// with this control.
-        /// Usage of this property depends on the control. Not all controls support it.
+        /// with this control. This property is auto-created and is always not null.
+        /// Usage of this property depends on the control.
         /// </summary>
         /// <returns>
-        /// The <see cref="ContextMenuStrip" /> for this control,
-        /// or <see langword="null" /> if there is no attached <see cref="ContextMenuStrip"/>.
-        /// The default is <see langword="null" />.
+        /// The <see cref="ContextMenuStrip" /> for this control.
         /// </returns>
         [Category("Behavior")]
-        [DefaultValue(null)]
         [Browsable(false)]
-        public virtual ContextMenuStrip? ContextMenuStrip
+        public virtual ContextMenuStrip ContextMenuStrip
         {
-            get;
-            set;
+            get
+            {
+                if (contextMenuStrip == null)
+                {
+                    contextMenuStrip = new();
+                    InitContextMenu();
+                }
+
+                return contextMenuStrip;
+            }
+
+            set
+            {
+                contextMenuStrip = value;
+            }
         }
+
+        /// <summary>
+        /// Gets whether this control has attached context menu.
+        /// </summary>
+        [Category("Behavior")]
+        [Browsable(false)]
+        public virtual bool HasContextMenu => contextMenuStrip is not null;
 
         /// <summary>
         /// Gets or sets the Input Method Editor (IME) mode of the control.

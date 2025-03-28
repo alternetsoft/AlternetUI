@@ -17,7 +17,7 @@ namespace ControlsSample
 
         private readonly int counter;
         private readonly AbstractControl? statusPanel;
-        private TreeControlItem rootItem = new();
+        private readonly TreeControlItem rootItem = new();
 
         private readonly VirtualListBox listBox = new()
         {
@@ -27,6 +27,8 @@ namespace ControlsSample
         {
             VerticalAlignment = VerticalAlignment.Bottom,
         };
+
+        private TreeViewButtonsKind treeButtons = TreeViewButtonsKind.Null;
 
         public ListBoxAsTreeWindow()
         {
@@ -42,8 +44,6 @@ namespace ControlsSample
             listBox.SelectionUnderImage = false;
             listBox.CheckBoxVisible = true;
             listBox.CheckOnClick = false;
-            listBox.CheckImageUnchecked = KnownSvgImages.ImgSquarePlus;
-            listBox.CheckImageChecked = KnownSvgImages.ImgSquareMinus;
             
             statusBar.Parent = this;
 
@@ -103,6 +103,34 @@ namespace ControlsSample
                 item.IsExpanded = !item.IsExpanded;
                 LoadItems();
             };
+
+            TreeButtons = TreeViewButtonsKind.PlusMinusSquare;
+
+            listBox.ContextMenu.Add("Change tree buttons", () =>
+            {
+                var newValue = ((int)TreeButtons + 1);
+
+                if (newValue > EnumUtils.GetMaxValueUseLastAsInt<TreeViewButtonsKind>())
+                    newValue = 0;
+
+                TreeButtons = (TreeViewButtonsKind)newValue;
+            });
+        }
+
+        public TreeViewButtonsKind TreeButtons
+        {
+            get
+            {
+                return treeButtons;
+            }
+
+            set
+            {
+                treeButtons = value;
+                var buttons = KnownSvgImages.GetTreeViewButtonImages(treeButtons);
+                listBox.CheckImageUnchecked = buttons.Closed;
+                listBox.CheckImageChecked = buttons.Opened;
+            }
         }
 
         protected override void OnClosed(EventArgs e)

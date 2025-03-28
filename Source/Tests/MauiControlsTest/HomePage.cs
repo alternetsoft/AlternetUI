@@ -32,6 +32,7 @@ public partial class HomePage : ContentPage
         AddPage("CollectionView", typeof(CollectionViewExamplePage));
         AddPage("SimpleToolBarView", typeof(ToolBarTestPage));
         AddPage("ColorPickerView", typeof(ColorPickerTestPage));
+        AddPage("SimpleTreeView", typeof(TreeViewExamplePage));
 
         /*
         AddPage("LabelView", typeof(LabelTestPage));

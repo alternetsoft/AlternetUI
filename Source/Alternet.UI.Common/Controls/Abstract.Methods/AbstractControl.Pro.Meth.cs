@@ -19,6 +19,13 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Initializes context menu with default actions.
+        /// </summary>
+        protected virtual void InitContextMenu()
+        {
+        }
+
+        /// <summary>
         /// Gets the size of the control specified in its
         /// <see cref="AbstractControl.SuggestedWidth"/>
         /// and <see cref="AbstractControl.SuggestedHeight"/>

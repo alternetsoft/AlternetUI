@@ -260,6 +260,16 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Alias for <see cref="ContextMenuStrip"/> property.
+        /// </summary>
+        [Browsable(false)]
+        public ContextMenuStrip ContextMenu
+        {
+            get => ContextMenuStrip;
+            set => ContextMenuStrip = value;
+        }
+
+        /// <summary>
         /// Gets a <see cref="IVListBoxHandler"/> associated with this class.
         /// </summary>
         [Browsable(false)]

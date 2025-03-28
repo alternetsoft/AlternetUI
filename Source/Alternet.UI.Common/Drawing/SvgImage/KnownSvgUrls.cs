@@ -301,6 +301,16 @@ namespace Alternet.UI
             GetImageUrl("alternet-ellipsis-vertical");
 
         /// <summary>
+        /// Gets or sets url used to load "Angle Right" svg image.
+        /// </summary>
+        public static string UrlImageAngleRight { get; set; } = GetImageUrl("alternet-angle-right");
+
+        /// <summary>
+        /// Gets or sets url used to load "Angle Left" svg image.
+        /// </summary>
+        public static string UrlImageAngleLeft { get; set; } = GetImageUrl("alternet-angle-left");
+
+        /// <summary>
         /// Gets or sets url used to load "Angle Down" svg image.
         /// </summary>
         public static string UrlImageAngleDown { get; set; } = GetImageUrl("alternet-angle-down");
@@ -340,6 +350,16 @@ namespace Alternet.UI
         /// Gets or sets url used to load "Arrow Down" svg image.
         /// </summary>
         public static string UrlImageArrowDown { get; set; } = GetImageUrl("alternet-arrow-down");
+
+        /// <summary>
+        /// Gets or sets url used to load "Arrow Left" svg image.
+        /// </summary>
+        public static string UrlImageArrowLeft { get; set; } = GetImageUrl("alternet-arrow-left");
+
+        /// <summary>
+        /// Gets or sets url used to load "Arrow Right" svg image.
+        /// </summary>
+        public static string UrlImageArrowRight { get; set; } = GetImageUrl("alternet-arrow-right");
 
         /// <summary>
         /// Gets or sets url used to load "Circle" svg image.
