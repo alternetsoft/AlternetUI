@@ -171,7 +171,7 @@ namespace Alternet.Maui
         /// <summary>
         /// Gets the collection of expanded items in the tree view.
         /// </summary>
-        public ObservableCollection<Alternet.UI.TreeControlItem> ExpandedItems
+        public IEnumerable<Alternet.UI.TreeControlItem> VisibleItems
         {
             get
             {
@@ -186,22 +186,17 @@ namespace Alternet.Maui
         /// </summary>
         public virtual void TreeButtonsChanged()
         {
-            var buttons = Alternet.UI.KnownSvgImages.GetTreeViewButtonImages(treeButtons);
-
-            /*
-            var scaleFactor = Alternet.UI.Display.MaxScaleFactor;
-            var imageSize = (int)(scaleFactor * DefaultTreeButtonSize);
-            */
+            var (closed, opened) = Alternet.UI.KnownSvgImages.GetTreeViewButtonImages(treeButtons);
 
             var imageSize = DefaultTreeButtonSize;
 
             closedImage = Alternet.UI.MauiUtils.ImageSourceFromSvg(
-                        buttons.Closed,
+                        closed,
                         imageSize,
                         Alternet.UI.MauiUtils.IsDarkTheme,
                         IsEnabled);
             openedImage = Alternet.UI.MauiUtils.ImageSourceFromSvg(
-                        buttons.Opened,
+                        opened,
                         imageSize,
                         Alternet.UI.MauiUtils.IsDarkTheme,
                         IsEnabled);
