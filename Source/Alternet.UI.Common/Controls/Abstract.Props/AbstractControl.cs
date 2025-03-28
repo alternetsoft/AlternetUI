@@ -106,11 +106,12 @@ namespace Alternet.UI
         private DockStyle dock;
         private LayoutStyle? layout;
         private List<IControlNotification>? notifications;
-        private int paintCounter;
+        private ContextMenuStrip? contextMenuStrip;
 
         private RectD reportedBounds = RectD.MinusOne;
         private RectD bounds;
 
+        private int paintCounter;
         private int rowIndex;
         private int columnIndex;
         private int columnSpan = 1;
@@ -609,8 +610,12 @@ namespace Alternet.UI
         [Browsable(false)]
         public virtual ContextMenuStrip? ContextMenuStrip
         {
-            get;
-            set;
+            get => contextMenuStrip;
+
+            set
+            {
+                contextMenuStrip = value;
+            }
         }
 
         /// <summary>

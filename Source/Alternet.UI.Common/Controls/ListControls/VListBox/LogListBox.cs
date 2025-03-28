@@ -34,7 +34,6 @@ namespace Alternet.UI
         /// </summary>
         public static SvgImage? InformationImage = null;
 
-        private ContextMenuStrip? contextMenu;
         private string? lastLogMessage;
         private MenuItem? menuItemShowDevTools;
         private bool boundToApplicationLog;
@@ -114,25 +113,6 @@ namespace Alternet.UI
                     BindApplicationLog();
                 else
                     UnbindApplicationLog();
-            }
-        }
-
-        /// <summary>
-        /// Gets context menu for the control.
-        /// </summary>
-        [Browsable(false)]
-        public ContextMenuStrip ContextMenu
-        {
-            get
-            {
-                if (contextMenu == null)
-                {
-                    contextMenu = new();
-                    InitContextMenu();
-                    ContextMenuStrip = contextMenu;
-                }
-
-                return contextMenu;
             }
         }
 
@@ -284,10 +264,8 @@ namespace Alternet.UI
             }
         }
 
-        /// <summary>
-        /// Initializes context menu with debug related actions.
-        /// </summary>
-        protected virtual void InitContextMenu()
+        /// <inheritdoc/>
+        protected override void InitContextMenu()
         {
             ContextMenu.Add(new(CommonStrings.Default.ButtonClear, RemoveAll));
 

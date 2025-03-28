@@ -40,6 +40,7 @@ namespace Alternet.UI
         private ListBoxItemPaintEventArgs? itemPaintArgs;
         private Coord horizontalExtent;
         private DrawMode drawMode = DrawMode.Normal;
+        private ContextMenuStrip? contextMenu;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="VirtualListBox"/> class.
@@ -132,6 +133,30 @@ namespace Alternet.UI
                 if (value == SetItemsKind.Default)
                     return;
                 defaultSetItemsKind = value;
+            }
+        }
+
+        /// <summary>
+        /// Gets default context menu for the control.
+        /// </summary>
+        [Browsable(false)]
+        public virtual ContextMenuStrip ContextMenu
+        {
+            get
+            {
+                if (contextMenu == null)
+                {
+                    contextMenu = new();
+                    InitContextMenu();
+                    ContextMenuStrip = contextMenu;
+                }
+
+                return contextMenu;
+            }
+
+            set
+            {
+                contextMenu = value;
             }
         }
 
@@ -1331,6 +1356,13 @@ namespace Alternet.UI
         protected override void OnHandleCreated(EventArgs e)
         {
             base.OnHandleCreated(e);
+        }
+
+        /// <summary>
+        /// Initializes context menu with default actions.
+        /// </summary>
+        protected virtual void InitContextMenu()
+        {
         }
 
         private int? GetIndexOnNextPage()
