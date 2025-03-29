@@ -53,9 +53,9 @@ namespace Alternet.Maui
                 NumberOfTapsRequired = 2,
             };
 
-            doubleClickGesture.Tapped += (s, e) =>
+            void ItemTapHandler(object? sender, TappedEventArgs e)
             {
-                if (s is View tappedFrame
+                if (sender is View tappedFrame
                 && tappedFrame.BindingContext is Alternet.UI.TreeControlItem item)
                 {
                     if (!item.HasItems)
@@ -64,7 +64,12 @@ namespace Alternet.Maui
                     item.IsExpanded = !item.IsExpanded;
                     TreeChanged();
                 }
-            };
+            }
+
+            var imageGestureRecognizer = new TapGestureRecognizer();
+
+            imageGestureRecognizer.Tapped += ItemTapHandler;
+            doubleClickGesture.Tapped += ItemTapHandler;
 
             var tapGesture = new TapGestureRecognizer
             {
@@ -104,6 +109,8 @@ namespace Alternet.Maui
                     Aspect = Aspect.AspectFit,
                     VerticalOptions = LayoutOptions.Center,
                 };
+
+                image.GestureRecognizers.Add(imageGestureRecognizer);
 
                 image.SetBinding(
                     TreeButtonImage.IsVisibleProperty,
