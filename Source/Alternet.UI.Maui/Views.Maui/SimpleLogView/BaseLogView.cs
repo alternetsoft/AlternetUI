@@ -13,10 +13,26 @@ namespace Alternet.Maui
     public abstract partial class BaseLogView : BaseContentView
     {
         /// <summary>
+        /// Delegate to create a log view.
+        /// </summary>
+        public static Func<BaseLogView>? CreateLogView;
+
+        /// <summary>
         /// Gets or sets a value indicating whether Debug.WriteLine is called
         /// when log item is added.
         /// </summary>
         public static bool IsDebugWriteLineCalled = false;
+
+        /// <summary>
+        /// Creates the default log view.
+        /// </summary>
+        /// <returns>A new instance of the default log view.</returns>
+        public static BaseLogView CreateDefaultLogView()
+        {
+            if(CreateLogView is null)
+                return new CollectionLogView();
+            return CreateLogView();
+        }
 
         /// <summary>
         /// Clears all log items.
