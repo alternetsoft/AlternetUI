@@ -9,20 +9,20 @@ namespace Alternet.UI
     /// </summary>
     public partial class TreeControlRootItem : TreeControlItem
     {
-        private readonly object? owner;
+        private readonly ITreeControlItemContainer owner;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="TreeControlItem"/> class
         /// with the specified owner. Use this constructor only for the root items.
         /// </summary>
         /// <param name="owner">The owner of the item.</param>
-        public TreeControlRootItem(object owner)
+        public TreeControlRootItem(ITreeControlItemContainer owner)
         {
             this.owner = owner;
         }
 
         /// <inheritdoc/>
-        public override object? Owner
+        public override ITreeControlItemContainer? Owner
         {
             get
             {

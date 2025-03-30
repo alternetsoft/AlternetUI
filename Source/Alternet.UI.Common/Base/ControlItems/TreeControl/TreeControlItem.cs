@@ -75,7 +75,7 @@ namespace Alternet.UI
         /// If this item is the root item, the owner is the object passed to the constructor.
         /// Otherwise, the owner is the owner of the root item.
         /// </remarks>
-        public virtual object? Owner
+        public virtual ITreeControlItemContainer? Owner
         {
             get
             {
@@ -112,8 +112,43 @@ namespace Alternet.UI
             {
                 if (isExpanded == value)
                     return;
+
+                var owner = Owner;
+
+                if(owner is not null)
+                {
+                    bool cancel = false;
+
+                    if (value)
+                    {
+                        owner.RaiseBeforeExpand(this, ref cancel);
+                        if (cancel)
+                            return;
+                    }
+                    else
+                    {
+                        owner.RaiseBeforeCollapse(this, ref cancel);
+                        if (cancel)
+                            return;
+                    }
+                }
+
                 isExpanded = value;
                 RaisePropertyChanged(nameof(IsExpanded));
+
+                if(owner is not null)
+                {
+                    if (value)
+                    {
+                        owner.RaiseAfterExpand(this);
+                    }
+                    else
+                    {
+                        owner.RaiseAfterCollapse(this);
+                    }
+
+                    owner.RaiseExpandedChanged(this);
+                }
             }
         }
 
@@ -212,6 +247,9 @@ namespace Alternet.UI
 
             if(HasItems != hasItems)
                 RaisePropertyChanged(nameof(HasItems));
+
+            Owner?.RaiseItemRemoved(item);
+
             return result;
         }
 
@@ -240,6 +278,8 @@ namespace Alternet.UI
 
             if (HasItems != hasItems)
                 RaisePropertyChanged(nameof(HasItems));
+
+            Owner?.RaiseItemAdded(item);
         }
 
         /// <summary>
@@ -249,13 +289,22 @@ namespace Alternet.UI
         {
             if (items is null || items.Count == 0)
                 return;
-            foreach(var item in items)
-            {
-                item.InternalSetParent(null);
-            }
 
-            items.Clear();
-            RaisePropertyChanged(nameof(HasItems));
+            Owner?.BeginUpdate();
+            try
+            {
+                foreach (var item in items)
+                {
+                    item.InternalSetParent(null);
+                }
+
+                items.Clear();
+                RaisePropertyChanged(nameof(HasItems));
+            }
+            finally
+            {
+                Owner?.EndUpdate();
+            }
         }
 
         /// <summary>

@@ -120,8 +120,6 @@ namespace AllQuickStarts
             grid.Add(treeView, 0, 1);         
             
             Content = grid;
-
-            treeView.TreeChanged();
         }
 
         public void AddNewItem()
