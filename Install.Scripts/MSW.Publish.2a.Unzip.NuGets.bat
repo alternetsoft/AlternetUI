@@ -20,8 +20,6 @@ for /D %%f in (*.Folder) do (rmdir /S /Q %%f)
 
 for /R %%f in (*.nupkg) do call "C:\Program Files\WinRar\WinRAR.exe" x "%%f" "%%f.Folder/"
 
-for /R %%f in (*.snupkg) do call "C:\Program Files\WinRar\WinRAR.exe" x "%%f" "%%f.Folder/"
-
 for /R %%f in (*.vsix) do call "C:\Program Files\WinRar\WinRAR.exe" x "%%f" "%%f.Folder/"
 
 popd
