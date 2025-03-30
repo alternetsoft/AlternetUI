@@ -43,28 +43,6 @@ ALTERNET_UI_API void MenuItem_SetManagedCommandId_(MenuItem* obj, const char16_t
     #endif
 }
 
-ALTERNET_UI_API char16_t* MenuItem_GetText_(MenuItem* obj)
-{
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    return MarshalExceptions<char16_t*>([&](){
-    #endif
-        return AllocPInvokeReturnString(obj->GetText());
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    });
-    #endif
-}
-
-ALTERNET_UI_API void MenuItem_SetText_(MenuItem* obj, const char16_t* value)
-{
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    MarshalExceptions<void>([&](){
-    #endif
-        obj->SetText(value);
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    });
-    #endif
-}
-
 ALTERNET_UI_API char16_t* MenuItem_GetRole_(MenuItem* obj)
 {
     #if !defined(__WXMSW__) || defined(_DEBUG)

@@ -3149,6 +3149,17 @@ namespace Alternet::UI
         None = 3,
     };
     
+    enum class TreeViewButtonsKind
+    {
+        Null = 0,
+        Empty = 1,
+        Angle = 2,
+        Arrow = 3,
+        TriangleArrow = 4,
+        PlusMinus = 5,
+        PlusMinusSquare = 6,
+    };
+    
     enum class TreeViewHitTestLocations
     {
         None = 2,
