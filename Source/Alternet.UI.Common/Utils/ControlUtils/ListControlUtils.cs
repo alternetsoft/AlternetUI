@@ -26,6 +26,8 @@ namespace Alternet.UI
         {
             try
             {
+                tree.Owner?.BeginUpdate();
+
                 void Initialize(TreeControlItem item)
                 {
                     item.SvgImage = KnownColorSvgImages.ImgLogo;
@@ -61,6 +63,7 @@ namespace Alternet.UI
             }
             finally
             {
+                tree.Owner?.EndUpdate();
             }
         }
 

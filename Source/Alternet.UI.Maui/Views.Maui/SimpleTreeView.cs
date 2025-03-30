@@ -16,7 +16,7 @@ namespace Alternet.Maui
     /// <summary>
     /// Represents a simple tree view.
     /// </summary>
-    public partial class SimpleTreeView : BaseContentView
+    public partial class SimpleTreeView : BaseContentView, UI.ITreeControlItemContainer
     {
         /// <summary>
         /// Default size of the tree button.
@@ -32,6 +32,7 @@ namespace Alternet.Maui
         private readonly Grid grid = new();
         private readonly CollectionView collectionView = new();
 
+        private int updateCount;
         private SKBitmapImageSource? openedImage;
         private SKBitmapImageSource? closedImage;
         private ObservableCollection<Alternet.UI.TreeControlItem>? visibleItems;
@@ -62,7 +63,6 @@ namespace Alternet.Maui
                         return;
 
                     item.IsExpanded = !item.IsExpanded;
-                    TreeChanged();
                 }
             }
 
@@ -143,6 +143,7 @@ namespace Alternet.Maui
 
             collectionView.SelectionChanged += (s, e) =>
             {
+                SelectionChanged?.Invoke(this, EventArgs.Empty);
             };
 
             collectionView.SelectionMode = SelectionMode.Single;
@@ -153,10 +154,103 @@ namespace Alternet.Maui
         }
 
         /// <summary>
+        /// Occurs when the <see cref="SelectedItem"/> property or the
+        /// <see cref="SelectedItems"/> collection has changed.
+        /// </summary>
+        /// <remarks>
+        /// You can create an event handler for this event to determine when
+        /// the selected item in the tree view has been changed.
+        /// This can be useful when you need to display information in other
+        /// controls based on the current selection in the tree view.
+        /// <para>
+        /// The <see cref="SelectedItems"/> collection changes whenever an
+        /// individual item selection changes.
+        /// The property change can occur programmatically or when the user selects
+        /// an item or clears the selection of an item.
+        /// </para>
+        /// </remarks>
+        public event EventHandler? SelectionChanged;
+
+        /// <summary>
+        /// Occurs when the value of the <see cref="SelectionMode"/> property changes.
+        /// </summary>
+        public event EventHandler? SelectionModeChanged;
+
+        /// <summary>
+        /// Occurs when an item is added to this tree view control, at
+        /// any nesting level.
+        /// </summary>
+        public event EventHandler<UI.TreeControlEventArgs>? ItemAdded;
+
+        /// <summary>
+        /// Occurs when an item is removed from this tree view control,
+        /// at any nesting level.
+        /// </summary>
+        public event EventHandler<UI.TreeControlEventArgs>? ItemRemoved;
+
+        /// <summary>
+        /// Occurs after the tree item is expanded.
+        /// </summary>
+        public event EventHandler<UI.TreeControlEventArgs>? AfterExpand;
+
+        /// <summary>
+        /// Occurs after the tree item is collapsed.
+        /// </summary>
+        public event EventHandler<UI.TreeControlEventArgs>? AfterCollapse;
+
+        /// <summary>
+        /// Occurs before the tree item is expanded. This event can be canceled.
+        /// </summary>
+        public event EventHandler<UI.TreeControlCancelEventArgs>? BeforeExpand;
+
+        /// <summary>
+        /// Occurs before the tree item is collapsed. This event can be canceled.
+        /// </summary>
+        public event EventHandler<UI.TreeControlCancelEventArgs>? BeforeCollapse;
+
+        /// <summary>
+        /// Occurs after 'IsExpanded' property
+        /// value of a tree item belonging to this tree view changes.
+        /// </summary>
+        public event EventHandler<UI.TreeControlEventArgs>? ExpandedChanged;
+
+        /// <summary>
+        /// Gets or sets the selection mode of the tree view.
+        /// </summary>
+        /// <value>The selection mode of the tree view.</value>
+        public virtual SelectionMode SelectionMode
+        {
+            get
+            {
+                return collectionView.SelectionMode;
+            }
+
+            set
+            {
+                if (SelectionMode == value)
+                    return;
+                collectionView.SelectionMode = value;
+                SelectionModeChanged?.Invoke(this, EventArgs.Empty);
+            }
+        }
+
+        /// <summary>
+        /// Gets the selected items in the tree view.
+        /// </summary>
+        /// <value>The selected <see cref="Alternet.UI.TreeControlItem"/> items in the tree view.</value>
+        public virtual IEnumerable<Alternet.UI.TreeControlItem> SelectedItems
+        {
+            get
+            {
+                return collectionView.SelectedItems.Cast<Alternet.UI.TreeControlItem>();
+            }
+        }
+
+        /// <summary>
         /// Gets or sets the selected item in the tree view.
         /// </summary>
         /// <value>The selected <see cref="Alternet.UI.TreeControlItem"/> in the tree view.</value>
-        public Alternet.UI.TreeControlItem? SelectedItem
+        public virtual Alternet.UI.TreeControlItem? SelectedItem
         {
             get
             {
@@ -253,8 +347,16 @@ namespace Alternet.Maui
             if (InternalSelect())
                 return;
 
-            item.ExpandAllParents();
-            TreeChanged();
+            BeginUpdate();
+            try
+            {
+                item.ExpandAllParents();
+            }
+            finally
+            {
+                EndUpdate();
+            }
+
             InternalSelect();
         }
 
@@ -290,7 +392,6 @@ namespace Alternet.Maui
                 return false;
 
             rootItem.Add(item);
-            visibleItems?.Add(item);
 
             if (selectItem)
             {
@@ -305,9 +406,17 @@ namespace Alternet.Maui
         /// </summary>
         public virtual void Clear()
         {
-            rootItem.Clear();
-            visibleItems = null;
-            collectionView.ItemsSource = null;
+            BeginUpdate();
+            try
+            {
+                rootItem.Clear();
+                visibleItems = null;
+                collectionView.ItemsSource = null;
+            }
+            finally
+            {
+                EndUpdate();
+            }
         }
 
         /// <summary>
@@ -357,6 +466,63 @@ namespace Alternet.Maui
             if(item.Parent is null)
                 return false;
             item.Parent.Remove(item);
+
+            return true;
+        }
+
+        /// <summary>
+        /// Begins an update of the tree view. Call this method before making
+        /// multiple changes to the tree view to prevent multiple refreshes.
+        /// </summary>
+        public virtual void BeginUpdate()
+        {
+            updateCount++;
+        }
+
+        /// <summary>
+        /// Ends an update of the tree view. Call this method after making
+        /// multiple changes to the tree view to refresh the view.
+        /// </summary>
+        /// <exception cref="Exception">Thrown if EndUpdate is called without
+        /// a preceding BeginUpdate call.</exception>
+        public virtual void EndUpdate()
+        {
+            if (updateCount <= 0)
+                throw new Exception("Call BeginUpdate before calling EndUpdate");
+            updateCount--;
+            if(updateCount == 0)
+            {
+                TreeChanged();
+            }
+        }
+
+        /// <summary>
+        /// Called when an item is added to this tree view control, at
+        /// any nesting level.
+        /// </summary>
+        public virtual void RaiseItemAdded(UI.TreeControlItem item)
+        {
+            if (item.Parent == rootItem && visibleItems is not null)
+            {
+                visibleItems.Add(item);
+            }
+            else
+            {
+                TreeChanged();
+            }
+
+            if (ItemAdded is not null)
+            {
+                ItemAdded(this, new(item));
+            }
+        }
+
+        /// <summary>
+        /// Called when an item is removed from this tree view control,
+        /// at any nesting level.
+        /// </summary>
+        public virtual void RaiseItemRemoved(UI.TreeControlItem item)
+        {
             if (item.HasItems && item.IsExpanded)
             {
                 TreeChanged();
@@ -366,14 +532,91 @@ namespace Alternet.Maui
                 visibleItems?.Remove(item);
             }
 
-            return true;
+            if (ItemRemoved is not null)
+            {
+                ItemRemoved(this, new(item));
+            }
+        }
+
+        /// <summary>
+        /// Called after the tree item is expanded.
+        /// </summary>
+        public virtual void RaiseAfterExpand(UI.TreeControlItem item)
+        {
+            TreeChanged();
+
+            if (AfterExpand is not null)
+            {
+                AfterExpand(this, new(item));
+            }
+        }
+
+        /// <summary>
+        /// Called after the tree item is collapsed.
+        /// </summary>
+        public virtual void RaiseAfterCollapse(UI.TreeControlItem item)
+        {
+            TreeChanged();
+
+            if (AfterCollapse is not null)
+            {
+                AfterCollapse(this, new(item));
+            }
+        }
+
+        /// <summary>
+        /// Called before the tree item is expanded.
+        /// </summary>
+        public virtual void RaiseBeforeExpand(UI.TreeControlItem item, ref bool cancel)
+        {
+            if (BeforeExpand is not null)
+            {
+                UI.TreeControlCancelEventArgs e = new(item);
+                BeforeExpand(this, e);
+                cancel = e.Cancel;
+            }
+        }
+
+        /// <summary>
+        /// Called before the tree item is collapsed.
+        /// </summary>
+        public virtual void RaiseBeforeCollapse(UI.TreeControlItem item, ref bool cancel)
+        {
+            if(BeforeCollapse is not null)
+            {
+                UI.TreeControlCancelEventArgs e = new(item);
+                BeforeCollapse(this, e);
+                cancel = e.Cancel;
+            }
+        }
+
+        /// <summary>
+        /// Called after 'IsExpanded' property
+        /// value of a tree item belonging to this tree view changes.
+        /// </summary>
+        public virtual void RaiseExpandedChanged(UI.TreeControlItem item)
+        {
+            if (ExpandedChanged is not null)
+            {
+                ExpandedChanged(this, new(item));
+            }
+        }
+
+        /// <inheritdoc/>
+        public override void RaiseSystemColorsChanged()
+        {
+            TreeButtonsChanged();
+            TreeChanged();
         }
 
         /// <summary>
         /// Updates the tree view when the tree structure changes.
         /// </summary>
-        public virtual void TreeChanged()
+        protected virtual void TreeChanged()
         {
+            if (updateCount > 0)
+                return;
+
             ObservableCollection<Alternet.UI.TreeControlItem> collection
                 = new(rootItem.EnumExpandedItems());
 
@@ -390,13 +633,6 @@ namespace Alternet.Maui
 
             visibleItems = collection;
             collectionView.ItemsSource = visibleItems;
-        }
-
-        /// <inheritdoc/>
-        public override void RaiseSystemColorsChanged()
-        {
-            TreeButtonsChanged();
-            TreeChanged();
         }
 
         private partial class TreeButtonImage : Image

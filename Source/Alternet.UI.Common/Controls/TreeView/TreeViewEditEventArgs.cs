@@ -7,7 +7,7 @@ namespace Alternet.UI
     /// Provides data for the <see cref="TreeView.BeforeLabelEdit"/> and
     /// <see cref="TreeView.AfterLabelEdit"/> events.
     /// </summary>
-    public class TreeViewEditEventArgs : CancelEventArgs
+    public class TreeViewEditEventArgs : BaseCancelEventArgs
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="TreeViewEditEventArgs"/> class.

@@ -1,21 +1,18 @@
 using System;
-using System.ComponentModel;
 
 namespace Alternet.UI
 {
     /// <summary>
-    /// Provides data for <see cref="TreeView.BeforeExpand"/>,
-    /// <see cref="TreeView.BeforeCollapse"/>, <see cref="TreeView.ExpandedChanged"/>
-    /// and other cancelable events.
+    /// Provides data for 'ItemAdded', 'ItemRemoved'
+    /// and other events.
     /// </summary>
-    public class TreeViewCancelEventArgs : BaseCancelEventArgs
+    public class TreeControlEventArgs : BaseEventArgs
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="TreeViewCancelEventArgs"/>
-        /// class.
+        /// Initializes a new instance of the <see cref="TreeControlEventArgs"/> class.
         /// </summary>
         /// <param name="item">The item being affected.</param>
-        public TreeViewCancelEventArgs(TreeViewItem item)
+        public TreeControlEventArgs(TreeControlItem item)
         {
             Item = item;
         }
@@ -27,6 +24,6 @@ namespace Alternet.UI
         /// <remarks>
         /// Use the <see cref="Item"/> property to access the properties of the item.
         /// </remarks>
-        public TreeViewItem Item { get; }
+        public TreeControlItem Item { get; }
     }
 }
