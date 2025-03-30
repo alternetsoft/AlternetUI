@@ -69,13 +69,15 @@ namespace ControlsSample
 
                 int indentPx = VirtualTreeControl.DefaultLevelMargin;
 
-                foreach (TreeControlItem item in collection)
+                foreach (var item in collection)
                 {
-                    var indentLevel = item.IndentLelel - 1;
+                    var treeItem = (TreeControlItem)item;
+
+                    var indentLevel = treeItem.IndentLelel - 1;
 
                     item.ForegroundMargin = (indentPx * indentLevel, 0, 0, 0);
-                    item.CheckBoxVisible = item.HasItems;
-                    item.IsChecked = item.IsExpanded;
+                    item.CheckBoxVisible = treeItem.HasItems;
+                    item.IsChecked = treeItem.IsExpanded;
                 }
 
                 listBox.SetItemsFast(collection, VirtualListBox.SetItemsKind.ChangeField);

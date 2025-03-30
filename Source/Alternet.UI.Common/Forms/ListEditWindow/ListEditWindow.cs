@@ -125,7 +125,7 @@ namespace Alternet.UI
             BackgroundColor = SystemColors.Window;
 
             ComponentDesigner.InitDefault();
-            ComponentDesigner.Default!.PropertyChanged += OnDesignerPropertyChanged;
+            ComponentDesigner.Default!.ObjectPropertyChanged += OnDesignerPropertyChanged;
 
             Closing += Window_Closing;
             Closed += Window_Closed;
@@ -173,7 +173,7 @@ namespace Alternet.UI
 
         private void Window_Closing(object? sender, WindowClosingEventArgs e)
         {
-            ComponentDesigner.Default!.PropertyChanged -= OnDesignerPropertyChanged;
+            ComponentDesigner.Default!.ObjectPropertyChanged -= OnDesignerPropertyChanged;
         }
 
         private void OnDesignerPropertyChanged(object? sender, ObjectPropertyChangedEventArgs e)
@@ -200,7 +200,7 @@ namespace Alternet.UI
 
         private void Window_Disposed(object? sender, EventArgs e)
         {
-            ComponentDesigner.Default!.PropertyChanged -= OnDesignerPropertyChanged;
+            ComponentDesigner.Default!.ObjectPropertyChanged -= OnDesignerPropertyChanged;
         }
 
         private void CancelButton_Click(object? sender, EventArgs e)

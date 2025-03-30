@@ -48,11 +48,6 @@ namespace Alternet.UI
         public event EventHandler? StyleChanged;
 
         /// <summary>
-        /// Occurs when any of the properties were changed.
-        /// </summary>
-        public event EventHandler? PropertyChanged;
-
-        /// <summary>
         /// Gets or sets a value indicating the text displayed in the status bar panel.
         /// </summary>
         public virtual string Text
@@ -69,7 +64,7 @@ namespace Alternet.UI
 
                 text = value;
                 TextChanged?.Invoke(this, EventArgs.Empty);
-                PropertyChanged?.Invoke(this, EventArgs.Empty);
+                RaisePropertyChanged(nameof(Text));
             }
         }
 
@@ -93,7 +88,7 @@ namespace Alternet.UI
                     return;
                 width = value;
                 WidthChanged?.Invoke(this, EventArgs.Empty);
-                PropertyChanged?.Invoke(this, EventArgs.Empty);
+                RaisePropertyChanged(nameof(Width));
             }
         }
 
@@ -113,7 +108,7 @@ namespace Alternet.UI
                     return;
                 style = value;
                 StyleChanged?.Invoke(this, EventArgs.Empty);
-                PropertyChanged?.Invoke(this, EventArgs.Empty);
+                RaisePropertyChanged(nameof(Style));
             }
         }
 
@@ -137,7 +132,7 @@ namespace Alternet.UI
             width = item.Width;
             style = item.Style;
             Tag = item.Tag;
-            PropertyChanged?.Invoke(this, EventArgs.Empty);
+            RaisePropertyChanged();
         }
 
         /// <inheritdoc/>

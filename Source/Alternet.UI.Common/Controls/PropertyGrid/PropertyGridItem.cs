@@ -49,7 +49,7 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        public event EventHandler? PropertyChanged;
+        public new event EventHandler? PropertyChanged;
 
         /// <inheritdoc/>
         public event EventHandler? ButtonClick;

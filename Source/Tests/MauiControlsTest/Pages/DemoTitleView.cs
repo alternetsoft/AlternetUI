@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace AllQuickStarts.Pages
 {
-    public class DemoTitleView: Label
+    public partial class DemoTitleView: Label
     {
         public DemoTitleView(string title)
         {

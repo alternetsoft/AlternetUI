@@ -173,7 +173,7 @@ namespace PropertyGridSample
                 RunTests();
 
                 ComponentDesigner.InitDefault();
-                ComponentDesigner.SafeDefault.PropertyChanged += Designer_PropertyChanged;
+                ComponentDesigner.SafeDefault.ObjectPropertyChanged += Designer_PropertyChanged;
                 ComponentDesigner.SafeDefault.MouseLeftButtonDown += Designer_MouseLeftButtonDown;
 
                 panel.FillPanel.MouseDown += ControlPanel_MouseDown;
@@ -487,7 +487,7 @@ namespace PropertyGridSample
 
         protected override void DisposeManaged()
         {
-            ComponentDesigner.SafeDefault.PropertyChanged -= Designer_PropertyChanged;
+            ComponentDesigner.SafeDefault.ObjectPropertyChanged -= Designer_PropertyChanged;
             ComponentDesigner.SafeDefault.MouseLeftButtonDown -= Designer_MouseLeftButtonDown;
 
             base.DisposeManaged();

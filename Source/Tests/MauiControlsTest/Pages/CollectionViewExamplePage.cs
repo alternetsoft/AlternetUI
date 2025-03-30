@@ -56,9 +56,10 @@ namespace AllQuickStarts
                 new Item { Name = "Carol", Title = "Manager", Description = "Focuses on team productivity" },
             };
 
+        private readonly CollectionView collectionView;
+
         private Item? selectedItem;
         private int? selectedIndex;
-        private CollectionView collectionView;
 
         public void CollectionAdd()
         {
@@ -289,7 +290,13 @@ namespace AllQuickStarts
 
         private void OnSelectionChanged(object? sender, SelectionChangedEventArgs e)
         {
-            if (e.CurrentSelection.FirstOrDefault() is Item selectedItem)
+            if(e.CurrentSelection is null || e.CurrentSelection.Count == 0)
+            {
+                SelectedIndex = null;
+                return;
+            }
+
+            if (e.CurrentSelection[0] is Item selectedItem)
             {
                 SelectedIndex = SampleItems.IndexOf(selectedItem);
             }
@@ -312,7 +319,7 @@ namespace AllQuickStarts
             }
         }
 
-        public class Item : INotifyPropertyChanged
+        public partial class Item : INotifyPropertyChanged
         {
             private string? name;
             private string? title;

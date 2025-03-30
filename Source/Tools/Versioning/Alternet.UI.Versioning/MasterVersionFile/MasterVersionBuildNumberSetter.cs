@@ -7,8 +7,10 @@ namespace Alternet.UI.Versioning
 {
     internal static class MasterVersionBuildNumberSetter
     {
+#pragma warning disable
         private static readonly Regex informationalVersionRegex
             = new(@"^\d+\.\d+\.(?<build1>\d+) \(\d+\.\d+\ \w+ build (?<build2>\d+)\)$");
+#pragma warning restore
 
         public static void SetBuildNumber(Repository repository, int buildNumber)
         {
@@ -57,11 +59,13 @@ namespace Alternet.UI.Versioning
             return TrySetBuildNumber(informationalVersionRegex, v, buildNumber, "build2");
         }
 
+#pragma warning disable
         private static string TrySetBuildNumberInPackageVersion(string value, int buildNumber) =>
             TrySetBuildNumber(new Regex(@"^\d+\.\d+\.(?<build>\d+)(-\w+)*$"), value, buildNumber, "build");
 
         private static string TrySetBuildNumberInAssemblyVersion(string value, int buildNumber) =>
             TrySetBuildNumber(new Regex(@"^\d+\.\d+\.(?<build>\d+).\d+$"), value, buildNumber, "build");
+#pragma warning restore
 
         private static string ReplaceNamedGroup(string groupName, string replacement, Match m)
         {

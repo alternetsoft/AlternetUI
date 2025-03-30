@@ -25,6 +25,7 @@
     <SingleProject>true</SingleProject>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
 
     <!-- Display name -->
     <ApplicationTitle>All quick stats</ApplicationTitle>

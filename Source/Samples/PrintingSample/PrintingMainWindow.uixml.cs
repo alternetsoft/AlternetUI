@@ -10,7 +10,7 @@ namespace PrintingSample
         private static readonly Font font = new(FontFamily.GenericSerif, 20);
         private static readonly Pen thickGrayPen = Color.Gray.GetAsPen(4);
 
-        private ToolBar toolBar = new()
+        private readonly ToolBar toolBar = new()
         {
         };
 

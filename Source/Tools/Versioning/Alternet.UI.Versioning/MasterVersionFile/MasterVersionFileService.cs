@@ -7,8 +7,10 @@ namespace Alternet.UI.Versioning
 {
     static class MasterVersionFileService
     {
+#pragma warning disable
         private static readonly Regex informationalVersionRegex
             = new(@"^(?<major>\d+)\.(?<minor>\d+)\.(?<build>\d+) \(\d+\.\d+\ (?<type>\w+) build \d+\)$");
+#pragma warning restore
 
         public static ProductVersion GetVersion(string versionFilePath)
         {

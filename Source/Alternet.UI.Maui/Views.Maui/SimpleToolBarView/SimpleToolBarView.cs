@@ -491,7 +491,7 @@ namespace Alternet.Maui
         }
 
         /// <inheritdoc/>
-        public virtual void RaiseSystemColorsChanged()
+        public override void RaiseSystemColorsChanged()
         {
             if(bottomBorder is not null)
             {
