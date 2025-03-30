@@ -13,7 +13,7 @@ namespace Alternet.UI
     /// <summary>
     /// Provides a mechanism for releasing managed and unmanaged resources.
     /// </summary>
-    public class DisposableObject : BaseObjectWithAttr, IDisposable, IDisposableObject
+    public class DisposableObject : BaseObjectWithNotify, IDisposable, IDisposableObject
     {
         private bool disposeHandle;
         private bool insideDisposing;
@@ -78,7 +78,7 @@ namespace Alternet.UI
         /// Gets whether this object is disposing or disposed.
         /// </summary>
         [Browsable(false)]
-        public virtual bool DisposingOrDisposed
+        public override bool DisposingOrDisposed
         {
             get
             {

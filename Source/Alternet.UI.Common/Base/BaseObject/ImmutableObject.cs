@@ -9,14 +9,13 @@ using System.Threading.Tasks;
 namespace Alternet.UI
 {
     /// <summary>
-    /// Extends <see cref="DisposableObject"/> with immutable feature,
-    /// event <see cref="PropertyChanged"/> and other features.
+    /// Extends <see cref="DisposableObject"/> with <see cref="Immutable"/> property
+    /// and other features.
     /// Allows to implement immutable objects with properties that can not be changed.
     /// </summary>
-    public class ImmutableObject : DisposableObject, IImmutableObject, INotifyPropertyChanged
+    public class ImmutableObject : DisposableObject, IImmutableObject
     {
         private bool immutable;
-        private int suspendCounter;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ImmutableObject"/> class.
@@ -24,17 +23,6 @@ namespace Alternet.UI
         public ImmutableObject()
         {
         }
-
-        /// <summary>
-        /// Occurs when a property value changes.
-        /// </summary>
-        public event PropertyChangedEventHandler? PropertyChanged;
-
-        /// <summary>
-        /// Gets or sets an action which is called when a property value changes.
-        /// </summary>
-        [Browsable(false)]
-        public Action<PropertyChangedEventArgs>? PropertyChangedAction { get; set; }
 
         /// <summary>
         /// Gets or sets whether object is immutable (properties can not be changed).
@@ -54,18 +42,6 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Gets whether <see cref="PropertyChanged"/> event is suspended.
-        /// </summary>
-        [Browsable(false)]
-        public bool IsPropertyChangedSuspended
-        {
-            get
-            {
-                return suspendCounter > 0;
-            }
-        }
-
-        /// <summary>
         /// Marks the object as immutable.
         /// </summary>
         /// <remarks>
@@ -81,77 +57,7 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Suspends <see cref="PropertyChanged"/> event and <see cref="OnPropertyChanged"/>
-        /// method so they will not be called when properties are changed.
-        /// </summary>
-        public virtual void SuspendPropertyChanged()
-        {
-            suspendCounter++;
-        }
-
-        /// <summary>
-        /// Resumes <see cref="PropertyChanged"/> event and <see cref="OnPropertyChanged"/>
-        /// method so they will be called when properties are changed.
-        /// </summary>
-        /// <param name="callChangedOnResume">Whether to call <see cref="PropertyChanged"/> event
-        /// after action is executed and events are resumed.
-        /// Optional. Default is True.</param>
-        public virtual void ResumePropertyChanged(bool callChangedOnResume = true)
-        {
-            if (suspendCounter <= 0)
-            {
-                throw new InvalidOperationException(
-                    "ResumePropertyChanged is called without previous call to SuspendPropertyChanged");
-            }
-
-            suspendCounter--;
-
-            if(suspendCounter == 0)
-            {
-                if(callChangedOnResume)
-                    RaisePropertyChanged();
-            }
-        }
-
-        /// <summary>
-        /// Calls the specified action inside block with suspended
-        /// <see cref="PropertyChanged"/> event.
-        /// </summary>
-        /// <param name="action">Action to call.</param>
-        /// <param name="callChangedOnResume">Whether to call <see cref="PropertyChanged"/> event
-        /// after action is executed and events are resumed.
-        /// Optional. Default is True.</param>
-        public void DoInsideSuspendedPropertyChanged(Action action, bool callChangedOnResume = true)
-        {
-            SuspendPropertyChanged();
-            try
-            {
-                action();
-            }
-            finally
-            {
-                ResumePropertyChanged(callChangedOnResume);
-            }
-        }
-
-        /// <summary>
-        /// Calls <see cref="PropertyChanged"/> event. If events are suspended
-        /// with previous call to <see cref="SuspendPropertyChanged"/>, does nothing.
-        /// </summary>
-        /// <param name="propertyName">Name of the property.</param>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public void RaisePropertyChanged([CallerMemberName] string? propertyName = null)
-        {
-            if (DisposingOrDisposed || suspendCounter > 0)
-                return;
-            OnPropertyChanged(propertyName);
-            var e = EventArgsUtils.GetPropertyChangedEventArgs(propertyName);
-            PropertyChanged?.Invoke(this, e);
-            PropertyChangedAction?.Invoke(e);
-        }
-
-        /// <summary>
-        /// Sets field value and calls <see cref="RaisePropertyChanged"/> method.
+        /// Sets field value and calls <see cref="BaseObjectWithNotify.RaisePropertyChanged"/> method.
         /// </summary>
         /// <param name="storage">Field where property is stored.</param>
         /// <param name="value">New property value.</param>
@@ -174,7 +80,7 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Sets field value and calls <see cref="RaisePropertyChanged"/> method.
+        /// Sets field value and calls <see cref="BaseObjectWithNotify.RaisePropertyChanged"/> method.
         /// </summary>
         /// <param name="storage">Field where property is stored.</param>
         /// <param name="value">New property value.</param>
@@ -190,7 +96,7 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Gets new field value and calls <see cref="RaisePropertyChanged"/> method.
+        /// Gets new field value and calls <see cref="BaseObjectWithNotify.RaisePropertyChanged"/> method.
         /// </summary>
         /// <param name="storage">Field value.</param>
         /// <param name="value">New property value.</param>
@@ -201,14 +107,6 @@ namespace Alternet.UI
                 return storage;
             RaisePropertyChanged();
             return value;
-        }
-
-        /// <summary>
-        /// Called when object property is changed.
-        /// </summary>
-        /// <param name="propertyName">Name of the property.</param>
-        protected virtual void OnPropertyChanged([CallerMemberName] string? propertyName = null)
-        {
         }
     }
 }
