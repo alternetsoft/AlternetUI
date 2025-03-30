@@ -39,21 +39,6 @@ namespace Alternet.UI.Native
             }
         }
         
-        public string Text
-        {
-            get
-            {
-                CheckDisposed();
-                return NativeApi.MenuItem_GetText_(NativePointer);
-            }
-            
-            set
-            {
-                CheckDisposed();
-                NativeApi.MenuItem_SetText_(NativePointer, value);
-            }
-        }
-        
         public string Role
         {
             get
@@ -218,12 +203,6 @@ namespace Alternet.UI.Native
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void MenuItem_SetManagedCommandId_(IntPtr obj, string value);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern string MenuItem_GetText_(IntPtr obj);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void MenuItem_SetText_(IntPtr obj, string value);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern string MenuItem_GetRole_(IntPtr obj);

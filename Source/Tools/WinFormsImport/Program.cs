@@ -25,7 +25,7 @@ void Import()
 void CreateBrowsablePartials()
 #pragma warning restore
 {
-    var controls = AssemblyUtils.GetTypeDescendants(typeof(Alternet.UI.Control), true);
+    var controls = AssemblyUtils.GetTypeDescendants(typeof(Alternet.UI.Control));
 
     var path = CommonUtils.GetSamplesFolder("Tools") + @"\..\..\Source\Alternet.UI\Controls\BrowsableProps\";
     path = Path.GetFullPath(path);
@@ -42,7 +42,7 @@ void CreateBrowsablePartials()
 void ShowIncompleteDocs()
 #pragma warning restore
 {
-    var controls = AssemblyUtils.GetTypeDescendants(typeof(Alternet.UI.Control), true);
+    var controls = AssemblyUtils.GetTypeDescendants(typeof(Alternet.UI.Control));
     SortedList<string, Type> list = [];
     foreach(var control in controls)
     {
@@ -74,7 +74,7 @@ void ShowIncompleteDocs()
 void ShowControlCategory()
 #pragma warning restore
 {
-    var controls = AssemblyUtils.GetTypeDescendants(typeof(Alternet.UI.Control), true);
+    var controls = AssemblyUtils.GetTypeDescendants(typeof(Alternet.UI.Control));
     SortedList<string, Type> list = [];
     foreach (var control in controls)
     {

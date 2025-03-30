@@ -10,8 +10,6 @@ namespace Alternet.UI
     /// </summary>
     public partial class TreeControlItem : ListControlItemWithNotify
     {
-        private readonly object? owner;
-
         private bool isVisible = true;
         private List<TreeControlItem>? items;
         private bool isExpanded;
@@ -22,16 +20,6 @@ namespace Alternet.UI
         /// </summary>
         public TreeControlItem()
         {
-        }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="TreeControlItem"/> class
-        /// with the specified owner. Use this constructor only for the root items.
-        /// </summary>
-        /// <param name="owner">The owner of the item.</param>
-        public TreeControlItem(object owner)
-        {
-            this.owner = owner;
         }
 
         /// <summary>
@@ -92,7 +80,7 @@ namespace Alternet.UI
             get
             {
                 if (IsRoot)
-                    return owner;
+                    return null;
                 return Root.Owner;
             }
         }

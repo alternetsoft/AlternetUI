@@ -4,9 +4,6 @@ public:
 string GetManagedCommandId();
 void SetManagedCommandId(const string& value);
 
-string GetText();
-void SetText(const string& value);
-
 string GetRole();
 void SetRole(const string& value);
 

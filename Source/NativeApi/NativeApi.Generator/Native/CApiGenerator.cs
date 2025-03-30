@@ -120,10 +120,10 @@ namespace ApiGenerator.Native
             {
                 this.writer = writer;
 
+                conditional = "!defined(__WXMSW__) || defined(_DEBUG)";
+
                 if (!UseMarshalExceptionsScope)
                     return;
-
-                conditional = "!defined(__WXMSW__) || defined(_DEBUG)";
 
                 writer.WriteLine($"#if {conditional}");
                 if (returnTypeName != "void")

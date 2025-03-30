@@ -28,7 +28,7 @@ namespace Alternet.Maui
         /// </summary>
         public static int DefaultSvgSize = 16;
 
-        private readonly Alternet.UI.TreeControlItem rootItem;
+        private readonly Alternet.UI.TreeControlRootItem rootItem;
         private readonly Grid grid = new();
         private readonly CollectionView collectionView = new();
 
@@ -399,7 +399,7 @@ namespace Alternet.Maui
             TreeChanged();
         }
 
-        private class TreeButtonImage : Image
+        private partial class TreeButtonImage : Image
         {
             public static readonly BindableProperty IsExpandedProperty =
                 BindableProperty.Create(

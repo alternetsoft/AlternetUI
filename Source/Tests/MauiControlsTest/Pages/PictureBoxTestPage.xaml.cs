@@ -10,7 +10,7 @@ public partial class PictureBoxTestPage : ContentPage
 
     public PictureBoxTestPage()
     {
-        DemoTitleView titleView = new DemoTitleView("PictureBoxView");
+        DemoTitleView titleView = new ("PictureBoxView");
         NavigationPage.SetTitleView(this, titleView);
 
         InitializeComponent();

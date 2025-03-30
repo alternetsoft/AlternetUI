@@ -7,8 +7,6 @@ namespace NativeApi.Api
     {
         public string ManagedCommandId { get; set; }
 
-        public string Text { get; set; }
-
         public string Role { get; set; }
 
         public bool Checked { get; set; }

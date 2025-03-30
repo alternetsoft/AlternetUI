@@ -90,7 +90,7 @@ namespace Alternet.UI
         /// <summary>
         /// Occurs when property value has been changed by the user.
         /// </summary>
-        public event EventHandler? PropertyChanged;
+        public new event EventHandler? PropertyChanged;
 
         /// <summary>
         /// Occurs when button is clicked in the property editor.

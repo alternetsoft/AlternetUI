@@ -19,7 +19,7 @@ namespace Alternet.UI
         /// <summary>
         /// Occurs when the property value changes.
         /// </summary>
-        public event EventHandler<ObjectPropertyChangedEventArgs>? PropertyChanged;
+        public event EventHandler<ObjectPropertyChangedEventArgs>? ObjectPropertyChanged;
 
         /// <summary>
         /// Occurs when the control receives focus.
@@ -69,7 +69,7 @@ namespace Alternet.UI
         {
             if (IsDisposingOrDisposed(instance))
                 return;
-            PropertyChanged?.Invoke(this, new ObjectPropertyChangedEventArgs(instance, propName));
+            ObjectPropertyChanged?.Invoke(this, new ObjectPropertyChangedEventArgs(instance, propName));
         }
 
         /// <summary>

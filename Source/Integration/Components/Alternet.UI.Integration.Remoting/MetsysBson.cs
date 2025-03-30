@@ -1,4 +1,5 @@
-﻿/*
+﻿#pragma warning disable
+/*
 Copyright (c) 2010, Karl Seguin - http://www.openmymind.net/
 All rights reserved.
  

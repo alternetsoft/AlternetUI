@@ -22,24 +22,22 @@ namespace SkiaSharpSample.Samples
 
 			// decode the bitmap
 			var desiredInfo = new SKImageInfo(386, 395, SKImageInfo.PlatformColorType, SKAlphaType.Premul);
-			using (var stream = new SKManagedStream(SampleMedia.Images.BabyTux))
-			using (var bitmap = SKBitmap.Decode(stream, desiredInfo))
-			{
-				// draw directly on the bitmap
-				using (var annotationCanvas = new SKCanvas(bitmap))
-				using (var paint = new SKPaint())
-				{
-					paint.StrokeWidth = 3;
-					paint.Color = SampleMedia.Colors.XamarinLightBlue;
-					paint.Style = SKPaintStyle.Stroke;
+            
+            using var stream = new SKManagedStream(SampleMedia.Images.BabyTux);
+            using var bitmap = SKBitmap.Decode(stream, desiredInfo);
 
-					var face = SKRectI.Create(100, 50, 190, 170);
-					annotationCanvas.DrawRect(face, paint);
-				}
+            using var annotationCanvas = new SKCanvas(bitmap);
+            using var paint = new SKPaint();
+            
+            paint.StrokeWidth = 3;
+            paint.Color = SampleMedia.Colors.XamarinLightBlue;
+            paint.Style = SKPaintStyle.Stroke;
 
-				// draw the modified bitmap to the screen
-				canvas.DrawBitmap(bitmap, 10, 10);
-			}
-		}
+            var face = SKRectI.Create(100, 50, 190, 170);
+            annotationCanvas.DrawRect(face, paint);
+
+            // draw the modified bitmap to the screen
+            canvas.DrawBitmap(bitmap, 10, 10);
+        }
 	}
 }

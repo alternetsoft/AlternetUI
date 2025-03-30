@@ -10,7 +10,7 @@ public partial class BorderTestPage : ContentPage
 
     public BorderTestPage()
     {
-        DemoTitleView titleView = new DemoTitleView("BorderView");
+        DemoTitleView titleView = new ("BorderView");
         NavigationPage.SetTitleView(this, titleView);
 
         InitializeComponent();

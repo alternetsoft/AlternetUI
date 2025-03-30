@@ -1,9 +1,46 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ApiInfo>
-  <Assembly Name="Alternet.UI.Common, Version=0.9.718.0, Culture=neutral, PublicKeyToken=7fb0fe57212b4b74">
+  <Assembly Name="Alternet.UI.Common, Version=0.9.719.0, Culture=neutral, PublicKeyToken=7fb0fe57212b4b74">
     <Type Name="XamlX.Runtime.IXamlParentStackProviderV1" />
     <Type Name="XamlX.Runtime.IXamlXmlNamespaceInfoProviderV1" />
     <Type Name="XamlX.Runtime.XamlXmlNamespaceInfoV1" />
+    <Type Name="Alternet.Drawing.TextHorizontalAlignment" />
+    <Type Name="Alternet.Drawing.TextTrimming" />
+    <Type Name="Alternet.Drawing.TextVerticalAlignment" />
+    <Type Name="Alternet.Drawing.TextWrapping" />
+    <Type Name="Alternet.Drawing.BrushHatchStyle" />
+    <Type Name="Alternet.Drawing.BrushType" />
+    <Type Name="Alternet.Drawing.KnownColor" />
+    <Type Name="Alternet.Drawing.KnownColorCategory" />
+    <Type Name="Alternet.Drawing.KnownSystemColor" />
+    <Type Name="Alternet.Drawing.CombineMode" />
+    <Type Name="Alternet.Drawing.DrawLabelFlags" />
+    <Type Name="Alternet.Drawing.FillMode" />
+    <Type Name="Alternet.Drawing.FontEncoding" />
+    <Type Name="Alternet.Drawing.FontStyle" />
+    <Type Name="Alternet.Drawing.FontWeight" />
+    <Type Name="Alternet.Drawing.GenericFontFamily" />
+    <Type Name="Alternet.Drawing.GenericImageAlphaBlendMode" />
+    <Type Name="Alternet.Drawing.GenericImageLoadFlags" />
+    <Type Name="Alternet.Drawing.GenericImagePngSetFilter" />
+    <Type Name="Alternet.Drawing.GenericImagePngType" />
+    <Type Name="Alternet.Drawing.GenericImageResizeQuality" />
+    <Type Name="Alternet.Drawing.GenericImageResolutionUnit" />
+    <Type Name="Alternet.Drawing.GenericImageTiffCompression" />
+    <Type Name="Alternet.Drawing.GenericImageTiffPhotometric" />
+    <Type Name="Alternet.Drawing.GraphicsUnit" />
+    <Type Name="Alternet.Drawing.ImageBitsFormatKind" />
+    <Type Name="Alternet.Drawing.ImageLockMode" />
+    <Type Name="Alternet.Drawing.InterpolationMode" />
+    <Type Name="Alternet.Drawing.PixelFormat" />
+    <Type Name="Alternet.Drawing.DashStyle" />
+    <Type Name="Alternet.Drawing.LineCap" />
+    <Type Name="Alternet.Drawing.LineJoin" />
+    <Type Name="Alternet.Drawing.RasterOperationMode" />
+    <Type Name="Alternet.Drawing.RegionContain" />
+    <Type Name="Alternet.Drawing.SvgImageDataKind" />
+    <Type Name="Alternet.Drawing.SvgImageNumOfColors" />
+    <Type Name="Alternet.Drawing.TextFormatFlags" />
     <Type Name="Alternet.Drawing.BrushConverter" />
     <Type Name="Alternet.Drawing.ColorConverter" />
     <Type Name="Alternet.Drawing.IconSetConverter" />
@@ -11,60 +48,66 @@
     <Type Name="Alternet.Drawing.ImageSetConverter" />
     <Type Name="Alternet.Drawing.ControlPaint" />
     <Type Name="Alternet.Drawing.Brush">
-      <Event Name="PropertyChanged" />
       <Event Name="Disposed" />
+      <Event Name="PropertyChanged" />
     </Type>
     <Type Name="Alternet.Drawing.Brushes" />
     <Type Name="Alternet.Drawing.GradientStop" />
     <Type Name="Alternet.Drawing.IBrushHandler" />
     <Type Name="Alternet.Drawing.PlessBrushHandler">
       <Event Name="Disposed" />
+      <Event Name="PropertyChanged" />
     </Type>
     <Type Name="Alternet.Drawing.BrushAndPen" />
     <Type Name="Alternet.Drawing.BrushOrColor" />
     <Type Name="Alternet.Drawing.GradientBrush">
-      <Event Name="PropertyChanged" />
       <Event Name="Disposed" />
+      <Event Name="PropertyChanged" />
     </Type>
     <Type Name="Alternet.Drawing.ILinearGradientBrushHandler" />
     <Type Name="Alternet.Drawing.IRadialGradientBrushHandler" />
     <Type Name="Alternet.Drawing.LinearGradientBrush">
-      <Event Name="PropertyChanged" />
       <Event Name="Disposed" />
+      <Event Name="PropertyChanged" />
     </Type>
     <Type Name="Alternet.Drawing.PlessLinearGradientBrushHandler">
       <Event Name="Disposed" />
+      <Event Name="PropertyChanged" />
     </Type>
     <Type Name="Alternet.Drawing.PlessRadialGradientBrushHandler">
       <Event Name="Disposed" />
+      <Event Name="PropertyChanged" />
     </Type>
     <Type Name="Alternet.Drawing.RadialGradientBrush">
-      <Event Name="PropertyChanged" />
       <Event Name="Disposed" />
+      <Event Name="PropertyChanged" />
     </Type>
     <Type Name="Alternet.Drawing.HatchBrush">
-      <Event Name="PropertyChanged" />
       <Event Name="Disposed" />
+      <Event Name="PropertyChanged" />
     </Type>
     <Type Name="Alternet.Drawing.IHatchBrushHandler" />
     <Type Name="Alternet.Drawing.PlessHatchBrushHandler">
       <Event Name="Disposed" />
+      <Event Name="PropertyChanged" />
     </Type>
     <Type Name="Alternet.Drawing.ISolidBrushHandler" />
     <Type Name="Alternet.Drawing.PlessSolidBrushHandler">
       <Event Name="Disposed" />
+      <Event Name="PropertyChanged" />
     </Type>
     <Type Name="Alternet.Drawing.SolidBrush">
-      <Event Name="PropertyChanged" />
       <Event Name="Disposed" />
+      <Event Name="PropertyChanged" />
     </Type>
     <Type Name="Alternet.Drawing.ITextureBrushHandler" />
     <Type Name="Alternet.Drawing.PlessTextureBrushHandler">
       <Event Name="Disposed" />
+      <Event Name="PropertyChanged" />
     </Type>
     <Type Name="Alternet.Drawing.TextureBrush">
-      <Event Name="PropertyChanged" />
       <Event Name="Disposed" />
+      <Event Name="PropertyChanged" />
     </Type>
     <Type Name="Alternet.Drawing.Color" />
     <Type Name="Alternet.Drawing.ColorTranslator" />
@@ -99,6 +142,7 @@
     <Type Name="Alternet.Drawing.ScrollBarDrawable" />
     <Type Name="Alternet.Drawing.Font">
       <Event Name="Disposed" />
+      <Event Name="PropertyChanged" />
     </Type>
     <Type Name="Alternet.Drawing.FontFactory" />
     <Type Name="Alternet.Drawing.FontFamily" />
@@ -108,20 +152,22 @@
     <Type Name="Alternet.Drawing.IFontHandler" />
     <Type Name="Alternet.Drawing.PlessFontHandler">
       <Event Name="Disposed" />
+      <Event Name="PropertyChanged" />
     </Type>
     <Type Name="Alternet.Drawing.GenericImage">
-      <Event Name="PropertyChanged" />
       <Event Name="Disposed" />
+      <Event Name="PropertyChanged" />
     </Type>
     <Type Name="Alternet.Drawing.GenericImageOptionNames" />
     <Type Name="Alternet.Drawing.IGenericImageHandler" />
     <Type Name="Alternet.Drawing.GraphicsPath">
-      <Event Name="PropertyChanged" />
       <Event Name="Disposed" />
+      <Event Name="PropertyChanged" />
     </Type>
     <Type Name="Alternet.Drawing.IGraphicsPathHandler" />
     <Type Name="Alternet.Drawing.Graphics">
       <Event Name="Disposed" />
+      <Event Name="PropertyChanged" />
     </Type>
     <Type Name="Alternet.Drawing.GraphicsFactory" />
     <Type Name="Alternet.Drawing.ConvertGraphicsUnit" />
@@ -130,58 +176,63 @@
     <Type Name="Alternet.Drawing.IGraphicsFactoryHandler" />
     <Type Name="Alternet.Drawing.NotImplementedGraphics">
       <Event Name="Disposed" />
+      <Event Name="PropertyChanged" />
     </Type>
     <Type Name="Alternet.Drawing.PlessGraphics">
       <Event Name="Disposed" />
+      <Event Name="PropertyChanged" />
     </Type>
     <Type Name="Alternet.Drawing.TextRenderer" />
     <Type Name="Alternet.Drawing.DummyIconSetHandler">
       <Event Name="Disposed" />
+      <Event Name="PropertyChanged" />
     </Type>
     <Type Name="Alternet.Drawing.IconSet">
       <Event Name="Changed" />
-      <Event Name="PropertyChanged" />
       <Event Name="Disposed" />
+      <Event Name="PropertyChanged" />
     </Type>
     <Type Name="Alternet.Drawing.IIconSetHandler" />
     <Type Name="Alternet.Drawing.DummyImageContainer">
       <Event Name="Disposed" />
+      <Event Name="PropertyChanged" />
     </Type>
     <Type Name="Alternet.Drawing.IImageContainer" />
     <Type Name="Alternet.Drawing.ImageContainer">
       <Event Name="Changed" />
-      <Event Name="PropertyChanged" />
       <Event Name="Disposed" />
+      <Event Name="PropertyChanged" />
     </Type>
     <Type Name="Alternet.Drawing.ImageContainer`1">
       <Event Name="Changed" />
-      <Event Name="PropertyChanged" />
       <Event Name="Disposed" />
+      <Event Name="PropertyChanged" />
     </Type>
     <Type Name="Alternet.Drawing.DummyImageListHandler">
       <Event Name="Disposed" />
+      <Event Name="PropertyChanged" />
     </Type>
     <Type Name="Alternet.Drawing.IImageListHandler" />
     <Type Name="Alternet.Drawing.ImageList">
       <Event Name="Changed" />
-      <Event Name="PropertyChanged" />
       <Event Name="Disposed" />
+      <Event Name="PropertyChanged" />
     </Type>
     <Type Name="Alternet.Drawing.IImageSetHandler" />
     <Type Name="Alternet.Drawing.PlessImageSetHandler">
       <Event Name="Changed" />
-      <Event Name="PropertyChanged" />
       <Event Name="Disposed" />
+      <Event Name="PropertyChanged" />
     </Type>
     <Type Name="Alternet.Drawing.Bitmap">
-      <Event Name="PropertyChanged" />
       <Event Name="Disposed" />
+      <Event Name="PropertyChanged" />
     </Type>
     <Type Name="Alternet.Drawing.IImageHandler" />
     <Type Name="Alternet.Drawing.ILockImageBits" />
     <Type Name="Alternet.Drawing.Image">
-      <Event Name="PropertyChanged" />
       <Event Name="Disposed" />
+      <Event Name="PropertyChanged" />
     </Type>
     <Type Name="Alternet.Drawing.ImageBitsFormat" />
     <Type Name="Alternet.Drawing.ImageFormat" />
@@ -189,16 +240,18 @@
     <Type Name="Alternet.Drawing.NinePatchImagePaintParams" />
     <Type Name="Alternet.Drawing.PlessImageHandler">
       <Event Name="Disposed" />
+      <Event Name="PropertyChanged" />
     </Type>
     <Type Name="Alternet.Drawing.TransformMatrix" />
     <Type Name="Alternet.Drawing.IPenHandler" />
     <Type Name="Alternet.Drawing.Pen">
-      <Event Name="PropertyChanged" />
       <Event Name="Disposed" />
+      <Event Name="PropertyChanged" />
     </Type>
     <Type Name="Alternet.Drawing.Pens" />
     <Type Name="Alternet.Drawing.PlessPenHandler">
       <Event Name="Disposed" />
+      <Event Name="PropertyChanged" />
     </Type>
     <Type Name="Alternet.Drawing.CoordD" />
     <Type Name="Alternet.Drawing.NineRects" />
@@ -210,19 +263,22 @@
     <Type Name="Alternet.Drawing.SizeI" />
     <Type Name="Alternet.Drawing.IRegionHandler" />
     <Type Name="Alternet.Drawing.Region">
-      <Event Name="PropertyChanged" />
       <Event Name="Disposed" />
+      <Event Name="PropertyChanged" />
     </Type>
     <Type Name="Alternet.Drawing.ISkiaSurface" />
     <Type Name="Alternet.Drawing.SkiaColorFilter" />
     <Type Name="Alternet.Drawing.SkiaFontFactoryHandler">
       <Event Name="Disposed" />
+      <Event Name="PropertyChanged" />
     </Type>
     <Type Name="Alternet.Drawing.SkiaGraphics">
       <Event Name="Disposed" />
+      <Event Name="PropertyChanged" />
     </Type>
     <Type Name="Alternet.Drawing.SkiaRegionHandler">
       <Event Name="Disposed" />
+      <Event Name="PropertyChanged" />
     </Type>
     <Type Name="Alternet.Drawing.SkiaUtils" />
     <Type Name="Alternet.Drawing.CachedSvgImage`1" />
@@ -234,10 +290,14 @@
     <Type Name="Alternet.Drawing.SvgUtils" />
     <Type Name="Alternet.Drawing.TextAndFontStyle" />
     <Type Name="Alternet.Drawing.TextFormat">
-      <Event Name="PropertyChanged" />
       <Event Name="Disposed" />
+      <Event Name="PropertyChanged" />
     </Type>
     <Type Name="Alternet.Drawing.IControlPainterHandler" />
+    <Type Name="Alternet.Drawing.Printing.Duplex" />
+    <Type Name="Alternet.Drawing.Printing.PaperKind" />
+    <Type Name="Alternet.Drawing.Printing.PrinterResolutionKind" />
+    <Type Name="Alternet.Drawing.Printing.PrintRange" />
     <Type Name="Alternet.Drawing.Printing.IBasePrintDialogHandler" />
     <Type Name="Alternet.Drawing.Printing.IPageSettingsHandler" />
     <Type Name="Alternet.Drawing.Printing.IPageSetupDialogHandler" />
@@ -251,8 +311,8 @@
     <Type Name="Alternet.Drawing.Printing.IPrintPreviewDialogHandler" />
     <Type Name="Alternet.Drawing.Printing.IPrintingHandler" />
     <Type Name="Alternet.Drawing.Printing.PageSettings">
-      <Event Name="PropertyChanged" />
       <Event Name="Disposed" />
+      <Event Name="PropertyChanged" />
     </Type>
     <Type Name="Alternet.Drawing.Printing.PaperSize" />
     <Type Name="Alternet.Drawing.Printing.PaperSizes" />
@@ -260,13 +320,13 @@
       <Event Name="PrintPage" />
       <Event Name="BeginPrint" />
       <Event Name="EndPrint" />
-      <Event Name="PropertyChanged" />
       <Event Name="Disposed" />
+      <Event Name="PropertyChanged" />
     </Type>
     <Type Name="Alternet.Drawing.Printing.PrinterResolution" />
     <Type Name="Alternet.Drawing.Printing.PrinterSettings">
-      <Event Name="PropertyChanged" />
       <Event Name="Disposed" />
+      <Event Name="PropertyChanged" />
     </Type>
     <Type Name="Alternet.Drawing.Printing.PrintEventArgs" />
     <Type Name="Alternet.Drawing.Printing.PrintingFactory" />
@@ -304,68 +364,83 @@
     <Type Name="Alternet.UI.BaseObject" />
     <Type Name="Alternet.UI.BaseObjectWithAttr" />
     <Type Name="Alternet.UI.BaseObjectWithId" />
+    <Type Name="Alternet.UI.BaseObjectWithNotify">
+      <Event Name="PropertyChanged" />
+    </Type>
     <Type Name="Alternet.UI.BaseOwnedObject`1" />
     <Type Name="Alternet.UI.DisposableObject">
       <Event Name="Disposed" />
+      <Event Name="PropertyChanged" />
     </Type>
     <Type Name="Alternet.UI.DisposableObject`1">
       <Event Name="Disposed" />
+      <Event Name="PropertyChanged" />
     </Type>
     <Type Name="Alternet.UI.FrameworkElement">
       <Event Name="Disposed" />
+      <Event Name="PropertyChanged" />
     </Type>
     <Type Name="Alternet.UI.HandledObject`1">
-      <Event Name="PropertyChanged" />
       <Event Name="Disposed" />
+      <Event Name="PropertyChanged" />
     </Type>
     <Type Name="Alternet.UI.ImmutableObject">
-      <Event Name="PropertyChanged" />
       <Event Name="Disposed" />
+      <Event Name="PropertyChanged" />
     </Type>
     <Type Name="Alternet.UI.ImmutableWithRecord`1">
-      <Event Name="PropertyChanged" />
       <Event Name="Disposed" />
+      <Event Name="PropertyChanged" />
     </Type>
     <Type Name="Alternet.UI.AbstractCharValidator">
-      <Event Name="PropertyChanged" />
       <Event Name="Disposed" />
+      <Event Name="PropertyChanged" />
     </Type>
     <Type Name="Alternet.UI.CharValidator">
-      <Event Name="PropertyChanged" />
       <Event Name="Disposed" />
+      <Event Name="PropertyChanged" />
     </Type>
     <Type Name="Alternet.UI.ICharValidator" />
     <Type Name="Alternet.UI.ICustomCharValidator" />
     <Type Name="Alternet.UI.DummyActionSimulatorHandler">
       <Event Name="Disposed" />
+      <Event Name="PropertyChanged" />
     </Type>
     <Type Name="Alternet.UI.IActionSimulatorHandler" />
     <Type Name="Alternet.UI.UIActionSimulator">
-      <Event Name="PropertyChanged" />
       <Event Name="Disposed" />
+      <Event Name="PropertyChanged" />
     </Type>
     <Type Name="Alternet.UI.App">
       <Event Name="Disposed" />
+      <Event Name="PropertyChanged" />
     </Type>
     <Type Name="Alternet.UI.ApplicationContext">
       <Event Name="ThreadExit" />
       <Event Name="Disposed" />
+      <Event Name="PropertyChanged" />
     </Type>
     <Type Name="Alternet.UI.IApplicationHandler" />
     <Type Name="Alternet.UI.PlessApplicationHandler">
       <Event Name="Disposed" />
+      <Event Name="PropertyChanged" />
     </Type>
     <Type Name="Alternet.UI.Caret">
-      <Event Name="PropertyChanged" />
       <Event Name="Disposed" />
+      <Event Name="PropertyChanged" />
     </Type>
     <Type Name="Alternet.UI.CaretInfo" />
     <Type Name="Alternet.UI.ICaretHandler" />
     <Type Name="Alternet.UI.PlessCaretHandler">
       <Event Name="Disposed" />
+      <Event Name="PropertyChanged" />
     </Type>
     <Type Name="Alternet.UI.WindowsCaretHandler">
       <Event Name="Disposed" />
+      <Event Name="PropertyChanged" />
+    </Type>
+    <Type Name="Alternet.UI.CommandLineArgs">
+      <Event Name="Error" />
     </Type>
     <Type Name="Alternet.UI.IndexedValues`2">
       <Event Name="AfterClear" />
@@ -374,26 +449,32 @@
     <Type Name="Alternet.UI.StringSearch" />
     <Type Name="Alternet.UI.TwoDimensionalBuffer`1" />
     <Type Name="Alternet.UI.Cursor">
-      <Event Name="PropertyChanged" />
       <Event Name="Disposed" />
+      <Event Name="PropertyChanged" />
     </Type>
     <Type Name="Alternet.UI.Cursors" />
     <Type Name="Alternet.UI.ICursorFactoryHandler" />
     <Type Name="Alternet.UI.ICursorHandler" />
     <Type Name="Alternet.UI.PlessCursorFactoryHandler">
       <Event Name="Disposed" />
+      <Event Name="PropertyChanged" />
     </Type>
     <Type Name="Alternet.UI.PlessCursorHandler">
       <Event Name="Disposed" />
+      <Event Name="PropertyChanged" />
     </Type>
     <Type Name="Alternet.UI.AbstractEnumMapping`2" />
     <Type Name="Alternet.UI.AbstractTwoWayEnumMapping`2">
       <Event Name="Disposed" />
+      <Event Name="PropertyChanged" />
     </Type>
     <Type Name="Alternet.UI.EnumMapping`2" />
     <Type Name="Alternet.UI.TwoWayEnumMapping`2">
       <Event Name="Disposed" />
+      <Event Name="PropertyChanged" />
     </Type>
+    <Type Name="Alternet.UI.AssertFailureException" />
+    <Type Name="Alternet.UI.AssertFailureExceptionData" />
     <Type Name="Alternet.UI.BaseException" />
     <Type Name="Alternet.UI.AttributesFactory" />
     <Type Name="Alternet.UI.FlagsAndAttributesFactory" />
@@ -410,17 +491,19 @@
     <Type Name="Alternet.UI.NotifyIcon">
       <Event Name="Click" />
       <Event Name="DoubleClick" />
-      <Event Name="PropertyChanged" />
       <Event Name="Disposed" />
+      <Event Name="PropertyChanged" />
     </Type>
     <Type Name="Alternet.UI.DummyTimerHandler">
       <Event Name="Disposed" />
+      <Event Name="PropertyChanged" />
     </Type>
     <Type Name="Alternet.UI.ITimerHandler" />
     <Type Name="Alternet.UI.Timer">
       <Event Name="Tick" />
       <Event Name="Elapsed" />
       <Event Name="Disposed" />
+      <Event Name="PropertyChanged" />
     </Type>
     <Type Name="Alternet.UI.UixmlLoader" />
     <Type Name="Alternet.UI.IPlessVariantExtender" />
@@ -435,6 +518,7 @@
     <Type Name="Alternet.UI.IDataObject" />
     <Type Name="Alternet.UI.PlessClipboardHandler">
       <Event Name="Disposed" />
+      <Event Name="PropertyChanged" />
     </Type>
     <Type Name="Alternet.UI.AdvDictionary`2" />
     <Type Name="Alternet.UI.AdvDictionaryCached`2" />
@@ -456,7 +540,12 @@
       <Event Name="BeforeExecute" />
     </Type>
     <Type Name="Alternet.UI.NamedCommands" />
-    <Type Name="Alternet.UI.BaseControlItem" />
+    <Type Name="Alternet.UI.BaseControlItem">
+      <Event Name="PropertyChanged" />
+    </Type>
+    <Type Name="Alternet.UI.ListControlItemWithNotify">
+      <Event Name="PropertyChanged" />
+    </Type>
     <Type Name="Alternet.UI.IListControlItemContainer" />
     <Type Name="Alternet.UI.IListControlItemDefaults" />
     <Type Name="Alternet.UI.IListControlItems`1">
@@ -464,8 +553,12 @@
       <Event Name="ItemRemoved" />
       <Event Name="ItemRangeAdditionFinished" />
     </Type>
-    <Type Name="Alternet.UI.ListControlEmptyItem" />
-    <Type Name="Alternet.UI.ListControlItem" />
+    <Type Name="Alternet.UI.ListControlEmptyItem">
+      <Event Name="PropertyChanged" />
+    </Type>
+    <Type Name="Alternet.UI.ListControlItem">
+      <Event Name="PropertyChanged" />
+    </Type>
     <Type Name="Alternet.UI.ListControlItemDefaults" />
     <Type Name="Alternet.UI.ListControlItems`1">
       <Event Name="ItemInserted" />
@@ -473,11 +566,24 @@
       <Event Name="ItemRangeAdditionFinished" />
       <Event Name="CollectionChanged" />
     </Type>
-    <Type Name="Alternet.UI.ListControlSeparatorItem" />
-    <Type Name="Alternet.UI.ListViewColumn" />
-    <Type Name="Alternet.UI.ListViewItem" />
-    <Type Name="Alternet.UI.ListViewItemCell" />
-    <Type Name="Alternet.UI.TreeViewItem" />
+    <Type Name="Alternet.UI.ListControlSeparatorItem">
+      <Event Name="PropertyChanged" />
+    </Type>
+    <Type Name="Alternet.UI.ListViewColumn">
+      <Event Name="PropertyChanged" />
+    </Type>
+    <Type Name="Alternet.UI.ListViewItem">
+      <Event Name="PropertyChanged" />
+    </Type>
+    <Type Name="Alternet.UI.ListViewItemCell">
+      <Event Name="PropertyChanged" />
+    </Type>
+    <Type Name="Alternet.UI.TreeControlItem">
+      <Event Name="PropertyChanged" />
+    </Type>
+    <Type Name="Alternet.UI.TreeViewItem">
+      <Event Name="PropertyChanged" />
+    </Type>
     <Type Name="Alternet.UI.VirtualListBoxItems">
       <Event Name="ItemInserted" />
       <Event Name="ItemRemoved" />
@@ -485,17 +591,197 @@
       <Event Name="CollectionChanged" />
     </Type>
     <Type Name="Alternet.UI.Display">
-      <Event Name="PropertyChanged" />
       <Event Name="Disposed" />
+      <Event Name="PropertyChanged" />
     </Type>
     <Type Name="Alternet.UI.IDisplayFactoryHandler" />
     <Type Name="Alternet.UI.IDisplayHandler" />
     <Type Name="Alternet.UI.PlessDisplayFactoryHandler">
       <Event Name="Disposed" />
+      <Event Name="PropertyChanged" />
     </Type>
     <Type Name="Alternet.UI.PlessDisplayHandler">
       <Event Name="Disposed" />
+      <Event Name="PropertyChanged" />
     </Type>
+    <Type Name="Alternet.UI.ContentAlignment" />
+    <Type Name="Alternet.UI.GenericAlignment" />
+    <Type Name="Alternet.UI.GenericDirection" />
+    <Type Name="Alternet.UI.AnchorStyles" />
+    <Type Name="Alternet.UI.ArrowDirection" />
+    <Type Name="Alternet.UI.AutoSizeMode" />
+    <Type Name="Alternet.UI.CoordAlignment" />
+    <Type Name="Alternet.UI.DockStyle" />
+    <Type Name="Alternet.UI.GenericOrientation" />
+    <Type Name="Alternet.UI.HorizontalAlignment" />
+    <Type Name="Alternet.UI.ImageToText" />
+    <Type Name="Alternet.UI.LayoutStyle" />
+    <Type Name="Alternet.UI.RightToLeft" />
+    <Type Name="Alternet.UI.SplitterPanelSplitMethod" />
+    <Type Name="Alternet.UI.StackPanelOrientation" />
+    <Type Name="Alternet.UI.VerticalAlignment" />
+    <Type Name="Alternet.UI.Border3DSide" />
+    <Type Name="Alternet.UI.ButtonBorderStyle" />
+    <Type Name="Alternet.UI.ControlBorderStyle" />
+    <Type Name="Alternet.UI.InnerOuterSelector" />
+    <Type Name="Alternet.UI.WindowRoundedCornerPreference" />
+    <Type Name="Alternet.UI.ClipboardDataFormatId" />
+    <Type Name="Alternet.UI.TextDataFormat" />
+    <Type Name="Alternet.UI.BoundsSpecified" />
+    <Type Name="Alternet.UI.CheckState" />
+    <Type Name="Alternet.UI.ControlBackgroundStyle" />
+    <Type Name="Alternet.UI.ControlFlags" />
+    <Type Name="Alternet.UI.ControlRefreshOptions" />
+    <Type Name="Alternet.UI.ControlRenderSizeVariant" />
+    <Type Name="Alternet.UI.ControlStyles" />
+    <Type Name="Alternet.UI.FocusState" />
+    <Type Name="Alternet.UI.GenericControlAction" />
+    <Type Name="Alternet.UI.GenericControlProperty" />
+    <Type Name="Alternet.UI.KnownButton" />
+    <Type Name="Alternet.UI.SetBoundsFlags" />
+    <Type Name="Alternet.UI.SliderTickStyle" />
+    <Type Name="Alternet.UI.StatusBarPanelStyle" />
+    <Type Name="Alternet.UI.VisualControlState" />
+    <Type Name="Alternet.UI.VisualControlStates" />
+    <Type Name="Alternet.UI.CalendarDateBorder" />
+    <Type Name="Alternet.UI.DatePickerStyleFlags" />
+    <Type Name="Alternet.UI.DateTimePickerKind" />
+    <Type Name="Alternet.UI.DateTimePickerPopupKind" />
+    <Type Name="Alternet.UI.LogItemKind" />
+    <Type Name="Alternet.UI.LogItemKindFlags" />
+    <Type Name="Alternet.UI.UnhandledExceptionMode" />
+    <Type Name="Alternet.UI.DialogResult" />
+    <Type Name="Alternet.UI.MessageBoxButtons" />
+    <Type Name="Alternet.UI.MessageBoxDefaultButton" />
+    <Type Name="Alternet.UI.MessageBoxIcon" />
+    <Type Name="Alternet.UI.MessageBoxOptions" />
+    <Type Name="Alternet.UI.AppColorTheme" />
+    <Type Name="Alternet.UI.DrawMode" />
+    <Type Name="Alternet.UI.BitmapType" />
+    <Type Name="Alternet.UI.KnownSvgColor" />
+    <Type Name="Alternet.UI.TextEllipsizeType" />
+    <Type Name="Alternet.UI.Key" />
+    <Type Name="Alternet.UI.Keys" />
+    <Type Name="Alternet.UI.KeyStates" />
+    <Type Name="Alternet.UI.ModifierKeys" />
+    <Type Name="Alternet.UI.MouseButton" />
+    <Type Name="Alternet.UI.MouseButtons" />
+    <Type Name="Alternet.UI.MouseButtonState" />
+    <Type Name="Alternet.UI.RawModifierKeys" />
+    <Type Name="Alternet.UI.TouchAction" />
+    <Type Name="Alternet.UI.TouchDeviceType" />
+    <Type Name="Alternet.UI.TouchEventsMask" />
+    <Type Name="Alternet.UI.TouchInteractionKind" />
+    <Type Name="Alternet.UI.VirtualKeyboardClass" />
+    <Type Name="Alternet.UI.VirtualKeyboardFlags" />
+    <Type Name="Alternet.UI.ListViewColumnWidthMode" />
+    <Type Name="Alternet.UI.ListViewGridLinesDisplayMode" />
+    <Type Name="Alternet.UI.ListViewHitTestLocations" />
+    <Type Name="Alternet.UI.ListViewItemBoundsPortion" />
+    <Type Name="Alternet.UI.ListViewSelectionMode" />
+    <Type Name="Alternet.UI.ListViewSortMode" />
+    <Type Name="Alternet.UI.ListViewView" />
+    <Type Name="Alternet.UI.AnimationType" />
+    <Type Name="Alternet.UI.SoundPlayFlags" />
+    <Type Name="Alternet.UI.SystemSoundType" />
+    <Type Name="Alternet.UI.LangDirection" />
+    <Type Name="Alternet.UI.ProgressBarOrientation" />
+    <Type Name="Alternet.UI.ScrollBarOrientation" />
+    <Type Name="Alternet.UI.SliderOrientation" />
+    <Type Name="Alternet.UI.CursorType" />
+    <Type Name="Alternet.UI.DragAction" />
+    <Type Name="Alternet.UI.DragDropEffects" />
+    <Type Name="Alternet.UI.DrawItemState" />
+    <Type Name="Alternet.UI.FontDialogRestrictSelection" />
+    <Type Name="Alternet.UI.GridUnitType" />
+    <Type Name="Alternet.UI.HelpNavigator" />
+    <Type Name="Alternet.UI.HiddenOrVisible" />
+    <Type Name="Alternet.UI.ImeMode" />
+    <Type Name="Alternet.UI.ListBoxSelectionMode" />
+    <Type Name="Alternet.UI.Modifiability" />
+    <Type Name="Alternet.UI.Readability" />
+    <Type Name="Alternet.UI.ResetColorType" />
+    <Type Name="Alternet.UI.RichToolTipKind" />
+    <Type Name="Alternet.UI.RoutingStrategy" />
+    <Type Name="Alternet.UI.SelectionMode" />
+    <Type Name="Alternet.UI.ToolStripDropDownCloseReason" />
+    <Type Name="Alternet.UI.TrimTextRules" />
+    <Type Name="Alternet.UI.ValueInRangeResult" />
+    <Type Name="Alternet.UI.PropertyGridApplyFlags" />
+    <Type Name="Alternet.UI.PropertyGridCreateStyle" />
+    <Type Name="Alternet.UI.PropertyGridCreateStyleEx" />
+    <Type Name="Alternet.UI.PropertyGridEditableState" />
+    <Type Name="Alternet.UI.PropertyGridEditKindAll" />
+    <Type Name="Alternet.UI.PropertyGridEditKindColor" />
+    <Type Name="Alternet.UI.PropertyGridEditKindString" />
+    <Type Name="Alternet.UI.PropertyGridFeature" />
+    <Type Name="Alternet.UI.PropertyGridItemAttrId" />
+    <Type Name="Alternet.UI.PropertyGridItemFlags" />
+    <Type Name="Alternet.UI.PropertyGridItemValueFlags" />
+    <Type Name="Alternet.UI.PropertyGridIteratorFlags" />
+    <Type Name="Alternet.UI.PropertyGridKeyboardAction" />
+    <Type Name="Alternet.UI.PropertyGridKnownColors" />
+    <Type Name="Alternet.UI.PropertyGridKnownEditors" />
+    <Type Name="Alternet.UI.PropertyGridSelectPropFlags" />
+    <Type Name="Alternet.UI.PropertyGridSplitterPosFlags" />
+    <Type Name="Alternet.UI.PropertyGridValidationFailure" />
+    <Type Name="Alternet.UI.PropertyGridValueFormatFlags" />
+    <Type Name="Alternet.UI.RichTextBoxScrollBars" />
+    <Type Name="Alternet.UI.ScrollEventType" />
+    <Type Name="Alternet.UI.GenericDeviceType" />
+    <Type Name="Alternet.UI.NetFrameworkIdentifier" />
+    <Type Name="Alternet.UI.OperatingSystems" />
+    <Type Name="Alternet.UI.SystemColorMode" />
+    <Type Name="Alternet.UI.SystemSettingsFeature" />
+    <Type Name="Alternet.UI.SystemSettingsFont" />
+    <Type Name="Alternet.UI.SystemSettingsMetric" />
+    <Type Name="Alternet.UI.UIPlatformKind" />
+    <Type Name="Alternet.UI.TabAlignment" />
+    <Type Name="Alternet.UI.TabAppearance" />
+    <Type Name="Alternet.UI.TabControlAction" />
+    <Type Name="Alternet.UI.TabSizeMode" />
+    <Type Name="Alternet.UI.ComboBoxStyle" />
+    <Type Name="Alternet.UI.KnownInputType" />
+    <Type Name="Alternet.UI.RichTextFileType" />
+    <Type Name="Alternet.UI.RichTextHandlerFlags" />
+    <Type Name="Alternet.UI.RichTextInsertFlags" />
+    <Type Name="Alternet.UI.RichTextMoveCaretFlags" />
+    <Type Name="Alternet.UI.RichTextSetPropFlags" />
+    <Type Name="Alternet.UI.RichTextSetStyleFlags" />
+    <Type Name="Alternet.UI.TextBoxOptions" />
+    <Type Name="Alternet.UI.TextBoxSetValueFlags" />
+    <Type Name="Alternet.UI.TextBoxTextAttrAlignment" />
+    <Type Name="Alternet.UI.TextBoxTextAttrBulletStyle" />
+    <Type Name="Alternet.UI.TextBoxTextAttrEffects" />
+    <Type Name="Alternet.UI.TextBoxTextAttrFlags" />
+    <Type Name="Alternet.UI.TextBoxTextAttrLineSpacing" />
+    <Type Name="Alternet.UI.TextBoxTextAttrUnderlineType" />
+    <Type Name="Alternet.UI.TextBoxTextWrap" />
+    <Type Name="Alternet.UI.TreeViewButtonsKind" />
+    <Type Name="Alternet.UI.TreeViewHitTestLocations" />
+    <Type Name="Alternet.UI.TreeViewSelectionMode" />
+    <Type Name="Alternet.UI.ValueValidatorKind" />
+    <Type Name="Alternet.UI.ValueValidatorKnownError" />
+    <Type Name="Alternet.UI.ValueValidatorNumStyle" />
+    <Type Name="Alternet.UI.ValueValidatorTextStyle" />
+    <Type Name="Alternet.UI.WebBrowserBackend" />
+    <Type Name="Alternet.UI.WebBrowserBackendOS" />
+    <Type Name="Alternet.UI.WebBrowserEvent" />
+    <Type Name="Alternet.UI.WebBrowserHostResourceAccessKind" />
+    <Type Name="Alternet.UI.WebBrowserNavigationAction" />
+    <Type Name="Alternet.UI.WebBrowserNavigationError" />
+    <Type Name="Alternet.UI.WebBrowserPreferredColorScheme" />
+    <Type Name="Alternet.UI.WebBrowserSearchFlags" />
+    <Type Name="Alternet.UI.WebBrowserZoomType" />
+    <Type Name="Alternet.UI.WebBrowserZoom" />
+    <Type Name="Alternet.UI.ModalResult" />
+    <Type Name="Alternet.UI.WindowCloseAction" />
+    <Type Name="Alternet.UI.WindowKind" />
+    <Type Name="Alternet.UI.WindowSizeToContentMode" />
+    <Type Name="Alternet.UI.WindowStartLocation" />
+    <Type Name="Alternet.UI.WindowState" />
+    <Type Name="Alternet.UI.BaseEventArgs" />
+    <Type Name="Alternet.UI.BaseEventArgs`1" />
     <Type Name="Alternet.UI.BaseCancelEventArgs" />
     <Type Name="Alternet.UI.LogMessageEventArgs" />
     <Type Name="Alternet.UI.UrlEventHandler" />
@@ -544,6 +830,7 @@
     <Type Name="Alternet.UI.ScrollEventArgs" />
     <Type Name="Alternet.UI.SplitterEventHandler" />
     <Type Name="Alternet.UI.SplitterEventArgs" />
+    <Type Name="Alternet.UI.ThrowExceptionEventArgs" />
     <Type Name="Alternet.UI.ToolStripDropDownClosedEventArgs" />
     <Type Name="Alternet.UI.ValidationEventHandler" />
     <Type Name="Alternet.UI.ValidationEventArgs" />
@@ -568,13 +855,16 @@
     <Type Name="Alternet.UI.KnownShortcuts" />
     <Type Name="Alternet.UI.PlatformKeyboardHandler`1">
       <Event Name="Disposed" />
+      <Event Name="PropertyChanged" />
     </Type>
     <Type Name="Alternet.UI.PlatformKeyMapping`1">
       <Event Name="Disposed" />
+      <Event Name="PropertyChanged" />
     </Type>
     <Type Name="Alternet.UI.PlessKeyboard" />
     <Type Name="Alternet.UI.PlessKeyboardHandler">
       <Event Name="Disposed" />
+      <Event Name="PropertyChanged" />
     </Type>
     <Type Name="Alternet.UI.ShortcutInfo" />
     <Type Name="Alternet.UI.HelpInfo" />
@@ -588,26 +878,31 @@
     <Type Name="Alternet.UI.PlessMouse" />
     <Type Name="Alternet.UI.PlessMouseHandler">
       <Event Name="Disposed" />
+      <Event Name="PropertyChanged" />
     </Type>
     <Type Name="Alternet.UI.TouchEventArgs" />
     <Type Name="Alternet.UI.BasePrintDialog">
       <Event Name="Disposed" />
+      <Event Name="PropertyChanged" />
     </Type>
     <Type Name="Alternet.UI.PageSetupDialog">
       <Event Name="Disposed" />
+      <Event Name="PropertyChanged" />
     </Type>
     <Type Name="Alternet.UI.PrintDialog">
       <Event Name="Disposed" />
+      <Event Name="PropertyChanged" />
     </Type>
     <Type Name="Alternet.UI.PrintPreviewDialog">
       <Event Name="Disposed" />
+      <Event Name="PropertyChanged" />
     </Type>
     <Type Name="Alternet.UI.ResourceLoader" />
     <Type Name="Alternet.UI.ISoundFactoryHandler" />
     <Type Name="Alternet.UI.ISoundPlayerHandler" />
     <Type Name="Alternet.UI.SimpleSoundPlayer">
-      <Event Name="PropertyChanged" />
       <Event Name="Disposed" />
+      <Event Name="PropertyChanged" />
     </Type>
     <Type Name="Alternet.UI.SoundUtils" />
     <Type Name="Alternet.UI.SystemSound" />
@@ -632,6 +927,7 @@
     <Type Name="Alternet.UI.ISystemSettingsHandler" />
     <Type Name="Alternet.UI.PlessSystemSettingsHandler">
       <Event Name="Disposed" />
+      <Event Name="PropertyChanged" />
     </Type>
     <Type Name="Alternet.UI.SystemInformation" />
     <Type Name="Alternet.UI.SystemSettings" />
@@ -717,15 +1013,16 @@
       <Event Name="LayoutUpdated" />
       <Event Name="Scroll" />
       <Event Name="Disposed" />
+      <Event Name="PropertyChanged" />
     </Type>
     <Type Name="Alternet.UI.BorderSettings">
       <Event Name="Paint" />
-      <Event Name="PropertyChanged" />
       <Event Name="Disposed" />
+      <Event Name="PropertyChanged" />
     </Type>
     <Type Name="Alternet.UI.BorderSideSettings">
-      <Event Name="PropertyChanged" />
       <Event Name="Disposed" />
+      <Event Name="PropertyChanged" />
     </Type>
     <Type Name="Alternet.UI.HiddenBorder">
       <Event Name="CellChanged" />
@@ -798,6 +1095,7 @@
       <Event Name="LayoutUpdated" />
       <Event Name="Scroll" />
       <Event Name="Disposed" />
+      <Event Name="PropertyChanged" />
     </Type>
     <Type Name="Alternet.UI.HorizontalLine">
       <Event Name="CellChanged" />
@@ -870,6 +1168,7 @@
       <Event Name="LayoutUpdated" />
       <Event Name="Scroll" />
       <Event Name="Disposed" />
+      <Event Name="PropertyChanged" />
     </Type>
     <Type Name="Alternet.UI.VerticalLine">
       <Event Name="CellChanged" />
@@ -942,6 +1241,7 @@
       <Event Name="LayoutUpdated" />
       <Event Name="Scroll" />
       <Event Name="Disposed" />
+      <Event Name="PropertyChanged" />
     </Type>
     <Type Name="Alternet.UI.ContainerControl">
       <Event Name="CellChanged" />
@@ -1014,6 +1314,7 @@
       <Event Name="LayoutUpdated" />
       <Event Name="Scroll" />
       <Event Name="Disposed" />
+      <Event Name="PropertyChanged" />
     </Type>
     <Type Name="Alternet.UI.ErrorPictureBox">
       <Event Name="ImageChanged" />
@@ -1087,6 +1388,7 @@
       <Event Name="LayoutUpdated" />
       <Event Name="Scroll" />
       <Event Name="Disposed" />
+      <Event Name="PropertyChanged" />
     </Type>
     <Type Name="Alternet.UI.GraphicControl">
       <Event Name="CellChanged" />
@@ -1159,6 +1461,7 @@
       <Event Name="LayoutUpdated" />
       <Event Name="Scroll" />
       <Event Name="Disposed" />
+      <Event Name="PropertyChanged" />
     </Type>
     <Type Name="Alternet.UI.NonVisualControl">
       <Event Name="CellChanged" />
@@ -1231,6 +1534,7 @@
       <Event Name="LayoutUpdated" />
       <Event Name="Scroll" />
       <Event Name="Disposed" />
+      <Event Name="PropertyChanged" />
     </Type>
     <Type Name="Alternet.UI.PaintActionsControl">
       <Event Name="CellChanged" />
@@ -1303,6 +1607,7 @@
       <Event Name="LayoutUpdated" />
       <Event Name="Scroll" />
       <Event Name="Disposed" />
+      <Event Name="PropertyChanged" />
     </Type>
     <Type Name="Alternet.UI.Panel">
       <Event Name="CellChanged" />
@@ -1375,6 +1680,7 @@
       <Event Name="LayoutUpdated" />
       <Event Name="Scroll" />
       <Event Name="Disposed" />
+      <Event Name="PropertyChanged" />
     </Type>
     <Type Name="Alternet.UI.PictureBox">
       <Event Name="ImageChanged" />
@@ -1448,6 +1754,7 @@
       <Event Name="LayoutUpdated" />
       <Event Name="Scroll" />
       <Event Name="Disposed" />
+      <Event Name="PropertyChanged" />
     </Type>
     <Type Name="Alternet.UI.UserControl">
       <Event Name="CellChanged" />
@@ -1520,6 +1827,7 @@
       <Event Name="LayoutUpdated" />
       <Event Name="Scroll" />
       <Event Name="Disposed" />
+      <Event Name="PropertyChanged" />
     </Type>
     <Type Name="Alternet.UI.AbstractControl">
       <Event Name="CellChanged" />
@@ -1592,9 +1900,11 @@
       <Event Name="LayoutUpdated" />
       <Event Name="Scroll" />
       <Event Name="Disposed" />
+      <Event Name="PropertyChanged" />
     </Type>
     <Type Name="Alternet.UI.ControlNotification">
       <Event Name="Disposed" />
+      <Event Name="PropertyChanged" />
     </Type>
     <Type Name="Alternet.UI.ControlSubscriber">
       <Event Name="AfterControlPreviewKeyDown" />
@@ -1661,6 +1971,7 @@
       <Event Name="AfterControlMouseEnter" />
       <Event Name="AfterControlMouseLeave" />
       <Event Name="Disposed" />
+      <Event Name="PropertyChanged" />
     </Type>
     <Type Name="Alternet.UI.IControlNotification" />
     <Type Name="Alternet.UI.GenericControl">
@@ -1734,6 +2045,7 @@
       <Event Name="LayoutUpdated" />
       <Event Name="Scroll" />
       <Event Name="Disposed" />
+      <Event Name="PropertyChanged" />
     </Type>
     <Type Name="Alternet.UI.GenericTextControl">
       <Event Name="CellChanged" />
@@ -1806,6 +2118,7 @@
       <Event Name="LayoutUpdated" />
       <Event Name="Scroll" />
       <Event Name="Disposed" />
+      <Event Name="PropertyChanged" />
     </Type>
     <Type Name="Alternet.UI.GenericWrappedTextControl">
       <Event Name="CellChanged" />
@@ -1878,6 +2191,7 @@
       <Event Name="LayoutUpdated" />
       <Event Name="Scroll" />
       <Event Name="Disposed" />
+      <Event Name="PropertyChanged" />
     </Type>
     <Type Name="Alternet.UI.Spacer">
       <Event Name="CellChanged" />
@@ -1950,16 +2264,20 @@
       <Event Name="LayoutUpdated" />
       <Event Name="Scroll" />
       <Event Name="Disposed" />
+      <Event Name="PropertyChanged" />
     </Type>
     <Type Name="Alternet.UI.BaseControlHandler">
       <Event Name="Disposed" />
+      <Event Name="PropertyChanged" />
     </Type>
     <Type Name="Alternet.UI.HandlerForDisposed">
       <Event Name="CurrentPositionChanged" />
       <Event Name="Disposed" />
+      <Event Name="PropertyChanged" />
     </Type>
     <Type Name="Alternet.UI.PlessControlHandler">
       <Event Name="Disposed" />
+      <Event Name="PropertyChanged" />
     </Type>
     <Type Name="Alternet.UI.PaintEventHandler" />
     <Type Name="Alternet.UI.Control">
@@ -2033,6 +2351,7 @@
       <Event Name="LayoutUpdated" />
       <Event Name="Scroll" />
       <Event Name="Disposed" />
+      <Event Name="PropertyChanged" />
     </Type>
     <Type Name="Alternet.UI.AllControlDefaults" />
     <Type Name="Alternet.UI.ControlDefaults">
@@ -2050,8 +2369,8 @@
       <Event Name="PressedChanged" />
       <Event Name="DisabledChanged" />
       <Event Name="SelectedChanged" />
-      <Event Name="PropertyChanged" />
       <Event Name="Disposed" />
+      <Event Name="PropertyChanged" />
     </Type>
     <Type Name="Alternet.UI.ControlStateBrushes">
       <Event Name="NormalChanged" />
@@ -2060,8 +2379,8 @@
       <Event Name="PressedChanged" />
       <Event Name="DisabledChanged" />
       <Event Name="SelectedChanged" />
-      <Event Name="PropertyChanged" />
       <Event Name="Disposed" />
+      <Event Name="PropertyChanged" />
     </Type>
     <Type Name="Alternet.UI.ControlStateColors">
       <Event Name="NormalChanged" />
@@ -2070,8 +2389,8 @@
       <Event Name="PressedChanged" />
       <Event Name="DisabledChanged" />
       <Event Name="SelectedChanged" />
-      <Event Name="PropertyChanged" />
       <Event Name="Disposed" />
+      <Event Name="PropertyChanged" />
     </Type>
     <Type Name="Alternet.UI.ControlStateImages">
       <Event Name="NormalChanged" />
@@ -2080,8 +2399,8 @@
       <Event Name="PressedChanged" />
       <Event Name="DisabledChanged" />
       <Event Name="SelectedChanged" />
-      <Event Name="PropertyChanged" />
       <Event Name="Disposed" />
+      <Event Name="PropertyChanged" />
     </Type>
     <Type Name="Alternet.UI.ControlStateImageSets">
       <Event Name="NormalChanged" />
@@ -2090,8 +2409,8 @@
       <Event Name="PressedChanged" />
       <Event Name="DisabledChanged" />
       <Event Name="SelectedChanged" />
-      <Event Name="PropertyChanged" />
       <Event Name="Disposed" />
+      <Event Name="PropertyChanged" />
     </Type>
     <Type Name="Alternet.UI.ControlStateObjects`1">
       <Event Name="NormalChanged" />
@@ -2100,8 +2419,8 @@
       <Event Name="PressedChanged" />
       <Event Name="DisabledChanged" />
       <Event Name="SelectedChanged" />
-      <Event Name="PropertyChanged" />
       <Event Name="Disposed" />
+      <Event Name="PropertyChanged" />
     </Type>
     <Type Name="Alternet.UI.ControlStatePens">
       <Event Name="NormalChanged" />
@@ -2110,8 +2429,8 @@
       <Event Name="PressedChanged" />
       <Event Name="DisabledChanged" />
       <Event Name="SelectedChanged" />
-      <Event Name="PropertyChanged" />
       <Event Name="Disposed" />
+      <Event Name="PropertyChanged" />
     </Type>
     <Type Name="Alternet.UI.ControlStateSettings" />
     <Type Name="Alternet.UI.FontAndColor" />
@@ -2120,13 +2439,16 @@
     <Type Name="Alternet.UI.PlatformDefaults" />
     <Type Name="Alternet.UI.BaseControlActivity">
       <Event Name="Disposed" />
+      <Event Name="PropertyChanged" />
     </Type>
     <Type Name="Alternet.UI.ControlActivities" />
     <Type Name="Alternet.UI.InteriorControlActivity">
       <Event Name="Disposed" />
+      <Event Name="PropertyChanged" />
     </Type>
     <Type Name="Alternet.UI.ZoomControlActivity">
       <Event Name="Disposed" />
+      <Event Name="PropertyChanged" />
     </Type>
     <Type Name="Alternet.UI.Button">
       <Event Name="CellChanged" />
@@ -2199,6 +2521,7 @@
       <Event Name="LayoutUpdated" />
       <Event Name="Scroll" />
       <Event Name="Disposed" />
+      <Event Name="PropertyChanged" />
     </Type>
     <Type Name="Alternet.UI.ButtonBase">
       <Event Name="CellChanged" />
@@ -2271,6 +2594,7 @@
       <Event Name="LayoutUpdated" />
       <Event Name="Scroll" />
       <Event Name="Disposed" />
+      <Event Name="PropertyChanged" />
     </Type>
     <Type Name="Alternet.UI.CheckBox">
       <Event Name="CheckedChanged" />
@@ -2344,6 +2668,7 @@
       <Event Name="LayoutUpdated" />
       <Event Name="Scroll" />
       <Event Name="Disposed" />
+      <Event Name="PropertyChanged" />
     </Type>
     <Type Name="Alternet.UI.RadioButton">
       <Event Name="CheckedChanged" />
@@ -2417,6 +2742,7 @@
       <Event Name="LayoutUpdated" />
       <Event Name="Scroll" />
       <Event Name="Disposed" />
+      <Event Name="PropertyChanged" />
     </Type>
     <Type Name="Alternet.UI.ComboBoxAndButton">
       <Event Name="SelectedIndexChanged" />
@@ -2491,6 +2817,7 @@
       <Event Name="LayoutUpdated" />
       <Event Name="Scroll" />
       <Event Name="Disposed" />
+      <Event Name="PropertyChanged" />
     </Type>
     <Type Name="Alternet.UI.ControlAndButton">
       <Event Name="TextChanged" />
@@ -2564,6 +2891,7 @@
       <Event Name="LayoutUpdated" />
       <Event Name="Scroll" />
       <Event Name="Disposed" />
+      <Event Name="PropertyChanged" />
     </Type>
     <Type Name="Alternet.UI.ControlAndControl">
       <Event Name="CellChanged" />
@@ -2636,6 +2964,7 @@
       <Event Name="LayoutUpdated" />
       <Event Name="Scroll" />
       <Event Name="Disposed" />
+      <Event Name="PropertyChanged" />
     </Type>
     <Type Name="Alternet.UI.TextBoxAndButton">
       <Event Name="TextChanged" />
@@ -2709,6 +3038,7 @@
       <Event Name="LayoutUpdated" />
       <Event Name="Scroll" />
       <Event Name="Disposed" />
+      <Event Name="PropertyChanged" />
     </Type>
     <Type Name="Alternet.UI.ComboBoxAndLabel">
       <Event Name="SelectedIndexChanged" />
@@ -2782,6 +3112,7 @@
       <Event Name="LayoutUpdated" />
       <Event Name="Scroll" />
       <Event Name="Disposed" />
+      <Event Name="PropertyChanged" />
     </Type>
     <Type Name="Alternet.UI.ControlAndLabel`2">
       <Event Name="TextChanged" />
@@ -2854,6 +3185,7 @@
       <Event Name="LayoutUpdated" />
       <Event Name="Scroll" />
       <Event Name="Disposed" />
+      <Event Name="PropertyChanged" />
     </Type>
     <Type Name="Alternet.UI.ValueEditorDouble">
       <Event Name="TextChanged" />
@@ -2926,6 +3258,7 @@
       <Event Name="LayoutUpdated" />
       <Event Name="Scroll" />
       <Event Name="Disposed" />
+      <Event Name="PropertyChanged" />
     </Type>
     <Type Name="Alternet.UI.ValueEditorSingle">
       <Event Name="TextChanged" />
@@ -2998,6 +3331,7 @@
       <Event Name="LayoutUpdated" />
       <Event Name="Scroll" />
       <Event Name="Disposed" />
+      <Event Name="PropertyChanged" />
     </Type>
     <Type Name="Alternet.UI.ValueEditorUDouble">
       <Event Name="TextChanged" />
@@ -3070,6 +3404,7 @@
       <Event Name="LayoutUpdated" />
       <Event Name="Scroll" />
       <Event Name="Disposed" />
+      <Event Name="PropertyChanged" />
     </Type>
     <Type Name="Alternet.UI.ValueEditorUSingle">
       <Event Name="TextChanged" />
@@ -3142,6 +3477,7 @@
       <Event Name="LayoutUpdated" />
       <Event Name="Scroll" />
       <Event Name="Disposed" />
+      <Event Name="PropertyChanged" />
     </Type>
     <Type Name="Alternet.UI.ValueEditorInt16">
       <Event Name="TextChanged" />
@@ -3214,6 +3550,7 @@
       <Event Name="LayoutUpdated" />
       <Event Name="Scroll" />
       <Event Name="Disposed" />
+      <Event Name="PropertyChanged" />
     </Type>
     <Type Name="Alternet.UI.ValueEditorInt32">
       <Event Name="TextChanged" />
@@ -3286,6 +3623,7 @@
       <Event Name="LayoutUpdated" />
       <Event Name="Scroll" />
       <Event Name="Disposed" />
+      <Event Name="PropertyChanged" />
     </Type>
     <Type Name="Alternet.UI.ValueEditorInt64">
       <Event Name="TextChanged" />
@@ -3358,6 +3696,7 @@
       <Event Name="LayoutUpdated" />
       <Event Name="Scroll" />
       <Event Name="Disposed" />
+      <Event Name="PropertyChanged" />
     </Type>
     <Type Name="Alternet.UI.ValueEditorSByte">
       <Event Name="TextChanged" />
@@ -3430,6 +3769,7 @@
       <Event Name="LayoutUpdated" />
       <Event Name="Scroll" />
       <Event Name="Disposed" />
+      <Event Name="PropertyChanged" />
     </Type>
     <Type Name="Alternet.UI.ValueEditorEMail">
       <Event Name="TextValidation" />
@@ -3503,6 +3843,7 @@
       <Event Name="LayoutUpdated" />
       <Event Name="Scroll" />
       <Event Name="Disposed" />
+      <Event Name="PropertyChanged" />
     </Type>
     <Type Name="Alternet.UI.ValueEditorString">
       <Event Name="TextValidation" />
@@ -3576,6 +3917,7 @@
       <Event Name="LayoutUpdated" />
       <Event Name="Scroll" />
       <Event Name="Disposed" />
+      <Event Name="PropertyChanged" />
     </Type>
     <Type Name="Alternet.UI.ValueEditorUrl">
       <Event Name="TextValidation" />
@@ -3649,6 +3991,7 @@
       <Event Name="LayoutUpdated" />
       <Event Name="Scroll" />
       <Event Name="Disposed" />
+      <Event Name="PropertyChanged" />
     </Type>
     <Type Name="Alternet.UI.TextBoxAndLabel">
       <Event Name="TextChanged" />
@@ -3721,6 +4064,7 @@
       <Event Name="LayoutUpdated" />
       <Event Name="Scroll" />
       <Event Name="Disposed" />
+      <Event Name="PropertyChanged" />
     </Type>
     <Type Name="Alternet.UI.HexEditorUInt32">
       <Event Name="TextChanged" />
@@ -3793,6 +4137,7 @@
       <Event Name="LayoutUpdated" />
       <Event Name="Scroll" />
       <Event Name="Disposed" />
+      <Event Name="PropertyChanged" />
     </Type>
     <Type Name="Alternet.UI.ValueEditorByte">
       <Event Name="TextChanged" />
@@ -3865,6 +4210,7 @@
       <Event Name="LayoutUpdated" />
       <Event Name="Scroll" />
       <Event Name="Disposed" />
+      <Event Name="PropertyChanged" />
     </Type>
     <Type Name="Alternet.UI.ValueEditorUInt16">
       <Event Name="TextChanged" />
@@ -3937,6 +4283,7 @@
       <Event Name="LayoutUpdated" />
       <Event Name="Scroll" />
       <Event Name="Disposed" />
+      <Event Name="PropertyChanged" />
     </Type>
     <Type Name="Alternet.UI.ValueEditorUInt32">
       <Event Name="TextChanged" />
@@ -4009,6 +4356,7 @@
       <Event Name="LayoutUpdated" />
       <Event Name="Scroll" />
       <Event Name="Disposed" />
+      <Event Name="PropertyChanged" />
     </Type>
     <Type Name="Alternet.UI.ValueEditorUInt64">
       <Event Name="TextChanged" />
@@ -4081,6 +4429,7 @@
       <Event Name="LayoutUpdated" />
       <Event Name="Scroll" />
       <Event Name="Disposed" />
+      <Event Name="PropertyChanged" />
     </Type>
     <Type Name="Alternet.UI.ValueEditorCustom">
       <Event Name="TextChanged" />
@@ -4153,6 +4502,7 @@
       <Event Name="LayoutUpdated" />
       <Event Name="Scroll" />
       <Event Name="Disposed" />
+      <Event Name="PropertyChanged" />
     </Type>
     <Type Name="Alternet.UI.Calendar">
       <Event Name="SelectionChanged" />
@@ -4230,6 +4580,7 @@
       <Event Name="LayoutUpdated" />
       <Event Name="Scroll" />
       <Event Name="Disposed" />
+      <Event Name="PropertyChanged" />
     </Type>
     <Type Name="Alternet.UI.CustomDateEdit">
       <Event Name="CellChanged" />
@@ -4302,6 +4653,7 @@
       <Event Name="LayoutUpdated" />
       <Event Name="Scroll" />
       <Event Name="Disposed" />
+      <Event Name="PropertyChanged" />
     </Type>
     <Type Name="Alternet.UI.DateTimePicker">
       <Event Name="ValueChanged" />
@@ -4375,11 +4727,12 @@
       <Event Name="LayoutUpdated" />
       <Event Name="Scroll" />
       <Event Name="Disposed" />
+      <Event Name="PropertyChanged" />
     </Type>
     <Type Name="Alternet.UI.ICalendarDateAttr" />
     <Type Name="Alternet.UI.PlessCalendarDateAttr">
-      <Event Name="PropertyChanged" />
       <Event Name="Disposed" />
+      <Event Name="PropertyChanged" />
     </Type>
     <Type Name="Alternet.UI.GenericLabel">
       <Event Name="ImageChanged" />
@@ -4453,6 +4806,7 @@
       <Event Name="LayoutUpdated" />
       <Event Name="Scroll" />
       <Event Name="Disposed" />
+      <Event Name="PropertyChanged" />
     </Type>
     <Type Name="Alternet.UI.HeaderLabel">
       <Event Name="CellChanged" />
@@ -4525,6 +4879,7 @@
       <Event Name="LayoutUpdated" />
       <Event Name="Scroll" />
       <Event Name="Disposed" />
+      <Event Name="PropertyChanged" />
     </Type>
     <Type Name="Alternet.UI.Label">
       <Event Name="CellChanged" />
@@ -4597,6 +4952,7 @@
       <Event Name="LayoutUpdated" />
       <Event Name="Scroll" />
       <Event Name="Disposed" />
+      <Event Name="PropertyChanged" />
     </Type>
     <Type Name="Alternet.UI.LinkLabel">
       <Event Name="LinkClicked" />
@@ -4670,9 +5026,11 @@
       <Event Name="LayoutUpdated" />
       <Event Name="Scroll" />
       <Event Name="Disposed" />
+      <Event Name="PropertyChanged" />
     </Type>
     <Type Name="Alternet.UI.ColumnDefinition">
       <Event Name="Disposed" />
+      <Event Name="PropertyChanged" />
     </Type>
     <Type Name="Alternet.UI.Grid">
       <Event Name="CellChanged" />
@@ -4745,15 +5103,18 @@
       <Event Name="LayoutUpdated" />
       <Event Name="Scroll" />
       <Event Name="Disposed" />
+      <Event Name="PropertyChanged" />
     </Type>
     <Type Name="Alternet.UI.GridColumnCollection" />
     <Type Name="Alternet.UI.GridDefinitionBase">
       <Event Name="Disposed" />
+      <Event Name="PropertyChanged" />
     </Type>
     <Type Name="Alternet.UI.GridLength" />
     <Type Name="Alternet.UI.GridRowCollection" />
     <Type Name="Alternet.UI.RowDefinition">
       <Event Name="Disposed" />
+      <Event Name="PropertyChanged" />
     </Type>
     <Type Name="Alternet.UI.LayoutPanel">
       <Event Name="CellChanged" />
@@ -4826,6 +5187,7 @@
       <Event Name="LayoutUpdated" />
       <Event Name="Scroll" />
       <Event Name="Disposed" />
+      <Event Name="PropertyChanged" />
     </Type>
     <Type Name="Alternet.UI.SplittedTreeAndCards">
       <Event Name="CellChanged" />
@@ -4898,6 +5260,7 @@
       <Event Name="LayoutUpdated" />
       <Event Name="Scroll" />
       <Event Name="Disposed" />
+      <Event Name="PropertyChanged" />
     </Type>
     <Type Name="Alternet.UI.ScrollViewer">
       <Event Name="CellChanged" />
@@ -4970,6 +5333,7 @@
       <Event Name="LayoutUpdated" />
       <Event Name="Scroll" />
       <Event Name="Disposed" />
+      <Event Name="PropertyChanged" />
     </Type>
     <Type Name="Alternet.UI.PanelListBoxAndCards">
       <Event Name="AfterDoubleClickAction" />
@@ -5043,6 +5407,7 @@
       <Event Name="LayoutUpdated" />
       <Event Name="Scroll" />
       <Event Name="Disposed" />
+      <Event Name="PropertyChanged" />
     </Type>
     <Type Name="Alternet.UI.PanelTreeAndCards">
       <Event Name="AfterDoubleClickAction" />
@@ -5116,6 +5481,7 @@
       <Event Name="LayoutUpdated" />
       <Event Name="Scroll" />
       <Event Name="Disposed" />
+      <Event Name="PropertyChanged" />
     </Type>
     <Type Name="Alternet.UI.SplittedControlsPanel">
       <Event Name="AfterDoubleClickAction" />
@@ -5189,6 +5555,7 @@
       <Event Name="LayoutUpdated" />
       <Event Name="Scroll" />
       <Event Name="Disposed" />
+      <Event Name="PropertyChanged" />
     </Type>
     <Type Name="Alternet.UI.SplittedPanel">
       <Event Name="CellChanged" />
@@ -5261,6 +5628,7 @@
       <Event Name="LayoutUpdated" />
       <Event Name="Scroll" />
       <Event Name="Disposed" />
+      <Event Name="PropertyChanged" />
     </Type>
     <Type Name="Alternet.UI.Splitter">
       <Event Name="SplitterMoving" />
@@ -5335,6 +5703,7 @@
       <Event Name="LayoutUpdated" />
       <Event Name="Scroll" />
       <Event Name="Disposed" />
+      <Event Name="PropertyChanged" />
     </Type>
     <Type Name="Alternet.UI.HorizontalStackPanel">
       <Event Name="OrientationChanged" />
@@ -5408,6 +5777,7 @@
       <Event Name="LayoutUpdated" />
       <Event Name="Scroll" />
       <Event Name="Disposed" />
+      <Event Name="PropertyChanged" />
     </Type>
     <Type Name="Alternet.UI.StackPanel">
       <Event Name="OrientationChanged" />
@@ -5481,6 +5851,7 @@
       <Event Name="LayoutUpdated" />
       <Event Name="Scroll" />
       <Event Name="Disposed" />
+      <Event Name="PropertyChanged" />
     </Type>
     <Type Name="Alternet.UI.VerticalStackPanel">
       <Event Name="OrientationChanged" />
@@ -5554,6 +5925,7 @@
       <Event Name="LayoutUpdated" />
       <Event Name="Scroll" />
       <Event Name="Disposed" />
+      <Event Name="PropertyChanged" />
     </Type>
     <Type Name="Alternet.UI.ColorComboBox">
       <Event Name="DropDownClosed" />
@@ -5632,6 +6004,7 @@
       <Event Name="LayoutUpdated" />
       <Event Name="Scroll" />
       <Event Name="Disposed" />
+      <Event Name="PropertyChanged" />
     </Type>
     <Type Name="Alternet.UI.ComboBox">
       <Event Name="DropDownClosed" />
@@ -5710,6 +6083,7 @@
       <Event Name="LayoutUpdated" />
       <Event Name="Scroll" />
       <Event Name="Disposed" />
+      <Event Name="PropertyChanged" />
     </Type>
     <Type Name="Alternet.UI.FontComboBox">
       <Event Name="DropDownClosed" />
@@ -5788,6 +6162,7 @@
       <Event Name="LayoutUpdated" />
       <Event Name="Scroll" />
       <Event Name="Disposed" />
+      <Event Name="PropertyChanged" />
     </Type>
     <Type Name="Alternet.UI.ListControl">
       <Event Name="CustomItemText" />
@@ -5861,6 +6236,7 @@
       <Event Name="LayoutUpdated" />
       <Event Name="Scroll" />
       <Event Name="Disposed" />
+      <Event Name="PropertyChanged" />
     </Type>
     <Type Name="Alternet.UI.ComboBoxItemPaintEventArgs" />
     <Type Name="Alternet.UI.ListBoxItemPaintEventArgs" />
@@ -5958,6 +6334,7 @@
       <Event Name="LayoutUpdated" />
       <Event Name="Scroll" />
       <Event Name="Disposed" />
+      <Event Name="PropertyChanged" />
     </Type>
     <Type Name="Alternet.UI.ListBox">
       <Event Name="DrawItem" />
@@ -6038,6 +6415,7 @@
       <Event Name="LayoutUpdated" />
       <Event Name="Scroll" />
       <Event Name="Disposed" />
+      <Event Name="PropertyChanged" />
     </Type>
     <Type Name="Alternet.UI.ActionsListBox">
       <Event Name="DrawItem" />
@@ -6118,6 +6496,7 @@
       <Event Name="LayoutUpdated" />
       <Event Name="Scroll" />
       <Event Name="Disposed" />
+      <Event Name="PropertyChanged" />
     </Type>
     <Type Name="Alternet.UI.ColorListBox">
       <Event Name="DrawItem" />
@@ -6198,6 +6577,7 @@
       <Event Name="LayoutUpdated" />
       <Event Name="Scroll" />
       <Event Name="Disposed" />
+      <Event Name="PropertyChanged" />
     </Type>
     <Type Name="Alternet.UI.FileListBox">
       <Event Name="AddRootFolder" />
@@ -6279,6 +6659,7 @@
       <Event Name="LayoutUpdated" />
       <Event Name="Scroll" />
       <Event Name="Disposed" />
+      <Event Name="PropertyChanged" />
     </Type>
     <Type Name="Alternet.UI.FontListBox">
       <Event Name="DrawItem" />
@@ -6359,6 +6740,7 @@
       <Event Name="LayoutUpdated" />
       <Event Name="Scroll" />
       <Event Name="Disposed" />
+      <Event Name="PropertyChanged" />
     </Type>
     <Type Name="Alternet.UI.ListControl`1">
       <Event Name="CustomItemText" />
@@ -6432,6 +6814,7 @@
       <Event Name="LayoutUpdated" />
       <Event Name="Scroll" />
       <Event Name="Disposed" />
+      <Event Name="PropertyChanged" />
     </Type>
     <Type Name="Alternet.UI.LogListBox">
       <Event Name="DrawItem" />
@@ -6512,6 +6895,7 @@
       <Event Name="LayoutUpdated" />
       <Event Name="Scroll" />
       <Event Name="Disposed" />
+      <Event Name="PropertyChanged" />
     </Type>
     <Type Name="Alternet.UI.VirtualCheckListBox">
       <Event Name="DrawItem" />
@@ -6592,6 +6976,7 @@
       <Event Name="LayoutUpdated" />
       <Event Name="Scroll" />
       <Event Name="Disposed" />
+      <Event Name="PropertyChanged" />
     </Type>
     <Type Name="Alternet.UI.VirtualListBox">
       <Event Name="DrawItem" />
@@ -6672,6 +7057,7 @@
       <Event Name="LayoutUpdated" />
       <Event Name="Scroll" />
       <Event Name="Disposed" />
+      <Event Name="PropertyChanged" />
     </Type>
     <Type Name="Alternet.UI.VirtualListControl">
       <Event Name="CheckedChanged" />
@@ -6750,6 +7136,88 @@
       <Event Name="LayoutUpdated" />
       <Event Name="Scroll" />
       <Event Name="Disposed" />
+      <Event Name="PropertyChanged" />
+    </Type>
+    <Type Name="Alternet.UI.VirtualTreeControl">
+      <Event Name="DrawItem" />
+      <Event Name="MeasureItem" />
+      <Event Name="CheckedChanged" />
+      <Event Name="SelectionChanged" />
+      <Event Name="DelayedSelectionChanged" />
+      <Event Name="SelectedIndexChanged" />
+      <Event Name="SelectionModeChanged" />
+      <Event Name="CustomItemText" />
+      <Event Name="CellChanged" />
+      <Event Name="Activated" />
+      <Event Name="TitleChanged" />
+      <Event Name="MouseMove" />
+      <Event Name="Touch" />
+      <Event Name="MouseDown" />
+      <Event Name="MouseUp" />
+      <Event Name="MouseWheel" />
+      <Event Name="MouseLeftButtonDown" />
+      <Event Name="MouseRightButtonDown" />
+      <Event Name="MouseRightButtonUp" />
+      <Event Name="CustomLayout" />
+      <Event Name="MouseDoubleClick" />
+      <Event Name="DoubleClick" />
+      <Event Name="MouseLeftButtonUp" />
+      <Event Name="HandleCreated" />
+      <Event Name="HandleDestroyed" />
+      <Event Name="Deactivated" />
+      <Event Name="GotFocus" />
+      <Event Name="QueryContinueDrag" />
+      <Event Name="KeyDown" />
+      <Event Name="KeyUp" />
+      <Event Name="LostFocus" />
+      <Event Name="TextChanged" />
+      <Event Name="DelayedTextChanged" />
+      <Event Name="KeyPress" />
+      <Event Name="PreviewKeyDown" />
+      <Event Name="VisualStateChanged" />
+      <Event Name="ToolTipChanged" />
+      <Event Name="IsMouseOverChanged" />
+      <Event Name="LongTap" />
+      <Event Name="Click" />
+      <Event Name="ParentChanged" />
+      <Event Name="Paint" />
+      <Event Name="MarginChanged" />
+      <Event Name="PaddingChanged" />
+      <Event Name="VisibleChanged" />
+      <Event Name="AfterShow" />
+      <Event Name="AfterHide" />
+      <Event Name="MouseCaptureLost" />
+      <Event Name="MouseCaptureChanged" />
+      <Event Name="HelpRequested" />
+      <Event Name="ProcessException" />
+      <Event Name="MouseEnter" />
+      <Event Name="MouseLeave" />
+      <Event Name="ChildRemoved" />
+      <Event Name="ChildVisibleChanged" />
+      <Event Name="ChildInserted" />
+      <Event Name="EnabledChanged" />
+      <Event Name="BackgroundChanged" />
+      <Event Name="ForegroundChanged" />
+      <Event Name="FontChanged" />
+      <Event Name="VerticalAlignmentChanged" />
+      <Event Name="HorizontalAlignmentChanged" />
+      <Event Name="SizeChanged" />
+      <Event Name="Idle" />
+      <Event Name="Resize" />
+      <Event Name="LocationChanged" />
+      <Event Name="DragStart" />
+      <Event Name="DragDrop" />
+      <Event Name="DragOver" />
+      <Event Name="DragEnter" />
+      <Event Name="DragLeave" />
+      <Event Name="DpiChanged" />
+      <Event Name="SystemColorsChanged" />
+      <Event Name="ErrorsChanged" />
+      <Event Name="Invalidated" />
+      <Event Name="LayoutUpdated" />
+      <Event Name="Scroll" />
+      <Event Name="Disposed" />
+      <Event Name="PropertyChanged" />
     </Type>
     <Type Name="Alternet.UI.ListView">
       <Event Name="SelectionChanged" />
@@ -6830,6 +7298,7 @@
       <Event Name="LayoutUpdated" />
       <Event Name="Scroll" />
       <Event Name="Disposed" />
+      <Event Name="PropertyChanged" />
     </Type>
     <Type Name="Alternet.UI.ListViewColumnEventArgs" />
     <Type Name="Alternet.UI.ListViewHitTestInfo" />
@@ -6908,6 +7377,7 @@
       <Event Name="LayoutUpdated" />
       <Event Name="Scroll" />
       <Event Name="Disposed" />
+      <Event Name="PropertyChanged" />
     </Type>
     <Type Name="Alternet.UI.MainMenu">
       <Event Name="CellChanged" />
@@ -6980,6 +7450,7 @@
       <Event Name="LayoutUpdated" />
       <Event Name="Scroll" />
       <Event Name="Disposed" />
+      <Event Name="PropertyChanged" />
     </Type>
     <Type Name="Alternet.UI.Menu">
       <Event Name="CellChanged" />
@@ -7052,6 +7523,7 @@
       <Event Name="LayoutUpdated" />
       <Event Name="Scroll" />
       <Event Name="Disposed" />
+      <Event Name="PropertyChanged" />
     </Type>
     <Type Name="Alternet.UI.MenuItem">
       <Event Name="Opened" />
@@ -7132,15 +7604,19 @@
       <Event Name="LayoutUpdated" />
       <Event Name="Scroll" />
       <Event Name="Disposed" />
+      <Event Name="PropertyChanged" />
     </Type>
     <Type Name="Alternet.UI.PlessContextMenuHandler">
       <Event Name="Disposed" />
+      <Event Name="PropertyChanged" />
     </Type>
     <Type Name="Alternet.UI.PlessMainMenuHandler">
       <Event Name="Disposed" />
+      <Event Name="PropertyChanged" />
     </Type>
     <Type Name="Alternet.UI.PlessMenuItemHandler">
       <Event Name="Disposed" />
+      <Event Name="PropertyChanged" />
     </Type>
     <Type Name="Alternet.UI.MenuItemRole" />
     <Type Name="Alternet.UI.MenuItemRoles" />
@@ -7218,6 +7694,7 @@
       <Event Name="LayoutUpdated" />
       <Event Name="Scroll" />
       <Event Name="Disposed" />
+      <Event Name="PropertyChanged" />
     </Type>
     <Type Name="Alternet.UI.ToolStripMenuItem">
       <Event Name="Opened" />
@@ -7298,6 +7775,7 @@
       <Event Name="LayoutUpdated" />
       <Event Name="Scroll" />
       <Event Name="Disposed" />
+      <Event Name="PropertyChanged" />
     </Type>
     <Type Name="Alternet.UI.ToolStripSeparator">
       <Event Name="Opened" />
@@ -7378,6 +7856,7 @@
       <Event Name="LayoutUpdated" />
       <Event Name="Scroll" />
       <Event Name="Disposed" />
+      <Event Name="PropertyChanged" />
     </Type>
     <Type Name="Alternet.UI.AnimationPlayer">
       <Event Name="CellChanged" />
@@ -7450,6 +7929,7 @@
       <Event Name="LayoutUpdated" />
       <Event Name="Scroll" />
       <Event Name="Disposed" />
+      <Event Name="PropertyChanged" />
     </Type>
     <Type Name="Alternet.UI.Calculator">
       <Event Name="CellChanged" />
@@ -7522,6 +8002,7 @@
       <Event Name="LayoutUpdated" />
       <Event Name="Scroll" />
       <Event Name="Disposed" />
+      <Event Name="PropertyChanged" />
     </Type>
     <Type Name="Alternet.UI.ColorPicker">
       <Event Name="ValueChanged" />
@@ -7595,6 +8076,7 @@
       <Event Name="LayoutUpdated" />
       <Event Name="Scroll" />
       <Event Name="Disposed" />
+      <Event Name="PropertyChanged" />
     </Type>
     <Type Name="Alternet.UI.ComponentDesigner">
       <Event Name="MouseLeftButtonDown" />
@@ -7677,6 +8159,7 @@
       <Event Name="LayoutUpdated" />
       <Event Name="Scroll" />
       <Event Name="Disposed" />
+      <Event Name="PropertyChanged" />
     </Type>
     <Type Name="Alternet.UI.NumericUpDown">
       <Event Name="ValueChanged" />
@@ -7752,6 +8235,7 @@
       <Event Name="LayoutUpdated" />
       <Event Name="Scroll" />
       <Event Name="Disposed" />
+      <Event Name="PropertyChanged" />
     </Type>
     <Type Name="Alternet.UI.PopupControl">
       <Event Name="Closed" />
@@ -7825,6 +8309,7 @@
       <Event Name="LayoutUpdated" />
       <Event Name="Scroll" />
       <Event Name="Disposed" />
+      <Event Name="PropertyChanged" />
     </Type>
     <Type Name="Alternet.UI.ProgressBar">
       <Event Name="ValueChanged" />
@@ -7902,6 +8387,7 @@
       <Event Name="LayoutUpdated" />
       <Event Name="Scroll" />
       <Event Name="Disposed" />
+      <Event Name="PropertyChanged" />
     </Type>
     <Type Name="Alternet.UI.Slider">
       <Event Name="ValueChanged" />
@@ -7982,6 +8468,7 @@
       <Event Name="LayoutUpdated" />
       <Event Name="Scroll" />
       <Event Name="Disposed" />
+      <Event Name="PropertyChanged" />
     </Type>
     <Type Name="Alternet.UI.PopupCalendar">
       <Event Name="Load" />
@@ -8073,6 +8560,7 @@
       <Event Name="LayoutUpdated" />
       <Event Name="Scroll" />
       <Event Name="Disposed" />
+      <Event Name="PropertyChanged" />
     </Type>
     <Type Name="Alternet.UI.PopupCheckListBox">
       <Event Name="Load" />
@@ -8164,6 +8652,7 @@
       <Event Name="LayoutUpdated" />
       <Event Name="Scroll" />
       <Event Name="Disposed" />
+      <Event Name="PropertyChanged" />
     </Type>
     <Type Name="Alternet.UI.PopupColorListBox">
       <Event Name="Load" />
@@ -8255,6 +8744,7 @@
       <Event Name="LayoutUpdated" />
       <Event Name="Scroll" />
       <Event Name="Disposed" />
+      <Event Name="PropertyChanged" />
     </Type>
     <Type Name="Alternet.UI.PopupListBox">
       <Event Name="Load" />
@@ -8346,6 +8836,7 @@
       <Event Name="LayoutUpdated" />
       <Event Name="Scroll" />
       <Event Name="Disposed" />
+      <Event Name="PropertyChanged" />
     </Type>
     <Type Name="Alternet.UI.PopupListBox`1">
       <Event Name="Load" />
@@ -8437,6 +8928,7 @@
       <Event Name="LayoutUpdated" />
       <Event Name="Scroll" />
       <Event Name="Disposed" />
+      <Event Name="PropertyChanged" />
     </Type>
     <Type Name="Alternet.UI.PopupPictureBox">
       <Event Name="Load" />
@@ -8528,6 +9020,7 @@
       <Event Name="LayoutUpdated" />
       <Event Name="Scroll" />
       <Event Name="Disposed" />
+      <Event Name="PropertyChanged" />
     </Type>
     <Type Name="Alternet.UI.PopupPropertyGrid">
       <Event Name="Load" />
@@ -8619,6 +9112,7 @@
       <Event Name="LayoutUpdated" />
       <Event Name="Scroll" />
       <Event Name="Disposed" />
+      <Event Name="PropertyChanged" />
     </Type>
     <Type Name="Alternet.UI.PopupTreeView">
       <Event Name="Load" />
@@ -8710,6 +9204,7 @@
       <Event Name="LayoutUpdated" />
       <Event Name="Scroll" />
       <Event Name="Disposed" />
+      <Event Name="PropertyChanged" />
     </Type>
     <Type Name="Alternet.UI.PopupWindow">
       <Event Name="Load" />
@@ -8801,6 +9296,7 @@
       <Event Name="LayoutUpdated" />
       <Event Name="Scroll" />
       <Event Name="Disposed" />
+      <Event Name="PropertyChanged" />
     </Type>
     <Type Name="Alternet.UI.PopupWindow`1">
       <Event Name="Load" />
@@ -8892,6 +9388,7 @@
       <Event Name="LayoutUpdated" />
       <Event Name="Scroll" />
       <Event Name="Disposed" />
+      <Event Name="PropertyChanged" />
     </Type>
     <Type Name="Alternet.UI.IFilePreview" />
     <Type Name="Alternet.UI.PreviewFile">
@@ -8965,6 +9462,7 @@
       <Event Name="LayoutUpdated" />
       <Event Name="Scroll" />
       <Event Name="Disposed" />
+      <Event Name="PropertyChanged" />
     </Type>
     <Type Name="Alternet.UI.PreviewFileSplitted">
       <Event Name="CellChanged" />
@@ -9037,6 +9535,7 @@
       <Event Name="LayoutUpdated" />
       <Event Name="Scroll" />
       <Event Name="Disposed" />
+      <Event Name="PropertyChanged" />
     </Type>
     <Type Name="Alternet.UI.PreviewInBrowser">
       <Event Name="CellChanged" />
@@ -9109,6 +9608,7 @@
       <Event Name="LayoutUpdated" />
       <Event Name="Scroll" />
       <Event Name="Disposed" />
+      <Event Name="PropertyChanged" />
     </Type>
     <Type Name="Alternet.UI.PreviewTextFile">
       <Event Name="CellChanged" />
@@ -9181,6 +9681,7 @@
       <Event Name="LayoutUpdated" />
       <Event Name="Scroll" />
       <Event Name="Disposed" />
+      <Event Name="PropertyChanged" />
     </Type>
     <Type Name="Alternet.UI.PreviewUixml">
       <Event Name="CellChanged" />
@@ -9253,6 +9754,7 @@
       <Event Name="LayoutUpdated" />
       <Event Name="Scroll" />
       <Event Name="Disposed" />
+      <Event Name="PropertyChanged" />
     </Type>
     <Type Name="Alternet.UI.PreviewUixmlSplitted">
       <Event Name="CellChanged" />
@@ -9325,6 +9827,7 @@
       <Event Name="LayoutUpdated" />
       <Event Name="Scroll" />
       <Event Name="Disposed" />
+      <Event Name="PropertyChanged" />
     </Type>
     <Type Name="Alternet.UI.PropertyGridAdapterBrush" />
     <Type Name="Alternet.UI.PropertyGridAdapterFont" />
@@ -9499,6 +10002,7 @@
       <Event Name="LayoutUpdated" />
       <Event Name="Scroll" />
       <Event Name="Disposed" />
+      <Event Name="PropertyChanged" />
     </Type>
     <Type Name="Alternet.UI.HScrollBar">
       <Event Name="ValueChanged" />
@@ -9573,9 +10077,11 @@
       <Event Name="LayoutUpdated" />
       <Event Name="Scroll" />
       <Event Name="Disposed" />
+      <Event Name="PropertyChanged" />
     </Type>
     <Type Name="Alternet.UI.PlessScrollBarHandler">
       <Event Name="Disposed" />
+      <Event Name="PropertyChanged" />
     </Type>
     <Type Name="Alternet.UI.ScrollBar">
       <Event Name="ValueChanged" />
@@ -9650,6 +10156,7 @@
       <Event Name="LayoutUpdated" />
       <Event Name="Scroll" />
       <Event Name="Disposed" />
+      <Event Name="PropertyChanged" />
     </Type>
     <Type Name="Alternet.UI.ScrollBarInfo" />
     <Type Name="Alternet.UI.ScrollBarUtils" />
@@ -9726,6 +10233,7 @@
       <Event Name="LayoutUpdated" />
       <Event Name="Scroll" />
       <Event Name="Disposed" />
+      <Event Name="PropertyChanged" />
     </Type>
     <Type Name="Alternet.UI.SpeedButton">
       <Event Name="CellChanged" />
@@ -9798,6 +10306,7 @@
       <Event Name="LayoutUpdated" />
       <Event Name="Scroll" />
       <Event Name="Disposed" />
+      <Event Name="PropertyChanged" />
     </Type>
     <Type Name="Alternet.UI.SpeedColorButton">
       <Event Name="ValueChanged" />
@@ -9873,6 +10382,7 @@
       <Event Name="LayoutUpdated" />
       <Event Name="Scroll" />
       <Event Name="Disposed" />
+      <Event Name="PropertyChanged" />
     </Type>
     <Type Name="Alternet.UI.SpeedTextButton">
       <Event Name="CellChanged" />
@@ -9945,12 +10455,15 @@
       <Event Name="LayoutUpdated" />
       <Event Name="Scroll" />
       <Event Name="Disposed" />
+      <Event Name="PropertyChanged" />
     </Type>
     <Type Name="Alternet.UI.PlessStatusBarHandler">
       <Event Name="Disposed" />
+      <Event Name="PropertyChanged" />
     </Type>
     <Type Name="Alternet.UI.StatusBar">
       <Event Name="Disposed" />
+      <Event Name="PropertyChanged" />
     </Type>
     <Type Name="Alternet.UI.StatusBarPanel">
       <Event Name="TextChanged" />
@@ -10030,6 +10543,7 @@
       <Event Name="LayoutUpdated" />
       <Event Name="Scroll" />
       <Event Name="Disposed" />
+      <Event Name="PropertyChanged" />
     </Type>
     <Type Name="Alternet.UI.CardPanelItem">
       <Event Name="PropertyChanged" />
@@ -10114,6 +10628,7 @@
       <Event Name="LayoutUpdated" />
       <Event Name="Scroll" />
       <Event Name="Disposed" />
+      <Event Name="PropertyChanged" />
     </Type>
     <Type Name="Alternet.UI.TabControl">
       <Event Name="TabSizeChanged" />
@@ -10189,6 +10704,7 @@
       <Event Name="LayoutUpdated" />
       <Event Name="Scroll" />
       <Event Name="Disposed" />
+      <Event Name="PropertyChanged" />
     </Type>
     <Type Name="Alternet.UI.TabPage">
       <Event Name="CellChanged" />
@@ -10261,6 +10777,7 @@
       <Event Name="LayoutUpdated" />
       <Event Name="Scroll" />
       <Event Name="Disposed" />
+      <Event Name="PropertyChanged" />
     </Type>
     <Type Name="Alternet.UI.TemplateControl">
       <Event Name="CellChanged" />
@@ -10333,6 +10850,7 @@
       <Event Name="LayoutUpdated" />
       <Event Name="Scroll" />
       <Event Name="Disposed" />
+      <Event Name="PropertyChanged" />
     </Type>
     <Type Name="Alternet.UI.TemplateControls" />
     <Type Name="Alternet.UI.TemplateUtils" />
@@ -10408,6 +10926,7 @@
       <Event Name="LayoutUpdated" />
       <Event Name="Scroll" />
       <Event Name="Disposed" />
+      <Event Name="PropertyChanged" />
     </Type>
     <Type Name="Alternet.UI.MultilineTextBox">
       <Event Name="MultilineChanged" />
@@ -10488,6 +11007,7 @@
       <Event Name="LayoutUpdated" />
       <Event Name="Scroll" />
       <Event Name="Disposed" />
+      <Event Name="PropertyChanged" />
     </Type>
     <Type Name="Alternet.UI.PlessTextBoxRichAttr" />
     <Type Name="Alternet.UI.TextBox">
@@ -10569,6 +11089,7 @@
       <Event Name="LayoutUpdated" />
       <Event Name="Scroll" />
       <Event Name="Disposed" />
+      <Event Name="PropertyChanged" />
     </Type>
     <Type Name="Alternet.UI.TextBoxInitializeEventArgs" />
     <Type Name="Alternet.UI.FindReplaceControl">
@@ -10650,6 +11171,7 @@
       <Event Name="LayoutUpdated" />
       <Event Name="Scroll" />
       <Event Name="Disposed" />
+      <Event Name="PropertyChanged" />
     </Type>
     <Type Name="Alternet.UI.ToolBar">
       <Event Name="CellChanged" />
@@ -10722,6 +11244,7 @@
       <Event Name="LayoutUpdated" />
       <Event Name="Scroll" />
       <Event Name="Disposed" />
+      <Event Name="PropertyChanged" />
     </Type>
     <Type Name="Alternet.UI.ToolBarSet">
       <Event Name="CellChanged" />
@@ -10794,6 +11317,7 @@
       <Event Name="LayoutUpdated" />
       <Event Name="Scroll" />
       <Event Name="Disposed" />
+      <Event Name="PropertyChanged" />
     </Type>
     <Type Name="Alternet.UI.ToolStripRenderEventHandler" />
     <Type Name="Alternet.UI.ToolStripRenderEventArgs" />
@@ -10871,6 +11395,7 @@
       <Event Name="LayoutUpdated" />
       <Event Name="Scroll" />
       <Event Name="Disposed" />
+      <Event Name="PropertyChanged" />
     </Type>
     <Type Name="Alternet.UI.ToolTipFactory" />
     <Type Name="Alternet.UI.TreeView">
@@ -10956,22 +11481,13 @@
       <Event Name="LayoutUpdated" />
       <Event Name="Scroll" />
       <Event Name="Disposed" />
+      <Event Name="PropertyChanged" />
     </Type>
     <Type Name="Alternet.UI.TreeViewCancelEventArgs" />
     <Type Name="Alternet.UI.TreeViewCreateStyle" />
     <Type Name="Alternet.UI.TreeViewEditEventArgs" />
     <Type Name="Alternet.UI.TreeViewEventArgs" />
     <Type Name="Alternet.UI.TreeViewHitTestInfo" />
-    <Type Name="Alternet.UI.WebBrowserBackend" />
-    <Type Name="Alternet.UI.WebBrowserBackendOS" />
-    <Type Name="Alternet.UI.WebBrowserEvent" />
-    <Type Name="Alternet.UI.WebBrowserHostResourceAccessKind" />
-    <Type Name="Alternet.UI.WebBrowserNavigationAction" />
-    <Type Name="Alternet.UI.WebBrowserNavigationError" />
-    <Type Name="Alternet.UI.WebBrowserPreferredColorScheme" />
-    <Type Name="Alternet.UI.WebBrowserSearchFlags" />
-    <Type Name="Alternet.UI.WebBrowserZoomType" />
-    <Type Name="Alternet.UI.WebBrowserZoom" />
     <Type Name="Alternet.UI.IWebBrowser">
       <Event Name="Navigated" />
       <Event Name="Navigating" />
@@ -11066,6 +11582,7 @@
       <Event Name="LayoutUpdated" />
       <Event Name="Scroll" />
       <Event Name="Disposed" />
+      <Event Name="PropertyChanged" />
     </Type>
     <Type Name="Alternet.UI.WebBrowserEventArgs" />
     <Type Name="Alternet.UI.WebBrowserFindParams" />
@@ -11159,6 +11676,7 @@
       <Event Name="LayoutUpdated" />
       <Event Name="Scroll" />
       <Event Name="Disposed" />
+      <Event Name="PropertyChanged" />
     </Type>
     <Type Name="Alternet.UI.Form">
       <Event Name="Load" />
@@ -11250,6 +11768,7 @@
       <Event Name="LayoutUpdated" />
       <Event Name="Scroll" />
       <Event Name="Disposed" />
+      <Event Name="PropertyChanged" />
     </Type>
     <Type Name="Alternet.UI.HiddenWindow">
       <Event Name="Load" />
@@ -11341,6 +11860,7 @@
       <Event Name="LayoutUpdated" />
       <Event Name="Scroll" />
       <Event Name="Disposed" />
+      <Event Name="PropertyChanged" />
     </Type>
     <Type Name="Alternet.UI.MiniFrameWindow">
       <Event Name="Load" />
@@ -11432,9 +11952,11 @@
       <Event Name="LayoutUpdated" />
       <Event Name="Scroll" />
       <Event Name="Disposed" />
+      <Event Name="PropertyChanged" />
     </Type>
     <Type Name="Alternet.UI.PlessWindowHandler">
       <Event Name="Disposed" />
+      <Event Name="PropertyChanged" />
     </Type>
     <Type Name="Alternet.UI.Window">
       <Event Name="Load" />
@@ -11526,14 +12048,17 @@
       <Event Name="LayoutUpdated" />
       <Event Name="Scroll" />
       <Event Name="Disposed" />
+      <Event Name="PropertyChanged" />
     </Type>
     <Type Name="Alternet.UI.WindowInfo" />
     <Type Name="Alternet.UI.ColorDialog">
       <Event Name="Disposed" />
+      <Event Name="PropertyChanged" />
     </Type>
     <Type Name="Alternet.UI.IColorDialogHandler" />
     <Type Name="Alternet.UI.CommonDialog">
       <Event Name="Disposed" />
+      <Event Name="PropertyChanged" />
     </Type>
     <Type Name="Alternet.UI.IDialogHandler" />
     <Type Name="Alternet.UI.DialogFactory" />
@@ -11627,21 +12152,26 @@
       <Event Name="LayoutUpdated" />
       <Event Name="Scroll" />
       <Event Name="Disposed" />
+      <Event Name="PropertyChanged" />
     </Type>
     <Type Name="Alternet.UI.FileDialog">
       <Event Name="Disposed" />
+      <Event Name="PropertyChanged" />
     </Type>
     <Type Name="Alternet.UI.IFileDialogHandler" />
     <Type Name="Alternet.UI.IOpenFileDialogHandler" />
     <Type Name="Alternet.UI.ISaveFileDialogHandler" />
     <Type Name="Alternet.UI.OpenFileDialog">
       <Event Name="Disposed" />
+      <Event Name="PropertyChanged" />
     </Type>
     <Type Name="Alternet.UI.SaveFileDialog">
       <Event Name="Disposed" />
+      <Event Name="PropertyChanged" />
     </Type>
     <Type Name="Alternet.UI.FontDialog">
       <Event Name="Disposed" />
+      <Event Name="PropertyChanged" />
     </Type>
     <Type Name="Alternet.UI.IFontDialogHandler" />
     <Type Name="Alternet.UI.IDialogFactoryHandler" />
@@ -11653,22 +12183,24 @@
     <Type Name="Alternet.UI.ISelectDirectoryDialogHandler" />
     <Type Name="Alternet.UI.SelectDirectoryDialog">
       <Event Name="Disposed" />
+      <Event Name="PropertyChanged" />
     </Type>
     <Type Name="Alternet.UI.SvgColors" />
     <Type Name="Alternet.UI.SystemFonts" />
     <Type Name="Alternet.UI.DrawingUtils" />
     <Type Name="Alternet.UI.ImageSet">
       <Event Name="Changed" />
-      <Event Name="PropertyChanged" />
       <Event Name="Disposed" />
+      <Event Name="PropertyChanged" />
     </Type>
     <Type Name="Alternet.UI.EnumImages`1">
-      <Event Name="PropertyChanged" />
       <Event Name="Disposed" />
+      <Event Name="PropertyChanged" />
     </Type>
     <Type Name="Alternet.UI.Thickness" />
     <Type Name="Alternet.UI.SkiaImageHandler">
       <Event Name="Disposed" />
+      <Event Name="PropertyChanged" />
     </Type>
     <Type Name="Alternet.UI.KnownColorSvgImages" />
     <Type Name="Alternet.UI.KnownColorSvgUrls" />
@@ -11766,6 +12298,7 @@
       <Event Name="LayoutUpdated" />
       <Event Name="Scroll" />
       <Event Name="Disposed" />
+      <Event Name="PropertyChanged" />
     </Type>
     <Type Name="Alternet.UI.WindowPropertyGrid">
       <Event Name="Load" />
@@ -11857,6 +12390,7 @@
       <Event Name="LayoutUpdated" />
       <Event Name="Scroll" />
       <Event Name="Disposed" />
+      <Event Name="PropertyChanged" />
     </Type>
     <Type Name="Alternet.UI.WindowTextInput">
       <Event Name="Load" />
@@ -11948,6 +12482,7 @@
       <Event Name="LayoutUpdated" />
       <Event Name="Scroll" />
       <Event Name="Disposed" />
+      <Event Name="PropertyChanged" />
     </Type>
     <Type Name="Alternet.UI.IBaseObject" />
     <Type Name="Alternet.UI.IBaseObjectWithAttr" />
@@ -12207,6 +12742,7 @@
       <Event Name="LayoutUpdated" />
       <Event Name="Scroll" />
       <Event Name="Disposed" />
+      <Event Name="PropertyChanged" />
     </Type>
     <Type Name="Alternet.UI.PanelMultilineTextBox">
       <Event Name="FileNewClick" />
@@ -12282,6 +12818,7 @@
       <Event Name="LayoutUpdated" />
       <Event Name="Scroll" />
       <Event Name="Disposed" />
+      <Event Name="PropertyChanged" />
     </Type>
     <Type Name="Alternet.UI.PanelOkCancelButtons">
       <Event Name="OrientationChanged" />
@@ -12355,6 +12892,7 @@
       <Event Name="LayoutUpdated" />
       <Event Name="Scroll" />
       <Event Name="Disposed" />
+      <Event Name="PropertyChanged" />
     </Type>
     <Type Name="Alternet.UI.PanelRichTextBox">
       <Event Name="FileNewClick" />
@@ -12430,6 +12968,7 @@
       <Event Name="LayoutUpdated" />
       <Event Name="Scroll" />
       <Event Name="Disposed" />
+      <Event Name="PropertyChanged" />
     </Type>
     <Type Name="Alternet.UI.PanelSettings">
       <Event Name="CellChanged" />
@@ -12502,9 +13041,11 @@
       <Event Name="LayoutUpdated" />
       <Event Name="Scroll" />
       <Event Name="Disposed" />
+      <Event Name="PropertyChanged" />
     </Type>
     <Type Name="Alternet.UI.PanelSettingsItem">
       <Event Name="ValueChanged" />
+      <Event Name="PropertyChanged" />
     </Type>
     <Type Name="Alternet.UI.PanelSettingsItemKind" />
     <Type Name="Alternet.UI.PanelWebBrowser">
@@ -12578,6 +13119,7 @@
       <Event Name="LayoutUpdated" />
       <Event Name="Scroll" />
       <Event Name="Disposed" />
+      <Event Name="PropertyChanged" />
     </Type>
     <Type Name="Alternet.UI.PanelWithToolBar">
       <Event Name="CellChanged" />
@@ -12650,6 +13192,7 @@
       <Event Name="LayoutUpdated" />
       <Event Name="Scroll" />
       <Event Name="Disposed" />
+      <Event Name="PropertyChanged" />
     </Type>
     <Type Name="Alternet.UI.SR" />
     <Type Name="Alternet.UI.SRID" />
@@ -12659,6 +13202,7 @@
     <Type Name="Alternet.UI.AssemblyUtils" />
     <Type Name="Alternet.UI.CodeGeneratorUtils" />
     <Type Name="Alternet.UI.TypeUtils" />
+    <Type Name="Alternet.UI.CommonUtils" />
     <Type Name="Alternet.UI.ConsoleUtils" />
     <Type Name="Alternet.UI.ICustomConsole" />
     <Type Name="Alternet.UI.ControlUtils" />
@@ -12669,6 +13213,7 @@
     <Type Name="Alternet.UI.ConversionUtils" />
     <Type Name="Alternet.UI.StringConverters" />
     <Type Name="Alternet.UI.DotNetUtils" />
+    <Type Name="Alternet.UI.DownloadUtils" />
     <Type Name="Alternet.UI.InputUtils" />
     <Type Name="Alternet.UI.ArrayUtils" />
     <Type Name="Alternet.UI.EnumerableUtils" />
@@ -12685,6 +13230,7 @@
     <Type Name="Alternet.UI.MswUtils" />
     <Type Name="Alternet.UI.OSUtils" />
     <Type Name="Alternet.UI.RegistryUtils" />
+    <Type Name="Alternet.UI.PathUtils" />
     <Type Name="Alternet.UI.PlessUtils" />
     <Type Name="Alternet.UI.PythonUtils" />
     <Type Name="Alternet.UI.CharUtils" />
@@ -12711,10 +13257,12 @@
     <Type Name="Alternet.UI.ITestRootObjectProvider" />
     <Type Name="Alternet.UI.ITestProvideValueTarget" />
     <Type Name="Alternet.UI.ITestUriContext" />
-    <Type Name="Alternet.UI.Markup.INameScope" />
     <Type Name="Alternet.UI.Extensions.ExtensionsPublic" />
     <Type Name="Alternet.UI.Extensions.BoolBoxes" />
     <Type Name="Alternet.UI.Extensions.NullBoolBoxes" />
+    <Type Name="Alternet.UI.Extensions.EnumExtensionsPrivate" />
+    <Type Name="Alternet.UI.Extensions.HttpClientExtensions" />
+    <Type Name="Alternet.UI.Extensions.StreamExtensions" />
     <Type Name="Alternet.UI.Localization.KnownColorStrings" />
     <Type Name="Alternet.UI.Localization.CommonStrings" />
     <Type Name="Alternet.UI.Localization.ControlCategoryStrings" />
@@ -12726,6 +13274,7 @@
     <Type Name="Alternet.UI.Tests.Tests" />
     <Type Name="Alternet.UI.Threading.BackgroundTaskQueue" />
     <Type Name="Alternet.UI.Threading.BackgroundWorkManager" />
+    <Type Name="Alternet.UI.Markup.INameScope" />
     <Type Name="Alternet.UI.Port.IUixmlPortXamlIlParentStackProvider" />
     <Type Name="Alternet.UI.Port.IUixmlPortXamlIlXmlNamespaceInfoProvider" />
     <Type Name="Alternet.UI.Port.UixmlPortXamlIlXmlNamespaceInfo" />
@@ -12818,6 +13367,7 @@
       <Event Name="LayoutUpdated" />
       <Event Name="Scroll" />
       <Event Name="Disposed" />
+      <Event Name="PropertyChanged" />
     </Type>
     <Type Name="Alternet.Drawing.TextFormat+Record" />
     <Type Name="Alternet.UI.BaseObject+GenericStaticOptions" />
@@ -12830,6 +13380,7 @@
     <Type Name="Alternet.UI.Command+CanExecuteDelegate" />
     <Type Name="Alternet.UI.Command+ExecuteDelegate" />
     <Type Name="Alternet.UI.ListViewColumn+ColumnEventType" />
+    <Type Name="Alternet.UI.TreeControlItem+EnumExpandedItemsParams" />
     <Type Name="Alternet.UI.KnownShortcuts+FindReplaceControlKeys" />
     <Type Name="Alternet.UI.KnownShortcuts+RichEditKeys" />
     <Type Name="Alternet.UI.PropInstanceAndValue+SavedPropertiesItem" />
@@ -12851,13 +13402,16 @@
     <Type Name="Alternet.UI.ComboBox+OwnerDrawFlags" />
     <Type Name="Alternet.UI.ComboBox+DefaultItemPainter" />
     <Type Name="Alternet.UI.ColorListBox+DefaultItemPainter" />
-    <Type Name="Alternet.UI.FileListBox+FileListBoxItem" />
+    <Type Name="Alternet.UI.FileListBox+FileListBoxItem">
+      <Event Name="PropertyChanged" />
+    </Type>
     <Type Name="Alternet.UI.FileListBox+FolderInfoItem" />
     <Type Name="Alternet.UI.FileListBox+NewItemInfo" />
     <Type Name="Alternet.UI.VirtualListBox+ItemClickFlags" />
     <Type Name="Alternet.UI.VirtualListBox+SetItemsKind" />
     <Type Name="Alternet.UI.VirtualListControl+AddRangeController`1">
       <Event Name="Disposed" />
+      <Event Name="PropertyChanged" />
     </Type>
     <Type Name="Alternet.UI.AnimationPlayer+KnownHandler" />
     <Type Name="Alternet.UI.PopupControl+CloseReason" />
@@ -12866,8 +13420,8 @@
     <Type Name="Alternet.UI.ScrollBar+MetricsInfo`1" />
     <Type Name="Alternet.UI.ScrollBar+MetricsInfo" />
     <Type Name="Alternet.UI.ScrollBar+AltPositionInfo">
-      <Event Name="PropertyChanged" />
       <Event Name="Disposed" />
+      <Event Name="PropertyChanged" />
     </Type>
     <Type Name="Alternet.UI.ScrollBar+KnownTheme" />
     <Type Name="Alternet.UI.ScrollBar+ThemeInitializeArgs" />
@@ -12948,6 +13502,7 @@
       <Event Name="LayoutUpdated" />
       <Event Name="Scroll" />
       <Event Name="Disposed" />
+      <Event Name="PropertyChanged" />
     </Type>
     <Type Name="Alternet.UI.TemplateControls+BoldText`1">
       <Event Name="CellChanged" />
@@ -13020,6 +13575,7 @@
       <Event Name="LayoutUpdated" />
       <Event Name="Scroll" />
       <Event Name="Disposed" />
+      <Event Name="PropertyChanged" />
     </Type>
     <Type Name="Alternet.UI.FindReplaceControl+SearchScope" />
     <Type Name="Alternet.UI.FindReplaceControl+IFindReplaceConnect" />

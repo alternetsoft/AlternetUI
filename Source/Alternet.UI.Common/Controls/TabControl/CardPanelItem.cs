@@ -34,11 +34,6 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Occurs when property value changes.
-        /// </summary>
-        public event PropertyChangedEventHandler? PropertyChanged;
-
-        /// <summary>
         /// Gets page title.
         /// </summary>
         public string? Title
@@ -100,11 +95,6 @@ namespace Alternet.UI
             tooltip.Visible = true;
             tooltip.ShowToolTipWithError(null, e, 0);
             return tooltip;
-        }
-
-        private void RaisePropertyChanged(string propName)
-        {
-            PropertyChanged?.Invoke(this, new(propName));
         }
     }
 }

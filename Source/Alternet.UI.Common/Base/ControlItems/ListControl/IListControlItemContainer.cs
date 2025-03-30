@@ -12,7 +12,6 @@ namespace Alternet.UI
     /// </summary>
     public interface IListControlItemContainer
     {
-
         /// <summary>
         /// Gets the unchecked state image for the checkbox.
         /// </summary>

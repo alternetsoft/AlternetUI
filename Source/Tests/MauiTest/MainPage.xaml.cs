@@ -169,6 +169,7 @@ public partial class MainPage : ContentPage
         await Alternet.UI.Clipboard.SetDataObjectAsync(new Alternet.UI.DataObject("Hello"));
         var result = await Alternet.UI.Clipboard.GetDataObjectAsync();
         var test = result?.ToString();
+        Alternet.UI.App.LogIf(test, false);
     }
 
     public ObservableCollection<SimpleItem> MyItems { get; set; } = new();

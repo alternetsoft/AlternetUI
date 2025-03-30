@@ -10,7 +10,7 @@ public partial class TabControlTestPage : ContentPage
 
     public TabControlTestPage()
     {
-        DemoTitleView titleView = new DemoTitleView("TabControlView");
+        DemoTitleView titleView = new ("TabControlView");
         NavigationPage.SetTitleView(this, titleView);
 
         InitializeComponent();
