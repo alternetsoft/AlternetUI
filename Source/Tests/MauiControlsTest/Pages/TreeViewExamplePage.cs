@@ -11,9 +11,6 @@ namespace AllQuickStarts
     {
         private readonly Alternet.Maui.SimpleTreeView treeView = new ();
 
-        private int? selectedIndex;
-        private Alternet.UI.TreeControlItem? selectedItem;
-
         public TreeViewExamplePage()
         {
             Alternet.UI.ListControlUtils.AddTestItems(treeView.RootItem, 10, ItemInitialize);
@@ -28,6 +25,7 @@ namespace AllQuickStarts
                 Text = "Add",
                 Command = new Command(() =>
                 {
+                    AddNewItem();
                 }),
             });
             menuFlyout.Add(new MenuFlyoutItem
@@ -35,6 +33,7 @@ namespace AllQuickStarts
                 Text = "Remove",
                 Command = new Command(() =>
                 {
+                    treeView.RemoveSelectedItem(true);
                 }),
             });
             menuFlyout.Add(new MenuFlyoutItem
@@ -42,6 +41,7 @@ namespace AllQuickStarts
                 Text = "Clear",
                 Command = new Command(() =>
                 {
+                    treeView.Clear();
                 }),
             });
             menuFlyout.Add(new MenuFlyoutItem
@@ -49,21 +49,11 @@ namespace AllQuickStarts
                 Text = "Rename",
                 Command = new Command(() =>
                 {
+                    RenameSelectedItem();
                 }),
             });
 
-            /*
-            collectionView = CreateSampleCollectionView(tapGesture);
-            collectionView.ItemsSource = SampleItems;
-            */
-
             FlyoutBase.SetContextFlyout(treeView, menuFlyout);
-
-            /*
-            collectionView.SetBinding(CollectionView.SelectedItemProperty, new Binding(nameof(SelectedItem), source: this));
-            collectionView.SelectionChanged += OnSelectionChanged;
-            collectionView.SelectionMode = SelectionMode.Single;
-            */
 
             var toolbar = new SimpleToolBarView();
 
@@ -73,6 +63,7 @@ namespace AllQuickStarts
                 Alternet.UI.KnownSvgImages.ImgAdd,
                 () =>
                 {
+                    AddNewItem();
                 });
 
             toolbar.AddSeparator();
@@ -83,6 +74,7 @@ namespace AllQuickStarts
                 Alternet.UI.KnownSvgImages.ImgRemove,
                 () =>
                 {
+                    treeView.RemoveSelectedItem(true);
                 });
 
             toolbar.AddButton(
@@ -91,6 +83,7 @@ namespace AllQuickStarts
                 Alternet.UI.KnownSvgImages.ImgRemoveAll,
                 () =>
                 {
+                    treeView.Clear();
                 });
 
             toolbar.AddButton(
@@ -99,6 +92,7 @@ namespace AllQuickStarts
                 Alternet.UI.KnownSvgImages.ImgGear,
                 () =>
                 {
+                    RenameSelectedItem();
                 });
 
             toolbar.AddExpandingSpace();
@@ -130,105 +124,20 @@ namespace AllQuickStarts
             treeView.TreeChanged();
         }
 
-        public int? SelectedIndex
+        public void AddNewItem()
         {
-            get => selectedIndex;
-            set
-            {
-                if (selectedIndex != value)
-                {
-                    selectedIndex = value;
-                    OnPropertyChanged(nameof(SelectedIndex));
-                }
-            }
+            var item = new Alternet.UI.TreeControlItem();
+            item.Text = "item " + Alternet.UI.LogUtils.GenNewId();
+            item.SvgImage = Alternet.UI.KnownColorSvgImages.ImgLogo;
+            treeView.Add(item, true);
         }
 
-        public static CollectionView CreateSampleCollectionView(GestureRecognizer? tapGesture = null)
+        public void RenameSelectedItem()
         {
-            var collectionView = new CollectionView
-            {
-                ItemTemplate = new DataTemplate(() =>
-                {
-                    Grid grid = new()
-                    {
-                        Padding = 5,
-                    };
-
-                    grid.RowDefinitions.Add(new RowDefinition { Height = GridLength.Auto });
-
-                    grid.ColumnDefinitions.Add(new ColumnDefinition { Width = GridLength.Auto });
-
-                    Label nameLabel = new()
-                    {
-                        Margin = 5,
-                        HorizontalTextAlignment = TextAlignment.Center,
-                        VerticalTextAlignment = TextAlignment.Center,
-                    };
-
-                    nameLabel.SetBinding(Label.TextProperty, static (Item item) => item.Name);
-
-                    grid.Add(nameLabel);
-
-                    if (tapGesture is not null)
-                        grid.GestureRecognizers.Add(tapGesture);
-
-                    return grid;
-                })
-            };
-
-            return collectionView;
-        }
-
-        private void OnSelectionChanged(object? sender, SelectionChangedEventArgs e)
-        {
-            if (e.CurrentSelection.FirstOrDefault() is Item selectedItem)
-            {
-                /*
-                SelectedIndex = SampleItems.IndexOf(selectedItem);
-                */
-            }
-            else
-            {
-                SelectedIndex = null;
-            }
-        }
-
-        public Alternet.UI.TreeControlItem? SelectedItem
-        {
-            get => selectedItem;
-            set
-            {
-                if (selectedItem != value)
-                {
-                    selectedItem = value;
-                    OnPropertyChanged(nameof(SelectedItem));
-                }
-            }
-        }
-
-        public class Item : INotifyPropertyChanged
-        {
-            private string? name;
-
-            public string? Name
-            {
-                get => name;
-                set
-                {
-                    if (name != value)
-                    {
-                        name = value;
-                        OnPropertyChanged(nameof(Name));
-                    }
-                }
-            }
-
-            public event PropertyChangedEventHandler? PropertyChanged;
-
-            protected virtual void OnPropertyChanged(string propertyName)
-            {
-                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-            }
+            var item = treeView.SelectedItem;
+            if (item is null)
+                return;
+            item.Text += "a";
         }
     }
 }

@@ -8,10 +8,14 @@ namespace Alternet.UI
     /// <summary>
     /// Represents an item in a tree control.
     /// </summary>
-    public partial class TreeControlItem : ListControlItem
+    public partial class TreeControlItem : ListControlItemWithNotify
     {
+        private readonly object? owner;
+
+        private bool isVisible = true;
         private List<TreeControlItem>? items;
-        private object? owner;
+        private bool isExpanded;
+        private TreeControlItem? parent;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="TreeControlItem"/> class.
@@ -33,7 +37,25 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets the parent item of this tree control item.
         /// </summary>
-        public virtual TreeControlItem? Parent { get; set; }
+        public virtual TreeControlItem? Parent
+        {
+            get => parent;
+
+            set
+            {
+                if (parent == value)
+                    return;
+                DoInsideSuspendedPropertyChanged(
+                    () =>
+                    {
+                        Parent?.Remove(this);
+                        value?.Add(this);
+                    },
+                    false);
+
+                RaisePropertyChanged(nameof(Parent));
+            }
+        }
 
         /// <summary>
         /// Gets whether this control is the root control (has no parent).
@@ -46,7 +68,7 @@ namespace Alternet.UI
         /// If parent control is null, returns this control.
         /// </summary>
         [Browsable(false)]
-        public TreeControlItem Root
+        public virtual TreeControlItem Root
         {
             get
             {
@@ -58,6 +80,13 @@ namespace Alternet.UI
             }
         }
 
+        /// <summary>
+        /// Gets the owner of this tree control item.
+        /// </summary>
+        /// <remarks>
+        /// If this item is the root item, the owner is the object passed to the constructor.
+        /// Otherwise, the owner is the owner of the root item.
+        /// </remarks>
         public virtual object? Owner
         {
             get
@@ -71,12 +100,34 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets a value indicating whether this item is visible.
         /// </summary>
-        public virtual bool IsVisible { get; set; } = true;
+        public virtual bool IsVisible
+        {
+            get => isVisible;
+
+            set
+            {
+                if (isVisible == value)
+                    return;
+                isVisible = value;
+                RaisePropertyChanged(nameof(IsVisible));
+            }
+        }
 
         /// <summary>
         /// Gets or sets a value indicating whether this item is expanded.
         /// </summary>
-        public virtual bool IsExpanded { get; set; }
+        public virtual bool IsExpanded
+        {
+            get => isExpanded;
+
+            set
+            {
+                if (isExpanded == value)
+                    return;
+                isExpanded = value;
+                RaisePropertyChanged(nameof(IsExpanded));
+            }
+        }
 
         /// <summary>
         /// Gets the child items of this tree control item.
@@ -108,14 +159,31 @@ namespace Alternet.UI
         /// <returns>true if the item was successfully removed; otherwise, false.</returns>
         public virtual bool Remove(TreeControlItem item)
         {
+            bool hasItems = HasItems;
+
             if (item.Parent == this)
             {
-                item.Parent = null;
+                item.InternalSetParent(null);
             }
             else
                 return false;
 
-            return items?.Remove(item) ?? false;
+            var result = items?.Remove(item) ?? false;
+
+            if(HasItems != hasItems)
+                RaisePropertyChanged(nameof(HasItems));
+            return result;
+        }
+
+        /// <summary>
+        /// Expands all parent items of this tree control item.
+        /// </summary>
+        public virtual void ExpandAllParents()
+        {
+            if (Parent is null)
+                return;
+            Parent.IsExpanded = true;
+            Parent.ExpandAllParents();
         }
 
         /// <summary>
@@ -124,9 +192,14 @@ namespace Alternet.UI
         /// <param name="item">The item to add.</param>
         public virtual void Add(TreeControlItem item)
         {
+            bool hasItems = HasItems;
+
             items ??= new();
-            item.Parent = this;
+            item.InternalSetParent(this);
             items.Add(item);
+
+            if (HasItems != hasItems)
+                RaisePropertyChanged(nameof(HasItems));
         }
 
         /// <summary>
@@ -134,14 +207,15 @@ namespace Alternet.UI
         /// </summary>
         public virtual void Clear()
         {
-            if (items is null)
+            if (items is null || items.Count == 0)
                 return;
             foreach(var item in items)
             {
-                item.Parent = null;
+                item.InternalSetParent(null);
             }
 
             items.Clear();
+            RaisePropertyChanged(nameof(HasItems));
         }
 
         /// <summary>
@@ -191,6 +265,12 @@ namespace Alternet.UI
 
                 return true;
             }
+        }
+
+        private void InternalSetParent(TreeControlItem? newParent)
+        {
+            parent = newParent;
+            RaisePropertyChanged(nameof(Parent));
         }
 
         /// <summary>

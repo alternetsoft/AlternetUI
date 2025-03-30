@@ -34,7 +34,7 @@ namespace Alternet.Maui
 
         private SKBitmapImageSource? openedImage;
         private SKBitmapImageSource? closedImage;
-        private ObservableCollection<Alternet.UI.TreeControlItem>? expandedItems;
+        private ObservableCollection<Alternet.UI.TreeControlItem>? visibleItems;
         private Alternet.UI.TreeViewButtonsKind treeButtons = Alternet.UI.TreeViewButtonsKind.Null;
 
         /// <summary>
@@ -148,6 +148,25 @@ namespace Alternet.Maui
             collectionView.SelectionMode = SelectionMode.Single;
 
             TreeButtons = Alternet.UI.TreeViewButtonsKind.Angle;
+
+            TreeChanged();
+        }
+
+        /// <summary>
+        /// Gets or sets the selected item in the tree view.
+        /// </summary>
+        /// <value>The selected <see cref="Alternet.UI.TreeControlItem"/> in the tree view.</value>
+        public Alternet.UI.TreeControlItem? SelectedItem
+        {
+            get
+            {
+                return collectionView.SelectedItem as Alternet.UI.TreeControlItem;
+            }
+
+            set
+            {
+                collectionView.SelectedItem = value;
+            }
         }
 
         /// <summary>
@@ -182,9 +201,9 @@ namespace Alternet.Maui
         {
             get
             {
-                if (expandedItems is null)
+                if (visibleItems is null)
                     TreeChanged();
-                return expandedItems!;
+                return visibleItems!;
             }
         }
 
@@ -210,6 +229,147 @@ namespace Alternet.Maui
         }
 
         /// <summary>
+        /// Selects the specified item in the tree view and scrolls to it.
+        /// </summary>
+        public virtual void SelectItem(UI.TreeControlItem item)
+        {
+            bool InternalSelect()
+            {
+                if (visibleItems is not null)
+                {
+                    var index = visibleItems.IndexOf(item);
+
+                    if (index > 0)
+                    {
+                        collectionView.SelectedItem = item;
+                        collectionView.ScrollTo(index);
+                        return true;
+                    }
+                }
+
+                return false;
+            }
+
+            if (InternalSelect())
+                return;
+
+            item.ExpandAllParents();
+            TreeChanged();
+            InternalSelect();
+        }
+
+        /// <summary>
+        /// Selects the last visible item in the tree view and scrolls to it.
+        /// </summary>
+        public virtual void SelectLastVisibleItem()
+        {
+            if (visibleItems is null)
+                return;
+
+            var index = visibleItems.Count - 1;
+            if (index < 0)
+                return;
+            try
+            {
+                collectionView.SelectedItem = visibleItems[index];
+                collectionView.ScrollTo(index);
+            }
+            catch
+            {
+            }
+        }
+
+        /// <summary>
+        /// Adds the specified item to the tree view on the root level.
+        /// </summary>
+        /// <param name="item">The item to add.</param>
+        /// <param name="selectItem">If true, the item will be selected after being added.</param>
+        public virtual bool Add(UI.TreeControlItem item, bool selectItem = false)
+        {
+            if (item.Parent is not null || item.Owner is not null)
+                return false;
+
+            rootItem.Add(item);
+            visibleItems?.Add(item);
+
+            if (selectItem)
+            {
+                SelectItem(item);
+            }
+
+            return true;
+        }
+
+        /// <summary>
+        /// Clears all items from the tree view.
+        /// </summary>
+        public virtual void Clear()
+        {
+            rootItem.Clear();
+            visibleItems = null;
+            collectionView.ItemsSource = null;
+        }
+
+        /// <summary>
+        /// Removes the currently selected item from the tree view.
+        /// </summary>
+        public virtual bool RemoveSelectedItem(bool selectSibling = false)
+        {
+            var item = SelectedItem;
+            if (item is null)
+                return false;
+
+            if (selectSibling && visibleItems is not null)
+            {
+                var index = visibleItems.IndexOf(item);
+                var result = Remove(item);
+                if (result)
+                {
+                    if(index > 0)
+                        index--;
+                    index = Math.Min(visibleItems.Count - 1, index);
+                    if(index >= 0)
+                    {
+                        item = visibleItems[index];
+                        SelectItem(item);
+                    }
+                }
+
+                return result;
+            }
+            else
+            {
+                return Remove(SelectedItem);
+            }
+        }
+
+        /// <summary>
+        /// Removes the specified item (with sub-items) from the tree view.
+        /// </summary>
+        /// <param name="item">The item to remove.</param>
+        /// <returns>true if the item was successfully removed; otherwise, false.</returns>
+        public virtual bool Remove(UI.TreeControlItem? item)
+        {
+            if (item is null)
+                return false;
+            if (item.Owner != this)
+                return false;
+            if(item.Parent is null)
+                return false;
+            item.Parent.Remove(item);
+            if (item.HasItems && item.IsExpanded)
+            {
+                TreeChanged();
+            }
+            else
+            {
+                visibleItems?.Remove(item);
+            }
+
+            return true;
+        }
+
+        /// <summary>
         /// Updates the tree view when the tree structure changes.
         /// </summary>
         public virtual void TreeChanged()
@@ -228,8 +388,8 @@ namespace Alternet.Maui
                 item.IsChecked = item.IsExpanded;
             }
 
-            expandedItems = collection;
-            collectionView.ItemsSource = expandedItems;
+            visibleItems = collection;
+            collectionView.ItemsSource = visibleItems;
         }
 
         /// <inheritdoc/>
