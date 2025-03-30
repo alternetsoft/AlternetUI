@@ -1,3 +1,20 @@
+# 0.9.719 (2025 March 30)
+
+- Added support for Linux ARM64 platform.
+- Maui: SimpleTreeView.
+- ListControlItem.ForegroundMargin, IsChecked, ForegroundMarginLeft.
+- ListControl: Add properties which allow to specify svg for use instead of native check images.
+- Integrated UI.Interfaces library into UI.Common library.
+- ComboBox.AllowMouseWheel, PanelSettings.DefaultAllowComboBoxMouseWheel.
+- Change used licenses to MIT.
+- Update used nugets to the versions.
+- Timer: Fixed Interval property setter.
+- Improve exception handling in the library.
+- Create TreeControlItem, BaseObjectWithNotify, ListControlItemWithNotify.
+- Sample: How to setup ListBox as TreeView.
+- KnownSvgImages: new members.
+- AbstractControl.ContextMenuStrip is now auto created and is always not null.
+
 # 0.9.718 (2025 March 24)
 
 - Update library to use WxWidgets 3.2.7 and microsoft.web.webview2.1.0.3124.44.
