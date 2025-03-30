@@ -141,6 +141,58 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Removes the tree item from the tree view control.
+        /// </summary>
+        /// <remarks>
+        /// When the <see cref="Remove()"/> method is called, the tree item, and
+        /// any child tree items that are
+        /// assigned to the <see cref="TreeControlItem"/>, are removed from the
+        /// tree view control.
+        /// </remarks>
+        public virtual void Remove()
+        {
+            Parent = null;
+        }
+
+        /// <summary>
+        /// Expands the tree item.
+        /// </summary>
+        /// <remarks>
+        /// The <see cref="Expand"/> method expands the
+        /// <see cref="TreeControlItem"/>, while leaving the child items expanded
+        /// state unchanged.
+        /// </remarks>
+        public virtual void Expand()
+        {
+            IsExpanded = true;
+        }
+
+        /// <summary>
+        /// Collapses the tree item.
+        /// </summary>
+        /// <remarks>
+        /// The <see cref="Collapse"/> method collapses the
+        /// <see cref="TreeControlItem"/>, while leaving the child items
+        /// expanded state unchanged.
+        /// </remarks>
+        public virtual void Collapse()
+        {
+            IsExpanded = false;
+        }
+
+        /// <summary>
+        /// Toggles the tree item to either the expanded or collapsed state.
+        /// </summary>
+        /// <remarks>
+        /// The tree item is toggled to the state opposite its current state,
+        /// either expanded or collapsed.
+        /// </remarks>
+        public virtual void Toggle()
+        {
+            IsExpanded = !IsExpanded;
+        }
+
+        /// <summary>
         /// Removes the specified child item from this tree control item.
         /// </summary>
         /// <param name="item">The item to remove.</param>

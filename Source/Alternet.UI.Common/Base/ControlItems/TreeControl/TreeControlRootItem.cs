@@ -4,6 +4,9 @@ using System.Text;
 
 namespace Alternet.UI
 {
+    /// <summary>
+    /// Represents the root item in a tree control.
+    /// </summary>
     public partial class TreeControlRootItem : TreeControlItem
     {
         private readonly object? owner;

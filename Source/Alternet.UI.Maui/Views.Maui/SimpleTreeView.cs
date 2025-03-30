@@ -143,6 +143,7 @@ namespace Alternet.Maui
 
             collectionView.SelectionChanged += (s, e) =>
             {
+                SelectionChanged?.Invoke(this, EventArgs.Empty);
             };
 
             collectionView.SelectionMode = SelectionMode.Single;
@@ -153,10 +154,107 @@ namespace Alternet.Maui
         }
 
         /// <summary>
+        /// Occurs when the <see cref="SelectedItem"/> property or the
+        /// <see cref="SelectedItems"/> collection has changed.
+        /// </summary>
+        /// <remarks>
+        /// You can create an event handler for this event to determine when
+        /// the selected item in the tree view has been changed.
+        /// This can be useful when you need to display information in other
+        /// controls based on the current selection in the tree view.
+        /// <para>
+        /// The <see cref="SelectedItems"/> collection changes whenever an
+        /// individual item selection changes.
+        /// The property change can occur programmatically or when the user selects
+        /// an item or clears the selection of an item.
+        /// </para>
+        /// </remarks>
+        public event EventHandler? SelectionChanged;
+
+        /// <summary>
+        /// Occurs when the value of the <see cref="SelectionMode"/> property changes.
+        /// </summary>
+        public event EventHandler? SelectionModeChanged;
+
+        /*
+
+
+                /// <summary>
+                /// Occurs when an item is added to this tree view control, at
+                /// any nesting level.
+                /// </summary>
+                public event EventHandler<TreeViewEventArgs>? ItemAdded;
+
+                /// <summary>
+                /// Occurs when an item is removed from this tree view control,
+                /// at any nesting level.
+                /// </summary>
+                public event EventHandler<TreeViewEventArgs>? ItemRemoved;
+
+                /// <summary>
+                /// Occurs after the tree item is expanded.
+                /// </summary>
+                public event EventHandler<TreeViewEventArgs>? AfterExpand;
+
+                /// <summary>
+                /// Occurs after the tree item is collapsed.
+                /// </summary>
+                public event EventHandler<TreeViewEventArgs>? AfterCollapse;
+
+                /// <summary>
+                /// Occurs before the tree item is expanded. This event can be canceled.
+                /// </summary>
+                public event EventHandler<TreeViewCancelEventArgs>? BeforeExpand;
+
+                /// <summary>
+                /// Occurs before the tree item is collapsed. This event can be canceled.
+                /// </summary>
+                public event EventHandler<TreeViewCancelEventArgs>? BeforeCollapse;
+
+                /// <summary>
+                /// Occurs after 'IsExpanded' property
+                /// value of a tree item belonging to this tree view changes.
+                /// </summary>
+                public event EventHandler<TreeViewEventArgs>? ExpandedChanged;
+        */
+
+        /// <summary>
+        /// Gets or sets the selection mode of the tree view.
+        /// </summary>
+        /// <value>The selection mode of the tree view.</value>
+        public virtual SelectionMode SelectionMode
+        {
+            get
+            {
+                return collectionView.SelectionMode;
+            }
+
+            set
+            {
+                if (SelectionMode == value)
+                    return;
+                collectionView.SelectionMode = value;
+                SelectionModeChanged?.Invoke(this, EventArgs.Empty);
+            }
+        }
+
+        /// <summary>
+        /// Gets the selected items in the tree view.
+        /// </summary>
+        /// <value>The selected <see cref="Alternet.UI.TreeControlItem"/> items in the tree view.</value>
+        public virtual IEnumerable<Alternet.UI.TreeControlItem> SelectedItems
+        {
+            get
+            {
+                return collectionView.SelectedItems.Cast<Alternet.UI.TreeControlItem>();
+            }
+        }
+
+        /// <summary>
         /// Gets or sets the selected item in the tree view.
         /// </summary>
         /// <value>The selected <see cref="Alternet.UI.TreeControlItem"/> in the tree view.</value>
-        public Alternet.UI.TreeControlItem? SelectedItem
+        public virtual Alternet.UI.TreeControlItem? SelectedItem
         {
             get
             {
