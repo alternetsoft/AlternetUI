@@ -10,6 +10,9 @@ namespace Alternet.UI
     /// </summary>
     public partial class VirtualTreeControl : VirtualListBox
     {
+        /// <summary>
+        /// Default margin for each level in the tree.
+        /// </summary>
         public static int DefaultLevelMargin = 16;
 
         /// <summary>
