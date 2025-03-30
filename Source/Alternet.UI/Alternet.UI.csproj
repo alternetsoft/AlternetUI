@@ -77,10 +77,8 @@
 
   <!-- ================================================= -->
 
-  <ItemGroup>
-	<ProjectReference Include="..\Alternet.UI.Common\Alternet.UI.Common.csproj" PrivateAssets="All">
-		<ReferenceOutputAssembly>true</ReferenceOutputAssembly>
-		<IncludeAssets>all</IncludeAssets>
+  <ItemGroup Condition="'$(AlternetUIPackagesBuild)' == ''">
+	<ProjectReference Include="..\Alternet.UI.Common\Alternet.UI.Common.csproj">
 	</ProjectReference>
   </ItemGroup>
 
