@@ -6,9 +6,9 @@ namespace Alternet.UI
     /// <summary>
     /// Provides data for <see cref="TreeView.BeforeExpand"/>,
     /// <see cref="TreeView.BeforeCollapse"/>, <see cref="TreeView.ExpandedChanged"/>
-    /// anf other cancelable events.
+    /// and other cancelable events.
     /// </summary>
-    public class TreeViewCancelEventArgs : CancelEventArgs
+    public class TreeViewCancelEventArgs : BaseCancelEventArgs
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="TreeViewCancelEventArgs"/>
