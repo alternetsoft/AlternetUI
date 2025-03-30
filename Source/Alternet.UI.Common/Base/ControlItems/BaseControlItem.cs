@@ -11,7 +11,7 @@ namespace Alternet.UI
     /// Base class with properties and methods common to all control items like
     /// <see cref="TreeViewItem"/>, <see cref="ListViewItem"/> and <see cref="ListControlItem"/>.
     /// </summary>
-    public partial class BaseControlItem : BaseObjectWithAttr
+    public partial class BaseControlItem : BaseObjectWithNotify
     {
     }
 }

@@ -117,6 +117,20 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets whether this object is disposing or disposed.
+        /// Default implemetation returns False. Inherit from <see cref="DisposableObject"/>
+        /// or override this property in order to have valid result.
+        /// </summary>
+        [Browsable(false)]
+        public virtual bool DisposingOrDisposed
+        {
+            get
+            {
+                return false;
+            }
+        }
+
+        /// <summary>
         /// Safely disposes specified object which supports
         /// <see cref="IDisposable"/> interface.
         /// </summary>

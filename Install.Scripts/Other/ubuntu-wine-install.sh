@@ -1,3 +1,5 @@
+# https://ccifra.github.io/PortingWPFAppsToLinux/Overview.html
+
 sudo dpkg --add-architecture i386
 sudo apt update
 
@@ -9,3 +11,5 @@ sudo apt update
 
 
 sudo apt install --install-recommends winehq-stable
+
+sudo apt-get -y install winetricks
