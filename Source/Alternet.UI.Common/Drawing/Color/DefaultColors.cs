@@ -25,6 +25,14 @@ namespace Alternet.Drawing
 
         private static LightDarkColor? borderColor;
 
+        static DefaultColors()
+        {
+            /*
+            // This call is here for testing purposes
+            WindowBackColor.Light = Color.FloralWhite;
+            */
+        }
+
         /// <summary>
         /// Gets or sets default border color of the user control.
         /// </summary>
