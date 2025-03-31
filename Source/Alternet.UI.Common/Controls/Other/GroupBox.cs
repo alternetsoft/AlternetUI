@@ -38,6 +38,16 @@ namespace Alternet.UI
     public partial class GroupBox : Control
     {
         /// <summary>
+        /// Gets or sets a default value of the <see cref="AbstractControl.ParentBackColor"/> property.
+        /// </summary>
+        public static bool? DefaultParentBackColor = true;
+
+        /// <summary>
+        /// Gets or sets a default value of the <see cref="AbstractControl.ParentForeColor"/> property.
+        /// </summary>
+        public static bool? DefaultParentForeColor = true;
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="GroupBox"/> class.
         /// </summary>
         /// <param name="parent">Parent of the control.</param>
@@ -52,6 +62,10 @@ namespace Alternet.UI
         /// </summary>
         public GroupBox()
         {
+            if (DefaultParentBackColor is not null)
+                ParentBackColor = DefaultParentBackColor.Value;
+            if (DefaultParentForeColor is not null)
+                ParentForeColor = DefaultParentForeColor.Value;
         }
 
         /// <inheritdoc/>
