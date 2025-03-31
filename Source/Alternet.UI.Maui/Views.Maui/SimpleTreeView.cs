@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -19,6 +20,26 @@ namespace Alternet.Maui
     public partial class SimpleTreeView : BaseContentView, UI.ITreeControlItemContainer
     {
         /// <summary>
+        /// Default margin for the item label.
+        /// </summary>
+        public static Thickness DefaultItemLabelMargin = 5;
+
+        /// <summary>
+        /// Default padding for the item container.
+        /// </summary>
+        public static Thickness DefaultItemContainerPadding = 5;
+
+        /// <summary>
+        /// Default margin for the item image.
+        /// </summary>
+        public static Thickness DefaultItemImageMargin = new(2, 0, 2, 0);
+
+        /// <summary>
+        /// Default margin for the tree button image.
+        /// </summary>
+        public static Thickness DefaultTreeButtonImageMargin = new(0, 0, 0, 0);
+
+        /// <summary>
         /// Default size of the tree button.
         /// </summary>
         public static int DefaultTreeButtonSize = 16;
@@ -31,6 +52,18 @@ namespace Alternet.Maui
         private readonly Alternet.UI.TreeControlRootItem rootItem;
         private readonly Grid grid = new();
         private readonly CollectionView collectionView = new();
+        private readonly TapGestureRecognizer imageGestureRecognizer = new();
+
+        private readonly TapGestureRecognizer doubleClickGesture = new ()
+        {
+            Buttons = ButtonsMask.Primary,
+            NumberOfTapsRequired = 2,
+        };
+
+        private readonly TapGestureRecognizer tapGesture = new ()
+        {
+            Buttons = ButtonsMask.Secondary,
+        };
 
         private int updateCount;
         private SKBitmapImageSource? openedImage;
@@ -48,12 +81,6 @@ namespace Alternet.Maui
             grid.Add(collectionView);
             Content = grid;
 
-            var doubleClickGesture = new TapGestureRecognizer
-            {
-                Buttons = ButtonsMask.Primary,
-                NumberOfTapsRequired = 2,
-            };
-
             void ItemTapHandler(object? sender, TappedEventArgs e)
             {
                 if (sender is View tappedFrame
@@ -66,15 +93,9 @@ namespace Alternet.Maui
                 }
             }
 
-            var imageGestureRecognizer = new TapGestureRecognizer();
-
             imageGestureRecognizer.Tapped += ItemTapHandler;
             doubleClickGesture.Tapped += ItemTapHandler;
 
-            var tapGesture = new TapGestureRecognizer
-            {
-                Buttons = ButtonsMask.Secondary,
-            };
             tapGesture.Tapped += (sender, e) =>
             {
                 if (sender is View tappedFrame
@@ -84,62 +105,7 @@ namespace Alternet.Maui
                 }
             };
 
-            collectionView.ItemTemplate = new DataTemplate(() =>
-            {
-                HorizontalStackLayout parent = new()
-                {
-                    Padding = 5,
-                };
-
-                BoxView spacer = new()
-                {
-                    BackgroundColor = Colors.Transparent,
-                    HeightRequest = 1,
-                    WidthRequest = 0,
-                };
-
-                spacer.SetBinding(
-                    BoxView.WidthRequestProperty,
-                    static (Alternet.UI.TreeControlItem item) => item.ForegroundMarginLeft);
-
-                parent.Children.Add(spacer);
-
-                var image = new TreeButtonImage(this)
-                {
-                    Aspect = Aspect.AspectFit,
-                    VerticalOptions = LayoutOptions.Center,
-                };
-
-                image.GestureRecognizers.Add(imageGestureRecognizer);
-
-                image.SetBinding(
-                    TreeButtonImage.IsVisibleProperty,
-                    static (Alternet.UI.TreeControlItem item) => item.HasItems);
-
-                image.SetBinding(
-                    TreeButtonImage.IsExpandedProperty,
-                    static (Alternet.UI.TreeControlItem item) => item.IsExpanded);
-
-                parent.Children.Add(image);
-
-                Label nameLabel = new()
-                {
-                    Margin = 5,
-                    HorizontalTextAlignment = TextAlignment.Start,
-                    VerticalTextAlignment = TextAlignment.Center,
-                };
-
-                nameLabel.SetBinding(
-                    Label.TextProperty,
-                    static (Alternet.UI.TreeControlItem item) => item.Text);
-
-                parent.Add(nameLabel);
-
-                parent.GestureRecognizers.Add(tapGesture);
-                parent.GestureRecognizers.Add(doubleClickGesture);
-
-                return parent;
-            });
+            collectionView.ItemTemplate = CreateItemTemplate();
 
             collectionView.SelectionChanged += (s, e) =>
             {
@@ -314,12 +280,12 @@ namespace Alternet.Maui
                         closed,
                         imageSize,
                         Alternet.UI.MauiUtils.IsDarkTheme,
-                        IsEnabled);
+                        !IsEnabled);
             openedImage = Alternet.UI.MauiUtils.ImageSourceFromSvg(
                         opened,
                         imageSize,
                         Alternet.UI.MauiUtils.IsDarkTheme,
-                        IsEnabled);
+                        !IsEnabled);
         }
 
         /// <summary>
@@ -610,6 +576,64 @@ namespace Alternet.Maui
         }
 
         /// <summary>
+        /// Creates the item template for the tree view.
+        /// </summary>
+        /// <returns>A <see cref="DataTemplate"/> representing the item template.</returns>
+        protected virtual DataTemplate CreateItemTemplate()
+        {
+            var result = new DataTemplate(() =>
+            {
+                HorizontalStackLayout parent = new()
+                {
+                    Padding = DefaultItemContainerPadding,
+                };
+
+                ItemSpacer spacer = new()
+                {
+                    BackgroundColor = Colors.Transparent,
+                    HeightRequest = 1,
+                    WidthRequest = 0,
+                };
+
+                parent.Children.Add(spacer);
+
+                var buttonImage = new TreeButtonImage(this)
+                {
+                    Aspect = Aspect.AspectFit,
+                    VerticalOptions = LayoutOptions.Center,
+                };
+
+                buttonImage.GestureRecognizers.Add(imageGestureRecognizer);
+
+                parent.Children.Add(buttonImage);
+
+                var itemImage = new ItemImage(this)
+                {
+                    Aspect = Aspect.AspectFit,
+                    VerticalOptions = LayoutOptions.Center,
+                };
+
+                parent.Children.Add(itemImage);
+
+                ItemLabel nameLabel = new()
+                {
+                    Margin = DefaultItemLabelMargin,
+                    HorizontalTextAlignment = TextAlignment.Start,
+                    VerticalTextAlignment = TextAlignment.Center,
+                };
+
+                parent.Add(nameLabel);
+
+                parent.GestureRecognizers.Add(tapGesture);
+                parent.GestureRecognizers.Add(doubleClickGesture);
+
+                return parent;
+            });
+
+            return result;
+        }
+
+        /// <summary>
         /// Updates the tree view when the tree structure changes.
         /// </summary>
         protected virtual void TreeChanged()
@@ -635,6 +659,84 @@ namespace Alternet.Maui
             collectionView.ItemsSource = visibleItems;
         }
 
+        private partial class ItemLabel : Label
+        {
+            private Alternet.UI.TreeControlItem? item;
+
+            protected override void OnBindingContextChanged()
+            {
+                base.OnBindingContextChanged();
+
+                if(item is not null)
+                {
+                    item.PropertyChanged -= ItemPropertyChanged;
+                }
+
+                if (BindingContext is not Alternet.UI.TreeControlItem newItem)
+                    return;
+
+                item = newItem;
+
+                if(item is not null)
+                {
+                    Text = item.Text;
+                    item.PropertyChanged += ItemPropertyChanged;
+                }
+            }
+
+            protected void ItemPropertyChanged(object? sender, PropertyChangedEventArgs e)
+            {
+                Text = item?.Text ?? string.Empty;
+            }
+        }
+
+        private partial class ItemSpacer : BoxView
+        {
+            protected override void OnBindingContextChanged()
+            {
+                base.OnBindingContextChanged();
+                if (BindingContext is not Alternet.UI.TreeControlItem item)
+                    return;
+                WidthRequest = item.ForegroundMarginLeft;
+            }
+        }
+
+        private partial class ItemImage : Image
+        {
+            private readonly SimpleTreeView owner;
+
+            public ItemImage(SimpleTreeView owner)
+            {
+                this.owner = owner;
+                IsVisible = false;
+                Margin = DefaultItemImageMargin;
+            }
+
+            protected override void OnBindingContextChanged()
+            {
+                base.OnBindingContextChanged();
+                if (BindingContext is not Alternet.UI.TreeControlItem item)
+                    return;
+
+                var isVisible = item.SvgImage is not null;
+
+                IsVisible = isVisible;
+
+                if (isVisible)
+                {
+                    Source = Alternet.UI.MauiUtils.ImageSourceFromSvg(
+                                item.SvgImage,
+                                DefaultSvgSize,
+                                Alternet.UI.MauiUtils.IsDarkTheme,
+                                !owner.IsEnabled);
+                }
+                else
+                {
+                    Source = null;
+                }
+            }
+        }
+
         private partial class TreeButtonImage : Image
         {
             public static readonly BindableProperty IsExpandedProperty =
@@ -650,6 +752,7 @@ namespace Alternet.Maui
 
             public TreeButtonImage(SimpleTreeView owner)
             {
+                Margin = DefaultTreeButtonImageMargin;
                 this.owner = owner;
                 this.Source = owner.closedImage;
             }
@@ -658,6 +761,15 @@ namespace Alternet.Maui
             {
                 get => (bool)GetValue(IsExpandedProperty);
                 set => SetValue(IsExpandedProperty, value);
+            }
+
+            protected override void OnBindingContextChanged()
+            {
+                base.OnBindingContextChanged();
+                if (BindingContext is not Alternet.UI.TreeControlItem item)
+                    return;
+                IsVisible = item.HasItems;
+                IsExpanded = item.IsExpanded;
             }
 
             private static void OnIsExpandedChanged(
