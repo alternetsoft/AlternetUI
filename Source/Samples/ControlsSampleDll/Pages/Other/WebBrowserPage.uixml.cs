@@ -7,7 +7,7 @@ using Alternet.UI;
 
 namespace ControlsSample
 {
-    internal partial class WebBrowserPage : Control
+    internal partial class WebBrowserPage : Panel
     {
         [IsTextLocalized(true)]
         private const string SItemPanda = "Panda Web Site";

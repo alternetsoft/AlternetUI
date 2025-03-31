@@ -8,7 +8,7 @@ using Alternet.UI;
 
 namespace ControlsSample
 {
-    internal class TextMemoPage : Control
+    internal class TextMemoPage : Panel
     {
         public const string LoremIpsum =
             "Lorem ipsum dolor sit amet,\nconsectetur adipiscing elit. " +

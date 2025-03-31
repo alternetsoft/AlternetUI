@@ -5,7 +5,7 @@ using Alternet.UI;
 
 namespace ControlsSample
 {
-    internal partial class ProgressBarPage : Control
+    internal partial class ProgressBarPage : Panel
     {
         public ProgressBarPage()
         {

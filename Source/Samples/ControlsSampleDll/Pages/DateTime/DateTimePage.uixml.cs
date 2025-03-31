@@ -4,7 +4,7 @@ using Alternet.UI;
 
 namespace ControlsSample
 {
-    internal partial class DateTimePage : Control
+    internal partial class DateTimePage : Panel
     {
         public DateTimePage()
         {
