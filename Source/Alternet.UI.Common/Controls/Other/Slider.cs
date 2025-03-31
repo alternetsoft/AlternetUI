@@ -31,6 +31,16 @@ namespace Alternet.UI
     [ControlCategory("Common")]
     public partial class Slider : Control
     {
+        /// <summary>
+        /// Gets or sets a default value of the <see cref="ParentBackColor"/> property.
+        /// </summary>
+        public static bool? DefaultParentBackColor;
+
+        /// <summary>
+        /// Gets or sets a default value of the <see cref="ParentForeColor"/> property.
+        /// </summary>
+        public static bool? DefaultParentForeColor;
+
         private int maximum = 10;
         private int minimum = 0;
         private int val = 0;
@@ -55,6 +65,10 @@ namespace Alternet.UI
         /// </summary>
         public Slider()
         {
+            if(DefaultParentBackColor is not null)
+                ParentBackColor = DefaultParentBackColor.Value;
+            if(DefaultParentForeColor is not null)
+                ParentForeColor = DefaultParentForeColor.Value;
         }
 
         /// <summary>

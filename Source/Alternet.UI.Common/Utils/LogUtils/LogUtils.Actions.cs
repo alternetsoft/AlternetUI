@@ -150,7 +150,7 @@ namespace Alternet.UI
             if (App.LogFileIsEnabled)
                 App.DebugLog($"Log File = {App.LogFilePath}");
             if (Display.MinScaleFactor != Display.MaxScaleFactor)
-                App.LogWarning("Displays have different ScaleFactor");
+                App.DebugLog("Displays have different scale factors");
         }
 
         /// <summary>

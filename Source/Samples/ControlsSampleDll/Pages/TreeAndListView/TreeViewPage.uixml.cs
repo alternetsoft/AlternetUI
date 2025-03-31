@@ -7,7 +7,7 @@ using Alternet.Drawing;
 
 namespace ControlsSample
 {
-    internal partial class TreeViewPage : Control
+    internal partial class TreeViewPage : Panel
     {
         private readonly PopupTreeView popupTreeView = new();
         private int supressExpandEvents = 0;

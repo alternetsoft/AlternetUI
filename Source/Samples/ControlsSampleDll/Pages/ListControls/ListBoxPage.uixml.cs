@@ -6,7 +6,7 @@ using Alternet.Drawing;
 
 namespace ControlsSample
 {
-    internal partial class ListBoxPage : Control
+    internal partial class ListBoxPage : Panel
     {
         private static int newItemIndex = 0;
 

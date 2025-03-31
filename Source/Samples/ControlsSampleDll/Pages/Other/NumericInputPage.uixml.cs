@@ -4,7 +4,7 @@ using Alternet.UI;
 
 namespace ControlsSample
 {
-    internal partial class NumericInputPage : Control
+    internal partial class NumericInputPage : Panel
     {
         public NumericInputPage()
         {

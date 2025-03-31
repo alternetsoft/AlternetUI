@@ -8,7 +8,7 @@ using static Alternet.UI.ControlsSampleUtils;
 
 namespace ControlsSample
 {
-    internal partial class ListViewPage : Control
+    internal partial class ListViewPage : Panel
     {
         private bool? slowSettingsEnabled;
         private int newItemIndex = 0;

@@ -6,7 +6,7 @@ using Alternet.Drawing;
 
 namespace ControlsSample
 {
-    internal partial class VListBoxSamplePage: Control
+    internal partial class VListBoxSamplePage: Panel
     {
         private readonly VirtualListBoxItems items1 = new();
         private readonly VirtualListBoxItems items2 = new();

@@ -1,8 +1,8 @@
-﻿<Control x:Class="ControlsSample.TreeViewPage"
+﻿<Panel x:Class="ControlsSample.TreeViewPage"
         xmlns="http://schemas.alternetsoft.com/ui/2021"
         xmlns:x="http://schemas.alternetsoft.com/ui/2021/uixml"
         xmlns:local="clr-namespace:ControlsSample;assembly=ControlsSample" Padding="10,0,10,0">
-  <Control >
+  <Panel >
     <HorizontalStackPanel>
       <TreeView SuggestedWidth="240" Name="treeView"
                 ExpandedChanged="TreeView_ExpandedChanged"
@@ -55,23 +55,23 @@
                     Click="EditorButton_Click"/>
           </Grid>
 
-          <Control  Padding="5" Margin="0,10,0,0" Layout="Vertical">
+          <Panel  Padding="5" Margin="0,10,0,0" Layout="Vertical">
             <Label Text="Last Item:" Margin="0,0,0,10" IsTextLocalized="true"/>
 
-            <Control Layout="Horizontal" Margin="5,0,0,0">
+            <Panel Layout="Horizontal" Margin="5,0,0,0">
               <Button Text="Make Visible" Name="ensureLastItemVisibleButton" IsTextLocalized="true"
                       Margin="0,0,0,0" Click="EnsureLastItemVisibleButton_Click" />
               <Button Text="To View" Name="scrollLastItemIntoViewButton" IsTextLocalized="true"
                       Margin="0,0,0,0" Click="ScrollLastItemIntoViewButton_Click" />
-            </Control>
+            </Panel>
 
-            <Control Layout="Horizontal" Margin="5,3,0,0">
+            <Panel Layout="Horizontal" Margin="5,3,0,0">
               <Button Text="Focus" Name="focusLastItemButton" IsTextLocalized="true" 
                         Click="FocusLastItemButton_Click" />
               <Button Text="Modify" Name="modifyLastItemButton" IsTextLocalized="true"
                       Click="ModifyLastItemButton_Click" />
-            </Control>
-          </Control>
+            </Panel>
+          </Panel>
 
         </VerticalStackPanel>
 
@@ -138,6 +138,6 @@
         <!-- ========================= -->
       </TabControl>
     </HorizontalStackPanel>
-  </Control>
+  </Panel>
 
-</Control>
+</Panel>

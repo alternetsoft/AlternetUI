@@ -341,25 +341,6 @@ namespace Alternet.UI
             }
         }
 
-        /// <inheritdoc/>
-        public override Color? BackgroundColor
-        {
-            get
-            {
-                return base.BackgroundColor;
-            }
-
-            set
-            {
-                base.BackgroundColor = value;
-                foreach(var item in Children)
-                {
-                    if (NeedUpdateBackColor(item))
-                        item.BackgroundColor = value;
-                }
-            }
-        }
-
         /// <summary>
         /// Gets or sets 'IsClickRepeated' property for all the tools.
         /// </summary>
@@ -408,26 +389,6 @@ namespace Alternet.UI
                 {
                     if (NeedUpdateBackColor(item))
                         item.Background = value;
-                }
-            }
-        }
-
-        /// <inheritdoc/>
-        public override Color? ForegroundColor
-        {
-            get
-            {
-                return base.ForegroundColor;
-            }
-
-            set
-            {
-                base.ForegroundColor = value;
-                var items = GetChildren(true).Items;
-                foreach (var item in items)
-                {
-                    if (NeedUpdateForeColor(item))
-                        item.ForegroundColor = value;
                 }
             }
         }
@@ -1988,14 +1949,10 @@ namespace Alternet.UI
         /// <param name="itemKind">Item kind.</param>
         /// <remarks>
         /// This method is called when new item is added, it updates
-        /// <see cref="AbstractControl.BackgroundColor"/> and other properties.
+        /// some of its properties.
         /// </remarks>
         protected virtual void UpdateItemProps(AbstractControl control, ItemKind itemKind)
         {
-            if (itemKind == ItemKind.Control)
-                return;
-            if (BackgroundColor is not null)
-                control.BackgroundColor = BackgroundColor;
         }
 
         /// <summary>

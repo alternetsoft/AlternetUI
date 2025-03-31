@@ -8,7 +8,7 @@ using Alternet.UI.Extensions;
 
 namespace ControlsSample
 {
-    internal class TextRichPage : Control
+    internal class TextRichPage : Panel
     {
         [IsTextLocalized(true)]
         public static string itWasInJanuary =

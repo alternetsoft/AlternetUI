@@ -626,6 +626,11 @@ namespace Alternet.UI
                 MathUtils.Max(normal?.Size.Height, disabled?.Size.Height, selected?.Size.Height);
             var maxHeightD = GraphicsFactory.PixelToDip(maxHeightI, dc.ScaleFactor);
 
+            var checkBoxSize = GetCheckBoxSize(container).Height + GetAdditionalImageMargin()
+                + GetAdditionalTextMargin().Vertical;
+
+            maxHeightD = Math.Max(checkBoxSize, maxHeightD);
+
             var font = ListControlItem.GetFont(item, container).AsBold;
             var size = dc.GetTextExtent(s, font);
             size.Height = Math.Max(size.Height, maxHeightD);
@@ -969,6 +974,26 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets an additional text margin.
+        /// </summary>
+        /// <returns></returns>
+        public static Thickness GetAdditionalTextMargin()
+        {
+            return Thickness.Empty;
+        }
+
+        /// <summary>
+        /// Gets an additional image margin.
+        /// </summary>
+        /// <returns></returns>
+        public static Coord GetAdditionalImageMargin()
+        {
+            var result = ComboBox.DefaultImageVerticalOffset;
+
+            return result;
+        }
+
+        /// <summary>
         /// Gets suggested rectangles of the item's image and text.
         /// </summary>
         /// <param name="rect">Item rectangle.</param>
@@ -978,18 +1003,18 @@ namespace Alternet.UI
         public static (RectD ImageRect, RectD TextRect) GetItemImageRect(
             RectD rect, SizeD? imageSize = null)
         {
-            Thickness textMargin = Thickness.Empty;
+            Thickness textMargin = GetAdditionalTextMargin();
 
-            var offset = ComboBox.DefaultImageVerticalOffset;
+            var imagemargin = GetAdditionalImageMargin();
 
-            var size = rect.Height - textMargin.Vertical - (offset * 2);
+            var size = rect.Height - textMargin.Vertical - (imagemargin * 2);
 
             if (imageSize is null || imageSize.Value.Height > size)
                 imageSize = (size, size);
 
             PointD imageLocation = (
                 rect.X + textMargin.Left,
-                rect.Y + textMargin.Top + offset);
+                rect.Y + textMargin.Top + imagemargin);
 
             var imageRect = new RectD(imageLocation, imageSize.Value);
             var centeredImageRect = imageRect.CenterIn(rect, false, true);
@@ -1291,6 +1316,18 @@ namespace Alternet.UI
                 info.PartState);
         }
 
+        internal static SizeD GetCheckBoxSize(
+            IListControlItemContainer? container,
+            CheckState? checkState = null,
+            VisualControlState? partState = null)
+        {
+            var result = DrawingUtils.GetCheckBoxSize(
+                            container?.Control ?? App.SafeWindow ?? ControlUtils.Empty,
+                            checkState ?? CheckState.Unchecked,
+                            partState ?? VisualControlState.Normal);
+            return result;
+        }
+
         internal virtual ItemCheckBoxInfo? GetCheckBoxInfo(
             IListControlItemContainer? container,
             RectD rect)
@@ -1302,10 +1339,7 @@ namespace Alternet.UI
             result.PartState = IsContainerEnabled(container)
                 ? VisualControlState.Normal : VisualControlState.Disabled;
             result.CheckState = GetCheckState(container);
-            result.CheckSize = DrawingUtils.GetCheckBoxSize(
-                container?.Control ?? App.SafeWindow ?? ControlUtils.Empty,
-                result.CheckState,
-                result.PartState);
+            result.CheckSize = GetCheckBoxSize(container, result.CheckState, result.PartState);
 
             if(container is not null)
             {
