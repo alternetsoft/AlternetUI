@@ -9,7 +9,7 @@ using Alternet.Drawing;
 namespace ControlsSample
 {
     [IsTextLocalized(true)]
-    internal class ListControlsPopups : Control
+    internal class ListControlsPopups : Panel
     {
         internal bool logMouseEvents = false;
 

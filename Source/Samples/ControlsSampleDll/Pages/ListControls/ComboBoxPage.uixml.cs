@@ -3,7 +3,7 @@ using Alternet.UI;
 
 namespace ControlsSample
 {
-    internal partial class ComboBoxPage : Control, IComboBoxItemPainter
+    internal partial class ComboBoxPage : Panel, IComboBoxItemPainter
     {
         private const bool supressUpDown = false;
 

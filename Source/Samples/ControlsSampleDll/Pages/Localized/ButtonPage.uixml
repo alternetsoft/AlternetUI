@@ -1,4 +1,4 @@
-﻿<Control x:Class="ControlsSample.ButtonPage"
+﻿<Panel x:Class="ControlsSample.ButtonPage"
         xmlns="http://schemas.alternetsoft.com/ui/2021"
         xmlns:x="http://schemas.alternetsoft.com/ui/2021/uixml">
   <Grid>
@@ -80,9 +80,9 @@
 
     </VerticalStackPanel>
 
-    <Control Grid.Row="1" Margin="10">
+    <Panel Grid.Row="1" Margin="10">
       <Button Name="button" VerticalAlignment="Center"  IsTextLocalized="true"
               HorizontalAlignment="Center" Click="Button_Click"/>
-    </Control>
+    </Panel>
   </Grid>
-</Control>
+</Panel>

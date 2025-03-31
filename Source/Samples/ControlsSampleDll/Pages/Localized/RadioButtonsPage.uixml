@@ -1,4 +1,4 @@
-﻿<Control x:Class="ControlsSample.RadioButtonsPage"
+﻿<Panel x:Class="ControlsSample.RadioButtonsPage"
         xmlns="http://schemas.alternetsoft.com/ui/2021"
         xmlns:x="http://schemas.alternetsoft.com/ui/2021/uixml"
         xmlns:local="clr-namespace:ControlsSample;assembly=ControlsSample">
@@ -32,4 +32,4 @@
       <Button Text="Change Value" Name="changeValueButton" Margin="5"  IsTextLocalized="true"/>
     </HorizontalStackPanel>
   </StackPanel>
-  </Control>
+  </Panel>
