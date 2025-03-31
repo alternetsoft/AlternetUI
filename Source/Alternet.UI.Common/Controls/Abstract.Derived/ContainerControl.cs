@@ -31,6 +31,8 @@ namespace Alternet.UI
         /// </summary>
         public ContainerControl()
         {
+            ParentBackColor = true;
+            ParentForeColor = true;
         }
 
         /// <summary>
