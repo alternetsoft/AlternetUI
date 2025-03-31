@@ -32,12 +32,12 @@ namespace Alternet.UI
     public partial class Slider : Control
     {
         /// <summary>
-        /// Gets or sets a default value of the <see cref="ParentBackColor"/> property.
+        /// Gets or sets a default value of the <see cref="AbstractControl.ParentBackColor"/> property.
         /// </summary>
         public static bool? DefaultParentBackColor;
 
         /// <summary>
-        /// Gets or sets a default value of the <see cref="ParentForeColor"/> property.
+        /// Gets or sets a default value of the <see cref="AbstractControl.ParentForeColor"/> property.
         /// </summary>
         public static bool? DefaultParentForeColor;
 
