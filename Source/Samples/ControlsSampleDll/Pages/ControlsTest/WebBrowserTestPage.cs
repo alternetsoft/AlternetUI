@@ -11,7 +11,7 @@ using Alternet.UI.Localization;
 
 namespace ControlsSample
 {
-    internal partial class WebBrowserTestPage : Control
+    internal partial class WebBrowserTestPage : Panel
     {
         private static readonly string ZipSchemeName = "zipfs";
         private static readonly bool SetDefaultUserAgent = false;

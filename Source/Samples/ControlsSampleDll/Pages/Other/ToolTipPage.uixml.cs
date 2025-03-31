@@ -6,7 +6,7 @@ using Alternet.UI;
 
 namespace ControlsSample
 {
-    internal partial class ToolTipPage : Control
+    internal partial class ToolTipPage : Panel
     {
         private readonly RichToolTip toolTip = new();
 

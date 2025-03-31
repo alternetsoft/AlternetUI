@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Alternet.UI
 {
-    public class CustomInternalSamplesPage : Control
+    public class CustomInternalSamplesPage : Panel
     {
         private readonly VirtualListBox view = new()
         {

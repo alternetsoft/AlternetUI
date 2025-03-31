@@ -4,14 +4,16 @@ using Alternet.UI;
 
 namespace LayoutSample
 {
-    public partial class AlignmentControl : Control
+    public partial class AlignmentControl : Panel
     {
         public AlignmentControl()
         {
             InitializeComponent();
 
-            verticalAlignmentComboBox.Items.AddRange(Enum.GetValues(typeof(VerticalAlignment)).Cast<object>());
-            horizontalAlignmentComboBox.Items.AddRange(Enum.GetValues(typeof(HorizontalAlignment)).Cast<object>());
+            verticalAlignmentComboBox.Items.AddRange(
+                Enum.GetValues(typeof(VerticalAlignment)).Cast<object>());
+            horizontalAlignmentComboBox.Items.AddRange(
+                Enum.GetValues(typeof(HorizontalAlignment)).Cast<object>());
         }
 
         AbstractControl? control;

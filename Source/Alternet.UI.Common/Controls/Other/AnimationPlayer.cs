@@ -56,6 +56,8 @@ namespace Alternet.UI
         /// </summary>
         public AnimationPlayer()
         {
+            ParentBackColor = true;
+            ParentForeColor = true;
         }
 
         /// <summary>

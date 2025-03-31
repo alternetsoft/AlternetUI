@@ -4,7 +4,7 @@ using Alternet.UI;
 
 namespace ControlsSample
 {
-    internal partial class NotifyIconPage : Control
+    internal partial class NotifyIconPage : Panel
     {
         public static readonly Image Image =
             new Bitmap(typeof(NotifyIconPage).Assembly.GetManifestResourceStream(

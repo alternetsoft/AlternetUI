@@ -2,7 +2,7 @@
         xmlns:x="http://schemas.alternetsoft.com/ui/2021/uixml"
         x:Class="LayoutSample.Grid10x10Window"
         Title="Alternet UI Grid 10x10 Sample" Width="700" Height="700" StartLocation="CenterScreen">
-  <Control Padding="10">
+  <Panel Padding="10">
     <Grid Name="generatedControlsRoot"/>
-  </Control>  
+  </Panel>  
 </Window>

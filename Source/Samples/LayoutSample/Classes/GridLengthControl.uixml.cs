@@ -4,7 +4,7 @@ using System.Linq;
 
 namespace LayoutSample
 {
-    public partial class GridLengthControl : Control
+    public partial class GridLengthControl : Panel
     {
         public GridLengthControl()
         {

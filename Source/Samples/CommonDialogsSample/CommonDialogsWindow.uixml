@@ -15,7 +15,7 @@
 
       <!-- =============================== -->
 
-      <Control Title="File and Directory" Margin="10" IsTitleLocalized="true" >
+      <Panel Title="File and Directory" Margin="10" IsTitleLocalized="true" >
         <StackPanel>
           <CheckBox Text="Set Initial Dir to User Home Dir" IsTextLocalized="true"
             Name="setInitialDirectoryCheckBox" Margin="5" />
@@ -40,7 +40,7 @@
                   HorizontalAlignment="Left" IsTextLocalized="true"
                   Click="ShowSelectDirectoryDialogButton_Click" Margin="5,5,5,10"/>
         </StackPanel>
-      </Control>
+      </Panel>
 
       <!-- =============================== -->
 
