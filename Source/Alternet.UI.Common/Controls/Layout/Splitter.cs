@@ -21,6 +21,11 @@ namespace Alternet.UI
     public partial class Splitter : GraphicControl
     {
         /// <summary>
+        /// Gets or sets a default value of the <see cref="AbstractControl.ParentBackColor"/> property.
+        /// </summary>
+        public static bool DefaultParentBackColor = false;
+
+        /// <summary>
         /// Gets or sets default splitter width.
         /// </summary>
         public static Coord DefaultWidth = 5;
@@ -64,8 +69,10 @@ namespace Alternet.UI
             CanSelect = false;
             Size = (DefaultWidth, DefaultWidth);
             Dock = DockStyle.Left;
-            ParentBackColor = true;
-            ParentForeColor = true;
+            ParentBackColor = DefaultParentBackColor;
+
+            // We do not use parent's fore color
+            ParentForeColor = false;
         }
 
         /// <summary>
@@ -324,20 +331,25 @@ namespace Alternet.UI
             if (IsDarkBackground)
             {
                 colors ??= DefaultDarkColors;
-                defaultColor = KnownOSColorConsts.WindowsDark.ExplorerSplitter;
+                if (ParentBackColor)
+                    defaultColor = RealBackgroundColor;
+                else
+                    defaultColor = KnownOSColorConsts.WindowsDark.ExplorerSplitter;
             }
             else
             {
                 colors ??= DefaultLightColors;
-                defaultColor = KnownOSColorConsts.WindowsLight.ExplorerSplitter;
+                if (ParentBackColor)
+                    defaultColor = RealBackgroundColor;
+                else
+                    defaultColor = KnownOSColorConsts.WindowsLight.ExplorerSplitter;
             }
 
             var backColor = colors?.BackgroundColor ?? defaultColor;
-            var foreColor = colors?.ForegroundColor;
-
             if (backColor is not null)
                 dc.FillRectangle(backColor.AsBrush, rect);
 
+            var foreColor = colors?.ForegroundColor;
             if (foreColor is null)
                 return;
 
@@ -446,11 +458,10 @@ namespace Alternet.UI
                 SplitMove(e.SplitX, e.SplitY);
         }
 
-        /// <devdoc>
-        ///     Draws the splitter bar at the current location. Will automatically
-        ///     cleanup anyplace the splitter was drawn previously.
-        /// </devdoc>
-        /// <internalonly/>
+        /// <summary>
+        /// Draws the splitter bar at the current location. Will automatically
+        /// cleanup anyplace the splitter was drawn previously.
+        /// </summary>
         private void DrawSplitBar(DrawSplitBarKind mode)
         {
             if (mode != DrawSplitBarKind.Start && lastDrawSplit != -1)
