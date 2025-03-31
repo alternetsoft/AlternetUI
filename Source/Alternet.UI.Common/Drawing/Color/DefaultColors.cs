@@ -39,6 +39,18 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
+        /// Gets or sets the default background color of the window.
+        /// </summary>
+        public static LightDarkColor WindowBackColor { get; set; }
+            = new(light: new(240, 240, 240), dark: SystemColors.Control);
+
+        /// <summary>
+        /// Gets or sets the default foreground color of the window.
+        /// </summary>
+        public static LightDarkColor WindowForeColor { get; set; }
+            = new(light: Color.Black, dark: SystemColors.ControlText);
+
+        /// <summary>
         /// Gets default border color of the user control.
         /// </summary>
         /// <returns></returns>

@@ -2045,8 +2045,8 @@ namespace Alternet.UI
 
             SetVisibleValue(false);
             ProcessIdle = true;
-            BackColor = SystemColors.Control;
-            ForeColor = SystemColors.ControlText;
+            BackColor = DefaultColors.WindowBackColor;
+            ForeColor = DefaultColors.WindowForeColor;
 
             if (GetWindowKind() != WindowKind.Control)
                 App.Current.RegisterWindow(this);
