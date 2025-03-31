@@ -15,6 +15,28 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Executes the specified action on each window in the application.
+        /// </summary>
+        /// <param name="action">The action to execute on each window.</param>
+        public static void ForEach(Action<Window> action)
+        {
+            var windows = App.Current.Windows.ToArray();
+
+            foreach (var window in windows)
+            {
+                action(window);
+            }
+        }
+
+        /// <summary>
+        /// Invalidates all windows in the application, causing them to be redrawn.
+        /// </summary>
+        public static void InvalidateAll()
+        {
+            ForEach((window) => window.Invalidate());
+        }
+
+        /// <summary>
         /// Closes all windows using the specified close action. If <paramref name="action"/>
         /// is not specified, windows are disposed.
         /// </summary>
@@ -26,7 +48,7 @@ namespace Alternet.UI
 
             var windows = App.Current.Windows.ToArray();
 
-            foreach(var window in windows)
+            foreach (var window in windows)
             {
                 if (window == exceptWindow)
                     continue;
