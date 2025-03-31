@@ -3,7 +3,7 @@
         x:Class="LayoutSample.StackLayoutPropertiesWindow"
 		xmlns:local="clr-namespace:LayoutSample" StartLocation="CenterScreen"
         Title="Alternet UI Stack Layout Properties" Width="800" Height="500" >
-  <Control Padding="10">
+  <Panel Padding="10">
     <HorizontalStackPanel>
 
       <TabControl Grid.Column="0" Margin="0,0,20,0" Name="tabControlPanel">
@@ -40,5 +40,5 @@
         </StackPanel>
       </Border>
     </HorizontalStackPanel>
-  </Control>
+  </Panel>
 </Window>

@@ -6,7 +6,7 @@ using System.Collections.Generic;
 
 namespace ControlsSample
 {
-    internal partial class GridPage : Control
+    internal partial class GridPage : Panel
     {
         private readonly ControlSet controls;
 

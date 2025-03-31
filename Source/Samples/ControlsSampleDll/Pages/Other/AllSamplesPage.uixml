@@ -1,32 +1,30 @@
-﻿<Control x:Class="ControlsSample.AllSamplesPage"
+﻿<Panel x:Class="ControlsSample.AllSamplesPage"
         xmlns="http://schemas.alternetsoft.com/ui/2021"
         xmlns:x="http://schemas.alternetsoft.com/ui/2021/uixml"
         xmlns:local="clr-namespace:ControlsSample;assembly=ControlsSample"
-         VerticalAlignment="Stretch" HorizontalAlignment="Stretch" 
+         VerticalAlignment="Stretch" HorizontalAlignment="Stretch"
          Name="mainControl" Padding="10" >
 
-  <Control>
-    <HorizontalStackPanel>
-      
-        <ListBox SuggestedWidth="350" SuggestedHeight="400" Name="view" />
+  <HorizontalStackPanel>
 
-        <VerticalStackPanel Margin="10,0,0,0" Padding="5"
-                    Grid.Column="1" Grid.Row="0" >
-            <Button Text="Run Sample" Name="runButton" Margin="0,0,0,5"  IsTextLocalized="true"
-                    Click="RunButton_Click" HorizontalAlignment="Left" />
-          <Button Text="Build Sample" Name="buildButton" Margin="0,0,0,5" IsTextLocalized="true"
-                  Enabled="true" Visible="true"
-                  Click="BuildButton_Click" HorizontalAlignment="Left" />
-          <Button Text="Build UI" Name="buildUIButton" Margin="0,0,0,5" IsTextLocalized="true"
-                  Enabled="true" Visible="true"
-                  Click="BuildUIButton_Click" HorizontalAlignment="Left"/>
-          <Button Text="Build Pal" Name="buildPalButton" Margin="0,0,0,5" Enabled="false"
-                  IsTextLocalized="true" Visible="false"
-                  Click="BuildPalButton_Click" HorizontalAlignment="Left"/>
-          <CheckBox Text="Delete Bin" Name="deleteBinCheckBox" Margin="0,5,0,5" IsTextLocalized="true"
-                  Enabled="true" Visible="true"/>
-        </VerticalStackPanel>
-    </HorizontalStackPanel>
+    <ListBox SuggestedWidth="350" SuggestedHeight="400" Name="view" />
 
-  </Control>
-</Control>
+    <VerticalStackPanel Margin="10,0,0,0" Padding="5"
+                Grid.Column="1" Grid.Row="0" >
+      <Button Text="Run Sample" Name="runButton" Margin="0,0,0,5"  IsTextLocalized="true"
+              Click="RunButton_Click" HorizontalAlignment="Left" />
+      <Button Text="Build Sample" Name="buildButton" Margin="0,0,0,5" IsTextLocalized="true"
+              Enabled="true" Visible="true"
+              Click="BuildButton_Click" HorizontalAlignment="Left" />
+      <Button Text="Build UI" Name="buildUIButton" Margin="0,0,0,5" IsTextLocalized="true"
+              Enabled="true" Visible="true"
+              Click="BuildUIButton_Click" HorizontalAlignment="Left"/>
+      <Button Text="Build Pal" Name="buildPalButton" Margin="0,0,0,5" Enabled="false"
+              IsTextLocalized="true" Visible="false"
+              Click="BuildPalButton_Click" HorizontalAlignment="Left"/>
+      <CheckBox Text="Delete Bin" Name="deleteBinCheckBox" Margin="0,5,0,5" IsTextLocalized="true"
+              Enabled="true" Visible="true"/>
+    </VerticalStackPanel>
+  </HorizontalStackPanel>
+
+</Panel>

@@ -4,7 +4,7 @@ using LayoutSample;
 
 namespace LayoutSample
 {
-    public partial class LayoutMainControl : Control
+    public partial class LayoutMainControl : Panel
     {
         public LayoutMainControl()
         {

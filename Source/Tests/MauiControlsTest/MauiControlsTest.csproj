@@ -66,7 +66,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Include="..\..\.editorconfig" Link=".editorconfig" Condition="Exists('..\..\.editorconfig')" />
+  </ItemGroup>
 
+  <ItemGroup>
     <PackageReference Include="Microsoft.Maui.Controls" Version="$(MicrosoftMauiVersion)" />
     <PackageReference Include="Microsoft.Maui.Controls.Compatibility" Version="$(MicrosoftMauiVersion)" />
     <PackageReference Include="SkiaSharp.Views.Maui.Controls" Version="$(SkiaSharpVersion)" />
