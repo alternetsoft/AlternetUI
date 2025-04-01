@@ -28,6 +28,15 @@ namespace AllQuickStarts
                     AddNewItem();
                 }),
             });
+            menuFlyout = new MenuFlyout();
+            menuFlyout.Add(new MenuFlyoutItem
+            {
+                Text = "Add Child",
+                Command = new Command(() =>
+                {
+                    AddNewChildItem();
+                }),
+            });
             menuFlyout.Add(new MenuFlyoutItem
             {
                 Text = "Remove",
@@ -64,6 +73,15 @@ namespace AllQuickStarts
                 () =>
                 {
                     AddNewItem();
+                });
+
+            toolbar.AddButton(
+                "Add child",
+                "Add new child item",
+                Alternet.UI.KnownSvgImages.ImgAdd,
+                () =>
+                {
+                    AddNewChildItem();
                 });
 
             toolbar.AddSeparator();
@@ -120,6 +138,14 @@ namespace AllQuickStarts
             grid.Add(treeView, 0, 1);         
             
             Content = grid;
+        }
+
+        public void AddNewChildItem()
+        {
+            var item = new Alternet.UI.TreeControlItem();
+            item.Text = "item " + Alternet.UI.LogUtils.GenNewId();
+            item.SvgImage = Alternet.UI.KnownColorSvgImages.ImgLogo;
+            treeView.AddChild(treeView.SelectedItem, item, true);
         }
 
         public void AddNewItem()

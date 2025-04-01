@@ -348,23 +348,41 @@ namespace Alternet.Maui
         }
 
         /// <summary>
+        /// Adds a child item to the specified parent item in the tree view.
+        /// </summary>
+        /// <param name="parentItem">The parent item to which the child item will be added.
+        /// If null, the child item will be added to the root item.</param>
+        /// <param name="childItem">The child item to add.</param>
+        /// <param name="selectItem">If true, the child item will be selected after being added.</param>
+        /// <returns>true if the child item was successfully added; otherwise, false.</returns>
+        public virtual bool AddChild(
+            UI.TreeControlItem? parentItem,
+            UI.TreeControlItem childItem,
+            bool selectItem = false)
+        {
+            if (childItem.Parent is not null || childItem.Owner is not null)
+                return false;
+
+            parentItem ??= rootItem;
+
+            parentItem.Add(childItem);
+
+            if (selectItem)
+            {
+                SelectItem(childItem);
+            }
+
+            return true;
+        }
+
+        /// <summary>
         /// Adds the specified item to the tree view on the root level.
         /// </summary>
         /// <param name="item">The item to add.</param>
         /// <param name="selectItem">If true, the item will be selected after being added.</param>
-        public virtual bool Add(UI.TreeControlItem item, bool selectItem = false)
+        public bool Add(UI.TreeControlItem item, bool selectItem = false)
         {
-            if (item.Parent is not null || item.Owner is not null)
-                return false;
-
-            rootItem.Add(item);
-
-            if (selectItem)
-            {
-                SelectItem(item);
-            }
-
-            return true;
+            return AddChild(null, item, selectItem);
         }
 
         /// <summary>
