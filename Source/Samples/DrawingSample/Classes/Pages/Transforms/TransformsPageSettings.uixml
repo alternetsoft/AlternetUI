@@ -1,4 +1,4 @@
-﻿<Control x:Class="DrawingSample.TransformsPageSettings"
+﻿<Panel x:Class="DrawingSample.TransformsPageSettings"
         xmlns="http://schemas.alternetsoft.com/ui/2021"
         xmlns:x="http://schemas.alternetsoft.com/ui/2021/uixml"
         xmlns:local="clr-namespace:DrawingSample;assembly=DrawingSample">
@@ -18,4 +18,4 @@
         <Label Text="Rotation:" IsTextLocalized="true"/>
         <Slider Name="rotationSlider" Minimum="0" Maximum="90" Margin="0,0,0,20"/>
     </StackPanel>
-</Control>
+</Panel>

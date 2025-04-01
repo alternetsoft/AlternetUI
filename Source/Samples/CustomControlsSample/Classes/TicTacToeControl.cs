@@ -9,7 +9,7 @@ namespace Alternet.UI
     /// <summary>
     /// Implements tic-tac-toe game.
     /// </summary>
-    public partial class TicTacToeControl : Control
+    public partial class TicTacToeControl : Panel
     {
         /// <summary>
         /// Winners contains all the array locations of the winning combination

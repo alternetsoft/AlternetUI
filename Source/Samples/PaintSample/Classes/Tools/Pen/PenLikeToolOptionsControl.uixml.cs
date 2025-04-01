@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace PaintSample
 {
-    partial class PenLikeToolOptionsControl : Control
+    partial class PenLikeToolOptionsControl : Panel
     {
         public PenLikeToolOptionsControl()
         {

@@ -159,6 +159,7 @@
   <ItemGroup>
     <Compile Include="..\EmployeeFormSample\EmployeeMainWindow.uixml.cs" Link="Links\EmployeeFormSample\EmployeeMainWindow.uixml.cs" />
     <UIXml Include="..\EmployeeFormSample\EmployeeMainWindow.uixml" Link="Links\EmployeeFormSample\EmployeeMainWindow.uixml" />
+    <None Include="..\EmployeeFormSample\EmployeeMainWindow.uixml" Link="Links\EmployeeFormSample\EmployeeMainWindow.uixml" />
   </ItemGroup>
 
   <ItemGroup>

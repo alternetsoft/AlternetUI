@@ -66,9 +66,13 @@ namespace CustomControlsSample
                 knobControl.Parent = slidersStackPanel;
                 gaugeControl.Parent = slidersStackPanel;
             }
-            this.SetSizeToContent();
-            Slider_ValueChanged(null, EventArgs.Empty);
+
+            SetSizeToContent();
+
             knobControl.ValueChanged += Slider_ValueChanged;
+            slider1.ValueChanged += Slider_ValueChanged;
+
+            slider1.Value = 35;
 
             // Logs LongTap event.
             knobControl.CanLongTap = true;

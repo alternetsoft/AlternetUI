@@ -1,4 +1,4 @@
-﻿<Control x:Class="DrawingSample.BrushesAndPensPageSettings"
+﻿<Panel x:Class="DrawingSample.BrushesAndPensPageSettings"
         xmlns="http://schemas.alternetsoft.com/ui/2021"
         xmlns:x="http://schemas.alternetsoft.com/ui/2021/uixml"
         xmlns:local="clr-namespace:DrawingSample;assembly=DrawingSample">
@@ -41,4 +41,4 @@
     </Grid>
   </StackPanel>
 
-</Control>
+</Panel>

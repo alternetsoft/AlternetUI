@@ -4,7 +4,7 @@ using System;
 
 namespace DrawingSample
 {
-    partial class TransformsPageSettings : Control
+    partial class TransformsPageSettings : Panel
     {
         public TransformsPageSettings()
         {

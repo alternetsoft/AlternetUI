@@ -9,7 +9,6 @@ namespace Alternet.UI
     public partial class FancyProgressBar : ProgressBar
     {
         private readonly SolidBrush gaugeBackgroundBrush = new((Color)"#484854");
-        private readonly Pen gaugeBorderPen = new((Color)"#9EAABA", 2);
         private readonly Font font = Control.DefaultFont;
         private readonly Pen pointerPen1 = new((Color)"#FC4154", 3);
         private readonly Pen pointerPen2 = new((Color)"#FF827D", 1);
@@ -44,11 +43,11 @@ namespace Alternet.UI
             var bounds = e.ClipRectangle;
             var dc = e.Graphics;
 
-            var gaugeBounds = bounds.InflatedBy(-2, -2);
-            var scaleBounds = gaugeBounds.InflatedBy(-4, -4);
+            var scaleBounds = bounds.InflatedBy(-4, -4);
 
-            dc.FillRectangle(gaugeBackgroundBrush, gaugeBounds);
+            dc.FillRectangle(gaugeBackgroundBrush, bounds);
 
+            /*
             GradientStop[] gradientStops =
             {
                 new((Color)"#1B222C", 0),
@@ -61,10 +60,11 @@ namespace Alternet.UI
                     new PointD(0, 0),
                     new PointD(0, scaleBounds.Height),
                     gradientStops);
-
             dc.FillRectangle(scaleGradientBrush, scaleBounds);
 
-            dc.DrawRectangle(gaugeBorderPen, gaugeBounds);
+            */
+
+            dc.DrawBorderWithBrush(DefaultColors.GetBorderBrush(this), bounds);
 
             dc.Clip = new Region(scaleBounds);
 

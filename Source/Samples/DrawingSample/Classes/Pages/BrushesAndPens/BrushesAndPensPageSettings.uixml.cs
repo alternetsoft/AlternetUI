@@ -5,7 +5,7 @@ using System.Linq;
 
 namespace DrawingSample
 {
-    partial class BrushesAndPensPageSettings : Control
+    partial class BrushesAndPensPageSettings : Panel
     {
         private readonly Label dashStyleLabel = new("Dash Style:");
         private readonly Label lineCapLabel = new("Line Cap:");

@@ -4,7 +4,7 @@ using System;
 
 namespace DrawingSample
 {
-    partial class TextPageSettings : Control
+    partial class TextPageSettings : Panel
     {
         private readonly Label horzAlignLabel = new("Horz Align:");
         private readonly Label vertAlignLabel = new("Vert Align:");

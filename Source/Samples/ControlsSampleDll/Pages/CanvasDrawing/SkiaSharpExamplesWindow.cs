@@ -89,8 +89,13 @@ namespace ControlsSample
                 actionsListBox.Add(new ListControlItem(sample.Title,
                 () =>
                 {
-                    currentSample = sample;
-                    Draw(sample.DrawSample);
+                    App.AddBackgroundInvokeAction(() =>
+                    {
+                        if (DisposingOrDisposed)
+                            return;
+                        currentSample = sample;
+                        Draw(sample.DrawSample);
+                    });
                 }));
             }
 

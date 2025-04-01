@@ -4,7 +4,7 @@ using System;
 
 namespace DrawingSample
 {
-    internal partial class GraphicsPathPageSettings : Control
+    internal partial class GraphicsPathPageSettings : Panel
     {
         private GraphicsPathPage? page;
 
