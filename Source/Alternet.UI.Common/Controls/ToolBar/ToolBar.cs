@@ -110,7 +110,7 @@ namespace Alternet.UI
         public static Coord DefaultSpacerSize { get; set; } = 4;
 
         /// <summary>
-        /// Gets or sets default margin of the sticky button item.
+        /// Gets or sets default margin of the button item.
         /// </summary>
         public static Thickness DefaultSpeedBtnMargin { get; set; } = (1, 0, 1, 0);
 
@@ -984,9 +984,16 @@ namespace Alternet.UI
         /// for the added item.</returns>
         public virtual AbstractControl AddTextCore(string text)
         {
-            var label = AddTextBtnCore(text);
+            var label = CreateToolLabel();
+            label.VerticalAlignment = UI.VerticalAlignment.Center;
+            label.Text = text;
+            label.Margin = DefaultTextMargin;
+            label.Parent = this;
+
+            /*
             label.ToolTip = string.Empty;
             label.UseTheme = SpeedButton.KnownTheme.NoBorder;
+            */
 
             return label;
         }
@@ -998,7 +1005,7 @@ namespace Alternet.UI
         /// <returns><see cref="ObjectUniqueId"/> of the added item.</returns>
         public virtual ObjectUniqueId AddSpacer(Coord? size = null)
         {
-            Panel control = new()
+            Spacer control = new()
             {
                 SuggestedSize = size ?? DefaultSpacerSize,
             };

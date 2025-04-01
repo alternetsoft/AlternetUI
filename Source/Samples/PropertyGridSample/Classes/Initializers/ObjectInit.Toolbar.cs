@@ -95,7 +95,7 @@ namespace PropertyGridSample
                 saveClone);
             toolbar.AddToolAction(buttonIdSave, ButtonClick);
 
-            toolbar.AddSpacer();
+            toolbar.AddSeparator();
 
             var idText = toolbar.AddText("text");
             toolbar.AddToolAction(idText, ButtonClick);

@@ -32,7 +32,7 @@ namespace PropertyGridSample
             toolbar.Parent = panel.TopPanel;
             InitGenericToolBar(toolbar);
             panel.TopSplitter.Visible = false;
-            panel.TopPanel.Height = toolbar.ItemSize + 6;
+            panel.TopPanel.MinHeight = toolbar.ItemSize + 6;
 
             ListBox BottomLabel = new()
             {
