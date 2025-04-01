@@ -14,6 +14,12 @@
 - Sample: How to setup ListBox as TreeView.
 - KnownSvgImages: new members.
 - AbstractControl.ContextMenuStrip is now auto created and is always not null.
+- DefaultColors: WindowBackColor, WindowForeColor.
+- Fix default fore/back colors in ContainerControl, CardPanel, Splitter, AnimationPlayer. 
+- Demo: Use Panel instead of Control in all demo pages.
+- ToolBar: Fixed behavior related to parent's back/fore color.
+- VirtualListBox: Fix painting when checkboxes are big.
+- ToolBar: Fixed text item sizing.
 
 # 0.9.718 (2025 March 24)
 
