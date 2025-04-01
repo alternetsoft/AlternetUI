@@ -4,7 +4,7 @@ using System;
 
 namespace DrawingSample
 {
-    partial class ImagesPageSettings : Control
+    partial class ImagesPageSettings : Panel
     {
         ImagesPage? page;
 

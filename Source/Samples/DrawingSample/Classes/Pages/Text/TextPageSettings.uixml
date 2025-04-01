@@ -1,4 +1,4 @@
-﻿<Control x:Class="DrawingSample.TextPageSettings"
+﻿<Panel x:Class="DrawingSample.TextPageSettings"
         xmlns="http://schemas.alternetsoft.com/ui/2021"
         xmlns:x="http://schemas.alternetsoft.com/ui/2021/uixml"
         xmlns:local="clr-namespace:DrawingSample;assembly=DrawingSample">
@@ -44,4 +44,4 @@
 
   </TabControl>
 
-</Control>
+</Panel>

@@ -3,7 +3,7 @@
         x:Class="EmployeeFormSample.EmployeeWindow"
 		Title="Alternet UI Employee Details Form"
 		StartLocation="CenterScreen">
-  <Control Padding="10">
+  <Panel Padding="10">
     <Grid>
       <Grid.ColumnDefinitions>
         <ColumnDefinition Width="*"/>
@@ -147,5 +147,5 @@
 
       </Grid>
     </Grid>
-  </Control>
+  </Panel>
 </Window>

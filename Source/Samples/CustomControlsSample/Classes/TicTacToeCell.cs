@@ -5,11 +5,16 @@ namespace Alternet.UI
 {
     internal class TicTacToeCell : GraphicControl
     {
-        private readonly SolidBrush winningCellBrush = new(Color.Parse("#FFD0BF"));
-        private readonly Pen xPen = new(Color.Red, 2);
-        private readonly Pen oPen = new(Color.Blue, 2);
+        private static readonly SolidBrush winningCellBrush = new(Color.Parse("#FFD0BF"));
+
         private TicTacToeControl.PlayerMark? mark;
         private bool isWinningCell;
+
+        public TicTacToeCell()
+        {
+            ParentBackColor = true;
+            ParentForeColor = true;
+        }
 
         public TicTacToeControl.PlayerMark? Mark
         {
@@ -41,6 +46,9 @@ namespace Alternet.UI
             var brush = GetBackgroundBrush();
             if (brush != null)
                 dc.FillRectangle(brush, bounds);
+            else
+                DrawDefaultBackground(e);
+
             dc.DrawRectangle(Pens.Gray, bounds.InflatedBy(-3, -3));
 
             var minBoundsSize = Math.Min(bounds.Width, bounds.Height);
@@ -53,11 +61,15 @@ namespace Alternet.UI
 
                 if (mark == TicTacToeControl.PlayerMark.X)
                 {
+                    var xPen = LightDarkColors.Red.LightOrDark(IsDarkBackground).GetAsPen(2);
+
                     dc.DrawLine(xPen, markBounds.TopLeft, markBounds.BottomRight);
                     dc.DrawLine(xPen, markBounds.BottomLeft, markBounds.TopRight);
                 }
                 else
                 {
+                    var oPen = LightDarkColors.Blue.LightOrDark(IsDarkBackground).GetAsPen(2);
+
                     dc.DrawEllipse(oPen, markBounds);
                 }
             }

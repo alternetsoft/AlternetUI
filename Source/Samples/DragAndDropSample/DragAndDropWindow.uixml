@@ -3,7 +3,7 @@
         x:Class="DragAndDropSample.DragAndDropWindow"
         Title="Alternet.UI Drag and Drop Sample" StartLocation="CenterScreen"
         MinWidth="800" MinHeight="700">
-  <Control Padding="10">
+  <Panel Padding="10">
     <Grid>
       <Grid.RowDefinitions>
         <RowDefinition Height="Auto" />
@@ -21,18 +21,18 @@
         </StackPanel>
 
         <Border Margin="5" >
-          <Control SuggestedWidth="120" VerticalAlignment="Stretch" Padding="2"
+          <Panel SuggestedWidth="120" VerticalAlignment="Stretch" Padding="2"
                   Name="dragSource"
                   MouseDown="DragSource_MouseDown"
                   MouseMove="DragSource_MouseMove"
                   MouseUp="DragSource_MouseUp">
             <Label Text="Drag Me" VerticalAlignment="Center" IsTextLocalized="true"
                    HorizontalAlignment="Center" InputTransparent="true"/>
-          </Control>
+          </Panel>
         </Border>
 
         <Border Margin="5" >
-          <Control SuggestedWidth="120" VerticalAlignment="Stretch" Padding="2"
+          <Panel SuggestedWidth="120" VerticalAlignment="Stretch" Padding="2"
                 AllowDrop="True" Name="dropTarget"
                 DragDrop="DropTarget_DragDrop"
                 DragOver="DropTarget_DragOver"
@@ -40,7 +40,7 @@
                 DragLeave="DropTarget_DragLeave">
             <Label Text="Drop Here" VerticalAlignment="Center" IsTextLocalized="true"
                    HorizontalAlignment="Center" InputTransparent="true"/>
-          </Control>
+          </Panel>
         </Border>
 
         <StackPanel Orientation="Vertical" Margin="5"
@@ -71,5 +71,5 @@
 
       <LogListBox Name="eventsListBox" Grid.Row="2" Margin="5" SuggestedSize="500,300"/>
     </Grid>
-  </Control>
+  </Panel>
 </Window>

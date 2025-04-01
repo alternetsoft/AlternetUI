@@ -162,22 +162,15 @@ namespace SkiaSharpSample
 		{
 			await base.OnInit();
 
-#if !__WASM__
-			var scheduler = TaskScheduler.FromCurrentSynchronizationContext();
-#endif
 			cts = new CancellationTokenSource();
+
 			var loop = Task.Run(async () =>
 			{
 				while (!cts.IsCancellationRequested)
 				{
-					await OnUpdate(cts.Token);
+                    await OnUpdate(cts.Token);
 
-					new Task(Refresh)
-#if !__WASM__
-					.Start(scheduler);
-#else
-					.Start();
-#endif
+					Alternet.UI.App.AddBackgroundInvokeAction(Refresh);
 				}
 			}, cts.Token);
 		}

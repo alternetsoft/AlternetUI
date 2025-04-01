@@ -9,7 +9,6 @@ namespace Alternet.UI
     public partial class FancySlider : Slider
     {
         private readonly SolidBrush gaugeBackgroundBrush = new((Color)"#484854");
-        private readonly Pen gaugeBorderPen = new((Color)"#9EAABA", 2);
         private readonly Pen knobBorderPen = new(Color.Black, 2);
         private readonly Pen largeTickPen = new(Color.Black, 2);
         private readonly Pen smallTickPen = new((Color)"#FFFFFF", 2);
@@ -148,11 +147,10 @@ namespace Alternet.UI
             var bounds = e.ClipRectangle;
             var dc = e.Graphics;
 
-            var gaugeBounds = bounds.InflatedBy(-2, -2);
+            dc.FillRectangle(gaugeBackgroundBrush, bounds);
+
+            /*
             var scaleBounds = gaugeBounds.InflatedBy(-4, -4);
-
-            dc.FillRectangle(gaugeBackgroundBrush, gaugeBounds);
-
             var gradientStops1 = new[]
             {
                 new GradientStop((Color)"#1B222C", 0),
@@ -166,9 +164,10 @@ namespace Alternet.UI
                 gradientStops1);
 
             dc.FillRectangle(scaleGradientBrush, scaleBounds);
+            */
 
-            dc.DrawRectangle(gaugeBorderPen, gaugeBounds);
-
+            dc.DrawBorderWithBrush(DefaultColors.GetBorderBrush(this), bounds);
+                
             var center = GetControlCenter();
             double controlRadius = GetControlRadius();
             var largeTickLength = controlRadius * 0.1;
@@ -176,6 +175,7 @@ namespace Alternet.UI
             var knobPadding = largeTickLength * 0.5;
             var knobRadius = controlRadius - largeTickLength - knobPadding;
 
+            /*
             var gradientStops2 = new[]
             {
                     new GradientStop((Color)"#A9A9A9", 0),
@@ -189,6 +189,8 @@ namespace Alternet.UI
                 gradientStops2);
 
             dc.FillCircle(knobGradientBrush, center, knobRadius);
+            */
+
             dc.DrawCircle(knobBorderPen, center, knobRadius);
 
             var emptyScaleSectorAngle = 70.0;

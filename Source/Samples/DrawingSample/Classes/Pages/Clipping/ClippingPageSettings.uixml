@@ -1,4 +1,4 @@
-﻿<Control x:Class="DrawingSample.ClippingPageSettings"
+﻿<Panel x:Class="DrawingSample.ClippingPageSettings"
         xmlns="http://schemas.alternetsoft.com/ui/2021"
         xmlns:x="http://schemas.alternetsoft.com/ui/2021/uixml"
         xmlns:local="clr-namespace:DrawingSample;assembly=DrawingSample">
@@ -10,4 +10,4 @@
         <Button Name="resetButton" Text="Reset" IsTextLocalized="true"
                 Click="ResetButton_Click" Margin="0,20,0,0"/>
     </StackPanel>
-</Control>
+</Panel>

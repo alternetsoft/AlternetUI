@@ -3,7 +3,7 @@ using System;
 
 namespace PaintSample
 {
-    partial class AirbrushToolOptionsControl : Control
+    partial class AirbrushToolOptionsControl : Panel
     {
         public AirbrushToolOptionsControl()
         {

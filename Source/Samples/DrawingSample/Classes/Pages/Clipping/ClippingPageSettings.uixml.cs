@@ -3,7 +3,7 @@ using Alternet.UI;
 
 namespace DrawingSample
 {
-    partial class ClippingPageSettings : Control
+    partial class ClippingPageSettings : Panel
     {
         private ClippingPage? page;
 

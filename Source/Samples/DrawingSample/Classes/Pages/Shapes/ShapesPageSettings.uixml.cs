@@ -3,7 +3,7 @@ using Alternet.UI;
 
 namespace DrawingSample
 {
-    partial class ShapesPageSettings : Control
+    partial class ShapesPageSettings : Panel
     {
         private ShapesPage? page;
 

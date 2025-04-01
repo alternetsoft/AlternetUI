@@ -15,7 +15,7 @@
                 MinChildMargin="5" HasBorder="true">
       <Label Text="Native Slider and Progress:" VerticalAlignment="Center"/>
       <Slider Minimum="0" Maximum="100" Value="25"
-              TickFrequency="25" Name="slider1" ValueChanged="Slider_ValueChanged"
+              TickFrequency="25" Name="slider1"
           VerticalAlignment="Center" Margin="0,0,10,0" SuggestedWidth="200"/>
       <ProgressBar Name="progressBar1"
         Minimum="0" Maximum="100"
