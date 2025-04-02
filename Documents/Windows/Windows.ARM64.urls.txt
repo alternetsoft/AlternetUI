@@ -1,0 +1,6 @@
+Installing Windows 11 on MacBook M1 (ARM64)
+https://princessdharmy.medium.com/installing-windows-11-on-macbook-m1-arm64-e1e7e0f52ce0
+
+Options for using Windows 11 with Mac® computers with Apple® M1®, M2™, and M3™ chips
+https://support.microsoft.com/en-us/windows/options-for-using-windows-11-with-mac-computers-with-apple-m1-m2-and-m3-chips-cd15fd62-9b34-4b78-b0bc-121baa3c568c
+
