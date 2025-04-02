@@ -60,7 +60,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Content Include="..\..\..\Licenses\License.txt">
+    <Content Include="..\..\..\..\License.txt">
       <Link>License.txt</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <IncludeInVSIX>true</IncludeInVSIX>
