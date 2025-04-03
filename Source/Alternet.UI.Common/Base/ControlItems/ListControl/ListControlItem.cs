@@ -949,7 +949,7 @@ namespace Alternet.UI
                         image = svgImage.AsDisabledImage(size, control.IsDarkBackground);
                         break;
                     case VisualControlState.Selected:
-                        image = svgImage.ImageWithColor(size, info.SvgImageColor); 
+                        image = svgImage.ImageWithColor(size, info.SvgImageColor);
                         break;
                 }
 
@@ -1391,8 +1391,15 @@ namespace Alternet.UI
                 result.ImageIndeterminate = container.CheckImageIndeterminate;
             }
 
+#if DEBUG
+            if(Graphics.DebugElementId is not null)
+            {
+            }
+#endif
+
             var (checkRect, textRect) = ListControlItem.GetItemImageRect(rect, result.CheckSize);
             result.CheckRect = checkRect;
+            result.CheckSize = checkRect.Size;
             result.TextRect = textRect;
             result.Bounds = rect;
             return result;
