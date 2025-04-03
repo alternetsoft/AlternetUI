@@ -55,6 +55,19 @@ namespace ControlsSample
             {
             }
 
+            treeView.ContextMenu.Add("Add", AddNewItem);
+            treeView.ContextMenu.Add("Add child", AddNewChildItem);
+            
+            treeView.ContextMenu.Add("Add many items", () =>
+            {
+                ListControlUtils.AddTestItems(treeView.RootItem, 1000);
+            });
+
+            treeView.ContextMenu.AddSeparator();
+            treeView.ContextMenu.Add("Remove", treeView.RemoveSelectedItem);
+            treeView.ContextMenu.Add("Clear", treeView.Clear);
+            treeView.ContextMenu.Add("Rename", RenameSelectedItem);
+            treeView.ContextMenu.AddSeparator();
             treeView.ContextMenu.Add("Change tree buttons", treeView.SelectNextTreeButton);
             treeView.ContextMenu.Add("Inc checkbox size", () =>
             {
@@ -78,6 +91,31 @@ namespace ControlsSample
             {
                 treeView.Enabled = !treeView.Enabled;
             });
+        }
+
+        public void AddNewChildItem()
+        {
+            var item = new Alternet.UI.TreeControlItem();
+            item.Text = "item " + Alternet.UI.LogUtils.GenNewId();
+            item.SvgImage = Alternet.UI.KnownColorSvgImages.ImgLogo;
+            treeView.AddChild(treeView.SelectedItem, item, true);
+        }
+
+        public void AddNewItem()
+        {
+            var item = new Alternet.UI.TreeControlItem();
+            item.Text = "item " + Alternet.UI.LogUtils.GenNewId();
+            item.SvgImage = Alternet.UI.KnownColorSvgImages.ImgLogo;
+            treeView.Add(item, true);
+        }
+
+        public void RenameSelectedItem()
+        {
+            var item = treeView.SelectedItem;
+            if (item is null)
+                return;
+            item.Text += "a";
+            treeView.Invalidate();
         }
 
         protected override void OnClosed(EventArgs e)
