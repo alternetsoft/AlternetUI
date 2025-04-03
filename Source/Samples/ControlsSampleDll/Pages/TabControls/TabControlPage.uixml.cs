@@ -25,7 +25,6 @@ namespace ControlsSample
             void Fn()
             {
                 tabControl.Parent = this;
-                tabControl.SelectedIndexChanged += TabControl_SelectedIndexChanged;
                 InitializeComponent();
 
                 InsertPage();
@@ -39,7 +38,7 @@ namespace ControlsSample
                 ImageSet image;
                 ImageSet? svgImage;
 
-                if(GetDPI().Width <= 96)
+                if(UseSmallImages)
                 {
                     image = ImageSet.FromUrl($"{ResPrefixSmall}Calendar16.png");
                     svgImage = KnownSvgImages.ImgGear.AsNormal(16, IsDarkBackground);
@@ -54,6 +53,7 @@ namespace ControlsSample
                 tabControl.SetTabImage(2, svgImage);
 
                 tabControl.TabSizeChanged += TabControl_TabSizeChanged;
+                tabControl.SelectedIndexChanged += TabControl_SelectedIndexChanged;
             }
         }
 
