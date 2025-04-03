@@ -13,6 +13,7 @@ using Microsoft.Maui.Controls.Shapes;
 using Alternet.Maui;
 using Alternet.Scripter.Python;
 using Alternet.Scripter.Integration.AlternetUI;
+using Alternet.Scripter.Debugger.UI.AlternetUI;
 
 namespace EditorMAUI;
 

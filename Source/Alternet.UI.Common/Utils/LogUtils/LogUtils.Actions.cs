@@ -327,7 +327,7 @@ namespace Alternet.UI
             Fn("Log control info", () => LogUtils.LogControlInfo(AppUtils.FirstWindowChildOrEmpty));
             Fn("Test Exception: HookExceptionEvents()", DebugUtils.HookExceptionEvents);
             Fn("Run terminal command", () => DialogFactory.ShowRunTerminalCommandDlg());
-            Fn("Show Second MainForm", () => AppUtils.CreateFirstWindowClone());
+            Fn("Show Second MainForm", () => AppUtils.CreateMainWindowClone());
             Fn("Log mapping: Key <-> Keys", KeysExtensions.KeyAndKeysMapping.LogToFile);
             Fn("Log metrics: ScrollBar", ScrollBar.DefaultMetrics(Window.Default).Log);
             Fn("Log CultureInfo.CurrentCulture", LogCurrentCulture);
