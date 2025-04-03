@@ -82,6 +82,21 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Creates clone of the main window and optinally shows it on the screen.
+        /// </summary>
+        /// <param name="show">Whether to show created window. Optional.
+        /// Default is <c>true</c>.</param>
+        /// <returns></returns>
+        public static Window CreateMainWindowClone(bool show = true)
+        {
+            var type = App.MainWindow?.GetType() ?? typeof(Window);
+            var instance = (Window)Activator.CreateInstance(type);
+            if (show)
+                instance.Show();
+            return instance;
+        }
+
+        /// <summary>
         /// Gets library version as string.
         /// </summary>
         /// <returns></returns>
