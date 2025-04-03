@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Runtime.CompilerServices;
 using System.Text;
 
@@ -9,6 +10,13 @@ namespace Alternet.Drawing
 {
     public partial class Graphics
     {
+#if DEBUG
+        /// <summary>
+        /// Internal use only.
+        /// </summary>
+        public static ObjectUniqueId? DebugElementId;
+#endif
+
         /// <summary>
         /// Draws text string with the specified bounds, <see cref="Brush"/>
         /// and <see cref="Font"/> objects.
@@ -331,6 +339,7 @@ namespace Alternet.Drawing
             drawParams.Alignment = prm.Alignment;
             drawParams.Visible = prm.Visible;
             drawParams.DrawDebugCorners = prm.DrawDebugCorners;
+            drawParams.DebugId = prm.DebugId;
 
             var result = DrawElements(ref drawParams);
 
@@ -408,6 +417,11 @@ namespace Alternet.Drawing
                 }
                 else
                 {
+#if DEBUG
+                    if(length > 1 && DebugElementId == prm.DebugId && prm.DebugId is not null)
+                    {
+                    }
+#endif
                     var elementAfterAlign = AlignUtils.AlignRectInRect(
                         elementBeforeAlign,
                         rect,
@@ -439,6 +453,11 @@ namespace Alternet.Drawing
         /// </summary>
         public struct DrawElementsParams
         {
+            /// <summary>
+            /// Internal use only.
+            /// </summary>
+            public ObjectUniqueId? DebugId;
+
             /// <summary>
             /// Gets or sets whether to draw debug corners around elements.
             /// </summary>
@@ -558,6 +577,11 @@ namespace Alternet.Drawing
         /// </summary>
         public struct DrawLabelParams
         {
+            /// <summary>
+            /// Internal use only.
+            /// </summary>
+            public ObjectUniqueId? DebugId;
+
             /// <summary>
             /// Gets or sets a value which specifies whether image to text are aligned vertically
             /// or horizontally.
