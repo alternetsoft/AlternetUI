@@ -81,8 +81,19 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="item">Menu item.</param>
         /// <returns><paramref name="item"/> parameter.</returns>
-        public MenuItem Add(MenuItem item)
+        public virtual MenuItem Add(MenuItem item)
         {
+            Items.Add(item);
+            return item;
+        }
+
+        /// <summary>
+        /// Adds a separator item to the <see cref="Items"/> collection.
+        /// </summary>
+        /// <returns>The created separator item.</returns>
+        public virtual MenuItem AddSeparator()
+        {
+            MenuItem item  = new("-");
             Items.Add(item);
             return item;
         }
@@ -94,7 +105,7 @@ namespace Alternet.UI
         /// <param name="title">Item title.</param>
         /// <param name="onClick">Item click action.</param>
         /// <returns></returns>
-        public MenuItem Add(string title, Action onClick)
+        public virtual MenuItem Add(string title, Action onClick)
         {
             MenuItem item = new(title, onClick);
             Items.Add(item);

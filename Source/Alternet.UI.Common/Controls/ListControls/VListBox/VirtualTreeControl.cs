@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Text;
 
 namespace Alternet.UI
@@ -116,6 +117,25 @@ namespace Alternet.UI
                 });
             }
         }
+
+        /// <summary>
+        /// Gets or sets the selected item in the tree view.
+        /// </summary>
+        /// <value>The selected <see cref="TreeControlItem"/>.</value>
+        [Browsable(false)]
+        public new virtual TreeControlItem? SelectedItem
+        {
+            get
+            {
+                return base.SelectedItem as TreeControlItem;
+            }
+
+            set
+            {
+                base.SelectedItem = value;
+            }
+        }
+
 
         /// <summary>
         /// Gets the root item of the tree view.
