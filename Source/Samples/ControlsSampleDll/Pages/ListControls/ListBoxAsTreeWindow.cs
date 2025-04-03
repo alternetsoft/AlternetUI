@@ -17,9 +17,8 @@ namespace ControlsSample
 
         private readonly int counter;
         private readonly AbstractControl? statusPanel;
-        private readonly TreeControlItem rootItem = new();
 
-        private readonly VirtualListBox listBox = new()
+        private readonly VirtualTreeControl treeView = new()
         {
         };
 
@@ -27,8 +26,6 @@ namespace ControlsSample
         {
             VerticalAlignment = VerticalAlignment.Bottom,
         };
-
-        private TreeViewButtonsKind treeButtons = TreeViewButtonsKind.Null;
 
         public ListBoxAsTreeWindow()
         {
@@ -38,12 +35,9 @@ namespace ControlsSample
             StartLocation = WindowStartLocation.ScreenTopRight;
             Layout = LayoutStyle.Vertical;
 
-            listBox.Margin = 10;
-            listBox.VerticalAlignment = VerticalAlignment.Fill;
-            listBox.Parent = this;
-            listBox.SelectionUnderImage = false;
-            listBox.CheckBoxVisible = true;
-            listBox.CheckOnClick = false;
+            treeView.Margin = 10;
+            treeView.VerticalAlignment = VerticalAlignment.Fill;
+            treeView.Parent = this;
             
             statusBar.Parent = this;
 
@@ -53,84 +47,15 @@ namespace ControlsSample
             statusPanel = new Label("Ready");
             statusBar.AddControl(statusPanel);
 
-            ActiveControl = listBox;
+            ActiveControl = treeView;
 
-            ListControlUtils.AddTestItems(rootItem, 10, ItemInitialize);
+            ListControlUtils.AddTestItems(treeView.RootItem, 10, ItemInitialize);
 
             void ItemInitialize(TreeControlItem item)
             {
             }
 
-            listBox.SelectionUnderImage = true;
-
-            void LoadItems()
-            {
-                VirtualListBoxItems collection = new(rootItem.EnumExpandedItems());
-
-                int indentPx = VirtualTreeControl.DefaultLevelMargin;
-
-                foreach (var item in collection)
-                {
-                    var treeItem = (TreeControlItem)item;
-
-                    var indentLevel = treeItem.IndentLelel - 1;
-
-                    item.ForegroundMargin = (indentPx * indentLevel, 0, 0, 0);
-                    item.CheckBoxVisible = treeItem.HasItems;
-                    item.IsChecked = treeItem.IsExpanded;
-                }
-
-                listBox.SetItemsFast(collection, VirtualListBox.SetItemsKind.ChangeField);
-            }
-
-            LoadItems();
-
-            listBox.MouseDown += (s, e) =>
-            {
-                var itemIndex = listBox.HitTestCheckBox(e.Location);
-                if (itemIndex is null)
-                    return;
-                if (listBox.Items[itemIndex.Value] is not TreeControlItem item)
-                    return;
-                item.IsExpanded = !item.IsExpanded;
-                LoadItems();
-            };
-
-            listBox.DoubleClick += (s, e) =>
-            {
-                if (listBox.SelectedItem is not TreeControlItem item)
-                    return;
-                item.IsExpanded = !item.IsExpanded;
-                LoadItems();
-            };
-
-            TreeButtons = TreeViewButtonsKind.PlusMinusSquare;
-
-            listBox.ContextMenu.Add("Change tree buttons", () =>
-            {
-                var newValue = ((int)TreeButtons + 1);
-
-                if (newValue > EnumUtils.GetMaxValueUseLastAsInt<TreeViewButtonsKind>())
-                    newValue = 0;
-
-                TreeButtons = (TreeViewButtonsKind)newValue;
-            });
-        }
-
-        public TreeViewButtonsKind TreeButtons
-        {
-            get
-            {
-                return treeButtons;
-            }
-
-            set
-            {
-                treeButtons = value;
-                var buttons = KnownSvgImages.GetTreeViewButtonImages(treeButtons);
-                listBox.CheckImageUnchecked = buttons.Closed;
-                listBox.CheckImageChecked = buttons.Opened;
-            }
+            treeView.ContextMenu.Add("Change tree buttons", treeView.SelectNextTreeButton);
         }
 
         protected override void OnClosed(EventArgs e)
