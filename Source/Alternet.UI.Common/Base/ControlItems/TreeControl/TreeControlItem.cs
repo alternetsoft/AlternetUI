@@ -153,6 +153,32 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets the first child item of this tree control item.
+        /// </summary>
+        public TreeControlItem? FirstChild
+        {
+            get
+            {
+                if (items is null || items.Count == 0)
+                    return null;
+                return items[0];
+            }
+        }
+
+        /// <summary>
+        /// Gets the last child item of this tree control item.
+        /// </summary>
+        public TreeControlItem? LastChild
+        {
+            get
+            {
+                if (items is null || items.Count == 0)
+                    return null;
+                return items[items.Count - 1];
+            }
+        }
+
+        /// <summary>
         /// Gets the child items of this tree control item.
         /// </summary>
         public virtual IEnumerable<TreeControlItem> Items => items ?? [];
