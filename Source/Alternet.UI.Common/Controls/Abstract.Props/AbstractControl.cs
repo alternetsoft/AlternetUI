@@ -3423,5 +3423,21 @@ namespace Alternet.UI
         /// </summary>
         [Browsable(false)]
         public SizeD SizeAndMargin => (WidthAndMargin, HeightAndMargin);
+
+        /// <summary>
+        /// Gets a value indicating whether small images should be used.
+        /// Default implementation of this property checks DPI and returns True if it is 96 or less.
+        /// </summary>
+        /// <value>
+        /// <c>true</c> if small images should be used; otherwise, <c>false</c>.
+        /// </value>
+        [Browsable(false)]
+        public virtual bool UseSmallImages
+        {
+            get
+            {
+                return GetDPI().Width <= 96;
+            }
+        }
     }
 }
