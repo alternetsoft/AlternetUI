@@ -31,6 +31,12 @@ namespace Alternet.UI
             = new(HorizontalAlignment.Left, VerticalAlignment.Center);
 
         /// <summary>
+        /// Gets or sets the size of the checkbox override. Default is Null.
+        /// It is used when checkbox size is determined if specified.
+        /// </summary>
+        public static Coord? CheckBoxSizeOverride;
+
+        /// <summary>
         /// Gets or sets whether to draw debug corners around item elements (image, text, etc.).
         /// </summary>
         public static bool DrawDebugCornersOnElements = false;
@@ -876,6 +882,92 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets the size of the checkbox.
+        /// </summary>
+        /// <param name="container">The container of the item.</param>
+        /// <param name="checkState">The state of the checkbox.</param>
+        /// <param name="partState">The visual state of the checkbox.</param>
+        /// <returns>The size of the checkbox.</returns>
+        public static SizeD GetCheckBoxSize(
+            IListControlItemContainer? container,
+            CheckState? checkState = null,
+            VisualControlState? partState = null)
+        {
+            if (CheckBoxSizeOverride is not null)
+                return CheckBoxSizeOverride.Value;
+
+            var result = DrawingUtils.GetCheckBoxSize(
+                            container?.Control ?? App.SafeWindow ?? ControlUtils.Empty,
+                            checkState ?? CheckState.Unchecked,
+                            partState ?? VisualControlState.Normal);
+            return result;
+        }
+
+        /// <summary>
+        /// Draws the default checkbox for the item.
+        /// </summary>
+        /// <param name="canvas">The graphics context used to draw the checkbox.</param>
+        /// <param name="control">The control associated with the checkbox.</param>
+        /// <param name="info">Information about the checkbox to be drawn.</param>
+        public static void DefaultDrawCheckBox(
+            Graphics canvas,
+            AbstractControl control,
+            ItemCheckBoxInfo info)
+        {
+            var useSvg = info.ImageChecked is not null && info.ImageUnchecked is not null;
+
+            if (useSvg)
+            {
+                SvgImage? svgImage = null;
+
+                switch (info.CheckState)
+                {
+                    case CheckState.Unchecked:
+                        svgImage = info.ImageUnchecked;
+                        break;
+                    case CheckState.Checked:
+                        svgImage = info.ImageChecked;
+                        break;
+                    case CheckState.Indeterminate:
+                        svgImage = info.ImageIndeterminate;
+                        break;
+                }
+
+                svgImage ??= KnownSvgImages.ImgEmpty;
+
+                var size = control.PixelFromDip(info.CheckSize.Width);
+
+                Image? image;
+
+                switch (info.SvgState)
+                {
+                    default:
+                    case VisualControlState.Normal:
+                        image = svgImage.AsNormalImage(size, control.IsDarkBackground);
+                        break;
+                    case VisualControlState.Disabled:
+                        image = svgImage.AsDisabledImage(size, control.IsDarkBackground);
+                        break;
+                    case VisualControlState.Selected:
+                        image = svgImage.ImageWithColor(size, info.SvgImageColor); 
+                        break;
+                }
+
+                if (image is not null)
+                {
+                    canvas.DrawImage(image, info.CheckRect.Location);
+                    return;
+                }
+            }
+
+            canvas.DrawCheckBox(
+                control,
+                info.CheckRect,
+                info.CheckState,
+                info.PartState);
+        }
+
+        /// <summary>
         /// Default method which draws item foreground.
         /// </summary>
         public static void DefaultDrawForeground(
@@ -897,20 +989,25 @@ namespace Alternet.UI
             var paintRectangle = e.ClipRectangle;
             paintRectangle.ApplyMargin(padding);
 
+            var isSelected = e.IsSelected;
+            var hideSelection = item?.HideSelection ?? false;
+            if (hideSelection)
+                isSelected = false;
+
             if (item is not null)
             {
                 var info = item.GetCheckBoxInfo(container, paintRectangle);
                 if (info is not null)
                 {
+                    info.SvgState = IsContainerEnabled(container)
+                        ? (isSelected ? VisualControlState.Selected : VisualControlState.Normal)
+                        : VisualControlState.Disabled;
+                    if(info.SvgState == VisualControlState.Selected)
+                        info.SvgImageColor = ListControlItem.GetSelectedTextColor(item, container);
                     DefaultDrawCheckBox(e.Graphics, ControlUtils.SafeControl(container), info);
                     paintRectangle = info.TextRect;
                 }
             }
-
-            var isSelected = e.IsSelected;
-            var hideSelection = item?.HideSelection ?? false;
-            if (hideSelection)
-                isSelected = false;
 
             var itemImages = e.ItemImages;
             var normalImage = itemImages[VisualControlState.Normal];
@@ -940,6 +1037,10 @@ namespace Alternet.UI
             if(item is not null)
             {
                 prm.Flags = item.LabelFlags;
+
+#if DEBUG
+                prm.DebugId = item.UniqueId;
+#endif
             }
 
             if (DebugUtils.IsDebugDefined)
@@ -1270,64 +1371,6 @@ namespace Alternet.UI
             return Text ?? base.ToString();
         }
 
-        internal static void DefaultDrawCheckBox(
-            Graphics canvas,
-            AbstractControl control,
-            ItemCheckBoxInfo info)
-        {
-            var useSvg = info.ImageChecked is not null && info.ImageUnchecked is not null;
-
-            if (useSvg)
-            {
-                SvgImage? svgImage = null;
-
-                switch (info.CheckState)
-                {
-                    case CheckState.Unchecked:
-                        svgImage = info.ImageUnchecked;
-                        break;
-                    case CheckState.Checked:
-                        svgImage = info.ImageChecked;
-                        break;
-                    case CheckState.Indeterminate:
-                        svgImage = info.ImageIndeterminate;
-                        break;
-                }
-
-                svgImage ??= KnownSvgImages.ImgEmpty;
-
-                var size = control.PixelFromDip(info.CheckSize.Width);
-
-                var image = control.IsEnabled
-                    ? svgImage.AsNormalImage(size, control.IsDarkBackground)
-                    : svgImage.AsDisabledImage(size, control.IsDarkBackground);
-
-                if(image is not null)
-                {
-                    canvas.DrawImage(image, info.CheckRect.Location);
-                    return;
-                }
-            }
-
-            canvas.DrawCheckBox(
-                control,
-                info.CheckRect,
-                info.CheckState,
-                info.PartState);
-        }
-
-        internal static SizeD GetCheckBoxSize(
-            IListControlItemContainer? container,
-            CheckState? checkState = null,
-            VisualControlState? partState = null)
-        {
-            var result = DrawingUtils.GetCheckBoxSize(
-                            container?.Control ?? App.SafeWindow ?? ControlUtils.Empty,
-                            checkState ?? CheckState.Unchecked,
-                            partState ?? VisualControlState.Normal);
-            return result;
-        }
-
         internal virtual ItemCheckBoxInfo? GetCheckBoxInfo(
             IListControlItemContainer? container,
             RectD rect)
@@ -1351,6 +1394,7 @@ namespace Alternet.UI
             var (checkRect, textRect) = ListControlItem.GetItemImageRect(rect, result.CheckSize);
             result.CheckRect = checkRect;
             result.TextRect = textRect;
+            result.Bounds = rect;
             return result;
         }
 
@@ -1384,16 +1428,65 @@ namespace Alternet.UI
             public bool IsSelected;
         }
 
-        internal class ItemCheckBoxInfo
+        /// <summary>
+        /// Contains information about the checkbox associated with a <see cref="ListControlItem"/>.
+        /// </summary>
+        public class ItemCheckBoxInfo
         {
+            /// <summary>
+            /// Gets or sets the rectangle that defines the bounds of the item.
+            /// </summary>
+            public RectD Bounds;
+
+            /// <summary>
+            /// Gets or sets the visual state of the checkbox.
+            /// </summary>
             public VisualControlState PartState;
+
+            /// <summary>
+            /// Gets or sets the size of the checkbox.
+            /// </summary>
             public SizeD CheckSize;
+
+            /// <summary>
+            /// Gets or sets the rectangle that defines the position and size of the checkbox.
+            /// </summary>
             public RectD CheckRect;
+
+            /// <summary>
+            /// Gets or sets the rectangle that defines the position and size of the text.
+            /// </summary>
             public RectD TextRect;
+
+            /// <summary>
+            /// Gets or sets the state of the checkbox.
+            /// </summary>
             public CheckState CheckState;
+
+            /// <summary>
+            /// Gets or sets the SVG image used when the checkbox is unchecked.
+            /// </summary>
             public SvgImage? ImageUnchecked;
+
+            /// <summary>
+            /// Gets or sets the SVG image used when the checkbox is checked.
+            /// </summary>
             public SvgImage? ImageChecked;
+
+            /// <summary>
+            /// Gets or sets the SVG image used when the checkbox is in an indeterminate state.
+            /// </summary>
             public SvgImage? ImageIndeterminate;
+
+            /// <summary>
+            /// Gets or sets the color of the SVG image.
+            /// </summary>
+            public Color? SvgImageColor;
+
+            /// <summary>
+            /// Gets or sets the visual state of the SVG image.
+            /// </summary>
+            public VisualControlState SvgState = VisualControlState.Normal;
         }
     }
 }

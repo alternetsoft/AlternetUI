@@ -280,7 +280,8 @@ namespace Alternet.UI
             if (newValue > EnumUtils.GetMaxValueUseLastAsInt<TreeViewButtonsKind>())
                 newValue = 0;
             TreeButtons = (TreeViewButtonsKind)newValue;
-        }
+        }
+
         /// <summary>
         /// Called when an item is added to this tree view control, at
         /// any nesting level.

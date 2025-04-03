@@ -56,6 +56,28 @@ namespace ControlsSample
             }
 
             treeView.ContextMenu.Add("Change tree buttons", treeView.SelectNextTreeButton);
+            treeView.ContextMenu.Add("Inc checkbox size", () =>
+            {
+                int incValue = 4;
+
+                if(ListControlItem.CheckBoxSizeOverride is null)
+                {
+                    ListControlItem.CheckBoxSizeOverride
+                    = ListControlItem.GetCheckBoxSize(treeView).Width + incValue;
+                }
+                else
+                {
+                    ListControlItem.CheckBoxSizeOverride
+                    = ListControlItem.CheckBoxSizeOverride.Value + incValue;
+                }
+
+                Graphics.DebugElementId = treeView.RootItem.FirstChild?.UniqueId;
+                treeView.Invalidate();
+            });
+            treeView.ContextMenu.Add("Toggle enabled", () =>
+            {
+                treeView.Enabled = !treeView.Enabled;
+            });
         }
 
         protected override void OnClosed(EventArgs e)
