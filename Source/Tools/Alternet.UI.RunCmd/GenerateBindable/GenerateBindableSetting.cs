@@ -222,6 +222,9 @@ namespace Alternet.UI
 
                 var events = GetEvents();
 
+                if (events is null)
+                    return;
+
                 foreach (var ev in events)
                 {
                     if (!EventIsOk(ev))
@@ -244,7 +247,7 @@ namespace Alternet.UI
                 GenerateBindUnbindCall("UnbindFromEvents", "-", "Undinds from the events");
             }
 
-            EventInfo[] GetEvents()
+            EventInfo[]? GetEvents()
             {
                 var events = type.GetEvents(
                     BindingFlags.Instance | BindingFlags.Public | BindingFlags.DeclaredOnly);
@@ -276,6 +279,9 @@ namespace Alternet.UI
             void GenerateEvents(bool first)
             {
                 var events = GetEvents();
+
+                if (events is null)
+                    return;
 
                 Console.WriteLine();
                 Console.WriteLine("Events:");
