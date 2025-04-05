@@ -176,7 +176,6 @@
 	<ItemGroup>
             <DeleteFilesAnyPlatform Include="$(PUBLISH_FOLDER_SFX)\Alternet.UI.xml"/>
             <DeleteFilesAnyPlatform Include="$(PUBLISH_FOLDER_SFX)\Alternet.UI.Common.xml"/>
-            <DeleteFilesAnyPlatform Include="$(PUBLISH_FOLDER_SFX)\Alternet.UI.Interfaces.xml"/>
             <DeleteFilesAnyPlatform Include="$(PUBLISH_FOLDER_SFX)\*.pdb"/>
             <DeleteFilesAnyPlatform Include="$(PUBLISH_FOLDER_SFX)\**\*.pdb"/>
 
@@ -186,24 +185,28 @@
             <DeleteFilesWindows Include="$(PUBLISH_FOLDER_SFX)\*.dylib"/>
 
             <DeleteFoldersAnyPlatform Include="$(PUBLISH_FOLDER_SFX)\Edge"/>
-            <DeleteFoldersAnyPlatform Include="$(PUBLISH_FOLDER_SFX)\runtimes\linux-arm"/>
-            <DeleteFoldersAnyPlatform Include="$(PUBLISH_FOLDER_SFX)\runtimes\linux-arm64"/>
-            <DeleteFoldersAnyPlatform Include="$(PUBLISH_FOLDER_SFX)\runtimes\linux-musl-x64"/>
-            <DeleteFoldersAnyPlatform Include="$(PUBLISH_FOLDER_SFX)\runtimes\win-arm64"/>
             <DeleteFoldersAnyPlatform Include="$(PUBLISH_FOLDER_SFX)\arm"/>
             <DeleteFoldersAnyPlatform Include="$(PUBLISH_FOLDER_SFX)\arm64"/>
             <DeleteFoldersAnyPlatform Include="$(PUBLISH_FOLDER_SFX)\musl-x64"/>
 
             <DeleteFoldersWindows Include="$(PUBLISH_FOLDER_SFX)\runtimes\linux-x64"/>
             <DeleteFoldersWindows Include="$(PUBLISH_FOLDER_SFX)\runtimes\osx"/>
+            <DeleteFoldersWindows Include="$(PUBLISH_FOLDER_SFX)\runtimes\linux-arm"/>
+            <DeleteFoldersWindows Include="$(PUBLISH_FOLDER_SFX)\runtimes\linux-arm64"/>
+            <DeleteFoldersWindows Include="$(PUBLISH_FOLDER_SFX)\runtimes\linux-musl-x64"/>
 
             <DeleteFoldersLinux Include="$(PUBLISH_FOLDER_SFX)\runtimes\win-x64\native\"/>
             <DeleteFoldersLinux Include="$(PUBLISH_FOLDER_SFX)\runtimes\win-x86\native\"/>
+            <DeleteFoldersLinux Include="$(PUBLISH_FOLDER_SFX)\runtimes\win-arm64"/>
             <DeleteFoldersLinux Include="$(PUBLISH_FOLDER_SFX)\runtimes\osx"/>
 
             <DeleteFoldersMacOs Include="$(PUBLISH_FOLDER_SFX)\runtimes\win-x64\native\"/>
             <DeleteFoldersMacOs Include="$(PUBLISH_FOLDER_SFX)\runtimes\win-x86\native\"/>
+            <DeleteFoldersMacOs Include="$(PUBLISH_FOLDER_SFX)\runtimes\win-arm64"/>
             <DeleteFoldersMacOs Include="$(PUBLISH_FOLDER_SFX)\runtimes\linux-x64"/>
+            <DeleteFoldersMacOs Include="$(PUBLISH_FOLDER_SFX)\runtimes\linux-arm"/>
+            <DeleteFoldersMacOs Include="$(PUBLISH_FOLDER_SFX)\runtimes\linux-arm64"/>
+            <DeleteFoldersMacOs Include="$(PUBLISH_FOLDER_SFX)\runtimes\linux-musl-x64"/>
 
             <DeleteFolders32bit Include="$(PUBLISH_FOLDER_SFX)\x64"/>
 
