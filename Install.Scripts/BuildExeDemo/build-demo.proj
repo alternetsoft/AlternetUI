@@ -4,17 +4,22 @@
 <PropertyGroup>
   <OSARCH>$([System.Runtime.InteropServices.RuntimeInformation]::OSArchitecture)</OSARCH>
   <IsLinuxX64 Condition="$([MSBuild]::IsOsPlatform('Linux')) And $(OSARCH) == X64">true</IsLinuxX64>
+  <IsLinuxArm64 Condition="$([MSBuild]::IsOsPlatform('Linux')) And $(OSARCH) == Arm64">true</IsLinuxArm64>
   <IsOsxArm64 Condition="$([MSBuild]::IsOsPlatform('OSX')) And $(OSARCH) == Arm64">true</IsOsxArm64>
   <IsOsxX64 Condition="$([MSBuild]::IsOsPlatform('OSX')) And $(OSARCH) == X64">true</IsOsxX64>
   <IsWindowsX64 Condition="$([MSBuild]::IsOsPlatform('Windows')) And $(OSARCH) == X64">true</IsWindowsX64>
+  <IsWindowsArm64 Condition="$([MSBuild]::IsOsPlatform('Windows')) And $(OSARCH) == Arm64">true</IsWindowsArm64>
 </PropertyGroup>
 
 	<PropertyGroup>
 		<SCRIPT_HOME>$(MSBuildProjectDirectory)</SCRIPT_HOME>
 		<SOURCE_HOME>$(SCRIPT_HOME)\..\..\Source</SOURCE_HOME>
 		<ALTERNET_HOME>$(SCRIPT_HOME)\..\..\</ALTERNET_HOME>
-		<SAMPLES_HOME>$(SOURCE_HOME)\Samples</SAMPLES_HOME>
-		<DEMO_HOME>$(SAMPLES_HOME)\ControlsSample</DEMO_HOME>
+
+		<DemoPathControlsSample>$(SOURCE_HOME)\Samples\ControlsSample</DemoPathControlsSample>
+
+		<DEMO_HOME Condition="$(DEMO_HOME)==''">$(DemoPathControlsSample)</DEMO_HOME>
+
 		<DEMO_HOME_BIN>$(DEMO_HOME)\bin</DEMO_HOME_BIN>
 		<DEMO_HOME_OBJ>$(DEMO_HOME)\obj</DEMO_HOME_OBJ>
 		<DEMO_HOME_BIN_RELEASE>$(DEMO_HOME)\bin\Release</DEMO_HOME_BIN_RELEASE>
@@ -34,7 +39,6 @@
 		<SCRIPT_HOME>$([System.IO.Path]::GetFullPath('$(SCRIPT_HOME)'))</SCRIPT_HOME>
 		<SOURCE_HOME>$([System.IO.Path]::GetFullPath('$(SOURCE_HOME)'))</SOURCE_HOME>
 		<ALTERNET_HOME>$([System.IO.Path]::GetFullPath('$(ALTERNET_HOME)'))</ALTERNET_HOME>
-		<SAMPLES_HOME>$([System.IO.Path]::GetFullPath('$(SAMPLES_HOME)'))</SAMPLES_HOME>
 		<DEMO_HOME>$([System.IO.Path]::GetFullPath('$(DEMO_HOME)'))</DEMO_HOME>
 		<DEMO_HOME_BIN>$([System.IO.Path]::GetFullPath('$(DEMO_HOME_BIN)'))</DEMO_HOME_BIN>
 		<DEMO_HOME_OBJ>$([System.IO.Path]::GetFullPath('$(DEMO_HOME_OBJ)'))</DEMO_HOME_OBJ>
@@ -60,7 +64,6 @@
 		<Message Text="SCRIPT_HOME: $(SCRIPT_HOME)" Importance="high" />
 		<Message Text="SOURCE_HOME: $(SOURCE_HOME)" Importance="high" />
 		<Message Text="ALTERNET_HOME: $(ALTERNET_HOME)" Importance="high" />
-		<Message Text="SAMPLES_HOME: $(SAMPLES_HOME)" Importance="high" />
 		<Message Text="DEMO_HOME: $(DEMO_HOME)" Importance="high" />
 		<Message Text="DEMO_HOME_BIN: $(DEMO_HOME_BIN)" Importance="high" />
 		<Message Text="DEMO_HOME_OBJ: $(DEMO_HOME_OBJ)" Importance="high" />
@@ -100,7 +103,8 @@
 
 		<Message Text="===========================================" Importance="high" />
 		<Message Text="Getting demo version..." Importance="high" />
-		<Exec Command="$(VERSIONTOOL_PREFIX) get-version" ConsoleToMSBuild="true">
+
+		<Exec Command="$(VERSIONTOOL_PREFIX) get-version" ConsoleToMSBuild="true" Condition="$(VERSION_SUFFIX)==''">
   			<Output TaskParameter="ConsoleOutput" PropertyName="VERSION_SUFFIX" />
 		</Exec>
 
@@ -181,6 +185,7 @@
             <DeleteFilesWindows Include="$(PUBLISH_FOLDER_SFX)\**\*.dylib"/>
             <DeleteFilesWindows Include="$(PUBLISH_FOLDER_SFX)\*.dylib"/>
 
+            <DeleteFoldersAnyPlatform Include="$(PUBLISH_FOLDER_SFX)\Edge"/>
             <DeleteFoldersAnyPlatform Include="$(PUBLISH_FOLDER_SFX)\runtimes\linux-arm"/>
             <DeleteFoldersAnyPlatform Include="$(PUBLISH_FOLDER_SFX)\runtimes\linux-arm64"/>
             <DeleteFoldersAnyPlatform Include="$(PUBLISH_FOLDER_SFX)\runtimes\linux-musl-x64"/>

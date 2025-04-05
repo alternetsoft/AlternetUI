@@ -93,7 +93,7 @@ namespace Alternet.UI
         /// <returns>The created separator item.</returns>
         public virtual MenuItem AddSeparator()
         {
-            MenuItem item  = new("-");
+            MenuItem item = new("-");
             Items.Add(item);
             return item;
         }

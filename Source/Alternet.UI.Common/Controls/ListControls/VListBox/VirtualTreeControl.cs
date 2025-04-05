@@ -136,7 +136,6 @@ namespace Alternet.UI
             }
         }
 
-
         /// <summary>
         /// Gets the root item of the tree view.
         /// </summary>
