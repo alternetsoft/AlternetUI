@@ -84,7 +84,9 @@ namespace ControlsSample
                     = ListControlItem.CheckBoxSizeOverride.Value + incValue;
                 }
 
+#if DEBUG
                 Graphics.DebugElementId = treeView.RootItem.FirstChild?.UniqueId;
+#endif
                 treeView.Invalidate();
             });
             treeView.ContextMenu.Add("Toggle enabled", () =>
