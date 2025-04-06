@@ -80,9 +80,6 @@
     <EmbeddedResource Include="Content\newfile-scripts.html">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </EmbeddedResource>
-    <EmbeddedResource Include="Content\newfile-small.cs">
-      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
-    </EmbeddedResource>
     <EmbeddedResource Include="Content\newfile.cs">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </EmbeddedResource>
@@ -105,26 +102,21 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference
-      Include="$(StudioPath)\Demo\Editor.AlternetUI\AllDemos\EditorUI\EditorUI.Dll.csproj" />
-    <ProjectReference
-      Include="$(StudioPath)\Source\Parsers\Roslyn\Alternet.Syntax.Parsers.Roslyn.csproj" />
+    <ProjectReference Include="$(StudioPath)\Demo\Editor.AlternetUI\AllDemos\EditorUI\EditorUI.Dll.csproj" />
+    <ProjectReference Include="$(StudioPath)\Source\Parsers\Roslyn\Alternet.Syntax.Parsers.Roslyn.csproj" />
     <ProjectReference Include="..\..\Alternet.UI.Maui\Alternet.UI.Maui.csproj" />
 
-    <ProjectReference
-      Include="$(StudioPath)\Source\Common.AlternetUI\Alternet.Common.AlternetUI.csproj" />
+    <ProjectReference Include="$(StudioPath)\Source\Common.AlternetUI\Alternet.Common.AlternetUI.csproj" />
     <ProjectReference Include="$(StudioPath)\Source\Common\Alternet.Common.csproj" />
     <ProjectReference Include="$(StudioPath)\Source\Editor.MAUI\Alternet.Editor.MAUI.csproj" />
     <ProjectReference Include="$(StudioPath)\Source\Editor\Alternet.Editor.AlternetUI.csproj" />
     <ProjectReference Include="$(StudioPath)\Source\Parsers\Alternet.Syntax.csproj" />
-    <ProjectReference
-      Include="$(StudioPath)\Source\Parsers\Advanced\Alternet.Syntax.Parsers.Advanced.csproj" />
+    <ProjectReference Include="$(StudioPath)\Source\Parsers\Advanced\Alternet.Syntax.Parsers.Advanced.csproj" />
   </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="Microsoft.Maui.Controls" Version="$(MicrosoftMauiVersion)" />
-    <PackageReference Include="Microsoft.Maui.Controls.Compatibility" 
-                      Version="$(MicrosoftMauiVersion)" />
+    <PackageReference Include="Microsoft.Maui.Controls.Compatibility" Version="$(MicrosoftMauiVersion)" />
     <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="9.0.0" />
     <PackageReference Include="SkiaSharp.Views.Maui.Controls" Version="$(SkiaSharpVersion)" />
   </ItemGroup>
