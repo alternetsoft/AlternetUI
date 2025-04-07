@@ -217,7 +217,16 @@ namespace Alternet.UI
 
             set
             {
-                Handler.Visible = value;
+                if (Visible == value)
+                    return;
+
+                if(control?.Value?.ContainsFocus ?? false)
+                {
+                    Handler.Visible = value;
+                }
+                else
+                {
+                }
             }
         }
 

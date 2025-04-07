@@ -26,7 +26,7 @@ namespace Alternet.UI
         /// <param name="image">The <see cref="Image" /> to display on the control.</param>
         /// <param name="onClick">An event handler that raises the <see cref="AbstractControl.Click" />
         /// event when the control is clicked.</param>
-        public ToolStripMenuItem(string text, Image image, EventHandler onClick)
+        public ToolStripMenuItem(string text, Image? image, EventHandler onClick)
             : base(text, image, onClick)
         {
         }
