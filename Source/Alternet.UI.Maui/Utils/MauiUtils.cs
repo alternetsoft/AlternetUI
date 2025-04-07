@@ -156,9 +156,6 @@ namespace Alternet.UI
             }
         }
 
-#if WINDOWS
-#endif
-
         /// <summary>
         /// Debug related method. Do not use directly.
         /// </summary>
@@ -245,6 +242,8 @@ namespace Alternet.UI
                 ? WindowSoftInputModeAdjust.Resize : WindowSoftInputModeAdjust.Pan;
             Microsoft.Maui.Controls.PlatformConfiguration.AndroidSpecific
                 .Application.SetWindowSoftInputModeAdjust(window, value);
+#elif IOS || MACCATALYST
+#elif WINDOWS
 #endif
         }
 
@@ -469,6 +468,43 @@ namespace Alternet.UI
                 foreach (var element in elements)
                     yield return element;
             }
+        }
+
+        /// <summary>
+        /// Gets the current page of the first window in the application.
+        /// </summary>
+        /// <returns>The current page of the first window, or null if no windows are available.</returns>
+        public static Page? GetFirstWindowPage()
+        {
+            var windows = Application.Current?.Windows;
+
+            if (windows is null || windows.Count == 0)
+                return null;
+
+            return windows[0].Page;
+        }
+
+        /// <summary>
+        /// Gets the page that contains the specified view.
+        /// </summary>
+        /// <param name="view">The view to find the containing page for.</param>
+        /// <returns>The page that contains the specified view, or the first
+        /// window's current page if no containing page is found.</returns>
+        public static Page? GetPage(View? view)
+        {
+            var parent = view?.Parent;
+            while (parent is not null && parent is not Page)
+            {
+                parent = parent.Parent;
+            }
+
+            var page = parent as Page;
+
+            if (page is not null)
+                return page;
+
+            page = GetFirstWindowPage();
+            return page;
         }
 
         /// <summary>
