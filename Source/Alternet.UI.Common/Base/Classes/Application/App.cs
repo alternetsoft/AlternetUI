@@ -79,9 +79,14 @@ namespace Alternet.UI
         public static readonly bool IsIOS;
 
         /// <summary>
-        /// Gets the log queue.
+        /// Gets the log queue. See also <see cref="UseLogQueue"/>.
         /// </summary>
         public static readonly ConcurrentQueue<LogUtils.LogItem> LogQueue = new();
+
+        /// <summary>
+        /// Gets whether <see cref="LogQueue"/> is used for saving the logged items. Default is false;
+        /// </summary>
+        public static bool UseLogQueue = false;
 
         /// <summary>
         /// Gets device the app is running on, such as a desktop computer or a tablet.
@@ -1187,15 +1192,19 @@ namespace Alternet.UI
             ListControlItem item,
             LogItemKind kind = LogItemKind.Information)
         {
-            AddLogItem(new(item, kind));
+            AddLogItem(new(item, kind), false);
         }
 
         /// <summary>
-        /// Calls <see cref="LogMessage"/> event.
+        /// Calls <see cref="Log"/> and waits until it completes its execution.
         /// </summary>
         /// <param name="obj">Message text or object to log.</param>
         /// <param name="kind">Message kind.</param>
-        public static void Log(object? obj, LogItemKind kind = LogItemKind.Information)
+        /// <param name="wait">Whether to wait until log operation completes its execution.</param>
+        public static void LogAndWait(
+            object? obj,
+            LogItemKind kind = LogItemKind.Information,
+            bool wait = false)
         {
             try
             {
@@ -1207,19 +1216,28 @@ namespace Alternet.UI
                 if (msg is null)
                     return;
 
-                AddBackgroundAction(() =>
+                void Internal()
                 {
                     string[] result = LogUtils.LogToExternalIfAllowed(msg, kind);
 
-                    if(LogMessage is not null)
+                    if (LogMessage is not null)
                     {
                         foreach (string s2 in result)
                         {
                             var item = new LogUtils.LogItem(s2, kind);
-                            AddLogItem(item);
+                            AddLogItem(item, wait);
                         }
                     }
-                });
+                }
+
+                if (wait)
+                {
+                    Invoke(Internal);
+                }
+                else
+                {
+                    AddBackgroundAction(Internal);
+                }
             }
             catch
             {
@@ -1227,17 +1245,37 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Calls <see cref="LogMessage"/> event.
+        /// </summary>
+        /// <param name="obj">Message text or object to log.</param>
+        /// <param name="kind">Message kind.</param>
+        public static void Log(object? obj, LogItemKind kind = LogItemKind.Information)
+        {
+            LogAndWait(obj, kind, false);
+        }
+
+        /// <summary>
         /// Adds log item.
         /// </summary>
-        /// <param name="item"></param>
-        public static void AddLogItem(LogUtils.LogItem item)
+        public static void AddLogItem(LogUtils.LogItem item, bool wait)
         {
-            LogQueue.Enqueue(item);
+            if(UseLogQueue)
+                LogQueue.Enqueue(item);
 
-            AddBackgroundInvokeAction(() =>
+            if(wait)
             {
-                LogToEvent(item);
-            });
+                Invoke(() =>
+                {
+                    LogToEvent(item);
+                });
+            }
+            else
+            {
+                AddBackgroundInvokeAction(() =>
+                {
+                    LogToEvent(item);
+                });
+            }
         }
 
         /// <summary>
