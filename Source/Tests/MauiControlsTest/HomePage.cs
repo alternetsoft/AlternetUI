@@ -4,8 +4,6 @@ namespace AllQuickStarts;
 
 public partial class HomePage : ContentPage
 {
-    private readonly Alternet.Maui.WaitContentPage waitPage = new();
-
     static HomePage()
     {
     }
@@ -49,19 +47,8 @@ public partial class HomePage : ContentPage
         var button = new Button { Text = text, Margin = 10 };
         button.Clicked += async (s, e) =>
         {
-            await Dispatcher.DispatchAsync(() =>
-            {
-                return Navigation.PushAsync(waitPage);
-            });
             var page = Activator.CreateInstance(type) as Page;
             await Navigation.PushAsync(page);
-            try
-            {
-            }
-            finally
-            {
-                Navigation.RemovePage(waitPage);
-            }
         };
 
         (Content as Layout)?.Add(button);

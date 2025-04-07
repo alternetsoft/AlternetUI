@@ -9,7 +9,7 @@ namespace Alternet.Maui;
 /// <summary>
 /// <see cref="ContentPage"/> descendant with 'Please wait' label.
 /// </summary>
-public partial class WaitContentPage : Alternet.UI.DisposableContentPage
+internal partial class WaitContentPage : Alternet.UI.DisposableContentPage
 {
     private static WaitContentPage? defaultPage;
 

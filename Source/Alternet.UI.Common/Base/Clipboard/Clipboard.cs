@@ -258,9 +258,9 @@ namespace Alternet.UI
         /// Adds a text string to the data object in the
         /// <see cref="DataFormats.Text"/> format.
         /// </summary>
-        public static void SetText(string value)
+        public static void SetText(string? value)
         {
-            SetData(DataFormats.Text, value);
+            SetData(DataFormats.Text, value ?? string.Empty);
         }
 
         /// <summary>
