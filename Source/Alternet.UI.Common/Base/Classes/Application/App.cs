@@ -1514,7 +1514,10 @@ namespace Alternet.UI
         /// These two calls can be nested, and a counter ensures that only the outer calls take effect.
         /// </remarks>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static void BeginBusyCursor() => Cursor.Factory.BeginBusyCursor();
+        public static void BeginBusyCursor()
+        {
+            Invoke(Cursor.Factory.BeginBusyCursor);
+        }
 
         /// <summary>
         /// Changes the cursor back to the original cursor, for all windows in the application.
@@ -1523,7 +1526,10 @@ namespace Alternet.UI
         /// Use with <see cref="BeginBusyCursor"/> and <see cref="IsBusyCursor"/>.
         /// </remarks>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static void EndBusyCursor() => Cursor.Factory.EndBusyCursor();
+        public static void EndBusyCursor()
+        {
+            Invoke(Cursor.Factory.EndBusyCursor);
+        }
 
         /// <summary>
         /// Executes <paramref name="action"/> between calls to <see cref="BeginBusyCursor"/>
