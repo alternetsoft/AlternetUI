@@ -8,10 +8,21 @@ namespace Alternet.UI.Threading
     /// <summary>
     /// Implements background tasks queue.
     /// </summary>
-    public class BackgroundTaskQueue
+    public class BackgroundTaskQueue : BaseObject
     {
         private readonly ConcurrentQueue<Func<Task>> tasks = new ();
         private readonly SemaphoreSlim signal = new (0);
+
+        /// <summary>
+        /// Gets a value indicating whether the queue has tasks.
+        /// </summary>
+        public virtual bool HasTasks
+        {
+            get
+            {
+                return !tasks.IsEmpty;
+            }
+        }
 
         /// <summary>
         /// Enqueue a task.
