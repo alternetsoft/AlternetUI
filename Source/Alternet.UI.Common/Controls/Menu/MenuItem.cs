@@ -55,10 +55,12 @@ namespace Alternet.UI
         /// <param name="onClick">An event handler that raises the
         /// <see cref="AbstractControl.Click" />
         /// event when the control is clicked.</param>
-        public MenuItem(string? text, Image image, EventHandler onClick)
+        public MenuItem(string? text, Image? image, EventHandler onClick)
             : this()
         {
             Text = text ?? string.Empty;
+            if(image is not null)
+                Image = new ImageSet(image);
             Click += onClick;
         }
 
