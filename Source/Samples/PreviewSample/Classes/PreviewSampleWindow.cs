@@ -177,7 +177,7 @@ namespace PreviewSample
                 return;
             }
 
-            App.LogIf($"Preview: {item.Path}", true);
+            App.LogIf($"Preview: {item.Path}", false);
 
             preview.FileName = item.Path;
 

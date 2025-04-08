@@ -9,7 +9,7 @@ using Alternet.Drawing;
 namespace Alternet.UI
 {
     /// <summary>
-    /// Contains urls for svg images that are included in Alternet.UI.dll resources.
+    /// Contains urls for svg images that are included in the library resources.
     /// </summary>
     public static class KnownSvgUrls
     {
@@ -373,14 +373,24 @@ namespace Alternet.UI
             GetImageUrl("alternet-ellipsis");
 
         /// <summary>
-        /// Gets or sets url used to load generic file icon.
+        /// Gets or sets url used to load regular file icon.
         /// </summary>
         public static string UrlIconFile { get; set; } = GetImageUrl("alternet-file");
 
         /// <summary>
-        /// Gets or sets url used to load generic folder icon.
+        /// Gets or sets url used to load solid file icon.
+        /// </summary>
+        public static string UrlIconFileSolid { get; set; } = GetImageUrl("alternet-file-solid");
+
+        /// <summary>
+        /// Gets or sets url used to load regular folder icon.
         /// </summary>
         public static string UrlIconFolder { get; set; } = GetImageUrl("alternet-folder");
+
+        /// <summary>
+        /// Gets or sets url used to load solid folder icon.
+        /// </summary>
+        public static string UrlIconFolderSolid { get; set; } = GetImageUrl("alternet-folder-solid");
 
         private static string GetImageUrl(string name) => string.Format(ResTemplate, name);
     }

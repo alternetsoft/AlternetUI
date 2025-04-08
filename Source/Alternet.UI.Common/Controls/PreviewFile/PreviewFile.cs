@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+using Alternet.Drawing;
 using Alternet.UI.Localization;
 
 namespace Alternet.UI
@@ -47,6 +48,8 @@ namespace Alternet.UI
         /// </summary>
         public PreviewFile()
         {
+            BackColor = SystemColors.Window;
+            ForeColor = SystemColors.WindowText;
             cardPanel.Parent = this;
             label.Text = CommonStrings.Default.SelectFileToPreview;
             cardPanel.Add(null, label);

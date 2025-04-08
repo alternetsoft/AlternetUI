@@ -53,14 +53,46 @@ namespace Alternet.UI
         public static string DriveItemTemplate = "{0}";
 
         /// <summary>
+        /// Gets or sets a value indicating whether to use solid default images
+        /// for folder items when <see cref="DefaultFolderImage"/> not specified.
+        /// </summary>
+        public static bool UseSolidFolderDefaultImages = true;
+
+        /// <summary>
+        /// Gets or sets a value indicating whether to use solid default images
+        /// for file items when <see cref="DefaultFileImage"/> not specified.
+        /// </summary>
+        public static bool UseSolidFileDefaultImages = false;
+
+        /// <summary>
         /// Gets or sets default svg image used for the "file" items.
         /// </summary>
-        public static SvgImage? DefaultFileImage = new MonoSvgImage(KnownSvgUrls.UrlIconFile);
+        public static SvgImage? DefaultFileImage;
 
         /// <summary>
         /// Gets or sets default svg image used for the "folder" items.
         /// </summary>
-        public static SvgImage? DefaultFolderImage = new MonoSvgImage(KnownSvgUrls.UrlIconFolder);
+        public static SvgImage? DefaultFolderImage;
+
+        /// <summary>
+        /// Gets or sets a function that provides a color override for file icons.
+        /// This function returns a <see cref="LightDarkColor"/> object, which specifies
+        /// the color to be used for file icons in light and dark themes.
+        /// </summary>
+        public static Func<LightDarkColor?>? FileImageColorOverride = () =>
+        {
+            return null;
+        };
+
+        /// <summary>
+        /// Gets or sets a function that provides a color override for folder icons.
+        /// This function returns a <see cref="LightDarkColor"/> object, which specifies
+        /// the color to be used for file icons in light and dark themes.
+        /// </summary>
+        public static Func<LightDarkColor?>? FolderImageColorOverride = () =>
+        {
+            return LightDarkColors.Yellow;
+        };
 
         private string? selectedFolder;
         private string searchPattern = "*";
@@ -299,7 +331,7 @@ namespace Alternet.UI
                 {
                     var rootFolderItem = new FileListBoxItem("/", null);
                     rootFolderItem.DoubleClickAction = RootFolderAction;
-                    rootFolderItem.SvgImage = DefaultFolderImage;
+                    rootFolderItem.SvgImage = GetFolderImage();
                     Add(rootFolderItem);
                 }
 
@@ -307,7 +339,7 @@ namespace Alternet.UI
                 {
                     var upperFolderItem = new FileListBoxItem("..", null);
                     upperFolderItem.DoubleClickAction = UpperFolderAction;
-                    upperFolderItem.SvgImage = DefaultFolderImage;
+                    upperFolderItem.SvgImage = GetFolderImage();
                     Add(upperFolderItem);
                 }
 
@@ -352,6 +384,34 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets the default SVG image used for file items.
+        /// If <see cref="DefaultFileImage"/> is not set, a known default file icon is returned.
+        /// </summary>
+        /// <returns>The SVG image representing a file icon.</returns>
+        public virtual SvgImage? GetFileImage()
+        {
+            var result = DefaultFileImage
+                ?? (UseSolidFileDefaultImages
+                ? KnownSvgImages.ImgIconFileSolid : KnownSvgImages.ImgIconFile);
+            result.SetColorOverride(KnownSvgColor.Normal, FileImageColorOverride?.Invoke());
+            return result;
+        }
+
+        /// <summary>
+        /// Gets the default SVG image used for folder items.
+        /// If <see cref="DefaultFolderImage"/> is not set, a known default folder icon is returned.
+        /// </summary>
+        /// <returns>The SVG image representing a folder icon.</returns>
+        public virtual SvgImage? GetFolderImage()
+        {
+            var result = DefaultFolderImage
+                ?? (UseSolidFolderDefaultImages
+                ? KnownSvgImages.ImgIconFolderSolid : KnownSvgImages.ImgIconFolder);
+            result.SetColorOverride(KnownSvgColor.Normal, FolderImageColorOverride?.Invoke());
+            return result;
+        }
+
+        /// <summary>
         /// Adds file to the control.
         /// </summary>
         /// <param name="title">Optional title of the file.</param>
@@ -362,7 +422,7 @@ namespace Alternet.UI
         {
             if (string.IsNullOrEmpty(path))
                 return false;
-            image ??= DefaultFileImage;
+            image ??= GetFileImage();
             title ??= Path.GetFileName(path);
             var item = new FileListBoxItem(title, path);
             item.SvgImage = image;
@@ -401,7 +461,7 @@ namespace Alternet.UI
         {
             if (string.IsNullOrEmpty(path))
                 return false;
-            image ??= DefaultFolderImage;
+            image ??= GetFolderImage();
             title ??= Path.GetFileName(path);
             var item = new FileListBoxItem(title, path);
             item.DoubleClickAction = FolderAction;
