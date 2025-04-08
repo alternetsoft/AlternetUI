@@ -81,6 +81,47 @@ namespace Alternet.UI
         private static SvgImage? imgEyeOff;
         private static SvgImage? imgSearch;
 
+        private static SvgImage? imgIconFile;
+        private static SvgImage? imgIconFileSolid;
+        private static SvgImage? imgIconFolder;
+        private static SvgImage? imgIconFolderSolid;
+
+        /// <summary>
+        /// Gets or sets image for the regular file icon.
+        /// </summary>
+        public static SvgImage ImgIconFile
+        {
+            get => imgIconFile ??= new MonoSvgImage(KnownSvgUrls.UrlIconFile);
+            set => imgIconFile = value;
+        }
+
+        /// <summary>
+        /// Gets or sets image for the solid file icon.
+        /// </summary>
+        public static SvgImage ImgIconFileSolid
+        {
+            get => imgIconFileSolid ??= new MonoSvgImage(KnownSvgUrls.UrlIconFileSolid);
+            set => imgIconFileSolid = value;
+        }
+
+        /// <summary>
+        /// Gets or sets image for the solid folder icon.
+        /// </summary>
+        public static SvgImage ImgIconFolderSolid
+        {
+            get => imgIconFolderSolid ??= new MonoSvgImage(KnownSvgUrls.UrlIconFolderSolid);
+            set => imgIconFolderSolid = value;
+        }
+
+        /// <summary>
+        /// Gets or sets image for the regular folder icon.
+        /// </summary>
+        public static SvgImage ImgIconFolder
+        {
+            get => imgIconFolder ??= new MonoSvgImage(KnownSvgUrls.UrlIconFolder);
+            set => imgIconFolder = value;
+        }
+
         /// <summary>
         /// Gets or sets 'Eye On' image.
         /// </summary>
