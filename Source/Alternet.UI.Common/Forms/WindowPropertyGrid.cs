@@ -77,7 +77,7 @@ namespace Alternet.UI
                 disposable.Disposed += defaultWindow.Disposable_Disposed;
             }
 
-            defaultWindow.Show();
+            defaultWindow.ShowAndFocus();
             return defaultWindow;
         }
 

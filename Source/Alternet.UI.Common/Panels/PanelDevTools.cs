@@ -231,7 +231,7 @@ namespace Alternet.UI
             }
         }
 
-        public static void CreateDeveloperTools()
+        public static WindowDevTools GetOrCreateDeveloperTools()
         {
             if (devToolsWindow is null)
             {
@@ -239,6 +239,8 @@ namespace Alternet.UI
                 devToolsWindow.Closing += DevToolsWindow_Closing;
                 devToolsWindow.Disposed += DevToolsWindow_Disposed;
             }
+
+            return devToolsWindow;
 
             static void DevToolsWindow_Closing(object? sender, WindowClosingEventArgs e)
             {
@@ -255,9 +257,7 @@ namespace Alternet.UI
         /// </summary>
         public static void ShowDeveloperTools()
         {
-            CreateDeveloperTools();
-
-            devToolsWindow!.Show();
+            GetOrCreateDeveloperTools().ShowAndFocus();
         }
 
         /// <summary>

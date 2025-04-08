@@ -41,7 +41,7 @@ namespace Alternet.UI
         /// </summary>
         public static void CreateDeveloperTools()
         {
-            PanelDevTools.CreateDeveloperTools();
+            PanelDevTools.GetOrCreateDeveloperTools();
         }
 
         /// <summary>
@@ -159,7 +159,7 @@ namespace Alternet.UI
         public static void ShowTestActionsDialog()
         {
             testActionsWindow ??= new();
-            testActionsWindow.Show();
+            testActionsWindow.ShowAndFocus();
         }
 
         /// <summary>
