@@ -24,6 +24,7 @@ namespace Alternet.UI
 
         static MauiApplicationHandler()
         {
+            App.SetUnhandledExceptionModes(UnhandledExceptionMode.CatchWithThrow);
             DeviceDisplay.MainDisplayInfoChanged += DeviceDisplay_MainDisplayInfoChanged;
             App.WakeUpIdleWithTimer = false;
         }
