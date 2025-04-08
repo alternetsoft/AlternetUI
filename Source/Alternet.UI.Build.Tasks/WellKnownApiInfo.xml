@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ApiInfo>
-  <Assembly Name="Alternet.UI.Common, Version=0.9.719.0, Culture=neutral, PublicKeyToken=7fb0fe57212b4b74">
+  <Assembly Name="Alternet.UI.Common, Version=0.9.720.0, Culture=neutral, PublicKeyToken=7fb0fe57212b4b74">
     <Type Name="XamlX.Runtime.IXamlParentStackProviderV1" />
     <Type Name="XamlX.Runtime.IXamlXmlNamespaceInfoProviderV1" />
     <Type Name="XamlX.Runtime.XamlXmlNamespaceInfoV1" />
@@ -578,7 +578,13 @@
     <Type Name="Alternet.UI.ListViewItemCell">
       <Event Name="PropertyChanged" />
     </Type>
+    <Type Name="Alternet.UI.ITreeControlItemContainer" />
+    <Type Name="Alternet.UI.TreeControlCancelEventArgs" />
+    <Type Name="Alternet.UI.TreeControlEventArgs" />
     <Type Name="Alternet.UI.TreeControlItem">
+      <Event Name="PropertyChanged" />
+    </Type>
+    <Type Name="Alternet.UI.TreeControlRootItem">
       <Event Name="PropertyChanged" />
     </Type>
     <Type Name="Alternet.UI.TreeViewItem">
@@ -758,6 +764,7 @@
     <Type Name="Alternet.UI.TextBoxTextAttrUnderlineType" />
     <Type Name="Alternet.UI.TextBoxTextWrap" />
     <Type Name="Alternet.UI.TreeViewButtonsKind" />
+    <Type Name="Alternet.UI.TreeViewCreateStyle" />
     <Type Name="Alternet.UI.TreeViewHitTestLocations" />
     <Type Name="Alternet.UI.TreeViewSelectionMode" />
     <Type Name="Alternet.UI.ValueValidatorKind" />
@@ -7139,6 +7146,13 @@
       <Event Name="PropertyChanged" />
     </Type>
     <Type Name="Alternet.UI.VirtualTreeControl">
+      <Event Name="ItemAdded" />
+      <Event Name="ItemRemoved" />
+      <Event Name="AfterExpand" />
+      <Event Name="AfterCollapse" />
+      <Event Name="BeforeExpand" />
+      <Event Name="BeforeCollapse" />
+      <Event Name="ExpandedChanged" />
       <Event Name="DrawItem" />
       <Event Name="MeasureItem" />
       <Event Name="CheckedChanged" />
@@ -8080,12 +8094,13 @@
     </Type>
     <Type Name="Alternet.UI.ComponentDesigner">
       <Event Name="MouseLeftButtonDown" />
-      <Event Name="PropertyChanged" />
+      <Event Name="ObjectPropertyChanged" />
       <Event Name="ControlGotFocus" />
       <Event Name="ControlCreated" />
       <Event Name="ControlDisposed" />
       <Event Name="ControlParentChanged" />
       <Event Name="Disposed" />
+      <Event Name="PropertyChanged" />
     </Type>
     <Type Name="Alternet.UI.ControlFactory" />
     <Type Name="Alternet.UI.GroupBox">
@@ -11484,7 +11499,6 @@
       <Event Name="PropertyChanged" />
     </Type>
     <Type Name="Alternet.UI.TreeViewCancelEventArgs" />
-    <Type Name="Alternet.UI.TreeViewCreateStyle" />
     <Type Name="Alternet.UI.TreeViewEditEventArgs" />
     <Type Name="Alternet.UI.TreeViewEventArgs" />
     <Type Name="Alternet.UI.TreeViewHitTestInfo" />
@@ -12526,7 +12540,7 @@
     <Type Name="Alternet.UI.IToolTipFactoryHandler" />
     <Type Name="Alternet.UI.IWebBrowserFactoryHandler" />
     <Type Name="Alternet.UI.IComponentDesigner">
-      <Event Name="PropertyChanged" />
+      <Event Name="ObjectPropertyChanged" />
       <Event Name="MouseLeftButtonDown" />
       <Event Name="ControlGotFocus" />
       <Event Name="ControlCreated" />
@@ -13379,6 +13393,7 @@
     <Type Name="Alternet.UI.UixmlLoader+Flags" />
     <Type Name="Alternet.UI.Command+CanExecuteDelegate" />
     <Type Name="Alternet.UI.Command+ExecuteDelegate" />
+    <Type Name="Alternet.UI.ListControlItem+ItemCheckBoxInfo" />
     <Type Name="Alternet.UI.ListViewColumn+ColumnEventType" />
     <Type Name="Alternet.UI.TreeControlItem+EnumExpandedItemsParams" />
     <Type Name="Alternet.UI.KnownShortcuts+FindReplaceControlKeys" />

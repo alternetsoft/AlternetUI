@@ -1,3 +1,14 @@
+# 0.9.720 (2025 April 8)
+
+- Added VirtualTreeControl. It represents a tree control that inherits from VirtualListBox. 
+See sample in ```Source\Samples\ControlsSampleDll\Pages\ListControls\ListBoxAsTreeWindow.cs```.
+- VirtualListBox: Fixed svg checkboxes color in selected state.
+- VirtualListBox: Fixed svg check size to fit into item.
+- AbstractControl.UseSmallImages, Menu.AddSeparator().
+- TreeControlItem: FirstChild, LastChild.
+- App: BeginBusyCusros/EndBusyCursor are now thread safe.
+- Caret: Fix internal cpp exception in some cases.
+
 # 0.9.719 (2025 March 30)
 
 - Added support for Linux ARM64 platform.
