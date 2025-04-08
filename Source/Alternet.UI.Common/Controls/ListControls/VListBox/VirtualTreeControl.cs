@@ -7,7 +7,6 @@ namespace Alternet.UI
 {
     /// <summary>
     /// Represents a tree control that inherits from <see cref="VirtualListBox"/>.
-    /// This control is under development, please do not use it.
     /// </summary>
     public partial class VirtualTreeControl : VirtualListBox, ITreeControlItemContainer
     {
