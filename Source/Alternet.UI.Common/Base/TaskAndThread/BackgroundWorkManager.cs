@@ -10,7 +10,7 @@ namespace Alternet.UI.Threading
     /// Use <see cref="Start"/> and <see cref="Stop"/> methods to control
     /// background worker execution.
     /// </summary>
-    public class BackgroundWorkManager
+    public class BackgroundWorkManager : BaseObject
     {
         private static readonly object defaultWorkerLocker = new();
         private static BackgroundWorkManager? defaultWorker;
@@ -88,7 +88,10 @@ namespace Alternet.UI.Threading
                         }
                         catch (Exception ex)
                         {
-                            Console.WriteLine($"Error executing task: {ex}");
+                            Invoke(() =>
+                            {
+                                App.OnThreadException(ex);
+                            });
                         }
                     }
                 }

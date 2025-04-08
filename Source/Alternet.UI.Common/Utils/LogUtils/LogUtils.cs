@@ -273,6 +273,9 @@ namespace Alternet.UI
             LogItemKind kind = LogItemKind.Error,
             bool allowReplace = false)
         {
+            if (e == App.LastUnhandledException)
+                return;
+
             var asString = e.ToString();
 
             if (e is BaseException baseException)

@@ -1899,13 +1899,13 @@ namespace Alternet.UI
                 if (LastUnhandledException == exception)
                     return;
 
-                LastUnhandledException = exception;
-                LastUnhandledExceptionThrown = false;
-
                 if (LogUnhandledThreadException)
                 {
                     LogUtils.LogException(exception);
                 }
+
+                LastUnhandledException = exception;
+                LastUnhandledExceptionThrown = false;
 
                 var mode = GetUnhandledExceptionMode();
 
