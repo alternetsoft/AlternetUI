@@ -68,7 +68,7 @@ namespace Alternet.UI
             void Fn()
             {
                 var form = createForm();
-                form.Show();
+                form.ShowAndFocus();
             }
         }
 

@@ -326,7 +326,7 @@ namespace Alternet.UI
                     Recreate();
                 else
                 {
-                    target.Show();
+                    target.ShowAndFocus();
                 }
             }
             else

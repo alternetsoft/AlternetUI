@@ -182,6 +182,18 @@ namespace Alternet.UI.Tests
         /// Test method for the internal purposes.
         /// </summary>
         [Conditional("DEBUG")]
+        public static void TestExceptionInBackgroundTask()
+        {
+            App.AddBackgroundAction(() =>
+            {
+                throw new Exception("This is test exception");
+            });
+        }
+
+        /// <summary>
+        /// Test method for the internal purposes.
+        /// </summary>
+        [Conditional("DEBUG")]
         public static void TestBitArray64()
         {
             BitArray64 value = new();

@@ -472,14 +472,25 @@ namespace Alternet.UI
         /// Gets how the application responds to unhandled exceptions.
         /// Use <see cref="SetUnhandledExceptionMode"/> to change this property.
         /// </summary>
-        public static UnhandledExceptionMode UnhandledExceptionMode => unhandledExceptionMode;
+        public static UnhandledExceptionMode UnhandledExceptionMode
+        {
+            get
+            {
+                return unhandledExceptionMode;
+            }
+        }
 
         /// <summary>
         /// Gets how the application responds to unhandled exceptions (if debugger is attached).
         /// Use <see cref="SetUnhandledExceptionModeIfDebugger"/> to change this property.
         /// </summary>
         public static UnhandledExceptionMode UnhandledExceptionModeIfDebugger
-            => unhandledExceptionModeDebug;
+        {
+            get
+            {
+                return unhandledExceptionModeDebug;
+            }
+        }
 
         /// <summary>
         /// Gets a value that indicates whether a debugger is attached to the process.
@@ -1259,10 +1270,10 @@ namespace Alternet.UI
         /// </summary>
         public static void AddLogItem(LogUtils.LogItem item, bool wait)
         {
-            if(UseLogQueue)
+            if (UseLogQueue)
                 LogQueue.Enqueue(item);
 
-            if(wait)
+            if (wait)
             {
                 Invoke(() =>
                 {
@@ -1416,7 +1427,7 @@ namespace Alternet.UI
         {
             var windows = Current.Windows;
 
-            foreach(var window in windows)
+            foreach (var window in windows)
             {
                 if (window is T t)
                     return t;
@@ -1515,7 +1526,7 @@ namespace Alternet.UI
 
                 return false;
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 TryCatchSilent(() => App.LogError(e));
 
@@ -1668,7 +1679,7 @@ namespace Alternet.UI
             bool condition,
             LogItemKind kind = LogItemKind.Information)
         {
-            if(condition)
+            if (condition)
                 IdleLog(obj, kind);
         }
 
@@ -1860,9 +1871,9 @@ namespace Alternet.UI
                     var args = new BaseThreadExceptionEventArgs(exception);
                     RaiseThreadException(Thread.CurrentThread, args);
 
-                    if(args.Handled)
+                    if (args.Handled)
 
-                    return args.Handled;
+                        return args.Handled;
                 }
 
                 return false;
@@ -1899,20 +1910,20 @@ namespace Alternet.UI
                 if (LastUnhandledException == exception)
                     return;
 
-                LastUnhandledException = exception;
-                LastUnhandledExceptionThrown = false;
-
                 if (LogUnhandledThreadException)
                 {
                     LogUtils.LogException(exception);
                 }
+
+                LastUnhandledException = exception;
+                LastUnhandledExceptionThrown = false;
 
                 var mode = GetUnhandledExceptionMode();
 
                 switch (mode)
                 {
                     case UnhandledExceptionMode.CatchException:
-                        if(ThreadExceptionAssigned)
+                        if (ThreadExceptionAssigned)
                             HandleWithEvent();
                         else
                             HandleWithDialog();
@@ -2095,7 +2106,7 @@ namespace Alternet.UI
                     {
                         OnThreadException(e);
 
-                        if(Debugger.IsAttached && DebugUtils.IsDebugDefined
+                        if (Debugger.IsAttached && DebugUtils.IsDebugDefined
                             && LastUnhandledExceptionThrown)
                         {
                             throw;
