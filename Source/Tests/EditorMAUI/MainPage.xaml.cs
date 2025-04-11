@@ -225,110 +225,20 @@ public partial class MainPage : Alternet.UI.DisposableContentPage, EditorUI.IDoc
 
     public View CreateInnerForm()
     {
-        var dialogTitle = new SimpleDialogTitleView();
-        dialogTitle.Title = "Title";
+        var innerForm = SimpleInputDialog.CreateGoToLineDialog();
 
-        Color backColor;
-        Color textColor;
-
-        if (Alternet.UI.MauiUtils.IsDarkTheme)
+        innerForm.OkButtonClicked += (s, e) =>
         {
-            backColor = Color.FromRgb(30, 30, 30);
-            textColor = Color.FromRgb(220, 220, 220);
-        }
-        else
-        {
-            backColor = Colors.White;
-            textColor = Colors.Black;
-        }
-
-        var borderColor = dialogTitle.GetPressedBorderColor();
-        var placeHolderColor = textColor;
-
-        var innerForm = new Border
-        {
-            IsVisible = false,
-            BackgroundColor = backColor,
-            StrokeShape = new RoundRectangle { CornerRadius = 10 },
-            Stroke = borderColor,
-            StrokeThickness = 1,
-            MinimumWidthRequest = 300,
+            Alternet.UI.App.Log("Ok button clicked");
         };
 
-        dialogTitle.CloseClicked += (s, e) =>
+        innerForm.CancelButtonClicked += (s, e) =>
         {
-            innerForm.IsVisible = false;
+            Alternet.UI.App.Log("Cancel button clicked");
         };
 
-        var formContent = new VerticalStackLayout();
-        formContent.VerticalOptions = LayoutOptions.Start;
-
-        formContent.Children.Add(dialogTitle);
-
-        var verticalStack = new VerticalStackLayout();
-        verticalStack.Padding = 10;
-
-        var label = new Label
-        {
-            Text = "Enter your text:",
-            Margin = new Thickness(5, 5, 5, 5),
-            TextColor = textColor,
-        };
-
-        verticalStack.Children.Add(label);
-
-        var entryBorder = new Border
-        {
-            Stroke = borderColor,
-            StrokeThickness = 1,
-            BackgroundColor = backColor,
-            Margin = new Thickness(5),
-            Padding = new Thickness(0),
-            StrokeShape = new RoundRectangle { CornerRadius = 5 }
-        };
-
-        var entry = new Entry
-        {
-            Placeholder = "Type here",
-            TextColor = textColor,
-            PlaceholderColor = placeHolderColor,
-        };
-
-        entryBorder.Content = entry;
-        verticalStack.Children.Add(entryBorder);
-
-        var buttons = new SimpleToolBarView();
-        buttons.Margin = new(0, 5, 0, 0);
-
-        buttons.AddExpandingSpace();
-        buttons.AddButtonOk(() =>
-        {
-            innerForm.IsVisible = false;
-        });
-        buttons.AddButtonCancel(() =>
-        {
-            innerForm.IsVisible = false;
-        });
-
-        verticalStack.Children.Add(buttons);
-
-        formContent.Children.Add(verticalStack);
-
-        innerForm.Content = formContent;
-
-        formContent.SizeChanged += (s, e) =>
-        {
-            editorPanel.SetLayoutBounds(
-                innerForm,
-                new Rect(650, 100, -1, -1));
-        };
-
-        editorPanel.SetLayoutBounds(
-            innerForm,
-            new Rect(650, 100, -1, -1));
-
+        innerForm.SetPosition(editorPanel, 650, 100);
         editorPanel.Add(innerForm);
-
         return innerForm;
     }
 

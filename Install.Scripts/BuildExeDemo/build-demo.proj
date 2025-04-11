@@ -1,6 +1,26 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
 
+<!--
+./build-demo-ubuntu-xxx.sh net9.0 alternet-ui-demo-macos-arm64-net9 osx-arm64
+./build-demo-ubuntu-xxx.sh net8.0 alternet-ui-demo-macos-x64-net8 x64
+
+./build-demo-ubuntu-xxx.sh net9.0 alternet-ui-demo-ubuntu-arm64-net9 arm64
+./build-demo-ubuntu-xxx.sh net9.0 alternet-ui-demo-ubuntu-x64-net9 x64
+
+call build-demo-win-xxx.bat net9.0 alternet-ui-demo-win10-x64-net9 x64
+call build-demo-win-xxx.bat net9.0 alternet-ui-demo-win10-x86-net9 x86
+
+set DEMO_FRAMEWORK=%1
+set DEMO_NAME=%2
+set DEMO_PLATFORM=%3
+
+pushd %SCRIPT_HOME%
+
+dotnet msbuild -tl:off /t:BuildExeDemo -property:DEMO_NAME=%DEMO_NAME%;DEMO_FRAMEWORK=%DEMO_FRAMEWORK%;DEMO_PLATFORM=%DEMO_PLATFORM% build-demo.proj
+
+-->
+
 <PropertyGroup>
   <OSARCH>$([System.Runtime.InteropServices.RuntimeInformation]::OSArchitecture)</OSARCH>
   <IsLinuxX64 Condition="$([MSBuild]::IsOsPlatform('Linux')) And $(OSARCH) == X64">true</IsLinuxX64>
@@ -11,13 +31,41 @@
   <IsWindowsArm64 Condition="$([MSBuild]::IsOsPlatform('Windows')) And $(OSARCH) == Arm64">true</IsWindowsArm64>
 </PropertyGroup>
 
+<PropertyGroup>
+	<DEMO_NAME_CODE Condition="$(DEMO_NAME_CODE)==''">ui</DEMO_NAME_CODE>
+
+	<DEMO_NAME_OS Condition="$([MSBuild]::IsOsPlatform('Windows'))">win10</DEMO_NAME_OS>
+	<DEMO_NAME_OS Condition="$([MSBuild]::IsOsPlatform('Linux'))">ubuntu</DEMO_NAME_OS>
+	<DEMO_NAME_OS Condition="$([MSBuild]::IsOsPlatform('OSX'))">macos</DEMO_NAME_OS>
+
+	<DEMO_NAME_CPU Condition="$(OSARCH) == X64">x64</DEMO_NAME_CPU>
+	<DEMO_NAME_CPU Condition="$(OSARCH) == Arm64">arm64</DEMO_NAME_CPU>
+
+	<DEMO_NAME_NET>net9</DEMO_NAME_NET>
+	<DEMO_NAME_NET Condition="$(IsOsxX64) == 'true'">net8</DEMO_NAME_NET>
+
+	<DEMO_FRAMEWORK>$(DEMO_NAME_NET).0</DEMO_FRAMEWORK>
+
+	<DEMO_NAME>alternet-$(DEMO_NAME_CODE)-demo-$(DEMO_NAME_OS)-$(DEMO_NAME_CPU)-$(DEMO_NAME_NET)</DEMO_NAME>
+
+	<DEMO_PLATFORM>$(DEMO_NAME_CPU)</DEMO_PLATFORM>
+	<DEMO_PLATFORM Condition="$(IsOsxArm64)=='true'">osx-arm64</DEMO_PLATFORM>
+</PropertyGroup>
+
 	<PropertyGroup>
 		<SCRIPT_HOME>$(MSBuildProjectDirectory)</SCRIPT_HOME>
 		<SOURCE_HOME>$(SCRIPT_HOME)\..\..\Source</SOURCE_HOME>
 		<ALTERNET_HOME>$(SCRIPT_HOME)\..\..\</ALTERNET_HOME>
 
 		<DemoPathControlsSample>$(SOURCE_HOME)\Samples\ControlsSample</DemoPathControlsSample>
+		<DemoPathEditorAllQuickStarts>$(ALTERNET_HOME)\..\AlternetStudio\Demo\Editor.AlternetUI\AllQuickStarts\</DemoPathEditorAllQuickStarts>
+		<DemoPathEditorResources>$(ALTERNET_HOME)\..\AlternetStudio\Demo\Resources\</DemoPathEditorResources>
 
+		<DEMO_ADD_EDITOR_RES>false</DEMO_ADD_EDITOR_RES>
+		<DEMO_ADD_EDITOR_RES Condition="$(DEMO_NAME_CODE)=='studio-ui'">true</DEMO_ADD_EDITOR_RES>
+
+		<DEMO_HOME Condition="$(DEMO_NAME_CODE)=='studio-ui'">$(DemoPathEditorAllQuickStarts)</DEMO_HOME>
+		<DEMO_HOME Condition="$(DEMO_NAME_CODE)=='ui'">$(DemoPathControlsSample)</DEMO_HOME>
 		<DEMO_HOME Condition="$(DEMO_HOME)==''">$(DemoPathControlsSample)</DEMO_HOME>
 
 		<DEMO_HOME_BIN>$(DEMO_HOME)\bin</DEMO_HOME_BIN>
@@ -59,7 +107,6 @@
 
 	</PropertyGroup>
 
-
 	<Target Name="ShowProps">
 		<Message Text="SCRIPT_HOME: $(SCRIPT_HOME)" Importance="high" />
 		<Message Text="SOURCE_HOME: $(SOURCE_HOME)" Importance="high" />
@@ -100,6 +147,9 @@
 		<Message Text="Deleting bin and obj files..." Importance="high" />
 		<Message Text="in folder [$(DEMO_HOME)]" Importance="high" />
 		<Exec Command="$(RUNCMD_PREFIX) -r=deleteBinObjSubFolders Path=&quot;$(DEMO_HOME)&quot;" />
+
+		<Message Text="in folder [$(DemoPathEditorResources)]" Importance="high" Condition="$(DEMO_ADD_EDITOR_RES)=='true'"/>
+		<Exec Command="$(RUNCMD_PREFIX) -r=deleteBinObjSubFolders Path=&quot;$(DemoPathEditorResources)&quot;" Condition="$(DEMO_ADD_EDITOR_RES)=='true'"/>
 
 		<Message Text="===========================================" Importance="high" />
 		<Message Text="Getting demo version..." Importance="high" />
@@ -155,6 +205,16 @@
 
 		<Message Text="Copying additional files..." Importance="high" />
 
+ 	<ItemGroup>
+    		<EditorResourcesFiles Include="$(DemoPathEditorResources)\**\*" Condition="$(DEMO_ADD_EDITOR_RES)=='true'"/>
+	</ItemGroup>
+
+		<Copy 
+			SourceFiles="@(EditorResourcesFiles)"
+          		DestinationFolder="$(PUBLISH_FOLDER_SFX)\Resources\%(RecursiveDir)"
+			Condition="$(DEMO_ADD_EDITOR_RES)=='true'"
+		/>
+
 		<Copy
             		SourceFiles="$(SCRIPT_HOME)\PublicFiles\ExeDemoREADME.md"
             		DestinationFiles="$(PUBLISH_FOLDER_SFX)\README.md"
@@ -178,7 +238,9 @@
             <DeleteFilesAnyPlatform Include="$(PUBLISH_FOLDER_SFX)\Alternet.UI.Common.xml"/>
             <DeleteFilesAnyPlatform Include="$(PUBLISH_FOLDER_SFX)\*.pdb"/>
             <DeleteFilesAnyPlatform Include="$(PUBLISH_FOLDER_SFX)\**\*.pdb"/>
-
+            <DeleteFilesAnyPlatform Include="$(PUBLISH_FOLDER_SFX)\**\*.lib"/>
+            <DeleteFilesAnyPlatform Include="$(PUBLISH_FOLDER_SFX)\**\*.exp"/>
+ 
             <DeleteFilesWindows Include="$(PUBLISH_FOLDER_SFX)\**\*.so"/>
             <DeleteFilesWindows Include="$(PUBLISH_FOLDER_SFX)\*.so"/>
             <DeleteFilesWindows Include="$(PUBLISH_FOLDER_SFX)\**\*.dylib"/>

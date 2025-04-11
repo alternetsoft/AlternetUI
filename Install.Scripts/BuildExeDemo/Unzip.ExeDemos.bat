@@ -14,9 +14,9 @@ echo ====================================5
 
 pushd "%PackagesPublishDirectory%"
 
-for /D %%f in (alternet-ui-demo-*) do (rmdir /S /Q %%f)
+for /D %%f in (alternet-*-demo-*) do (rmdir /S /Q %%f)
 
-for /R %%f in (alternet-ui-demo-*.zip) do call "C:\Program Files\WinRar\WinRAR.exe" x "%%f"
+for /R %%f in (alternet-*-demo-*.zip) do call "C:\Program Files\WinRar\WinRAR.exe" x "%%f"
 
 popd
 
