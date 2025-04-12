@@ -133,6 +133,7 @@ public partial class MainPage : Alternet.UI.DisposableContentPage, EditorUI.IDoc
             Alternet.UI.KnownSvgImages.ImgDiamondFilled,
             () =>
             {
+                innerForm.SetAlignedPosition(editorPanel, Alternet.UI.HVAlignment.TopRight);
                 innerForm.IsVisible = !innerForm.IsVisible;
             });
 
@@ -223,7 +224,7 @@ public partial class MainPage : Alternet.UI.DisposableContentPage, EditorUI.IDoc
         };
     }
 
-    public View CreateInnerForm()
+    public SimpleInputDialog CreateInnerForm()
     {
         var innerForm = SimpleInputDialog.CreateGoToLineDialog();
 
@@ -237,8 +238,6 @@ public partial class MainPage : Alternet.UI.DisposableContentPage, EditorUI.IDoc
             Alternet.UI.App.Log("Cancel button clicked");
         };
 
-        innerForm.SetPosition(editorPanel, 650, 100);
-        editorPanel.Add(innerForm);
         return innerForm;
     }
 

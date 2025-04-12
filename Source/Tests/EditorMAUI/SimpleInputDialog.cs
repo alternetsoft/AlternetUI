@@ -6,6 +6,8 @@ using System.Threading.Tasks;
 
 using Microsoft.Maui.Controls.Shapes;
 
+using Alternet.UI.Extensions;
+
 namespace Alternet.Maui
 {
     public partial class SimpleInputDialog : BaseContentView
@@ -24,6 +26,8 @@ namespace Alternet.Maui
         private readonly Label label;
         private readonly SimpleToolBarView buttons;
         private readonly VerticalStackLayout dialogLayout;
+
+        private Alternet.UI.HVAlignment? alignment;
 
         public SimpleInputDialog()
         {
@@ -91,8 +95,9 @@ namespace Alternet.Maui
 
             Content = dialogBorder;
 
-            DialogLayout.SizeChanged += (s, e) =>
+            DialogBorder.SizeChanged += (s, e) =>
             {
+                OnUpdatePosition();
             };
 
             ResetColors();
@@ -161,6 +166,21 @@ namespace Alternet.Maui
 
         public VerticalStackLayout DialogLayout => dialogLayout;
 
+        public Alternet.UI.HVAlignment? Alignment
+        {
+            get => alignment;
+
+            set
+            {
+                if (alignment == value)
+                    return;
+                alignment = value;
+                if (alignment is null)
+                    return;
+                SetAlignedPosition(Parent as AbsoluteLayout, alignment.Value);
+            }
+        }
+
         public static SimpleInputDialog CreateGoToLineDialog()
         {
             SimpleInputDialog result = new();
@@ -173,8 +193,50 @@ namespace Alternet.Maui
             return result;
         }
 
-        public virtual void SetPosition(AbsoluteLayout layout, double x, double y)
+        public virtual bool SetAlignedPosition(AbsoluteLayout? layout, Alternet.UI.HVAlignment? align)
         {
+            alignment = align;
+            if (align is null)
+                return false;
+
+            if (!IsVisible && layout is not null)
+            {
+                SetAbsolutePosition(layout, 0, 0);
+            }
+
+            return SetAlignedPosition(layout, align.Value.Horizontal, align.Value.Vertical);
+        }
+
+        public virtual bool SetAlignedPosition(
+            AbsoluteLayout? layout,
+            Alternet.UI.HorizontalAlignment? horz,
+            Alternet.UI.VerticalAlignment? vert)
+        {
+            if (layout is null)
+                return false;
+
+            UpdateParent(layout);
+
+            var thisBounds = this.Bounds.ToRectD();
+            var containerBounds = layout.Bounds.ToRectD();
+
+            if (thisBounds.SizeIsEmpty || containerBounds.SizeIsEmpty)
+                return false;
+
+            var alignedBounds = Alternet.UI.AlignUtils.AlignRectInRect(
+                thisBounds,
+                containerBounds,
+                horz,
+                vert,
+                false);
+            SetAbsolutePosition(layout, alignedBounds.X, alignedBounds.Y);
+
+            return true;
+        }
+
+        public virtual void SetAbsolutePosition(AbsoluteLayout layout, double x, double y)
+        {
+            UpdateParent(layout);
             layout.SetLayoutBounds(
                 this,
                 new Rect(x, y, -1, -1));
@@ -204,8 +266,8 @@ namespace Alternet.Maui
         {
             var isDark = Alternet.UI.MauiUtils.IsDarkTheme;
 
-            var backColor = Convert(DefaultBackColor.LightOrDark(isDark));
-            var textColor = Convert(DefaultTextColor.LightOrDark(isDark));
+            var backColor = Alternet.UI.MauiUtils.Convert(DefaultBackColor.LightOrDark(isDark));
+            var textColor = Alternet.UI.MauiUtils.Convert(DefaultTextColor.LightOrDark(isDark));
 
             var borderColor = dialogTitle.GetPressedBorderColor();
             var placeHolderColor = textColor;
@@ -219,9 +281,46 @@ namespace Alternet.Maui
             entry.PlaceholderColor = placeHolderColor;
         }
 
-        internal static Color Convert(Alternet.Drawing.Color color)
+        protected virtual void OnUpdatePosition()
         {
-            return Color.FromUint(color.AsUInt());
+            SetAlignedPosition(Parent as AbsoluteLayout, alignment);
+        }
+
+        protected virtual void OnParentSizeChanged(object? sender, EventArgs e)
+        {
+            OnUpdatePosition();
+        }
+
+        protected override void OnParentChanged()
+        {
+            base.OnParentChanged();
+            OnUpdatePosition();
+        }
+
+        protected override void OnParentChanging(ParentChangingEventArgs args)
+        {
+            base.OnParentChanging(args);
+
+            var oldParent = args.OldParent as AbsoluteLayout;
+            var newParent = args.NewParent as AbsoluteLayout;
+
+            if (oldParent is not null)
+            {
+                oldParent.SizeChanged -= OnParentSizeChanged;
+            }
+
+            if (newParent is not null)
+            {
+                newParent.SizeChanged += OnParentSizeChanged;
+            }
+        }
+
+        private void UpdateParent(AbsoluteLayout layout)
+        {
+            if (Parent is not null && Parent != layout)
+                throw new Exception("Parent is already assigned");
+            if (Parent is null)
+                layout.Add(this);
         }
     }
 }
