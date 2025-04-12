@@ -157,6 +157,53 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets the absolute position of a <see cref="VisualElement"/> relative to its ancestors.
+        /// </summary>
+        /// <param name="visualElement">The <see cref="VisualElement"/> to calculate the position for.</param>
+        /// <returns>A <see cref="PointD"/> representing the absolute position.</returns>
+        public static PointD GetAbsolutePosition(VisualElement visualElement)
+        {
+            var ancestors = AllParents(visualElement);
+
+            var x = visualElement.X;
+            var y = visualElement.Y;
+
+            foreach (var item in ancestors)
+            {
+                x += item.X;
+                y += item.Y;
+            }
+
+            return new(x, y);
+        }
+
+        /// <summary>
+        /// Converts an <see cref="Alternet.Drawing.Color"/> to a <see cref="Microsoft.Maui.Graphics.Color"/>.
+        /// </summary>
+        /// <param name="color">The <see cref="Alternet.Drawing.Color"/> to convert.</param>
+        /// <returns>A <see cref="Microsoft.Maui.Graphics.Color"/> representation of the input color.</returns>
+        public static Microsoft.Maui.Graphics.Color Convert(Alternet.Drawing.Color color)
+        {
+            return Microsoft.Maui.Graphics.Color.FromUint(color.AsUInt());
+        }
+
+        /// <summary>
+        /// Enumerates all parent elements of the specified <see cref="VisualElement"/>.
+        /// </summary>
+        /// <param name="element">The <see cref="VisualElement"/> to retrieve parents for.</param>
+        /// <returns>An enumerable collection of parent <see cref="VisualElement"/> instances.</returns>
+        public static IEnumerable<VisualElement> AllParents(VisualElement? element)
+        {
+            element = element?.Parent as VisualElement;
+
+            while (element != null)
+            {
+                yield return element;
+                element = element.Parent as VisualElement;
+            }
+        }
+
+        /// <summary>
         /// Debug related method. Do not use directly.
         /// </summary>
         public static void AddAllViewsToParent(Layout parent)

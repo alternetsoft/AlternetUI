@@ -159,7 +159,7 @@ namespace Alternet.UI
             }
             else
             {
-                absolutePos = container.GetAbsolutePosition();
+                absolutePos = MauiUtils.GetAbsolutePosition(container);
             }
 
             var x = absolutePos.X + position.X;

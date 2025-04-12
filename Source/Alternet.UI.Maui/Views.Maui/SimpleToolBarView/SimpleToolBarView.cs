@@ -293,17 +293,6 @@ namespace Alternet.Maui
         }
 
         /// <summary>
-        /// Gets a value indicating whether the current theme is dark.
-        /// </summary>
-        public static bool IsDark
-        {
-            get
-            {
-                return Alternet.UI.SystemSettings.AppearanceIsDark;
-            }
-        }
-
-        /// <summary>
         /// Gets or sets a value indicating whether the top border is visible.
         /// </summary>
         public virtual bool IsTopBorderVisible
