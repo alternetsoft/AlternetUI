@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -18,6 +19,17 @@ namespace Alternet.Maui
         /// </summary>
         public BaseContentView()
         {
+        }
+
+        /// <summary>
+        /// Gets a value indicating whether the current theme is dark.
+        /// </summary>
+        public static bool IsDark
+        {
+            get
+            {
+                return Alternet.UI.SystemSettings.AppearanceIsDark;
+            }
         }
 
         /// <summary>
