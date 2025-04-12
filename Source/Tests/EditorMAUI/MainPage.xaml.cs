@@ -134,8 +134,18 @@ public partial class MainPage : Alternet.UI.DisposableContentPage, EditorUI.IDoc
             () =>
             {
                 innerForm.SetAlignedPosition(editorPanel, Alternet.UI.HVAlignment.TopRight);
-                innerForm.IsVisible = !innerForm.IsVisible;
+                innerForm.Owner = this;
+                innerForm.IsVisible = true;
+                innerForm.Entry.Focus();
             });
+
+        showDialogAbsPosition.Clicked += (s, e) =>
+        {
+            innerForm.SetAbsolutePosition(editorPanel, 150, 100);
+            innerForm.IsVisible = true;
+            innerForm.Owner = this;
+            innerForm.Entry.Focus();
+        };
 
         buttonStatus = toolbar.AddLabel("Ready");
 
