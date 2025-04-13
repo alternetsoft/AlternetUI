@@ -186,7 +186,7 @@ namespace Alternet.UI
         {
             if (InUpdates)
                 return true;
-            if (Parent is null || Parent.InUpdates)
+            if (Parent is not null && Parent.CanSkipInvalidate())
                 return true;
             if (!VisibleOnScreen)
                 return true;
