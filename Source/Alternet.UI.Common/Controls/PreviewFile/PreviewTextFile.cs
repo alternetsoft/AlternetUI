@@ -33,6 +33,7 @@ namespace Alternet.UI
         public static List<string> SupportedExtensions = new()
         {
             "txt",
+            "ini",
             "editorconfig",
             "gitattributes",
             "gitmodules",
@@ -45,9 +46,14 @@ namespace Alternet.UI
             "cpp",
             "c",
             "csproj",
+            "vbproj",
+            "vb",
+            "fb2",
+            "vsixmanifest",
             "json",
             "yml",
             "proj",
+            "config",
             "sln",
             "props",
             "targets",
