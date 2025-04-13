@@ -76,7 +76,7 @@ namespace ControlsSample
                 if(ListControlItem.CheckBoxSizeOverride is null)
                 {
                     ListControlItem.CheckBoxSizeOverride
-                    = ListControlItem.GetCheckBoxSize(treeView).Width + incValue;
+                    = ListControlItem.GetCheckBoxSize(treeView.ListBox).Width + incValue;
                 }
                 else
                 {
@@ -87,7 +87,7 @@ namespace ControlsSample
 #if DEBUG
                 Graphics.DebugElementId = treeView.RootItem.FirstChild?.UniqueId;
 #endif
-                treeView.Invalidate();
+                FormUtils.InvalidateAll();
             });
             treeView.ContextMenu.Add("Toggle enabled", () =>
             {

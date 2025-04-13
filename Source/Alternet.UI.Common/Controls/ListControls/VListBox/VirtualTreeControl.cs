@@ -8,13 +8,14 @@ namespace Alternet.UI
     /// <summary>
     /// Represents a tree control that inherits from <see cref="VirtualListBox"/>.
     /// </summary>
-    public partial class VirtualTreeControl : VirtualListBox, ITreeControlItemContainer
+    public partial class VirtualTreeControl : Control, ITreeControlItemContainer
     {
         /// <summary>
         /// Default margin for each level in the tree.
         /// </summary>
         public static int DefaultLevelMargin = 16;
 
+        private readonly VirtualListBox listBox = new();
         private readonly TreeControlRootItem rootItem;
         private TreeViewButtonsKind treeButtons = TreeViewButtonsKind.Null;
         private bool needTreeChanged;
@@ -24,10 +25,11 @@ namespace Alternet.UI
         /// </summary>
         public VirtualTreeControl()
         {
+            ListBox.Parent = this;
             rootItem = new(this);
-            SelectionUnderImage = true;
-            CheckBoxVisible = true;
-            CheckOnClick = false;
+            ListBox.SelectionUnderImage = true;
+            ListBox.CheckBoxVisible = true;
+            ListBox.CheckOnClick = false;
 
             void ToggleExpanded(ListControlItem? listItem)
             {
@@ -38,20 +40,42 @@ namespace Alternet.UI
                 item.IsExpanded = !item.IsExpanded;
             }
 
-            MouseDown += (s, e) =>
+            ListBox.MouseDown += (s, e) =>
             {
-                var itemIndex = HitTestCheckBox(e.Location);
+                var itemIndex = ListBox.HitTestCheckBox(e.Location);
                 if (itemIndex is null)
                     return;
-                ToggleExpanded(Items[itemIndex.Value]);
+                ToggleExpanded(ListBox.Items[itemIndex.Value]);
             };
 
-            DoubleClick += (s, e) =>
+            ListBox.DoubleClick += (s, e) =>
             {
                 ToggleExpanded(SelectedItem);
             };
 
             TreeButtons = TreeViewButtonsKind.PlusMinusSquare;
+        }
+
+        /// <summary>
+        /// Occurs when the selection has changed.
+        /// </summary>
+        /// <remarks>
+        /// You can create an event handler for this event to determine when the
+        /// selected index in the control has been changed.
+        /// This can be useful when you need to display information in other
+        /// controls based on the current selection in the control.
+        /// </remarks>
+        public event EventHandler? SelectionChanged
+        {
+            add
+            {
+                ListBox.SelectionChanged += value;
+            }
+
+            remove
+            {
+                ListBox.SelectionChanged -= value;
+            }
         }
 
         /// <summary>
@@ -93,10 +117,15 @@ namespace Alternet.UI
         public event EventHandler<UI.TreeControlEventArgs>? ExpandedChanged;
 
         /// <summary>
+        /// Gets the underlying <see cref="VirtualListBox"/> used by this tree control.
+        /// </summary>
+        public VirtualListBox ListBox => listBox;
+
+        /// <summary>
         /// Gets or sets the type of tree view buttons.
         /// </summary>
         /// <value>The type of tree view buttons.</value>
-        public TreeViewButtonsKind TreeButtons
+        public virtual TreeViewButtonsKind TreeButtons
         {
             get
             {
@@ -109,11 +138,8 @@ namespace Alternet.UI
                     return;
                 treeButtons = value;
                 var (closed, opened) = KnownSvgImages.GetTreeViewButtonImages(treeButtons);
-                DoInsideUpdate(() =>
-                {
-                    CheckImageUnchecked = closed;
-                    CheckImageChecked = opened;
-                });
+                ListBox.CheckImageUnchecked = closed;
+                ListBox.CheckImageChecked = opened;
             }
         }
 
@@ -122,17 +148,34 @@ namespace Alternet.UI
         /// </summary>
         /// <value>The selected <see cref="TreeControlItem"/>.</value>
         [Browsable(false)]
-        public new virtual TreeControlItem? SelectedItem
+        public virtual TreeControlItem? SelectedItem
         {
             get
             {
-                return base.SelectedItem as TreeControlItem;
+                return ListBox.SelectedItem as TreeControlItem;
             }
 
             set
             {
-                base.SelectedItem = value;
+                ListBox.SelectedItem = value;
             }
+        }
+
+        /// <inheritdoc/>
+        public override ContextMenuStrip ContextMenuStrip
+        {
+            get => ListBox.ContextMenuStrip;
+            set => ListBox.ContextMenuStrip = value;
+        }
+
+        /// <summary>
+        /// Alias for <see cref="ContextMenuStrip"/> property.
+        /// </summary>
+        [Browsable(false)]
+        public ContextMenuStrip ContextMenu
+        {
+            get => ListBox.ContextMenuStrip;
+            set => ListBox.ContextMenuStrip = value;
         }
 
         /// <summary>
@@ -143,7 +186,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets the collection of visible items contained in the tree view.
         /// </summary>
-        protected new IListControlItems<ListControlItem> Items => base.Items;
+        public IEnumerable<ListControlItem> VisibleItems => ListBox.Items;
 
         /// <summary>
         /// Selects the specified item in the tree view and scrolls to it.
@@ -155,12 +198,12 @@ namespace Alternet.UI
 
             bool InternalSelect()
             {
-                var index = Items.IndexOf(item);
+                var index = ListBox.Items.IndexOf(item);
 
                 if (index > 0)
                 {
                     SelectedItem = item;
-                    this.ScrollToRow(index);
+                    ListBox.ScrollToRow(index);
                     return true;
                 }
 
@@ -211,6 +254,25 @@ namespace Alternet.UI
             return true;
         }
 
+        /// <inheritdoc/>
+        public override int EndUpdate()
+        {
+            var result = base.EndUpdate();
+            if (result == 0 && needTreeChanged)
+            {
+                TreeChanged();
+            }
+
+            return result;
+        }
+
+        /// <inheritdoc/>
+        public override int BeginUpdate()
+        {
+            var result = base.BeginUpdate();
+            return result;
+        }
+
         /// <summary>
         /// Clears all items from the tree view.
         /// </summary>
@@ -219,7 +281,7 @@ namespace Alternet.UI
             BeginUpdate();
             try
             {
-                SetItemsFast(new(), VirtualListBox.SetItemsKind.ChangeField);
+                ListBox.SetItemsFast(new(), VirtualListBox.SetItemsKind.ChangeField);
                 rootItem.Clear();
             }
             finally
@@ -259,7 +321,16 @@ namespace Alternet.UI
         /// <summary>
         /// Removes the currently selected item from the tree view.
         /// </summary>
-        public virtual bool RemoveSelectedItem(bool selectSibling = false)
+        public void RemoveSelectedItem()
+        {
+            RemoveSelectedItem(false);
+        }
+
+        /// <summary>
+        /// Removes the currently selected item from the tree view and optinally selects on
+        /// of the remaining items.
+        /// </summary>
+        public virtual bool RemoveSelectedItem(bool selectSibling)
         {
             var item = SelectedItem as TreeControlItem;
             if (item is null)
@@ -267,16 +338,16 @@ namespace Alternet.UI
 
             if (selectSibling)
             {
-                var index = Items.IndexOf(item);
-                var result = Items.Remove(item);
+                var index = ListBox.Items.IndexOf(item);
+                var result = ListBox.Items.Remove(item);
                 if (result)
                 {
                     if (index > 0)
                         index--;
-                    index = Math.Min(Items.Count - 1, index);
+                    index = Math.Min(ListBox.Items.Count - 1, index);
                     if (index >= 0)
                     {
-                        item = Items[index] as TreeControlItem;
+                        item = ListBox.Items[index] as TreeControlItem;
                         SelectItem(item);
                     }
                 }
@@ -306,9 +377,9 @@ namespace Alternet.UI
         /// </summary>
         public virtual void RaiseItemAdded(UI.TreeControlItem item)
         {
-            if (item.Parent == rootItem)
+            if (item.Parent == rootItem && !item.IsExpanded)
             {
-                Items.Add(item);
+                ListBox.Items.Add(item);
             }
             else
             {
@@ -333,7 +404,7 @@ namespace Alternet.UI
             }
             else
             {
-                Items?.Remove(item);
+                ListBox.Items?.Remove(item);
             }
 
             if (ItemRemoved is not null)
@@ -394,6 +465,12 @@ namespace Alternet.UI
             }
         }
 
+        /// <inheritdoc/>
+        public override bool SetFocus()
+        {
+            return ListBox.SetFocus();
+        }
+
         /// <summary>
         /// Called after 'IsExpanded' property
         /// value of a tree item belonging to this tree view changes.
@@ -416,18 +493,6 @@ namespace Alternet.UI
             this.EndUpdate();
         }
 
-        /// <inheritdoc/>
-        public override int EndUpdate()
-        {
-            var result = base.EndUpdate();
-            if (result == 0 && needTreeChanged)
-            {
-                TreeChanged();
-            }
-
-            return result;
-        }
-
         /// <summary>
         /// Updates the tree view when the tree structure changes.
         /// </summary>
@@ -445,20 +510,7 @@ namespace Alternet.UI
 
             VirtualListBoxItems collection = new(rootItem.EnumExpandedItems());
 
-            int indentPx = DefaultLevelMargin;
-
-            foreach (var item in collection)
-            {
-                var treeItem = (TreeControlItem)item;
-
-                var indentLevel = treeItem.IndentLelel - 1;
-
-                item.ForegroundMargin = (indentPx * indentLevel, 0, 0, 0);
-                item.CheckBoxVisible = treeItem.HasItems;
-                item.IsChecked = treeItem.IsExpanded;
-            }
-
-            SetItemsFast(collection, VirtualListBox.SetItemsKind.ChangeField);
+            ListBox.SetItemsFast(collection, VirtualListBox.SetItemsKind.ChangeField);
         }
     }
 }

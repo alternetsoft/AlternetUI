@@ -186,6 +186,8 @@ namespace Alternet.UI
         {
             if (InUpdates)
                 return true;
+            if (Parent is null || Parent.InUpdates)
+                return true;
             if (!VisibleOnScreen)
                 return true;
             if (ClientRectangle.SizeIsEmpty)

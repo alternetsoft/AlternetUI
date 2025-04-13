@@ -51,6 +51,56 @@ namespace Alternet.UI
         [Browsable(false)]
         public bool IsRoot => Parent == null;
 
+        /// <inheritdoc/>
+        public override Thickness ForegroundMargin
+        {
+            get
+            {
+                var indentLevel = IndentLelel - 1;
+                int indentPx = VirtualTreeControl.DefaultLevelMargin;
+                Thickness result = (indentPx * indentLevel, 0, 0, 0);
+                return result;
+            }
+
+            set
+            {
+            }
+        }
+
+        /// <inheritdoc/>
+        public override CheckState CheckState
+        {
+            get
+            {
+                if (IsExpanded)
+                    return CheckState.Checked;
+                return CheckState.Unchecked;
+            }
+
+            set
+            {
+            }
+        }
+
+        /// <inheritdoc/>
+        public override bool? CheckBoxVisible
+        {
+            get
+            {
+                if(base.CheckBoxVisible is null)
+                {
+                    return HasItems;
+                }
+
+                return HasItems && base.CheckBoxVisible.Value;
+            }
+
+            set
+            {
+                base.CheckBoxVisible = value;
+            }
+        }
+
         /// <summary>
         /// Gets the root parent control in the chain of parent controls.
         /// If parent control is null, returns this control.
