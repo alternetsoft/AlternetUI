@@ -13,7 +13,7 @@ namespace Alternet.UI
     /// <summary>
     /// <see cref="VirtualListBox"/> descendant which allows to browse folder contents.
     /// </summary>
-    public class FileListBox : VirtualListBox
+    public class FileListBox : VirtualTreeControl
     {
         /// <summary>
         /// Gets or sets global <see cref="FolderInfoItem"/> for the file or folder.
@@ -238,7 +238,7 @@ namespace Alternet.UI
                     return;
                 }
 
-                foreach(var item in Items)
+                foreach(var item in VisibleItems)
                 {
                     if (item is not FileListBoxItem item2)
                         continue;
@@ -296,7 +296,7 @@ namespace Alternet.UI
         public virtual void Reload()
         {
             SelectedItem = null;
-            EnsureVisible(0);
+            ListBox.EnsureVisible(0);
 
             try
             {
@@ -308,7 +308,7 @@ namespace Alternet.UI
                         return;
                     reloading--;
                     SelectedItem = null;
-                    EnsureVisible(0);
+                    ListBox.EnsureVisible(0);
                 });
 
                 DoInsideUpdate(ReloadFn);
@@ -319,7 +319,7 @@ namespace Alternet.UI
 
             void ReloadFn()
             {
-                RemoveAll();
+                this.Clear();
 
                 if (selectedFolder is null)
                 {
@@ -330,7 +330,7 @@ namespace Alternet.UI
                 if (AddRootFolderItem)
                 {
                     var rootFolderItem = new FileListBoxItem("/", null);
-                    rootFolderItem.DoubleClickAction = RootFolderAction;
+                    rootFolderItem.DoubleClickAction = NavigateToRootFolder;
                     rootFolderItem.SvgImage = GetFolderImage();
                     Add(rootFolderItem);
                 }
@@ -338,7 +338,7 @@ namespace Alternet.UI
                 if (AddUpperFolderItem)
                 {
                     var upperFolderItem = new FileListBoxItem("..", null);
-                    upperFolderItem.DoubleClickAction = UpperFolderAction;
+                    upperFolderItem.DoubleClickAction = NavigateToParentFolder;
                     upperFolderItem.SvgImage = GetFolderImage();
                     Add(upperFolderItem);
                 }
@@ -359,26 +359,6 @@ namespace Alternet.UI
                 foreach (var file in files)
                 {
                     AddFile(null, file);
-                }
-            }
-
-            void RootFolderAction()
-            {
-                SelectedFolder = null;
-            }
-
-            void UpperFolderAction()
-            {
-                try
-                {
-                    var upperFolder = Path.Combine(selectedFolder, "..");
-                    var fullFolder = Path.GetFullPath(upperFolder);
-                    SelectedFolder = fullFolder;
-                }
-                catch (Exception e)
-                {
-                    LogUtils.LogException(e);
-                    SelectedFolder = null;
                 }
             }
         }
@@ -586,6 +566,41 @@ namespace Alternet.UI
             }
         }
 
+        /// <summary>
+        /// Navigates to the root folder.
+        /// By default, this method sets the <see cref="SelectedFolder"/> property to <c>null</c>,
+        /// effectively navigating to the root folder. This method is called when root folder item
+        /// is double-clicked.
+        /// </summary>
+        protected virtual void NavigateToRootFolder()
+        {
+            SelectedFolder = null;
+        }
+
+        /// <summary>
+        /// Navigates to the parent folder.
+        /// If the parent folder is the same as the current folder, it navigates to the root folder.
+        /// If an exception occurs, it logs the exception and resets the selected folder to null.
+        /// This method is called when parent folder item is double-clicked.
+        /// </summary>
+        protected virtual void NavigateToParentFolder()
+        {
+            try
+            {
+                var upperFolder = Path.Combine(selectedFolder, "..");
+                var fullFolder = Path.GetFullPath(upperFolder);
+                if (SelectedFolder == fullFolder)
+                    NavigateToRootFolder();
+                else
+                    SelectedFolder = fullFolder;
+            }
+            catch (Exception e)
+            {
+                LogUtils.LogException(e);
+                SelectedFolder = null;
+            }
+        }
+
         /// <inheritdoc/>
         protected override void OnKeyDown(KeyEventArgs e)
         {
@@ -601,7 +616,7 @@ namespace Alternet.UI
         /// <summary>
         /// Impements item of the <see cref="FileListBox"/> control.
         /// </summary>
-        public class FileListBoxItem : ListControlItem
+        public class FileListBoxItem : TreeControlItem
         {
             /// <summary>
             /// Initializes a new instance of the <see cref="FileListBoxItem"/> class.
