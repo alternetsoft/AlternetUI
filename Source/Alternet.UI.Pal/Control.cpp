@@ -221,8 +221,6 @@ namespace Alternet::UI
             {
                 {DelayedControlFlags::Visible, std::make_tuple(&Control::RetrieveVisible,
                     &Control::ApplyVisible)},
-                {DelayedControlFlags::Frozen, std::make_tuple(&Control::RetrieveFrozen,
-                    &Control::ApplyFrozen)},
                 {DelayedControlFlags::Enabled, std::make_tuple(&Control::RetrieveEnabled,
                     &Control::ApplyEnabled)},
             }),
@@ -1350,34 +1348,37 @@ namespace Alternet::UI
             wxWindow->Disable();
     }
 
-    bool Control::RetrieveFrozen()
+    void Control::BeginUpdate()
     {
-        return GetWxWindow()->IsFrozen();
+        _beginUpdateCount++;
+        if (_beginUpdateCount == 1)
+        {
+            auto window = GetWxWindow();
+            window->Freeze();
+        }
+    }
+
+    void Control::EndUpdate()
+    {
+        if (_beginUpdateCount <= 0)
+            throwEx(u"EndUpdate() without matching BeginUpdate()");
+
+        _beginUpdateCount--;
+        if (_beginUpdateCount == 0)
+        {
+            auto window = GetWxWindow();
+            window->Thaw();
+        }
     }
 
     void Control::Freeze()
     {
-        GetWxWindow()->Freeze();
+        BeginUpdate();
     }
 
     void Control::Thaw() 
     {
-        GetWxWindow()->Thaw();
-    }
-
-    void Control::ApplyFrozen(bool value)
-    {
-        auto window = GetWxWindow();
-        if (value)
-        {
-            if (!window->IsFrozen())
-                window->Freeze();
-        }
-        else
-        {
-            if (window->IsFrozen())
-                window->Thaw();
-        }
+        EndUpdate();
     }
 
     std::vector<Control*> Control::GetChildren()
@@ -1439,27 +1440,6 @@ namespace Alternet::UI
     void Control::UnsetToolTip()
     {
         GetWxWindow()->UnsetToolTip();
-    }
-
-    void Control::BeginUpdate()
-    {
-        _beginUpdateCount++;
-        if (_beginUpdateCount == 1)
-        {
-            _delayedFlags.Set(DelayedControlFlags::Frozen, true);
-        }
-    }
-
-    void Control::EndUpdate()
-    {
-        if (_beginUpdateCount <= 0)
-            throwEx(u"EndUpdate() without matching BeginUpdate()");
-
-        _beginUpdateCount--;
-        if (_beginUpdateCount == 0)
-        {
-            _delayedFlags.Set(DelayedControlFlags::Frozen, false);
-        }
     }
 
     Size Control::GetClientSize()

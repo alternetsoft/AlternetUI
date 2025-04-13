@@ -279,8 +279,7 @@ namespace Alternet::UI
         {
             None = 0,
             Visible = 1 << 0,
-            Frozen = 1 << 1,
-            Enabled = 1 << 2
+            Enabled = 1 << 1
         };
 
         enum class ControlFlags
@@ -347,9 +346,6 @@ namespace Alternet::UI
         void DestroyDropTarget(bool setDropTarget);
 
         bool RetrieveVisible();
-
-        bool RetrieveFrozen();
-        void ApplyFrozen(bool value);
 
         void ApplyScroll(int evtKind, wxScrollWinEvent& event, int position);
 
