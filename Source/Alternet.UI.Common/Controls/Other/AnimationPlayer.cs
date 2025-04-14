@@ -255,7 +255,9 @@ namespace Alternet.UI
         {
             if (DisposingOrDisposed)
                 return default;
-            using var stream = ResourceLoader.StreamFromUrl(url);
+            using var stream = ResourceLoader.StreamFromUrlOrDefault(url);
+            if (stream is null)
+                return false;
             return Handler.Load(stream, type);
         }
 
