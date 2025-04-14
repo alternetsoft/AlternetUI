@@ -662,17 +662,6 @@ namespace Alternet.Maui
             ObservableCollection<Alternet.UI.TreeControlItem> collection
                 = new(rootItem.EnumExpandedItems());
 
-            int indentPx = Alternet.UI.VirtualTreeControl.DefaultLevelMargin;
-
-            foreach (var item in collection)
-            {
-                var indentLevel = item.IndentLelel - 1;
-
-                item.ForegroundMargin = (indentPx * indentLevel, 0, 0, 0);
-                item.CheckBoxVisible = item.HasItems;
-                item.IsChecked = item.IsExpanded;
-            }
-
             visibleItems = collection;
             collectionView.ItemsSource = visibleItems;
         }
