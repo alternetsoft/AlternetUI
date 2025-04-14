@@ -80,13 +80,43 @@ namespace Alternet.UI
         /// </remarks>
         public static Stream StreamFromUrl(string url, Uri? baseUri = null)
         {
-            if(CustomStreamFromUrl is not null)
+            return StreamFromUrlOr(url, baseUri)
+                ?? throw new FileNotFoundException(ErrorText());
+
+            string ErrorText()
+            {
+                if(baseUri is null)
+                    return $"The resource '{url}' not found.";
+                return $"The resource '{url}' (baseUri: '{baseUri}') not found.";
+            }
+        }
+
+        /// <summary>
+        /// Attempts to load a <see cref="Stream"/> from the specified URL
+        /// or uses a fallback function if provided.
+        /// </summary>
+        /// <param name="url">The URL used to load the data. By default, "file" and
+        /// "embres" protocols are supported, but this can be extended using
+        /// the <see cref="CustomStreamFromUrl"/> event.</param>
+        /// <param name="baseUri">Specifies the base URL if <paramref name="url"/> is not absolute.</param>
+        /// <param name="func">A fallback function to invoke if the default loading mechanism fails.</param>
+        /// <returns>
+        /// A <see cref="Stream"/> loaded from the specified URL, or the result of the
+        /// fallback function if provided and the default mechanism fails.
+        /// Returns <c>null</c> if no stream could be loaded.
+        /// </returns>
+        public static Stream? StreamFromUrlOr(string? url, Uri? baseUri, Func<Stream?>? func = null)
+        {
+            if (url is null || url.Length == 0)
+                return null;
+
+            if (CustomStreamFromUrl is not null)
             {
                 StreamFromUrlEventArgs e = new(url);
 
                 var list = CustomStreamFromUrl.GetInvocationList();
 
-                foreach(var item in list)
+                foreach (var item in list)
                 {
                     ((EventHandler<StreamFromUrlEventArgs>)item)(null, e);
                     if (e.Handled && e.Result is not null)
@@ -94,7 +124,24 @@ namespace Alternet.UI
                 }
             }
 
-            return DefaultStreamFromUrl(url, baseUri);
+            return DefaultStreamFromUrl(url, baseUri) ?? func?.Invoke();
+        }
+
+        /// <summary>
+        /// Calls <see cref="StreamFromUrlOrDefault"/> and if it returns <c>null</c>,
+        /// calls <paramref name="func"/>.
+        /// </summary>
+        /// <param name="url">Url used to load the data. By default "file" and "embres"
+        /// protocols are supported but you can extend it with <see cref="CustomStreamFromUrl"/>
+        /// event.
+        /// </param>
+        /// <param name="func">Function used to get stream from url in case if
+        /// <see cref="StreamFromUrl"/> returns <c>null</c>.</param>
+        /// <returns></returns>
+        public static Stream? StreamFromUrlOrDefault(string? url, Func<Stream?>? func = null)
+        {
+            var result = StreamFromUrlOr(url, null, func);
+            return result;
         }
 
         /// <summary>
@@ -119,24 +166,6 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Calls <see cref="StreamFromUrlOrDefault"/> and if it returns <c>null</c>,
-        /// calls <paramref name="func"/>.
-        /// </summary>
-        /// <param name="url">Url used to load the data. By default "file" and "embres"
-        /// protocols are supported but you can extend it with <see cref="CustomStreamFromUrl"/>
-        /// event.
-        /// </param>
-        /// <param name="func">Function used to get stream from url in case if
-        /// <see cref="StreamFromUrl"/> returns <c>null</c>.</param>
-        /// <returns></returns>
-        public static Stream? StreamFromUrlOrDefault(string url, Func<Stream?>? func = null)
-        {
-            var result = BaseObject.InsideTryCatch(() => StreamFromUrl(url));
-            result ??= func?.Invoke();
-            return result;
-        }
-
-        /// <summary>
         /// Default implementation of <see cref="StreamFromUrl"/>.
         /// See <see cref="StreamFromUrl"/> for details.
         /// </summary>
@@ -146,7 +175,7 @@ namespace Alternet.UI
         /// </param>
         /// <param name="baseUri">Specifies base url if <paramref name="url"/> is not absolute.</param>
         /// <returns></returns>
-        public static Stream DefaultStreamFromUrl(string url, Uri? baseUri = null)
+        public static Stream? DefaultStreamFromUrl(string url, Uri? baseUri = null)
         {
             var s = url.Trim();
 
@@ -174,6 +203,9 @@ namespace Alternet.UI
                     path = PathUtils.GetFullPath(s, baseUri.LocalPath);
                 }
 
+                if (!FileSystem.Default.FileExists(path))
+                    return null;
+
                 var stream = FileSystem.Default.OpenRead(path);
                 return stream;
             }
@@ -186,11 +218,14 @@ namespace Alternet.UI
         /// <param name="uri"></param>
         /// <param name="baseUri"></param>
         /// <returns></returns>
-        public static Stream DefaultStreamFromUri(Uri uri, Uri? baseUri = null)
+        public static Stream? DefaultStreamFromUri(Uri uri, Uri? baseUri = null)
         {
             if (uri.IsAbsoluteUri && uri.IsFile)
             {
-                var stream = FileSystem.OpenRead(uri.LocalPath);
+                var s = uri.LocalPath;
+                if (!FileSystem.Default.FileExists(s))
+                    return null;
+                var stream = FileSystem.OpenRead(s);
                 return stream;
             }
 
@@ -276,8 +311,10 @@ namespace Alternet.UI
         /// <exception cref="FileNotFoundException">
         /// The asset could not be found.
         /// </exception>
-        public virtual Stream Open(Uri uri, Uri? baseUri = null)
-            => OpenAndGetAssembly(uri, baseUri).Stream;
+        public virtual Stream? Open(Uri uri, Uri? baseUri = null)
+        {
+            return OpenAndGetAssembly(uri, baseUri)?.Stream;
+        }
 
         /// <summary>
         /// Opens the asset with the requested URI and returns the asset stream and the
@@ -293,13 +330,57 @@ namespace Alternet.UI
         /// <exception cref="FileNotFoundException">
         /// The asset could not be found.
         /// </exception>
-        public virtual (Stream Stream, Assembly Assembly) OpenAndGetAssembly(
+        public virtual (Stream Stream, Assembly Assembly)? OpenAndGetAssembly(
             Uri uri,
             Uri? baseUri = null)
         {
-            var asset = GetAsset(uri, baseUri)
-                ?? throw new FileNotFoundException($"The resource {uri} could not be found.");
+            var asset = GetAsset(uri, baseUri);
+            if (asset is null)
+                return null;
             return (asset.GetStream(), asset.Assembly);
+        }
+
+        /// <summary>
+        /// Retrieves the asset descriptor for the specified URI.
+        /// </summary>
+        /// <param name="uri">The URI of the asset to retrieve.</param>
+        /// <param name="baseUri">
+        /// A base URI to use if <paramref name="uri"/> is relative.
+        /// </param>
+        /// <returns>
+        /// An <see cref="IAssetDescriptor"/> representing the asset, or <c>null</c> if the asset
+        /// could not be found.
+        /// </returns>
+        public virtual IAssetDescriptor? GetAsset(Uri uri, Uri? baseUri)
+        {
+            if (uri.IsAbsoluteEmbres())
+            {
+                var asm = GetAssembly(uri) ?? GetAssembly(baseUri) ?? defaultEmbresAssembly;
+                if(asm is null)
+                {
+                    App.LogErrorIfDebug("Assembly is not specified in ResourceLoader.GetAsset");
+                    return null;
+                }
+
+                var resourceKey = uri.AbsolutePath;
+                IAssetDescriptor? rv = null;
+                asm.Resources?.TryGetValue(resourceKey, out rv);
+                return rv;
+            }
+
+            uri = uri.EnsureAbsolute(baseUri);
+
+            if (uri.IsUires())
+            {
+                var (asm, path) = GetResAsmAndPath(uri);
+                if (asm.UIResources == null)
+                    return null;
+                asm.UIResources.TryGetValue(path, out var desc);
+                return desc;
+            }
+
+            App.LogErrorIfDebug($"Unsupported url type in ResourceLoader.GetAsset: " + uri.Scheme);
+            return null;
         }
 
         /// <remarks>
@@ -357,32 +438,6 @@ namespace Alternet.UI
             }
 
             return null;
-        }
-
-        private IAssetDescriptor? GetAsset(Uri uri, Uri? baseUri)
-        {
-            if (uri.IsAbsoluteEmbres())
-            {
-                var asm = (GetAssembly(uri) ?? GetAssembly(baseUri) ?? defaultEmbresAssembly)
-                    ?? throw new ArgumentException("Assembly is not specified");
-                var resourceKey = uri.AbsolutePath;
-                IAssetDescriptor? rv = null;
-                asm.Resources?.TryGetValue(resourceKey, out rv);
-                return rv;
-            }
-
-            uri = uri.EnsureAbsolute(baseUri);
-
-            if (uri.IsUires())
-            {
-                var (asm, path) = GetResAsmAndPath(uri);
-                if (asm.UIResources == null)
-                    return null;
-                asm.UIResources.TryGetValue(path, out var desc);
-                return desc;
-            }
-
-            throw new ArgumentException($"Unsupported url type: " + uri.Scheme, nameof(uri));
         }
     }
 }
