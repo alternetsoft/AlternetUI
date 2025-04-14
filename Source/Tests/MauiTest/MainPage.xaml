@@ -37,12 +37,6 @@
                 HorizontalOptions="Center" />
             <alternet:ColorPickerView x:Name="colorPicker" 
                 Margin="10,10"/>
-            <alternet:BorderView Margin="10,10"
-                HeightRequest="35" WidthRequest="50"/>
-            <alternet:LabelView Margin="10,10" HeightRequest="35"
-                WidthRequest="50" x:Name="labelView"/>
-            <alternet:PictureBoxView Margin="10,10"
-                HeightRequest="35" WidthRequest="50" x:Name="pictureBoxView"/>
         </HorizontalStackLayout>
 
 
