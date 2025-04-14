@@ -22,10 +22,11 @@ namespace Alternet.Drawing
         /// <param name="image">This image will be converted to icon and added
         /// to the set of icons.</param>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public IconSet(Image image)
+        public IconSet(Image? image)
             : base(false)
         {
-            Add(image);
+            if(image is not null)
+                Add(image);
         }
 
         /// <summary>
@@ -34,10 +35,11 @@ namespace Alternet.Drawing
         /// </summary>
         /// <param name="stream">The data stream used to load the icon.</param>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public IconSet(Stream stream)
+        public IconSet(Stream? stream)
             : base(false)
         {
-            Add(stream);
+            if(stream is not null)
+                Add(stream);
         }
 
         /// <summary>
@@ -58,7 +60,7 @@ namespace Alternet.Drawing
 
             try
             {
-                using var stream = ResourceLoader.StreamFromUrl(url!, baseUri);
+                using var stream = ResourceLoader.StreamFromUrlOr(url!, baseUri);
                 if (stream is null)
                 {
                     App.LogError($"Image not loaded from: {url}");
@@ -117,9 +119,9 @@ namespace Alternet.Drawing
         /// <paramref name="url"/> can include assembly name. Example:
         /// "embres:Alternet.UI.Resources.Svg.IconName.ico?assembly=Alternet.UI"
         /// </remarks>
-        public static IconSet FromUrl(string url)
+        public static IconSet? FromUrl(string url)
         {
-            using var stream = ResourceLoader.StreamFromUrl(url);
+            using var stream = ResourceLoader.StreamFromUrlOrDefault(url);
             return new IconSet(stream);
         }
 
@@ -133,12 +135,11 @@ namespace Alternet.Drawing
         {
             try
             {
-                var stream = ResourceLoader.StreamFromUrl(url);
+                var stream = ResourceLoader.StreamFromUrlOrDefault(url);
                 if (stream is not null)
                     return new IconSet(stream);
                 else
                 {
-                    App.LogErrorIfDebug($"Image not loaded from: {url}");
                     return null;
                 }
             }
@@ -158,7 +159,7 @@ namespace Alternet.Drawing
         {
             try
             {
-                var stream = ResourceLoader.StreamFromUrl(url);
+                var stream = ResourceLoader.StreamFromUrlOrDefault(url);
                 if (stream is not null)
                     return new IconSet(stream);
                 else
