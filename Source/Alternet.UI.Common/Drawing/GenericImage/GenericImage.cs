@@ -96,7 +96,7 @@ namespace Alternet.Drawing
             if (string.IsNullOrEmpty(url))
                 return;
 
-            using var stream = ResourceLoader.StreamFromUrl(url!);
+            using var stream = ResourceLoader.StreamFromUrlOrDefault(url);
             if (stream is null)
             {
                 App.LogError($"GenericImage not loaded from: {url}");
@@ -123,7 +123,7 @@ namespace Alternet.Drawing
             if (string.IsNullOrEmpty(url))
                 return;
 
-            using var stream = ResourceLoader.StreamFromUrl(url!);
+            using var stream = ResourceLoader.StreamFromUrlOrDefault(url!);
             if (stream is null)
             {
                 App.LogError($"GenericImage not loaded from: {url}");
@@ -406,10 +406,9 @@ namespace Alternet.Drawing
             if (string.IsNullOrEmpty(url))
                 return false;
 
-            using var stream = ResourceLoader.StreamFromUrl(url!);
+            using var stream = ResourceLoader.StreamFromUrlOrDefault(url);
             if (stream is null)
             {
-                App.LogError($"GenericImage not loaded from: {url}");
                 return false;
             }
 
@@ -845,10 +844,9 @@ namespace Alternet.Drawing
             if (string.IsNullOrEmpty(url))
                 return 0;
 
-            using var stream = ResourceLoader.StreamFromUrl(url!);
+            using var stream = ResourceLoader.StreamFromUrlOrDefault(url);
             if (stream is null)
             {
-                App.LogError($"GenericImage not loaded from: {url}");
                 return 0;
             }
 
@@ -1963,10 +1961,9 @@ namespace Alternet.Drawing
             if (string.IsNullOrEmpty(url))
                 return false;
 
-            using var stream = ResourceLoader.StreamFromUrl(url!);
+            using var stream = ResourceLoader.StreamFromUrlOrDefault(url);
             if (stream is null)
             {
-                App.LogError($"GenericImage not loaded from: {url}");
                 return false;
             }
 
@@ -1989,10 +1986,9 @@ namespace Alternet.Drawing
             if (string.IsNullOrEmpty(url))
                 return false;
 
-            using var stream = ResourceLoader.StreamFromUrl(url!);
+            using var stream = ResourceLoader.StreamFromUrlOrDefault(url);
             if (stream is null)
             {
-                App.LogError($"GenericImage not loaded from: {url}");
                 return false;
             }
 
