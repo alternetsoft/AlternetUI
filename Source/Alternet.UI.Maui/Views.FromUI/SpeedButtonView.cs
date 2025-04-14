@@ -22,7 +22,7 @@ namespace Alternet.UI
     /// This controls is implemented for testing purposes. It is better to use native MAUI control
     /// instead of <see cref="SpeedButtonView"/>.
     /// </remarks>
-    public partial class SpeedButtonView : ControlView<SpeedButton>
+    internal partial class SpeedButtonView : ControlView<SpeedButton>
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="SpeedButtonView"/> class.

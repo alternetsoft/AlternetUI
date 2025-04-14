@@ -22,7 +22,7 @@ namespace Alternet.UI
     /// This controls is implemented for testing purposes. It is better to use native MAUI control
     /// instead of <see cref="ToolBarView"/>.
     /// </remarks>
-    public partial class ToolBarView : ControlView<ToolBar>
+    internal partial class ToolBarView : ControlView<ToolBar>
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="ToolBarView"/> class.

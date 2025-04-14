@@ -22,7 +22,7 @@ namespace Alternet.UI
     /// This controls is implemented for testing purposes. It is better to use native MAUI control
     /// instead of <see cref="TabControlView"/>.
     /// </remarks>
-    public partial class TabControlView : ControlView<TabControl>
+    internal partial class TabControlView : ControlView<TabControl>
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="TabControlView"/> class.

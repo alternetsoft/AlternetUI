@@ -22,7 +22,7 @@ namespace Alternet.UI
     /// This controls is implemented for testing purposes. It is better to use native MAUI control
     /// instead of <see cref="PictureBoxView"/>.
     /// </remarks>
-    public partial class PictureBoxView : ControlView<PictureBox>
+    internal partial class PictureBoxView : ControlView<PictureBox>
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="PictureBoxView"/> class.

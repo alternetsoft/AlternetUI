@@ -22,7 +22,7 @@ namespace Alternet.UI
     /// This controls is implemented for testing purposes. It is better to use native MAUI control
     /// instead of <see cref="LabelView"/>.
     /// </remarks>
-    public partial class LabelView : ControlView<GenericLabel>
+    internal partial class LabelView : ControlView<GenericLabel>
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="LabelView"/> class.

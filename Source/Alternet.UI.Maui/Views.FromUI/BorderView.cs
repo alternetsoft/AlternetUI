@@ -22,7 +22,7 @@ namespace Alternet.UI
     /// This controls is implemented for testing purposes. It is better to use native MAUI control
     /// instead of <see cref="BorderView"/>.
     /// </remarks>
-    public partial class BorderView : ControlView<Border>
+    internal partial class BorderView : ControlView<Border>
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="BorderView"/> class.
