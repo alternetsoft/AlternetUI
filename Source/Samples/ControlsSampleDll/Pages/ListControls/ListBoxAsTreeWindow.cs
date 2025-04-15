@@ -49,11 +49,7 @@ namespace ControlsSample
 
             ActiveControl = treeView;
 
-            ListControlUtils.AddTestItems(treeView.RootItem, 10, ItemInitialize);
-
-            void ItemInitialize(TreeControlItem item)
-            {
-            }
+            ListControlUtils.AddTestItems(treeView.RootItem, 10);
 
             treeView.ContextMenu.Add("Add", AddNewItem);
             treeView.ContextMenu.Add("Add child", AddNewChildItem);
@@ -69,6 +65,7 @@ namespace ControlsSample
             treeView.ContextMenu.Add("Rename", RenameSelectedItem);
             treeView.ContextMenu.AddSeparator();
             treeView.ContextMenu.Add("Change tree buttons", treeView.SelectNextTreeButton);
+
             treeView.ContextMenu.Add("Inc checkbox size", () =>
             {
                 int incValue = 4;
@@ -89,9 +86,23 @@ namespace ControlsSample
 #endif
                 FormUtils.InvalidateAll();
             });
+
             treeView.ContextMenu.Add("Toggle enabled", () =>
             {
                 treeView.Enabled = !treeView.Enabled;
+            });
+
+            treeView.ContextMenu.Add("Change root item", () =>
+            {
+                TreeControlRootItem item = new();
+                ListControlUtils.AddTestItems(item, 10, ItemInitialize);
+
+                void ItemInitialize(TreeControlItem item)
+                {
+                    item.Text += "a";
+                }
+
+                treeView.RootItem = item;
             });
         }
 
@@ -123,19 +134,19 @@ namespace ControlsSample
         protected override void OnClosed(EventArgs e)
         {
             base.OnClosed(e);
-            App.IdleLog($"{GetType()}{counter} Closed");
+            App.LogIf($"{GetType()}{counter} Closed", false);
         }
 
         protected override void DisposeManaged()
         {
             base.DisposeManaged();
-            App.IdleLog($"{GetType()}{counter} Disposed");
+            App.LogIf($"{GetType()}{counter} Disposed", false);
         }
 
         protected override void OnClosing(WindowClosingEventArgs e)
         {
             base.OnClosing(e);
-            App.IdleLog($"{GetType()}{counter} Closing");
+            App.LogIf($"{GetType()}{counter} Closing", false);
         }
     }
 }

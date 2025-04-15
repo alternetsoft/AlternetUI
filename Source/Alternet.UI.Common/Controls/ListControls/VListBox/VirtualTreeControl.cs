@@ -16,7 +16,7 @@ namespace Alternet.UI
         public static int DefaultLevelMargin = 16;
 
         private readonly VirtualListBox listBox = new();
-        private readonly TreeControlRootItem rootItem;
+        private TreeControlRootItem rootItem;
         private TreeViewButtonsKind treeButtons = TreeViewButtonsKind.Null;
         private bool needTreeChanged;
 
@@ -179,9 +179,28 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Gets the root item of the tree view.
+        /// Gets or sets the root item of the tree view.
         /// </summary>
-        public TreeControlItem RootItem => rootItem;
+        public virtual TreeControlRootItem RootItem
+        {
+            get
+            {
+                return rootItem;
+            }
+
+            set
+            {
+                if (rootItem == value)
+                    return;
+                if (value is null)
+                    value = new(this);
+                else
+                    value.SetOwner(this);
+                rootItem?.SetOwner(null);
+                rootItem = value;
+                RefreshTree();
+            }
+        }
 
         /// <summary>
         /// Gets the collection of visible items contained in the tree view.
@@ -508,8 +527,12 @@ namespace Alternet.UI
                 needTreeChanged = false;
             }
 
-            VirtualListBoxItems collection = new(rootItem.EnumExpandedItems());
+            RefreshTree();
+        }
 
+        private void RefreshTree()
+        {
+            VirtualListBoxItems collection = new(rootItem.EnumExpandedItems());
             ListBox.SetItemsFast(collection, VirtualListBox.SetItemsKind.ChangeField);
         }
     }
