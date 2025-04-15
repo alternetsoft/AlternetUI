@@ -49,7 +49,6 @@ namespace Alternet.Maui
         /// </summary>
         public static int DefaultSvgSize = 16;
 
-        private readonly Alternet.UI.TreeControlRootItem rootItem;
         private readonly Grid grid = new();
         private readonly CollectionView collectionView = new();
         private readonly TapGestureRecognizer imageGestureRecognizer = new();
@@ -65,6 +64,7 @@ namespace Alternet.Maui
             Buttons = ButtonsMask.Secondary,
         };
 
+        private Alternet.UI.TreeControlRootItem rootItem;
         private int updateCount;
         private SKBitmapImageSource? openedImage;
         private SKBitmapImageSource? closedImage;
@@ -233,7 +233,7 @@ namespace Alternet.Maui
         /// Gets or sets the type of tree view buttons.
         /// </summary>
         /// <value>The type of tree view buttons.</value>
-        public Alternet.UI.TreeViewButtonsKind TreeButtons
+        public virtual Alternet.UI.TreeViewButtonsKind TreeButtons
         {
             get
             {
@@ -250,9 +250,28 @@ namespace Alternet.Maui
         }
 
         /// <summary>
-        /// Gets the root item of the tree view.
+        /// Gets or sets the root item of the tree view.
         /// </summary>
-        public Alternet.UI.TreeControlItem RootItem => rootItem;
+        public virtual Alternet.UI.TreeControlRootItem RootItem
+        {
+            get
+            {
+                return rootItem;
+            }
+
+            set
+            {
+                if (rootItem == value)
+                    return;
+                if (value is null)
+                    value = new(this);
+                else
+                    value.SetOwner(this);
+                rootItem?.SetOwner(null);
+                rootItem = value;
+                RefreshTree();
+            }
+        }
 
         /// <summary>
         /// Gets the collection of expanded items in the tree view.
@@ -658,10 +677,13 @@ namespace Alternet.Maui
         {
             if (updateCount > 0)
                 return;
+            RefreshTree();
+        }
 
+        private void RefreshTree()
+        {
             ObservableCollection<Alternet.UI.TreeControlItem> collection
                 = new(rootItem.EnumExpandedItems());
-
             visibleItems = collection;
             collectionView.ItemsSource = visibleItems;
         }
