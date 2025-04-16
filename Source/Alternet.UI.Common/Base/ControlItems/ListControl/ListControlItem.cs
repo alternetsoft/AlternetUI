@@ -139,6 +139,28 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets or sets a value indicating whether the font style of the item is bold.
+        /// This property is based on the <see cref="FontStyle"/> value.
+        /// </summary>
+        /// <value>
+        /// <c>true</c> if the font style is bold; otherwise, <c>false</c>.
+        /// </value>
+        public bool IsBold
+        {
+            get
+            {
+                return FontStyle?.HasFlag(Alternet.Drawing.FontStyle.Bold) ?? false;
+            }
+
+            set
+            {
+                if (value == IsBold)
+                    return;
+                FontStyle = Drawing.Font.ChangeFontStyle(FontStyle ?? 0, Drawing.FontStyle.Bold, value);
+            }
+        }
+
+        /// <summary>
         /// Gets or sets a value indicating whether checkbox will
         /// allow three check states rather than two. If property is null (default),
         /// control's setting is used.
