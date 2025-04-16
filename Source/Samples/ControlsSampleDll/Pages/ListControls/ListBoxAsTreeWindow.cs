@@ -104,6 +104,20 @@ namespace ControlsSample
 
                 treeView.RootItem = item;
             });
+
+            var lastChild = treeView.RootItem.LastChild;
+            var item = treeView.RootItem.GetItem(3);
+
+            if (lastChild is not null)
+            {
+                lastChild.IsBold = true;
+            }
+
+            if(item is not null)
+            {
+                item.ForegroundColor = Color.Black;
+                item.BackgroundColor = Color.Beige;
+            }
         }
 
         public void AddNewChildItem()

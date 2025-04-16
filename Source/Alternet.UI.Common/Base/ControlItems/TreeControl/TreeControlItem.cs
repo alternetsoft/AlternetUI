@@ -234,6 +234,17 @@ namespace Alternet.UI
         public virtual IEnumerable<TreeControlItem> Items => items ?? [];
 
         /// <summary>
+        /// Gets the number of child items in this tree control item.
+        /// </summary>
+        public virtual int ItemCount
+        {
+            get
+            {
+                return items?.Count ?? 0;
+            }
+        }
+
+        /// <summary>
         /// Gets a value indicating whether this item has child items.
         /// </summary>
         public virtual bool HasItems => items is not null && items.Count > 0;
@@ -338,6 +349,21 @@ namespace Alternet.UI
                 return;
             Parent.IsExpanded = true;
             Parent.ExpandAllParents();
+        }
+
+        /// <summary>
+        /// Retrieves the child item at the specified index.
+        /// </summary>
+        /// <param name="index">The zero-based index of the child item to retrieve.</param>
+        /// <returns>
+        /// The <see cref="TreeControlItem"/> at the specified index, or <c>null</c>
+        /// if the index is out of range or there are no child items.
+        /// </returns>
+        public virtual TreeControlItem? GetItem(int index)
+        {
+            if (items is null || index >= items.Count || index < 0)
+                return null;
+            return items[index];
         }
 
         /// <summary>
