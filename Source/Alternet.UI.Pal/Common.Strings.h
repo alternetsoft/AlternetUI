@@ -8,7 +8,9 @@
 #include <unicode/unistr.h>
 */
 
+#ifdef __GNUC__
 #pragma GCC diagnostic ignored "-Wdeprecated"
+#endif
 
 namespace Alternet::UI
 {

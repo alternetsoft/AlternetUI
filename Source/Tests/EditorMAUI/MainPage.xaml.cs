@@ -204,8 +204,8 @@ public partial class MainPage : Alternet.UI.DisposableContentPage, EditorUI.IDoc
         {
         };
 
-        ProcessRunner.RunningProcessDisposed += ScripterUtils_RunningProcessDisposed;
-        ProcessRunner.RunningProcessExited += ScripterUtils_RunningProcessDisposed;
+        Alternet.UI.ProcessRunnerWithNotification.RunningProcessDisposed += ScripterUtils_RunningProcessDisposed;
+        Alternet.UI.ProcessRunnerWithNotification.RunningProcessExited += ScripterUtils_RunningProcessDisposed;
 
         documentCs = new(this);
         documentCs.StateChanged += Document_StateChanged;
