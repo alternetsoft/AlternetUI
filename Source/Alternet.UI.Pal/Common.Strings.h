@@ -5,8 +5,26 @@
 #include "Common.Base.h"
 #include <stdint.h>
 
+_STL_DISABLE_DEPRECATED_WARNING
+
 namespace Alternet::UI
 {
+    /*
+    std::u16string To_UTF16(const std::u32string& s)
+    {
+        std::wstring_convert<std::codecvt_utf16<char32_t>, char32_t> conv;
+        std::string bytes = conv.to_bytes(s);
+        return std::u16string(reinterpret_cast<const char16_t*>(bytes.c_str()), bytes.length() / sizeof(char16_t));
+    }
+
+    std::u32string To_UTF32(const std::u16string& s)
+    {
+        const char16_t* pData = s.c_str();
+        std::wstring_convert<std::codecvt_utf16<char32_t>, char32_t> conv;
+        return conv.from_bytes(reinterpret_cast<const char*>(pData), reinterpret_cast<const char*>(pData + s.length()));
+    }
+    */
+
     static void LogMessage(std::string msg)
     {
         wxLogMessage(msg.c_str());
@@ -101,16 +119,8 @@ namespace Alternet::UI
         return value16;
     }
 
-    inline wxString wxStr(const string& u16str)
+    inline wxString wxStr(const string& value)
     {
-#if defined(__WXMSW__)
-        return (wchar_t*)u16str.c_str();
-#else
-        return wxString::FromUTF16(u16str.data(), u16str.size());
-#endif
-
-
-/*
 #if defined(__WXMSW__)
         return (wchar_t*)value.c_str();
 #else
@@ -121,26 +131,15 @@ namespace Alternet::UI
             reinterpret_cast<const char*> (&value[0] + value.size()));
         return s.c_str();
 #endif
-*/
     }
 
-    inline string wxStr(const wxString& wx)
+    inline string wxStr(const wxString& value)
     {
-#if defined(__WXMSW__)
-        return (char16_t*)wx.c_str().AsWChar();
-#else
-        return std::u16string(wx.utf16_str());
-#endif
-
-
-
-/*
 #if defined(__WXMSW__)
         return (char16_t*)value.c_str().AsWChar();
 #else
         return make_u16string(value.c_str().AsWChar());
 #endif
-*/
     }
 }
 
