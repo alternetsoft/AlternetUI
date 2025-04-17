@@ -58,6 +58,21 @@ namespace Alternet.Drawing
         public virtual Collection<Image> Images { get; } = new() { ThrowOnNullAdd = true };
 
         /// <summary>
+        /// Retrieves an image from the container at the specified index.
+        /// </summary>
+        /// <param name="index">The zero-based index of the image to retrieve.
+        /// If the index is null, less than 0, or greater than or equal to the
+        /// number of images, null is returned.</param>
+        /// <returns>The <see cref="Image"/> at the specified index, or null if
+        /// the index is invalid.</returns>
+        public virtual Image? GetImage(int? index)
+        {
+            if (index < 0 || index >= Images.Count)
+                return null;
+            return Images[index];
+        }
+
+        /// <summary>
         /// Raises <see cref="Changed"/> event and <see cref="OnChanged"/> method.
         /// </summary>
         public void RaiseChanged()
