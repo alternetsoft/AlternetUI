@@ -613,6 +613,16 @@ namespace Alternet.Maui
         }
 
         /// <summary>
+        /// Updates the tree view when the tree structure changes.
+        /// </summary>
+        public virtual void TreeChanged()
+        {
+            if (updateCount > 0)
+                return;
+            RefreshTree();
+        }
+
+        /// <summary>
         /// Creates the item template for the tree view.
         /// </summary>
         /// <returns>A <see cref="DataTemplate"/> representing the item template.</returns>
@@ -668,16 +678,6 @@ namespace Alternet.Maui
             });
 
             return result;
-        }
-
-        /// <summary>
-        /// Updates the tree view when the tree structure changes.
-        /// </summary>
-        protected virtual void TreeChanged()
-        {
-            if (updateCount > 0)
-                return;
-            RefreshTree();
         }
 
         private void RefreshTree()
