@@ -126,6 +126,7 @@ namespace Alternet.UI
             }
 
             item.CustomAttr.SetAttribute<Action>("Fn", Fn);
+            item.DoubleClickAction = Fn;
             Items.Add(item);
 
             void Fn()
