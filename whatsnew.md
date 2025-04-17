@@ -1,3 +1,29 @@
+# 0.9.721 (2025 April 17)
+
+- PreviewFile: Fixed default text and bk colors.
+- FileListBox: new members and draw folder using color svg.
+- FileListBox: Inherit from VirtualTreeControl.
+- FileListBox: 'Go to up folder' action is implemented more properly.
+- FileListBox: NavigateToRootFolder(), NavigateToParentFolder().
+- BackgroundWorkManager: Catch and report exceptions.
+- Maui: SimpleInputDialog.
+- HVAlignment: BottomLeft, BottomRight, TopRight.
+- Control.cpp: Fixed problems with BeginUpdate/EndUpdate.
+- VirtualTreeControl: ListBox is now created as child control and VirtualTreeControl is derived from Control.
+- VirtualTreeControl: Improved tree items and listbox items synchronization.
+- VirtualTreeControl: Fixed some issues in demo.
+- VirtualTreeControl: Improved TreeControlItem to update base item properties automatically depending on it's state.
+- VirtualTreeControl: RootItem setter.
+- AnimationPlayer.LoadFromUrl works without exception if no such file.
+- GenericImage: Load method return false instead of exception if no image resource is found.
+- IconSet: Do not raise exceptions if no icon is found, also support nullable params in constructors.
+- ResourceLoader: StreamFromUrlOr, GetAsset.
+- ResourceLoader: Most of the load methods now return null instead of raising an exception if no such resource is found.
+- ListControlItem: IsBold, paint image from ImageList if ImageIndex is specified.
+- TreeControlItem: ItemCount, GetItem(index).
+- Create ProgressDialog.
+- Image: ToGrayScaleCached, ResetGrayScaleCached.
+
 # 0.9.720 (2025 April 8)
 
 - Added VirtualTreeControl. It represents a tree control that inherits from VirtualListBox. 
