@@ -8,7 +8,7 @@
 #include <unicode/unistr.h>
 */
 
-_STL_DISABLE_DEPRECATED_WARNING
+#pragma GCC diagnostic ignored "-Wdeprecated"
 
 namespace Alternet::UI
 {
