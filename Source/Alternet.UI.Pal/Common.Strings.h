@@ -4,11 +4,26 @@
 #include <wx/string.h>
 #include "Common.Base.h"
 #include <stdint.h>
+/*
+#include <unicode/unistr.h>
+*/
 
 _STL_DISABLE_DEPRECATED_WARNING
 
 namespace Alternet::UI
 {
+
+/*
+    std::u16string wstringToU16String(const std::wstring& wstr) {
+        icu::UnicodeString unicodeStr(reinterpret_cast<const UChar*>(wstr.data()), wstr.length());
+        return std::u16string(reinterpret_cast<const char16_t*>(unicodeStr.getBuffer()), unicodeStr.length());
+    }
+
+    std::wstring u16StringToWstring(const std::u16string& u16str) {
+        icu::UnicodeString unicodeStr(reinterpret_cast<const UChar*>(u16str.data()), u16str.length());
+        return std::wstring(reinterpret_cast<const wchar_t*>(unicodeStr.getBuffer()), unicodeStr.length());
+    }
+*/
     /*
     std::u16string To_UTF16(const std::u32string& s)
     {
