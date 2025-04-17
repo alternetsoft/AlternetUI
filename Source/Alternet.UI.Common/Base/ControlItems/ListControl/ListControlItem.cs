@@ -92,12 +92,24 @@ namespace Alternet.UI
         /// Gets whether <see cref="Image"/> or <see cref="SvgImage"/> is assigned.
         /// </summary>
         [Browsable(false)]
-        public bool HasImageOrSvg => Image is not null || SvgImage is not null;
+        public bool HasImageOrSvg => Image is not null || SvgImage is not null || HasValidImageIndex;
 
         /// <summary>
         /// Gets or sets text for the display purposes.
         /// </summary>
         public virtual string? DisplayText { get; set; }
+
+        /// <summary>
+        /// Gets a value indicating whether the item has a valid image index assigned.
+        /// </summary>
+        [Browsable(false)]
+        public virtual bool HasValidImageIndex
+        {
+            get
+            {
+                return ImageIndex is not null && ImageIndex >= 0;
+            }
+        }
 
         /// <summary>
         /// Gets or sets image index used when item is painted.
@@ -231,8 +243,15 @@ namespace Alternet.UI
         /// </remarks>
         public virtual Image? Image
         {
-            get => GetImage(VisualControlState.Normal);
-            set => SetImage(VisualControlState.Normal, value);
+            get
+            {
+                return GetImage(VisualControlState.Normal);
+            }
+
+            set
+            {
+                SetImage(VisualControlState.Normal, value);
+            }
         }
 
         /// <summary>
@@ -244,8 +263,15 @@ namespace Alternet.UI
         /// </remarks>
         public virtual Image? DisabledImage
         {
-            get => GetImage(VisualControlState.Disabled);
-            set => SetImage(VisualControlState.Disabled, value);
+            get
+            {
+                return GetImage(VisualControlState.Disabled);
+            }
+
+            set
+            {
+                SetImage(VisualControlState.Disabled, value);
+            }
         }
 
         /// <summary>
@@ -257,8 +283,15 @@ namespace Alternet.UI
         /// </remarks>
         public virtual Image? SelectedImage
         {
-            get => GetImage(VisualControlState.Selected);
-            set => SetImage(VisualControlState.Selected, value);
+            get
+            {
+                return GetImage(VisualControlState.Selected);
+            }
+
+            set
+            {
+                SetImage(VisualControlState.Selected, value);
+            }
         }
 
         /// <summary>
@@ -456,11 +489,13 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets margin of the item when foreground is painted.
         /// </summary>
+        [Browsable(false)]
         public virtual Thickness ForegroundMargin { get; set; }
 
         /// <summary>
         /// Gets or sets left margin of the item when foreground is painted.
         /// </summary>
+        [Browsable(false)]
         public Coord ForegroundMarginLeft
         {
             get => ForegroundMargin.Left;
@@ -555,8 +590,19 @@ namespace Alternet.UI
             IListControlItemContainer? container,
             Color? svgColor)
         {
+            EnumArrayStateImages result = new();
+
             if (item is null)
-                return new();
+                return result;
+
+            if (item.HasValidImageIndex && container is not null)
+            {
+                var img = container.ImageList?.GetImage(item.ImageIndex);
+                result[VisualControlState.Normal] = img;
+                result[VisualControlState.Selected] = img;
+                result[VisualControlState.Disabled] = img?.ToGrayScaleCached();
+                return result;
+            }
 
             var svgImage = item.SvgImage;
             var isDark = IsContainerDark(container);
@@ -598,8 +644,6 @@ namespace Alternet.UI
 
                 /* ============================= */
             }
-
-            EnumArrayStateImages result = new();
 
             Image? image = null;
             Image? disabledImage = null;
