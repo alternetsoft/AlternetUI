@@ -1,5 +1,7 @@
 #pragma once
 
+#include <string>
+#include <wx/string.h>
 #include "Common.Base.h"
 #include <stdint.h>
 
@@ -99,8 +101,16 @@ namespace Alternet::UI
         return value16;
     }
 
-    inline wxString wxStr(const string& value)
+    inline wxString wxStr(const string& u16str)
     {
+#if defined(__WXMSW__)
+        return (wchar_t*)u16str.c_str();
+#else
+        return wxString::FromUTF16(u16str.data(), u16str.size());
+#endif
+
+
+/*
 #if defined(__WXMSW__)
         return (wchar_t*)value.c_str();
 #else
@@ -111,14 +121,26 @@ namespace Alternet::UI
             reinterpret_cast<const char*> (&value[0] + value.size()));
         return s.c_str();
 #endif
+*/
     }
 
-    inline string wxStr(const wxString& value)
+    inline string wxStr(const wxString& wx)
     {
+#if defined(__WXMSW__)
+        return (char16_t*)wx.c_str().AsWChar();
+#else
+        return std::u16string(wx.utf16_str());
+#endif
+
+
+
+/*
 #if defined(__WXMSW__)
         return (char16_t*)value.c_str().AsWChar();
 #else
         return make_u16string(value.c_str().AsWChar());
 #endif
+*/
     }
 }
+
