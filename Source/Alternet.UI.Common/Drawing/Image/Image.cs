@@ -73,6 +73,8 @@ namespace Alternet.Drawing
         private static IEnumerable<string>? extensionsForLoad;
         private static IEnumerable<string>? extensionsForSave;
 
+        private Image? grayScaleCache;
+
         /// <summary>
         /// Initializes a new instance of the <see cref="Image"/> class.
         /// </summary>
@@ -946,6 +948,29 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
+        /// Resets the cached grayscale version of the image by disposing of it.
+        /// </summary>
+        public virtual void ResetGrayScaleCache()
+        {
+            SafeDispose(ref grayScaleCache);
+        }
+
+        /// <summary>
+        /// Returns a cached grayscale version of the image.
+        /// If the cached version does not exist, it creates a new grayscale image and caches it.
+        /// </summary>
+        /// <returns>The cached grayscale version of the image.</returns>
+        public virtual Image ToGrayScaleCached()
+        {
+            if (grayScaleCache is null)
+            {
+                grayScaleCache = ToGrayScale();
+            }
+
+            return grayScaleCache;
+        }
+
+        /// <summary>
         /// Creates grayscaled version of the image.
         /// </summary>
         /// <returns>Returns new grayscaled image from this image.</returns>
@@ -1142,6 +1167,13 @@ namespace Alternet.Drawing
         protected override IImageHandler CreateHandler()
         {
             return GraphicsFactory.Handler.CreateImageHandler();
+        }
+
+        /// <inheritdoc/>
+        protected override void DisposeManaged()
+        {
+            ResetGrayScaleCache();
+            base.DisposeManaged();
         }
 
         /// <summary>
