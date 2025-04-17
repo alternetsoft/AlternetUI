@@ -71,6 +71,7 @@ namespace Alternet.UI
         private Coord minItemHeight = DefaultMinItemHeight;
         private BorderSettings? currentItemBorder;
         private BorderSettings? selectionBorder;
+        private WeakReferenceValue<ImageList> imageList = new();
 
         private bool selectedIsBold;
         private bool textVisible = true;
@@ -115,6 +116,27 @@ namespace Alternet.UI
         }
 
         AbstractControl? IListControlItemContainer.Control => this;
+
+        /// <summary>
+        /// Gets or sets the <see cref="ImageList"/> associated with the control.
+        /// </summary>
+        /// <value>An <see cref="ImageList"/> that contains the images to be used by the control.
+        /// If no <see cref="ImageList"/> is set, this property returns null.</value>
+        public virtual ImageList? ImageList
+        {
+            get
+            {
+                return imageList.Value;
+            }
+
+            set
+            {
+                if (ImageList == value)
+                    return;
+                imageList.Value = value;
+                Invalidate();
+            }
+        }
 
         /// <summary>
         /// Gets or sets default size of the svg images.

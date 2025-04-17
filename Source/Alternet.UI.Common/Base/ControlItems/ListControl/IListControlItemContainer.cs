@@ -28,6 +28,11 @@ namespace Alternet.UI
         SvgImage? CheckImageIndeterminate { get; }
 
         /// <summary>
+        /// Gets the image list associated with the container.
+        /// </summary>
+        ImageList? ImageList { get; }
+
+        /// <summary>
         /// Gets unique id of the container.
         /// </summary>
         ObjectUniqueId UniqueId { get; }

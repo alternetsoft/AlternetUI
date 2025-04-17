@@ -372,16 +372,21 @@ namespace Alternet.UI
         /// <param name="item">The item to add.</param>
         public virtual void Add(TreeControlItem item)
         {
-            bool hasItems = HasItems;
+            Invoke(Internal);
 
-            items ??= new();
-            item.InternalSetParent(this);
-            items.Add(item);
+            void Internal()
+            {
+                bool hasItems = HasItems;
 
-            if (HasItems != hasItems)
-                RaisePropertyChanged(nameof(HasItems));
+                items ??= new();
+                item.InternalSetParent(this);
+                items.Add(item);
 
-            Owner?.RaiseItemAdded(item);
+                if (HasItems != hasItems)
+                    RaisePropertyChanged(nameof(HasItems));
+
+                Owner?.RaiseItemAdded(item);
+            }
         }
 
         /// <summary>
@@ -389,23 +394,29 @@ namespace Alternet.UI
         /// </summary>
         public virtual void Clear()
         {
-            if (items is null || items.Count == 0)
-                return;
+            Invoke(Internal);
 
-            Owner?.BeginUpdate();
-            try
+            void Internal()
             {
-                foreach (var item in items)
+                if (items is null || items.Count == 0)
+                    return;
+
+                Owner?.BeginUpdate();
+                try
                 {
-                    item.InternalSetParent(null);
-                }
+                    for(int i = items.Count - 1; i >= 0; i--)
+                    {
+                        items[i].InternalSetParent(null);
+                    }
 
-                items.Clear();
-                RaisePropertyChanged(nameof(HasItems));
-            }
-            finally
-            {
-                Owner?.EndUpdate();
+                    items.Clear();
+                    Owner?.TreeChanged();
+                    RaisePropertyChanged(nameof(HasItems));
+                }
+                finally
+                {
+                    Owner?.EndUpdate();
+                }
             }
         }
 

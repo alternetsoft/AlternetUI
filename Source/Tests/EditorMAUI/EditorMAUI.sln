@@ -184,6 +184,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CallMethod", "..\..\..\..\A
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Alternet.Scripter.Python.Embedded", "..\..\..\..\AlternetStudio\Source\Scripter.Python\Scripter.Python.Embedded\Alternet.Scripter.Python.Embedded.csproj", "{A866BCEB-3609-3145-0F19-5CA919B9A970}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ObjectReference", "..\..\..\..\AlternetStudio\Demo\Scripter.AlternetUI\QuickStarts\ObjectReference\ObjectReference.csproj", "{D71EE2BA-55D8-2FC9-B0E4-E7857B57A2BF}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -1154,6 +1156,18 @@ Global
 		{A866BCEB-3609-3145-0F19-5CA919B9A970}.Release|x64.Build.0 = Release|Any CPU
 		{A866BCEB-3609-3145-0F19-5CA919B9A970}.Release|x86.ActiveCfg = Release|Any CPU
 		{A866BCEB-3609-3145-0F19-5CA919B9A970}.Release|x86.Build.0 = Release|Any CPU
+		{D71EE2BA-55D8-2FC9-B0E4-E7857B57A2BF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D71EE2BA-55D8-2FC9-B0E4-E7857B57A2BF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D71EE2BA-55D8-2FC9-B0E4-E7857B57A2BF}.Debug|x64.ActiveCfg = Debug|x64
+		{D71EE2BA-55D8-2FC9-B0E4-E7857B57A2BF}.Debug|x64.Build.0 = Debug|x64
+		{D71EE2BA-55D8-2FC9-B0E4-E7857B57A2BF}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{D71EE2BA-55D8-2FC9-B0E4-E7857B57A2BF}.Debug|x86.Build.0 = Debug|Any CPU
+		{D71EE2BA-55D8-2FC9-B0E4-E7857B57A2BF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D71EE2BA-55D8-2FC9-B0E4-E7857B57A2BF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D71EE2BA-55D8-2FC9-B0E4-E7857B57A2BF}.Release|x64.ActiveCfg = Release|x64
+		{D71EE2BA-55D8-2FC9-B0E4-E7857B57A2BF}.Release|x64.Build.0 = Release|x64
+		{D71EE2BA-55D8-2FC9-B0E4-E7857B57A2BF}.Release|x86.ActiveCfg = Release|Any CPU
+		{D71EE2BA-55D8-2FC9-B0E4-E7857B57A2BF}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -1237,6 +1251,7 @@ Global
 		{2145D3E4-CF01-535C-91C4-1630312FB7EC} = {D84C4058-F85B-415C-9396-CB5DF82909C5}
 		{259CB0E5-D5B6-8118-A48C-5C466F8A6959} = {466C809B-2459-4588-A92C-3D2DEF80B84C}
 		{A866BCEB-3609-3145-0F19-5CA919B9A970} = {B2A9BC6A-3E80-4D51-A37B-9DA316EABDC0}
+		{D71EE2BA-55D8-2FC9-B0E4-E7857B57A2BF} = {466C809B-2459-4588-A92C-3D2DEF80B84C}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {F95CA668-BA7A-4B96-BAC6-3B0B1B4A50DC}

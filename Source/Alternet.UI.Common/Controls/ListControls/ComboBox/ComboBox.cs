@@ -77,6 +77,7 @@ namespace Alternet.UI
         private bool isEditable = true;
         private IComboBoxItemPainter? painter;
         private ListControlItemDefaults? itemDefaults;
+        private WeakReferenceValue<ImageList> imageList = new();
         private bool droppedDown;
         private int? reportedSelectedIndex;
         private SizeD? savedBestSize;
@@ -157,6 +158,27 @@ namespace Alternet.UI
             /// Specifies whether to draw item.
             /// </summary>
             Item = 2,
+        }
+
+        /// <summary>
+        /// Gets or sets the <see cref="ImageList"/> associated with the control.
+        /// </summary>
+        /// <value>An <see cref="ImageList"/> that contains the images to be used by the control.
+        /// If no <see cref="ImageList"/> is set, this property returns null.</value>
+        public virtual ImageList? ImageList
+        {
+            get
+            {
+                return imageList.Value;
+            }
+
+            set
+            {
+                if (ImageList == value)
+                    return;
+                imageList.Value = value;
+                Invalidate();
+            }
         }
 
         /// <summary>

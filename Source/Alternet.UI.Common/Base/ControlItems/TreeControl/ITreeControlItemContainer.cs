@@ -23,6 +23,8 @@ namespace Alternet.UI
         /// a preceding BeginUpdate call.</exception>
         void EndUpdate();
 
+        void TreeChanged();
+
         /// <summary>
         /// Called when an item is added to this tree view control, at
         /// any nesting level.

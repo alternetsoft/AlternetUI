@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Text;
 
+using Alternet.Drawing;
+
 namespace Alternet.UI
 {
     /// <summary>
@@ -25,6 +27,7 @@ namespace Alternet.UI
         /// </summary>
         public VirtualTreeControl()
         {
+            ListBox.HasBorder = false;
             ListBox.Parent = this;
             rootItem = new(this);
             ListBox.SelectionUnderImage = true;
@@ -120,6 +123,24 @@ namespace Alternet.UI
         /// Gets the underlying <see cref="VirtualListBox"/> used by this tree control.
         /// </summary>
         public VirtualListBox ListBox => listBox;
+
+        /// <summary>
+        /// Gets or sets the <see cref="ImageList"/> associated with the tree control.
+        /// </summary>
+        /// <value>An <see cref="ImageList"/> that contains the images to be used by the tree control.
+        /// If no <see cref="ImageList"/> is set, this property returns null.</value>
+        public ImageList? ImageList
+        {
+            get
+            {
+                return ListBox.ImageList;
+            }
+
+            set
+            {
+                ListBox.ImageList = value;
+            }
+        }
 
         /// <summary>
         /// Gets or sets the type of tree view buttons.
@@ -472,6 +493,20 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Retrieves the tree control item located at the current mouse cursor position.
+        /// </summary>
+        /// <returns>The <see cref="TreeControlItem"/> at the mouse cursor position,
+        /// or <c>null</c> if no item is found.</returns>
+        public virtual TreeControlItem? GetNodeAtMouseCursor()
+        {
+            var index = ListBox.HitTest(Mouse.GetPosition(ListBox));
+            if (index is null)
+                return null;
+            var item = ListBox.GetItem(index.Value);
+            return item as TreeControlItem;
+        }
+
+        /// <summary>
         /// Called before the tree item is collapsed.
         /// </summary>
         public virtual void RaiseBeforeCollapse(UI.TreeControlItem item, ref bool cancel)
@@ -515,7 +550,7 @@ namespace Alternet.UI
         /// <summary>
         /// Updates the tree view when the tree structure changes.
         /// </summary>
-        protected virtual void TreeChanged()
+        public virtual void TreeChanged()
         {
             if (InUpdates)
             {

@@ -5,12 +5,12 @@ using System.Threading;
 namespace Alternet.UI
 {
     /// <summary>
-    /// SynchronizationContext subclass used by AlterNET UI.
+    /// SynchronizationContext subclass used by the library.
     /// </summary>
     internal class UISynchronizationContext : System.Threading.SynchronizationContext
     {
         [ThreadStatic]
-        private static bool doNotAutoInstall = true;
+        private static bool doNotAutoInstall = false;
 
         [ThreadStatic]
         private static bool contextInstallationInProgress;
