@@ -368,8 +368,8 @@ namespace Alternet.Maui
                     color = DefaultStickyUnderlineColorLight;
 
                 underline.Color = IsSticky ? color : Colors.Transparent;
-                underline.IsVisible = StickyStyle == StickyButtonStyle.UnderlineFull ||
-                    StickyStyle == StickyButtonStyle.UnderlinePartial;
+                underline.IsVisible = IsSticky && (StickyStyle == StickyButtonStyle.UnderlineFull ||
+                    StickyStyle == StickyButtonStyle.UnderlinePartial);
             }
         }
     }
