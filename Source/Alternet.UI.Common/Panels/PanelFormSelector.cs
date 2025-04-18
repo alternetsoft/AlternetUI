@@ -14,7 +14,7 @@ namespace Alternet.UI
     /// </summary>
     public class PanelFormSelector : Panel
     {
-        private readonly VirtualListBox view = new()
+        private readonly VirtualTreeControl view = new()
         {
             MinimumSize = (350, 400),
         };
@@ -50,17 +50,17 @@ namespace Alternet.UI
 
             AddDefaultItems();
 
-            view.SelectionChanged += View_SelectionChanged;
+            view.SelectionChanged += OnSelectionChanged;
 
             view.SelectFirstItem();
             view.EnsureVisible(0);
-            View_SelectionChanged(null, EventArgs.Empty);
+            OnSelectionChanged(null, EventArgs.Empty);
         }
 
         /// <summary>
         /// Gets collection of the items.
         /// </summary>
-        public IListControlItems<ListControlItem> Items => ListBox.Items;
+        public TreeControlRootItem RootItem => View.RootItem;
 
         /// <summary>
         /// Gets "Open" button.
@@ -70,7 +70,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets listbox with the list of forms.
         /// </summary>
-        public VirtualListBox ListBox => view;
+        public VirtualTreeControl View => view;
 
         /// <summary>
         /// Gets button panel which contains "Open" button.
@@ -100,34 +100,40 @@ namespace Alternet.UI
         /// <summary>
         /// Adds group.
         /// </summary>
-        public void AddGroup(string title)
+        public virtual void AddGroup(string title)
         {
             HasGroups = true;
-            ListControlItem item = new(title)
+
+            TreeControlItem item = new(title)
             {
                 Font = GroupFont ??= Control.DefaultFont.Larger().AsBold,
                 HideSelection = true,
                 HideFocusRect = true,
+                IsExpanded = true,
             };
-            Items.Add(item);
+
+            item.CustomAttr["IsGroupItem"] = true;
+
+            RootItem.Add(item);
         }
 
         /// <summary>
         /// Adds an item with the specified text and form create action.
         /// </summary>
-        public void Add(string text, Func<Window> createForm)
+        public virtual void Add(string text, Func<Window> createForm)
         {
-            ListControlItem item = new(text);
+            TreeControlItem item = new(text);
 
-            if (HasGroups)
+            TreeControlItem root = RootItem;
+
+            if (RootItem.LastChild?.CustomAttr["IsGroupItem"] is true)
             {
-                item.SvgImage = KnownSvgImages.ImgEmpty;
-                item.SvgImageSize = GraphicsFactory.PixelFromDip(16, ScaleFactor);
+                root = RootItem.LastChild;
             }
 
             item.CustomAttr.SetAttribute<Action>("Fn", Fn);
             item.DoubleClickAction = Fn;
-            Items.Add(item);
+            root.Add(item);
 
             void Fn()
             {
@@ -174,7 +180,13 @@ namespace Alternet.UI
             }
         }
 
-        private void View_SelectionChanged(object? sender, EventArgs e)
+        /// <summary>
+        /// Handles the selection change event of the tree view.
+        /// Enables or disables the "Open" button based on the selected item's properties.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">An <see cref="EventArgs"/> that contains the event data.</param>
+        protected virtual void OnSelectionChanged(object? sender, EventArgs e)
         {
             if (view.SelectedItem is not ListControlItem item)
             {
