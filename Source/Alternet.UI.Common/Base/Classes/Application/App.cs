@@ -250,7 +250,7 @@ namespace Alternet.UI
         public static event EventHandler<LogMessageEventArgs>? BeforeNativeLogMessage;
 
         /// <summary>
-        /// Occurs when an untrapped thread exception is thrown.
+        /// Occurs when an unhandled thread exception is thrown.
         /// </summary>
         /// <remarks>
         /// This event allows your application to handle otherwise
@@ -448,7 +448,7 @@ namespace Alternet.UI
 
         /// <summary>
         /// Gets the <see cref="App"/> object for the currently
-        /// runnning application.
+        /// running application.
         /// </summary>
         public static App Current
         {
@@ -618,7 +618,7 @@ namespace Alternet.UI
         ///  Currently used to suppress GTK messages under Linux. Default
         ///  value is true.
         /// </remarks>
-        public static bool SupressDiagnostics { get; set; } = true;
+        public static bool SuppressDiagnostics { get; set; } = true;
 
         /// <summary>
         /// Gets whether application was created and <see cref="Current"/> property is assigned.
@@ -639,8 +639,8 @@ namespace Alternet.UI
         /// </summary>
         /// <remarks>
         /// By default it returns icon of the the first <see cref="Window"/>.
-        /// You can assing <see cref="IconSet"/> here to override default behavior.
-        /// If you assing <c>null</c>, this property will again return icon of
+        /// You can assign <see cref="IconSet"/> here to override default behavior.
+        /// If you assign <c>null</c>, this property will again return icon of
         /// the the first <see cref="Window"/>. Change to this property doesn't
         /// update the icon of the the first <see cref="Window"/>.
         /// </remarks>
@@ -749,7 +749,7 @@ namespace Alternet.UI
         public virtual bool IsActive => Handler.IsActive;
 
         /// <summary>
-        /// Gets whether application in Uixml previewer mode.
+        /// Gets whether application in window previewer mode.
         /// </summary>
         public virtual bool InUixmlPreviewerMode
         {
@@ -941,7 +941,7 @@ namespace Alternet.UI
         /// <param name="name">Name.</param>
         /// <param name="value">Value.</param>
         /// <param name="kind">Item kind.</param>
-        /// <param name="hint">Hint string. Optinal. If present, it is
+        /// <param name="hint">Hint string. Optional. If present, it is
         /// shown in () after the value.</param>
         public static void LogNameValue(
             object name,
@@ -959,7 +959,7 @@ namespace Alternet.UI
 
         /// <summary>
         /// Logs name and value as "{name} = {value}". If last logged item starts from "{name} = ",
-        /// it is repaced with the new item.
+        /// it is replaced with the new item.
         /// </summary>
         /// <param name="name">Name.</param>
         /// <param name="value">Value.</param>
@@ -1193,7 +1193,7 @@ namespace Alternet.UI
 
         /// <summary>
         /// Adds log item using the specified <see cref="ListControlItem"/>.
-        /// <see cref="LogListBox"/> controls binded to the log will paint added item
+        /// <see cref="LogListBox"/> controls attached to the log will paint added item
         /// with image, font and color properties specified in the <paramref name="item"/>.
         /// </summary>
         /// <param name="item">Item to add.</param>
@@ -2138,9 +2138,9 @@ namespace Alternet.UI
         /// Allows the programmer to specify whether the application will use the best
         /// visual on systems that support several visual on the same display.
         /// </summary>
-        public virtual void SetUseBestVisual(bool flag, bool forceTrueColour = false)
+        public virtual void SetUseBestVisual(bool flag, bool forceTrueColor = false)
         {
-            SystemSettings.Handler.SetUseBestVisual(flag, forceTrueColour);
+            SystemSettings.Handler.SetUseBestVisual(flag, forceTrueColor);
         }
 
         internal static void WriteToLogFileIfAllowed(string? msg)

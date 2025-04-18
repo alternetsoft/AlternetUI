@@ -44,7 +44,7 @@ namespace Alternet.UI
                     = (WxEventIdentifiers)i;
             }
 
-            if (App.SupressDiagnostics)
+            if (App.SuppressDiagnostics)
                 Native.Application.SuppressDiagnostics(-1);
 
             nativeApplication = new Native.Application();

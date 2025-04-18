@@ -73,7 +73,7 @@ namespace Alternet.UI
         public event MeasureItemEventHandler? MeasureItem;
 
         /// <summary>
-        /// Enumerates flast for the item click method.
+        /// Enumerates known flags for the item click method.
         /// </summary>
         [Flags]
         public enum ItemClickFlags

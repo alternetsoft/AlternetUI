@@ -177,7 +177,7 @@ namespace Alternet.UI
         public event EventHandler? Deactivated;
 
         /// <summary>
-        /// Occurs when the contol gets focus.
+        /// Occurs when the control gets focus.
         /// </summary>
         [Category("Focus")]
         public event EventHandler? GotFocus;
@@ -261,7 +261,7 @@ namespace Alternet.UI
         public event EventHandler? IsMouseOverChanged;
 
         /// <summary>
-        /// Occurs when long tap gesture is recognised.
+        /// Occurs when long tap gesture is recognized.
         /// </summary>
         public event EventHandler<LongTapEventArgs>? LongTap;
 
