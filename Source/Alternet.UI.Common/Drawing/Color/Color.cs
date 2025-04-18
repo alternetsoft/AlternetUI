@@ -84,7 +84,7 @@ namespace Alternet.Drawing
         public static readonly Color Empty = new();
 
         // User supplied name of color. Will not be filled in if
-        // we map to a "knowncolor"
+        // we map to a known color.
         private readonly string? name;
 
         private ColorStruct color;
@@ -630,10 +630,10 @@ namespace Alternet.Drawing
 
                 if (IsKnownColor)
                 {
-                    string tablename =
+                    string tableName =
                         KnownColorNames.KnownColorToName(knownColor);
-                    if (tablename != null)
-                        return tablename;
+                    if (tableName != null)
+                        return tableName;
                     throw new InvalidOperationException(
                         $"Could not find known color '{knownColor}'");
                 }
@@ -812,7 +812,7 @@ namespace Alternet.Drawing
             new(color.R, color.G, color.B);
 
         /// <summary>
-        /// Implicit operator convertion from tuple with three <see cref="byte"/> values
+        /// Implicit operator conversion from tuple with three <see cref="byte"/> values
         /// to <see cref="Color"/>. Tuple values define RGB of the color.
         /// </summary>
         /// <param name="d">New color value specified as tuple with three <see cref="byte"/> values.</param>
@@ -821,7 +821,7 @@ namespace Alternet.Drawing
             new(d.Red, d.Green, d.Blue);
 
         /// <summary>
-        /// Implicit operator convertion from tuple with four <see cref="byte"/> values
+        /// Implicit operator conversion from tuple with four <see cref="byte"/> values
         /// to <see cref="Color"/>. Tuple values define ARGB of the color.
         /// </summary>
         /// <param name="d">New color value specified as tuple with four <see cref="byte"/> values.</param>
@@ -1235,25 +1235,23 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
-        /// Darkens or lightens a color, based on the specified percentage
-        /// ialpha of 0 would be completely black, 200 completely white
-        /// an ialpha of 100 returns the same color.
+        /// Darkens or lightens a color, based on the specified percentage.
+        /// <paramref name="alphaValue"/> of 0 would be completely black, 200 completely white
+        /// an <paramref name="alphaValue"/> of 100 returns the same color.
         /// </summary>
         /// <param name="rgb">RGB Color.</param>
-        /// <param name="ialpha">Lightness value (0..200).</param>
-        public static void ChangeLightness(ref RGBValue rgb, int ialpha)
+        /// <param name="alphaValue">Lightness value (0..200).</param>
+        public static void ChangeLightness(ref RGBValue rgb, int alphaValue)
         {
-            if (ialpha == 100) return;
+            if (alphaValue == 100) return;
 
-            // ialpha is 0..200 where 0 is completely black
-            // and 200 is completely white and 100 is the same
-            // convert that to normal alpha 0.0 - 1.0
-            ialpha = Math.Max(ialpha, 0);
-            ialpha = Math.Min(ialpha, 200);
-            double alpha = ((double)(ialpha - 100.0)) / 100.0;
+            // convert to normal alpha 0.0 - 1.0
+            alphaValue = Math.Max(alphaValue, 0);
+            alphaValue = Math.Min(alphaValue, 200);
+            double alpha = ((double)(alphaValue - 100.0)) / 100.0;
 
             byte bg;
-            if (ialpha > 100)
+            if (alphaValue > 100)
             {
                 // blend with white
                 bg = 255;
@@ -1506,15 +1504,15 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
-        /// Darkens or lightens a color, based on the specified percentage
-        /// ialpha of 0 would be completely black, 200 completely white
-        /// an ialpha of 100 returns the same color.
+        /// Darkens or lightens a color, based on the specified percentage.
+        /// <paramref name="alphaValue"/> of 0 would be completely black, 200 completely white
+        /// an <paramref name="alphaValue"/> of 100 returns the same color.
         /// </summary>
-        /// <param name="ialpha">Lightness value (0..200).</param>
-        public Color ChangeLightness(int ialpha)
+        /// <param name="alphaValue">Lightness value (0..200).</param>
+        public Color ChangeLightness(int alphaValue)
         {
             RGBValue rgb = this;
-            ChangeLightness(ref rgb, ialpha);
+            ChangeLightness(ref rgb, alphaValue);
             return rgb;
         }
 
@@ -1839,7 +1837,7 @@ namespace Alternet.Drawing
         /// </remarks>
         /// <remarks>
         /// You can handle <see cref="ColorToString"/> in order to provide custom
-        /// color to string convertion.
+        /// color to string conversion.
         /// </remarks>
         public override string? ToString()
         {
@@ -1877,7 +1875,7 @@ namespace Alternet.Drawing
         /// <returns></returns>
         /// <remarks>
         /// You can handle <see cref="ColorToDisplayString"/> in order to provide custom
-        /// color to display string convertion.
+        /// color to display string conversion.
         /// </remarks>
         public string? ToDisplayString()
         {
@@ -1983,7 +1981,9 @@ namespace Alternet.Drawing
         /// </remarks>
         public bool IsDark()
         {
-            RequireArgb();
+            if (IsBlack)
+                return true;
+
             double r = color.R;
             double g = color.G;
             double b = color.B;
