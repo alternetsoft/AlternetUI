@@ -12,6 +12,11 @@
       "commandName": "Project",
       "commandLineArgs": "UILanguage=ru",
       "nativeDebugging": true
+    },
+    "IsDark": {
+      "commandName": "Project",
+      "commandLineArgs": "-IsDark=true",
+      "nativeDebugging": true
     }
   }
 }

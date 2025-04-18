@@ -24,13 +24,27 @@ namespace Alternet.Drawing
         public static readonly Color DefaultBorderColorLight = Color.FromRgb(204, 206, 219);
 
         private static LightDarkColor? borderColor;
+        private static LightDarkColor windowBackColor;
+        private static LightDarkColor windowForeColor;
 
         static DefaultColors()
         {
-            /*
-            // This call is here for testing purposes
-            WindowBackColor.Light = Color.FloralWhite;
-            */
+            Color darkBackColor;
+            Color darkForeColor;
+
+            if (SystemColors.Control.IsDark())
+            {
+                darkBackColor = SystemColors.Control;
+                darkForeColor = SystemColors.ControlText;
+            }
+            else
+            {
+                darkBackColor = (30, 30, 30);
+                darkForeColor = (164, 164, 164);
+            }
+
+            windowBackColor = new(light: new(240, 240, 240), dark: darkBackColor);
+            windowForeColor = new(light: Color.Black, dark: darkForeColor);
         }
 
         /// <summary>
@@ -49,14 +63,20 @@ namespace Alternet.Drawing
         /// <summary>
         /// Gets or sets the default background color of the window.
         /// </summary>
-        public static LightDarkColor WindowBackColor { get; set; }
-            = new(light: new(240, 240, 240), dark: SystemColors.Control);
+        public static LightDarkColor WindowBackColor
+        {
+            get => windowBackColor;
+            set => windowBackColor = value;
+        }
 
         /// <summary>
         /// Gets or sets the default foreground color of the window.
         /// </summary>
-        public static LightDarkColor WindowForeColor { get; set; }
-            = new(light: Color.Black, dark: SystemColors.ControlText);
+        public static LightDarkColor WindowForeColor
+        {
+            get => windowForeColor;
+            set => windowForeColor = value;
+        }
 
         /// <summary>
         /// Gets default border color of the user control.
@@ -71,6 +91,38 @@ namespace Alternet.Drawing
             else
             {
                 return BorderColor.Light;
+            }
+        }
+
+        /// <summary>
+        /// Gets default fore color of the window.
+        /// </summary>
+        /// <returns></returns>
+        public static Color GetWindowForeColor(bool isDark)
+        {
+            if (isDark)
+            {
+                return WindowForeColor.Dark;
+            }
+            else
+            {
+                return WindowForeColor.Light;
+            }
+        }
+
+        /// <summary>
+        /// Gets default back color of the window.
+        /// </summary>
+        /// <returns></returns>
+        public static Color GetWindowBackColor(bool isDark)
+        {
+            if (isDark)
+            {
+                return WindowBackColor.Dark;
+            }
+            else
+            {
+                return WindowBackColor.Light;
             }
         }
 

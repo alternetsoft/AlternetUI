@@ -31,7 +31,7 @@ namespace ControlsSample
         {
             counter = ++globalCounter;
             Size = (800, 600);
-            Title = "VirtualListBox as TreeView Sample";
+            Title = "VirtualTreeControl Sample";
             StartLocation = WindowStartLocation.ScreenTopRight;
             Layout = LayoutStyle.Vertical;
 
@@ -113,10 +113,24 @@ namespace ControlsSample
                 lastChild.IsBold = true;
             }
 
-            if(item is not null)
+            if (CommandLineArgs.ParseAndGetIsDark())
             {
-                item.ForegroundColor = Color.Black;
-                item.BackgroundColor = Color.Beige;
+                treeView.BackColor = DefaultColors.GetWindowBackColor(true);
+                treeView.ForeColor = DefaultColors.GetWindowForeColor(true);
+            }
+
+            if (item is not null)
+            {
+                if (treeView.IsDarkBackground)
+                {
+                    item.ForegroundColor = DefaultColors.GetWindowForeColor(true);
+                    item.BackgroundColor = DefaultColors.GetWindowBackColor(true).Lighter();
+                }
+                else
+                {
+                    item.ForegroundColor = Color.Black;
+                    item.BackgroundColor = Color.Beige;
+                }
             }
         }
 

@@ -23,6 +23,14 @@ namespace Alternet.UI
         /// a preceding BeginUpdate call.</exception>
         void EndUpdate();
 
+        /// <summary>
+        /// Notifies the container that the structure of the tree has changed.
+        /// </summary>
+        /// <remarks>
+        /// This method should be called in some cases when the tree's structure is modified.
+        /// It ensures that the tree view is updated to
+        /// reflect the changes.
+        /// </remarks>
         void TreeChanged();
 
         /// <summary>
