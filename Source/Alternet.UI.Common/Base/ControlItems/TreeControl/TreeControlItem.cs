@@ -23,6 +23,16 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Initializes a new instance of the <see cref="TreeControlItem"/> class with the specified text.
+        /// </summary>
+        /// <param name="text">The text of the tree control item.</param>
+        public TreeControlItem(string text)
+            : this()
+        {
+            Text = text;
+        }
+
+        /// <summary>
         /// Gets or sets the parent item of this tree control item.
         /// </summary>
         public virtual TreeControlItem? Parent
