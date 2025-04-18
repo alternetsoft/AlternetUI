@@ -8,7 +8,7 @@ using Alternet.Drawing;
 namespace Alternet.UI
 {
     /// <summary>
-    /// Contains grouped listbox with the list of forms and "Open" button which
+    /// Contains tree view with the grouped list of forms and "Open" button which
     /// creates and shows them. Use <see cref="AddGroup"/> to add group and <see cref="Add"/>
     /// to add item.
     /// </summary>
@@ -84,7 +84,7 @@ namespace Alternet.UI
 
         /// <summary>
         /// Gets or sets whether any groups were added. This property is used
-        /// in order to determine identation of the items.
+        /// in order to determine indentation of the items.
         /// </summary>
         public virtual bool HasGroups { get; set; }
 
@@ -137,8 +137,11 @@ namespace Alternet.UI
 
             void Fn()
             {
-                var form = createForm();
-                form.ShowAndFocus();
+                App.DoInsideBusyCursor(() =>
+                {
+                    var form = createForm();
+                    form.ShowAndFocus();
+                });
             }
         }
 
