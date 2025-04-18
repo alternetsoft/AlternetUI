@@ -3011,7 +3011,7 @@ namespace Alternet.UI
                 var foregroundColor = RealForegroundColor;
                 var backgroundColor = RealBackgroundColor;
 
-                if (backgroundColor.IsBlack)
+                if (backgroundColor.IsDark())
                     return true;
 
                 if (foregroundColor.IsEmpty || backgroundColor.IsEmpty)
@@ -3306,7 +3306,7 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Gets or sets attacher <see cref="ICustomCharValidator"/> provider.
+        /// Gets or sets attached <see cref="ICustomCharValidator"/> provider.
         /// </summary>
         [Browsable(false)]
         public virtual ICustomCharValidator? CharValidator { get; set; }
