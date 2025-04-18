@@ -38,6 +38,7 @@ namespace Alternet.UI
         public VirtualTreeControl()
         {
             listBox = CreateListBox();
+            ListBox.ParentFont = true;
             ListBox.HasBorder = false;
             ListBox.Parent = this;
             rootItem = new(this);
@@ -141,6 +142,48 @@ namespace Alternet.UI
             set
             {
                 ListBox.ImageList = value;
+            }
+        }
+
+        /// <inheritdoc/>
+        public override Color RealForegroundColor
+        {
+            get
+            {
+                return ListBox.RealForegroundColor;
+            }
+        }
+
+        /// <inheritdoc/>
+        public override Color RealBackgroundColor
+        {
+            get
+            {
+                return ListBox.RealBackgroundColor;
+            }
+        }
+
+        /// <inheritdoc/>
+        public override Color? BackgroundColor
+        {
+            get => ListBox.BackgroundColor;
+
+            set
+            {
+                base.BackgroundColor = value;
+                ListBox.BackgroundColor = value;
+            }
+        }
+
+        /// <inheritdoc/>
+        public override Color? ForegroundColor
+        {
+            get => ListBox.ForegroundColor;
+
+            set
+            {
+                base.ForegroundColor = value;
+                ListBox.ForegroundColor = value;
             }
         }
 
@@ -369,7 +412,7 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Removes the currently selected item from the tree view and optinally selects on
+        /// Removes the currently selected item from the tree view and optionally selects on
         /// of the remaining items.
         /// </summary>
         public virtual bool RemoveSelectedItem(bool selectSibling)
