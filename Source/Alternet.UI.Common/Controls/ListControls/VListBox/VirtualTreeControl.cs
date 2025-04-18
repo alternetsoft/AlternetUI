@@ -13,11 +13,21 @@ namespace Alternet.UI
     public partial class VirtualTreeControl : Control, ITreeControlItemContainer
     {
         /// <summary>
+        /// Specifies the default type of buttons used in the tree view control to expand or collapse nodes.
+        /// </summary>
+        /// <remarks>
+        /// This field determines the initial value of the <see cref="TreeButtons"/> property
+        /// for instances of <see cref="VirtualTreeControl"/>.
+        /// The default value is <see cref="TreeViewButtonsKind.Angle"/>.
+        /// </remarks>
+        public static TreeViewButtonsKind DefaultTreeButtons = TreeViewButtonsKind.Angle;
+
+        /// <summary>
         /// Default margin for each level in the tree.
         /// </summary>
         public static int DefaultLevelMargin = 16;
 
-        private readonly VirtualListBox listBox = new();
+        private readonly VirtualListBox listBox;
         private TreeControlRootItem rootItem;
         private TreeViewButtonsKind treeButtons = TreeViewButtonsKind.Null;
         private bool needTreeChanged;
@@ -27,6 +37,7 @@ namespace Alternet.UI
         /// </summary>
         public VirtualTreeControl()
         {
+            listBox = CreateListBox();
             ListBox.HasBorder = false;
             ListBox.Parent = this;
             rootItem = new(this);
@@ -34,21 +45,12 @@ namespace Alternet.UI
             ListBox.CheckBoxVisible = true;
             ListBox.CheckOnClick = false;
 
-            void ToggleExpanded(ListControlItem? listItem)
-            {
-                if (listItem is not TreeControlItem item)
-                    return;
-                if (!item.HasItems)
-                    return;
-                item.IsExpanded = !item.IsExpanded;
-            }
-
             ListBox.MouseDown += (s, e) =>
             {
                 var itemIndex = ListBox.HitTestCheckBox(e.Location);
                 if (itemIndex is null)
                     return;
-                ToggleExpanded(ListBox.Items[itemIndex.Value]);
+                ToggleExpanded(ListBox.Items[itemIndex.Value] as TreeControlItem);
             };
 
             ListBox.DoubleClick += (s, e) =>
@@ -56,7 +58,7 @@ namespace Alternet.UI
                 ToggleExpanded(SelectedItem);
             };
 
-            TreeButtons = TreeViewButtonsKind.PlusMinusSquare;
+            TreeButtons = DefaultTreeButtons;
         }
 
         /// <summary>
@@ -548,6 +550,53 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Toggles the expanded or collapsed state of the specified tree control item.
+        /// </summary>
+        /// <param name="treeItem">The <see cref="TreeControlItem"/> to toggle. If null or not
+        /// a valid tree item, no action is taken.</param>
+        /// <remarks>
+        /// If the specified item has child items, this method switches its state between expanded and collapsed.
+        /// It does not affect the state of child items.
+        /// </remarks>
+        public virtual void ToggleExpanded(TreeControlItem? treeItem)
+        {
+            if (treeItem is not TreeControlItem item)
+                return;
+            if (!item.HasItems)
+                return;
+            item.IsExpanded = !item.IsExpanded;
+        }
+
+        /// <summary>
+        /// Ensures that the child item of the root item with the specified index
+        /// is visible within the tree view control.
+        /// </summary>
+        /// <param name="index">The zero-based index of the item to make visible.</param>
+        /// <returns>
+        /// <c>true</c> if the item was successfully scrolled into view; otherwise, <c>false</c>.
+        /// </returns>
+        /// <remarks>
+        /// This method scrolls the tree view as necessary to bring the specified item into view.
+        /// If the index is out of range or the item is already visible, no action is taken.
+        /// </remarks>
+        public virtual bool EnsureVisible(int index)
+        {
+            return ListBox.EnsureVisible(index);
+        }
+
+        /// <summary>
+        /// Selects the first item in the tree view control.
+        /// </summary>
+        /// <remarks>
+        /// This method ensures that the first item
+        /// is selected. If no items are present, no action is taken.
+        /// </remarks>
+        public virtual void SelectFirstItem()
+        {
+            ListBox.SelectFirstItem();
+        }
+
+        /// <summary>
         /// Updates the tree view when the tree structure changes.
         /// </summary>
         public virtual void TreeChanged()
@@ -565,10 +614,34 @@ namespace Alternet.UI
             RefreshTree();
         }
 
-        private void RefreshTree()
+        /// <summary>
+        /// Refreshes the tree view by updating the list of visible items
+        /// based on the current state of the tree structure.
+        /// </summary>
+        /// <remarks>
+        /// This method regenerates the collection of items displayed in the
+        /// control by enumerating the expanded items
+        /// from the root of the tree. It ensures that the visual representation
+        /// of the tree matches its logical structure.
+        /// </remarks>
+        protected virtual void RefreshTree()
         {
             VirtualListBoxItems collection = new(rootItem.EnumExpandedItems());
             ListBox.SetItemsFast(collection, VirtualListBox.SetItemsKind.ChangeField);
+        }
+
+        /// <summary>
+        /// Creates a new instance of the <see cref="VirtualListBox"/> used by the tree control.
+        /// </summary>
+        /// <remarks>
+        /// This method can be overridden in derived classes to provide a custom implementation
+        /// of the <see cref="VirtualListBox"/>. By default, it returns a standard instance
+        /// of <see cref="VirtualListBox"/>.
+        /// </remarks>
+        /// <returns>A new instance of <see cref="VirtualListBox"/>.</returns>
+        protected virtual VirtualListBox CreateListBox()
+        {
+            return new VirtualListBox();
         }
     }
 }
