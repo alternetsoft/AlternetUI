@@ -14,7 +14,7 @@ namespace Alternet.UI
     /// </summary>
     public static class CodeGeneratorUtils
     {
-        private static AdvDictionary<EventInfo, Delegate>? eventDelegates;
+        private static BaseDictionary<EventInfo, Delegate>? eventDelegates;
         private static ModuleBuilder? moduleBuilder;
 
         /// <summary>

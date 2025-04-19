@@ -11,7 +11,7 @@ namespace Alternet.UI
 {
     internal class PropertyGridTypeRegistry : IPropertyGridTypeRegistry
     {
-        private readonly AdvDictionary<PropertyInfo, IPropertyGridPropInfoRegistry> registry = new();
+        private readonly BaseDictionary<PropertyInfo, IPropertyGridPropInfoRegistry> registry = new();
         private readonly Type type;
         private IPropertyGridTypeRegistry? baseTypeRegistry;
         private List<(string, Action)>? simpleActions;

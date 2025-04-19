@@ -13,9 +13,9 @@ namespace Alternet.Drawing
     /// </summary>
     public static class ColorUtils
     {
-        private static AdvDictionary<KnownColor, IKnownColorInfo>? knownColorItems;
+        private static BaseDictionary<KnownColor, IKnownColorInfo>? knownColorItems;
 
-        private static AdvDictionary<KnownColor, IKnownColorInfo> KnownColorItems
+        private static BaseDictionary<KnownColor, IKnownColorInfo> KnownColorItems
         {
             get
             {

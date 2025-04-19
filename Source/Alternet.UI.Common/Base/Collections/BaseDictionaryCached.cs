@@ -9,11 +9,11 @@ namespace Alternet.UI
     /// <summary>
     /// Implements dictionary with <see cref="GetValueOrDefaultCached"/>
     /// and <see cref="GetOrCreateCached"/> methods. These methods speed up
-    /// work with dictionary if same item is accessed more than once continiously.
+    /// work with dictionary if same item is accessed more than once continuously.
     /// </summary>
     /// <typeparam name="TKey">The type of the keys in the dictionary.</typeparam>
     /// <typeparam name="TValue">The type of the values in the dictionary.</typeparam>
-    public class AdvDictionaryCached<TKey, TValue> : AdvDictionary<TKey, TValue>
+    public class BaseDictionaryCached<TKey, TValue> : BaseDictionary<TKey, TValue>
         where TKey : notnull
     {
         private (TKey Key, TValue Data)? last;

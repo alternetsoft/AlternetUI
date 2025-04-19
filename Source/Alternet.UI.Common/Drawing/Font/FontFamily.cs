@@ -22,7 +22,7 @@ namespace Alternet.Drawing
         private static FontFamily? genericSansSerif;
         private static FontFamily? genericMonospace;
 
-        private static AdvDictionary<string, FontFamily>? items;
+        private static BaseDictionary<string, FontFamily>? items;
         private static List<string>? namesAscending;
 
         private string? name;
@@ -249,7 +249,7 @@ namespace Alternet.Drawing
         /// </summary>
         public virtual GenericFontFamily? GenericFamily { get; }
 
-        private static AdvDictionary<string, FontFamily> Items
+        private static BaseDictionary<string, FontFamily> Items
         {
             get
             {

@@ -10,7 +10,7 @@ namespace Alternet.UI
     /// </summary>
     public static class FlagsFactory
     {
-        private static readonly AdvDictionary<string, int> IntIdentifiers = new();
+        private static readonly BaseDictionary<string, int> IntIdentifiers = new();
 
         private static int intIdentifierCounter = 10000;
 

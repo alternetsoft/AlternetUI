@@ -12,7 +12,7 @@ namespace Alternet.UI.Localization
     /// </summary>
     public class PropCategoryStrings
     {
-        private static AdvDictionary<string, Func<string, string>>? titles;
+        private static BaseDictionary<string, Func<string, string>>? titles;
 
         /// <summary>
         /// Gets <see cref="IDictionary"/> which is used to get

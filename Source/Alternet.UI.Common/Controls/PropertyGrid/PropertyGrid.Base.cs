@@ -14,10 +14,10 @@ namespace Alternet.UI
         /// <summary>
         /// Dictionary used to get type related information.
         /// </summary>
-        public static readonly AdvDictionaryCached<Type, IPropertyGridTypeRegistry>
+        public static readonly BaseDictionaryCached<Type, IPropertyGridTypeRegistry>
             TypeRegistry = new();
 
-        private static AdvDictionary<Type, IPropertyGridChoices>? choicesCache = null;
+        private static BaseDictionary<Type, IPropertyGridChoices>? choicesCache = null;
         private static StaticStateFlags staticStateFlags;
         private static ConcurrentStack<Action>? initializers;
 

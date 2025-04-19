@@ -74,7 +74,7 @@ namespace Alternet.Drawing
         /// </summary>
         public static bool DefaultAntialias = true;
 
-        private static readonly AdvDictionary<Coord, Graphics> MemoryCanvases = new();
+        private static readonly BaseDictionary<Coord, Graphics> MemoryCanvases = new();
 
         private static bool imageBitsFormatsLoaded = false;
         private static ImageBitsFormat nativeBitsFormat;

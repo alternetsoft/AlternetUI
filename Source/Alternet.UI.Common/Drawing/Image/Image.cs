@@ -69,7 +69,7 @@ namespace Alternet.Drawing
             ".xpm",
         };
 
-        private static AdvDictionary<string, Image>? cachedBitmaps;
+        private static BaseDictionary<string, Image>? cachedBitmaps;
         private static IEnumerable<string>? extensionsForLoad;
         private static IEnumerable<string>? extensionsForSave;
 

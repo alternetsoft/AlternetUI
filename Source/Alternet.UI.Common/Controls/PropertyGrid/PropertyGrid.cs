@@ -37,7 +37,7 @@ namespace Alternet.UI
         private static PropertyGridEditKindColor defaultEditKindColor =
             PropertyGridEditKindColor.ComboBox;
 
-        private readonly AdvDictionary<PropertyGridItemHandle, IPropertyGridItem> items = new();
+        private readonly BaseDictionary<PropertyGridItemHandle, IPropertyGridItem> items = new();
         private readonly HashSet<string> ignorePropNames = new();
 
         private int supressIgnoreProps;

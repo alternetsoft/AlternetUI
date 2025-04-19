@@ -28,7 +28,7 @@ namespace Alternet.UI
         public const BindingFlags DefaultBindingFlags
             = BindingFlags.Instance | BindingFlags.Static | BindingFlags.Public;
 
-        private static AdvDictionary<string, Assembly>? resNameToAssembly;
+        private static BaseDictionary<string, Assembly>? resNameToAssembly;
         private static int resNameToAssemblySavedLength = 0;
         private static SortedList<string, EventInfo>? allControlEvents;
         private static SortedList<string, Type>? allControlDescendants;

@@ -12,7 +12,7 @@ namespace Alternet.UI.Localization
     /// </summary>
     public class ControlCategoryStrings
     {
-        private static AdvDictionary<string, Func<string, string>>? titles;
+        private static BaseDictionary<string, Func<string, string>>? titles;
 
         /// <summary>
         /// Current localizations for control categories.

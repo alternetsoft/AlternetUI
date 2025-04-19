@@ -13,7 +13,7 @@ namespace Alternet.UI
     /// </summary>
     /// <typeparam name="TKey">The type of the keys in the dictionary.</typeparam>
     /// <typeparam name="TValue">The type of the values in the dictionary.</typeparam>
-    public class AdvDictionary<TKey, TValue> : ConcurrentDictionary<TKey, TValue>
+    public class BaseDictionary<TKey, TValue> : ConcurrentDictionary<TKey, TValue>
         where TKey : notnull
     {
         /// <summary>

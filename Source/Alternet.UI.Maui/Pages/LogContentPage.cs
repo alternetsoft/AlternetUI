@@ -18,8 +18,8 @@ public partial class LogContentPage : Alternet.UI.DisposableContentPage
 {
     private static readonly ConcurrentQueue<string> items = new();
 
-    private static Alternet.UI.AdvDictionary<string, Action>? actions;
-    private static Alternet.UI.AdvDictionary<string, Action>? testActions;
+    private static Alternet.UI.BaseDictionary<string, Action>? actions;
+    private static Alternet.UI.BaseDictionary<string, Action>? testActions;
 
     private readonly ListView listView;
     private readonly TitleWithTwoButtonsView titleView;
@@ -72,7 +72,7 @@ public partial class LogContentPage : Alternet.UI.DisposableContentPage
     /// <summary>
     /// Gets debug actions dictionary.
     /// </summary>
-    public Alternet.UI.AdvDictionary<string, Action> ActionsDictionary
+    public Alternet.UI.BaseDictionary<string, Action> ActionsDictionary
     {
         get
         {
@@ -101,7 +101,7 @@ public partial class LogContentPage : Alternet.UI.DisposableContentPage
     /// <summary>
     /// Gets test actions dictionary.
     /// </summary>
-    public Alternet.UI.AdvDictionary<string, Action> TestActionsDictionary
+    public Alternet.UI.BaseDictionary<string, Action> TestActionsDictionary
     {
         get
         {
@@ -154,7 +154,7 @@ public partial class LogContentPage : Alternet.UI.DisposableContentPage
     /// </summary>
     public async Task ShowActionsDialog(
         string title,
-        Alternet.UI.AdvDictionary<string, Action> actions)
+        Alternet.UI.BaseDictionary<string, Action> actions)
     {
         string[] buttons = actions.Keys.Order().ToArray();
 

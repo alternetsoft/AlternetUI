@@ -11,7 +11,7 @@ namespace Alternet.UI
     public class IndexedValues<TIndex, TValue> : BaseObject
         where TIndex : notnull
     {
-        private readonly AdvDictionary<TIndex, ILockedItem> values = new();
+        private readonly BaseDictionary<TIndex, ILockedItem> values = new();
         private ILockedItem? cachedItem;
 
         /// <summary>
