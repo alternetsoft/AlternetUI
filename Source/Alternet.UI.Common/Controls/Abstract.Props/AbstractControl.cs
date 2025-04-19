@@ -61,6 +61,7 @@ namespace Alternet.UI
         private bool ignoreSuggestedHeight;
         private bool inLayout;
         private bool visible = true;
+        private bool allowDefaultContextMenu = true;
 
         private ControlStyles controlStyle = ControlStyles.UserPaint | ControlStyles.StandardClick
             | ControlStyles.Selectable | ControlStyles.StandardDoubleClick
@@ -592,6 +593,30 @@ namespace Alternet.UI
                 void AddBinding(InputBinding binding)
                 {
                 }
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether the default context menu is allowed for this control.
+        /// The default value is <c>true</c>. This property is relevant for native controls that have a
+        /// default context menu provided by the operating system. When set to <c>false</c>, right-clicking
+        /// with the mouse does not forward the event to the native control, preventing the default context
+        /// menu from appearing.
+        /// </summary>
+        /// <value>
+        /// <c>true</c> if the default context menu is allowed; otherwise, <c>false</c>.
+        /// </value>
+        [Browsable(false)]
+        public virtual bool AllowDefaultContextMenu
+        {
+            get
+            {
+                return allowDefaultContextMenu;
+            }
+
+            set
+            {
+                allowDefaultContextMenu = value;
             }
         }
 

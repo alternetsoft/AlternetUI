@@ -10,6 +10,8 @@ namespace NativeApi.Api
 
     public abstract class Control
     {
+        public void SetAllowDefaultContextMenu(bool value) { }
+
         public void SetScrollBar(ScrollBarOrientation orientation, HiddenOrVisible visible,
             int value, int largeChange, int maximum)
         { }

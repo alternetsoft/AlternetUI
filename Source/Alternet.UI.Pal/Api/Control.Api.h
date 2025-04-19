@@ -891,6 +891,17 @@ ALTERNET_UI_API void Control_SetMaximumSize_(Control* obj, SizeD value)
     #endif
 }
 
+ALTERNET_UI_API void Control_SetAllowDefaultContextMenu_(Control* obj, c_bool value)
+{
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    MarshalExceptions<void>([&](){
+    #endif
+        obj->SetAllowDefaultContextMenu(value);
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    });
+    #endif
+}
+
 ALTERNET_UI_API void Control_SetScrollBar_(Control* obj, ScrollBarOrientation orientation, HiddenOrVisible visible, int value, int largeChange, int maximum)
 {
     #if !defined(__WXMSW__) || defined(_DEBUG)

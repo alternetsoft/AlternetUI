@@ -69,6 +69,11 @@ namespace ControlsSample
                 panelSettings.AddInput("Password", textBox, nameof(TextBox.IsPassword));
                 panelSettings.AddInput("Has Border", textBox, nameof(TextBox.HasBorder));
                 panelSettings.AddInput("Allow Space Character", this, nameof(AllowSpaceChar));
+                
+                panelSettings.AddInput(
+                    "Allow Default Context Menu",
+                    textBox,
+                    nameof(TextBox.AllowDefaultContextMenu));
 
                 panelSettings.AddHorizontalLine();
 

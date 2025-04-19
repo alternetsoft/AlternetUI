@@ -492,6 +492,7 @@ namespace Alternet::UI
         wxWindow->Unbind(wxEVT_SET_FOCUS, &Control::OnGotFocus, this);
         wxWindow->Unbind(wxEVT_KILL_FOCUS, &Control::OnLostFocus, this);
         wxWindow->Unbind(wxEVT_LEFT_UP, &Control::OnMouseLeftUp, this);
+        wxWindow->Unbind(wxEVT_RIGHT_UP, &Control::OnMouseRightUp, this);
         wxWindow->Unbind(wxEVT_MOUSEWHEEL, &Control::OnMouseWheel, this);
         wxWindow->Unbind(wxEVT_SYS_COLOUR_CHANGED, &Control::OnSysColorChanged, this);
 
@@ -1091,6 +1092,7 @@ namespace Alternet::UI
         _wxWindow->Bind(wxEVT_KILL_FOCUS, &Control::OnLostFocus, this);
         _wxWindow->Bind(wxEVT_MOUSEWHEEL, &Control::OnMouseWheel, this);
         _wxWindow->Bind(wxEVT_LEFT_UP, &Control::OnMouseLeftUp, this);
+        _wxWindow->Bind(wxEVT_RIGHT_UP, &Control::OnMouseRightUp, this);
         _wxWindow->Bind(wxEVT_IDLE, &Control::OnIdle, this);
         _wxWindow->Bind(wxEVT_SYS_COLOUR_CHANGED, &Control::OnSysColorChanged, this);
         _wxWindow->Bind(wxEVT_SET_CURSOR, &Control::OnSetCursor, this);
@@ -1615,9 +1617,21 @@ namespace Alternet::UI
         event.Skip();
     }
 
+    void Control::SetAllowDefaultContextMenu(bool value)
+    {
+        _allowDefaultContextMenu = value;
+    }
+
+
     void Control::OnMouseLeftUp(wxMouseEvent& event)
     {
         event.Skip();
+    }
+
+    void Control::OnMouseRightUp(wxMouseEvent& event)
+    {
+        if(_allowDefaultContextMenu)
+            event.Skip();
     }
 
     void Control::OnMouseLeave(wxMouseEvent& event)

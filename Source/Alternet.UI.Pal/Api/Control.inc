@@ -130,6 +130,7 @@ void SetMinimumSize(const SizeD& value);
 SizeD GetMaximumSize();
 void SetMaximumSize(const SizeD& value);
 
+void SetAllowDefaultContextMenu(bool value);
 void SetScrollBar(ScrollBarOrientation orientation, HiddenOrVisible visible, int value, int largeChange, int maximum);
 bool IsScrollBarVisible(ScrollBarOrientation orientation);
 int GetScrollBarValue(ScrollBarOrientation orientation);

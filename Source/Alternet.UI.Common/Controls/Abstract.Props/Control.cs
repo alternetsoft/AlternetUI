@@ -424,6 +424,23 @@ namespace Alternet.UI
             }
         }
 
+        /// <inheritdoc/>
+        public override bool AllowDefaultContextMenu
+        {
+            get
+            {
+                return base.AllowDefaultContextMenu;
+            }
+
+            set
+            {
+                if (AllowDefaultContextMenu == value)
+                    return;
+                base.AllowDefaultContextMenu = value;
+                SafeHandler?.SetAllowDefaultContextMenu(value);
+            }
+        }
+
         /// <summary>
         /// Gets or sets border style of the control.
         /// </summary>

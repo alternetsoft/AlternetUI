@@ -14,6 +14,12 @@ namespace Alternet.UI
     public partial interface IControlHandler : IDisposableObject
     {
         /// <summary>
+        /// Sets whether the default context menu is allowed for the control.
+        /// </summary>
+        /// <param name="value">True to allow the default context menu; otherwise, false.</param>
+        void SetAllowDefaultContextMenu(bool value);
+
+        /// <summary>
         /// Gets or sets a value indicating whether the control has a border.
         /// </summary>
         bool HasBorder { get; set; }

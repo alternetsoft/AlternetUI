@@ -9,7 +9,7 @@ using Alternet.Drawing;
 namespace Alternet.UI
 {
     /// <summary>
-    /// Platformless implementation of the <see cref="IControlHandler"/> interface.
+    /// Platform independent implementation of the <see cref="IControlHandler"/> interface.
     /// </summary>
     public class PlessControlHandler : BaseControlHandler, IControlHandler
     {
@@ -328,6 +328,10 @@ namespace Alternet.UI
         {
             this.canSelect = canSelect;
             this.tabStop = tabStop;
+        }
+
+        void IControlHandler.SetAllowDefaultContextMenu(bool value)
+        {
         }
     }
 }

@@ -1421,6 +1421,17 @@ namespace Alternet::UI
         Middle = 3,
     };
     
+    enum class DialogCloseAction
+    {
+        None = 0,
+        OkButton = 1,
+        EnterKey = 2,
+        CancelButton = 3,
+        EscapeKey = 4,
+        CloseButtonInTitleBar = 5,
+        Other = 6,
+    };
+    
     enum class Key
     {
         None = 0,
@@ -3160,6 +3171,20 @@ namespace Alternet::UI
         PlusMinusSquare = 6,
     };
     
+    enum class TreeViewCreateStyle
+    {
+        HasButtons = 1,
+        NoLines = 4,
+        LinesAtRoot = 8,
+        TwistButtons = 16,
+        Multiple = 32,
+        VariableRowHeight = 128,
+        EditLabels = 512,
+        RowLines = 1024,
+        HideRoot = 2048,
+        FullRowHighlight = 8192,
+    };
+    
     enum class TreeViewHitTestLocations
     {
         None = 2,
@@ -3468,6 +3493,7 @@ template<> struct enable_bitmask_operators<Alternet::UI::TextBoxSetValueFlags> {
 template<> struct enable_bitmask_operators<Alternet::UI::TextBoxTextAttrBulletStyle> { static const bool enable = true; };
 template<> struct enable_bitmask_operators<Alternet::UI::TextBoxTextAttrEffects> { static const bool enable = true; };
 template<> struct enable_bitmask_operators<Alternet::UI::TextBoxTextAttrFlags> { static const bool enable = true; };
+template<> struct enable_bitmask_operators<Alternet::UI::TreeViewCreateStyle> { static const bool enable = true; };
 template<> struct enable_bitmask_operators<Alternet::UI::TreeViewHitTestLocations> { static const bool enable = true; };
 template<> struct enable_bitmask_operators<Alternet::UI::ValueValidatorTextStyle> { static const bool enable = true; };
 template<> struct enable_bitmask_operators<Alternet::UI::WebBrowserSearchFlags> { static const bool enable = true; };

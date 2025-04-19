@@ -176,6 +176,7 @@ namespace Alternet::UI
         bool bindScrollEvents = true;
         int _ignoreRecreate = 0;
         int _borderStyle = 0;
+        bool _allowDefaultContextMenu = true;
         int _disableRecreateCounter = 0;
         SizeI _eventOldDpi;
         SizeI _eventNewDpi;
@@ -192,6 +193,7 @@ namespace Alternet::UI
         virtual void OnMouseWheel(wxMouseEvent& event);
         virtual void OnMouseLeave(wxMouseEvent& event);
         virtual void OnMouseLeftUp(wxMouseEvent& event);
+        virtual void OnMouseRightUp(wxMouseEvent& event);
         virtual void OnVisibleChanged(wxShowEvent& event);
         virtual void OnSizeChanged(wxSizeEvent& event);
         virtual void OnLocationChanged(wxMoveEvent& event);

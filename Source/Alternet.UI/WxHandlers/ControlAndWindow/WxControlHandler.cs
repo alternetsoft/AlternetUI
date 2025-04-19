@@ -540,5 +540,10 @@ namespace Alternet.UI
         public virtual void OnHandleCreated()
         {
         }
+
+        void IControlHandler.SetAllowDefaultContextMenu(bool value)
+        {
+            NativeControl.SetAllowDefaultContextMenu(value);
+        }
     }
 }

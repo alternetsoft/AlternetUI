@@ -678,6 +678,12 @@ namespace Alternet.UI.Native
             }
         }
         
+        public void SetAllowDefaultContextMenu(bool value)
+        {
+            CheckDisposed();
+            NativeApi.Control_SetAllowDefaultContextMenu_(NativePointer, value);
+        }
+        
         public void SetScrollBar(Alternet.UI.ScrollBarOrientation orientation, Alternet.UI.HiddenOrVisible visible, int value, int largeChange, int maximum)
         {
             CheckDisposed();
@@ -1581,6 +1587,9 @@ namespace Alternet.UI.Native
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void Control_SetMaximumSize_(IntPtr obj, Alternet.Drawing.SizeD value);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void Control_SetAllowDefaultContextMenu_(IntPtr obj, bool value);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void Control_SetScrollBar_(IntPtr obj, Alternet.UI.ScrollBarOrientation orientation, Alternet.UI.HiddenOrVisible visible, int value, int largeChange, int maximum);
