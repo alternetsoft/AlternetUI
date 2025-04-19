@@ -370,6 +370,10 @@ namespace Alternet.UI
         {
         }
 
+        public virtual void SetAllowDefaultContextMenu(bool value)
+        {
+        }
+
         private MauiControlHandler? GetRootHandler()
         {
             var result = (Control?.Root as Control)?.Handler as MauiControlHandler;
