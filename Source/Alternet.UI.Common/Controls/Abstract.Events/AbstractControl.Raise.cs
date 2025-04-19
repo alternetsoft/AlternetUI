@@ -241,6 +241,8 @@ namespace Alternet.UI
             if (DisposingOrDisposed)
                 return;
             MouseRightButtonUp?.Invoke(this, e);
+            if (HasContextMenu)
+                ShowPopupMenu(ContextMenuStrip);
             OnMouseRightButtonUp(e);
 
             RaiseNotifications((n) => n.AfterMouseRightButtonUp(this, e));
@@ -975,8 +977,6 @@ namespace Alternet.UI
             if (DisposingOrDisposed)
                 return;
             MouseRightButtonDown?.Invoke(this, e);
-            if(HasContextMenu)
-                ShowPopupMenu(ContextMenuStrip);
             OnMouseRightButtonDown(e);
 
             RaiseNotifications((n) => n.AfterMouseRightButtonDown(this, e));
