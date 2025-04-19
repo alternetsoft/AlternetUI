@@ -13,7 +13,7 @@ namespace Alternet.UI
     /// <typeparam name="TKey">The type of the identifiers.</typeparam>
     /// <typeparam name="TValue">The type of the values.</typeparam>
     public class FlagsAndAttributes<TKey, TValue>
-        : AdvDictionary<TKey, TValue?>, IFlagsAndAttributes<TKey, TValue>,
+        : BaseDictionary<TKey, TValue?>, IFlagsAndAttributes<TKey, TValue>,
         ICustomFlags<TKey>, ICustomAttributes<TKey, TValue>
         where TKey : notnull
     {
