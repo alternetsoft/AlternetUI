@@ -687,12 +687,7 @@ namespace Alternet.UI
         /// <returns>The zero-based index of the item found at the specified
         /// coordinates; returns <see langword="null"/>
         /// if no match is found.</returns>
-        public virtual int? HitTest(PointD position)
-        {
-            if (DisposingOrDisposed)
-                return null;
-            return Handler.HitTest(position);
-        }
+        public abstract int? HitTest(PointD position);
 
         /// <summary>
         /// Gets only valid indexes from the list of indexes in

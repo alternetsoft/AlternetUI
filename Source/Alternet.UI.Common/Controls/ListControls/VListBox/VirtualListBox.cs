@@ -319,7 +319,10 @@ namespace Alternet.UI
         {
             if (DisposingOrDisposed)
                 return default;
-            return index >= GetVisibleBegin() && index < (GetVisibleEnd() - 1);
+            var visibleBegin = GetVisibleBegin();
+            var visibleEnd = GetVisibleEnd();
+
+            return index >= visibleBegin && index < visibleEnd;
         }
 
         /// <summary>
@@ -557,14 +560,135 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets the rectangle that represents the bounds of the item at the specified index.
+        /// </summary>
+        /// <param name="index">The zero-based index of the item.</param>
+        /// <returns>
+        /// A <see cref="RectD"/> that represents the bounds of the item, or <c>null</c> if
+        /// the index is invalid, item is not currently visible or the control is disposed.
+        /// </returns>
+        public virtual RectD? GetItemRect(int? index)
+        {
+            if (index is null || DisposingOrDisposed)
+                return default;
+            var n = index.Value;
+
+            var lineMax = GetVisibleEnd();
+            if (n >= lineMax)
+                return null;
+            var line = GetVisibleBegin();
+            if (n < line)
+                return null;
+
+            MeasureItemEventArgs e = new(MeasureCanvas, 0);
+            RectD itemRect = (0, 0, ClientSize.Width, 0);
+
+            while (line <= n)
+            {
+                e.Index = line;
+                MeasureItemSize(e);
+
+                itemRect.Y += itemRect.Height;
+                itemRect.Height = e.ItemHeight;
+
+                line++;
+            }
+
+            return itemRect;
+        }
+
+        /// <inheritdoc/>
+        public override int? HitTest(PointD position)
+        {
+            if (DisposingOrDisposed)
+                return null;
+            var y = position.Y;
+            var unitMax = GetVisibleEnd();
+
+            MeasureItemEventArgs e = new(MeasureCanvas, 0);
+
+            for (int unit = GetVisibleBegin(); unit < unitMax; ++unit)
+            {
+                e.Index = unit;
+                MeasureItemSize(e);
+                y -= e.ItemHeight;
+                if (y < 0)
+                    return unit;
+            }
+
+            return null;
+        }
+
+        /// <summary>
+        /// Triggers a refresh for the area between the specified range of rows given (inclusively).
+        /// </summary>
+        /// <param name="from">First item index.</param>
+        /// <param name="to">Last item index.</param>
+        public virtual void RefreshRows(int from, int to)
+        {
+            if (DisposingOrDisposed || CanSkipInvalidate())
+                return;
+
+            if (from > to)
+                return;
+
+            if (from < GetVisibleBegin())
+                from = GetVisibleBegin();
+
+            if (to > GetVisibleEnd())
+                to = GetVisibleEnd();
+
+            Coord orientSize = 0;
+            Coord orientPos = 0;
+
+            MeasureItemEventArgs e = new(MeasureCanvas, 0);
+
+            for (int nBefore = GetVisibleBegin();
+                  nBefore < from;
+                  nBefore++)
+            {
+                e.Index = nBefore;
+                MeasureItemSize(e);
+
+                orientPos += e.ItemHeight;
+            }
+
+            for (int nBetween = from; nBetween <= to; nBetween++)
+            {
+                e.Index = nBetween;
+                MeasureItemSize(e);
+                orientSize += e.ItemHeight;
+            }
+
+            RectD rect = (0, orientPos, ClientSize.Width, orientSize);
+            Invalidate(rect);
+        }
+
+        /// <summary>
         /// Triggers a refresh for just the given row's area of the control if it is visible.
         /// </summary>
         /// <param name="row">Item index.</param>
         public virtual void RefreshRow(int row)
         {
-            if (DisposingOrDisposed)
+            if (DisposingOrDisposed || CanSkipInvalidate())
                 return;
-            Handler.RefreshRow(row);
+
+            if (!IsItemVisible(row))
+                return;
+
+            MeasureItemEventArgs e = new(MeasureCanvas, row);
+            MeasureItemSize(e);
+
+            RectD rect = (0, 0, ClientSize.Width, e.ItemHeight);
+
+            for (int n = GetVisibleBegin(); n < row; ++n)
+            {
+                e.Index = n;
+                MeasureItemSize(e);
+                rect.Top += e.ItemHeight;
+            }
+
+            Invalidate(rect);
         }
 
         /// <summary>
@@ -648,18 +772,6 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Triggers a refresh for the area between the specified range of rows given (inclusively).
-        /// </summary>
-        /// <param name="from">First item index.</param>
-        /// <param name="to">Last item index.</param>
-        public virtual void RefreshRows(int from, int to)
-        {
-            if (DisposingOrDisposed)
-                return;
-            Handler.RefreshRows(from, to);
-        }
-
-        /// <summary>
         /// Selects items with the specified indexes
         /// and scrolls the control so the first selected item will become visible in the view.
         /// </summary>
@@ -671,6 +783,19 @@ namespace Alternet.UI
             SelectedIndices = validIndexes;
             EnsureVisible(validIndexes[0]);
             return true;
+        }
+
+        /// <summary>
+        /// Selects the first item in the tree view control and scrolls to it.
+        /// </summary>
+        /// <remarks>
+        /// This method ensures that the first item is selected and visible.
+        /// If no items are present, no action is taken.
+        /// </remarks>
+        public virtual void SelectFirstItemAndScroll()
+        {
+            SelectFirstItem();
+            ScrollToFirstRow();
         }
 
         /// <summary>
@@ -742,9 +867,28 @@ namespace Alternet.UI
         /// <returns></returns>
         public virtual int GetVisibleEnd()
         {
-            if (DisposingOrDisposed)
+            if (DisposingOrDisposed || Count == 0)
                 return default;
-            return Handler.GetVisibleEnd();
+
+            MeasureItemEventArgs e = new(MeasureCanvas);
+            var sWindow = ClientSize.Height;
+            Coord s = 0;
+            var firstItem = GetVisibleBegin();
+
+            int unit = 0;
+
+            for (unit = firstItem; unit < Count; ++unit)
+            {
+                if (s > sWindow)
+                    break;
+
+                e.Index = unit;
+                MeasureItemSize(e);
+
+                s += e.ItemHeight;
+            }
+
+            return unit;
         }
 
         /// <summary>
@@ -838,22 +982,6 @@ namespace Alternet.UI
                 return;
             OnDrawItem(e);
             DrawItem?.Invoke(this, e);
-        }
-
-        /// <summary>
-        /// Returns the rectangle occupied by this item in physical coordinates (dips).
-        /// If the item is not currently visible, returns an empty rectangle.
-        /// </summary>
-        /// <param name="index"></param>
-        /// <returns></returns>
-        public virtual RectD? GetItemRect(int? index)
-        {
-            if (DisposingOrDisposed)
-                return default;
-            if (index is null)
-                return null;
-            var result = Handler.GetItemRect(index.Value);
-            return result;
         }
 
         void IListControl.Add(ListControlItem item)
@@ -1160,12 +1288,12 @@ namespace Alternet.UI
             RectD rectRow = RectD.Empty;
             rectRow.Width = clientSize.Width;
 
-            int lineMax = Handler.GetVisibleEnd();
+            int lineMax = GetVisibleEnd();
 
             MeasureItemEventArgs measureItemArgs = new(dc, 0);
             DrawItemEventArgs drawItemArgs = new(dc);
 
-            for (int line = Handler.GetVisibleBegin(); line < lineMax; line++)
+            for (int line = GetVisibleBegin(); line < lineMax; line++)
             {
                 measureItemArgs.Index = line;
                 MeasureItemSize(measureItemArgs);

@@ -48,44 +48,14 @@ namespace Alternet.UI
                 NativeControl.EnsureVisible(itemIndex);
         }
 
-        RectD? IVListBoxHandler.GetItemRect(int index)
-        {
-            var resultI = NativeControl.GetItemRectI(index);
-            if (resultI.SizeIsEmpty)
-                return null;
-            var resultD = Control?.PixelToDip(resultI);
-            return resultD;
-        }
-
         bool IVListBoxHandler.ScrollToRow(int pages)
         {
             return NativeControl.ScrollToRow(pages);
         }
         
-        void IVListBoxHandler.RefreshRow(int row)
-        {
-            NativeControl.RefreshRow(row);
-        }
-
-        void IVListBoxHandler.RefreshRows(int from, int to)
-        {
-            NativeControl.RefreshRows(from, to);
-        }
-
-        int IVListBoxHandler.GetVisibleEnd()
-        {
-            return NativeControl.GetVisibleEnd();
-        }
-
         int IVListBoxHandler.GetVisibleBegin()
         {
             return NativeControl.GetVisibleBegin();
-        }
-
-        public int? HitTest(PointD position)
-        {
-            int index = NativeControl.ItemHitTest(position);
-            return index == -1 ? null : index;
         }
 
         internal override Native.Control CreateNativeControl()

@@ -1877,11 +1877,6 @@ namespace Alternet.UI
             return default;
         }
 
-        int? IVListBoxHandler.HitTest(PointD position)
-        {
-            return default;
-        }
-
         public void ShowModalAsync(Window? owner, Action<ModalResult> onResult)
         {
         }

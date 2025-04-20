@@ -18,25 +18,10 @@ namespace Alternet.UI
         /// </summary>
         int ItemsCount { set; }
 
-        /// <inheritdoc cref="VirtualListBox.GetItemRect"/>
-        public RectD? GetItemRect(int index); // !!
-
         /// <inheritdoc cref="VirtualListBox.ScrollToRow(int)"/>
         bool ScrollToRow(int row);
 
-        /// <inheritdoc cref="VirtualListBox.RefreshRow(int)"/>
-        void RefreshRow(int row); // !!
-
-        /// <inheritdoc cref="VirtualListBox.RefreshRows(int, int)"/>
-        void RefreshRows(int from, int to); // !!
-
-        /// <inheritdoc cref="VirtualListBox.GetVisibleEnd"/>
-        int GetVisibleEnd(); // !!
-
         /// <inheritdoc cref="VirtualListBox.GetVisibleBegin"/>
         int GetVisibleBegin();
-
-        /// <inheritdoc cref="VirtualListControl.HitTest"/>
-        int? HitTest(PointD position); // !!
     }
 }
