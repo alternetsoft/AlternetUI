@@ -7,6 +7,22 @@
 
 namespace Alternet::UI
 {
+    class wxListView2 : public wxListView, public wxWidgetExtender
+    {
+    public:
+        wxListView2() {}
+        wxListView2(wxWindow* parent,
+            wxWindowID winid = wxID_ANY,
+            const wxPoint& pos = wxDefaultPosition,
+            const wxSize& size = wxDefaultSize,
+            long style = wxLC_REPORT,
+            const wxValidator& validator = wxDefaultValidator,
+            const wxString& name = wxASCII_STR(wxListCtrlNameStr))
+        {
+            Create(parent, winid, pos, size, style, validator, name);
+        }
+    };
+
     class ListView : Control
     {
 #include "Api/ListView.inc"
@@ -24,8 +40,8 @@ namespace Alternet::UI
         void OnWxWindowCreated() override;
 
     private:
-        void ApplyLargeImageList(wxListView* value);
-        void ApplySmallImageList(wxListView* value);
+        void ApplyLargeImageList(wxListView2* value);
+        void ApplySmallImageList(wxListView2* value);
 
         bool hasBorder = false;
         ImageList* _smallImageList = nullptr;
@@ -51,9 +67,9 @@ namespace Alternet::UI
         virtual void RecreateWxWindowIfNeeded() override;
         std::vector<int64_t> GetSelectedIndices();
         void SetSelectedIndices(const std::vector<int64_t>& value);
-        void DeselectAll(wxListView* listView);
-        wxListView* GetListView();
-        void InsertItem(wxListView* listView, wxListItem& item);
+        void DeselectAll(wxListView2* listView);
+        wxListView2* GetListView();
+        void InsertItem(wxListView2* listView, wxListItem& item);
         long GetStyle();
         void RaiseSelectionChanged();
         int GetWxColumnWidth(double width, ListViewColumnWidthMode widthMode);

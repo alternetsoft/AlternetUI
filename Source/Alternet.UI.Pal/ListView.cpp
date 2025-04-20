@@ -97,7 +97,7 @@ namespace Alternet::UI
         InsertItem(GetListView(), item);
     }
 
-    void ListView::InsertItem(wxListView* listView, wxListItem& item)
+    void ListView::InsertItem(wxListView2* listView, wxListItem& item)
     {
         auto col = item.GetColumn();
 
@@ -181,22 +181,6 @@ namespace Alternet::UI
             _largeImageList->AddRef();
         ApplyLargeImageList(GetListView());
     }
-
-    class wxListView2 : public wxListView, public wxWidgetExtender
-    {
-    public:
-        wxListView2(){}
-        wxListView2(wxWindow* parent,
-            wxWindowID winid = wxID_ANY,
-            const wxPoint& pos = wxDefaultPosition,
-            const wxSize& size = wxDefaultSize,
-            long style = wxLC_REPORT,
-            const wxValidator& validator = wxDefaultValidator,
-            const wxString& name = wxASCII_STR(wxListCtrlNameStr))
-        {
-            Create(parent, winid, pos, size, style, validator, name);
-        }
-    };
 
     wxWindow* ListView::CreateWxWindowUnparented()
     {
@@ -569,7 +553,7 @@ namespace Alternet::UI
         DeselectAll(GetListView());
     }
 
-    void ListView::DeselectAll(wxListView* listView)
+    void ListView::DeselectAll(wxListView2* listView)
     {
         auto selectedIndices = (std::vector<int64_t>*)OpenSelectedIndicesArray();
         for (auto index : *selectedIndices)
@@ -595,13 +579,13 @@ namespace Alternet::UI
         RecreateWxWindowIfNeeded();
     }
 
-    void ListView::ApplyLargeImageList(wxListView* value)
+    void ListView::ApplyLargeImageList(wxListView2* value)
     {
         value->SetImageList(_largeImageList == nullptr ? nullptr :
             _largeImageList->GetImageList(), wxIMAGE_LIST_NORMAL);
     }
 
-    void ListView::ApplySmallImageList(wxListView* value)
+    void ListView::ApplySmallImageList(wxListView2* value)
     {
         value->SetImageList(_smallImageList == nullptr ? nullptr :
             _smallImageList->GetImageList(), wxIMAGE_LIST_SMALL);
@@ -617,9 +601,9 @@ namespace Alternet::UI
         return GetListView()->GetItemCount();
     }
 
-    wxListView* ListView::GetListView()
+    wxListView2* ListView::GetListView()
     {
-        return dynamic_cast<wxListView*>(GetWxWindow());
+        return dynamic_cast<wxListView2*>(GetWxWindow());
     }
 
     long ListView::GetStyle()
