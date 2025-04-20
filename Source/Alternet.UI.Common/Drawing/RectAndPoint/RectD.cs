@@ -440,7 +440,7 @@ namespace Alternet.Drawing
         public static explicit operator RectD(Vector4 vector) => new(vector);
 
         /// <summary>
-        /// Implicit operator convertion from tuple with four values
+        /// Implicit operator conversion from tuple with four values
         /// to <see cref="RectD"/>.
         /// </summary>
         /// <param name="d">New rectangle value.</param>
@@ -449,7 +449,7 @@ namespace Alternet.Drawing
             new(d.X, d.Y, d.Width, d.Height);
 
         /// <summary>
-        /// Implicit operator convertion from <see cref="RectD"/>
+        /// Implicit operator conversion from <see cref="RectD"/>
         /// to <see cref="SKRect"/>.
         /// </summary>
         /// <param name="rect">Value to convert.</param>
@@ -462,7 +462,7 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
-        /// Implicit operator convertion from <see cref="SKRect"/>
+        /// Implicit operator conversion from <see cref="SKRect"/>
         /// to <see cref="RectD"/>.
         /// </summary>
         /// <param name="value">Value to convert.</param>
@@ -497,7 +497,7 @@ namespace Alternet.Drawing
             new((float)p.X, (float)p.Y, (float)p.Width, (float)p.Height);
 
         /// <summary>
-        /// Implicit operator convertion from tuple (<see cref="PointD"/>, <see cref="Size"/>)
+        /// Implicit operator conversion from tuple (<see cref="PointD"/>, <see cref="Size"/>)
         /// to <see cref="RectD"/>.
         /// </summary>
         /// <param name="d">New rectangle value.</param>
@@ -1359,6 +1359,31 @@ namespace Alternet.Drawing
         /// <returns>Point that contains location of the upper-right rectangle corner.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public readonly PointD RightTop() => new(Right, y);
+
+        /// <summary>
+        /// Offsets the location of given rectangle by the specified offset.
+        /// </summary>
+        /// <param name="offsetX">Horizontal offset.</param>
+        /// <param name="offsetY">Vertical offset.</param>
+        /// <returns>Rectangle object with new location.</returns>
+        public readonly RectD WithOffset(Coord offsetX, Coord offsetY)
+        {
+            var r = this;
+            r.Offset(offsetX, offsetY);
+            return r;
+        }
+
+        /// <summary>
+        /// Offsets the location of given rectangle by the specified offset.
+        /// </summary>
+        /// <param name="offset">Horizontal and vertical offset.</param>
+        /// <returns>Rectangle object with new location.</returns>
+        public readonly RectD WithOffset(SizeD offset)
+        {
+            var r = this;
+            r.Offset((PointD)offset);
+            return r;
+        }
 
         /// <summary>
         /// Returns location of the bottom-right corner of this rectangle.
