@@ -60,7 +60,7 @@ namespace Alternet.UI
         /// Initializes a new instance of the <see cref="ListControlItem"/> class
         /// with the default values for the <see cref="Text"/> and <see cref="Value"/> properties.
         /// </summary>
-        /// <param name="text">The defult value of the <see cref="Text"/> property.</param>
+        /// <param name="text">The default value of the <see cref="Text"/> property.</param>
         /// <param name="value">User data.</param>
         public ListControlItem(string text, object? value)
         {
@@ -80,7 +80,7 @@ namespace Alternet.UI
         /// with the default value for the <see cref="Text"/> property and an action associated
         /// with the item.
         /// </summary>
-        /// <param name="text">The defult value of the <see cref="Text"/> property.</param>
+        /// <param name="text">The default value of the <see cref="Text"/> property.</param>
         /// <param name="action">Action associated with the item.</param>
         public ListControlItem(string text, Action? action)
         {

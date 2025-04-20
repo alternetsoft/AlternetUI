@@ -42,7 +42,7 @@ namespace Alternet.UI
         /// Initializes a new instance of the <see cref="MeasureItemEventArgs" /> class.</summary>
         /// <param name="graphics">The <see cref="Graphics" /> object being written to.</param>
         /// <param name="index">The index of the item for which you need the height or width.</param>
-        public MeasureItemEventArgs(Graphics graphics, int index)
+        public MeasureItemEventArgs(Graphics graphics, int index = 0)
         {
             this.graphics = graphics;
             this.index = index;

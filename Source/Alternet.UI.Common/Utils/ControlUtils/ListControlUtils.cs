@@ -42,7 +42,7 @@ namespace Alternet.UI
                     for (int j = 0; j < 10; j++)
                     {
                         var childItem = new TreeControlItem();
-                        childItem.Text = item.Text + "." + j;
+                        childItem.Text = "Item " + LogUtils.GenNewId();
                         Initialize(childItem);
                         item.Add(childItem);
 
@@ -51,7 +51,7 @@ namespace Alternet.UI
                             for (int k = 0; k < 2; k++)
                             {
                                 var childOfChildItem = new TreeControlItem();
-                                childOfChildItem.Text = childItem.Text + "." + k;
+                                childOfChildItem.Text = "Item " + LogUtils.GenNewId();
                                 Initialize(childOfChildItem);
                                 childItem.Add(childOfChildItem);
                             }
