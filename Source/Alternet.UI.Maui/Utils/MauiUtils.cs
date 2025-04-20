@@ -64,7 +64,7 @@ namespace Alternet.UI
         {
             get
             {
-                foreach(var view in ControlViews)
+                foreach (var view in ControlViews)
                 {
                     if (view.Control is not null)
                         yield return view.Control;
@@ -80,7 +80,7 @@ namespace Alternet.UI
         {
             get
             {
-                foreach(var page in Pages)
+                foreach (var page in Pages)
                 {
                     var elements = GetChildren<Alternet.UI.ControlView>(page, true);
 
@@ -101,7 +101,7 @@ namespace Alternet.UI
         {
             get
             {
-                foreach(var window in Windows)
+                foreach (var window in Windows)
                 {
                     var page = window.Page;
                     if (page is not null)
@@ -210,7 +210,7 @@ namespace Alternet.UI
         {
             var types = Alternet.UI.AssemblyUtils.GetTypeDescendants(typeof(View));
 
-            foreach(var type in types)
+            foreach (var type in types)
             {
                 if (type == typeof(WebView) || type == typeof(VerticalStackLayout)
                     || type == typeof(GroupableItemsView))
@@ -381,7 +381,7 @@ namespace Alternet.UI
         {
             Drawing.Image? img;
 
-            if(isDisabled)
+            if (isDisabled)
                 img = svgImage?.AsDisabledImage(sizeInPixels, isDark);
             else
                 img = svgImage?.AsNormalImage(sizeInPixels, isDark);
@@ -401,7 +401,7 @@ namespace Alternet.UI
             int size,
             bool disabled = false)
         {
-            if(svg is null)
+            if (svg is null)
             {
                 button.RemoveBinding(Microsoft.Maui.Controls.Button.ImageSourceProperty);
                 return;
@@ -579,6 +579,21 @@ namespace Alternet.UI
                     }
                 }
             }
+        }
+
+        /// <summary>
+        /// Closes the application.
+        /// </summary>
+        public static void CloseApplication()
+        {
+            var window = Application.Current?.Windows.FirstOrDefault();
+            if (window is null)
+                return;
+            Application.Current?.CloseWindow(window);
+#if ANDROID
+#elif IOS || MACCATALYST
+#elif WINDOWS
+#endif
         }
     }
 }
