@@ -57,6 +57,7 @@ namespace ControlsSample
             treeView.ContextMenu.Add("Add many items", () =>
             {
                 ListControlUtils.AddTestItems(treeView.RootItem, 1000);
+                treeView.SelectLastItemAndScroll();
             });
 
             treeView.ContextMenu.AddSeparator();

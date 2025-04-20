@@ -465,6 +465,8 @@ namespace Alternet.UI
             if (item.Parent == rootItem && !item.IsExpanded)
             {
                 ListBox.Items.Add(item);
+                if(InUpdates)
+                    needTreeChanged = true;
             }
             else
             {
@@ -490,6 +492,8 @@ namespace Alternet.UI
             else
             {
                 ListBox.Items?.Remove(item);
+                if (InUpdates)
+                    needTreeChanged = true;
             }
 
             if (ItemRemoved is not null)
@@ -625,6 +629,42 @@ namespace Alternet.UI
         public virtual bool EnsureVisible(int index)
         {
             return ListBox.EnsureVisible(index);
+        }
+
+        /// <summary>
+        /// Selects the last item in the tree view control.
+        /// </summary>
+        /// <remarks>
+        /// This method ensures that the last item
+        /// is selected. If no items are present, no action is taken.
+        /// </remarks>
+        public virtual void SelectLastItem()
+        {
+            ListBox.SelectLastItem();
+        }
+
+        /// <summary>
+        /// Selects the first item in the tree view control and scrolls to it.
+        /// </summary>
+        /// <remarks>
+        /// This method ensures that the first item is selected and visible.
+        /// If no items are present, no action is taken.
+        /// </remarks>
+        public virtual void SelectFirstItemAndScroll()
+        {
+            ListBox.SelectFirstItemAndScroll();
+        }
+
+        /// <summary>
+        /// Selects the last item in the tree view control and scrolls to it.
+        /// </summary>
+        /// <remarks>
+        /// This method ensures that the last item is selected and visible.
+        /// If no items are present, no action is taken.
+        /// </remarks>
+        public virtual void SelectLastItemAndScroll()
+        {
+            ListBox.SelectLastItemAndScroll();
         }
 
         /// <summary>
