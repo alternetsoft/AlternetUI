@@ -1370,8 +1370,11 @@ namespace Alternet.UI
                 if (enabled == value)
                     return;
                 enabled = value;
-                RaiseEnabledChanged(EventArgs.Empty);
-                Invalidate();
+                Invoke(() =>
+                {
+                    RaiseEnabledChanged(EventArgs.Empty);
+                    Invalidate();
+                });
             }
         }
 
