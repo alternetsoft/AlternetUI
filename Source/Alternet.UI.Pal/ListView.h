@@ -89,12 +89,13 @@ namespace Alternet::UI
 
     protected:
         void OnWxWindowCreated() override;
+        void OnSizeChanged(wxSizeEvent& event) override;
 
     private:
         void ApplyLargeImageList(wxListView2* value);
         void ApplySmallImageList(wxListView2* value);
 
-        bool hasBorder = false;
+        bool hasBorder = true;
         ImageList* _smallImageList = nullptr;
         ImageList* _largeImageList = nullptr;
         ListViewSelectionMode _selectionMode = ListViewSelectionMode::Single;

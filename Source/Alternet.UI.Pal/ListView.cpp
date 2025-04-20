@@ -18,12 +18,10 @@ namespace Alternet::UI
 
     void ListView::SetHasBorder(bool value)
     {
-        /*
         if (hasBorder == value)
             return;
         hasBorder = value;
         RecreateWxWindowIfNeeded();
-        */
     }
 
     ListView::~ListView()
@@ -202,8 +200,9 @@ namespace Alternet::UI
             style);
 
 #ifdef __WXMSW__
+        auto hWnd = (HWND)value->GetHWND();
         // turn off "explorer style" item hover effects.
-        SetWindowTheme((HWND)value->GetHWND(), L"", NULL); 
+        SetWindowTheme(hWnd, L"", NULL); 
 #endif
 
         ApplySmallImageList(value);
@@ -591,9 +590,35 @@ namespace Alternet::UI
             _smallImageList->GetImageList(), wxIMAGE_LIST_SMALL);
     }
 
+    void ListView::OnSizeChanged(wxSizeEvent& event)
+    {
+        Control::OnSizeChanged(event);
+    }
+
     void ListView::OnWxWindowCreated()
     {
         Control::OnWxWindowCreated();
+        /*
+        #ifdef __WXMSW__
+                auto wnd = GetListView();
+                auto hWnd = (HWND)wnd->GetHWND();
+
+                wnd->SetDoubleBuffered(false);
+                wnd->SetBackgroundStyle(wxBackgroundStyle::wxBG_STYLE_ERASE);
+
+                DWORD dwStyle = SendMessage(hWnd, LVM_GETEXTENDEDLISTVIEWSTYLE, 0, 0);
+
+                // Remove the LVS_EX_DOUBLEBUFFER flag
+                dwStyle &= ~LVS_EX_DOUBLEBUFFER;
+
+                SendMessage(hWnd, LVM_SETEXTENDEDLISTVIEWSTYLE, 0, dwStyle);
+
+                RedrawWindow(hWnd, nullptr, nullptr, RDW_FRAME | RDW_INVALIDATE | RDW_UPDATENOW);
+                SetWindowPos(hWnd, nullptr, 0, 0, 0, 0, SWP_NOSIZE | SWP_NOMOVE | SWP_NOZORDER);
+                SendMessage(hWnd, WM_NCPAINT, 0, 0);
+                SendMessage(hWnd, WM_PAINT, 0, 0);
+        #endif
+        */
     }
 
     int64_t ListView::GetItemsCount()
@@ -638,13 +663,22 @@ namespace Alternet::UI
 
         auto getGridLinesStyle = [&]()
         {
+            if (_view != ListViewView::Details)
+            {
+                return 0;
+            }
+
             switch (_gridLinesDisplayMode)
             {
             case ListViewGridLinesDisplayMode::None:
-            default:
+#ifdef __WXMSW__
+                return wxLC_VRULES;
+#else
                 return 0;
+#endif
             case ListViewGridLinesDisplayMode::Horizontal:
                 return wxLC_HRULES;
+            default:
             case ListViewGridLinesDisplayMode::Vertical:
                 return wxLC_VRULES;
             case ListViewGridLinesDisplayMode::VerticalAndHorizontal:

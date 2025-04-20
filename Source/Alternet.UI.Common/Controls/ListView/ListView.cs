@@ -649,6 +649,7 @@ namespace Alternet.UI
 
             set
             {
+                base.Handler.HasBorder = value;
             }
         }
 

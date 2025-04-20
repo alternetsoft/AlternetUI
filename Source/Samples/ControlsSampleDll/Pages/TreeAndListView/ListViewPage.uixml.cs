@@ -51,7 +51,7 @@ namespace ControlsSample
 
             viewComboBox.AddEnumValues(typeof(ListViewView), ListViewView.Details);
             gridLinesComboBox.AddEnumValues(typeof(ListViewGridLinesDisplayMode),
-                ListViewGridLinesDisplayMode.None);
+                ListViewGridLinesDisplayMode.Vertical);
             columnWidthModeComboBox.AddEnumValues(typeof(ListViewColumnWidthMode),
                 ListViewColumnWidthMode.AutoSize);
 
