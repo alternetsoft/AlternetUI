@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Text;
 
+using Alternet.Drawing;
+
 namespace Alternet.UI
 {
     /// <summary>
@@ -66,8 +68,8 @@ namespace Alternet.UI
         {
             get
             {
-                var indentLevel = IndentLelel - 1;
-                int indentPx = VirtualTreeControl.DefaultLevelMargin;
+                var indentLevel = IndentLevel - 1;
+                var indentPx = Owner?.GetLevelMargin() ?? VirtualTreeControl.DefaultLevelMargin;
                 Thickness result = (indentPx * indentLevel, 0, 0, 0);
                 return result;
             }
@@ -262,13 +264,13 @@ namespace Alternet.UI
         /// <summary>
         /// Gets the indent level of this item.
         /// </summary>
-        public virtual int IndentLelel
+        public virtual int IndentLevel
         {
             get
             {
                 if (Parent is null)
                     return 0;
-                return Parent.IndentLelel + 1;
+                return Parent.IndentLevel + 1;
             }
         }
 
@@ -428,6 +430,17 @@ namespace Alternet.UI
                     Owner?.EndUpdate();
                 }
             }
+        }
+
+        /// <inheritdoc/>
+        public override ItemCheckBoxInfo GetCheckBoxInfo(
+            IListControlItemContainer? container,
+            RectD rect)
+        {
+            var result = base.GetCheckBoxInfo(container, rect);
+            if (Owner is null || Owner.TreeButtons != TreeViewButtonsKind.Null)
+                result.KeepTextPaddingWithoutCheckBox = true;
+            return result;
         }
 
         /// <summary>

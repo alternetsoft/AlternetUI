@@ -875,7 +875,7 @@ namespace Alternet.UI
             Coord s = 0;
             var firstItem = GetVisibleBegin();
 
-            int unit = 0;
+            int unit;
 
             for (unit = firstItem; unit < Count; ++unit)
             {
@@ -952,7 +952,7 @@ namespace Alternet.UI
             if (rect is null)
                 return null;
             var info = GetCheckBoxInfo(itemIndex.Value, rect.Value);
-            if (info is null)
+            if (info is null || !info.IsCheckBoxVisible)
                 return null;
             var checkRect = info.CheckRect;
             checkRect.Inflate(2);

@@ -273,6 +273,13 @@ namespace Alternet.UI
         /// </summary>
         public IEnumerable<ListControlItem> VisibleItems => ListBox.Items;
 
+        /// <inheritdoc/>
+        public virtual Coord GetLevelMargin()
+        {
+            var checkSize = ListControlItem.GetCheckBoxSize(ListBox, null, null).Width;
+            return checkSize;
+        }
+
         /// <summary>
         /// Selects the specified item in the tree view and scrolls to it.
         /// </summary>

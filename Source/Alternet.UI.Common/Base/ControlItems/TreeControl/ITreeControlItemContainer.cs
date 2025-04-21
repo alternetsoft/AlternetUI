@@ -10,6 +10,16 @@ namespace Alternet.UI
     public interface ITreeControlItemContainer
     {
         /// <summary>
+        /// Gets the type of buttons used in the tree view.
+        /// </summary>
+        TreeViewButtonsKind TreeButtons { get; }
+
+        /// <summary>
+        /// Gets margin for each level in the tree.
+        /// </summary>
+        Coord GetLevelMargin();
+
+        /// <summary>
         /// Begins an update of the tree view. Call this method before making
         /// multiple changes to the tree view to prevent multiple refreshes.
         /// </summary>

@@ -138,7 +138,7 @@ namespace ControlsSample
         public void AddNewChildItem()
         {
             var item = new Alternet.UI.TreeControlItem();
-            item.Text = "item " + Alternet.UI.LogUtils.GenNewId();
+            item.Text = "Item " + Alternet.UI.LogUtils.GenNewId();
             item.SvgImage = Alternet.UI.KnownColorSvgImages.ImgLogo;
             treeView.AddChild(treeView.SelectedItem, item, true);
         }
@@ -146,7 +146,7 @@ namespace ControlsSample
         public void AddNewItem()
         {
             var item = new Alternet.UI.TreeControlItem();
-            item.Text = "item " + Alternet.UI.LogUtils.GenNewId();
+            item.Text = "Item " + Alternet.UI.LogUtils.GenNewId();
             item.SvgImage = Alternet.UI.KnownColorSvgImages.ImgLogo;
             treeView.Add(item, true);
         }

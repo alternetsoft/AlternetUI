@@ -326,7 +326,7 @@ namespace Alternet.UI
         /// Converts <see cref="SKTouchEventArgs"/> to <see cref="TouchEventArgs"/>.
         /// </summary>
         /// <param name="e">Value to convert.</param>
-        /// <param name="control">Control where touch event occured.</param>
+        /// <param name="control">Control where touch event occurred.</param>
         /// <returns></returns>
         public static Alternet.UI.TouchEventArgs Convert(
             SKTouchEventArgs e,
@@ -584,12 +584,23 @@ namespace Alternet.UI
         /// <summary>
         /// Closes the application.
         /// </summary>
-        public static void CloseApplication()
+        public static bool CloseApplication()
         {
-            var window = Application.Current?.Windows.FirstOrDefault();
-            if (window is null)
-                return;
-            Application.Current?.CloseWindow(window);
+            try
+            {
+                var windows = Application.Current?.Windows;
+
+                if (windows is null || windows.Count == 0)
+                    return false;
+
+                var window = windows[0];
+                Application.Current?.CloseWindow(window);
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
 #if ANDROID
 #elif IOS || MACCATALYST
 #elif WINDOWS
