@@ -53,7 +53,7 @@ namespace ControlsSample
             gridLinesComboBox.AddEnumValues(typeof(ListViewGridLinesDisplayMode),
                 ListViewGridLinesDisplayMode.Vertical);
             columnWidthModeComboBox.AddEnumValues(typeof(ListViewColumnWidthMode),
-                ListViewColumnWidthMode.AutoSize);
+                ListViewColumnWidthMode.Fixed);
 
             listView.Items.ItemInserted += Items_ItemInserted;
             listView.Items.ItemRemoved += Items_ItemRemoved;

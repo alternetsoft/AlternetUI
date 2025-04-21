@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.ComponentModel;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Threading;
 
 using Alternet.Base.Collections;
@@ -40,6 +41,7 @@ namespace Alternet.UI
         private ListBoxItemPaintEventArgs? itemPaintArgs;
         private Coord horizontalExtent;
         private DrawMode drawMode = DrawMode.Normal;
+        private int firstVisibleItem;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="VirtualListBox"/> class.
@@ -58,6 +60,9 @@ namespace Alternet.UI
         {
             UserPaint = true;
             SuggestedSize = 200;
+            IsScrollable = true;
+            BackColor = DefaultColors.ControlBackColor;
+            ForeColor = DefaultColors.ControlForeColor;
         }
 
         /// <summary>
@@ -269,18 +274,6 @@ namespace Alternet.UI
             set => ContextMenuStrip = value;
         }
 
-        /// <summary>
-        /// Gets a <see cref="IVListBoxHandler"/> associated with this class.
-        /// </summary>
-        [Browsable(false)]
-        internal new IVListBoxHandler Handler
-        {
-            get
-            {
-                return (IVListBoxHandler)base.Handler;
-            }
-        }
-
         /// <inheritdoc cref="StringSearch.FindStringEx(string?, int?, bool, bool)"/>
         /// <remarks>
         /// If text is found in the control, item which contains this text will be selected
@@ -346,13 +339,27 @@ namespace Alternet.UI
         /// <summary>
         /// Scrolls to the specified row.
         /// </summary>
-        /// <param name="rows">It will become the first visible row in the control.</param>
+        /// <param name="row">It will become the first visible row in the control.</param>
         /// <returns>True if we scrolled the control, False if nothing was done.</returns>
-        public virtual bool ScrollToRow(int rows)
+        public virtual bool ScrollToRow(int row)
         {
-            if (DisposingOrDisposed)
+            if (DisposingOrDisposed || Count == 0 || row < 0)
                 return default;
-            return Handler.ScrollToRow(rows);
+
+            // determine the real first unit to scroll to: we shouldn't scroll beyond the end
+            var unitFirstLast = FindFirstVisibleFromLast(Count - 1, true);
+            if (row > unitFirstLast)
+                row = unitFirstLast;
+
+            if (row == firstVisibleItem)
+                return false;
+
+            firstVisibleItem = row;
+
+            UpdateVertScrollBar();
+            Invalidate();
+
+            return true;
         }
 
         /// <summary>
@@ -537,7 +544,6 @@ namespace Alternet.UI
                 {
                     RemoveAll();
                     Items.AddRange(value);
-                    Invalidate();
                 });
 
                 return true;
@@ -551,8 +557,6 @@ namespace Alternet.UI
                     DetachItems(Items);
                     RecreateItems(value);
                     AttachItems(Items);
-                    Handler.ItemsCount = Items.Count;
-                    Invalidate();
                 });
 
                 return true;
@@ -799,6 +803,18 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets the number of items currently rendered in the control.
+        /// </summary>
+        /// <returns>The count of visible items rendered in the control.</returns>
+        public virtual int GetRenderedItemCount()
+        {
+            var visibleBegin = GetVisibleBegin();
+            var visibleEnd = GetVisibleEnd();
+            var visibleItems = visibleEnd - visibleBegin;
+            return visibleItems;
+        }
+
+        /// <summary>
         /// Selects last item in the control and scrolls the control so last item will be visible.
         /// </summary>
         public virtual void SelectLastItemAndScroll()
@@ -813,9 +829,7 @@ namespace Alternet.UI
         /// <returns></returns>
         public virtual int GetVisibleBegin()
         {
-            if (DisposingOrDisposed)
-                return default;
-            return Handler.GetVisibleBegin();
+            return firstVisibleItem;
         }
 
         /// <summary>
@@ -862,13 +876,19 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Gets index of the last visible item.
+        /// Determines the index of the last visible item in the control and calculates
+        /// the total height of visible items.
         /// </summary>
-        /// <returns></returns>
-        public virtual int GetVisibleEnd()
+        /// <param name="visibleItemsHeight">Outputs the total height of all visible
+        /// items in device-independent units.</param>
+        /// <returns>The zero-based index of the last visible item in the control.</returns>
+        public virtual int GetVisibleEnd(out Coord visibleItemsHeight)
         {
             if (DisposingOrDisposed || Count == 0)
+            {
+                visibleItemsHeight = 0;
                 return default;
+            }
 
             MeasureItemEventArgs e = new(MeasureCanvas);
             var sWindow = ClientSize.Height;
@@ -888,7 +908,132 @@ namespace Alternet.UI
                 s += e.ItemHeight;
             }
 
+            visibleItemsHeight = s;
             return unit;
+        }
+
+        /// <summary>
+        /// Determines the index of the last visible item in the control.
+        /// </summary>
+        /// <returns>The zero-based index of the last visible item in the control.</returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public int GetVisibleEnd()
+        {
+            return GetVisibleEnd(out _);
+        }
+
+        /// <inheritdoc/>
+        public override void DefaultPaint(PaintEventArgs e)
+        {
+            if (DisposingOrDisposed)
+                return;
+
+            bool fullPaint = false;
+
+            var clientSize = ClientSize;
+
+            var dc = e.Graphics;
+
+            RectD rectUpdate;
+
+            if (fullPaint)
+                rectUpdate = e.ClipRectangle;
+            else
+                rectUpdate = GetUpdateClientRect();
+
+            dc.FillRectangle(RealBackgroundColor.AsBrush, rectUpdate);
+
+            RectD rectRow = RectD.Empty;
+            rectRow.Width = clientSize.Width;
+
+            int lineMax = GetVisibleEnd();
+
+            MeasureItemEventArgs measureItemArgs = new(dc, 0);
+            DrawItemEventArgs drawItemArgs = new(dc);
+
+            for (int line = GetVisibleBegin(); line < lineMax; line++)
+            {
+                measureItemArgs.Index = line;
+                MeasureItemSize(measureItemArgs);
+
+                var hRow = measureItemArgs.ItemHeight;
+
+                rectRow.Height = hRow;
+
+                if (fullPaint || rectRow.IntersectsWith(rectUpdate))
+                {
+                    var isCurrentItem = IsCurrent(line);
+                    var isSelectedItem = IsSelected(line);
+
+                    if (drawMode != DrawMode.Normal)
+                    {
+                        var item = SafeItem(line);
+                        drawItemArgs.Bounds = rectRow;
+                        drawItemArgs.Index = line;
+                        drawItemArgs.Font = ListControlItem.GetFont(item, this);
+
+                        DrawItemState state = 0;
+                        if (isCurrentItem)
+                            state |= DrawItemState.Focus;
+                        if (isSelectedItem)
+                            state |= DrawItemState.Selected;
+
+                        drawItemArgs.State = state;
+
+                        if (isSelectedItem)
+                        {
+                            drawItemArgs.BackColor
+                                = ListControlItem.GetSelectedItemBackColor(item, this)
+                                ?? RealBackgroundColor;
+                            drawItemArgs.ForeColor
+                                = ListControlItem.GetSelectedTextColor(item, this)
+                                ?? RealForegroundColor;
+                        }
+                        else
+                        {
+                            drawItemArgs.BackColor = RealBackgroundColor;
+                            drawItemArgs.ForeColor
+                                = ListControlItem.GetItemTextColor(item, this)
+                                ?? RealForegroundColor;
+                        }
+
+                        RaiseDrawItem(drawItemArgs);
+                    }
+                    else
+                    {
+                        if (itemPaintArgs is null)
+                            itemPaintArgs = new(this, dc, rectRow, line);
+                        else
+                        {
+                            itemPaintArgs.Graphics = dc;
+                            itemPaintArgs.ClipRectangle = rectRow;
+                            itemPaintArgs.ItemIndex = line;
+                            itemPaintArgs.IsCurrent = IsCurrent(line);
+                            itemPaintArgs.IsSelected = IsSelected(line);
+                            itemPaintArgs.LabelMetrics = new();
+                            itemPaintArgs.Visible = true;
+                        }
+
+                        matrix.Reset();
+                        dc.Transform = matrix;
+                        DrawItemBackground(itemPaintArgs);
+
+                        matrix.Translate(-scrollOffset, 0);
+                        dc.Transform = matrix;
+                        DrawItemForeground(itemPaintArgs);
+                    }
+                }
+                else
+                {
+                    if (!fullPaint)
+                    {
+                        if (rectRow.Top > rectUpdate.Bottom)
+                            break;
+                    }
+                }
+
+                rectRow.Top += hRow;
+            }
         }
 
         /// <summary>
@@ -1033,6 +1178,34 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Calculates the page size for the vertical scrollbar based on the number of visible items
+        /// and their total height within the control's client area.
+        /// </summary>
+        /// <returns>
+        /// The number of items that can fit within the visible area of the control, adjusted
+        /// to account for partially visible items at the bottom of the control.
+        /// </returns>
+        public virtual int GetVertScrollBarPageSize()
+        {
+            Coord sWindow = ClientSize.Height;
+
+            var visibleBegin = GetVisibleBegin();
+            var visibleEnd = GetVisibleEnd(out var s);
+            var visibleItems = visibleEnd - visibleBegin;
+
+            int unitsPageSize = visibleItems;
+            if (s > sWindow)
+            {
+                // last unit is only partially visible, we still need the scrollbar and
+                // so we have to "fix" pageSize because if it is equal to m_unitMax
+                // the scrollbar is not shown at all under MSW
+                --unitsPageSize;
+            }
+
+            return unitsPageSize;
+        }
+
+        /// <summary>
         /// Finds the item with <see cref="ListControlItem.Value"/> property which is
         /// equal to the specified value.
         /// </summary>
@@ -1054,19 +1227,20 @@ namespace Alternet.UI
             return null;
         }
 
+        internal void RunKeyDown(Key key, ModifierKeys modifiers = UI.ModifierKeys.None)
+        {
+            KeyEventArgs e = new();
+            e.Key = key;
+            e.ModifierKeys = modifiers;
+            OnKeyDown(e);
+        }
+
         internal void CountChanged()
         {
             if (DisposingOrDisposed || InUpdates)
                 return;
-            var newCount = Items.Count;
-            Handler.ItemsCount = newCount;
+            UpdateVertScrollBar();
             Invalidate();
-        }
-
-        /// <inheritdoc/>
-        protected override IControlHandler CreateHandler()
-        {
-            return ControlFactory.Handler.CreateVListBoxHandler(this);
         }
 
         /// <inheritdoc/>
@@ -1213,6 +1387,13 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
+        protected override void OnSizeChanged(EventArgs e)
+        {
+            base.OnSizeChanged(e);
+            UpdateVertScrollBar();
+        }
+
+        /// <inheritdoc/>
         protected override void OnMouseLeftButtonDown(MouseEventArgs e)
         {
             if (DisposingOrDisposed)
@@ -1264,120 +1445,6 @@ namespace Alternet.UI
             }
         }
 
-        /// <inheritdoc/>
-        protected override void OnPaint(PaintEventArgs e)
-        {
-            if (DisposingOrDisposed)
-                return;
-
-            bool fullPaint = App.IsMacOS && App.PlatformKind == UIPlatformKind.WxWidgets;
-
-            var clientSize = ClientSize;
-
-            var dc = e.Graphics;
-
-            RectD rectUpdate;
-
-            if (fullPaint)
-                rectUpdate = e.ClipRectangle;
-            else
-                rectUpdate = GetUpdateClientRect();
-
-            dc.FillRectangle(RealBackgroundColor.AsBrush, rectUpdate);
-
-            RectD rectRow = RectD.Empty;
-            rectRow.Width = clientSize.Width;
-
-            int lineMax = GetVisibleEnd();
-
-            MeasureItemEventArgs measureItemArgs = new(dc, 0);
-            DrawItemEventArgs drawItemArgs = new(dc);
-
-            for (int line = GetVisibleBegin(); line < lineMax; line++)
-            {
-                measureItemArgs.Index = line;
-                MeasureItemSize(measureItemArgs);
-
-                var hRow = measureItemArgs.ItemHeight;
-
-                rectRow.Height = hRow;
-
-                if (fullPaint || rectRow.IntersectsWith(rectUpdate))
-                {
-                    var isCurrentItem = IsCurrent(line);
-                    var isSelectedItem = IsSelected(line);
-
-                    if (drawMode != DrawMode.Normal)
-                    {
-                        var item = SafeItem(line);
-                        drawItemArgs.Bounds = rectRow;
-                        drawItemArgs.Index = line;
-                        drawItemArgs.Font = ListControlItem.GetFont(item, this);
-
-                        DrawItemState state = 0;
-                        if (isCurrentItem)
-                            state |= DrawItemState.Focus;
-                        if (isSelectedItem)
-                            state |= DrawItemState.Selected;
-
-                        drawItemArgs.State = state;
-
-                        if (isSelectedItem)
-                        {
-                            drawItemArgs.BackColor
-                                = ListControlItem.GetSelectedItemBackColor(item, this)
-                                ?? RealBackgroundColor;
-                            drawItemArgs.ForeColor
-                                = ListControlItem.GetSelectedTextColor(item, this)
-                                ?? RealForegroundColor;
-                        }
-                        else
-                        {
-                            drawItemArgs.BackColor = RealBackgroundColor;
-                            drawItemArgs.ForeColor
-                                = ListControlItem.GetItemTextColor(item, this)
-                                ?? RealForegroundColor;
-                        }
-
-                        RaiseDrawItem(drawItemArgs);
-                    }
-                    else
-                    {
-                        if (itemPaintArgs is null)
-                            itemPaintArgs = new(this, dc, rectRow, line);
-                        else
-                        {
-                            itemPaintArgs.Graphics = dc;
-                            itemPaintArgs.ClipRectangle = rectRow;
-                            itemPaintArgs.ItemIndex = line;
-                            itemPaintArgs.IsCurrent = IsCurrent(line);
-                            itemPaintArgs.IsSelected = IsSelected(line);
-                            itemPaintArgs.LabelMetrics = new();
-                            itemPaintArgs.Visible = true;
-                        }
-
-                        matrix.Reset();
-                        dc.Transform = matrix;
-                        DrawItemBackground(itemPaintArgs);
-
-                        matrix.Translate(-scrollOffset, 0);
-                        dc.Transform = matrix;
-                        DrawItemForeground(itemPaintArgs);
-                    }
-                }
-                else
-                {
-                    if (!fullPaint)
-                    {
-                        if (rectRow.Top > rectUpdate.Bottom)
-                            break;
-                    }
-                }
-
-                rectRow.Top += hRow;
-            }
-        }
-
         /// <summary>
         /// Increments horizontal scroll offset.
         /// </summary>
@@ -1405,41 +1472,79 @@ namespace Alternet.UI
         /// <inheritdoc/>
         protected override void OnScroll(ScrollEventArgs e)
         {
+            int GetRenderedItemCountSmart()
+            {
+                return Math.Max(GetRenderedItemCount() - 1, 1);
+            }
+
             if (DisposingOrDisposed)
-                return;
-            if (!App.IsWindowsOS)
                 return;
 
             base.OnScroll(e);
 
-            switch (e.Type)
+            if (e.IsVertical)
             {
-                case ScrollEventType.SmallDecrement:
-                    IncHorizontalOffsetChars(-1);
-                    break;
-                case ScrollEventType.SmallIncrement:
-                    IncHorizontalOffsetChars(1);
-                    break;
-                case ScrollEventType.LargeDecrement:
-                    IncHorizontalOffsetChars(-4);
-                    break;
-                case ScrollEventType.LargeIncrement:
-                    IncHorizontalOffsetChars(4);
-                    break;
-                case ScrollEventType.ThumbPosition:
-                    break;
-                case ScrollEventType.ThumbTrack:
-                    break;
-                case ScrollEventType.First:
-                    scrollOffset = 0;
-                    Invalidate();
-                    break;
-                case ScrollEventType.Last:
-                    break;
-                case ScrollEventType.EndScroll:
-                    break;
-                default:
-                    break;
+                switch (e.Type)
+                {
+                    case ScrollEventType.SmallDecrement:
+                        ScrollToRow(TopIndex - 1);
+                        break;
+                    case ScrollEventType.SmallIncrement:
+                        ScrollToRow(TopIndex + 1);
+                        break;
+                    case ScrollEventType.LargeDecrement:
+                        ScrollToRow(TopIndex - GetRenderedItemCountSmart());
+                        break;
+                    case ScrollEventType.LargeIncrement:
+                        ScrollToRow(TopIndex + GetRenderedItemCountSmart());
+                        break;
+                    case ScrollEventType.ThumbPosition:
+                        break;
+                    case ScrollEventType.ThumbTrack:
+                        break;
+                    case ScrollEventType.First:
+                        ScrollToRow(0);
+                        break;
+                    case ScrollEventType.Last:
+                        ScrollToRow(Count - 1);
+                        break;
+                    case ScrollEventType.EndScroll:
+                        break;
+                    default:
+                        break;
+                }
+            }
+            else
+            {
+                switch (e.Type)
+                {
+                    case ScrollEventType.SmallDecrement:
+                        IncHorizontalOffsetChars(-1);
+                        break;
+                    case ScrollEventType.SmallIncrement:
+                        IncHorizontalOffsetChars(1);
+                        break;
+                    case ScrollEventType.LargeDecrement:
+                        IncHorizontalOffsetChars(-4);
+                        break;
+                    case ScrollEventType.LargeIncrement:
+                        IncHorizontalOffsetChars(4);
+                        break;
+                    case ScrollEventType.ThumbPosition:
+                        break;
+                    case ScrollEventType.ThumbTrack:
+                        break;
+                    case ScrollEventType.First:
+                        scrollOffset = 0;
+                        Invalidate();
+                        break;
+                    case ScrollEventType.Last:
+                        break;
+                    case ScrollEventType.EndScroll:
+                        break;
+                    default:
+                        break;
+                }
             }
         }
 
@@ -1469,6 +1574,24 @@ namespace Alternet.UI
         protected override void OnHandleCreated(EventArgs e)
         {
             base.OnHandleCreated(e);
+        }
+
+        /// <inheritdoc/>
+        protected override void UpdateVertScrollBar()
+        {
+            if (Count == 0)
+            {
+                SetScrollBar(isVertical: true, HiddenOrVisible.Auto, 0, 0, 0);
+                return;
+            }
+
+            var pageSize = GetVertScrollBarPageSize();
+            SetScrollBar(
+                isVertical: true,
+                HiddenOrVisible.Auto,
+                firstVisibleItem,
+                pageSize,
+                Count);
         }
 
         private int? GetIndexOnNextPage()

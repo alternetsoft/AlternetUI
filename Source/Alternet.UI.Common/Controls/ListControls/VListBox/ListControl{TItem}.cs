@@ -18,7 +18,7 @@ namespace Alternet.UI
     /// </summary>
     /// <typeparam name="TItem">Type of the item. Can be <see cref="object"/>,
     /// <see cref="ListControlItem"/> or any other type.</typeparam>
-    public abstract class ListControl<TItem> : Control, IReadOnlyStrings, IListControl<TItem>
+    public abstract class ListControl<TItem> : UserControl, IReadOnlyStrings, IListControl<TItem>
         where TItem : class, new()
     {
         private StringSearch? search;

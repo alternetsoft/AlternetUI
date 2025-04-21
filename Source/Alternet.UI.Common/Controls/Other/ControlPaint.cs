@@ -20,8 +20,15 @@ namespace Alternet.Drawing
         /// </summary>
         public static IControlPainterHandler Handler
         {
-            get => handler ??= App.Handler.CreateControlPainterHandler();
-            set => handler = value;
+            get
+            {
+                return handler ??= App.Handler.CreateControlPainterHandler();
+            }
+
+            set
+            {
+                handler = value;
+            }
         }
 
         /// <summary>

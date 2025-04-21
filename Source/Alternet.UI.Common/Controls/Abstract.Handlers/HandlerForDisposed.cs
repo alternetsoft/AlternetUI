@@ -29,7 +29,6 @@ namespace Alternet.UI
         ISliderHandler,
         ITextBoxHandler,
         ITreeViewHandler,
-        IVListBoxHandler,
         IWebBrowserLite,
         IWindowHandler
     {
@@ -331,7 +330,7 @@ namespace Alternet.UI
             return default;
         }
 
-        public bool AddUserScript(string javascript, bool injectDocStart)
+        public bool AddUserScript(string javaScript, bool injectDocStart)
         {
             return default;
         }
@@ -1504,7 +1503,7 @@ namespace Alternet.UI
         {
         }
 
-        public void RunScriptAsync(string javascript, IntPtr? clientData)
+        public void RunScriptAsync(string javaScript, IntPtr? clientData)
         {
         }
 

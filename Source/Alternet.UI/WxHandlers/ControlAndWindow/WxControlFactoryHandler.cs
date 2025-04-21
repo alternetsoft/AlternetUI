@@ -185,12 +185,6 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        public IControlHandler CreateVListBoxHandler(VirtualListBox control)
-        {
-            return new VListBoxHandler();
-        }
-
-        /// <inheritdoc/>
         public IStatusBarHandler CreateStatusBarHandler(StatusBar control)
         {
             return new StatusBarHandler(control);

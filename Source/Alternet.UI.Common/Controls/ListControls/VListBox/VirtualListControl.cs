@@ -650,18 +650,6 @@ namespace Alternet.UI
             }
         }
 
-        /// <summary>
-        /// Gets a <see cref="IVListBoxHandler"/> associated with this class.
-        /// </summary>
-        [Browsable(false)]
-        internal new IVListBoxHandler Handler
-        {
-            get
-            {
-                return (IVListBoxHandler)base.Handler;
-            }
-        }
-
         [Browsable(false)]
         internal new string Text
         {
@@ -1189,7 +1177,16 @@ namespace Alternet.UI
             return Items.Count;
         }
 
-        internal ListControlItem.ItemCheckBoxInfo? GetCheckBoxInfo(int itemIndex, RectD rect)
+        /// <summary>
+        /// Retrieves information about the checkbox associated with a specific item in the control.
+        /// </summary>
+        /// <param name="itemIndex">The zero-based index of the item in the control.</param>
+        /// <param name="rect">The bounding rectangle of the item.</param>
+        /// <returns>
+        /// An <see cref="ListControlItem.ItemCheckBoxInfo"/> object containing details about the checkbox,
+        /// or <c>null</c> if the item does not have a checkbox.
+        /// </returns>
+        public ListControlItem.ItemCheckBoxInfo? GetCheckBoxInfo(int itemIndex, RectD rect)
         {
             var item = SafeItem(itemIndex);
             if (item is null)
@@ -1197,6 +1194,12 @@ namespace Alternet.UI
             rect.ApplyMargin(item.ForegroundMargin);
             return item.GetCheckBoxInfo(this, rect);
         }
+
+        /// <summary>
+        /// Updates the vertical scrollbar based on the current number of items
+        /// and their visibility within the control.
+        /// </summary>
+        protected abstract void UpdateVertScrollBar();
 
         /// <summary>
         /// Called when when the checkbox state of the item has changed.

@@ -148,11 +148,6 @@ namespace Alternet.UI
             throw new NotImplementedException();
         }
 
-        IControlHandler IControlFactoryHandler.CreateVListBoxHandler(VirtualListBox control)
-        {
-            return new MauiVListBoxHandler();
-        }
-
         IWebBrowserFactoryHandler IControlFactoryHandler.CreateWebBrowserFactoryHandler()
         {
             return new MauiWebBrowserFactoryHandler();
