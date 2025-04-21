@@ -356,11 +356,11 @@ namespace Alternet.Maui
         public virtual void ResetColors()
         {
             var backColor = GetBackColor();
-            var textColor = GetTextColor();
-
             var borderColor = GetBorderColor();
+/*
+            var textColor = GetTextColor();
             var placeholderColor = GetPlaceholderColor();
-
+*/
             dialogBorder.Stroke = borderColor;
             dialogBorder.BackgroundColor = backColor;
         }

@@ -519,17 +519,17 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="dc">Drawing context.</param>
         /// <param name="brush">Brush to draw border.</param>
-        /// <param name="rects">Border rectangles.</param>
+        /// <param name="rectangles">Border rectangles.</param>
         /// <param name="borders">Border width.</param>
         public static void DrawBordersWithBrush(
             this Graphics dc,
             Brush brush,
-            RectD[] rects,
+            RectD[] rectangles,
             Thickness[]? borders = null)
         {
-            for (int i = 0; i < rects.Length; i++)
+            for (int i = 0; i < rectangles.Length; i++)
             {
-                DrawBorderWithBrush(dc, brush, rects[i], borders?[i] ?? 1);
+                DrawBorderWithBrush(dc, brush, rectangles[i], borders?[i] ?? 1);
             }
         }
 
@@ -633,17 +633,17 @@ namespace Alternet.UI
         {
             List<string> result = new();
 
-            var splitted = StringUtils.Split(text, false);
+            var splitText = StringUtils.Split(text, false);
 
             if (maxWidth <= 0)
             {
-                result.AddRange(splitted);
+                result.AddRange(splitText);
                 return result;
             }
 
             Coord allMaxWidth = 0;
 
-            foreach (var s in splitted)
+            foreach (var s in splitText)
             {
                 var cw = maxWidth;
                 var wrappedLine = WrapTextLineToList(s, ref cw, font, canvas);
@@ -733,7 +733,7 @@ namespace Alternet.UI
         /// <summary>
         /// Draws sliced image with the specified
         /// <see cref="NinePatchImagePaintParams"/> parameters. This method can be used,
-        /// for example, for drawing complex button bakgrounds using predefined templates.
+        /// for example, for drawing complex button backgrounds using predefined templates.
         /// </summary>
         /// <param name="canvas"><see cref="Graphics"/> where to draw.</param>
         /// <param name="e">Draw parameters.</param>
