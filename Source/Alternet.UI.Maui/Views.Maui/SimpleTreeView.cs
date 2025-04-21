@@ -345,6 +345,22 @@ namespace Alternet.Maui
             InternalSelect();
         }
 
+        /// <inheritdoc/>
+        public virtual Coord GetLevelMargin()
+        {
+            int GetWidth(SKBitmapImageSource? source)
+            {
+                return source?.Bitmap.Width ?? UI.VirtualTreeControl.DefaultLevelMargin;
+            }
+
+            var openedImageWidth = GetWidth(openedImage);
+            var closedImageWidth = GetWidth(closedImage);
+
+            var result = Math.Max(openedImageWidth, closedImageWidth);
+
+            return result;
+        }
+
         /// <summary>
         /// Selects the last visible item in the tree view and scrolls to it.
         /// </summary>
