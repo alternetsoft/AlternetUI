@@ -795,7 +795,7 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Gets item text color when item is inside the spedified container.
+        /// Gets item text color when item is inside the container.
         /// </summary>
         public static Color? GetItemTextColor(
             ListControlItem? item,
@@ -896,11 +896,11 @@ namespace Alternet.UI
                         {
                             CalcForegroundMetrics(container, e);
                             var drawParams = e.LabelMetrics;
-                            var rects = drawParams.ResultRects;
-                            if (rects is not null && rects.Length > 1)
+                            var rectangles = drawParams.ResultRects;
+                            if (rectangles is not null && rectangles.Length > 1)
                             {
                                 var distance = (drawParams.ImageLabelDistance ?? 0) / 2;
-                                var imageRect = rects[1];
+                                var imageRect = rectangles[1];
                                 var delta = imageRect.Left - rect.Left - distance;
                                 rect = rect.DeflatedWithPadding((delta, 0, 0, 0));
                             }
@@ -1063,7 +1063,7 @@ namespace Alternet.UI
             if (item is not null)
             {
                 var info = item.GetCheckBoxInfo(container, paintRectangle);
-                if (info is not null)
+                if (info.IsCheckBoxVisible)
                 {
                     info.SvgState = IsContainerEnabled(container)
                         ? (isSelected ? VisualControlState.Selected : VisualControlState.Normal)
@@ -1072,6 +1072,11 @@ namespace Alternet.UI
                         info.SvgImageColor = ListControlItem.GetSelectedTextColor(item, container);
                     DefaultDrawCheckBox(e.Graphics, ControlUtils.SafeControl(container), info);
                     paintRectangle = info.TextRect;
+                }
+                else
+                {
+                    if(info.KeepTextPaddingWithoutCheckBox)
+                        paintRectangle = info.TextRect;
                 }
             }
 
@@ -1119,7 +1124,7 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Gets selected item text color when item is inside the spedified container.
+        /// Gets selected item text color when item is inside the container.
         /// </summary>
         /// <returns></returns>
         public static Color? GetSelectedTextColor(
@@ -1172,16 +1177,16 @@ namespace Alternet.UI
         {
             Thickness textMargin = GetAdditionalTextMargin();
 
-            var imagemargin = GetAdditionalImageMargin();
+            var imageMargin = GetAdditionalImageMargin();
 
-            var size = rect.Height - textMargin.Vertical - (imagemargin * 2);
+            var size = rect.Height - textMargin.Vertical - (imageMargin * 2);
 
             if (imageSize is null || imageSize.Value.Height > size)
                 imageSize = (size, size);
 
             PointD imageLocation = (
                 rect.X + textMargin.Left,
-                rect.Y + textMargin.Top + imagemargin);
+                rect.Y + textMargin.Top + imageMargin);
 
             var imageRect = new RectD(imageLocation, imageSize.Value);
             var centeredImageRect = imageRect.CenterIn(rect, false, true);
@@ -1221,7 +1226,7 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Gets item text color when item is inside the spedified container.
+        /// Gets item text color when item is inside the container.
         /// </summary>
         public virtual Color? GetTextColor(IListControlItemContainer? container)
         {
@@ -1330,9 +1335,11 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Assigns properties of this object from the properties of another object.
+        /// Copies the properties of the specified <see cref="ListControlItem"/> instance
+        /// to the current instance. This method may not copy all the properties.
         /// </summary>
-        /// <param name="assignFrom">The object to assign properties from.</param>
+        /// <param name="assignFrom">The <see cref="ListControlItem"/> instance whose properties
+        /// will be copied.</param>
         public virtual void Assign(ListControlItem assignFrom)
         {
             DisplayText = assignFrom.DisplayText;
@@ -1437,14 +1444,19 @@ namespace Alternet.UI
             return Text ?? base.ToString();
         }
 
-        internal virtual ItemCheckBoxInfo? GetCheckBoxInfo(
+        /// <summary>  
+        /// Retrieves information about the checkbox associated with the item, including
+        /// its visibility, state, size, and position.  
+        /// </summary>  
+        /// <param name="container">The container that holds the item. Can be null.</param>  
+        /// <param name="rect">The bounding rectangle of the item.</param>  
+        /// <returns>An <see cref="ItemCheckBoxInfo"/> object containing details about the checkbox.</returns>  
+        public virtual ItemCheckBoxInfo GetCheckBoxInfo(
             IListControlItemContainer? container,
             RectD rect)
         {
-            var showCheckBox = GetShowCheckBox(container);
-            if (!showCheckBox)
-                return null;
             ListControlItem.ItemCheckBoxInfo result = new();
+            result.IsCheckBoxVisible = GetShowCheckBox(container);
             result.PartState = IsContainerEnabled(container)
                 ? VisualControlState.Normal : VisualControlState.Disabled;
             result.CheckState = GetCheckState(container);
@@ -1471,6 +1483,20 @@ namespace Alternet.UI
             return result;
         }
 
+        /// <summary>
+        /// Retrieves an item containing data related to the specified container.
+        /// If the container is null, a default container-related data object is returned.
+        /// </summary>
+        /// <param name="container">The container for which related data is retrieved.</param>
+        /// <returns>An item containing container-related data.</returns>
+        public virtual ILockedItem GetContainerRelated(IListControlItemContainer? container)
+        {
+            var id = container?.UniqueId ?? NullContainerId;
+            containerRelated ??= new();
+            var result = containerRelated.GetLockedItemCached(id, () => new());
+            return result;
+        }
+
         [Conditional("DEBUG")]
         private static void DefaultDrawBackgroundDebug(
                    IListControlItemContainer? container,
@@ -1488,16 +1514,14 @@ namespace Alternet.UI
             }
         }
 
-        private ILockedItem GetContainerRelated(IListControlItemContainer? container)
+        /// <summary>
+        /// Represents data related to a container for a <see cref="ListControlItem"/>.
+        /// </summary>
+        public struct ContainerRelatedData
         {
-            var id = container?.UniqueId ?? NullContainerId;
-            containerRelated ??= new();
-            var result = containerRelated.GetLockedItemCached(id, () => new());
-            return result;
-        }
-
-        internal struct ContainerRelatedData
-        {
+            /// <summary>
+            /// Gets or sets a value indicating whether the item is selected.
+            /// </summary>
             public bool IsSelected;
         }
 
@@ -1560,6 +1584,16 @@ namespace Alternet.UI
             /// Gets or sets the visual state of the SVG image.
             /// </summary>
             public VisualControlState SvgState = VisualControlState.Normal;
+
+            /// <summary>
+            /// Gets or sets a value indicating whether the checkbox is visible.
+            /// </summary>
+            public bool IsCheckBoxVisible;
+
+            /// <summary>
+            /// Gets or sets a value indicating whether to keep text padding even when the checkbox is not visible.
+            /// </summary>
+            public bool KeepTextPaddingWithoutCheckBox;
         }
     }
 }
