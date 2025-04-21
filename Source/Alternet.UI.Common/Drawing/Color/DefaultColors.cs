@@ -26,6 +26,8 @@ namespace Alternet.Drawing
         private static LightDarkColor? borderColor;
         private static LightDarkColor windowBackColor;
         private static LightDarkColor windowForeColor;
+        private static LightDarkColor controlBackColor;
+        private static LightDarkColor controlForeColor;
 
         static DefaultColors()
         {
@@ -45,6 +47,20 @@ namespace Alternet.Drawing
 
             windowBackColor = new(light: new(240, 240, 240), dark: darkBackColor);
             windowForeColor = new(light: Color.Black, dark: darkForeColor);
+
+            if (SystemColors.Window.IsDark())
+            {
+                darkBackColor = SystemColors.Window;
+                darkForeColor = SystemColors.WindowText;
+            }
+            else
+            {
+                darkBackColor = (30, 30, 30);
+                darkForeColor = (164, 164, 164);
+            }
+
+            controlBackColor = new(light: Color.White, dark: darkBackColor);
+            controlForeColor = new(light: Color.Black, dark: darkForeColor);
         }
 
         /// <summary>
@@ -61,12 +77,43 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
+        /// Gets or sets the default foreground color of the control.
+        /// </summary>
+        public static LightDarkColor ControlForeColor
+        {
+            get => controlForeColor;
+
+            set
+            {
+                controlForeColor = value;
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets the default background color of the control.
+        /// </summary>
+        public static LightDarkColor ControlBackColor
+        {
+            get => controlBackColor;
+            
+            set
+            {
+                controlBackColor = value;
+            }
+        }
+
+
+        /// <summary>
         /// Gets or sets the default background color of the window.
         /// </summary>
         public static LightDarkColor WindowBackColor
         {
             get => windowBackColor;
-            set => windowBackColor = value;
+
+            set
+            {
+                windowBackColor = value;
+            }
         }
 
         /// <summary>
@@ -75,7 +122,11 @@ namespace Alternet.Drawing
         public static LightDarkColor WindowForeColor
         {
             get => windowForeColor;
-            set => windowForeColor = value;
+
+            set
+            {
+                windowForeColor = value;
+            }
         }
 
         /// <summary>
