@@ -11,6 +11,26 @@ namespace Alternet.UI
     /// </summary>
     public static class PythonUtils
     {
+        /*
+         On Ubuntu:
+         LIBDIR: /usr/lib/x86_64-linux-gnu
+         LIBRARY: libpython3.11.a
+         LIBDEST: /usr/lib/python3.11
+
+         On Windows:
+         LIBDEST: C:\Users\UserName\AppData\Local\Programs\Python\Python312\Lib
+        */
+
+        /// <summary>
+        /// The name of the Python configuration variable.
+        /// </summary>
+        public const string VarLibDir = "LIBDIR";
+
+        /// <summary>
+        /// The name of the Python configuration variable.
+        /// </summary>
+        public const string VarLibDest = "LIBDEST";
+
         private static string? pythonName;
 
         /// <summary>
@@ -42,6 +62,30 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Executes a Python script using the application-defined method for running external commands.
+        /// This method executes 'python' command using os command interpreter.
+        /// </summary>
+        /// <param name="script">The Python script to execute as a string.</param>
+        /// <returns>
+        /// The output of the Python script as a string, or <c>null</c>
+        /// if an error occurs during execution.
+        /// </returns>
+        public static string? RunPythonScriptViaApp(string script)
+        {
+            string python = PythonName;
+
+            try
+            {
+                var result = AppUtils.ExecuteApp(python, " -c \"" + script + "\"", null, true, false);
+                return result.Output;
+            }
+            catch
+            {
+                return null;
+            }
+        }
+
+        /// <summary>
         /// Executes 'python' command using os command interpreter and
         /// gets the config variable specified by it's name.
         /// </summary>
@@ -50,23 +94,14 @@ namespace Alternet.UI
         public static string? GetPythonConfigVar(string s)
         {
             const string None = "None";
+
             const string script = "import sysconfig; print(sysconfig.get_config_var('{0}'));";
-
-            string python = PythonName;
-
             var script1 = string.Format(script, s);
 
-            try
-            {
-                var result = AppUtils.ExecuteApp(python, " -c \"" + script1 + "\"", null, true, false);
-                if (result.Output == None)
-                    return null;
-                return result.Output;
-            }
-            catch
-            {
+            var result = RunPythonScriptViaApp(script1);
+            if (result == None)
                 return null;
-            }
+            return result;
         }
 
         /// <summary>
@@ -110,7 +145,7 @@ namespace Alternet.UI
         /// This is the correct way to find python on macOs or Linux.
         /// </summary>
         /// <returns></returns>
-        public static string? FindPythonPathUsingConfigVars()
+        internal static string? FindPythonPathUsingConfigVars()
         {
             var logLibVars = DebugUtils.IsDebugDefined;
 
@@ -127,21 +162,9 @@ namespace Alternet.UI
 
             string? Internal()
             {
-                /*
-                 On Ubuntu:
-                 LIBDIR: /usr/lib/x86_64-linux-gnu
-                 LIBRARY: libpython3.11.a
-                 LIBDEST: /usr/lib/python3.11
+                var result1 = PythonUtils.GetPythonConfigVar(VarLibDir);
 
-                 On Windows:
-                 LIBDEST: C:\Users\Sergiy\AppData\Local\Programs\Python\Python312\Lib
-                */
-                const string varLibDir = "LIBDIR";
-                const string varLibDest = "LIBDEST";
-
-                var result1 = PythonUtils.GetPythonConfigVar(varLibDir);
-
-                App.DebugLogIf($"{varLibDir}: {result1}", true);
+                App.DebugLogIf($"{VarLibDir}: {result1}", logLibVars);
 
                 if (result1 is not null)
                 {
@@ -150,8 +173,8 @@ namespace Alternet.UI
                         return Path.GetDirectoryName(dll1);
                 }
 
-                var result3 = PythonUtils.GetPythonConfigVar(varLibDest);
-                App.LogIf($"{varLibDest}: {result3}", logLibVars);
+                var result3 = PythonUtils.GetPythonConfigVar(VarLibDest);
+                App.LogIf($"{VarLibDest}: {result3}", logLibVars);
 
                 if (result3 is not null)
                 {
