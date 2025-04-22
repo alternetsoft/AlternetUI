@@ -122,6 +122,27 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Deletes the specified file if it exists in a safe manner.
+        /// </summary>
+        /// <param name="pathToFile">The path to the file to be deleted.</param>
+        /// <returns>
+        /// <c>true</c> if the file was successfully deleted or did not exist;
+        /// otherwise, <c>false</c> if an exception occurred during the deletion process.
+        /// </returns>
+        public static bool DeleteIfExistsSafe(string pathToFile)
+        {
+            try
+            {
+                DeleteIfExists(pathToFile);
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+        }
+
+        /// <summary>
         /// Gets directory name of the specified file path and creates
         /// that directory if it is not exists.
         /// </summary>
@@ -132,6 +153,28 @@ namespace Alternet.UI
             if (Directory.Exists(dir))
                 return;
             Directory.CreateDirectory(dir);
+        }
+
+        /// <summary>
+        /// Creates the directory for the specified file path if it does not already exist.
+        /// This method is a safe version of <see cref="CreateFilePath"/> that catches exceptions.
+        /// </summary>
+        /// <param name="pathToFile">The file path for which the directory should be created.</param>
+        /// <returns>
+        /// <c>true</c> if the directory was successfully created or already exists;
+        /// otherwise, <c>false</c> if an exception occurred.
+        /// </returns>
+        public static bool CreateFilePathSafe(string pathToFile)
+        {
+            try
+            {
+                CreateFilePath(pathToFile);
+                return true;
+            }
+            catch
+            {
+                return true;
+            }
         }
 
         /// <summary>
