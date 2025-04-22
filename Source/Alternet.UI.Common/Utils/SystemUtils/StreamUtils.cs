@@ -176,5 +176,29 @@ namespace Alternet.UI
             fileStream.Flush();
             fileStream.Close();
         }
+
+        /// <summary>
+        /// Safely copies the content of a stream to a file at the specified destination path.
+        /// Returns true if the operation succeeds, otherwise false.
+        /// </summary>
+        /// <param name="stream">The input stream to copy from.</param>
+        /// <param name="destPath">The destination file path to copy to.</param>
+        /// <returns>True if the copy operation succeeds, otherwise false.</returns>
+        public static bool CopyStreamSafe(Stream stream, string destPath)
+        {
+            try
+            {
+                if (!FileUtils.CreateFilePathSafe(destPath))
+                    return false;
+                if(!FileUtils.DeleteIfExistsSafe(destPath))
+                    return false;
+                CopyStream(stream, destPath);
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+        }
     }
 }
