@@ -94,7 +94,7 @@ namespace Alternet.UI
         public event EventHandler? CheckedChanged;
 
         /// <summary>
-        /// Gets or sets default border of the listbox's current item.
+        /// Gets or sets default border of the current item.
         /// </summary>
         public static BorderSettings DefaultCurrentItemBorder
         {
@@ -143,7 +143,7 @@ namespace Alternet.UI
         /// </summary>
         /// <remarks>
         /// Each item has <see cref="ListControlItem.SvgImageSize"/> property where
-        /// this setting can be overriden. If <see cref="SvgImageSize"/> is not specified,
+        /// this setting can be overridden. If <see cref="SvgImageSize"/> is not specified,
         /// default toolbar image size is used. Currently only rectangular svg images
         /// are supported.
         /// </remarks>
@@ -1116,7 +1116,7 @@ namespace Alternet.UI
            int bufferSize = 10,
            int sleepAfterBufferMsec = 150)
         {
-            bool AddToDest(IEnumerable<ListControlItem> items)
+            bool AddToDestination(IEnumerable<ListControlItem> items)
             {
                 var result = true;
                 Invoke(() =>
@@ -1132,7 +1132,7 @@ namespace Alternet.UI
 
             EnumerableUtils.ConvertItems<TSource, ListControlItem>(
                         convertItem,
-                        AddToDest,
+                        AddToDestination,
                         source,
                         bufferSize);
         }
@@ -1140,7 +1140,7 @@ namespace Alternet.UI
         /// <summary>
         /// Sets items from the specified collection to the control's items as fast as possible.
         /// </summary>
-        /// <typeparam name="TItemFrom">Type of the item in the otgher collection
+        /// <typeparam name="TItemFrom">Type of the item in the other collection
         /// that will be assigned to the control's items.</typeparam>
         /// <param name="from">The collection to be assigned to item of the control.</param>
         /// <param name="fnAssign">Assign item action. Must assign item data.</param>

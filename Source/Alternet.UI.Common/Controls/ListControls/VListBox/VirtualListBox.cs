@@ -343,8 +343,10 @@ namespace Alternet.UI
         /// <returns>True if we scrolled the control, False if nothing was done.</returns>
         public virtual bool ScrollToRow(int row)
         {
-            if (DisposingOrDisposed || Count == 0 || row < 0)
+            if (DisposingOrDisposed || Count == 0)
                 return default;
+            row = Math.Min(Count - 1, row);
+            row = Math.Max(0, row);
 
             // determine the real first unit to scroll to: we shouldn't scroll beyond the end
             var unitFirstLast = FindFirstVisibleFromLast(Count - 1, true);
@@ -1472,10 +1474,14 @@ namespace Alternet.UI
         /// <inheritdoc/>
         protected override void OnScroll(ScrollEventArgs e)
         {
+            int? idx;
+
+            /*
             int GetRenderedItemCountSmart()
             {
                 return Math.Max(GetRenderedItemCount() - 1, 1);
             }
+            */
 
             if (DisposingOrDisposed)
                 return;
@@ -1493,10 +1499,18 @@ namespace Alternet.UI
                         ScrollToRow(TopIndex + 1);
                         break;
                     case ScrollEventType.LargeDecrement:
-                        ScrollToRow(TopIndex - GetRenderedItemCountSmart());
+                        idx = GetIndexOnPreviousPage(TopIndex);
+                        if (idx is not null)
+                        {
+                            ScrollToRow(Math.Min(idx.Value + 1, TopIndex));
+                        }
                         break;
                     case ScrollEventType.LargeIncrement:
-                        ScrollToRow(TopIndex + GetRenderedItemCountSmart());
+                        idx = GetIndexOnNextPage(TopIndex);
+                        if(idx is not null)
+                        {
+                            ScrollToRow(Math.Max(idx.Value - 1, TopIndex));
+                        }
                         break;
                     case ScrollEventType.ThumbPosition:
                         break;
@@ -1594,12 +1608,49 @@ namespace Alternet.UI
                 Count);
         }
 
-        private int? GetIndexOnNextPage()
+        /// <summary>
+        /// Gets the index of the first item on the previous page relative to the specified index.
+        /// </summary>
+        /// <param name="index">The starting index to calculate the previous page from.
+        /// If null, the current selected index is used.</param>
+        /// <returns>
+        /// The zero-based index of the first item on the previous page, or 0 if the list
+        /// is empty or the index is null.
+        /// </returns>
+        protected virtual int? GetIndexOnPreviousPage(int? index = null)
         {
             if (Count == 0)
                 return null;
 
-            var selected = SelectedIndex;
+            var selected = index ?? SelectedIndex;
+
+            if (selected is null)
+            {
+                return 0;
+            }
+
+            var numVisible = VisibleCount - 1;
+
+            if (numVisible <= 0)
+                return null;
+
+            return Math.Max(selected.Value - numVisible, 0);
+        }
+
+        /// <summary>
+        /// Gets the index of the first item on the next page relative to the specified index.
+        /// </summary>
+        /// <param name="index">The starting index to calculate the next page from.
+        /// If null, the current selected index is used.</param>
+        /// <returns>
+        /// The zero-based index of the first item on the next page, or null if the list is empty.
+        /// </returns>
+        protected virtual int? GetIndexOnNextPage(int? index = null)
+        {
+            if (Count == 0)
+                return null;
+
+            var selected = index ?? SelectedIndex;
 
             if (selected is null)
             {
@@ -1614,7 +1665,17 @@ namespace Alternet.UI
             return Math.Min(selected.Value + numVisible, Count - 1);
         }
 
-        private void DoHandleItemClick(int item, ItemClickFlags flags)
+        /// <summary>
+        /// Handles the logic for item selection when an item is clicked.
+        /// </summary>
+        /// <param name="item">The index of the item that was clicked.</param>
+        /// <param name="flags">Flags indicating the type of click (e.g., Shift, Ctrl, Keyboard).</param>
+        /// <remarks>
+        /// This method processes item selection based on the current selection mode
+        /// (single or multiple). It supports Shift-click for range selection and
+        /// Ctrl-click for toggling selection of individual items in multiple-selection mode.
+        /// </remarks>
+        protected virtual void DoHandleItemClick(int item, ItemClickFlags flags)
         {
             DoInsideSuspendedSelectionEvents(Internal);
 
@@ -1670,26 +1731,6 @@ namespace Alternet.UI
                 SetSelectedIndex(item, clearSelection: false, setSelected: setSelected);
                 AnchorIndex = savedAnchor;
             }
-        }
-
-        private int? GetIndexOnPreviousPage()
-        {
-            if (Count == 0)
-                return null;
-
-            var selected = SelectedIndex;
-
-            if (selected is null)
-            {
-                return 0;
-            }
-
-            var numVisible = VisibleCount - 1;
-
-            if (numVisible <= 0)
-                return null;
-
-            return Math.Max(selected.Value - numVisible, 0);
         }
     }
 }

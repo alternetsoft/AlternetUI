@@ -455,9 +455,9 @@ namespace Alternet.UI
         /// Gets or sets anchor item index.
         /// </summary>
         /// <remarks>
-        /// This is the anchor of the selection for the multiselection listboxes:
+        /// This is the anchor of the selection for the list boxes with multiple selection:
         /// shift-clicking an item extends the selection from anchor to the item
-        /// clicked, for example. It is always Null for single selection listboxes.
+        /// clicked, for example. It is always Null for single selection list boxes.
         /// </remarks>
         protected virtual int? AnchorIndex
         {
@@ -869,9 +869,9 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Gets minimal and maximal item indexes of the continious selection block.
+        /// Gets minimal and maximal item indexes of the continuous selection block.
         /// </summary>
-        /// <param name="blockItemIndex">Index of any item in the continious selection block.</param>
+        /// <param name="blockItemIndex">Index of any item in the continuous selection block.</param>
         /// <returns></returns>
         internal virtual SelectionRange<int>? GetSelectedMinMax(int blockItemIndex)
         {
