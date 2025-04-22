@@ -53,6 +53,15 @@ namespace Alternet.UI
             Unfocused += SkiaContainer_Unfocused;
 
             MauiApplicationHandler.RegisterThemeChangedHandler();
+
+            HandlerChanged += (s, e) =>
+            {
+                if (NeedSetFocusOnce && Handler is not null)
+                {
+                    NeedSetFocusOnce = false;
+                    SetFocusIfPossible();
+                }
+            };
         }
 
         /// <summary>
@@ -121,6 +130,12 @@ namespace Alternet.UI
                 InvalidateSurface();
             }
         }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether the control needs to set focus once when handler
+        /// was changed.
+        /// </summary>
+        internal virtual bool NeedSetFocusOnce { get; set; }
 
         /// <summary>
         /// Gets <see cref="ControlView"/> for the specified <see cref="Control"/>.
@@ -302,6 +317,40 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Sets focus to the control if it is not already focused and if the platform supports it.
+        /// </summary>
+        public virtual void SetFocusIfPossible()
+        {
+#if WINDOWS
+            if(!IsFocused)
+            {
+                var platformView = GetPlatformView();
+                platformView?.Focus(Microsoft.UI.Xaml.FocusState.Pointer);
+            }
+#endif
+#if ANDROID
+            if (!IsFocused)
+            {
+                var platformView = GetPlatformView();
+                var request = new FocusRequest();
+                platformView?.Focus(request);
+            }
+#endif
+#if IOS || MACCATALYST
+            if (!IsFocused)
+            {
+                var platformView = GetPlatformView();
+                var request = new FocusRequest();
+                App.DebugLogIf("Try to set focus", false);
+                platformView?.Focus(request);
+                platformView?.SetNeedsFocusUpdate();
+                platformView?.UpdateFocusIfNeeded();
+                control?.RaiseGotFocus(GotFocusEventArgs.Empty);
+            }
+#endif
+        }
+
+        /// <summary>
         /// Toggles on-screen keyboard visibility for this control.
         /// </summary>
         public virtual void ToggleKeyboard()
@@ -414,33 +463,11 @@ namespace Alternet.UI
 
         private void Canvas_Touch(object? sender, SKTouchEventArgs e)
         {
-#if WINDOWS
-            if(e.ActionType == SKTouchAction.Pressed && !IsFocused)
+            if (e.ActionType == SKTouchAction.Pressed)
             {
-                var platformView = GetPlatformView();
-                platformView?.Focus(Microsoft.UI.Xaml.FocusState.Pointer);
+                SetFocusIfPossible();
             }
-#endif
-#if ANDROID
-            if (e.ActionType == SKTouchAction.Pressed && !IsFocused)
-            {
-                var platformView = GetPlatformView();
-                var request = new FocusRequest();
-                platformView?.Focus(request);
-            }
-#endif
-#if IOS || MACCATALYST
-            if (e.ActionType == SKTouchAction.Pressed && !IsFocused)
-            {
-                var platformView = GetPlatformView();
-                var request = new FocusRequest();
-                App.DebugLogIf("Try to set focus", false);
-                platformView?.Focus(request);
-                platformView?.SetNeedsFocusUpdate();
-                platformView?.UpdateFocusIfNeeded();
-                control?.RaiseGotFocus(GotFocusEventArgs.Empty);
-            }
-#endif
+
             if (control is null)
                 return;
 
