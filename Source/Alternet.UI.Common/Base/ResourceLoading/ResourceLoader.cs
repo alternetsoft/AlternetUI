@@ -128,6 +128,51 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Extracts a resource from the specified URL and saves it to the given destination path.
+        /// Returns true if the operation succeeds, otherwise false.
+        /// </summary>
+        /// <param name="url">The URL of the resource to extract.</param>
+        /// <param name="destPath">The destination file path where the resource will be saved.</param>
+        /// <returns>True if the resource extraction and saving succeed, otherwise false.</returns>
+        /// <remarks>
+        /// Uses <see cref="ResourceLoader.StreamFromUrlOrDefault"/> for the resource extraction.
+        /// </remarks>
+        public static bool ExtractResourceSafe(string url, string destPath)
+        {
+            var stream = ResourceLoader.StreamFromUrlOrDefault(url);
+            if (stream is null)
+                return false;
+            if (!StreamUtils.CopyStreamSafe(stream, destPath))
+                return false;
+            return true;
+        }
+
+        /// <summary>
+        /// Extracts multiple resources from the specified URL and saves them to the given destination folder.
+        /// Returns true if all operations succeed, otherwise false.
+        /// </summary>
+        /// <param name="url">The base URL of the resources to extract.</param>
+        /// <param name="fileNames">An array of file names to extract from the base URL.</param>
+        /// <param name="destFolder">The destination folder where the resources will be saved.</param>
+        /// <returns>True if all resources are successfully extracted and saved, otherwise false.</returns>
+        public static bool ExtractResourcesSafe(string url, string[] fileNames, string destFolder)
+        {
+            var allResult = true;
+
+            foreach(var fileName in fileNames)
+            {
+                var destPath = Path.Combine(destFolder, fileName);
+                var sourceUrl = url + @"." + fileName;
+
+                var result = ExtractResourceSafe(sourceUrl, destPath);
+                if (!result)
+                    allResult = false;
+            }
+
+            return allResult;
+        }
+
+        /// <summary>
         /// Calls <see cref="StreamFromUrlOrDefault"/> and if it returns <c>null</c>,
         /// calls <paramref name="func"/>.
         /// </summary>
