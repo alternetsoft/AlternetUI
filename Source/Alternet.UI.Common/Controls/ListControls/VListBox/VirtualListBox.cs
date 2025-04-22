@@ -1504,6 +1504,7 @@ namespace Alternet.UI
                         {
                             ScrollToRow(Math.Min(idx.Value + 1, TopIndex));
                         }
+
                         break;
                     case ScrollEventType.LargeIncrement:
                         idx = GetIndexOnNextPage(TopIndex);
@@ -1511,6 +1512,7 @@ namespace Alternet.UI
                         {
                             ScrollToRow(Math.Max(idx.Value - 1, TopIndex));
                         }
+
                         break;
                     case ScrollEventType.ThumbPosition:
                         break;
