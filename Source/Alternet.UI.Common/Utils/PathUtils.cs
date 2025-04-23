@@ -24,6 +24,29 @@ namespace Alternet.UI
         public static bool DirectoryIsEmpty(string path) => !DirectoryHasEntries(path);
 
         /// <summary>
+        /// Gets the path to the desktop directory for the current user.
+        /// </summary>
+        /// <returns>
+        /// A <see cref="string"/> containing the full path to the desktop directory.
+        /// </returns>
+        public static string GetDesktopPath()
+        {
+            return Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory);
+        }
+
+        /// <summary>
+        /// Generates a file path on the desktop for the current user using the specified file name.
+        /// </summary>
+        /// <param name="fileNameWithoutPath">The name of the file without any directory path.</param>
+        /// <returns>
+        /// A <see cref="string"/> containing the full path to the file on the desktop.
+        /// </returns>
+        public static string GenFilePathOnDesktop(string fileNameWithoutPath)
+        {
+            return Path.Combine(GetDesktopPath(), fileNameWithoutPath);
+        }
+
+        /// <summary>
         /// Gets whether directory is not empty (contains files or sub-folders).
         /// </summary>
         /// <param name="path">Path to directory.</param>
