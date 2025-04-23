@@ -1,3 +1,30 @@
+# 0.9.722 (2025 April 23)
+
+- **VirtualListBox**: Fully implemented inside the library using C#.
+- **ListView**: Fixed scrollbar painting on Windows.
+- **ListView**: `HasBorder` property now works correctly.
+- Added **ProcessRunnerWithNotification**.
+- **TreeControlItem**: New constructor with `Text` parameter.
+- **ListControlItem**: Added `GetCheckBoxInfo`, `GetContainerRelated`.
+- **VirtualTreeControl**: Implemented `DefaultTreeButtons`, `ToggleExpanded`, `EnsureVisible`, `SelectFirstItem`, `RefreshTree`, `CreateListBox`.
+- **VirtualTreeControl**: Fixed `BackColor` and `ForeColor`.
+- **VirtualTreeControl**: Implemented `SelectLastItem()`, `SelectFirstItemAndScroll()`, `SelectLastItemAndScroll()`.
+- **VirtualTreeControl**: Fixed synchronization issues between tree items and internal listbox items occurring in some cases.
+- **VirtualTreeControl**: Fixed incorrect text offset for items without children.
+- **AbstractControl**: Fixed `IsDarkBackground`.
+- **Color**: Fixed `IsDark`.
+- **DefaultColors**: Added `ControlForeColor`, `ControlBackColor`.
+- **DefaultColors**: Fixed `WindowBackColor` and `WindowForeColor`.
+- **MAUI**: Level margin in `SimpleTreeView` is now calculated using tree button size.
+- **MAUI**: Fixed `SimpleToolBarView` not working properly on macOS.
+- **MAUI**: Implemented `ControlView.SetFocusIfPossible`.
+- **PanelFormSelector**: Uses a busy cursor.
+- **PanelFormSelector**: Now integrates `VirtualTreeControl`.
+- **Control**: Added `AllowDefaultContextMenu` property.
+- **AbstractControl**: `Enabled` is now thread-safe.
+- **Demo**: Added header items to `CheckListBox` sample page.
+- **ResourceLoader**: Added `ExtractResourceSafe`, `ExtractResourcesSafe`.
+
 # 0.9.721 (2025 April 17)
 
 - PreviewFile: Fixed default text and bk colors.

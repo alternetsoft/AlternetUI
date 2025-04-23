@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ApiInfo>
-  <Assembly Name="Alternet.UI.Common, Version=0.9.721.0, Culture=neutral, PublicKeyToken=7fb0fe57212b4b74">
+  <Assembly Name="Alternet.UI.Common, Version=0.9.722.0, Culture=neutral, PublicKeyToken=7fb0fe57212b4b74">
     <Type Name="XamlX.Runtime.IXamlParentStackProviderV1" />
     <Type Name="XamlX.Runtime.IXamlXmlNamespaceInfoProviderV1" />
     <Type Name="XamlX.Runtime.XamlXmlNamespaceInfoV1" />
@@ -494,6 +494,8 @@
       <Event Name="Disposed" />
       <Event Name="PropertyChanged" />
     </Type>
+    <Type Name="Alternet.UI.IProcessRunnerNotification" />
+    <Type Name="Alternet.UI.ProcessRunnerWithNotification" />
     <Type Name="Alternet.UI.DummyTimerHandler">
       <Event Name="Disposed" />
       <Event Name="PropertyChanged" />
@@ -520,8 +522,11 @@
       <Event Name="Disposed" />
       <Event Name="PropertyChanged" />
     </Type>
-    <Type Name="Alternet.UI.AdvDictionary`2" />
-    <Type Name="Alternet.UI.AdvDictionaryCached`2" />
+    <Type Name="Alternet.UI.BaseBlockingCollection`1" />
+    <Type Name="Alternet.UI.BaseConcurrentQueue`1" />
+    <Type Name="Alternet.UI.BaseConcurrentStack`1" />
+    <Type Name="Alternet.UI.BaseDictionary`2" />
+    <Type Name="Alternet.UI.BaseDictionaryCached`2" />
     <Type Name="Alternet.UI.Command">
       <Event Name="CanExecuteChanged" />
       <Event Name="AfterExecute" />
@@ -12606,7 +12611,6 @@
     <Type Name="Alternet.UI.ISliderHandler" />
     <Type Name="Alternet.UI.ITextBoxHandler" />
     <Type Name="Alternet.UI.ITreeViewHandler" />
-    <Type Name="Alternet.UI.IVListBoxHandler" />
     <Type Name="Alternet.UI.IWindowHandler" />
     <Type Name="Alternet.UI.ICustomAttributes" />
     <Type Name="Alternet.UI.ICustomAttributes`2" />
@@ -13333,7 +13337,6 @@
     <Type Name="Alternet.UI.RegistryUtils" />
     <Type Name="Alternet.UI.PathUtils" />
     <Type Name="Alternet.UI.PlessUtils" />
-    <Type Name="Alternet.UI.PythonUtils" />
     <Type Name="Alternet.UI.CharUtils" />
     <Type Name="Alternet.UI.RegexUtils" />
     <Type Name="Alternet.UI.StringTokenizer" />
@@ -13480,6 +13483,7 @@
     <Type Name="Alternet.UI.UixmlLoader+Flags" />
     <Type Name="Alternet.UI.Command+CanExecuteDelegate" />
     <Type Name="Alternet.UI.Command+ExecuteDelegate" />
+    <Type Name="Alternet.UI.ListControlItem+ContainerRelatedData" />
     <Type Name="Alternet.UI.ListControlItem+ItemCheckBoxInfo" />
     <Type Name="Alternet.UI.ListViewColumn+ColumnEventType" />
     <Type Name="Alternet.UI.TreeControlItem+EnumExpandedItemsParams" />

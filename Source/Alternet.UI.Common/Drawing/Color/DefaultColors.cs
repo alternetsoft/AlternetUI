@@ -95,13 +95,12 @@ namespace Alternet.Drawing
         public static LightDarkColor ControlBackColor
         {
             get => controlBackColor;
-            
+
             set
             {
                 controlBackColor = value;
             }
         }
-
 
         /// <summary>
         /// Gets or sets the default background color of the window.

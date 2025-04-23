@@ -1444,13 +1444,13 @@ namespace Alternet.UI
             return Text ?? base.ToString();
         }
 
-        /// <summary>  
+        /// <summary>
         /// Retrieves information about the checkbox associated with the item, including
-        /// its visibility, state, size, and position.  
-        /// </summary>  
-        /// <param name="container">The container that holds the item. Can be null.</param>  
-        /// <param name="rect">The bounding rectangle of the item.</param>  
-        /// <returns>An <see cref="ItemCheckBoxInfo"/> object containing details about the checkbox.</returns>  
+        /// its visibility, state, size, and position.
+        /// </summary>
+        /// <param name="container">The container that holds the item. Can be null.</param>
+        /// <param name="rect">The bounding rectangle of the item.</param>
+        /// <returns>An <see cref="ItemCheckBoxInfo"/> object containing details about the checkbox.</returns>
         public virtual ItemCheckBoxInfo GetCheckBoxInfo(
             IListControlItemContainer? container,
             RectD rect)
