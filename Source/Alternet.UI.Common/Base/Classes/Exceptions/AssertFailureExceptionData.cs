@@ -25,7 +25,7 @@ namespace Alternet.UI
         public string? Line { get; set; }
 
         /// <summary>
-        /// Gets or sets function name where error occured.
+        /// Gets or sets function name where error occurred.
         /// </summary>
         public string? Function { get; set; }
 

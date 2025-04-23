@@ -398,7 +398,7 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Gets last error occured inside <see cref="TextAsValue"/> property getter or setter.
+        /// Gets last error occurred inside <see cref="TextAsValue"/> property getter or setter.
         /// </summary>
         [Browsable(false)]
         public virtual Exception? TextAsValueError

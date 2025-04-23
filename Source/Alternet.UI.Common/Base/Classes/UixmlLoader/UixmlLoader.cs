@@ -30,7 +30,7 @@ namespace Alternet.UI
         public static Func<Stream, object, string?, Flags, bool>? LoadFromStream;
 
         /// <summary>
-        /// Custom method for showing errors occured during load process. Overrides default behavior.
+        /// Custom method for showing errors occurred during load process. Overrides default behavior.
         /// </summary>
         public static Func<Exception, string?, Flags, bool>? ReportLoadException;
 

@@ -7,42 +7,42 @@ using System.Threading.Tasks;
 namespace Alternet.UI
 {
     /// <summary>
-    /// Specifies constants that define which touch/mouse event occured in the control.
+    /// Specifies constants that define which touch/mouse event occurred in the control.
     /// </summary>
     public enum TouchInteractionKind
     {
         /// <summary>
-        /// 'CancelInteraction' event occured.
+        /// 'CancelInteraction' event occurred.
         /// </summary>
         CancelInteraction,
 
         /// <summary>
-        /// 'EndInteraction' event occured.
+        /// 'EndInteraction' event occurred.
         /// </summary>
         EndInteraction,
 
         /// <summary>
-        /// 'DragInteraction' event occured.
+        /// 'DragInteraction' event occurred.
         /// </summary>
         DragInteraction,
 
         /// <summary>
-        /// 'StartInteraction' event occured.
+        /// 'StartInteraction' event occurred.
         /// </summary>
         StartInteraction,
 
         /// <summary>
-        /// 'EndHoverInteraction' event occured.
+        /// 'EndHoverInteraction' event occurred.
         /// </summary>
         EndHoverInteraction,
 
         /// <summary>
-        /// 'MoveHoverInteraction' event occured.
+        /// 'MoveHoverInteraction' event occurred.
         /// </summary>
         MoveHoverInteraction,
 
         /// <summary>
-        /// 'StartHoverInteraction' event occured.
+        /// 'StartHoverInteraction' event occurred.
         /// </summary>
         StartHoverInteraction,
     }
