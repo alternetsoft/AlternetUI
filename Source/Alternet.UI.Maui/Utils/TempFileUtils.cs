@@ -18,7 +18,8 @@ namespace Alternet.Maui
         /// Gets the path to the temporary folder used by the application.
         /// </summary>
         /// <returns>
-        /// A string representing the path to the temporary folder, with a directory separator character appended.
+        /// A string representing the path to the temporary folder, with a directory separator
+        /// character appended.
         /// </returns>
         public static string GetTempFolder()
         {
