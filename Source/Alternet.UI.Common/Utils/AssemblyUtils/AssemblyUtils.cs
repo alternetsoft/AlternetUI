@@ -304,12 +304,35 @@ namespace Alternet.UI
             assemblies ??= AppDomain.CurrentDomain.GetAssemblies();
             foreach (var assembly in assemblies)
             {
-                var types = assembly.GetExportedTypes();
+                var types = GetExportedTypesSafe(assembly);
                 foreach (var type in types)
                 {
                     var members = getMembers(type);
                     yield return members;
                 }
+            }
+        }
+
+        /// <summary>
+        /// Gets the exported types from the specified assembly safely.
+        /// </summary>
+        /// <param name="asm">The assembly to retrieve exported types from.</param>
+        /// <returns>
+        /// An array of <see cref="Type"/> objects representing the exported types in the assembly.
+        /// Returns an empty array if the assembly is null, dynamic, or has no exported types.
+        /// </returns>
+        public static Type[] GetExportedTypesSafe(Assembly? asm)
+        {
+            try
+            {
+                if (asm is null || asm.IsDynamic)
+                    return [];
+                var types = asm.GetExportedTypes();
+                return types;
+            }
+            catch
+            {
+                return [];
             }
         }
 
