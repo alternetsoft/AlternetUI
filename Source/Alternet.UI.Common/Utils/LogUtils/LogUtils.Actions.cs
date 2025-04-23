@@ -192,6 +192,8 @@ namespace Alternet.UI
                 Fn("> Show Test Actions Dialog", ShowTestActionsDialog);
             }
 
+            Fn("File Preview Window", WindowFilePreview.ShowPreviewWindow);
+
             Fn("Log system settings", LogUtils.LogSystemSettings);
             Fn("Log font families", LogUtils.LogFontFamilies);
             Fn("Log fonts system", SystemSettings.LogSystemFonts);
