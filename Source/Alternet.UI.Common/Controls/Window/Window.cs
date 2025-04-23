@@ -1269,13 +1269,15 @@ namespace Alternet.UI
             {
                 default:
                 case WindowCloseAction.Dispose:
-                    if (CanClose(true))
+                    if (!CanClose(true))
                         return;
                     ignoreClosingEvent = true;
                     Visible = false;
                     Handler.Close();
                     break;
                 case WindowCloseAction.Hide:
+                    if (!CanClose(true))
+                        return;
                     Visible = false;
                     break;
                 case WindowCloseAction.None:
