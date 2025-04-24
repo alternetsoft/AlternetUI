@@ -195,7 +195,7 @@ namespace Alternet.UI
                     return;
                 base.HasBorder = value;
                 if (value)
-                    BorderStyle = ControlBorderStyle.Simple;
+                    BorderStyle = ControlBorderStyle.Theme;
                 else
                     BorderStyle = ControlBorderStyle.None;
             }
