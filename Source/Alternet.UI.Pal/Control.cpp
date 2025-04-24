@@ -409,7 +409,7 @@ namespace Alternet::UI
     {
         if (_borderStyle == value)
             return;
-        _borderStyle = value;
+        _borderStyle = (wxBorder)value;
         RecreateWxWindowIfNeeded();
     }
 
@@ -2456,7 +2456,7 @@ namespace Alternet::UI
 
     long Control::GetDefaultStyle()
     {
-        long style = wxNO_BORDER;
+        long style = GetBorderStyle();
 
         if (_wantChars)
             style |= wxWANTS_CHARS;

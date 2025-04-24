@@ -175,7 +175,7 @@ namespace Alternet::UI
         
         bool bindScrollEvents = true;
         int _ignoreRecreate = 0;
-        int _borderStyle = 0;
+        wxBorder _borderStyle = wxBorder::wxBORDER_NONE;
         bool _allowDefaultContextMenu = true;
         int _disableRecreateCounter = 0;
         SizeI _eventOldDpi;
