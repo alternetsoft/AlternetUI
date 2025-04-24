@@ -146,38 +146,43 @@ namespace Alternet.UI
         {
             textBox.Text = string.Empty;
 
-            if (FileName is null || !GetFileSystem().FileExists(FileName))
+            App.AddBackgroundAction(Internal);
+
+            void Internal()
             {
-                return;
-            }
+                if (FileName is null || !GetFileSystem().FileExists(FileName))
+                {
+                    return;
+                }
 
-            using var stream = GetFileSystem().OpenRead(FileName);
+                using var stream = GetFileSystem().OpenRead(FileName);
 
-            Encoding? encoding;
+                Encoding? encoding;
 
-            if(QueryEncoding is not null)
-            {
-                QueryEncodingEventArgs args = new(FileName);
-                QueryEncoding(this, args);
-                encoding = args.Result;
-            }
-            else
-            {
-                var ext = PathUtils.GetExtensionLower(fileName);
-
-                if (ext == "txt")
-                    encoding = DefaultTextEncoding ?? Encoding.Default;
+                if (QueryEncoding is not null)
+                {
+                    QueryEncodingEventArgs args = new(FileName);
+                    QueryEncoding(this, args);
+                    encoding = args.Result;
+                }
                 else
-                    encoding = DefaultOtherEncoding ?? Encoding.UTF8;
+                {
+                    var ext = PathUtils.GetExtensionLower(fileName);
+
+                    if (ext == "txt")
+                        encoding = DefaultTextEncoding ?? Encoding.Default;
+                    else
+                        encoding = DefaultOtherEncoding ?? Encoding.UTF8;
+                }
+
+                encoding ??= Encoding.UTF8;
+
+                using var reader = new StreamReader(stream, encoding);
+
+                var s = reader.ReadToEnd();
+
+                textBox.Text = s;
             }
-
-            encoding ??= Encoding.UTF8;
-
-            using var reader = new StreamReader(stream, encoding);
-
-            var s = reader.ReadToEnd();
-
-            textBox.Text = s;
         }
     }
 }
