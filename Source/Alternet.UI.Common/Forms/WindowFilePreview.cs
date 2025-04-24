@@ -37,12 +37,20 @@ namespace Alternet.UI
             HasBorder = false,
         };
 
+        private readonly Label pathLabel = new()
+        {
+            MarginBottom = 10,
+        };
+
         /// <summary>
         /// Initializes a new instance of the <see cref="WindowFilePreview"/> class.
         /// </summary>
         public WindowFilePreview()
         {
+            Layout = LayoutStyle.Vertical;
             Padding = 10;
+
+            pathLabel.Parent = this;
 
             /*
                 PreviewUixml.ShowExceptionDialog = true;
@@ -61,6 +69,7 @@ namespace Alternet.UI
 
             panel.LeftPanel.Width = 400;
             panel.BottomPanel.Height = 200;
+            panel.VerticalAlignment = VerticalAlignment.Fill;
             panel.Parent = this;
 
             fileListBox.Parent = panel.LeftPanel;
@@ -84,6 +93,17 @@ namespace Alternet.UI
 
             preview.RegisterDefaultPreviewControls();
             preview.Visible = true;
+
+            SizeChanged += (s, e) =>
+            {
+                pathLabel.WrapToParent();
+            };
+
+            fileListBox.SelectedFolderChanged += (s, e) =>
+            {
+                pathLabel.Text = fileListBox.SelectedFolder ?? string.Empty;
+                pathLabel.WrapToParent();
+            };
         }
 
         internal static new WindowFilePreview Default
@@ -111,10 +131,22 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Displays the default instance of the <see cref="WindowFilePreview"/> and brings it to focus.
+        /// Displays the file preview window.
         /// </summary>
         public static void ShowPreviewWindow()
         {
+            ShowPreviewWindow(null);
+        }
+
+        /// <summary>
+        /// Displays the file preview window for a specified file or folder.
+        /// </summary>
+        /// <param name="fileNameOrFolder">
+        /// The file name or folder path to preview. If null, the default folder is selected.
+        /// </param>
+        public static void ShowPreviewWindow(string? fileNameOrFolder)
+        {
+            Default.fileListBox.SelectFolderByFileName(fileNameOrFolder);
             Default.ShowAndFocus();
         }
 
