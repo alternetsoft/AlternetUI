@@ -58,6 +58,7 @@ namespace Alternet.UI
         /// </summary>
         public VirtualListBox()
         {
+            BorderStyle = ControlBorderStyle.Simple;
             UserPaint = true;
             SuggestedSize = 200;
             IsScrollable = true;
@@ -167,11 +168,37 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
+        public override ControlBorderStyle BorderStyle
+        {
+            get => base.BorderStyle;
+            set
+            {
+                if (BorderStyle == value)
+                    return;
+                base.BorderStyle = value;
+                UpdateVertScrollBar();
+            }
+        }
+
+        /// <inheritdoc/>
         [Browsable(true)]
         public override bool HasBorder
         {
-            get => base.HasBorder;
-            set => base.HasBorder = value;
+            get
+            {
+                return BorderStyle != ControlBorderStyle.None;
+            }
+
+            set
+            {
+                if (HasBorder == value)
+                    return;
+                base.HasBorder = value;
+                if (value)
+                    BorderStyle = ControlBorderStyle.Simple;
+                else
+                    BorderStyle = ControlBorderStyle.None;
+            }
         }
 
         /// <inheritdoc/>

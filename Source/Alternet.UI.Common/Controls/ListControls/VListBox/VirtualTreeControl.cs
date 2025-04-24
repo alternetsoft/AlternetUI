@@ -146,6 +146,27 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
+        public override bool HasBorder
+        {
+            get
+            {
+                return ListBox.HasBorder;
+            }
+
+            set
+            {
+                ListBox.HasBorder = value;
+            }
+        }
+
+        /// <inheritdoc/>
+        public override ControlBorderStyle BorderStyle
+        {
+            get => ListBox.BorderStyle;
+            set => ListBox.BorderStyle = value;
+        }
+
+        /// <inheritdoc/>
         public override Color RealForegroundColor
         {
             get

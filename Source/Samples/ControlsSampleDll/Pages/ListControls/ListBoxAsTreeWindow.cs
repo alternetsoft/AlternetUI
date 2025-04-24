@@ -88,12 +88,20 @@ namespace ControlsSample
                 FormUtils.InvalidateAll();
             });
 
-            treeView.ContextMenu.Add("Toggle enabled", () =>
+            treeView.ContextMenu.Add("Toggle HasBorder", () =>
+            {
+                App.AddIdleTask(() =>
+                {
+                    treeView.HasBorder = !treeView.HasBorder;
+                });
+            });
+
+            treeView.ContextMenu.Add("Toggle Enabled", () =>
             {
                 treeView.Enabled = !treeView.Enabled;
             });
 
-            treeView.ContextMenu.Add("Change root item", () =>
+            treeView.ContextMenu.Add("Change RootItem", () =>
             {
                 TreeControlRootItem item = new();
                 ListControlUtils.AddTestItems(item, 10, ItemInitialize);
