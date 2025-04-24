@@ -128,7 +128,13 @@ namespace Alternet.UI
         public event EventHandler? AddRootFolder;
 
         /// <summary>
-        /// Gets or sets whether foder and file names are sorted.
+        /// Occurs when the <see cref="SelectedFolder"/> property value changes.
+        /// This event is raised after the folder selection has been updated.
+        /// </summary>
+        public event EventHandler? SelectedFolderChanged;
+
+        /// <summary>
+        /// Gets or sets whether folder and file names are sorted.
         /// </summary>
         public virtual bool Sorted
         {
@@ -210,6 +216,8 @@ namespace Alternet.UI
                         Reload();
                     }
                 }
+
+                SelectedFolderChanged?.Invoke(this, EventArgs.Empty);
             }
         }
 
@@ -263,7 +271,7 @@ namespace Alternet.UI
 
         /// <summary>
         /// Gets whether control is reloading and selection change events
-        /// should be ingored.
+        /// should be ignored.
         /// </summary>
         [Browsable(false)]
         public bool IsReloading { get => reloading > 0; }
@@ -361,6 +369,32 @@ namespace Alternet.UI
                     AddFile(null, file);
                 }
             }
+        }
+
+        /// <summary>
+        /// Selects a folder by file name or folder path.
+        /// </summary>
+        /// <param name="fileNameOrFolder">The file name or folder path to select.</param>
+        /// <returns>
+        /// <c>true</c> if the folder or file exists and the folder was successfully selected;
+        /// otherwise, <c>false</c>.
+        /// </returns>
+        public virtual bool SelectFolderByFileName(string? fileNameOrFolder)
+        {
+            if (fileNameOrFolder is null)
+                return false;
+
+            var isFile = GetFileSystem().FileExists(fileNameOrFolder);
+            var isFolder = !isFile && GetFileSystem().DirectoryExists(fileNameOrFolder);
+
+            if (isFile || isFolder)
+            {
+                var path = isFolder ? fileNameOrFolder : Path.GetDirectoryName(fileNameOrFolder);
+                SelectedFolder = path;
+                return true;
+            }
+
+            return false;
         }
 
         /// <summary>
