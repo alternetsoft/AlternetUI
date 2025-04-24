@@ -1207,6 +1207,22 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Logs an action with a specified message and associates it with a log item.
+        /// </summary>
+        /// <param name="s">The message to log.</param>
+        /// <param name="action">The action to associate with the log item.</param>
+        /// <param name="kind">The kind of log item. Default is <see cref="LogItemKind.Information"/>.</param>
+        public static void LogAction(
+            string s,
+            Action action,
+            LogItemKind kind = LogItemKind.Information)
+        {
+            ListControlItem item = new(s);
+            item.DoubleClickAction = action;
+            AddLogItem(item, kind);
+        }
+
+        /// <summary>
         /// Calls <see cref="Log"/> and waits until it completes its execution.
         /// </summary>
         /// <param name="obj">Message text or object to log.</param>

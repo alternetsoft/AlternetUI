@@ -677,6 +677,25 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Logs the specified file name (or a folder) with a prefix.
+        /// When log item is double clicked, application
+        /// opens a preview window for the file.
+        /// </summary>
+        /// <param name="prefix">The prefix to include in the log message.</param>
+        /// <param name="fileName">The path to the file or folder to log and preview.</param>
+        /// <param name="kind">The kind of log item. Default is <see cref="LogItemKind.Information"/>.</param>
+        public static void LogFileName(
+            string prefix,
+            string fileName,
+            LogItemKind kind = LogItemKind.Information)
+        {
+            App.LogAction($"{prefix}: {fileName}", () =>
+            {
+                WindowFilePreview.ShowPreviewWindow(fileName);
+            });
+        }
+
+        /// <summary>
         /// Logs error 'InvalidBoundArgument' for unsigned <see cref="int"/> values.
         /// </summary>
         /// <param name="name">Name of the field or property.</param>
