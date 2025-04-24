@@ -102,13 +102,13 @@ namespace Alternet.UI
             var btnCopy = logListBoxToolBar.AddSpeedBtn(
                     "Copy selected items",
                     KnownSvgImages.ImgCopy,
-                    (_, _) => logListBox.SelectedItemsToClipboard());
+                    (_, _) => logListBox.ListBox.SelectedItemsToClipboard());
             logListBoxToolBar.SetToolAlignRight(btnCopy);
 
             var btnClear = logListBoxToolBar.AddSpeedBtn(
                     "Clear items",
                     KnownSvgImages.ImgTrashCan,
-                    (_, _) => logListBox.RemoveAll());
+                    (_, _) => logListBox.Clear());
             logListBoxToolBar.SetToolAlignRight(btnClear);
 
             var btnLogListBoxSettings = logListBoxToolBar.AddSpeedBtn(

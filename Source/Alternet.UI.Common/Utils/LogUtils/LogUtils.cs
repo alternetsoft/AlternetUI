@@ -297,7 +297,7 @@ namespace Alternet.UI
 
                 var s = $"{prefix} '{e.GetType().Name}': <b>{e.Message}</b>. [Double click...]";
 
-                ListControlItem item = new(s);
+                TreeControlItem item = new(s);
                 item.TextHasBold = true;
                 item.Tag = asString;
                 item.DoubleClickAction = () =>
@@ -917,7 +917,7 @@ namespace Alternet.UI
             /// <summary>
             /// Gets or sets <see cref="ListControlItem"/> used to show log item.
             /// </summary>
-            public ListControlItem? Item;
+            public TreeControlItem? Item;
 
             private int? id;
 
@@ -935,7 +935,7 @@ namespace Alternet.UI
             /// Initializes a new instance of the <see cref="LogItem"/> class
             /// with the specified parameters.
             /// </summary>
-            public LogItem(ListControlItem? item, LogItemKind kind = LogItemKind.Information)
+            public LogItem(TreeControlItem? item, LogItemKind kind = LogItemKind.Information)
             {
                 Msg = string.Empty;
                 Kind = kind;

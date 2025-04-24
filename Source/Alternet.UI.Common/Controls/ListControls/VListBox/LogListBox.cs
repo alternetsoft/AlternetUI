@@ -17,7 +17,7 @@ namespace Alternet.UI
     /// <see cref="ListBox"/> descendant with log and debug related functionality.
     /// </summary>
     [ControlCategory("Other")]
-    public partial class LogListBox : VirtualListBox
+    public partial class LogListBox : VirtualTreeControl
     {
         /// <summary>
         /// Gets or sets image used for error messages.
@@ -55,7 +55,7 @@ namespace Alternet.UI
         public LogListBox()
         {
             HorizontalScrollbar = true;
-            SelectionMode = ListBoxSelectionMode.Multiple;
+            ListBox.SelectionMode = ListBoxSelectionMode.Multiple;
         }
 
         /// <summary>
@@ -72,7 +72,7 @@ namespace Alternet.UI
         {
             get
             {
-                if(Items.Count > 0)
+                if(RootItem.ItemCount > 0)
                     return lastLogMessage;
                 return null;
             }
@@ -194,7 +194,7 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="obj">Message text.</param>
         /// <param name="kind">Message kind.</param>
-        public virtual ListControlItem Log(object? obj, LogItemKind kind = LogItemKind.Information)
+        public virtual TreeControlItem Log(object? obj, LogItemKind kind = LogItemKind.Information)
         {
             var result = LogInternal(LogUtils.GenNewId(), obj, kind);
             LogRefresh();
@@ -217,7 +217,7 @@ namespace Alternet.UI
         /// Creates new empty item.
         /// </summary>
         /// <returns></returns>
-        protected virtual ListControlItem CreateItem()
+        protected virtual TreeControlItem CreateItem()
         {
             return new();
         }
@@ -259,7 +259,7 @@ namespace Alternet.UI
 
             if(e.KeyData == (Keys.Control | Keys.C))
             {
-                SelectedItemsToClipboard();
+                ListBox.SelectedItemsToClipboard();
                 e.Handled = true;
             }
         }
@@ -267,9 +267,9 @@ namespace Alternet.UI
         /// <inheritdoc/>
         protected override void InitContextMenu()
         {
-            ContextMenu.Add(new(CommonStrings.Default.ButtonClear, RemoveAll));
+            ContextMenu.Add(new(CommonStrings.Default.ButtonClear, Clear));
 
-            ContextMenu.Add(new(CommonStrings.Default.ButtonCopy, () => SelectedItemsToClipboard()))
+            ContextMenu.Add(new(CommonStrings.Default.ButtonCopy, () => ListBox.SelectedItemsToClipboard()))
                 .SetShortcutKeys(Keys.Control | Keys.C);
 
             ContextMenu.Add(new("Open log file", AppUtils.OpenLogFile));
@@ -310,10 +310,7 @@ namespace Alternet.UI
 
                 if (!App.LogInUpdates() || !BoundToApplicationLog)
                 {
-                    var index = Items.Count - 1;
-                    SelectedIndex = index;
-                    EnsureVisible(index);
-                    Refresh();
+                    SelectLastItemAndScroll();
                 }
             }
         }
@@ -326,7 +323,7 @@ namespace Alternet.UI
             LogRefresh();
         }
 
-        private ListControlItem LogItemInternal(int id, ListControlItem item, LogItemKind kind)
+        private TreeControlItem LogItemInternal(int id, TreeControlItem item, LogItemKind kind)
         {
             if (IsDisposed)
                 return item;
@@ -339,13 +336,11 @@ namespace Alternet.UI
 
             lastLogMessage = item.Text;
             Add(item);
-            SelectedIndex = Count - 1;
-            RefreshRow(Count - 1);
-            EnsureVisible(Count - 1);
+            SelectLastItemAndScroll();
             return item;
         }
 
-        private ListControlItem LogInternal(int id, object? obj, LogItemKind kind)
+        private TreeControlItem LogInternal(int id, object? obj, LogItemKind kind)
         {
             if (DisposingOrDisposed)
                 return new();
@@ -354,11 +349,11 @@ namespace Alternet.UI
 
             lastLogMessage = message;
 
-            ListControlItem item;
+            TreeControlItem item;
 
             if(message == LogUtils.SectionSeparator || message == "-")
             {
-                item = new ListControlSeparatorItem();
+                item = new TreeControlSeparatorItem();
             }
             else
             {
@@ -369,13 +364,11 @@ namespace Alternet.UI
             }
 
             Add(item);
-            SelectedIndex = Count - 1;
-            RefreshRow(Count - 1);
-            EnsureVisible(Count - 1);
+            SelectLastItemAndScroll();
             return item;
         }
 
-        private ListControlItem LogReplaceInternal(
+        private TreeControlItem LogReplaceInternal(
             int id,
             string? message,
             string? prefix,
@@ -396,13 +389,12 @@ namespace Alternet.UI
             if (b)
             {
                 lastLogMessage = message;
-                var item = LastItem!;
+                var item = RootItem.LastChild!;
                 item.Text = ConstructLogMessage(id, message);
                 item.SvgImage = GetImage(kind);
                 item.SvgImageSize = ToolBarUtils.GetDefaultImageSize(this);
-                SelectedIndex = Count - 1;
-                RefreshRow(Count - 1);
-                EnsureVisible(Count - 1);
+
+                SelectLastItemAndScroll();
                 return item;
             }
             else

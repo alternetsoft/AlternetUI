@@ -454,7 +454,7 @@ namespace PropertyGridSample
                                     return;
                                 var result = method.Invoke(selectedControl, null);
 
-                                ListControlItem item = new();
+                                TreeControlItem item = new();
                                 item.TextHasBold = true;
 
                                 var itemText = $"Called <b>{type.Name}.{methodName}</b>";

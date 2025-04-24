@@ -33,7 +33,7 @@ namespace MenuSample
             {
                 var target = Command.CurrentTarget?.GetType().ToString() ?? "null";
                 var s = $"Run sample command on target <b>'{target}'</b> with param <b>'{param}'</b>";
-                ListControlItem item = new(s);
+                TreeControlItem item = new(s);
                 item.TextHasBold = true;
                 App.AddLogItem(item);
             };
