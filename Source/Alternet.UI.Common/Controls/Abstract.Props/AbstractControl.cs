@@ -784,20 +784,6 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Gets attributes provider which allows to
-        /// access items using integer identifiers.
-        /// You can store any custom data here.
-        /// </summary>
-        [Browsable(false)]
-        public ICustomAttributes<int, object> IntAttr
-        {
-            get
-            {
-                return IntFlagsAndAttributes.Attr;
-            }
-        }
-
-        /// <summary>
         /// Gets or sets whether <see cref="Text"/> property should be localizable.
         /// </summary>
         [Browsable(false)]
