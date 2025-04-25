@@ -232,23 +232,6 @@ namespace Alternet::UI
 
         virtual wxWindow* GetParentingWxWindow(Control* child);
 
-        Size RetrieveMinimumSize();
-        Size RetrieveMaximumSize();
-        virtual void ApplyMinimumSize(const Size& value);
-        virtual void ApplyMaximumSize(const Size& value);
-
-        virtual Rect RetrieveBounds();
-        virtual void ApplyBounds(const Rect& value);
-
-        /*
-        struct ScrollInfo
-        {
-            bool visible = false;
-            int value = 0;
-            int largeChange = 0;
-            int maximum = 0;
-        };*/
-
         bool EventsSuspended() override;
 
         virtual void SetWxWindowParent(wxWindow* parent);
@@ -290,7 +273,6 @@ namespace Alternet::UI
             None = 0,
             DoNotDestroyWxWindow = 1 << 0,
             CreatingWxWindow = 1 << 1,
-            ClientSizeCacheValid = 1 << 2,
             UserPaint = 1 << 3,
             InitInProgress = 1 << 4,
             PostInitWxWindowRecreationPending = 1 << 5,
@@ -312,13 +294,8 @@ namespace Alternet::UI
         FlagsAccessor<ControlFlags> _flags;
 
         int _beginUpdateCount = 0;
-        Size _clientSizeCache;
 
         DelayedFlags<Control, DelayedControlFlags> _delayedFlags;
-        DelayedValue<Control, Rect> _bounds;
-
-        DelayedValue<Control, Size> _minimumSize;
-        DelayedValue<Control, Size> _maximumSize;
 
         DelayedValues _delayedValues;
 
@@ -326,12 +303,8 @@ namespace Alternet::UI
 
         optional<string> _toolTip;
 
-        Size _appliedMinimumSize;
-        Size _appliedMaximumSize;
         int _scrollbarEvtKind = 0;
         int _scrollbarEvtPosition = 0;
-
-        optional<Size> CoerceSize(const Size& value);
 
         static DragDropEffects GetDragDropEffects(wxDragResult input);
         static wxDragResult GetDragResult(DragDropEffects input);
@@ -358,8 +331,6 @@ namespace Alternet::UI
         void ApplyToolTip();
 
         void DestroyWxWindow();
-
-        Size GetClientSizeCore();
 
         static ControlsByWxWindowsMap s_controlsByWxWindowsMap;
 

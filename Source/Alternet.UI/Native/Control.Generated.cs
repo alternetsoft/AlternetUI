@@ -648,36 +648,6 @@ namespace Alternet.UI.Native
             }
         }
         
-        public Alternet.Drawing.SizeD MinimumSize
-        {
-            get
-            {
-                CheckDisposed();
-                return NativeApi.Control_GetMinimumSize_(NativePointer);
-            }
-            
-            set
-            {
-                CheckDisposed();
-                NativeApi.Control_SetMinimumSize_(NativePointer, value);
-            }
-        }
-        
-        public Alternet.Drawing.SizeD MaximumSize
-        {
-            get
-            {
-                CheckDisposed();
-                return NativeApi.Control_GetMaximumSize_(NativePointer);
-            }
-            
-            set
-            {
-                CheckDisposed();
-                NativeApi.Control_SetMaximumSize_(NativePointer, value);
-            }
-        }
-        
         public void SetAllowDefaultContextMenu(bool value)
         {
             CheckDisposed();
@@ -1575,18 +1545,6 @@ namespace Alternet.UI.Native
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void Control_SetFont_(IntPtr obj, IntPtr value);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern Alternet.Drawing.SizeD Control_GetMinimumSize_(IntPtr obj);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void Control_SetMinimumSize_(IntPtr obj, Alternet.Drawing.SizeD value);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern Alternet.Drawing.SizeD Control_GetMaximumSize_(IntPtr obj);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void Control_SetMaximumSize_(IntPtr obj, Alternet.Drawing.SizeD value);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void Control_SetAllowDefaultContextMenu_(IntPtr obj, bool value);

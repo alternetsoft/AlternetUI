@@ -107,20 +107,6 @@ namespace Alternet::UI
     {
     }
 
-    void MenuItem::ApplyBounds(const Rect& value)
-    {
-    }
-
-    Rect MenuItem::RetrieveBounds()
-    {
-        return Rect();
-    }
-
-    Size MenuItem::SizeToClientSize(const Size& size)
-    {
-        return size;
-    }
-
     bool MenuItem::GetEnabled()
     {
         return _flags.IsSet(MenuItemFlags::Enabled);

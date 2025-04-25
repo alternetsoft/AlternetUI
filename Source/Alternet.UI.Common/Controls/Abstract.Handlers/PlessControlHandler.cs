@@ -71,10 +71,6 @@ namespace Alternet.UI
             }
         }
 
-        SizeD IControlHandler.MinimumSize { get; set; }
-
-        SizeD IControlHandler.MaximumSize { get; set; }
-
         /// <inheritdoc/>
         public virtual Color BackgroundColor { get; set; } = SystemColors.Window;
 

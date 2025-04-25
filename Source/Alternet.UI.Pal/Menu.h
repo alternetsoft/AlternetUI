@@ -44,8 +44,10 @@ namespace Alternet::UI
         void UnregisterWxMenu();
     protected:
 
-        void ApplyBounds(const Rect& value) override;
         void ShowCore() override;
+
+        RectD GetBounds() override { return RectD(); }
+        void SetBounds(const RectD& value) override {}
 
     private:
 

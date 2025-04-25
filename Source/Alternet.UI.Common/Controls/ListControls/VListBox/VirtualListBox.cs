@@ -31,7 +31,7 @@ namespace Alternet.UI
     /// properties provide access to
     /// the three collections that are used by the control.
     /// </remarks>
-    public class VirtualListBox : VirtualListControl, IListControl
+    public partial class VirtualListBox : VirtualListControl, IListControl
     {
         private static SetItemsKind defaultSetItemsKind = SetItemsKind.ChangeField;
 
@@ -176,7 +176,7 @@ namespace Alternet.UI
                 if (BorderStyle == value)
                     return;
                 base.BorderStyle = value;
-                UpdateScrollBar();
+                UpdateScrollBars();
             }
         }
 
@@ -385,7 +385,7 @@ namespace Alternet.UI
 
             firstVisibleItem = row;
 
-            UpdateScrollBar();
+            UpdateScrollBars();
             Invalidate();
 
             return true;
@@ -906,38 +906,43 @@ namespace Alternet.UI
 
         /// <summary>
         /// Determines the index of the last visible item in the control and calculates
-        /// the total height of visible items.
+        /// the total height and maximal width of visible items.
         /// </summary>
-        /// <param name="visibleItemsHeight">Outputs the total height of all visible
-        /// items in device-independent units.</param>
+        /// <param name="visibleHeight">Outputs the total height
+        /// of all visible items in device-independent units.</param>
+        /// <param name="maxWidth">Outputs the maximal width
+        /// of all visible items in device-independent units.</param>
         /// <returns>The zero-based index of the last visible item in the control.</returns>
-        public virtual int GetVisibleEnd(out Coord visibleItemsHeight)
+        public virtual int GetVisibleEnd(out Coord maxWidth, out Coord visibleHeight)
         {
+            maxWidth = 0;
+
             if (DisposingOrDisposed || Count == 0)
             {
-                visibleItemsHeight = 0;
+                visibleHeight = 0;
                 return default;
             }
 
             MeasureItemEventArgs e = new(MeasureCanvas);
             var sWindow = ClientSize.Height;
-            Coord s = 0;
+            Coord totalHeight = 0;
             var firstItem = GetVisibleBegin();
 
             int unit;
 
             for (unit = firstItem; unit < Count; ++unit)
             {
-                if (s > sWindow)
+                if (totalHeight > sWindow)
                     break;
 
                 e.Index = unit;
                 MeasureItemSize(e);
 
-                s += e.ItemHeight;
+                totalHeight += e.ItemHeight;
+                maxWidth = Math.Max(maxWidth, e.ItemWidth);
             }
 
-            visibleItemsHeight = s;
+            visibleHeight = totalHeight;
             return unit;
         }
 
@@ -948,7 +953,7 @@ namespace Alternet.UI
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public int GetVisibleEnd()
         {
-            return GetVisibleEnd(out _);
+            return GetVisibleEnd(out _, out _);
         }
 
         /// <inheritdoc/>
@@ -1207,31 +1212,96 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Calculates the page size for the vertical scrollbar based on the number of visible items
-        /// and their total height within the control's client area.
+        /// Calculates the position information for the scrollbars based on the number of visible items
+        /// and their total height and maximal width.
         /// </summary>
-        /// <returns>
-        /// The number of items that can fit within the visible area of the control, adjusted
-        /// to account for partially visible items at the bottom of the control.
-        /// </returns>
-        public virtual int GetVertScrollBarPageSize()
+        public virtual void CalcScrollBarInfo(out ScrollBarInfo horzScrollbar, out ScrollBarInfo vertScrollbar)
         {
+            HiddenOrVisible vertVisibility = HiddenOrVisible.Auto;
+            HiddenOrVisible horzVisibility = HiddenOrVisible.Auto;
+
+            if (Count == 0)
+            {
+                horzScrollbar = new(horzVisibility);
+                vertScrollbar = new(vertVisibility);
+                return;
+            }
+
             Coord sWindow = ClientSize.Height;
 
             var visibleBegin = GetVisibleBegin();
-            var visibleEnd = GetVisibleEnd(out var s);
-            var visibleItems = visibleEnd - visibleBegin;
+            var visibleEnd = GetVisibleEnd(out Coord maxWidth, out var visibleHeight);
+            var visibleItemsCount = visibleEnd - visibleBegin;
 
-            int unitsPageSize = visibleItems;
-            if (s > sWindow)
+            int pageHeightInUnits = visibleItemsCount;
+            if (visibleHeight > sWindow)
             {
                 // last unit is only partially visible, we still need the scrollbar and
                 // so we have to "fix" pageSize because if it is equal to m_unitMax
                 // the scrollbar is not shown at all under MSW
-                --unitsPageSize;
+                --pageHeightInUnits;
             }
 
-            return unitsPageSize;
+            horzScrollbar = new((int)scrollOffset, (int)maxWidth, (int)ClientSize.Width);
+            vertScrollbar = new(firstVisibleItem, Count, pageHeightInUnits);
+            horzScrollbar.Visibility = horzVisibility;
+            vertScrollbar.Visibility = vertVisibility;
+        }
+
+        /// <summary>
+        /// Sets horizontal scroll offset.
+        /// </summary>
+        /// <param name="value">Value of the horizontal scroll offset in device-independent units.</param>
+        public virtual void SetHorizontalOffset(Coord value)
+        {
+            var newOffset = Math.Max(value, 0);
+            if (newOffset != scrollOffset)
+            {
+                scrollOffset = newOffset;
+                Refresh();
+            }
+        }
+
+        /// <summary>
+        /// Increments horizontal scroll offset.
+        /// </summary>
+        /// <param name="delta">Increment value in device-independent units.</param>
+        public virtual void IncHorizontalOffset(Coord delta)
+        {
+            SetHorizontalOffset(scrollOffset + delta);
+        }
+
+        /// <summary>
+        /// Retrieves the width of a single character using the font returned by
+        /// <see cref="VirtualListControl.GetItemFont"/>.
+        /// </summary>
+        /// <returns>
+        /// A <see cref="Coord"/> representing the width of the character.
+        /// </returns>
+        public virtual Coord GetCharWidth()
+        {
+            var result = MeasureCanvas.GetTextExtent("W", GetItemFont()).Width;
+            if (result <= 0)
+                result = 16;
+            return result;
+        }
+
+        /// <summary>
+        /// Increments horizontal scroll offset on the value specified in characters.
+        /// </summary>
+        /// <param name="chars">Increment value in chars.</param>
+        public virtual void IncHorizontalOffsetChars(int chars = 1)
+        {
+            IncHorizontalOffset(chars * GetCharWidth());
+        }
+
+        /// <summary>
+        /// Sets horizontal scroll offset to the value specified in characters.
+        /// </summary>
+        /// <param name="offsetInChars">New horizontal scroll offset value in chars.</param>
+        public virtual void SetHorizontalOffsetChars(int offsetInChars)
+        {
+            SetHorizontalOffset(offsetInChars * GetCharWidth());
         }
 
         /// <summary>
@@ -1256,7 +1326,12 @@ namespace Alternet.UI
             return null;
         }
 
-        internal void RunKeyDown(Key key, ModifierKeys modifiers = UI.ModifierKeys.None)
+        /// <summary>
+        /// Simulates the key press event by creating and dispatching a <see cref="KeyEventArgs"/>.
+        /// </summary>
+        /// <param name="key">The key that was pressed.</param>
+        /// <param name="modifiers">Optional modifier keys associated with the key press.</param>
+        protected virtual void RunKeyDown(Key key, ModifierKeys modifiers = UI.ModifierKeys.None)
         {
             KeyEventArgs e = new();
             e.Key = key;
@@ -1264,138 +1339,15 @@ namespace Alternet.UI
             OnKeyDown(e);
         }
 
-        internal void CountChanged()
+        /// <summary>
+        /// Responds to changes in the item count by updating the scrollbars and invalidating the control.
+        /// </summary>
+        protected virtual void CountChanged()
         {
             if (DisposingOrDisposed || InUpdates)
                 return;
-            UpdateScrollBar();
+            UpdateScrollBars();
             Invalidate();
-        }
-
-        /// <inheritdoc/>
-        protected override void OnKeyDown(KeyEventArgs e)
-        {
-            if (DisposingOrDisposed)
-                return;
-
-            if (Count == 0)
-            {
-                base.OnKeyDown(e);
-                return;
-            }
-
-            ItemClickFlags flags = ItemClickFlags.Keyboard;
-
-            var selected = SelectedIndex;
-
-            int current = 0;
-
-            switch (e.Key)
-            {
-                case Key.A:
-                    if (e.Control)
-                    {
-                        SelectAll();
-                        e.Suppressed();
-                    }
-
-                    return;
-
-                case Key.Home:
-                    if (e.Control)
-                    {
-                        DoInsideUpdate(() => scrollOffset = 0);
-                        e.Suppressed();
-                        return;
-                    }
-                    else
-                    {
-                        current = 0;
-                    }
-
-                    break;
-
-                case Key.End:
-                    current = Count - 1;
-                    break;
-
-                case Key.Down:
-                    if (selected is null)
-                    {
-                        SelectedIndex = 0;
-                        e.Suppressed();
-                        return;
-                    }
-                    else
-                    if (selected >= Count - 1)
-                    {
-                        e.Suppressed();
-                        return;
-                    }
-
-                    current = selected.Value + 1;
-                    break;
-
-                case Key.Up:
-                    if (selected is null)
-                    {
-                        SelectedIndex = Count - 1;
-                        e.Suppressed();
-                        return;
-                    }
-                    else
-                    if (selected <= 0)
-                    {
-                        e.Suppressed();
-                        return;
-                    }
-
-                    current = selected.Value - 1;
-                    break;
-
-                case Key.PageDown:
-                    current = GetIndexOnNextPage() ?? 0;
-                    break;
-
-                case Key.PageUp:
-                    current = GetIndexOnPreviousPage() ?? 0;
-                    break;
-
-                case Key.Left:
-                    if (e.Control)
-                        IncHorizontalOffsetChars(-4);
-                    else
-                        IncHorizontalOffsetChars(-1);
-                    e.Suppressed();
-                    return;
-                case Key.Right:
-                    if (e.Control)
-                        IncHorizontalOffsetChars(4);
-                    else
-                        IncHorizontalOffsetChars(1);
-                    e.Suppressed();
-                    return;
-
-                case Key.Space:
-                    // hack: pressing space should work like a mouse click rather than
-                    // like a keyboard arrow press, so trick DoHandleItemClick() in
-                    // thinking we were clicked.
-                    flags &= ~ItemClickFlags.Keyboard;
-                    current = selected ?? 0;
-                    break;
-
-                default:
-                    return;
-            }
-
-            e.Suppressed();
-
-            if (e.Shift)
-                flags |= ItemClickFlags.Shift;
-            if (e.Control)
-                flags |= ItemClickFlags.Ctrl;
-
-            DoHandleItemClick(current, flags);
         }
 
         /// <inheritdoc/>
@@ -1419,7 +1371,7 @@ namespace Alternet.UI
         protected override void OnSizeChanged(EventArgs e)
         {
             base.OnSizeChanged(e);
-            UpdateScrollBar();
+            UpdateScrollBars();
         }
 
         /// <inheritdoc/>
@@ -1475,117 +1427,6 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Increments horizontal scroll offset.
-        /// </summary>
-        /// <param name="delta">Increment value in device-independent units.</param>
-        protected void IncHorizontalOffset(Coord delta)
-        {
-            var newOffset = Math.Max(scrollOffset + delta, 0);
-            if (newOffset != scrollOffset)
-            {
-                scrollOffset = newOffset;
-                Refresh();
-            }
-        }
-
-        /// <summary>
-        /// Increments horizontal scroll offset.
-        /// </summary>
-        /// <param name="chars">Increment value in chars.</param>
-        protected void IncHorizontalOffsetChars(int chars = 1)
-        {
-            Coord CharWidth() => MeasureCanvas.GetTextExtent("W", GetItemFont()).Width;
-            IncHorizontalOffset(chars * CharWidth());
-        }
-
-        /// <inheritdoc/>
-        protected override void OnScroll(ScrollEventArgs e)
-        {
-            int? idx;
-
-            if (DisposingOrDisposed)
-                return;
-
-            base.OnScroll(e);
-
-            if (e.IsVertical)
-            {
-                switch (e.Type)
-                {
-                    case ScrollEventType.SmallDecrement:
-                        ScrollToRow(TopIndex - 1);
-                        break;
-                    case ScrollEventType.SmallIncrement:
-                        ScrollToRow(TopIndex + 1);
-                        break;
-                    case ScrollEventType.LargeDecrement:
-                        idx = GetIndexOnPreviousPage(TopIndex);
-                        if (idx is not null)
-                        {
-                            ScrollToRow(Math.Min(idx.Value + 1, TopIndex));
-                        }
-
-                        break;
-                    case ScrollEventType.LargeIncrement:
-                        idx = GetIndexOnNextPage(TopIndex);
-                        if(idx is not null)
-                        {
-                            ScrollToRow(Math.Max(idx.Value - 1, TopIndex));
-                        }
-
-                        break;
-                    case ScrollEventType.ThumbPosition:
-                        break;
-                    case ScrollEventType.ThumbTrack:
-                        ScrollToRow(e.NewValue);
-                        break;
-                    case ScrollEventType.First:
-                        ScrollToRow(0);
-                        break;
-                    case ScrollEventType.Last:
-                        ScrollToRow(Count - 1);
-                        break;
-                    case ScrollEventType.EndScroll:
-                        break;
-                    default:
-                        break;
-                }
-            }
-            else
-            {
-                switch (e.Type)
-                {
-                    case ScrollEventType.SmallDecrement:
-                        IncHorizontalOffsetChars(-1);
-                        break;
-                    case ScrollEventType.SmallIncrement:
-                        IncHorizontalOffsetChars(1);
-                        break;
-                    case ScrollEventType.LargeDecrement:
-                        IncHorizontalOffsetChars(-4);
-                        break;
-                    case ScrollEventType.LargeIncrement:
-                        IncHorizontalOffsetChars(4);
-                        break;
-                    case ScrollEventType.ThumbPosition:
-                        break;
-                    case ScrollEventType.ThumbTrack:
-                        break;
-                    case ScrollEventType.First:
-                        scrollOffset = 0;
-                        Invalidate();
-                        break;
-                    case ScrollEventType.Last:
-                        break;
-                    case ScrollEventType.EndScroll:
-                        break;
-                    default:
-                        break;
-                }
-            }
-        }
-
-        /// <summary>
         /// Called when the <see cref="MeasureItem" /> event is raised.</summary>
         /// <param name="e">A <see cref="MeasureItemEventArgs" /> that
         /// contains the event data.</param>
@@ -1611,29 +1452,15 @@ namespace Alternet.UI
         protected override void OnHandleCreated(EventArgs e)
         {
             base.OnHandleCreated(e);
+            UpdateScrollBars();
         }
 
         /// <inheritdoc/>
-        protected override void UpdateHorzScrollBar()
+        protected override void UpdateScrollBars()
         {
-        }
-
-        /// <inheritdoc/>
-        protected override void UpdateVertScrollBar()
-        {
-            if (Count == 0)
-            {
-                SetScrollBar(isVertical: true, HiddenOrVisible.Auto, 0, 0, 0);
-                return;
-            }
-
-            var pageSize = GetVertScrollBarPageSize();
-            SetScrollBar(
-                isVertical: true,
-                HiddenOrVisible.Auto,
-                firstVisibleItem,
-                pageSize,
-                Count);
+            CalcScrollBarInfo(out var horzScrollbar, out var vertScrollbar);
+            VertScrollBarInfo = vertScrollbar;
+            HorzScrollBarInfo = horzScrollbar;
         }
 
         /// <summary>
@@ -1758,6 +1585,204 @@ namespace Alternet.UI
                 var savedAnchor = AnchorIndex;
                 SetSelectedIndex(item, clearSelection: false, setSelected: setSelected);
                 AnchorIndex = savedAnchor;
+            }
+        }
+
+        /// <inheritdoc/>
+        protected override void OnKeyDown(KeyEventArgs e)
+        {
+            if (DisposingOrDisposed)
+                return;
+
+            if (Count == 0)
+            {
+                base.OnKeyDown(e);
+                return;
+            }
+
+            ItemClickFlags flags = ItemClickFlags.Keyboard;
+
+            var selected = SelectedIndex;
+
+            int current = 0;
+
+            switch (e.Key)
+            {
+                case Key.A:
+                    if (e.Control)
+                    {
+                        SelectAll();
+                        e.Suppressed();
+                    }
+
+                    return;
+
+                case Key.Home:
+                    if (e.Control)
+                    {
+                        SetHorizontalOffset(0);
+                        e.Suppressed();
+                        return;
+                    }
+                    else
+                    {
+                        current = 0;
+                    }
+
+                    break;
+
+                case Key.End:
+                    current = Count - 1;
+                    break;
+
+                case Key.Down:
+                    if (selected is null)
+                    {
+                        SelectedIndex = 0;
+                        e.Suppressed();
+                        return;
+                    }
+                    else
+                    if (selected >= Count - 1)
+                    {
+                        e.Suppressed();
+                        return;
+                    }
+
+                    current = selected.Value + 1;
+                    break;
+
+                case Key.Up:
+                    if (selected is null)
+                    {
+                        SelectedIndex = Count - 1;
+                        e.Suppressed();
+                        return;
+                    }
+                    else
+                    if (selected <= 0)
+                    {
+                        e.Suppressed();
+                        return;
+                    }
+
+                    current = selected.Value - 1;
+                    break;
+
+                case Key.PageDown:
+                    current = GetIndexOnNextPage() ?? 0;
+                    break;
+
+                case Key.PageUp:
+                    current = GetIndexOnPreviousPage() ?? 0;
+                    break;
+
+                case Key.Left:
+                    if (e.Control)
+                        IncHorizontalOffsetChars(-4);
+                    else
+                        IncHorizontalOffsetChars(-1);
+                    e.Suppressed();
+                    return;
+                case Key.Right:
+                    if (e.Control)
+                        IncHorizontalOffsetChars(4);
+                    else
+                        IncHorizontalOffsetChars(1);
+                    e.Suppressed();
+                    return;
+
+                case Key.Space:
+                    // hack: pressing space should work like a mouse click rather than
+                    // like a keyboard arrow press, so trick DoHandleItemClick() in
+                    // thinking we were clicked.
+                    flags &= ~ItemClickFlags.Keyboard;
+                    current = selected ?? 0;
+                    break;
+
+                default:
+                    return;
+            }
+
+            e.Suppressed();
+
+            if (e.Shift)
+                flags |= ItemClickFlags.Shift;
+            if (e.Control)
+                flags |= ItemClickFlags.Ctrl;
+
+            DoHandleItemClick(current, flags);
+        }
+
+        /// <inheritdoc/>
+        protected override void OnScroll(ScrollEventArgs e)
+        {
+            if (DisposingOrDisposed)
+                return;
+
+            base.OnScroll(e);
+
+            if (e.IsVertical)
+            {
+                switch (e.Type)
+                {
+                    case ScrollEventType.SmallDecrement:
+                        DoActionScrollLineUp();
+                        break;
+                    case ScrollEventType.SmallIncrement:
+                        DoActionScrollLineDown();
+                        break;
+                    case ScrollEventType.LargeDecrement:
+                        DoActionScrollPageUp();
+                        break;
+                    case ScrollEventType.LargeIncrement:
+                        DoActionScrollPageDown();
+                        break;
+                    case ScrollEventType.ThumbTrack:
+                        ScrollToRow(e.NewValue);
+                        break;
+                    case ScrollEventType.First:
+                        DoActionScrollToFirstLine();
+                        break;
+                    case ScrollEventType.Last:
+                        DoActionScrollToLastLine();
+                        break;
+                    case ScrollEventType.ThumbPosition:
+                    case ScrollEventType.EndScroll:
+                    default:
+                        break;
+                }
+            }
+            else
+            {
+                switch (e.Type)
+                {
+                    case ScrollEventType.SmallDecrement:
+                        IncHorizontalOffsetChars(-1);
+                        break;
+                    case ScrollEventType.SmallIncrement:
+                        IncHorizontalOffsetChars(1);
+                        break;
+                    case ScrollEventType.LargeDecrement:
+                        IncHorizontalOffsetChars(-4);
+                        break;
+                    case ScrollEventType.LargeIncrement:
+                        IncHorizontalOffsetChars(4);
+                        break;
+                    case ScrollEventType.ThumbPosition:
+                        break;
+                    case ScrollEventType.ThumbTrack:
+                        break;
+                    case ScrollEventType.First:
+                        SetHorizontalOffset(0);
+                        break;
+                    case ScrollEventType.Last:
+                        break;
+                    case ScrollEventType.EndScroll:
+                        break;
+                    default:
+                        break;
+                }
             }
         }
     }

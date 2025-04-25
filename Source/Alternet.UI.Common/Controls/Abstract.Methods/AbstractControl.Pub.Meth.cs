@@ -1231,9 +1231,7 @@ namespace Alternet.UI
                     newSize = SizeD.Max(newSize, ClientSize);
                 }
 
-                // We need to use here client size as, for example,
-                // window has title bar and thick border.
-                ClientSize = newSize;
+                Size = newSize + InteriorSize;
             }
         }
 

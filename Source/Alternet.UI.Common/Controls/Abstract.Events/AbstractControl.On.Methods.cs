@@ -104,7 +104,7 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Called when the conrol's handle is created.
+        /// Called when the control's handle is created.
         /// </summary>
         /// <param name="e">An <see cref="EventArgs"/> that contains the
         /// event data.</param>
@@ -114,7 +114,7 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Called when the native conrol size is changed.
+        /// Called when the native control size is changed.
         /// </summary>
         /// <param name="e">An <see cref="EventArgs"/> that contains the
         /// event data.</param>
@@ -142,7 +142,7 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Called when the native conrol location is changed.
+        /// Called when the native control location is changed.
         /// </summary>
         /// <param name="e">An <see cref="EventArgs"/> that contains the
         /// event data.</param>
@@ -152,7 +152,7 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Called when the conrol's handle is destroyed.
+        /// Called when the control's handle is destroyed.
         /// </summary>
         /// <param name="e">An <see cref="EventArgs"/> that contains the
         /// event data.</param>

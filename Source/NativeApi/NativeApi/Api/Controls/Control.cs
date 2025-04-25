@@ -130,8 +130,8 @@ namespace NativeApi.Api
         public bool AllowDrop { get; set; }
         public SizeD Size { get; set; }
         public PointD Location { get; set; }
-        public RectD Bounds { get; set; }
-        public RectI BoundsI { get; set; }
+        public virtual RectD Bounds { get; set; }
+        public virtual RectI BoundsI { get; set; }
         public RectD EventBounds { get; }
 
         public SizeD ClientSize { get; set; }
@@ -145,8 +145,6 @@ namespace NativeApi.Api
         public Color BackgroundColor { get; set; }
         public Color ForegroundColor { get; set; }
         public Font? Font { get; set; }
-        public SizeD MinimumSize { get; set; }
-        public SizeD MaximumSize { get; set; }
 
         public static Control? HitTest(PointD screenPoint) => default;
         public static Control? GetFocusedControl() => default;

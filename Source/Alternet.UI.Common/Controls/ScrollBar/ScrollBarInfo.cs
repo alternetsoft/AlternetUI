@@ -39,7 +39,17 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="ScrollBarInfo"/> struct.
+        /// Initializes a new instance of the <see cref="ScrollBarInfo"/> struct
+        /// with the specified visibility.
+        /// </summary>
+        public ScrollBarInfo(HiddenOrVisible visibility)
+        {
+            this.visibility = visibility;
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ScrollBarInfo"/> struct
+        /// with the specified position, range and page size properties.
         /// </summary>
         /// <param name="position">The position of the scrollbar in scroll units.</param>
         /// <param name="range">The maximum position of the scrollbar.</param>

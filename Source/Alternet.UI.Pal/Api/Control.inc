@@ -87,11 +87,11 @@ void SetSize(const SizeD& value);
 PointD GetLocation();
 void SetLocation(const PointD& value);
 
-RectD GetBounds();
-void SetBounds(const RectD& value);
+virtual RectD GetBounds();
+virtual void SetBounds(const RectD& value);
 
-RectI GetBoundsI();
-void SetBoundsI(const RectI& value);
+virtual RectI GetBoundsI();
+virtual void SetBoundsI(const RectI& value);
 
 RectD GetEventBounds();
 
@@ -123,12 +123,6 @@ void SetForegroundColor(const Color& value);
 
 Font* GetFont();
 void SetFont(Font* value);
-
-SizeD GetMinimumSize();
-void SetMinimumSize(const SizeD& value);
-
-SizeD GetMaximumSize();
-void SetMaximumSize(const SizeD& value);
 
 void SetAllowDefaultContextMenu(bool value);
 void SetScrollBar(ScrollBarOrientation orientation, HiddenOrVisible visible, int value, int largeChange, int maximum);

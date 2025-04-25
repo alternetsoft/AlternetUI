@@ -104,18 +104,6 @@ namespace Alternet.UI
             }
         }
 
-        public SizeD MinimumSize
-        {
-            get => NativeControl.MinimumSize;
-            set => NativeControl.MinimumSize = value;
-        }
-
-        public SizeD MaximumSize
-        {
-            get => NativeControl.MaximumSize;
-            set => NativeControl.MaximumSize = value;
-        }
-
         public Color BackgroundColor
         {
             get => NativeControl.BackgroundColor;

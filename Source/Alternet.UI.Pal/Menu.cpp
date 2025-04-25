@@ -109,10 +109,6 @@ namespace Alternet::UI
         return _parentMenuItem->FindParentMainMenu();
     }
 
-    void Menu::ApplyBounds(const Rect& value)
-    {
-    }
-
     std::vector<MenuItem*> Menu::GetItems()
     {
         return _items;

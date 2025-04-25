@@ -828,7 +828,7 @@ namespace Alternet.UI
                 }
             });
 
-            UpdateScrollBar();
+            UpdateScrollBars();
         }
 
         /// <summary>

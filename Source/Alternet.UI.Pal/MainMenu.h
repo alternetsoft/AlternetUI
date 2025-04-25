@@ -23,11 +23,14 @@ namespace Alternet::UI
         bool IsItemHidden(Menu* item);
     protected:
         void ApplyEnabled(bool value) override;
-        void ApplyBounds(const Rect& value) override;
 
         void OnWxWindowDestroyed(wxWindow* window) override;
 
         void OnEndInit() override;
+
+        RectD GetBounds() override { return RectD(); }
+        void SetBounds(const RectD& value) override {}
+
     private:
         void ApplyItemRoles();
 

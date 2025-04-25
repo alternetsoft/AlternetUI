@@ -115,9 +115,6 @@
         <Label Text="Bounds" Margin="0,0,0,5"/>
         <Button Name="setSizeButton" Click="SetSizeButton_Click"
             Text="Size = (300, 300)" Margin="0,0,0,5" IsTextLocalized="true" />
-        <Button Name="setClientSizeButton" Click="SetClientSizeButton_Click"
-            Text="Client Size = (300, 300)" IsTextLocalized="true"
-            Margin="0,0,0,5"/>
         <Button Name="increaseLocationButton" Click="IncreaseLocationButton_Click"
             Text="Location += (10, 10)" Margin="0,0,0,5" IsTextLocalized="true" />
         <Button Name="setBoundsButton" Click="SetBoundsButton_Click"

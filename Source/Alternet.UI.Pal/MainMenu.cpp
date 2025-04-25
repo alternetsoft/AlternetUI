@@ -23,10 +23,6 @@ namespace Alternet::UI
     {
     }
 
-    void MainMenu::ApplyBounds(const Rect& value)
-    {
-    }
-
     void MainMenu::ApplyItemRoles()
     {
 #ifdef __WXOSX_COCOA__

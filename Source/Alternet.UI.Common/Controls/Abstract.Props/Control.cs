@@ -10,7 +10,7 @@ namespace Alternet.UI
     /// <summary>
     /// Control handled by the operating system.
     /// </summary>
-    public class Control : AbstractControl
+    public partial class Control : AbstractControl
     {
         /// <summary>
         /// Gets an empty control for use in the different places.
@@ -142,20 +142,15 @@ namespace Alternet.UI
             {
                 if (IsDummy)
                     return SizeD.Empty;
-                return SafeHandler?.ClientSize ?? SizeD.Empty;
-            }
+                var result = SafeHandler?.ClientSize ?? SizeD.Empty;
 
-            set
-            {
-                value = value.ApplyMinMax(MinimumSize, MaximumSize);
+                var size = Size;
+                if (result.Width <= 0)
+                    result.Width = size.Width;
+                if (result.Height <= 0)
+                    result.Height = size.Height;
 
-                if (ClientSize == value || SafeHandler is null)
-                    return;
-
-                DoInsideLayout(() =>
-                {
-                    Handler.ClientSize = value;
-                });
+                return result;
             }
         }
 
@@ -185,50 +180,6 @@ namespace Alternet.UI
                 if (Bounds == value || DisposingOrDisposed)
                     return;
                 Handler.Bounds = value;
-            }
-        }
-
-        /// <inheritdoc/>
-        public override SizeD MinimumSize
-        {
-            get
-            {
-                return base.MinimumSize;
-            }
-
-            set
-            {
-                value.Width = Math.Max(0, value.Width);
-                value.Height = Math.Max(0, value.Height);
-                if (MinimumSize == value || DisposingOrDisposed)
-                    return;
-                DoInsideLayout(() =>
-                {
-                    Handler.MinimumSize = value;
-                    base.MinimumSize = value;
-                });
-            }
-        }
-
-        /// <inheritdoc/>
-        public override SizeD MaximumSize
-        {
-            get
-            {
-                return base.MaximumSize;
-            }
-
-            set
-            {
-                value.Width = Math.Max(0, value.Width);
-                value.Height = Math.Max(0, value.Height);
-                if (MaximumSize == value || DisposingOrDisposed)
-                    return;
-                DoInsideLayout(() =>
-                {
-                    base.MaximumSize = value;
-                    Handler.MaximumSize = value;
-                });
             }
         }
 

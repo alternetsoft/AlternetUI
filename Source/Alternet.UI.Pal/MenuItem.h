@@ -57,11 +57,10 @@ namespace Alternet::UI
 
         void ShowCore() override;
 
-        Rect RetrieveBounds() override;
-        void ApplyBounds(const Rect& value) override;
-        Size SizeToClientSize(const Size& size) override;
-
         void UpdateWxWindowParent() override;
+
+        RectD GetBounds() override { return RectD(); }
+        void SetBounds(const RectD& value) override {}
 
     private:
 

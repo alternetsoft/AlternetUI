@@ -224,13 +224,7 @@ namespace Alternet::UI
                 {DelayedControlFlags::Enabled, std::make_tuple(&Control::RetrieveEnabled,
                     &Control::ApplyEnabled)},
             }),
-            _bounds(*this, Rect(), &Control::IsWxWindowCreated, &Control::RetrieveBounds,
-                &Control::ApplyBounds),
-            _minimumSize(*this, Size(), &Control::IsWxWindowCreated,
-                    &Control::RetrieveMinimumSize, &Control::ApplyMinimumSize),
-            _maximumSize(*this, Size(), &Control::IsWxWindowCreated,
-                &Control::RetrieveMaximumSize, &Control::ApplyMaximumSize),
-            _delayedValues({&_delayedFlags, &_bounds, &_minimumSize,&_maximumSize})
+            _delayedValues({&_delayedFlags})
     {
     }
 
@@ -255,11 +249,6 @@ namespace Alternet::UI
         window->PopupMenu((wxMenu*)menu, sx, sy);
     }
 
-    Size Control::RetrieveMinimumSize()
-    {
-        return _appliedMinimumSize;
-    }
-
     void Control::LogRectMethod(wxString name, const Rect& value, const wxRect& wx)
     {
         auto dips = value.ToString();
@@ -280,104 +269,6 @@ namespace Alternet::UI
         auto s = methodName + ": " + value.ToString() + ", minSize: " + minSize.ToString() + 
             ", maxSize: " + maxSize.ToString();
         Application::Log(s);
-    }
-
-    void Control::ApplyMinimumSize(const Size& value)
-    {
-        auto window = GetWxWindow();
-        if (value.Width <= 0 && value.Height <= 0)
-        {
-            if (window->GetMinSize() != wxDefaultSize)
-                window->SetMinSize(wxDefaultSize);
-            return;
-        }
-
-        auto size = fromDip(value, window);
-        window->SetMinSize(size);
-    }
-
-    Size Control::GetMinimumSize()
-    {
-        return _minimumSize.Get();
-    }
-
-    void Control::SetMinimumSize(const Size& value)
-    {
-        _minimumSize.Set(value);
-        _appliedMinimumSize = value;
-        auto limited = CoerceSize(GetSize());
-         if (limited.has_value())
-            SetSize(limited.value());
-    }
-
-    optional<Size> Control::CoerceSize(const Size& value)
-    {
-        auto minSize = GetMinimumSize();
-        auto maxSize = GetMaximumSize();
-
-        bool limitNeeded = false;
-        Size limitedSize = value;
-
-        if (minSize.Width > 0 && minSize.Width > value.Width)
-        {
-            limitedSize.Width = minSize.Width;
-            limitNeeded = true;
-        }
-
-        if (minSize.Height > 0 && minSize.Height > value.Height)
-        {
-            limitedSize.Height = minSize.Height;
-            limitNeeded = true;
-        }
-
-        if (maxSize.Width > 0 && maxSize.Width < value.Width)
-        {
-            limitedSize.Width = maxSize.Width;
-            limitNeeded = true;
-        }
-
-        if (maxSize.Height > 0 && maxSize.Height < value.Height)
-        {
-            limitedSize.Height = maxSize.Height;
-            limitNeeded = true;
-        }
-
-        if (limitNeeded)
-            return limitedSize;
-        else
-            return nullopt;
-    }
-
-    Size Control::GetMaximumSize()
-    {
-        return _maximumSize.Get();
-    }
-
-    void Control::SetMaximumSize(const Size& value)
-    {
-        _maximumSize.Set(value);
-        _appliedMaximumSize = value;
-        auto limited = CoerceSize(GetSize());
-        if (limited.has_value())
-            SetSize(limited.value());
-    }
-
-    Size Control::RetrieveMaximumSize()
-    {
-        return _appliedMaximumSize;
-    }
-
-    void Control::ApplyMaximumSize(const Size& value)
-    {
-        auto window = GetWxWindow();
-        if (value.Width <= 0 && value.Height <= 0)
-        {
-            if(window->GetMaxSize() != wxDefaultSize)
-                window->SetMaxSize(wxDefaultSize);
-            return;
-        }
-        auto size = fromDip(value, window);
-        window->SetMaxSize(size);
     }
 
     int Control::GetId()
@@ -1446,22 +1337,6 @@ namespace Alternet::UI
         GetWxWindow()->UnsetToolTip();
     }
 
-    Size Control::GetClientSize()
-    {
-        if (!_flags.IsSet(ControlFlags::ClientSizeCacheValid))
-        {
-            _clientSizeCache = GetClientSizeCore();
-            _flags.Set(ControlFlags::ClientSizeCacheValid, true);
-        }
-
-        return _clientSizeCache;
-    }
-
-    Size Control::GetClientSizeCore()
-    {
-        return SizeToClientSize(GetBounds().GetSize());
-    }
-
     Size Control::GetDPI() 
     {
         auto window = GetWxWindow();
@@ -1699,8 +1574,6 @@ namespace Alternet::UI
         if (IsNullOrDeleting())
             return;
 
-        _flags.Set(ControlFlags::ClientSizeCacheValid, false);
-
         auto wxWindow = GetWxWindow();
 
         auto location = wxWindow->GetPosition();
@@ -1792,31 +1665,24 @@ namespace Alternet::UI
         _disableRecreateCounter--;
     }
 
-    Rect Control::RetrieveBounds()
+    Size Control::GetClientSize()
+    {
+        auto wxWindow = GetWxWindow();
+        return toDip(wxWindow->GetClientSize(), wxWindow);
+    }
+
+    Rect Control::GetBounds()
     {
         auto wxWindow = GetWxWindow();
         return toDip(wxWindow->GetRect(), wxWindow);
     }
 
-    void Control::ApplyBounds(const Rect& value)
+    void Control::SetBounds(const Rect& value)
     {
-        if (value.IsEmpty())
-            return;
-
         auto wxWindow = GetWxWindow();
         wxRect rect(fromDip(value, wxWindow));
         wxWindow->SetSize(rect);
         wxWindow->Refresh();
-    }
-
-    Rect Control::GetBounds()
-    {
-        return _bounds.Get();
-    }
-
-    void Control::SetBounds(const Rect& value)
-    {
-        _bounds.Set(value);
     }
 
     RectI Control::GetBoundsI()
@@ -2426,6 +2292,10 @@ namespace Alternet::UI
     public:
         wxWindow* CreateWxWindowCore(wxWindow* parent) override;
         wxWindow* CreateWxWindowUnparented() override;
+
+        ControlNonAbstract()
+        {
+        }
 
     protected:
     private:

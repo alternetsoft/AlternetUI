@@ -310,9 +310,12 @@ namespace Alternet.UI
             var clientHeight =
                 ms.Height + toolHeight + Padding.Vertical;
             var clientWidth = ms.Width + Padding.Horizontal;
-            var newSize = (clientWidth, clientHeight);
-            ClientSize = newSize + new SizeD(1, 0);
-            ClientSize = newSize;
+            SizeD newSize = (clientWidth, clientHeight);
+
+            newSize += InteriorSize;
+
+            Size = newSize + new SizeD(1, 0);
+            Size = newSize;
             Refresh();
             PerformLayout();
         }

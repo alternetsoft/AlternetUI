@@ -69,12 +69,6 @@ namespace Alternet.UI
         /// <inheritdoc cref="AbstractControl.UserPaint"/>
         bool UserPaint { get; set; }
 
-        /// <inheritdoc cref="AbstractControl.MinimumSize"/>
-        SizeD MinimumSize { get; set; }
-
-        /// <inheritdoc cref="AbstractControl.MaximumSize"/>
-        SizeD MaximumSize { get; set; }
-
         /// <inheritdoc cref="AbstractControl.BackgroundColor"/>
         Color BackgroundColor { get; set; }
 

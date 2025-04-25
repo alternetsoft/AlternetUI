@@ -1196,24 +1196,9 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Updates the vertical scrollbar based on the current number of items
-        /// and their visibility within the control.
-        /// </summary>
-        protected abstract void UpdateVertScrollBar();
-
-        /// <summary>
-        /// Updates the horizontal scrollbar based on the current maximal width of displayed items.
-        /// </summary>
-        protected abstract void UpdateHorzScrollBar();
-
-        /// <summary>
         /// Updates the vertical and horizontal scrollbars.
         /// </summary>
-        protected virtual void UpdateScrollBar()
-        {
-            UpdateHorzScrollBar();
-            UpdateVertScrollBar();
-        }
+        protected abstract void UpdateScrollBars();
 
         /// <summary>
         /// Called when when the checkbox state of the item has changed.

@@ -847,50 +847,6 @@ ALTERNET_UI_API void Control_SetFont_(Control* obj, Font* value)
     #endif
 }
 
-ALTERNET_UI_API SizeD_C Control_GetMinimumSize_(Control* obj)
-{
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    return MarshalExceptions<SizeD_C>([&](){
-    #endif
-        return obj->GetMinimumSize();
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    });
-    #endif
-}
-
-ALTERNET_UI_API void Control_SetMinimumSize_(Control* obj, SizeD value)
-{
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    MarshalExceptions<void>([&](){
-    #endif
-        obj->SetMinimumSize(value);
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    });
-    #endif
-}
-
-ALTERNET_UI_API SizeD_C Control_GetMaximumSize_(Control* obj)
-{
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    return MarshalExceptions<SizeD_C>([&](){
-    #endif
-        return obj->GetMaximumSize();
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    });
-    #endif
-}
-
-ALTERNET_UI_API void Control_SetMaximumSize_(Control* obj, SizeD value)
-{
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    MarshalExceptions<void>([&](){
-    #endif
-        obj->SetMaximumSize(value);
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    });
-    #endif
-}
-
 ALTERNET_UI_API void Control_SetAllowDefaultContextMenu_(Control* obj, c_bool value)
 {
     #if !defined(__WXMSW__) || defined(_DEBUG)
