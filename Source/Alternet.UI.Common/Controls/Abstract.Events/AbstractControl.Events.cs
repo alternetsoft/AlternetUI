@@ -47,6 +47,11 @@ namespace Alternet.UI
         public static event EventHandler<DefaultLayoutEventArgs>? GlobalOnLayout;
 
         /// <summary>
+        /// Occurs when the context menu for the control is created.
+        /// </summary>
+        public event EventHandler? ContextMenuCreated;
+
+        /// <summary>
         /// Occurs when cell settings are changed.
         /// </summary>
         /// <remarks>

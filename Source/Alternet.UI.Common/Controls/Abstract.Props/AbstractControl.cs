@@ -638,6 +638,7 @@ namespace Alternet.UI
                 {
                     contextMenuStrip = new();
                     InitContextMenu();
+                    ContextMenuCreated?.Invoke(this, EventArgs.Empty);
                 }
 
                 return contextMenuStrip;
