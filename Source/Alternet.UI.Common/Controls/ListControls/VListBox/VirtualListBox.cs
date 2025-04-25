@@ -169,6 +169,7 @@ namespace Alternet.UI
                     horizontalScrollBarSettings.PropertyChangedAction = (e) =>
                     {
                         UpdateScrollBars();
+                        Invalidate();
                     };
                 }
 
@@ -190,6 +191,7 @@ namespace Alternet.UI
                     verticalScrollBarSettings.PropertyChangedAction = (e) =>
                     {
                         UpdateScrollBars();
+                        Invalidate();
                     };
                 }
 
@@ -1665,7 +1667,9 @@ namespace Alternet.UI
 
             var selected = SelectedIndex;
 
+#pragma warning disable
             int current = 0;
+#pragma warning restore
 
             switch (e.Key)
             {
