@@ -122,7 +122,7 @@ namespace Alternet::UI
 
     wxWindow* DateTimePicker::CreateWxWindowCore(wxWindow* parent)
     {
-        long style = GetBorderStyle();
+        long style = 0;
 
         if (!hasBorder)
             style = style | wxBORDER_NONE;

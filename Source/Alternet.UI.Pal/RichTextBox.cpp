@@ -40,7 +40,7 @@ namespace Alternet::UI
 #define wxRE_READONLY          0x0010
 #define wxRE_CENTRE_CARET      0x8000
 */
-		long style = wxRE_MULTILINE | GetBorderStyle();;
+		long style = wxRE_MULTILINE;
 
 		if (!hasBorder)
 			style = style | wxBORDER_NONE;

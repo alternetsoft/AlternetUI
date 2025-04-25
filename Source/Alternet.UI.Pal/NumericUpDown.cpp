@@ -93,7 +93,7 @@ namespace Alternet::UI
 
     wxWindow* NumericUpDown::CreateWxWindowCore(wxWindow* parent)
     {
-        long style = wxSP_ARROW_KEYS | GetBorderStyle();
+        long style = wxSP_ARROW_KEYS;
 
         if (!hasBorder)
             style = style | wxBORDER_NONE;

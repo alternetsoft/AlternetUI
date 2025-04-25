@@ -65,7 +65,7 @@ namespace Alternet::UI
 
 	wxWindow* TextBox::CreateWxWindowCore(wxWindow* parent)
 	{
-		long style = GetCreateStyle() | GetBorderStyle();
+		long style = GetCreateStyle();
 
 		TextCtrlEx* textCtrl;
 

@@ -300,7 +300,7 @@ namespace Alternet::UI
 
     wxWindow* ComboBox::CreateWxWindowCore(wxWindow* parent)
     {
-        long style = GetBorderStyle();
+        long style = 0;
 
         if (!hasBorder)
             style = style | wxBORDER_NONE;

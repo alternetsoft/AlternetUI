@@ -368,7 +368,7 @@ namespace Alternet::UI
     {
         RaiseSimpleEvent(WebBrowserEvent::BeforeBrowserCreate);
 
-        long style = GetBorderStyle() | wxFULL_REPAINT_ON_RESIZE;
+        long style = wxFULL_REPAINT_ON_RESIZE;
 
         if (!hasBorder)
             style = style | wxBORDER_NONE;
