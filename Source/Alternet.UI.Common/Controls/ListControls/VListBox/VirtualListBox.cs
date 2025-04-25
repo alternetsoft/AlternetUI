@@ -176,7 +176,7 @@ namespace Alternet.UI
                 if (BorderStyle == value)
                     return;
                 base.BorderStyle = value;
-                UpdateVertScrollBar();
+                UpdateScrollBar();
             }
         }
 
@@ -385,7 +385,7 @@ namespace Alternet.UI
 
             firstVisibleItem = row;
 
-            UpdateVertScrollBar();
+            UpdateScrollBar();
             Invalidate();
 
             return true;
@@ -1268,7 +1268,7 @@ namespace Alternet.UI
         {
             if (DisposingOrDisposed || InUpdates)
                 return;
-            UpdateVertScrollBar();
+            UpdateScrollBar();
             Invalidate();
         }
 
@@ -1419,7 +1419,7 @@ namespace Alternet.UI
         protected override void OnSizeChanged(EventArgs e)
         {
             base.OnSizeChanged(e);
-            UpdateVertScrollBar();
+            UpdateScrollBar();
         }
 
         /// <inheritdoc/>
@@ -1537,6 +1537,7 @@ namespace Alternet.UI
                     case ScrollEventType.ThumbPosition:
                         break;
                     case ScrollEventType.ThumbTrack:
+                        ScrollToRow(e.NewValue);
                         break;
                     case ScrollEventType.First:
                         ScrollToRow(0);
@@ -1610,6 +1611,11 @@ namespace Alternet.UI
         protected override void OnHandleCreated(EventArgs e)
         {
             base.OnHandleCreated(e);
+        }
+
+        /// <inheritdoc/>
+        protected override void UpdateHorzScrollBar()
+        {
         }
 
         /// <inheritdoc/>
