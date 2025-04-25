@@ -11,6 +11,7 @@ using SharpCompress.Archives.SevenZip;
 using SharpCompress.Archives.Zip;
 using SharpCompress.Common;
 using SharpCompress.Readers;
+using SharpCompress.Helpers;
 
 namespace Alternet.UI
 {
@@ -262,6 +263,26 @@ namespace Alternet.UI
             }
         }
 
+        private static T NotNull<T>(this T? obj, string? message = null)
+              where T : class
+        {
+            if (obj is null)
+            {
+                throw new ArgumentNullException(message ?? "Value is null");
+            }
+            return obj;
+        }
+
+        private static T NotNull<T>(this T? obj, string? message = null)
+            where T : struct
+        {
+            if (obj is null)
+            {
+                throw new ArgumentNullException(message ?? "Value is null");
+            }
+            return obj.Value;
+        }
+
         /// <summary>
         /// Extract to specific directory, retaining filename
         /// </summary>
@@ -298,20 +319,20 @@ namespace Alternet.UI
             {
                 var folder = Path.GetDirectoryName(entry.Key.NotNull("Entry Key is null"))
                     .NotNull("Directory is null");
-                var destdir = Path.GetFullPath(Path.Combine(fullDestinationDirectoryPath, folder));
+                var destDir = Path.GetFullPath(Path.Combine(fullDestinationDirectoryPath, folder));
 
-                if (!Directory.Exists(destdir))
+                if (!Directory.Exists(destDir))
                 {
-                    if (!destdir.StartsWith(fullDestinationDirectoryPath, StringComparison.Ordinal))
+                    if (!destDir.StartsWith(fullDestinationDirectoryPath, StringComparison.Ordinal))
                     {
                         throw new ExtractionException(
                             "Entry is trying to create a directory outside of the destination directory."
                         );
                     }
 
-                    Directory.CreateDirectory(destdir);
+                    Directory.CreateDirectory(destDir);
                 }
-                destinationFileName = Path.Combine(destdir, file);
+                destinationFileName = Path.Combine(destDir, file);
             }
             else
             {
