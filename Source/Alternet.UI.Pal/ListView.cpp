@@ -187,7 +187,7 @@ namespace Alternet::UI
 
     wxWindow* ListView::CreateWxWindowCore(wxWindow* parent)
     {
-        long style = GetStyle() | GetBorderStyle();
+        long style = GetStyle();
 
         if (!hasBorder)
             style = style | wxBORDER_NONE;

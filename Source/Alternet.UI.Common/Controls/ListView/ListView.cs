@@ -637,7 +637,6 @@ namespace Alternet.UI
         /// This is done to prevent bad behavior on Windows platform in some situations.
         /// In order to have border place <see cref="ListView"/> inside <see cref="Border"/> control.
         /// </remarks>
-        [Browsable(false)]
         public override bool HasBorder
         {
             get
