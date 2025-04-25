@@ -1523,6 +1523,81 @@ namespace Alternet.UI
             /// Gets or sets a value indicating whether the item is selected.
             /// </summary>
             public bool IsSelected;
+
+            private FlagsAndAttributesStruct attr = new();
+
+            /// <summary>
+            /// Initializes a new instance of the <see cref="ContainerRelatedData"/> struct.
+            /// </summary>
+            public ContainerRelatedData()
+            {
+            }
+
+            /// <summary>
+            /// <inheritdoc cref="BaseObjectWithAttr.Tag"/>
+            /// </summary>
+            [Browsable(false)]
+            public object? Tag { get; set; }
+
+            /// <summary>
+            /// <inheritdoc cref="BaseObjectWithAttr.IntFlags"/>
+            /// </summary>
+            [Browsable(false)]
+            public ICustomIntFlags IntFlags
+            {
+                get
+                {
+                    return IntFlagsAndAttributes;
+                }
+            }
+
+            /// <summary>
+            /// <inheritdoc cref="BaseObjectWithAttr.IntFlagsAndAttributes"/>
+            /// </summary>
+            [Browsable(false)]
+            public IIntFlagsAndAttributes IntFlagsAndAttributes
+            {
+                get
+                {
+                    return attr.IntFlagsAndAttributes;
+                }
+            }
+
+            /// <summary>
+            /// <inheritdoc cref="BaseObjectWithAttr.FlagsAndAttributes"/>
+            /// </summary>
+            [Browsable(false)]
+            public IFlagsAndAttributes FlagsAndAttributes
+            {
+                get
+                {
+                    return attr.FlagsAndAttributes;
+                }
+            }
+
+            /// <summary>
+            /// <inheritdoc cref="BaseObjectWithAttr.CustomFlags"/>
+            /// </summary>
+            [Browsable(false)]
+            public ICustomFlags<string> CustomFlags => FlagsAndAttributes.Flags;
+
+            /// <summary>
+            /// <inheritdoc cref="BaseObjectWithAttr.CustomAttr"/>
+            /// </summary>
+            [Browsable(false)]
+            public ICustomAttributes<string, object> CustomAttr => FlagsAndAttributes.Attr;
+
+            /// <summary>
+            /// <inheritdoc cref="BaseObjectWithAttr.IntAttr"/>
+            /// </summary>
+            [Browsable(false)]
+            public ICustomAttributes<int, object> IntAttr
+            {
+                get
+                {
+                    return IntFlagsAndAttributes.Attr;
+                }
+            }
         }
 
         /// <summary>
