@@ -13,10 +13,13 @@ namespace Alternet.UI
         /// <summary>
         /// Gets <see cref="ControlStateImages"/> with empty state images.
         /// </summary>
-        public static readonly ControlStateImages Empty = new()
+        public static readonly ControlStateImages Empty;
+
+        static ControlStateImages()
         {
-            Immutable = true,
-        };
+            Empty = new();
+            Empty.SetImmutable();
+        }
 
         /// <summary>
         /// Gets or sets an <see cref="Image"/> for normal control state.

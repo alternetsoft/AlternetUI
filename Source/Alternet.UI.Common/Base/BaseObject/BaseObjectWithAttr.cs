@@ -93,5 +93,19 @@ namespace Alternet.UI
         /// </summary>
         [Browsable(false)]
         public ICustomAttributes<string, object> CustomAttr => FlagsAndAttributes.Attr;
+
+        /// <summary>
+        /// Gets attributes provider which allows to
+        /// access items using integer identifiers.
+        /// You can store any custom data here.
+        /// </summary>
+        [Browsable(false)]
+        public ICustomAttributes<int, object> IntAttr
+        {
+            get
+            {
+                return IntFlagsAndAttributes.Attr;
+            }
+        }
     }
 }

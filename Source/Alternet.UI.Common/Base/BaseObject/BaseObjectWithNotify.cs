@@ -111,5 +111,58 @@ namespace Alternet.UI
         protected virtual void OnPropertyChanged([CallerMemberName] string? propertyName = null)
         {
         }
+
+        /// <summary>
+        /// Sets field value and calls <see cref="BaseObjectWithNotify.RaisePropertyChanged"/> method.
+        /// </summary>
+        /// <param name="storage">Field where property is stored.</param>
+        /// <param name="value">New property value.</param>
+        /// <param name="propertyName">Name of the property.</param>
+        /// <param name="changedAction">This action is called when property changes</param>
+        /// <returns></returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        protected virtual bool SetProperty<T>(
+            ref T? storage,
+            T? value,
+            [CallerMemberName] string? propertyName = null,
+            Action? changedAction = null)
+        {
+            if (Immutable || Equals(storage, value))
+                return false;
+            storage = value;
+            RaisePropertyChanged(propertyName);
+            changedAction?.Invoke();
+            return true;
+        }
+
+        /// <summary>
+        /// Sets field value and calls <see cref="BaseObjectWithNotify.RaisePropertyChanged"/> method.
+        /// </summary>
+        /// <param name="storage">Field where property is stored.</param>
+        /// <param name="value">New property value.</param>
+        /// <returns></returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        protected virtual bool SetProperty<T>(ref T? storage, T? value)
+        {
+            if (Immutable || Equals(storage, value))
+                return false;
+            storage = value;
+            RaisePropertyChanged();
+            return true;
+        }
+
+        /// <summary>
+        /// Gets new field value and calls <see cref="BaseObjectWithNotify.RaisePropertyChanged"/> method.
+        /// </summary>
+        /// <param name="storage">Field value.</param>
+        /// <param name="value">New property value.</param>
+        /// <returns></returns>
+        protected virtual T GetNewFieldValue<T>(T storage, T value)
+        {
+            if (Immutable || Equals(storage, value))
+                return storage;
+            RaisePropertyChanged();
+            return value;
+        }
     }
 }

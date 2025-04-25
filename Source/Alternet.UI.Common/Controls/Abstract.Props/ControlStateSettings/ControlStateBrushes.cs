@@ -15,10 +15,13 @@ namespace Alternet.UI
         /// <summary>
         /// Gets <see cref="ControlStateBrushes"/> with empty state images.
         /// </summary>
-        public static readonly ControlStateBrushes Empty = new()
+        public static readonly ControlStateBrushes Empty;
+
+        static ControlStateBrushes()
         {
-            Immutable = true,
-        };
+            Empty = new();
+            Empty.SetImmutable();
+        }
 
         /// <summary>
         /// Creates clone of this object.

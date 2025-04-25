@@ -117,8 +117,20 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets whether object is immutable (properties can not be changed).
+        /// </summary>
+        [Browsable(false)]
+        public virtual bool Immutable
+        {
+            get
+            {
+                return false;
+            }
+        }
+
+        /// <summary>
         /// Gets whether this object is disposing or disposed.
-        /// Default implemetation returns False. Inherit from <see cref="DisposableObject"/>
+        /// Default implementation returns False. Inherit from <see cref="DisposableObject"/>
         /// or override this property in order to have valid result.
         /// </summary>
         [Browsable(false)]

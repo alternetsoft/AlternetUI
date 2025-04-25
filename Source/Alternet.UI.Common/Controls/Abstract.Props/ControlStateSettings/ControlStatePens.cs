@@ -15,10 +15,13 @@ namespace Alternet.UI
         /// <summary>
         /// Gets <see cref="ControlStatePens"/> with empty state images.
         /// </summary>
-        public static readonly ControlStatePens Empty = new()
+        public static readonly ControlStatePens Empty;
+
+        static ControlStatePens()
         {
-            Immutable = true,
-        };
+            Empty = new();
+            Empty.SetImmutable();
+        }
 
         /// <summary>
         /// Creates clone of this object.

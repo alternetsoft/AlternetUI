@@ -17,14 +17,9 @@ namespace Alternet.UI
         {
         }
 
-        /// <summary>
-        /// Gets whether this object is immutable (properties are readonly).
-        /// </summary>
-        [Browsable(false)]
-        public bool Immutable
+        public override bool Immutable
         {
             get => immutable;
-            internal set => immutable = value;
         }
 
         public Color? TextColor
@@ -155,6 +150,11 @@ namespace Alternet.UI
             {
                 return Native.Calendar.DateAttrHasBorder(Handle);
             }
+        }
+
+        public void SetImmutable(bool value)
+        {
+            immutable = value;
         }
 
         /// <inheritdoc/>

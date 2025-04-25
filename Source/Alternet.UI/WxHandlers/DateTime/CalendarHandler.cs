@@ -30,11 +30,9 @@ namespace Alternet.UI
                 var result = Native.Calendar.GetMarkDateAttr();
                 if (result == default)
                     return null;
-                var resultIntf = new CalendarDateAttr(result, true)
-                {
-                    Immutable = true,
-                };
-                return resultIntf;
+                var resultManaged = new CalendarDateAttr(result, true);
+                resultManaged.SetImmutable(true);
+                return resultManaged;
             }
 
             set

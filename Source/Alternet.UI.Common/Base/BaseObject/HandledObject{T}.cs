@@ -26,7 +26,7 @@ namespace Alternet.UI
         /// (properties are readonly).</param>
         public HandledObject(bool immutable)
         {
-            Immutable = immutable;
+            SetImmutable(immutable);
         }
 
         /// <summary>

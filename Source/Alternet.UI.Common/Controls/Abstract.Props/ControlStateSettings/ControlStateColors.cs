@@ -14,10 +14,13 @@ namespace Alternet.UI
         /// <summary>
         /// Gets <see cref="ControlStateColors"/> with empty state images.
         /// </summary>
-        public static readonly ControlStateColors Empty = new()
+        public static readonly ControlStateColors Empty;
+
+        static ControlStateColors()
         {
-            Immutable = true,
-        };
+            Empty = new();
+            Empty.SetImmutable();
+        }
 
         /// <summary>
         /// Converts the specified <see cref='ControlStateColors'/>

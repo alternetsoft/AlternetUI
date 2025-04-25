@@ -16,10 +16,13 @@ namespace Alternet.UI
         /// <summary>
         /// Gets <see cref="ControlStateBorders"/> with empty state images.
         /// </summary>
-        public static readonly ControlStateBorders Empty = new()
+        public static readonly ControlStateBorders Empty;
+
+        static ControlStateBorders()
         {
-            Immutable = true,
-        };
+            Empty = new();
+            Empty.SetImmutable();
+        }
 
         /// <summary>
         /// Creates clone of this object.
