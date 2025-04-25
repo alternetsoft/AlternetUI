@@ -56,6 +56,15 @@ namespace Alternet.UI
         {
             HorizontalScrollbar = true;
             ListBox.SelectionMode = ListBoxSelectionMode.Multiple;
+
+            ListBox.KeyDown += (s, e) =>
+            {
+                if (e.KeyData == (Keys.Control | Keys.C))
+                {
+                    ListBox.SelectedItemsToClipboard();
+                    e.Handled = true;
+                }
+            };
         }
 
         /// <summary>
@@ -250,18 +259,6 @@ namespace Alternet.UI
         protected virtual SvgImage? GetImage(LogItemKind kind)
         {
             return GetDefaultImage(kind);
-        }
-
-        /// <inheritdoc/>
-        protected override void OnKeyDown(KeyEventArgs e)
-        {
-            base.OnKeyDown(e);
-
-            if(e.KeyData == (Keys.Control | Keys.C))
-            {
-                ListBox.SelectedItemsToClipboard();
-                e.Handled = true;
-            }
         }
 
         /// <inheritdoc/>

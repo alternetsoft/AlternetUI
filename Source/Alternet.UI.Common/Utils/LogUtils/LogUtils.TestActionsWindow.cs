@@ -26,6 +26,9 @@ namespace Alternet.UI
                 return null;
             if (!member.Name.StartsWith("Test"))
                 return null;
+            var isBrowsable = AssemblyUtils.GetBrowsable(member);
+            if (!isBrowsable)
+                return null;
 
             var fullName = $"{member.DeclaringType.FullName}.{member.Name}";
 

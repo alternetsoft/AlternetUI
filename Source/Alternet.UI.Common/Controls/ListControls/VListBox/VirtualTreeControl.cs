@@ -60,6 +60,11 @@ namespace Alternet.UI
             };
 
             TreeButtons = DefaultTreeButtons;
+
+            ListBox.ContextMenuCreated += (s, e) =>
+            {
+                InitContextMenu();
+            };
         }
 
         /// <summary>
@@ -251,9 +256,19 @@ namespace Alternet.UI
         /// <inheritdoc/>
         public override ContextMenuStrip ContextMenuStrip
         {
-            get => ListBox.ContextMenuStrip;
-            set => ListBox.ContextMenuStrip = value;
+            get
+            {
+                return ListBox.ContextMenuStrip;
+            }
+
+            set
+            {
+                ListBox.ContextMenuStrip = value;
+            }
         }
+
+        /// <inheritdoc/>
+        public override bool HasContextMenu => ListBox.HasContextMenu;
 
         /// <summary>
         /// Alias for <see cref="ContextMenuStrip"/> property.
@@ -261,8 +276,15 @@ namespace Alternet.UI
         [Browsable(false)]
         public ContextMenuStrip ContextMenu
         {
-            get => ListBox.ContextMenuStrip;
-            set => ListBox.ContextMenuStrip = value;
+            get
+            {
+                return ListBox.ContextMenu;
+            }
+
+            set
+            {
+                ListBox.ContextMenu = value;
+            }
         }
 
         /// <summary>
@@ -669,6 +691,18 @@ namespace Alternet.UI
         public virtual void SelectLastItem()
         {
             ListBox.SelectLastItem();
+        }
+
+        /// <summary>
+        /// Removes all items from the tree view control.
+        /// </summary>
+        /// <remarks>
+        /// This method clears the tree view by calling the <see cref="Clear"/> method,
+        /// which removes all items and resets the tree structure.
+        /// </remarks>
+        public void RemoveAll()
+        {
+            Clear();
         }
 
         /// <summary>

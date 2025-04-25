@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Diagnostics;
 using System.Text;
 
@@ -16,6 +17,7 @@ namespace Alternet.UI.Tests
         /// Test method for the internal purposes.
         /// </summary>
         [Conditional("DEBUG")]
+        [Browsable(false)]
         public static void TestVariant2()
         {
             Random rnd = new();
@@ -91,6 +93,7 @@ namespace Alternet.UI.Tests
         /// Test method for the internal purposes.
         /// </summary>
         [Conditional("DEBUG")]
+        [Browsable(false)]
         public static void TestVariant1()
         {
             byte a1 = 15;
@@ -151,6 +154,7 @@ namespace Alternet.UI.Tests
         /// Test method for the internal purposes.
         /// </summary>
         [Conditional("DEBUG")]
+        [Browsable(false)]
         public static void TestParseTextWithIndexAccel()
         {
             var s1 = "Text1 with acell [2]";
@@ -167,6 +171,7 @@ namespace Alternet.UI.Tests
         /// Test method for the internal purposes.
         /// </summary>
         [Conditional("DEBUG")]
+        [Browsable(false)]
         public static void TestEnumArray()
         {
             EnumArray<VisualControlState, int> data = new();
@@ -194,6 +199,7 @@ namespace Alternet.UI.Tests
         /// Test method for the internal purposes.
         /// </summary>
         [Conditional("DEBUG")]
+        [Browsable(false)]
         public static void TestBitArray64()
         {
             BitArray64 value = new();
@@ -202,6 +208,21 @@ namespace Alternet.UI.Tests
             value[63] = true;
 
             App.Log(value);
+        }
+
+        /// <summary>
+        /// Test method for the internal purposes.
+        /// </summary>
+        [Conditional("DEBUG")]
+        [Browsable(true)]
+        public static void TestLogListBoxItemWithChilds()
+        {
+            TreeControlItem item = new("This is log item with children");
+            item.Add(new("Child 1"));
+            item.Add(new("Child 2"));
+            item.Add(new("Child 3"));
+
+            App.AddLogItem(item);
         }
     }
 }
