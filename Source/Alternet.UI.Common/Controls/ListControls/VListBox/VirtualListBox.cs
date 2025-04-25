@@ -1503,13 +1503,6 @@ namespace Alternet.UI
         {
             int? idx;
 
-            /*
-            int GetRenderedItemCountSmart()
-            {
-                return Math.Max(GetRenderedItemCount() - 1, 1);
-            }
-            */
-
             if (DisposingOrDisposed)
                 return;
 

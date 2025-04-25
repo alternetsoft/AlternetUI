@@ -19,7 +19,6 @@
 #include "Api/Label.Api.h"
 #include "Api/LinkLabel.Api.h"
 #include "Api/ComboBox.Api.h"
-#include "Api/VListBox.Api.h"
 #include "Api/ListView.Api.h"
 #include "Api/AnimationControl.Api.h"
 #include "Api/Calendar.Api.h"

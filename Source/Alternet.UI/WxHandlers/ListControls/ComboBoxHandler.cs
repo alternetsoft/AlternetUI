@@ -26,16 +26,6 @@ namespace Alternet.UI
             }
         }
 
-        public VirtualListBox? PopupControl
-        {
-            set
-            {
-                var native = value?.NativeControl as Native.VListBox;
-
-                NativeControl.SetPopupControl(native);
-            }
-        }
-
         public ComboBox.OwnerDrawFlags OwnerDrawStyle
         {
             get

@@ -16,9 +16,6 @@ namespace Alternet.UI
         /// <inheritdoc cref="ComboBox.AllowMouseWheel"/>
         bool AllowMouseWheel { set; }
 
-        /// <inheritdoc cref="ComboBox.PopupControl"/>
-        VirtualListBox? PopupControl { set; }
-
         /// <inheritdoc cref="ComboBox.OwnerDrawStyle"/>
         ComboBox.OwnerDrawFlags OwnerDrawStyle { get; set; }
 

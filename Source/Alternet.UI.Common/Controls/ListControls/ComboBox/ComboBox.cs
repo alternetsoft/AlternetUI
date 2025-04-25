@@ -70,8 +70,6 @@ namespace Alternet.UI
         /// </summary>
         public static Color DefaultDisabledTextColor = SystemColors.GrayText;
 
-        private ValueContainer<VirtualListBox> listBox;
-
         private bool allowMouseWheel = true;
         private int? selectedIndex;
         private bool isEditable = true;
@@ -98,7 +96,6 @@ namespace Alternet.UI
         public ComboBox()
         {
             Handler.Required();
-            listBox = new(HandlePopupControlChanged);
         }
 
         /// <summary>
@@ -629,19 +626,6 @@ namespace Alternet.UI
 
         AbstractControl? IListControlItemContainer.Control => this;
 
-        /// <summary>
-        /// Gets or sets control that will be shown in the popup.
-        /// </summary>
-        internal virtual VirtualListBox? PopupControl
-        {
-            get => listBox.Value;
-
-            set
-            {
-                listBox.SetValueAsControl(value);
-            }
-        }
-
         internal OwnerDrawFlags OwnerDrawStyle
         {
             get
@@ -1044,13 +1028,6 @@ namespace Alternet.UI
         /// <param name="e">An <see cref="EventArgs"/> that contains the event data.</param>
         protected virtual void OnSelectedItemChanged(EventArgs e)
         {
-        }
-
-        private void HandlePopupControlChanged()
-        {
-            if (DisposingOrDisposed)
-                return;
-            PlatformControl.PopupControl = listBox.Value;
         }
 
         private SizeD CalcBestSize(int startIndex, int count)

@@ -234,12 +234,6 @@ namespace Alternet.UI.Native
             }
         }
         
-        public void SetPopupControl(VListBox? value)
-        {
-            CheckDisposed();
-            NativeApi.ComboBox_SetPopupControl_(NativePointer, value?.NativePointer ?? IntPtr.Zero);
-        }
-        
         public void DismissPopup()
         {
             CheckDisposed();
@@ -488,9 +482,6 @@ namespace Alternet.UI.Native
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void ComboBox_SetEventCalled_(IntPtr obj, bool value);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void ComboBox_SetPopupControl_(IntPtr obj, IntPtr value);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void ComboBox_DismissPopup_(IntPtr obj);

@@ -6,8 +6,6 @@ namespace NativeApi.Api
 {
     public class ComboBox : Control
     {
-        public void SetPopupControl(VListBox? value) { }
-
         public event EventHandler? SelectedItemChanged;
         public event EventHandler? MeasureItem;
         public event EventHandler? MeasureItemWidth;
