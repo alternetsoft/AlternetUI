@@ -892,17 +892,14 @@ namespace Alternet.UI
         {
             get
             {
-                if (IsDummy)
-                    return SizeD.Empty;
                 return Size;
             }
 
             set
             {
-                value = value.ApplyMinMax(MinimumSize, MaximumSize);
-                if (ClientSize == value)
-                    return;
-                Size = value;
+                value.Width = Math.Max(0, value.Width);
+                value.Height = Math.Max(0, value.Height);
+                Size = value + InteriorSize;
             }
         }
 
@@ -3419,14 +3416,40 @@ namespace Alternet.UI
         /// This property allows to get width of the interior elements.
         /// </summary>
         [Browsable(false)]
-        public Coord InteriorWidth => Width - ClientSize.Width;
+        public virtual Coord InteriorWidth
+        {
+            get
+            {
+                var width = Width;
+                var clientWidth = ClientSize.Width;
+
+                if (width <= 0 || clientWidth <= 0 || width < clientWidth)
+                    return 0;
+
+                var result = width - clientWidth;
+                return result;
+            }
+        }
 
         /// <summary>
         /// Gets difference between height and client height.
         /// This property allows to get height of the interior elements.
         /// </summary>
         [Browsable(false)]
-        public Coord InteriorHeight => Height - ClientSize.Height;
+        public virtual Coord InteriorHeight
+        {
+            get
+            {
+                var height = Height;
+                var clientHeight = ClientSize.Height;
+
+                if (height <= 0 || clientHeight <= 0 || height < clientHeight)
+                    return 0;
+
+                var result = height - clientHeight;
+                return result;
+            }
+        }
 
         /// <summary>
         /// Gets difference between size and client size.

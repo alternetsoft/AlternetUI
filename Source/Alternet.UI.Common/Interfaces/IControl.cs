@@ -496,7 +496,7 @@ namespace Alternet.UI
         /// Gets or sets size of the <see cref="AbstractControl"/>'s client area, in
         /// device-independent units.
         /// </summary>
-        SizeD ClientSize { get; set; }
+        SizeD ClientSize { get; }
 
         /// <summary>
         /// Gets control flags.
