@@ -257,7 +257,7 @@ namespace Alternet.UI
         public readonly override bool Equals([NotNullWhen(true)] object? obj) =>
             obj is ScrollBarInfo other && Equals(other);
 
-        /// <inheritdoc cref="ImmutableObject.SetImmutable"/>
+        /// <inheritdoc cref="ImmutableObject.SetImmutable()"/>
         public void SetImmutable()
         {
             immutable = true;

@@ -65,6 +65,8 @@ namespace Alternet.UI
             {
                 InitContextMenu();
             };
+
+            BorderStyle = ControlBorderStyle.Theme;
         }
 
         /// <summary>
@@ -151,24 +153,28 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
+        [Browsable(true)]
         public override bool HasBorder
         {
             get
             {
-                return ListBox.HasBorder;
+                return BorderStyle != ControlBorderStyle.None;
             }
 
             set
             {
-                ListBox.HasBorder = value;
-            }
-        }
+                if (HasBorder == value)
+                    return;
+                base.HasBorder = value;
 
-        /// <inheritdoc/>
-        public override ControlBorderStyle BorderStyle
-        {
-            get => ListBox.BorderStyle;
-            set => ListBox.BorderStyle = value;
+                DoInsideLayout(() =>
+                {
+                    if (value)
+                        BorderStyle = ControlBorderStyle.Theme;
+                    else
+                        BorderStyle = ControlBorderStyle.None;
+                });
+            }
         }
 
         /// <inheritdoc/>

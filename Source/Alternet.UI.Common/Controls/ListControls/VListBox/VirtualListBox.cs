@@ -42,6 +42,8 @@ namespace Alternet.UI
         private Coord horizontalExtent;
         private DrawMode drawMode = DrawMode.Normal;
         private int firstVisibleItem;
+        private ScrollBarSettings? horizontalScrollBarSettings;
+        private ScrollBarSettings? verticalScrollBarSettings;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="VirtualListBox"/> class.
@@ -138,6 +140,60 @@ namespace Alternet.UI
                 if (value == SetItemsKind.Default)
                     return;
                 defaultSetItemsKind = value;
+            }
+        }
+
+        /// <summary>
+        /// Indicates whether vertical scrollbar settings are defined.
+        /// </summary>
+        [Browsable(false)]
+        public bool HasVerticalScrollBarSettings => verticalScrollBarSettings is not null;
+
+        /// <summary>
+        /// Indicates whether horizontal scrollbar settings are defined.
+        /// </summary>
+        [Browsable(false)]
+        public bool HasHorizontalScrollBarSettings => horizontalScrollBarSettings is not null;
+
+        /// <summary>
+        /// Gets the horizontal scrollbar settings. Initializes them if required.
+        /// </summary>
+        [Browsable(false)]
+        public virtual ScrollBarSettings HorizontalScrollBarSettings
+        {
+            get
+            {
+                if (horizontalScrollBarSettings is null)
+                {
+                    horizontalScrollBarSettings = new();
+                    horizontalScrollBarSettings.PropertyChangedAction = (e) =>
+                    {
+                        UpdateScrollBars();
+                    };
+                }
+
+                return horizontalScrollBarSettings;
+            }
+        }
+
+        /// <summary>
+        /// Gets the vertical scrollbar settings. Initializes them if required.
+        /// </summary>
+        [Browsable(false)]
+        public virtual ScrollBarSettings VerticalScrollBarSettings
+        {
+            get
+            {
+                if (verticalScrollBarSettings is null)
+                {
+                    verticalScrollBarSettings = new();
+                    verticalScrollBarSettings.PropertyChangedAction = (e) =>
+                    {
+                        UpdateScrollBars();
+                    };
+                }
+
+                return verticalScrollBarSettings;
             }
         }
 
@@ -1220,6 +1276,11 @@ namespace Alternet.UI
             HiddenOrVisible vertVisibility = HiddenOrVisible.Auto;
             HiddenOrVisible horzVisibility = HiddenOrVisible.Auto;
 
+            if (HasHorizontalScrollBarSettings)
+                horzVisibility = HorizontalScrollBarSettings.SuggestedVisibility;
+            if (HasVerticalScrollBarSettings)
+                vertVisibility = VerticalScrollBarSettings.SuggestedVisibility;
+
             if (Count == 0)
             {
                 horzScrollbar = new(horzVisibility);
@@ -1324,6 +1385,14 @@ namespace Alternet.UI
             }
 
             return null;
+        }
+
+        /// <inheritdoc/>
+        public override void UpdateScrollBars()
+        {
+            CalcScrollBarInfo(out var horzScrollbar, out var vertScrollbar);
+            VertScrollBarInfo = vertScrollbar;
+            HorzScrollBarInfo = horzScrollbar;
         }
 
         /// <summary>
@@ -1453,14 +1522,6 @@ namespace Alternet.UI
         {
             base.OnHandleCreated(e);
             UpdateScrollBars();
-        }
-
-        /// <inheritdoc/>
-        protected override void UpdateScrollBars()
-        {
-            CalcScrollBarInfo(out var horzScrollbar, out var vertScrollbar);
-            VertScrollBarInfo = vertScrollbar;
-            HorzScrollBarInfo = horzScrollbar;
         }
 
         /// <summary>

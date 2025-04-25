@@ -37,7 +37,7 @@ namespace ControlsSample
             checkListBox.SelectionChanged += CheckListBox_SelectionChanged;
             allowMultipleSelectionCheckBox.IsChecked =
                 checkListBox.SelectionMode == ListBoxSelectionMode.Multiple;
-            App.LogIf($"CheckListBoxDemo: Constructor done", true);
+            App.LogIf($"CheckListBoxDemo: Constructor done", false);
         }
 
         private void EditorButton_Click(object? sender, System.EventArgs e)

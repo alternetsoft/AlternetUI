@@ -28,7 +28,7 @@ namespace Alternet.UI
             /// <param name="immutable">Whether this object is immutable.</param>
             public AltPositionInfo(bool immutable)
             {
-                Immutable = immutable;
+                SetImmutable(immutable);
             }
 
             /// <summary>

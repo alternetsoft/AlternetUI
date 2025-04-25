@@ -114,6 +114,27 @@ namespace ControlsSample
                 treeView.RootItem = item;
             });
 
+            treeView.ContextMenu.Add("Toggle vertical scroll bar visibility", () =>
+            {
+                var visibility = treeView.ListBox.VerticalScrollBarSettings.SuggestedVisibility;
+
+                switch (visibility)
+                {
+                    default:
+                    case HiddenOrVisible.Auto:
+                        visibility = HiddenOrVisible.Hidden;
+                        break;
+                    case HiddenOrVisible.Hidden:
+                        visibility = HiddenOrVisible.Visible;
+                        break;
+                    case HiddenOrVisible.Visible:
+                        visibility = HiddenOrVisible.Auto;
+                        break;
+                }
+
+                treeView.ListBox.VerticalScrollBarSettings.SuggestedVisibility = visibility;
+            });
+
             var lastChild = treeView.RootItem.LastChild;
             var item = treeView.RootItem.GetItem(3);
 
