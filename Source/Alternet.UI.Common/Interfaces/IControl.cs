@@ -115,7 +115,7 @@ namespace Alternet.UI
         event EventHandler? Deactivated;
 
         /// <summary>
-        /// Occurs when the contol gets focus.
+        /// Occurs when the control gets focus.
         /// </summary>
         event EventHandler? GotFocus;
 
@@ -671,7 +671,7 @@ namespace Alternet.UI
         long? LastDoubleClickTimestamp { get; set; }
 
         /// <summary>
-        /// Gets whether there are any childrent in the control.
+        /// Gets whether there are any children in the control.
         /// </summary>
         bool HasChildren { get; }
 
@@ -853,7 +853,7 @@ namespace Alternet.UI
         Thickness Padding { get; set; }
 
         /// <summary>
-        /// Getw whether control is performing updates.
+        /// Gets whether control is performing updates.
         /// </summary>
         /// <remarks>
         /// This property is <c>true</c> after call to <see cref="BeginUpdate"/>
@@ -1244,12 +1244,12 @@ namespace Alternet.UI
         void ResetForegroundColor(ResetColorType method);
 
         /// <summary>
-        /// Resets bacgkround color to the default value.
+        /// Resets background color to the default value.
         /// </summary>
         void ResetBackgroundColor(ResetColorType method);
 
         /// <summary>
-        /// Resets bacgkround color to the default value.
+        /// Resets background color to the default value.
         /// </summary>
         void ResetBackgroundColor();
 
@@ -1457,7 +1457,7 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="point">A <see cref="PointD"/> that specifies the
         /// screen coordinates to be converted.</param>
-        /// <returns>The converted cooridnates.</returns>
+        /// <returns>The converted coordinates.</returns>
         PointD ScreenToClient(PointD point);
 
         /// <summary>
@@ -1466,7 +1466,7 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="point">A <see cref="PointD"/> that contains the
         /// client coordinates to be converted.</param>
-        /// <returns>The converted cooridnates.</returns>
+        /// <returns>The converted coordinates.</returns>
         PointD ClientToScreen(PointD point);
 
         /// <summary>
@@ -1636,35 +1636,35 @@ namespace Alternet.UI
         /// Sets children font.
         /// </summary>
         /// <param name="font">New font value</param>
-        /// <param name="recursive">Whether to apply to all children recurively.</param>
+        /// <param name="recursive">Whether to apply to all children recursively.</param>
         void SetChildrenFont(Font? font, bool recursive = false);
 
         /// <summary>
         /// Sets children background color.
         /// </summary>
         /// <param name="color">New background color value</param>
-        /// <param name="recursive">Whether to apply to all children recurively.</param>
+        /// <param name="recursive">Whether to apply to all children recursively.</param>
         void SetChildrenBackgroundColor(Color? color, bool recursive = false);
 
         /// <summary>
         /// Sets children background color.
         /// </summary>
         /// <param name="color">New background color value</param>
-        /// <param name="recursive">Whether to apply to all children recurively.</param>
+        /// <param name="recursive">Whether to apply to all children recursively.</param>
         void SetChildrenBackgroundColor<T>(Color? color, bool recursive = false);
 
         /// <summary>
         /// Sets children foreground color.
         /// </summary>
         /// <param name="color">New foreground color value</param>
-        /// <param name="recursive">Whether to apply to all children recurively.</param>
+        /// <param name="recursive">Whether to apply to all children recursively.</param>
         void SetChildrenForegroundColor(Color? color, bool recursive = false);
 
         /// <summary>
         /// Sets children foreground color.
         /// </summary>
         /// <param name="color">New foreground color value</param>
-        /// <param name="recursive">Whether to apply to all children recurively.</param>
+        /// <param name="recursive">Whether to apply to all children recursively.</param>
         void SetChildrenForegroundColor<T>(Color? color, bool recursive = false);
 
         /// <summary>

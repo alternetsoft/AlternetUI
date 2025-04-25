@@ -68,7 +68,7 @@ namespace Alternet.UI
         /// This is a default implementation which is called from
         /// <see cref="AbstractControl.OnLayout"/>.
         /// </remarks>
-        /// <param name="container">Container control which childs will be processed.</param>
+        /// <param name="container">Container control which children will be processed.</param>
         /// <param name="layout">Layout style to use.</param>
         /// <param name="getBounds">Returns rectangle in which layout is performed.</param>
         /// <param name="items">List of controls to layout.</param>
@@ -131,7 +131,7 @@ namespace Alternet.UI
         /// This is a default implementation which is called from
         /// <see cref="AbstractControl.GetPreferredSize(SizeD)"/>.
         /// </remarks>
-        /// <param name="container">Container control which childs will be processed.</param>
+        /// <param name="container">Container control which children will be processed.</param>
         /// <param name="layout">Layout style to use.</param>
         public static SizeD DefaultGetPreferredSize(
             AbstractControl container,
@@ -350,7 +350,7 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Resets bacgkround color to the default value.
+        /// Resets background color to the default value.
         /// </summary>
         public virtual void ResetBackgroundColor(ResetColorType method)
         {
@@ -358,7 +358,7 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Resets bacgkround color to the default value.
+        /// Resets background color to the default value.
         /// </summary>
         [Browsable(false)]
         public virtual void ResetBackgroundColor()
@@ -428,11 +428,11 @@ namespace Alternet.UI
         /// <summary>
         /// Repaints rectangles (coordinates in pixels) in the control.
         /// </summary>
-        /// <param name="rects">Array of rectangles with coordinates specified in pixels.</param>
+        /// <param name="rectangles">Array of rectangles with coordinates specified in pixels.</param>
         /// <param name="eraseBackground">Specifies whether to erase background.</param>
-        public virtual void RefreshRects(IEnumerable<RectI> rects, bool eraseBackground = true)
+        public virtual void RefreshRects(IEnumerable<RectI> rectangles, bool eraseBackground = true)
         {
-            foreach (var rect in rects)
+            foreach (var rect in rectangles)
                 RefreshRect(PixelToDip(rect), eraseBackground);
         }
 
@@ -451,11 +451,11 @@ namespace Alternet.UI
         /// Calculates bounds of the specified rectangles collection and
         /// repaints combined rectangle. Coordinates are in pixels.
         /// </summary>
-        /// <param name="rects">Array of rectangles with coordinates specified in pixels.</param>
+        /// <param name="rectangles">Array of rectangles with coordinates specified in pixels.</param>
         /// <param name="eraseBackground">Specifies whether to erase background.</param>
-        public virtual void RefreshRectsUnion(IEnumerable<RectI> rects, bool eraseBackground = true)
+        public virtual void RefreshRectsUnion(IEnumerable<RectI> rectangles, bool eraseBackground = true)
         {
-            var bounds = SkiaUtils.GetBounds(rects);
+            var bounds = SkiaUtils.GetBounds(rectangles);
 
             if (bounds is null)
                 return;
@@ -642,7 +642,7 @@ namespace Alternet.UI
         /// is called.</remarks>
         public virtual void Show()
         {
-            // This method must be virtual as it is overriden in some descendants.
+            // This method must be virtual as it is overridden in some descendants.
             Visible = true;
         }
 
@@ -871,8 +871,8 @@ namespace Alternet.UI
         [Browsable(false)]
         public virtual AbstractControl? GetVisibleChildOrNull(int index = 0)
         {
-            var childs = GetVisibleChildren();
-            foreach (AbstractControl control in childs)
+            var children = GetVisibleChildren();
+            foreach (AbstractControl control in children)
             {
                 if (!control.Visible)
                     continue;
@@ -985,7 +985,7 @@ namespace Alternet.UI
         /// <returns>True if <see cref="ValidateKeyBinding"/> is False; otherwise
         /// returns result of <see cref="KeyGesture.IsValid(Key, UI.ModifierKeys)"/> call.</returns>
         /// <remarks>
-        /// Override this method in order to allow/supress allowed keys
+        /// Override this method in order to allow/suppress allowed keys
         /// for this control used in <see cref="ExecuteKeyBinding"/> method.
         /// </remarks>
         public virtual bool IsKeyBindingValid(Key key, ModifierKeys modifiers)
@@ -1074,8 +1074,8 @@ namespace Alternet.UI
         {
             if (!HasChildren)
                 return false;
-            var childs = GetVisibleChildren();
-            foreach (var child in childs)
+            var children = GetVisibleChildren();
+            foreach (var child in children)
             {
                 if (!child.Visible)
                     continue;
@@ -1143,7 +1143,7 @@ namespace Alternet.UI
         /// Sets 'ParentBackColor' property for all child controls.
         /// </summary>
         /// <param name="value">New property value</param>
-        /// <param name="recursive">Whether to apply to all children recurively.</param>
+        /// <param name="recursive">Whether to apply to all children recursively.</param>
         [Browsable(false)]
         public virtual void SetChildrenUseParentBackColor(bool value = true, bool recursive = false)
         {
@@ -1154,7 +1154,7 @@ namespace Alternet.UI
         /// Sets 'ParentForeColor' property for all child controls.
         /// </summary>
         /// <param name="value">New property value</param>
-        /// <param name="recursive">Whether to apply to all children recurively.</param>
+        /// <param name="recursive">Whether to apply to all children recursively.</param>
         [Browsable(false)]
         public virtual void SetChildrenUseParentForeColor(bool value = true, bool recursive = false)
         {
@@ -1165,7 +1165,7 @@ namespace Alternet.UI
         /// Sets 'ParentFont' property for all child controls.
         /// </summary>
         /// <param name="value">New property value</param>
-        /// <param name="recursive">Whether to apply to all children recurively.</param>
+        /// <param name="recursive">Whether to apply to all children recursively.</param>
         [Browsable(false)]
         public virtual void SetChildrenUseParentFont(bool value = true, bool recursive = false)
         {
@@ -1241,7 +1241,7 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="point">A <see cref="PointD"/> that specifies the
         /// screen coordinates to be converted.</param>
-        /// <returns>The converted cooridnates.</returns>
+        /// <returns>The converted coordinates.</returns>
         public virtual PointD ScreenToClient(PointD point)
         {
             return PlessUtils.ScreenToClient(point, this);
@@ -1253,7 +1253,7 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="point">A <see cref="PointD"/> that contains the
         /// client coordinates to be converted.</param>
-        /// <returns>The converted cooridnates.</returns>
+        /// <returns>The converted coordinates.</returns>
         public virtual PointD ClientToScreen(PointD point)
         {
             return PlessUtils.ClientToScreen(point, this);
@@ -1507,7 +1507,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets children as <see cref="ControlSet"/>.
         /// </summary>
-        /// <param name="recursive">Whether to get all children recurively.</param>
+        /// <param name="recursive">Whether to get all children recursively.</param>
         /// <returns></returns>
         public virtual ControlSet GetChildren(bool recursive = false)
         {
@@ -1604,7 +1604,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets children of the specified type as <see cref="ControlSet"/>.
         /// </summary>
-        /// <param name="recursive">Whether to get all children recurively.</param>
+        /// <param name="recursive">Whether to get all children recursively.</param>
         /// <returns></returns>
         /// <typeparam name="T">Type of the control to find.</typeparam>
         [Browsable(false)]
@@ -1635,7 +1635,7 @@ namespace Alternet.UI
         /// Sets children font.
         /// </summary>
         /// <param name="font">New font value</param>
-        /// <param name="recursive">Whether to apply to all children recurively.</param>
+        /// <param name="recursive">Whether to apply to all children recursively.</param>
         public virtual void SetChildrenFont(Font? font, bool recursive = false)
         {
             ForEachChild((control) => control.Font = font, recursive);
@@ -1645,7 +1645,7 @@ namespace Alternet.UI
         /// Sets children background color.
         /// </summary>
         /// <param name="color">New background color value</param>
-        /// <param name="recursive">Whether to apply to all children recurively.</param>
+        /// <param name="recursive">Whether to apply to all children recursively.</param>
         public virtual void SetChildrenBackgroundColor(Color? color, bool recursive = false)
         {
             ForEachChild((control) => control.BackgroundColor = color, recursive);
@@ -1655,7 +1655,7 @@ namespace Alternet.UI
         /// Sets children background color.
         /// </summary>
         /// <param name="color">New background color value</param>
-        /// <param name="recursive">Whether to apply to all children recurively.</param>
+        /// <param name="recursive">Whether to apply to all children recursively.</param>
         public virtual void SetChildrenBackgroundColor<T>(Color? color, bool recursive = false)
         {
             GetChildren<T>(recursive).BackgroundColor(color);
@@ -1665,7 +1665,7 @@ namespace Alternet.UI
         /// Sets children foreground color.
         /// </summary>
         /// <param name="color">New foreground color value</param>
-        /// <param name="recursive">Whether to apply to all children recurively.</param>
+        /// <param name="recursive">Whether to apply to all children recursively.</param>
         public virtual void SetChildrenForegroundColor(Color? color, bool recursive = false)
         {
             ForEachChild((control) => control.ForegroundColor = color, recursive);
@@ -1675,7 +1675,7 @@ namespace Alternet.UI
         /// Sets children foreground color.
         /// </summary>
         /// <param name="color">New foreground color value</param>
-        /// <param name="recursive">Whether to apply to all children recurively.</param>
+        /// <param name="recursive">Whether to apply to all children recursively.</param>
         public virtual void SetChildrenForegroundColor<T>(Color? color, bool recursive = false)
         {
             GetChildren<T>(recursive).ForegroundColor(color);
@@ -2376,11 +2376,11 @@ namespace Alternet.UI
         /// <returns></returns>
         public virtual IEnumerable<AbstractControl> PointInChilds(PointD point)
         {
-            var childs = AllChildren;
+            var allChildren = AllChildren;
 
-            for(int i = childs.Count - 1; i >= 0; i--)
+            for(int i = allChildren.Count - 1; i >= 0; i--)
             {
-                var child = childs[i];
+                var child = allChildren[i];
                 if (!child.Visible)
                     continue;
                 if(child.Bounds.Contains(point))

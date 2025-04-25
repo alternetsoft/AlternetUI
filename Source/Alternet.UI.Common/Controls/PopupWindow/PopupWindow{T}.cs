@@ -42,7 +42,7 @@ namespace Alternet.UI
             ButtonIdOk = buttons[0];
             ButtonIdCancel = buttons[1];
             bottomToolBar.SuspendLayout();
-            bottomToolBar.Padding = DefaultBotttomToolBarPadding;
+            bottomToolBar.Padding = DefaultBottomToolBarPadding;
             bottomToolBar.MinHeight = bottomToolBar.ItemSize + bottomToolBar.Padding.Vertical;
             bottomToolBar.SetToolAlignRight(ButtonIdOk, true);
             bottomToolBar.SetToolAlignRight(ButtonIdCancel, true);
@@ -61,7 +61,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets default bottom toolbar padding.
         /// </summary>
-        public static Thickness DefaultBotttomToolBarPadding { get; set; } = (5, 5, 0, 0);
+        public static Thickness DefaultBottomToolBarPadding { get; set; } = (5, 5, 0, 0);
 
         /// <summary>
         /// Gets or sets default popup window padding.
@@ -350,7 +350,7 @@ namespace Alternet.UI
         /// </remarks>
         /// <remarks>
         /// <paramref name="ptOrigin"/> and <paramref name="sizePopup"/> are specified in
-        /// device-inpependent units.
+        /// device-independent units.
         /// </remarks>
         public virtual void ShowPopup(PointD ptOrigin, SizeD sizePopup)
         {
@@ -403,7 +403,7 @@ namespace Alternet.UI
         /// </remarks>
         /// <remarks>
         /// <paramref name="ptOrigin"/> and <paramref name="size"/> are specified in
-        /// device-inpependent units.
+        /// device-independent units.
         /// </remarks>
         internal virtual void SetPositionInDips(PointD ptOrigin, SizeD size)
         {
@@ -501,7 +501,7 @@ namespace Alternet.UI
         /// <summary>
         /// Override to bind events to the main control of the popup window.
         /// </summary>
-        /// <param name="control">Control which events are binded.</param>
+        /// <param name="control">Control which events to bind.</param>
         protected virtual void BindEvents(AbstractControl? control)
         {
             if (control is null)
@@ -513,7 +513,7 @@ namespace Alternet.UI
         /// <summary>
         /// Override to unbind events to the main control of the popup window.
         /// </summary>
-        /// <param name="control">Control which events are unbinded.</param>
+        /// <param name="control">Control which events to unbind.</param>
         protected virtual void UnbindEvents(AbstractControl? control)
         {
             if (control is null)

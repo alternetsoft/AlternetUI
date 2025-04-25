@@ -120,7 +120,7 @@ namespace Alternet.UI
         void Lower();
 
         /// <summary>
-        /// Clears toltip text.
+        /// Clears tooltip text.
         /// </summary>
         void UnsetToolTip();
 
