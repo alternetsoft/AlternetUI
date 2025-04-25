@@ -7,6 +7,46 @@ namespace Alternet.UI
     public partial class VirtualListBox
     {
         /// <summary>
+        /// Scrolls the control horizontally by one char to the left.
+        /// </summary>
+        public virtual void DoActionScrollCharLeft()
+        {
+            IncHorizontalOffsetChars(-1);
+        }
+
+        /// <summary>
+        /// Scrolls the control horizontally by one char to the right.
+        /// </summary>
+        public virtual void DoActionScrollCharRight()
+        {
+            IncHorizontalOffsetChars(1);
+        }
+
+        /// <summary>
+        /// Scrolls the control horizontally to the first char.
+        /// </summary>
+        public virtual void DoActionScrollToFirstChar()
+        {
+            SetHorizontalOffset(0);
+        }
+
+        /// <summary>
+        /// Scrolls the control horizontally by one page to the left.
+        /// </summary>
+        public virtual void DoActionScrollPageLeft()
+        {
+            IncHorizontalOffsetChars(-DefaultHorizontalScrollBarLargeIncrement);
+        }
+
+        /// <summary>
+        /// Scrolls the control horizontally by one page to the right.
+        /// </summary>
+        public virtual void DoActionScrollPageRight()
+        {
+            IncHorizontalOffsetChars(DefaultHorizontalScrollBarLargeIncrement);
+        }
+
+        /// <summary>
         /// Scrolls the control up by one page.
         /// </summary>
         public virtual void DoActionScrollPageUp()

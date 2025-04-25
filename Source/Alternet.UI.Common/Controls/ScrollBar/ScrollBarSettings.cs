@@ -7,7 +7,7 @@ namespace Alternet.UI
     /// <summary>
     /// Represents the settings for a scrollbar, including visibility configuration.
     /// </summary>
-    public class ScrollBarSettings : BaseObjectWithNotify
+    public partial class ScrollBarSettings : BaseObjectWithNotify
     {
         private HiddenOrVisible visibility;
 
@@ -17,7 +17,7 @@ namespace Alternet.UI
         /// <value>
         /// A <see cref="HiddenOrVisible"/> value indicating the recommended visibility state.
         /// </value>
-        public HiddenOrVisible SuggestedVisibility
+        public virtual HiddenOrVisible SuggestedVisibility
         {
             get
             {

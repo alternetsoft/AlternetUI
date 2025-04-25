@@ -33,6 +33,12 @@ namespace Alternet.UI
     /// </remarks>
     public partial class VirtualListBox : VirtualListControl, IListControl
     {
+        /// <summary>
+        /// Defines the default increment for horizontal scrollbar position.
+        /// Value is specified in characters. Default is 4.
+        /// </summary>
+        public static int DefaultHorizontalScrollBarLargeIncrement = 4;
+
         private static SetItemsKind defaultSetItemsKind = SetItemsKind.ChangeField;
 
         private TransformMatrix matrix = new();
@@ -1744,16 +1750,16 @@ namespace Alternet.UI
 
                 case Key.Left:
                     if (e.Control)
-                        IncHorizontalOffsetChars(-4);
+                        DoActionScrollPageLeft();
                     else
-                        IncHorizontalOffsetChars(-1);
+                        DoActionScrollCharLeft();
                     e.Suppressed();
                     return;
                 case Key.Right:
                     if (e.Control)
-                        IncHorizontalOffsetChars(4);
+                        DoActionScrollPageRight();
                     else
-                        IncHorizontalOffsetChars(1);
+                        DoActionScrollCharRight();
                     e.Suppressed();
                     return;
 
@@ -1777,6 +1783,40 @@ namespace Alternet.UI
                 flags |= ItemClickFlags.Ctrl;
 
             DoHandleItemClick(current, flags);
+        }
+
+        /// <inheritdoc/>
+        protected override void OnMouseWheel(MouseEventArgs e)
+        {
+            base.OnMouseWheel(e);
+
+            var delta = e.Delta;
+            if (delta > 0)
+            {
+                delta = 1;
+            }
+            else
+            if (delta < 0)
+            {
+                delta = -1;
+            }
+            else
+                return;
+
+            if (Keyboard.IsShiftPressed)
+            {
+                if (delta < 0)
+                    DoActionScrollCharRight();
+                else
+                    DoActionScrollCharLeft();
+            }
+            else
+            {
+                if (delta < 0)
+                    DoActionScrollLineDown();
+                else
+                    DoActionScrollLineUp();
+            }
         }
 
         /// <inheritdoc/>
@@ -1829,12 +1869,10 @@ namespace Alternet.UI
                         IncHorizontalOffsetChars(1);
                         break;
                     case ScrollEventType.LargeDecrement:
-                        IncHorizontalOffsetChars(-4);
+                        DoActionScrollPageLeft();
                         break;
                     case ScrollEventType.LargeIncrement:
-                        IncHorizontalOffsetChars(4);
-                        break;
-                    case ScrollEventType.ThumbPosition:
+                        DoActionScrollPageRight();
                         break;
                     case ScrollEventType.ThumbTrack:
                         break;
@@ -1843,8 +1881,8 @@ namespace Alternet.UI
                         break;
                     case ScrollEventType.Last:
                         break;
+                    case ScrollEventType.ThumbPosition:
                     case ScrollEventType.EndScroll:
-                        break;
                     default:
                         break;
                 }
