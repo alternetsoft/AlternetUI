@@ -9,12 +9,45 @@ using Alternet.Drawing;
 namespace Alternet.UI
 {
     /// <summary>
-    /// Contains urls for svg images that are included in the library resources.
+    /// Contains URLs for svg images that are included in the library resources.
     /// </summary>
     public static class KnownSvgUrls
     {
-        private const string ResTemplate =
+        /// <summary>
+        /// Gets template for the svg resource URLs.
+        /// </summary>
+        public static string ResTemplate { get; } =
             "embres:Alternet.UI.Common.Resources.Svg.{0}.svg?assembly=Alternet.UI.Common";
+
+        /// <summary>
+        /// Gets or sets url used to load "Square Check Filled" svg image.
+        /// </summary>
+        public static string UrlImageSquareCheckFilled { get; set; } = GetImageUrl("alternet-square-check-filled");
+
+        /// <summary>
+        /// Gets or sets url used to load "Square Minus Filled" svg image.
+        /// </summary>
+        public static string UrlImageSquareMinusFilled { get; set; } = GetImageUrl("alternet-square-minus-filled");
+
+        /// <summary>
+        /// Gets or sets url used to load "Square Plus Filled" svg image.
+        /// </summary>
+        public static string UrlImageSquarePlusFilled { get; set; } = GetImageUrl("alternet-square-plus-filled");
+
+        /// <summary>
+        /// Gets or sets url used to load "Square" svg image.
+        /// </summary>
+        public static string UrlImageSquare { get; set; } = GetImageUrl("alternet-square");
+
+        /// <summary>
+        /// Gets or sets url used to load "Circle Dot Filled" svg image.
+        /// </summary>
+        public static string UrlImageCircleDotFilled { get; set; } = GetImageUrl("alternet-circle-dot-filled");
+
+        /// <summary>
+        /// Gets or sets url used to load "Circle Dot" svg image.
+        /// </summary>
+        public static string UrlImageCircleDot { get; set; } = GetImageUrl("alternet-circle-dot");
 
         /// <summary>
         /// Gets or sets url used to load "Triangle Arrow Down" svg image.

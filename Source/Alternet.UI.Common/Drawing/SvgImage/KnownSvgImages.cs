@@ -86,6 +86,13 @@ namespace Alternet.UI
         private static SvgImage? imgIconFolder;
         private static SvgImage? imgIconFolderSolid;
 
+        private static SvgImage? imgSquareCheckFilled;
+        private static SvgImage? imgSquareMinusFilled;
+        private static SvgImage? imgSquarePlusFilled;
+        private static SvgImage? imgSquare;
+        private static SvgImage? imgCircleDotFilled;
+        private static SvgImage? imgCircleDot;
+
         /// <summary>
         /// Gets or sets image for the regular file icon.
         /// </summary>
@@ -699,6 +706,60 @@ namespace Alternet.UI
         {
             get => imgUnderline ??= new MonoSvgImage(KnownSvgUrls.UrlImageUnderline);
             set => imgUnderline = value;
+        }
+
+        /// <summary>
+        /// Gets or sets 'Square Check Filled' image.
+        /// </summary>
+        public static SvgImage ImgSquareCheckFilled
+        {
+            get => imgSquareCheckFilled ??= new MonoSvgImage(KnownSvgUrls.UrlImageSquareCheckFilled);
+            set => imgSquareCheckFilled = value;
+        }
+
+        /// <summary>
+        /// Gets or sets 'Square Minus Filled' image.
+        /// </summary>
+        public static SvgImage ImgSquareMinusFilled
+        {
+            get => imgSquareMinusFilled ??= new MonoSvgImage(KnownSvgUrls.UrlImageSquareMinusFilled);
+            set => imgSquareMinusFilled = value;
+        }
+
+        /// <summary>
+        /// Gets or sets 'Square Plus Filled' image.
+        /// </summary>
+        public static SvgImage ImgSquarePlusFilled
+        {
+            get => imgSquarePlusFilled ??= new MonoSvgImage(KnownSvgUrls.UrlImageSquarePlusFilled);
+            set => imgSquarePlusFilled = value;
+        }
+
+        /// <summary>
+        /// Gets or sets 'Square' image.
+        /// </summary>
+        public static SvgImage ImgSquare
+        {
+            get => imgSquare ??= new MonoSvgImage(KnownSvgUrls.UrlImageSquare);
+            set => imgSquare = value;
+        }
+
+        /// <summary>
+        /// Gets or sets 'Circle Dot Filled' image.
+        /// </summary>
+        public static SvgImage ImgCircleDotFilled
+        {
+            get => imgCircleDotFilled ??= new MonoSvgImage(KnownSvgUrls.UrlImageCircleDotFilled);
+            set => imgCircleDotFilled = value;
+        }
+
+        /// <summary>
+        /// Gets or sets 'Circle Dot' image.
+        /// </summary>
+        public static SvgImage ImgCircleDot
+        {
+            get => imgCircleDot ??= new MonoSvgImage(KnownSvgUrls.UrlImageCircleDot);
+            set => imgCircleDot = value;
         }
 
         /// <summary>
