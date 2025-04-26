@@ -54,6 +54,26 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
+        /// Gets the displacement values (DX and DY) from the current transformation.
+        /// Returns an empty point if no transformation is applied.
+        /// </summary>
+        /// <value>
+        /// A <see cref="PointD"/> representing the translation offset.
+        /// </value>
+        public PointD TransformDXDY
+        {
+            get
+            {
+                if (HasTransform)
+                {
+                    return (Transform.DX, Transform.DY);
+                }
+                else
+                    return PointD.Empty;
+            }
+        }
+
+        /// <summary>
         /// Gets whether <see cref="Transform"/> is assigned with transform matrix
         /// which is not the identity matrix.
         /// </summary>
@@ -576,6 +596,14 @@ namespace Alternet.Drawing
         public void DrawPointAtCenter(Color color, RectD container)
         {
             FillRectangle(color.AsBrush, container.Center.AsRect(1));
+        }
+
+        /// <summary>
+        /// Resets transformation matrix in the <see cref="Transform"/> property.
+        /// </summary>
+        public void ResetTransform()
+        {
+            Transform = new TransformMatrix();
         }
 
         /// <summary>
@@ -1224,8 +1252,8 @@ namespace Alternet.Drawing
             => GetTextExtent(text, font);
 
         /// <summary>
-        /// Pops a stored state from the stack and sets the current transformation matrix
-        /// to that state.
+        /// Pops a stored transformation matrix from the stack and sets
+        /// it to the <see cref="Transform"/> property.
         /// </summary>
         public void Pop()
         {
