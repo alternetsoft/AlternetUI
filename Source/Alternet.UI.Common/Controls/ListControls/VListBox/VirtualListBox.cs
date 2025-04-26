@@ -180,8 +180,7 @@ namespace Alternet.UI
                     horizontalScrollBarSettings = new();
                     horizontalScrollBarSettings.PropertyChangedAction = (e) =>
                     {
-                        UpdateScrollBars();
-                        Invalidate();
+                        UpdateScrollBars(true);
                     };
                 }
 
@@ -202,8 +201,7 @@ namespace Alternet.UI
                     verticalScrollBarSettings = new();
                     verticalScrollBarSettings.PropertyChangedAction = (e) =>
                     {
-                        UpdateScrollBars();
-                        Invalidate();
+                        UpdateScrollBars(true);
                     };
                 }
 
@@ -246,7 +244,7 @@ namespace Alternet.UI
                 if (BorderStyle == value)
                     return;
                 base.BorderStyle = value;
-                UpdateScrollBars();
+                UpdateScrollBars(true);
             }
         }
 
@@ -455,9 +453,7 @@ namespace Alternet.UI
 
             firstVisibleItem = row;
 
-            UpdateScrollBars();
-            Invalidate();
-
+            UpdateScrollBars(true);
             return true;
         }
 
@@ -1034,9 +1030,11 @@ namespace Alternet.UI
 
             TransformMatrix matrix = TransformMatrix.CreateTranslation(-scrollOffset, 0);
 
-            bool fullPaint = false;
+            var r = e.ClipRectangle;
+            r.Width += scrollOffset;
+            e.ClipRectangle = r;
 
-            var clientSize = ClientSize;
+            bool fullPaint = true;
 
             var dc = e.Graphics;
 
@@ -1050,7 +1048,7 @@ namespace Alternet.UI
             dc.FillRectangle(RealBackgroundColor.AsBrush, rectUpdate);
 
             RectD rectRow = RectD.Empty;
-            rectRow.Width = clientSize.Width;
+            rectRow.Width = r.Width;
 
             int lineMax = GetVisibleEnd();
 
@@ -1334,7 +1332,7 @@ namespace Alternet.UI
             if (newOffset != scrollOffset)
             {
                 scrollOffset = newOffset;
-                Refresh();
+                UpdateScrollBars(true);
             }
         }
 
@@ -1403,11 +1401,16 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        public override void UpdateScrollBars()
+        public override void UpdateScrollBars(bool refresh)
         {
+            if (DisposingOrDisposed)
+                return;
+
             CalcScrollBarInfo(out var horzScrollbar, out var vertScrollbar);
             VertScrollBarInfo = vertScrollbar;
             HorzScrollBarInfo = horzScrollbar;
+            if (refresh)
+                Refresh();
         }
 
         /// <summary>
@@ -1430,8 +1433,7 @@ namespace Alternet.UI
         {
             if (DisposingOrDisposed || InUpdates)
                 return;
-            UpdateScrollBars();
-            Invalidate();
+            UpdateScrollBars(true);
         }
 
         /// <inheritdoc/>
@@ -1455,7 +1457,7 @@ namespace Alternet.UI
         protected override void OnSizeChanged(EventArgs e)
         {
             base.OnSizeChanged(e);
-            UpdateScrollBars();
+            UpdateScrollBars(false);
         }
 
         /// <inheritdoc/>
@@ -1536,7 +1538,7 @@ namespace Alternet.UI
         protected override void OnHandleCreated(EventArgs e)
         {
             base.OnHandleCreated(e);
-            UpdateScrollBars();
+            UpdateScrollBars(false);
         }
 
         /// <summary>
@@ -1870,10 +1872,10 @@ namespace Alternet.UI
                 switch (e.Type)
                 {
                     case ScrollEventType.SmallDecrement:
-                        IncHorizontalOffsetChars(-1);
+                        DoActionScrollCharLeft();
                         break;
                     case ScrollEventType.SmallIncrement:
-                        IncHorizontalOffsetChars(1);
+                        DoActionScrollCharRight();
                         break;
                     case ScrollEventType.LargeDecrement:
                         DoActionScrollPageLeft();
@@ -1882,6 +1884,7 @@ namespace Alternet.UI
                         DoActionScrollPageRight();
                         break;
                     case ScrollEventType.ThumbTrack:
+                        SetHorizontalOffset(e.NewValue);
                         break;
                     case ScrollEventType.First:
                         SetHorizontalOffset(0);

@@ -27,7 +27,7 @@ namespace Alternet.UI
         /// </summary>
         /// <remarks>
         /// This method must return <c>true</c> if default background
-        /// painting is not needed. The simplest implemetation is to return <c>false</c>.
+        /// painting is not needed. The simplest implementation is to return <c>false</c>.
         /// In this case default background will be painted.
         /// </remarks>
         /// <param name="sender"><see cref="VirtualListBox"/> control.</param>

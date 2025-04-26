@@ -157,9 +157,9 @@ namespace Alternet.Drawing
             Color foreColor,
             Color? backColor = null)
         {
-            var splitted = RegexUtils.GetBoldTagSplitted(text);
+            var splittedText = RegexUtils.GetBoldTagSplitted(text);
             return DrawTextWithFontStyle(
-                        splitted,
+                        splittedText,
                         location,
                         font,
                         foreColor,
@@ -238,7 +238,7 @@ namespace Alternet.Drawing
         /// Draws text with the specified font, background and foreground colors,
         /// optional image, alignment and underlined mnemonic character.
         /// </summary>
-        /// <param name="prm">Parameters spedified using <see cref="DrawLabelParams"/> structure.</param>
+        /// <param name="prm">Parameters specified using <see cref="DrawLabelParams"/> structure.</param>
         /// <returns></returns>
         public virtual RectD DrawLabel(ref DrawLabelParams prm)
         {

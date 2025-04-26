@@ -328,7 +328,7 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Gets or sets 'Use Regular Exprpressions' image.
+        /// Gets or sets 'Use Regular Expressions' image.
         /// </summary>
         public static SvgImage ImgRegularExpr
         {
@@ -465,7 +465,7 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Gets or sets image that can be used as 'Plus' image.
+        /// Gets or sets image that can be used as plus image.
         /// </summary>
         public static SvgImage ImgPlus
         {

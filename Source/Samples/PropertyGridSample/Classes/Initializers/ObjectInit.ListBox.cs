@@ -39,14 +39,13 @@ namespace PropertyGridSample
             var svgImageSize = 24; /* image sizes are always in pixels */
 
             ListControlItem item = new();
-            item.Alignment = HVAlignment.Center;
-            item.DisplayText = string.Empty;
+            item.DisplayText = "This is display text";
             item.Text = "This is some text";
             item.Image = Image.FromUrlCached(PhotoUrl);
             addAction(item);
 
             item = new();
-            item.Text = "Bold item CenterRight";
+            item.Text = "Bold item (right, vert center)";
             item.Alignment = (HorizontalAlignment.Right, VerticalAlignment.Center);
             item.FontStyle = FontStyle.Bold;
             item.MinHeight = control.PixelToDip(svgImageSize);
@@ -66,7 +65,7 @@ namespace PropertyGridSample
             addAction(item);
 
             item = new();
-            item.Text = "Height=60/BottomCenter";
+            item.Text = "H = 60 (bottom, vert center)";
             item.CheckBoxVisible = false;
             item.MinHeight = 60;
             item.Alignment = (HorizontalAlignment.Center, VerticalAlignment.Bottom);

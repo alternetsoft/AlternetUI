@@ -1198,7 +1198,7 @@ namespace Alternet.UI
         /// <summary>
         /// Updates the vertical and horizontal scrollbars.
         /// </summary>
-        public abstract void UpdateScrollBars();
+        public abstract void UpdateScrollBars(bool refresh);
 
         /// <summary>
         /// Called when when the checkbox state of the item has changed.
