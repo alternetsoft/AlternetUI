@@ -41,8 +41,6 @@ namespace Alternet.UI
 
         private static SetItemsKind defaultSetItemsKind = SetItemsKind.ChangeField;
 
-        private TransformMatrix matrix = new();
-
         private Coord scrollOffset;
         private ListBoxItemPaintEventArgs? itemPaintArgs;
         private Coord horizontalExtent;
@@ -148,6 +146,14 @@ namespace Alternet.UI
                 defaultSetItemsKind = value;
             }
         }
+
+        /// <summary>
+        /// Gets the horizontal scroll offset.
+        /// </summary>
+        /// <value>
+        /// A <see cref="Coord"/> representing the current horizontal scroll position.
+        /// </value>
+        public Coord ScrollOffsetX => scrollOffset;
 
         /// <summary>
         /// Indicates whether vertical scrollbar settings are defined.
@@ -1026,6 +1032,8 @@ namespace Alternet.UI
             if (DisposingOrDisposed)
                 return;
 
+            TransformMatrix matrix = TransformMatrix.CreateTranslation(-scrollOffset, 0);
+
             bool fullPaint = false;
 
             var clientSize = ClientSize;
@@ -1048,6 +1056,8 @@ namespace Alternet.UI
 
             MeasureItemEventArgs measureItemArgs = new(dc, 0);
             DrawItemEventArgs drawItemArgs = new(dc);
+
+            dc.PushTransform(matrix);
 
             for (int line = GetVisibleBegin(); line < lineMax; line++)
             {
@@ -1112,12 +1122,7 @@ namespace Alternet.UI
                             itemPaintArgs.Visible = true;
                         }
 
-                        matrix.Reset();
-                        dc.Transform = matrix;
                         DrawItemBackground(itemPaintArgs);
-
-                        matrix.Translate(-scrollOffset, 0);
-                        dc.Transform = matrix;
                         DrawItemForeground(itemPaintArgs);
                     }
                 }
@@ -1132,6 +1137,8 @@ namespace Alternet.UI
 
                 rectRow.Top += hRow;
             }
+
+            dc.Pop();
         }
 
         /// <summary>

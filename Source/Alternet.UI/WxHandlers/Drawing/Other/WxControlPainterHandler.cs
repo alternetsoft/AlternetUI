@@ -507,6 +507,8 @@ namespace Alternet.Drawing
             RectD rect,
             DrawFlags flags = 0)
         {
+            rect.Offset(dc.TransformDXDY);
+
             Alternet.UI.Native.WxOtherFactory.RendererDrawCheckBox(
                 default,
                 WxApplicationHandler.WxWidget(control),
