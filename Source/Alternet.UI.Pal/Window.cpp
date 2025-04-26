@@ -55,6 +55,8 @@ namespace Alternet::UI
         _menu(*this, nullptr, &Control::IsWxWindowCreated, &Window::RetrieveMenu,   
             &Window::ApplyMenu)
     {
+        _borderStyle = wxBorder::wxBORDER_DEFAULT;
+
         GetDelayedValues().Add(&_title);
         GetDelayedValues().Add(&_delayedFlags);
         SetVisible(false);
