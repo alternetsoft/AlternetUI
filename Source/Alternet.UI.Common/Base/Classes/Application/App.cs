@@ -351,15 +351,13 @@ namespace Alternet.UI
             get
             {
                 if (current is null)
-                    yield break;
+                    return [];
 
-                var windows = Current.VisibleWindows.OrderByDescending(x => x.LastShownAsDialogTime);
+                var windows = Current.VisibleWindows
+                    .Where(x => x.Modal)
+                    .OrderByDescending(x => x.LastShownAsDialogTime).ToArray();
 
-                foreach (var window in windows)
-                {
-                    if (window.Modal)
-                        yield return window;
-                }
+                return windows;
             }
         }
 

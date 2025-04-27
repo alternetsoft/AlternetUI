@@ -128,8 +128,10 @@ namespace Alternet::UI
     void Window::OnActivate(wxActivateEvent& event)
     {
         Control::OnActivate(event);
+        /*
         if (!HasEnabledChilds())
             event.Skip(false);
+            */
     }
 
     void Window::OnBeforeDestroyWxWindow()

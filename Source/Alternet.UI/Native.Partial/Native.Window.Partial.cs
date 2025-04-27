@@ -14,9 +14,10 @@ namespace Alternet.UI.Native
 
             var uiControl = UIControl as UI.Window;
 
-            var canClose = uiControl?.CanClose(true) ?? false;
+            WindowClosingEventArgs args = new();
+            uiControl?.RaiseClosing(args);
 
-            e.Cancel = e.Cancel || !canClose;
+            e.Cancel = args.Cancel;
 
             if (e.Cancel)
                 return;

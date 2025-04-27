@@ -52,7 +52,7 @@ namespace Alternet.UI
                     PropInstanceAndValue.PopPropertiesMultiple(disabledControls);
                     disabledControls = null;
                     LastShownAsDialogTime = null;
-                    Close(WindowCloseAction.Hide);
+                    Hide();
                     isModal = false;
                     onCloseModal?.Invoke(modalResult == ModalResult.Accepted);
                     onCloseModal = null;
@@ -61,12 +61,12 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Runs a dialog asynchroniously.
+        /// Runs a dialog asynchronously.
         /// </summary>
         /// <param name="onClose">Action to call after dialog is closed.</param>
         /// <param name="owner">A window that will own this window.</param>
         /// <remarks>
-        /// On some platforms dialogs are shown synchroniously and application waits
+        /// On some platforms dialogs are shown synchronously and application waits
         /// until dialog is closed.
         /// </remarks>
         public virtual void ShowDialogAsync(Window? owner = null, Action<bool>? onClose = null)

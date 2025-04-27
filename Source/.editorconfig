@@ -1,6 +1,9 @@
 ﻿# top-most EditorConfig file
 root = true
 
+[*.{cpp,h}]
+spelling_checkable_types = comments
+
 
 [*.cs]
 

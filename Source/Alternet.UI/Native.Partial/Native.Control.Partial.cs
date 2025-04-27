@@ -201,6 +201,11 @@ namespace Alternet.UI.Native
 
         public void OnPlatformEventHandleCreated()
         {
+            if(UIControl is not null)
+            {
+                Bounds = UIControl.ReportedBounds;
+            }
+
             Handler?.OnHandleCreated();
             UIControl?.RaiseHandleCreated(EventArgs.Empty);
         }

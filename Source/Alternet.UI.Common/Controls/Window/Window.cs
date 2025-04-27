@@ -1310,20 +1310,13 @@ namespace Alternet.UI
             {
                 if (modalDialog != this)
                     return false;
-                else
-                {
-                    RunWhenIdle(() =>
-                    {
-                        ModalResult = ModalResult.Canceled;
-                    });
-                    return false;
-                }
             }
 
             bool CanClose()
             {
                 WindowClosingEventArgs e = new();
-                RaiseClosing(e);
+                OnClosing(e);
+                Closing?.Invoke(this, e);
                 if (e.Cancel)
                     return false;
                 return true;
@@ -1352,13 +1345,20 @@ namespace Alternet.UI
         /// <param name="e">Event arguments.</param>
         public void RaiseClosing(WindowClosingEventArgs e)
         {
-            if (DisposingOrDisposed || ignoreClosingEvent)
+            if (DisposingOrDisposed || ignoreClosingEvent || e.Cancel)
                 return;
-            OnClosing(e);
-            Closing?.Invoke(this, e);
+
+            e.Cancel = !CanClose(true);
 
             if (e.Cancel)
                 return;
+
+            if (Modal)
+            {
+                e.Cancel = true;
+                ModalResult = ModalResult.Canceled;
+                return;
+            }
 
             if (CloseAction == WindowCloseAction.Hide)
             {
