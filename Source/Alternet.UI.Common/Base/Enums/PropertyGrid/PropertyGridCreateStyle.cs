@@ -44,7 +44,7 @@ namespace Alternet.UI
 
         /// <summary>
         /// When PropertyGrid is resized, splitter moves to the center. This
-        /// behaviour stops once the user manually moves the splitter.
+        /// behavior stops once the user manually moves the splitter.
         /// </summary>
         SplitterAutoCenter = 0x00000080,
 
@@ -78,25 +78,6 @@ namespace Alternet.UI
         /// properties.
         /// </summary>
         LimitedEditing = 0x00000800,
-
-        /*
-        /// <summary>
-        /// PropertyGridManager only: Show toolbar for mode and page selection.
-        /// </summary>
-        Toolbar = 0x00001000,
-
-        /// <summary>
-        /// PropertyGridManager only: Show adjustable text box showing description
-        /// or help text, if available, for currently selected property.
-        /// </summary>
-        Description = 0x00002000,
-
-        /// <summary>
-        /// PropertyGridManager only: don't show an internal border around the
-        /// property grid. Recommended if you use a header.
-        /// </summary>
-        InternalBorder = 0x00004000,
-        */
 
         /// <summary>
         /// Default style of the property grid.

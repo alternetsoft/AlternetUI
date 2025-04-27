@@ -56,15 +56,6 @@ namespace Alternet.UI
         AutoUnspecifiedValues = 0x00200000,
 
         /// <summary>
-        /// If this style is used, built-in attributes (such as FloatPrecision
-        /// and StringPassword) are not stored into property's attribute storage
-        /// (thus they are not readable).
-        /// Note that this option is global, and applies to all property
-        /// containers.
-        /// </summary>
-        WriteOnlyBuiltinAttributes = 0x00400000,
-
-        /// <summary>
         /// Hides page selection buttons from toolbar.
         /// </summary>
         HidePageButtons = 0x01000000,
@@ -98,14 +89,8 @@ namespace Alternet.UI
         ToolbarSeparator = 0x10000000,
 
         /// <summary>
-        /// Allows to take focus on the entire area (on canvas)
-        /// even if control is not in a standalone mode.
-        /// </summary>
-        AlwaysAllowFocus = 0x00100000,
-
-        /// <summary>
         /// Default style.
         /// </summary>
-        DefaultStyle = AlwaysAllowFocus,
+        DefaultStyle = 0,
     }
 }

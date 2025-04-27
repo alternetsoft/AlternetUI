@@ -148,7 +148,6 @@ namespace Alternet.UI
                 | PropertyGridApplyFlags.ReloadAfterSetValue;
             propGrid.Features = PropertyGridFeature.QuestionCharInNullable;
             propGrid.ProcessException += PropertyGrid_ProcessException;
-            propGrid.CreateStyleEx = PropertyGridCreateStyleEx.AlwaysAllowFocus;
             rightNotebook.Add("Members", propGrid);
 
             InitActions();
