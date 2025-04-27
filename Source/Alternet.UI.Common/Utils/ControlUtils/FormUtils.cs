@@ -50,7 +50,7 @@ namespace Alternet.UI
 
             foreach (var window in windows)
             {
-                if (window == exceptWindow)
+                if (window.GetType() == exceptWindow?.GetType())
                     continue;
                 window.Close(action);
                 App.DoEvents();

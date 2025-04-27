@@ -1389,8 +1389,21 @@ namespace Alternet.UI
             Closed?.Invoke(this, e);
             if (!Modal)
             {
-                Dispose();
+                SendDispose();
             }
+        }
+
+        /// <summary>
+        /// Schedules the disposal of the window when it is safe to do so.
+        /// It is recommended to use this method in event handlers rather than
+        /// calling <see cref="DisposableObject.Dispose()"/> directly.
+        /// </summary>
+        public virtual void SendDispose()
+        {
+            App.AddBackgroundInvokeAction(() =>
+            {
+                Dispose();
+            });
         }
 
         /// <summary>
