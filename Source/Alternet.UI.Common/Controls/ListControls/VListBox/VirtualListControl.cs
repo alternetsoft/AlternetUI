@@ -30,25 +30,25 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets default selected item text color.
         /// </summary>
-        public static Color DefaultSelectedItemTextColor
+        public static LightDarkColor DefaultSelectedItemTextColor
             = Color.LightDark(SystemColors.HighlightText);
 
         /// <summary>
         /// Gets or sets default selected item background color.
         /// </summary>
-        public static Color DefaultSelectedItemBackColor
+        public static LightDarkColor DefaultSelectedItemBackColor
             = Color.LightDark(SystemColors.Highlight);
 
         /// <summary>
         /// Gets or sets default disabled item text color.
         /// </summary>
-        public static Color DefaultDisabledItemTextColor
+        public static LightDarkColor DefaultDisabledItemTextColor
             = Color.LightDark(SystemColors.GrayText);
 
         /// <summary>
         /// Gets or sets default item text color.
         /// </summary>
-        public static Color DefaultItemTextColor
+        public static LightDarkColor DefaultItemTextColor
             = Color.LightDark(SystemColors.WindowText);
 
         /// <summary>
@@ -56,8 +56,8 @@ namespace Alternet.UI
         /// This is used when <see cref="DefaultCurrentItemBorder"/>
         /// is created.
         /// </summary>
-        public static Color DefaultCurrentItemBorderColor
-            = Color.LightDark(light: Color.Black, dark: Color.Gray);
+        public static LightDarkColor DefaultCurrentItemBorderColor
+            = Color.LightDark(light: Color.Gray600, dark: Color.White);
 
         private static BorderSettings? defaultCurrentItemBorder;
 
@@ -1030,13 +1030,13 @@ namespace Alternet.UI
         /// </summary>
         public virtual void SetColorThemeToDark()
         {
-            BackgroundColor = (44, 44, 44);
-            ForegroundColor = (204, 204, 204);
+            BackgroundColor = DefaultColors.ControlBackColor.Dark;
+            ForegroundColor = DefaultColors.ControlForeColor.Dark;
 
-            SelectedItemTextColor = (255, 255, 255);
-            SelectedItemBackColor = (214, 117, 64);
+            SelectedItemTextColor = null;
+            SelectedItemBackColor = null;
             CurrentItemBorder ??= new();
-            CurrentItemBorder.SetColor(Color.White);
+            CurrentItemBorder.SetColor(DefaultCurrentItemBorderColor.Dark);
             ItemTextColor = (204, 204, 204);
         }
 
