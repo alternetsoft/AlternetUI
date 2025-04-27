@@ -146,17 +146,17 @@ namespace Alternet.UI
         /// </summary>
         /// <returns>
         /// The default foreground <see cref="Color" /> of the control.
-        /// The default is <see cref="SystemColors.ControlText" />.
+        /// The default is <see cref="DefaultColors.ControlForeColor" />.
         /// </returns>
-        public static Color DefaultForeColor => SystemColors.ControlText;
+        public static Color DefaultForeColor => DefaultColors.ControlForeColor;
 
         /// <summary>
         /// Gets the default background color of the control.
         /// </summary>
         /// <returns>
         /// The default background <see cref="Color" /> of the control.
-        /// The default is <see cref="SystemColors.Control" />.</returns>
-        public static Color DefaultBackColor => SystemColors.Control;
+        /// The default is <see cref="DefaultColors.ControlBackColor" />.</returns>
+        public static Color DefaultBackColor => DefaultColors.ControlBackColor;
 
         /// <summary>
         /// Gets a value indicating which of the modifier keys (SHIFT, CTRL, and ALT) is in
@@ -244,6 +244,14 @@ namespace Alternet.UI
                 defaultMonoFont = value;
             }
         }
+
+        /// <summary>
+        /// Gets the reported bounds of the control.
+        /// </summary>
+        /// <value>
+        /// A <see cref="RectD"/> representing the control's boundaries.
+        /// </value>
+        public RectD ReportedBounds => reportedBounds;
 
         /// <summary>
         /// Gets scale factor used in device-independent units to/from
