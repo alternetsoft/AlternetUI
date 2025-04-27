@@ -11,42 +11,42 @@ namespace Alternet.Drawing
         /// <summary>
         /// Gets a system-defined color.
         /// </summary>
-        public static readonly Color Gray100 = Color.FromArgb(0xE1E1E1);
+        public static readonly Color Gray100 = Color.FromArgb(0xFFE1E1E1);
 
         /// <summary>
         /// Gets a system-defined color.
         /// </summary>
-        public static readonly Color Gray200 = Color.FromArgb(0xC8C8C8);
+        public static readonly Color Gray200 = Color.FromArgb(0xFFC8C8C8);
 
         /// <summary>
         /// Gets a system-defined color.
         /// </summary>
-        public static readonly Color Gray300 = Color.FromArgb(0xACACAC);
+        public static readonly Color Gray300 = Color.FromArgb(0xFFACACAC);
 
         /// <summary>
         /// Gets a system-defined color.
         /// </summary>
-        public static readonly Color Gray400 = Color.FromArgb(0x919191);
+        public static readonly Color Gray400 = Color.FromArgb(0xFF919191);
 
         /// <summary>
         /// Gets a system-defined color.
         /// </summary>
-        public static readonly Color Gray500 = Color.FromArgb(0x6E6E6E);
+        public static readonly Color Gray500 = Color.FromArgb(0xFF6E6E6E);
 
         /// <summary>
         /// Gets a system-defined color.
         /// </summary>
-        public static readonly Color Gray600 = Color.FromArgb(0x404040);
+        public static readonly Color Gray600 = Color.FromArgb(0xFF404040);
 
         /// <summary>
         /// Gets a system-defined color.
         /// </summary>
-        public static readonly Color Gray900 = Color.FromArgb(0x212121);
+        public static readonly Color Gray900 = Color.FromArgb(0xFF212121);
 
         /// <summary>
         /// Gets a system-defined color.
         /// </summary>
-        public static readonly Color Gray950 = Color.FromArgb(0x141414);
+        public static readonly Color Gray950 = Color.FromArgb(0xFF141414);
 
         /// <summary>
         /// Gets a system-defined color.
