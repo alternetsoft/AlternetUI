@@ -1500,18 +1500,6 @@ namespace Alternet.UI
         {
         }
 
-        /// <inheritdoc/>
-        protected override void OnGotFocus(EventArgs e)
-        {
-            base.OnGotFocus(e);
-
-            if (SelectedIndex is null)
-            {
-                if (Count > 0)
-                    SelectItemsAndScroll(0);
-            }
-        }
-
         /// <summary>
         /// Called when the <see cref="MeasureItem" /> event is raised.</summary>
         /// <param name="e">A <see cref="MeasureItemEventArgs" /> that
@@ -1826,6 +1814,30 @@ namespace Alternet.UI
                 else
                     DoActionScrollLineUp();
             }
+        }
+
+        /// <inheritdoc/>
+        protected override void OnGotFocus(EventArgs e)
+        {
+            base.OnGotFocus(e);
+
+            DoInsideUpdate(() =>
+            {
+                if (SelectedIndex is null)
+                {
+                    if (Count > 0)
+                        SelectItemsAndScroll(0);
+                }
+
+                Invalidate();
+            });
+        }
+
+        /// <inheritdoc/>
+        protected override void OnLostFocus(EventArgs e)
+        {
+            base.OnLostFocus(e);
+            Invalidate();
         }
 
         /// <inheritdoc/>
