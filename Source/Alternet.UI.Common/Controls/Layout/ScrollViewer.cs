@@ -69,7 +69,7 @@ namespace Alternet.UI
         /// <returns>True if the mouse wheel event should be ignored; otherwise, false.</returns>
         protected virtual bool IgnoreChildMouseWheel(AbstractControl? child)
         {
-            return child is ComboBox;
+            return false;
         }
 
         /// <inheritdoc/>
@@ -81,7 +81,7 @@ namespace Alternet.UI
 
             var sign = Math.Sign(e.Delta);
 
-            if (Keyboard.IsShiftPressed && App.IsWindowsOS)
+            if (Keyboard.IsShiftPressed)
             {
                 var w = (int)MeasureCanvas.GetTextExtent("W", RealFont).Width;
                 IncHorizontalLayoutOffset(sign * w);
