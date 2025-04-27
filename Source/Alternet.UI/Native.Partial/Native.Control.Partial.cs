@@ -88,17 +88,15 @@ namespace Alternet.UI.Native
         public void OnPlatformEventVisibleChanged()
         {
             bool visible = Visible;
-            UIControl?.SetVisible(visible);
+            /*UIControl?.SetVisible(visible);*/
 
             if (App.IsLinuxOS && visible)
             {
                 // todo: this is a workaround for a problem on Linux when
                 // ClientSize is not reported correctly until the window is shown
-                // So we need to relayout all after the proper client size is available
+                // So we need to perform layout after the proper client size is available
                 // This should be changed later in respect to RedrawOnResize functionality.
                 // Also we may need to do this for top-level windows.
-                // Doing this on Windows results in strange glitches like disappearing
-                // tab controls' tab.
                 // See https://forums.wxwidgets.org/viewtopic.php?f=1&t=47439
                 UIControl?.PerformLayout();
             }
