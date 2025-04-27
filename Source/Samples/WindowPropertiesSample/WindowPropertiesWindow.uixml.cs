@@ -149,7 +149,11 @@ namespace WindowPropertiesSample
             {
                 App.Log("Modal Result: " + (result ? "Accepted" : "Canceled"));
                 OnWindowClosed();
-                dialogWindow.Dispose();
+
+                App.AddBackgroundInvokeAction(() =>
+                {
+                    dialogWindow.Dispose();
+                });
             });
         }
 

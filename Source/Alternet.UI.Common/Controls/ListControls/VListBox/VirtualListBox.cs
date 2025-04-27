@@ -1814,6 +1814,7 @@ namespace Alternet.UI
 
             if (Keyboard.IsShiftPressed)
             {
+                App.Log("Shift scroll");
                 if (delta < 0)
                     DoActionScrollCharRight();
                 else
@@ -1821,6 +1822,7 @@ namespace Alternet.UI
             }
             else
             {
+                App.Log("scroll");
                 if (delta < 0)
                     DoActionScrollLineDown();
                 else
