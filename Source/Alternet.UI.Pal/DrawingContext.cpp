@@ -357,15 +357,6 @@ namespace Alternet::UI
 
     void DrawingContext::DrawBeziers(Pen* pen, Point* points, int pointsCount)
     {
-        /*if (pointsCount == 0)
-            return;
-
-        if ((pointsCount - 1) % 3 != 0)
-            throwExInvalidArg(
-                pointsCount,
-                u"The number of points in the array should be a multiple of 3 plus 1, such as 4, 7, or 10.");
-        */
-
         auto path = new GraphicsPath(_dc, _graphicsContext);
 
         path->StartFigure(points[0]);
@@ -696,32 +687,6 @@ namespace Alternet::UI
         _dc->SetBrush(oldBrush);
     }
 
-    /*void DrawingContext::Push()
-    {
-        _transformStack.push(_dc->GetTransformMatrix());
-    }
-
-    void DrawingContext::Pop()
-    {
-        if (_transformStack.empty())
-            return;
-
-        SetTransformCore(_transformStack.top());
-        _transformStack.pop();
-    }*/
-
-    /*TransformMatrix* DrawingContext::GetTransform()
-    {
-        auto result = new TransformMatrix(_currentTransform);
-        result->AddRef();
-        return result;
-    }
-
-    void DrawingContext::SetTransform(TransformMatrix* value)
-    {
-        SetTransformCore(value->GetMatrix());
-    }*/
-
     void DrawingContext::SetTransformValues(
         double m11, double m12, double m21, double m22, double dx, double dy)
     {
@@ -741,24 +706,6 @@ namespace Alternet::UI
         _dc->ResetTransformMatrix();
         _graphicsContext->SetTransform(_graphicsContext->CreateMatrix());
     }
-
-    /*void DrawingContext::SetTransformCore(const wxAffineMatrix2D& value)
-    {
-        _currentTransform = value;
-
-        wxMatrix2D m;
-        wxPoint2DDouble t;
-        value.Get(&m, &t);
-        _currentTranslation = wxPoint((int)t.m_x, (int)t.m_y);
-
-        _nonIdentityTransformSet = !_currentTransform.IsIdentity();
-
-        // Setting transform on DC and GC at the same time doesn't work.
-        // So apply them before every operation on by one if needed.
-
-        _dc->ResetTransformMatrix();
-        _graphicsContext->SetTransform(_graphicsContext->CreateMatrix());
-    }*/
 
     void DrawingContext::ApplyTransform(bool useDC)
     {
@@ -1115,12 +1062,6 @@ namespace Alternet::UI
         }
     }
 
-    void DrawingContext::GetPartialTextExtents(const string& text,
-        double* widths, int widthsCount, Font* font, void* control)
-    {
-
-    }
-
     void DrawingContext::DrawEllipse(Pen* pen, const Rect& bounds)
     {
         if (NeedToUseDC())
@@ -1160,70 +1101,6 @@ namespace Alternet::UI
                 _dc->GetWindow());
             _graphicsContext->DrawEllipse(rect.x, rect.y, rect.width, rect.height);
         }
-    }
-
-    RectD DrawingContext::DrawLabel(const string& text,
-        Font* font, const Color& foreColor, const Color& backColor, Image* image,
-        const RectD& rect, int alignment, int indexAccel)
-    {
-        bool useBackColor = !backColor.IsEmpty();
-
-        UseDC();
-
-        auto window = DrawingContext::GetWindow(_dc);
-        auto backMode = _dc->GetBackgroundMode();
-
-        if (useBackColor)
-            _dc->SetBackgroundMode(wxBRUSHSTYLE_SOLID);
-        else
-            _dc->SetBackgroundMode(wxBRUSHSTYLE_TRANSPARENT);
-
-        auto& oldTextForeground = _dc->GetTextForeground();
-        _dc->SetTextForeground(foreColor);
-
-        auto& oldFont = _dc->GetFont();
-        _dc->SetFont(font->GetWxFont());
-
-        Rect rectTranslated(rect.X, rect.Y, rect.Width, rect.Height);
-
-#ifndef __WXMSW__
-        /*rectTranslated.X += _currentTranslation.x;
-        rectTranslated.Y += _currentTranslation.y;*/
-#endif
-        auto wRect = fromDip(rectTranslated, window);
-        wxRect rectBounding;
-        wxBitmap bitmap = wxNullBitmap;
-
-        if (image != nullptr)
-            bitmap = image->GetBitmap();
-
-        if (useBackColor)
-        {
-            auto& oldTextBackground = _dc->GetTextBackground();
-            _dc->SetTextBackground(backColor);
-            _dc->DrawLabel(wxStr(text),
-                bitmap,
-                wRect,
-                alignment,
-                indexAccel,
-                &rectBounding);
-            _dc->SetTextBackground(oldTextBackground);
-        }
-        else
-        {
-            _dc->DrawLabel(wxStr(text),
-                bitmap,
-                wRect,
-                alignment,
-                indexAccel,
-                &rectBounding);
-        }
-
-        _dc->SetTextForeground(oldTextForeground);
-        _dc->SetFont(oldFont);
-
-        _dc->SetBackgroundMode(backMode);
-        return rectBounding;
     }
 
     static void _DrawText(wxDC* dc, const string& text, wxPoint point)
@@ -1286,57 +1163,6 @@ namespace Alternet::UI
         _dc->SetBackgroundMode(backMode);
     }
 
-    void DrawingContext::DrawTextAtPoint(
-        const string& text,
-        const Point& origin,
-        Font* font,
-        Brush* brush)
-    {
-        UseDC();
-/*
-#if __WXMSW__
-        UseDC();
-#else
-        _dc->ResetTransformMatrix();
-#endif
-*/
-
-        std::unique_ptr<TextPainter>(GetTextPainter())->DrawTextAtPoint(
-            text,
-            origin,
-            font,
-            brush);
-    }
-
-    void DrawingContext::DrawTextAtRect(
-        const string& text,
-        const Rect& bounds,
-        Font* font,
-        Brush* brush,
-        TextHorizontalAlignment horizontalAlignment,
-        TextVerticalAlignment verticalAlignment,
-        TextTrimming trimming,
-        TextWrapping wrapping)
-    {
-        UseDC();
-/*
-#if __WXMSW__
-        UseDC();
-#else
-        _dc->ResetTransformMatrix();
-#endif*/
-
-        std::unique_ptr<TextPainter>(GetTextPainter())->DrawTextAtRect(
-            text,
-            bounds,
-            font,
-            brush,
-            horizontalAlignment,
-            verticalAlignment,
-            trimming,
-            wrapping);
-    }
-
     wxGraphicsBrush DrawingContext::GetGraphicsBrush(Brush* brush, const wxPoint2DDouble& offset)
     {
         return brush->GetGraphicsBrush(_graphicsContext->GetRenderer(), offset);
@@ -1345,32 +1171,6 @@ namespace Alternet::UI
     wxGraphicsPen DrawingContext::GetGraphicsPen(Pen* pen)
     {
         return pen->GetGraphicsPen(_graphicsContext->GetRenderer());
-    }
-
-    TextPainter* DrawingContext::GetTextPainter()
-    {
-        wxPoint translation;
-#ifndef __WXMSW__
-        /*translation = _currentTranslation;*/
-#endif
-        return new TextPainter(_dc, _graphicsContext, /*NeedToUseDC()*/true, translation);
-    }
-
-    Size DrawingContext::MeasureText(const string& text, Font* font, double maximumWidth,
-        TextWrapping wrapping)
-    {
-        if (NeedToUseDC())
-            UseDC();
-        else
-            UseGC();
-/*#if __WXMSW__
-        UseDC();
-#else
-        _dc->ResetTransformMatrix();
-#endif*/
-
-        return std::unique_ptr<TextPainter>(GetTextPainter())->MeasureText(text, font,
-            maximumWidth, wrapping);
     }
 
     Size DrawingContext::GetTextExtentSimple(const string& text, Font* font, void* control)

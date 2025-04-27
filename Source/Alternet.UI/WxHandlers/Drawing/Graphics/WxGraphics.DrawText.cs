@@ -124,7 +124,12 @@ namespace Alternet.Drawing
         {
             if(GetNoTransformForDrawText())
                 return value;
-            return Transform.TransformPoint(value);
+
+            value.X += Transform.DX;
+            value.Y += Transform.DY;
+            return value;
+            
+            /*return Transform.TransformPoint(value);*/
         }
 
         private Font TransformFontForDrawText(Font value)

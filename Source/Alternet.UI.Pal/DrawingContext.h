@@ -53,8 +53,6 @@ namespace Alternet::UI
         wxGraphicsBrush GetGraphicsBrush(Brush* brush, const wxPoint2DDouble& offset);
         wxGraphicsPen GetGraphicsPen(Pen* pen);
 
-        TextPainter* GetTextPainter();
-
         Region* _clip = nullptr;
 
         bool _nonIdentityTransformSet = false;

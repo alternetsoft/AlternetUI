@@ -17,6 +17,18 @@ namespace Alternet.UI.Tests
         /// Test method for the internal purposes.
         /// </summary>
         [Conditional("DEBUG")]
+        public static void TestTransformPoint()
+        {
+            TransformMatrix matrix = TransformMatrix.CreateTranslation(-50, 0);
+            PointD point = new(50, 25);
+            var transformedPoint = matrix.TransformPoint(point);
+            App.Log($"Point transformed: {point} -> {transformedPoint}");
+        }
+
+        /// <summary>
+        /// Test method for the internal purposes.
+        /// </summary>
+        [Conditional("DEBUG")]
         [Browsable(false)]
         public static void TestVariant2()
         {

@@ -190,17 +190,6 @@ ALTERNET_UI_API c_bool DrawingContext_StretchBlitI_(DrawingContext* obj, PointI 
     #endif
 }
 
-ALTERNET_UI_API RectD_C DrawingContext_DrawLabel_(DrawingContext* obj, const char16_t* text, Font* font, Color foreColor, Color backColor, Image* image, RectD rect, int alignment, int indexAccel)
-{
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    return MarshalExceptions<RectD_C>([&](){
-    #endif
-        return obj->DrawLabel(text, font, foreColor, backColor, image, rect, alignment, indexAccel);
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    });
-    #endif
-}
-
 ALTERNET_UI_API void DrawingContext_DestroyClippingRegion_(DrawingContext* obj)
 {
     #if !defined(__WXMSW__) || defined(_DEBUG)
@@ -278,17 +267,6 @@ ALTERNET_UI_API void DrawingContext_ImageFromGenericImageDC_(Image* image, void*
     #endif
 }
 
-ALTERNET_UI_API void DrawingContext_GetPartialTextExtents_(DrawingContext* obj, const char16_t* text, double* widths, int widthsCount, Font* font, void* control)
-{
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    MarshalExceptions<void>([&](){
-    #endif
-        obj->GetPartialTextExtents(text, widths, widthsCount, font, control);
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    });
-    #endif
-}
-
 ALTERNET_UI_API RectD_C DrawingContext_GetTextExtent_(DrawingContext* obj, const char16_t* text, Font* font, void* control)
 {
     #if !defined(__WXMSW__) || defined(_DEBUG)
@@ -306,17 +284,6 @@ ALTERNET_UI_API SizeD_C DrawingContext_GetTextExtentSimple_(DrawingContext* obj,
     return MarshalExceptions<SizeD_C>([&](){
     #endif
         return obj->GetTextExtentSimple(text, font, control);
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    });
-    #endif
-}
-
-ALTERNET_UI_API SizeD_C DrawingContext_MeasureText_(DrawingContext* obj, const char16_t* text, Font* font, double maximumWidth, TextWrapping textWrapping)
-{
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    return MarshalExceptions<SizeD_C>([&](){
-    #endif
-        return obj->MeasureText(text, font, maximumWidth, textWrapping);
     #if !defined(__WXMSW__) || defined(_DEBUG)
     });
     #endif
@@ -504,28 +471,6 @@ ALTERNET_UI_API void DrawingContext_FillPath_(DrawingContext* obj, Brush* brush,
     MarshalExceptions<void>([&](){
     #endif
         obj->FillPath(brush, path);
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    });
-    #endif
-}
-
-ALTERNET_UI_API void DrawingContext_DrawTextAtPoint_(DrawingContext* obj, const char16_t* text, PointD origin, Font* font, Brush* brush)
-{
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    MarshalExceptions<void>([&](){
-    #endif
-        obj->DrawTextAtPoint(text, origin, font, brush);
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    });
-    #endif
-}
-
-ALTERNET_UI_API void DrawingContext_DrawTextAtRect_(DrawingContext* obj, const char16_t* text, RectD bounds, Font* font, Brush* brush, TextHorizontalAlignment horizontalAlignment, TextVerticalAlignment verticalAlignment, TextTrimming trimming, TextWrapping wrapping)
-{
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    MarshalExceptions<void>([&](){
-    #endif
-        obj->DrawTextAtRect(text, bounds, font, brush, horizontalAlignment, verticalAlignment, trimming, wrapping);
     #if !defined(__WXMSW__) || defined(_DEBUG)
     });
     #endif

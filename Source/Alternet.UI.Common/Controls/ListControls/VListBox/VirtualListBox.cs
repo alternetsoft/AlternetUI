@@ -64,7 +64,7 @@ namespace Alternet.UI
         /// </summary>
         public VirtualListBox()
         {
-            BorderStyle = ControlBorderStyle.Simple;
+            BorderStyle = ControlBorderStyle.Theme;
             UserPaint = true;
             SuggestedSize = 200;
             IsScrollable = true;
@@ -1814,7 +1814,6 @@ namespace Alternet.UI
 
             if (Keyboard.IsShiftPressed)
             {
-                App.Log("Shift scroll");
                 if (delta < 0)
                     DoActionScrollCharRight();
                 else
@@ -1822,7 +1821,6 @@ namespace Alternet.UI
             }
             else
             {
-                App.Log("scroll");
                 if (delta < 0)
                     DoActionScrollLineDown();
                 else

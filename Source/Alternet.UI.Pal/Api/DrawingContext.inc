@@ -21,7 +21,6 @@ bool Blit(const PointD& destPt, const SizeD& sz, DrawingContext* source, const P
 bool StretchBlit(const PointD& dstPt, const SizeD& dstSize, DrawingContext* source, const PointD& srcPt, const SizeD& srcSize, int rop, bool useMask, const PointD& srcMaskPt);
 bool BlitI(const PointI& destPt, const SizeI& sz, DrawingContext* source, const PointI& srcPt, int rop, bool useMask, const PointI& srcPtMask);
 bool StretchBlitI(const PointI& dstPt, const SizeI& dstSize, DrawingContext* source, const PointI& srcPt, const SizeI& srcSize, int rop, bool useMask, const PointI& srcMaskPt);
-RectD DrawLabel(const string& text, Font* font, const Color& foreColor, const Color& backColor, Image* image, const RectD& rect, int alignment, int indexAccel);
 void DestroyClippingRegion();
 void SetClippingRegion(const RectD& rect);
 RectD GetClippingBox();
@@ -29,10 +28,8 @@ void DrawText(const string& text, const PointD& location, Font* font, const Colo
 SizeI GetDpi();
 static void ImageFromDrawingContext(Image* image, int width, int height, DrawingContext* dc);
 static void ImageFromGenericImageDC(Image* image, void* source, DrawingContext* dc);
-void GetPartialTextExtents(const string& text, double* widths, int widthsCount, Font* font, void* control);
 RectD GetTextExtent(const string& text, Font* font, void* control);
 SizeD GetTextExtentSimple(const string& text, Font* font, void* control);
-SizeD MeasureText(const string& text, Font* font, double maximumWidth, TextWrapping textWrapping);
 static DrawingContext* FromImage(Image* image);
 static DrawingContext* FromScreen();
 void RoundedRectangle(Pen* pen, Brush* brush, const RectD& rectangle, double cornerRadius);
@@ -50,8 +47,6 @@ void DrawEllipse(Pen* pen, const RectD& bounds);
 void FloodFill(Brush* brush, const PointD& point);
 void DrawPath(Pen* pen, GraphicsPath* path);
 void FillPath(Brush* brush, GraphicsPath* path);
-void DrawTextAtPoint(const string& text, const PointD& origin, Font* font, Brush* brush);
-void DrawTextAtRect(const string& text, const RectD& bounds, Font* font, Brush* brush, TextHorizontalAlignment horizontalAlignment, TextVerticalAlignment verticalAlignment, TextTrimming trimming, TextWrapping wrapping);
 void DrawImageAtPoint(Image* image, const PointD& origin, bool useMask);
 void DrawImageAtRect(Image* image, const RectD& destinationRect, bool useMask);
 void DrawImagePortionAtRect(Image* image, const RectD& destinationRect, const RectD& sourceRect);

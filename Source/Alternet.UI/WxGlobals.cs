@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace Alternet.UI
 {
     /// <summary>
-    /// Contains static properties which allow to customize WxWidgest behavior.
+    /// Contains static properties which allow to customize WxWidgets behavior.
     /// </summary>
     public static class WxGlobals
     {
