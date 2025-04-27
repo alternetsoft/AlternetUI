@@ -145,7 +145,7 @@ namespace Alternet.UI
         /// is pressed. Set <c>true</c> to this property in order to handle 'Esc' key
         /// so no sound will be played.
         /// </remarks>
-        bool SupressEsc { get; set; }
+        bool SuppressEsc { get; set; }
 
         /// <summary>
         /// Gets or sets a boolean value indicating whether window has title bar.

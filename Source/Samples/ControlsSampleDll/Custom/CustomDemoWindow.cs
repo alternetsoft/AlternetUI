@@ -51,7 +51,7 @@ namespace Alternet.UI
                 LogUtils.LogToFile("CustomDemoWindow constructor");
             }
 
-            SupressEsc = true;
+            SuppressEsc = true;
 
             if (UseLogListBox)
             {

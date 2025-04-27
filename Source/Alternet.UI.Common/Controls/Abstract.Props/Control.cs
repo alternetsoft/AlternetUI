@@ -60,6 +60,20 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
+        public override bool Visible
+        {
+            get
+            {
+                return base.Visible;
+            }
+
+            set
+            {
+                base.Visible = value;
+            }
+        }
+
+        /// <inheritdoc/>
         public override bool VisibleOnScreen
         {
             get
