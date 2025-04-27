@@ -1491,7 +1491,9 @@ namespace Alternet::UI
 
     void Control::OnMouseWheel(wxMouseEvent& event)
     {
-        event.Skip();
+        /*
+        This is commented as under Linux default mouse wheel is bad.
+        event.Skip();*/
     }
 
     void Control::SetAllowDefaultContextMenu(bool value)

@@ -576,7 +576,7 @@ namespace Alternet.Drawing
         /// <summary>
         /// Gets whether this matrix equals another matrix.
         /// </summary>
-        /// <param name="matrix">Other matix.</param>
+        /// <param name="matrix">Other matrix.</param>
         /// <returns></returns>
         public readonly bool Equals(TransformMatrix matrix)
         {
