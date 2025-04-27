@@ -52,21 +52,6 @@ namespace Alternet.UI.Native
             }
         }
         
-        public bool IsDefault
-        {
-            get
-            {
-                CheckDisposed();
-                return NativeApi.Button_GetIsDefault_(NativePointer);
-            }
-            
-            set
-            {
-                CheckDisposed();
-                NativeApi.Button_SetIsDefault_(NativePointer, value);
-            }
-        }
-        
         public bool HasBorder
         {
             get
@@ -79,21 +64,6 @@ namespace Alternet.UI.Native
             {
                 CheckDisposed();
                 NativeApi.Button_SetHasBorder_(NativePointer, value);
-            }
-        }
-        
-        public bool IsCancel
-        {
-            get
-            {
-                CheckDisposed();
-                return NativeApi.Button_GetIsCancel_(NativePointer);
-            }
-            
-            set
-            {
-                CheckDisposed();
-                NativeApi.Button_SetIsCancel_(NativePointer, value);
             }
         }
         
@@ -289,22 +259,10 @@ namespace Alternet.UI.Native
             public static extern void Button_SetExactFit_(IntPtr obj, bool value);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern bool Button_GetIsDefault_(IntPtr obj);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void Button_SetIsDefault_(IntPtr obj, bool value);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern bool Button_GetHasBorder_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void Button_SetHasBorder_(IntPtr obj, bool value);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern bool Button_GetIsCancel_(IntPtr obj);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void Button_SetIsCancel_(IntPtr obj, bool value);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern IntPtr Button_GetNormalImage_(IntPtr obj);

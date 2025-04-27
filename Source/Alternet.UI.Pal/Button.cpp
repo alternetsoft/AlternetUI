@@ -206,49 +206,6 @@ namespace Alternet::UI
         GetButton()->SetLabel(wxStr(value));
     }
 
-    void Button::ApplyIsDefault()
-    {
-        auto button = GetButton();
-        auto topLevelWindow = 
-            dynamic_cast<wxTopLevelWindow*>(wxGetTopLevelParent(button));
-        if (topLevelWindow != nullptr)
-        {
-            if (_isDefault)
-                button->SetDefault();
-            else if (topLevelWindow->GetDefaultItem() == button)
-            {
-#ifdef __WXOSX_COCOA__
-                button->GetPeer()->SetDefaultButton(false);
-#endif
-                ButtonDefaultStyleSetter::SetDefaultStyle(button, false);
-                topLevelWindow->SetDefaultItem(nullptr);
-            }
-        }
-
-        auto window = GetParentWindow();
-        if (window != nullptr)
-        {
-            if (_isDefault)
-                window->SetAcceptButton(this);
-            else if (window->GetAcceptButton() == this)
-                window->SetAcceptButton(nullptr);
-        }
-    }
-
-    void Button::ApplyIsCancel()
-    {
-        auto button = GetButton();
-
-        auto window = GetParentWindow();
-        if (window != nullptr)
-        {
-            if (_isCancel)
-                window->SetCancelButton(this);
-            else if (window->GetCancelButton() == this)
-                window->SetCancelButton(nullptr);
-        }
-    }
-
     void Button::OnButtonClick(wxCommandEvent& event)
     {
         event.Skip();
@@ -414,9 +371,7 @@ namespace Alternet::UI
     void Button::OnWxWindowCreated()
     {
         Control::OnWxWindowCreated();
-        ApplyIsDefault();
-        ApplyIsCancel();
-
+        
         auto button = GetButton();
 
         if (ButtonImagesEnabled)
@@ -436,42 +391,10 @@ namespace Alternet::UI
     void Button::OnParentChanged()
     {
         Control::OnParentChanged();
-        ApplyIsDefault();
-        ApplyIsCancel();
     }
 
     void Button::OnAnyParentChanged()
     {
         Control::OnAnyParentChanged();
-        ApplyIsDefault();
-        ApplyIsCancel();
-    }
-    
-    bool Button::GetIsDefault()
-    {
-        return _isDefault;
-    }
-    
-    void Button::SetIsDefault(bool value)
-    {
-        if (_isDefault == value)
-            return;
-
-        _isDefault = value;
-        ApplyIsDefault();
-    }
-    
-    bool Button::GetIsCancel()
-    {
-        return _isCancel;
-    }
-    
-    void Button::SetIsCancel(bool value)
-    {
-        if (_isCancel == value)
-            return;
-
-        _isCancel = value;
-        ApplyIsCancel();
-    }
+    }    
 }

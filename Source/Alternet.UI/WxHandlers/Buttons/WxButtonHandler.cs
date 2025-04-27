@@ -52,22 +52,10 @@ namespace Alternet.UI
 
         public new Native.Button NativeControl => (Native.Button)base.NativeControl;
 
-        public bool IsDefault
-        {
-            get => NativeControl.IsDefault;
-            set => NativeControl.IsDefault = value;
-        }
-
         public bool ExactFit
         {
             get => NativeControl.ExactFit;
             set => NativeControl.ExactFit = value;
-        }
-
-        public bool IsCancel
-        {
-            get => NativeControl.IsCancel;
-            set => NativeControl.IsCancel = value;
         }
 
         public bool TextVisible

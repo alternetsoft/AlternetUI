@@ -70,17 +70,6 @@ namespace Alternet::UI
             _icon->Release();
     }
 
-    void Window::OnCharHook(wxKeyEvent& event)
-    {
-        if (event.m_keyCode == WXK_ESCAPE && _cancelButton != nullptr)
-            _cancelButton->RaiseClick();
-        else
-        if (event.m_keyCode == WXK_RETURN && _acceptButton != nullptr)
-            _acceptButton->RaiseClick();
-        else
-            event.Skip();
-    }
-
     MainMenu* Window::GetMenu()
     {
         return _menu.Get();
@@ -130,9 +119,6 @@ namespace Alternet::UI
         Control::OnWxWindowDestroyed(window);
 
         bool recreatingWxWindow = IsRecreatingWxWindow();
-
-        if (_flags.IsSet(WindowFlags::Modal) && !recreatingWxWindow)
-            _flags.Set(WindowFlags::Modal, false);
 
         auto parent = GetParent();
         if (parent != nullptr && !recreatingWxWindow)
@@ -284,7 +270,7 @@ namespace Alternet::UI
                 style);
             break;
         case KindDialog:
-            frame = new Dialog(parent,
+            frame = new Dialog(nullptr,
                 wxID_ANY,
                 "",
                 position,
@@ -299,95 +285,7 @@ namespace Alternet::UI
         frame->Bind(wxEVT_MAXIMIZE, &Window::OnMaximize, this);
         frame->Bind(wxEVT_ICONIZE, &Window::OnIconize, this);
 
-        auto panelColor =
-            wxSystemSettings::GetColour(wxSystemColour::wxSYS_COLOUR_BTNFACE);
-        frame->SetBackgroundColour(panelColor);
-
         return frame;
-    }
-
-    void Window::SetAcceptButton(Button* button)
-    {
-        if (_acceptButton != nullptr)
-            _acceptButton->Release();
-
-        _acceptButton = button;
-
-        if (_acceptButton != nullptr)
-            _acceptButton->AddRef();
-    }
-
-    Button* Window::GetAcceptButton()
-    {
-        return _acceptButton;
-    }
-
-    void Window::SetCancelButton(Button* button)
-    {
-        if (_cancelButton != nullptr)
-            _cancelButton->Release();
-
-        _cancelButton = button;
-
-        if (_cancelButton != nullptr)
-            _cancelButton->AddRef();
-    }
-
-    Button* Window::GetCancelButton()
-    {
-        return _cancelButton;
-    }
-
-    ModalResult Window::GetModalResult()
-    {
-        return _modalResult;
-    }
-
-    void Window::SetModalResult(ModalResult value)
-    {
-        _modalResult = value;
-
-        auto dialog = GetDialog();
-
-        if (dialog == nullptr || !dialog->IsModal())
-            return;
-
-        if (_modalResult == ModalResult::Accepted)
-        {
-            dialog->EndModal(wxID_OK);
-            return;
-        }
-
-        if (_modalResult == ModalResult::Canceled)
-        {
-            dialog->EndModal(wxID_CANCEL);
-            return;
-        }
-    }
-
-    bool Window::GetModal()
-    {
-        return _flags.IsSet(WindowFlags::Modal);
-    }
-
-    void Window::ShowModal(void* owner)
-    {
-        while (IsRecreatingWxWindow())
-        {
-            wxMilliSleep(1);
-            wxTheApp->GetMainLoop()->Yield();
-        }
-
-        _flags.Set(WindowFlags::Modal, true);
-
-        auto dialog = GetDialog();
-
-        if (dialog == nullptr)
-            return;
-
-        dialog->ShowModal();
-
-        _flags.Set(WindowFlags::Modal, false);
     }
 
     void Window::Close()

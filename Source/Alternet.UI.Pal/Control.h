@@ -218,7 +218,7 @@ namespace Alternet::UI
 
         virtual void OnToolTipChanged();
 
-        void CreateWxWindow();
+        virtual void CreateWxWindow();
 
         virtual void RecreateWxWindowIfNeeded();
         void ScheduleRecreateWxWindow(std::function<void()> postRecreateAction);

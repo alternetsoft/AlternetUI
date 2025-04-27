@@ -64,28 +64,6 @@ ALTERNET_UI_API void Button_SetExactFit_(Button* obj, c_bool value)
     #endif
 }
 
-ALTERNET_UI_API c_bool Button_GetIsDefault_(Button* obj)
-{
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    return MarshalExceptions<c_bool>([&](){
-    #endif
-        return obj->GetIsDefault();
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    });
-    #endif
-}
-
-ALTERNET_UI_API void Button_SetIsDefault_(Button* obj, c_bool value)
-{
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    MarshalExceptions<void>([&](){
-    #endif
-        obj->SetIsDefault(value);
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    });
-    #endif
-}
-
 ALTERNET_UI_API c_bool Button_GetHasBorder_(Button* obj)
 {
     #if !defined(__WXMSW__) || defined(_DEBUG)
@@ -103,28 +81,6 @@ ALTERNET_UI_API void Button_SetHasBorder_(Button* obj, c_bool value)
     MarshalExceptions<void>([&](){
     #endif
         obj->SetHasBorder(value);
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    });
-    #endif
-}
-
-ALTERNET_UI_API c_bool Button_GetIsCancel_(Button* obj)
-{
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    return MarshalExceptions<c_bool>([&](){
-    #endif
-        return obj->GetIsCancel();
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    });
-    #endif
-}
-
-ALTERNET_UI_API void Button_SetIsCancel_(Button* obj, c_bool value)
-{
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    MarshalExceptions<void>([&](){
-    #endif
-        obj->SetIsCancel(value);
     #if !defined(__WXMSW__) || defined(_DEBUG)
     });
     #endif

@@ -204,31 +204,6 @@ namespace Alternet.UI.Native
             }
         }
         
-        public Alternet.UI.ModalResult ModalResult
-        {
-            get
-            {
-                CheckDisposed();
-                return NativeApi.Window_GetModalResult_(NativePointer);
-            }
-            
-            set
-            {
-                CheckDisposed();
-                NativeApi.Window_SetModalResult_(NativePointer, value);
-            }
-        }
-        
-        public bool Modal
-        {
-            get
-            {
-                CheckDisposed();
-                return NativeApi.Window_GetModal_(NativePointer);
-            }
-            
-        }
-        
         public static Window ActiveWindow
         {
             get
@@ -320,12 +295,6 @@ namespace Alternet.UI.Native
         public static void SetParkingWindowFont(Font? font)
         {
             NativeApi.Window_SetParkingWindowFont_(font?.NativePointer ?? IntPtr.Zero);
-        }
-        
-        public void ShowModal(System.IntPtr owner)
-        {
-            CheckDisposed();
-            NativeApi.Window_ShowModal_(NativePointer, owner);
         }
         
         public void Close()
@@ -476,15 +445,6 @@ namespace Alternet.UI.Native
             public static extern void Window_SetIsPopupWindow_(IntPtr obj, bool value);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern Alternet.UI.ModalResult Window_GetModalResult_(IntPtr obj);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void Window_SetModalResult_(IntPtr obj, Alternet.UI.ModalResult value);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern bool Window_GetModal_(IntPtr obj);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern IntPtr Window_GetActiveWindow_();
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
@@ -519,9 +479,6 @@ namespace Alternet.UI.Native
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void Window_SetParkingWindowFont_(IntPtr font);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void Window_ShowModal_(IntPtr obj, System.IntPtr owner);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void Window_Close_(IntPtr obj);

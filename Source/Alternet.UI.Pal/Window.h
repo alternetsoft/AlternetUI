@@ -98,12 +98,6 @@ namespace Alternet::UI
         wxWindow* CreateWxWindowCore(wxWindow* parent) override;
         wxWindow* CreateWxWindowUnparented() override;
 
-        void SetAcceptButton(Button* button);
-        Button* GetAcceptButton();
-
-        void SetCancelButton(Button* button);
-        Button* GetCancelButton();
-
         wxTopLevelWindow* GetTopLevelWindow();
         Frame* GetFrame();
         wxDialog* GetDialog();
@@ -113,9 +107,13 @@ namespace Alternet::UI
         virtual void OnActivate(wxActivateEvent& event) override;
 
         void UpdateWxWindowParent() override;
+
+        void CreateWxWindow() override
+        {
+            Control::CreateWxWindow();
+        }
+
     private:
-        Button* _acceptButton = nullptr;
-        Button* _cancelButton = nullptr;
         int _frameKind = 0;
 
         ModalResult _modalResult = ModalResult::None;
@@ -124,7 +122,6 @@ namespace Alternet::UI
         void OnSizeChanged(wxSizeEvent& event) override;
         void OnMaximize(wxMaximizeEvent& event);
         void OnIconize(wxIconizeEvent& event);
-        void OnCharHook(wxKeyEvent& event);
 
         string RetrieveTitle();
         void ApplyTitle(const string& value);
@@ -155,7 +152,6 @@ namespace Alternet::UI
             HasBorder = 1 << 7,
             HasTitleBar = 1 << 8,
             Active = 1 << 9,
-            Modal = 1 << 10,
             SystemMenu = 1 << 11,
             PopupWindow = 1 << 12,
         };

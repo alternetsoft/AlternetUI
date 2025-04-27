@@ -286,39 +286,6 @@ ALTERNET_UI_API void Window_SetIsPopupWindow_(Window* obj, c_bool value)
     #endif
 }
 
-ALTERNET_UI_API ModalResult Window_GetModalResult_(Window* obj)
-{
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    return MarshalExceptions<ModalResult>([&](){
-    #endif
-        return obj->GetModalResult();
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    });
-    #endif
-}
-
-ALTERNET_UI_API void Window_SetModalResult_(Window* obj, ModalResult value)
-{
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    MarshalExceptions<void>([&](){
-    #endif
-        obj->SetModalResult(value);
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    });
-    #endif
-}
-
-ALTERNET_UI_API c_bool Window_GetModal_(Window* obj)
-{
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    return MarshalExceptions<c_bool>([&](){
-    #endif
-        return obj->GetModal();
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    });
-    #endif
-}
-
 ALTERNET_UI_API Window* Window_GetActiveWindow_()
 {
     #if !defined(__WXMSW__) || defined(_DEBUG)
@@ -446,17 +413,6 @@ ALTERNET_UI_API void Window_SetParkingWindowFont_(Font* font)
     MarshalExceptions<void>([&](){
     #endif
         Window::SetParkingWindowFont(font);
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    });
-    #endif
-}
-
-ALTERNET_UI_API void Window_ShowModal_(Window* obj, void* owner)
-{
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    MarshalExceptions<void>([&](){
-    #endif
-        obj->ShowModal(owner);
     #if !defined(__WXMSW__) || defined(_DEBUG)
     });
     #endif

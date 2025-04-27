@@ -30,10 +30,6 @@ namespace NativeApi.Api
         public bool HasTitleBar { get; set; }
         public bool HasSystemMenu { get; set; }
         public bool IsPopupWindow { get; set; }
-        public ModalResult ModalResult { get; set; }
-        public bool Modal => default;
-
-        public void ShowModal(IntPtr owner) { }
         public void Close() { }
 
         public void Activate() { }

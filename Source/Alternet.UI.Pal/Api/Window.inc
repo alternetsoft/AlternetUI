@@ -37,11 +37,6 @@ void SetHasSystemMenu(bool value);
 bool GetIsPopupWindow();
 void SetIsPopupWindow(bool value);
 
-ModalResult GetModalResult();
-void SetModalResult(ModalResult value);
-
-bool GetModal();
-
 static Window* GetActiveWindow();
 
 WindowState GetState();
@@ -59,7 +54,6 @@ void SetWxStatusBar(void* value);
 static void* CreateEx(int kind);
 static void SetDefaultBounds(const RectD& bounds);
 static void SetParkingWindowFont(Font* font);
-void ShowModal(void* owner);
 void Close();
 void Activate();
 

@@ -7,14 +7,8 @@ static void SetImagesEnabled(bool value);
 bool GetExactFit();
 void SetExactFit(bool value);
 
-bool GetIsDefault();
-void SetIsDefault(bool value);
-
 bool GetHasBorder();
 void SetHasBorder(bool value);
-
-bool GetIsCancel();
-void SetIsCancel(bool value);
 
 Image* GetNormalImage();
 void SetNormalImage(Image* value);

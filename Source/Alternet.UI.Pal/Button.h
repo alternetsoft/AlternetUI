@@ -63,15 +63,10 @@ namespace Alternet::UI
         string RetrieveText();
         void ApplyText(const string& value);
 
-        bool _isDefault = false;
-        bool _isCancel = false;
         bool _hasBorder = true;
         bool _textVisible = true;
         bool _exactFit = false;
         wxDirection _textAlign = (wxDirection)0;
-
-        void ApplyIsDefault();
-        void ApplyIsCancel();
 
         Image* _normalImage = nullptr;
         Image* _hoveredImage = nullptr;
