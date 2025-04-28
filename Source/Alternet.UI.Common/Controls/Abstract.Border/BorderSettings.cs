@@ -124,7 +124,7 @@ namespace Alternet.UI
 
         /// <summary>
         /// Gets or sets whether the uniform corner radius for the <see cref="Border"/> control
-        /// is specified in percents.
+        /// is specified in percent.
         /// </summary>
         /// <remarks>
         /// This value is applied to all the corners. If returned value is not null, all border corners
@@ -426,7 +426,7 @@ namespace Alternet.UI
         /// Gets real uniform corner radius using <see cref="UniformCornerRadius"/>,
         /// <see cref="UniformRadiusIsPercent"/> and <paramref name="rect"/>.
         /// </summary>
-        /// <param name="rect">Ractangle for percentage calculation.</param>
+        /// <param name="rect">Rectangle for percentage calculation.</param>
         /// <returns></returns>
         public virtual Coord? GetUniformCornerRadius(RectD rect)
         {

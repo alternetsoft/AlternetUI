@@ -1,5 +1,3 @@
-// #define ObsoleteModalDialogs
-
 using System;
 using System.Collections.Generic;
 
@@ -30,9 +28,6 @@ namespace Alternet.UI
         /// If an event handler is added to this event,
         /// default message box show handler is not used.
         /// </remarks>
-#if ObsoleteModalDialogs
-        [Obsolete("Event is deprecated.")]
-#endif
         public static event EventHandler<BaseEventArgs<MessageBoxInfo>>? ShowDialog;
 
         /// <summary>
@@ -45,16 +40,15 @@ namespace Alternet.UI
         /// specifies which buttons to display in the message box.</param>
         /// <param name="defaultButton">One of the <see cref="MessageBoxDefaultButton" /> values that
         /// specifies the default button for the message box.</param>
-#if ObsoleteModalDialogs
-        [Obsolete("Method is deprecated.")]
-#endif
-        public static DialogResult Show(
+        /// <param name="onClose">The action which is called when dialog is closed.</param>
+        public static void Show(
             object? text,
             string? caption,
             MessageBoxButtons buttons,
-            MessageBoxDefaultButton defaultButton)
+            MessageBoxDefaultButton defaultButton,
+            MessageBoxResultDelegate? onClose = null)
         {
-            return ShowCore(
+            ShowCore(
                 null,
                 text,
                 caption,
@@ -62,7 +56,8 @@ namespace Alternet.UI
                 MessageBoxIcon.None,
                 MessageBoxDefaultButton.Button1,
                 (MessageBoxOptions)0,
-                false);
+                false,
+                onClose);
         }
 
         /// <summary>
@@ -80,22 +75,20 @@ namespace Alternet.UI
         /// which display and association options will be used for the message box. You may pass in 0
         /// if you wish to use the defaults.</param>
         /// <param name="displayHelpButton">
-        ///   <see langword="true" /> to show the Help button; otherwise, <see langword="false" />.
-        ///   The default is <see langword="false" />.</param>
-        /// <returns>One of the <see cref="DialogResult" /> values.</returns>
-#if ObsoleteModalDialogs
-        [Obsolete("Method is deprecated.")]
-#endif
-        public static DialogResult Show(
+        /// <see langword="true" /> to show the Help button; otherwise, <see langword="false" />.
+        /// The default is <see langword="false" />.</param>
+        /// <param name="onClose">The action which is called when dialog is closed.</param>
+        public static void Show(
             object? text,
             string? caption,
             MessageBoxButtons buttons,
             MessageBoxIcon icon,
             MessageBoxDefaultButton defaultButton,
             MessageBoxOptions options,
-            bool displayHelpButton)
+            bool displayHelpButton,
+            MessageBoxResultDelegate? onClose = null)
         {
-            return ShowCore(null, text, caption, buttons, icon, defaultButton, options, displayHelpButton);
+            ShowCore(null, text, caption, buttons, icon, defaultButton, options, displayHelpButton, onClose);
         }
 
         /// <summary>
@@ -119,21 +112,19 @@ namespace Alternet.UI
         /// <param name="helpFilePath">The path and name of the Help file to
         /// display when the user clicks
         /// the Help button.</param>
-        /// <returns>One of the <see cref="DialogResult" /> values.</returns>
-#if ObsoleteModalDialogs
-        [Obsolete("Method is deprecated.")]
-#endif
-        public static DialogResult Show(
+        /// <param name="onClose">The action which is called when dialog is closed.</param>
+        public static void Show(
             object? text,
             string? caption,
             MessageBoxButtons buttons,
             MessageBoxIcon icon,
             MessageBoxDefaultButton defaultButton,
             MessageBoxOptions options,
-            string helpFilePath)
+            string helpFilePath,
+            MessageBoxResultDelegate? onClose = null)
         {
             HelpInfo hpi = new(helpFilePath);
-            return ShowCore(null, text, caption, buttons, icon, defaultButton, options, hpi);
+            ShowCore(null, text, caption, buttons, icon, defaultButton, options, hpi, onClose);
         }
 
         /// <summary>Displays a message box with the specified text, caption,
@@ -158,11 +149,8 @@ namespace Alternet.UI
         /// <param name="helpFilePath">The path and name of the Help file to display
         /// when the user clicks
         /// the Help button.</param>
-        /// <returns>One of the <see cref="DialogResult" /> values.</returns>
-#if ObsoleteModalDialogs
-        [Obsolete("Method is deprecated.")]
-#endif
-        public static DialogResult Show(
+        /// <param name="onClose">The action which is called when dialog is closed.</param>
+        public static void Show(
             Window? owner,
             object? text,
             string? caption,
@@ -170,10 +158,11 @@ namespace Alternet.UI
             MessageBoxIcon icon,
             MessageBoxDefaultButton defaultButton,
             MessageBoxOptions options,
-            string helpFilePath)
+            string helpFilePath,
+            MessageBoxResultDelegate? onClose = null)
         {
             HelpInfo hpi = new(helpFilePath);
-            return ShowCore(owner, text, caption, buttons, icon, defaultButton, options, hpi);
+            ShowCore(owner, text, caption, buttons, icon, defaultButton, options, hpi, onClose);
         }
 
         /// <summary>Displays a message box with the specified text, caption, buttons, icon,
@@ -198,11 +187,8 @@ namespace Alternet.UI
         /// the Help button.</param>
         /// <param name="keyword">The Help keyword to display when the user clicks the
         /// Help button.</param>
-        /// <returns>One of the <see cref="DialogResult" /> values.</returns>
-#if ObsoleteModalDialogs
-        [Obsolete("Method is deprecated.")]
-#endif
-        public static DialogResult Show(
+        /// <param name="onClose">The action which is called when dialog is closed.</param>
+        public static void Show(
             object? text,
             string? caption,
             MessageBoxButtons buttons,
@@ -210,10 +196,11 @@ namespace Alternet.UI
             MessageBoxDefaultButton defaultButton,
             MessageBoxOptions options,
             string helpFilePath,
-            string keyword)
+            string keyword,
+            MessageBoxResultDelegate? onClose = null)
         {
             HelpInfo hpi = new(helpFilePath, keyword);
-            return ShowCore(null, text, caption, buttons, icon, defaultButton, options, hpi);
+            ShowCore(null, text, caption, buttons, icon, defaultButton, options, hpi, onClose);
         }
 
         /// <summary>Displays a message box with the specified text, caption, buttons,
@@ -237,11 +224,8 @@ namespace Alternet.UI
         /// clicks the Help button.</param>
         /// <param name="keyword">The Help keyword to display when the user clicks
         /// the Help button.</param>
-        /// <returns>One of the <see cref="DialogResult" /> values.</returns>
-#if ObsoleteModalDialogs
-        [Obsolete("Method is deprecated.")]
-#endif
-        public static DialogResult Show(
+        /// <param name="onClose">The action which is called when dialog is closed.</param>
+        public static void Show(
             Window? owner,
             object? text,
             string? caption,
@@ -250,10 +234,11 @@ namespace Alternet.UI
             MessageBoxDefaultButton defaultButton,
             MessageBoxOptions options,
             string helpFilePath,
-            string keyword)
+            string keyword,
+            MessageBoxResultDelegate? onClose = null)
         {
             HelpInfo hpi = new(helpFilePath, keyword);
-            return ShowCore(owner, text, caption, buttons, icon, defaultButton, options, hpi);
+            ShowCore(owner, text, caption, buttons, icon, defaultButton, options, hpi, onClose);
         }
 
         /// <summary>Displays a message box with the specified text, caption, buttons,
@@ -279,11 +264,8 @@ namespace Alternet.UI
         /// when the user clicks the
         /// Help button.</param>
         /// <param name="navigator">One of the <see cref="HelpNavigator" /> values.</param>
-        /// <returns>One of the <see cref="DialogResult" /> values.</returns>
-#if ObsoleteModalDialogs
-        [Obsolete("Method is deprecated.")]
-#endif
-        public static DialogResult Show(
+        /// <param name="onClose">The action which is called when dialog is closed.</param>
+        public static void Show(
             object? text,
             string? caption,
             MessageBoxButtons buttons,
@@ -291,10 +273,11 @@ namespace Alternet.UI
             MessageBoxDefaultButton defaultButton,
             MessageBoxOptions options,
             string helpFilePath,
-            HelpNavigator navigator)
+            HelpNavigator navigator,
+            MessageBoxResultDelegate? onClose = null)
         {
             HelpInfo hpi = new(helpFilePath, navigator);
-            return ShowCore(null, text, caption, buttons, icon, defaultButton, options, hpi);
+            ShowCore(null, text, caption, buttons, icon, defaultButton, options, hpi, onClose);
         }
 
         /// <summary>Displays a message box with the specified text, caption, buttons,
@@ -321,11 +304,8 @@ namespace Alternet.UI
         /// the user clicks the
         /// Help button.</param>
         /// <param name="navigator">One of the <see cref="HelpNavigator" /> values.</param>
-        /// <returns>One of the <see cref="DialogResult" /> values.</returns>
-#if ObsoleteModalDialogs
-        [Obsolete("Method is deprecated.")]
-#endif
-        public static DialogResult Show(
+        /// <param name="onClose">The action which is called when dialog is closed.</param>
+        public static void Show(
             Window? owner,
             object? text,
             string? caption,
@@ -334,10 +314,11 @@ namespace Alternet.UI
             MessageBoxDefaultButton defaultButton,
             MessageBoxOptions options,
             string helpFilePath,
-            HelpNavigator navigator)
+            HelpNavigator navigator,
+            MessageBoxResultDelegate? onClose = null)
         {
             HelpInfo hpi = new(helpFilePath, navigator);
-            return ShowCore(owner, text, caption, buttons, icon, defaultButton, options, hpi);
+            ShowCore(owner, text, caption, buttons, icon, defaultButton, options, hpi, onClose);
         }
 
         /// <summary>Displays a message box with the specified text, caption, buttons, icon,
@@ -366,10 +347,8 @@ namespace Alternet.UI
         /// <param name="navigator">One of the <see cref="HelpNavigator" /> values.</param>
         /// <param name="param">The numeric ID of the Help topic to display when the user
         /// clicks the Help button.</param>
-#if ObsoleteModalDialogs
-        [Obsolete("Method is deprecated.")]
-#endif
-        public static DialogResult Show(
+        /// <param name="onClose">The action which is called when dialog is closed.</param>
+        public static void Show(
             object? text,
             string? caption,
             MessageBoxButtons buttons,
@@ -378,10 +357,11 @@ namespace Alternet.UI
             MessageBoxOptions options,
             string helpFilePath,
             HelpNavigator navigator,
-            object param)
+            object param,
+            MessageBoxResultDelegate? onClose = null)
         {
             HelpInfo hpi = new(helpFilePath, navigator, param);
-            return ShowCore(null, text, caption, buttons, icon, defaultButton, options, hpi);
+            ShowCore(null, text, caption, buttons, icon, defaultButton, options, hpi, onClose);
         }
 
         /// <summary>Displays a message box with the specified text, caption, buttons, icon,
@@ -404,11 +384,8 @@ namespace Alternet.UI
         /// <param name="navigator">One of the <see cref="HelpNavigator" /> values.</param>
         /// <param name="param">The numeric ID of the Help topic to display when the user
         /// clicks the Help button.</param>
-        /// <returns>One of the <see cref="DialogResult" /> values.</returns>
-#if ObsoleteModalDialogs
-        [Obsolete("Method is deprecated.")]
-#endif
-        public static DialogResult Show(
+        /// <param name="onClose">The action which is called when dialog is closed.</param>
+        public static void Show(
             Window? owner,
             object? text,
             string? caption,
@@ -418,10 +395,11 @@ namespace Alternet.UI
             MessageBoxOptions options,
             string helpFilePath,
             HelpNavigator navigator,
-            object param)
+            object param,
+            MessageBoxResultDelegate? onClose = null)
         {
             HelpInfo hpi = new(helpFilePath, navigator, param);
-            return ShowCore(owner, text, caption, buttons, icon, defaultButton, options, hpi);
+            ShowCore(owner, text, caption, buttons, icon, defaultButton, options, hpi, onClose);
         }
 
         /// <summary>Displays a message box with the specified text, caption, buttons,
@@ -439,19 +417,17 @@ namespace Alternet.UI
         /// which display and association options will be used for the message box.
         /// You may pass in 0 if you
         /// wish to use the defaults.</param>
-        /// <returns>One of the <see cref="DialogResult" /> values.</returns>
-#if ObsoleteModalDialogs
-        [Obsolete("Method is deprecated.")]
-#endif
-        public static DialogResult Show(
+        /// <param name="onClose">The action which is called when dialog is closed.</param>
+        public static void Show(
             object? text,
             string? caption,
             MessageBoxButtons buttons,
             MessageBoxIcon icon,
             MessageBoxDefaultButton defaultButton,
-            MessageBoxOptions options)
+            MessageBoxOptions options,
+            MessageBoxResultDelegate? onClose = null)
         {
-            return ShowCore(null, text, caption, buttons, icon, defaultButton, options, showHelp: false);
+            ShowCore(null, text, caption, buttons, icon, defaultButton, options, showHelp: false, onClose);
         }
 
         /// <summary>Displays a message box with the specified text, caption, buttons, icon,
@@ -467,18 +443,25 @@ namespace Alternet.UI
         /// <param name="defaultButton">One of the <see cref="MessageBoxDefaultButton" />
         /// values that specifies the
         /// default button for the message box.</param>
-        /// <returns>One of the <see cref="DialogResult" /> values.</returns>
-#if ObsoleteModalDialogs
-        [Obsolete("Method is deprecated.")]
-#endif
-        public static DialogResult Show(
+        /// <param name="onClose">The action which is called when dialog is closed.</param>
+        public static void Show(
             object? text,
             string? caption,
             MessageBoxButtons buttons,
             MessageBoxIcon icon,
-            MessageBoxDefaultButton defaultButton)
+            MessageBoxDefaultButton defaultButton,
+            MessageBoxResultDelegate? onClose = null)
         {
-            return ShowCore(null, text, caption, buttons, icon, defaultButton, (MessageBoxOptions)0, showHelp: false);
+            ShowCore(
+                null,
+                text,
+                caption,
+                buttons,
+                icon,
+                defaultButton,
+                (MessageBoxOptions)0,
+                showHelp: false,
+                onClose);
         }
 
         /// <summary>Displays a message box with specified text, caption, buttons, and icon.</summary>
@@ -490,13 +473,15 @@ namespace Alternet.UI
         /// <param name="icon">One of the <see cref="MessageBoxIcon" /> values that specifies
         /// which icon to display
         /// in the message box.</param>
-        /// <returns>One of the <see cref="DialogResult" /> values.</returns>
-#if ObsoleteModalDialogs
-        [Obsolete("Method is deprecated.")]
-#endif
-        public static DialogResult Show(object? text, string? caption, MessageBoxButtons buttons, MessageBoxIcon icon)
+        /// <param name="onClose">The action which is called when dialog is closed.</param>
+        public static void Show(
+            object? text,
+            string? caption,
+            MessageBoxButtons buttons,
+            MessageBoxIcon icon,
+            MessageBoxResultDelegate? onClose = null)
         {
-            return ShowCore(
+            ShowCore(
                 null,
                 text,
                 caption,
@@ -504,7 +489,8 @@ namespace Alternet.UI
                 icon,
                 MessageBoxDefaultButton.Button1,
                 (MessageBoxOptions)0,
-                showHelp: false);
+                showHelp: false,
+                onClose);
         }
 
         /// <summary>Displays a message box with specified text, caption, and buttons.</summary>
@@ -512,13 +498,14 @@ namespace Alternet.UI
         /// <param name="caption">The text to display in the title bar of the message box.</param>
         /// <param name="buttons">One of the <see cref="MessageBoxButtons" /> values that specifies
         /// which buttons to display in the message box.</param>
-        /// <returns>One of the <see cref="DialogResult" /> values.</returns>
-#if ObsoleteModalDialogs
-        [Obsolete("Method is deprecated.")]
-#endif
-        public static DialogResult Show(object? text, string? caption, MessageBoxButtons buttons)
+        /// <param name="onClose">The action which is called when dialog is closed.</param>
+        public static void Show(
+            object? text,
+            string? caption,
+            MessageBoxButtons buttons,
+            MessageBoxResultDelegate? onClose = null)
         {
-            return ShowCore(
+            ShowCore(
                 null,
                 text,
                 caption,
@@ -526,19 +513,20 @@ namespace Alternet.UI
                 MessageBoxIcon.None,
                 MessageBoxDefaultButton.Button1,
                 (MessageBoxOptions)0,
-                showHelp: false);
+                showHelp: false,
+                onClose);
         }
 
         /// <summary>Displays a message box with specified text and caption.</summary>
         /// <param name="text">The text to display in the message box.</param>
         /// <param name="caption">The text to display in the title bar of the message box.</param>
-        /// <returns>One of the <see cref="DialogResult" /> values.</returns>
-#if ObsoleteModalDialogs
-        [Obsolete("Method is deprecated.")]
-#endif
-        public static DialogResult Show(object? text, string? caption)
+        /// <param name="onClose">The action which is called when dialog is closed.</param>
+        public static void Show(
+            object? text,
+            string? caption,
+            MessageBoxResultDelegate? onClose = null)
         {
-            return ShowCore(
+            ShowCore(
                 null,
                 text,
                 caption,
@@ -546,18 +534,16 @@ namespace Alternet.UI
                 MessageBoxIcon.None,
                 MessageBoxDefaultButton.Button1,
                 (MessageBoxOptions)0,
-                showHelp: false);
+                showHelp: false,
+                onClose);
         }
 
         /// <summary>Displays a message box with specified text.</summary>
         /// <param name="text">The text to display in the message box.</param>
-        /// <returns>One of the <see cref="DialogResult" /> values.</returns>
-#if ObsoleteModalDialogs
-        [Obsolete("Method is deprecated.")]
-#endif
-        public static DialogResult Show(object? text)
+        /// <param name="onClose">The action which is called when dialog is closed.</param>
+        public static void Show(object? text, MessageBoxResultDelegate? onClose = null)
         {
-            return ShowCore(
+            ShowCore(
                 null,
                 text,
                 string.Empty,
@@ -565,7 +551,8 @@ namespace Alternet.UI
                 MessageBoxIcon.None,
                 MessageBoxDefaultButton.Button1,
                 (MessageBoxOptions)0,
-                showHelp: false);
+                showHelp: false,
+                onClose);
         }
 
         /// <summary>Displays a message box in front of the specified object and with
@@ -587,20 +574,18 @@ namespace Alternet.UI
         /// that specifies which display
         /// and association options will be used for the message box. You may pass
         /// in 0 if you wish to use the defaults.</param>
-        /// <returns>One of the <see cref="DialogResult" /> values.</returns>
-#if ObsoleteModalDialogs
-        [Obsolete("Method is deprecated.")]
-#endif
-        public static DialogResult Show(
+        /// <param name="onClose">The action which is called when dialog is closed.</param>
+        public static void Show(
             Window? owner,
             object? text,
             string? caption,
             MessageBoxButtons buttons,
             MessageBoxIcon icon,
             MessageBoxDefaultButton defaultButton,
-            MessageBoxOptions options)
+            MessageBoxOptions options,
+            MessageBoxResultDelegate? onClose = null)
         {
-            return ShowCore(owner, text, caption, buttons, icon, defaultButton, options, showHelp: false);
+            ShowCore(owner, text, caption, buttons, icon, defaultButton, options, showHelp: false, onClose);
         }
 
         /// <summary>Displays a message box in front of the specified object and with
@@ -618,19 +603,17 @@ namespace Alternet.UI
         /// <param name="defaultButton">One of the <see cref="MessageBoxDefaultButton" />
         /// values that specifies the
         /// default button for the message box.</param>
-        /// <returns>One of the <see cref="DialogResult" /> values.</returns>
-#if ObsoleteModalDialogs
-        [Obsolete("Method is deprecated.")]
-#endif
-        public static DialogResult Show(
+        /// <param name="onClose">The action which is called when dialog is closed.</param>
+        public static void Show(
             Window? owner,
             object? text,
             string? caption,
             MessageBoxButtons buttons,
             MessageBoxIcon icon,
-            MessageBoxDefaultButton defaultButton)
+            MessageBoxDefaultButton defaultButton,
+            MessageBoxResultDelegate? onClose = null)
         {
-            return ShowCore(
+            ShowCore(
                 owner,
                 text,
                 caption,
@@ -638,7 +621,8 @@ namespace Alternet.UI
                 icon,
                 defaultButton,
                 (MessageBoxOptions)0,
-                showHelp: false);
+                showHelp: false,
+                onClose);
         }
 
         /// <summary>Displays a message box in front of the specified object and
@@ -653,18 +637,16 @@ namespace Alternet.UI
         /// <param name="icon">One of the <see cref="MessageBoxIcon" /> values that
         /// specifies which icon to
         /// display in the message box.</param>
-        /// <returns>One of the <see cref="DialogResult" /> values.</returns>
-#if ObsoleteModalDialogs
-        [Obsolete("Method is deprecated.")]
-#endif
-        public static DialogResult Show(
+        /// <param name="onClose">The action which is called when dialog is closed.</param>
+        public static void Show(
             Window? owner,
             object? text,
             string? caption,
             MessageBoxButtons buttons,
-            MessageBoxIcon icon)
+            MessageBoxIcon icon,
+            MessageBoxResultDelegate? onClose = null)
         {
-            return ShowCore(
+            ShowCore(
                 owner,
                 text,
                 caption,
@@ -672,7 +654,8 @@ namespace Alternet.UI
                 icon,
                 MessageBoxDefaultButton.Button1,
                 (MessageBoxOptions)0,
-                showHelp: false);
+                showHelp: false,
+                onClose);
         }
 
         /// <summary>Displays a message box in front of the specified object and
@@ -684,13 +667,15 @@ namespace Alternet.UI
         /// <param name="buttons">One of the <see cref="MessageBoxButtons" />
         /// values that specifies which
         /// buttons to display in the message box.</param>
-        /// <returns>One of the <see cref="DialogResult" /> values.</returns>
-#if ObsoleteModalDialogs
-        [Obsolete("Method is deprecated.")]
-#endif
-        public static DialogResult Show(Window? owner, object? text, string? caption, MessageBoxButtons buttons)
+        /// <param name="onClose">The action which is called when dialog is closed.</param>
+        public static void Show(
+            Window? owner,
+            object? text,
+            string? caption,
+            MessageBoxButtons buttons,
+            MessageBoxResultDelegate? onClose = null)
         {
-            return ShowCore(
+            ShowCore(
                 owner,
                 text,
                 caption,
@@ -698,7 +683,8 @@ namespace Alternet.UI
                 MessageBoxIcon.None,
                 MessageBoxDefaultButton.Button1,
                 (MessageBoxOptions)0,
-                showHelp: false);
+                showHelp: false,
+                onClose);
         }
 
         /// <summary>Displays a message box in front of the specified object and with the
@@ -706,13 +692,14 @@ namespace Alternet.UI
         /// <param name="owner">A <see cref="Window"/> that will own the modal dialog box.</param>
         /// <param name="text">The text to display in the message box.</param>
         /// <param name="caption">The text to display in the title bar of the message box.</param>
-        /// <returns>One of the <see cref="DialogResult" /> values.</returns>
-#if ObsoleteModalDialogs
-        [Obsolete("Method is deprecated.")]
-#endif
-        public static DialogResult Show(Window? owner, object? text, string? caption)
+        /// <param name="onClose">The action which is called when dialog is closed.</param>
+        public static void Show(
+            Window? owner,
+            object? text,
+            string? caption,
+            MessageBoxResultDelegate? onClose = null)
         {
-            return ShowCore(
+            ShowCore(
                 owner,
                 text,
                 caption,
@@ -720,20 +707,21 @@ namespace Alternet.UI
                 MessageBoxIcon.None,
                 MessageBoxDefaultButton.Button1,
                 (MessageBoxOptions)0,
-                showHelp: false);
+                showHelp: false,
+                onClose);
         }
 
         /// <summary>Displays a message box in front of the specified object and with
         /// the specified text.</summary>
         /// <param name="owner">A <see cref="Window"/> that will own the modal dialog box.</param>
         /// <param name="text">The text to display in the message box.</param>
-        /// <returns>One of the <see cref="DialogResult" /> values.</returns>
-#if ObsoleteModalDialogs
-        [Obsolete("Method is deprecated.")]
-#endif
-        public static DialogResult Show(Window? owner, object? text)
+        /// <param name="onClose">The action which is called when dialog is closed.</param>
+        public static void Show(
+            Window? owner,
+            object? text,
+            MessageBoxResultDelegate? onClose = null)
         {
-            return ShowCore(
+            ShowCore(
                 owner,
                 text,
                 string.Empty,
@@ -741,7 +729,26 @@ namespace Alternet.UI
                 MessageBoxIcon.None,
                 MessageBoxDefaultButton.Button1,
                 (MessageBoxOptions)0,
-                showHelp: false);
+                showHelp: false,
+                onClose);
+        }
+
+        /// <summary>
+        /// Shows message box using the specified parameters.
+        /// </summary>
+        /// <param name="info">Message box parameters.</param>
+        /// <returns></returns>
+        /// <exception cref="NotImplementedException">If requested feature is not supported.</exception>
+        public static void Show(MessageBoxInfo info)
+        {
+            if (ShowDialog is not null)
+            {
+                BaseEventArgs<MessageBoxInfo> args = new(info);
+
+                ShowDialog(null, args);
+            }
+            else
+                ShowDefault(info);
         }
 
         /// <summary>
@@ -749,11 +756,8 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="info">Message box parameters.</param>
         /// <returns></returns>
-        /// <exception cref="NotImplementedException">If some feature is not supported.</exception>
-#if ObsoleteModalDialogs
-        [Obsolete("Method is deprecated.")]
-#endif
-        public static DialogResult ShowDefault(MessageBoxInfo info)
+        /// <exception cref="NotImplementedException">If requested feature is not supported.</exception>
+        public static void ShowDefault(MessageBoxInfo info)
         {
             info.Icon = ValidateIcon(info.Icon);
 
@@ -761,7 +765,8 @@ namespace Alternet.UI
                 || info.Buttons == MessageBoxButtons.RetryCancel)
             {
                 App.Alert("AbortRetryIgnore and RetryCancel are not implemented");
-                return DialogResult.None;
+                info.Result = DialogResult.None;
+                return;
             }
 
             switch (info.DefaultButton)
@@ -814,7 +819,7 @@ namespace Alternet.UI
 
             ValidateButtons(info.Buttons, info.DefaultButton);
 
-            return DialogFactory.Handler.ShowMessageBox(info);
+            DialogFactory.Handler.ShowMessageBox(info);
         }
 
         internal static MessageBoxIcon ValidateIcon(MessageBoxIcon icon)
@@ -843,7 +848,7 @@ namespace Alternet.UI
             helpInfo?.Pop();
         }
 
-        private static DialogResult ShowCore(
+        private static void ShowCore(
             Window? owner,
             object? text,
             string? caption,
@@ -851,12 +856,13 @@ namespace Alternet.UI
             MessageBoxIcon icon,
             MessageBoxDefaultButton defaultButton,
             MessageBoxOptions options,
-            HelpInfo hpi)
+            HelpInfo hpi,
+            MessageBoxResultDelegate? onClose)
         {
             try
             {
                 PushHelpInfo(hpi);
-                return ShowCore(
+                ShowCore(
                     owner,
                     text,
                     caption,
@@ -864,7 +870,8 @@ namespace Alternet.UI
                     icon,
                     defaultButton,
                     options,
-                    showHelp: true);
+                    showHelp: true,
+                    onClose);
             }
             finally
             {
@@ -872,7 +879,7 @@ namespace Alternet.UI
             }
         }
 
-        private static DialogResult ShowCore(
+        private static void ShowCore(
             Window? owner,
             object? text,
             string? caption,
@@ -880,8 +887,17 @@ namespace Alternet.UI
             MessageBoxIcon icon,
             MessageBoxDefaultButton defaultButton,
             MessageBoxOptions options,
-            bool showHelp)
+            bool showHelp,
+            MessageBoxResultDelegate? onClose)
         {
+            void HandleOnClose(MessageBoxInfo info)
+            {
+                onClose?.Invoke(info);
+
+                if (!info.Handled)
+                    ShowDefault(info);
+            }
+
             var info = new MessageBoxInfo()
             {
                 Owner = owner,
@@ -894,21 +910,10 @@ namespace Alternet.UI
                 ShowHelp = showHelp,
                 Result = DialogResult.None,
                 HelpInfo = helpInfo?.Peek(),
+                OnClose = HandleOnClose,
             };
 
-            if (ShowDialog is not null)
-            {
-                BaseEventArgs<MessageBoxInfo> args = new(info);
-
-                ShowDialog(null, args);
-
-                if (args.Value.Handled)
-                {
-                    return args.Value.Result;
-                }
-            }
-
-            return ShowDefault(info);
+            Show(info);
         }
 
         private static void ValidateButtons(

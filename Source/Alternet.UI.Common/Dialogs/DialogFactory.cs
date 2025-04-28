@@ -61,7 +61,7 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="s">Message to show.</param>
         /// <param name="e">Exception information.</param>
-        /// <returns><c>true</c> on succes, <c>false</c> on failure.</returns>
+        /// <returns><c>true</c> on success, <c>false</c> on failure.</returns>
         public static void ShowCriticalMessage(string s, Exception? e = null)
         {
             try
