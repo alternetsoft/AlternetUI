@@ -239,7 +239,7 @@ namespace Alternet.UI
             AddItem(treeView.SelectedItem?.ParentItems);
         }
 
-        private void AddItem(Collection<TreeViewItem>? items)
+        private void AddItem(BaseCollection<TreeViewItem>? items)
         {
             items ??= treeView.Items;
 
@@ -354,7 +354,7 @@ namespace Alternet.UI
             return (s, imageIndex);
         }
 
-        private void AddItems(Collection<TreeViewItem> treeItems, IEnumerable? data)
+        private void AddItems(BaseCollection<TreeViewItem> treeItems, IEnumerable? data)
         {
             if (data == null)
                 return;

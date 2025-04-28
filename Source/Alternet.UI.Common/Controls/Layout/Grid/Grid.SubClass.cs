@@ -680,7 +680,7 @@ namespace Alternet.UI
             private Object _currentChild;
             private GridColumnCollection.Enumerator _enumerator0;
             private GridRowCollection.Enumerator _enumerator1;
-            private Collection<AbstractControl> _enumerator2Collection;
+            private BaseCollection<AbstractControl> _enumerator2Collection;
             private int _enumerator2Index;
             private int _enumerator2Count;
         }

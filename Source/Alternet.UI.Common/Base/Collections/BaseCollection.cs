@@ -2,10 +2,12 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Runtime.CompilerServices;
+
 using Alternet.UI;
 using Alternet.UI.Localization;
 
-namespace Alternet.Base.Collections
+namespace Alternet.UI
 {
     /// <summary>
     /// Represents the method that will handle an event when collection is changed.
@@ -36,31 +38,31 @@ namespace Alternet.Base.Collections
     /// provides <see cref="ItemInserted"/> and <see cref="ItemRemoved"/> events.
     /// </summary>
     /// <typeparam name="T">The type of elements in the collection.</typeparam>
-    public class Collection<T> : ObservableCollection<T>
+    public class BaseCollection<T> : ObservableCollection<T>
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="Collection{T}"/> class.
+        /// Initializes a new instance of the <see cref="BaseCollection{T}"/> class.
         /// </summary>
-        public Collection()
+        public BaseCollection()
         {
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="Collection{T}"/> class
+        /// Initializes a new instance of the <see cref="BaseCollection{T}"/> class
         /// class that contains elements copied from the specified collection.
         /// </summary>
         /// <param name="collection">The collection from which the elements are copied.</param>
-        public Collection(IEnumerable<T> collection)
+        public BaseCollection(IEnumerable<T> collection)
             : base(collection)
         {
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="Collection{T}"/> class
+        /// Initializes a new instance of the <see cref="BaseCollection{T}"/> class
         /// that contains elements copied from the specified list.
         /// </summary>
         /// <param name="list">The list from which the elements are copied.</param>
-        public Collection(List<T> list)
+        public BaseCollection(List<T> list)
             : base(list)
         {
         }
@@ -91,6 +93,7 @@ namespace Alternet.Base.Collections
         /// </summary>
         public T? First
         {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
             get
             {
                 if (Count > 0)
@@ -105,6 +108,7 @@ namespace Alternet.Base.Collections
         /// </summary>
         public T? Last
         {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
             get
             {
                 if (Count > 0)
@@ -129,8 +133,17 @@ namespace Alternet.Base.Collections
         /// <returns>The element at the specified index.</returns>
         public T this[long index]
         {
-            get => base[(int)index];
-            set => SafeSetItem((int)index, value);
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get
+            {
+                return base[(int)index];
+            }
+
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            set
+            {
+                SafeSetItem((int)index, value);
+            }
         }
 
         /// <summary>
@@ -141,7 +154,13 @@ namespace Alternet.Base.Collections
         /// <returns>The element at the specified index.</returns>
         public new T this[int index]
         {
-            get => base[index];
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get
+            {
+                return base[index];
+            }
+
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
             set
             {
                 SafeSetItem(index, value);
@@ -156,6 +175,7 @@ namespace Alternet.Base.Collections
         /// is <c>null</c>.</returns>
         public T? this[int? index]
         {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
             get
             {
                 if (index is null)
@@ -181,10 +201,10 @@ namespace Alternet.Base.Collections
         /// The order of the elements in the <see cref="IEnumerable{T}"/> is preserved
         /// in the collection.
         /// </remarks>
-        public void AddRange(IEnumerable<T> collection)
+        public void AddRange(IEnumerable<T>? collection)
         {
             if (collection is null)
-                throw new ArgumentNullException(nameof(collection));
+                return;
 
             RangeOpInProgress = true;
 
@@ -204,6 +224,7 @@ namespace Alternet.Base.Collections
         /// <summary>
         /// Removes the last item from the collection.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void RemoveLast()
         {
             if (Count > 0)
@@ -213,6 +234,7 @@ namespace Alternet.Base.Collections
         /// <summary>
         /// Removes the first item from the collection.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void RemoveFirst()
         {
             if (Count > 0)
@@ -224,6 +246,7 @@ namespace Alternet.Base.Collections
         /// list of items owned by this collection.
         /// </summary>
         /// <param name="item">The object to insert.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void Prepend(T item) => Insert(0, item);
 
         /// <summary>
@@ -238,6 +261,7 @@ namespace Alternet.Base.Collections
         /// The zero-based index of the first occurrence of item within the entire collection,
         /// if found; otherwise, <c>null</c>.
         /// </returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public int? IndexOfOrNull(T item)
         {
             var result = IndexOf(item);

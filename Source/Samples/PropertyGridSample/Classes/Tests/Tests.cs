@@ -16,8 +16,8 @@ namespace PropertyGridSample
     {
         private static bool alreadyRegistered;
 
-        public Collection<string> ItemsString { get; set; } = NewCollection<string>();
-        public Collection<object> ItemsObject { get; set; } = NewCollection<object>();
+        public BaseCollection<string> ItemsString { get; set; } = NewCollection<string>();
+        public BaseCollection<object> ItemsObject { get; set; } = NewCollection<object>();
         public Brush BrushValue { get; set; } = Brush.Default;
         public Pen PenValue { get; set; } = Pen.Default;
 
@@ -275,10 +275,10 @@ namespace PropertyGridSample
                 LogEvent("ButtonClick", true);
         }
 
-        internal static Collection<T> NewCollection<T>()
+        internal static BaseCollection<T> NewCollection<T>()
             where T : class
         {
-            var result = new Collection<T>();
+            var result = new BaseCollection<T>();
             result.AddRange(ObjectInit.GetTenItems().Cast<T>());
             return result;
         }

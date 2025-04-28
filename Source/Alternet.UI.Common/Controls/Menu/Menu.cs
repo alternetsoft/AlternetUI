@@ -9,7 +9,7 @@ namespace Alternet.UI
     /// </summary>
     public abstract class Menu : NonVisualControl
     {
-        private Collection<MenuItem>? items;
+        private BaseCollection<MenuItem>? items;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Menu"/> class.
@@ -22,7 +22,7 @@ namespace Alternet.UI
         /// Gets a collection of <see cref="MenuItem"/> objects associated with the menu.
         /// </summary>
         [Content]
-        public virtual Collection<MenuItem> Items
+        public virtual BaseCollection<MenuItem> Items
         {
             get
             {

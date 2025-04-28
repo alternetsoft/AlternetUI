@@ -108,10 +108,10 @@ namespace Alternet.UI
         /// <summary>
         /// Gets the collection of tab pages in this tab control.
         /// </summary>
-        /// <value>A <see cref="Collection{Control}"/> that contains pages
+        /// <value>A <see cref="BaseCollection{Control}"/> that contains pages
         /// in this <see cref="TabControl"/>.</value>
         [Content]
-        public Collection<AbstractControl> Pages
+        public BaseCollection<AbstractControl> Pages
         {
             get
             {

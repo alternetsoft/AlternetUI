@@ -16,7 +16,7 @@ namespace Alternet.UI
 
         public string? PathToResultFile { get; set; }
 
-        public Collection<ReplaceInFileSetting> ReplaceItems { get; } = new();
+        public BaseCollection<ReplaceInFileSetting> ReplaceItems { get; } = new();
 
         public static string? ReplaceParam(
             string? s,

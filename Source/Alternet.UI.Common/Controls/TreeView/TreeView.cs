@@ -620,18 +620,18 @@ namespace Alternet.UI
         /// <summary>
         /// Gets a collection containing all the root items in the control.
         /// </summary>
-        /// <value>A <see cref="Collection{TreeViewItem}"/> that contains all
+        /// <value>A <see cref="BaseCollection{TreeViewItem}"/> that contains all
         /// the root items in the <see cref="TreeView"/> control.</value>
         /// <remarks>
-        /// Using the <see cref="Collection{TreeViewItem}"/> returned by this
+        /// Using the <see cref="BaseCollection{TreeViewItem}"/> returned by this
         /// property, you can add items, remove items, and obtain a count of items.
         /// The <see cref="Items"/> property holds a collection of
         /// <see cref="TreeViewItem"/> objects, each of which has a
         /// <see cref="Items"/> property
         /// that can contain its own child items collection.
         /// </remarks>
-        public virtual Collection<TreeViewItem> Items { get; } =
-            new Collection<TreeViewItem> { ThrowOnNullAdd = true };
+        public virtual BaseCollection<TreeViewItem> Items { get; } =
+            new BaseCollection<TreeViewItem> { ThrowOnNullAdd = true };
 
         /// <summary>
         /// Gets or sets the <see cref="ImageList"/> to use when displaying item

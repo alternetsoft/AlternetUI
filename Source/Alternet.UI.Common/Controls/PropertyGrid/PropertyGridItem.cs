@@ -23,7 +23,7 @@ namespace Alternet.UI
         private bool isCategory = false;
         private object? instance;
         private PropertyInfo? propInfo;
-        private Collection<IPropertyGridItem>? children;
+        private BaseCollection<IPropertyGridItem>? children;
         private IPropertyGridItem? parent;
 
         /// <summary>

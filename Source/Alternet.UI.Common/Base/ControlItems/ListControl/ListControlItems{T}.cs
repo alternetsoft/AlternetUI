@@ -15,7 +15,7 @@ namespace Alternet.UI
     /// Internal items container for list controls.
     /// </summary>
     /// <typeparam name="T">Type of the item.</typeparam>
-    public class ListControlItems<T> : Collection<T>, IListControlItems<T>
+    public class ListControlItems<T> : BaseCollection<T>, IListControlItems<T>
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="ListControlItems{T}"/> class.

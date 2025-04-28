@@ -435,12 +435,12 @@ namespace Alternet.UI
         /// <summary>
         /// Gets a collection containing all items in the control.
         /// </summary>
-        /// <value>A <see cref="Collection{ListViewItem}"/> that contains all the items in the
+        /// <value>A <see cref="BaseCollection{ListViewItem}"/> that contains all the items in the
         /// <see cref="ListView"/> control.</value>
-        /// <remarks>Using the <see cref="Collection{ListViewItem}"/> returned by this
+        /// <remarks>Using the <see cref="BaseCollection{ListViewItem}"/> returned by this
         /// property, you can add items, remove items, and obtain a count of items.</remarks>
-        public virtual Collection<ListViewItem> Items { get; } =
-            new Collection<ListViewItem> { ThrowOnNullAdd = true };
+        public virtual BaseCollection<ListViewItem> Items { get; } =
+            new BaseCollection<ListViewItem> { ThrowOnNullAdd = true };
 
         /// <summary>
         /// Gets the collection of all columns that appear in the control in the
@@ -448,8 +448,8 @@ namespace Alternet.UI
         /// </summary>
         /// <value>A collection that represents the columns that appear when the
         /// <see cref="View"/> property is set to <see cref="ListViewView.Details"/>.</value>
-        public virtual Collection<ListViewColumn> Columns { get; } =
-            new Collection<ListViewColumn> { ThrowOnNullAdd = true };
+        public virtual BaseCollection<ListViewColumn> Columns { get; } =
+            new BaseCollection<ListViewColumn> { ThrowOnNullAdd = true };
 
         /// <summary>
         /// Gets or sets how items are displayed in the control.

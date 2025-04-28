@@ -10,7 +10,7 @@ namespace Alternet.UI
 {
     public class ReplaceInFilesSettings
     {
-        public Collection<ReplaceInFilesSetting> Items { get; } = new();
+        public BaseCollection<ReplaceInFilesSetting> Items { get; } = new();
     }
 }
 

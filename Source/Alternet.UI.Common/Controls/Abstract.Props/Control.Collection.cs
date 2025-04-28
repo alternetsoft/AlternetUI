@@ -12,7 +12,7 @@ namespace Alternet.UI
         /// <summary>
         /// Represents a collection of <see cref="AbstractControl" /> objects.
         /// </summary>
-        public class ControlCollection : Collection<AbstractControl>
+        public class ControlCollection : BaseCollection<AbstractControl>
         {
             /// <summary>
             /// Initializes a new instance of the <see cref="ControlCollection"/> class.

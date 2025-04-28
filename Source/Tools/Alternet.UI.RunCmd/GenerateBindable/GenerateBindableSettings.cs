@@ -10,9 +10,9 @@ namespace Alternet.UI
 {
     public class GenerateBindableSettings
     {
-        public Collection<GenerateBindableSetting> Items { get; } = new();
+        public BaseCollection<GenerateBindableSetting> Items { get; } = new();
 
-        public Collection<TypeNameAlias> TypeAliases { get; } = new();
+        public BaseCollection<TypeNameAlias> TypeAliases { get; } = new();
 
         public void AddTypeAlias(string? typeName, string changeTo)
         {

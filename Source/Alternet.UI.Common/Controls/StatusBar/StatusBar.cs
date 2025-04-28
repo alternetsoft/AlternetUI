@@ -47,7 +47,7 @@ namespace Alternet.UI
         /// Gets a collection of <see cref="StatusBarPanel"/> objects associated with the control.
         /// </summary>
         [Content]
-        public virtual Collection<StatusBarPanel> Panels { get; } = new() { ThrowOnNullAdd = true };
+        public virtual BaseCollection<StatusBarPanel> Panels { get; } = new() { ThrowOnNullAdd = true };
 
         /// <summary>
         /// Gets or sets whether to ignore <see cref="Panels"/>.
@@ -188,7 +188,7 @@ namespace Alternet.UI
         /// Appllies <paramref name="panels"/> to the native control.
         /// </summary>
         /// <param name="panels">Collection of the panels.</param>
-        public virtual void ApplyPanels(Collection<StatusBarPanel> panels)
+        public virtual void ApplyPanels(BaseCollection<StatusBarPanel> panels)
         {
             if (InUpdates || !IsOk)
                 return;

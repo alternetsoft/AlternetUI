@@ -37,7 +37,7 @@ namespace Alternet.UI
         private static
             EnumArray<PanelSettingsItemKind, ItemToControlDelegate?> itemToControl = new();
 
-        private readonly Collection<PanelSettingsItem> items;
+        private readonly BaseCollection<PanelSettingsItem> items;
 
         private bool autoCreate = true;
 
@@ -231,7 +231,7 @@ namespace Alternet.UI
         /// Gets collection of the items. Each of the items defines individual
         /// setting with label, value and style options.
         /// </summary>
-        internal virtual Collection<PanelSettingsItem> Items
+        internal virtual BaseCollection<PanelSettingsItem> Items
         {
             get
             {

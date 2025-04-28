@@ -5,7 +5,7 @@ using Alternet.UI;
 namespace Alternet.Base.Collections
 {
     /// <summary>
-    /// Provides data for the <see cref="Collection{T}.ItemRangeAdditionFinished"/> event.
+    /// Provides data for the <see cref="BaseCollection{T}.ItemRangeAdditionFinished"/> event.
     /// </summary>
     /// <typeparam name="T">The type of elements in the collection.</typeparam>
     public class RangeAdditionFinishedEventArgs<T> : BaseEventArgs

@@ -43,7 +43,7 @@ namespace Alternet.UI
 
         internal static Color DefaultUnderlineColorLight = Color.FromRgb(0, 80, 197);
 
-        private readonly Collection<CardPanelHeaderItem> tabs = new();
+        private readonly BaseCollection<CardPanelHeaderItem> tabs = new();
 
         private Thickness? tabMargin;
         private Thickness? tabPadding;

@@ -62,7 +62,7 @@ namespace Alternet.UI
         private string text = string.Empty;
         private TreeView? treeView;
         private int? imageIndex;
-        private Collection<TreeViewItem>? items;
+        private BaseCollection<TreeViewItem>? items;
         private bool isBold;
         private Color? textColor;
         private Color? backgroundColor;
@@ -263,7 +263,7 @@ namespace Alternet.UI
         /// </summary>
         /// <value>
         /// A zero-based index value that represents the position of the tree item in
-        /// a <see cref="Collection{TreeViewItem}"/>, or <c>null</c> if the item
+        /// a <see cref="BaseCollection{TreeViewItem}"/>, or <c>null</c> if the item
         /// is not contained in any collection.
         /// An item can be contained in either <see cref="Items"/> or
         /// <see cref="TreeView.Items"/> collection.
@@ -328,7 +328,7 @@ namespace Alternet.UI
         /// <see cref="Items"/> property that can contain its own item collection.
         /// </remarks>
         [Browsable(false)]
-        public virtual Collection<TreeViewItem> Items
+        public virtual BaseCollection<TreeViewItem> Items
         {
             get
             {
@@ -352,11 +352,11 @@ namespace Alternet.UI
         /// property returns <c>null</c>.
         /// </remarks>
         [Browsable(false)]
-        public Collection<TreeViewItem>? ParentItems
+        public BaseCollection<TreeViewItem>? ParentItems
         {
             get
             {
-                Collection<TreeViewItem>? items;
+                BaseCollection<TreeViewItem>? items;
                 if (Parent == null)
                     items = TreeView?.Items;
                 else

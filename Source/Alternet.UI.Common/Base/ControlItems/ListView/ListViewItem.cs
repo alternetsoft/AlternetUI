@@ -46,7 +46,7 @@ namespace Alternet.UI
     /// </remarks>
     public class ListViewItem : BaseControlItem
     {
-        private Collection<ListViewItemCell>? cells;
+        private BaseCollection<ListViewItemCell>? cells;
         private ListView? listView;
 
         /// <summary>
@@ -233,7 +233,7 @@ namespace Alternet.UI
         /// </summary>
         /// <remarks>Using the <see cref="Cells"/> property, you can add column cells,
         /// remove column cells, and obtain a count of column cells.</remarks>
-        public Collection<ListViewItemCell> Cells
+        public BaseCollection<ListViewItemCell> Cells
         {
             get
             {

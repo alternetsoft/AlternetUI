@@ -44,7 +44,7 @@ namespace Alternet.UI
         /// </summary>
         bool RangeOpInProgress { get; }
 
-        /// <inheritdoc cref="Collection{T}.AddRange"/>
+        /// <inheritdoc cref="BaseCollection{T}.AddRange"/>
         void AddRange(IEnumerable<T> collection);
     }
 }

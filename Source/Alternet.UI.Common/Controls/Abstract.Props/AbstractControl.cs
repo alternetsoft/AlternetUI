@@ -88,7 +88,7 @@ namespace Alternet.UI
         private PointD layoutOffset;
         private SizeD? layoutMaxSize;
 
-        private Collection<InputBinding>? inputBindings;
+        private BaseCollection<InputBinding>? inputBindings;
         private Caret? caret;
         private WindowSizeToContentMode minSizeGrowMode = WindowSizeToContentMode.None;
         private CaretInfo? caretInfo;
@@ -573,7 +573,7 @@ namespace Alternet.UI
         /// Gets the collection of input bindings associated with this control.
         /// </summary>
         [Browsable(false)]
-        public virtual Collection<InputBinding> InputBindings
+        public virtual BaseCollection<InputBinding> InputBindings
         {
             get
             {
@@ -1465,19 +1465,19 @@ namespace Alternet.UI
         /// <summary>
         /// Gets the collection of child controls contained within the control.
         /// </summary>
-        /// <value>A <see cref="Collection{T}"/> representing the collection
+        /// <value>A <see cref="BaseCollection{T}"/> representing the collection
         /// of controls contained within the control.</value>
         /// <remarks>
         /// A Control can act as a parent to a collection of controls.
         /// For example, when several controls are added to a
         /// <see cref="Window"/>, each of the controls is a member
-        /// of the <see cref="Collection{T}"/> assigned to the
+        /// of the <see cref="BaseCollection{T}"/> assigned to the
         /// <see cref="Children"/> property of the window, which is derived
         /// from the <see cref="AbstractControl"/> class.
         /// <para>You can manipulate the controls in the
-        /// <see cref="Collection{T}"/> assigned to the <see cref="Children"/>
+        /// <see cref="BaseCollection{T}"/> assigned to the <see cref="Children"/>
         /// property by using the methods available in the
-        /// <see cref="Collection{T}"/> class.</para>
+        /// <see cref="BaseCollection{T}"/> class.</para>
         /// <para>When adding several controls to a parent control, it
         /// is recommended that you call the <see cref="SuspendLayout"/> method
         /// before initializing the controls to be added.

@@ -86,7 +86,7 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="controls">List of <see cref="TabPage"/> controls.</param>
         /// <param name="startIndex">Starting index.</param>
-        public static void UpdatePageIndexes(Collection<TabPage> controls, int startIndex)
+        public static void UpdatePageIndexes(BaseCollection<TabPage> controls, int startIndex)
         {
             for (int i = startIndex; i < controls.Count; i++)
                 controls[i].Index = i;

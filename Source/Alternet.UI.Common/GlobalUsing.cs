@@ -11,6 +11,10 @@ namespace Alternet.UI.Internal
 }
 
 #pragma warning disable
+namespace Alternet.Base.Collections
+{
+}
+
 namespace Alternet.UI.Threading
 {
 }

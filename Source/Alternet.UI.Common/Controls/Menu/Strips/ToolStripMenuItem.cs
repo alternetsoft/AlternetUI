@@ -82,6 +82,6 @@ namespace Alternet.UI
         /// <summary>
         /// Alias to <see cref="Menu.Items"/>.
         /// </summary>
-        public Collection<MenuItem> DropDownItems => Items;
+        public BaseCollection<MenuItem> DropDownItems => Items;
     }
 }
