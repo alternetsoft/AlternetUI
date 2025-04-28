@@ -140,32 +140,69 @@ namespace Alternet.UI
             }
         }
 
-        public DialogResult ShowMessageBox(MessageBoxInfo info)
+        public void ShowMessageBox(MessageBoxInfo info)
         {
-            var page = MauiUtils.GetFirstWindowPage();
+            var page = MauiUtils.GetFirstWindowPage() ?? throw new Exception("Page of the main window is null");
 
-            if(page is null)
-            {
-                throw new Exception("Page of the main window is null");
-            }
+            var strings = CommonStrings.Default;
+            var caption = info.Caption ?? string.Empty;
+            var text = info.Text?.ToString() ?? string.Empty;
 
             switch (info.Buttons)
             {
                 case MessageBoxButtons.OK:
-                    page.DisplayAlert(info.Caption, info.Text?.ToString() ?? string.Empty, "OK");
-                    return DialogResult.OK;
+                    var t = page.DisplayAlert(caption, text, strings.ButtonOk)
+                    .ContinueWith((t) =>
+                    {
+                        Alternet.UI.App.Invoke(() =>
+                        {
+                            info.Result = DialogResult.OK;
+                            info.OnClose?.Invoke(info);
+                        });
+                    });
+                    return;
                 case MessageBoxButtons.OKCancel:
+                    ShowWithTwoButtons(
+                        strings.ButtonOk,
+                        strings.ButtonCancel,
+                        DialogResult.OK,
+                        DialogResult.Cancel);
+                    return;
+                case MessageBoxButtons.YesNo:
+                    ShowWithTwoButtons(
+                        strings.ButtonYes,
+                        strings.ButtonNo,
+                        DialogResult.Yes,
+                        DialogResult.No);
+                    return;
+                case MessageBoxButtons.RetryCancel:
+                    ShowWithTwoButtons(
+                        strings.ButtonRetry,
+                        strings.ButtonCancel,
+                        DialogResult.Retry,
+                        DialogResult.Cancel);
+                    return;
+                case MessageBoxButtons.AbortRetryIgnore:
                     break;
                 case MessageBoxButtons.YesNoCancel:
                     break;
-                case MessageBoxButtons.YesNo:
-                    break;
-                case MessageBoxButtons.AbortRetryIgnore:
-                    break;
-                case MessageBoxButtons.RetryCancel:
-                    break;
                 default:
                     break;
+            }
+
+            void ShowWithTwoButtons(string button1, string button2, DialogResult result1, DialogResult result2)
+            {
+                page.DisplayAlert(caption, text, button1, button2)
+                .ContinueWith((t) =>
+                {
+                    bool result = t.Result;
+
+                    Alternet.UI.App.Invoke(() =>
+                    {
+                        info.Result = result ? result1 : result2;
+                        info.OnClose?.Invoke(info);
+                    });
+                });
             }
 
             throw new NotImplementedException();

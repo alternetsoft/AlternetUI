@@ -372,34 +372,40 @@ namespace PaintSample
 
         private void NewMenuItem_Click(object? sender, EventArgs e)
         {
-            PromptToSaveDocument(out var cancel);
-            if (cancel)
-                return;
-
-            CreateNewDocument();
+            PromptToSaveDocument(
+                (cancel) =>
+                {
+                    if (!cancel)
+                    {
+                        CreateNewDocument();
+                    }
+                });
         }
 
         private void OpenMenuItem_Click(object? sender, EventArgs e)
         {
-            PromptToSaveDocument(out var cancel);
-            if (cancel)
-                return;
+            PromptToSaveDocument(
+                (cancel) =>
+                {
+                    if (!cancel)
+                    {
+                        var s = PathUtils.GetAppSubFolder("SampleImages");
 
-            var s = PathUtils.GetAppSubFolder("SampleImages");
+                        using var dialog = new OpenFileDialog
+                        {
+                            Filter = FileMaskUtils.GetFileDialogFilterForImageOpen(false),
+                            InitialDirectory = s,
+                            FileMustExist = true,
+                        };
 
-            using var dialog = new OpenFileDialog
-            {
-                Filter = FileMaskUtils.GetFileDialogFilterForImageOpen(false),
-                InitialDirectory = s,
-                FileMustExist = true,
-            };
-
-            dialog.ShowAsync(() =>
-            {
-                if (dialog.FileName == null)
-                    return;
-                Document = new PaintSampleDocument(this, dialog.FileName);
-            });
+                        dialog.ShowAsync(() =>
+                        {
+                            if (dialog.FileName == null)
+                                return;
+                            Document = new PaintSampleDocument(this, dialog.FileName);
+                        });
+                    }
+                });
         }
 
         void PromptForSaveFileName(Action<string?> onResult)
@@ -451,41 +457,58 @@ namespace PaintSample
             SaveAs();
         }
 
-        private void PromptToSaveDocument(out bool cancel)
+        private void PromptToSaveDocument(Action<bool> onClose)
         {
-            cancel = false;
-            if (document == null)
+            if (document == null || !Document.Dirty)
+            {
+                onClose(false);
                 return;
+            }
 
-            if (!Document.Dirty)
-                return;
-
-            var result = MessageBox.Show(
-                this,
+            MessageBox.Show(
                 "The document has been modified. Save?",
                 "Paint Sample",
                 MessageBoxButtons.YesNoCancel,
                 defaultButton: MessageBoxDefaultButton.Cancel,
-                icon: MessageBoxIcon.None);
+                icon: MessageBoxIcon.None,
+                onClose: (e) =>
+                {
+                    if (e.Result == DialogResult.Cancel)
+                    {
+                        onClose(true);
+                        return;
+                    }
 
-            if (result == DialogResult.Cancel)
-            {
-                cancel = true;
-                return;
-            }
+                    if (e.Result == DialogResult.Yes)
+                    {
+                        Save();
 
-            if (result == DialogResult.Yes)
+                        onClose(false);
+                    }
+
+                    onClose(false);
+                });
+        }
+
+        public override bool CanClose(bool askOwned)
+        {
+            App.AddIdleTask(() =>
             {
-                // This in general is incorrect as dialogs are async
-                // need to be fixed
-                Save();
-            }
+                PromptToSaveDocument(
+                    (cancel) =>
+                    {
+                        if (!cancel)
+                        {
+                            SendDispose();
+                        }
+                    });
+            });
+
+            return false;
         }
 
         protected override void OnClosing(WindowClosingEventArgs e)
         {
-            PromptToSaveDocument(out var cancel);
-            e.Cancel = cancel;
             base.OnClosing(e);
         }
 

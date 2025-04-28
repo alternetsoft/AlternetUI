@@ -522,13 +522,16 @@ namespace ControlsSample
 
         private void RichPanel_FileNewClick(object? sender, EventArgs e)
         {
-            var result = MessageBox.Show(
+            MessageBox.Show(
                 "Clear all text".AddQuestion(),
                 "Prompt",
                 MessageBoxButtons.YesNo,
-                MessageBoxIcon.None);
-            if (result == DialogResult.Yes)
-                richPanel.TextBox.Clear();
+                MessageBoxIcon.None,
+                (e) =>
+                {
+                    if (e.Result == DialogResult.Yes)
+                        richPanel.TextBox.Clear();
+                });
         }
     }
 }

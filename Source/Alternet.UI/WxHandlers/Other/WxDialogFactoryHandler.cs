@@ -49,16 +49,18 @@ namespace Alternet.UI
             return new UI.Native.FontDialog();
         }
 
-        public DialogResult ShowMessageBox(MessageBoxInfo info)
+        public void ShowMessageBox(MessageBoxInfo info)
         {
             var nativeOwner = UI.Native.NativeObject.GetNativeWindow(info.Owner);
-            return Native.MessageBox.Show(
+            var result = Native.MessageBox.Show(
                 nativeOwner,
                 info.Text?.ToString() ?? string.Empty,
                 info.Caption ?? string.Empty,
                 info.Buttons,
                 info.Icon,
                 info.DefaultButton);
+            info.Result = result;
+            info.OnClose?.Invoke(info);
         }
 
         /// <summary>

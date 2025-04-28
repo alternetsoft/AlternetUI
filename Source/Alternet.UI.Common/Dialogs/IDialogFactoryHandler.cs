@@ -49,7 +49,7 @@ namespace Alternet.UI
         IColorDialogHandler CreateColorDialogHandler(ColorDialog dialog);
 
         /// <inheritdoc cref="MessageBox.ShowDefault(MessageBoxInfo)"/>
-        DialogResult ShowMessageBox(MessageBoxInfo info);
+        void ShowMessageBox(MessageBoxInfo info);
 
         /// <inheritdoc cref="DialogFactory.GetTextFromUserAsync"/>
         void GetTextFromUserAsync(TextFromUserParams prm);

@@ -151,15 +151,17 @@ namespace ControlsSample
         {
             try
             {
-                var result = MessageBox.Show(
+                MessageBox.Show(
                     "Message Box Text",
                     "Message Box Caption",
                     (MessageBoxButtons)messageBoxButtonsComboBox.SelectedItem!,
                     (MessageBoxIcon)messageBoxIconComboBox.SelectedItem!,
                     (MessageBoxDefaultButton)
-                        messageBoxDefaultButtonComboBox.SelectedItem!);
-
-                LogResult("Message Box Result: " + result);
+                        messageBoxDefaultButtonComboBox.SelectedItem!,
+                    (e) =>
+                    {
+                        LogResult("Message Box Result: " + e.Result);
+                    });
             }
             catch (ArgumentException ex)
             {
