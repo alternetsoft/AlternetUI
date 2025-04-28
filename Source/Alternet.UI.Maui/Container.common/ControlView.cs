@@ -494,11 +494,13 @@ namespace Alternet.UI
 
             var bounds = Bounds;
 
-            RectD newBounds = (
-                0,
-                0,
-                Math.Min(bounds.Width, max.Width),
-                Math.Min(bounds.Height, max.Height));
+            var newWidth = Math.Min(bounds.Width, max.Width);
+            var newHeight = Math.Min(bounds.Height, max.Height);
+
+            newWidth = Math.Max(0, newWidth);
+            newHeight = Math.Max(0, newHeight);
+
+            RectD newBounds = (0, 0, newWidth, newHeight);
 
             if (interior is null)
             {

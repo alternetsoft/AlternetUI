@@ -378,7 +378,7 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
-        /// Performs layout of the drawable childs and returns calculated bound of the different
+        /// Performs layout of the drawable children and returns calculated bound of the different
         /// parts of the drawable.
         /// </summary>
         /// <param name="control">Control which scale factor used to
@@ -386,9 +386,13 @@ namespace Alternet.Drawing
         /// <returns>Calculated bounds of the different parts of the drawable.</returns>
         public virtual EnumArray<HitTestResult, RectD> GetLayoutRectangles(AbstractControl control)
         {
+            var result = new EnumArray<HitTestResult, RectD>();
+
+            if (Bounds.SizeIsEmpty)
+                return result;
+
             Coord scaleFactor = control.ScaleFactor;
 
-            var result = new EnumArray<HitTestResult, RectD>();
             var borderWidth = BorderWidth;
 
             if (HasBorder)
