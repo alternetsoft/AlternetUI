@@ -301,6 +301,15 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
+        /// Hides both the horizontal and vertical scrollbars.
+        /// </summary>
+        public virtual void HideScrollBars()
+        {
+            HorzScrollBar?.SetVisible(false);
+            VertScrollBar?.SetVisible(false);
+        }
+
+        /// <summary>
         /// Returns <see cref="HitTestsResult"/> which contains
         /// interior hit test and scrollbar hit test.
         /// </summary>

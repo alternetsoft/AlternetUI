@@ -7,7 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 using Alternet.Drawing;
-using Alternet.UI.Extensions;
+using Alternet.Maui.Extensions;
 
 using Microsoft.Maui;
 using Microsoft.Maui.Controls;
@@ -62,6 +62,17 @@ namespace Alternet.UI
                     SetFocusIfPossible();
                 }
             };
+        }
+
+        /// <summary>
+        /// Gets a value indicating whether the current theme is dark.
+        /// </summary>
+        public static bool IsDark
+        {
+            get
+            {
+                return Alternet.UI.SystemSettings.AppearanceIsDark;
+            }
         }
 
         /// <summary>

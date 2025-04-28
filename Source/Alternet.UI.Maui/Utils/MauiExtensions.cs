@@ -14,13 +14,23 @@ using Microsoft.Maui.Graphics;
 using SkiaSharp;
 using SkiaSharp.Views.Maui;
 
-namespace Alternet.UI.Extensions
+namespace Alternet.Maui.Extensions
 {
     /// <summary>
     /// Provides extension methods for .NET MAUI components.
     /// </summary>
     public static class MauiExtensions
     {
+        /// <summary>
+        /// Converts an <see cref="Alternet.Drawing.Color"/> to a .NET MAUI color.
+        /// </summary>
+        /// <param name="color">The color to convert.</param>
+        /// <returns>A <see cref="Microsoft.Maui.Graphics.Color"/> representing the converted color.</returns>
+        public static Microsoft.Maui.Graphics.Color ToMaui(this Alternet.Drawing.Color color)
+        {
+            return Alternet.UI.MauiUtils.Convert(color);
+        }
+
         /// <summary>
         /// Attempts to set focus on the specified <see cref="GraphicsView"/>.
         /// </summary>

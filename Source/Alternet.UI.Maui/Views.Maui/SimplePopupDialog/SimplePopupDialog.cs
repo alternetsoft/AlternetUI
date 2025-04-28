@@ -5,7 +5,7 @@ using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 
-using Alternet.UI.Extensions;
+using Alternet.Maui.Extensions;
 
 using Microsoft.Maui;
 using Microsoft.Maui.Controls;

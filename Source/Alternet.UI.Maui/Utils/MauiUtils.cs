@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 using Alternet.Drawing;
-using Alternet.UI.Extensions;
+using Alternet.Maui.Extensions;
 
 using Microsoft.Maui.ApplicationModel;
 using Microsoft.Maui.Controls;
