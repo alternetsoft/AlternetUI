@@ -142,6 +142,32 @@ namespace Alternet.UI
 
         public DialogResult ShowMessageBox(MessageBoxInfo info)
         {
+            var page = MauiUtils.GetFirstWindowPage();
+
+            if(page is null)
+            {
+                throw new Exception("Page of the main window is null");
+            }
+
+            switch (info.Buttons)
+            {
+                case MessageBoxButtons.OK:
+                    page.DisplayAlert(info.Caption, info.Text?.ToString() ?? string.Empty, "OK");
+                    return DialogResult.OK;
+                case MessageBoxButtons.OKCancel:
+                    break;
+                case MessageBoxButtons.YesNoCancel:
+                    break;
+                case MessageBoxButtons.YesNo:
+                    break;
+                case MessageBoxButtons.AbortRetryIgnore:
+                    break;
+                case MessageBoxButtons.RetryCancel:
+                    break;
+                default:
+                    break;
+            }
+
             throw new NotImplementedException();
         }
     }
