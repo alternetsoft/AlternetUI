@@ -143,6 +143,32 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Retrieves a list of loaded native libraries (Windows, Linux, macOs).
+        /// </summary>
+        /// <returns>An array of strings containing the paths of the loaded libraries.</returns>
+        public static string[] GetLoadedLibraries()
+        {
+            if (App.IsWindowsOS)
+            {
+                return MswUtils.GetLoadedLibraries();
+            }
+            else
+            if(App.IsLinuxOS)
+            {
+                return LinuxUtils.GetLoadedLibraries();
+            }
+            else
+            if (App.IsMacOS)
+            {
+                return MacOsUtils.GetLoadedLibraries();
+            }
+            else
+            {
+                return [];
+            }
+        }
+
+        /// <summary>
         /// Adds an extension to the specified native module name. The extension depends on the
         /// operating system.
         /// </summary>

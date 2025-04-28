@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Runtime.InteropServices;
 using System.Text;
@@ -38,6 +39,29 @@ namespace Alternet.UI
                         sizeof(uint));
                 }
             }
+        }
+
+        /// <summary>
+        /// Retrieves a list of loaded native libraries on Windows.
+        /// </summary>
+        /// <returns>An array of strings containing the paths of the loaded libraries.</returns>
+        public static string[] GetLoadedLibraries()
+        {
+            List<string> libraries = new();
+            int pid = Process.GetCurrentProcess().Id;
+            IntPtr hProcess = NativeMethods.OpenProcess(0x0410, false, (uint)pid);
+
+            IntPtr[] modules = new IntPtr[1024];
+            NativeMethods.EnumProcessModules(hProcess, modules, modules.Length * IntPtr.Size, out int needed);
+
+            for (int i = 0; i < needed / IntPtr.Size; i++)
+            {
+                StringBuilder moduleName = new(260);
+                NativeMethods.GetModuleFileNameEx(hProcess, modules[i], moduleName, (uint)moduleName.Capacity);
+                libraries.Add(moduleName.ToString());
+            }
+
+            return libraries.ToArray();
         }
 
         /// <summary>
@@ -101,6 +125,23 @@ namespace Alternet.UI
                 Usedarkmodecolors = 26,
                 Last = 27,
             }
+
+            [DllImport("psapi.dll")]
+            internal static extern bool EnumProcessModules(
+                IntPtr hProcess,
+                IntPtr[] lphModule,
+                int cb,
+                out int lpcbNeeded);
+
+            [DllImport("psapi.dll")]
+            internal static extern uint GetModuleFileNameEx(
+                IntPtr hProcess,
+                IntPtr hModule,
+                StringBuilder lpFilename,
+                uint nSize);
+
+            [DllImport("kernel32.dll")]
+            internal static extern IntPtr OpenProcess(uint dwDesiredAccess, bool bInheritHandle, uint dwProcessId);
 
             /// <summary>
             /// Sets the value of Desktop Window Manager (DWM) non-client rendering

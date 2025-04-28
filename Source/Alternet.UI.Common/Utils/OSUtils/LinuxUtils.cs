@@ -115,6 +115,26 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Retrieves a list of loaded native libraries on Linux.
+        /// </summary>
+        /// <returns>An array of strings containing the paths of the loaded libraries.</returns>
+        public static string[] GetLoadedLibraries()
+        {
+            List<string> libraries = new();
+
+            int Callback(ref NativeMethods.DlPhdrInfo info, IntPtr size)
+            {
+                string name = Marshal.PtrToStringAnsi(info.Name);
+                if (!string.IsNullOrEmpty(name))
+                    libraries.Add(name);
+                return 0;
+            }
+
+            NativeMethods.dl_iterate_phdr(Callback, IntPtr.Zero);
+            return libraries.ToArray();
+        }
+
+        /// <summary>
         /// Gets whether specific package is installed using dpkg utility.
         /// </summary>
         /// <param name="packageName">Package name.</param>
@@ -241,6 +261,18 @@ namespace Alternet.UI
                     return (Marshal.PtrToStringAnsi(errPtr), errPtr);
                 return (string.Empty, default);
             }
+
+            [StructLayout(LayoutKind.Sequential)]
+            internal struct DlPhdrInfo
+            {
+                public IntPtr Addr;
+                public IntPtr Name;
+            }
+
+            internal delegate int DlIteratePhdrCallback(ref DlPhdrInfo info, IntPtr size);
+
+            [DllImport("libc.so.6")]
+            internal static extern int dl_iterate_phdr(DlIteratePhdrCallback callback, IntPtr data);
         }
     }
 }
