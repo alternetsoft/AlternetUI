@@ -1,6 +1,7 @@
 ﻿using System;
 using System.CodeDom;
 using System.CodeDom.Compiler;
+using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
@@ -36,15 +37,6 @@ namespace Alternet.UI
 
         static AssemblyUtils()
         {
-            /*
-            unsafe
-            {
-                var result = TryGetRawMetadataViaReflection(
-                                KnownAssemblies.LibraryCommon,
-                                out var blob,
-                                out var length);
-            }
-            */
         }
 
         /// <summary>
@@ -105,7 +97,7 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Gets whether the speciffied type is internal.
+        /// Gets whether the specified type is internal.
         /// </summary>
         /// <param name="type">Type to test.</param>
         /// <returns></returns>
@@ -437,8 +429,8 @@ namespace Alternet.UI
             var nullable = AssemblyUtils.GetNullable(propInfo);
             var value = propInfo.GetValue(instance);
             var resetMethod = AssemblyUtils.GetResetPropMethod(instance, propInfo.Name);
-            var hasDevaultAttr = AssemblyUtils.GetDefaultValue(propInfo, out _);
-            return hasDevaultAttr || resetMethod != null || (nullable && value is not null);
+            var hasDefaultAttr = AssemblyUtils.GetDefaultValue(propInfo, out _);
+            return hasDefaultAttr || resetMethod != null || (nullable && value is not null);
         }
 
         /// <summary>
@@ -461,8 +453,8 @@ namespace Alternet.UI
                 return true;
             }
 
-            var hasDevaultAttr = AssemblyUtils.GetDefaultValue(propInfo, out var defValue);
-            if (hasDevaultAttr)
+            var hasDefaultAttr = AssemblyUtils.GetDefaultValue(propInfo, out var defValue);
+            if (hasDefaultAttr)
             {
                 propInfo.SetValue(instance, defValue);
                 return true;
@@ -1075,7 +1067,7 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Upgrades signed inegers to <see cref="long"/>, unsigned integers to
+        /// Upgrades signed integers to <see cref="long"/>, unsigned integers to
         /// <see cref="ulong"/> and returns all other types as is.
         /// </summary>
         /// <param name="value">Value of any type.</param>
@@ -1349,7 +1341,7 @@ namespace Alternet.UI
         /// <param name="baseTypes">Base types array.</param>
         public static bool TypeIsDescendant(Type type, Type[] baseTypes)
         {
-            foreach(var item in baseTypes)
+            foreach (var item in baseTypes)
             {
                 if (TypeIsDescendant(type, item))
                     return true;
@@ -1481,7 +1473,7 @@ namespace Alternet.UI
         {
             SortedList<string, Type> result = new();
             var types = GetTypeDescendants(type);
-            foreach(var item in types)
+            foreach (var item in types)
             {
                 result.Add(item.FullName, item);
             }
@@ -1539,10 +1531,10 @@ namespace Alternet.UI
 
             var result = new SortedList<string, EventInfo>();
 
-            foreach(var item in types)
+            foreach (var item in types)
             {
                 IEnumerable<EventInfo> events = EnumEvents(item, false, bindingFlags);
-                foreach(var ev in events)
+                foreach (var ev in events)
                 {
                     var name = ev.Name;
                     if (result.ContainsKey(name))
@@ -1565,7 +1557,7 @@ namespace Alternet.UI
             var result = InvokeMethodWithResult(KnownTypes.MauiUtils.Value, "GetDeviceType");
             if (result is null)
             {
-                if(App.IsLinuxOS || App.IsWindowsOS || App.IsMacOS)
+                if (App.IsLinuxOS || App.IsWindowsOS || App.IsMacOS)
                     return GenericDeviceType.Desktop;
                 else
                     return GenericDeviceType.Unknown;
@@ -1760,7 +1752,7 @@ namespace Alternet.UI
         {
             try
             {
-                if(paramTypes == null)
+                if (paramTypes == null)
                     methodInfo ??= type?.GetMethod(methodName);
                 else
                     methodInfo ??= type?.GetMethod(methodName, paramTypes);
@@ -1815,7 +1807,7 @@ namespace Alternet.UI
         {
             var types = asm.ExportedTypes;
 
-            foreach(var t in types)
+            foreach (var t in types)
             {
                 if (t.Namespace == namesp)
                     yield return t;
@@ -1846,7 +1838,7 @@ namespace Alternet.UI
 
         /// <summary>
         /// Gets whether <paramref name="referenceContainer"/> assembly references
-        /// any assembly fromn the <paramref name="possibleReference"/> collection.
+        /// any assembly from the <paramref name="possibleReference"/> collection.
         /// </summary>
         /// <param name="referenceContainer">The Assembly which possibly
         /// contains the reference.</param>
@@ -1913,6 +1905,63 @@ namespace Alternet.UI
             }
 
             return result;
+        }
+
+        /// <summary>
+        /// Invokes the specified method on the given instance and logs the result.
+        /// </summary>
+        /// <param name="instance">The object instance on which the method should be invoked.
+        /// Can be null for static methods.</param>
+        /// <param name="method">The method to invoke. If null or requires parameters,
+        /// invocation is skipped.</param>
+        /// <returns>
+        /// <c>true</c> if the method was successfully invoked and logged; otherwise, <c>false</c>.
+        /// </returns>
+        public static bool InvokeMethodAndLogResult(object? instance, MethodInfo? method)
+        {
+            if (method is null)
+                return false;
+
+            Type declaringType = method.DeclaringType;
+
+            var methodName = $"{method.Name}()";
+            var retParam = method.ReturnParameter;
+            var resultIsVoid = retParam.ParameterType == typeof(void);
+
+            var methodParameters = method.GetParameters();
+            if (methodParameters.Length > 0)
+            {
+                App.LogWarning($"{declaringType.Name}.{methodName} has parameters, so it is not called.");
+                return false;
+            }
+
+            try
+            {
+                var result = method.Invoke(instance, null);
+
+                TreeControlItem item = new();
+                item.TextHasBold = true;
+
+                var itemText = $"Called <b>{declaringType.Name}.{methodName}</b>";
+
+                if (!resultIsVoid)
+                {
+                    itemText += $" with result = <b>{result}</b>";
+
+                    LogUtils.LogAsTreeItemChilds(item, result);
+                }
+
+                item.Text = itemText;
+
+                App.AddLogItem(item);
+
+                return true;
+            }
+            catch (Exception e)
+            {
+                App.LogError(e);
+                return false;
+            }
         }
 
         /// <summary>
