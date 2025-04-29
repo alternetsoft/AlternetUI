@@ -1,9 +1,11 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ApiInfo>
-  <Assembly Name="Alternet.UI.Common, Version=0.9.722.0, Culture=neutral, PublicKeyToken=7fb0fe57212b4b74">
+  <Assembly Name="Alternet.UI.Common, Version=0.9.723.0, Culture=neutral, PublicKeyToken=7fb0fe57212b4b74">
     <Type Name="XamlX.Runtime.IXamlParentStackProviderV1" />
     <Type Name="XamlX.Runtime.IXamlXmlNamespaceInfoProviderV1" />
     <Type Name="XamlX.Runtime.XamlXmlNamespaceInfoV1" />
+    <Type Name="Alternet.Base.Collections.CollectionChangeEventArgs`1" />
+    <Type Name="Alternet.Base.Collections.RangeAdditionFinishedEventArgs`1" />
     <Type Name="Alternet.Drawing.TextHorizontalAlignment" />
     <Type Name="Alternet.Drawing.TextTrimming" />
     <Type Name="Alternet.Drawing.TextVerticalAlignment" />
@@ -331,16 +333,6 @@
     <Type Name="Alternet.Drawing.Printing.PrintEventArgs" />
     <Type Name="Alternet.Drawing.Printing.PrintingFactory" />
     <Type Name="Alternet.Drawing.Printing.PrintPageEventArgs" />
-    <Type Name="Alternet.Base.Collections.CollectionItemChangedHandler`1" />
-    <Type Name="Alternet.Base.Collections.CollectionItemRangeChangedHandler`1" />
-    <Type Name="Alternet.Base.Collections.Collection`1">
-      <Event Name="ItemInserted" />
-      <Event Name="ItemRemoved" />
-      <Event Name="ItemRangeAdditionFinished" />
-      <Event Name="CollectionChanged" />
-    </Type>
-    <Type Name="Alternet.Base.Collections.CollectionChangeEventArgs`1" />
-    <Type Name="Alternet.Base.Collections.RangeAdditionFinishedEventArgs`1" />
     <Type Name="Alternet.UI.AutoResetAttribute" />
     <Type Name="Alternet.UI.BaseAttribute" />
     <Type Name="Alternet.UI.BaseBoolAttribute" />
@@ -523,6 +515,14 @@
       <Event Name="PropertyChanged" />
     </Type>
     <Type Name="Alternet.UI.BaseBlockingCollection`1" />
+    <Type Name="Alternet.UI.CollectionItemChangedHandler`1" />
+    <Type Name="Alternet.UI.CollectionItemRangeChangedHandler`1" />
+    <Type Name="Alternet.UI.BaseCollection`1">
+      <Event Name="ItemInserted" />
+      <Event Name="ItemRemoved" />
+      <Event Name="ItemRangeAdditionFinished" />
+      <Event Name="CollectionChanged" />
+    </Type>
     <Type Name="Alternet.UI.BaseConcurrentQueue`1" />
     <Type Name="Alternet.UI.BaseConcurrentStack`1" />
     <Type Name="Alternet.UI.BaseDictionary`2" />
@@ -590,6 +590,9 @@
       <Event Name="PropertyChanged" />
     </Type>
     <Type Name="Alternet.UI.TreeControlRootItem">
+      <Event Name="PropertyChanged" />
+    </Type>
+    <Type Name="Alternet.UI.TreeControlSeparatorItem">
       <Event Name="PropertyChanged" />
     </Type>
     <Type Name="Alternet.UI.TreeViewItem">
@@ -882,6 +885,7 @@
     <Type Name="Alternet.UI.ShortcutInfo" />
     <Type Name="Alternet.UI.HelpInfo" />
     <Type Name="Alternet.UI.MessageBox" />
+    <Type Name="Alternet.UI.MessageBoxResultDelegate" />
     <Type Name="Alternet.UI.MessageBoxInfo" />
     <Type Name="Alternet.UI.IMouseHandler" />
     <Type Name="Alternet.UI.LongTapEventArgs" />
@@ -957,6 +961,7 @@
       <Event Name="ValueChanged" />
     </Type>
     <Type Name="Alternet.UI.Border">
+      <Event Name="ContextMenuCreated" />
       <Event Name="CellChanged" />
       <Event Name="Activated" />
       <Event Name="TitleChanged" />
@@ -1039,6 +1044,7 @@
       <Event Name="PropertyChanged" />
     </Type>
     <Type Name="Alternet.UI.HiddenBorder">
+      <Event Name="ContextMenuCreated" />
       <Event Name="CellChanged" />
       <Event Name="Activated" />
       <Event Name="TitleChanged" />
@@ -1112,6 +1118,7 @@
       <Event Name="PropertyChanged" />
     </Type>
     <Type Name="Alternet.UI.HorizontalLine">
+      <Event Name="ContextMenuCreated" />
       <Event Name="CellChanged" />
       <Event Name="Activated" />
       <Event Name="TitleChanged" />
@@ -1185,6 +1192,7 @@
       <Event Name="PropertyChanged" />
     </Type>
     <Type Name="Alternet.UI.VerticalLine">
+      <Event Name="ContextMenuCreated" />
       <Event Name="CellChanged" />
       <Event Name="Activated" />
       <Event Name="TitleChanged" />
@@ -1258,6 +1266,7 @@
       <Event Name="PropertyChanged" />
     </Type>
     <Type Name="Alternet.UI.ContainerControl">
+      <Event Name="ContextMenuCreated" />
       <Event Name="CellChanged" />
       <Event Name="Activated" />
       <Event Name="TitleChanged" />
@@ -1332,6 +1341,7 @@
     </Type>
     <Type Name="Alternet.UI.ErrorPictureBox">
       <Event Name="ImageChanged" />
+      <Event Name="ContextMenuCreated" />
       <Event Name="CellChanged" />
       <Event Name="Activated" />
       <Event Name="TitleChanged" />
@@ -1405,6 +1415,7 @@
       <Event Name="PropertyChanged" />
     </Type>
     <Type Name="Alternet.UI.GraphicControl">
+      <Event Name="ContextMenuCreated" />
       <Event Name="CellChanged" />
       <Event Name="Activated" />
       <Event Name="TitleChanged" />
@@ -1478,6 +1489,7 @@
       <Event Name="PropertyChanged" />
     </Type>
     <Type Name="Alternet.UI.NonVisualControl">
+      <Event Name="ContextMenuCreated" />
       <Event Name="CellChanged" />
       <Event Name="Activated" />
       <Event Name="TitleChanged" />
@@ -1551,6 +1563,7 @@
       <Event Name="PropertyChanged" />
     </Type>
     <Type Name="Alternet.UI.PaintActionsControl">
+      <Event Name="ContextMenuCreated" />
       <Event Name="CellChanged" />
       <Event Name="Activated" />
       <Event Name="TitleChanged" />
@@ -1624,6 +1637,7 @@
       <Event Name="PropertyChanged" />
     </Type>
     <Type Name="Alternet.UI.Panel">
+      <Event Name="ContextMenuCreated" />
       <Event Name="CellChanged" />
       <Event Name="Activated" />
       <Event Name="TitleChanged" />
@@ -1698,6 +1712,7 @@
     </Type>
     <Type Name="Alternet.UI.PictureBox">
       <Event Name="ImageChanged" />
+      <Event Name="ContextMenuCreated" />
       <Event Name="CellChanged" />
       <Event Name="Activated" />
       <Event Name="TitleChanged" />
@@ -1771,6 +1786,7 @@
       <Event Name="PropertyChanged" />
     </Type>
     <Type Name="Alternet.UI.UserControl">
+      <Event Name="ContextMenuCreated" />
       <Event Name="CellChanged" />
       <Event Name="Activated" />
       <Event Name="TitleChanged" />
@@ -1844,6 +1860,7 @@
       <Event Name="PropertyChanged" />
     </Type>
     <Type Name="Alternet.UI.AbstractControl">
+      <Event Name="ContextMenuCreated" />
       <Event Name="CellChanged" />
       <Event Name="Activated" />
       <Event Name="TitleChanged" />
@@ -1989,6 +2006,7 @@
     </Type>
     <Type Name="Alternet.UI.IControlNotification" />
     <Type Name="Alternet.UI.GenericControl">
+      <Event Name="ContextMenuCreated" />
       <Event Name="CellChanged" />
       <Event Name="Activated" />
       <Event Name="TitleChanged" />
@@ -2062,6 +2080,7 @@
       <Event Name="PropertyChanged" />
     </Type>
     <Type Name="Alternet.UI.GenericTextControl">
+      <Event Name="ContextMenuCreated" />
       <Event Name="CellChanged" />
       <Event Name="Activated" />
       <Event Name="TitleChanged" />
@@ -2135,6 +2154,7 @@
       <Event Name="PropertyChanged" />
     </Type>
     <Type Name="Alternet.UI.GenericWrappedTextControl">
+      <Event Name="ContextMenuCreated" />
       <Event Name="CellChanged" />
       <Event Name="Activated" />
       <Event Name="TitleChanged" />
@@ -2208,6 +2228,7 @@
       <Event Name="PropertyChanged" />
     </Type>
     <Type Name="Alternet.UI.Spacer">
+      <Event Name="ContextMenuCreated" />
       <Event Name="CellChanged" />
       <Event Name="Activated" />
       <Event Name="TitleChanged" />
@@ -2295,6 +2316,7 @@
     </Type>
     <Type Name="Alternet.UI.PaintEventHandler" />
     <Type Name="Alternet.UI.Control">
+      <Event Name="ContextMenuCreated" />
       <Event Name="CellChanged" />
       <Event Name="Activated" />
       <Event Name="TitleChanged" />
@@ -2465,6 +2487,7 @@
       <Event Name="PropertyChanged" />
     </Type>
     <Type Name="Alternet.UI.Button">
+      <Event Name="ContextMenuCreated" />
       <Event Name="CellChanged" />
       <Event Name="Activated" />
       <Event Name="TitleChanged" />
@@ -2538,6 +2561,7 @@
       <Event Name="PropertyChanged" />
     </Type>
     <Type Name="Alternet.UI.ButtonBase">
+      <Event Name="ContextMenuCreated" />
       <Event Name="CellChanged" />
       <Event Name="Activated" />
       <Event Name="TitleChanged" />
@@ -2612,6 +2636,7 @@
     </Type>
     <Type Name="Alternet.UI.CheckBox">
       <Event Name="CheckedChanged" />
+      <Event Name="ContextMenuCreated" />
       <Event Name="CellChanged" />
       <Event Name="Activated" />
       <Event Name="TitleChanged" />
@@ -2686,6 +2711,7 @@
     </Type>
     <Type Name="Alternet.UI.RadioButton">
       <Event Name="CheckedChanged" />
+      <Event Name="ContextMenuCreated" />
       <Event Name="CellChanged" />
       <Event Name="Activated" />
       <Event Name="TitleChanged" />
@@ -2763,6 +2789,7 @@
       <Event Name="TextChanged" />
       <Event Name="DelayedTextChanged" />
       <Event Name="ButtonClick" />
+      <Event Name="ContextMenuCreated" />
       <Event Name="CellChanged" />
       <Event Name="Activated" />
       <Event Name="TitleChanged" />
@@ -2837,6 +2864,7 @@
       <Event Name="TextChanged" />
       <Event Name="DelayedTextChanged" />
       <Event Name="ButtonClick" />
+      <Event Name="ContextMenuCreated" />
       <Event Name="CellChanged" />
       <Event Name="Activated" />
       <Event Name="TitleChanged" />
@@ -2908,6 +2936,7 @@
       <Event Name="PropertyChanged" />
     </Type>
     <Type Name="Alternet.UI.ControlAndControl">
+      <Event Name="ContextMenuCreated" />
       <Event Name="CellChanged" />
       <Event Name="Activated" />
       <Event Name="TitleChanged" />
@@ -2984,6 +3013,7 @@
       <Event Name="TextChanged" />
       <Event Name="DelayedTextChanged" />
       <Event Name="ButtonClick" />
+      <Event Name="ContextMenuCreated" />
       <Event Name="CellChanged" />
       <Event Name="Activated" />
       <Event Name="TitleChanged" />
@@ -3058,6 +3088,7 @@
       <Event Name="SelectedIndexChanged" />
       <Event Name="TextChanged" />
       <Event Name="DelayedTextChanged" />
+      <Event Name="ContextMenuCreated" />
       <Event Name="CellChanged" />
       <Event Name="Activated" />
       <Event Name="TitleChanged" />
@@ -3131,6 +3162,7 @@
     <Type Name="Alternet.UI.ControlAndLabel`2">
       <Event Name="TextChanged" />
       <Event Name="DelayedTextChanged" />
+      <Event Name="ContextMenuCreated" />
       <Event Name="CellChanged" />
       <Event Name="Activated" />
       <Event Name="TitleChanged" />
@@ -3204,6 +3236,7 @@
     <Type Name="Alternet.UI.ValueEditorDouble">
       <Event Name="TextChanged" />
       <Event Name="DelayedTextChanged" />
+      <Event Name="ContextMenuCreated" />
       <Event Name="CellChanged" />
       <Event Name="Activated" />
       <Event Name="TitleChanged" />
@@ -3277,6 +3310,7 @@
     <Type Name="Alternet.UI.ValueEditorSingle">
       <Event Name="TextChanged" />
       <Event Name="DelayedTextChanged" />
+      <Event Name="ContextMenuCreated" />
       <Event Name="CellChanged" />
       <Event Name="Activated" />
       <Event Name="TitleChanged" />
@@ -3350,6 +3384,7 @@
     <Type Name="Alternet.UI.ValueEditorUDouble">
       <Event Name="TextChanged" />
       <Event Name="DelayedTextChanged" />
+      <Event Name="ContextMenuCreated" />
       <Event Name="CellChanged" />
       <Event Name="Activated" />
       <Event Name="TitleChanged" />
@@ -3423,6 +3458,7 @@
     <Type Name="Alternet.UI.ValueEditorUSingle">
       <Event Name="TextChanged" />
       <Event Name="DelayedTextChanged" />
+      <Event Name="ContextMenuCreated" />
       <Event Name="CellChanged" />
       <Event Name="Activated" />
       <Event Name="TitleChanged" />
@@ -3496,6 +3532,7 @@
     <Type Name="Alternet.UI.ValueEditorInt16">
       <Event Name="TextChanged" />
       <Event Name="DelayedTextChanged" />
+      <Event Name="ContextMenuCreated" />
       <Event Name="CellChanged" />
       <Event Name="Activated" />
       <Event Name="TitleChanged" />
@@ -3569,6 +3606,7 @@
     <Type Name="Alternet.UI.ValueEditorInt32">
       <Event Name="TextChanged" />
       <Event Name="DelayedTextChanged" />
+      <Event Name="ContextMenuCreated" />
       <Event Name="CellChanged" />
       <Event Name="Activated" />
       <Event Name="TitleChanged" />
@@ -3642,6 +3680,7 @@
     <Type Name="Alternet.UI.ValueEditorInt64">
       <Event Name="TextChanged" />
       <Event Name="DelayedTextChanged" />
+      <Event Name="ContextMenuCreated" />
       <Event Name="CellChanged" />
       <Event Name="Activated" />
       <Event Name="TitleChanged" />
@@ -3715,6 +3754,7 @@
     <Type Name="Alternet.UI.ValueEditorSByte">
       <Event Name="TextChanged" />
       <Event Name="DelayedTextChanged" />
+      <Event Name="ContextMenuCreated" />
       <Event Name="CellChanged" />
       <Event Name="Activated" />
       <Event Name="TitleChanged" />
@@ -3789,6 +3829,7 @@
       <Event Name="TextValidation" />
       <Event Name="TextChanged" />
       <Event Name="DelayedTextChanged" />
+      <Event Name="ContextMenuCreated" />
       <Event Name="CellChanged" />
       <Event Name="Activated" />
       <Event Name="TitleChanged" />
@@ -3863,6 +3904,7 @@
       <Event Name="TextValidation" />
       <Event Name="TextChanged" />
       <Event Name="DelayedTextChanged" />
+      <Event Name="ContextMenuCreated" />
       <Event Name="CellChanged" />
       <Event Name="Activated" />
       <Event Name="TitleChanged" />
@@ -3937,6 +3979,7 @@
       <Event Name="TextValidation" />
       <Event Name="TextChanged" />
       <Event Name="DelayedTextChanged" />
+      <Event Name="ContextMenuCreated" />
       <Event Name="CellChanged" />
       <Event Name="Activated" />
       <Event Name="TitleChanged" />
@@ -4010,6 +4053,7 @@
     <Type Name="Alternet.UI.TextBoxAndLabel">
       <Event Name="TextChanged" />
       <Event Name="DelayedTextChanged" />
+      <Event Name="ContextMenuCreated" />
       <Event Name="CellChanged" />
       <Event Name="Activated" />
       <Event Name="TitleChanged" />
@@ -4083,6 +4127,7 @@
     <Type Name="Alternet.UI.HexEditorUInt32">
       <Event Name="TextChanged" />
       <Event Name="DelayedTextChanged" />
+      <Event Name="ContextMenuCreated" />
       <Event Name="CellChanged" />
       <Event Name="Activated" />
       <Event Name="TitleChanged" />
@@ -4156,6 +4201,7 @@
     <Type Name="Alternet.UI.ValueEditorByte">
       <Event Name="TextChanged" />
       <Event Name="DelayedTextChanged" />
+      <Event Name="ContextMenuCreated" />
       <Event Name="CellChanged" />
       <Event Name="Activated" />
       <Event Name="TitleChanged" />
@@ -4229,6 +4275,7 @@
     <Type Name="Alternet.UI.ValueEditorUInt16">
       <Event Name="TextChanged" />
       <Event Name="DelayedTextChanged" />
+      <Event Name="ContextMenuCreated" />
       <Event Name="CellChanged" />
       <Event Name="Activated" />
       <Event Name="TitleChanged" />
@@ -4302,6 +4349,7 @@
     <Type Name="Alternet.UI.ValueEditorUInt32">
       <Event Name="TextChanged" />
       <Event Name="DelayedTextChanged" />
+      <Event Name="ContextMenuCreated" />
       <Event Name="CellChanged" />
       <Event Name="Activated" />
       <Event Name="TitleChanged" />
@@ -4375,6 +4423,7 @@
     <Type Name="Alternet.UI.ValueEditorUInt64">
       <Event Name="TextChanged" />
       <Event Name="DelayedTextChanged" />
+      <Event Name="ContextMenuCreated" />
       <Event Name="CellChanged" />
       <Event Name="Activated" />
       <Event Name="TitleChanged" />
@@ -4448,6 +4497,7 @@
     <Type Name="Alternet.UI.ValueEditorCustom">
       <Event Name="TextChanged" />
       <Event Name="DelayedTextChanged" />
+      <Event Name="ContextMenuCreated" />
       <Event Name="CellChanged" />
       <Event Name="Activated" />
       <Event Name="TitleChanged" />
@@ -4524,6 +4574,7 @@
       <Event Name="WeekNumberClick" />
       <Event Name="DayHeaderClick" />
       <Event Name="DayDoubleClick" />
+      <Event Name="ContextMenuCreated" />
       <Event Name="CellChanged" />
       <Event Name="Activated" />
       <Event Name="TitleChanged" />
@@ -4597,6 +4648,7 @@
       <Event Name="PropertyChanged" />
     </Type>
     <Type Name="Alternet.UI.CustomDateEdit">
+      <Event Name="ContextMenuCreated" />
       <Event Name="CellChanged" />
       <Event Name="Activated" />
       <Event Name="TitleChanged" />
@@ -4671,6 +4723,7 @@
     </Type>
     <Type Name="Alternet.UI.DateTimePicker">
       <Event Name="ValueChanged" />
+      <Event Name="ContextMenuCreated" />
       <Event Name="CellChanged" />
       <Event Name="Activated" />
       <Event Name="TitleChanged" />
@@ -4750,6 +4803,7 @@
     </Type>
     <Type Name="Alternet.UI.GenericLabel">
       <Event Name="ImageChanged" />
+      <Event Name="ContextMenuCreated" />
       <Event Name="CellChanged" />
       <Event Name="Activated" />
       <Event Name="TitleChanged" />
@@ -4823,6 +4877,7 @@
       <Event Name="PropertyChanged" />
     </Type>
     <Type Name="Alternet.UI.HeaderLabel">
+      <Event Name="ContextMenuCreated" />
       <Event Name="CellChanged" />
       <Event Name="Activated" />
       <Event Name="TitleChanged" />
@@ -4896,6 +4951,7 @@
       <Event Name="PropertyChanged" />
     </Type>
     <Type Name="Alternet.UI.Label">
+      <Event Name="ContextMenuCreated" />
       <Event Name="CellChanged" />
       <Event Name="Activated" />
       <Event Name="TitleChanged" />
@@ -4970,6 +5026,7 @@
     </Type>
     <Type Name="Alternet.UI.LinkLabel">
       <Event Name="LinkClicked" />
+      <Event Name="ContextMenuCreated" />
       <Event Name="CellChanged" />
       <Event Name="Activated" />
       <Event Name="TitleChanged" />
@@ -5047,6 +5104,7 @@
       <Event Name="PropertyChanged" />
     </Type>
     <Type Name="Alternet.UI.Grid">
+      <Event Name="ContextMenuCreated" />
       <Event Name="CellChanged" />
       <Event Name="Activated" />
       <Event Name="TitleChanged" />
@@ -5131,6 +5189,7 @@
       <Event Name="PropertyChanged" />
     </Type>
     <Type Name="Alternet.UI.LayoutPanel">
+      <Event Name="ContextMenuCreated" />
       <Event Name="CellChanged" />
       <Event Name="Activated" />
       <Event Name="TitleChanged" />
@@ -5204,6 +5263,7 @@
       <Event Name="PropertyChanged" />
     </Type>
     <Type Name="Alternet.UI.SplittedTreeAndCards">
+      <Event Name="ContextMenuCreated" />
       <Event Name="CellChanged" />
       <Event Name="Activated" />
       <Event Name="TitleChanged" />
@@ -5277,6 +5337,7 @@
       <Event Name="PropertyChanged" />
     </Type>
     <Type Name="Alternet.UI.ScrollViewer">
+      <Event Name="ContextMenuCreated" />
       <Event Name="CellChanged" />
       <Event Name="Activated" />
       <Event Name="TitleChanged" />
@@ -5351,6 +5412,7 @@
     </Type>
     <Type Name="Alternet.UI.PanelListBoxAndCards">
       <Event Name="AfterDoubleClickAction" />
+      <Event Name="ContextMenuCreated" />
       <Event Name="CellChanged" />
       <Event Name="Activated" />
       <Event Name="TitleChanged" />
@@ -5425,6 +5487,7 @@
     </Type>
     <Type Name="Alternet.UI.PanelTreeAndCards">
       <Event Name="AfterDoubleClickAction" />
+      <Event Name="ContextMenuCreated" />
       <Event Name="CellChanged" />
       <Event Name="Activated" />
       <Event Name="TitleChanged" />
@@ -5499,6 +5562,7 @@
     </Type>
     <Type Name="Alternet.UI.SplittedControlsPanel">
       <Event Name="AfterDoubleClickAction" />
+      <Event Name="ContextMenuCreated" />
       <Event Name="CellChanged" />
       <Event Name="Activated" />
       <Event Name="TitleChanged" />
@@ -5572,6 +5636,7 @@
       <Event Name="PropertyChanged" />
     </Type>
     <Type Name="Alternet.UI.SplittedPanel">
+      <Event Name="ContextMenuCreated" />
       <Event Name="CellChanged" />
       <Event Name="Activated" />
       <Event Name="TitleChanged" />
@@ -5647,6 +5712,7 @@
     <Type Name="Alternet.UI.Splitter">
       <Event Name="SplitterMoving" />
       <Event Name="SplitterMoved" />
+      <Event Name="ContextMenuCreated" />
       <Event Name="CellChanged" />
       <Event Name="Activated" />
       <Event Name="TitleChanged" />
@@ -5721,6 +5787,7 @@
     </Type>
     <Type Name="Alternet.UI.HorizontalStackPanel">
       <Event Name="OrientationChanged" />
+      <Event Name="ContextMenuCreated" />
       <Event Name="CellChanged" />
       <Event Name="Activated" />
       <Event Name="TitleChanged" />
@@ -5795,6 +5862,7 @@
     </Type>
     <Type Name="Alternet.UI.StackPanel">
       <Event Name="OrientationChanged" />
+      <Event Name="ContextMenuCreated" />
       <Event Name="CellChanged" />
       <Event Name="Activated" />
       <Event Name="TitleChanged" />
@@ -5869,6 +5937,7 @@
     </Type>
     <Type Name="Alternet.UI.VerticalStackPanel">
       <Event Name="OrientationChanged" />
+      <Event Name="ContextMenuCreated" />
       <Event Name="CellChanged" />
       <Event Name="Activated" />
       <Event Name="TitleChanged" />
@@ -5948,6 +6017,7 @@
       <Event Name="SelectedIndexChanged" />
       <Event Name="IsEditableChanged" />
       <Event Name="CustomItemText" />
+      <Event Name="ContextMenuCreated" />
       <Event Name="CellChanged" />
       <Event Name="Activated" />
       <Event Name="TitleChanged" />
@@ -6027,6 +6097,7 @@
       <Event Name="SelectedIndexChanged" />
       <Event Name="IsEditableChanged" />
       <Event Name="CustomItemText" />
+      <Event Name="ContextMenuCreated" />
       <Event Name="CellChanged" />
       <Event Name="Activated" />
       <Event Name="TitleChanged" />
@@ -6106,6 +6177,7 @@
       <Event Name="SelectedIndexChanged" />
       <Event Name="IsEditableChanged" />
       <Event Name="CustomItemText" />
+      <Event Name="ContextMenuCreated" />
       <Event Name="CellChanged" />
       <Event Name="Activated" />
       <Event Name="TitleChanged" />
@@ -6180,6 +6252,7 @@
     </Type>
     <Type Name="Alternet.UI.ListControl">
       <Event Name="CustomItemText" />
+      <Event Name="ContextMenuCreated" />
       <Event Name="CellChanged" />
       <Event Name="Activated" />
       <Event Name="TitleChanged" />
@@ -6278,6 +6351,7 @@
       <Event Name="SelectedIndexChanged" />
       <Event Name="SelectionModeChanged" />
       <Event Name="CustomItemText" />
+      <Event Name="ContextMenuCreated" />
       <Event Name="CellChanged" />
       <Event Name="Activated" />
       <Event Name="TitleChanged" />
@@ -6359,6 +6433,7 @@
       <Event Name="SelectedIndexChanged" />
       <Event Name="SelectionModeChanged" />
       <Event Name="CustomItemText" />
+      <Event Name="ContextMenuCreated" />
       <Event Name="CellChanged" />
       <Event Name="Activated" />
       <Event Name="TitleChanged" />
@@ -6440,6 +6515,7 @@
       <Event Name="SelectedIndexChanged" />
       <Event Name="SelectionModeChanged" />
       <Event Name="CustomItemText" />
+      <Event Name="ContextMenuCreated" />
       <Event Name="CellChanged" />
       <Event Name="Activated" />
       <Event Name="TitleChanged" />
@@ -6521,6 +6597,7 @@
       <Event Name="SelectedIndexChanged" />
       <Event Name="SelectionModeChanged" />
       <Event Name="CustomItemText" />
+      <Event Name="ContextMenuCreated" />
       <Event Name="CellChanged" />
       <Event Name="Activated" />
       <Event Name="TitleChanged" />
@@ -6595,6 +6672,7 @@
     </Type>
     <Type Name="Alternet.UI.FileListBox">
       <Event Name="AddRootFolder" />
+      <Event Name="SelectedFolderChanged" />
       <Event Name="SelectionChanged" />
       <Event Name="ItemAdded" />
       <Event Name="ItemRemoved" />
@@ -6603,6 +6681,7 @@
       <Event Name="BeforeExpand" />
       <Event Name="BeforeCollapse" />
       <Event Name="ExpandedChanged" />
+      <Event Name="ContextMenuCreated" />
       <Event Name="CellChanged" />
       <Event Name="Activated" />
       <Event Name="TitleChanged" />
@@ -6684,6 +6763,7 @@
       <Event Name="SelectedIndexChanged" />
       <Event Name="SelectionModeChanged" />
       <Event Name="CustomItemText" />
+      <Event Name="ContextMenuCreated" />
       <Event Name="CellChanged" />
       <Event Name="Activated" />
       <Event Name="TitleChanged" />
@@ -6758,6 +6838,7 @@
     </Type>
     <Type Name="Alternet.UI.ListControl`1">
       <Event Name="CustomItemText" />
+      <Event Name="ContextMenuCreated" />
       <Event Name="CellChanged" />
       <Event Name="Activated" />
       <Event Name="TitleChanged" />
@@ -6831,14 +6912,15 @@
       <Event Name="PropertyChanged" />
     </Type>
     <Type Name="Alternet.UI.LogListBox">
-      <Event Name="DrawItem" />
-      <Event Name="MeasureItem" />
-      <Event Name="CheckedChanged" />
       <Event Name="SelectionChanged" />
-      <Event Name="DelayedSelectionChanged" />
-      <Event Name="SelectedIndexChanged" />
-      <Event Name="SelectionModeChanged" />
-      <Event Name="CustomItemText" />
+      <Event Name="ItemAdded" />
+      <Event Name="ItemRemoved" />
+      <Event Name="AfterExpand" />
+      <Event Name="AfterCollapse" />
+      <Event Name="BeforeExpand" />
+      <Event Name="BeforeCollapse" />
+      <Event Name="ExpandedChanged" />
+      <Event Name="ContextMenuCreated" />
       <Event Name="CellChanged" />
       <Event Name="Activated" />
       <Event Name="TitleChanged" />
@@ -6920,6 +7002,7 @@
       <Event Name="SelectedIndexChanged" />
       <Event Name="SelectionModeChanged" />
       <Event Name="CustomItemText" />
+      <Event Name="ContextMenuCreated" />
       <Event Name="CellChanged" />
       <Event Name="Activated" />
       <Event Name="TitleChanged" />
@@ -7001,6 +7084,7 @@
       <Event Name="SelectedIndexChanged" />
       <Event Name="SelectionModeChanged" />
       <Event Name="CustomItemText" />
+      <Event Name="ContextMenuCreated" />
       <Event Name="CellChanged" />
       <Event Name="Activated" />
       <Event Name="TitleChanged" />
@@ -7080,6 +7164,7 @@
       <Event Name="SelectedIndexChanged" />
       <Event Name="SelectionModeChanged" />
       <Event Name="CustomItemText" />
+      <Event Name="ContextMenuCreated" />
       <Event Name="CellChanged" />
       <Event Name="Activated" />
       <Event Name="TitleChanged" />
@@ -7161,6 +7246,7 @@
       <Event Name="BeforeExpand" />
       <Event Name="BeforeCollapse" />
       <Event Name="ExpandedChanged" />
+      <Event Name="ContextMenuCreated" />
       <Event Name="CellChanged" />
       <Event Name="Activated" />
       <Event Name="TitleChanged" />
@@ -7242,6 +7328,7 @@
       <Event Name="ColumnClick" />
       <Event Name="BeforeLabelEdit" />
       <Event Name="AfterLabelEdit" />
+      <Event Name="ContextMenuCreated" />
       <Event Name="CellChanged" />
       <Event Name="Activated" />
       <Event Name="TitleChanged" />
@@ -7321,6 +7408,7 @@
       <Event Name="Opening" />
       <Event Name="Closing" />
       <Event Name="Closed" />
+      <Event Name="ContextMenuCreated" />
       <Event Name="CellChanged" />
       <Event Name="Activated" />
       <Event Name="TitleChanged" />
@@ -7394,6 +7482,7 @@
       <Event Name="PropertyChanged" />
     </Type>
     <Type Name="Alternet.UI.MainMenu">
+      <Event Name="ContextMenuCreated" />
       <Event Name="CellChanged" />
       <Event Name="Activated" />
       <Event Name="TitleChanged" />
@@ -7467,6 +7556,7 @@
       <Event Name="PropertyChanged" />
     </Type>
     <Type Name="Alternet.UI.Menu">
+      <Event Name="ContextMenuCreated" />
       <Event Name="CellChanged" />
       <Event Name="Activated" />
       <Event Name="TitleChanged" />
@@ -7548,6 +7638,7 @@
       <Event Name="RoleChanged" />
       <Event Name="ImageChanged" />
       <Event Name="DisabledImageChanged" />
+      <Event Name="ContextMenuCreated" />
       <Event Name="CellChanged" />
       <Event Name="Activated" />
       <Event Name="TitleChanged" />
@@ -7638,6 +7729,7 @@
       <Event Name="Opening" />
       <Event Name="Closing" />
       <Event Name="Closed" />
+      <Event Name="ContextMenuCreated" />
       <Event Name="CellChanged" />
       <Event Name="Activated" />
       <Event Name="TitleChanged" />
@@ -7719,6 +7811,7 @@
       <Event Name="RoleChanged" />
       <Event Name="ImageChanged" />
       <Event Name="DisabledImageChanged" />
+      <Event Name="ContextMenuCreated" />
       <Event Name="CellChanged" />
       <Event Name="Activated" />
       <Event Name="TitleChanged" />
@@ -7800,6 +7893,7 @@
       <Event Name="RoleChanged" />
       <Event Name="ImageChanged" />
       <Event Name="DisabledImageChanged" />
+      <Event Name="ContextMenuCreated" />
       <Event Name="CellChanged" />
       <Event Name="Activated" />
       <Event Name="TitleChanged" />
@@ -7873,6 +7967,7 @@
       <Event Name="PropertyChanged" />
     </Type>
     <Type Name="Alternet.UI.AnimationPlayer">
+      <Event Name="ContextMenuCreated" />
       <Event Name="CellChanged" />
       <Event Name="Activated" />
       <Event Name="TitleChanged" />
@@ -7946,6 +8041,7 @@
       <Event Name="PropertyChanged" />
     </Type>
     <Type Name="Alternet.UI.Calculator">
+      <Event Name="ContextMenuCreated" />
       <Event Name="CellChanged" />
       <Event Name="Activated" />
       <Event Name="TitleChanged" />
@@ -8020,6 +8116,7 @@
     </Type>
     <Type Name="Alternet.UI.ColorPicker">
       <Event Name="ValueChanged" />
+      <Event Name="ContextMenuCreated" />
       <Event Name="CellChanged" />
       <Event Name="Activated" />
       <Event Name="TitleChanged" />
@@ -8104,6 +8201,7 @@
     </Type>
     <Type Name="Alternet.UI.ControlFactory" />
     <Type Name="Alternet.UI.GroupBox">
+      <Event Name="ContextMenuCreated" />
       <Event Name="CellChanged" />
       <Event Name="Activated" />
       <Event Name="TitleChanged" />
@@ -8180,6 +8278,7 @@
       <Event Name="ValueChanged" />
       <Event Name="MinimumChanged" />
       <Event Name="MaximumChanged" />
+      <Event Name="ContextMenuCreated" />
       <Event Name="CellChanged" />
       <Event Name="Activated" />
       <Event Name="TitleChanged" />
@@ -8254,6 +8353,7 @@
     </Type>
     <Type Name="Alternet.UI.PopupControl">
       <Event Name="Closed" />
+      <Event Name="ContextMenuCreated" />
       <Event Name="CellChanged" />
       <Event Name="Activated" />
       <Event Name="TitleChanged" />
@@ -8332,6 +8432,7 @@
       <Event Name="OrientationChanged" />
       <Event Name="MaximumChanged" />
       <Event Name="IsIndeterminateChanged" />
+      <Event Name="ContextMenuCreated" />
       <Event Name="CellChanged" />
       <Event Name="Activated" />
       <Event Name="TitleChanged" />
@@ -8413,6 +8514,7 @@
       <Event Name="SmallChangeChanged" />
       <Event Name="LargeChangeChanged" />
       <Event Name="TickFrequencyChanged" />
+      <Event Name="ContextMenuCreated" />
       <Event Name="CellChanged" />
       <Event Name="Activated" />
       <Event Name="TitleChanged" />
@@ -8505,6 +8607,7 @@
       <Event Name="ResizableChanged" />
       <Event Name="HasBorderChanged" />
       <Event Name="HasTitleBarChanged" />
+      <Event Name="ContextMenuCreated" />
       <Event Name="CellChanged" />
       <Event Name="Activated" />
       <Event Name="TitleChanged" />
@@ -8597,6 +8700,7 @@
       <Event Name="ResizableChanged" />
       <Event Name="HasBorderChanged" />
       <Event Name="HasTitleBarChanged" />
+      <Event Name="ContextMenuCreated" />
       <Event Name="CellChanged" />
       <Event Name="Activated" />
       <Event Name="TitleChanged" />
@@ -8689,6 +8793,7 @@
       <Event Name="ResizableChanged" />
       <Event Name="HasBorderChanged" />
       <Event Name="HasTitleBarChanged" />
+      <Event Name="ContextMenuCreated" />
       <Event Name="CellChanged" />
       <Event Name="Activated" />
       <Event Name="TitleChanged" />
@@ -8781,6 +8886,7 @@
       <Event Name="ResizableChanged" />
       <Event Name="HasBorderChanged" />
       <Event Name="HasTitleBarChanged" />
+      <Event Name="ContextMenuCreated" />
       <Event Name="CellChanged" />
       <Event Name="Activated" />
       <Event Name="TitleChanged" />
@@ -8873,6 +8979,7 @@
       <Event Name="ResizableChanged" />
       <Event Name="HasBorderChanged" />
       <Event Name="HasTitleBarChanged" />
+      <Event Name="ContextMenuCreated" />
       <Event Name="CellChanged" />
       <Event Name="Activated" />
       <Event Name="TitleChanged" />
@@ -8965,6 +9072,7 @@
       <Event Name="ResizableChanged" />
       <Event Name="HasBorderChanged" />
       <Event Name="HasTitleBarChanged" />
+      <Event Name="ContextMenuCreated" />
       <Event Name="CellChanged" />
       <Event Name="Activated" />
       <Event Name="TitleChanged" />
@@ -9057,6 +9165,7 @@
       <Event Name="ResizableChanged" />
       <Event Name="HasBorderChanged" />
       <Event Name="HasTitleBarChanged" />
+      <Event Name="ContextMenuCreated" />
       <Event Name="CellChanged" />
       <Event Name="Activated" />
       <Event Name="TitleChanged" />
@@ -9149,6 +9258,7 @@
       <Event Name="ResizableChanged" />
       <Event Name="HasBorderChanged" />
       <Event Name="HasTitleBarChanged" />
+      <Event Name="ContextMenuCreated" />
       <Event Name="CellChanged" />
       <Event Name="Activated" />
       <Event Name="TitleChanged" />
@@ -9241,6 +9351,7 @@
       <Event Name="ResizableChanged" />
       <Event Name="HasBorderChanged" />
       <Event Name="HasTitleBarChanged" />
+      <Event Name="ContextMenuCreated" />
       <Event Name="CellChanged" />
       <Event Name="Activated" />
       <Event Name="TitleChanged" />
@@ -9333,6 +9444,7 @@
       <Event Name="ResizableChanged" />
       <Event Name="HasBorderChanged" />
       <Event Name="HasTitleBarChanged" />
+      <Event Name="ContextMenuCreated" />
       <Event Name="CellChanged" />
       <Event Name="Activated" />
       <Event Name="TitleChanged" />
@@ -9407,6 +9519,7 @@
     </Type>
     <Type Name="Alternet.UI.IFilePreview" />
     <Type Name="Alternet.UI.PreviewFile">
+      <Event Name="ContextMenuCreated" />
       <Event Name="CellChanged" />
       <Event Name="Activated" />
       <Event Name="TitleChanged" />
@@ -9480,6 +9593,7 @@
       <Event Name="PropertyChanged" />
     </Type>
     <Type Name="Alternet.UI.PreviewFileSplitted">
+      <Event Name="ContextMenuCreated" />
       <Event Name="CellChanged" />
       <Event Name="Activated" />
       <Event Name="TitleChanged" />
@@ -9553,6 +9667,7 @@
       <Event Name="PropertyChanged" />
     </Type>
     <Type Name="Alternet.UI.PreviewInBrowser">
+      <Event Name="ContextMenuCreated" />
       <Event Name="CellChanged" />
       <Event Name="Activated" />
       <Event Name="TitleChanged" />
@@ -9626,6 +9741,7 @@
       <Event Name="PropertyChanged" />
     </Type>
     <Type Name="Alternet.UI.PreviewTextFile">
+      <Event Name="ContextMenuCreated" />
       <Event Name="CellChanged" />
       <Event Name="Activated" />
       <Event Name="TitleChanged" />
@@ -9699,6 +9815,7 @@
       <Event Name="PropertyChanged" />
     </Type>
     <Type Name="Alternet.UI.PreviewUixml">
+      <Event Name="ContextMenuCreated" />
       <Event Name="CellChanged" />
       <Event Name="Activated" />
       <Event Name="TitleChanged" />
@@ -9772,6 +9889,7 @@
       <Event Name="PropertyChanged" />
     </Type>
     <Type Name="Alternet.UI.PreviewUixmlSplitted">
+      <Event Name="ContextMenuCreated" />
       <Event Name="CellChanged" />
       <Event Name="Activated" />
       <Event Name="TitleChanged" />
@@ -9866,6 +9984,7 @@
       <Event Name="ColDragging" />
       <Event Name="ColEndDrag" />
       <Event Name="PropertyCustomCreate" />
+      <Event Name="ContextMenuCreated" />
       <Event Name="CellChanged" />
       <Event Name="Activated" />
       <Event Name="TitleChanged" />
@@ -9947,6 +10066,7 @@
       <Event Name="CurrentPositionChanged" />
       <Event Name="EnterPressed" />
       <Event Name="TextUrl" />
+      <Event Name="ContextMenuCreated" />
       <Event Name="CellChanged" />
       <Event Name="Activated" />
       <Event Name="TitleChanged" />
@@ -10022,6 +10142,7 @@
     <Type Name="Alternet.UI.HScrollBar">
       <Event Name="ValueChanged" />
       <Event Name="IsVerticalChanged" />
+      <Event Name="ContextMenuCreated" />
       <Event Name="CellChanged" />
       <Event Name="Activated" />
       <Event Name="TitleChanged" />
@@ -10101,6 +10222,7 @@
     <Type Name="Alternet.UI.ScrollBar">
       <Event Name="ValueChanged" />
       <Event Name="IsVerticalChanged" />
+      <Event Name="ContextMenuCreated" />
       <Event Name="CellChanged" />
       <Event Name="Activated" />
       <Event Name="TitleChanged" />
@@ -10174,10 +10296,14 @@
       <Event Name="PropertyChanged" />
     </Type>
     <Type Name="Alternet.UI.ScrollBarInfo" />
+    <Type Name="Alternet.UI.ScrollBarSettings">
+      <Event Name="PropertyChanged" />
+    </Type>
     <Type Name="Alternet.UI.ScrollBarUtils" />
     <Type Name="Alternet.UI.VScrollBar">
       <Event Name="ValueChanged" />
       <Event Name="IsVerticalChanged" />
+      <Event Name="ContextMenuCreated" />
       <Event Name="CellChanged" />
       <Event Name="Activated" />
       <Event Name="TitleChanged" />
@@ -10251,6 +10377,7 @@
       <Event Name="PropertyChanged" />
     </Type>
     <Type Name="Alternet.UI.SpeedButton">
+      <Event Name="ContextMenuCreated" />
       <Event Name="CellChanged" />
       <Event Name="Activated" />
       <Event Name="TitleChanged" />
@@ -10327,6 +10454,7 @@
       <Event Name="ValueChanged" />
       <Event Name="StringToColor" />
       <Event Name="ColorToString" />
+      <Event Name="ContextMenuCreated" />
       <Event Name="CellChanged" />
       <Event Name="Activated" />
       <Event Name="TitleChanged" />
@@ -10400,6 +10528,7 @@
       <Event Name="PropertyChanged" />
     </Type>
     <Type Name="Alternet.UI.SpeedTextButton">
+      <Event Name="ContextMenuCreated" />
       <Event Name="CellChanged" />
       <Event Name="Activated" />
       <Event Name="TitleChanged" />
@@ -10488,6 +10617,7 @@
     </Type>
     <Type Name="Alternet.UI.CardPanel">
       <Event Name="CardPropertyChanged" />
+      <Event Name="ContextMenuCreated" />
       <Event Name="CellChanged" />
       <Event Name="Activated" />
       <Event Name="TitleChanged" />
@@ -10573,6 +10703,7 @@
       <Event Name="TabSizeChanged" />
       <Event Name="SelectedIndexChanged" />
       <Event Name="SelectedPageChanged" />
+      <Event Name="ContextMenuCreated" />
       <Event Name="CellChanged" />
       <Event Name="Activated" />
       <Event Name="TitleChanged" />
@@ -10649,6 +10780,7 @@
       <Event Name="TabSizeChanged" />
       <Event Name="SelectedIndexChanged" />
       <Event Name="SelectedPageChanged" />
+      <Event Name="ContextMenuCreated" />
       <Event Name="CellChanged" />
       <Event Name="Activated" />
       <Event Name="TitleChanged" />
@@ -10722,6 +10854,7 @@
       <Event Name="PropertyChanged" />
     </Type>
     <Type Name="Alternet.UI.TabPage">
+      <Event Name="ContextMenuCreated" />
       <Event Name="CellChanged" />
       <Event Name="Activated" />
       <Event Name="TitleChanged" />
@@ -10795,6 +10928,7 @@
       <Event Name="PropertyChanged" />
     </Type>
     <Type Name="Alternet.UI.TemplateControl">
+      <Event Name="ContextMenuCreated" />
       <Event Name="CellChanged" />
       <Event Name="Activated" />
       <Event Name="TitleChanged" />
@@ -10871,6 +11005,7 @@
     <Type Name="Alternet.UI.TemplateUtils" />
     <Type Name="Alternet.UI.CustomTextBox">
       <Event Name="ErrorStatusChanged" />
+      <Event Name="ContextMenuCreated" />
       <Event Name="CellChanged" />
       <Event Name="Activated" />
       <Event Name="TitleChanged" />
@@ -10952,6 +11087,7 @@
       <Event Name="TextMaxLength" />
       <Event Name="HasBorderChanged" />
       <Event Name="ErrorStatusChanged" />
+      <Event Name="ContextMenuCreated" />
       <Event Name="CellChanged" />
       <Event Name="Activated" />
       <Event Name="TitleChanged" />
@@ -11034,6 +11170,7 @@
       <Event Name="TextMaxLength" />
       <Event Name="HasBorderChanged" />
       <Event Name="ErrorStatusChanged" />
+      <Event Name="ContextMenuCreated" />
       <Event Name="CellChanged" />
       <Event Name="Activated" />
       <Event Name="TitleChanged" />
@@ -11116,6 +11253,7 @@
       <Event Name="OptionMatchCaseChanged" />
       <Event Name="OptionMatchWholeWordChanged" />
       <Event Name="OptionUseRegularExpressionsChanged" />
+      <Event Name="ContextMenuCreated" />
       <Event Name="CellChanged" />
       <Event Name="Activated" />
       <Event Name="TitleChanged" />
@@ -11189,6 +11327,7 @@
       <Event Name="PropertyChanged" />
     </Type>
     <Type Name="Alternet.UI.ToolBar">
+      <Event Name="ContextMenuCreated" />
       <Event Name="CellChanged" />
       <Event Name="Activated" />
       <Event Name="TitleChanged" />
@@ -11262,6 +11401,7 @@
       <Event Name="PropertyChanged" />
     </Type>
     <Type Name="Alternet.UI.ToolBarSet">
+      <Event Name="ContextMenuCreated" />
       <Event Name="CellChanged" />
       <Event Name="Activated" />
       <Event Name="TitleChanged" />
@@ -11340,6 +11480,7 @@
     <Type Name="Alternet.UI.IToolTipProvider" />
     <Type Name="Alternet.UI.RichToolTip">
       <Event Name="ToolTipVisibleChanged" />
+      <Event Name="ContextMenuCreated" />
       <Event Name="CellChanged" />
       <Event Name="Activated" />
       <Event Name="TitleChanged" />
@@ -11426,6 +11567,7 @@
       <Event Name="AfterLabelEdit" />
       <Event Name="ExpandedChanged" />
       <Event Name="ImageListChanged" />
+      <Event Name="ContextMenuCreated" />
       <Event Name="CellChanged" />
       <Event Name="Activated" />
       <Event Name="TitleChanged" />
@@ -11526,6 +11668,7 @@
       <Event Name="Error" />
       <Event Name="NewWindow" />
       <Event Name="DocumentTitleChanged" />
+      <Event Name="ContextMenuCreated" />
       <Event Name="CellChanged" />
       <Event Name="Activated" />
       <Event Name="TitleChanged" />
@@ -11620,6 +11763,7 @@
       <Event Name="ResizableChanged" />
       <Event Name="HasBorderChanged" />
       <Event Name="HasTitleBarChanged" />
+      <Event Name="ContextMenuCreated" />
       <Event Name="CellChanged" />
       <Event Name="Activated" />
       <Event Name="TitleChanged" />
@@ -11712,6 +11856,7 @@
       <Event Name="ResizableChanged" />
       <Event Name="HasBorderChanged" />
       <Event Name="HasTitleBarChanged" />
+      <Event Name="ContextMenuCreated" />
       <Event Name="CellChanged" />
       <Event Name="Activated" />
       <Event Name="TitleChanged" />
@@ -11804,6 +11949,7 @@
       <Event Name="ResizableChanged" />
       <Event Name="HasBorderChanged" />
       <Event Name="HasTitleBarChanged" />
+      <Event Name="ContextMenuCreated" />
       <Event Name="CellChanged" />
       <Event Name="Activated" />
       <Event Name="TitleChanged" />
@@ -11896,6 +12042,7 @@
       <Event Name="ResizableChanged" />
       <Event Name="HasBorderChanged" />
       <Event Name="HasTitleBarChanged" />
+      <Event Name="ContextMenuCreated" />
       <Event Name="CellChanged" />
       <Event Name="Activated" />
       <Event Name="TitleChanged" />
@@ -11992,6 +12139,7 @@
       <Event Name="ResizableChanged" />
       <Event Name="HasBorderChanged" />
       <Event Name="HasTitleBarChanged" />
+      <Event Name="ContextMenuCreated" />
       <Event Name="CellChanged" />
       <Event Name="Activated" />
       <Event Name="TitleChanged" />
@@ -12096,6 +12244,7 @@
       <Event Name="ResizableChanged" />
       <Event Name="HasBorderChanged" />
       <Event Name="HasTitleBarChanged" />
+      <Event Name="ContextMenuCreated" />
       <Event Name="CellChanged" />
       <Event Name="Activated" />
       <Event Name="TitleChanged" />
@@ -12242,6 +12391,100 @@
       <Event Name="ResizableChanged" />
       <Event Name="HasBorderChanged" />
       <Event Name="HasTitleBarChanged" />
+      <Event Name="ContextMenuCreated" />
+      <Event Name="CellChanged" />
+      <Event Name="Activated" />
+      <Event Name="TitleChanged" />
+      <Event Name="MouseMove" />
+      <Event Name="Touch" />
+      <Event Name="MouseDown" />
+      <Event Name="MouseUp" />
+      <Event Name="MouseWheel" />
+      <Event Name="MouseLeftButtonDown" />
+      <Event Name="MouseRightButtonDown" />
+      <Event Name="MouseRightButtonUp" />
+      <Event Name="CustomLayout" />
+      <Event Name="MouseDoubleClick" />
+      <Event Name="DoubleClick" />
+      <Event Name="MouseLeftButtonUp" />
+      <Event Name="HandleCreated" />
+      <Event Name="HandleDestroyed" />
+      <Event Name="Deactivated" />
+      <Event Name="GotFocus" />
+      <Event Name="QueryContinueDrag" />
+      <Event Name="KeyDown" />
+      <Event Name="KeyUp" />
+      <Event Name="LostFocus" />
+      <Event Name="TextChanged" />
+      <Event Name="DelayedTextChanged" />
+      <Event Name="KeyPress" />
+      <Event Name="PreviewKeyDown" />
+      <Event Name="VisualStateChanged" />
+      <Event Name="ToolTipChanged" />
+      <Event Name="IsMouseOverChanged" />
+      <Event Name="LongTap" />
+      <Event Name="Click" />
+      <Event Name="ParentChanged" />
+      <Event Name="Paint" />
+      <Event Name="MarginChanged" />
+      <Event Name="PaddingChanged" />
+      <Event Name="VisibleChanged" />
+      <Event Name="AfterShow" />
+      <Event Name="AfterHide" />
+      <Event Name="MouseCaptureLost" />
+      <Event Name="MouseCaptureChanged" />
+      <Event Name="HelpRequested" />
+      <Event Name="ProcessException" />
+      <Event Name="MouseEnter" />
+      <Event Name="MouseLeave" />
+      <Event Name="ChildRemoved" />
+      <Event Name="ChildVisibleChanged" />
+      <Event Name="ChildInserted" />
+      <Event Name="EnabledChanged" />
+      <Event Name="BackgroundChanged" />
+      <Event Name="ForegroundChanged" />
+      <Event Name="FontChanged" />
+      <Event Name="VerticalAlignmentChanged" />
+      <Event Name="HorizontalAlignmentChanged" />
+      <Event Name="SizeChanged" />
+      <Event Name="Idle" />
+      <Event Name="Resize" />
+      <Event Name="LocationChanged" />
+      <Event Name="DragStart" />
+      <Event Name="DragDrop" />
+      <Event Name="DragOver" />
+      <Event Name="DragEnter" />
+      <Event Name="DragLeave" />
+      <Event Name="DpiChanged" />
+      <Event Name="SystemColorsChanged" />
+      <Event Name="ErrorsChanged" />
+      <Event Name="Invalidated" />
+      <Event Name="LayoutUpdated" />
+      <Event Name="Scroll" />
+      <Event Name="Disposed" />
+      <Event Name="PropertyChanged" />
+    </Type>
+    <Type Name="Alternet.UI.WindowFilePreview">
+      <Event Name="Load" />
+      <Event Name="DisplayChanged" />
+      <Event Name="MenuChanged" />
+      <Event Name="IconChanged" />
+      <Event Name="StatusBarChanged" />
+      <Event Name="OwnerChanged" />
+      <Event Name="ShowInTaskbarChanged" />
+      <Event Name="StateChanged" />
+      <Event Name="Closing" />
+      <Event Name="Closed" />
+      <Event Name="MaximizeEnabledChanged" />
+      <Event Name="MinimizeEnabledChanged" />
+      <Event Name="CloseEnabledChanged" />
+      <Event Name="AlwaysOnTopChanged" />
+      <Event Name="IsToolWindowChanged" />
+      <Event Name="HasSystemMenuChanged" />
+      <Event Name="ResizableChanged" />
+      <Event Name="HasBorderChanged" />
+      <Event Name="HasTitleBarChanged" />
+      <Event Name="ContextMenuCreated" />
       <Event Name="CellChanged" />
       <Event Name="Activated" />
       <Event Name="TitleChanged" />
@@ -12334,6 +12577,7 @@
       <Event Name="ResizableChanged" />
       <Event Name="HasBorderChanged" />
       <Event Name="HasTitleBarChanged" />
+      <Event Name="ContextMenuCreated" />
       <Event Name="CellChanged" />
       <Event Name="Activated" />
       <Event Name="TitleChanged" />
@@ -12426,6 +12670,100 @@
       <Event Name="ResizableChanged" />
       <Event Name="HasBorderChanged" />
       <Event Name="HasTitleBarChanged" />
+      <Event Name="ContextMenuCreated" />
+      <Event Name="CellChanged" />
+      <Event Name="Activated" />
+      <Event Name="TitleChanged" />
+      <Event Name="MouseMove" />
+      <Event Name="Touch" />
+      <Event Name="MouseDown" />
+      <Event Name="MouseUp" />
+      <Event Name="MouseWheel" />
+      <Event Name="MouseLeftButtonDown" />
+      <Event Name="MouseRightButtonDown" />
+      <Event Name="MouseRightButtonUp" />
+      <Event Name="CustomLayout" />
+      <Event Name="MouseDoubleClick" />
+      <Event Name="DoubleClick" />
+      <Event Name="MouseLeftButtonUp" />
+      <Event Name="HandleCreated" />
+      <Event Name="HandleDestroyed" />
+      <Event Name="Deactivated" />
+      <Event Name="GotFocus" />
+      <Event Name="QueryContinueDrag" />
+      <Event Name="KeyDown" />
+      <Event Name="KeyUp" />
+      <Event Name="LostFocus" />
+      <Event Name="TextChanged" />
+      <Event Name="DelayedTextChanged" />
+      <Event Name="KeyPress" />
+      <Event Name="PreviewKeyDown" />
+      <Event Name="VisualStateChanged" />
+      <Event Name="ToolTipChanged" />
+      <Event Name="IsMouseOverChanged" />
+      <Event Name="LongTap" />
+      <Event Name="Click" />
+      <Event Name="ParentChanged" />
+      <Event Name="Paint" />
+      <Event Name="MarginChanged" />
+      <Event Name="PaddingChanged" />
+      <Event Name="VisibleChanged" />
+      <Event Name="AfterShow" />
+      <Event Name="AfterHide" />
+      <Event Name="MouseCaptureLost" />
+      <Event Name="MouseCaptureChanged" />
+      <Event Name="HelpRequested" />
+      <Event Name="ProcessException" />
+      <Event Name="MouseEnter" />
+      <Event Name="MouseLeave" />
+      <Event Name="ChildRemoved" />
+      <Event Name="ChildVisibleChanged" />
+      <Event Name="ChildInserted" />
+      <Event Name="EnabledChanged" />
+      <Event Name="BackgroundChanged" />
+      <Event Name="ForegroundChanged" />
+      <Event Name="FontChanged" />
+      <Event Name="VerticalAlignmentChanged" />
+      <Event Name="HorizontalAlignmentChanged" />
+      <Event Name="SizeChanged" />
+      <Event Name="Idle" />
+      <Event Name="Resize" />
+      <Event Name="LocationChanged" />
+      <Event Name="DragStart" />
+      <Event Name="DragDrop" />
+      <Event Name="DragOver" />
+      <Event Name="DragEnter" />
+      <Event Name="DragLeave" />
+      <Event Name="DpiChanged" />
+      <Event Name="SystemColorsChanged" />
+      <Event Name="ErrorsChanged" />
+      <Event Name="Invalidated" />
+      <Event Name="LayoutUpdated" />
+      <Event Name="Scroll" />
+      <Event Name="Disposed" />
+      <Event Name="PropertyChanged" />
+    </Type>
+    <Type Name="Alternet.UI.WindowSearchForMembers">
+      <Event Name="Load" />
+      <Event Name="DisplayChanged" />
+      <Event Name="MenuChanged" />
+      <Event Name="IconChanged" />
+      <Event Name="StatusBarChanged" />
+      <Event Name="OwnerChanged" />
+      <Event Name="ShowInTaskbarChanged" />
+      <Event Name="StateChanged" />
+      <Event Name="Closing" />
+      <Event Name="Closed" />
+      <Event Name="MaximizeEnabledChanged" />
+      <Event Name="MinimizeEnabledChanged" />
+      <Event Name="CloseEnabledChanged" />
+      <Event Name="AlwaysOnTopChanged" />
+      <Event Name="IsToolWindowChanged" />
+      <Event Name="HasSystemMenuChanged" />
+      <Event Name="ResizableChanged" />
+      <Event Name="HasBorderChanged" />
+      <Event Name="HasTitleBarChanged" />
+      <Event Name="ContextMenuCreated" />
       <Event Name="CellChanged" />
       <Event Name="Activated" />
       <Event Name="TitleChanged" />
@@ -12518,6 +12856,7 @@
       <Event Name="ResizableChanged" />
       <Event Name="HasBorderChanged" />
       <Event Name="HasTitleBarChanged" />
+      <Event Name="ContextMenuCreated" />
       <Event Name="CellChanged" />
       <Event Name="Activated" />
       <Event Name="TitleChanged" />
@@ -12777,6 +13116,7 @@
     <Type Name="Alternet.UI.ITextBoxRichAttr" />
     <Type Name="Alternet.UI.ITextBoxTextAttr" />
     <Type Name="Alternet.UI.PanelFormSelector">
+      <Event Name="ContextMenuCreated" />
       <Event Name="CellChanged" />
       <Event Name="Activated" />
       <Event Name="TitleChanged" />
@@ -12853,6 +13193,7 @@
       <Event Name="FileNewClick" />
       <Event Name="FileOpenClick" />
       <Event Name="FileSaveClick" />
+      <Event Name="ContextMenuCreated" />
       <Event Name="CellChanged" />
       <Event Name="Activated" />
       <Event Name="TitleChanged" />
@@ -12927,6 +13268,7 @@
     </Type>
     <Type Name="Alternet.UI.PanelOkCancelButtons">
       <Event Name="OrientationChanged" />
+      <Event Name="ContextMenuCreated" />
       <Event Name="CellChanged" />
       <Event Name="Activated" />
       <Event Name="TitleChanged" />
@@ -13003,6 +13345,7 @@
       <Event Name="FileNewClick" />
       <Event Name="FileOpenClick" />
       <Event Name="FileSaveClick" />
+      <Event Name="ContextMenuCreated" />
       <Event Name="CellChanged" />
       <Event Name="Activated" />
       <Event Name="TitleChanged" />
@@ -13076,6 +13419,7 @@
       <Event Name="PropertyChanged" />
     </Type>
     <Type Name="Alternet.UI.PanelSettings">
+      <Event Name="ContextMenuCreated" />
       <Event Name="CellChanged" />
       <Event Name="Activated" />
       <Event Name="TitleChanged" />
@@ -13154,6 +13498,7 @@
     </Type>
     <Type Name="Alternet.UI.PanelSettingsItemKind" />
     <Type Name="Alternet.UI.PanelWebBrowser">
+      <Event Name="ContextMenuCreated" />
       <Event Name="CellChanged" />
       <Event Name="Activated" />
       <Event Name="TitleChanged" />
@@ -13227,6 +13572,7 @@
       <Event Name="PropertyChanged" />
     </Type>
     <Type Name="Alternet.UI.PanelWithToolBar">
+      <Event Name="ContextMenuCreated" />
       <Event Name="CellChanged" />
       <Event Name="Activated" />
       <Event Name="TitleChanged" />
@@ -13333,6 +13679,7 @@
     <Type Name="Alternet.UI.LinuxUtils" />
     <Type Name="Alternet.UI.MacOsUtils" />
     <Type Name="Alternet.UI.MswUtils" />
+    <Type Name="Alternet.UI.NativeLibraryInspector" />
     <Type Name="Alternet.UI.OSUtils" />
     <Type Name="Alternet.UI.RegistryUtils" />
     <Type Name="Alternet.UI.PathUtils" />
@@ -13401,6 +13748,7 @@
     <Type Name="Alternet.Drawing.Graphics+DrawLabelParams" />
     <Type Name="Alternet.Drawing.GraphicsUnitConverter+GraphicsType" />
     <Type Name="Alternet.Drawing.NineRects+PreviewControl">
+      <Event Name="ContextMenuCreated" />
       <Event Name="CellChanged" />
       <Event Name="Activated" />
       <Event Name="TitleChanged" />
@@ -13538,6 +13886,7 @@
     <Type Name="Alternet.UI.SpeedButton+KnownTheme" />
     <Type Name="Alternet.UI.SpeedColorButton+ClickActionKind" />
     <Type Name="Alternet.UI.TemplateControls+RichToolTipTemplate">
+      <Event Name="ContextMenuCreated" />
       <Event Name="CellChanged" />
       <Event Name="Activated" />
       <Event Name="TitleChanged" />
@@ -13611,6 +13960,7 @@
       <Event Name="PropertyChanged" />
     </Type>
     <Type Name="Alternet.UI.TemplateControls+BoldText`1">
+      <Event Name="ContextMenuCreated" />
       <Event Name="CellChanged" />
       <Event Name="Activated" />
       <Event Name="TitleChanged" />
