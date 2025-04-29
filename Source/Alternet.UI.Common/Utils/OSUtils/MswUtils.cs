@@ -42,10 +42,22 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Shows console window on the screen.
+        /// </summary>
+        public static void ShowConsole()
+        {
+            if (!consoleAllocated)
+            {
+                MswUtils.NativeMethods.AllocConsole();
+                consoleAllocated = true;
+            }
+        }
+
+        /// <summary>
         /// Retrieves a list of loaded native libraries on Windows.
         /// </summary>
         /// <returns>An array of strings containing the paths of the loaded libraries.</returns>
-        public static string[] GetLoadedLibraries()
+        internal static string[] GetLoadedLibraries()
         {
             List<string> libraries = new();
             int pid = Process.GetCurrentProcess().Id;
@@ -62,18 +74,6 @@ namespace Alternet.UI
             }
 
             return libraries.ToArray();
-        }
-
-        /// <summary>
-        /// Shows console window on the screen.
-        /// </summary>
-        public static void ShowConsole()
-        {
-            if (!consoleAllocated)
-            {
-                MswUtils.NativeMethods.AllocConsole();
-                consoleAllocated = true;
-            }
         }
 
         /// <summary>

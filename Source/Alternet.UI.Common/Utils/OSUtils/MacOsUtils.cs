@@ -14,7 +14,7 @@ namespace Alternet.UI
         /// Retrieves a list of loaded native libraries on macOS.
         /// </summary>
         /// <returns>An array of strings containing the paths of the loaded libraries.</returns>
-        public static string[] GetLoadedLibraries()
+        internal static string[] GetLoadedLibraries()
         {
             List<string> libraries = new();
             int count = NativeMethods._dyld_image_count();

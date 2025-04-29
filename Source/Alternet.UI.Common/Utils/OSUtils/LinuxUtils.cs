@@ -115,26 +115,6 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Retrieves a list of loaded native libraries on Linux.
-        /// </summary>
-        /// <returns>An array of strings containing the paths of the loaded libraries.</returns>
-        public static string[] GetLoadedLibraries()
-        {
-            List<string> libraries = new();
-
-            int Callback(ref NativeMethods.DlPhdrInfo info, IntPtr size)
-            {
-                string name = Marshal.PtrToStringAnsi(info.Name);
-                if (!string.IsNullOrEmpty(name))
-                    libraries.Add(name);
-                return 0;
-            }
-
-            NativeMethods.dl_iterate_phdr(Callback, IntPtr.Zero);
-            return libraries.ToArray();
-        }
-
-        /// <summary>
         /// Gets whether specific package is installed using dpkg utility.
         /// </summary>
         /// <param name="packageName">Package name.</param>
@@ -170,6 +150,26 @@ namespace Alternet.UI
                 LogUtils.LogExceptionIfDebug(e);
                 return null;
             }
+        }
+
+        /// <summary>
+        /// Retrieves a list of loaded native libraries on Linux.
+        /// </summary>
+        /// <returns>An array of strings containing the paths of the loaded libraries.</returns>
+        internal static string[] GetLoadedLibraries()
+        {
+            List<string> libraries = new();
+
+            int Callback(ref NativeMethods.DlPhdrInfo info, IntPtr size)
+            {
+                string name = Marshal.PtrToStringAnsi(info.Name);
+                if (!string.IsNullOrEmpty(name))
+                    libraries.Add(name);
+                return 0;
+            }
+
+            NativeMethods.dl_iterate_phdr(Callback, IntPtr.Zero);
+            return libraries.ToArray();
         }
 
         /// <summary>
