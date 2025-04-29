@@ -1,8 +1,8 @@
 sudo apt -y update
 sudo apt -y upgrade 
 
-sudo apt -y install dotnet-sdk-6.0   
-sudo apt -y install dotnet-sdk-7.0
+#sudo apt -y install dotnet-sdk-6.0   
+#sudo apt -y install dotnet-sdk-7.0
 sudo apt -y install dotnet-sdk-8.0
 sudo apt -y install dotnet-sdk-9.0
 sudo apt -y install git
