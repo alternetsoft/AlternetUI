@@ -13,7 +13,7 @@ namespace Alternet.UI
     public partial class TreeControlItem : ListControlItemWithNotify
     {
         private bool isVisible = true;
-        private List<TreeControlItem>? items;
+        private BaseCollection<TreeControlItem>? items;
         private bool isExpanded;
         private TreeControlItem? parent;
 
@@ -379,10 +379,69 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Creates a new instance of <see cref="TreeControlItem"/>.
+        /// </summary>
+        /// <returns>A new <see cref="TreeControlItem"/> instance.</returns>
+        public virtual TreeControlItem CreateItem()
+        {
+            return new TreeControlItem();
+        }
+
+        /// <summary>
+        /// Creates a new <see cref="TreeControlItem"/>, assigns text to it,
+        /// adds it as the last child of this item in the tree, and returns it.
+        /// </summary>
+        /// <param name="text">The text to assign to the item.</param>
+        /// <returns>The newly created <see cref="TreeControlItem"/> with
+        /// the specified text, added as the last child of this item in the tree.</returns>
+        public virtual TreeControlItem AddWithText(string text)
+        {
+            TreeControlItem result = CreateItem();
+            result.Text = text;
+            Add(result);
+            return result;
+        }
+
+        /// <summary>
+        /// Creates a new <see cref="TreeControlItem"/>, assigns text to it,
+        /// adds it as the first child of this item in the tree, and returns it.
+        /// </summary>
+        /// <param name="text">The text to assign to the item.</param>
+        /// <returns>The newly created <see cref="TreeControlItem"/> with
+        /// the specified text, added as the first child of this item in the tree.</returns>
+        public virtual TreeControlItem PrependWithText(string text)
+        {
+            TreeControlItem result = CreateItem();
+            result.Text = text;
+            Prepend(result);
+            return result;
+        }
+
+        /// <summary>
         /// Adds the specified child item to this tree control item.
         /// </summary>
         /// <param name="item">The item to add.</param>
-        public virtual void Add(TreeControlItem item)
+        public void Add(TreeControlItem item)
+        {
+            int index = items?.Count ?? 0;
+            Insert(index, item);
+        }
+
+        /// <summary>
+        /// Inserts the specified <see cref="TreeControlItem"/> at the beginning of the item list.
+        /// </summary>
+        /// <param name="item">The item to prepend.</param>
+        public void Prepend(TreeControlItem item)
+        {
+            Insert(0, item);
+        }
+
+        /// <summary>
+        /// Inserts the specified <see cref="TreeControlItem"/> at the given index within the item list.
+        /// </summary>
+        /// <param name="index">The position at which to insert the item.</param>
+        /// <param name="item">The item to insert.</param>
+        public virtual void Insert(int index, TreeControlItem item)
         {
             Invoke(Internal);
 
@@ -392,7 +451,7 @@ namespace Alternet.UI
 
                 items ??= new();
                 item.InternalSetParent(this);
-                items.Add(item);
+                items.Insert(index, item);
 
                 if (HasItems != hasItems)
                     RaisePropertyChanged(nameof(HasItems));
