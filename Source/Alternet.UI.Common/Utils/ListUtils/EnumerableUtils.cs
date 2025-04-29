@@ -13,6 +13,24 @@ namespace Alternet.UI
     public static class EnumerableUtils
     {
         /// <summary>
+        /// Gets the count of elements in an IEnumerable.
+        /// Uses ICollection for efficiency when available.
+        /// </summary>
+        /// <param name="enumerable">The enumerable collection.</param>
+        /// <returns>The number of elements.</returns>
+        public static int GetCount(IEnumerable enumerable)
+        {
+            if (enumerable is ICollection collection)
+                return collection.Count;
+
+            int count = 0;
+            foreach (var _ in enumerable)
+                count++;
+
+            return count;
+        }
+
+        /// <summary>
         /// Calls specified action for the each item of the
         /// <see cref="IEnumerable{T}"/>.
         /// </summary>
@@ -164,9 +182,9 @@ namespace Alternet.UI
                 foreach (var item in parent)
                 {
                     func(item);
-                    var childs = tree.GetChildren(item);
-                    if (childs != null)
-                        Fn(childs);
+                    var children = tree.GetChildren(item);
+                    if (children != null)
+                        Fn(children);
                 }
             }
 

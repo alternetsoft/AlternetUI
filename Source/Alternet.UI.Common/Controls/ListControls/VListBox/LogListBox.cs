@@ -275,6 +275,11 @@ namespace Alternet.UI
 
             ContextMenu.Add("Test Actions...", LogUtils.ShowTestActionsDialog);
 
+            ContextMenu.Add("Search for Members...", () =>
+            {
+                WindowSearchForMembers.Default.ShowAndFocus();
+            });
+
             var logToFileItem = ContextMenu.Add(new("Enable Log to file"));
             logToFileItem.ClickAction = AlsoLogToFile;
 

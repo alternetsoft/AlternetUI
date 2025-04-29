@@ -44,6 +44,14 @@
   </ItemGroup>
 
   <ItemGroup>
+    <EmbeddedResource Include="Resources\Svg\CodeCompletionSymbols\Event.svg" />
+    <EmbeddedResource Include="Resources\Svg\CodeCompletionSymbols\Field.svg" />
+    <EmbeddedResource Include="Resources\Svg\CodeCompletionSymbols\Method1.svg" />
+    <EmbeddedResource Include="Resources\Svg\CodeCompletionSymbols\Method2.svg" />
+    <EmbeddedResource Include="Resources\Svg\CodeCompletionSymbols\Property.svg" />
+  </ItemGroup>
+
+  <ItemGroup>
     <EmbeddedResource Update="Resources\Strings.resx">
       <SubType>Designer</SubType>
       <Generator>MSBuild:_GenerateResxSource</Generator>

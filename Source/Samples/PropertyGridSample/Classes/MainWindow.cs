@@ -425,8 +425,8 @@ namespace PropertyGridSample
                             var retParam = method.ReturnParameter;
                             var resultIsVoid = retParam.ParameterType == typeof(void);
 
-                            var prms = method.GetParameters();
-                            if (prms.Length > 0)
+                            var methodParameters = method.GetParameters();
+                            if (methodParameters.Length > 0)
                                 continue;
                             var browsable = AssemblyUtils.GetBrowsable(method);
                             if (!browsable)
@@ -452,21 +452,7 @@ namespace PropertyGridSample
                                 var selectedControl = GetSelectedControl<Control>();
                                 if (selectedControl is null)
                                     return;
-                                var result = method.Invoke(selectedControl, null);
-
-                                TreeControlItem item = new();
-                                item.TextHasBold = true;
-
-                                var itemText = $"Called <b>{type.Name}.{methodName}</b>";
-
-                                if (!resultIsVoid)
-                                {
-                                    itemText += $" with result = <b>{result}</b>";
-                                }
-
-                                item.Text = itemText;
-                                
-                                App.AddLogItem(item);
+                                AssemblyUtils.InvokeMethodAndLogResult(selectedControl, method);
                             });
 
                             item.DisplayText = methodNameForDisplay;
@@ -495,12 +481,6 @@ namespace PropertyGridSample
 
         private void SetBackground(Color? color)
         {
-            /*
-            if (PropertyGridSettings.Default!.DemoBackgroundIsWhite)
-                color = Color.White;
-
-            ControlParent.BackgroundColor = color;
-            */
         }
 
         public class SettingsControl : Control

@@ -10,7 +10,7 @@ namespace ControlsSample
     {
         protected override void AddDefaultItems()
         {
-            Add("VirtualListBox with BigData", () => new ListBoxBigDataWindow());
+            Add("Search for Members", () => WindowSearchForMembers.Default);
             Add("VirtualListBox as TreeView Sample", () => new ListBoxAsTreeWindow());
         }
     }

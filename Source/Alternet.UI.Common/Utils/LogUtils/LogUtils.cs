@@ -504,7 +504,7 @@ namespace Alternet.UI
         /// <summary>
         /// Logs message using <see cref="App.Log"/> and after that calls <see cref="LogToFile"/>.
         /// </summary>
-        /// <param name="obj">Oject to log.</param>
+        /// <param name="obj">Object to log.</param>
         public static void LogAndToFile(object? obj = null)
         {
             App.Log(obj);
@@ -845,11 +845,11 @@ namespace Alternet.UI
             StringBuilder detailsTextBuilder = new();
             string newline = "\n";
             string separator = "----------------------------------------\n";
-            string sectionseparator = "\n************** {0} **************\n";
+            string sectionSeparator = "\n************** {0} **************\n";
 
             detailsTextBuilder.Append(string.Format(
                 CultureInfo.CurrentCulture,
-                sectionseparator,
+                sectionSeparator,
                 "Exception Text"));
             detailsTextBuilder.Append(e.ToString());
             detailsTextBuilder.Append(newline);
@@ -857,7 +857,7 @@ namespace Alternet.UI
             detailsTextBuilder.Append(
                 string.Format(
                     CultureInfo.CurrentCulture,
-                    sectionseparator,
+                    sectionSeparator,
                     "Loaded Assemblies"));
 
             foreach (Assembly asm in AppDomain.CurrentDomain.GetAssemblies())
@@ -897,6 +897,51 @@ namespace Alternet.UI
             detailsTextBuilder.Append(newline);
 
             return detailsTextBuilder.ToString();
+        }
+
+        /// <summary>
+        /// Logs the contents of an object as child items of a <see cref="TreeControlItem"/>.
+        /// If the object is an array or an enumerable collection, it logs each item up to a maximum of 100.
+        /// Also records the total item count.
+        /// </summary>
+        /// <param name="parent">The parent tree item to which the logged elements will be added.</param>
+        /// <param name="result">The object to log, which may be an array or an enumerable collection.</param>
+        public static void LogAsTreeItemChilds(TreeControlItem parent, object? result)
+        {
+            if (result is Array array)
+            {
+                parent.AddWithText($"Total Items: {array.Length}");
+
+                for (int i = 0; i < Math.Min(array.Length, 100); i++)
+                {
+                    parent.AddWithText($"[{i}] - {array.GetValue(i)}");
+                }
+
+                if (array.Length > 100)
+                {
+                    parent.AddWithText("... (truncated after 100 items)");
+                }
+            }
+            else
+            if (result is IEnumerable enumerable)
+            {
+                int count = 0;
+
+                foreach (var item in enumerable)
+                {
+                    if (count >= 100)
+                    {
+                        parent.AddWithText("... (truncated after 100 items)");
+                        break;
+                    }
+
+                    parent.AddWithText($"[{count}] - {item}");
+
+                    count++;
+                }
+
+                parent.PrependWithText($"Total Items: {EnumerableUtils.GetCount(enumerable)}");
+            }
         }
 
         /// <summary>

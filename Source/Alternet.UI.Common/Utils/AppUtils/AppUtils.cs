@@ -67,7 +67,7 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Creates clone of the first window and optinally shows it on the screen.
+        /// Creates clone of the first window and optionally shows it on the screen.
         /// </summary>
         /// <param name="show">Whether to show created window. Optional.
         /// Default is <c>true</c>.</param>
@@ -82,7 +82,7 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Creates clone of the main window and optinally shows it on the screen.
+        /// Creates clone of the main window and optionally shows it on the screen.
         /// </summary>
         /// <param name="show">Whether to show created window. Optional.
         /// Default is <c>true</c>.</param>
