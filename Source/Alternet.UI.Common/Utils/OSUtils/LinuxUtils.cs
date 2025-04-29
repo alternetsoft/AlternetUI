@@ -226,6 +226,8 @@ namespace Alternet.UI
             /// </remarks>
             public const int RTLD_GLOBAL = 8;
 
+            internal delegate int DlIteratePhdrCallback(ref DlPhdrInfo info, IntPtr size);
+
             /// <summary>
             /// Native method "dlopen", similar to win-api "LoadLibrary".
             /// </summary>
@@ -262,17 +264,15 @@ namespace Alternet.UI
                 return (string.Empty, default);
             }
 
+            [DllImport("libc.so.6")]
+            internal static extern int dl_iterate_phdr(DlIteratePhdrCallback callback, IntPtr data);
+
             [StructLayout(LayoutKind.Sequential)]
             internal struct DlPhdrInfo
             {
                 public IntPtr Addr;
                 public IntPtr Name;
             }
-
-            internal delegate int DlIteratePhdrCallback(ref DlPhdrInfo info, IntPtr size);
-
-            [DllImport("libc.so.6")]
-            internal static extern int dl_iterate_phdr(DlIteratePhdrCallback callback, IntPtr data);
         }
     }
 }

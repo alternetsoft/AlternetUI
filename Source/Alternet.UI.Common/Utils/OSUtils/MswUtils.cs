@@ -126,23 +126,6 @@ namespace Alternet.UI
                 Last = 27,
             }
 
-            [DllImport("psapi.dll")]
-            internal static extern bool EnumProcessModules(
-                IntPtr hProcess,
-                IntPtr[] lphModule,
-                int cb,
-                out int lpcbNeeded);
-
-            [DllImport("psapi.dll")]
-            internal static extern uint GetModuleFileNameEx(
-                IntPtr hProcess,
-                IntPtr hModule,
-                StringBuilder lpFilename,
-                uint nSize);
-
-            [DllImport("kernel32.dll")]
-            internal static extern IntPtr OpenProcess(uint dwDesiredAccess, bool bInheritHandle, uint dwProcessId);
-
             /// <summary>
             /// Sets the value of Desktop Window Manager (DWM) non-client rendering
             /// attributes for a window.
@@ -326,6 +309,23 @@ namespace Alternet.UI
                 IntPtr window,
                 string? substituteAppName,
                 string? substituteIdList);
+
+            [DllImport("psapi.dll")]
+            internal static extern bool EnumProcessModules(
+                IntPtr hProcess,
+                IntPtr[] lphModule,
+                int cb,
+                out int lpcbNeeded);
+
+            [DllImport("psapi.dll")]
+            internal static extern uint GetModuleFileNameEx(
+                IntPtr hProcess,
+                IntPtr hModule,
+                StringBuilder lpFilename,
+                uint nSize);
+
+            [DllImport("kernel32.dll")]
+            internal static extern IntPtr OpenProcess(uint dwDesiredAccess, bool bInheritHandle, uint dwProcessId);
 
             /// <summary>
             /// Represents X and Y coordinates.

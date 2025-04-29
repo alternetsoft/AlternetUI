@@ -24,7 +24,7 @@ namespace Alternet.UI
                 return collection.Count;
 
             int count = 0;
-            foreach (var _ in enumerable)
+            foreach (var item in enumerable)
                 count++;
 
             return count;
