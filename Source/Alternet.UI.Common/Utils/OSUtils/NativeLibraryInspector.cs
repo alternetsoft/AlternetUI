@@ -126,8 +126,13 @@ public static class NativeLibraryInspector
 
             if (string.IsNullOrEmpty(trimmed))
                 continue;
-            if (trimmed.Contains(" ") || !trimmed.Contains("."))
-                continue;
+
+            if (App.IsWindowsOS)
+            {
+                if (trimmed.Contains(" ") || !trimmed.Contains("."))
+                    continue;
+            }
+
             libraries.Add(trimmed);
         }
 
