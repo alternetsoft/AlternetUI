@@ -1,3 +1,41 @@
+# 0.9.723 (2025 April 29)
+
+- MessageBox: We changed the declaration of all members to return void and include an onClose parameter. This change was made to enable 
+the implementation of MessageBox within the library and to allow its use on the MAUI platform.
+- Fix modal dialogs behavior.
+- Add WindowFilePreview, TreeControlSeparatorItem.
+- VirtualListBox: Fixed scroll bars behavior.
+- VirtualListBox: Use SuggestedVisiblity setting for scrollbars.
+- VirtualListBox: add mouse wheel support.
+- VirtualListBox: Fix check box paint when scrolled horz.
+- VirtualListBox: Fix some painting issues.
+- VirtualListBox: repaint on lost/got focus.
+- VirtualListBox: Changed DefaultCurrentItemBorderColor and improved SetColorThemeToDark().
+- TreeControlItem: new members CreateItem, AddWithText, PrependWithText, Prepend, Insert.
+- Fixed Window.Close (not asked CanClose properly).
+- FileListBox: SelectedFolderChanged, SelectFolderByFileName.
+- PreviewTextFile: Use background thread for loading the file.
+- UserControl: BorderStyle now works properly.
+- LogListBox is now derived from VirtualTreeControl.
+- VirtualTreeControl, VirtualListBox: Fixed HasBorder and BorderStyle.
+- AbstractControl.ContextMenuCreated event.
+- Control: Fixed ClientSize (sometimes returned invalid value).
+- Control: Fixed InteriorWidth, InteriorHeight.
+- Fixed absent border in different controls (issue introduced in the previous build).
+- ListControlItem.ContainerRelatedData: Add custom attributes and flags.
+- Add svg for check box and radio button painting (will use in Maui port).
+- Fixed Color.Gray100 and other Gray* fields.
+- Fixed some Linux related issues in Window and ListBox.
+- ScrollViewer: Improved mouse wheel scrolling.
+- Control: Fix wrong Visible property value after native control is recreated.
+- PropertyGrid: Fixed focus exception in some cases.
+- AsbtractControl: ReportedBounds, fix DefaultForeColor, DefaultBackColor.
+- Maui: Fix ControlView painting if bounds are empty.
+- MauiDialogFactoryHandler: Implemented ShowMessageBox for one and two buttons dialogs.
+- Maui: ControlView.IsDark, InteriorDrawable.HideScrollBars.
+- Add WindowSearchForMembers to developer tools (added to the context menu of LogListBox).
+- EnumImages: do not raise exception if loaded svg not found.
+
 # 0.9.722 (2025 April 23)
 
 - **VirtualListBox**: Fully implemented inside the library using C#.
