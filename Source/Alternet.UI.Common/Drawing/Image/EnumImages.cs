@@ -177,7 +177,7 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Loads the specified image from the assemblie's resource.
+        /// Loads the specified image from the assembly resource.
         /// </summary>
         /// <param name="assembly">The assembly from where image is loaded.</param>
         /// <param name="imageKey">The key of the image to load.</param>
@@ -203,7 +203,7 @@ namespace Alternet.UI
 
                 if (url.EndsWith(".svg"))
                 {
-                    var svg = new MonoSvgImage(url);
+                    var svg = new MonoSvgImage(url, SvgImageDataKind.Url, false);
                     var size = GetSvgSize(isSmallImage);
                     var svgColor = svgColors[imageKey];
                     image = svg.ImageWithColor(size, svgColor);
@@ -234,7 +234,7 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Loads all small or large images from the assemblie's resource.
+        /// Loads all small or large images from the assembly resource.
         /// </summary>
         /// <param name="assembly">The assembly from where image is loaded.</param>
         /// <param name="loadSmallImageNames">The flag which specifies whether
