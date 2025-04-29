@@ -66,7 +66,7 @@ namespace Alternet.UI
                 InitContextMenu();
             };
 
-            BorderStyle = ControlBorderStyle.Theme;
+            BorderStyle = VirtualListBox.DefaultBorderStyle;
         }
 
         /// <summary>
@@ -170,7 +170,7 @@ namespace Alternet.UI
                 DoInsideLayout(() =>
                 {
                     if (value)
-                        BorderStyle = ControlBorderStyle.Theme;
+                        BorderStyle = VirtualListBox.DefaultBorderStyle;
                     else
                         BorderStyle = ControlBorderStyle.None;
                 });

@@ -34,6 +34,12 @@ namespace Alternet.UI
     public partial class VirtualListBox : VirtualListControl, IListControl
     {
         /// <summary>
+        /// Specifies the default border style for controls.
+        /// By default, it equals <see cref="ControlBorderStyle.Theme"/>.
+        /// </summary>
+        public static ControlBorderStyle DefaultBorderStyle = ControlBorderStyle.Theme;
+
+        /// <summary>
         /// Defines the default increment for horizontal scrollbar position.
         /// Value is specified in characters. Default is 4.
         /// </summary>
@@ -64,7 +70,7 @@ namespace Alternet.UI
         /// </summary>
         public VirtualListBox()
         {
-            BorderStyle = ControlBorderStyle.Theme;
+            BorderStyle = DefaultBorderStyle;
             UserPaint = true;
             SuggestedSize = 200;
             IsScrollable = true;
@@ -263,7 +269,7 @@ namespace Alternet.UI
                     return;
                 base.HasBorder = value;
                 if (value)
-                    BorderStyle = ControlBorderStyle.Theme;
+                    BorderStyle = DefaultBorderStyle;
                 else
                     BorderStyle = ControlBorderStyle.None;
             }
