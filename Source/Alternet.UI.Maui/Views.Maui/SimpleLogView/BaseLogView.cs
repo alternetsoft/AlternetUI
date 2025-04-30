@@ -48,7 +48,7 @@ namespace Alternet.Maui
         }
 
         /// <summary>
-        /// Unbinds the application log previusly bound with <see cref="BindApplicationLog"/>.
+        /// Unbinds the application log previously bound with <see cref="BindApplicationLog"/>.
         /// </summary>
         public virtual void UnbindApplicationLog()
         {
