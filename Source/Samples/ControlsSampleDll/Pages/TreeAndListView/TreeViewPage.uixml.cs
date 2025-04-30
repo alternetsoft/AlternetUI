@@ -34,7 +34,11 @@ namespace ControlsSample
                 treeView.MouseLeftButtonUp += TreeView_MouseLeftButtonUp;
                 treeView.MouseMove += TreeView_MouseMove;
 
-                treeView.ImageList = DemoResourceLoader.LoadImageLists().Small;
+                if(App.SafeWindow.UseSmallImages)
+                    treeView.ImageList = DemoResourceLoader.LoadImageLists().Small;
+                else
+                    treeView.ImageList = DemoResourceLoader.LoadImageLists().Large;
+
                 AddDefaultItems();
                 SetCustomColors();
 

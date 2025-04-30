@@ -542,7 +542,11 @@ namespace PropertyGridSample
 
         public static void InitTreeView(TreeView control)
         {
-            control.ImageList = LoadImageLists().Small;
+            if (App.SafeWindow.UseSmallImages)
+                control.ImageList = LoadImageLists().Small;
+            else
+                control.ImageList = LoadImageLists().Large;
+
             control.HorizontalAlignment = HorizontalAlignment.Stretch;
             AddItems(control, 10);
         }
