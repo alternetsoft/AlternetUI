@@ -43,7 +43,7 @@ namespace Alternet.UI
 
         /// <summary>
         /// Occurs when <see cref="ComboBox.SelectedIndexChanged"/> event of the
-        /// attached combobox control is changed.
+        /// attached combo box control is changed.
         /// </summary>
         public event EventHandler? SelectedIndexChanged
         {
@@ -96,7 +96,7 @@ namespace Alternet.UI
 
         /// <inheritdoc cref="ListControl{T}.Items"/>
         [Content]
-        public virtual IListControlItems<object> Items
+        public virtual BaseCollection<object> Items
         {
             get => ComboBox.Items;
             set => ComboBox.Items = value;

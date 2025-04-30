@@ -57,7 +57,7 @@ namespace Alternet.UI
         /// </summary>
         /// <remarks>
         /// Each item has <see cref="ListControlItem.SvgImageSize"/> property where
-        /// this setting can be overriden. If <see cref="SvgImageSize"/> is not specified,
+        /// this setting can be overridden. If <see cref="SvgImageSize"/> is not specified,
         /// default toolbar image size is used. Currently only rectangular svg images
         /// are supported.
         /// </remarks>

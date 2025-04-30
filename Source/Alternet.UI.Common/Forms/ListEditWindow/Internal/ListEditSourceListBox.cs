@@ -58,17 +58,7 @@ namespace Alternet.UI
             if (Instance is null)
                 return;
 
-            IList? items = null;
-
-            if (RootItems is IListControlItems<ListControlItem> list1)
-                items = list1.AsList;
-            else
-            if (RootItems is IListControlItems<object> list2)
-                items = list2.AsList;
-            else
-                items = RootItems as IList;
-
-            if (items is null)
+            if (RootItems is not IList items)
                 return;
 
             var containers = EnumerableUtils.GetItems<ListControlItem>(tree);

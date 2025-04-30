@@ -72,6 +72,7 @@ namespace Alternet.UI
         private BorderSettings? currentItemBorder;
         private BorderSettings? selectionBorder;
         private WeakReferenceValue<ImageList> imageList = new();
+        private NotNullCollection<ListControlColumn>? columns;
 
         private bool selectedIsBold;
         private bool textVisible = true;
@@ -174,6 +175,31 @@ namespace Alternet.UI
                     return;
                 currentItemBorder = value;
                 Invalidate();
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets the collection of list control columns.
+        /// </summary>
+        /// <remarks>
+        /// This collection defines the structure of the list control by managing multiple columns.
+        /// Each column represents an individual segment of the control with specific layout properties.
+        /// Currently this is under development and is not working yet.
+        /// </remarks>
+        public virtual BaseCollection<ListControlColumn> Columns
+        {
+            get
+            {
+                if(columns is null)
+                {
+                    columns = new();
+                }
+
+                return columns;
+            }
+
+            set
+            {
             }
         }
 

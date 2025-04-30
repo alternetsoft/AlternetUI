@@ -48,17 +48,6 @@ namespace Alternet.UI
         TItem? SelectedItem { get; set; }
 
         /// <summary>
-        /// Gets or sets the items of the control.
-        /// </summary>
-        /// <value>A collection representing the items
-        /// in the control.</value>
-        /// <remarks>This property enables you to obtain a reference to the list
-        /// of items that are currently stored in the control.
-        /// With this reference, you can add items, remove items, and obtain
-        /// a count of the items in the collection.</remarks>
-        IListControlItems<TItem> Items { get; set; }
-
-        /// <summary>
         /// Gets or sets the zero-based index of the currently selected item in
         /// the control.
         /// </summary>
@@ -99,7 +88,7 @@ namespace Alternet.UI
         StringSearch Search { get; set; }
 
         /// <summary>
-        /// Gets or sets the <see cref="Items"/> element at the specified index.
+        /// Gets or sets item at the specified index.
         /// </summary>
         /// <param name="index">The zero-based index of the element
         /// to get or set.</param>
@@ -141,10 +130,10 @@ namespace Alternet.UI
         void SetItem(int index, TItem value);
 
         /// <summary>
-        /// Adds an object to the end of the <see cref="Items"/> collection.
+        /// Adds an object to the end of the items collection.
         /// </summary>
         /// <param name="item">The object to be added to the end of the
-        /// <see cref="Items"/> collection.</param>
+        /// items collection.</param>
         int Add(TItem item);
 
         /// <summary>
@@ -264,7 +253,7 @@ namespace Alternet.UI
         bool RemoveItemWithValue(object? value);
 
         /// <summary>
-        /// Changes the number of elements in the <see cref="Items"/>.
+        /// Changes the number of elements in the items.
         /// </summary>
         /// <param name="newCount">New number of elements.</param>
         /// <param name="createItem">Function which creates new item.</param>

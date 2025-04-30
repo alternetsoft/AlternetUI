@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Runtime.CompilerServices;
 
 using Alternet.UI;
@@ -68,6 +69,15 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Occurs when a property value changes.
+        /// </summary>
+        public new event PropertyChangedEventHandler? PropertyChanged
+        {
+            add => base.PropertyChanged += value;
+            remove => base.PropertyChanged -= value;
+        }
+
+        /// <summary>
         /// Occurs when an item is inserted in the collection.
         /// </summary>
         public event CollectionItemChangedHandler<T>? ItemInserted;
@@ -119,11 +129,17 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Returns collection as <see cref="IList"/>.
+        /// This is for compatibility.
+        /// </summary>
+        public IList AsList => this;
+
+        /// <summary>
         /// Gets or sets a value indicating whether an
         /// <see cref="ArgumentNullException"/> should be thrown
         /// on an attempt to add a <c>null</c> value to the collection.
         /// </summary>
-        public bool ThrowOnNullAdd { get; set; }
+        public virtual bool ThrowOnNullAdd { get; set; }
 
         /// <summary>
         /// Gets or sets the element at the specified index.

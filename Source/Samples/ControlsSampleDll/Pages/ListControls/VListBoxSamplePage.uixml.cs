@@ -8,8 +8,8 @@ namespace ControlsSample
 {
     internal partial class VListBoxSamplePage: Panel
     {
-        private readonly VirtualListBoxItems items1 = new();
-        private readonly VirtualListBoxItems items2 = new();
+        private readonly NotNullCollection<ListControlItem> items1 = new();
+        private readonly NotNullCollection<ListControlItem> items2 = new();
         private bool useItems1 = true;
 
         private readonly VirtualListBox listBox = new()
@@ -95,7 +95,7 @@ namespace ControlsSample
                 item.DisplayText = null;
                 item.MinHeight = 70;
                 item.Alignment = item.Alignment.NextValue();
-                App.LogNameValueReplace("VListBox.Items[0].ALignment", item.Alignment);
+                App.LogNameValueReplace("VListBox.Items[0].Alignment", item.Alignment);
                 listBox.Invalidate();
             });
         }

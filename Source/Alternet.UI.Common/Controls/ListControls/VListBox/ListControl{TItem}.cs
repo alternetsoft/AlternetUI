@@ -22,7 +22,7 @@ namespace Alternet.UI
         where TItem : class, new()
     {
         private StringSearch? search;
-        private ListControlItems<TItem>? items;
+        private BaseCollection<TItem>? items;
         private SvgImage? checkImageUnchecked;
         private SvgImage? checkImageChecked;
         private SvgImage? checkImageIndeterminate;
@@ -176,7 +176,7 @@ namespace Alternet.UI
         /// With this reference, you can add items, remove items, and obtain
         /// a count of the items in the collection.</remarks>
         [Content]
-        public virtual IListControlItems<TItem> Items
+        public virtual BaseCollection<TItem> Items
         {
             get
             {
@@ -684,7 +684,7 @@ namespace Alternet.UI
         /// Called when items are attached to the control.
         /// </summary>
         /// <param name="itm">Attached items.</param>
-        protected virtual void AttachItems(IListControlItems<TItem>? itm)
+        protected virtual void AttachItems(BaseCollection<TItem>? itm)
         {
             if (itm is null)
                 return;
@@ -695,7 +695,7 @@ namespace Alternet.UI
         /// Called when items are detached to the control.
         /// </summary>
         /// <param name="itm">Detached items.</param>
-        protected virtual void DetachItems(IListControlItems<TItem>? itm)
+        protected virtual void DetachItems(BaseCollection<TItem>? itm)
         {
             if (itm is null)
                 return;
@@ -715,7 +715,7 @@ namespace Alternet.UI
         /// Recreates items. Before calling this method, you need to unbind all events
         /// connected to the <see cref="Items"/>.
         /// </summary>
-        protected virtual void RecreateItems(ListControlItems<TItem>? newItems = null)
+        protected virtual void RecreateItems(BaseCollection<TItem>? newItems = null)
         {
             DetachItems(Items);
             items = newItems;
@@ -725,11 +725,11 @@ namespace Alternet.UI
         /// Gets items.
         /// </summary>
         /// <returns></returns>
-        protected virtual ListControlItems<TItem> SafeItems()
+        protected virtual BaseCollection<TItem> SafeItems()
         {
             if(items is null)
             {
-                items = new ListControlItems<TItem>();
+                items = new NotNullCollection<TItem>();
                 AttachItems(items);
             }
 

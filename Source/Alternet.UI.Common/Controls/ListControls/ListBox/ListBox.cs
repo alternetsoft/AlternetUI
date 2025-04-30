@@ -27,7 +27,7 @@ namespace Alternet.UI
     [ControlCategory("Common")]
     public class ListBox : VirtualListBox, ICustomListBox<object>
     {
-        private readonly ListControlItemsAdapter adapter;
+        private readonly ListBoxItems adapter;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ListBox"/> class
@@ -45,7 +45,7 @@ namespace Alternet.UI
         /// </summary>
         public ListBox()
         {
-            adapter = new ListControlItemsAdapter(base.Items);
+            adapter = new ListBoxItems(base.Items);
         }
 
         /// <summary>
@@ -168,7 +168,7 @@ namespace Alternet.UI
         /// This is the fastest way to access items.
         /// </summary>
         [Browsable(false)]
-        public IListControlItems<ListControlItem> BaseItems
+        public BaseCollection<ListControlItem> BaseItems
         {
             get
             {
@@ -184,7 +184,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets items.
         /// </summary>
-        public new IListControlItems<object> Items
+        public new ListBoxItems Items
         {
             get
             {
@@ -193,7 +193,7 @@ namespace Alternet.UI
 
             set
             {
-                ListControlItems<ListControlItem> newItems = new();
+                NotNullCollection<ListControlItem> newItems = new();
                 foreach(var valueItem in value)
                 {
                     ListControlItem item = new();

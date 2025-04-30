@@ -13,7 +13,7 @@ namespace PropertyGridSample
             VirtualListBox control,
             bool addLong = true)
         {
-            VirtualListBoxItems items = new();
+            NotNullCollection<ListControlItem> items = new();
 
             AddDefaultOwnerDrawItems(
                 control,

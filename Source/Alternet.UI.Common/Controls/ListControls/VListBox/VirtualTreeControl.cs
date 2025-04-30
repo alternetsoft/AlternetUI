@@ -320,7 +320,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets the collection of visible items contained in the tree view.
         /// </summary>
-        public IReadOnlyList<ListControlItem> VisibleItems => ListBox.Items.AsReadOnlyList;
+        public IReadOnlyList<ListControlItem> VisibleItems => ListBox.Items;
 
         /// <inheritdoc/>
         public virtual Coord GetLevelMargin()
@@ -784,7 +784,7 @@ namespace Alternet.UI
         /// </remarks>
         protected virtual void RefreshTree()
         {
-            VirtualListBoxItems collection = new(rootItem.EnumExpandedItems());
+            NotNullCollection<ListControlItem> collection = new(rootItem.EnumExpandedItems());
             ListBox.SetItemsFast(collection, VirtualListBox.SetItemsKind.ChangeField);
         }
 
