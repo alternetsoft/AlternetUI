@@ -12,12 +12,12 @@ namespace Alternet.UI
     public interface ICalendarHandler
     {
         /// <summary>
-        /// Gets or sets whether or not the first day of week is sunday.
+        /// Gets or sets whether or not the first day of week is Sunday.
         /// </summary>
         bool SundayFirst { get; set; }
 
         /// <summary>
-        /// Gets or sets whether or not the first day of week is monday.
+        /// Gets or sets whether or not the first day of week is Monday.
         /// </summary>
         bool MondayFirst { get; set; }
 
@@ -33,7 +33,7 @@ namespace Alternet.UI
         bool NoMonthChange { get; set; }
 
         /// <inheritdoc cref="Calendar.SequentalMonthSelect"/>
-        bool SequentalMonthSelect { get; set; }
+        bool SequentialMonthSelect { get; set; }
 
         /// <inheritdoc cref="Calendar.ShowSurroundWeeks"/>
         bool ShowSurroundWeeks { get; set; }

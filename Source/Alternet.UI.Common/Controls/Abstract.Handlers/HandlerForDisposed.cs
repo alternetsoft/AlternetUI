@@ -81,7 +81,7 @@ namespace Alternet.UI
 
         public bool NoMonthChange { get; set; }
 
-        public bool SequentalMonthSelect { get; set; }
+        public bool SequentialMonthSelect { get; set; }
 
         public bool ShowSurroundWeeks { get; set; }
 
@@ -374,10 +374,6 @@ namespace Alternet.UI
             return default;
         }
 
-        public void AttachItems(IListControlItems<ListControlItem> items)
-        {
-        }
-
         public bool BatchingUndo()
         {
             return default;
@@ -621,10 +617,6 @@ namespace Alternet.UI
         }
 
         public void DeleteSelection()
-        {
-        }
-
-        public void DetachItems(IListControlItems<ListControlItem> items)
         {
         }
 

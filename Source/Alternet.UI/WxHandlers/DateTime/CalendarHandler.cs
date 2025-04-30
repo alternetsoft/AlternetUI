@@ -109,7 +109,7 @@ namespace Alternet.UI
             }
         }
 
-        public bool SequentalMonthSelect
+        public bool SequentialMonthSelect
         {
             get
             {

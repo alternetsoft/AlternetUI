@@ -281,7 +281,7 @@ namespace Alternet.UI
             {
                 if (DisposingOrDisposed)
                     return default;
-                return Handler.SequentalMonthSelect;
+                return Handler.SequentialMonthSelect;
             }
 
             set
@@ -290,7 +290,7 @@ namespace Alternet.UI
                     return;
                 if (SequentalMonthSelect == value)
                     return;
-                Handler.SequentalMonthSelect = value;
+                Handler.SequentialMonthSelect = value;
                 PerformLayout();
             }
         }
