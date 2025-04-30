@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.Specialized;
 using System.ComponentModel;
 using System.Linq;
 using System.Text;
@@ -72,7 +73,7 @@ namespace Alternet.UI
         private BorderSettings? currentItemBorder;
         private BorderSettings? selectionBorder;
         private WeakReferenceValue<ImageList> imageList = new();
-        private NotNullCollection<ListControlColumn>? columns;
+        private BaseCollection<ListControlColumn>? columns;
 
         private bool selectedIsBold;
         private bool textVisible = true;
@@ -192,7 +193,8 @@ namespace Alternet.UI
             {
                 if(columns is null)
                 {
-                    columns = new();
+                    columns = new NotNullCollection<ListControlColumn>();
+                    columns.CollectionChanged += OnColumnsChanged;
                 }
 
                 return columns;
@@ -200,6 +202,13 @@ namespace Alternet.UI
 
             set
             {
+                if (columns == value)
+                    return;
+                if(columns is not null)
+                    columns.CollectionChanged -= OnColumnsChanged;
+                columns = value;
+                if (columns is not null)
+                    columns.CollectionChanged += OnColumnsChanged;
             }
         }
 
@@ -1234,6 +1243,20 @@ namespace Alternet.UI
         /// <remarks>See <see cref="CheckedChanged"/> for details.</remarks>
         protected virtual void OnCheckedChanged(EventArgs e)
         {
+        }
+
+        /// <summary>
+        /// Handles changes to the columns collection.
+        /// </summary>
+        /// <param name="sender">The source of the change event.</param>
+        /// <param name="e">Details about the collection change, including added or removed items.</param>
+        /// <remarks>
+        /// This method is triggered when the column collection is modified.
+        /// Override it to implement custom behavior for handling column updates.
+        /// </remarks>
+        protected virtual void OnColumnsChanged(object? sender, NotifyCollectionChangedEventArgs e)
+        {
+            Invalidate();
         }
 
         /// <inheritdoc/>
