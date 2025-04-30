@@ -55,6 +55,11 @@ namespace Alternet.UI
             get => this;
         }
 
+        public IReadOnlyList<object> AsReadOnlyList
+        {
+            get => items.AsReadOnlyList;
+        }
+
         bool IList.IsFixedSize => ((IList)items).IsFixedSize;
 
         bool ICollection.IsSynchronized => ((ICollection)items).IsSynchronized;

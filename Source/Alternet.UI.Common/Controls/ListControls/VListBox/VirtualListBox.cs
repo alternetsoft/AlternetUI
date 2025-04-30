@@ -1215,6 +1215,26 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Scrolls item into the view so it will be fully visible.
+        /// </summary>
+        /// <param name="index">Index of the item.</param>
+        public virtual void ScrollIntoView(int index)
+        {
+            if (index < 0 || index >= Count)
+                return;
+
+            if (!IsItemVisible(index))
+            {
+                ScrollToRow(index);
+            }
+            else
+            {
+                if (index == GetVisibleEnd())
+                    DoActionScrollLineDown();
+            }
+        }
+
+        /// <summary>
         /// Raises <see cref="MeasureItem"/> event and <see cref="OnMeasureItem"/> method.
         /// </summary>
         /// <param name="e">Event arguments.</param>

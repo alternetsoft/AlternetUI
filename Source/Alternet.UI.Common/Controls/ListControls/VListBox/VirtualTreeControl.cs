@@ -320,7 +320,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets the collection of visible items contained in the tree view.
         /// </summary>
-        public IEnumerable<ListControlItem> VisibleItems => ListBox.Items;
+        public IReadOnlyList<ListControlItem> VisibleItems => ListBox.Items.AsReadOnlyList;
 
         /// <inheritdoc/>
         public virtual Coord GetLevelMargin()
@@ -330,28 +330,11 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Selects the specified item in the tree view and scrolls to it.
+        /// Expands all parent items of the specified item.
         /// </summary>
-        public virtual void SelectItem(UI.TreeControlItem? item)
+        public virtual void ExpandAllParents(TreeControlItem? item)
         {
             if (item is null)
-                return;
-
-            bool InternalSelect()
-            {
-                var index = ListBox.Items.IndexOf(item);
-
-                if (index > 0)
-                {
-                    SelectedItem = item;
-                    ListBox.ScrollToRow(index);
-                    return true;
-                }
-
-                return false;
-            }
-
-            if (InternalSelect())
                 return;
 
             BeginUpdate();
@@ -363,8 +346,35 @@ namespace Alternet.UI
             {
                 EndUpdate();
             }
+        }
 
-            InternalSelect();
+        /// <summary>
+        /// Scrolls control so the specified item will be fully visible.
+        /// </summary>
+        /// <param name="item">Item to show into the view.</param>
+        public virtual void ScrollIntoView(TreeControlItem? item)
+        {
+            if (item is null)
+                return;
+
+            if (item.HasCollapsedParents)
+            {
+                ExpandAllParents(item);
+            }
+            else
+            {
+                var index = ListBox.Items.IndexOf(item);
+                ListBox.ScrollIntoView(index);
+            }
+        }
+
+        /// <summary>
+        /// Selects the specified item in the tree view and scrolls to it.
+        /// </summary>
+        public virtual void SelectItem(TreeControlItem? item)
+        {
+            ScrollIntoView(item);
+            SelectedItem = item;
         }
 
         /// <summary>
@@ -468,36 +478,33 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Removes item and selects its sibling (next or previous on the same level).
+        /// </summary>
+        /// <param name="item">Item to remove.</param>
+        public virtual void RemoveItemAndSelectSibling(TreeControlItem? item)
+        {
+            if (DisposingOrDisposed)
+                return;
+            if (item is null)
+                return;
+            var newItem = item.NextOrPrevSibling;
+            item.Remove();
+            SelectItem(newItem);
+        }
+
+        /// <summary>
         /// Removes the currently selected item from the tree view and optionally selects on
         /// of the remaining items.
         /// </summary>
-        public virtual bool RemoveSelectedItem(bool selectSibling)
+        public virtual void RemoveSelectedItem(bool selectSibling)
         {
-            var item = SelectedItem as TreeControlItem;
-            if (item is null)
-                return false;
-
             if (selectSibling)
             {
-                var index = ListBox.Items.IndexOf(item);
-                var result = ListBox.Items.Remove(item);
-                if (result)
-                {
-                    if (index > 0)
-                        index--;
-                    index = Math.Min(ListBox.Items.Count - 1, index);
-                    if (index >= 0)
-                    {
-                        item = ListBox.Items[index] as TreeControlItem;
-                        SelectItem(item);
-                    }
-                }
-
-                return result;
+                RemoveItemAndSelectSibling(SelectedItem);
             }
             else
             {
-                return Remove(item);
+                Remove(SelectedItem);
             }
         }
 

@@ -53,6 +53,12 @@ namespace Alternet.UI
             get => this;
         }
 
+        /// <inheritdoc/>
+        public IReadOnlyList<T> AsReadOnlyList
+        {
+            get => this;
+        }
+
         /// <summary>
         /// Common initialization method called from the constructors.
         /// </summary>

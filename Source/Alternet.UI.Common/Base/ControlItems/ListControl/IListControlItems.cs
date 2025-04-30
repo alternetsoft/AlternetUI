@@ -39,6 +39,11 @@ namespace Alternet.UI
         IList AsList { get; }
 
         /// <summary>
+        /// Gets items as <see cref="IReadOnlyList{T}"/>.
+        /// </summary>
+        IReadOnlyList<T> AsReadOnlyList { get; }
+
+        /// <summary>
         /// Returns <see langword="true"/> if <see cref="AddRange"/> is being
         /// executed at the moment.
         /// </summary>
