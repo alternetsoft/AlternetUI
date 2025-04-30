@@ -35,6 +35,24 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Initializes a new instance of the <see cref="TreeControlItem"/>
+        /// class with the specified item text and
+        /// the image index position of the item's icon.
+        /// </summary>
+        /// <param name="text">The text to display for the item.</param>
+        /// <param name="imageIndex">
+        /// The zero-based index of the image within the
+        /// <see cref="ImageList"/>
+        /// associated with the <see cref="VirtualTreeControl"/> that contains the item.
+        /// </param>
+        public TreeControlItem(string text, int? imageIndex)
+            : this()
+        {
+            Text = text;
+            ImageIndex = imageIndex;
+        }
+
+        /// <summary>
         /// Gets or sets the parent item of this tree control item.
         /// </summary>
         public virtual TreeControlItem? Parent
@@ -243,7 +261,20 @@ namespace Alternet.UI
         /// <summary>
         /// Gets the child items of this tree control item.
         /// </summary>
-        public virtual IEnumerable<TreeControlItem> Items => items ?? [];
+        public virtual IReadOnlyList<TreeControlItem> Items => items ?? [];
+
+        /// <summary>
+        /// Gets whether item has collapsed parents.
+        /// </summary>
+        public virtual bool HasCollapsedParents
+        {
+            get
+            {
+                if (Parent is null || Parent.IsExpanded)
+                    return false;
+                return Parent.HasCollapsedParents;
+            }
+        }
 
         /// <summary>
         /// Gets the number of child items in this tree control item.
@@ -253,6 +284,59 @@ namespace Alternet.UI
             get
             {
                 return items?.Count ?? 0;
+            }
+        }
+
+        /// <summary>
+        /// Gets items from the <see cref="TreeView"/> (if item is on root level)
+        /// or from the <see cref="Parent"/> (if item has parent).
+        /// </summary>
+        /// <remarks>
+        /// If item has no parent and is not attached to the <see cref="TreeView"/> this
+        /// property returns <c>null</c>.
+        /// </remarks>
+        [Browsable(false)]
+        public IReadOnlyList<TreeControlItem>? ParentItems
+        {
+            get
+            {
+                IReadOnlyList<TreeControlItem>? items;
+                if (Parent == null)
+                    items = Root?.Items;
+                else
+                    items = Parent.Items;
+                return items;
+            }
+        }
+
+        /// <summary>
+        /// Gets next sibling if item is not the last one, otherwise gets previous sibling.
+        /// If item has no siblings, <see cref="Parent"/> is returned.
+        /// </summary>
+        [Browsable(false)]
+        public virtual TreeControlItem? NextOrPrevSibling
+        {
+            get
+            {
+                var items = ParentItems;
+                if (items == null)
+                    return null;
+
+                for (int i = 0; i < items.Count; i++)
+                {
+                    if (items[i] != this)
+                        continue;
+                    if (i == items.Count - 1)
+                    {
+                        if (i > 0)
+                            return items[i - 1];
+                        return Parent;
+                    }
+                    else
+                        return items[i + 1];
+                }
+
+                return null;
             }
         }
 
@@ -355,12 +439,18 @@ namespace Alternet.UI
         /// <summary>
         /// Expands all parent items of this tree control item.
         /// </summary>
-        public virtual void ExpandAllParents()
+        public virtual bool ExpandAllParents()
         {
             if (Parent is null)
-                return;
-            Parent.IsExpanded = true;
-            Parent.ExpandAllParents();
+                return false;
+            var result = Parent.ExpandAllParents();
+            if (!Parent.IsExpanded)
+            {
+                Parent.IsExpanded = true;
+                result = true;
+            }
+
+            return result;
         }
 
         /// <summary>
