@@ -135,7 +135,8 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="startInfo">The start information for the process.</param>
         /// <param name="wait">If <c>true</c>, waits for the process to exit before returning.</param>
-        /// <returns>The exit code of the process if <paramref name="wait"/> is <c>true</c>; otherwise, 0.</returns>
+        /// <returns>The exit code of the process if <paramref name="wait"/> is <c>true</c>;
+        /// otherwise, 0.</returns>
         public static int RunProcessAndWait(ProcessStartInfo startInfo, bool wait)
         {
             var process = RunProcess(startInfo);
