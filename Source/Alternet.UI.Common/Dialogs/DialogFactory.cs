@@ -227,7 +227,7 @@ namespace Alternet.UI
             if (source == null)
                 return;
 
-            var existing = App.FindVisibleWindow<ListEditWindow>();
+            var existing = App.FindVisibleWindow<WindowListEdit>();
 
             if(existing is not null)
             {
@@ -236,7 +236,7 @@ namespace Alternet.UI
             }
             else
             {
-                ListEditWindow dialog = new(source);
+                WindowListEdit dialog = new(source);
                 dialog.Show();
             }
         }

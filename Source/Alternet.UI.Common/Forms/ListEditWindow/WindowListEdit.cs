@@ -14,7 +14,7 @@ using Alternet.UI.Localization;
 namespace Alternet.UI
 {
     [ControlCategory("Hidden")]
-    internal class ListEditWindow : Window
+    internal class WindowListEdit : Window
     {
         private readonly SplittedPanel panel = new()
         {
@@ -38,8 +38,6 @@ namespace Alternet.UI
         private readonly TreeViewPlus treeView = new()
         {
             HasBorder = false,
-            FullRowSelect = true,
-            ShowLines = false,
         };
 
         private readonly PropertyGrid propertyGrid = new()
@@ -51,7 +49,7 @@ namespace Alternet.UI
         private IListEditSource? dataSource;
         private object? lastPropInstance;
 
-        public ListEditWindow(IListEditSource source)
+        public WindowListEdit(IListEditSource source)
         {
             Layout = LayoutStyle.Vertical;
             Size = new(750, 600);
@@ -62,16 +60,12 @@ namespace Alternet.UI
             panel.VerticalAlignment = VerticalAlignment.Fill;
             panel.Parent = this;
 
-            treeView.SelectionChanged += TreeView_SelectionChanged;
+            treeView.SelectionChanged += OnTreeViewSelectionChanged;
             treeView.Parent = panel.FillPanel;
 
             propertyGrid.ApplyFlags |= PropertyGridApplyFlags.PropInfoSetValue
                 | PropertyGridApplyFlags.ReloadAllAfterSetValue;
             propertyGrid.Parent = panel.RightPanel;
-
-            ShowInTaskbar = false;
-            MinimizeEnabled = false;
-            MaximizeEnabled = false;
 
             var s = CommonStrings.Default.WindowTitleListEdit;
 
@@ -96,36 +90,35 @@ namespace Alternet.UI
 
             if (source.AllowAdd)
             {
-                buttonIdAdd = toolbar.AddSpeedBtn(KnownButton.Add, AddButton_Click);
+                buttonIdAdd = toolbar.AddSpeedBtn(KnownButton.Add, OnAddButtonClick);
             }
 
             if(source.AllowSubItems && source.AllowAdd)
             {
-                buttonIdAddChild = toolbar.AddSpeedBtn(KnownButton.AddChild, AddChildButton_Click);
+                buttonIdAddChild = toolbar.AddSpeedBtn(KnownButton.AddChild, OnAddChildButtonClick);
             }
 
             if (source.AllowDelete)
             {
-                buttonIdRemove = toolbar.AddSpeedBtn(KnownButton.Remove, RemoveButton_Click);
-                buttonIdRemoveAll = toolbar.AddSpeedBtn(KnownButton.Clear, RemoveAllButton_Click);
+                buttonIdRemove = toolbar.AddSpeedBtn(KnownButton.Remove, OnRemoveButtonClick);
+                buttonIdRemoveAll = toolbar.AddSpeedBtn(KnownButton.Clear, OnRemoveAllButtonClick);
             }
 
             if (source.AllowApplyData)
             {
-                buttonIdOk = toolbar.AddSpeedBtn(KnownButton.OK, OkButton_Click);
+                buttonIdOk = toolbar.AddSpeedBtn(KnownButton.OK, OnOkButtonClick);
             }
 
-            var buttonIdCancel = toolbar.AddSpeedBtn(KnownButton.Cancel, CancelButton_Click);
+            var buttonIdCancel = toolbar.AddSpeedBtn(KnownButton.Cancel, OnCancelButtonClick);
 
             propertyGrid.SuggestedInitDefaults();
-            propertyGrid.PropertyChanged += PropertyGrid_PropertyChanged;
+            propertyGrid.PropertyChanged += OnPropertyGridPropertyChanged;
 
             toolbar.Margin = (0, 0, 0, ToolBar.DefaultDistanceToContent);
             toolbar.SetVisibleBorders(false, false, false, true);
             BackgroundColor = SystemColors.Window;
 
-            ComponentDesigner.InitDefault();
-            ComponentDesigner.Default!.ObjectPropertyChanged += OnDesignerPropertyChanged;
+            ComponentDesigner.SafeDefault.ObjectPropertyChanged += OnDesignerPropertyChanged;
 
             Closing += Window_Closing;
             Closed += Window_Closed;
@@ -173,7 +166,7 @@ namespace Alternet.UI
 
         private void Window_Closing(object? sender, WindowClosingEventArgs e)
         {
-            ComponentDesigner.Default!.ObjectPropertyChanged -= OnDesignerPropertyChanged;
+            ComponentDesigner.SafeDefault.ObjectPropertyChanged -= OnDesignerPropertyChanged;
         }
 
         private void OnDesignerPropertyChanged(object? sender, ObjectPropertyChangedEventArgs e)
@@ -200,15 +193,15 @@ namespace Alternet.UI
 
         private void Window_Disposed(object? sender, EventArgs e)
         {
-            ComponentDesigner.Default!.ObjectPropertyChanged -= OnDesignerPropertyChanged;
+            ComponentDesigner.SafeDefault.ObjectPropertyChanged -= OnDesignerPropertyChanged;
         }
 
-        private void CancelButton_Click(object? sender, EventArgs e)
+        private void OnCancelButtonClick(object? sender, EventArgs e)
         {
             Close();
         }
 
-        private void OkButton_Click(object? sender, EventArgs e)
+        private void OnOkButtonClick(object? sender, EventArgs e)
         {
             if (!propertyGrid.ClearSelection(true))
                 return;
@@ -223,25 +216,25 @@ namespace Alternet.UI
             Close();
         }
 
-        private void RemoveAllButton_Click(object? sender, EventArgs e)
+        private void OnRemoveAllButtonClick(object? sender, EventArgs e)
         {
             Clear();
             UpdateButtons();
         }
 
-        private void AddChildButton_Click(object? sender, EventArgs e)
+        private void OnAddChildButtonClick(object? sender, EventArgs e)
         {
-            AddItem(treeView.SelectedItem?.Items);
+            AddItem(treeView.SelectedItem);
         }
 
-        private void AddButton_Click(object? sender, EventArgs e)
+        private void OnAddButtonClick(object? sender, EventArgs e)
         {
-            AddItem(treeView.SelectedItem?.ParentItems);
+            AddItem(treeView.SelectedItem?.Parent);
         }
 
-        private void AddItem(BaseCollection<TreeViewItem>? items)
+        private void AddItem(TreeControlItem? parentItem)
         {
-            items ??= treeView.Items;
+            parentItem ??= treeView.RootItem;
 
             if (dataSource == null)
                 return;
@@ -253,17 +246,23 @@ namespace Alternet.UI
 
             var itemInfo = GetItemInfo(item);
 
-            var treeItem = new TreeViewItem(itemInfo!.Value.Title!, itemInfo.Value.ImageIndex)
+            var imageIndex = itemInfo?.ImageIndex ?? -1;
+            var newTitle = itemInfo?.Title ?? CommonStrings.Default.ListEditDefaultItemTitle;
+            newTitle += " " + LogUtils.GenNewId();
+
+            AssemblyUtils.TrySetMemberValue(item, "Text", newTitle);
+
+            var treeItem = new TreeControlItem(newTitle, imageIndex)
             {
                 Tag = item,
             };
-            items.Add(treeItem);
-            treeView.SelectedItem = treeItem;
-            treeItem.IsFocused = true;
+            parentItem.IsExpanded = true;
+            parentItem.Add(treeItem);
+            treeView.SelectItem(treeItem);
             UpdateButtons();
         }
 
-        private void RemoveButton_Click(object? sender, EventArgs e)
+        private void OnRemoveButtonClick(object? sender, EventArgs e)
         {
             treeView.RemoveItemAndSelectSibling(treeView.SelectedItem);
             UpdateButtons();
@@ -282,7 +281,7 @@ namespace Alternet.UI
                 canAdd = dataSource.AllowAdd;
                 canAddChild = itemSelected && canAdd && dataSource.AllowSubItems;
                 canRemove = itemSelected && dataSource.AllowDelete;
-                canRemoveAll = dataSource.AllowDelete && treeView.Items.Count > 0;
+                canRemoveAll = dataSource.AllowDelete && treeView.RootItem.ItemCount > 0;
                 canApply = dataSource.AllowApplyData;
             }
 
@@ -293,7 +292,7 @@ namespace Alternet.UI
             toolbar.SetToolEnabled(buttonIdOk, canApply);
         }
 
-        private void TreeView_SelectionChanged(object? sender, EventArgs e)
+        private void OnTreeViewSelectionChanged(object? sender, EventArgs e)
         {
             UpdateButtons();
             var item = treeView.SelectedItem;
@@ -324,10 +323,10 @@ namespace Alternet.UI
             Clear();
             if (dataSource == null)
                 return;
-            AddItems(treeView.Items, dataSource.RootItems);
+            AddItems(treeView.RootItem, dataSource.RootItems);
         }
 
-        private void PropertyGrid_PropertyChanged(object? sender, EventArgs e)
+        private void OnPropertyGridPropertyChanged(object? sender, EventArgs e)
         {
             var eventProp = propertyGrid.EventProperty;
             var eventInstance = eventProp?.Instance;
@@ -354,23 +353,23 @@ namespace Alternet.UI
             return (s, imageIndex);
         }
 
-        private void AddItems(BaseCollection<TreeViewItem> treeItems, IEnumerable? data)
+        private void AddItems(TreeControlItem parentItem, IEnumerable? data)
         {
             if (data == null)
                 return;
             foreach (var item in data)
             {
                 var itemInfo = GetItemInfo(item);
-                var treeItem = new TreeViewItem(itemInfo!.Value.Title!, itemInfo!.Value.ImageIndex)
+                var treeItem = new TreeControlItem(itemInfo!.Value.Title!, itemInfo!.Value.ImageIndex)
                 {
                     Tag = dataSource?.CloneItem(item),
                 };
 
                 var subItems = dataSource?.GetChildren(item);
                 if (subItems != null)
-                    AddItems(treeItem.Items, subItems);
+                    AddItems(treeItem, subItems);
 
-                treeItems.Add(treeItem);
+                parentItem.Add(treeItem);
             }
         }
 
@@ -384,12 +383,11 @@ namespace Alternet.UI
             treeView.ImageList = null;
         }
 
-        public class TreeViewPlus : TreeView, IEnumerableTree<TreeViewItem>
+        private class TreeViewPlus : VirtualTreeControl, IEnumerableTree<TreeControlItem>
         {
             public TreeViewPlus()
             {
-                AllowDrop = true;
-
+                // AllowDrop = true;
                 // DragDrop += OnDragDropEvent;
                 // DragOver += OnDragOverEvent;
                 // DragEnter += OnDragEnterEvent;
@@ -402,35 +400,35 @@ namespace Alternet.UI
                 // MouseLeftButtonUp += TreeViewPlus_MouseLeftButtonUp;
             }
 
-            IEnumerable<TreeViewItem>? IEnumerableTree<TreeViewItem>.GetChildren(TreeViewItem item)
+            IEnumerable<TreeControlItem>? IEnumerableTree<TreeControlItem>.GetChildren(TreeControlItem item)
             {
                 if (item == null || !item.HasItems)
-                    return Array.Empty<TreeViewItem>();
+                    return [];
                 return item.Items;
             }
 
             IEnumerable? IEnumerableTree.GetChildren(object item)
             {
-                if (item is not TreeViewItem treeItem || !treeItem.HasItems)
-                    return Array.Empty<TreeViewItem>();
+                if (item is not TreeControlItem treeItem || !treeItem.HasItems)
+                    return Array.Empty<TreeControlItem>();
                 return treeItem.Items;
             }
 
             object? IEnumerableTree.GetData(object item)
             {
-                if (item is not TreeViewItem treeItem)
+                if (item is not TreeControlItem treeItem)
                     return null;
                 return treeItem.Tag;
             }
 
-            IEnumerator<TreeViewItem> IEnumerable<TreeViewItem>.GetEnumerator()
+            IEnumerator<TreeControlItem> IEnumerable<TreeControlItem>.GetEnumerator()
             {
-                return Items.GetEnumerator();
+                return RootItem.Items.GetEnumerator();
             }
 
             IEnumerator IEnumerable.GetEnumerator()
             {
-                return Items.GetEnumerator();
+                return RootItem.Items.GetEnumerator();
             }
 
             internal static IDataObject GetDataObject()
