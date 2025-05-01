@@ -32,8 +32,8 @@ namespace Alternet.UI
         /// </summary>
         public Border()
         {
-            ParentBackColor = true;
-            ParentForeColor = true;
+            ParentBackColor = GetDefaultParentBackColor();
+            ParentForeColor = GetDefaultParentForeColor();
             RefreshOptions = ControlRefreshOptions.RefreshOnBorder
                 | ControlRefreshOptions.RefreshOnBackground;
             ResetBorders();
@@ -407,6 +407,24 @@ namespace Alternet.UI
                 if(Padding == NormalBorder.Width)
                     Padding = 0;
             }
+        }
+
+        /// <summary>
+        /// Gets default value for <see cref="AbstractControl.ParentBackColor"/> property.
+        /// </summary>
+        /// <returns>True if the parent background color is used by default; otherwise, false.</returns>
+        protected virtual bool GetDefaultParentBackColor()
+        {
+            return true;
+        }
+
+        /// <summary>
+        /// Gets default value for <see cref="AbstractControl.ParentForeColor"/> property.
+        /// </summary>
+        /// <returns>True if the parent foreground color is used by default; otherwise, false.</returns>
+        protected virtual bool GetDefaultParentForeColor()
+        {
+            return true;
         }
 
         [Conditional("DEBUG")]
