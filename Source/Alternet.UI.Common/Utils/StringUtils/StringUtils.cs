@@ -43,6 +43,10 @@ namespace Alternet.UI
     /// </summary>
     public static class StringUtils
     {
+        const string PrefixCDATA = "<![CDATA[";
+
+        const string SuffixCDATA = "]]>";
+
         /// <summary>
         /// Gets html start bold tag string constant.
         /// </summary>
@@ -1155,6 +1159,11 @@ namespace Alternet.UI
 
             result = result.Insert(pos, beforeTag);
             return result;
+        }
+
+        public static string WithCDATA(string? s)
+        {
+            return $"{PrefixCDATA}{s}{SuffixCDATA}";
         }
 
         /// <summary>
