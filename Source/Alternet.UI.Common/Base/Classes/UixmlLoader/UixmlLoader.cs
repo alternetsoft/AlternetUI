@@ -41,7 +41,7 @@ namespace Alternet.UI
         public enum Flags
         {
             /// <summary>
-            /// Specifies whether to report error. If this memmber is not specified,
+            /// Specifies whether to report error. If this member is not specified,
             /// <see cref="ShowErrorDialog"/>, <see cref="LogError"/> are ignored.
             /// </summary>
             ReportError = 1,
@@ -52,7 +52,7 @@ namespace Alternet.UI
             ShowErrorDialog = 2,
 
             /// <summary>
-            /// Specifies whether to supress exception throw.
+            /// Specifies whether to suppress exception throw.
             /// </summary>
             NoThrowException = 4,
 

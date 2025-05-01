@@ -25,10 +25,10 @@ namespace XamlX.IL
         public SreTypeSystem()
         {
             // Ensure that System.ComponentModel is available
-            var rasm = typeof(ISupportInitialize).Assembly;
-            rasm = typeof(ITypeDescriptorContext).Assembly;
-            rasm = typeof(TypeConverterAttribute).Assembly;
-            rasm = typeof(Uri).Assembly;
+            var rAsm = typeof(ISupportInitialize).Assembly;
+            rAsm = typeof(ITypeDescriptorContext).Assembly;
+            rAsm = typeof(TypeConverterAttribute).Assembly;
+            rAsm = typeof(Uri).Assembly;
             foreach (var asm in AppDomain.CurrentDomain.GetAssemblies())
             {
                 try
@@ -129,7 +129,7 @@ namespace XamlX.IL
             public void Init()
             {
                 // var types = Assembly.GetExportedTypes().Select(t => _system.ResolveType(t)).ToList();
-                var types = Assembly.GetTypes().Select(t => _system.ResolveType(t)).ToList(); // yezo: with using only exported types uixml cannot be loaded from outside of the assembly.
+                var types = Assembly.GetTypes().Select(t => _system.ResolveType(t)).ToList(); // with using only exported types uixml cannot be loaded from outside of the assembly.
                 Types = types;
                 _typeDic = types.ToDictionary(t => t.Type.FullName);
             }
@@ -362,16 +362,16 @@ namespace XamlX.IL
 
         class SreConstructor : SreMethodBase, IXamlConstructor
         {
-            public ConstructorInfo Constuctor { get; }
+            public ConstructorInfo Constructor { get; }
 
             public SreConstructor(SreTypeSystem system, ConstructorInfo ctor)
                 : base(system, ctor)
             {
-                Constuctor = ctor;
+                Constructor = ctor;
             }
 
             public bool Equals(IXamlConstructor other)
-                => ((SreConstructor)other)?.Constuctor.Equals(Constuctor) == true;
+                => ((SreConstructor)other)?.Constructor.Equals(Constructor) == true;
         }
 
         class SreProperty : SreMemberInfo, IXamlProperty
@@ -495,7 +495,7 @@ namespace XamlX.IL
 
             public IXamlILEmitter Emit(OpCode code, IXamlConstructor ctor)
             {
-                _ilg.Emit(code, ((SreConstructor)ctor).Constuctor);
+                _ilg.Emit(code, ((SreConstructor)ctor).Constructor);
                 return this;
             }
 
@@ -646,23 +646,23 @@ namespace XamlX.IL
                 string name,
                 bool isPublic,
                 bool isStatic,
-                bool isInterfaceImpl,
+                bool isInterfaceImplementation,
                 IXamlMethod overrideMethod)
             {
                 var ret = ((SreType)returnType).Type;
-                var largs = (IReadOnlyList<IXamlType>)(args?.ToList()) ?? new IXamlType[0];
-                var argTypes = largs.Cast<SreType>().Select(t => t.Type);
+                var lArgs = (IReadOnlyList<IXamlType>)(args?.ToList()) ?? new IXamlType[0];
+                var argTypes = lArgs.Cast<SreType>().Select(t => t.Type);
                 var m = _tb.DefineMethod(
                     name,
                     (isPublic ? MethodAttributes.Public : MethodAttributes.Private)
                     | (isStatic ? MethodAttributes.Static : default(MethodAttributes))
-                    | (isInterfaceImpl ? MethodAttributes.Virtual | MethodAttributes.NewSlot : default(MethodAttributes)),
+                    | (isInterfaceImplementation ? MethodAttributes.Virtual | MethodAttributes.NewSlot : default(MethodAttributes)),
                     ret,
                     argTypes.ToArray());
                 if (overrideMethod != null)
                     _tb.DefineMethodOverride(m, ((SreMethod)overrideMethod).Method);
 
-                return new SreMethodBuilder(_system, m, largs);
+                return new SreMethodBuilder(_system, m, lArgs);
             }
 
             public IXamlProperty DefineProperty(
@@ -695,10 +695,10 @@ namespace XamlX.IL
 
             public IXamlConstructorBuilder<IXamlILEmitter> DefineConstructor(bool isStatic, params IXamlType[] args)
             {
-                var attrs = MethodAttributes.Public;
+                var attributes = MethodAttributes.Public;
                 if (isStatic)
-                    attrs |= MethodAttributes.Static;
-                var ctor = _tb.DefineConstructor(attrs,
+                    attributes |= MethodAttributes.Static;
+                var ctor = _tb.DefineConstructor(attributes,
                     CallingConventions.Standard,
                     args.Cast<SreType>().Select(t => t.Type).ToArray());
                 return new SreConstructorBuilder(_system, ctor);
@@ -708,13 +708,13 @@ namespace XamlX.IL
 
             public IXamlTypeBuilder<IXamlILEmitter> DefineSubType(IXamlType baseType, string name, bool isPublic)
             {
-                var attrs = TypeAttributes.Class;
+                var attributes = TypeAttributes.Class;
                 if (isPublic)
-                    attrs |= TypeAttributes.NestedPublic;
+                    attributes |= TypeAttributes.NestedPublic;
                 else
-                    attrs |= TypeAttributes.NestedPrivate;
+                    attributes |= TypeAttributes.NestedPrivate;
 
-                var builder = _tb.DefineNestedType(name, attrs,
+                var builder = _tb.DefineNestedType(name, attributes,
                     ((SreType)baseType).Type);
 
                 return new SreTypeBuilder(_system, builder);

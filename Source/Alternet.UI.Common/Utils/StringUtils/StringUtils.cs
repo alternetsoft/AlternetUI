@@ -43,9 +43,15 @@ namespace Alternet.UI
     /// </summary>
     public static class StringUtils
     {
-        const string PrefixCDATA = "<![CDATA[";
+        /// <summary>
+        /// Gets the prefix string for CDATA sections.
+        /// </summary>
+        public const string PrefixCDATA = "<![CDATA[";
 
-        const string SuffixCDATA = "]]>";
+        /// <summary>
+        /// Gets the suffix string for CDATA sections.
+        /// </summary>
+        public const string SuffixCDATA = "]]>";
 
         /// <summary>
         /// Gets html start bold tag string constant.
@@ -149,7 +155,7 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Modfies specified string by adding prefix and suffix.
+        /// Modifies specified string by adding prefix and suffix.
         /// </summary>
         /// <param name="s">String to modify.</param>
         /// <param name="prefixAndSuffix">Prefix and suffix string.</param>
@@ -181,7 +187,7 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Gets whether the specified character is english char or dot.
+        /// Gets whether the specified character is English char or dot.
         /// </summary>
         /// <param name="c"></param>
         /// <returns></returns>
@@ -1161,6 +1167,11 @@ namespace Alternet.UI
             return result;
         }
 
+        /// <summary>
+        /// Wraps the specified string in a CDATA section.
+        /// </summary>
+        /// <param name="s">The string to wrap in a CDATA section.</param>
+        /// <returns>A string wrapped in a CDATA section.</returns>
         public static string WithCDATA(string? s)
         {
             return $"{PrefixCDATA}{s}{SuffixCDATA}";

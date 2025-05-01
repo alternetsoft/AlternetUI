@@ -25,6 +25,11 @@ namespace Alternet.UI
         /// </summary>
         public static readonly DataObject Empty = new EmptyDataObject();
 
+        /// <summary>
+        /// Occurs when a type resolution is requested for a given type name.
+        /// </summary>
+        public static Func<string, Type?>? TypeResolveRequested;
+
         private readonly Dictionary<string, object> data = new(StringComparer.Ordinal);
 
         static DataObject()
@@ -156,6 +161,12 @@ namespace Alternet.UI
             return result.ToString();
         }
 
+        /// <summary>
+        /// Converts a data object to a memory stream containing its XML representation.
+        /// </summary>
+        /// <param name="dataObject">The data object to serialize to XML.</param>
+        /// <param name="settings">Optional XML writer settings to customize the serialization process.</param>
+        /// <returns>A memory stream containing the XML representation of the data object.</returns>
         public static MemoryStream DataObjectToXmlMemoryStream(
             object? dataObject,
             XmlWriterSettings? settings = null)
@@ -166,6 +177,13 @@ namespace Alternet.UI
             return stream;
         }
 
+        /// <summary>
+        /// Converts a data object to its XML string representation.
+        /// </summary>
+        /// <param name="dataObject">The data object to serialize to XML.</param>
+        /// <param name="settings">Optional XML writer settings to customize the serialization process.</param>
+        /// <returns>A string containing the XML representation of the data object, or null
+        /// if the data object is null.</returns>
         public static string? DataObjectToXmlString(
             object? dataObject,
             XmlWriterSettings? settings = null)
@@ -175,6 +193,13 @@ namespace Alternet.UI
             return str;
         }
 
+        /// <summary>
+        /// Converts a data object to its XML string representation enclosed in a CDATA section.
+        /// </summary>
+        /// <param name="dataObject">The data object to serialize to XML.</param>
+        /// <param name="settings">Optional XML writer settings to customize the serialization process.</param>
+        /// <returns>A string containing the XML representation of the data object enclosed
+        /// in a CDATA section, or null if the data object is null.</returns>
         public static string DataObjectToCDataXmlString(
             object? dataObject,
             XmlWriterSettings? settings = null)
@@ -243,7 +268,7 @@ namespace Alternet.UI
         [Conditional("DEBUG")]
         public static void TestHashTableToClipboard()
         {
-            Hashtable sampleTable = new Hashtable
+            var sampleTable = new Hashtable
             {
                 { 1, "Apple" },
                 { 2, "Banana" },
@@ -261,9 +286,17 @@ namespace Alternet.UI
         [Conditional("DEBUG")]
         public static void TestHashTableFromClipboard()
         {
+#pragma warning disable
             var data = Clipboard.GetData(DataFormats.Serializable);
+#pragma warning restore
         }
 
+        /// <summary>
+        /// Deserializes a data object from its XML string representation.
+        /// </summary>
+        /// <param name="s">The XML string representation of the data object.</param>
+        /// <returns>The deserialized data object, or null if the input string
+        /// is null or deserialization fails.</returns>
         public static object? DeserializeDataObjectFromXmlString(string? s)
         {
             if (s is null)
@@ -275,6 +308,12 @@ namespace Alternet.UI
             return result;
         }
 
+        /// <summary>
+        /// Finds a type by its name, resolving it using the provided type resolver
+        /// (<see cref="TypeResolveRequested"/>) or the default type resolver.
+        /// </summary>
+        /// <param name="typeName">The name of the type to find.</param>
+        /// <returns>The resolved <see cref="Type"/> if found; otherwise, <see langword="null"/>.</returns>
         public static Type? FindTypeByName(string typeName)
         {
             if (typeName is null)
@@ -282,7 +321,8 @@ namespace Alternet.UI
 
             typeName = typeName.Replace("_x002B_", "+");
 
-            var result = UixmlLoader.FindType(typeName);
+            var result = TypeResolveRequested?.Invoke(typeName);
+            result ??= UixmlLoader.FindType(typeName);
 
             return result;
         }
@@ -554,22 +594,28 @@ namespace Alternet.UI
             return GetDataPresent(format);
         }
 
+        /// <summary>
+        /// Represents a collection of dictionary items prepared for the serialized into XML format.
+        /// Used in <see cref="SerializeDataObject"/> for <see cref="IDictionary"/> serialization.
+        /// </summary>
         [XmlRoot("XmlDictionaryItems")]
         public class XmlDictionaryItems
         {
-            const string NullableKey = "NullValue-71352CE74DAF4437BF45031D512C7489";
+            private const string NullableKey = "NullValue-71352CE74DAF4437BF45031D512C7489";
 
+            /// <summary>
+            /// Initializes a new instance of the <see cref="XmlDictionaryItems"/> class.
+            /// </summary>
             public XmlDictionaryItems()
             {
             }
 
-            [XmlArray("Items")]
-            [XmlArrayItem("Item")]
-            public BaseCollection<XmlDictionaryItem> Items { get; set; } = new();
-
-            [XmlElement("DictionaryType")]
-            public string DictionaryType { get; set; }
-
+            /// <summary>
+            /// Initializes a new instance of the <see cref="XmlDictionaryItems"/> class
+            /// with the specified dictionary and optional XML writer settings.
+            /// </summary>
+            /// <param name="dictionary">The dictionary to be serialized into XML.</param>
+            /// <param name="settings">Optional XML writer settings to customize the serialization process.</param>
             public XmlDictionaryItems(IDictionary dictionary, XmlWriterSettings? settings = null)
             {
                 DictionaryType = dictionary.GetType().ToString();
@@ -593,8 +639,30 @@ namespace Alternet.UI
                 }
             }
 
+            /// <summary>
+            /// Gets or sets the collection of dictionary items.
+            /// </summary>
+            [XmlArray("Items")]
+            [XmlArrayItem("Item")]
+            public BaseCollection<XmlDictionaryItem> Items { get; set; } = new();
+
+            /// <summary>
+            /// Gets or sets the type of the dictionary being serialized or deserialized.
+            /// </summary>
+            [XmlElement("DictionaryType")]
+            public string DictionaryType { get; set; } = string.Empty;
+
+            /// <summary>
+            /// Gets the dictionary representation of the XML dictionary items.
+            /// </summary>
+            /// <remarks>
+            /// This property attempts to create an instance of the dictionary type specified
+            /// in <see cref="DictionaryType"/> and populate it with the key-value pairs
+            /// stored in the <see cref="Items"/> collection. If the dictionary type cannot
+            /// be found or instantiated, this property returns null.
+            /// </remarks>
             [XmlIgnore]
-            public object? AsDictionary
+            public IDictionary? AsDictionary
             {
                 get
                 {
@@ -602,11 +670,10 @@ namespace Alternet.UI
 
                     if (type is null)
                         return null;
-                    var instance = Activator.CreateInstance(type) as IDictionary;
-                    if (instance is null)
+                    if (Activator.CreateInstance(type) is not IDictionary instance)
                         return null;
 
-                    foreach(var item in Items)
+                    foreach (var item in Items)
                     {
                         var key = DeserializeDataObjectFromXmlString(item.Key);
                         var value = DeserializeDataObjectFromXmlString(item.Value);
@@ -622,23 +689,41 @@ namespace Alternet.UI
             }
         }
 
+        /// <summary>
+        /// Represents a key-value pair used in XML serialization of dictionary items.
+        /// </summary>
         public class XmlDictionaryItem
         {
+            /// <summary>
+            /// Initializes a new instance of the <see cref="XmlDictionaryItem"/> class.
+            /// </summary>
             public XmlDictionaryItem()
             {
             }
 
+            /// <summary>
+            /// Initializes a new instance of the <see cref="DataObject.XmlDictionaryItem"/> class
+            /// with the specified key and value.
+            /// </summary>
+            /// <param name="key">The key of the dictionary item.</param>
+            /// <param name="value">The value of the dictionary item.</param>
             public XmlDictionaryItem(string key, string value)
             {
                 Key = key;
                 Value = value;
             }
 
+            /// <summary>
+            /// Gets or sets the key of the dictionary item.
+            /// </summary>
             [XmlElement("Key")]
-            public string Key { get; set; }
+            public string Key { get; set; } = string.Empty;
 
+            /// <summary>
+            /// Gets or sets the value of the dictionary item.
+            /// </summary>
             [XmlElement("Value")]
-            public string Value { get; set; }
+            public string Value { get; set; } = string.Empty;
         }
 
         internal class EmptyDataObject : DataObject
