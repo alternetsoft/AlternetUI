@@ -18,6 +18,11 @@ namespace Alternet.UI
         {
         }
 
+        [EditorBrowsable(EditorBrowsableState.Advanced)]
+        protected virtual void OnContextMenuCreated(EventArgs e)
+        {
+        }
+
         /// <summary>
         /// Called when the <see cref="AbstractControl.PreviewKeyDown" /> event is raised.
         /// </summary>
