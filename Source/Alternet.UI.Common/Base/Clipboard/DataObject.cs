@@ -1,9 +1,11 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Xml;
 using System.Xml.Serialization;
@@ -24,6 +26,10 @@ namespace Alternet.UI
         public static readonly DataObject Empty = new EmptyDataObject();
 
         private readonly Dictionary<string, object> data = new(StringComparer.Ordinal);
+
+        static DataObject()
+        {
+        }
 
         /// <summary>
         /// Initializes a new instance of <see cref="DataObject"/> class.
@@ -150,6 +156,34 @@ namespace Alternet.UI
             return result.ToString();
         }
 
+        public static MemoryStream DataObjectToXmlMemoryStream(
+            object? dataObject,
+            XmlWriterSettings? settings = null)
+        {
+            MemoryStream stream = new();
+            SerializeDataObject(stream, dataObject, settings);
+            stream.Seek(0, SeekOrigin.Begin);
+            return stream;
+        }
+
+        public static string? DataObjectToXmlString(
+            object? dataObject,
+            XmlWriterSettings? settings = null)
+        {
+            var stream = DataObjectToXmlMemoryStream(dataObject, settings);
+            var str = StreamUtils.StringFromStreamOrNull(stream);
+            return str;
+        }
+
+        public static string DataObjectToCDataXmlString(
+            object? dataObject,
+            XmlWriterSettings? settings = null)
+        {
+            var str = DataObjectToXmlString(dataObject, settings);
+            var strEnclosed = StringUtils.WithCDATA(str);
+            return strEnclosed;
+        }
+
         /// <summary>
         /// Serializes data object to the specified stream. This method is called
         /// when serialization with <see cref="DataFormats.Serializable"/> format
@@ -161,10 +195,20 @@ namespace Alternet.UI
         /// </remarks>
         /// <param name="dataObject">Data object to serialize.</param>
         /// <param name="stream">Stream where to serialize.</param>
-        public static void SerializeDataObject(Stream stream, object dataObject)
+        /// <param name="settings">Writer settings.</param>
+        public static void SerializeDataObject(
+            Stream stream,
+            object? dataObject,
+            XmlWriterSettings? settings = null)
         {
             if (dataObject is null)
                 return;
+
+            if(dataObject is IDictionary dictionary)
+            {
+                var xmlDictionaryItems = new XmlDictionaryItems(dictionary, settings);
+                dataObject = xmlDictionaryItems;
+            }
 
             if (GlobalSerializeDataObject is not null)
             {
@@ -180,8 +224,67 @@ namespace Alternet.UI
             xRoot.Namespace = XmlUtils.UIXmlNamespace;
             xRoot.IsNullable = false;
 
-            var writer = new StreamWriter(stream, Encoding.UTF8);
-            new XmlSerializer(dataObject.GetType(), xRoot).Serialize(writer, dataObject);
+            if(settings is null)
+            {
+                var writer = new StreamWriter(stream, Encoding.UTF8);
+                new XmlSerializer(dataObject.GetType(), xRoot).Serialize(writer, dataObject);
+            }
+            else
+            {
+                settings.Encoding = Encoding.UTF8;
+                using XmlWriter xmlWriter = XmlWriter.Create(stream, settings);
+                new XmlSerializer(dataObject.GetType(), xRoot).Serialize(xmlWriter, dataObject);
+            }
+        }
+
+        /// <summary>
+        /// This is internal method for testing purposes.
+        /// </summary>
+        [Conditional("DEBUG")]
+        public static void TestHashTableToClipboard()
+        {
+            Hashtable sampleTable = new Hashtable
+            {
+                { 1, "Apple" },
+                { 2, "Banana" },
+                { 3, "Cherry" },
+                { "Key4", 42 },
+                { "Key5", true },
+            };
+
+            Clipboard.SetData(DataFormats.Serializable, sampleTable);
+        }
+
+        /// <summary>
+        /// This is internal method for testing purposes.
+        /// </summary>
+        [Conditional("DEBUG")]
+        public static void TestHashTableFromClipboard()
+        {
+            var data = Clipboard.GetData(DataFormats.Serializable);
+        }
+
+        public static object? DeserializeDataObjectFromXmlString(string? s)
+        {
+            if (s is null)
+                return null;
+            MemoryStream stream = new();
+            StreamUtils.StringToStream(stream, s);
+            stream.Seek(0, SeekOrigin.Begin);
+            var result = DeserializeDataObject(stream);
+            return result;
+        }
+
+        public static Type? FindTypeByName(string typeName)
+        {
+            if (typeName is null)
+                return null;
+
+            typeName = typeName.Replace("_x002B_", "+");
+
+            var result = UixmlLoader.FindType(typeName);
+
+            return result;
         }
 
         /// <summary>
@@ -236,7 +339,7 @@ namespace Alternet.UI
                         if (uri == XmlUtils.UIXmlNamespace)
                         {
                             var typeName = xmlReader.Name;
-                            type = UixmlLoader.FindType(typeName);
+                            type = FindTypeByName(typeName);
                             break;
                         }
                         else
@@ -257,6 +360,12 @@ namespace Alternet.UI
                 memoryStream.Seek(0, SeekOrigin.Begin);
                 reader = new StreamReader(memoryStream, Encoding.UTF8);
                 var data = new XmlSerializer(type, xRoot).Deserialize(reader);
+
+                if(data is XmlDictionaryItems xmlDictionaryItems)
+                {
+                    data = xmlDictionaryItems.AsDictionary;
+                }
+
                 return data;
             }
         }
@@ -443,6 +552,93 @@ namespace Alternet.UI
         public virtual bool HasFormat(string format)
         {
             return GetDataPresent(format);
+        }
+
+        [XmlRoot("XmlDictionaryItems")]
+        public class XmlDictionaryItems
+        {
+            const string NullableKey = "NullValue-71352CE74DAF4437BF45031D512C7489";
+
+            public XmlDictionaryItems()
+            {
+            }
+
+            [XmlArray("Items")]
+            [XmlArrayItem("Item")]
+            public BaseCollection<XmlDictionaryItem> Items { get; set; } = new();
+
+            [XmlElement("DictionaryType")]
+            public string DictionaryType { get; set; }
+
+            public XmlDictionaryItems(IDictionary dictionary, XmlWriterSettings? settings = null)
+            {
+                DictionaryType = dictionary.GetType().ToString();
+
+                settings ??= new()
+                {
+                    OmitXmlDeclaration = true,
+                    Indent = true,
+                };
+
+                foreach (var key in dictionary.Keys)
+                {
+                    var keyStringEnclosed = DataObjectToXmlString(key, settings);
+                    var valueStringEnclosed
+                        = DataObjectToXmlString(dictionary[key], settings) ?? NullableKey;
+
+                    if (keyStringEnclosed is null)
+                        continue;
+
+                    Items.Add(new XmlDictionaryItem(keyStringEnclosed, valueStringEnclosed));
+                }
+            }
+
+            [XmlIgnore]
+            public object? AsDictionary
+            {
+                get
+                {
+                    var type = FindTypeByName(DictionaryType);
+
+                    if (type is null)
+                        return null;
+                    var instance = Activator.CreateInstance(type) as IDictionary;
+                    if (instance is null)
+                        return null;
+
+                    foreach(var item in Items)
+                    {
+                        var key = DeserializeDataObjectFromXmlString(item.Key);
+                        var value = DeserializeDataObjectFromXmlString(item.Value);
+
+                        if (value?.ToString() == NullableKey)
+                            value = null;
+
+                        instance.Add(key, value);
+                    }
+
+                    return instance;
+                }
+            }
+        }
+
+        public class XmlDictionaryItem
+        {
+            public XmlDictionaryItem()
+            {
+            }
+
+            public XmlDictionaryItem(string key, string value)
+            {
+                Key = key;
+                Value = value;
+            }
+
+            [XmlElement("Key")]
+            public string Key { get; set; }
+
+            [XmlElement("Value")]
+            public string Value { get; set; }
         }
 
         internal class EmptyDataObject : DataObject
