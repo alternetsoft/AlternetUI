@@ -22,13 +22,13 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Runs the specified task synchroniously.
+        /// Runs the specified task synchronously.
         /// </summary>
         /// <param name="func"></param>
         public static void Sync(Func<Task> func) => Task.Run(func).ConfigureAwait(false);
 
         /// <summary>
-        /// Runs the specified task synchroniously and returns result.
+        /// Runs the specified task synchronously and returns result.
         /// </summary>
         /// <param name="func"></param>
         public static T Sync<T>(Func<Task<T>> func) => Task.Run(func).Result;

@@ -49,7 +49,7 @@ namespace Alternet.UI
         private class TestActionsWindow : Window
         {
             private readonly ActionsListBox listBox;
-            private readonly VirtualListBox.AddRangeController<MemberInfo> controller;
+            private readonly VirtualListBox.RangeAdditionController<MemberInfo> controller;
 
             public TestActionsWindow()
             {

@@ -35,8 +35,8 @@ namespace Alternet.UI
         };
 
         private EnumImages<SymbolKind>? images;
-        private string? lastReportedText;
-        private VirtualListBox.AddRangeController<MemberInfo>? controller;
+        private VirtualListBox.RangeAdditionController<MemberInfo>? controller;
+        private bool closeRequested;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="WindowSearchForMembers"/> class.
@@ -61,7 +61,7 @@ namespace Alternet.UI
             listBox.Parent = this;
             listBox.SelectionUnderImage = false;
 
-            textBox.TextChanged += ComboBox_TextChanged;
+            textBox.DelayedTextChanged += ComboBox_TextChanged;
 
             statusBar.Parent = this;
 
@@ -109,6 +109,7 @@ namespace Alternet.UI
         /// <inheritdoc/>
         protected override void OnClosed(EventArgs e)
         {
+            StopThread();
             base.OnClosed(e);
             App.LogIf($"{GetType()}{counter} Closed", false);
         }
@@ -116,6 +117,7 @@ namespace Alternet.UI
         /// <inheritdoc/>
         protected override void DisposeManaged()
         {
+            StopThread();
             base.DisposeManaged();
             App.LogIf($"{GetType()}{counter} Disposed", false);
         }
@@ -124,20 +126,17 @@ namespace Alternet.UI
         protected override void OnClosing(WindowClosingEventArgs e)
         {
             base.OnClosing(e);
+
+            if(controller is not null)
+            {
+                e.Cancel = true;
+
+                closeRequested = true;
+
+                StopThread();
+            }
+
             App.LogIf($"{GetType()}{counter} Closing", false);
-            SafeDisposeObject(ref controller);
-        }
-
-        /// <inheritdoc/>
-        protected override void OnIdle(EventArgs e)
-        {
-            if (lastReportedText == textBox.Text)
-                return;
-            lastReportedText = textBox.Text;
-
-            ResetListBox();
-            if (lastReportedText.Length > 0)
-                StartThread();
         }
 
         private static SymbolKind GetKind(MemberTypes memberType)
@@ -153,23 +152,40 @@ namespace Alternet.UI
             return SymbolKind.Other;
         }
 
+        private void StopThread()
+        {
+            controller?.Stop();
+            controller = null;
+        }
+
         private void ResetListBox()
         {
-            SafeDisposeObject(ref controller);
+            StopThread();
             listBox.RemoveAll();
             statusPanel?.SetText(0);
         }
 
         private void ComboBox_TextChanged(object sender, EventArgs e)
         {
-            ResetListBox();
+            if (DisposingOrDisposed)
+                return;
+            StartThread();
         }
 
         private void StartThread()
         {
             ResetListBox();
             controller = CreateController();
-            controller.Start();
+            controller?.Start(() =>
+            {
+                if (DisposingOrDisposed)
+                    return;
+                if (closeRequested)
+                {
+                    closeRequested = false;
+                    Close(WindowCloseAction.Dispose);
+                }
+            });
         }
 
         private Image? GetImage(MemberTypes memberType)
@@ -208,9 +224,15 @@ namespace Alternet.UI
             images.LoadImagesFromResource(typeof(WindowSearchForMembers).Assembly, false);
         }
 
-        private VirtualListBox.AddRangeController<MemberInfo> CreateController()
+        private VirtualListBox.RangeAdditionController<MemberInfo>? CreateController()
         {
-            var containsText = lastReportedText ?? string.Empty;
+            var containsText = textBox.Text;
+
+            if (string.IsNullOrEmpty(containsText))
+            {
+                ResetListBox();
+                return null;
+            }
 
             ListControlItem? ConvertItem(MemberInfo member)
             {
@@ -250,13 +272,13 @@ namespace Alternet.UI
                 return item;
             }
 
-            var controller = new VirtualListBox.AddRangeController<MemberInfo>(
+            var controller = new VirtualListBox.RangeAdditionController<MemberInfo>(
                 listBox,
                 () => AssemblyUtils.GetAllPublicMembers(containsText),
                 ConvertItem,
                 () =>
                 {
-                    if (IsDisposed || containsText != lastReportedText)
+                    if (IsDisposed || containsText == string.Empty)
                         return false;
                     Invoke(() =>
                     {

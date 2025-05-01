@@ -5,6 +5,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading;
+using System.Threading.Tasks;
 
 using Alternet.Drawing;
 
@@ -1171,10 +1172,9 @@ namespace Alternet.UI
                 var result = true;
                 Invoke(() =>
                 {
-                    if (!continueFunc())
+                    if (DisposingOrDisposed || !continueFunc())
                         result = false;
                     Items.AddRange(items);
-                    App.DoEvents();
                 });
                 Thread.Sleep(sleepAfterBufferMsec);
                 return result;
@@ -1287,7 +1287,7 @@ namespace Alternet.UI
         /// new items are added to it.
         /// </summary>
         /// <typeparam name="TSource">Type of the source item.</typeparam>
-        public class AddRangeController<TSource> : DisposableObject
+        public class RangeAdditionController<TSource> : DisposableObject
         {
             /// <summary>
             /// Gets or sets control on which add range operation is performed.
@@ -1340,13 +1340,19 @@ namespace Alternet.UI
             /// </summary>
             public int SleepAfterBufferMsec = 150;
 
-            private Thread? thread;
+            private const bool logControllerState = true;
+
+            private static int globalUniqueNumber;
+
+            private readonly int uniqueNumber = ++globalUniqueNumber;
+
+            private CancellationTokenSource? cts;
 
             /// <summary>
-            /// Initializes a new instance of the <see cref="AddRangeController{TSource}"/>
+            /// Initializes a new instance of the <see cref="RangeAdditionController{TSource}"/>
             /// class with the specified parameters.
             /// </summary>
-            public AddRangeController(
+            public RangeAdditionController(
                 VirtualListControl listBox,
                 Func<IEnumerable<TSource>> source,
                 Func<TSource, ListControlItem?> convertItem,
@@ -1356,81 +1362,88 @@ namespace Alternet.UI
                 SourceFunc = source;
                 ConvertItemFunc = convertItem;
                 ContinueFunc = continueFunc;
+
+                App.DebugLogIf($"{SafeName} Created.", logControllerState);
             }
 
             /// <summary>
             /// Gets name of the object safely so it will always be not empty.
             /// </summary>
-            public virtual string SafeName => Name ?? "ListBox.AddRangeController";
+            public virtual string SafeName => Name ?? ("ListBox.RangeAdditionController" + uniqueNumber);
+
+            /// <summary>
+            /// Gets a value indicating whether the cancellation has been requested for the operation.
+            /// </summary>
+            public virtual bool IsCancellationRequested
+            {
+                get
+                {
+                    return cts?.Token.IsCancellationRequested ?? true;
+                }
+            }
 
             /// <summary>
             /// Stops controller add range operation.
             /// </summary>
             public virtual void Stop()
             {
-                AsyncUtils.EndThread(ref thread);
+                cts?.Cancel();
+                cts = null;
             }
 
             /// <summary>
             /// Starts controller add range operation.
             /// </summary>
-            public virtual void Start()
+            public virtual void Start(Action? onComplete = null)
             {
                 Stop();
 
-                thread = new Thread(ThreadAction)
-                {
-                    Name = $"{SafeName}Thread",
-                    IsBackground = true,
-                };
+                cts = new();
+                var ctsCopy = cts;
 
-                thread.Start();
+                App.AddBackgroundTask(() =>
+                {
+                    Task result;
+
+                    if (DisposingOrDisposed || cts is null || cts.Token.IsCancellationRequested)
+                        result = Task.CompletedTask;
+                    else
+                        result = new Task(ThreadAction, ctsCopy.Token);
+
+                    result.ContinueWith((task) =>
+                    {
+                        Invoke(onComplete);
+                    });
+
+                    return result;
+                });
             }
 
             /// <inheritdoc/>
             protected override void DisposeManaged()
             {
                 Stop();
+                App.DebugLogIf($"{SafeName} Disposed.", logControllerState);
             }
 
             private void ThreadAction()
             {
-                void Fn()
-                {
-                    ListBox.AddItemsThreadSafe(
-                        SourceFunc(),
-                        ConvertItemFunc,
-                        () =>
-                        {
-                            if (ListBox.IsDisposed)
-                                return false;
-                            return ContinueFunc();
-                        },
-                        BufferSize,
-                        SleepAfterBufferMsec);
-                }
+                var ctsCopy = cts ?? new();
 
-                CallThreadAction(Fn);
-            }
-
-            private void CallThreadAction(Action action)
-            {
-                try
-                {
-                    action();
-                }
-                catch (ThreadInterruptedException)
-                {
-                    App.DebugIdleLogIf($"{SafeName} awoken.", IsDebugInfoLogged);
-                }
-                catch (ThreadAbortException)
-                {
-                    App.DebugIdleLogIf($"{SafeName} aborted.", IsDebugInfoLogged);
-                }
-                finally
-                {
-                    App.DebugIdleLogIf($"{SafeName} executing finally block.", IsDebugInfoLogged);
-                }
+                App.DebugLogIf($"{SafeName} Started.", logControllerState);
+                ListBox.RemoveAll();
+                ListBox.AddItemsThreadSafe(
+                    SourceFunc(),
+                    ConvertItemFunc,
+                    () =>
+                    {
+                        if (ctsCopy.Token.IsCancellationRequested || ListBox.IsDisposed)
+                            return false;
+                        return ContinueFunc();
+                    },
+                    BufferSize,
+                    SleepAfterBufferMsec);
+                App.DebugLogIf($"{SafeName} Finished.", logControllerState);
             }
         }
     }
