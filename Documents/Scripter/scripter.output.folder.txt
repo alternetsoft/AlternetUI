@@ -1,1 +1,2 @@
 C:\Users\user\AppData\Local\Temp\Alternet Scripter Intermediate Output
+C:\Users\user\AppData\Local\Temp\Alternet Scripter Generated Modules\DebuggerTest\
