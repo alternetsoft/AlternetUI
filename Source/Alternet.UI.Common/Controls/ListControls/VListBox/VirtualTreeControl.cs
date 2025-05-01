@@ -10,7 +10,7 @@ namespace Alternet.UI
     /// <summary>
     /// Represents a tree control that inherits from <see cref="VirtualListBox"/>.
     /// </summary>
-    public partial class VirtualTreeControl : Control, ITreeControlItemContainer
+    public partial class VirtualTreeControl : Border, ITreeControlItemContainer
     {
         /// <summary>
         /// Specifies the default type of buttons used in the tree view control to expand or collapse nodes.
@@ -27,7 +27,7 @@ namespace Alternet.UI
         /// </summary>
         public static int DefaultLevelMargin = 16;
 
-        private readonly VirtualListBox listBox;
+        private VirtualListBox? listBox;
         private TreeControlRootItem rootItem;
         private TreeViewButtonsKind treeButtons = TreeViewButtonsKind.Null;
         private bool needTreeChanged;
@@ -37,14 +37,7 @@ namespace Alternet.UI
         /// </summary>
         public VirtualTreeControl()
         {
-            listBox = CreateListBox();
-            ListBox.ParentFont = true;
-            ListBox.HasBorder = false;
-            ListBox.Parent = this;
             rootItem = new(this);
-            ListBox.SelectionUnderImage = true;
-            ListBox.CheckBoxVisible = true;
-            ListBox.CheckOnClick = false;
 
             ListBox.MouseDown += (s, e) =>
             {
@@ -60,13 +53,6 @@ namespace Alternet.UI
             };
 
             TreeButtons = DefaultTreeButtons;
-
-            ListBox.ContextMenuCreated += (s, e) =>
-            {
-                InitContextMenu();
-            };
-
-            BorderStyle = VirtualListBox.DefaultBorderStyle;
         }
 
         /// <summary>
@@ -132,7 +118,24 @@ namespace Alternet.UI
         /// <summary>
         /// Gets the underlying <see cref="VirtualListBox"/> used by this tree control.
         /// </summary>
-        public VirtualListBox ListBox => listBox;
+        public virtual VirtualListBox ListBox
+        {
+            get
+            {
+                if(listBox is null)
+                {
+                    listBox = CreateListBox();
+                    listBox.ParentFont = true;
+                    listBox.HasBorder = false;
+                    listBox.SelectionUnderImage = true;
+                    listBox.CheckBoxVisible = true;
+                    listBox.CheckOnClick = false;
+                    listBox.Parent = this;
+                }
+
+                return listBox;
+            }
+        }
 
         /// <summary>
         /// Gets or sets the <see cref="ImageList"/> associated with the tree control.
@@ -149,31 +152,6 @@ namespace Alternet.UI
             set
             {
                 ListBox.ImageList = value;
-            }
-        }
-
-        /// <inheritdoc/>
-        [Browsable(true)]
-        public override bool HasBorder
-        {
-            get
-            {
-                return BorderStyle != ControlBorderStyle.None;
-            }
-
-            set
-            {
-                if (HasBorder == value)
-                    return;
-                base.HasBorder = value;
-
-                DoInsideLayout(() =>
-                {
-                    if (value)
-                        BorderStyle = VirtualListBox.DefaultBorderStyle;
-                    else
-                        BorderStyle = ControlBorderStyle.None;
-                });
             }
         }
 
@@ -259,23 +237,6 @@ namespace Alternet.UI
             }
         }
 
-        /// <inheritdoc/>
-        public override ContextMenuStrip ContextMenuStrip
-        {
-            get
-            {
-                return ListBox.ContextMenuStrip;
-            }
-
-            set
-            {
-                ListBox.ContextMenuStrip = value;
-            }
-        }
-
-        /// <inheritdoc/>
-        public override bool HasContextMenu => ListBox.HasContextMenu;
-
         /// <summary>
         /// Alias for <see cref="ContextMenuStrip"/> property.
         /// </summary>
@@ -284,12 +245,12 @@ namespace Alternet.UI
         {
             get
             {
-                return ListBox.ContextMenu;
+                return base.ContextMenuStrip;
             }
 
             set
             {
-                ListBox.ContextMenu = value;
+                base.ContextMenuStrip = value;
             }
         }
 
@@ -786,6 +747,24 @@ namespace Alternet.UI
         {
             NotNullCollection<ListControlItem> collection = new(rootItem.EnumExpandedItems());
             ListBox.SetItemsFast(collection, VirtualListBox.SetItemsKind.ChangeField);
+        }
+
+        /// <inheritdoc/>
+        protected override bool GetDefaultParentBackColor()
+        {
+            return false;
+        }
+
+        /// <inheritdoc/>
+        protected override bool GetDefaultParentForeColor()
+        {
+            return false;
+        }
+
+        /// <inheritdoc/>
+        protected override void OnContextMenuCreated(EventArgs e)
+        {
+            ListBox.ContextMenuStrip = ContextMenu;
         }
 
         /// <summary>
