@@ -180,6 +180,21 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets a value indicating whether the control has columns defined.
+        /// </summary>
+        /// <value>
+        /// <c>true</c> if the control has one or more columns; otherwise, <c>false</c>.
+        /// </value>
+        [Browsable(false)]
+        public virtual bool HasColumns
+        {
+            get
+            {
+                return columns is not null && columns.Count > 0;
+            }
+        }
+
+        /// <summary>
         /// Gets or sets the collection of list control columns.
         /// </summary>
         /// <remarks>
