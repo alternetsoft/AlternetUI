@@ -18,6 +18,10 @@ namespace ControlsSample
 
         private int newItemIndex;
 
+        static TabControlPage()
+        {
+        }
+
         public TabControlPage()
         {
             DoInsideLayout(Fn);
@@ -27,9 +31,9 @@ namespace ControlsSample
                 tabControl.Parent = this;
                 InitializeComponent();
 
-                InsertPage();
-                InsertPage();
-                InsertPage();
+                var page0 = InsertPage();
+                var page1 = InsertPage();
+                var page2 = InsertPage();
 
                 tabAlignmentComboBox.AddEnumValues(TabAlignment.Top);
                 tabAlignmentComboBox.SelectedItemChanged +=
@@ -54,6 +58,28 @@ namespace ControlsSample
 
                 tabControl.TabSizeChanged += TabControl_TabSizeChanged;
                 tabControl.SelectedIndexChanged += TabControl_SelectedIndexChanged;
+
+                var button = tabControl.GetHeaderButtonAt(1);
+                if(button is not null)
+                {
+                    button.ContextMenuStrip.Add("Sample command", () => App.Log("Sample command clicked"));
+                    var item = button.ContextMenuStrip.Add(
+                        "Disabled command",
+                        () => App.Log("Disabled command clicked"));
+                    item.Enabled = false;
+                }
+
+                var button2 = tabControl.GetHeaderButton(page2);
+                if (button2 is not null)
+                {
+                    button2.ContextMenuStrip.Add(
+                        "Another sample command",
+                        () => App.Log("Another sample command clicked"));
+                    var item = button2.ContextMenuStrip.Add(
+                        "Disabled command 2",
+                        () => App.Log("Disabled command 2 clicked"));
+                    item.Enabled = false;
+                }
             }
         }
 
@@ -104,7 +130,7 @@ namespace ControlsSample
             InsertPage();
         }
 
-        private void InsertPage(int? index = null)
+        private TabPage InsertPage(int? index = null)
         {
             var s = "Page " + GenItemIndex();
             TabPage page = new() 
@@ -136,11 +162,13 @@ namespace ControlsSample
             page.Title = s;
 
             tabControl.Insert(index, page);
+
+            return page;
         }
 
         private void Page_Disposed(object? sender, EventArgs e)
         {
-            App.Log("Page Disposed");
+            App.DebugLogIf("Page Disposed", false);
         }
 
         private void ClearPagesButton_Click(object? sender, EventArgs e)
