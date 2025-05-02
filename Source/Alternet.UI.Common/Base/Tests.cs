@@ -17,6 +17,22 @@ namespace Alternet.UI.Tests
         /// Test method for the internal purposes.
         /// </summary>
         [Conditional("DEBUG")]
+        public static void TestLogHoveredControl()
+        {
+            AbstractControl.HoveredControlChanged -= LogHoveredControl;
+            AbstractControl.HoveredControlChanged += LogHoveredControl;
+
+            void LogHoveredControl(object? sender, EventArgs e)
+            {
+                var prefix = "Hovered control: ";
+                App.DebugLogReplace($"{prefix}{AbstractControl.HoveredControl?.GetType().Name ?? "null"}", prefix);
+            }
+        }
+
+        /// <summary>
+        /// Test method for the internal purposes.
+        /// </summary>
+        [Conditional("DEBUG")]
         public static void TestTransformPoint()
         {
             TransformMatrix matrix = TransformMatrix.CreateTranslation(-50, 0);

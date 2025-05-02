@@ -64,7 +64,7 @@ namespace Alternet.UI
             if (mappedEvent == WxEventIdentifiers.None)
                 return;
 
-            targetControl = GetTargetControl(e.Data.targetControl, true);
+            targetControl = GetTargetControl(e.Data.targetControl);
             timestamp = e.Data.timestamp;
             delta = e.Data.delta;
 
@@ -82,34 +82,43 @@ namespace Alternet.UI
             Native.Mouse.GlobalObject = null;
         }
 
-        private static AbstractControl? GetTargetControl(
-            IntPtr targetControlPointer,
-            bool setHoveredControl)
+        private static AbstractControl? GetTargetControl(IntPtr targetControlPointer)
         {
-            if (targetControlPointer == IntPtr.Zero)
-                return null;
+            AbstractControl? newHoveredControl = null;
 
-            var hoveredControl = AbstractControl.GetHoveredControl();
-
-            var nativeHoveredHandler = Control.RequireHandler(hoveredControl) as WxControlHandler;
-
-            if (nativeHoveredHandler is not null)
+            try
             {
-                if (nativeHoveredHandler.NativeControl.NativePointer == targetControlPointer)
-                    return hoveredControl;
+                if (targetControlPointer == IntPtr.Zero)
+                {
+                    return null;
+                }
+
+                var hoveredControl = AbstractControl.GetHoveredControl();
+
+                var nativeHoveredHandler = Control.RequireHandler(hoveredControl) as WxControlHandler;
+
+                if (nativeHoveredHandler is not null)
+                {
+                    if (nativeHoveredHandler.NativeControl.NativePointer == targetControlPointer)
+                    {
+                        newHoveredControl = hoveredControl;
+                        return hoveredControl;
+                    }
+                }
+
+                var nativeObject = NativeObject.GetFromNativePointer<NativeObject>(
+                    targetControlPointer,
+                    null);
+                if (nativeObject is not Native.Control c)
+                    return null;
+
+                newHoveredControl = WxControlHandler.NativeControlToHandler(c)?.ControlOrNull;
+                return newHoveredControl;
             }
-
-            var nobj = NativeObject.GetFromNativePointer<NativeObject>(
-                targetControlPointer,
-                null);
-            if (nobj is not Native.Control c)
-                return null;
-
-            var result = WxControlHandler.NativeControlToHandler(c)?.ControlOrNull;
-            if (setHoveredControl && result is not null)
-                AbstractControl.HoveredControl = result;
-
-            return result;
+            finally
+            {
+                AbstractControl.HoveredControl = newHoveredControl;
+            }
         }
 
         private void ReportMouseDoubleClick(MouseButton button)

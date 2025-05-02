@@ -18,13 +18,34 @@ namespace Alternet.UI
         /// </summary>
         public static bool RaiseActivatedForChildren = true;
 
-        private VisualControlStates? reportedVisualStates;
+        private static (VisualControlStates ControlState, ObjectUniqueId ControlId)? reportedVisualStates;
+
         private DelayedEvent<EventArgs> delayedTextChanged = new();
 
         /// <summary>
         /// Occurs when the layout of the various visual elements changes.
         /// </summary>
         public event EventHandler? LayoutUpdated;
+
+        /// <summary>
+        /// Gets or sets the last reported visual states of the control.
+        /// </summary>
+        /// <remarks>
+        /// This property returns the last reported visual states of the control,
+        /// which may include states such as Hovered, Focused, or Disabled.
+        /// </remarks>
+        public (VisualControlStates ControlState, ObjectUniqueId ControlId)? ReportedVisualStates
+        {
+            get
+            {
+                return reportedVisualStates;
+            }
+
+            set
+            {
+                reportedVisualStates = value;
+            }
+        }
 
         /// <summary>
         /// Raises <see cref="LayoutUpdated"/> event.
@@ -241,8 +262,18 @@ namespace Alternet.UI
             if (DisposingOrDisposed)
                 return;
             MouseRightButtonUp?.Invoke(this, e);
+
             if (HasContextMenu)
-                ShowPopupMenu(ContextMenuStrip);
+            {
+                App.AddIdleTask(() =>
+                {
+                    if (DisposingOrDisposed)
+                        return;
+
+                    ShowPopupMenu(ContextMenuStrip);
+                });
+            }
+
             OnMouseRightButtonUp(e);
 
             RaiseNotifications((n) => n.AfterMouseRightButtonUp(this, e));
@@ -574,9 +605,12 @@ namespace Alternet.UI
         {
             if (DisposingOrDisposed)
                 return;
-            if (reportedVisualStates == VisualStates)
+
+            var newVisualStates = (VisualStates, this.UniqueId);
+
+            if (reportedVisualStates == newVisualStates)
                 return;
-            reportedVisualStates = VisualStates;
+            reportedVisualStates = newVisualStates;
 
             OnVisualStateChanged(e);
             VisualStateChanged?.Invoke(this, e);
@@ -593,10 +627,11 @@ namespace Alternet.UI
         {
             if (DisposingOrDisposed)
                 return;
+/*
             var reportedHovered = reportedVisualStates?.HasFlag(VisualControlStates.Hovered);
             if (reportedHovered == IsMouseOver)
                 return;
-
+*/
             OnIsMouseOverChanged(e);
             IsMouseOverChanged?.Invoke(this, e);
             RaiseVisualStateChanged(e);

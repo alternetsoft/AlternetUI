@@ -49,7 +49,7 @@ namespace Alternet.UI
         private static int groupIndexCounter;
         private static Font? defaultFont;
         private static Font? defaultMonoFont;
-        private static AbstractControl? hoveredControl;
+        private static WeakReferenceValue<AbstractControl> weakHoveredControl = new();
         private static List<IControlNotification>? globalNotifications;
 
         private bool enabled = true;
@@ -193,13 +193,15 @@ namespace Alternet.UI
         /// </remarks>
         public static AbstractControl? HoveredControl
         {
-            get => hoveredControl;
+            get => weakHoveredControl.Value;
 
             set
             {
-                if (hoveredControl == value)
+                var oldHoveredControl = weakHoveredControl.Value;
+                if (oldHoveredControl == value)
                     return;
-                hoveredControl?.RaiseVisualStateChanged(EventArgs.Empty);
+
+                oldHoveredControl?.RaiseVisualStateChanged(EventArgs.Empty);
 
                 if (value is not null)
                 {
@@ -207,9 +209,9 @@ namespace Alternet.UI
                         value = null;
                 }
 
-                hoveredControl = value;
-                HoveredControlChanged?.Invoke(hoveredControl, EventArgs.Empty);
-                hoveredControl?.RaiseVisualStateChanged(EventArgs.Empty);
+                weakHoveredControl.Value = value;
+                HoveredControlChanged?.Invoke(value, EventArgs.Empty);
+                value?.RaiseVisualStateChanged(EventArgs.Empty);
             }
         }
 
@@ -1975,7 +1977,7 @@ namespace Alternet.UI
                     return result;
                 if (IsMouseLeftButtonDown)
                     result |= VisualControlStates.Pressed;
-                if (IsMouseOver)
+                if (IsMouseOver && HoveredControl == this)
                     result |= VisualControlStates.Hovered;
                 if (Focused)
                     result |= VisualControlStates.Focused;

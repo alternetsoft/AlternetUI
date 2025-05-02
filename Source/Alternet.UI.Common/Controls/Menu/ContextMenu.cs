@@ -136,14 +136,28 @@ namespace Alternet.UI
             if (Items.Count == 0)
                 return;
             if (control is null)
-                throw new ArgumentNullException(nameof(control));
-
-            var e = new CancelEventArgs();
-            RaiseOpening(e);
-            if (e.Cancel)
                 return;
-            Handler.Show(control, position);
-            RaiseClosing(EventArgs.Empty);
+            try
+            {
+                var e = new CancelEventArgs();
+                RaiseOpening(e);
+                if (e.Cancel)
+                    return;
+                Handler.Show(control, position);
+                RaiseClosing(EventArgs.Empty);
+            }
+            finally
+            {
+                /*
+                var hoveredControl = AbstractControl.HoveredControl;
+
+                if (hoveredControl is not null)
+                {
+                    AbstractControl.HoveredControl = null;
+                    hoveredControl.Invalidate();
+                }
+                */
+            }
         }
 
         /// <inheritdoc/>

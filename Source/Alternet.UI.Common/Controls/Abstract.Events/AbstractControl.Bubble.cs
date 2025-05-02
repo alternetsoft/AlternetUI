@@ -43,7 +43,7 @@ namespace Alternet.UI
         /// <param name="originalTarget">Control on which event is originally fired.</param>
         /// <param name="timestamp">Event time.</param>
         /// <param name="position">Mouse position.</param>
-        /// <param name="handled">Result of the event procesing.</param>
+        /// <param name="handled">Result of the event processing.</param>
         public static void BubbleMouseMove(
             AbstractControl? originalTarget,
             long timestamp,
@@ -75,7 +75,7 @@ namespace Alternet.UI
         /// <param name="timestamp">Event time.</param>
         /// <param name="delta">Mouse wheel delta value.</param>
         /// <param name="position">Mouse position.</param>
-        /// <param name="handled">Result of the event procesing.</param>
+        /// <param name="handled">Result of the event processing.</param>
         public static void BubbleMouseWheel(
             AbstractControl? originalTarget,
             long timestamp,
@@ -116,7 +116,7 @@ namespace Alternet.UI
         /// <param name="changedButton">Pressed button.</param>
         /// <param name="position">Mouse position.</param>
         /// <param name="deviceType">Device which raised the event.</param>
-        /// <param name="handled">Result of the event procesing.</param>
+        /// <param name="handled">Result of the event processing.</param>
         public static void BubbleMouseDown(
             AbstractControl? originalTarget,
             long timestamp,
@@ -155,7 +155,7 @@ namespace Alternet.UI
         /// <param name="timestamp">Event time.</param>
         /// <param name="changedButton">Pressed button.</param>
         /// <param name="position">Mouse position.</param>
-        /// <param name="handled">Result of the event procesing.</param>
+        /// <param name="handled">Result of the event processing.</param>
         public static void BubbleMouseDoubleClick(
             AbstractControl? originalTarget,
             long timestamp,
@@ -191,7 +191,7 @@ namespace Alternet.UI
         /// <param name="changedButton">Pressed button.</param>
         /// <param name="deviceType">Device which raised the event.</param>
         /// <param name="position">Mouse position.</param>
-        /// <param name="handled">Result of the event procesing.</param>
+        /// <param name="handled">Result of the event processing.</param>
         public static void BubbleMouseUp(
             AbstractControl? originalTarget,
             long timestamp,
@@ -233,7 +233,7 @@ namespace Alternet.UI
         /// <param name="key">Key code.</param>
         /// <param name="keyChar">Key char.</param>
         /// <param name="repeatCount">Key repeat count.</param>
-        /// <param name="handled">Result of the key procesing.</param>
+        /// <param name="handled">Result of the key processing.</param>
         /// <param name="keyStates">The state of the key referenced by the event. Optional.
         /// Equals <see cref="KeyStates.Down"/> if not specified.</param>
         public static void BubbleKeyDown(
@@ -286,7 +286,7 @@ namespace Alternet.UI
         /// <param name="keyChar">Key char.</param>
         /// <param name="key">Key code.</param>
         /// <param name="repeatCount">Key repeat count.</param>
-        /// <param name="handled">Result of the key procesing.</param>
+        /// <param name="handled">Result of the key processing.</param>
         /// <param name="keyStates">The state of the key referenced by the event. Optional.
         /// Equals <see cref="KeyStates.None"/> if not specified.</param>
         public static void BubbleKeyUp(
@@ -322,7 +322,7 @@ namespace Alternet.UI
         /// the specified parameters.
         /// </summary>
         /// <param name="keyChar">Character of the pressed Key.</param>
-        /// <param name="handled">Result of the key procesing.</param>
+        /// <param name="handled">Result of the key processing.</param>
         /// <param name="key">Key code.</param>
         public static void BubbleTextInput(char keyChar, out bool handled, Key key)
         {
