@@ -106,6 +106,36 @@ namespace Alternet.UI
         public override ControlTypeId ControlKind => ControlTypeId.TabControl;
 
         /// <summary>
+        /// Gets an enumerable collection of header buttons associated with the tabs in the control.
+        /// </summary>
+        /// <remarks>
+        /// Each header button corresponds to a tab in the <see cref="TabControl"/>.
+        /// </remarks>
+        [Browsable(false)]
+        public IEnumerable<SpeedButton> HeaderButtons
+        {
+            get
+            {
+                foreach (var item in Header.Tabs)
+                {
+                    yield return item.HeaderButton;
+                }
+            }
+        }
+
+        /// <summary>
+        /// Gets the count of header buttons based on the number of tabs in the header.
+        /// </summary>
+        [Browsable(false)]
+        public int HeaderButtonsCount
+        {
+            get
+            {
+                return Header.Tabs.Count;
+            }
+        }
+
+        /// <summary>
         /// Gets the collection of tab pages in this tab control.
         /// </summary>
         /// <value>A <see cref="BaseCollection{Control}"/> that contains pages
@@ -530,6 +560,30 @@ namespace Alternet.UI
             }
         }
 
+        /// <summary>
+        /// Gets inner content control with tab pages.
+        /// </summary>
+        [Browsable(false)]
+        public AbstractControl ContentsControl => cardPanel;
+
+        /// <summary>
+        /// Gets inner header control with tab labels.
+        /// </summary>
+        [Browsable(false)]
+        public AbstractControl HeaderControl => cardPanelHeader;
+
+        /// <summary>
+        /// Gets inner content control with tab pages.
+        /// </summary>
+        [Browsable(false)]
+        internal CardPanel Contents => cardPanel;
+
+        /// <summary>
+        /// Gets inner header control with tab labels.
+        /// </summary>
+        [Browsable(false)]
+        internal CardPanelHeader Header => cardPanelHeader;
+
         [Browsable(false)]
         internal new LayoutStyle? Layout
         {
@@ -581,18 +635,6 @@ namespace Alternet.UI
             {
             }
         }
-
-        /// <summary>
-        /// Gets internal control with tab pages.
-        /// </summary>
-        [Browsable(false)]
-        internal CardPanel Contents => cardPanel;
-
-        /// <summary>
-        /// Gets internal control with tab labels.
-        /// </summary>
-        [Browsable(false)]
-        internal CardPanelHeader Header => cardPanelHeader;
 
         /// <summary>
         /// Gets default interior border color as light/dark color pair.
@@ -844,6 +886,21 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Retrieves the header button associated with the specified tab page.
+        /// </summary>
+        /// <param name="control">The control for which to retrieve the header button.</param>
+        /// <returns>The <see cref="SpeedButton"/> associated with the specified control,
+        /// or <c>null</c> if no button is found.</returns>
+        public virtual SpeedButton? GetHeaderButton(AbstractControl? control)
+        {
+            var index = GetTabIndex(control);
+            var tab = Header.GetTab(index);
+            if (tab is null)
+                return null;
+            return tab.HeaderButton;
+        }
+
+        /// <summary>
         /// Gets index of the tab page or <c>null</c> if control is not found in tabs.
         /// </summary>
         /// <param name="control"></param>
@@ -906,6 +963,18 @@ namespace Alternet.UI
                 return;
             item.ImageSet = image;
             item.DisabledImageSet = disabledImage;
+        }
+
+        /// <summary>
+        /// Retrieves the header button associated with the specified tab index.
+        /// </summary>
+        /// <param name="index">The zero-based index of the tab whose header button
+        /// is to be retrieved.</param>
+        /// <returns>The <see cref="SpeedButton"/> associated with the specified tab
+        /// index, or <c>null</c> if no button is found.</returns>
+        public SpeedButton? GetHeaderButtonAt(int? index)
+        {
+            return Header.GetTab(index)?.HeaderButton;
         }
 
         /// <summary>
