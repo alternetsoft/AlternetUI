@@ -395,6 +395,7 @@ namespace Alternet.UI
                 item.Text = ConstructLogMessage(id, message);
                 item.SvgImage = GetImage(kind);
                 item.SvgImageSize = ToolBarUtils.GetDefaultImageSize(this);
+                ListBox.RefreshLastRow();
 
                 SelectLastItemAndScroll();
                 return item;
