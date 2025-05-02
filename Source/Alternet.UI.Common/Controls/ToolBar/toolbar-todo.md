@@ -2,5 +2,4 @@
 - public bool IsBottom
 - public bool IsRight
 - public bool NoDivider
-- public bool IsVertical
 - public Collection<ToolbarItem> Items

@@ -198,6 +198,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AllQuickStarts", "..\..\..\
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Maui.Scripter", "Maui.Scripter", "{3F75BEA6-1088-4505-A7B2-133971CEB90A}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Python.Runtime", "..\..\..\..\pythonnet\src\runtime\Python.Runtime.csproj", "{6861E25A-8820-F0FA-2AB8-45CD6745BD7E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -1222,6 +1224,18 @@ Global
 		{7FCB69F0-E4C6-6639-AF0A-9FD07DC7AD2B}.Release|x86.ActiveCfg = Release|Any CPU
 		{7FCB69F0-E4C6-6639-AF0A-9FD07DC7AD2B}.Release|x86.Build.0 = Release|Any CPU
 		{7FCB69F0-E4C6-6639-AF0A-9FD07DC7AD2B}.Release|x86.Deploy.0 = Release|Any CPU
+		{6861E25A-8820-F0FA-2AB8-45CD6745BD7E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6861E25A-8820-F0FA-2AB8-45CD6745BD7E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6861E25A-8820-F0FA-2AB8-45CD6745BD7E}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{6861E25A-8820-F0FA-2AB8-45CD6745BD7E}.Debug|x64.Build.0 = Debug|Any CPU
+		{6861E25A-8820-F0FA-2AB8-45CD6745BD7E}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{6861E25A-8820-F0FA-2AB8-45CD6745BD7E}.Debug|x86.Build.0 = Debug|Any CPU
+		{6861E25A-8820-F0FA-2AB8-45CD6745BD7E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6861E25A-8820-F0FA-2AB8-45CD6745BD7E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6861E25A-8820-F0FA-2AB8-45CD6745BD7E}.Release|x64.ActiveCfg = Release|Any CPU
+		{6861E25A-8820-F0FA-2AB8-45CD6745BD7E}.Release|x64.Build.0 = Release|Any CPU
+		{6861E25A-8820-F0FA-2AB8-45CD6745BD7E}.Release|x86.ActiveCfg = Release|Any CPU
+		{6861E25A-8820-F0FA-2AB8-45CD6745BD7E}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -1311,6 +1325,7 @@ Global
 		{1E2ECE25-8F4B-83F9-246E-B000AD38978B} = {9BCEA6B1-9A35-4AE7-98FD-26B4D0D2DE9E}
 		{36E1842D-859F-ECA2-E487-C91753484FCB} = {9BCEA6B1-9A35-4AE7-98FD-26B4D0D2DE9E}
 		{7FCB69F0-E4C6-6639-AF0A-9FD07DC7AD2B} = {3F75BEA6-1088-4505-A7B2-133971CEB90A}
+		{6861E25A-8820-F0FA-2AB8-45CD6745BD7E} = {B2A9BC6A-3E80-4D51-A37B-9DA316EABDC0}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {F95CA668-BA7A-4B96-BAC6-3B0B1B4A50DC}

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
@@ -14,7 +15,7 @@ namespace Alternet.UI
     /// Implements main control of the Find and Replace dialogs.
     /// </summary>
     [ControlCategory("MenusAndToolbars")]
-    public partial class FindReplaceControl : ToolBarSet
+    public partial class FindReplaceControl : ToolBarSet, IFindReplaceControlHandler
     {
         /// <summary>
         /// Gets or sets default border color of the find text editor.
@@ -44,20 +45,17 @@ namespace Alternet.UI
 
         private readonly ComboBox scopeEdit = new()
         {
-            HasBorder = false,
             Margin = (2, 0, 2, 0),
             VerticalAlignment = VerticalAlignment.Center,
         };
 
         private readonly ComboBox findEdit = new()
         {
-            HasBorder = false,
             VerticalAlignment = VerticalAlignment.Center,
         };
 
         private readonly ComboBox replaceEdit = new()
         {
-            HasBorder = false,
             VerticalAlignment = VerticalAlignment.Center,
         };
 
@@ -464,6 +462,40 @@ namespace Alternet.UI
                     scopeEdit.SelectedItem = null;
                 }
             }
+        }
+
+        /// <summary>
+        /// Represents the search history.
+        /// </summary>
+        public virtual BaseCollection<object> SearchList
+        {
+            get => FindEdit.Items;
+        }
+
+        /// <summary>
+        /// Represents the replace history.
+        /// </summary>
+        public virtual BaseCollection<object> ReplaceList
+        {
+            get => ReplaceEdit.Items;
+        }
+
+        /// <summary>
+        /// Gets or sets the text to find in the search operation.
+        /// </summary>
+        public string TextToFind
+        {
+            get => FindEdit.Text;
+            set => FindEdit.Text = value;
+        }
+
+        /// <summary>
+        /// Gets or sets the text to replace in the replace operation.
+        /// </summary>
+        public string TextToReplace
+        {
+            get => ReplaceEdit.Text;
+            set => ReplaceEdit.Text = value;
         }
 
         /// <summary>
