@@ -797,6 +797,19 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Refreshes the last row in the control.
+        /// </summary>
+        /// <remarks>
+        /// This method checks if there are any items in the control. If there are, it refreshes
+        /// the last row by invalidating its area and triggering a repaint.
+        /// </remarks>
+        public virtual void RefreshLastRow()
+        {
+            if(Count > 0)
+                RefreshRow(Count - 1);
+        }
+
+        /// <summary>
         /// Selects item on the next page.
         /// </summary>
         public virtual void SelectItemOnNextPage()
