@@ -18,6 +18,10 @@ namespace Alternet.UI
         {
         }
 
+        /// <summary>
+        /// Called when the <see cref="ContextMenuCreated" /> event is raised.
+        /// </summary>
+        /// <param name="e">An <see cref="EventArgs" /> that contains the event data.</param>
         [EditorBrowsable(EditorBrowsableState.Advanced)]
         protected virtual void OnContextMenuCreated(EventArgs e)
         {
