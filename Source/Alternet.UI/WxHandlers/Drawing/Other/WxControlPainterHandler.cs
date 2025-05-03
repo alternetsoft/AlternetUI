@@ -440,7 +440,7 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
-        /// Draws a combobox dropdown button.
+        /// Draws a combo box dropdown button.
         /// </summary>
         /// <param name="control">Control in which drawing will be performed.</param>
         /// <param name="dc">Drawing context.</param>

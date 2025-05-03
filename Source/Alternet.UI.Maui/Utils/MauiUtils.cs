@@ -586,6 +586,11 @@ namespace Alternet.UI
         /// </summary>
         public static bool CloseApplication()
         {
+            /*
+                Environment.Exit(0);
+                Microsoft.Maui.Controls.Application.Current?.Quit();
+            */
+
             try
             {
                 var windows = Application.Current?.Windows;

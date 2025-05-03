@@ -386,7 +386,7 @@ namespace Alternet.UI
                 }
             });
 
-            Fn("Log metrics: NativeControlPainter", () =>
+            Fn("Log metrics: ControlPaint", () =>
             {
                 ControlPaint.LogPartSize(AppUtils.FirstWindowChildOrEmpty);
             });

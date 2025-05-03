@@ -171,7 +171,7 @@ namespace Alternet.UI
         /// <inheritdoc/>
         public virtual void ExitMainLoop()
         {
-            Microsoft.Maui.Controls.Application.Current?.Quit();
+            MauiUtils.CloseApplication();
         }
 
         /// <inheritdoc/>
@@ -258,7 +258,7 @@ namespace Alternet.UI
         /// <inheritdoc/>
         public virtual void Exit()
         {
-            Microsoft.Maui.Controls.Application.Current?.Quit();
+            MauiUtils.CloseApplication();
         }
 
         /// <inheritdoc/>
@@ -270,7 +270,7 @@ namespace Alternet.UI
         /// <inheritdoc/>
         public virtual IControlPainterHandler CreateControlPainterHandler()
         {
-            throw new NotImplementedException();
+            return new PlessControlPainterHandler();
         }
 
         /// <inheritdoc/>

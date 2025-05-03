@@ -148,7 +148,7 @@ namespace Alternet.UI
         /// <inheritdoc/>
         public virtual IControlPainterHandler CreateControlPainterHandler()
         {
-            throw new NotImplementedException();
+            return new PlessControlPainterHandler();
         }
 
         /// <inheritdoc/>
