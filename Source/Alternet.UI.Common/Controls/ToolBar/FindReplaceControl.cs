@@ -18,16 +18,9 @@ namespace Alternet.UI
     public partial class FindReplaceControl : ToolBarSet, IFindReplaceControlHandler
     {
         /// <summary>
-        /// Gets or sets default border color of the find text editor.
-        /// This property contains default value for the light color theme.
+        /// Gets or sets the default minimum width of the edit controls in the Find and Replace dialogs.
         /// </summary>
-        public static Color DefaultFindEditBorderColorLight = Color.Empty;
-
-        /// <summary>
-        /// Gets or sets default border color of the find text editor.
-        /// This property contains default value for the light color theme.
-        /// </summary>
-        public static Color DefaultFindEditBorderColorDark = Color.Empty;
+        public static int DefaultMinEditWidth = 150;
 
         /// <summary>
         /// Gets or sets default border color of the find text editor
@@ -43,19 +36,24 @@ namespace Alternet.UI
         /// </summary>
         public static Color DefaultNotFoundBorderDark = (255, 153, 164);
 
+        private static Color? defaultFindEditBorderColorLight;
+        private static Color? defaultFindEditBorderColorDark;
+
         private readonly ComboBox scopeEdit = new()
         {
-            Margin = (2, 0, 2, 0),
+            HasBorder = false,
             VerticalAlignment = VerticalAlignment.Center,
         };
 
         private readonly ComboBox findEdit = new()
         {
+            HasBorder = false,
             VerticalAlignment = VerticalAlignment.Center,
         };
 
         private readonly ComboBox replaceEdit = new()
         {
+            HasBorder = false,
             VerticalAlignment = VerticalAlignment.Center,
         };
 
@@ -77,6 +75,12 @@ namespace Alternet.UI
         private readonly ListControlItem scopeSelectionOnly = new()
         {
             Text = CommonStrings.Default.FindScopeSelectionOnly,
+        };
+
+        private readonly Border scopeEditBorder = new()
+        {
+            Margin = (2, 0, 2, 0),
+            VerticalAlignment = VerticalAlignment.Center,
         };
 
         private readonly Border findEditBorder = new()
@@ -115,13 +119,12 @@ namespace Alternet.UI
         {
             findEditBorder.BorderColor = FindEditBorderColor;
             replaceEditBorder.BorderColor = FindEditBorderColor;
+            scopeEditBorder.BorderColor = FindEditBorderColor;
 
             DoInsideLayout(Fn);
 
             void Fn()
             {
-                const int minEditWidth = 150;
-
                 scopeEdit.IsEditable = false;
                 UpdateFindScope();
 
@@ -161,7 +164,9 @@ namespace Alternet.UI
                     IdUseRegularExpressions,
                     KnownShortcuts.FindReplaceControlKeys.UseRegularExpressions);
 
-                IdScopeEdit = OptionsToolBar.AddControl(scopeEdit);
+                scopeEdit.Parent = scopeEditBorder;
+
+                IdScopeEdit = OptionsToolBar.AddControl(scopeEditBorder);
 
                 /* Find ToolBar */
 
@@ -171,7 +176,7 @@ namespace Alternet.UI
 
                 findEdit.EmptyTextHint = EmptyTextHints.FindEdit;
 
-                findEditBorder.MinWidth = minEditWidth;
+                findEditBorder.MinWidth = DefaultMinEditWidth;
 
                 findEditBorder.HorizontalAlignment = HorizontalAlignment.Fill;
 
@@ -202,7 +207,7 @@ namespace Alternet.UI
 
                 /* Replace ToolBar */
 
-                replaceEditBorder.MinWidth = minEditWidth;
+                replaceEditBorder.MinWidth = DefaultMinEditWidth;
                 replaceEditBorder.HorizontalAlignment = HorizontalAlignment.Fill;
 
                 IdReplaceEmptyButton1 = ReplaceToolBar.AddSpeedBtn();
@@ -385,6 +390,40 @@ namespace Alternet.UI
             /// </summary>
             /// <param name="text"></param>
             void SetReplaceText(string text);
+        }
+
+        /// <summary>
+        /// Gets or sets default border color of the find text editor.
+        /// This property contains default value for the light color theme.
+        /// </summary>
+        public static Color DefaultFindEditBorderColorLight
+        {
+            get
+            {
+                return defaultFindEditBorderColorLight ?? DefaultColors.GetBorderColor(false);
+            }
+
+            set
+            {
+                defaultFindEditBorderColorLight = value;
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets default border color of the find text editor.
+        /// This property contains default value for the light color theme.
+        /// </summary>
+        public static Color DefaultFindEditBorderColorDark
+        {
+            get
+            {
+                return defaultFindEditBorderColorDark ?? DefaultColors.GetBorderColor(true);
+            }
+
+            set
+            {
+                defaultFindEditBorderColorDark = value;
+            }
         }
 
         /// <summary>

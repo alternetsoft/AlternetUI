@@ -34,7 +34,7 @@ namespace Alternet.UI
         /// This property returns the last reported visual states of the control,
         /// which may include states such as Hovered, Focused, or Disabled.
         /// </remarks>
-        public (VisualControlStates ControlState, ObjectUniqueId ControlId)? ReportedVisualStates
+        public static (VisualControlStates ControlState, ObjectUniqueId ControlId)? ReportedVisualStates
         {
             get
             {
