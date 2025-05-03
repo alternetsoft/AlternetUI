@@ -1340,7 +1340,7 @@ namespace Alternet.UI
             /// </summary>
             public int SleepAfterBufferMsec = 150;
 
-            private const bool logControllerState = true;
+            private const bool logControllerState = false;
 
             private static int globalUniqueNumber;
 
