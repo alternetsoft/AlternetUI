@@ -387,6 +387,19 @@ namespace Alternet.UI
         public static bool HasLogMessageHandler => LogMessage is not null;
 
         /// <summary>
+        /// Gets the location of the currently executing assembly.
+        /// </summary>
+        public static string ExecutingAssemblyLocation
+        {
+            get
+            {
+                var location = AssemblyUtils.GetLocationSafe(Assembly.GetExecutingAssembly());
+                location ??= string.Empty;
+                return location;
+            }
+        }
+
+        /// <summary>
         /// Gets the path for the executable file that started the application, not including
         /// the executable name.</summary>
         /// <returns>
@@ -396,9 +409,7 @@ namespace Alternet.UI
         {
             get
             {
-                string location = Assembly.GetExecutingAssembly().Location;
-                string s = Path.GetDirectoryName(location)!;
-                return s;
+                return Path.GetDirectoryName(ExecutingAssemblyLocation);
             }
         }
 
@@ -527,10 +538,14 @@ namespace Alternet.UI
                 {
                     string location;
 
-                    if (App.IsWindowsOS && File.Exists(@"e:\logToFile.on"))
-                        location = @"e:\alternet-ui";
-                    else
-                        location = Assembly.GetExecutingAssembly().Location;
+                    location = App.ExecutingAssemblyLocation;
+
+                    if (DebugUtils.IsDebugDefined)
+                    {
+                        if (App.IsWindowsOS && File.Exists(@"e:\logToFile.on"))
+                            location = @"e:\alternet-ui";
+                    }
+
                     logFilePath = Path.ChangeExtension(location, ".log");
                 }
 
