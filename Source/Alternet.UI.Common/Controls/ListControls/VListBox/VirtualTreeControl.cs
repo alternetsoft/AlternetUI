@@ -325,7 +325,7 @@ namespace Alternet.UI
             else
             {
                 var index = ListBox.Items.IndexOf(item);
-                ListBox.ScrollIntoView(index);
+                ListBox.EnsureVisible(index);
             }
         }
 
@@ -334,6 +334,7 @@ namespace Alternet.UI
         /// </summary>
         public virtual void SelectItem(TreeControlItem? item)
         {
+            item?.ExpandAllParents();
             ScrollIntoView(item);
             SelectedItem = item;
         }
@@ -531,7 +532,9 @@ namespace Alternet.UI
         /// </summary>
         public virtual void RaiseAfterExpand(UI.TreeControlItem item)
         {
+            var selectedItems = ListBox.SelectedItems;
             TreeChanged();
+            ListBox.SelectedItems = selectedItems;
 
             if (AfterExpand is not null)
             {
@@ -544,7 +547,9 @@ namespace Alternet.UI
         /// </summary>
         public virtual void RaiseAfterCollapse(UI.TreeControlItem item)
         {
+            var selectedItems = ListBox.SelectedItems;
             TreeChanged();
+            ListBox.SelectedItems = selectedItems;
 
             if (AfterCollapse is not null)
             {
@@ -635,6 +640,7 @@ namespace Alternet.UI
                 return;
             if (!item.HasItems)
                 return;
+
             item.IsExpanded = !item.IsExpanded;
         }
 
