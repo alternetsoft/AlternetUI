@@ -166,7 +166,7 @@ namespace Alternet.UI
             dc.FillRectangle(scaleGradientBrush, scaleBounds);
             */
 
-            dc.DrawBorderWithBrush(DefaultColors.GetBorderBrush(this), bounds);
+            dc.DrawBorderWithBrush(DefaultColors.GetControlBorderBrush(this), bounds);
                 
             var center = GetControlCenter();
             double controlRadius = GetControlRadius();

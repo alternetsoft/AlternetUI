@@ -83,7 +83,7 @@ namespace ControlsSample
                 }
 
 #if DEBUG
-                Graphics.DebugElementId = treeView.RootItem.FirstChild?.UniqueId;
+                /*Graphics.DebugElementId = treeView.RootItem.FirstChild?.UniqueId;*/
 #endif
                 FormUtils.InvalidateAll();
             });
@@ -164,20 +164,22 @@ namespace ControlsSample
             }
         }
 
-        public void AddNewChildItem()
+        public void AddItem(TreeControlItem? root)
         {
             var item = new Alternet.UI.TreeControlItem();
             item.Text = "Item " + Alternet.UI.LogUtils.GenNewId();
             item.SvgImage = Alternet.UI.KnownColorSvgImages.ImgLogo;
-            treeView.AddChild(treeView.SelectedItem, item, true);
+            treeView.AddChild(root, item, true);
+        }
+
+        public void AddNewChildItem()
+        {
+            AddItem(treeView.SelectedItem ?? treeView.RootItem);
         }
 
         public void AddNewItem()
         {
-            var item = new Alternet.UI.TreeControlItem();
-            item.Text = "Item " + Alternet.UI.LogUtils.GenNewId();
-            item.SvgImage = Alternet.UI.KnownColorSvgImages.ImgLogo;
-            treeView.Add(item, true);
+            AddItem(treeView.SelectedItem?.Parent ?? treeView.RootItem);
         }
 
         public void RenameSelectedItem()

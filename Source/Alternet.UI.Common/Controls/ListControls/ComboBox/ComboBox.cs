@@ -53,7 +53,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets default vertical offset of the item's image for the items with images.
         /// </summary>
-        public static Coord DefaultImageVerticalOffset = 3;
+        public static Coord DefaultImageVerticalOffset = 2;
 
         /// <summary>
         /// Gets or sets default distance between image and text in the item.

@@ -714,7 +714,7 @@ namespace Alternet.UI
 
             var minItemHeight = ListControlItem.GetMinHeight(item, container);
 
-            size.Height = Math.Max(size.Height, minItemHeight);
+            size.Height = MathUtils.RoundUpAndIncrementIfOdd(Math.Max(size.Height, minItemHeight));
             return size;
         }
 
@@ -727,7 +727,10 @@ namespace Alternet.UI
                 = container?.Defaults.MinItemHeight ?? VirtualListBox.DefaultMinItemHeight;
             if (item is null)
                 return containerMinHeight;
-            return Math.Max(item.MinHeight, containerMinHeight);
+
+            var itemMinHeight = item.MinHeight;
+
+            return Math.Max(itemMinHeight, containerMinHeight);
         }
 
         /// <summary>
@@ -1030,7 +1033,7 @@ namespace Alternet.UI
                 control,
                 info.CheckRect,
                 info.CheckState,
-                info.PartState);
+                info.SvgState);
         }
 
         /// <summary>
@@ -1114,10 +1117,14 @@ namespace Alternet.UI
 #endif
             }
 
-            if (DebugUtils.IsDebugDefined)
+#if DEBUG
+            prm.DrawDebugCorners = DrawDebugCornersOnElements;
+
+            if (DrawDebugCornersOnElements)
             {
-                prm.DrawDebugCorners = DrawDebugCornersOnElements;
+                BorderSettings.DrawDesignCorners(e.Graphics, prm.Rect, BorderSettings.DebugBorderGreen);
             }
+#endif
 
             e.Graphics.DrawLabel(ref prm);
             e.LabelMetrics = prm;
@@ -1189,7 +1196,7 @@ namespace Alternet.UI
                 rect.Y + textMargin.Top + imageMargin);
 
             var imageRect = new RectD(imageLocation, imageSize.Value);
-            var centeredImageRect = imageRect.CenterIn(rect, false, true);
+            var centeredImageRect = imageRect.CenterIn(rect, centerHorz: false, centerVert: true);
 
             var itemRect = rect;
 

@@ -18,6 +18,15 @@ namespace Alternet.UI
     /// </summary>
     public class WxApplicationHandler : DisposableObject, IApplicationHandler
     {
+        /// <summary>  
+        /// Gets or sets a value indicating whether to use the internal control painter.  
+        /// </summary>  
+        /// <remarks>  
+        /// This property determines whether the application uses the internal control painter  
+        /// or an external one.  
+        /// </remarks>  
+        public static bool UseInternalControlPainter = true;
+
         private const string RequireVersion = "3.2.7";
 
         private static readonly int[] eventIdentifiers = new int[(int)WxEventIdentifiers.Max + 1];
@@ -361,6 +370,8 @@ namespace Alternet.UI
         /// <inheritdoc/>
         public IControlPainterHandler CreateControlPainterHandler()
         {
+            if (UseInternalControlPainter)
+                return new PlessControlPainterHandler();
             return new WxControlPainterHandler();
         }
 

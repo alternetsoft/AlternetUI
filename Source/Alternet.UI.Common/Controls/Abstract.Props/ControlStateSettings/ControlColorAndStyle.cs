@@ -9,7 +9,7 @@ using Alternet.Drawing;
 namespace Alternet.UI
 {
     /// <summary>
-    /// Defines color and style settings for dark and light themse.
+    /// Defines color and style settings for dark and light theme.
     /// </summary>
     public class ControlColorAndStyle
     {

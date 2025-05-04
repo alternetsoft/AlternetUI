@@ -38,6 +38,10 @@ namespace ControlsSample
             allowMultipleSelectionCheckBox.IsChecked =
                 checkListBox.SelectionMode == ListBoxSelectionMode.Multiple;
             App.LogIf($"CheckListBoxDemo: Constructor done", false);
+
+#if DEBUG
+            Graphics.DebugElementId = checkListBox.BaseItems[1].UniqueId;
+#endif
         }
 
         private void EditorButton_Click(object? sender, System.EventArgs e)

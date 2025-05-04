@@ -181,10 +181,10 @@ namespace Alternet.Drawing
         /// </summary>
         /// <param name="control">The user control for which to get the border color.</param>
         /// <returns>The color for the border of the specified user control.</returns>
-        public static Color GetBorderColor(AbstractControl control)
+        public static Color GetControlBorderColor(AbstractControl control)
         {
             var color = control.Borders?.GetObjectOrNull(VisualControlState.Normal)?.Color;
-            color ??= ColorUtils.GetTabControlInteriorBorderColor(control.IsDarkBackground);
+            color ??= GetBorderColor(control.IsDarkBackground);
             return color;
         }
 
@@ -193,11 +193,11 @@ namespace Alternet.Drawing
         /// </summary>
         /// <param name="control">The user control for which to get the border brush.</param>
         /// <returns>The brush for the border of the specified user control.</returns>
-        public static Brush GetBorderBrush(AbstractControl control)
+        public static Brush GetControlBorderBrush(AbstractControl control)
         {
             var brush = control.Background
                 ?? control.BackgroundColor?.AsBrush
-                ?? GetBorderColor(control).AsBrush;
+                ?? GetControlBorderColor(control).AsBrush;
             return brush;
         }
     }

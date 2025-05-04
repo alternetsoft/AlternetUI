@@ -42,11 +42,35 @@ namespace Alternet.UI
         /// <param name="value">Value.</param>
         /// <param name="min">Minimal value.</param>
         /// <returns></returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static long ValueOrMin(long? value, long min = default)
         {
             if (value is null || value <= min)
                 return min;
             return value.Value;
+        }
+
+        /// <summary>
+        /// Rounds up the given coordinate value to the nearest integer and
+        /// increments it by 1 if the result is odd.
+        /// </summary>
+        /// <param name="value">The coordinate value to process.</param>
+        /// <returns>An integer that is the rounded-up value incremented by 1 if it is odd.</returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static int RoundUpAndIncrementIfOdd(Coord value)
+        {
+            return IncrementIfOdd((int)Math.Ceiling(value));
+        }
+
+        /// <summary>
+        /// Increments the given number by 1 if it is odd; otherwise, returns the number unchanged.
+        /// </summary>
+        /// <param name="number">The integer to check and possibly increment.</param>
+        /// <returns>The incremented number if it is odd; otherwise, the original number.</returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static int IncrementIfOdd(int number)
+        {
+            return number % 2 != 0 ? number + 1 : number;
         }
 
         /// <summary>
@@ -411,6 +435,7 @@ namespace Alternet.UI
         /// <param name="min">The lower bound of the result.</param>
         /// <param name="max">The upper bound of the result.</param>
         /// <returns></returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static int Clamp(int v, int min, int max)
         {
             return Math.Min(Math.Max(v, min), max);
@@ -423,6 +448,7 @@ namespace Alternet.UI
         /// <param name="min">The lower bound of the result.</param>
         /// <param name="max">The upper bound of the result.</param>
         /// <returns></returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static double ClampD(double v, double min, double max)
         {
             return Math.Min(Math.Max(v, min), max);
@@ -435,6 +461,7 @@ namespace Alternet.UI
         /// <param name="min">The lower bound of the result.</param>
         /// <param name="max">The upper bound of the result.</param>
         /// <returns></returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Coord ClampCoord(Coord v, Coord min, Coord max)
         {
             return Math.Min(Math.Max(v, min), max);

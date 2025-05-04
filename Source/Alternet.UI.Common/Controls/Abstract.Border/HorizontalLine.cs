@@ -65,7 +65,7 @@ namespace Alternet.UI
         public override void DefaultPaint(PaintEventArgs e)
         {
             var rect = e.ClipRectangle;
-            var brush = DefaultColors.GetBorderBrush(this);
+            var brush = DefaultColors.GetControlBorderBrush(this);
             e.Graphics.DrawHorzLine(brush, rect.TopLeft, rect.Width, LineHeight);
         }
     }

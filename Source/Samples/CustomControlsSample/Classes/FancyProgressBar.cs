@@ -64,7 +64,7 @@ namespace Alternet.UI
 
             */
 
-            dc.DrawBorderWithBrush(DefaultColors.GetBorderBrush(this), bounds);
+            dc.DrawBorderWithBrush(DefaultColors.GetControlBorderBrush(this), bounds);
 
             dc.Clip = new Region(scaleBounds);
 

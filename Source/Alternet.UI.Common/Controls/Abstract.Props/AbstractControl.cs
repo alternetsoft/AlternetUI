@@ -3031,11 +3031,12 @@ namespace Alternet.UI
         {
             get
             {
-                var foregroundColor = RealForegroundColor;
                 var backgroundColor = RealBackgroundColor;
 
                 if (backgroundColor.IsDark())
                     return true;
+
+                var foregroundColor = RealForegroundColor;
 
                 if (foregroundColor.IsEmpty || backgroundColor.IsEmpty)
                     return SystemSettings.IsUsingDarkBackground;

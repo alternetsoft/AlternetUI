@@ -34,7 +34,7 @@ namespace Alternet.UI
         /// used for optimizations *only*.
         /// </summary>
         /// <returns>
-        /// bool - the result of the AreClose comparision.
+        /// bool - the result of the AreClose comparison.
         /// </returns>
         /// <param name="value1"> The first double to compare. </param>
         /// <param name="value2"> The second double to compare. </param>
@@ -103,7 +103,7 @@ namespace Alternet.UI
         /// used for optimizations *only*.
         /// </summary>
         /// <returns>
-        /// bool - the result of the LessThan comparision.
+        /// bool - the result of the LessThan comparison.
         /// </returns>
         /// <param name="value1"> The first double to compare. </param>
         /// <param name="value2"> The second double to compare. </param>
@@ -125,7 +125,7 @@ namespace Alternet.UI
         /// used for optimizations *only*.
         /// </summary>
         /// <returns>
-        /// bool - the result of the GreaterThan comparision.
+        /// bool - the result of the GreaterThan comparison.
         /// </returns>
         /// <param name="value1"> The first double to compare. </param>
         /// <param name="value2"> The second double to compare. </param>
@@ -147,7 +147,7 @@ namespace Alternet.UI
         /// used for optimizations *only*.
         /// </summary>
         /// <returns>
-        /// bool - the result of the LessThanOrClose comparision.
+        /// bool - the result of the LessThanOrClose comparison.
         /// </returns>
         /// <param name="value1"> The first double to compare. </param>
         /// <param name="value2"> The second double to compare. </param>
@@ -169,7 +169,7 @@ namespace Alternet.UI
         /// used for optimizations *only*.
         /// </summary>
         /// <returns>
-        /// bool - the result of the GreaterThanOrClose comparision.
+        /// bool - the result of the GreaterThanOrClose comparison.
         /// </returns>
         /// <param name="value1"> The first double to compare. </param>
         /// <param name="value2"> The second double to compare. </param>
@@ -183,7 +183,7 @@ namespace Alternet.UI
         /// but this is faster.
         /// </summary>
         /// <returns>
-        /// bool - the result of the AreClose comparision.
+        /// bool - the result of the AreClose comparison.
         /// </returns>
         /// <param name="value"> The double to compare to 1. </param>
         public static bool IsOne(double value)
@@ -196,7 +196,7 @@ namespace Alternet.UI
         /// but this is faster.
         /// </summary>
         /// <returns>
-        /// bool - the result of the AreClose comparision.
+        /// bool - the result of the AreClose comparison.
         /// </returns>
         /// <param name="value"> The double to compare to 0. </param>
         public static bool IsZero(double value)
