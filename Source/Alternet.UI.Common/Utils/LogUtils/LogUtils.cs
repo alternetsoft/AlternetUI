@@ -261,6 +261,52 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Creates a <see cref="TreeControlItem"/> for logging an exception.
+        /// </summary>
+        /// <param name="e">The exception to log.</param>
+        /// <param name="kind">The kind of log item. Default is <see cref="LogItemKind.Error"/>.</param>
+        /// <param name="allowReplace">Indicates whether replacing the last log item with the
+        /// same text is allowed. Currently not implemented.</param>
+        /// <returns>A <see cref="TreeControlItem"/> representing the logged exception.</returns>
+        public static TreeControlItem CreateLogItemForException(
+            Exception e,
+            LogItemKind kind = LogItemKind.Error,
+            bool allowReplace = false)
+        {
+            var asString = e.ToString();
+
+            if (e is BaseException baseException)
+            {
+                if (baseException.AdditionalInformation is not null)
+                    asString += Environment.NewLine + baseException.AdditionalInformation;
+            }
+
+            var separator = $"{SectionSeparator}";
+            LogToExternalIfAllowed(
+                $"{separator}{Environment.NewLine}{asString}{Environment.NewLine}{separator}",
+                kind);
+
+            var prefix = "Error";
+            if (kind != LogItemKind.Error)
+                prefix = "Warning";
+
+            var s = $"{prefix} '{e.GetType().Name}': <b>{e.Message}</b>. [Double click...]";
+
+            TreeControlItem item = new(s);
+            item.TextHasBold = true;
+            item.Tag = asString;
+            item.DoubleClickAction = () =>
+            {
+                App.AddIdleTask(() =>
+                {
+                    App.ShowExceptionWindow(e, null, true, false);
+                });
+            };
+
+            return item;
+        }
+
+        /// <summary>
         /// Logs <see cref="Exception"/> information.
         /// </summary>
         /// <param name="kind">Message kind. Optional.
@@ -276,42 +322,20 @@ namespace Alternet.UI
             if (e == App.LastUnhandledException)
                 return;
 
-            var asString = e.ToString();
-
-            if (e is BaseException baseException)
-            {
-                if (baseException.AdditionalInformation is not null)
-                    asString += Environment.NewLine + baseException.AdditionalInformation;
-            }
-
-            var separator = $"{SectionSeparator}";
-            LogToExternalIfAllowed(
-                $"{separator}{Environment.NewLine}{asString}{Environment.NewLine}{separator}",
-                kind);
-
             try
             {
-                var prefix = "Error";
-                if (kind != LogItemKind.Error)
-                    prefix = "Warning";
-
-                var s = $"{prefix} '{e.GetType().Name}': <b>{e.Message}</b>. [Double click...]";
-
-                TreeControlItem item = new(s);
-                item.TextHasBold = true;
-                item.Tag = asString;
-                item.DoubleClickAction = () =>
+                var item = CreateLogItemForException(e, kind, allowReplace);
+                if(e.InnerException is not null)
                 {
-                    App.AddIdleTask(() =>
-                    {
-                        App.ShowExceptionWindow(e, null, true, false);
-                    });
-                };
+                    var innerItem = CreateLogItemForException(e.InnerException, kind);
+                    item.Add(innerItem);
+                }
 
                 App.AddLogItem(item, kind);
             }
-            catch
+            catch (Exception exception)
             {
+                BaseObject.Nop(exception);
             }
         }
 
@@ -822,6 +846,14 @@ namespace Alternet.UI
                         text += "\n" + s;
                     }
                 }
+
+                if(e.InnerException is not null)
+                {
+                    text += "\n" + LogUtils.SectionSeparator + "\n";
+                    text += "Inner exception: \n";
+
+                    text += GetExceptionMessageText(e.InnerException) + "\n";
+                }
             }
 
             if (additionalInfo is not null)
@@ -863,7 +895,7 @@ namespace Alternet.UI
             foreach (Assembly asm in AppDomain.CurrentDomain.GetAssemblies())
             {
                 AssemblyName name = asm.GetName();
-                string? location = asm.Location;
+                string? location = AssemblyUtils.GetLocationSafe(asm);
                 string? fileVer = "n/a";
 
                 try
@@ -947,7 +979,7 @@ namespace Alternet.UI
         /// <summary>
         /// Implements log item.
         /// </summary>
-        public class LogItem : BaseObject
+        public class LogItem : BaseObjectWithAttr
         {
             /// <summary>
             /// Gets or sets message of the log item.
