@@ -357,6 +357,21 @@ namespace Alternet.UI
             return e;
         }
 
+        /// <summary>
+        /// Does nothing.
+        /// </summary>
+        public static void Nop()
+        {
+        }
+
+        /// <summary>
+        /// Does nothing.
+        /// </summary>
+        /// <param name="exception"></param>
+        public static void Nop(Exception? exception)
+        {
+        }
+
         /// <inheritdoc/>
         [Browsable(false)]
         public virtual void Required()
