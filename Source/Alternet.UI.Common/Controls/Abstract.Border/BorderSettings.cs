@@ -48,6 +48,8 @@ namespace Alternet.UI
         public static Color DefaultCommonBorderColor = SystemColors.GrayText;
 
         private static BorderSettings? debugBorder;
+        private static BorderSettings? debugBorderBlue;
+        private static BorderSettings? debugBorderGreen;
 
         private readonly BorderSideSettings left = new();
         private readonly BorderSideSettings top = new();
@@ -88,7 +90,7 @@ namespace Alternet.UI
         public event EventHandler<PaintEventArgs>? Paint;
 
         /// <summary>
-        /// Default border settings.
+        /// Get border settings for the default debug border.
         /// </summary>
         public static BorderSettings DebugBorder
         {
@@ -96,6 +98,30 @@ namespace Alternet.UI
             {
                 return debugBorder
                     ??= Default.WithColor(DefaultDebugBorderColor ?? LightDarkColors.Red);
+            }
+        }
+
+        /// <summary>
+        /// Get border settings for the green debug border.
+        /// </summary>
+        public static BorderSettings DebugBorderGreen
+        {
+            get
+            {
+                return debugBorderGreen
+                    ??= Default.WithColor(DefaultDebugBorderColor ?? LightDarkColors.Green);
+            }
+        }
+
+        /// <summary>
+        /// Get border settings for the blue debug border.
+        /// </summary>
+        public static BorderSettings DebugBorderBlue
+        {
+            get
+            {
+                return debugBorderBlue
+                    ??= Default.WithColor(DefaultDebugBorderColor ?? LightDarkColors.Blue);
             }
         }
 
