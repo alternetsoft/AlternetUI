@@ -554,6 +554,29 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Safely retrieves the location of the specified assembly.
+        /// This method catches all exception raised by <see cref="Assembly.Location"/>.
+        /// </summary>
+        /// <param name="assembly">The assembly whose location is to be retrieved.</param>
+        /// <returns>
+        /// The location of the assembly as a string, or <c>null</c> if the location cannot be determined.
+        /// </returns>
+        public static string? GetLocationSafe(Assembly? assembly)
+        {
+            try
+            {
+                if (assembly is null || assembly.IsDynamic)
+                    return null;
+                return assembly.Location;
+            }
+            catch (Exception e)
+            {
+                BaseObject.Nop(e);
+                return null;
+            }
+        }
+
+        /// <summary>
         /// Compares two specified <see cref="EventInfo"/> objects by their names
         /// and returns an
         /// integer that indicates their relative position in the sort order.
