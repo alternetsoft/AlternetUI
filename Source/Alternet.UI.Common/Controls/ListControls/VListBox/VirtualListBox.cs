@@ -1196,9 +1196,15 @@ namespace Alternet.UI
         {
             if (index < 0 || index >= Count)
                 return false;
+
             if (IsItemVisible(index))
+            {
+                if (index >= (GetVisibleEnd() - 1))
+                    DoActionScrollLineDown();
                 return true;
-            var newRow = FindFirstVisibleFromLast(index, true);
+            }
+
+            var newRow = FindFirstVisibleFromLast(index, full: true);
             var result = ScrollToRow(newRow);
             return result;
         }
@@ -1225,26 +1231,6 @@ namespace Alternet.UI
             checkRect.Inflate(2);
             var isOverCheck = checkRect.Contains(position);
             return isOverCheck ? itemIndex : null;
-        }
-
-        /// <summary>
-        /// Scrolls item into the view so it will be fully visible.
-        /// </summary>
-        /// <param name="index">Index of the item.</param>
-        public virtual void ScrollIntoView(int index)
-        {
-            if (index < 0 || index >= Count)
-                return;
-
-            if (!IsItemVisible(index))
-            {
-                ScrollToRow(index);
-            }
-            else
-            {
-                if (index == GetVisibleEnd())
-                    DoActionScrollLineDown();
-            }
         }
 
         /// <summary>

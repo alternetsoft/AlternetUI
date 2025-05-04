@@ -250,6 +250,7 @@ namespace Alternet.Drawing
             var foreColor = prm.ForegroundColor;
             var backColor = prm.BackgroundColor;
             var isVertical = prm.IsVertical;
+            var drawDebugCorners = prm.DrawDebugCorners;
 
             if (image is not null)
             {
@@ -262,6 +263,11 @@ namespace Alternet.Drawing
                     Draw = (dc, rect) =>
                     {
                         dc.DrawImage(image, rect.Location);
+
+#if DEBUG
+                        if (drawDebugCorners)
+                            BorderSettings.DrawDesignCorners(dc, rect, BorderSettings.DebugBorderBlue);
+#endif
                     },
                     Alignment = GetElementAlignment(),
                 };
@@ -322,6 +328,11 @@ namespace Alternet.Drawing
                     {
                         DrawTextWithFontStyle(parsed, rect.Location, font, foreColor, backColor);
                     }
+
+#if DEBUG
+                    if (drawDebugCorners)
+                        BorderSettings.DrawDesignCorners(dc, rect, BorderSettings.DebugBorderBlue);
+#endif
                 },
                 Alignment = GetElementAlignment(),
             };
@@ -374,11 +385,23 @@ namespace Alternet.Drawing
 
             prm.ResultSizes = elementSizes;
 
-            var sumSize = SizeD.Sum(elementSizes);
             var elementDistance = prm.Distance ?? SpeedButton.DefaultImageLabelDistance;
             prm.Distance = elementDistance;
             Coord sumDistance = elementDistance * (length - 1);
-            var size = sumSize + sumDistance;
+
+            var sumSize = SizeD.Sum(elementSizes);
+            var maxSize = SizeD.MaxWidthHeights(elementSizes);
+
+            SizeD size;
+
+            if (prm.IsVertical)
+            {
+                size = (maxSize.Width, sumSize.Height + sumDistance);
+            }
+            else
+            {
+                size = (sumSize.Width + sumDistance, maxSize.Height);
+            }
 
             RectD beforeAlign = (prm.Rect.Location, size);
 
@@ -388,6 +411,13 @@ namespace Alternet.Drawing
                 prm.Alignment.Horizontal,
                 prm.Alignment.Vertical,
                 shrinkSize: true);
+
+#if DEBUG
+            if (drawDebugCorners)
+            {
+                BorderSettings.DrawDesignCorners(this, afterAlign, BorderSettings.DebugBorder);
+            }
+#endif
 
             prm.ResultBounds = afterAlign;
 
@@ -418,8 +448,11 @@ namespace Alternet.Drawing
                 else
                 {
 #if DEBUG
-                    if(length > 1 && DebugElementId == prm.DebugId && prm.DebugId is not null)
+                    if(length > 1)
                     {
+                        if(DebugElementId == prm.DebugId && prm.DebugId is not null)
+                        {
+                        }
                     }
 #endif
                     var elementAfterAlign = AlignUtils.AlignRectInRect(
@@ -440,9 +473,12 @@ namespace Alternet.Drawing
                 if (!visible)
                     return;
                 element.Draw(this, rect);
+
+#if DEBUG
                 if (!drawDebugCorners)
                     return;
                 BorderSettings.DrawDesignCorners(this, rect, BorderSettings.DebugBorder);
+#endif
             }
 
             return afterAlign;

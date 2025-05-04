@@ -209,7 +209,18 @@ namespace Alternet.UI
         /// Same as <see cref="SelectedIndices"/>.
         /// </summary>
         [Browsable(false)]
-        public IReadOnlyList<int> SelectedIndexes => SelectedIndices;
+        public IReadOnlyList<int> SelectedIndexes
+        {
+            get
+            {
+                return SelectedIndices;
+            }
+
+            set
+            {
+                SelectedIndices = value;
+            }
+        }
 
         /// <summary>
         /// Gets 'Tag' property of the selected item if it is <see cref="BaseObjectWithAttr"/>.
@@ -250,6 +261,18 @@ namespace Alternet.UI
             get
             {
                 return SelectedIndexes.Select(x => Items[x]).ToArray();
+            }
+
+            set
+            {
+                if(value is null || value.Count == 0)
+                {
+                    SelectedIndexes = [];
+                    return;
+                }
+
+                var indexes = ListUtils.IndexOfRange(Items, value).ToArray();
+                SelectedIndexes = indexes;
             }
         }
 
