@@ -977,7 +977,7 @@ namespace Alternet.UI
         {
             if (isRelative)
             {
-                string location = Assembly.GetExecutingAssembly().Location;
+                string location = App.ExecutingAssemblyLocation;
                 string s = Path.GetDirectoryName(location)!;
                 string s2 = Path.Combine(s, path);
                 path = s2;
@@ -1017,21 +1017,6 @@ namespace Alternet.UI
                 Factory.ThrowError(1);
                 return string.Empty;
             }
-
-            /*
-            if (cmdName == "Screenshot")
-            {
-                string location = Assembly.GetExecutingAssembly().Location;
-                string s = Path.GetDirectoryName(location)!;
-
-                var screenshotFilename = s + @"\screenshot.bmp";
-                if (args.Length == 0)
-                    return string.Empty;
-                Control? control = args[0] as Control;
-                control?.Handler.SaveScreenshot(screenshotFilename);
-                return screenshotFilename;
-            }
-            */
 
             return Factory.DoCommand(cmdName, args);
         }

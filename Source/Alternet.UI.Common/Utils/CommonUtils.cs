@@ -129,7 +129,7 @@ namespace Alternet.UI
         /// with directory separator char at the end.</returns>
         public static string GetAppFolder()
         {
-            string location = Assembly.GetExecutingAssembly().Location;
+            string location = App.ExecutingAssemblyLocation;
             string s = Path.GetDirectoryName(location)!;
             return PathUtils.AddDirectorySeparatorChar(s);
         }

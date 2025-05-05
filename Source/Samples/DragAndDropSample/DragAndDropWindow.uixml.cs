@@ -126,9 +126,11 @@ namespace DragAndDropSample
                 result.SetText("Test data string.");
 
             if (filesFormatCheckBox.IsChecked)
+            {
                 result.SetFiles(
-                    (Assembly.GetEntryAssembly() ?? throw new Exception()).Location,
-                    typeof(App).Assembly.Location);
+                    AssemblyUtils.GetLocationSafe(Assembly.GetEntryAssembly()) ?? "file1.txt",
+                    AssemblyUtils.GetLocationSafe(typeof(App).Assembly) ?? "file2.dat");
+            }
 
             if (bitmapFormatCheckBox.IsChecked)
                 result.SetBitmap(testBitmap);

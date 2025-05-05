@@ -41,7 +41,7 @@ namespace ControlsSample
                 "\n",
             };
 
-            var location = Assembly.GetExecutingAssembly().Location;
+            var location = App.ExecutingAssemblyLocation;
             var logFilePath = Path.ChangeExtension(location, ".log");
 
             var msg = obj?.ToString() ?? string.Empty;

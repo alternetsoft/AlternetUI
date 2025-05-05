@@ -97,7 +97,7 @@ namespace Alternet.UI
             string GetDllPath(string? subFolder)
             {
                 var assemblyDirectory
-                    = Path.GetDirectoryName(typeof(OSUtils).Assembly.Location)
+                    = Path.GetDirectoryName(AssemblyUtils.GetLocationSafe(typeof(OSUtils).Assembly))
                     ?? PathUtils.GetAppFolder();
                 var moduleName = nativeModuleNameWithExt;
                 string result;

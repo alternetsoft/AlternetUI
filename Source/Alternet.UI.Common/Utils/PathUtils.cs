@@ -250,7 +250,7 @@ namespace Alternet.UI
         /// <returns></returns>
         public static string GetExecutingAssemblyWithNewExt(string ext)
         {
-            string sPath1 = Assembly.GetExecutingAssembly().Location;
+            string sPath1 = App.ExecutingAssemblyLocation;
             string sPath2 = Path.ChangeExtension(sPath1, ext);
             return sPath2;
         }
