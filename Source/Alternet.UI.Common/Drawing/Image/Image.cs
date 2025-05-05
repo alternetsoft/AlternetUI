@@ -89,7 +89,13 @@ namespace Alternet.Drawing
         /// Gets default <see cref="BitmapType"/> value for the current operating system.
         /// </summary>
         /// <returns></returns>
-        public static BitmapType DefaultBitmapType => GraphicsFactory.Handler.GetDefaultBitmapType();
+        public static BitmapType DefaultBitmapType
+        {
+            get
+            {
+                return GraphicsFactory.Handler.GetDefaultBitmapType();
+            }
+        }
 
         /// <summary>
         /// Gets or sets list of extensions (including ".") which can be used to filter out
@@ -639,6 +645,26 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
+        /// Creates an <see cref="Image"/> from a Base64-encoded string.
+        /// </summary>
+        /// <param name="base64str">The Base64-encoded string containing the image data.</param>
+        /// <returns>An <see cref="Image"/> instance if the decoding is successful;
+        /// otherwise, <c>null</c>.</returns>
+        public static Image? FromBase64String(string base64str)
+        {
+            var stream = StreamUtils.ConvertBase64ToStream(base64str);
+            try
+            {
+                Bitmap image = new(stream);
+                return image;
+            }
+            catch
+            {
+                return null;
+            }
+        }
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="Image"/> class
         /// from the specified url which points to svg file or resource.
         /// </summary>
@@ -1129,6 +1155,22 @@ namespace Alternet.Drawing
             if (Immutable)
                 throw new Exception($"Assign(SKBitmap) is not possible on the immutable image.");
             Handler.Assign(bitmap);
+        }
+
+        /// <summary>  
+        /// Converts this image to a Base64-encoded string in the specified format.  
+        /// </summary>  
+        /// <param name="bitmapType">The format in which the image should be encoded.</param>  
+        /// <param name="quality">The quality of the image encoding. Optional.
+        /// If not specified, <see cref="DefaultSaveQuality"/> is used.</param>  
+        /// <returns>A Base64-encoded string representation of the image.</returns>  
+        public virtual string ToBase64String(BitmapType bitmapType, int? quality = null)
+        {
+            var memStream = new MemoryStream();
+            Save(memStream, bitmapType, quality);
+            memStream.Seek(0, SeekOrigin.Begin);
+            var result = StreamUtils.ConvertStreamToBase64(memStream);
+            return result;
         }
 
         /// <summary>
