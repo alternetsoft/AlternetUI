@@ -94,6 +94,28 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Converts a Base64 encoded string to a <see cref="MemoryStream"/>.
+        /// </summary>
+        /// <param name="base64String">The Base64 encoded string to convert.</param>
+        /// <returns>A <see cref="MemoryStream"/> containing the decoded data.</returns>
+        public static MemoryStream ConvertBase64ToStream(string base64String)
+        {
+            byte[] byteArray = Convert.FromBase64String(base64String);
+            MemoryStream memoryStream = new(byteArray);
+            return memoryStream;
+        }
+
+        /// <summary>
+        /// Converts a <see cref="MemoryStream"/> to a Base64 encoded string.
+        /// </summary>
+        /// <param name="stream">The <see cref="MemoryStream"/> to convert.</param>
+        /// <returns>A Base64 encoded string representing the content of the stream.</returns>
+        public static string ConvertStreamToBase64(MemoryStream stream)
+        {
+            return Convert.ToBase64String(stream.ToArray());
+        }
+
+        /// <summary>
         /// Compares two memory streams using byte to byte comparison.
         /// </summary>
         /// <param name="stream1">First stream to compare.</param>
