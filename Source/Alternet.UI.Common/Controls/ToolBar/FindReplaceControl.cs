@@ -15,7 +15,7 @@ namespace Alternet.UI
     /// Implements main control of the Find and Replace dialogs.
     /// </summary>
     [ControlCategory("MenusAndToolbars")]
-    public partial class FindReplaceControl : ToolBarSet, IFindReplaceControlHandler
+    public partial class FindReplaceControl : ToolBarSet
     {
         /// <summary>
         /// Gets or sets the default minimum width of the edit controls in the Find and Replace dialogs.
@@ -588,6 +588,38 @@ namespace Alternet.UI
                 {
                     scopeEdit.SelectedItem = null;
                 }
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets a hint shown in an empty unfocused find text editor.
+        /// </summary>
+        public virtual string? FindEditEmptyTextHint
+        {
+            get
+            {
+                return FindEdit.EmptyTextHint;
+            }
+
+            set
+            {
+                FindEdit.EmptyTextHint = value;
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets a hint shown in an empty unfocused replace text editor.
+        /// </summary>
+        public virtual string? ReplaceEditEmptyTextHint
+        {
+            get
+            {
+                return ReplaceEdit.EmptyTextHint;
+            }
+
+            set
+            {
+                ReplaceEdit.EmptyTextHint = value;
             }
         }
 
