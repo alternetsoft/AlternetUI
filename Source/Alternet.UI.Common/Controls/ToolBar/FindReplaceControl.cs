@@ -427,6 +427,30 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets the find editor control as <see cref="IControl"/>.
+        /// </summary>
+        [Browsable(false)]
+        public IControl FindEditor
+        {
+            get
+            {
+                return FindEdit;
+            }
+        }
+
+        /// <summary>
+        /// Gets the replace editor control as <see cref="IControl"/>.
+        /// </summary>
+        [Browsable(false)]
+        public IControl ReplaceEditor
+        {
+            get
+            {
+                return ReplaceEdit;
+            }
+        }
+
+        /// <summary>
         /// Gets search scope as <see cref="SearchScope"/>.
         /// </summary>
         [Browsable(false)]
@@ -620,6 +644,25 @@ namespace Alternet.UI
             set
             {
                 ReplaceEdit.EmptyTextHint = value;
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether the scope edit control is enabled.
+        /// </summary>
+        /// <value>
+        /// <c>true</c> if the scope edit control is enabled; otherwise, <c>false</c>.
+        /// </value>
+        public virtual bool IsScopeEditEnabled
+        {
+            get
+            {
+                return ScopeEdit.Enabled;
+            }
+
+            set
+            {
+                ScopeEdit.Enabled = value;
             }
         }
 
@@ -1389,6 +1432,14 @@ namespace Alternet.UI
                 OnClickUseRegularExpressions))
                 return true;
             return false;
+        }
+
+        /// <summary>
+        /// Selects all the text in the find editor control.
+        /// </summary>
+        public void SelectAllTextInFindEditor()
+        {
+            FindEdit.SelectAllText();
         }
 
         /// <summary>
