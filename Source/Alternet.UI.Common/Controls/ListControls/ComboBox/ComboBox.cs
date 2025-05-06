@@ -179,7 +179,7 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Gets or sets defaults which are used when items are painted in the popup listbox
+        /// Gets or sets defaults which are used when items are painted in the popup list box
         /// in the case when item is <see cref="ListControlItem"/> and owner draw mode is turned on.
         /// </summary>
         [Browsable(false)]
@@ -744,7 +744,7 @@ namespace Alternet.UI
         /// <param name="addToItems">Optional function which returns whether to add
         /// specified enum value to the items.</param>
         /// <remarks>
-        /// Property must have the <see cref="Enum"/> type. Value of the binded
+        /// Property must have the <see cref="Enum"/> type. Value of the bound
         /// property will be changed automatically after <see cref="SelectedItem"/>
         /// is changed.
         /// </remarks>
@@ -930,7 +930,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets suggested rectangles of the item's image and text.
         /// </summary>
-        /// <param name="e">Item painting paramaters.</param>
+        /// <param name="e">Item painting parameters.</param>
         /// <returns></returns>
         public virtual (RectD ImageRect, RectD TextRect) GetItemImageRect(
             ComboBoxItemPaintEventArgs e)
@@ -1063,7 +1063,7 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Default item painter for the ownerdraw <see cref="ComboBox"/> items.
+        /// Default item painter for the owner draw <see cref="ComboBox"/> items.
         /// </summary>
         public class DefaultItemPainter : IComboBoxItemPainter
         {

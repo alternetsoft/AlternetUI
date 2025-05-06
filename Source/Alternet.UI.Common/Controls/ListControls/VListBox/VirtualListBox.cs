@@ -34,6 +34,11 @@ namespace Alternet.UI
     public partial class VirtualListBox : VirtualListControl, IListControl
     {
         /// <summary>
+        /// Indicates whether the list box controls use internal scrollbars.
+        /// </summary>
+        public static bool DefaultUseInternalScrollBars = false && DebugUtils.IsDebugDefinedAndAttached;
+
+        /// <summary>
         /// Specifies the default border style for controls.
         /// By default, it equals <see cref="ControlBorderStyle.Theme"/>.
         /// </summary>
@@ -54,6 +59,10 @@ namespace Alternet.UI
         private int firstVisibleItem;
         private ScrollBarSettings? horizontalScrollBarSettings;
         private ScrollBarSettings? verticalScrollBarSettings;
+        private InteriorDrawable? interior;
+        private RectD paintRectangle;
+        private ScrollBarInfo vertScrollBarInfo = new ();
+        private ScrollBarInfo horzScrollBarInfo = new ();
 
         /// <summary>
         /// Initializes a new instance of the <see cref="VirtualListBox"/> class.
@@ -70,12 +79,24 @@ namespace Alternet.UI
         /// </summary>
         public VirtualListBox()
         {
-            BorderStyle = DefaultBorderStyle;
+            var internalScrollBars = App.IsMaui || DefaultUseInternalScrollBars;
+
+            if (!internalScrollBars)
+            {
+                BorderStyle = DefaultBorderStyle;
+                IsScrollable = true;
+            }
+
             UserPaint = true;
             SuggestedSize = 200;
-            IsScrollable = true;
+
             BackColor = DefaultColors.ControlBackColor;
             ForeColor = DefaultColors.ControlForeColor;
+
+            if (internalScrollBars)
+            {
+                Interior?.Required();
+            }
         }
 
         /// <summary>
@@ -260,18 +281,28 @@ namespace Alternet.UI
         {
             get
             {
-                return BorderStyle != ControlBorderStyle.None;
+                if(interior is null)
+                    return BorderStyle != ControlBorderStyle.None;
+                return interior.HasBorder;
             }
 
             set
             {
                 if (HasBorder == value)
                     return;
-                base.HasBorder = value;
-                if (value)
-                    BorderStyle = DefaultBorderStyle;
+
+                if(interior is null)
+                {
+                    base.HasBorder = value;
+                    if (value)
+                        BorderStyle = DefaultBorderStyle;
+                    else
+                        BorderStyle = ControlBorderStyle.None;
+                }
                 else
-                    BorderStyle = ControlBorderStyle.None;
+                {
+                    interior.HasBorder = value;
+                }
             }
         }
 
@@ -373,6 +404,24 @@ namespace Alternet.UI
         {
             get => ContextMenuStrip;
             set => ContextMenuStrip = value;
+        }
+
+        /// <summary>
+        /// Gets control interior element (border and scrollbars).
+        /// </summary>
+        internal virtual InteriorDrawable Interior
+        {
+            get
+            {
+                if (interior is null)
+                {
+                    interior = new(IsDarkBackground);
+                    AddNotification(interior.Notification);
+                    Invalidate();
+                }
+
+                return interior;
+            }
         }
 
         /// <inheritdoc cref="StringSearch.FindStringEx(string?, int?, bool, bool)"/>
@@ -556,7 +605,7 @@ namespace Alternet.UI
 
             MeasureItemEventArgs e = new(MeasureCanvas, 0);
 
-            var sWindow = ClientSize.Height;
+            var sWindow = GetPaintRectangle().Height;
 
             // go upwards until we arrive at a unit such that unitLast is not visible
             // any more when it is shown
@@ -686,7 +735,7 @@ namespace Alternet.UI
                 return null;
 
             MeasureItemEventArgs e = new(MeasureCanvas, 0);
-            RectD itemRect = (0, 0, ClientSize.Width, 0);
+            RectD itemRect = (0, 0, GetPaintRectangle().Width, 0);
 
             while (line <= n)
             {
@@ -765,7 +814,7 @@ namespace Alternet.UI
                 orientSize += e.ItemHeight;
             }
 
-            RectD rect = (0, orientPos, ClientSize.Width, orientSize);
+            RectD rect = (0, orientPos, GetPaintRectangle().Width, orientSize);
             Invalidate(rect);
         }
 
@@ -784,7 +833,7 @@ namespace Alternet.UI
             MeasureItemEventArgs e = new(MeasureCanvas, row);
             MeasureItemSize(e);
 
-            RectD rect = (0, 0, ClientSize.Width, e.ItemHeight);
+            RectD rect = (0, 0, GetPaintRectangle().Width, e.ItemHeight);
 
             for (int n = GetVisibleBegin(); n < row; ++n)
             {
@@ -1009,7 +1058,7 @@ namespace Alternet.UI
             }
 
             MeasureItemEventArgs e = new(MeasureCanvas);
-            var sWindow = ClientSize.Height;
+            var sWindow = GetPaintRectangle().Height;
             Coord totalHeight = 0;
             var firstItem = GetVisibleBegin();
 
@@ -1047,24 +1096,14 @@ namespace Alternet.UI
             if (DisposingOrDisposed)
                 return;
 
-            TransformMatrix matrix = TransformMatrix.CreateTranslation(-scrollOffset, 0);
-
-            var r = e.ClipRectangle;
-            r.Width += scrollOffset;
-            e.ClipRectangle = r;
-
-            bool fullPaint = true;
-
             var dc = e.Graphics;
 
-            RectD rectUpdate;
+            dc.FillRectangle(RealBackgroundColor.AsBrush, ClientRectangle);
 
-            if (fullPaint)
-                rectUpdate = e.ClipRectangle;
-            else
-                rectUpdate = GetUpdateClientRect();
+            TransformMatrix matrix = TransformMatrix.CreateTranslation(-scrollOffset, 0);
 
-            dc.FillRectangle(RealBackgroundColor.AsBrush, rectUpdate);
+            var r = GetPaintRectangle();
+            r.Width += scrollOffset;
 
             RectD rectRow = RectD.Empty;
             rectRow.Width = r.Width;
@@ -1075,18 +1114,33 @@ namespace Alternet.UI
             DrawItemEventArgs drawItemArgs = new(dc);
 
             dc.PushTransform(matrix);
-
-            for (int line = GetVisibleBegin(); line < lineMax; line++)
+            try
             {
-                measureItemArgs.Index = line;
-                MeasureItemSize(measureItemArgs);
+                PaintRows();
+            }
+            finally
+            {
+                dc.Pop();
+            }
 
-                var hRow = measureItemArgs.ItemHeight;
+            if (interior is not null)
+            {
+                interior.VertPosition = VertScrollBarInfo;
+                interior.HorzPosition = HorzScrollBarInfo;
+                interior.Draw(this, dc);
+            }
 
-                rectRow.Height = hRow;
-
-                if (fullPaint || rectRow.IntersectsWith(rectUpdate))
+            void PaintRows()
+            {
+                for (int line = GetVisibleBegin(); line < lineMax; line++)
                 {
+                    measureItemArgs.Index = line;
+                    MeasureItemSize(measureItemArgs);
+
+                    var hRow = measureItemArgs.ItemHeight;
+
+                    rectRow.Height = hRow;
+
                     var isCurrentItem = IsCurrent(line);
                     var isSelectedItem = IsSelected(line);
 
@@ -1142,20 +1196,10 @@ namespace Alternet.UI
                         DrawItemBackground(itemPaintArgs);
                         DrawItemForeground(itemPaintArgs);
                     }
-                }
-                else
-                {
-                    if (!fullPaint)
-                    {
-                        if (rectRow.Top > rectUpdate.Bottom)
-                            break;
-                    }
-                }
 
-                rectRow.Top += hRow;
+                    rectRow.Top += hRow;
+                }
             }
-
-            dc.Pop();
         }
 
         /// <summary>
@@ -1326,7 +1370,7 @@ namespace Alternet.UI
                 return;
             }
 
-            Coord sWindow = ClientSize.Height;
+            Coord sWindow = GetPaintRectangle().Height;
 
             var visibleBegin = GetVisibleBegin();
             var visibleEnd = GetVisibleEnd(out Coord maxWidth, out var visibleHeight);
@@ -1438,6 +1482,42 @@ namespace Alternet.UI
                 Refresh();
         }
 
+        /// <inheritdoc/>
+        public override ScrollBarInfo GetScrollBarInfo(bool isVertical)
+        {
+            if(interior is null)
+                return base.GetScrollBarInfo(isVertical);
+            if (isVertical)
+            {
+                return vertScrollBarInfo;
+            }
+            else
+            {
+                return horzScrollBarInfo;
+            }
+        }
+
+        /// <inheritdoc/>
+        public override void SetScrollBarInfo(bool isVertical, ScrollBarInfo value)
+        {
+            if (interior is null)
+            {
+                base.SetScrollBarInfo(isVertical, value);
+                return;
+            }
+
+            if (isVertical)
+            {
+                vertScrollBarInfo = value;
+            }
+            else
+            {
+                horzScrollBarInfo = value;
+            }
+
+            RaiseNotifications((n) => n.AfterSetScrollBarInfo(this, isVertical, value));
+        }
+
         /// <summary>
         /// Simulates the key press event by creating and dispatching a <see cref="KeyEventArgs"/>.
         /// </summary>
@@ -1478,10 +1558,37 @@ namespace Alternet.UI
             base.OnMouseDoubleClick(e);
         }
 
+        /// <summary>
+        /// Gets the rectangle that represents the paintable area of the control.
+        /// </summary>
+        /// <returns>
+        /// A <see cref="RectD"/> representing the bounds of the paintable area within the control.
+        /// </returns>
+        protected virtual RectD GetPaintRectangle()
+        {
+            var clientR = ClientRectangle;
+
+            if (interior is null)
+                return clientR;
+
+            if (interior.Bounds == clientR)
+                return paintRectangle;
+
+            interior.Bounds = clientR;
+
+            var rectangles = interior.GetLayoutRectangles(this);
+            paintRectangle = rectangles[InteriorDrawable.HitTestResult.ClientRect];
+
+            return paintRectangle;
+        }
+
         /// <inheritdoc/>
         protected override void OnSizeChanged(EventArgs e)
         {
             base.OnSizeChanged(e);
+
+            GetPaintRectangle();
+
             UpdateScrollBars(false);
         }
 
@@ -1863,6 +1970,19 @@ namespace Alternet.UI
         {
             base.OnLostFocus(e);
             Invalidate();
+        }
+
+        /// <inheritdoc/>
+        protected override void OnSystemColorsChanged(EventArgs e)
+        {
+            base.OnSystemColorsChanged(e);
+
+            if (interior is not null && interior.ScrollBarTheme is not null)
+            {
+                interior.SetThemeMetrics(
+                    interior.ScrollBarTheme.Value,
+                    IsDarkBackground);
+            }
         }
 
         /// <inheritdoc/>

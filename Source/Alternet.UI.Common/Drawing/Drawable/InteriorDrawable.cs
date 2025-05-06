@@ -44,9 +44,11 @@ namespace Alternet.Drawing
         /// <summary>
         /// Initializes a new instance of the <see cref="InteriorDrawable"/> class.
         /// </summary>
-        public InteriorDrawable()
+        public InteriorDrawable(bool? isDark = null)
         {
-            SetThemeMetrics(ScrollBar.KnownTheme.MauiAuto, SystemSettings.AppearanceIsDark);
+            isDark ??= SystemSettings.AppearanceIsDark;
+
+            SetThemeMetrics(ScrollBar.KnownTheme.MauiAuto, isDark.Value);
         }
 
         /// <summary>
