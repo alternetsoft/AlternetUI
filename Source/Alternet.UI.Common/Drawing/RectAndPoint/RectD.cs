@@ -285,6 +285,17 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
+        /// Gets a value indicating whether the rectangle is not empty.
+        /// </summary>
+        public readonly bool NotEmpty
+        {
+            get
+            {
+                return width > 0 && height > 0;
+            }
+        }
+
+        /// <summary>
         /// Tests whether this <see cref='RectD'/> has a <see cref='Width'/>
         /// or a <see cref='Height'/> less than or equal to 0.
         /// </summary>
