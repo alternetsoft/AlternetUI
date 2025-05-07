@@ -92,6 +92,16 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Determines whether the specified double value is an even number.
+        /// </summary>
+        /// <param name="value">The double value to check.</param>
+        /// <returns>True if the value is an even number; otherwise, false.</returns>
+        public static bool IsEven(double value)
+        {
+            return value % 1 == 0 && value % 2 == 0;
+        }
+
+        /// <summary>
         /// LessThan - Returns whether or not the first double is less than the second double.
         /// That is, whether or not the first is strictly less than *and* not within epsilon of
         /// the other number.  Note that this epsilon is proportional to the numbers themselves

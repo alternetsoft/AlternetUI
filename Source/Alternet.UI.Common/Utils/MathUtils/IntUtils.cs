@@ -11,6 +11,29 @@ namespace Alternet.UI
     public static class IntUtils
     {
         /// <summary>
+        /// Determines whether two integers have the same evenness (both even or both odd).
+        /// </summary>
+        /// <param name="a">The first integer to compare.</param>
+        /// <param name="b">The second integer to compare.</param>
+        /// <returns><c>true</c> if both integers are either even
+        /// or odd; otherwise, <c>false</c>.</returns>
+        public static bool IsEqualEven(int a, int b)
+        {
+            return IsEven(a) == IsEven(b);
+        }
+
+        /// <summary>
+        /// Determines whether the specified integer value is even.
+        /// </summary>
+        /// <param name="value">The integer value to check.</param>
+        /// <returns><c>true</c> if the value is even; otherwise, <c>false</c>.</returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static bool IsEven(int value)
+        {
+            return value % 2 == 0;
+        }
+
+        /// <summary>
         /// Gets an integer value as a binary string (containing 0 and 1).
         /// </summary>
         /// <param name="value">Value to convert.</param>
