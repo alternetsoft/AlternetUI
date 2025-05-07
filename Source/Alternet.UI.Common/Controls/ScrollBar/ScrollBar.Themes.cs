@@ -195,12 +195,14 @@ namespace Alternet.UI
             public EnumArray<VisualControlState, BrushOrColor> ThumbBackground = new();
 
             /// <summary>
-            /// Gets or sets distance (in dips) between arrow button and arrow in the different visual states.
+            /// Gets or sets distance (in dips) between arrow button and
+            /// arrow in the different visual states.
             /// </summary>
             public EnumArray<VisualControlState, Coord> ArrowMargin = new();
 
             /// <summary>
-            /// Gets or sets whether to use arrow width as the thumb width for the vertical scrollbar
+            /// Gets or sets whether to use arrow width as the thumb width
+            /// for the vertical scrollbar
             /// and arrow height as the thumb height for the horizontal scrollbar.
             /// Each visual state has its own setting.
             /// </summary>
@@ -260,7 +262,7 @@ namespace Alternet.UI
             }
 
             /// <summary>
-            /// Occurs when this theme is assigned to the drawables.
+            /// Occurs when this theme is assigned to the drawable objects.
             /// </summary>
             public event EventHandler<ThemeInitializeArgs>? ThemeInitialize;
 
@@ -313,21 +315,7 @@ namespace Alternet.UI
             {
                 get
                 {
-                    if (windowsDark is null)
-                    {
-                        windowsDark = new();
-                        var states = windowsDark.AllStates;
-                        windowsDark.Background[VisualControlState.Normal] = (46, 46, 46);
-                        windowsDark.CornerBackground[VisualControlState.Normal] = (102, 102, 102);
-                        windowsDark.Arrow[VisualControlState.Normal] = (153, 153, 153);
-                        windowsDark.Arrow[VisualControlState.Hovered] = (153, 153, 153);
-                        windowsDark.ThumbBackground[VisualControlState.Normal] = (77, 77, 77);
-                        windowsDark.ThumbBorder[VisualControlState.Normal] = (77, 77, 77);
-                        windowsDark.ArrowMargin[states] = 1;
-                        windowsDark.UseArrowSizeForThumb[states] = true;
-                        windowsDark.ThumbMargin[states] = 1;
-                    }
-
+                    windowsDark ??= CreateWindowsDarkTheme();
                     return windowsDark;
                 }
 
@@ -344,23 +332,7 @@ namespace Alternet.UI
             {
                 get
                 {
-                    if (windowsLight is null)
-                    {
-                        windowsLight = new();
-                        var states = windowsLight.AllStates;
-                        windowsLight.Background[VisualControlState.Normal] = (226, 226, 226);
-                        windowsLight.CornerBackground[VisualControlState.Normal] = (238, 238, 242);
-                        windowsLight.Arrow[VisualControlState.Normal] = (194, 195, 201);
-                        windowsLight.Arrow[VisualControlState.Hovered] = (104, 104, 104);
-                        windowsLight.ThumbBackground[VisualControlState.Normal] = (194, 195, 201);
-                        windowsLight.ThumbBorder[VisualControlState.Normal] = (194, 195, 201);
-                        windowsLight.ThumbBackground[VisualControlState.Hovered] = (104, 104, 104);
-                        windowsLight.ThumbBorder[VisualControlState.Hovered] = (104, 104, 104);
-                        windowsLight.ArrowMargin[states] = 1;
-                        windowsLight.UseArrowSizeForThumb[states] = true;
-                        windowsLight.ThumbMargin[states] = 1;
-                    }
-
+                    windowsLight ??= CreateWindowsLightTheme();
                     return windowsLight;
                 }
 
@@ -419,7 +391,8 @@ namespace Alternet.UI
                         visualStudioLight.Arrow[VisualControlState.Hovered] = (28, 151, 234);
                         visualStudioLight.ThumbBackground[VisualControlState.Normal] = (255, 255, 255);
                         visualStudioLight.ThumbBorder[VisualControlState.Normal] = (0, 0, 0);
-                        visualStudioLight.CornerBackground[VisualControlState.Normal] = (245, 245, 245);
+                        visualStudioLight.CornerBackground[VisualControlState.Normal]
+                            = (245, 245, 245);
                         visualStudioLight.ArrowMargin[states] = 1;
                         visualStudioLight.UseArrowSizeForThumb[states] = false;
                         visualStudioLight.ThumbMargin[states] = 0;
@@ -439,6 +412,56 @@ namespace Alternet.UI
             /// in the constructor with the default values.
             /// </summary>
             public virtual VisualControlState[] AllStates => AllStatesDefault;
+
+            /// <summary>
+            /// Creates a new instance of the 'Windows Dark' theme with
+            /// predefined colors and metrics.
+            /// </summary>
+            /// <returns>A <see cref="ThemeMetrics"/> object representing
+            /// the 'Windows Dark' theme.</returns>
+            public static ThemeMetrics CreateWindowsDarkTheme()
+            {
+                ThemeMetrics windowsDark = new();
+                Color background = (47, 47, 47);
+                Color foreground = (160, 160, 160);
+                windowsDark.SetThemeColors(background, foreground);
+                var states = windowsDark.AllStates;
+                windowsDark.ArrowMargin[states] = 1;
+                windowsDark.UseArrowSizeForThumb[states] = true;
+                windowsDark.ThumbMargin[states] = 1;
+                return windowsDark;
+            }
+
+            /// <summary>
+            /// Creates a new instance of the 'Windows Light' theme with
+            /// predefined colors and metrics.
+            /// </summary>
+            /// <returns>A <see cref="ThemeMetrics"/> object representing
+            /// the 'Windows Light' theme.</returns>
+            public static ThemeMetrics CreateWindowsLightTheme()
+            {
+                ThemeMetrics windowsLight = new();
+                Color background = (240, 240, 240);
+                Color foreground = (194, 195, 201);
+
+                windowsLight.SetThemeColors(background, foreground);
+                var states = windowsLight.AllStates;
+                windowsLight.ArrowMargin[states] = 1;
+                windowsLight.UseArrowSizeForThumb[states] = true;
+                windowsLight.ThumbMargin[states] = 3;
+
+                /*
+                windowsLight.Background[VisualControlState.Normal] = (226, 226, 226);
+                windowsLight.CornerBackground[VisualControlState.Normal] = (238, 238, 242);
+                windowsLight.Arrow[VisualControlState.Normal] = (194, 195, 201);
+                windowsLight.Arrow[VisualControlState.Hovered] = (104, 104, 104);
+                windowsLight.ThumbBackground[VisualControlState.Normal] = (194, 195, 201);
+                windowsLight.ThumbBorder[VisualControlState.Normal] = (194, 195, 201);
+                windowsLight.ThumbBackground[VisualControlState.Hovered] = (104, 104, 104);
+                windowsLight.ThumbBorder[VisualControlState.Hovered] = (104, 104, 104);
+                */
+                return windowsLight;
+            }
 
             /// <summary>
             /// Returns theme colors for the specified <paramref name="theme"/> and
@@ -488,7 +511,8 @@ namespace Alternet.UI
             /// <summary>
             /// Assigns properties of this object with the properties of another object.
             /// </summary>
-            /// <param name="assignFrom">Object which properties will be assigned to this object.</param>
+            /// <param name="assignFrom">Object which properties will be assigned
+            /// to this object.</param>
             public virtual void Assign(ThemeMetrics assignFrom)
             {
                 UpArrowImage = assignFrom.UpArrowImage.Clone();
@@ -531,12 +555,30 @@ namespace Alternet.UI
                 this.AssignTo(interior.HorzScrollBar);
 
                 interior.Corner ??= new();
-                interior.Corner.Brush = this.CornerBackground[VisualControlState.Normal].AsBrush
-                    ?? this.Background[VisualControlState.Normal].AsBrush;
+                interior.Corner.Brush = this.CornerBackground[VisualControlState.Normal]?.AsBrush
+                    ?? this.Background[VisualControlState.Normal]?.AsBrush;
 
-                ScrollBar.ThemeInitializeArgs e = new(this);
-                e.Interior = interior;
-                ThemeInitialize?.Invoke(this, e);
+                if(ThemeInitialize is not null)
+                {
+                    ScrollBar.ThemeInitializeArgs e = new(this);
+                    e.Interior = interior;
+                    ThemeInitialize.Invoke(this, e);
+                }
+            }
+
+            /// <summary>
+            /// Sets the same background and foreground colors for all parts of the theme.
+            /// </summary>
+            /// <param name="background">The background color to apply.</param>
+            /// <param name="foreground">The foreground color to apply.</param>
+            public void SetThemeColors(Color background, Color foreground)
+            {
+                Background[VisualControlState.Normal] = background;
+                CornerBackground[VisualControlState.Normal] = background;
+                Arrow[VisualControlState.Normal] = foreground;
+                Arrow[VisualControlState.Hovered] = foreground;
+                ThumbBackground[VisualControlState.Normal] = foreground;
+                ThumbBorder[VisualControlState.Normal] = foreground;
             }
 
             /// <inheritdoc/>

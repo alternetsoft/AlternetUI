@@ -42,7 +42,7 @@ namespace Alternet.Drawing
         /// <inheritdoc/>
         public override void Draw(AbstractControl control, Graphics dc)
         {
-            if (!Visible)
+            if (!Visible || Bounds.SizeIsEmpty)
                 return;
             DefaultDrawBackAndBorder(control, dc);
         }

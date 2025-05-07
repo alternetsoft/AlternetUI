@@ -211,7 +211,7 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
-        /// Performs layout of the drawable childs and returns calculated bound of the different
+        /// Performs layout of the drawable children and returns calculated bound of the different
         /// parts of the drawable.
         /// </summary>
         /// <param name="scaleFactor">Scale factor used to convert pixels to/from dips.</param>
@@ -270,21 +270,22 @@ namespace Alternet.Drawing
                 {
                     var thumbMaxTop = thumbMaximalBounds.Height - thumbHeight;
                     var thumbTop = (thumbMaxTop * Position.Position) / (Position.Range - Position.PageSize);
+                    var vertThumbWidth = Bounds.Width;
                     thumbTop = Math.Min(thumbTop, thumbMaxTop);
                     thumbBounds = (
                         Bounds.Left,
                         thumbMaximalBounds.Top + thumbTop,
-                        Bounds.Width,
+                        vertThumbWidth,
                         thumbHeight);
                     beforeThumbBounds = (
                         Bounds.Left,
                         thumbMaximalBounds.Top,
-                        Bounds.Width,
+                        vertThumbWidth,
                         thumbTop);
                     afterThumbBounds = (
                         Bounds.Left,
                         thumbBounds.Bottom,
-                        Bounds.Width,
+                        vertThumbWidth,
                         thumbMaximalBounds.Bottom - thumbBounds.Bottom);
                 }
             }
@@ -304,24 +305,27 @@ namespace Alternet.Drawing
                 else
                 {
                     var thumbMaxLeft = thumbMaximalBounds.Width - thumbWidth;
-                    var thumbLeft = (thumbMaxLeft * Position.Position) / (Position.Range - Position.PageSize);
+                    var thumbLeft = (thumbMaxLeft * Position.Position)
+                        / (Position.Range - Position.PageSize);
                     thumbLeft = Math.Min(thumbLeft, thumbMaxLeft);
+
+                    var horzThumbHeight = Bounds.Height;
 
                     thumbBounds = (
                         thumbMaximalBounds.Left + thumbLeft,
                         Bounds.Top,
                         thumbWidth,
-                        Bounds.Height);
+                        horzThumbHeight);
                     beforeThumbBounds = (
                         thumbMaximalBounds.Left,
                         Bounds.Top,
                         thumbLeft,
-                        Bounds.Height);
+                        horzThumbHeight);
                     afterThumbBounds = (
                         thumbBounds.Right,
                         Bounds.Top,
                         thumbMaximalBounds.Right - thumbBounds.Right,
-                        Bounds.Height);
+                        horzThumbHeight);
                 }
             }
 
@@ -334,7 +338,7 @@ namespace Alternet.Drawing
         /// <inheritdoc/>
         public override void Draw(AbstractControl control, Graphics dc)
         {
-            if (!Visible || !Position.IsVisible)
+            if (!Visible || !Position.IsVisible || Bounds.SizeIsEmpty)
                 return;
 
             var scaleFactor = control.ScaleFactor;
@@ -367,46 +371,74 @@ namespace Alternet.Drawing
             var arrowMargin = ArrowMargin?[this.VisualState] ?? 1;
             arrowMargin *= 2;
 
+            var arrowButtonSize = IsVertical ? Bounds.Width : Bounds.Height;
+
             var realArrowSize =
                 MathUtils.Min(
                     arrowSize.Width,
                     arrowSize.Height,
                     Bounds.Width - arrowMargin,
                     Bounds.Height - arrowMargin);
+
+            if (!IntUtils.IsEqualEven((int)arrowButtonSize, (int)realArrowSize))
+            {
+                realArrowSize--;
+            }
+
             var realArrowSizeI = GraphicsFactory.PixelFromDip(realArrowSize, scaleFactor);
 
             var thumb = Thumb?.GetObjectOrNormal(thumbState)?.OnlyVisible;
 
             if (thumb is not null)
             {
-                thumb.Bounds = rectangles[HitTestResult.Thumb];
+                var thumbBounds = rectangles[HitTestResult.Thumb];
+                var fillBounds = thumbBounds;
+
+                if (UseArrowSizeForThumb?[thumbState] ?? true)
+                {
+                    if (IsVertical)
+                        fillBounds.Width = realArrowSize;
+                    else
+                        fillBounds.Height = realArrowSize;
+
+                    thumb.Bounds = fillBounds.CenterIn(thumbBounds, IsVertical, !IsVertical);
+                }
+
                 thumb.Draw(control, dc);
             }
 
             if (startButton is not null)
             {
                 startButton.Bounds = rectangles[HitTestResult.StartButton];
-                startButton.Draw(control, dc);
+                if(startButton.Bounds.NotEmpty)
+                    startButton.Draw(control, dc);
             }
 
             if (startArrow is not null)
             {
                 startArrow.Bounds = rectangles[HitTestResult.StartButton];
-                startArrow.SetSvgSize(realArrowSizeI);
-                startArrow.Draw(control, dc);
+                if (startArrow.Bounds.NotEmpty)
+                {
+                    startArrow.SetSvgSize(realArrowSizeI);
+                    startArrow.Draw(control, dc);
+                }
             }
 
             if (endButton is not null)
             {
                 endButton.Bounds = rectangles[HitTestResult.EndButton];
-                endButton.Draw(control, dc);
+                if(endButton.Bounds.NotEmpty)
+                    endButton.Draw(control, dc);
             }
 
             if (endArrow is not null)
             {
                 endArrow.Bounds = rectangles[HitTestResult.EndButton];
-                endArrow.SetSvgSize(realArrowSizeI);
-                endArrow.Draw(control, dc);
+                if (endArrow.Bounds.NotEmpty)
+                {
+                    endArrow.SetSvgSize(realArrowSizeI);
+                    endArrow.Draw(control, dc);
+                }
             }
         }
 

@@ -21,10 +21,7 @@ namespace Alternet.Drawing
         /// </summary>
         public Color? SvgColor;
 
-        /// <summary>
-        /// Gets or sets svg width and height.
-        /// </summary>
-        public int SvgSize = 16;
+        private int svgSize = 16;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="SvgImageInfo"/> struct.
@@ -42,6 +39,28 @@ namespace Alternet.Drawing
         {
             SvgImage = image;
             SvgColor = color;
+        }
+
+        /// <summary>
+        /// Gets or sets svg width and height.
+        /// </summary>
+        public int SvgSize
+        {
+            readonly get => svgSize;
+
+            set
+            {
+                if (svgSize == value)
+                    return;
+
+                if(value < 0)
+                {
+                    svgSize = 16;
+                    return;
+                }
+
+                svgSize = value;
+            }
         }
 
         /// <summary>

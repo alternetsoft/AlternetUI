@@ -145,11 +145,19 @@ namespace Alternet.UI
 
                         App.LogNameValue("info.GetPreferredSize(vert)", info.GetPreferredSize(true));
                         App.LogNameValue("info.GetPreferredSize(horz)", info.GetPreferredSize(false));
-                        App.LogNameValue("info.GetArrowBitmapSize(vert)", info.GetArrowBitmapSize(true));
-                        App.LogNameValue("info.GetArrowBitmapSize(horz)", info.GetArrowBitmapSize(false));
+
+                        App.LogNameValue(
+                            "info.GetArrowBitmapSize(vert)",
+                            info.GetArrowBitmapSize(true));
+
+                        App.LogNameValue(
+                            "info.GetArrowBitmapSize(horz)",
+                            info.GetArrowBitmapSize(false));
+
                         App.LogNameValue(
                             "info.GetThumbSize(vert,(50,50))",
                             info.GetThumbSize(true, (50, 50)));
+
                         App.LogNameValue(
                             "info.GetThumbSize(horz,(50,50))",
                             info.GetThumbSize(false, (50, 50)));

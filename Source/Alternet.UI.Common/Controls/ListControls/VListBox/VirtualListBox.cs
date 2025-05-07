@@ -36,7 +36,8 @@ namespace Alternet.UI
         /// <summary>
         /// Indicates whether the list box controls use internal scrollbars.
         /// </summary>
-        public static bool DefaultUseInternalScrollBars = false && DebugUtils.IsDebugDefinedAndAttached;
+        public static bool DefaultUseInternalScrollBars
+            = false && DebugUtils.IsDebugDefinedAndAttached;
 
         /// <summary>
         /// Specifies the default border style for controls.
@@ -1125,6 +1126,7 @@ namespace Alternet.UI
 
             if (interior is not null)
             {
+                interior.UpdateThemeMetrics(IsDarkBackground);
                 interior.VertPosition = VertScrollBarInfo;
                 interior.HorzPosition = HorzScrollBarInfo;
                 interior.Draw(this, dc);
@@ -1977,12 +1979,7 @@ namespace Alternet.UI
         {
             base.OnSystemColorsChanged(e);
 
-            if (interior is not null && interior.ScrollBarTheme is not null)
-            {
-                interior.SetThemeMetrics(
-                    interior.ScrollBarTheme.Value,
-                    IsDarkBackground);
-            }
+            interior?.UpdateThemeMetrics();
         }
 
         /// <inheritdoc/>

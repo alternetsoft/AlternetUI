@@ -13,6 +13,11 @@ namespace Alternet.Drawing
     public partial class InteriorDrawable : BaseDrawable
     {
         /// <summary>
+        /// Gets or sets the default theme for the interior elements, such as scrollbars.
+        /// </summary>
+        public static ScrollBar.KnownTheme DefaultInteriorTheme = ScrollBar.KnownTheme.WindowsAuto;
+
+        /// <summary>
         /// Gets or sets vertical scrollbar element.
         /// </summary>
         public ScrollBarDrawable? VertScrollBar;
@@ -40,6 +45,7 @@ namespace Alternet.Drawing
         private ScrollBar.MetricsInfo? metrics;
         private InteriorControlActivity? notification;
         private ScrollBar.KnownTheme? scrollBarTheme;
+        private bool? currentIsDark;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="InteriorDrawable"/> class.
@@ -48,7 +54,7 @@ namespace Alternet.Drawing
         {
             isDark ??= SystemSettings.AppearanceIsDark;
 
-            SetThemeMetrics(ScrollBar.KnownTheme.MauiAuto, isDark.Value);
+            SetThemeMetrics(DefaultInteriorTheme, isDark.Value);
         }
 
         /// <summary>
@@ -556,10 +562,35 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
+        /// Updates the theme metrics for the interior drawable.
+        /// This method checks if a scrollbar theme is set and applies the theme metrics
+        /// based on the current system appearance (dark or light mode).
+        /// </summary>
+        public virtual void UpdateThemeMetrics(bool? newDark = null)
+        {
+            if (ScrollBarTheme is not null)
+            {
+                SetThemeMetrics(
+                    ScrollBarTheme.Value,
+                    newDark ?? currentIsDark ?? SystemSettings.AppearanceIsDark);
+            }
+        }
+
+        /// <summary>
         /// Initialized this drawable with default settings for the specified color theme.
         /// </summary>
-        public virtual void SetThemeMetrics(ScrollBar.KnownTheme theme, bool isDark = false)
+        public virtual void SetThemeMetrics(
+            ScrollBar.KnownTheme theme,
+            bool isDark = false,
+            bool reset = false)
         {
+            if (!reset)
+            {
+                if (scrollBarTheme == theme && currentIsDark == isDark)
+                    return;
+            }
+
+            currentIsDark = isDark;
             scrollBarTheme = theme;
             SetDefaultBorder(isDark);
             var themeObj = ScrollBar.ThemeMetrics.GetTheme(theme, isDark);

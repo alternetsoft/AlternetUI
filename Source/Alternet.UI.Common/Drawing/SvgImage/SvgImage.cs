@@ -9,7 +9,7 @@ using Alternet.UI;
 namespace Alternet.Drawing
 {
     /// <summary>
-    /// Impements methods and properties to work with toolbar svg images.
+    /// Implements methods and properties to work with toolbar svg images.
     /// These are rectangular images with small size. This class allows
     /// to speed up loading and getting of different states (and sizes) of the
     /// same image.

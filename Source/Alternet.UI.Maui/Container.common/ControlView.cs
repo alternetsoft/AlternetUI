@@ -295,12 +295,7 @@ namespace Alternet.UI
                 return;
             control.RaiseSystemColorsChanged(EventArgs.Empty);
 
-            if(Interior.ScrollBarTheme is not null)
-            {
-                Interior.SetThemeMetrics(
-                    Interior.ScrollBarTheme.Value,
-                    SystemSettings.AppearanceIsDark);
-            }
+            Interior.UpdateThemeMetrics();
 
             Invalidate();
         }
