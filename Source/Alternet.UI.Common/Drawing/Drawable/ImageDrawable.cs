@@ -71,7 +71,16 @@ namespace Alternet.Drawing
         {
             Image? GetNormalImage()
             {
-                var image = SvgImage.SvgImage?.AsNormalImage(SvgImage.SvgSize, isDark);
+                Image? image = null;
+
+                if(SvgImage.SvgImage is not null)
+                {
+                    if(SvgImage.SvgColor is null)
+                        image = SvgImage.SvgImage.AsNormalImage(SvgImage.SvgSize, isDark);
+                    else
+                        image = SvgImage.SvgImage.ImageWithColor(SvgImage.SvgSize, SvgImage.SvgColor);
+                }
+
                 image ??= Image ?? ImageSet?.AsImage(ImageSet.DefaultSize);
                 return image;
             }
