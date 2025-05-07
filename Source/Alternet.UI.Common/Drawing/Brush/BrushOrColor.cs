@@ -3,12 +3,14 @@ using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using System.Text;
 
+using Alternet.UI;
+
 namespace Alternet.Drawing
 {
     /// <summary>
     /// Contains brush or color.
     /// </summary>
-    public class BrushOrColor
+    public class BrushOrColor : BaseObject
     {
         private object? val;
 
@@ -63,7 +65,7 @@ namespace Alternet.Drawing
         /// <summary>
         /// Gets or sets brush.
         /// </summary>
-        public Brush? Brush
+        public virtual Brush? Brush
         {
             get
             {
@@ -79,7 +81,7 @@ namespace Alternet.Drawing
         /// <summary>
         /// Gets or sets color.
         /// </summary>
-        public Color? Color
+        public virtual Color? Color
         {
             get
             {
@@ -95,7 +97,7 @@ namespace Alternet.Drawing
         /// <summary>
         /// Gets or sets whether this object is empty (contains no brush or color).
         /// </summary>
-        public bool IsEmpty
+        public virtual bool IsEmpty
         {
             get
             {
@@ -111,7 +113,7 @@ namespace Alternet.Drawing
         /// <summary>
         /// Gets whether this object contains brush.
         /// </summary>
-        public bool IsBrush
+        public virtual bool IsBrush
         {
             get
             {
@@ -122,7 +124,7 @@ namespace Alternet.Drawing
         /// <summary>
         /// Gets whether this object contains color.
         /// </summary>
-        public bool IsColor
+        public virtual bool IsColor
         {
             get
             {
@@ -133,7 +135,7 @@ namespace Alternet.Drawing
         /// <summary>
         /// Gets brush or color as brush.
         /// </summary>
-        public Brush? AsBrush
+        public virtual Brush? AsBrush
         {
             get
             {
@@ -153,7 +155,7 @@ namespace Alternet.Drawing
         /// <summary>
         /// Gets brush or color as color.
         /// </summary>
-        public Color? AsColor
+        public virtual Color? AsColor
         {
             get
             {
@@ -176,21 +178,36 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
-        /// Implicit operator convertion from tuple with three <see cref="byte"/> values
+        /// Implicitly converts a <see cref="Brush"/> to a <see cref="BrushOrColor"/>.
+        /// </summary>
+        /// <param name="d">The <see cref="Brush"/> to convert.</param>
+        public static implicit operator BrushOrColor(Brush d) => new(d);
+
+        /// <summary>
+        /// Implicitly converts a <see cref="Color"/> to a <see cref="BrushOrColor"/>.
+        /// </summary>
+        /// <param name="d">The <see cref="Color"/> to convert.</param>
+        public static implicit operator BrushOrColor(Color d) => new(d);
+
+        /// <summary>
+        /// Implicit operator conversion from tuple with three <see cref="byte"/> values
         /// to <see cref="BrushOrColor"/>. Tuple values define RGB of the color.
         /// </summary>
-        /// <param name="d">New color value specified as tuple with three <see cref="byte"/> values.</param>
+        /// <param name="d">New color value
+        /// specified as tuple with three <see cref="byte"/> values.</param>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static implicit operator BrushOrColor((byte Red, byte Green, byte Blue) d) =>
             new(d.Red, d.Green, d.Blue);
 
         /// <summary>
-        /// Implicit operator convertion from tuple with four <see cref="byte"/> values
+        /// Implicit operator conversion from tuple with four <see cref="byte"/> values
         /// to <see cref="BrushOrColor"/>. Tuple values define ARGB of the color.
         /// </summary>
-        /// <param name="d">New color value specified as tuple with four <see cref="byte"/> values.</param>
+        /// <param name="d">New color value specified as
+        /// tuple with four <see cref="byte"/> values.</param>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static implicit operator BrushOrColor((byte Alpha, byte Red, byte Green, byte Blue) d) =>
+        public static implicit operator BrushOrColor(
+            (byte Alpha, byte Red, byte Green, byte Blue) d) =>
             new(d.Alpha, d.Red, d.Green, d.Blue);
     }
 }
