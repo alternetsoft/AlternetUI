@@ -942,7 +942,7 @@ namespace Alternet.UI
         {
             MessageBox.Show(
                 App.SafeWindow,
-                message,
+                message.SafeToString(),
                 CommonStrings.Default.WindowTitleApplicationAlert,
                 MessageBoxButtons.OK,
                 MessageBoxIcon.None);

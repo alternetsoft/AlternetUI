@@ -42,7 +42,7 @@ namespace Alternet.UI
         /// specifies the default button for the message box.</param>
         /// <param name="onClose">The action which is called when dialog is closed.</param>
         public static void Show(
-            object? text,
+            string? text,
             string? caption,
             MessageBoxButtons buttons,
             MessageBoxDefaultButton defaultButton,
@@ -79,7 +79,7 @@ namespace Alternet.UI
         /// The default is <see langword="false" />.</param>
         /// <param name="onClose">The action which is called when dialog is closed.</param>
         public static void Show(
-            object? text,
+            string? text,
             string? caption,
             MessageBoxButtons buttons,
             MessageBoxIcon icon,
@@ -114,7 +114,7 @@ namespace Alternet.UI
         /// the Help button.</param>
         /// <param name="onClose">The action which is called when dialog is closed.</param>
         public static void Show(
-            object? text,
+            string? text,
             string? caption,
             MessageBoxButtons buttons,
             MessageBoxIcon icon,
@@ -152,7 +152,7 @@ namespace Alternet.UI
         /// <param name="onClose">The action which is called when dialog is closed.</param>
         public static void Show(
             Window? owner,
-            object? text,
+            string? text,
             string? caption,
             MessageBoxButtons buttons,
             MessageBoxIcon icon,
@@ -189,7 +189,7 @@ namespace Alternet.UI
         /// Help button.</param>
         /// <param name="onClose">The action which is called when dialog is closed.</param>
         public static void Show(
-            object? text,
+            string? text,
             string? caption,
             MessageBoxButtons buttons,
             MessageBoxIcon icon,
@@ -227,7 +227,7 @@ namespace Alternet.UI
         /// <param name="onClose">The action which is called when dialog is closed.</param>
         public static void Show(
             Window? owner,
-            object? text,
+            string? text,
             string? caption,
             MessageBoxButtons buttons,
             MessageBoxIcon icon,
@@ -266,7 +266,7 @@ namespace Alternet.UI
         /// <param name="navigator">One of the <see cref="HelpNavigator" /> values.</param>
         /// <param name="onClose">The action which is called when dialog is closed.</param>
         public static void Show(
-            object? text,
+            string? text,
             string? caption,
             MessageBoxButtons buttons,
             MessageBoxIcon icon,
@@ -307,7 +307,7 @@ namespace Alternet.UI
         /// <param name="onClose">The action which is called when dialog is closed.</param>
         public static void Show(
             Window? owner,
-            object? text,
+            string? text,
             string? caption,
             MessageBoxButtons buttons,
             MessageBoxIcon icon,
@@ -349,7 +349,7 @@ namespace Alternet.UI
         /// clicks the Help button.</param>
         /// <param name="onClose">The action which is called when dialog is closed.</param>
         public static void Show(
-            object? text,
+            string? text,
             string? caption,
             MessageBoxButtons buttons,
             MessageBoxIcon icon,
@@ -387,7 +387,7 @@ namespace Alternet.UI
         /// <param name="onClose">The action which is called when dialog is closed.</param>
         public static void Show(
             Window? owner,
-            object? text,
+            string? text,
             string? caption,
             MessageBoxButtons buttons,
             MessageBoxIcon icon,
@@ -419,7 +419,7 @@ namespace Alternet.UI
         /// wish to use the defaults.</param>
         /// <param name="onClose">The action which is called when dialog is closed.</param>
         public static void Show(
-            object? text,
+            string? text,
             string? caption,
             MessageBoxButtons buttons,
             MessageBoxIcon icon,
@@ -445,7 +445,7 @@ namespace Alternet.UI
         /// default button for the message box.</param>
         /// <param name="onClose">The action which is called when dialog is closed.</param>
         public static void Show(
-            object? text,
+            string? text,
             string? caption,
             MessageBoxButtons buttons,
             MessageBoxIcon icon,
@@ -475,7 +475,7 @@ namespace Alternet.UI
         /// in the message box.</param>
         /// <param name="onClose">The action which is called when dialog is closed.</param>
         public static void Show(
-            object? text,
+            string? text,
             string? caption,
             MessageBoxButtons buttons,
             MessageBoxIcon icon,
@@ -500,7 +500,7 @@ namespace Alternet.UI
         /// which buttons to display in the message box.</param>
         /// <param name="onClose">The action which is called when dialog is closed.</param>
         public static void Show(
-            object? text,
+            string? text,
             string? caption,
             MessageBoxButtons buttons,
             MessageBoxResultDelegate? onClose = null)
@@ -522,7 +522,7 @@ namespace Alternet.UI
         /// <param name="caption">The text to display in the title bar of the message box.</param>
         /// <param name="onClose">The action which is called when dialog is closed.</param>
         public static void Show(
-            object? text,
+            string? text,
             string? caption,
             MessageBoxResultDelegate? onClose = null)
         {
@@ -541,7 +541,7 @@ namespace Alternet.UI
         /// <summary>Displays a message box with specified text.</summary>
         /// <param name="text">The text to display in the message box.</param>
         /// <param name="onClose">The action which is called when dialog is closed.</param>
-        public static void Show(object? text, MessageBoxResultDelegate? onClose = null)
+        public static void Show(string? text, MessageBoxResultDelegate? onClose = null)
         {
             ShowCore(
                 null,
@@ -577,7 +577,7 @@ namespace Alternet.UI
         /// <param name="onClose">The action which is called when dialog is closed.</param>
         public static void Show(
             Window? owner,
-            object? text,
+            string? text,
             string? caption,
             MessageBoxButtons buttons,
             MessageBoxIcon icon,
@@ -606,7 +606,7 @@ namespace Alternet.UI
         /// <param name="onClose">The action which is called when dialog is closed.</param>
         public static void Show(
             Window? owner,
-            object? text,
+            string? text,
             string? caption,
             MessageBoxButtons buttons,
             MessageBoxIcon icon,
@@ -640,7 +640,7 @@ namespace Alternet.UI
         /// <param name="onClose">The action which is called when dialog is closed.</param>
         public static void Show(
             Window? owner,
-            object? text,
+            string? text,
             string? caption,
             MessageBoxButtons buttons,
             MessageBoxIcon icon,
@@ -670,7 +670,7 @@ namespace Alternet.UI
         /// <param name="onClose">The action which is called when dialog is closed.</param>
         public static void Show(
             Window? owner,
-            object? text,
+            string? text,
             string? caption,
             MessageBoxButtons buttons,
             MessageBoxResultDelegate? onClose = null)
@@ -695,7 +695,7 @@ namespace Alternet.UI
         /// <param name="onClose">The action which is called when dialog is closed.</param>
         public static void Show(
             Window? owner,
-            object? text,
+            string? text,
             string? caption,
             MessageBoxResultDelegate? onClose = null)
         {
@@ -718,7 +718,7 @@ namespace Alternet.UI
         /// <param name="onClose">The action which is called when dialog is closed.</param>
         public static void Show(
             Window? owner,
-            object? text,
+            string? text,
             MessageBoxResultDelegate? onClose = null)
         {
             ShowCore(
@@ -850,7 +850,7 @@ namespace Alternet.UI
 
         private static void ShowCore(
             Window? owner,
-            object? text,
+            string? text,
             string? caption,
             MessageBoxButtons buttons,
             MessageBoxIcon icon,
@@ -881,7 +881,7 @@ namespace Alternet.UI
 
         private static void ShowCore(
             Window? owner,
-            object? text,
+            string? text,
             string? caption,
             MessageBoxButtons buttons,
             MessageBoxIcon icon,

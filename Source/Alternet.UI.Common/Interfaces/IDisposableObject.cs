@@ -12,7 +12,7 @@ namespace Alternet.UI
     public interface IDisposableObject : IDisposable, IBaseObject
     {
         /// <summary>
-        /// Occurs when control is disposed.
+        /// Occurs when object is disposed.
         /// </summary>
         event EventHandler? Disposed;
 
@@ -27,7 +27,7 @@ namespace Alternet.UI
         bool DisposingOrDisposed { get; }
 
         /// <summary>
-        /// Gets or sets whether to dispose resources.
+        /// Gets whether to dispose resources.
         /// </summary>
         bool DisposeHandle { get; }
 
