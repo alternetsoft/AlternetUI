@@ -35,15 +35,52 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Generates a file path on the desktop for the current user using the specified file name.
+        /// Generates a unique file name in the specified folder based on the provided
+        /// file name template.
         /// </summary>
-        /// <param name="fileNameWithoutPath">The name of the file without any directory path.</param>
+        /// <param name="pathToFolder">The path to the folder where the file will be created.</param>
+        /// <param name="fileNameTemplate">The template for the file name,
+        /// including extension.</param>
         /// <returns>
-        /// A <see cref="string"/> containing the full path to the file on the desktop.
+        /// A <see cref="string"/> containing a unique file name in the specified folder.
         /// </returns>
-        public static string GenFilePathOnDesktop(string fileNameWithoutPath)
+        public static string GenerateUniqueFilename(string pathToFolder, string fileNameTemplate)
         {
-            return Path.Combine(GetDesktopPath(), fileNameWithoutPath);
+            string filePath = Path.Combine(pathToFolder, fileNameTemplate);
+            string fileNameWithoutExt = Path.GetFileNameWithoutExtension(fileNameTemplate);
+            string fileExt = Path.GetExtension(fileNameTemplate);
+
+            int counter = 1;
+            while (File.Exists(filePath))
+            {
+                filePath = Path.Combine(pathToFolder, $"{fileNameWithoutExt}_{counter}{fileExt}");
+                counter++;
+            }
+
+            return filePath;
+        }
+
+        /// <summary>
+        /// Generates a file path on the desktop for the specified file name.
+        /// </summary>
+        /// <param name="fileNameWithoutPath">The name of the file without the path.</param>
+        /// <param name="uniqueName">
+        /// A boolean value indicating whether to generate a unique file name if
+        /// a file with the same name already exists. Optional. Default is <c>false</c>.
+        /// </param>
+        /// <returns>
+        /// A <see cref="string"/> containing the full file path on the desktop.
+        /// </returns>
+        public static string GenFilePathOnDesktop(string fileNameWithoutPath, bool uniqueName = false)
+        {
+            string result;
+
+            if (uniqueName)
+                result = GenerateUniqueFilename(GetDesktopPath(), fileNameWithoutPath);
+            else
+                result = Path.Combine(GetDesktopPath(), fileNameWithoutPath);
+
+            return result;
         }
 
         /// <summary>
