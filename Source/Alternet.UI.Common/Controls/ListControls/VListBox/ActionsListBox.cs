@@ -12,7 +12,7 @@ namespace Alternet.UI
     /// Implements list box control with list of actions. When item is double clicked,
     /// associated action is executed.
     /// </summary>
-    public class ActionsListBox : VirtualListBox
+    public class ActionsListBox : VirtualTreeControl
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="ActionsListBox"/> class.
@@ -32,53 +32,18 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Adds an empty space to the <see cref="ActionsListBox"/>.
-        /// </summary>
-        /// <remarks>
-        /// This method allows to separate different action groups.
-        /// </remarks>
-        public virtual ListControlItem AddActionSpacer(bool drawLine = false)
-        {
-            ListControlItem result;
-
-            if (drawLine)
-            {
-                result = new ListControlSeparatorItem();
-            }
-            else
-            {
-                result = new ListControlEmptyItem();
-            }
-
-            Add(result);
-            return result;
-        }
-
-        /// <summary>
-        /// Adds <see cref="Action"/> to the <see cref="ActionsListBox"/>.
-        /// </summary>
-        /// <param name="title">Action title.</param>
-        /// <param name="action">Action method.</param>
-        public virtual ListControlItem AddAction(string title, Action? action)
-        {
-            ListControlItem item = new(title)
-            {
-                DoubleClickAction = action,
-            };
-
-            Add(item);
-            return item;
-        }
-
-        /// <summary>
-        /// Adds "heavy" <see cref="Action"/> to the <see cref="ActionsListBox"/>. When action
+        /// Adds "heavy" <see cref="Action"/> to the <see cref="VirtualListBox"/>. When action
         /// executes, application's cursor is changed to the "busy" cursor.
         /// </summary>
+        /// <param name="onAddAction">Function which is called when action is added.</param>
         /// <param name="title">Action title.</param>
         /// <param name="action">Action method.</param>
-        public virtual ListControlItem AddBusyAction(string title, Action action)
+        public static ListControlItem AddBusyAction(
+            Func<string, Action, ListControlItem> onAddAction,
+            string title,
+            Action action)
         {
-            return AddAction(title, Fn);
+            return onAddAction(title, Fn);
 
             void Fn()
             {
@@ -95,6 +60,56 @@ namespace Alternet.UI
                     }
                 });
             }
+        }
+
+        /// <summary>
+        /// Adds an empty space to the <see cref="ActionsListBox"/>.
+        /// </summary>
+        /// <remarks>
+        /// This method allows to separate different action groups.
+        /// </remarks>
+        public virtual ListControlItem AddActionSpacer(bool drawLine = false)
+        {
+            TreeControlItem result;
+
+            if (drawLine)
+            {
+                result = new TreeControlSeparatorItem();
+            }
+            else
+            {
+                result = new TreeControlEmptyItem();
+            }
+
+            Add(result);
+            return result;
+        }
+
+        /// <summary>
+        /// Adds <see cref="Action"/> to the <see cref="ActionsListBox"/>.
+        /// </summary>
+        /// <param name="title">Action title.</param>
+        /// <param name="action">Action method.</param>
+        public virtual ListControlItem AddAction(string title, Action? action)
+        {
+            TreeControlItem item = new(title)
+            {
+                DoubleClickAction = action,
+            };
+
+            Add(item);
+            return item;
+        }
+
+        /// <summary>
+        /// Adds "heavy" <see cref="Action"/> to the <see cref="ActionsListBox"/>. When action
+        /// executes, application's cursor is changed to the "busy" cursor.
+        /// </summary>
+        /// <param name="title">Action title.</param>
+        /// <param name="action">Action method.</param>
+        public virtual ListControlItem AddBusyAction(string title, Action action)
+        {
+            return AddBusyAction(AddAction, title, action);
         }
     }
 }
