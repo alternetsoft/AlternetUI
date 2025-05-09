@@ -41,11 +41,6 @@ namespace Alternet.UI
         /// </summary>
         public CardPanel CardPanel => cardPanel;
 
-        internal new TreeView LeftTreeView
-        {
-            get => base.LeftTreeView;
-        }
-
         /// <summary>
         /// Adds new page.
         /// </summary>
@@ -58,7 +53,7 @@ namespace Alternet.UI
         {
             var index = cardPanel.Add(title, fnCreate);
             var id = cardPanel.Cards[index].UniqueId;
-            ListControlItem item = new(title);
+            TreeControlItem item = new(title);
             item.Tag = id;
             LeftListBox.Add(item);
             return index;
@@ -76,7 +71,7 @@ namespace Alternet.UI
         {
             var index = cardPanel.Add(title, control);
             var id = cardPanel.Cards[index].UniqueId;
-            ListControlItem item = new(title);
+            TreeControlItem item = new(title);
             item.Tag = id;
             LeftListBox.Add(item);
             return index;

@@ -1131,10 +1131,12 @@ namespace Alternet.UI
                 dc.Pop();
             }
 
+#pragma warning disable
             if (interior is not null)
             {
                 interior.Draw(this, dc);
             }
+#pragma warning restore
 
             void PaintRows()
             {

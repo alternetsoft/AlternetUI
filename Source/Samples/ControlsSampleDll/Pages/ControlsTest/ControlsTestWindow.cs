@@ -8,7 +8,7 @@ namespace ControlsSample
     {
         public static bool TestEdgeBackend = false;
 
-        private readonly StatusBar statusbar = new();
+        private readonly StatusBar statusBar = new();
 #pragma warning disable
         private readonly PanelListBoxAndCards mainPanel;
 #pragma warning restore
@@ -28,7 +28,7 @@ namespace ControlsSample
 
             Icon = new("embres:ControlsSampleDll.Sample.ico");
 
-            this.StatusBar = statusbar;
+            this.StatusBar = statusBar;
             mainPanel.Parent = this;
             mainPanel.BindApplicationLog();
 
@@ -43,7 +43,7 @@ namespace ControlsSample
 
             CreateWebBrowserPages();
 
-            mainPanel.LeftListBox.SelectedIndex = 0;
+            mainPanel.LeftListBox.SelectFirstItem();
 
             mainPanel.Name = "mainPanel";
             Name = "MainTestWindow";

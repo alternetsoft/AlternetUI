@@ -86,8 +86,8 @@ namespace ControlsSample
                 sample.Init();
                 sample.RefreshRequested += OnRefreshRequested;
 
-                actionsListBox.Add(new ListControlItem(sample.Title,
-                () =>
+                var newItem = new TreeControlItem(sample.Title);
+                newItem.Action = () =>
                 {
                     App.AddBackgroundInvokeAction(() =>
                     {
@@ -96,15 +96,17 @@ namespace ControlsSample
                         currentSample = sample;
                         Draw(sample.DrawSample);
                     });
-                }));
+                };
+
+                actionsListBox.Add(newItem);
             }
 
             Idle += SkiaSharpExamplesWindow_Idle;
 
-            if (actionsListBox.Count > 0)
+            if (actionsListBox.RootItem.ItemCount > 0)
             {
                 actionsListBox.SelectionChanged += ActionsListBox_SelectionChanged;
-                actionsListBox.SelectedIndex = 0;
+                actionsListBox.SelectFirstItem();
                 refreshRequested = true;
             }
 

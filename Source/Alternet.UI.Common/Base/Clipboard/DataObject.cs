@@ -277,7 +277,11 @@ namespace Alternet.UI
                 { "Key5", true },
             };
 
-            Clipboard.SetData(DataFormats.Serializable, sampleTable);
+            App.DoInsideBusyCursor(() =>
+            {
+                Clipboard.SetData(DataFormats.Serializable, sampleTable);
+                App.Log("Clipboard.SetData Done");
+            });
         }
 
         /// <summary>
@@ -287,7 +291,11 @@ namespace Alternet.UI
         public static void TestHashTableFromClipboard()
         {
 #pragma warning disable
-            var data = Clipboard.GetData(DataFormats.Serializable);
+            App.DoInsideBusyCursor(() =>
+            {
+                var data = Clipboard.GetData(DataFormats.Serializable);
+                App.Log("Clipboard.GetData Done");
+            });
 #pragma warning restore
         }
 

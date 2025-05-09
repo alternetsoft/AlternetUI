@@ -168,7 +168,7 @@ namespace PropertyGridSample
                     Key.DownArrow,
                     Alternet.UI.ModifierKeys.Control);
 
-                ToolBox.SelectedItem = ToolBox.FirstItem;
+                ToolBox.SelectFirstItem();
 
                 RunTests();
 
@@ -188,7 +188,7 @@ namespace PropertyGridSample
             };
         }
 
-        public VirtualListBox ToolBox => panel.LeftListBox;
+        public VirtualTreeControl ToolBox => panel.LeftListBox;
 
         private void PropGrid_PropertyCustomCreate(object? sender, CreatePropertyEventArgs e)
         {
@@ -365,9 +365,9 @@ namespace PropertyGridSample
                         if (control.Name == null)
                         {
                             var s = control.GetType().ToString();
-                            var splitted = s.Split('.');
+                            var splittedText = s.Split('.');
                             control.Name
-                            = splitted[splitted.Length - 1] + LogUtils.GenNewId().ToString();
+                            = splittedText[splittedText.Length - 1] + LogUtils.GenNewId().ToString();
                         }
 
                         if (control.Parent == null)

@@ -14,11 +14,10 @@ namespace Alternet.UI
     /// </summary>
     public class SplittedControlsPanel : SplittedPanel
     {
-        private TreeView? leftTreeView;
-        private VirtualListBox? leftListBox;
+        private VirtualTreeControl? leftListBox;
         private PropertyGrid? propertyGrid;
         private LogListBox? logControl;
-        private VirtualListBox? actionsControl;
+        private VirtualTreeControl? actionsControl;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="SplittedControlsPanel"/> class.
@@ -47,18 +46,10 @@ namespace Alternet.UI
         public override Thickness DefaultPanelSize => (200, 5, 350, 150);
 
         /// <summary>
-        /// Gets or sets whether <see cref="LeftTreeView"/> should look like <see cref="ListBox"/>.
-        /// </summary>
-        /// <remarks>
-        /// This property must be assigned before first use of <see cref="LeftTreeView"/>
-        /// </remarks>
-        public virtual bool LeftTreeViewAsListBox { get; set; } = false;
-
-        /// <summary>
         /// Gets the control with actions list.
         /// </summary>
         [Browsable(false)]
-        public VirtualListBox ActionsControl
+        public VirtualTreeControl ActionsControl
         {
             get
             {
@@ -110,36 +101,22 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Gets <see cref="TreeView"/> control on the left pane.
+        /// Gets <see cref="VirtualTreeControl"/> control on the left pane.
         /// </summary>
         [Browsable(false)]
-        public TreeView LeftTreeView
+        public VirtualTreeControl LeftTreeView
         {
             get
             {
-                if (leftTreeView == null)
-                {
-                    leftTreeView = new()
-                    {
-                        Parent = LeftPanel,
-                        HasBorder = false,
-                        FullRowSelect = true,
-                        HorizontalAlignment = UI.HorizontalAlignment.Fill,
-                        VerticalAlignment = UI.VerticalAlignment.Fill,
-                    };
-                    if (LeftTreeViewAsListBox)
-                        leftTreeView.MakeAsListBox();
-                }
-
-                return leftTreeView;
+                return LeftListBox;
             }
         }
 
         /// <summary>
-        /// Gets <see cref="TreeView"/> control on the left pane.
+        /// Gets the control on the left pane.
         /// </summary>
         [Browsable(false)]
-        public VirtualListBox LeftListBox
+        public VirtualTreeControl LeftListBox
         {
             get
             {
@@ -196,8 +173,7 @@ namespace Alternet.UI
         /// </remarks>
         public virtual void AddActionSpacer()
         {
-            ActionsControl.Required();
-            (actionsControl as ListBox)?.Add(string.Empty);
+            ActionsControl.Add(string.Empty);
         }
 
         /// <summary>
@@ -207,7 +183,7 @@ namespace Alternet.UI
         /// <param name="action">Action method.</param>
         public virtual ListControlItem AddAction(string title, Action? action)
         {
-            ListControlItem item = new(title)
+            TreeControlItem item = new(title)
             {
                 DoubleClickAction = () =>
                 {
@@ -222,8 +198,7 @@ namespace Alternet.UI
                 },
             };
 
-            ActionsControl.Required();
-            actionsControl?.Add(item);
+            ActionsControl.Add(item);
             return item;
         }
 

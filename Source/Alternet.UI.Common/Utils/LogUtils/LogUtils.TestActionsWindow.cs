@@ -48,7 +48,7 @@ namespace Alternet.UI
 
         private class TestActionsWindow : Window
         {
-            private readonly ActionsListBox listBox;
+            private readonly VirtualListBox listBox;
             private readonly VirtualListBox.RangeAdditionController<MemberInfo> controller;
 
             public TestActionsWindow()
@@ -60,7 +60,7 @@ namespace Alternet.UI
                 HasTitleBar = true;
                 CloseEnabled = true;
 
-                listBox = new ActionsListBox();
+                listBox = new VirtualListBox();
                 listBox.Parent = this;
 
                 SetLocationOnDisplay(HorizontalAlignment.Left, VerticalAlignment.Fill);
@@ -70,7 +70,18 @@ namespace Alternet.UI
                 void Fn(string title, Action action)
                 {
                     if (title.StartsWith("Test "))
-                        listBox.AddBusyAction(title, action);
+                        ActionsListBox.AddBusyAction(DoAddAction, title, action);
+
+                    ListControlItem DoAddAction(string title, Action action)
+                    {
+                        ListControlItem item = new(title)
+                        {
+                            DoubleClickAction = action,
+                        };
+
+                        listBox.Add(item);
+                        return item;
+                    }
                 }
 
                 ListControlItem? ConvertItem(MemberInfo member)
@@ -78,7 +89,7 @@ namespace Alternet.UI
                     var item = ActionAndTitleFromTestMethod(member);
                     if (item is null)
                         return null;
-                    var result = new ListControlItem(item.Value.Title);
+                    var result = new TreeControlItem(item.Value.Title);
                     result.DoubleClickAction = item.Value.Action;
                     return result;
                 }

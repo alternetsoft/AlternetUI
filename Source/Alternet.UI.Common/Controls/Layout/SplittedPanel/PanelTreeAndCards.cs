@@ -11,7 +11,6 @@ namespace Alternet.UI
     /// <see cref="CardPanel"/> on the right separated with splitter.
     /// </summary>
     [ControlCategory("Panels")]
-    [Obsolete("Please use PanelListBoxAndCards instead of this control.")]
     public partial class PanelTreeAndCards : SplittedControlsPanel
     {
         private readonly CardPanel cardPanel = new();
@@ -32,20 +31,15 @@ namespace Alternet.UI
         public PanelTreeAndCards()
         {
             RightVisible = false;
-            LeftTreeView.Required();
+            LeftListBox.Required();
             cardPanel.Parent = FillPanel;
-            LeftTreeView.SelectionChanged += LeftTreeView_SelectionChanged;
+            LeftListBox.SelectionChanged += LeftTreeView_SelectionChanged;
         }
 
         /// <summary>
         /// Gets used <see cref="CardPanel"/> control.
         /// </summary>
         public CardPanel CardPanel => cardPanel;
-
-        internal new VirtualListBox LeftListBox
-        {
-            get => base.LeftListBox;
-        }
 
         /// <summary>
         /// Adds new page.
@@ -58,7 +52,7 @@ namespace Alternet.UI
         public virtual int Add(string title, Func<AbstractControl> fnCreate)
         {
             var index = cardPanel.Add(title, fnCreate);
-            var item = LeftTreeView.Add(title);
+            var item = LeftListBox.Add(title);
             item.Tag = index;
             return index;
         }
@@ -74,14 +68,14 @@ namespace Alternet.UI
         public virtual int Add(string title, AbstractControl control)
         {
             var index = cardPanel.Add(title, control);
-            var item = LeftTreeView.Add(title);
+            var item = LeftListBox.Add(title);
             item.Tag = index;
             return index;
         }
 
         private void LeftTreeView_SelectionChanged(object? sender, System.EventArgs e)
         {
-            var tag = LeftTreeView.SelectedItem?.Tag;
+            var tag = LeftListBox.SelectedItem?.Tag;
             cardPanel.SelectCard(tag as int?);
         }
     }

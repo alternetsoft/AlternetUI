@@ -129,7 +129,7 @@ namespace Alternet.UI
             var btnRunAction = actionsListBoxToolBar.AddSpeedBtn(
                 "Run action",
                 KnownSvgImages.ImgDebugRun,
-                (_, _) => actionsListBox.RunSelectedItemDoubleClickAction());
+                (_, _) => actionsListBox.ListBox.RunSelectedItemDoubleClickAction());
             actionsListBoxToolBar.SetToolAlignRight(btnRunAction);
 
             var btnActionsListBoxSettings = actionsListBoxToolBar.AddSpeedBtn(
@@ -269,16 +269,6 @@ namespace Alternet.UI
                 (t) => Debug.WriteLine(t.Name));
         }
 
-        /*/// <summary>
-        /// Outputs all <see cref="Native.NativeObject"/> descendants to the debug console.
-        /// </summary>
-        public static void NativeObjectToConsole()
-        {
-            EnumerableUtils.ForEach<Type>(
-                AssemblyUtils.GetTypeDescendants(typeof(Native.NativeObject), true, false),
-                (t) => Debug.WriteLine(t.Name));
-        }*/
-
         public static void UpdateEventsPropertyGrid(PropertyGrid eventGrid, Type? type)
         {
             eventGrid.DoInsideUpdate(() =>
@@ -292,8 +282,8 @@ namespace Alternet.UI
                 {
                     if (item.DeclaringType != type)
                         continue;
-                    var isBinded = LogUtils.IsEventLogged(type, item);
-                    var prop = eventGrid.CreateBoolItem(item.Name, null, isBinded);
+                    var isBound = LogUtils.IsEventLogged(type, item);
+                    var prop = eventGrid.CreateBoolItem(item.Name, null, isBound);
                     prop.FlagsAndAttributes.Attr["InstanceType"] = type;
                     prop.FlagsAndAttributes.Attr["EventInfo"] = item;
                     prop.PropertyChanged += Event_PropertyChanged;

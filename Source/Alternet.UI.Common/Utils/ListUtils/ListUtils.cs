@@ -11,13 +11,13 @@ namespace Alternet.UI
     /// </summary>
     public static class ListUtils
     {
-        /// <summary>  
-        /// Finds the indices of the specified items in the given collection.  
-        /// </summary>  
-        /// <typeparam name="T">The type of elements in the collection and items.</typeparam>  
-        /// <param name="collection">The collection to search.</param>  
-        /// <param name="items">The items to find in the collection.</param>  
-        /// <returns>An enumerable of indices where the items are found in the collection.</returns>  
+        /// <summary>
+        /// Finds the indices of the specified items in the given collection.
+        /// </summary>
+        /// <typeparam name="T">The type of elements in the collection and items.</typeparam>
+        /// <param name="collection">The collection to search.</param>
+        /// <param name="items">The items to find in the collection.</param>
+        /// <returns>An enumerable of indices where the items are found in the collection.</returns>
         public static IEnumerable<int> IndexOfRange<T>(IList<T> collection, IEnumerable<T> items)
         {
             foreach (T item in items)
