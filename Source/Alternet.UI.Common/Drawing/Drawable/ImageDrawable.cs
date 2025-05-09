@@ -161,7 +161,7 @@ namespace Alternet.Drawing
                     var destRect = Bounds;
                     var centeredRect = imageRect.CenterIn(destRect, CenterHorz, CenterVert);
                     if (SourceRect is null)
-                        dc.DrawImage(image, centeredRect);
+                        dc.DrawImage(image, centeredRect.Location);
                     else
                         dc.DrawImage(image, centeredRect, SourceRect.Value);
                 }

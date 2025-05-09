@@ -559,8 +559,6 @@ namespace Alternet.UI
 
             TemplateUtils.RaisePaintForChildren(control, graphics);
 
-            graphics.UseUnscaledDrawImage = false;
-
             dc.Restore();
 
             if(interior is not null)
@@ -569,6 +567,8 @@ namespace Alternet.UI
                 interior.HorzPosition = control.HorzScrollBarInfo;
                 interior.Draw(control, graphics);
             }
+
+            graphics.UseUnscaledDrawImage = false;
 
 #if ANDROID
             DebugUtils.DebugCallIf(false, () =>

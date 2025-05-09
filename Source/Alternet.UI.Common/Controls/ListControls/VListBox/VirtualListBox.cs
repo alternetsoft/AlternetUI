@@ -1101,8 +1101,6 @@ namespace Alternet.UI
 
             dc.FillRectangle(RealBackgroundColor.AsBrush, ClientRectangle);
 
-            TransformMatrix matrix = TransformMatrix.CreateTranslation(-scrollOffset, 0);
-
             if (interior is not null)
             {
                 interior.UpdateThemeMetrics(IsDarkBackground);
@@ -1121,7 +1119,7 @@ namespace Alternet.UI
             MeasureItemEventArgs measureItemArgs = new(dc, 0);
             DrawItemEventArgs drawItemArgs = new(dc);
 
-            dc.PushTransform(matrix);
+            dc.PushAndTranslate(-scrollOffset, 0);
             try
             {
                 PaintRows();
@@ -1358,10 +1356,13 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Calculates the position information for the scrollbars based on the number of visible items
+        /// Calculates the position information for the scrollbars based on the number
+        /// of visible items
         /// and their total height and maximal width.
         /// </summary>
-        public virtual void CalcScrollBarInfo(out ScrollBarInfo horzScrollbar, out ScrollBarInfo vertScrollbar)
+        public virtual void CalcScrollBarInfo(
+            out ScrollBarInfo horzScrollbar,
+            out ScrollBarInfo vertScrollbar)
         {
             HiddenOrVisible vertVisibility = HiddenOrVisible.Auto;
             HiddenOrVisible horzVisibility = HiddenOrVisible.Auto;
@@ -1402,7 +1403,8 @@ namespace Alternet.UI
         /// <summary>
         /// Sets horizontal scroll offset.
         /// </summary>
-        /// <param name="value">Value of the horizontal scroll offset in device-independent units.</param>
+        /// <param name="value">Value of the horizontal scroll offset in
+        /// device-independent units.</param>
         public virtual void SetHorizontalOffset(Coord value)
         {
             var newOffset = Math.Max(value, 0);
