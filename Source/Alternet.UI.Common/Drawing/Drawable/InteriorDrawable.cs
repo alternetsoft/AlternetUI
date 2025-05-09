@@ -592,9 +592,14 @@ namespace Alternet.Drawing
 
             currentIsDark = isDark;
             scrollBarTheme = theme;
+
+            bool savedHasBorder = HasBorder;
+
             SetDefaultBorder(isDark);
             var themeObj = ScrollBar.ThemeMetrics.GetTheme(theme, isDark);
             themeObj.AssignTo(this);
+
+            HasBorder = savedHasBorder;
         }
 
         /// <summary>

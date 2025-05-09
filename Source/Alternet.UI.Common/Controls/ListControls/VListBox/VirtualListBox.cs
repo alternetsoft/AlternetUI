@@ -1103,6 +1103,13 @@ namespace Alternet.UI
 
             TransformMatrix matrix = TransformMatrix.CreateTranslation(-scrollOffset, 0);
 
+            if (interior is not null)
+            {
+                interior.UpdateThemeMetrics(IsDarkBackground);
+                interior.VertPosition = VertScrollBarInfo;
+                interior.HorzPosition = HorzScrollBarInfo;
+            }
+
             var r = GetPaintRectangle();
             r.Width += scrollOffset;
 
@@ -1126,9 +1133,6 @@ namespace Alternet.UI
 
             if (interior is not null)
             {
-                interior.UpdateThemeMetrics(IsDarkBackground);
-                interior.VertPosition = VertScrollBarInfo;
-                interior.HorzPosition = HorzScrollBarInfo;
                 interior.Draw(this, dc);
             }
 
