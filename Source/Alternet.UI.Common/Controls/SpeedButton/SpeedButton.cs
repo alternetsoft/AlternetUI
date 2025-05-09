@@ -394,7 +394,7 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Gets or sets whether mouse clicks are repeated continiously while left mouse
+        /// Gets or sets whether mouse clicks are repeated continuously while left mouse
         /// button is pressed.
         /// </summary>
         public virtual bool IsClickRepeated

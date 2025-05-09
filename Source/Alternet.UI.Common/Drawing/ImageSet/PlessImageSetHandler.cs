@@ -19,11 +19,31 @@ namespace Alternet.Drawing
         /// </summary>
         public static IImageSetHandler Default = new PlessImageSetHandler();
 
-        /// <inheritdoc/>
-        public SizeI DefaultSize { get; set; }
+        private SizeI defaultSize;
 
         /// <inheritdoc/>
-        bool IImageSetHandler.LoadFromStream(Stream stream)
+        public virtual SizeI DefaultSize
+        {
+            get
+            {
+                if (defaultSize.AnyIsEmptyOrNegative)
+                {
+                    if (Images.Count > 0)
+                        return Images[0].Size;
+                    return 16;
+                }
+
+                return defaultSize;
+            }
+
+            set
+            {
+                defaultSize = value;
+            }
+        }
+
+        /// <inheritdoc/>
+        public virtual bool LoadFromStream(Stream stream)
         {
             var bitmap = Bitmap.FromStream(stream);
             if (bitmap.IsOk)
@@ -32,7 +52,7 @@ namespace Alternet.Drawing
         }
 
         /// <inheritdoc/>
-        public Image AsImage(SizeI size)
+        public virtual Image AsImage(SizeI size)
         {
             Image? result = null;
 
@@ -45,7 +65,8 @@ namespace Alternet.Drawing
                     var newDistance = SizeI.Subtract(bitmap.Size, size).Abs;
                     var oldDistance = SizeI.Subtract(result.Size, size).Abs;
 
-                    if (newDistance.Width < oldDistance.Width && newDistance.Height < oldDistance.Height)
+                    if (newDistance.Width < oldDistance.Width
+                        && newDistance.Height < oldDistance.Height)
                         result = bitmap;
                 }
             }
@@ -54,13 +75,13 @@ namespace Alternet.Drawing
         }
 
         /// <inheritdoc/>
-        public SizeI GetPreferredBitmapSizeAtScale(Coord scale)
+        public virtual SizeI GetPreferredBitmapSizeAtScale(Coord scale)
         {
             return new((int)(DefaultSize.Width * scale), (int)(DefaultSize.Height * scale));
         }
 
         /// <inheritdoc/>
-        public SizeI GetPreferredBitmapSizeFor(IControl control)
+        public virtual SizeI GetPreferredBitmapSizeFor(IControl control)
         {
             return GetPreferredBitmapSizeAtScale(control.ScaleFactor);
         }
