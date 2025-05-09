@@ -13,7 +13,8 @@ namespace Alternet.UI
     public partial class VirtualTreeControl : Border, ITreeControlItemContainer
     {
         /// <summary>
-        /// Specifies the default type of buttons used in the tree view control to expand or collapse nodes.
+        /// Specifies the default type of buttons used in the tree view control to expand
+        /// or collapse nodes.
         /// </summary>
         /// <remarks>
         /// This field determines the initial value of the <see cref="TreeButtons"/> property
@@ -245,12 +246,12 @@ namespace Alternet.UI
         {
             get
             {
-                return base.ContextMenuStrip;
+                return ContextMenuStrip;
             }
 
             set
             {
-                base.ContextMenuStrip = value;
+                ContextMenuStrip = value;
             }
         }
 
@@ -404,11 +405,26 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Adds a new item with the specified title to the tree view on the root level.
+        /// </summary>
+        /// <param name="title">The title of the item to add.</param>
+        /// <remarks>
+        /// This method creates a new <see cref="TreeControlItem"/> with the specified title
+        /// and adds it to the root level of the tree view.
+        /// </remarks>
+        public virtual TreeControlItem Add(string title)
+        {
+            TreeControlItem item = new(title);
+            Add(item);
+            return item;
+        }
+
+        /// <summary>
         /// Adds the specified item to the tree view on the root level.
         /// </summary>
         /// <param name="item">The item to add.</param>
         /// <param name="selectItem">If true, the item will be selected after being added.</param>
-        public bool Add(UI.TreeControlItem item, bool selectItem = false)
+        public virtual bool Add(UI.TreeControlItem item, bool selectItem = false)
         {
             return AddChild(null, item, selectItem);
         }
