@@ -142,7 +142,7 @@ namespace Alternet.UI
         public static explicit operator ImageSet(Image image) => new(image);
 
         /// <summary>
-        /// Creates grayscaled <see cref="ImageSet"/> instance from
+        /// Creates grayscale <see cref="ImageSet"/> instance from
         /// the <see cref="Image"/> instance.
         /// </summary>
         /// <param name="image">The image used to load the data.</param>
