@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ApiInfo>
-  <Assembly Name="Alternet.UI.Common, Version=0.9.723.0, Culture=neutral, PublicKeyToken=7fb0fe57212b4b74">
+  <Assembly Name="Alternet.UI.Common, Version=0.9.724.0, Culture=neutral, PublicKeyToken=7fb0fe57212b4b74">
     <Type Name="XamlX.Runtime.IXamlParentStackProviderV1" />
     <Type Name="XamlX.Runtime.IXamlXmlNamespaceInfoProviderV1" />
     <Type Name="XamlX.Runtime.XamlXmlNamespaceInfoV1" />
@@ -49,6 +49,10 @@
     <Type Name="Alternet.Drawing.ImageConverter" />
     <Type Name="Alternet.Drawing.ImageSetConverter" />
     <Type Name="Alternet.Drawing.ControlPaint" />
+    <Type Name="Alternet.Drawing.PlessControlPainterHandler">
+      <Event Name="Disposed" />
+      <Event Name="PropertyChanged" />
+    </Type>
     <Type Name="Alternet.Drawing.Brush">
       <Event Name="Disposed" />
       <Event Name="PropertyChanged" />
@@ -518,6 +522,7 @@
     <Type Name="Alternet.UI.CollectionItemChangedHandler`1" />
     <Type Name="Alternet.UI.CollectionItemRangeChangedHandler`1" />
     <Type Name="Alternet.UI.BaseCollection`1">
+      <Event Name="PropertyChanged" />
       <Event Name="ItemInserted" />
       <Event Name="ItemRemoved" />
       <Event Name="ItemRangeAdditionFinished" />
@@ -527,6 +532,13 @@
     <Type Name="Alternet.UI.BaseConcurrentStack`1" />
     <Type Name="Alternet.UI.BaseDictionary`2" />
     <Type Name="Alternet.UI.BaseDictionaryCached`2" />
+    <Type Name="Alternet.UI.NotNullCollection`1">
+      <Event Name="PropertyChanged" />
+      <Event Name="ItemInserted" />
+      <Event Name="ItemRemoved" />
+      <Event Name="ItemRangeAdditionFinished" />
+      <Event Name="CollectionChanged" />
+    </Type>
     <Type Name="Alternet.UI.Command">
       <Event Name="CanExecuteChanged" />
       <Event Name="AfterExecute" />
@@ -553,10 +565,8 @@
     </Type>
     <Type Name="Alternet.UI.IListControlItemContainer" />
     <Type Name="Alternet.UI.IListControlItemDefaults" />
-    <Type Name="Alternet.UI.IListControlItems`1">
-      <Event Name="ItemInserted" />
-      <Event Name="ItemRemoved" />
-      <Event Name="ItemRangeAdditionFinished" />
+    <Type Name="Alternet.UI.ListControlColumn">
+      <Event Name="PropertyChanged" />
     </Type>
     <Type Name="Alternet.UI.ListControlEmptyItem">
       <Event Name="PropertyChanged" />
@@ -565,12 +575,6 @@
       <Event Name="PropertyChanged" />
     </Type>
     <Type Name="Alternet.UI.ListControlItemDefaults" />
-    <Type Name="Alternet.UI.ListControlItems`1">
-      <Event Name="ItemInserted" />
-      <Event Name="ItemRemoved" />
-      <Event Name="ItemRangeAdditionFinished" />
-      <Event Name="CollectionChanged" />
-    </Type>
     <Type Name="Alternet.UI.ListControlSeparatorItem">
       <Event Name="PropertyChanged" />
     </Type>
@@ -597,12 +601,6 @@
     </Type>
     <Type Name="Alternet.UI.TreeViewItem">
       <Event Name="PropertyChanged" />
-    </Type>
-    <Type Name="Alternet.UI.VirtualListBoxItems">
-      <Event Name="ItemInserted" />
-      <Event Name="ItemRemoved" />
-      <Event Name="ItemRangeAdditionFinished" />
-      <Event Name="CollectionChanged" />
     </Type>
     <Type Name="Alternet.UI.Display">
       <Event Name="Disposed" />
@@ -6505,6 +6503,10 @@
       <Event Name="Scroll" />
       <Event Name="Disposed" />
       <Event Name="PropertyChanged" />
+    </Type>
+    <Type Name="Alternet.UI.ListBoxItems">
+      <Event Name="PropertyChanged" />
+      <Event Name="CollectionChanged" />
     </Type>
     <Type Name="Alternet.UI.ActionsListBox">
       <Event Name="DrawItem" />
@@ -13829,6 +13831,8 @@
     <Type Name="Alternet.UI.KnownButtons+Info" />
     <Type Name="Alternet.UI.KnownProperties+AbstractControlProperties" />
     <Type Name="Alternet.UI.UixmlLoader+Flags" />
+    <Type Name="Alternet.UI.DataObject+XmlDictionaryItems" />
+    <Type Name="Alternet.UI.DataObject+XmlDictionaryItem" />
     <Type Name="Alternet.UI.Command+CanExecuteDelegate" />
     <Type Name="Alternet.UI.Command+ExecuteDelegate" />
     <Type Name="Alternet.UI.ListControlItem+ContainerRelatedData" />
@@ -13843,6 +13847,7 @@
     <Type Name="Alternet.UI.AbstractControl+HandlerType" />
     <Type Name="Alternet.UI.AbstractControl+SuspendFlags" />
     <Type Name="Alternet.UI.AbstractControl+ControlCollection">
+      <Event Name="PropertyChanged" />
       <Event Name="ItemInserted" />
       <Event Name="ItemRemoved" />
       <Event Name="ItemRangeAdditionFinished" />
@@ -13863,7 +13868,7 @@
     <Type Name="Alternet.UI.FileListBox+NewItemInfo" />
     <Type Name="Alternet.UI.VirtualListBox+ItemClickFlags" />
     <Type Name="Alternet.UI.VirtualListBox+SetItemsKind" />
-    <Type Name="Alternet.UI.VirtualListControl+AddRangeController`1">
+    <Type Name="Alternet.UI.VirtualListControl+RangeAdditionController`1">
       <Event Name="Disposed" />
       <Event Name="PropertyChanged" />
     </Type>

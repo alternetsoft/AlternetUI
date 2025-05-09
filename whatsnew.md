@@ -1,3 +1,32 @@
+# 0.9.724 (2025 May 9)
+
+- TabControl: HeaderButtons, HeaderButtonsCount, ContentsControl, HeaderControl, GetHeaderButton, GetHeaderButtonAt.
+- TreeControlItem: HasCollapsedParents, ParentItems, NextOrPrevSibling.
+- TreeControlItem: Items are now IReadOnlyList{TreeControlItem}.
+- VirtualListBox and VirtualTreeControl: ScrollIntoView.
+- WindowListEditor: Use VirtualTreeControl instead of TreeView.
+- VirtualListBox.Items is now BaseCollection{ListControlItem}.
+- DataObject: Support IDictionary save/load to/from xml.
+- AbstractControl.OnContextMenuCreated.
+- VirtualTreeControl: inherit from Border and use it's border.
+- VirtualTreeControl: SelectItem now expands all parents of the selected item.
+- VirtualTreeControl: Expand/Collapse don't clear selection.
+- VirtualListControl: Redo RangeAdditionController to work better.
+- VirtualListBox.RefreshLastRow.
+- VirtualListBox: Fixed EnsureVisible for partially visible last item
+- VirtualListBox:SelectedIndexes and SelectedItems property setters
+- VirtualListBox:Fixed vertical align of the item text.
+- Fixed AbstractControl.HoveredControl related issues.
+- LogListBox: Fix last item paint when changed by App.LogReplace.
+- Demo: Add context menu for header button of TabControl.
+- Update csproj to use new SkiaSharp nuget version.
+- FindReplaceControl: Find, Replace and Scope editors now have border so they will look properly on Linux and macOs.
+- LogUtils: Log exception with sub-items for inner exceptions.
+- Image: FromBase64String, ToBase64String.
+- Fix possible Assembly.Location exception.
+- BrushOrColor: conversion operators from Brush/Color.
+- ImageDrawable: Fixed not used SvgColor.
+
 # 0.9.723 (2025 April 29)
 
 - MessageBox: We changed the declaration of all members to return void and include an onClose parameter. This change was made to enable 
