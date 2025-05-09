@@ -423,7 +423,8 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
-        /// Indicates whether the specified image is not <c>null</c> and has non-empty width and height.
+        /// Indicates whether the specified image is not <c>null</c> and has non-empty
+        /// width and height.
         /// </summary>
         /// <param name="image">The image to test.</param>
         /// <returns><c>true</c> if the <paramref name="image"/> parameter is not <c>null</c> and
@@ -506,7 +507,8 @@ namespace Alternet.Drawing
         /// </summary>
         /// <param name="asm">Assembly from which image will be loaded.</param>
         /// <param name="relativeName">Image name of relative path.
-        /// Slash characters must be changed to '.'. Example: "ToolBarPng.Large.Calendar32.png".</param>
+        /// Slash characters must be changed to '.'.
+        /// Example: "ToolBarPng.Large.Calendar32.png".</param>
         /// <returns></returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Image FromAssemblyUrl(Assembly asm, string relativeName)
@@ -639,7 +641,8 @@ namespace Alternet.Drawing
         /// If provided, svg fill color is changed to the specified value.</param>
         public static Image FromSvgString(string s, int width, int height, Color? color = null)
         {
-            var nativeImage = GraphicsFactory.Handler.CreateImageHandlerFromSvg(s, width, height, color);
+            var nativeImage = GraphicsFactory.Handler
+                .CreateImageHandlerFromSvg(s, width, height, color);
             var result = new Image(nativeImage);
             return result;
         }
@@ -670,7 +673,8 @@ namespace Alternet.Drawing
         /// </summary>
         /// <remarks>
         /// This is similar to <see cref="Image.FromSvgUrl"/> but uses
-        /// <see cref="AbstractControl.GetDPI"/> and <see cref="ToolBarUtils.GetDefaultImageSize(Coord)"/>
+        /// <see cref="AbstractControl.GetDPI"/> and
+        /// <see cref="ToolBarUtils.GetDefaultImageSize(Coord)"/>
         /// to get appropriate image size which is best suitable for toolbars.
         /// </remarks>
         /// <param name="url">The file or embedded resource url with Svg data used
@@ -723,7 +727,10 @@ namespace Alternet.Drawing
             }
             else
             {
-                result = GenericImage.CreateSkiaBitmapForImage(bitmap.Width, bitmap.Height, bitmap.HasAlpha);
+                result = GenericImage.CreateSkiaBitmapForImage(
+                    bitmap.Width,
+                    bitmap.Height,
+                    bitmap.HasAlpha);
             }
 
             if (bitmap.Immutable)
@@ -913,12 +920,12 @@ namespace Alternet.Drawing
         /// <summary>
         /// Creates new image using pixels of this image with changed lightness.
         /// </summary>
-        /// <param name="ialpha">Lightgness (0..200).</param>
+        /// <param name="alpha">Lightness (0..200).</param>
         /// <returns></returns>
-        public virtual Image ChangeLightness(int ialpha)
+        public virtual Image ChangeLightness(int alpha)
         {
             GenericImage image = (GenericImage)this;
-            var converted = image.ConvertLightness(ialpha);
+            var converted = image.ConvertLightness(alpha);
             var result = (Image)converted;
             return result;
         }
@@ -997,9 +1004,15 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
-        /// Creates grayscaled version of the image.
+        /// Converts the current image to a grayscale version.
         /// </summary>
-        /// <returns>Returns new grayscaled image from this image.</returns>
+        /// <remarks>
+        /// If the <see cref="GrayScale"/> event is not null, it will be invoked to allow
+        /// custom grayscale conversion logic. Otherwise, the default grayscale conversion
+        /// logic will be applied using the <see cref="GenericImage.ChangeToGrayScale"/> method.
+        /// </remarks>
+        /// <returns>A new <see cref="Image"/> instance representing
+        /// the grayscale version of the current image.</returns>
         public virtual Image ToGrayScale()
         {
             if(GrayScale is null)
@@ -1116,6 +1129,22 @@ namespace Alternet.Drawing
             => control.PixelToDip(PixelSize);
 
         /// <summary>
+        /// Saves the current image to the desktop with the specified file name.
+        /// </summary>
+        /// <param name="imageName">Optional. The name of the image file to save.
+        /// If not specified, the default name "image.png" will be used.</param>
+        /// <param name="uniqueName">
+        /// A boolean value indicating whether to generate a unique file name if
+        /// a file with the same name already exists. Optional. Default is <c>false</c>.
+        /// </param>
+        public virtual void SaveToDesktop(string? imageName = null, bool uniqueName = false)
+        {
+            var imagePath = PathUtils.GenFilePathOnDesktop(imageName ?? "image.png", uniqueName);
+            FileUtils.DeleteIfExistsSafe(imagePath);
+            Save(imagePath);
+        }
+
+        /// <summary>
         /// Gets image rect as (0, 0, SizeDip(control).Width, SizeDip(control).Height).
         /// </summary>
         public virtual RectD BoundsDip(AbstractControl control)
@@ -1157,13 +1186,13 @@ namespace Alternet.Drawing
             Handler.Assign(bitmap);
         }
 
-        /// <summary>  
-        /// Converts this image to a Base64-encoded string in the specified format.  
-        /// </summary>  
-        /// <param name="bitmapType">The format in which the image should be encoded.</param>  
+        /// <summary>
+        /// Converts this image to a Base64-encoded string in the specified format.
+        /// </summary>
+        /// <param name="bitmapType">The format in which the image should be encoded.</param>
         /// <param name="quality">The quality of the image encoding. Optional.
-        /// If not specified, <see cref="DefaultSaveQuality"/> is used.</param>  
-        /// <returns>A Base64-encoded string representation of the image.</returns>  
+        /// If not specified, <see cref="DefaultSaveQuality"/> is used.</param>
+        /// <returns>A Base64-encoded string representation of the image.</returns>
         public virtual string ToBase64String(BitmapType bitmapType, int? quality = null)
         {
             var memStream = new MemoryStream();
