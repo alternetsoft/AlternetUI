@@ -87,6 +87,12 @@ namespace Alternet.Drawing
         public readonly bool AnyIsEmpty => width == 0 || height == 0;
 
         /// <summary>
+        /// Tests whether this <see cref="SizeI"/> has zero or negative width or height.
+        /// </summary>
+        [Browsable(false)]
+        public readonly bool AnyIsEmptyOrNegative => width <= 0 || height <= 0;
+
+        /// <summary>
         /// Tests whether this <see cref='SizeI'/> has zero
         /// width and height.
         /// </summary>
