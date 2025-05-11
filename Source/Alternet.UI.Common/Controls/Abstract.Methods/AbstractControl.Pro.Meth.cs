@@ -118,12 +118,12 @@ namespace Alternet.UI
         /// An example of the correct implementation
         /// can be found in <see cref="SpeedButton.GetShortcuts"/>.
         /// </remarks>
-        protected virtual IReadOnlyList<(ShortcutInfo Shortcut, Action Action)>? GetShortcuts()
+        protected virtual IReadOnlyList<ShortcutAndAction>? GetShortcuts()
         {
             if (!HasChildren)
                 return null;
 
-            List<(ShortcutInfo Shortcut, Action Action)>? result = null;
+            List<ShortcutAndAction>? result = null;
 
             foreach (var child in Children)
             {

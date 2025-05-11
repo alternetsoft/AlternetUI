@@ -1529,7 +1529,7 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Gets window kind (window, dialog, control, miniframe).
+        /// Gets window kind (window, dialog, control, mini-frame).
         /// </summary>
         /// <returns></returns>
         public virtual WindowKind GetWindowKind() => GetWindowKindOverride() ?? WindowKind.Window;
@@ -1909,12 +1909,12 @@ namespace Alternet.UI
             var shortcuts = GetShortcuts();
             if (shortcuts is null)
                 return;
-            foreach (var (shortcut, action) in shortcuts)
+            foreach (var item in shortcuts)
             {
-                var keys = shortcut.KeyInfo;
+                var keys = item.Shortcut.KeyInfo;
                 if (keys is null)
                     continue;
-                if (KeyInfo.Run(keys, e, action, setHandled: true))
+                if (KeyInfo.Run(keys, e, item.Action, setHandled: true))
                     break;
             }
         }

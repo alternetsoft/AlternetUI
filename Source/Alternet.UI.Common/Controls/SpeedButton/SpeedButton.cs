@@ -1176,12 +1176,11 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        protected override
-            IReadOnlyList<(ShortcutInfo Shortcut, Action Action)>? GetShortcuts()
+        protected override IReadOnlyList<ShortcutAndAction>? GetShortcuts()
         {
             if (shortcut is null)
                 return null;
-            return new (ShortcutInfo Shortcut, Action Action)[] { (shortcut, Fn) };
+            return new ShortcutAndAction[] { new(shortcut, Fn) };
 
             void Fn()
             {
