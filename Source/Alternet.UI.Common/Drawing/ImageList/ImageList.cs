@@ -21,7 +21,12 @@ namespace Alternet.Drawing
         /// </summary>
         public static readonly ImageList Empty = new(immutable: true);
 
-        private SizeI size = 16;
+        /// <summary>
+        /// Gets or sets the default size of the images in the image list, in pixels.
+        /// </summary>
+        public static int DefaultSize = 16;
+
+        private SizeI size = DefaultSize;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ImageList"/> with default values.
