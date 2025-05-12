@@ -18,7 +18,8 @@ namespace Alternet.UI
         /// </summary>
         public static bool RaiseActivatedForChildren = true;
 
-        private static (VisualControlStates ControlState, ObjectUniqueId ControlId)? reportedVisualStates;
+        private static
+            (VisualControlStates ControlState, ObjectUniqueId ControlId)? reportedVisualStates;
 
         private DelayedEvent<EventArgs> delayedTextChanged = new();
 
@@ -239,7 +240,8 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Raises the <see cref="MouseLeftButtonUp" /> event and <see cref="OnMouseLeftButtonUp"/> method.
+        /// Raises the <see cref="MouseLeftButtonUp" /> event
+        /// and <see cref="OnMouseLeftButtonUp"/> method.
         /// </summary>
         public void RaiseMouseLeftButtonUp(MouseEventArgs e)
         {
@@ -1212,7 +1214,13 @@ namespace Alternet.UI
         {
             if (DisposingOrDisposed)
                 return;
-            var currentTarget = UI.AbstractControl.GetMouseTargetControl(this);
+            PointD? position = null;
+            var originalTarget = this;
+
+            var currentTarget = UI.AbstractControl.GetMouseTargetControl(
+                ref originalTarget,
+                ref position);
+
             currentTarget?.RaiseMouseEnter(e);
         }
 
@@ -1224,7 +1232,13 @@ namespace Alternet.UI
         {
             if (DisposingOrDisposed)
                 return;
-            var currentTarget = UI.AbstractControl.GetMouseTargetControl(this);
+            PointD? position = null;
+            var originalTarget = this;
+
+            var currentTarget = UI.AbstractControl.GetMouseTargetControl(
+                ref originalTarget,
+                ref position);
+
             currentTarget?.RaiseMouseLeave(e);
         }
 

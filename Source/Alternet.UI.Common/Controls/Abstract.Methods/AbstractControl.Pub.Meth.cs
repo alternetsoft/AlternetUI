@@ -44,20 +44,44 @@ namespace Alternet.UI
         /// of its parent controls.
         /// </summary>
         /// <param name="control">Control to check.</param>
+        /// <param name="mousePosition">The position of the mouse pointer.</param>
         /// <returns></returns>
-        public static AbstractControl? GetMouseTargetControl(AbstractControl? control)
+        public static AbstractControl? GetMouseTargetControl(
+            ref AbstractControl? control,
+            ref PointD? mousePosition)
         {
-            var result = control;
+            if (control is null)
+                return null;
 
-            while (result is not null)
+            var position = mousePosition ?? Mouse.GetPosition(control);
+
+            var result = control.PointInChildRecursive(position) ?? control;
+
+            if (result == control)
             {
-                if (result.InputTransparent)
-                    result = result.Parent;
-                else
-                    return result;
+                PlessMouse.UpdateMousePosition(position, control);
+                mousePosition = position;
+                return control;
             }
+            else
+            {
+                while (result is not null)
+                {
+                    if (result.InputTransparent)
+                    {
+                        result = result.Parent;
+                    }
+                    else
+                    {
+                        var screenPosition = PlessUtils.ClientToScreen(position, control);
+                        position = PlessUtils.ScreenToClient(screenPosition, result);
+                        PlessMouse.UpdateMousePosition(position, result);
+                        return result;
+                    }
+                }
 
-            return result;
+                return null;
+            }
         }
 
         /// <summary>
@@ -570,6 +594,10 @@ namespace Alternet.UI
         /// <param name="e">Touch event arguments.</param>
         public virtual void TouchToMouseEvents(TouchEventArgs e)
         {
+            var originalTarget = this;
+            PointD? position = e.Location;
+            AbstractControl? target;
+
             switch (e.DeviceType)
             {
                 case TouchDeviceType.Touch:
@@ -577,7 +605,10 @@ namespace Alternet.UI
                     switch (e.ActionType)
                     {
                         case TouchAction.Entered:
-                            RaiseMouseEnter(e);
+                            target = AbstractControl.GetMouseTargetControl(
+                                ref originalTarget,
+                                ref position);
+                            target?.RaiseMouseEnter(e);
                             break;
                         case TouchAction.Pressed:
                             AbstractControl.BubbleMouseDown(
@@ -607,7 +638,10 @@ namespace Alternet.UI
                         case TouchAction.Cancelled:
                             break;
                         case TouchAction.Exited:
-                            RaiseMouseLeave(e);
+                            target = AbstractControl.GetMouseTargetControl(
+                                ref originalTarget,
+                                ref position);
+                            target?.RaiseMouseLeave(e);
                             break;
                         case TouchAction.WheelChanged:
                             AbstractControl.BubbleMouseWheel(
@@ -2325,7 +2359,34 @@ namespace Alternet.UI
         /// <returns></returns>
         public virtual AbstractControl? PointInChild(PointD point)
         {
-            return PointInChilds(point).FirstOrDefault();
+            var allChildren = AllChildren;
+
+            for (int i = allChildren.Count - 1; i >= 0; i--)
+            {
+                var child = allChildren[i];
+                if (!child.Visible)
+                    continue;
+                if (child.Bounds.Contains(point))
+                    return child;
+            }
+
+            return null;
+        }
+
+        /// <summary>
+        /// Recursively finds the child control at the specified point.
+        /// </summary>
+        /// <param name="point">The point to check, relative to the current control.</param>
+        /// <returns>The child control at the specified point, or <c>null</c>
+        /// if no child control is found.</returns>
+        public virtual AbstractControl? PointInChildRecursive(PointD point)
+        {
+            var child = PointInChild(point);
+            if (child is null)
+                return null;
+            var pointInChild = point - child.Location;
+            var result = child.PointInChildRecursive(pointInChild) ?? child;
+            return result;
         }
 
         /// <summary>
@@ -2372,7 +2433,7 @@ namespace Alternet.UI
         /// Controls are returned starting
         /// from the last control in <see cref="Children"/>.
         /// </summary>
-        /// <param name="point">Point to test.</param>
+        /// <param name="point">The point to test.</param>
         /// <returns></returns>
         public virtual IEnumerable<AbstractControl> PointInChilds(PointD point)
         {

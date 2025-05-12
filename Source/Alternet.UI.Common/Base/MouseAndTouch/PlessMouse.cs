@@ -9,7 +9,8 @@ using Alternet.Drawing;
 namespace Alternet.UI
 {
     /// <summary>
-    /// Contains static methods and properties related to the platformless mouse implementation.
+    /// Contains static methods and properties related to the platform
+    /// independent mouse implementation.
     /// </summary>
     public static class PlessMouse
     {
@@ -95,7 +96,8 @@ namespace Alternet.UI
         /// <summary>
         /// Updates <see cref="LastMousePosition"/>
         /// </summary>
-        /// <param name="position">Mouse position. If <c>null</c>, <see cref="Mouse.GetPosition(AbstractControl)"/>
+        /// <param name="position">Mouse position.
+        /// If <c>null</c>, <see cref="Mouse.GetPosition(AbstractControl)"/>
         /// is used to get mouse position.</param>
         /// <param name="control"></param>
         /// <returns></returns>

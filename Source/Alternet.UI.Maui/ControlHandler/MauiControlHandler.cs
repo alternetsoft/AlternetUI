@@ -160,7 +160,7 @@ namespace Alternet.UI
         {
             get
             {
-                return Container?.IsVisible ?? false;
+                return Control?.Parent?.VisibleOnScreen ?? Container?.IsVisible ?? false;
             }
         }
 

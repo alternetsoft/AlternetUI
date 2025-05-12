@@ -23,21 +23,6 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Bubbles long tap event with the specified argument.
-        /// </summary>
-        /// <param name="originalTarget">Control on which event is originally fired.</param>
-        /// <param name="e"></param>
-        public static void BubbleLongTap(
-            AbstractControl? originalTarget,
-            LongTapEventArgs e)
-        {
-            var currentTarget = AbstractControl.GetMouseTargetControl(originalTarget);
-            if (currentTarget == null)
-                return;
-            currentTarget.RaiseLongTap(e);
-        }
-
-        /// <summary>
         /// Bubbles mouse move event with the specified parameters.
         /// </summary>
         /// <param name="originalTarget">Control on which event is originally fired.</param>
@@ -51,13 +36,8 @@ namespace Alternet.UI
             out bool handled)
         {
             handled = false;
-            var currentTarget = AbstractControl.GetMouseTargetControl(originalTarget);
-            if (currentTarget == null)
-                return;
-
-            position = PlessMouse.UpdateMousePosition(position, currentTarget);
-
-            if (position is null)
+            var currentTarget = AbstractControl.GetMouseTargetControl(ref originalTarget, ref position);
+            if (currentTarget is null || position is null)
                 return;
 
             var eventArgs = new MouseEventArgs(
@@ -89,13 +69,8 @@ namespace Alternet.UI
                 return;
             mouseWheelTimestamp = timestamp;
 
-            var currentTarget = AbstractControl.GetMouseTargetControl(originalTarget);
-            if (currentTarget == null)
-                return;
-
-            position = PlessMouse.UpdateMousePosition(position, currentTarget);
-
-            if (position is null)
+            var currentTarget = AbstractControl.GetMouseTargetControl(ref originalTarget, ref position);
+            if (currentTarget == null || position is null)
                 return;
 
             var eventArgs
@@ -128,13 +103,8 @@ namespace Alternet.UI
             PlessMouse.SetButtonPressed(changedButton);
 
             handled = false;
-            var currentTarget = AbstractControl.GetMouseTargetControl(originalTarget);
-            if (currentTarget == null)
-                return;
-
-            position = PlessMouse.UpdateMousePosition(position, currentTarget);
-
-            if (position is null)
+            var currentTarget = AbstractControl.GetMouseTargetControl(ref originalTarget, ref position);
+            if (currentTarget is null || position is null)
                 return;
 
             var eventArgs = new MouseEventArgs(
@@ -164,13 +134,8 @@ namespace Alternet.UI
             out bool handled)
         {
             handled = false;
-            var currentTarget = AbstractControl.GetMouseTargetControl(originalTarget);
-            if (currentTarget == null)
-                return;
-
-            position = PlessMouse.UpdateMousePosition(position, currentTarget);
-
-            if (position is null)
+            var currentTarget = AbstractControl.GetMouseTargetControl(ref originalTarget, ref position);
+            if (currentTarget is null || position is null)
                 return;
 
             var eventArgs =
@@ -203,13 +168,8 @@ namespace Alternet.UI
             PlessMouse.SetButtonPressed(changedButton, false);
 
             handled = false;
-            var currentTarget = AbstractControl.GetMouseTargetControl(originalTarget);
-            if (currentTarget == null)
-                return;
-
-            position = PlessMouse.UpdateMousePosition(position, currentTarget);
-
-            if (position is null)
+            var currentTarget = AbstractControl.GetMouseTargetControl(ref originalTarget, ref position);
+            if (currentTarget is null || position is null)
                 return;
 
             var eventArgs

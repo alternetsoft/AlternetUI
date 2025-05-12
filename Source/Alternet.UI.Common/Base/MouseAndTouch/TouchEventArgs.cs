@@ -22,12 +22,13 @@ namespace Alternet.UI
 
         /// <summary>
         /// Initializes a new instance of the <see cref="TouchEventArgs"/> class
-        /// with the specified paramaters.
+        /// with the specified parameters.
         /// </summary>
         /// <param name="id">The ID used to track the touch event.</param>
         /// <param name="type">The type of touch action that initiated this event.</param>
         /// <param name="location">The location of the touch.</param>
-        /// <param name="inContact">Whether or not the touch device is in contact with the screen.</param>
+        /// <param name="inContact">Whether or not the touch device is in contact
+        /// with the screen.</param>
         public TouchEventArgs(long id, TouchAction type, PointD location, bool inContact)
             : this(id, type, MouseButton.Left, TouchDeviceType.Touch, location, inContact, 0, 1f)
         {
@@ -42,7 +43,8 @@ namespace Alternet.UI
         /// <param name="id">The ID used to track the touch event.</param>
         /// <param name="type">The type of touch action that initiated this event.</param>
         /// <param name="location">The location of the touch.</param>
-        /// <param name="inContact">Whether or not the touch device is in contact with the screen.</param>
+        /// <param name="inContact">Whether or not the touch device is in contact
+        /// with the screen.</param>
         public TouchEventArgs(
             long id,
             TouchAction type,
@@ -64,7 +66,8 @@ namespace Alternet.UI
         /// <param name="id">The ID used to track the touch event.</param>
         /// <param name="type">The type of touch action that initiated this event.</param>
         /// <param name="location">The location of the touch.</param>
-        /// <param name="inContact">Whether or not the touch device is in contact with the screen.</param>
+        /// <param name="inContact">Whether or not the touch device is in
+        /// contact with the screen.</param>
         public TouchEventArgs(
             long id,
             TouchAction type,
@@ -88,7 +91,8 @@ namespace Alternet.UI
         /// <param name="id">The ID used to track the touch event.</param>
         /// <param name="type">The type of touch action that initiated this event.</param>
         /// <param name="location">The location of the touch.</param>
-        /// <param name="inContact">Whether or not the touch device is in contact with the screen.</param>
+        /// <param name="inContact">Whether or not the touch device is in
+        /// contact with the screen.</param>
         public TouchEventArgs(
             long id,
             TouchAction type,

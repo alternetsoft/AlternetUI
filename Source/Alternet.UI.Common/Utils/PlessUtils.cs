@@ -9,7 +9,7 @@ using Alternet.Drawing;
 namespace Alternet.UI
 {
     /// <summary>
-    /// Static methods related to platformless control and application implementation.
+    /// Static methods related to platform independent control and application implementation.
     /// </summary>
     public static class PlessUtils
     {
