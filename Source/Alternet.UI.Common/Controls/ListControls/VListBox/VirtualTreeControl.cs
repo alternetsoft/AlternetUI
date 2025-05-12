@@ -138,6 +138,9 @@ namespace Alternet.UI
             }
         }
 
+        /// <inheritdoc/>
+        public override bool HasOwnInterior => ListBox.HasOwnInterior;
+
         /// <summary>
         /// Gets or sets the <see cref="ImageList"/> associated with the tree control.
         /// </summary>
@@ -252,6 +255,7 @@ namespace Alternet.UI
             set
             {
                 ContextMenuStrip = value;
+                ListBox.ContextMenuStrip = value;
             }
         }
 

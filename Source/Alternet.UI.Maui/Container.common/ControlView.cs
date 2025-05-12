@@ -129,7 +129,7 @@ namespace Alternet.UI
 
                 if (control is not null)
                 {
-                    if (interior is not null)
+                    if (interior is not null && !control.HasOwnInterior)
                         control.AddNotification(interior.Notification);
                     if (control.Handler is MauiControlHandler handler)
                     {
@@ -293,9 +293,10 @@ namespace Alternet.UI
         {
             if (control is null)
                 return;
-            control.RaiseSystemColorsChanged(EventArgs.Empty);
+            AbstractControl.BubbleSystemColorsChanged(control, EventArgs.Empty);
 
-            Interior.UpdateThemeMetrics();
+            if(!control.HasOwnInterior)
+                Interior.UpdateThemeMetrics();
 
             Invalidate();
         }
@@ -528,6 +529,13 @@ namespace Alternet.UI
             if (control is null)
                 return;
 
+            if (interior is not null)
+            {
+                interior.UpdateThemeMetrics(control.IsDarkBackground);
+                interior.VertPosition = control.VertScrollBarInfo;
+                interior.HorzPosition = control.HorzScrollBarInfo;
+            }
+
             var dc = e.Surface.Canvas;
 
             control.ResetScaleFactor();
@@ -561,12 +569,12 @@ namespace Alternet.UI
 
             dc.Restore();
 
+#pragma warning disable
             if(interior is not null)
             {
-                interior.VertPosition = control.VertScrollBarInfo;
-                interior.HorzPosition = control.HorzScrollBarInfo;
                 interior.Draw(control, graphics);
             }
+#pragma warning restore
 
             graphics.UseUnscaledDrawImage = false;
 

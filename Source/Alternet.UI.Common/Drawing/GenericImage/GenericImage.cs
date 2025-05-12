@@ -114,11 +114,11 @@ namespace Alternet.Drawing
         /// Creates an image from a file using MIME-types to specify the type.
         /// </summary>
         /// <param name="url">Path or url to file with image data.</param>
-        /// <param name="mimetype">MIME type string (for example 'image/jpeg').</param>
+        /// <param name="mimeType">MIME type string (for example 'image/jpeg').</param>
         /// <param name="index">See description in
         /// <see cref="GenericImage(string, BitmapType, int)"/></param>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public GenericImage(string? url, string mimetype, int index = -1)
+        public GenericImage(string? url, string mimeType, int index = -1)
         {
             if (string.IsNullOrEmpty(url))
                 return;
@@ -132,7 +132,7 @@ namespace Alternet.Drawing
 
             Handler = GraphicsFactory.Handler.CreateGenericImageHandler(
                     stream,
-                    mimetype,
+                    mimeType,
                     index);
         }
 
@@ -605,13 +605,13 @@ namespace Alternet.Drawing
 
                 fixed (RGBValue* resultPtr = result)
                 {
-                    var aptr = resultPtr;
+                    var aPtr = resultPtr;
 
                     for (int i = 0; i < length; i++)
                     {
-                        *aptr = *ptr;
+                        *aPtr = *ptr;
                         ptr++;
-                        aptr++;
+                        aPtr++;
                     }
                 }
             }
@@ -705,13 +705,13 @@ namespace Alternet.Drawing
 
                 fixed (byte* alphaPtr = alpha)
                 {
-                    var aptr = alphaPtr;
+                    var aPtr = alphaPtr;
 
                     for (int i = 0; i < length; i++)
                     {
-                        *aptr = (*ptr).Alpha;
+                        *aPtr = (*ptr).Alpha;
                         ptr++;
-                        aptr++;
+                        aPtr++;
                     }
                 }
             }
@@ -975,7 +975,7 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
-        /// Makes this image grayscaled.
+        /// Makes this image grayscale.
         /// </summary>
         public virtual bool ChangeToGrayScale()
         {
@@ -1977,11 +1977,11 @@ namespace Alternet.Drawing
         /// Loads an image from a file.
         /// </summary>
         /// <param name="url">Path or url to file with image data.</param>
-        /// <param name="mimetype">MIME type string (for example 'image/jpeg').</param>
+        /// <param name="mimeType">MIME type string (for example 'image/jpeg').</param>
         /// <param name="index">See description in
         /// <see cref="GenericImage(string, BitmapType, int)"/></param>
         /// <returns><c>true</c> if the call succeeded, <c>false</c> otherwise.</returns>
-        public virtual bool LoadFromFile(string? url, string mimetype, int index = -1)
+        public virtual bool LoadFromFile(string? url, string mimeType, int index = -1)
         {
             if (string.IsNullOrEmpty(url))
                 return false;
@@ -1992,31 +1992,31 @@ namespace Alternet.Drawing
                 return false;
             }
 
-            return Handler.LoadFromStream(stream, mimetype, index);
+            return Handler.LoadFromStream(stream, mimeType, index);
         }
 
         /// <summary>
         /// Loads an image from an input stream.
         /// </summary>
         /// <param name="stream">Input stream with image data.</param>
-        /// <param name="mimetype">MIME type string (for example 'image/jpeg').</param>
+        /// <param name="mimeType">MIME type string (for example 'image/jpeg').</param>
         /// <param name="index">See description in
         /// <see cref="GenericImage(string, BitmapType, int)"/></param>
         /// <returns><c>true</c> if the call succeeded, <c>false</c> otherwise.</returns>
-        public virtual bool LoadFromStream(Stream stream, string mimetype, int index = -1)
+        public virtual bool LoadFromStream(Stream stream, string mimeType, int index = -1)
         {
-            return Handler.LoadFromStream(stream, mimetype, index);
+            return Handler.LoadFromStream(stream, mimeType, index);
         }
 
         /// <summary>
         /// Saves an image in the given stream.
         /// </summary>
         /// <param name="stream">Output stream.</param>
-        /// <param name="mimetype">MIME type string (for example 'image/jpeg').</param>
+        /// <param name="mimeType">MIME type string (for example 'image/jpeg').</param>
         /// <returns><c>true</c> if the call succeeded, <c>false</c> otherwise.</returns>
-        public virtual bool SaveToStream(Stream stream, string mimetype)
+        public virtual bool SaveToStream(Stream stream, string mimeType)
         {
-            return Handler.SaveToStream(stream, mimetype);
+            return Handler.SaveToStream(stream, mimeType);
         }
 
         /// <summary>
@@ -2040,14 +2040,14 @@ namespace Alternet.Drawing
         /// Saves an image in the named file.
         /// </summary>
         /// <param name="filename">Name of the file to save the image to.</param>
-        /// <param name="mimetype">MIME type string (for example 'image/jpeg').</param>
+        /// <param name="mimeType">MIME type string (for example 'image/jpeg').</param>
         /// <returns><c>true</c> if the call succeeded, <c>false</c> otherwise.</returns>
-        public virtual bool SaveToFile(string filename, string mimetype)
+        public virtual bool SaveToFile(string filename, string mimeType)
         {
             return InsideTryCatch(() =>
             {
                 using var stream = FileSystem.Default.Create(filename);
-                return SaveToStream(stream, mimetype);
+                return SaveToStream(stream, mimeType);
             });
         }
 

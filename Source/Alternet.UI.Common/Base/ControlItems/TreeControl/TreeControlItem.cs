@@ -25,7 +25,8 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="TreeControlItem"/> class with the specified text.
+        /// Initializes a new instance of the <see cref="TreeControlItem"/> class
+        /// with the specified text.
         /// </summary>
         /// <param name="text">The text of the tree control item.</param>
         public TreeControlItem(string text)
@@ -261,7 +262,13 @@ namespace Alternet.UI
         /// <summary>
         /// Gets the child items of this tree control item.
         /// </summary>
-        public virtual IReadOnlyList<TreeControlItem> Items => items ?? [];
+        public virtual IReadOnlyList<TreeControlItem> Items
+        {
+            get
+            {
+                return items ?? [];
+            }
+        }
 
         /// <summary>
         /// Gets whether item has collapsed parents.
@@ -600,7 +607,8 @@ namespace Alternet.UI
         /// <returns>An enumerable collection containing all child items.</returns>
         /// <param name="prm">The parameters that define which items should be
         /// included in the result.</param>
-        public virtual IEnumerable<TreeControlItem> EnumExpandedItems(EnumExpandedItemsParams? prm = null)
+        public virtual IEnumerable<TreeControlItem> EnumExpandedItems(
+            EnumExpandedItemsParams? prm = null)
         {
             if (items is null)
                 yield break;

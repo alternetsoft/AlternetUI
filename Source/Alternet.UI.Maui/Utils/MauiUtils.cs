@@ -506,7 +506,6 @@ namespace Alternet.UI
         /// added to pages of the application.
         /// </summary>
         public static IEnumerable<T> GetAllChildren<T>()
-            where T : View
         {
             foreach (var page in Pages)
             {
@@ -562,7 +561,6 @@ namespace Alternet.UI
         /// <param name="recursive">Whether to get elements recursively.</param>
         /// <returns></returns>
         public static IEnumerable<T> GetChildren<T>(object? container, bool recursive)
-            where T : View
         {
             if (container is IElementController controller)
             {

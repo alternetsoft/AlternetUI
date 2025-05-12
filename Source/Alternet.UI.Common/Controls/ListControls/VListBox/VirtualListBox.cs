@@ -53,6 +53,8 @@ namespace Alternet.UI
 
         private static SetItemsKind defaultSetItemsKind = SetItemsKind.ChangeField;
 
+        private readonly bool hasInternalScrollBars;
+
         private Coord scrollOffset;
         private ListBoxItemPaintEventArgs? itemPaintArgs;
         private Coord horizontalExtent;
@@ -80,9 +82,9 @@ namespace Alternet.UI
         /// </summary>
         public VirtualListBox()
         {
-            var internalScrollBars = App.IsMaui || DefaultUseInternalScrollBars;
+            hasInternalScrollBars = App.IsMaui || DefaultUseInternalScrollBars;
 
-            if (!internalScrollBars)
+            if (!hasInternalScrollBars)
             {
                 BorderStyle = DefaultBorderStyle;
                 IsScrollable = true;
@@ -94,9 +96,15 @@ namespace Alternet.UI
             BackColor = DefaultColors.ControlBackColor;
             ForeColor = DefaultColors.ControlForeColor;
 
-            if (internalScrollBars)
+            if (hasInternalScrollBars)
             {
                 Interior?.Required();
+            }
+
+            if (App.IsMaui)
+            {
+                if (SystemSettings.AppearanceIsDark)
+                    this.SetColorThemeToDark();
             }
         }
 
@@ -213,6 +221,15 @@ namespace Alternet.UI
                 }
 
                 return horizontalScrollBarSettings;
+            }
+        }
+
+        /// <inheritdoc/>
+        public override bool HasOwnInterior
+        {
+            get
+            {
+                return hasInternalScrollBars;
             }
         }
 
@@ -1986,6 +2003,14 @@ namespace Alternet.UI
         protected override void OnSystemColorsChanged(EventArgs e)
         {
             base.OnSystemColorsChanged(e);
+
+            if (App.IsMaui)
+            {
+                if (SystemSettings.AppearanceIsDark)
+                    SetColorThemeToDark();
+                else
+                    SetColorThemeToDefault();
+            }
 
             interior?.UpdateThemeMetrics();
         }

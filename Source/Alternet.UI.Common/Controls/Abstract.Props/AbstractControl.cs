@@ -631,6 +631,21 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets a value indicating whether the control has internal scroll bars.
+        /// </summary>
+        /// <value>
+        /// <c>true</c> if the control has internal scroll bars; otherwise, <c>false</c>.
+        /// </value>
+        [Browsable(false)]
+        public virtual bool HasOwnInterior
+        {
+            get
+            {
+                return false;
+            }
+        }
+
+        /// <summary>
         /// Gets or sets the <see cref="ContextMenuStrip" /> associated
         /// with this control. This property is auto-created and is always not null.
         /// Usage of this property depends on the control.
