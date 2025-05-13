@@ -22,6 +22,29 @@ namespace Alternet.UI
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Command"/> class with the
+        /// specified <paramref name="action"/>.
+        /// </summary>
+        public Command(Action action)
+        {
+            if(action is not null)
+                this.executeDelegate = (parameter) => action();
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Command"/> class with the
+        /// specified <paramref name="action"/> and <paramref name="canExecute"/>.
+        /// </summary>
+        public Command(Action action, Func<bool>? canExecute)
+        {
+            if(action is not null)
+                this.executeDelegate = (parameter) => action();
+
+            if(canExecute is not null)
+                this.canExecuteDelegate = (parameter) => canExecute();
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Command"/> class with the
         /// specified <paramref name="executeDelegate"/>.
         /// </summary>
         public Command(ExecuteDelegate executeDelegate)
