@@ -25,6 +25,7 @@ namespace Alternet.Drawing
         private static string? defaultMonoFontName;
         private static SKFont? defaultSkiaFont;
         private static SKTypeface? defaultTypeFace;
+        private static SKColorFilter? grayscaleColorFilter;
 
         static SkiaUtils()
         {
@@ -116,11 +117,99 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
+        /// Gets or sets the <see cref="SKColorFilter"/> used to convert images to grayscale.
+        /// </summary>
+        /// <remarks>
+        /// This property provides a reusable grayscale color filter for SkiaSharp drawing operations.
+        /// The filter is lazily initialized on first access using a color matrix that converts
+        /// colors to grayscale by applying weighted sums to the red, green, and blue channels.
+        /// You can also set this property to use a custom <see cref="SKColorFilter"/>.
+        /// </remarks>
+        public static SKColorFilter GrayscaleColorFilter
+        {
+            get
+            {
+                if(grayscaleColorFilter is null)
+                {
+                    grayscaleColorFilter = SKColorFilter.CreateColorMatrix(new float[]
+                    {
+                        0.21f, 0.72f, 0.07f, 0, 0,
+                        0.21f, 0.72f, 0.07f, 0, 0,
+                        0.21f, 0.72f, 0.07f, 0, 0,
+                        0,     0,     0,     1, 0,
+                    });
+                }
+
+                return grayscaleColorFilter;
+            }
+
+            set
+            {
+                grayscaleColorFilter = value;
+            }
+        }
+
+        /// <summary>
         /// Gets all installed font families as enumerable.
         /// </summary>
         public static IEnumerable<string> GetFontFamiliesNames()
         {
             return FontFamilies;
+        }
+
+        /// <summary>
+        /// Converts an <see cref="SKImage"/> to an <see cref="SKBitmap"/>.
+        /// </summary>
+        /// <param name="image">The <see cref="SKImage"/> to convert.</param>
+        /// <returns>
+        /// A new <see cref="SKBitmap"/> instance containing the pixel data
+        /// from the specified <paramref name="image"/>.
+        /// </returns>
+        public static SKBitmap ImageToBitmap(SKImage image)
+        {
+            SKBitmap result = new (image.Width, image.Height);
+            image.ReadPixels(result.Info, result.GetPixels(), result.RowBytes, 0, 0);
+            return result;
+        }
+
+        /// <summary>
+        /// Converts the specified <see cref="Image"/> to a grayscale version.
+        /// </summary>
+        /// <param name="image">The <see cref="Image"/> to convert to grayscale.</param>
+        /// <returns>
+        /// A new <see cref="Image"/> instance containing the grayscale version of the input image.
+        /// </returns>
+        public static Image ConvertToGrayscale(Image image)
+        {
+            var result = SkiaUtils.ConvertToGrayscale((SKBitmap)image);
+            return (Bitmap)result;
+        }
+
+        /// <summary>
+        /// Converts the specified <see cref="SKBitmap"/> to a grayscale version using a color filter.
+        /// </summary>
+        /// <param name="bitmap">The <see cref="SKBitmap"/> to convert to grayscale.</param>
+        /// <returns>
+        /// A new <see cref="SKBitmap"/> instance containing the grayscale version of the input bitmap.
+        /// </returns>
+        /// <exception cref="ArgumentNullException">
+        /// Thrown if the <paramref name="bitmap"/> parameter is <c>null</c>.
+        /// </exception>
+        public static SKBitmap ConvertToGrayscale(SKBitmap bitmap)
+        {
+            if (bitmap == null)
+                throw new ArgumentNullException(nameof(bitmap));
+
+            using SKImage image = SKImage.FromBitmap(bitmap);
+            using SKSurface surface = SKSurface.Create(image.Info);
+            using SKCanvas canvas = surface.Canvas;
+
+            using SKPaint paint = new() { ColorFilter = GrayscaleColorFilter };
+            canvas.DrawBitmap(bitmap, 0, 0, paint);
+
+            var resultImage = surface.Snapshot();
+
+            return ImageToBitmap(resultImage);
         }
 
         /// <summary>

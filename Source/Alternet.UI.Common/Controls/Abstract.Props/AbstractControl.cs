@@ -253,6 +253,7 @@ namespace Alternet.UI
         /// <value>
         /// A <see cref="RectD"/> representing the control's boundaries.
         /// </value>
+        [Browsable(false)]
         public RectD ReportedBounds => reportedBounds;
 
         /// <summary>

@@ -96,6 +96,7 @@ namespace PaintSample
             testMenu.Add("Load Toucan image", DoLoadToucanImage);
             testMenu.Add("Load Toucan image on background", DoLoadToucanOnBackground);
             testMenu.Add("Convert To Disabled", DoConvertToDisabled);
+            testMenu.Add("Convert To Disabled (Skia)", DoConvertToDisabledSkia);
 
             if (!App.IsLinuxOS)
                 testMenu.Add("Sample draw", DoDrawOnBitmap);
@@ -519,6 +520,12 @@ namespace PaintSample
                 App.Log($"Image.ChangeLightness: {lightness}");
                 Document.Bitmap = Document.Bitmap.ChangeLightness(lightness);
             });
+        }
+
+        public void DoConvertToDisabledSkia()
+        {
+            var result = SkiaUtils.ConvertToGrayscale((SKBitmap)Document.Bitmap);
+            Document.Bitmap = (Bitmap)result;
         }
 
         public void DoConvertToDisabled()
