@@ -31,7 +31,7 @@ namespace Alternet.Drawing
         public static int DefaultSaveQuality = 70;
 
         /// <summary>
-        /// Occurs when <see cref="ToGrayScale"/> is called. Used to override default
+        /// Called from <see cref="ToGrayScale"/>. Used to override default
         /// grayscale method.
         /// </summary>
         public static EventHandler<BaseEventArgs<Image>>? GrayScale;
@@ -1017,9 +1017,7 @@ namespace Alternet.Drawing
         {
             if(GrayScale is null)
             {
-                var generic = (GenericImage)this;
-                generic.ChangeToGrayScale();
-                return (Image)generic;
+                return SkiaUtils.ConvertToGrayscale(this);
             }
             else
             {
