@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -14,11 +15,14 @@ namespace Alternet.Maui
     /// </summary>
     public partial class BaseContentView : ContentView, UI.IRaiseSystemColorsChanged
     {
+        private bool currentIsDark;
+
         /// <summary>
         /// Initializes a new instance of the <see cref="BaseContentView"/> class.
         /// </summary>
         public BaseContentView()
         {
+            currentIsDark = IsDark;
         }
 
         /// <summary>
@@ -46,6 +50,7 @@ namespace Alternet.Maui
         /// <inheritdoc/>
         public virtual void RaiseSystemColorsChanged()
         {
+            currentIsDark = IsDark;
         }
 
         /// <summary>
@@ -80,6 +85,17 @@ namespace Alternet.Maui
             if (newParent is not null)
             {
                 newParent.SizeChanged += OnParentSizeChanged;
+            }
+        }
+
+        /// <inheritdoc/>
+        protected override void OnPropertyChanged([CallerMemberName] string? propertyName = null)
+        {
+            base.OnPropertyChanged(propertyName);
+            if (propertyName == nameof(Window) || propertyName == nameof(Parent))
+            {
+                if (currentIsDark != Alternet.UI.SystemSettings.AppearanceIsDark)
+                    RaiseSystemColorsChanged();
             }
         }
     }

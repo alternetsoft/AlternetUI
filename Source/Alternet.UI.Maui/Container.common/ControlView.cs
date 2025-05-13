@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -31,6 +32,7 @@ namespace Alternet.UI
         private InteriorDrawable? interior;
         private SkiaGraphics? graphics;
         private Alternet.UI.Control? control;
+        private bool currentIsDark;
 
         static ControlView()
         {
@@ -43,6 +45,7 @@ namespace Alternet.UI
         /// </summary>
         public ControlView()
         {
+            currentIsDark = IsDark;
             EnableTouchEvents = true;
             Touch += Canvas_Touch;
             SizeChanged += SkiaContainer_SizeChanged;
@@ -291,6 +294,7 @@ namespace Alternet.UI
         /// </summary>
         public virtual void RaiseSystemColorsChanged()
         {
+            currentIsDark = IsDark;
             if (control is null)
                 return;
             AbstractControl.BubbleSystemColorsChanged(control, EventArgs.Empty);
@@ -395,6 +399,17 @@ namespace Alternet.UI
         /// <param name="e">Event arguments.</param>
         protected virtual void OnSwipeDown(SwipedEventArgs e)
         {
+        }
+
+        /// <inheritdoc/>
+        protected override void OnPropertyChanged([CallerMemberName] string? propertyName = null)
+        {
+            base.OnPropertyChanged(propertyName);
+            if (propertyName == nameof(Window) || propertyName == nameof(Parent))
+            {
+                if (currentIsDark != Alternet.UI.SystemSettings.AppearanceIsDark)
+                    RaiseSystemColorsChanged();
+            }
         }
 
         /// <summary>
