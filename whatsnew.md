@@ -1,3 +1,12 @@
+# 0.9.725 (2025 May 13)
+
+- Maui: Fixed scroll bar painting on HighDpi displays.
+- Maui: Implemented mouse handling for child controls.
+- Maui: Update colors on theme change.
+- Command: new constructors with action params.
+- SkiaUtils: GrayscaleColorFilter, ImageToBitmap, ConvertToGrayscale.
+- Image: ToGrayScale() now uses SkiaSharp.
+
 # 0.9.724 (2025 May 9)
 
 - TabControl: HeaderButtons, HeaderButtonsCount, ContentsControl, HeaderControl, GetHeaderButton, GetHeaderButtonAt.

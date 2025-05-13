@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ApiInfo>
-  <Assembly Name="Alternet.UI.Common, Version=0.9.724.0, Culture=neutral, PublicKeyToken=7fb0fe57212b4b74">
+  <Assembly Name="Alternet.UI.Common, Version=0.9.725.0, Culture=neutral, PublicKeyToken=7fb0fe57212b4b74">
     <Type Name="XamlX.Runtime.IXamlParentStackProviderV1" />
     <Type Name="XamlX.Runtime.IXamlXmlNamespaceInfoProviderV1" />
     <Type Name="XamlX.Runtime.XamlXmlNamespaceInfoV1" />
@@ -589,6 +589,9 @@
     </Type>
     <Type Name="Alternet.UI.ITreeControlItemContainer" />
     <Type Name="Alternet.UI.TreeControlCancelEventArgs" />
+    <Type Name="Alternet.UI.TreeControlEmptyItem">
+      <Event Name="PropertyChanged" />
+    </Type>
     <Type Name="Alternet.UI.TreeControlEventArgs" />
     <Type Name="Alternet.UI.TreeControlItem">
       <Event Name="PropertyChanged" />
@@ -939,6 +942,7 @@
     <Type Name="Alternet.UI.ObjectUniqueId" />
     <Type Name="Alternet.UI.PropInstanceAndValue" />
     <Type Name="Alternet.UI.RowColumnIndex" />
+    <Type Name="Alternet.UI.ShortcutAndAction" />
     <Type Name="Alternet.UI.WeakReferenceValue`1" />
     <Type Name="Alternet.UI.ISystemSettingsHandler" />
     <Type Name="Alternet.UI.PlessSystemSettingsHandler">
@@ -6509,14 +6513,14 @@
       <Event Name="CollectionChanged" />
     </Type>
     <Type Name="Alternet.UI.ActionsListBox">
-      <Event Name="DrawItem" />
-      <Event Name="MeasureItem" />
-      <Event Name="CheckedChanged" />
       <Event Name="SelectionChanged" />
-      <Event Name="DelayedSelectionChanged" />
-      <Event Name="SelectedIndexChanged" />
-      <Event Name="SelectionModeChanged" />
-      <Event Name="CustomItemText" />
+      <Event Name="ItemAdded" />
+      <Event Name="ItemRemoved" />
+      <Event Name="AfterExpand" />
+      <Event Name="AfterCollapse" />
+      <Event Name="BeforeExpand" />
+      <Event Name="BeforeCollapse" />
+      <Event Name="ExpandedChanged" />
       <Event Name="ContextMenuCreated" />
       <Event Name="CellChanged" />
       <Event Name="Activated" />
