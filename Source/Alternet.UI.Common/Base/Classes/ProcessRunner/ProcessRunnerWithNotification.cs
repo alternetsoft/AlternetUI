@@ -151,6 +151,94 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Binds event handlers to the specified <see cref="Process"/> to handle its output,
+        /// error, exit, and disposal events.
+        /// Notifies all subscribers about process lifecycle events and logs output and error data.
+        /// </summary>
+        /// <param name="process">The <see cref="Process"/> to bind events to.</param>
+        public static void BindProcessEvents(Process process)
+        {
+            var outputComplete = false;
+            var errorComplete = false;
+
+            process.Disposed += (x, y) =>
+            {
+                if (x == RunningProcess)
+                    RunningProcess = null;
+                NotifyDisposed((Process)x);
+            };
+
+            process.Exited += (x, y) =>
+            {
+                while (true)
+                {
+                    if (outputComplete && errorComplete)
+                        break;
+                    Task.Delay(100).Wait();
+                }
+
+                var process = x as Process;
+
+                if (process is null)
+                    return;
+
+                if (x == RunningProcess)
+                    RunningProcess = null;
+
+                NotifyExited((Process)x);
+
+                var exitCode = process.ExitCode;
+
+                if (ProcessExitedWithResult is not null)
+                    LogString(process, string.Format(ProcessExitedWithResult, exitCode));
+                LogString(process, ProcessExitedSeparator);
+            };
+
+            void LogString(Process process, string? s, LogItemKind kind = LogItemKind.Information)
+            {
+                if (s is null)
+                    return;
+                Notify((subscriber) => subscriber.OnRunningProcessLog(process, s, kind));
+            }
+
+            process.OutputDataReceived += (x, y) =>
+            {
+                if (y.Data is null)
+                {
+                    outputComplete = true;
+                    return;
+                }
+
+                var process = x as Process;
+
+                if (process != RunningProcess || process is null)
+                    return;
+
+                if (string.IsNullOrWhiteSpace(y.Data))
+                    return;
+                LogString(process, $"{OutputPrefix}{y.Data}", LogItemKind.Information);
+            };
+
+            process.ErrorDataReceived += (x, y) =>
+            {
+                if (y.Data is null)
+                {
+                    errorComplete = true;
+                    return;
+                }
+
+                var process = x as Process;
+
+                if (process != RunningProcess || process is null)
+                    return;
+
+                if (string.IsNullOrWhiteSpace(y.Data))
+                    return;
+                LogString(process, $"{ErrorOutputPrefix}{y.Data}", LogItemKind.Error);
+            };
+        }
+
+        /// <summary>
         /// Runs a process using the specified start information.
         /// </summary>
         /// <param name="startInfo">The start information for the process.</param>
@@ -167,7 +255,10 @@ namespace Alternet.UI
                 startInfo.UseShellExecute = false;
                 startInfo.StandardErrorEncoding = encoding;
 
-                var result = AssemblyUtils.TrySetMemberValue(startInfo, "StandardInputEncoding", Encoding.UTF8);
+                var result = AssemblyUtils.TrySetMemberValue(
+                    startInfo,
+                    "StandardInputEncoding",
+                    Encoding.UTF8);
 
                 startInfo.StandardOutputEncoding = encoding;
                 startInfo.RedirectStandardInput = true;
@@ -176,88 +267,13 @@ namespace Alternet.UI
                 startInfo.RedirectStandardError = true;
                 if (!string.IsNullOrEmpty(startInfo.WorkingDirectory))
                 {
-                    startInfo.WorkingDirectory = PathUtils.AddDirectorySeparatorChar(startInfo.WorkingDirectory);
+                    startInfo.WorkingDirectory
+                        = PathUtils.AddDirectorySeparatorChar(startInfo.WorkingDirectory);
                 }
 
                 var process = new Process();
-                var outputComplete = false;
-                var errorComplete = false;
 
-                process.Disposed += (x, y) =>
-                {
-                    if (x == RunningProcess)
-                        RunningProcess = null;
-                    NotifyDisposed((Process)x);
-                };
-
-                process.Exited += (x, y) =>
-                {
-                    while (true)
-                    {
-                        if (outputComplete && errorComplete)
-                            break;
-                        Task.Delay(100).Wait();
-                    }
-
-                    process = x as Process;
-
-                    if (process is null)
-                        return;
-
-                    if (x == RunningProcess)
-                        RunningProcess = null;
-
-                    NotifyExited((Process)x);
-
-                    var exitCode = process.ExitCode;
-
-                    if (ProcessExitedWithResult is not null)
-                        LogString(process, string.Format(ProcessExitedWithResult, exitCode));
-                    LogString(process, ProcessExitedSeparator);
-                };
-
-                void LogString(Process process, string? s, LogItemKind kind = LogItemKind.Information)
-                {
-                    if (s is null)
-                        return;
-                    Notify((subscriber) => subscriber.OnRunningProcessLog(process, s, kind));
-                }
-
-                process.OutputDataReceived += (x, y) =>
-                {
-                    if (y.Data is null)
-                    {
-                        outputComplete = true;
-                        return;
-                    }
-
-                    process = x as Process;
-
-                    if (process != RunningProcess || process is null)
-                        return;
-
-                    if (string.IsNullOrWhiteSpace(y.Data))
-                        return;
-                    LogString(process, $"{OutputPrefix}{y.Data}", LogItemKind.Information);
-                };
-
-                process.ErrorDataReceived += (x, y) =>
-                {
-                    if (y.Data is null)
-                    {
-                        errorComplete = true;
-                        return;
-                    }
-
-                    process = x as Process;
-
-                    if (process != RunningProcess || process is null)
-                        return;
-
-                    if (string.IsNullOrWhiteSpace(y.Data))
-                        return;
-                    LogString(process, $"{ErrorOutputPrefix}{y.Data}", LogItemKind.Error);
-                };
+                BindProcessEvents(process);
 
                 process.StartInfo = startInfo;
                 process.EnableRaisingEvents = true;
