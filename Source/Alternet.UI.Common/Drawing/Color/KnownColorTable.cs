@@ -419,10 +419,14 @@ namespace Alternet.Drawing
         {
             Debug.Assert(color > 0 && color <= KnownColor.RebeccaPurple, nameof(KnownColorToArgb));
 
+            ColorStruct result;
+
             if (ColorKindTable[(int)color] == KnownColorKindSystem)
-                return SystemSettings.GetColor((KnownSystemColor)color);
+                result = SystemSettings.GetColor((KnownSystemColor)color);
             else
-                return ColorValueTable[(int)color];
+                result = ColorValueTable[(int)color];
+
+            return result;
         }
 
         /// <summary>

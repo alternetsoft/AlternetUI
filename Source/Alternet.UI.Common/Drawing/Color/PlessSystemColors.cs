@@ -476,7 +476,7 @@ namespace Alternet.Drawing
                 SetColor(KnownSystemColor.WindowFrame, SystemColorsLight.WindowFrame);
                 SetColor(KnownSystemColor.Window, SystemColorsLight.Window);
                 SetColor(KnownSystemColor.WindowText, SystemColorsLight.WindowText);
-                SetColor(KnownSystemColor.ControlText, ControlText);
+                SetColor(KnownSystemColor.ControlText, SystemColorsLight.ControlText);
             }
 
             void ResetDarkColors()
