@@ -390,11 +390,9 @@ namespace Alternet.UI
                             type = FindTypeByName(typeName);
                             break;
                         }
-                        else
-                            reader.Read();
                     }
-                    else
-                        reader.Read();
+
+                    xmlReader.Read();
                 }
 
                 if (type is null)
