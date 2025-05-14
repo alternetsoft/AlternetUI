@@ -2628,7 +2628,10 @@ namespace Alternet.UI
 
             set
             {
-                ForegroundColor = value;
+                if (value == Color.Empty)
+                    ForegroundColor = null;
+                else
+                    ForegroundColor = value;
             }
         }
 
@@ -2650,7 +2653,10 @@ namespace Alternet.UI
 
             set
             {
-                BackgroundColor = value;
+                if (value == Color.Empty)
+                    BackgroundColor = null;
+                else
+                    BackgroundColor = value;
             }
         }
 
