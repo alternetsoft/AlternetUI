@@ -702,8 +702,17 @@ namespace Alternet.Drawing
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Image FromSkia(SKBitmap bitmap)
         {
-            var genericImage = GenericImage.FromSkia(bitmap);
-            return (Image)genericImage;
+            if (App.IsMaui)
+            {
+                var handler = new SkiaImageHandler(bitmap);
+                var result = new Bitmap(handler);
+                return result;
+            }
+            else
+            {
+                var genericImage = GenericImage.FromSkia(bitmap);
+                return (Image)genericImage;
+            }
         }
 
         /// <summary>
