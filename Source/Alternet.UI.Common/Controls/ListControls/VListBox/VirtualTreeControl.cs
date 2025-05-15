@@ -509,9 +509,10 @@ namespace Alternet.UI
         {
             if (item.Parent == rootItem && !item.IsExpanded)
             {
-                ListBox.Items.Add(item);
                 if(InUpdates)
                     needTreeChanged = true;
+                else
+                    ListBox.Items.Add(item);
             }
             else
             {
@@ -536,9 +537,10 @@ namespace Alternet.UI
             }
             else
             {
-                ListBox.Items?.Remove(item);
                 if (InUpdates)
                     needTreeChanged = true;
+                else
+                    ListBox.Items?.Remove(item);
             }
 
             if (ItemRemoved is not null)

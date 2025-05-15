@@ -610,7 +610,7 @@ namespace Alternet.UI
         public virtual IEnumerable<TreeControlItem> EnumExpandedItems(
             EnumExpandedItemsParams? prm = null)
         {
-            if (items is null)
+            if (items is null || items.Count == 0)
                 yield break;
 
             prm ??= EnumExpandedItemsParams.Default;
