@@ -12,7 +12,7 @@ using SkiaSharp;
 namespace Alternet.Drawing
 {
     /// <summary>
-    /// Contains static methods and properties which allow to access platformless system colors.
+    /// Contains static methods and properties which allow to manage system colors
     /// </summary>
     public static class PlessSystemColors
     {
@@ -133,14 +133,16 @@ namespace Alternet.Drawing
 
         /// <summary>Gets a <see cref="Color" /> structure that is the highlight color of
         /// a 3-D element. </summary>
-        /// <returns>A <see cref="Color" /> that is the highlight color of a 3-D element.</returns>
+        /// <returns>A <see cref="Color" /> that is the highlight color of
+        /// a 3-D element.</returns>
         public static ColorStruct ControlLightLight
         {
             get => GetColor(KnownSystemColor.ControlLightLight);
             set => SetColor(KnownSystemColor.ControlLightLight, value);
         }
 
-        /// <summary>Gets a <see cref="Color" /> structure that is the color of the desktop.</summary>
+        /// <summary>Gets a <see cref="Color" /> structure that is the color
+        /// of the desktop.</summary>
         /// <returns>A <see cref="Color" /> that is the color of the desktop.</returns>
         public static ColorStruct Desktop
         {
@@ -249,7 +251,8 @@ namespace Alternet.Drawing
 
         /// <summary>Gets a <see cref="Color" /> structure that is the color of the text
         /// of a ToolTip.</summary>
-        /// <returns>A <see cref="Color" /> that is the color of the text of a ToolTip.</returns>
+        /// <returns>A <see cref="Color" /> that is the color of the
+        /// text of a ToolTip.</returns>
         public static ColorStruct InfoText
         {
             get => GetColor(KnownSystemColor.InfoText);
@@ -335,7 +338,8 @@ namespace Alternet.Drawing
 
         /// <summary>Gets a <see cref="Color" /> structure that is the color of text in a
         /// 3-D element.</summary>
-        /// <returns>A <see cref="Color" /> that is the color of text in a 3-D element.</returns>
+        /// <returns>A <see cref="Color" /> that is the color of text
+        /// in a 3-D element.</returns>
         public static ColorStruct ControlText
         {
             get => GetColor(KnownSystemColor.ControlText);
@@ -419,6 +423,65 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
+        /// Sets the system colors from the specified
+        /// <see cref="ISystemColorStructs"/> instance.
+        /// Each property of the <paramref name="colors"/> parameter
+        /// is assigned to the corresponding
+        /// system color using <see cref="SetColor(KnownSystemColor, ColorStruct)"/>.
+        /// </summary>
+        /// <param name="colors">An object that provides color
+        /// values for all known system colors.</param>
+        public static void SetColorsFrom(ISystemColorStructs colors)
+        {
+            SetColor(KnownSystemColor.ActiveBorder, colors.ActiveBorder);
+            SetColor(KnownSystemColor.ActiveCaption, colors.ActiveCaption);
+            SetColor(
+                KnownSystemColor.ActiveCaptionText,
+                colors.ActiveCaptionText);
+            SetColor(KnownSystemColor.AppWorkspace, colors.AppWorkspace);
+            SetColor(KnownSystemColor.ButtonFace, colors.ButtonFace);
+            SetColor(KnownSystemColor.ButtonHighlight, colors.ButtonHighlight);
+            SetColor(KnownSystemColor.ButtonShadow, colors.ButtonShadow);
+            SetColor(KnownSystemColor.Control, colors.Control);
+            SetColor(KnownSystemColor.ControlDark, colors.ControlDark);
+            SetColor(KnownSystemColor.ControlDarkDark, colors.ControlDarkDark);
+            SetColor(KnownSystemColor.ControlLight, colors.ControlLight);
+            SetColor(KnownSystemColor.ControlLightLight, colors.ControlLightLight);
+            SetColor(KnownSystemColor.Desktop, colors.Desktop);
+
+            SetColor(
+                KnownSystemColor.GradientActiveCaption,
+                colors.GradientActiveCaption);
+
+            SetColor(
+                KnownSystemColor.GradientInactiveCaption,
+                colors.GradientInactiveCaption);
+
+            SetColor(KnownSystemColor.GrayText, colors.GrayText);
+            SetColor(KnownSystemColor.Highlight, colors.Highlight);
+            SetColor(KnownSystemColor.HighlightText, colors.HighlightText);
+            SetColor(KnownSystemColor.HotTrack, colors.HotTrack);
+            SetColor(KnownSystemColor.InactiveBorder, colors.InactiveBorder);
+            SetColor(KnownSystemColor.InactiveCaption, colors.InactiveCaption);
+
+            SetColor(
+                KnownSystemColor.InactiveCaptionText,
+                colors.InactiveCaptionText);
+
+            SetColor(KnownSystemColor.Info, colors.Info);
+            SetColor(KnownSystemColor.InfoText, colors.InfoText);
+            SetColor(KnownSystemColor.Menu, colors.Menu);
+            SetColor(KnownSystemColor.MenuBar, colors.MenuBar);
+            SetColor(KnownSystemColor.MenuHighlight, colors.MenuHighlight);
+            SetColor(KnownSystemColor.MenuText, colors.MenuText);
+            SetColor(KnownSystemColor.ScrollBar, colors.ScrollBar);
+            SetColor(KnownSystemColor.WindowFrame, colors.WindowFrame);
+            SetColor(KnownSystemColor.Window, colors.Window);
+            SetColor(KnownSystemColor.WindowText, colors.WindowText);
+            SetColor(KnownSystemColor.ControlText, colors.ControlText);
+        }
+
+        /// <summary>
         /// Assigns internal system colors structures with RGB values
         /// from const color declarations.
         /// </summary>
@@ -427,61 +490,38 @@ namespace Alternet.Drawing
             isDark ??= SystemSettings.AppearanceIsDark;
 
             if (isDark.Value)
-                ResetDarkColors();
-            else
-                ResetLightColors();
-
-            void ResetLightColors()
             {
-                SetColor(KnownSystemColor.ActiveBorder, SystemColorsLight.ActiveBorder);
-                SetColor(KnownSystemColor.ActiveCaption, SystemColorsLight.ActiveCaption);
-                SetColor(KnownSystemColor.ActiveCaptionText, SystemColorsLight.ActiveCaptionText);
-                SetColor(KnownSystemColor.AppWorkspace, SystemColorsLight.AppWorkspace);
-                SetColor(KnownSystemColor.ButtonFace, SystemColorsLight.ButtonFace);
-                SetColor(KnownSystemColor.ButtonHighlight, SystemColorsLight.ButtonHighlight);
-                SetColor(KnownSystemColor.ButtonShadow, SystemColorsLight.ButtonShadow);
-                SetColor(KnownSystemColor.Control, SystemColorsLight.Control);
-                SetColor(KnownSystemColor.ControlDark, SystemColorsLight.ControlDark);
-                SetColor(KnownSystemColor.ControlDarkDark, SystemColorsLight.ControlDarkDark);
-                SetColor(KnownSystemColor.ControlLight, SystemColorsLight.ControlLight);
-                SetColor(KnownSystemColor.ControlLightLight, SystemColorsLight.ControlLightLight);
-                SetColor(KnownSystemColor.Desktop, SystemColorsLight.Desktop);
+                if (App.IsLinuxOS)
+                {
+                    SetColorsFrom(SystemColorsDarkLinux.Default);
+                    return;
+                }
 
-                SetColor(
-                    KnownSystemColor.GradientActiveCaption,
-                    SystemColorsLight.GradientActiveCaption);
+                if (App.IsMacOS)
+                {
+                    SetColorsFrom(SystemColorsDarkMacOs.Default);
+                    return;
+                }
 
-                SetColor(
-                    KnownSystemColor.GradientInactiveCaption,
-                    SystemColorsLight.GradientInactiveCaption);
+                if (App.IsMaui)
+                {
+                    SetColorsFrom(SystemColorsDarkLinux.Default);
+                    return;
+                }
 
-                SetColor(KnownSystemColor.GrayText, SystemColorsLight.GrayText);
-                SetColor(KnownSystemColor.Highlight, SystemColorsLight.Highlight);
-                SetColor(KnownSystemColor.HighlightText, SystemColorsLight.HighlightText);
-                SetColor(KnownSystemColor.HotTrack, SystemColorsLight.HotTrack);
-                SetColor(KnownSystemColor.InactiveBorder, SystemColorsLight.InactiveBorder);
-                SetColor(KnownSystemColor.InactiveCaption, SystemColorsLight.InactiveCaption);
+                if (App.IsWindowsOS)
+                {
+                    // here we set light colors as Windows port
+                    // currently doesn't support dark theme.
+                    SetColorsFrom(SystemColorsLight.Default);
+                    return;
+                }
 
-                SetColor(
-                    KnownSystemColor.InactiveCaptionText,
-                    SystemColorsLight.InactiveCaptionText);
-
-                SetColor(KnownSystemColor.Info, SystemColorsLight.Info);
-                SetColor(KnownSystemColor.InfoText, SystemColorsLight.InfoText);
-                SetColor(KnownSystemColor.Menu, SystemColorsLight.Menu);
-                SetColor(KnownSystemColor.MenuBar, SystemColorsLight.MenuBar);
-                SetColor(KnownSystemColor.MenuHighlight, SystemColorsLight.MenuHighlight);
-                SetColor(KnownSystemColor.MenuText, SystemColorsLight.MenuText);
-                SetColor(KnownSystemColor.ScrollBar, SystemColorsLight.ScrollBar);
-                SetColor(KnownSystemColor.WindowFrame, SystemColorsLight.WindowFrame);
-                SetColor(KnownSystemColor.Window, SystemColorsLight.Window);
-                SetColor(KnownSystemColor.WindowText, SystemColorsLight.WindowText);
-                SetColor(KnownSystemColor.ControlText, SystemColorsLight.ControlText);
+                SetColorsFrom(SystemColorsDarkLinux.Default);
             }
-
-            void ResetDarkColors()
+            else
             {
-                ResetLightColors();
+                SetColorsFrom(SystemColorsLight.Default);
             }
         }
     }

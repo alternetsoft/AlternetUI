@@ -60,7 +60,8 @@ namespace Alternet.Drawing
 
         /// <summary>Gets a <see cref="Color" /> structure that is the dark shadow color
         /// of a 3-D element. </summary>
-        /// <returns>A <see cref="Color" /> that is the dark shadow color of a 3-D element.</returns>
+        /// <returns>A <see cref="Color" /> that is the dark shadow
+        /// color of a 3-D element.</returns>
         public static Color ControlDarkDark = new(KnownSystemColor.ControlDarkDark);
 
         /// <summary>Gets a <see cref="Color" /> structure that is the light color of a 3-D
@@ -70,10 +71,12 @@ namespace Alternet.Drawing
 
         /// <summary>Gets a <see cref="Color" /> structure that is the highlight color of
         /// a 3-D element. </summary>
-        /// <returns>A <see cref="Color" /> that is the highlight color of a 3-D element.</returns>
+        /// <returns>A <see cref="Color" /> that is the highlight color
+        /// of a 3-D element.</returns>
         public static Color ControlLightLight = new(KnownSystemColor.ControlLightLight);
 
-        /// <summary>Gets a <see cref="Color" /> structure that is the color of the desktop.</summary>
+        /// <summary>Gets a <see cref="Color" /> structure that is the color
+        /// of the desktop.</summary>
         /// <returns>A <see cref="Color" /> that is the color of the desktop.</returns>
         public static Color Desktop = new(KnownSystemColor.Desktop);
 
@@ -87,7 +90,8 @@ namespace Alternet.Drawing
         /// color gradient of an inactive window's title bar.</summary>
         /// <returns>A <see cref="Color" /> that is the lightest color in the color gradient
         /// of an inactive window's title bar.</returns>
-        public static Color GradientInactiveCaption = new(KnownSystemColor.GradientInactiveCaption);
+        public static Color GradientInactiveCaption
+            = new(KnownSystemColor.GradientInactiveCaption);
 
         /// <summary>Gets a <see cref="Color" /> structure that is the color of dimmed
         /// text. </summary>
@@ -138,7 +142,8 @@ namespace Alternet.Drawing
 
         /// <summary>Gets a <see cref="Color" /> structure that is the color of the text
         /// of a ToolTip.</summary>
-        /// <returns>A <see cref="Color" /> that is the color of the text of a ToolTip.</returns>
+        /// <returns>A <see cref="Color" /> that is the color
+        /// of the text of a ToolTip.</returns>
         public static Color InfoText = new(KnownSystemColor.InfoText);
 
         /// <summary>Gets a <see cref="Color" /> structure that is the color of a menu's
@@ -188,7 +193,8 @@ namespace Alternet.Drawing
 
         /// <summary>Gets a <see cref="Color" /> structure that is the color of text in a
         /// 3-D element.</summary>
-        /// <returns>A <see cref="Color" /> that is the color of text in a 3-D element.</returns>
+        /// <returns>A <see cref="Color" /> that is the color of text in
+        /// a 3-D element.</returns>
         public static Color ControlText = new(KnownSystemColor.ControlText);
     }
 }
