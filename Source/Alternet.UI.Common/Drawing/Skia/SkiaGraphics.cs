@@ -346,9 +346,7 @@ namespace Alternet.Drawing
         /// <inheritdoc/>
         public override void DrawImage(Image image, RectD destinationRect)
         {
-            var origin = destinationRect.Location;
-            if (BeforeDrawImage(ref image, ref origin))
-                destinationRect.Location = origin;
+            BeforeDrawImage(ref image, ref destinationRect);
             canvas.DrawBitmap((SKBitmap)image, destinationRect, InterpolationModePaint);
             AfterDrawImage();
         }
@@ -356,11 +354,9 @@ namespace Alternet.Drawing
         /// <inheritdoc/>
         public override void DrawImage(Image image, RectD destinationRect, RectD sourceRect)
         {
-            var origin = destinationRect.Location;
-            if (BeforeDrawImage(ref image, ref origin))
+            if (BeforeDrawImage(ref image, ref destinationRect))
             {
-                destinationRect.Location = origin;
-                sourceRect.ScaleLocation(OriginalScaleFactor);
+                sourceRect.Scale(OriginalScaleFactor);
             }
 
             canvas.DrawBitmap((SKBitmap)image, sourceRect, destinationRect, InterpolationModePaint);
@@ -431,6 +427,30 @@ namespace Alternet.Drawing
             {
                 location.X *= OriginalScaleFactor;
                 location.Y *= OriginalScaleFactor;
+                canvas.Save();
+                canvas.Scale(1 / OriginalScaleFactor);
+                return true;
+            }
+
+            return false;
+        }
+
+        /// <summary>
+        /// Called before any draw image operation.
+        /// </summary>
+        /// <param name="image"><see cref="Image"/> to draw.</param>
+        /// <param name="rect"><see cref="RectD"/> structure that represents the
+        /// bounds of the image on the destination drawing context.</param>
+        protected virtual bool BeforeDrawImage(ref Image image, ref RectD rect)
+        {
+            DebugImageAssert(image);
+
+            if (UseUnscaledDrawImage && OriginalScaleFactor != 1f)
+            {
+                rect.X *= OriginalScaleFactor;
+                rect.Y *= OriginalScaleFactor;
+                rect.Width *= OriginalScaleFactor;
+                rect.Height *= OriginalScaleFactor;
                 canvas.Save();
                 canvas.Scale(1 / OriginalScaleFactor);
                 return true;
