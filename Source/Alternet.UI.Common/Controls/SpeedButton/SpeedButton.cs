@@ -184,6 +184,7 @@ namespace Alternet.UI
 
             drawable.CenterHorz = true;
             drawable.CenterVert = true;
+            drawable.Stretch = false;
         }
 
         /// <summary>
@@ -252,6 +253,30 @@ namespace Alternet.UI
                 spacer.SuggestedSize = value;
                 if(HasImage && TextVisible)
                     PerformLayoutAndInvalidate();
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether the image should be stretched
+        /// to fill its container. Default is <c>false</c>.
+        /// </summary>
+        /// <remarks>When set to <see langword="true"/>, the image will scale to fit
+        /// the dimensions of its
+        /// container, potentially altering its aspect ratio. When set to <see langword="false"/>,
+        /// the image will retain  its original size and aspect ratio.</remarks>
+        public virtual bool StretchImage
+        {
+            get
+            {
+                return drawable.Stretch;
+            }
+
+            set
+            {
+                if (drawable.Stretch == value)
+                    return;
+                drawable.Stretch = value;
+                Invalidate();
             }
         }
 
@@ -1107,10 +1132,6 @@ namespace Alternet.UI
         public override void DefaultPaint(PaintEventArgs e)
         {
             var state = VisualState;
-
-            if(state == VisualControlState.Hovered)
-            {
-            }
 
             DrawDefaultBackground(e);
             if (HasImage)
