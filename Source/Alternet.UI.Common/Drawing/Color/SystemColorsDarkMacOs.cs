@@ -72,10 +72,14 @@ namespace Alternet.Drawing
         /// <inheritdoc/>
         public ColorStruct GrayText { get; set; } = (63, 255, 255, 255);
 
-        /// <inheritdoc/>
-        public ColorStruct Highlight { get; set; } = (255, 49, 79, 120);
+        /// <summary>
+        /// <inheritdoc cref="ActiveBorder"/>.
+        /// </summary>
+        public ColorStruct Highlight { get; set; } = (255, 0, 120, 215);
 
-        /// <inheritdoc/>
+        /// <summary>
+        /// <inheritdoc cref="ActiveBorder"/>.
+        /// </summary>
         public ColorStruct HighlightText { get; set; } = (255, 255, 255, 255);
 
         /// <inheritdoc/>
