@@ -1,3 +1,17 @@
+# 0.9.726 (2025 May 16)
+
+- DataObject: Fixed DeserializeDataObject.
+- PlessSystemColors: Fixed ControlText initialize.
+- AbstractControl: Fix ForeColor, BackColor setters to support Color.Empty as in WinForms.
+- Image: Fix FromSkia under Maui.
+- VirtualTreeContrrol: Fixed sync TreeItems to ListItems.
+- Added consts for system colors when dark theme is used.
+- ImageDrawable: Stretch is now False by default.
+- SkiaGraphics: Fixed DrawImage with rect param.
+- SpeedButton.ImageStretch.
+- Maui: Fixed ImageSet and ImageList behavior.
+- Changed Highlight and HighlightText default colors.
+
 # 0.9.725 (2025 May 13)
 
 - Maui: Fixed scroll bar painting on HighDpi displays.

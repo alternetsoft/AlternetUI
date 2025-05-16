@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ApiInfo>
-  <Assembly Name="Alternet.UI.Common, Version=0.9.725.0, Culture=neutral, PublicKeyToken=7fb0fe57212b4b74">
+  <Assembly Name="Alternet.UI.Common, Version=0.9.726.0, Culture=neutral, PublicKeyToken=7fb0fe57212b4b74">
     <Type Name="XamlX.Runtime.IXamlParentStackProviderV1" />
     <Type Name="XamlX.Runtime.IXamlXmlNamespaceInfoProviderV1" />
     <Type Name="XamlX.Runtime.XamlXmlNamespaceInfoV1" />
@@ -120,6 +120,7 @@
     <Type Name="Alternet.Drawing.ColorUtils" />
     <Type Name="Alternet.Drawing.DefaultColors" />
     <Type Name="Alternet.Drawing.IKnownColorInfo" />
+    <Type Name="Alternet.Drawing.ISystemColorStructs" />
     <Type Name="Alternet.Drawing.KnownColorNames" />
     <Type Name="Alternet.Drawing.KnownColorTable" />
     <Type Name="Alternet.Drawing.KnownOSColorConsts" />
@@ -133,6 +134,8 @@
     <Type Name="Alternet.Drawing.RGBAValue" />
     <Type Name="Alternet.Drawing.RGBValue" />
     <Type Name="Alternet.Drawing.SystemColors" />
+    <Type Name="Alternet.Drawing.SystemColorsDarkLinux" />
+    <Type Name="Alternet.Drawing.SystemColorsDarkMacOs" />
     <Type Name="Alternet.Drawing.SystemColorsLight" />
     <Type Name="Alternet.Drawing.BaseDrawable" />
     <Type Name="Alternet.Drawing.BorderDrawable" />
@@ -199,10 +202,6 @@
       <Event Name="PropertyChanged" />
     </Type>
     <Type Name="Alternet.Drawing.IIconSetHandler" />
-    <Type Name="Alternet.Drawing.DummyImageContainer">
-      <Event Name="Disposed" />
-      <Event Name="PropertyChanged" />
-    </Type>
     <Type Name="Alternet.Drawing.IImageContainer" />
     <Type Name="Alternet.Drawing.ImageContainer">
       <Event Name="Changed" />
@@ -214,13 +213,17 @@
       <Event Name="Disposed" />
       <Event Name="PropertyChanged" />
     </Type>
-    <Type Name="Alternet.Drawing.DummyImageListHandler">
+    <Type Name="Alternet.Drawing.PlessImageContainer">
       <Event Name="Disposed" />
       <Event Name="PropertyChanged" />
     </Type>
     <Type Name="Alternet.Drawing.IImageListHandler" />
     <Type Name="Alternet.Drawing.ImageList">
       <Event Name="Changed" />
+      <Event Name="Disposed" />
+      <Event Name="PropertyChanged" />
+    </Type>
+    <Type Name="Alternet.Drawing.PlessImageListHandler">
       <Event Name="Disposed" />
       <Event Name="PropertyChanged" />
     </Type>
