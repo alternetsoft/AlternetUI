@@ -10,7 +10,7 @@ namespace Alternet.UI
     /// <see cref="VirtualListBox"/> descendant which has visible checkboxes next to the items.
     /// Please use <see cref="ListControlItem"/> with this control.
     /// </summary>
-    public class VirtualCheckListBox : VirtualListBox
+    public partial class VirtualCheckListBox : VirtualListBox
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="VirtualCheckListBox"/> class.

@@ -15,7 +15,7 @@ namespace Alternet.UI
     /// There is also <see cref="PreviewUixmlSplitted"/> class which allows to preview
     /// uixml together with its source code.
     /// </summary>
-    public class PreviewUixml : Control, IFilePreview
+    public partial class PreviewUixml : Control, IFilePreview
     {
         /// <summary>
         /// Gets or sets whether to log converted uixml.

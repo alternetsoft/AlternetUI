@@ -8,7 +8,7 @@ namespace Alternet.UI
     /// <summary>
     /// Descendant of the <see cref="ListControl{T}"/> with object items.
     /// </summary>
-    public abstract class ListControl : ListControl<object>
+    public abstract partial class ListControl : ListControl<object>
     {
         /// <summary>
         /// Adds enum values to the items collection.

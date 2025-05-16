@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 namespace Alternet.UI
 {
     /// <summary>
-    /// Imlements e-mail editor with validation.
+    /// Implements e-mail editor with validation.
     /// </summary>
     [ControlCategory("Editors")]
     public partial class ValueEditorEMail : ValueEditorString

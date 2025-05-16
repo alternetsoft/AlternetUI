@@ -124,7 +124,7 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Occcurs when button is clicked.
+        /// Occurs when button is clicked.
         /// </summary>
         public event EventHandler<ControlAndButtonClickEventArgs>? ButtonClick;
 
@@ -449,7 +449,7 @@ namespace Alternet.UI
         protected abstract AbstractControl CreateControl();
 
         /// <summary>
-        /// Called when combobox image needs to be updated. Assigns combobox image
+        /// Called when combo box image needs to be updated. Assigns combo box image
         /// using different properties of the control.
         /// </summary>
         protected virtual void UpdateComboBoxImage()

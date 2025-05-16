@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace Alternet.UI
 {
     /// <summary>
-    /// Imlements <see cref="sbyte"/> editor with validation.
+    /// Implements <see cref="sbyte"/> editor with validation.
     /// </summary>
     [ControlCategory("Editors")]
     public partial class ValueEditorSByte : ValueEditorCustom

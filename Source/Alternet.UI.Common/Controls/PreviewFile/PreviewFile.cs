@@ -13,7 +13,7 @@ namespace Alternet.UI
     /// <summary>
     /// Allows to preview the file using one of the registered preview controls.
     /// </summary>
-    public class PreviewFile : Control, IFilePreview
+    public partial class PreviewFile : Control, IFilePreview
     {
         private readonly Label label = new()
         {
@@ -186,13 +186,14 @@ namespace Alternet.UI
         /// </summary>
         public virtual void RegisterDefaultPreviewControls()
         {
-            RegisterPreview(new(PreviewUixmlSplitted.IsSupportedFile, PreviewUixmlSplitted.CreatePreviewControl));
+            RegisterPreview(
+                new(PreviewUixmlSplitted.IsSupportedFile, PreviewUixmlSplitted.CreatePreviewControl));
             RegisterPreview(new(PreviewTextFile.IsSupportedFile, PreviewTextFile.CreatePreviewControl));
             RegisterPreview(new(PreviewInBrowser.IsSupportedFile, PreviewInBrowser.CreatePreviewControl));
         }
 
         /// <summary>
-        /// Registeres preview control for use with this object.
+        /// Registers preview control for use with this object.
         /// </summary>
         /// <param name="item">Preview control information.</param>
         public virtual void RegisterPreview(PreviewFileRegisterItem item)

@@ -10,7 +10,7 @@ namespace Alternet.UI
     /// <summary>
     /// Popup window with <see cref="TreeView"/> control.
     /// </summary>
-    public class PopupTreeView : PopupWindow<TreeView>
+    public partial class PopupTreeView : PopupWindow<TreeView>
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="PopupTreeView"/> class.

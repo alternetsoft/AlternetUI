@@ -8,7 +8,7 @@ namespace Alternet.UI
     /// Descendant of the <see cref="PictureBox"/> which is initialized to show
     /// text validation or other errors.
     /// </summary>
-    public class ErrorPictureBox : PictureBox
+    public partial class ErrorPictureBox : PictureBox
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="ErrorPictureBox"/> class.

@@ -15,7 +15,7 @@ namespace Alternet.UI
     /// Additionally to the tooltip message <see cref="RichToolTip"/> allows to
     /// specify title, image and other options.
     /// </summary>
-    public class RichToolTip : ScrollViewer, IRichToolTip, IToolTipProvider
+    public partial class RichToolTip : ScrollViewer, IRichToolTip, IToolTipProvider
     {
         /// <summary>
         /// Gets or sets default tooltip border color.

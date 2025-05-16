@@ -25,7 +25,7 @@ namespace Alternet.UI
     /// collections that are used by the control.
     /// </remarks>
     [ControlCategory("Common")]
-    public class CheckListBox : ListBox
+    public partial class CheckListBox : ListBox
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="CheckListBox"/> class

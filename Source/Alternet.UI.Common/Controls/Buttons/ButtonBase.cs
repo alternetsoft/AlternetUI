@@ -6,7 +6,7 @@ namespace Alternet.UI
     /// <summary>
     /// Implements the basic functionality common to button controls.
     /// </summary>
-    public abstract class ButtonBase : Control, ICommandSource
+    public abstract partial class ButtonBase : Control, ICommandSource
     {
         private Action? clickAction;
         private CommandSourceStruct commandSource;

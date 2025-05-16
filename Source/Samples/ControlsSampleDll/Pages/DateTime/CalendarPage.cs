@@ -48,7 +48,7 @@ namespace ControlsSample
 
                 var sequentalMonthSelectCheckBox
                     = checkboxPanel.AddCheckBox(GenericStrings.SequentalMonthSelect)
-                    .BindBoolProp(calendar, nameof(Calendar.SequentalMonthSelect));
+                    .BindBoolProp(calendar, nameof(Calendar.SequentialMonthSelect));
                 sequentalMonthSelectCheckBox.Enabled = useGenericCheckBox.IsChecked;
 
                 var showSurroundWeeksCheckBox
@@ -108,7 +108,7 @@ namespace ControlsSample
                 {
                     showHolidaysCheckBox.IsChecked = calendar.ShowHolidays;
                     noMonthChangeCheckBox.IsChecked = calendar.NoMonthChange;
-                    sequentalMonthSelectCheckBox.IsChecked = calendar.SequentalMonthSelect;
+                    sequentalMonthSelectCheckBox.IsChecked = calendar.SequentialMonthSelect;
                     showSurroundWeeksCheckBox.IsChecked = calendar.ShowSurroundWeeks;
                     weekNumbersCheckBox.IsChecked = calendar.ShowWeekNumbers;
 

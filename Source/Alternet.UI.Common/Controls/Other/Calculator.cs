@@ -139,14 +139,14 @@ namespace Alternet.UI
         public virtual ScriptOptions? FormulaOptions { get; set; } = null;
 
         /// <summary>
-        /// Gets or sets script globals used in <see cref="CSharpScript.EvaluateAsync"/>
+        /// Gets or sets script global context used in <see cref="CSharpScript.EvaluateAsync"/>
         /// which is called from <see cref="Evaluate"/>. Default is Null.
         /// </summary>
         [Browsable(false)]
         public virtual object? FormulaGlobals { get; set; } = null;
 
         /// <summary>
-        /// Gets or sets script globals type used in <see cref="CSharpScript.EvaluateAsync"/>
+        /// Gets or sets script global type used in <see cref="CSharpScript.EvaluateAsync"/>
         /// which is called from <see cref="Evaluate"/>. Default is Null.
         /// </summary>
         [Browsable(false)]

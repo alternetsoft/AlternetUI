@@ -11,7 +11,7 @@ namespace Alternet.UI
     /// <summary>
     /// Popup window with <see cref="Calendar"/> control.
     /// </summary>
-    public class PopupCalendar : PopupWindow<Calendar>
+    public partial class PopupCalendar : PopupWindow<Calendar>
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="PopupCalendar"/> class.

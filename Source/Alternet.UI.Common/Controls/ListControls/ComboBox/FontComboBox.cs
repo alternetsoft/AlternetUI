@@ -11,7 +11,7 @@ namespace Alternet.UI
     /// <summary>
     /// <see cref="ComboBox"/> descendant for selecting font names.
     /// </summary>
-    public class FontComboBox : ComboBox
+    public partial class FontComboBox : ComboBox
     {
         /// <summary>
         /// Gets or sets method that initializes items in <see cref="FontListBox"/>.

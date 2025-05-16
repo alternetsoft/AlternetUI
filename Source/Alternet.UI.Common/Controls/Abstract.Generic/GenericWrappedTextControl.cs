@@ -10,7 +10,7 @@ namespace Alternet.UI
     /// Implements simple text control which can text with new line
     /// characters and wrapping.
     /// </summary>
-    public class GenericWrappedTextControl : GenericTextControl
+    public partial class GenericWrappedTextControl : GenericTextControl
     {
         private TextFormat.Record textFormat;
         private List<string>? wrappedText;

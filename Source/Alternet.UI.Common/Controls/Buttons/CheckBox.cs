@@ -240,7 +240,7 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="instance">Object.</param>
         /// <param name="propName">Property name.</param>
-        /// <remarks>Property must have the <see cref="bool"/> type. Value of the binded
+        /// <remarks>Property must have the <see cref="bool"/> type. Value of the bound
         /// property will be changed automatically after <see cref="IsChecked"/> is changed.</remarks>
         public virtual CheckBox BindBoolProp(object instance, string propName)
         {

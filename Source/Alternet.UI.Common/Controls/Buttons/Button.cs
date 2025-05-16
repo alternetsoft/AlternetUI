@@ -71,8 +71,8 @@ namespace Alternet.UI
         /// Gets or sets whether images in buttons are available.
         /// </summary>
         /// <remarks>
-        /// By default under Macos images in buttons not available due to not correct
-        /// implementation in WxWidget native button control. On all other operating systems
+        /// By default images in buttons are not available under macOs due to not correct
+        /// implementation in WxWidget native button control. On all other platforms
         /// images in buttons are available.
         /// </remarks>
         public static bool ImagesEnabled

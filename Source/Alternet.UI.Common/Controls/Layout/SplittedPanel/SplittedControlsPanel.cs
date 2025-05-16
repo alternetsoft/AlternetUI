@@ -12,7 +12,7 @@ namespace Alternet.UI
     /// <summary>
     /// Descendant of <see cref="SplittedPanel"/> control with additional features.
     /// </summary>
-    public class SplittedControlsPanel : SplittedPanel
+    public partial class SplittedControlsPanel : SplittedPanel
     {
         private VirtualTreeControl? leftListBox;
         private PropertyGrid? propertyGrid;

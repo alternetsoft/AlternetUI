@@ -20,7 +20,7 @@ namespace Alternet.UI
     /// described below.If you want to use these possibilities on every platform,
     /// set UseGeneric property.
     /// <remarks>
-    /// All global settings (such as colours and fonts used) can, of course, be changed.
+    /// All global settings (such as colors and fonts used) can, of course, be changed.
     /// But also, the display style for each day in the month can be set independently.
     /// </remarks>
     /// <remarks>
@@ -64,10 +64,10 @@ namespace Alternet.UI
         public static bool DefaultShowWeekNumbers = false;
 
         /// <summary>
-        /// Gets or sets default value for the <see cref="SequentalMonthSelect"/> property.
+        /// Gets or sets default value for the <see cref="SequentialMonthSelect"/> property.
         /// Default is True.
         /// </summary>
-        public static bool DefaultSequentalMonthSelect = true;
+        public static bool DefaultSequentialMonthSelect = true;
 
         /// <summary>
         /// Gets or sets default value for the <see cref="ShowHolidays"/> property.
@@ -100,7 +100,7 @@ namespace Alternet.UI
             }
 
             ShowWeekNumbers = DefaultShowWeekNumbers;
-            SequentalMonthSelect = DefaultSequentalMonthSelect;
+            SequentialMonthSelect = DefaultSequentialMonthSelect;
             ShowHolidays = DefaultShowHolidays;
 
             UpdateThemeIfRequired();
@@ -275,7 +275,7 @@ namespace Alternet.UI
         /// This feature is implemented only in generic calendar. In order to use
         /// generic calendar, set <see cref="UseGeneric"/> property.
         /// </remarks>
-        public virtual bool SequentalMonthSelect
+        public virtual bool SequentialMonthSelect
         {
             get
             {
@@ -288,7 +288,7 @@ namespace Alternet.UI
             {
                 if (DisposingOrDisposed)
                     return;
-                if (SequentalMonthSelect == value)
+                if (SequentialMonthSelect == value)
                     return;
                 Handler.SequentialMonthSelect = value;
                 PerformLayout();
@@ -296,7 +296,7 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Gets or sets a value indicating whether to show the neighbouring weeks in the
+        /// Gets or sets a value indicating whether to show the neighboring weeks in the
         /// previous and next months. (only generic, always on for the native controls)
         /// </summary>
         /// <remarks>
@@ -304,7 +304,7 @@ namespace Alternet.UI
         /// generic calendar, set <see cref="UseGeneric"/> property.
         /// </remarks>
         /// <remarks>
-        /// In the native calendar neighbouring weeks for the
+        /// In the native calendar neighboring weeks for the
         /// previous and next months are always shown.
         /// </remarks>
         public virtual bool ShowSurroundWeeks

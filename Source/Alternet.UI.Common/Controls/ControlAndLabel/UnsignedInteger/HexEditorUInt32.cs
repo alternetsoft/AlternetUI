@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 namespace Alternet.UI
 {
     /// <summary>
-    /// Imlements hexadecimal <see cref="uint"/> editor with validation.
+    /// Implements hexadecimal <see cref="uint"/> editor with validation.
     /// </summary>
     public partial class HexEditorUInt32 : ValueEditorCustom
     {

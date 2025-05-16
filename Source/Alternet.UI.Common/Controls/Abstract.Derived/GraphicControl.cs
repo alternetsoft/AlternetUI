@@ -10,7 +10,7 @@ namespace Alternet.UI
     /// Descendant of the <see cref="UserControl"/> which doesn't need to have focus.
     /// An example of <see cref="GraphicControl"/> is <see cref="GenericLabel"/>.
     /// </summary>
-    public class GraphicControl : UserControl
+    public partial class GraphicControl : UserControl
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="GraphicControl"/> class.

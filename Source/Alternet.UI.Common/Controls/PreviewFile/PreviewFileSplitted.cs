@@ -11,7 +11,7 @@ namespace Alternet.UI
     /// and uses <see cref="First"/> and <see cref="Second"/> preview sub-controls there.
     /// When <see cref="FileName"/> is changed, preview sub-controls are also updated.
     /// </summary>
-    public class PreviewFileSplitted : Control, IFilePreview
+    public partial class PreviewFileSplitted : Control, IFilePreview
     {
         private readonly SplittedPanel panel = new()
         {

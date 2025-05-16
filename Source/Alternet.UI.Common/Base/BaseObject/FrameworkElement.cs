@@ -10,7 +10,7 @@ namespace Alternet.UI
     /// <summary>
     /// Base class for components that can be loaded from uixml.
     /// </summary>
-    public class FrameworkElement : DisposableObject, IComponent
+    public partial class FrameworkElement : DisposableObject, IComponent
     {
         private FrameworkElement? logicalParent;
 
@@ -89,7 +89,7 @@ namespace Alternet.UI
         /// <param name="name">The name of the control to be found.</param>
         /// <returns>The found control, or <c>null</c> if no control with the provided name
         /// is found.</returns>
-        public virtual FrameworkElement? TryFindElement(string name)
+        public virtual FrameworkElement? TryFindElement(string? name)
         {
             if (name is null)
                 return null;

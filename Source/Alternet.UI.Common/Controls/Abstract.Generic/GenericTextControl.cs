@@ -12,7 +12,7 @@ namespace Alternet.UI
     /// Implements simple text control which can paint text without new line
     /// characters and wrapping.
     /// </summary>
-    public class GenericTextControl : GenericControl
+    public partial class GenericTextControl : GenericControl
     {
         /// <summary>
         /// Gets or sets whether to show debug corners when control is painted.
@@ -51,19 +51,19 @@ namespace Alternet.UI
             var isNanSuggestedWidth = suggested.IsNanWidth;
             var isNanSuggestedHeight = suggested.IsNanHeight;
 
-            var conteinerSize = suggested;
+            var containerSize = suggested;
 
             if (isNanSuggestedWidth)
-                conteinerSize.Width = availableSize.Width;
+                containerSize.Width = availableSize.Width;
 
             if (isNanSuggestedHeight)
-                conteinerSize.Height = availableSize.Height;
+                containerSize.Height = availableSize.Height;
 
             var paddingSize = Padding.Size;
 
-            conteinerSize -= paddingSize;
+            containerSize -= paddingSize;
 
-            var measured = func(conteinerSize);
+            var measured = func(containerSize);
 
             if (!isNanSuggestedWidth)
                 measured.Width = suggested.Width;

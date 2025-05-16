@@ -8,7 +8,7 @@ namespace Alternet.UI
     /// Arranges child controls using different methods.
     /// </summary>
     /// <remarks>
-    /// Currently only default layout method is implemeted.
+    /// Currently only default layout method is implemented.
     /// Use <see cref="AbstractControl.Dock"/> to specify child controls dock style.
     /// If it dock style is not specified, controls are positioned absolutely using
     /// <see cref="AbstractControl.Bounds"/>.

@@ -25,7 +25,7 @@ namespace Alternet.UI
     /// collections that are used by the control.
     /// </remarks>
     [ControlCategory("Common")]
-    public class ListBox : VirtualListBox, ICustomListBox<object>
+    public partial class ListBox : VirtualListBox, ICustomListBox<object>
     {
         private readonly ListBoxItems adapter;
 

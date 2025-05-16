@@ -11,7 +11,7 @@ namespace Alternet.UI
     /// Represents a status bar control.
     /// </summary>
     [ControlCategory("MenusAndToolbars")]
-    public class StatusBar : FrameworkElement
+    public partial class StatusBar : FrameworkElement
     {
         private IStatusBarHandler? handler;
         private int updateCount = 0;

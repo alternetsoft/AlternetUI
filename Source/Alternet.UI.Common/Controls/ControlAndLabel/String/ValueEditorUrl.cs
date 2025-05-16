@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 namespace Alternet.UI
 {
     /// <summary>
-    /// Imlements url editor with validation.
+    /// Implements url editor with validation.
     /// </summary>
     [ControlCategory("Editors")]
     public partial class ValueEditorUrl : ValueEditorString

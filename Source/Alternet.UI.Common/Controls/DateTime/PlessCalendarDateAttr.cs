@@ -12,7 +12,7 @@ namespace Alternet.UI
     /// <summary>
     /// <see cref="ICalendarDateAttr"/> interface implementation that does nothing.
     /// </summary>
-    public class PlessCalendarDateAttr : ImmutableObject, ICalendarDateAttr
+    public partial class PlessCalendarDateAttr : ImmutableObject, ICalendarDateAttr
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="PlessCalendarDateAttr"/> class.

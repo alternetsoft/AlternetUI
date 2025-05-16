@@ -15,7 +15,7 @@ namespace Alternet.UI
     /// <see cref="ListControlItem.Value"/> is <see cref="Color"/> and
     /// <see cref="ListControlItem.Text"/> is label of the color.
     /// </remarks>
-    public class ColorListBox : VirtualListBox
+    public partial class ColorListBox : VirtualListBox
     {
         /// <summary>
         /// Gets or sets default painter for the <see cref="ColorListBox"/> items.
@@ -258,10 +258,10 @@ namespace Alternet.UI
             /// <inheritdoc/>
             public virtual SizeD GetSize(object sender, int index)
             {
-                if (sender is not ColorListBox listbox)
+                if (sender is not ColorListBox listBox)
                     return SizeD.MinusOne;
 
-                return ListControlItem.DefaultMeasureItemSize(listbox, listbox.MeasureCanvas, index);
+                return ListControlItem.DefaultMeasureItemSize(listBox, listBox.MeasureCanvas, index);
             }
 
             /// <summary>

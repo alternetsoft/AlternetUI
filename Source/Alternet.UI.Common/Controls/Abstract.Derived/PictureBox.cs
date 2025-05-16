@@ -390,7 +390,7 @@ namespace Alternet.UI
         /// Helper method which allows to draw on <see cref="SKCanvas"/>.
         /// </summary>
         /// <param name="action">Draw action with <see cref="SKCanvas"/> and size parameters.</param>
-        /// <param name="backgroundColor">Color to fill bacgkround. Optional.</param>
+        /// <param name="backgroundColor">Color to fill background. Optional.</param>
         public virtual void Draw(Action<SKCanvas, int, int> action, Color? backgroundColor = null)
         {
             RectI rect = (0, 0, PixelFromDip(Width), PixelFromDip(Height));

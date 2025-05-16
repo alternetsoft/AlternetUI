@@ -32,7 +32,7 @@ namespace Alternet.UI
         /// <inheritdoc cref="Calendar.NoMonthChange"/>
         bool NoMonthChange { get; set; }
 
-        /// <inheritdoc cref="Calendar.SequentalMonthSelect"/>
+        /// <inheritdoc cref="Calendar.SequentialMonthSelect"/>
         bool SequentialMonthSelect { get; set; }
 
         /// <inheritdoc cref="Calendar.ShowSurroundWeeks"/>

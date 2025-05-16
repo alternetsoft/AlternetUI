@@ -10,7 +10,7 @@ namespace Alternet.UI
     /// Implements Uixml preview control which splits it's view into two docked panels.
     /// In the first panel Uixml is previewed as text and in the second as form.
     /// </summary>
-    public class PreviewUixmlSplitted : PreviewFileSplitted
+    public partial class PreviewUixmlSplitted : PreviewFileSplitted
     {
         /// <summary>
         /// Gets or sets callback function which is fired when

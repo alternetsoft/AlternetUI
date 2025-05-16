@@ -7,7 +7,7 @@ namespace Alternet.UI
     /// <summary>
     /// This is the <see cref="Border"/> descendant which is initialized with the hidden border.
     /// </summary>
-    public class HiddenBorder : Border
+    public partial class HiddenBorder : Border
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="HiddenBorder"/> class.

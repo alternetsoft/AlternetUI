@@ -369,7 +369,7 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Initializes DefinitionsU memeber either to user supplied ColumnDefinitions collection
+        /// Initializes DefinitionsU member either to user supplied ColumnDefinitions collection
         /// or to a default single element collection. DefinitionsU gets trimmed to size.
         /// </summary>
         /// <remarks>
@@ -675,7 +675,7 @@ namespace Alternet.UI
         /// <summary>
         /// Helper method to register a span information for delayed processing.
         /// </summary>
-        /// <param name="store">Reference to a hashtable object used as storage.</param>
+        /// <param name="store">Reference to a hash table object used as storage.</param>
         /// <param name="start">Span starting index.</param>
         /// <param name="count">Span count.</param>
         /// <param name="u"><c>true</c> if this is a column span. <c>false</c>
@@ -2696,7 +2696,7 @@ namespace Alternet.UI
             if (scale < 0)
             {
                 // if one of the *-weights is Infinity, adjust the weights by mapping
-                // Infinty to 1 and everything else to 0:  the infinite items share the
+                // Infinity to 1 and everything else to 0:  the infinite items share the
                 // available space equally, everyone else gets nothing.
                 return (Coord.IsPositiveInfinity(def.UserSize.Value)) ? 1 : 0;
             }

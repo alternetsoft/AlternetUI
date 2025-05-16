@@ -11,7 +11,7 @@ namespace Alternet.UI
     /// <summary>
     /// Popup window with <see cref="ListBox"/> control.
     /// </summary>
-    /// <typeparam name="T">Type of the listbox control</typeparam>
+    /// <typeparam name="T">Type of the list box control</typeparam>
     public partial class PopupListBox<T> : PopupWindow<T>
         where T : VirtualListBox, new()
     {
@@ -26,7 +26,7 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Gets or sets default minimum size of the listbox popup main control.
+        /// Gets or sets default minimum size of the list box popup main control.
         /// </summary>
         public static SizeD DefaultMinimumSize { get; set; } = (200, 300);
 

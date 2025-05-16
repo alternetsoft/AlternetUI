@@ -17,7 +17,7 @@ namespace Alternet.UI
     /// <see cref="ListControlItem.Value"/> is <see cref="Color"/> and
     /// <see cref="ListControlItem.Text"/> is label of the color.
     /// </remarks>
-    public class ColorComboBox : ComboBox
+    public partial class ColorComboBox : ComboBox
     {
         /// <summary>
         /// Gets or sets default disabled image color.

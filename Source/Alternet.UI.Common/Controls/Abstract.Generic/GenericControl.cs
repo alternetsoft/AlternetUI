@@ -10,7 +10,7 @@ namespace Alternet.UI
     /// <summary>
     /// Implements generic control which is not handled by the operating system.
     /// </summary>
-    public class GenericControl : AbstractControl
+    public partial class GenericControl : AbstractControl
     {
         private bool isClipped = false;
 

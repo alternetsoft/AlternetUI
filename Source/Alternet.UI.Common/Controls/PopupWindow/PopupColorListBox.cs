@@ -10,7 +10,7 @@ namespace Alternet.UI
     /// <summary>
     /// Popup window with <see cref="ColorListBox"/> control.
     /// </summary>
-    public class PopupColorListBox : PopupListBox<ColorListBox>
+    public partial class PopupColorListBox : PopupListBox<ColorListBox>
     {
         /// <summary>
         /// Gets popup result as <see cref="Color"/>.

@@ -325,7 +325,7 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Sets visible borders. Changes border side widths depending on the paramer values.
+        /// Sets visible borders. Changes border side widths depending on the parameter values.
         /// </summary>
         /// <param name="left">Whether left border side is visible.</param>
         /// <param name="top">Whether top border side is visible.</param>

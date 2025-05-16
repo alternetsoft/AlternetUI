@@ -10,7 +10,7 @@ namespace Alternet.UI
     /// <summary>
     /// Popup window with <see cref="PictureBox"/> control.
     /// </summary>
-    public class PopupPictureBox : PopupWindow<PictureBox>
+    public partial class PopupPictureBox : PopupWindow<PictureBox>
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="PopupPictureBox"/> class.

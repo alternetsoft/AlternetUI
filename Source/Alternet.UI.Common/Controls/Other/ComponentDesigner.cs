@@ -9,7 +9,7 @@ namespace Alternet.UI
     /// <summary>
     /// Default <see cref="IComponentDesigner"/> implementation.
     /// </summary>
-    public class ComponentDesigner : DisposableObject, IComponentDesigner
+    public partial class ComponentDesigner : DisposableObject, IComponentDesigner
     {
         /// <summary>
         /// Occurs when the left mouse button was pressed on the control

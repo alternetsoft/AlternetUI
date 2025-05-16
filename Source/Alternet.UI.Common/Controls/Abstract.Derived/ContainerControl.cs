@@ -14,7 +14,7 @@ namespace Alternet.UI
     /// <summary>
     /// Base class for all container controls.
     /// </summary>
-    public class ContainerControl : HiddenBorder
+    public partial class ContainerControl : HiddenBorder
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="ContainerControl"/> class.

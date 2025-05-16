@@ -8,7 +8,7 @@ using Alternet.UI.Localization;
 namespace Alternet.UI
 {
     /// <summary>
-    /// Imlements unsigned <see cref="double"/> editor with validation.
+    /// Implements unsigned <see cref="double"/> editor with validation.
     /// </summary>
     [ControlCategory("Editors")]
     public partial class ValueEditorUDouble : ValueEditorCustom
