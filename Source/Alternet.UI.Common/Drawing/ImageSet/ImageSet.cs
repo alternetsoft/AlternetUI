@@ -152,7 +152,7 @@ namespace Alternet.UI
                 return null;
 
             ImageSet result = new();
-            result.Images.Add(image!.ToGrayScale());
+            result.Images.Add(image.ToGrayScale());
             return result;
         }
 
@@ -382,7 +382,7 @@ namespace Alternet.UI
         /// <inheritdoc/>
         protected override IImageSetHandler CreateHandler()
         {
-            return GraphicsFactory.Handler.CreateImageSetHandler() ?? PlessImageSetHandler.Default;
+            return GraphicsFactory.Handler.CreateImageSetHandler() ?? new PlessImageSetHandler();
         }
 
         /// <summary>

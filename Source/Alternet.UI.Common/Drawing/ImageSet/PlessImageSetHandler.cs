@@ -14,11 +14,6 @@ namespace Alternet.Drawing
     /// </summary>
     public class PlessImageSetHandler : ImageContainer, IImageSetHandler
     {
-        /// <summary>
-        /// Gets default dummy <see cref="IImageSetHandler"/> provider.
-        /// </summary>
-        public static IImageSetHandler Default = new PlessImageSetHandler();
-
         private SizeI defaultSize;
 
         /// <inheritdoc/>

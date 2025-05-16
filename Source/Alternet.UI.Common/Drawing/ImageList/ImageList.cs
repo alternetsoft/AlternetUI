@@ -192,7 +192,7 @@ namespace Alternet.Drawing
         /// <inheritdoc/>
         protected override IImageListHandler CreateHandler()
         {
-            return GraphicsFactory.Handler.CreateImageListHandler() ?? DummyImageListHandler.Default;
+            return GraphicsFactory.Handler.CreateImageListHandler() ?? new PlessImageListHandler();
         }
     }
 }

@@ -12,7 +12,7 @@ namespace Alternet.Drawing
     /// <summary>
     /// Dummy implementation of the <see cref="IIconSetHandler"/> interface.
     /// </summary>
-    public class DummyIconSetHandler : DummyImageContainer, IIconSetHandler
+    public class DummyIconSetHandler : PlessImageContainer, IIconSetHandler
     {
         /// <summary>
         /// Gets or sets default dummy implementation of the <see cref="IIconSetHandler"/> interface.

@@ -7,7 +7,7 @@ namespace Alternet.Drawing
     /// <summary>
     /// Image container bound to the dummy handler.
     /// </summary>
-    public class ImageContainer : ImageContainer<DummyImageContainer>
+    public class ImageContainer : ImageContainer<PlessImageContainer>
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="ImageContainer"/> class.
@@ -18,9 +18,9 @@ namespace Alternet.Drawing
         }
 
         /// <inheritdoc/>
-        protected override DummyImageContainer CreateHandler()
+        protected override PlessImageContainer CreateHandler()
         {
-            return new DummyImageContainer();
+            return new PlessImageContainer();
         }
     }
 }

@@ -576,7 +576,7 @@ namespace Alternet.Drawing
         /// </summary>
         /// <param name="brush">Brush used to fill the rectangle.</param>
         /// <param name="container">Rectangle to use as a container for the point.</param>
-        /// <param name="size">Size of the retangle which is painted at the center.</param>
+        /// <param name="size">Size of the rectangle which is painted at the center.</param>
         public void FillRectangleAtCenter(Brush brush, RectD container, SizeD size)
         {
             RectD rect = ((0, 0), size);

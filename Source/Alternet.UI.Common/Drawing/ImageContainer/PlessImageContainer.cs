@@ -12,7 +12,7 @@ namespace Alternet.Drawing
     /// <summary>
     /// Dummy implementation of the <see cref="IImageContainer"/> interface.
     /// </summary>
-    public class DummyImageContainer : DisposableObject, IImageContainer
+    public class PlessImageContainer : DisposableObject, IImageContainer
     {
         /// <inheritdoc/>
         public virtual bool IsOk => true;
