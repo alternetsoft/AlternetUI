@@ -264,7 +264,7 @@ namespace Alternet.UI
         /// the dimensions of its
         /// container, potentially altering its aspect ratio. When set to <see langword="false"/>,
         /// the image will retain  its original size and aspect ratio.</remarks>
-        public virtual bool StretchImage
+        public virtual bool ImageStretch
         {
             get
             {
