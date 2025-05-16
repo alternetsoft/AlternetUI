@@ -44,11 +44,6 @@ namespace Alternet.Drawing
         public RectI? SourceRect = null;
 
         /// <summary>
-        /// Gets whether or not to stretch this object. Default is <c>true</c>.
-        /// </summary>
-        public bool Stretch = true;
-
-        /// <summary>
         /// Gets whether or not to center this object vertically. Default is <c>true</c>.
         /// </summary>
         public bool CenterVert = true;
@@ -57,6 +52,21 @@ namespace Alternet.Drawing
         /// Gets whether or not to center this object horizontally. Default is <c>true</c>.
         /// </summary>
         public bool CenterHorz = true;
+
+        private bool stretch = false;
+
+        /// <summary>
+        /// Gets whether or not to stretch this object. Default is <c>true</c>.
+        /// </summary>
+        public virtual bool Stretch
+        {
+            get => stretch;
+
+            set
+            {
+                stretch = value;
+            }
+        }
 
         /// <summary>
         /// Gets whether or not center this object horizontally or vertically.
