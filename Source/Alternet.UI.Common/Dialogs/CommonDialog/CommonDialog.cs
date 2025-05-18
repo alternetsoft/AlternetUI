@@ -55,11 +55,11 @@ namespace Alternet.UI
         public IDialogHandler Handler => handler ??= CreateHandler();
 
         /// <summary>
-        /// Runs a common dialog window with a default owner asynchroniously.
+        /// Runs a common dialog window with a default owner asynchronously.
         /// </summary>
         /// <param name="onClose">Action to call after dialog is closed.</param>
         /// <remarks>
-        /// On some platforms dialogs are shown synchroniously and application waits
+        /// On some platforms dialogs are shown synchronously and application waits
         /// until dialog is closed.
         /// </remarks>
         public void ShowAsync(Action<CommonDialog, bool>? onClose)
@@ -68,11 +68,11 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Runs a common dialog window with a default owner asynchroniously.
+        /// Runs a common dialog window with a default owner asynchronously.
         /// </summary>
         /// <param name="onClose">Action to call after dialog is closed.</param>
         /// <remarks>
-        /// On some platforms dialogs are shown synchroniously and application waits
+        /// On some platforms dialogs are shown synchronously and application waits
         /// until dialog is closed.
         /// </remarks>
         public void ShowAsync(Action<bool>? onClose)
@@ -84,12 +84,12 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Runs a common dialog window asynchroniously.
+        /// Runs a common dialog window asynchronously.
         /// </summary>
         /// <param name="onClose">Action to call after dialog is closed.</param>
         /// <param name="owner">A window that will own the dialog.</param>
         /// <remarks>
-        /// On some platforms dialogs are shown synchroniously and application waits
+        /// On some platforms dialogs are shown synchronously and application waits
         /// until dialog is closed.
         /// </remarks>
         public void ShowAsync(Window? owner, Action<bool>? onClose)
@@ -101,11 +101,11 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Runs a common dialog window asynchroniously.
+        /// Runs a common dialog window asynchronously.
         /// </summary>
         /// <param name="onAccepted">Action to call after dialog is accepted.</param>
         /// <remarks>
-        /// On some platforms dialogs are shown synchroniously and application waits
+        /// On some platforms dialogs are shown synchronously and application waits
         /// until dialog is closed.
         /// </remarks>
         public void ShowAsync(Action? onAccepted = null)
@@ -114,12 +114,12 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Runs a common dialog window asynchroniously.
+        /// Runs a common dialog window asynchronously.
         /// </summary>
         /// <param name="onAccepted">Action to call after dialog is accepted.</param>
         /// <param name="owner">A window that will own the dialog.</param>
         /// <remarks>
-        /// On some platforms dialogs are shown synchroniously and application waits
+        /// On some platforms dialogs are shown synchronously and application waits
         /// until dialog is closed.
         /// </remarks>
         public void ShowAsync(Window? owner, Action? onAccepted)
@@ -132,12 +132,12 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Runs a common dialog window with the specified owner asynchroniously.
+        /// Runs a common dialog window with the specified owner asynchronously.
         /// </summary>
         /// <param name="onClose">Action to call after dialog is closed.</param>
         /// <param name="owner">A window that will own the dialog.</param>
         /// <remarks>
-        /// On some platforms dialogs are shown synchroniously and application waits
+        /// On some platforms dialogs are shown synchronously and application waits
         /// until dialog is closed.
         /// </remarks>
         public virtual void ShowAsync(Window? owner, Action<CommonDialog, bool>? onClose)

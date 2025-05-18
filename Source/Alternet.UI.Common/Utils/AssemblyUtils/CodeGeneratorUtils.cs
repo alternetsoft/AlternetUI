@@ -100,11 +100,11 @@ namespace Alternet.UI
             // parameter types of the Invoke method.
             Type? handlerType = eInfo?.EventHandlerType;
             MethodInfo? invokeMethod = handlerType?.GetMethod("Invoke");
-            ParameterInfo[]? parms = invokeMethod?.GetParameters();
-            Type[] parmTypes = new Type[parms?.Length ?? 0];
-            for (int i = 0; i < parms?.Length; i++)
+            ParameterInfo[]? paramInfoArray = invokeMethod?.GetParameters();
+            Type[] paramTypes = new Type[paramInfoArray?.Length ?? 0];
+            for (int i = 0; i < paramInfoArray?.Length; i++)
             {
-                parmTypes[i] = parms[i].ParameterType;
+                paramTypes[i] = paramInfoArray[i].ParameterType;
             }
 
             var mb = GetModuleBuilder();
@@ -126,7 +126,7 @@ namespace Alternet.UI
                 dynamicHandlerName,
                 MethodAttributes.Public | MethodAttributes.Static,
                 invokeMethod?.ReturnType,
-                parmTypes);
+                paramTypes);
 
             // Generate code to handle the event. In this case, the
             // handler simply prints a text string to the console.

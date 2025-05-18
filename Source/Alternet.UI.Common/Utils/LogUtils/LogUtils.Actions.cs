@@ -204,6 +204,7 @@ namespace Alternet.UI
             Fn("Log system colors", LogUtils.LogSystemColors);
             Fn("Log constraint checks", LogUtils.LogCheckConstraints);
             Fn("Log used Alternet assemblies", LogUtils.LogUsedAlternetAssemblies);
+            Fn("Log public members of the assembly", LogAssemblyPublicMembers);
             Fn("Log dotnet information", () =>
             {
                 App.LogNameValue(
@@ -887,6 +888,33 @@ namespace Alternet.UI
             LogUtils.LogToFile(LogUtils.SectionSeparator);
 
             App.Log($"{names.Count()} FontFamilies logged to file.");
+        }
+
+        internal static void LogAssemblyPublicMembers()
+        {
+            OpenFileDialog.SelectFile(
+            (fileName) =>
+            {
+                var asm = AssemblyMetaData.LoadAssemblyMetadata(fileName);
+                if(asm is null)
+                {
+                    App.LogError("Error loading assembly: {fileName}");
+                    return;
+                }
+
+                App.LogBeginSection("Exported Types of the Assembly");
+                App.Log($"Assembly: {fileName}");
+
+                var exportedTypes = asm.GetExportedTypes();
+
+                foreach(var type in exportedTypes)
+                {
+                    App.Log(type.FullName);
+                }
+
+                App.LogEndSection();
+            },
+            FileMaskUtils.FileDialogFilterLibraryFiles);
         }
 
         internal static void LogUsedAlternetAssemblies()

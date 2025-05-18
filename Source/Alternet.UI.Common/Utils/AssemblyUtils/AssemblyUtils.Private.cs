@@ -8,7 +8,7 @@ namespace Alternet.UI
     public static partial class AssemblyUtils
     {
         // Helper that inspects a specific CustomAttributeData obtained via ReflectionOnlyLoad, and
-        // returns its value if the Type of the attribiutes matches the passed in attrType. It only
+        // returns its value if the Type of the attributes matches the passed in attrType. It only
         // looks for attributes with no values or a single value of Type string that is passed in via
         // a ctor. If allowTypeAlso is true, then it looks for values of typeof(Type) as well in the
         // single value case. If noArgs == false and zeroArgsAllowed = true, that means 0 or 1 args
@@ -25,8 +25,8 @@ namespace Alternet.UI
             typeValue = null;
 
             // get the Constructor info
-            ConstructorInfo cinfo = cad.Constructor;
-            if (cinfo.ReflectedType == attrType)
+            ConstructorInfo constructorInfo = cad.Constructor;
+            if (constructorInfo.ReflectedType == attrType)
             {
                 // typedConstructorArguments (the Attribute constructor arguments)
                 // [MyAttribute("test", Name=Hello)]
@@ -82,7 +82,7 @@ namespace Alternet.UI
         // Helper that enumerates a list of CustomAttributeData obtained
         // via ReflectionOnlyLoad, and
         // looks for a specific attribute of Type attrType.
-        // It only looks for attribiutes with a single
+        // It only looks for attributes with a single
         // value of Type string that is passed in via a ctor.
         // If allowTypeAlso is true, then it looks for
         // values of typeof(Type) as well.

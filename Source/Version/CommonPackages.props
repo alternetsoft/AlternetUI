@@ -22,6 +22,7 @@
     <PackageReference Include="Svg.Skia" Version="$(SvgSkiaVersion)" />
 
     <PackageReference Include="System.CodeDom" Version="9.0.3" />
+  <PackageReference Include="System.Reflection.MetadataLoadContext" Version="9.0.5" />
     <PackageReference Include="System.Configuration.ConfigurationManager" Version="9.0.3" />
     <PackageReference Include="System.Text.Json" Version="9.0.3" />
     <PackageReference Include="System.IO.Packaging" Version="9.0.3" />

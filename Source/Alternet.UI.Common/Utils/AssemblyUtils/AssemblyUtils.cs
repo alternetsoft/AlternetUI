@@ -103,13 +103,13 @@ namespace Alternet.UI
         /// <returns></returns>
         public static bool IsInternalType(Type type)
         {
-            Type origType = type;
+            Type originalType = type;
             Debug.Assert(type != null, "Type passed to IsInternalType is null");
 
             // If this is an internal nested type or a parent nested public type,
             // walk up the declaring types.
             while (type!.IsNestedAssembly || type.IsNestedFamORAssem
-                || (origType != type && type.IsNestedPublic))
+                || (originalType != type && type.IsNestedPublic))
             {
                 type = type.DeclaringType;
             }
@@ -117,7 +117,7 @@ namespace Alternet.UI
             // If we're on a non-internal nested type, IsNotPublic & IsPublic will both return false.
             // If we were originally on a nested type and have currently reached a parent
             // top-level(non nested) type, then it must be top level internal or public type.
-            return type.IsNotPublic || (origType != type && type.IsPublic);
+            return type.IsNotPublic || (originalType != type && type.IsPublic);
         }
 
         /// <summary>

@@ -23,6 +23,16 @@ namespace Alternet.UI
         public static string StrImageFiles = "Image Files";
 
         /// <summary>
+        /// Gets or sets localization for "Image Files" string.
+        /// </summary>
+        public static string StrLibraryFiles = "Library Files";
+
+        /// <summary>
+        /// Gets "Library Files (*.*)|*.*" string.
+        /// </summary>
+        public static string FileDialogFilterLibraryFiles => $"{StrLibraryFiles} (*.dll)|*.dll";
+
+        /// <summary>
         /// Gets "All Files (*.*)|*.*" string.
         /// </summary>
         public static string FileDialogFilterAllFiles => $"{StrAllFiles} (*.*)|*.*";
