@@ -97,6 +97,30 @@ namespace Alternet.UI
         [Browsable(false)]
         public new IOpenFileDialogHandler Handler => (IOpenFileDialogHandler)base.Handler;
 
+        /// <summary>
+        /// Displays a file selection dialog and invokes the specified callback with
+        /// the selected file's path.
+        /// </summary>
+        /// <remarks>The dialog enforces that the selected file must exist and allows
+        /// only a single file
+        /// to be selected. The file filter is set to display all files.</remarks>
+        /// <param name="onSelectFile">A callback to be invoked with the full
+        /// path of the selected file. </param>
+        /// <param name="filter">The value for <see cref="FileDialog.Filter"/> property.
+        /// If not specified, <see cref="FileMaskUtils.FileDialogFilterAllFiles"/> is used.</param>
+        public static void SelectFile(Action<string> onSelectFile, string? filter = null)
+        {
+            var dialog = OpenFileDialog.Default;
+            dialog.FileMustExist = true;
+            dialog.AllowMultipleSelection = false;
+            dialog.Filter = FileMaskUtils.FileDialogFilterAllFiles;
+            dialog.ShowAsync(() =>
+            {
+                if(dialog.FileName is not null)
+                    onSelectFile(dialog.FileName);
+            });
+        }
+
         /// <inheritdoc/>
         public override void Reset()
         {
