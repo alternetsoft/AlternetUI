@@ -50,7 +50,8 @@ public partial class MainPage : Alternet.UI.DisposableContentPage, EditorUI.IDoc
             */
         });
 
-        ScripterDemoUtils.Initialize();
+        CoreClrLauncher.RunProcessFunc = Alternet.UI.ProcessRunnerWithNotification.RunProcess;
+        CoreClrLauncher.NetCoreAppConfigOnWindows = true;
         PythonDemoUtils.Initialize();
 
         if (Alternet.UI.App.IsWindowsOS && Alternet.UI.DebugUtils.IsDebugDefined)
