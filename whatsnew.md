@@ -1,3 +1,9 @@
+# 0.9.727 (2025 May 22)
+
+- **Added AssemblyMetaData**: Provides methods for loading assembly metadata.
+- Added `VirtualListBoxView` and `VirtualTreeControlView`: fast list box and tree view controls for the MAUI platform with customizable item painting features.
+- **Window**: Fixed the `MinimumSize` and `MaximumSize` setters.
+
 # 0.9.726 (2025 May 16)
 
 - DataObject: Fixed DeserializeDataObject.
