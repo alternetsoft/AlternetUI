@@ -25,12 +25,14 @@ public static class Registration
         builder.ConfigureMauiHandlers(h =>
         {
             h.AddHandler<ControlView, PlatformViewHandler>();
-            h.AddHandler<BorderView, PlatformViewHandler>();
-            h.AddHandler<LabelView, PlatformViewHandler>();
-            h.AddHandler<PictureBoxView, PlatformViewHandler>();
-            h.AddHandler<SpeedButtonView, PlatformViewHandler>();
-            h.AddHandler<ToolBarView, PlatformViewHandler>();
-            h.AddHandler<TabControlView, PlatformViewHandler>();
+            h.AddHandler<Alternet.Maui.BorderView, PlatformViewHandler>();
+            h.AddHandler<Alternet.Maui.LabelView, PlatformViewHandler>();
+            h.AddHandler<Alternet.Maui.PictureBoxView, PlatformViewHandler>();
+            h.AddHandler<Alternet.Maui.SpeedButtonView, PlatformViewHandler>();
+            h.AddHandler<Alternet.Maui.ToolBarView, PlatformViewHandler>();
+            h.AddHandler<Alternet.Maui.TabControlView, PlatformViewHandler>();
+            h.AddHandler<Alternet.Maui.VirtualListBoxView, PlatformViewHandler>();
+            h.AddHandler<Alternet.Maui.VirtualTreeControlView, PlatformViewHandler>();
         });
 
         ControlView.InitMauiHandler();

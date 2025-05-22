@@ -7,13 +7,13 @@ using System.ComponentModel;
 
 namespace AllQuickStarts
 {
-    public partial class TreeViewExamplePage : ContentPage
+    public partial class VirtualTreeControlExamplePage : ContentPage
     {
-        private readonly SimpleTreeView treeView = new ();
+        private readonly VirtualTreeControlView treeView = new ();
 
-        public TreeViewExamplePage()
+        public VirtualTreeControlExamplePage()
         {
-            Alternet.UI.ListControlUtils.AddTestItems(treeView.RootItem, 10, ItemInitialize);
+            Alternet.UI.ListControlUtils.AddTestItems(treeView.Control.RootItem, 10, ItemInitialize);
 
             void ItemInitialize(Alternet.UI.TreeControlItem item)
             {
@@ -42,7 +42,7 @@ namespace AllQuickStarts
                 Text = "Remove",
                 Command = new Command(() =>
                 {
-                    treeView.RemoveSelectedItem(true);
+                    treeView.Control.RemoveSelectedItem(true);
                 }),
             });
             menuFlyout.Add(new MenuFlyoutItem
@@ -50,7 +50,7 @@ namespace AllQuickStarts
                 Text = "Clear",
                 Command = new Command(() =>
                 {
-                    treeView.Clear();
+                    treeView.Control.Clear();
                 }),
             });
             menuFlyout.Add(new MenuFlyoutItem
@@ -92,7 +92,7 @@ namespace AllQuickStarts
                 Alternet.UI.KnownSvgImages.ImgRemove,
                 () =>
                 {
-                    treeView.RemoveSelectedItem(true);
+                    treeView.Control.RemoveSelectedItem(true);
                 });
 
             toolbar.AddButton(
@@ -101,7 +101,7 @@ namespace AllQuickStarts
                 Alternet.UI.KnownSvgImages.ImgRemoveAll,
                 () =>
                 {
-                    treeView.Clear();
+                    treeView.Control.Clear();
                 });
 
             toolbar.AddButton(
@@ -145,7 +145,7 @@ namespace AllQuickStarts
             var item = new Alternet.UI.TreeControlItem();
             item.Text = "item " + Alternet.UI.LogUtils.GenNewId();
             item.SvgImage = Alternet.UI.KnownColorSvgImages.ImgLogo;
-            treeView.AddChild(treeView.SelectedItem, item, true);
+            treeView.Control.AddChild(treeView.Control.SelectedItem, item, true);
         }
 
         public void AddNewItem()
@@ -153,12 +153,12 @@ namespace AllQuickStarts
             var item = new Alternet.UI.TreeControlItem();
             item.Text = "item " + Alternet.UI.LogUtils.GenNewId();
             item.SvgImage = Alternet.UI.KnownColorSvgImages.ImgLogo;
-            treeView.Add(item, true);
+            treeView.Control.Add(item, true);
         }
 
         public void RenameSelectedItem()
         {
-            var item = treeView.SelectedItem;
+            var item = treeView.Control.SelectedItem;
             if (item is null)
                 return;
             item.Text += "a";

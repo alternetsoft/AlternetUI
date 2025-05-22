@@ -31,14 +31,8 @@ public partial class HomePage : ContentPage
         AddPage("SimpleToolBarView", typeof(ToolBarTestPage));
         AddPage("ColorPickerView", typeof(ColorPickerTestPage));
         AddPage("SimpleTreeView", typeof(TreeViewExamplePage));
+        AddPage("VirtualTreeControlView", typeof(VirtualTreeControlExamplePage));
 
-        /*
-        AddPage("LabelView", typeof(LabelTestPage));
-        AddPage("BorderView", typeof(BorderTestPage));
-        AddPage("PictureBoxView", typeof(PictureBoxTestPage));
-        AddPage("SpeedButtonView", typeof(SpeedButtonTestPage));
-        AddPage("TabControlView", typeof(TabControlTestPage));
-        */
         (Content as IView).InvalidateArrange();
     }
 

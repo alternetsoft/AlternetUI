@@ -16,18 +16,15 @@ using Microsoft.Maui.Dispatching;
 namespace Alternet.Maui
 {
     /// <summary>
-    /// Implements label view on the MAUI platform using <see cref="GenericLabel"/> control.
+    /// Implements list box on the MAUI platform using internal
+    /// <see cref="VirtualListBox"/> control.
     /// </summary>
-    /// <remarks>
-    /// This controls is implemented for testing purposes. It is better to use native MAUI control
-    /// instead of <see cref="LabelView"/>.
-    /// </remarks>
-    internal partial class LabelView : ControlView<GenericLabel>
+    public partial class VirtualListBoxView : ControlView<VirtualListBox>
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="LabelView"/> class.
+        /// Initializes a new instance of the <see cref="VirtualListBoxView"/> class.
         /// </summary>
-        public LabelView()
+        public VirtualListBoxView()
         {
         }
     }

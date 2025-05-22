@@ -13,7 +13,7 @@ using Alternet.UI;
 
 using Microsoft.Maui.Dispatching;
 
-namespace Alternet.UI
+namespace Alternet.Maui
 {
     /// <summary>
     /// Implements tool bar view on the MAUI platform using <see cref="ToolBar"/> control.
