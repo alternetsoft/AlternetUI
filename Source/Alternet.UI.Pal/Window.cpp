@@ -96,6 +96,20 @@ namespace Alternet::UI
         frame->PostSizeEvent();
     }
 
+    void Window::SetMinSize(const SizeD& size)
+    {
+        auto wxWindow = GetWxWindow();
+        auto p = fromDip(size, wxWindow);
+        wxWindow->SetMinSize(p);
+    }
+
+    void Window::SetMaxSize(const SizeD& size)
+    {
+        auto wxWindow = GetWxWindow();
+        auto p = fromDip(size, wxWindow);
+        wxWindow->SetMaxSize(p);
+    }
+
     void* Window::GetWxStatusBar()
     {
         auto wxWindow = GetFrame();

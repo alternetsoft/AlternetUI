@@ -2538,15 +2538,13 @@ namespace Alternet::UI
     
     enum class PropertyGridCreateStyleEx
     {
+        DefaultStyle = 0,
         InitNoCat = 4096,
         NoFlatToolbar = 8192,
         ModeButtons = 32768,
         HelpAsTooltips = 65536,
         NativeDoubleBuffering = 524288,
-        AlwaysAllowFocus = 1048576,
-        DefaultStyle = 1048576,
         AutoUnspecifiedValues = 2097152,
-        WriteOnlyBuiltinAttributes = 4194304,
         HidePageButtons = 16777216,
         MultipleSelection = 33554432,
         EnableTlpTracking = 67108864,

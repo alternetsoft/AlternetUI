@@ -81,5 +81,17 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="value"></param>
         void SetMenu(object? value);
+
+        /// <summary>
+        /// Sets minimal window size.
+        /// </summary>
+        /// <param name="size">The minimal window size.</param>
+        void SetMinSize(SizeD size);
+
+        /// <summary>
+        /// Sets maximal window size.
+        /// </summary>
+        /// <param name="size">The maximal window size.</param>
+        void SetMaxSize(SizeD size);
     }
 }

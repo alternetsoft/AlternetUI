@@ -1871,5 +1871,13 @@ namespace Alternet.UI
         public void ShowModalAsync(Window? owner, Action<ModalResult> onResult)
         {
         }
+
+        public void SetMinSize(SizeD size)
+        {
+        }
+
+        public void SetMaxSize(SizeD size)
+        {
+        }
     }
 }

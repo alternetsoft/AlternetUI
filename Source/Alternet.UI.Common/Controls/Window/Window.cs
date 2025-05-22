@@ -460,6 +460,38 @@ namespace Alternet.UI
             }
         }
 
+        /// <inheritdoc/>
+        public override SizeD MaximumSize
+        {
+            get => base.MaximumSize;
+
+            set
+            {
+                var oldValue = MaximumSize;
+                base.MaximumSize = value;
+                var newValue = MaximumSize;
+                if (newValue == oldValue)
+                    return;
+                Handler.SetMaxSize(newValue);
+            }
+        }
+
+        /// <inheritdoc/>
+        public override SizeD MinimumSize
+        {
+            get => base.MinimumSize;
+
+            set
+            {
+                var oldValue = MinimumSize;
+                base.MinimumSize = value;
+                var newValue = MinimumSize;
+                if (newValue == oldValue)
+                    return;
+                Handler.SetMinSize(newValue);
+            }
+        }
+
         /// <summary>
         /// Gets or sets a value indicating whether the window can be resized by user.
         /// </summary>

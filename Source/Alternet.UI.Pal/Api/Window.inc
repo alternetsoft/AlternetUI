@@ -54,6 +54,8 @@ void SetWxStatusBar(void* value);
 static void* CreateEx(int kind);
 static void SetDefaultBounds(const RectD& bounds);
 static void SetParkingWindowFont(Font* font);
+void SetMinSize(const SizeD& size);
+void SetMaxSize(const SizeD& size);
 void Close();
 void Activate();
 

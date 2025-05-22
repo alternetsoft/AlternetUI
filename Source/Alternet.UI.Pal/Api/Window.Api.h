@@ -418,6 +418,28 @@ ALTERNET_UI_API void Window_SetParkingWindowFont_(Font* font)
     #endif
 }
 
+ALTERNET_UI_API void Window_SetMinSize_(Window* obj, SizeD size)
+{
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    MarshalExceptions<void>([&](){
+    #endif
+        obj->SetMinSize(size);
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    });
+    #endif
+}
+
+ALTERNET_UI_API void Window_SetMaxSize_(Window* obj, SizeD size)
+{
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    MarshalExceptions<void>([&](){
+    #endif
+        obj->SetMaxSize(size);
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    });
+    #endif
+}
+
 ALTERNET_UI_API void Window_Close_(Window* obj)
 {
     #if !defined(__WXMSW__) || defined(_DEBUG)

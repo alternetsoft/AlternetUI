@@ -297,6 +297,18 @@ namespace Alternet.UI.Native
             NativeApi.Window_SetParkingWindowFont_(font?.NativePointer ?? IntPtr.Zero);
         }
         
+        public void SetMinSize(Alternet.Drawing.SizeD size)
+        {
+            CheckDisposed();
+            NativeApi.Window_SetMinSize_(NativePointer, size);
+        }
+        
+        public void SetMaxSize(Alternet.Drawing.SizeD size)
+        {
+            CheckDisposed();
+            NativeApi.Window_SetMaxSize_(NativePointer, size);
+        }
+        
         public void Close()
         {
             CheckDisposed();
@@ -479,6 +491,12 @@ namespace Alternet.UI.Native
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void Window_SetParkingWindowFont_(IntPtr font);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void Window_SetMinSize_(IntPtr obj, Alternet.Drawing.SizeD size);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void Window_SetMaxSize_(IntPtr obj, Alternet.Drawing.SizeD size);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void Window_Close_(IntPtr obj);

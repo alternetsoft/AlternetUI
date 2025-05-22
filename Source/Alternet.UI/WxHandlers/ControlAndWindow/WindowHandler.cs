@@ -220,6 +220,16 @@ namespace Alternet.UI
             NativeControl.Menu = (value as IControl)?.NativeControl as Native.MainMenu;
         }
 
+        public void SetMinSize(SizeD size)
+        {
+            NativeControl.SetMinSize(size);
+        }
+
+        public void SetMaxSize(SizeD size)
+        {
+            NativeControl.SetMaxSize(size);
+        }
+
         private class NativeWindow : Native.Window
         {
             public NativeWindow(int kind)

@@ -77,7 +77,17 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
+        public virtual void SetMaxSize(SizeD size)
+        {
+        }
+
+        /// <inheritdoc/>
         public virtual void SetMenu(object? value)
+        {
+        }
+
+        /// <inheritdoc/>
+        public virtual void SetMinSize(SizeD size)
         {
         }
     }

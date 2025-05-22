@@ -153,7 +153,15 @@ namespace Alternet.UI
         {
         }
 
+        public virtual void SetMaxSize(SizeD size)
+        {
+        }
+
         public virtual void SetMenu(object? value)
+        {
+        }
+
+        public virtual void SetMinSize(SizeD size)
         {
         }
 

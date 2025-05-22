@@ -18,6 +18,10 @@ namespace NativeApi.Api
 
         public event EventHandler StateChanged;
 
+        public void SetMinSize(SizeD size) { }
+
+        public void SetMaxSize(SizeD size) { }
+
         public string Title { get; set; }
         public bool ShowInTaskbar { get; set; }
         public bool MinimizeEnabled { get; set; }

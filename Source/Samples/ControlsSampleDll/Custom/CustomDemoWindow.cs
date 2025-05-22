@@ -91,6 +91,8 @@ namespace Alternet.UI
                 LogUtils.LogToFile("CustomDemoWindow constructor done");
             }
 
+            MinimumSize = (800, 600);
+
             StartLocation = WindowStartLocation.CenterScreen;
         }
 
