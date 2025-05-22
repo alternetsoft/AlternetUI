@@ -159,7 +159,8 @@ namespace Alternet.UI
         /// <summary>
         /// Gets the absolute position of a <see cref="VisualElement"/> relative to its ancestors.
         /// </summary>
-        /// <param name="visualElement">The <see cref="VisualElement"/> to calculate the position for.</param>
+        /// <param name="visualElement">The <see cref="VisualElement"/> to
+        /// calculate the position for.</param>
         /// <returns>A <see cref="PointD"/> representing the absolute position.</returns>
         public static PointD GetAbsolutePosition(VisualElement visualElement)
         {
@@ -170,18 +171,23 @@ namespace Alternet.UI
 
             foreach (var item in ancestors)
             {
-                x += item.X;
-                y += item.Y;
+                if(item is VisualElement visualItem)
+                {
+                    x += visualItem.X;
+                    y += visualItem.Y;
+                }
             }
 
             return new(x, y);
         }
 
         /// <summary>
-        /// Converts an <see cref="Alternet.Drawing.Color"/> to a <see cref="Microsoft.Maui.Graphics.Color"/>.
+        /// Converts an <see cref="Alternet.Drawing.Color"/> to
+        /// a <see cref="Microsoft.Maui.Graphics.Color"/>.
         /// </summary>
         /// <param name="color">The <see cref="Alternet.Drawing.Color"/> to convert.</param>
-        /// <returns>A <see cref="Microsoft.Maui.Graphics.Color"/> representation of the input color.</returns>
+        /// <returns>A <see cref="Microsoft.Maui.Graphics.Color"/> representation
+        /// of the input color.</returns>
         public static Microsoft.Maui.Graphics.Color Convert(Alternet.Drawing.Color color)
         {
             return Microsoft.Maui.Graphics.Color.FromUint(color.AsUInt());
@@ -192,14 +198,14 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="element">The <see cref="VisualElement"/> to retrieve parents for.</param>
         /// <returns>An enumerable collection of parent <see cref="VisualElement"/> instances.</returns>
-        public static IEnumerable<VisualElement> AllParents(VisualElement? element)
+        public static IEnumerable<Element> AllParents(Element? element)
         {
-            element = element?.Parent as VisualElement;
+            element = element?.Parent;
 
             while (element != null)
             {
                 yield return element;
-                element = element.Parent as VisualElement;
+                element = element.Parent;
             }
         }
 
@@ -519,7 +525,8 @@ namespace Alternet.UI
         /// <summary>
         /// Gets the current page of the first window in the application.
         /// </summary>
-        /// <returns>The current page of the first window, or null if no windows are available.</returns>
+        /// <returns>The current page of the first window, or null if no
+        /// windows are available.</returns>
         public static Page? GetFirstWindowPage()
         {
             var windows = Application.Current?.Windows;
@@ -531,12 +538,80 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Retrieves the nearest parent <see cref="AbsoluteLayout"/>
+        /// that contains the specified view.
+        /// </summary>
+        /// <param name="view">The view whose parent <see cref="AbsoluteLayout"/>
+        /// is to be found.</param>
+        /// <returns>The closest parent <see cref="AbsoluteLayout"/>,
+        /// or <c>null</c> if none is found.</returns>
+        public static AbsoluteLayout? GetParentAbsoluteLayout(Element? view)
+        {
+            return GetSpecialParent<AbsoluteLayout>(view);
+        }
+
+        /// <summary>
+        /// Searches for the closest parent of type <typeparamref name="T"/> in the view hierarchy.
+        /// </summary>
+        /// <typeparam name="T">The type of the parent view to find.</typeparam>
+        /// <param name="view">The view whose parent is to be found.</param>
+        /// <returns>The closest parent of type <typeparamref name="T"/>, or null if
+        /// none is found.</returns>
+        public static T? GetSpecialParent<T>(Element? view)
+            where T : Element
+        {
+            var parent = view?.Parent;
+            while (parent is not null && parent is not T)
+            {
+                parent = parent.Parent;
+            }
+
+            var page = parent as T;
+
+            return page;
+        }
+
+        /// <summary>
+        /// Retrieves the highest-level parent <c>AbsoluteLayout</c> that
+        /// contains the specified element.
+        /// </summary>
+        /// <param name="view">The element whose topmost <c>AbsoluteLayout</c> parent
+        /// is to be found.</param>
+        /// <returns>The topmost <c>AbsoluteLayout</c>, or null if none is found.</returns>
+        public static AbsoluteLayout? GetTopAbsoluteLayout(Element? view)
+        {
+            return GetTopSpecialParent<AbsoluteLayout>(view);
+        }
+
+        /// <summary>
+        /// Searches for the highest-level parent of type
+        /// <typeparamref name="T"/> in the element hierarchy.
+        /// </summary>
+        /// <typeparam name="T">The type of the parent element to find.</typeparam>
+        /// <param name="view">The element whose topmost parent is to be found.</param>
+        /// <returns>The topmost parent of type <typeparamref name="T"/>,
+        /// or null if none is found.</returns>
+        public static T? GetTopSpecialParent<T>(Element? view)
+            where T : Element
+        {
+            T? result = null;
+
+            foreach(var parent in AllParents(view))
+            {
+                if (parent is T typedParent)
+                    result = typedParent;
+            }
+
+            return result;
+        }
+
+        /// <summary>
         /// Gets the page that contains the specified view.
         /// </summary>
         /// <param name="view">The view to find the containing page for.</param>
         /// <returns>The page that contains the specified view, or the first
         /// window's current page if no containing page is found.</returns>
-        public static Page? GetPage(View? view)
+        public static Page? GetPage(VisualElement? view)
         {
             var parent = view?.Parent;
             while (parent is not null && parent is not Page)

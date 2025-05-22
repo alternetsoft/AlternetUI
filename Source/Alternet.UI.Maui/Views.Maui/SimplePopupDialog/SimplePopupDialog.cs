@@ -29,14 +29,16 @@ namespace Alternet.Maui
         /// <summary>
         /// Gets or sets the default background color for the dialog in light and dark themes.
         /// </summary>
-        public static Alternet.Drawing.LightDarkColor DefaultBackColor
-            = new(light: Alternet.Drawing.Color.White, dark: Alternet.Drawing.Color.FromRgb(30, 30, 30));
+        public static Alternet.Drawing.LightDarkColor DefaultBackColor = new(
+                light: Alternet.Drawing.Color.White,
+                dark: Alternet.Drawing.Color.FromRgb(30, 30, 30));
 
         /// <summary>
         /// Gets or sets the default text color for the dialog in light and dark themes.
         /// </summary>
-        public static Alternet.Drawing.LightDarkColor DefaultTextColor
-            = new(light: Alternet.Drawing.Color.Black, dark: Alternet.Drawing.Color.FromRgb(220, 220, 220));
+        public static Alternet.Drawing.LightDarkColor DefaultTextColor = new(
+            light: Alternet.Drawing.Color.Black,
+            dark: Alternet.Drawing.Color.FromRgb(220, 220, 220));
 
         private readonly SimpleDialogTitleView dialogTitle;
         private readonly Border dialogBorder;
@@ -51,7 +53,8 @@ namespace Alternet.Maui
 
         static SimplePopupDialog()
         {
-            Microsoft.Maui.Handlers.PageHandler.Mapper.AppendToMapping(nameof(PageHandler), (handler, view) =>
+            Microsoft.Maui.Handlers.PageHandler.Mapper
+                .AppendToMapping(nameof(PageHandler), (handler, view) =>
             {
 #if WINDOWS
                 handler.PlatformView.PreviewKeyUp += (s, e) =>
@@ -113,17 +116,18 @@ namespace Alternet.Maui
         }
 
         /// <summary>
-        /// Occurs when the OK button is clicked.
+        /// Occurs when the 'OK' button is clicked.
         /// </summary>
         public event EventHandler? OkButtonClicked;
 
         /// <summary>
-        /// Occurs when the Cancel button is clicked.
+        /// Occurs when the 'Cancel' button is clicked.
         /// </summary>
         public event EventHandler? CancelButtonClicked;
 
         /// <summary>
-        /// Gets or sets a value indicating whether the dialog should close when the Cancel button is clicked.
+        /// Gets or sets a value indicating whether the dialog should close when
+        /// the 'Cancel' button is clicked.
         /// </summary>
         public virtual bool CloseWhenCancelButtonClicked { get; set; } = true;
 
@@ -256,7 +260,8 @@ namespace Alternet.Maui
         }
 
         /// <summary>
-        /// Sets the aligned position of the dialog within the specified layout using the provided alignment.
+        /// Sets the aligned position of the dialog within the specified
+        /// layout using the provided alignment.
         /// </summary>
         /// <param name="layout">The parent layout in which the dialog is to be aligned.</param>
         /// <param name="align">The horizontal and vertical alignment to apply.</param>

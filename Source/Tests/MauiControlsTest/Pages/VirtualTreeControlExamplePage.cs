@@ -9,6 +9,8 @@ namespace AllQuickStarts
 {
     public partial class VirtualTreeControlExamplePage : ContentPage
     {
+        private readonly AbsoluteLayout layout = new();
+
         private readonly VirtualTreeControlView treeView = new ();
 
         public VirtualTreeControlExamplePage()
