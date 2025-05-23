@@ -815,7 +815,8 @@ namespace Alternet.Drawing
         /// Implicit operator conversion from tuple with three <see cref="byte"/> values
         /// to <see cref="Color"/>. Tuple values define RGB of the color.
         /// </summary>
-        /// <param name="d">New color value specified as tuple with three <see cref="byte"/> values.</param>
+        /// <param name="d">New color value specified as tuple with three
+        /// <see cref="byte"/> values.</param>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static implicit operator Color((byte Red, byte Green, byte Blue) d) =>
             new(d.Red, d.Green, d.Blue);
@@ -824,7 +825,8 @@ namespace Alternet.Drawing
         /// Implicit operator conversion from tuple with four <see cref="byte"/> values
         /// to <see cref="Color"/>. Tuple values define ARGB of the color.
         /// </summary>
-        /// <param name="d">New color value specified as tuple with four <see cref="byte"/> values.</param>
+        /// <param name="d">New color value specified as tuple with
+        /// four <see cref="byte"/> values.</param>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static implicit operator Color((byte Alpha, byte Red, byte Green, byte Blue) d) =>
             new(d.Alpha, d.Red, d.Green, d.Blue);
@@ -1270,7 +1272,8 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
-        /// Assigns the same value to RGB of the color: 0 if <paramref name="on"/> is false, 255 otherwise.
+        /// Assigns the same value to RGB of the color: 0 if <paramref name="on"/>
+        /// is false, 255 otherwise.
         /// </summary>
         /// <param name="rgb">Color.</param>
         /// <param name="on">Color on/off selector.</param>

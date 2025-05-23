@@ -5,7 +5,7 @@
 <!-- https://www.nuget.org/packages/SkiaSharp/#versions-body-tab -->
 <!-- https://www.nuget.org/packages/SkiaSharp.Extended/#versions-body-tab -->
 
-	<SkiaSharpVersion>3.119.0</SkiaSharpVersion>
+	<SkiaSharpVersion>3.116.1</SkiaSharpVersion>
 	<SkiaSharpExtendedVersion>3.0.0-preview.13</SkiaSharpExtendedVersion>
 	<SvgSkiaVersion>3.0.0</SvgSkiaVersion>
 	<SkiaSharpExtendedIconifyVersion>1.60.0</SkiaSharpExtendedIconifyVersion>
