@@ -155,6 +155,19 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Determines whether the specified string contains CR (\r) or LF (\n) characters.
+        /// </summary>
+        /// <param name="input">The string to check.</param>
+        /// <returns><c>true</c> if the string contains CR or LF
+        /// characters; otherwise, <c>false</c>.</returns>
+        public static bool ContainsNewLineChars(string input)
+        {
+            if (input is null || input.Length == 0)
+                return false;
+            return input.AsSpan().IndexOfAny('\r', '\n') >= 0;
+        }
+
+        /// <summary>
         /// Modifies specified string by adding prefix and suffix.
         /// </summary>
         /// <param name="s">String to modify.</param>
