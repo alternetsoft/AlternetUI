@@ -259,6 +259,22 @@ namespace Alternet.UI
             }
         }
 
+        /// <inheritdoc/>
+        [Browsable(false)]
+        public override ContextMenuStrip ContextMenuStrip
+        {
+            get
+            {
+                return base.ContextMenuStrip;
+            }
+
+            set
+            {
+                base.ContextMenuStrip = value;
+                ListBox.ContextMenuStrip = value;
+            }
+        }
+
         /// <summary>
         /// Gets or sets the root item of the tree view.
         /// </summary>
