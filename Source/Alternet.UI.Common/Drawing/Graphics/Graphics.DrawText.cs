@@ -116,7 +116,12 @@ namespace Alternet.Drawing
         /// <remarks>
         /// You can pass 0 as height of the <paramref name="rect"/>.
         /// </remarks>
-        public virtual RectD DrawText(object? text, Font font, Brush brush, RectD rect, TextFormat format)
+        public virtual RectD DrawText(
+            object? text,
+            Font font,
+            Brush brush,
+            RectD rect,
+            TextFormat format)
         {
             string s = text?.ToString() ?? string.Empty;
 
@@ -157,9 +162,9 @@ namespace Alternet.Drawing
             Color foreColor,
             Color? backColor = null)
         {
-            var splittedText = RegexUtils.GetBoldTagSplitted(text);
+            var convertedText = RegexUtils.GetBoldTagSplitted(text);
             return DrawTextWithFontStyle(
-                        splittedText,
+                        convertedText,
                         location,
                         font,
                         foreColor,
@@ -170,7 +175,7 @@ namespace Alternet.Drawing
         /// Draws an array of text elements with font styles.
         /// </summary>
         public virtual SizeD DrawTextWithFontStyle(
-            TextAndFontStyle[] splittedText,
+            TextAndFontStyle[] text,
             PointD location,
             Font font,
             Color foreColor,
@@ -182,7 +187,7 @@ namespace Alternet.Drawing
 
             bool visible = foreColor.IsOk && (foreColor != Color.Empty);
 
-            foreach (var item in splittedText)
+            foreach (var item in text)
             {
                 var itemFont = font.WithStyle(item.FontStyle);
                 var measure = GetTextExtent(item.Text, itemFont);
@@ -238,7 +243,8 @@ namespace Alternet.Drawing
         /// Draws text with the specified font, background and foreground colors,
         /// optional image, alignment and underlined mnemonic character.
         /// </summary>
-        /// <param name="prm">Parameters specified using <see cref="DrawLabelParams"/> structure.</param>
+        /// <param name="prm">Parameters specified using
+        /// <see cref="DrawLabelParams"/> structure.</param>
         /// <returns></returns>
         public virtual RectD DrawLabel(ref DrawLabelParams prm)
         {
@@ -246,11 +252,29 @@ namespace Alternet.Drawing
             var image = prm.Image;
             var indexAccel = prm.IndexAccel;
             var s = prm.Text;
+            string[]? splitText = null;
             var font = prm.Font;
             var foreColor = prm.ForegroundColor;
             var backColor = prm.BackgroundColor;
             var isVertical = prm.IsVertical;
             var drawDebugCorners = prm.DrawDebugCorners;
+
+            var textHorizontalAlignment = prm.TextHorizontalAlignment;
+            var lineDistance = prm.LineDistance;
+
+            var hasNewLineChars = prm.Flags.HasFlag(DrawLabelFlags.TextHasNewLineChars);
+
+            if (hasNewLineChars)
+            {
+                if (StringUtils.ContainsNewLineChars(s))
+                {
+                    splitText = StringUtils.Split(s, false);
+                }
+                else
+                {
+                    hasNewLineChars = false;
+                }
+            }
 
             if (image is not null)
             {
@@ -305,7 +329,20 @@ namespace Alternet.Drawing
                 {
                     if (parsed is null)
                     {
-                        var result = MeasureText(s, font);
+                        SizeD result;
+
+                        if(splitText is null)
+                            result = MeasureText(s, font);
+                        else
+                        {
+                            result = DrawStrings(
+                                RectD.Empty,
+                                font,
+                                splitText,
+                                textHorizontalAlignment,
+                                lineDistance);
+                        }
+
                         return result;
                     }
                     else
@@ -322,7 +359,19 @@ namespace Alternet.Drawing
                 {
                     if (parsed is null)
                     {
-                        DrawText(s, rect.Location, font, foreColor, backColor);
+                        if (splitText is null)
+                            DrawText(s, rect.Location, font, foreColor, backColor);
+                        else
+                        {
+                            DrawStrings(
+                                (rect.Location, SizeD.Empty),
+                                font,
+                                splitText,
+                                textHorizontalAlignment,
+                                lineDistance,
+                                foreColor,
+                                backColor);
+                        }
                     }
                     else
                     {
@@ -360,6 +409,85 @@ namespace Alternet.Drawing
             prm.ImageLabelDistance = drawParams.Distance;
 
             return result;
+        }
+
+        /// <summary>
+        /// Draws range of strings.
+        /// </summary>
+        /// <param name="rect">The bounding rectangle used to specify location
+        /// and maximal width of the text. Height of the rectangle is not used. If width
+        /// of the rectangle is not specified <paramref name="textHorizontalAlignment"/>
+        /// is not used.</param>
+        /// <param name="font">The font used to draw the text.</param>
+        /// <param name="wrappedText">The text to draw.</param>
+        /// <param name="textHorizontalAlignment">The horizontal alignment of the text</param>
+        /// <param name="lineDistance">The vertical distance between the lines of text.
+        /// Optional. If not specified, 0 is used.</param>
+        /// <param name="foreColor">The foreground color of the text. If <c>null</c>, text
+        /// will be only measured and no drawing will be performed.</param>
+        /// <param name="backColor">The background color of the text.</param>
+        /// <returns></returns>
+        public virtual SizeD DrawStrings(
+            RectD rect,
+            Font font,
+            IEnumerable<string>? wrappedText,
+            TextHorizontalAlignment textHorizontalAlignment = TextHorizontalAlignment.Left,
+            Coord lineDistance = 0,
+            Color? foreColor = null,
+            Color? backColor = null)
+        {
+            var wrappedWidth = 0;
+
+            if (wrappedText is null)
+                return SizeD.Empty;
+
+            var origin = rect.Location;
+            SizeD totalMeasure = (wrappedWidth, 0);
+
+            foreach (var s in wrappedText)
+            {
+                var measure = MeasureText(s, font).Ceiling();
+
+                if (foreColor is not null)
+                {
+                    PointD location;
+
+                    if (rect.SizeIsEmpty)
+                    {
+                        location = origin;
+                    }
+                    else
+                    {
+                        RectD itemRect = (origin, measure);
+                        RectD itemContainer = itemRect;
+                        itemContainer.Width = rect.Width;
+
+                        var alignment = AlignUtils.Convert(textHorizontalAlignment);
+
+                        var alignedItemRect = AlignUtils.AlignRectInRect(
+                            false,
+                            itemRect,
+                            itemContainer,
+                            (CoordAlignment)alignment);
+                        location = alignedItemRect.Location;
+                    }
+
+                    DrawText(
+                        s,
+                        location,
+                        font,
+                        foreColor,
+                        backColor ?? Color.Empty);
+                }
+
+                var increment = measure.Height + lineDistance;
+                origin.Y += increment;
+                totalMeasure.Height += increment;
+
+                totalMeasure.Width = Math.Max(totalMeasure.Width, measure.Width);
+            }
+
+            return totalMeasure.ApplyMax(rect.Size);
         }
 
         /// <summary>
@@ -614,6 +742,16 @@ namespace Alternet.Drawing
         public struct DrawLabelParams
         {
             /// <summary>
+            /// Gets or sets distance between lines of text.
+            /// </summary>
+            public Coord LineDistance;
+
+            /// <summary>
+            /// Gets or sets horizontal alignment of the text line within the text block.
+            /// </summary>
+            public TextHorizontalAlignment TextHorizontalAlignment = TextHorizontalAlignment.Left;
+
+            /// <summary>
             /// Internal use only.
             /// </summary>
             public ObjectUniqueId? DebugId;
@@ -673,7 +811,7 @@ namespace Alternet.Drawing
             public RectD Rect;
 
             /// <summary>
-            /// Gets or sets alignment of the text. Default is <see cref="HVAlignment.TopLeft"/>.
+            /// Gets or sets alignment of the text block. Default is <see cref="HVAlignment.TopLeft"/>.
             /// </summary>
             public HVAlignment Alignment = HVAlignment.TopLeft;
 
