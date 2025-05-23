@@ -64,15 +64,21 @@ namespace Alternet.UI
             {
                 if (parent == value)
                     return;
-                DoInsideSuspendedPropertyChanged(
-                    () =>
-                    {
-                        Parent?.Remove(this);
-                        value?.Add(this);
-                    },
-                    false);
 
-                RaisePropertyChanged(nameof(Parent));
+                SmartInvoke(Internal);
+
+                void Internal()
+                {
+                    DoInsideSuspendedPropertyChanged(
+                        () =>
+                        {
+                            Parent?.Remove(this);
+                            value?.Add(this);
+                        },
+                        false);
+
+                    RaisePropertyChanged(nameof(Parent));
+                }
             }
         }
 
@@ -177,8 +183,14 @@ namespace Alternet.UI
             {
                 if (isVisible == value)
                     return;
-                isVisible = value;
-                RaisePropertyChanged(nameof(IsVisible));
+
+                SmartInvoke(Internal);
+
+                void Internal()
+                {
+                    isVisible = value;
+                    RaisePropertyChanged(nameof(IsVisible));
+                }
             }
         }
 
@@ -194,41 +206,46 @@ namespace Alternet.UI
                 if (isExpanded == value)
                     return;
 
-                var owner = Owner;
+                SmartInvoke(Internal);
 
-                if(owner is not null)
+                void Internal()
                 {
-                    bool cancel = false;
+                    var owner = Owner;
 
-                    if (value)
+                    if (owner is not null)
                     {
-                        owner.RaiseBeforeExpand(this, ref cancel);
-                        if (cancel)
-                            return;
-                    }
-                    else
-                    {
-                        owner.RaiseBeforeCollapse(this, ref cancel);
-                        if (cancel)
-                            return;
-                    }
-                }
+                        bool cancel = false;
 
-                isExpanded = value;
-                RaisePropertyChanged(nameof(IsExpanded));
-
-                if(owner is not null)
-                {
-                    if (value)
-                    {
-                        owner.RaiseAfterExpand(this);
-                    }
-                    else
-                    {
-                        owner.RaiseAfterCollapse(this);
+                        if (value)
+                        {
+                            owner.RaiseBeforeExpand(this, ref cancel);
+                            if (cancel)
+                                return;
+                        }
+                        else
+                        {
+                            owner.RaiseBeforeCollapse(this, ref cancel);
+                            if (cancel)
+                                return;
+                        }
                     }
 
-                    owner.RaiseExpandedChanged(this);
+                    isExpanded = value;
+                    RaisePropertyChanged(nameof(IsExpanded));
+
+                    if (owner is not null)
+                    {
+                        if (value)
+                        {
+                            owner.RaiseAfterExpand(this);
+                        }
+                        else
+                        {
+                            owner.RaiseAfterCollapse(this);
+                        }
+
+                        owner.RaiseExpandedChanged(this);
+                    }
                 }
             }
         }
@@ -540,7 +557,7 @@ namespace Alternet.UI
         /// <param name="item">The item to insert.</param>
         public virtual void Insert(int index, TreeControlItem item)
         {
-            Invoke(Internal);
+            SmartInvoke(Internal);
 
             void Internal()
             {
@@ -562,7 +579,7 @@ namespace Alternet.UI
         /// </summary>
         public virtual void Clear()
         {
-            Invoke(Internal);
+            SmartInvoke(Internal);
 
             void Internal()
             {
@@ -647,6 +664,15 @@ namespace Alternet.UI
 
                 return true;
             }
+        }
+
+        /// <summary>
+        /// Used to invoke the update action.
+        /// </summary>
+        /// <param name="action">The action to invoke.</param>
+        protected virtual void SmartInvoke(Action action)
+        {
+            Invoke(action);
         }
 
         private void InternalSetParent(TreeControlItem? newParent)
