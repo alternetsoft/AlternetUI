@@ -89,6 +89,16 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets or sets horizontal alignment of the text line within text block.
+        /// </summary>
+        public virtual TextHorizontalAlignment? TextLineAlignment { get; set; }
+
+        /// <summary>
+        /// Gets or sets distance between lines of the text.
+        /// </summary>
+        public virtual Coord? TextLineDistance { get; set; }
+
+        /// <summary>
         /// Gets whether <see cref="Image"/> or <see cref="SvgImage"/> is assigned.
         /// </summary>
         [Browsable(false)]
@@ -704,7 +714,26 @@ namespace Alternet.UI
             maxHeightD = Math.Max(checkBoxSize, maxHeightD);
 
             var font = ListControlItem.GetFont(item, container).AsBold;
-            var size = dc.GetTextExtent(s, font);
+
+            var hasNewLineChars = item?.LabelFlags.HasFlag(DrawLabelFlags.TextHasNewLineChars) ?? false;
+
+            SizeD size;
+
+            if (hasNewLineChars && StringUtils.ContainsNewLineChars(s))
+            {
+                var splitText = StringUtils.Split(s, false);
+                size = dc.DrawStrings(
+                    RectD.Empty,
+                    font,
+                    splitText,
+                    item?.TextLineAlignment ?? TextHorizontalAlignment.Left,
+                    item?.TextLineDistance ?? 0);
+            }
+            else
+            {
+                size = dc.GetTextExtent(s, font);
+            }
+
             size.Height = Math.Max(size.Height, maxHeightD);
 
             var itemMargin = container.Defaults.ItemMargin;
@@ -1111,6 +1140,8 @@ namespace Alternet.UI
             if(item is not null)
             {
                 prm.Flags = item.LabelFlags;
+                prm.TextHorizontalAlignment = item.TextLineAlignment ?? TextHorizontalAlignment.Left;
+                prm.LineDistance = item.TextLineDistance ?? 0;
 
 #if DEBUG
                 prm.DebugId = item.UniqueId;
@@ -1125,7 +1156,6 @@ namespace Alternet.UI
                 BorderSettings.DrawDesignCorners(e.Graphics, prm.Rect, BorderSettings.DebugBorderGreen);
             }
 #endif
-
             e.Graphics.DrawLabel(ref prm);
             e.LabelMetrics = prm;
         }
@@ -1457,7 +1487,8 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="container">The container that holds the item. Can be null.</param>
         /// <param name="rect">The bounding rectangle of the item.</param>
-        /// <returns>An <see cref="ItemCheckBoxInfo"/> object containing details about the checkbox.</returns>
+        /// <returns>An <see cref="ItemCheckBoxInfo"/> object containing
+        /// details about the checkbox.</returns>
         public virtual ItemCheckBoxInfo GetCheckBoxInfo(
             IListControlItemContainer? container,
             RectD rect)
@@ -1673,7 +1704,8 @@ namespace Alternet.UI
             public bool IsCheckBoxVisible;
 
             /// <summary>
-            /// Gets or sets a value indicating whether to keep text padding even when the checkbox is not visible.
+            /// Gets or sets a value indicating whether to keep text padding
+            /// even when the checkbox is not visible.
             /// </summary>
             public bool KeepTextPaddingWithoutCheckBox;
         }

@@ -7,7 +7,7 @@ using Alternet.Drawing;
 namespace Alternet.UI
 {
     /// <summary>
-    /// Implements simple text control which can text with new line
+    /// Implements simple text control which can draw text with new line
     /// characters and wrapping.
     /// </summary>
     public partial class GenericWrappedTextControl : GenericTextControl
@@ -173,48 +173,14 @@ namespace Alternet.UI
             Color? foreColor = null,
             Color? backColor = null)
         {
-            var wrappedWidth = 0;
-
-            if (wrappedText is null)
-                return SizeD.Empty;
-
-            var origin = rect.Location;
-            SizeD totalMeasure = (wrappedWidth, 0);
-
-            foreach (var s in wrappedText)
-            {
-                var measure = dc.MeasureText(s, font).Ceiling();
-
-                if (foreColor is not null)
-                {
-                    RectD itemRect = (origin, measure);
-                    RectD itemContainer = itemRect;
-                    itemContainer.Width = rect.Width;
-
-                    var alignment = AlignUtils.Convert(TextHorizontalAlignment);
-
-                    var alignedItemRect = AlignUtils.AlignRectInRect(
-                        false,
-                        itemRect,
-                        itemContainer,
-                        (CoordAlignment)alignment);
-
-                    dc.DrawText(
-                        s,
-                        alignedItemRect.Location,
+            return dc.DrawStrings(
+                        rect,
                         font,
+                        wrappedText,
+                        TextHorizontalAlignment.Left,
+                        LineDistance,
                         foreColor,
-                        backColor ?? Color.Empty);
-                }
-
-                var increment = measure.Height + LineDistance;
-                origin.Y += increment;
-                totalMeasure.Height += increment;
-
-                totalMeasure.Width = Math.Max(totalMeasure.Width, measure.Width);
-            }
-
-            return totalMeasure.ApplyMax(rect.Size);
+                        backColor);
         }
     }
 }
