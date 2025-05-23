@@ -507,21 +507,26 @@ namespace Alternet.UI
         /// </summary>
         public virtual void RaiseItemAdded(UI.TreeControlItem item)
         {
-            if (item.Parent == rootItem && !item.IsExpanded)
-            {
-                if(InUpdates)
-                    needTreeChanged = true;
-                else
-                    ListBox.Items.Add(item);
-            }
-            else
-            {
-                TreeChanged();
-            }
+            Invoke(Internal);
 
-            if (ItemAdded is not null)
+            void Internal()
             {
-                ItemAdded(this, new(item));
+                if (item.Parent == rootItem && !item.IsExpanded)
+                {
+                    if (InUpdates)
+                        needTreeChanged = true;
+                    else
+                        ListBox.Items.Add(item);
+                }
+                else
+                {
+                    TreeChanged();
+                }
+
+                if (ItemAdded is not null)
+                {
+                    ItemAdded(this, new(item));
+                }
             }
         }
 
@@ -531,21 +536,26 @@ namespace Alternet.UI
         /// </summary>
         public virtual void RaiseItemRemoved(UI.TreeControlItem item)
         {
-            if (item.HasItems && item.IsExpanded)
-            {
-                TreeChanged();
-            }
-            else
-            {
-                if (InUpdates)
-                    needTreeChanged = true;
-                else
-                    ListBox.Items?.Remove(item);
-            }
+            Invoke(Internal);
 
-            if (ItemRemoved is not null)
+            void Internal()
             {
-                ItemRemoved(this, new(item));
+                if (item.HasItems && item.IsExpanded)
+                {
+                    TreeChanged();
+                }
+                else
+                {
+                    if (InUpdates)
+                        needTreeChanged = true;
+                    else
+                        ListBox.Items?.Remove(item);
+                }
+
+                if (ItemRemoved is not null)
+                {
+                    ItemRemoved(this, new(item));
+                }
             }
         }
 
@@ -554,13 +564,18 @@ namespace Alternet.UI
         /// </summary>
         public virtual void RaiseAfterExpand(UI.TreeControlItem item)
         {
-            var selectedItems = ListBox.SelectedItems;
-            TreeChanged();
-            ListBox.SelectedItems = selectedItems;
+            Invoke(Internal);
 
-            if (AfterExpand is not null)
+            void Internal()
             {
-                AfterExpand(this, new(item));
+                var selectedItems = ListBox.SelectedItems;
+                TreeChanged();
+                ListBox.SelectedItems = selectedItems;
+
+                if (AfterExpand is not null)
+                {
+                    AfterExpand(this, new(item));
+                }
             }
         }
 
@@ -569,13 +584,18 @@ namespace Alternet.UI
         /// </summary>
         public virtual void RaiseAfterCollapse(UI.TreeControlItem item)
         {
-            var selectedItems = ListBox.SelectedItems;
-            TreeChanged();
-            ListBox.SelectedItems = selectedItems;
+            Invoke(Internal);
 
-            if (AfterCollapse is not null)
+            void Internal()
             {
-                AfterCollapse(this, new(item));
+                var selectedItems = ListBox.SelectedItems;
+                TreeChanged();
+                ListBox.SelectedItems = selectedItems;
+
+                if (AfterCollapse is not null)
+                {
+                    AfterCollapse(this, new(item));
+                }
             }
         }
 
@@ -584,12 +604,21 @@ namespace Alternet.UI
         /// </summary>
         public virtual void RaiseBeforeExpand(UI.TreeControlItem item, ref bool cancel)
         {
-            if (BeforeExpand is not null)
+            if (BeforeExpand is null)
+                return;
+
+            var localCancel = cancel;
+
+            Invoke(Internal);
+
+            void Internal()
             {
                 UI.TreeControlCancelEventArgs e = new(item);
                 BeforeExpand(this, e);
-                cancel = e.Cancel;
+                localCancel = e.Cancel;
             }
+
+            cancel = localCancel;
         }
 
         /// <summary>
@@ -611,12 +640,21 @@ namespace Alternet.UI
         /// </summary>
         public virtual void RaiseBeforeCollapse(UI.TreeControlItem item, ref bool cancel)
         {
-            if (BeforeCollapse is not null)
+            if (BeforeCollapse is null)
+                return;
+
+            var localCancel = cancel;
+
+            Invoke(Internal);
+
+            void Internal()
             {
                 UI.TreeControlCancelEventArgs e = new(item);
                 BeforeCollapse(this, e);
-                cancel = e.Cancel;
+                localCancel = e.Cancel;
             }
+
+            cancel = localCancel;
         }
 
         /// <inheritdoc/>
@@ -633,18 +671,21 @@ namespace Alternet.UI
         {
             if (ExpandedChanged is not null)
             {
-                ExpandedChanged(this, new(item));
+                Invoke(() =>
+                {
+                    ExpandedChanged(this, new(item));
+                });
             }
         }
 
         void ITreeControlItemContainer.BeginUpdate()
         {
-            this.BeginUpdate();
+            Invoke(BeginUpdate);
         }
 
         void ITreeControlItemContainer.EndUpdate()
         {
-            this.EndUpdate();
+            Invoke(EndUpdate);
         }
 
         /// <summary>
@@ -653,7 +694,8 @@ namespace Alternet.UI
         /// <param name="treeItem">The <see cref="TreeControlItem"/> to toggle. If null or not
         /// a valid tree item, no action is taken.</param>
         /// <remarks>
-        /// If the specified item has child items, this method switches its state between expanded and collapsed.
+        /// If the specified item has child items, this method switches its state
+        /// between expanded and collapsed.
         /// It does not affect the state of child items.
         /// </remarks>
         public virtual void ToggleExpanded(TreeControlItem? treeItem)
@@ -748,17 +790,22 @@ namespace Alternet.UI
         /// </summary>
         public virtual void TreeChanged()
         {
-            if (InUpdates)
-            {
-                needTreeChanged = true;
-                return;
-            }
-            else
-            {
-                needTreeChanged = false;
-            }
+            Invoke(Internal);
 
-            RefreshTree();
+            void Internal()
+            {
+                if (InUpdates)
+                {
+                    needTreeChanged = true;
+                    return;
+                }
+                else
+                {
+                    needTreeChanged = false;
+                }
+
+                RefreshTree();
+            }
         }
 
         /// <summary>
@@ -773,8 +820,11 @@ namespace Alternet.UI
         /// </remarks>
         protected virtual void RefreshTree()
         {
-            NotNullCollection<ListControlItem> collection = new(rootItem.EnumExpandedItems());
-            ListBox.SetItemsFast(collection, VirtualListBox.SetItemsKind.ChangeField);
+            Invoke(() =>
+            {
+                NotNullCollection<ListControlItem> collection = new(rootItem.EnumExpandedItems());
+                ListBox.SetItemsFast(collection, VirtualListBox.SetItemsKind.ChangeField);
+            });
         }
 
         /// <inheritdoc/>
