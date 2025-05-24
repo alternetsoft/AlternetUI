@@ -1,3 +1,12 @@
+# 0.9.728 (2025 May 24)
+
+- **Downgraded to an older version of SkiaSharp** due to compatibility issues with ARM64 Linux.
+- **Graphics:** `DrawLabel` can render multiline text when the corresponding flag is specified.
+- **Graphics:** Added the `DrawStrings` method, which draws a collection of strings with adjustable line spacing and text alignment.
+- **VirtualTreeControl:** Added `Invoke` calls to certain methods.
+- **VirtualListBox:** Item text can now be multiline (requires `DrawLabelFlags.TextHasNewLineChars` to be specified).
+- **VirtualTreeControl:** Fixed the `ContextMenuStrip` property setter.
+
 # 0.9.727 (2025 May 22)
 
 - **Added AssemblyMetaData**: Provides methods for loading assembly metadata.
