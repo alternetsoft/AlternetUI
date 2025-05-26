@@ -10,10 +10,6 @@ namespace Alternet.UI
     {
         private readonly Dictionary<string, IAssemblyDescriptor> assemblyNameCache = new();
 
-        public void GetAllAssemblies()
-        {
-        }
-
         public IAssemblyDescriptor? GetAssemblyFromUrl(Uri url)
         {
             var resName = url.AbsolutePath;
