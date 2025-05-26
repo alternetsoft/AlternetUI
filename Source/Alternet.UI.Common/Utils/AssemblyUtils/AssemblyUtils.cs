@@ -1463,14 +1463,52 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Returns list of types which descend from specified type.
+        /// Runs the action for all descendants of the specified type.
+        /// </summary>
+        /// <param name="baseType">The base type which descendants are passed to the action.</param>
+        /// <param name="action">The action to call for the each descendant
+        /// of the specified type.</param>
+        public static void RunActionForDerivedTypes(
+            Type baseType,
+            Action<Type> action)
+        {
+            var assemblies = AppDomain.CurrentDomain.GetAssemblies();
+            var descendants = GetTypeDescendants(baseType, assemblies);
+            foreach (var type in descendants)
+            {
+                action(type);
+            }
+        }
+
+        /// <summary>
+        /// Returns list of types which descend from the specified type.
+        /// Search is performed in the collection of assemblies.
         /// </summary>
         /// <param name="type">Base type.</param>
-        public static IEnumerable<Type> GetTypeDescendants(Type type)
+        /// <param name="assemblies">The collection of assemblies where search is performed.</param>
+        public static IEnumerable<Type> GetTypeDescendants(Type type, IEnumerable<Assembly> assemblies)
+        {
+            foreach (var asm in assemblies)
+            {
+                if (asm is null)
+                    continue;
+                var result = GetTypeDescendants(type, asm);
+                foreach (var item in result)
+                    yield return item;
+            }
+        }
+
+        /// <summary>
+        /// Returns list of types which descend from the specified type.
+        /// </summary>
+        /// <param name="type">The base type.</param>
+        /// <param name="asm">The assembly in which search is performed. If it is null,
+        /// search is done in the assembly where base type is declared</param>
+        public static IEnumerable<Type> GetTypeDescendants(Type type, Assembly? asm = null)
         {
             List<Type> result = new();
 
-            Assembly asm = type.Assembly;
+            asm ??= type.Assembly;
 
             var definedTypes = asm.DefinedTypes;
 
