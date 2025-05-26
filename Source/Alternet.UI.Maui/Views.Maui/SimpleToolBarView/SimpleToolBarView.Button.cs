@@ -268,9 +268,6 @@ namespace Alternet.Maui
             {
                 base.OnPropertyChanged(propertyName);
 
-                if (Window is null)
-                    return;
-
                 if (svgImage is not null)
                 {
                     if (propertyName == IsEnabledProperty.PropertyName)
