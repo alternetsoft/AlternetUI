@@ -12,6 +12,27 @@ namespace Alternet.UI
     public static class AsyncUtils
     {
         /// <summary>
+        /// Runs a task with a specified timeout.
+        /// </summary>
+        /// <param name="taskFunc">The asynchronous function to execute.</param>
+        /// <param name="timeoutMs">The timeout duration in milliseconds.</param>
+        /// <returns><c>true</c> if the task completes within the timeout;
+        /// otherwise, <c>false</c>.</returns>
+        public static async Task<bool> RunWithTimeout(Func<Task> taskFunc, int timeoutMs)
+        {
+            var task = taskFunc();
+            var timeoutTask = Task.Delay(timeoutMs);
+
+            if (await Task.WhenAny(task, timeoutTask) == task)
+            {
+                await task; // Ensure exceptions are propagated
+                return true; // Task completed within timeout
+            }
+
+            return false; // Timeout occurred
+        }
+
+        /// <summary>
         /// Calls <see cref="Thread.Interrupt"/> and clears ref parameter.
         /// </summary>
         /// <param name="thread">The thread to interrupt.</param>

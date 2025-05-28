@@ -328,6 +328,29 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Attempts to set focus to the view within the specified timeout.
+        /// </summary>
+        /// <param name="timeout">The maximum time (in milliseconds) to attempt
+        /// setting focus. Default is 2000ms.</param>
+        /// <remarks>
+        /// This method continuously checks if the view is focused and tries to set focus if it isn't.
+        /// It runs in a background task and stops once focus is achieved or the timeout expires.
+        /// </remarks>
+        public async virtual Task TrySetFocusWithTimeout(int timeout = 2000)
+        {
+            void FocusControl()
+            {
+                while (!IsFocused)
+                {
+                    Task.Delay(50).Wait();
+                    Dispatcher.Dispatch(() => SetFocusIfPossible());
+                }
+            }
+
+            await AsyncUtils.RunWithTimeout(() => Task.Run(FocusControl), timeout);
+        }
+
+        /// <summary>
         /// Sets focus to the control if it is not already focused and if the platform supports it.
         /// </summary>
         public virtual void SetFocusIfPossible()
