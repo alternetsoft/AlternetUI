@@ -71,7 +71,7 @@ namespace PrintingSample
 
             var wrappedText = DrawingUtils.WrapTextToMultipleLines(
                 TextToDraw,
-                ref dtbWidth,
+                dtbWidth,
                 font,
                 dc);
 

@@ -567,16 +567,12 @@ namespace Alternet.UI
         /// <returns></returns>
         public static string WrapTextToMultipleLines(
             string text,
-            ref Coord maxWidth,
+            Coord maxWidth,
             Font font,
             Graphics canvas)
         {
-            var list = WrapTextToList(text, ref maxWidth, font, canvas);
-            if (list.Count == 0)
-                return string.Empty;
-            if (list.Count == 1)
-                return list[0];
-            StringBuilder result = new();
+            var list = WrapTextToList(text, maxWidth, font, canvas);
+            StringBuilder result = new(text.Length);
             bool firstLine = true;
             foreach (var s in list)
             {
@@ -625,35 +621,30 @@ namespace Alternet.UI
         /// <param name="font">Text font.</param>
         /// <param name="canvas">Graphics context.</param>
         /// <returns></returns>
-        public static List<string> WrapTextToList(
+        public static IEnumerable<string> WrapTextToList(
             string text,
-            ref Coord maxWidth,
+            Coord maxWidth,
             Font font,
             Graphics canvas)
         {
-            List<string> result = new();
-
             var splitText = StringUtils.Split(text, false);
 
             if (maxWidth <= 0)
             {
-                result.AddRange(splitText);
-                return result;
+                foreach (var s in splitText)
+                {
+                    yield return s;
+                }
             }
-
-            Coord allMaxWidth = 0;
 
             foreach (var s in splitText)
             {
-                var cw = maxWidth;
-                var wrappedLine = WrapTextLineToList(s, ref cw, font, canvas);
-                allMaxWidth = Math.Max(allMaxWidth, cw);
-                result.AddRange(wrappedLine);
+                var wrappedLine = WrapTextLineToList(s, maxWidth, font, canvas);
+                foreach (var ws in wrappedLine)
+                {
+                    yield return ws;
+                }
             }
-
-            maxWidth = allMaxWidth;
-
-            return result;
         }
 
         /// <summary>
@@ -664,70 +655,44 @@ namespace Alternet.UI
         /// <param name="font">Text font.</param>
         /// <param name="canvas">Graphics context.</param>
         /// <returns></returns>
-        public static List<string> WrapTextLineToList(
+        public static IEnumerable<string> WrapTextLineToList(
             string text,
-            ref Coord maxWidth,
+            Coord maxWidth,
             Font font,
             Graphics canvas)
         {
-            if (text is null)
+            if (text is null || text.Length == 0)
             {
                 maxWidth = 0;
-                return [];
+                yield break;
             }
 
-            var textLength = text.Length;
+            var words = text.Split(' ');
+            var line = string.Empty;
+            List<string> wrappedLines = new();
 
-            if (textLength == 0)
+            foreach (var word in words)
             {
-                maxWidth = 0;
-                return [];
-            }
+                var lineAndWord = line + word;
+                var measureResult = GetWidth(lineAndWord);
 
-            var spaceWidth = canvas.MeasureText(StringUtils.OneSpace, font).Ceiling().Width;
-
-            string[] originalLines = text.Split(' ');
-            var count = originalLines.Length;
-
-            List<string> wrappedLines = new(count);
-            StringBuilder actualLine = new(textLength);
-
-            Coord actualWidth = 0;
-            Coord resultMaxWidth = 0;
-
-            for (int i = 0; i < count; i++)
-            {
-                var item = originalLines[i].Trim();
-
-                var measureResult = canvas.MeasureText(item, font).Ceiling().Width;
-                var spc = actualLine.Length > 0 ? spaceWidth : 0;
-                var proposedWidth = actualWidth + spc + measureResult;
-
-                if (proposedWidth > maxWidth)
+                if (measureResult > maxWidth)
                 {
-                    wrappedLines.Add(actualLine.ToString());
-                    actualLine.Clear();
-                    proposedWidth = 0;
+                    yield return line;
+                    line = word;
                 }
-
-                actualWidth = proposedWidth;
-
-                resultMaxWidth = Math.Max(resultMaxWidth, actualWidth);
-
-                if (actualLine.Length > 0)
-                    actualLine.Append(StringUtils.OneSpace + item);
                 else
-                    actualLine.Append(item);
+                {
+                    line += (line.Length > 0 ? " " : string.Empty) + word;
+                }
             }
 
-            if (actualLine.Length > 0)
+            yield return line;
+
+            Coord GetWidth(string s)
             {
-                wrappedLines.Add(actualLine.ToString());
+                return canvas.MeasureText(s, font).Ceiling().Width;
             }
-
-            maxWidth = resultMaxWidth;
-
-            return wrappedLines;
         }
 
         /// <summary>

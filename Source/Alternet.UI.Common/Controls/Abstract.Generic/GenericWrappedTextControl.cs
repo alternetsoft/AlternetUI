@@ -13,7 +13,7 @@ namespace Alternet.UI
     public partial class GenericWrappedTextControl : GenericTextControl
     {
         private TextFormat.Record textFormat;
-        private List<string>? wrappedText;
+        private IEnumerable<string>? wrappedText;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="GenericWrappedTextControl"/> class
@@ -138,7 +138,7 @@ namespace Alternet.UI
             var wrappedWidth = availableSize.Width;
 
             wrappedText
-                = DrawingUtils.WrapTextToList(TextForPaint, ref wrappedWidth, font, dc);
+                = DrawingUtils.WrapTextToList(TextForPaint, wrappedWidth, font, dc);
 
             var result = DrawInternal(dc, (PointD.Empty, availableSize), font);
             return result;

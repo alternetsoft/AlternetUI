@@ -137,7 +137,7 @@ namespace DrawingSample
 
                 var cellName = DrawingUtils.WrapTextToMultipleLines(
                     cell.Name,
-                    ref cw,
+                    cw,
                     AbstractControl.DefaultFont,
                     dc);
 
