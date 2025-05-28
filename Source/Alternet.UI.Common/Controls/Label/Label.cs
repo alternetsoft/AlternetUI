@@ -107,12 +107,13 @@ namespace Alternet.UI
                     value = null;
                 if (maxTextWidth == value)
                     return;
-                PerformLayoutAndInvalidate(() =>
-                {
-                    maxTextWidth = value;
-                    StateFlags |= ControlFlags.ForceTextChange;
-                    Text = Text;
-                });
+                maxTextWidth = value;
+                StateFlags |= ControlFlags.ForceTextChange;
+                Text = Text;
+
+                /* App.LogReplace(
+                    $"LabelMaxTextWidth {Size}/_{value}_/{Parent?.ClientSize.Width}",
+                    "LabelMaxTextWidth");*/
             }
         }
 
@@ -144,8 +145,15 @@ namespace Alternet.UI
         /// </summary>
         public virtual void WrapToParent()
         {
-            if (Parent is not null)
-                MaxTextWidth = Parent.ClientSize.Width - Parent.Padding.Horizontal;
+            App.AddBackgroundInvokeAction(() =>
+            {
+                if (DisposingOrDisposed)
+                    return;
+                if (Parent is null)
+                    return;
+                MaxTextWidth = Parent.ClientSize.Width
+                - Parent.Padding.Horizontal - Margin.Horizontal;
+            });
         }
 
         /// <inheritdoc/>
@@ -156,8 +164,8 @@ namespace Alternet.UI
             var mw = maxTextWidth.Value;
             var result = DrawingUtils.WrapTextToMultipleLines(
                 s,
-                ref mw,
-                Font ?? AbstractControl.DefaultFont,
+                mw,
+                RealFont,
                 MeasureCanvas);
             return result;
         }
