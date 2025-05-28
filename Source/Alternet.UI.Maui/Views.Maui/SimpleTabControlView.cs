@@ -13,7 +13,7 @@ namespace Alternet.Maui
     /// <summary>
     /// Represents a simple tab control view.
     /// </summary>
-    public partial class SimpleTabControlView : ContentView
+    public partial class SimpleTabControlView : BaseContentView
     {
         private readonly SimpleToolBarView tabs = new();
         private readonly Grid grid = new();
@@ -37,6 +37,8 @@ namespace Alternet.Maui
             grid.Add(content, 0, 1);
             base.Content = grid;
         }
+
+        public event EventHandler? SelectedTabChanged;
 
         /// <summary>
         /// Gets the header of the tab control view.
@@ -139,6 +141,7 @@ namespace Alternet.Maui
                 return;
             btn.IsSticky = true;
             Content = item!.PageResolver?.Invoke();
+            SelectedTabChanged?.Invoke(this, EventArgs.Empty);
         }
 
         /// <summary>
