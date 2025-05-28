@@ -721,7 +721,7 @@ namespace Alternet.UI
 
             childControl.RaiseHandleCreated(EventArgs.Empty);
 
-            if (childControl.Visible)
+            if (childControl.Visible && !childControl.IgnoreLayout)
             {
                 DoInsideLayout(UpdateFontAndColor);
             }
@@ -769,7 +769,7 @@ namespace Alternet.UI
             ChildRemoved?.Invoke(this, new BaseEventArgs<AbstractControl>(childControl));
 
             RaiseNotifications((n) => n.AfterChildRemoved(this, childControl));
-            if (childControl.Visible)
+            if (childControl.Visible && !childControl.IgnoreLayout)
                 PerformLayout();
         }
 
