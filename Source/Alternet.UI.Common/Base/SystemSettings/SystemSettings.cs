@@ -9,7 +9,7 @@ namespace Alternet.UI
 {
     /// <summary>
     /// <see cref="SystemSettings"/> allows the application to ask for details about the system.
-    /// This can include settings such as standard colours, fonts, and user interface element sizes.
+    /// This can include settings such as standard colors, fonts, and user interface element sizes.
     /// </summary>
     public static class SystemSettings
     {
@@ -17,6 +17,7 @@ namespace Alternet.UI
         private static bool validColors;
         private static bool? appearanceIsDarkOverride;
         private static bool? isUsingDarkBackgroundOverride;
+        private static bool insideResetColors;
 
         static SystemSettings()
         {
@@ -165,7 +166,7 @@ namespace Alternet.UI
         public static bool IsDarkBackground(Color foregroundColor, Color backgroundColor)
         {
             // The threshold here is rather arbitrary, but it seems that using just
-            // inequality would be wrong as it could result in false positivies.
+            // inequality would be wrong as it could result in false results.
             if (foregroundColor.IsOk && backgroundColor.IsOk)
                 return foregroundColor.GetLuminance() - backgroundColor.GetLuminance() > 0.2;
             else
@@ -173,7 +174,7 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Gets default font size increnent depending on the dpi value of the screen.
+        /// Gets default font size increment depending on the dpi value of the screen.
         /// Uses <see cref="Window.IncFontSize"/> and <see cref="Window.IncFontSizeHighDpi"/>
         /// properties.
         /// </summary>
@@ -303,9 +304,19 @@ namespace Alternet.UI
         /// </summary>
         public static void ResetColors()
         {
-            validColors = false;
-            PlessSystemColors.Reset();
-            SystemColorsChanged?.Invoke();
+            if (insideResetColors)
+                return;
+            insideResetColors = true;
+            try
+            {
+                validColors = false;
+                PlessSystemColors.Reset();
+                SystemColorsChanged?.Invoke();
+            }
+            finally
+            {
+                insideResetColors = false;
+            }
         }
 
         /// <summary>

@@ -261,7 +261,7 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Gets collection of the focusable children controls optinally sorted by
+        /// Gets collection of the focusable children controls optionally sorted by
         /// the <see cref="TabIndex"/> property.
         /// </summary>
         /// <param name="recursive">Whether to process child controls recursively</param>
