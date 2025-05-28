@@ -319,11 +319,6 @@ namespace Alternet.UI
                 container.IsEnabled = value;
         }
 
-        public virtual bool SetFocus()
-        {
-            return true;
-        }
-
         public virtual void SetToolTip(string? value)
         {
         }

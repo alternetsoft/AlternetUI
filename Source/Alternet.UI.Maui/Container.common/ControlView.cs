@@ -336,7 +336,9 @@ namespace Alternet.UI
             if(!IsFocused)
             {
                 var platformView = GetPlatformView();
-                platformView?.Focus(Microsoft.UI.Xaml.FocusState.Pointer);
+                var request = new FocusRequest();
+                platformView?.Focus(request);
+                platformView?.Focus(Microsoft.UI.Xaml.FocusState.Programmatic);
             }
 #endif
 #if ANDROID

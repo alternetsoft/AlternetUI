@@ -55,6 +55,14 @@ namespace Alternet.UI
             }
         }
 
+        public virtual bool SetFocus()
+        {
+            if (container is null)
+                return false;
+            container.SetFocusIfPossible();
+            return container.IsFocused;
+        }
+
         public virtual void FocusNextControl(bool forward = true, bool nested = true)
         {
         }
