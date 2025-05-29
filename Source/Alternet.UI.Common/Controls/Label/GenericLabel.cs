@@ -324,7 +324,7 @@ namespace Alternet.UI
         /// <param name="font">Text font.</param>
         /// <param name="backColor">Background color of the text.</param>
         /// <param name="rect">Rectangle to draw in.</param>
-        public virtual void DrawDefaultText(
+        public virtual RectD DrawDefaultText(
             Graphics dc,
             RectD rect,
             Color? foreColor = null,
@@ -340,14 +340,14 @@ namespace Alternet.UI
             var labelText = GetFormattedText();
 
             if (labelImage is null && labelText == string.Empty)
-                return;
+                return RectD.Empty;
 
             var labelFont = font ?? GetLabelFont(state);
             var labelForeColor = foreColor ?? GetLabelForeColor(state);
             var labelBackColor = backColor ?? GetLabelBackColor(state);
             var mnemonicCharIndex = GetMnemonicCharIndex();
 
-            var result = dc.DrawLabel(
+            Graphics.DrawLabelParams prm = new(
                 labelText,
                 labelFont,
                 labelForeColor,
@@ -357,15 +357,10 @@ namespace Alternet.UI
                 alignment,
                 mnemonicCharIndex);
 
-            if(result == RectD.MinusOne)
-            {
-                dc.DrawText(
-                    labelText,
-                    paddedRect.Location,
-                    labelFont,
-                    labelForeColor,
-                    labelBackColor);
-            }
+            prm.Visible = foreColor != Color.Empty;
+
+            var result = dc.DrawLabel(ref prm);
+            return result;
         }
 
         /// <summary>
@@ -404,8 +399,11 @@ namespace Alternet.UI
             var specifiedWidth = SuggestedWidth;
             var specifiedHeight = SuggestedHeight;
 
-            SizeD result = 0;
-
+            SizeD result = DrawDefaultText(
+                        MeasureCanvas,
+                        RectD.Empty,
+                        Color.Empty).Size;
+/*
             var text = GetFormattedText();
             if (!string.IsNullOrEmpty(text))
             {
@@ -420,7 +418,7 @@ namespace Alternet.UI
             {
                 result.Width += PixelToDip(image.Width);
             }
-
+*/
             if (!Coord.IsNaN(specifiedWidth))
                 result.Width = Math.Max(result.Width, specifiedWidth);
 
