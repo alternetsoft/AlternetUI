@@ -347,6 +347,17 @@ namespace Alternet.UI
             return num;
         }
 
+        /// <summary>
+        /// Moves the item at the specified index to a new location in the collection.
+        /// </summary>
+        /// <param name="oldIndex">The zero-based index specifying the location
+        /// of the item to be moved.</param>
+        /// <param name="newIndex">The zero-based index specifying the new location of the item.</param>
+        public new virtual void MoveItem(int oldIndex, int newIndex)
+        {
+            base.MoveItem(oldIndex, newIndex);
+        }
+
         internal static void Copy(
             IList<T> source,
             int sourceIndex,
