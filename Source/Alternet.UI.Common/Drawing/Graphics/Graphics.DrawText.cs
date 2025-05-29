@@ -532,13 +532,21 @@ namespace Alternet.Drawing
             }
 
             RectD beforeAlign = (prm.Rect.Location, size);
+            RectD afterAlign;
 
-            var afterAlign = AlignUtils.AlignRectInRect(
-                beforeAlign,
-                prm.Rect,
-                prm.Alignment.Horizontal,
-                prm.Alignment.Vertical,
-                shrinkSize: true);
+            if (prm.Rect.Size.AnyIsEmptyOrNegative)
+            {
+                afterAlign = beforeAlign;
+            }
+            else
+            {
+                afterAlign = AlignUtils.AlignRectInRect(
+                    beforeAlign,
+                    prm.Rect,
+                    prm.Alignment.Horizontal,
+                    prm.Alignment.Vertical,
+                    shrinkSize: true);
+            }
 
 #if DEBUG
             if (drawDebugCorners)
