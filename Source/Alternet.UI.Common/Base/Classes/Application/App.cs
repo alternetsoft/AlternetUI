@@ -1112,7 +1112,17 @@ namespace Alternet.UI
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static void AddIdleTask(Action<object?> task, object? param = null)
         {
-            IdleTasks.Enqueue((task, param));
+            if (App.IsMaui)
+            {
+                App.AddBackgroundInvokeAction(() =>
+                {
+                    task(param);
+                });
+            }
+            else
+            {
+                IdleTasks.Enqueue((task, param));
+            }
         }
 
         /// <summary>
