@@ -9,7 +9,8 @@ namespace Alternet.UI
     /// </summary>
     /// <typeparam name="T">The type of elements in the collection.</typeparam>
     /// <remarks>
-    /// This collection ensures that all added items are non-null, preventing accidental null references.
+    /// This collection ensures that all added items are non-null, preventing
+    /// accidental null references.
     /// </remarks>
     public class NotNullCollection<T> : BaseCollection<T>
     {
@@ -31,10 +32,10 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="NotNullCollection{T}"/> class
-        /// that contains elements copied from the specified list.
+        /// Initializes a new instance of the collection
+        /// as a wrapper for the specified list.
         /// </summary>
-        /// <param name="list">The list from which the elements are copied.</param>
+        /// <param name="list">The list that is wrapped by the new collection.</param>
         public NotNullCollection(List<T> list)
             : base(list)
         {

@@ -39,7 +39,7 @@ namespace Alternet.UI
     /// provides <see cref="ItemInserted"/> and <see cref="ItemRemoved"/> events.
     /// </summary>
     /// <typeparam name="T">The type of elements in the collection.</typeparam>
-    public class BaseCollection<T> : ObservableCollection<T>
+    public class BaseCollection<T> : BaseObservableCollection<T>
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="BaseCollection{T}"/> class.
@@ -59,12 +59,13 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="BaseCollection{T}"/> class
-        /// that contains elements copied from the specified list.
+        /// Initializes a new instance of the collection
+        /// as a wrapper for the specified list.
         /// </summary>
-        /// <param name="list">The list from which the elements are copied.</param>
-        public BaseCollection(List<T> list)
-            : base(list)
+        /// <param name="createCopy">Whether to create copy of the list.</param>
+        /// <param name="list">The list that is wrapped by the new collection.</param>
+        public BaseCollection(IList<T> list, bool createCopy = false)
+            : base(list, createCopy)
         {
         }
 

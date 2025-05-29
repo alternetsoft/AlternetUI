@@ -15,8 +15,8 @@ using Alternet.UI.Extensions;
 namespace Alternet.UI
 {
     /// <summary>
-    /// Implementation of a dynamic data collection based on generic Collection&lt;T&gt;,
-    /// implementing INotifyCollectionChanged to notify listeners
+    /// Implementation of a dynamic data collection based on generic collection
+    /// implementing <see cref="INotifyCollectionChanged"/> to notify listeners
     /// when items get added, removed or the whole list is refreshed.
     /// </summary>
     [Serializable]
@@ -33,7 +33,7 @@ namespace Alternet.UI
         private int blockReentrancyCount;
 
         /// <summary>
-        /// Initializes a new instance of ObservableCollection that is empty and
+        /// Initializes a new instance of collection that is empty and
         /// has default initial capacity.
         /// </summary>
         public BaseObservableCollection()
@@ -41,33 +41,31 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Initializes a new instance of the ObservableCollection class that contains
+        /// Initializes a new instance of the collection that contains
         /// elements copied from the specified collection and has sufficient capacity
         /// to accommodate the number of elements copied.
         /// </summary>
         /// <param name="collection">The collection whose elements are copied to the new list.</param>
         /// <remarks>
-        /// The elements are copied onto the ObservableCollection in the
+        /// The elements are copied onto the collection in the
         /// same order they are read by the enumerator of the collection.
         /// </remarks>
-        /// <exception cref="ArgumentNullException"> collection is a null reference </exception>
+        /// <exception cref="ArgumentNullException"> collection is a null reference.</exception>
         public BaseObservableCollection(IEnumerable<T> collection)
             : base(new List<T>(collection ?? throw new ArgumentNullException(nameof(collection))))
         {
         }
 
         /// <summary>
-        /// Initializes a new instance of the ObservableCollection class
-        /// that contains elements copied from the specified list
+        /// Initializes a new instance of the collection
+        /// as a wrapper for the specified list.
         /// </summary>
-        /// <param name="list">The list whose elements are copied to the new list.</param>
-        /// <remarks>
-        /// The elements are copied onto the ObservableCollection in the
-        /// same order they are read by the enumerator of the list.
-        /// </remarks>
-        /// <exception cref="ArgumentNullException"> list is a null reference </exception>
-        public BaseObservableCollection(List<T> list)
-            : base(new List<T>(list ?? throw new ArgumentNullException(nameof(list))))
+        /// <param name="list">The list that is wrapped by the new collection.</param>
+        /// <param name="createCopy">Whether to create copy of the list.</param>
+        public BaseObservableCollection(IList<T> list, bool createCopy = false)
+            : base(createCopy
+                  ? new List<T>(list ?? throw new ArgumentNullException(nameof(list)))
+                  : list)
         {
         }
 
@@ -89,7 +87,7 @@ namespace Alternet.UI
         public void Move(int oldIndex, int newIndex) => MoveItem(oldIndex, newIndex);
 
         /// <summary>
-        /// Called by base class Collection&lt;T&gt; when the list is being cleared;
+        /// Called by base class when the list is being cleared;
         /// raises a CollectionChanged event to any listeners.
         /// </summary>
         protected override void ClearItems()
@@ -102,7 +100,7 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Called by base class Collection&lt;T&gt; when an item is removed from list;
+        /// Called by base class when an item is removed from list;
         /// raises a CollectionChanged event to any listeners.
         /// </summary>
         protected override void RemoveItem(int index)
@@ -118,8 +116,8 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Called by base class Collection&lt;T&gt; when an item is added to list;
-        /// raises a CollectionChanged event to any listeners.
+        /// Called by base class when an item is added to list;
+        /// raises a <see cref="CollectionChanged"/> event to any listeners.
         /// </summary>
         protected override void InsertItem(int index, T item)
         {
@@ -132,8 +130,8 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Called by base class Collection&lt;T&gt; when an item is set in list;
-        /// raises a CollectionChanged event to any listeners.
+        /// Called by base class when an item is set in list;
+        /// raises a <see cref="CollectionChanged"/> event to any listeners.
         /// </summary>
         protected override void SetItem(int index, T item)
         {
@@ -146,9 +144,9 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Called by base class ObservableCollection&lt;T&gt; when an item is
+        /// Called by base class when an item is
         /// to be moved within the list;
-        /// raises a CollectionChanged event to any listeners.
+        /// raises a <see cref="CollectionChanged"/> event to any listeners.
         /// </summary>
         protected virtual void MoveItem(int oldIndex, int newIndex)
         {
@@ -164,7 +162,7 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Raises a PropertyChanged event (per <see cref="INotifyPropertyChanged" />).
+        /// Raises a <see cref="PropertyChanged"/> event (per <see cref="INotifyPropertyChanged" />).
         /// </summary>
         protected virtual void OnPropertyChanged(PropertyChangedEventArgs e)
         {
@@ -172,8 +170,8 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Raise CollectionChanged event to any listeners.
-        /// Properties/methods modifying this ObservableCollection will raise
+        /// Raise <see cref="CollectionChanged"/> event to any listeners.
+        /// Properties/methods modifying this collection will raise
         /// a collection changed event through this virtual method.
         /// </summary>
         /// <remarks>
@@ -200,7 +198,8 @@ namespace Alternet.UI
 
         /// <summary>
         /// Disallow reentrant attempts to change this collection. E.g. an event handler
-        /// of the CollectionChanged event is not allowed to make changes to this collection.
+        /// of the <see cref="CollectionChanged"/> event
+        /// is not allowed to make changes to this collection.
         /// </summary>
         /// <remarks>
         /// typical usage is to wrap e.g. a OnCollectionChanged call with a using() scope:
@@ -220,7 +219,7 @@ namespace Alternet.UI
 
         /// <summary> Check and assert for reentrant attempts to change this collection. </summary>
         /// <exception cref="InvalidOperationException"> raised when changing the collection
-        /// while another collection change is still being notified to other listeners </exception>
+        /// while another collection change is still being notified to other listeners.</exception>
         protected void CheckReentrancy()
         {
             if (blockReentrancyCount > 0)
@@ -235,19 +234,19 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Helper to raise a PropertyChanged event for the Count property
+        /// Helper to raise a <see cref="PropertyChanged"/> event for the Count property.
         /// </summary>
         private void OnCountPropertyChanged()
             => OnPropertyChanged(EventArgsCache.CountPropertyChanged);
 
         /// <summary>
-        /// Helper to raise a PropertyChanged event for the Indexer property
+        /// Helper to raise a <see cref="PropertyChanged"/> event for the Indexer property.
         /// </summary>
         private void OnIndexerPropertyChanged()
             => OnPropertyChanged(EventArgsCache.IndexerPropertyChanged);
 
         /// <summary>
-        /// Helper to raise CollectionChanged event to any listeners
+        /// Helper to raise <see cref="CollectionChanged"/> event to any listeners.
         /// </summary>
         private void OnCollectionChanged(NotifyCollectionChangedAction action, object? item, int index)
         {
@@ -255,7 +254,7 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Helper to raise CollectionChanged event to any listeners
+        /// Helper to raise <see cref="CollectionChanged"/> event to any listeners.
         /// </summary>
         private void OnCollectionChanged(
             NotifyCollectionChangedAction action,
@@ -267,7 +266,7 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Helper to raise CollectionChanged event to any listeners
+        /// Helper to raise <see cref="CollectionChanged"/> event to any listeners.
         /// </summary>
         private void OnCollectionChanged(
             NotifyCollectionChangedAction action,
@@ -279,7 +278,7 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Helper to raise CollectionChanged event with action == Reset to any listeners
+        /// Helper to raise <see cref="CollectionChanged"/> event with action == Reset to any listeners.
         /// </summary>
         private void OnCollectionReset() => OnCollectionChanged(EventArgsCache.ResetCollectionChanged);
 
@@ -305,13 +304,13 @@ namespace Alternet.UI
         internal static class EventArgsCache
         {
             internal static readonly PropertyChangedEventArgs CountPropertyChanged
-                = new PropertyChangedEventArgs("Count");
+                = new ("Count");
 
             internal static readonly PropertyChangedEventArgs IndexerPropertyChanged
-                = new PropertyChangedEventArgs("Item[]");
+                = new ("Item[]");
 
             internal static readonly NotifyCollectionChangedEventArgs ResetCollectionChanged
-                = new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Reset);
+                = new (NotifyCollectionChangedAction.Reset);
         }
 
         internal sealed class CollectionDebugView<T1>
