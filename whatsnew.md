@@ -1,3 +1,14 @@
+# 0.9.729 (2025 May 29)
+
+- AbstractControl: Do not call realign when child control is added/removed and it's IgnoreLayout is true.
+- DrawingUtils: Fix wrap text methods.
+- Label: Fix WrapToParent and MaxTextWidth.
+- Fix SystemSettings.Reset stack overflow in some situations.
+- Maui: Implemented control SetFocus in handler.
+- Maui: ControlView.TrySetFocusWithTimeout.
+- Graphics: Allow to pass an empty rect to DrawElements.
+- GenericLabel: Fixed GetPreferredSize.
+
 # 0.9.728 (2025 May 24)
 
 - **Downgraded to an older version of SkiaSharp** due to compatibility issues with ARM64 Linux.
