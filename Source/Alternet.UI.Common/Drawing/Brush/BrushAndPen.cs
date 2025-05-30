@@ -71,11 +71,11 @@ namespace Alternet.Drawing
         /// <summary>
         /// Gets this object as <see cref="SKPaint"/>.
         /// </summary>
-        public SKPaint AsPaint
+        public (SKPaint? Fill, SKPaint? Stroke) AsPaint
         {
             get
             {
-                throw new NotImplementedException();
+                return (brush?.SkiaPaint, pen?.SkiaPaint);
             }
         }
     }
