@@ -5,19 +5,12 @@ using System.Text;
 using Alternet.UI;
 using Alternet.UI.Extensions;
 
+using SkiaSharp;
+
 namespace Alternet.Drawing
 {
     public partial class SkiaGraphics
     {
-        /// <inheritdoc/>
-        public override bool HasClip
-        {
-            get
-            {
-                return !canvas.IsClipEmpty;
-            }
-        }
-
         /// <inheritdoc/>
         public override Region? Clip
         {
@@ -79,19 +72,21 @@ namespace Alternet.Drawing
         /// <inheritdoc/>
         public override void Path(Pen pen, Brush brush, GraphicsPath path)
         {
-            /*
-            var paint = GetFillAndStrokePaint(pen, brush);
-            */
+            /* var (fill, stroke) = GetFillAndStrokePaint(pen, brush);*/
             throw new NotImplementedException();
         }
 
         /// <inheritdoc/>
-        public override void Polygon(Pen pen, Brush brush, PointD[] points, FillMode fillMode)
+        public override void DrawPath(Pen pen, GraphicsPath path)
         {
-            /*
-            var paint = GetFillAndStrokePaint(pen, brush);
-            var skiaPoints = points.ToSkia();
-            */
+            DebugPenAssert(pen);
+            throw new NotImplementedException();
+        }
+
+        /// <inheritdoc/>
+        public override void FillPath(Brush brush, GraphicsPath path)
+        {
+            DebugBrushAssert(brush);
             throw new NotImplementedException();
         }
 
@@ -120,16 +115,6 @@ namespace Alternet.Drawing
         }
 
         /// <inheritdoc/>
-        public override void FillPolygon(
-            Brush brush,
-            PointD[] points,
-            FillMode fillMode = FillMode.Alternate)
-        {
-            DebugBrushAssert(brush);
-            throw new NotImplementedException();
-        }
-
-        /// <inheritdoc/>
         public override void FloodFill(Brush brush, PointD point)
         {
             DebugBrushAssert(brush);
@@ -153,20 +138,6 @@ namespace Alternet.Drawing
         /// <inheritdoc/>
         public override void SetClippingRegion(RectD rect)
         {
-            throw new NotImplementedException();
-        }
-
-        /// <inheritdoc/>
-        public override void DrawPath(Pen pen, GraphicsPath path)
-        {
-            DebugPenAssert(pen);
-            throw new NotImplementedException();
-        }
-
-        /// <inheritdoc/>
-        public override void FillPath(Brush brush, GraphicsPath path)
-        {
-            DebugBrushAssert(brush);
             throw new NotImplementedException();
         }
 

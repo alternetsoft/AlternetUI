@@ -15,12 +15,13 @@ namespace Alternet.Drawing
 {
     /// <summary>
     /// Contains static methods and properties related to the graphics objects creation,
-    /// convertion and handling.
+    /// conversion and handling.
     /// </summary>
     public static class GraphicsFactory
     {
         /// <summary>
-        /// Gets or sets default dpi value used when pixels are converted from/to device-independent units.
+        /// Gets or sets default dpi value used when pixels are converted
+        /// from/to device-independent units.
         /// </summary>
         public static int DefaultDPI = 96;
 
@@ -29,7 +30,7 @@ namespace Alternet.Drawing
         /// <see cref="BrushAndPen"/> is converted to <see cref="SKPaint"/>
         /// with <see cref="SKPaintStyle.StrokeAndFill"/> style.
         /// </summary>
-        public static Func<BrushAndPen, SKPaint> BrushAndPenToStrokeAndFillPaint
+        public static Func<BrushAndPen, (SKPaint? Fill, SKPaint? Stroke)> BrushAndPenToStrokeAndFillPaint
             = (brushAndPen) => GraphicsFactory.CreateStrokeAndFillPaint(brushAndPen);
 
         /// <summary>
@@ -394,7 +395,7 @@ namespace Alternet.Drawing
         /// </summary>
         /// <param name="brushAndPen">Brush and pen for which <see cref="SKPaint"/> is created.</param>
         /// <returns></returns>
-        public static SKPaint CreateStrokeAndFillPaint(BrushAndPen brushAndPen)
+        public static (SKPaint? Fill, SKPaint? Stroke) CreateStrokeAndFillPaint(BrushAndPen brushAndPen)
         {
             return brushAndPen.AsPaint;
         }

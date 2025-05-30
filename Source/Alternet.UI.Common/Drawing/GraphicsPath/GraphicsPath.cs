@@ -13,7 +13,7 @@ namespace Alternet.Drawing
     /// and create clipping regions.
     /// The graphics engine maintains the coordinates of geometric shapes in a path in
     /// world coordinate space.
-    /// A path may be composed of any number of figures(subpaths).
+    /// A path may be composed of any number of figures (sub-paths).
     /// Each figure is either composed of a sequence of connected lines and curves or a
     /// geometric shape primitive.
     /// The starting point of a figure is the first point in the sequence of connected
@@ -133,7 +133,7 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
-        /// Adds a cubic Bézier curve to the current figure.
+        /// Adds a cubic Bezier curve to the current figure.
         /// </summary>
         /// <param name="startPoint">A <see cref="PointD"/> that represents the
         /// starting point of the curve.</param>
@@ -166,7 +166,7 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
-        /// Adds a cubic Bézier curve to the current figure.
+        /// Adds a cubic Bezier curve to the current figure.
         /// </summary>
         /// <param name="controlPoint1">A <see cref="PointD"/> that represents the first
         /// control point for the curve.</param>

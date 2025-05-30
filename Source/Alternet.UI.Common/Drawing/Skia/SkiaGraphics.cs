@@ -40,6 +40,15 @@ namespace Alternet.Drawing
             this.canvas = canvas;
         }
 
+        /// <inheritdoc/>
+        public override bool HasClip
+        {
+            get
+            {
+                return !canvas.IsClipEmpty;
+            }
+        }
+
         /// <summary>
         /// Gets or sets whether 'DrawImage' methods draw unscaled image.
         /// </summary>
@@ -224,45 +233,59 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
-        /// Gets <see cref="SKPaint"/> for the specifed brush and pen.
+        /// Gets <see cref="SKPaint"/> for the specified brush and pen.
         /// </summary>
         /// <param name="pen">Pen to use.</param>
         /// <param name="brush">Brush to use.</param>
         /// <returns></returns>
-        public virtual SKPaint GetFillAndStrokePaint(Pen pen, Brush brush)
+        public virtual (SKPaint? Fill, SKPaint? Stroke) GetFillAndStrokePaint(Pen? pen, Brush? brush)
         {
-            DebugAssert(pen, brush);
-            BrushAndPen brushAndPen = new(brush, pen);
-            return GraphicsFactory.CreateStrokeAndFillPaint(brushAndPen);
+            return (brush?.SkiaPaint, pen?.SkiaPaint);
         }
 
         /// <inheritdoc/>
         public override void RoundedRectangle(Pen pen, Brush brush, RectD rectangle, Coord cornerRadius)
         {
-            var paint = GetFillAndStrokePaint(pen, brush);
+            var (fill, stroke) = GetFillAndStrokePaint(pen, brush);
             SKRoundRect roundRect = new(rectangle, (float)cornerRadius);
-            canvas.DrawRoundRect(roundRect, paint);
+            if(fill is not null)
+                canvas.DrawRoundRect(roundRect, fill);
+            if (stroke is not null)
+                canvas.DrawRoundRect(roundRect, stroke);
         }
 
         /// <inheritdoc/>
         public override void Rectangle(Pen pen, Brush brush, RectD rectangle)
         {
-            var paint = GetFillAndStrokePaint(pen, brush);
-            canvas.DrawRect(rectangle, paint);
+            var (fill, stroke) = GetFillAndStrokePaint(pen, brush);
+            SKRect rect = rectangle;
+            if (fill is not null)
+                canvas.DrawRect(rect, fill);
+            if (stroke is not null)
+                canvas.DrawRect(rect, stroke);
         }
 
         /// <inheritdoc/>
         public override void Ellipse(Pen pen, Brush brush, RectD rectangle)
         {
-            var paint = GetFillAndStrokePaint(pen, brush);
-            canvas.DrawOval(rectangle, paint);
+            var (fill, stroke) = GetFillAndStrokePaint(pen, brush);
+            SKRect rect = rectangle;
+            if (fill is not null)
+                canvas.DrawOval(rect, fill);
+            if (stroke is not null)
+                canvas.DrawOval(rect, stroke);
         }
 
         /// <inheritdoc/>
         public override void Circle(Pen pen, Brush brush, PointD center, Coord radius)
         {
-            var paint = GetFillAndStrokePaint(pen, brush);
-            canvas.DrawCircle(center, (float)radius, paint);
+            var (fill, stroke) = GetFillAndStrokePaint(pen, brush);
+            var radiusF = (float)radius;
+            SKPoint centerF = center;
+            if (fill is not null)
+                canvas.DrawCircle(centerF, radiusF, fill);
+            if (stroke is not null)
+                canvas.DrawCircle(centerF, radiusF, stroke);
         }
 
         /// <inheritdoc/>
@@ -387,6 +410,66 @@ namespace Alternet.Drawing
         {
             DebugPenAssert(pen);
             canvas.DrawPoint((float)x, (float)y, pen.Color.AsFillPaint);
+        }
+
+        /// <summary>
+        /// Gets <see cref="SKPath"/> from array of points and fill mode.
+        /// </summary>
+        /// <param name="points">The array of points.</param>
+        /// <param name="fillMode">The fill mode.</param>
+        /// <returns></returns>
+        public virtual SKPath? GetPathFromPoints(PointD[] points, FillMode fillMode)
+        {
+            if (points == null || points.Length < 3)
+                return null;
+
+            var path = new SKPath
+            {
+                FillType = fillMode.ToSkia(),
+            };
+
+            // Move to the first point
+            path.MoveTo((float)points[0].X, (float)points[0].Y);
+
+            // Draw lines between the points
+            for (int i = 1; i < points.Length; i++)
+            {
+                path.LineTo((float)points[i].X, (float)points[i].Y);
+            }
+
+            path.Close(); // Ensures the polygon is closed
+
+            return path;
+        }
+
+        /// <inheritdoc/>
+        public override void Polygon(Pen? pen, Brush brush, PointD[] points, FillMode fillMode)
+        {
+            using var path = GetPathFromPoints(points, fillMode);
+            if (path is null)
+                return;
+
+            var (fill, stroke) = GetFillAndStrokePaint(pen, brush);
+
+            if (fill is not null)
+                canvas.DrawPath(path, fill);
+            if (stroke is not null)
+                canvas.DrawPath(path, stroke);
+        }
+
+        /// <inheritdoc/>
+        public override void FillPolygon(
+            Brush brush,
+            PointD[] points,
+            FillMode fillMode = FillMode.Alternate)
+        {
+            DebugBrushAssert(brush);
+
+            var path = GetPathFromPoints(points, fillMode);
+            if (path is null)
+                return;
+
+            canvas.DrawPath(path, brush);
         }
 
         /// <inheritdoc/>
