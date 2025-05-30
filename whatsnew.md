@@ -1,3 +1,11 @@
+# 0.9.730 (2025 May 30)
+
+- Maui: Implement App.AddIdleTask (this fixed different issues in the library as many methods use it).
+- Add BaseObservableCollection and inherit BaseCollection from it.
+- BrushAndPen: implement AsPaint.
+- SkiaGraphics: Implement FillPolygon, Polygon and redo RoundedRectangle, Rectangle, Ellipse, Circle.
+- BaseObservableCollection: Add different Sort methods.
+
 # 0.9.729 (2025 May 29)
 
 - AbstractControl: Do not call realign when child control is added/removed and it's IgnoreLayout is true.
