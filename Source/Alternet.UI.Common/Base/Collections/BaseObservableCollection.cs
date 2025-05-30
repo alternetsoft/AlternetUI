@@ -37,6 +37,7 @@ namespace Alternet.UI
         /// has default initial capacity.
         /// </summary>
         public BaseObservableCollection()
+            : this(new List<T>())
         {
         }
 
@@ -52,7 +53,7 @@ namespace Alternet.UI
         /// </remarks>
         /// <exception cref="ArgumentNullException"> collection is a null reference.</exception>
         public BaseObservableCollection(IEnumerable<T> collection)
-            : base(new List<T>(collection ?? throw new ArgumentNullException(nameof(collection))))
+            : this(new List<T>(collection))
         {
         }
 
@@ -61,11 +62,8 @@ namespace Alternet.UI
         /// as a wrapper for the specified list.
         /// </summary>
         /// <param name="list">The list that is wrapped by the new collection.</param>
-        /// <param name="createCopy">Whether to create copy of the list.</param>
-        public BaseObservableCollection(IList<T> list, bool createCopy = false)
-            : base(createCopy
-                  ? new List<T>(list ?? throw new ArgumentNullException(nameof(list)))
-                  : list)
+        public BaseObservableCollection(IList<T> list)
+            : base(list)
         {
         }
 

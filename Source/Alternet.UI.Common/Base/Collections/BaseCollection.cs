@@ -62,10 +62,9 @@ namespace Alternet.UI
         /// Initializes a new instance of the collection
         /// as a wrapper for the specified list.
         /// </summary>
-        /// <param name="createCopy">Whether to create copy of the list.</param>
         /// <param name="list">The list that is wrapped by the new collection.</param>
-        public BaseCollection(IList<T> list, bool createCopy = false)
-            : base(list, createCopy)
+        public BaseCollection(IList<T> list)
+            : base(list)
         {
         }
 
