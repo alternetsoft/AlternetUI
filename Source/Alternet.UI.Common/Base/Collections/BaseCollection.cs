@@ -49,21 +49,11 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="BaseCollection{T}"/> class
-        /// class that contains elements copied from the specified collection.
-        /// </summary>
-        /// <param name="collection">The collection from which the elements are copied.</param>
-        public BaseCollection(IEnumerable<T> collection)
-            : base(collection)
-        {
-        }
-
-        /// <summary>
         /// Initializes a new instance of the collection
         /// as a wrapper for the specified list.
         /// </summary>
         /// <param name="list">The list that is wrapped by the new collection.</param>
-        public BaseCollection(IList<T> list)
+        public BaseCollection(List<T> list)
             : base(list)
         {
         }
@@ -353,9 +343,9 @@ namespace Alternet.UI
         /// <param name="oldIndex">The zero-based index specifying the location
         /// of the item to be moved.</param>
         /// <param name="newIndex">The zero-based index specifying the new location of the item.</param>
-        public new virtual void MoveItem(int oldIndex, int newIndex)
+        public new virtual void Move(int oldIndex, int newIndex)
         {
-            base.MoveItem(oldIndex, newIndex);
+            base.Move(oldIndex, newIndex);
         }
 
         internal static void Copy(

@@ -22,16 +22,6 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="NotNullCollection{T}"/> class
-        /// class that contains elements copied from the specified collection.
-        /// </summary>
-        /// <param name="collection">The collection from which the elements are copied.</param>
-        public NotNullCollection(IEnumerable<T> collection)
-            : base(collection)
-        {
-        }
-
-        /// <summary>
         /// Initializes a new instance of the collection
         /// as a wrapper for the specified list.
         /// </summary>

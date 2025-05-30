@@ -838,7 +838,8 @@ namespace Alternet.UI
         {
             Invoke(() =>
             {
-                NotNullCollection<ListControlItem> collection = new(rootItem.EnumExpandedItems());
+                List<ListControlItem> list = new(rootItem.EnumExpandedItems());
+                NotNullCollection<ListControlItem> collection = new(list);
                 ListBox.SetItemsFast(collection, VirtualListBox.SetItemsKind.ChangeField);
             });
         }

@@ -1,5 +1,8 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// Source code for list and collection:
+// https://github.com/microsoft/referencesource/blob/master/mscorlib/system/collections/generic/list.cs
+// https://github.com/microsoft/referencesource/blob/master/mscorlib/system/collections/objectmodel/collection.cs
 
 using System;
 using System.Collections.Generic;
@@ -7,6 +10,7 @@ using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.ComponentModel;
 using System.Diagnostics;
+using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Runtime.Serialization;
 
@@ -32,6 +36,10 @@ namespace Alternet.UI
         [NonSerialized]
         private int blockReentrancyCount;
 
+        static BaseObservableCollection()
+        {
+        }
+
         /// <summary>
         /// Initializes a new instance of collection that is empty and
         /// has default initial capacity.
@@ -42,27 +50,11 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Initializes a new instance of the collection that contains
-        /// elements copied from the specified collection and has sufficient capacity
-        /// to accommodate the number of elements copied.
-        /// </summary>
-        /// <param name="collection">The collection whose elements are copied to the new list.</param>
-        /// <remarks>
-        /// The elements are copied onto the collection in the
-        /// same order they are read by the enumerator of the collection.
-        /// </remarks>
-        /// <exception cref="ArgumentNullException"> collection is a null reference.</exception>
-        public BaseObservableCollection(IEnumerable<T> collection)
-            : this(new List<T>(collection))
-        {
-        }
-
-        /// <summary>
         /// Initializes a new instance of the collection
         /// as a wrapper for the specified list.
         /// </summary>
         /// <param name="list">The list that is wrapped by the new collection.</param>
-        public BaseObservableCollection(IList<T> list)
+        public BaseObservableCollection(List<T> list)
             : base(list)
         {
         }
@@ -80,9 +72,121 @@ namespace Alternet.UI
         public virtual event PropertyChangedEventHandler? PropertyChanged;
 
         /// <summary>
-        /// Move item at oldIndex to newIndex.
+        /// Sorts the elements in this collection.  Uses the default comparer.
         /// </summary>
-        public void Move(int oldIndex, int newIndex) => MoveItem(oldIndex, newIndex);
+        public virtual void Sort()
+        {
+            CheckReentrancy();
+
+            if (Items is List<T> list)
+            {
+                list.Sort();
+            }
+            else
+            {
+                throw new NotImplementedException();
+            }
+
+            OnIndexerPropertyChanged();
+            OnCollectionReset();
+        }
+
+        /// <summary>
+        /// Sorts the elements in this collection. Uses the provided comparer.
+        /// </summary>
+        public virtual void Sort(IComparer<T> comparer)
+        {
+            CheckReentrancy();
+
+            if (Items is List<T> list)
+            {
+                list.Sort(comparer);
+            }
+            else
+            {
+                throw new NotImplementedException();
+            }
+
+            OnIndexerPropertyChanged();
+            OnCollectionReset();
+        }
+
+        /// <summary>
+        /// Sorts the elements in a section of this collection. The sort compares the
+        /// elements to each other using the given IComparer interface. If
+        /// comparer is null, the elements are compared to each other using
+        /// the IComparable interface, which in that case must be implemented by all
+        /// elements of the list.
+        /// </summary>
+        public virtual void Sort(int index, int count, IComparer<T>? comparer)
+        {
+            CheckReentrancy();
+
+            if (Items is List<T> list)
+            {
+                list.Sort(index, count, comparer);
+            }
+            else
+            {
+                throw new NotImplementedException();
+            }
+
+            OnIndexerPropertyChanged();
+            OnCollectionReset();
+        }
+
+        /// <summary>
+        /// Sorts the elements in the entire collection using the specified comparison.
+        /// </summary>
+        public virtual void Sort(Comparison<T> comparison)
+        {
+            CheckReentrancy();
+
+            if (Items is List<T> list)
+            {
+                list.Sort(comparison);
+            }
+            else
+            {
+                throw new NotImplementedException();
+            }
+
+            OnIndexerPropertyChanged();
+            OnCollectionReset();
+        }
+
+        /// <summary>
+        /// Moves item from oldIndex to newIndex within the list.
+        /// Raises a <see cref="CollectionChanged"/> event to any listeners.
+        /// </summary>
+        public virtual void Move(int oldIndex, int newIndex)
+        {
+            CheckReentrancy();
+
+            T removedItem = this[oldIndex];
+
+            base.RemoveItem(oldIndex);
+            base.InsertItem(newIndex, removedItem);
+
+            OnIndexerPropertyChanged();
+            OnCollectionChanged(NotifyCollectionChangedAction.Move, removedItem, newIndex, oldIndex);
+        }
+
+        /// <summary> Check and assert for reentrant attempts to change this collection. </summary>
+        /// <exception cref="InvalidOperationException"> raised when changing the collection
+        /// while another collection change is still being notified to other listeners.</exception>
+        protected void CheckReentrancy()
+        {
+            if (blockReentrancyCount > 0)
+            {
+                // we can allow changes if there's only one listener - the problem
+                // only arises if reentrant changes make the original event args
+                // invalid for later listeners.  This keeps existing code working
+                // (e.g. Selector.SelectedItems).
+                if (CollectionChanged?.GetInvocationList().Length > 1)
+                    throw new InvalidOperationException("ObservableCollection reentrancy not allowed");
+            }
+        }
 
         /// <summary>
         /// Called by base class when the list is being cleared;
@@ -142,24 +246,6 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Called by base class when an item is
-        /// to be moved within the list;
-        /// raises a <see cref="CollectionChanged"/> event to any listeners.
-        /// </summary>
-        protected virtual void MoveItem(int oldIndex, int newIndex)
-        {
-            CheckReentrancy();
-
-            T removedItem = this[oldIndex];
-
-            base.RemoveItem(oldIndex);
-            base.InsertItem(newIndex, removedItem);
-
-            OnIndexerPropertyChanged();
-            OnCollectionChanged(NotifyCollectionChangedAction.Move, removedItem, newIndex, oldIndex);
-        }
-
-        /// <summary>
         /// Raises a <see cref="PropertyChanged"/> event (per <see cref="INotifyPropertyChanged" />).
         /// </summary>
         protected virtual void OnPropertyChanged(PropertyChangedEventArgs e)
@@ -195,6 +281,14 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Helper to raise <see cref="CollectionChanged"/> event with action == Reset to any listeners.
+        /// </summary>
+        protected void OnCollectionReset()
+        {
+            OnCollectionChanged(EventArgsCache.ResetCollectionChanged);
+        }
+
+        /// <summary>
         /// Disallow reentrant attempts to change this collection. E.g. an event handler
         /// of the <see cref="CollectionChanged"/> event
         /// is not allowed to make changes to this collection.
@@ -215,20 +309,18 @@ namespace Alternet.UI
             return EnsureMonitorInitialized();
         }
 
-        /// <summary> Check and assert for reentrant attempts to change this collection. </summary>
-        /// <exception cref="InvalidOperationException"> raised when changing the collection
-        /// while another collection change is still being notified to other listeners.</exception>
-        protected void CheckReentrancy()
+        [Conditional("DEBUG")]
+        private static void CallTests()
         {
-            if (blockReentrancyCount > 0)
-            {
-                // we can allow changes if there's only one listener - the problem
-                // only arises if reentrant changes make the original event args
-                // invalid for later listeners.  This keeps existing code working
-                // (e.g. Selector.SelectedItems).
-                if (CollectionChanged?.GetInvocationList().Length > 1)
-                    throw new InvalidOperationException("ObservableCollection reentrancy not allowed");
-            }
+            TestSort();
+        }
+
+        [Conditional("DEBUG")]
+        private static void TestSort()
+        {
+            var numbers = new List<int> { 5, 2, 8, 1, 3 };
+            var collection = new BaseObservableCollection<int>(numbers);
+            collection.Sort();
         }
 
         /// <summary>
@@ -274,11 +366,6 @@ namespace Alternet.UI
         {
             OnCollectionChanged(new NotifyCollectionChangedEventArgs(action, newItem, oldItem, index));
         }
-
-        /// <summary>
-        /// Helper to raise <see cref="CollectionChanged"/> event with action == Reset to any listeners.
-        /// </summary>
-        private void OnCollectionReset() => OnCollectionChanged(EventArgsCache.ResetCollectionChanged);
 
         private SimpleMonitor EnsureMonitorInitialized() => monitor ??= new SimpleMonitor(this);
 
