@@ -73,9 +73,15 @@ namespace Alternet.UI
                     }
                     else
                     {
-                        var screenPosition = PlessUtils.ClientToScreen(position, control);
-                        position = PlessUtils.ScreenToClient(screenPosition, result);
+                        var temp = result;
+                        while(temp != control && temp is not null)
+                        {
+                            position -= temp.Location;
+                            temp = temp.Parent;
+                        }
+
                         PlessMouse.UpdateMousePosition(position, result);
+                        mousePosition = position;
                         return result;
                     }
                 }
