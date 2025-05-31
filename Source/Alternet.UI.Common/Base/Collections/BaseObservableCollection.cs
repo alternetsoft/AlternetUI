@@ -36,6 +36,9 @@ namespace Alternet.UI
         [NonSerialized]
         private int blockReentrancyCount;
 
+        [NonSerialized]
+        private List<T> list;
+
         static BaseObservableCollection()
         {
         }
@@ -57,6 +60,7 @@ namespace Alternet.UI
         public BaseObservableCollection(List<T> list)
             : base(list)
         {
+            this.list = list;
         }
 
         /// <summary>
@@ -70,6 +74,14 @@ namespace Alternet.UI
         /// </summary>
         [field: NonSerialized]
         public virtual event PropertyChangedEventHandler? PropertyChanged;
+
+        /// <summary>
+        /// Gets access to the internal list.
+        /// </summary>
+        /// <remarks>
+        /// When you call methods of the internal list, collection events are not called.
+        /// </remarks>
+        protected List<T> List => list;
 
         /// <summary>
         /// Sorts the elements in this collection.  Uses the default comparer.
@@ -285,7 +297,7 @@ namespace Alternet.UI
         /// </summary>
         protected void OnCollectionReset()
         {
-            OnCollectionChanged(EventArgsCache.ResetCollectionChanged);
+            OnCollectionChanged(EventArgsUtils.ResetCollectionChangedArgs);
         }
 
         /// <summary>
@@ -309,6 +321,50 @@ namespace Alternet.UI
             return EnsureMonitorInitialized();
         }
 
+        /// <summary>
+        /// Helper to raise a <see cref="PropertyChanged"/> event for the Count property.
+        /// </summary>
+        protected void OnCountPropertyChanged()
+            => OnPropertyChanged(EventArgsUtils.CountPropertyChangedArgs);
+
+        /// <summary>
+        /// Helper to raise a <see cref="PropertyChanged"/> event for the Indexer property.
+        /// </summary>
+        protected void OnIndexerPropertyChanged()
+            => OnPropertyChanged(EventArgsUtils.IndexerPropertyChangedArgs);
+
+        /// <summary>
+        /// Helper to raise <see cref="CollectionChanged"/> event to any listeners.
+        /// </summary>
+        protected void OnCollectionChanged(NotifyCollectionChangedAction action, object? item, int index)
+        {
+            OnCollectionChanged(new NotifyCollectionChangedEventArgs(action, item, index));
+        }
+
+        /// <summary>
+        /// Helper to raise <see cref="CollectionChanged"/> event to any listeners.
+        /// </summary>
+        protected void OnCollectionChanged(
+            NotifyCollectionChangedAction action,
+            object? item,
+            int index,
+            int oldIndex)
+        {
+            OnCollectionChanged(new NotifyCollectionChangedEventArgs(action, item, index, oldIndex));
+        }
+
+        /// <summary>
+        /// Helper to raise <see cref="CollectionChanged"/> event to any listeners.
+        /// </summary>
+        protected void OnCollectionChanged(
+            NotifyCollectionChangedAction action,
+            object? oldItem,
+            object? newItem,
+            int index)
+        {
+            OnCollectionChanged(new NotifyCollectionChangedEventArgs(action, newItem, oldItem, index));
+        }
+
         [Conditional("DEBUG")]
         private static void CallTests()
         {
@@ -321,50 +377,6 @@ namespace Alternet.UI
             var numbers = new List<int> { 5, 2, 8, 1, 3 };
             var collection = new BaseObservableCollection<int>(numbers);
             collection.Sort();
-        }
-
-        /// <summary>
-        /// Helper to raise a <see cref="PropertyChanged"/> event for the Count property.
-        /// </summary>
-        private void OnCountPropertyChanged()
-            => OnPropertyChanged(EventArgsCache.CountPropertyChanged);
-
-        /// <summary>
-        /// Helper to raise a <see cref="PropertyChanged"/> event for the Indexer property.
-        /// </summary>
-        private void OnIndexerPropertyChanged()
-            => OnPropertyChanged(EventArgsCache.IndexerPropertyChanged);
-
-        /// <summary>
-        /// Helper to raise <see cref="CollectionChanged"/> event to any listeners.
-        /// </summary>
-        private void OnCollectionChanged(NotifyCollectionChangedAction action, object? item, int index)
-        {
-            OnCollectionChanged(new NotifyCollectionChangedEventArgs(action, item, index));
-        }
-
-        /// <summary>
-        /// Helper to raise <see cref="CollectionChanged"/> event to any listeners.
-        /// </summary>
-        private void OnCollectionChanged(
-            NotifyCollectionChangedAction action,
-            object? item,
-            int index,
-            int oldIndex)
-        {
-            OnCollectionChanged(new NotifyCollectionChangedEventArgs(action, item, index, oldIndex));
-        }
-
-        /// <summary>
-        /// Helper to raise <see cref="CollectionChanged"/> event to any listeners.
-        /// </summary>
-        private void OnCollectionChanged(
-            NotifyCollectionChangedAction action,
-            object? oldItem,
-            object? newItem,
-            int index)
-        {
-            OnCollectionChanged(new NotifyCollectionChangedEventArgs(action, newItem, oldItem, index));
         }
 
         private SimpleMonitor EnsureMonitorInitialized() => monitor ??= new SimpleMonitor(this);
@@ -384,18 +396,6 @@ namespace Alternet.UI
                 blockReentrancyCount = monitor.busyCount;
                 monitor.collection = this;
             }
-        }
-
-        internal static class EventArgsCache
-        {
-            internal static readonly PropertyChangedEventArgs CountPropertyChanged
-                = new ("Count");
-
-            internal static readonly PropertyChangedEventArgs IndexerPropertyChanged
-                = new ("Item[]");
-
-            internal static readonly NotifyCollectionChangedEventArgs ResetCollectionChanged
-                = new (NotifyCollectionChangedAction.Reset);
         }
 
         internal sealed class CollectionDebugView<T1>
