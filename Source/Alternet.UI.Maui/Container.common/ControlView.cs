@@ -57,14 +57,7 @@ namespace Alternet.UI
 
             MauiApplicationHandler.RegisterThemeChangedHandler();
 
-            HandlerChanged += (s, e) =>
-            {
-                if (NeedSetFocusOnce && Handler is not null)
-                {
-                    NeedSetFocusOnce = false;
-                    SetFocusIfPossible();
-                }
-            };
+            RequireDoubleTapGesture();
         }
 
         /// <summary>
@@ -144,12 +137,6 @@ namespace Alternet.UI
                 InvalidateSurface();
             }
         }
-
-        /// <summary>
-        /// Gets or sets a value indicating whether the control needs to set focus once when handler
-        /// was changed.
-        /// </summary>
-        internal virtual bool NeedSetFocusOnce { get; set; }
 
         /// <summary>
         /// Gets <see cref="ControlView"/> for the specified <see cref="Control"/>.
@@ -451,6 +438,21 @@ namespace Alternet.UI
         /// <param name="e">Event arguments.</param>
         protected virtual void OnDoubleTapGesture(TappedEventArgs e)
         {
+            if (control is null)
+                return;
+
+            var position = e.GetPosition(this);
+            if (position is null)
+                return;
+            PointD pt = (position.Value.X, position.Value.Y);
+
+            AbstractControl.BubbleMouseDoubleClick(
+                        control,
+                        DateTime.Now.Ticks,
+                        MouseButton.Left,
+                        pt,
+                        out _,
+                        TouchDeviceType.Mouse);
         }
 
         /// <summary>

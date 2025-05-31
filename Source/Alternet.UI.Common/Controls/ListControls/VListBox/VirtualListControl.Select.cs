@@ -802,8 +802,8 @@ namespace Alternet.UI
 
                 if (changed)
                 {
-                    RaiseSelectionChanged(EventArgs.Empty);
                     Invalidate();
+                    RaiseSelectionChanged(EventArgs.Empty);
                 }
             }
         }
@@ -824,6 +824,10 @@ namespace Alternet.UI
                 return;
 
             var oldSelected = SelectedIndex;
+
+            if (index < 0 || index >= Count)
+                index = null;
+
             if (oldSelected == index)
                 return;
 
@@ -831,9 +835,6 @@ namespace Alternet.UI
             {
                 if(clearSelection)
                     ClearSelected();
-
-                if (index != null && (index < 0 || index >= Count))
-                    index = null;
 
                 selectedIndex = index;
 

@@ -184,6 +184,31 @@ namespace Alternet.UI
             currentTarget.RaiseMouseUp(eventArgs);
         }
 
+        public static void BubbleMouseDoubleClick(
+            AbstractControl? originalTarget,
+            long timestamp,
+            MouseButton changedButton,
+            PointD? position,
+            out bool handled,
+            TouchDeviceType deviceType = TouchDeviceType.Mouse)
+        {
+            handled = false;
+            var currentTarget = AbstractControl.GetMouseTargetControl(ref originalTarget, ref position);
+            if (currentTarget is null || position is null)
+                return;
+
+            var eventArgs
+                = new MouseEventArgs(
+                    currentTarget,
+                    originalTarget!,
+                    changedButton,
+                    timestamp,
+                    position.Value);
+            eventArgs.DeviceType = deviceType;
+
+            currentTarget.RaiseMouseDoubleClick(eventArgs);
+        }
+
         /// <summary>
         /// Calls <see cref="BubbleKeyDown(KeyEventArgs)"/> for the focused control with
         /// the specified parameters.
