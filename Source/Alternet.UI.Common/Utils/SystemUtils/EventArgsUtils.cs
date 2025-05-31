@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.Specialized;
 using System.ComponentModel;
 using System.Text;
 
@@ -10,6 +11,15 @@ namespace Alternet.UI
     /// </summary>
     public static class EventArgsUtils
     {
+        public static readonly PropertyChangedEventArgs CountPropertyChangedArgs
+            = new("Count");
+
+        public static readonly PropertyChangedEventArgs IndexerPropertyChangedArgs
+            = new("Item[]");
+
+        public static readonly NotifyCollectionChangedEventArgs ResetCollectionChangedArgs
+            = new(NotifyCollectionChangedAction.Reset);
+
         private static PropertyChangedEventArgs? defaultPropertyChangedEventArgs;
 
         /// <summary>
