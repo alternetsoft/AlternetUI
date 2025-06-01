@@ -38,5 +38,23 @@ namespace Alternet.Maui
                 return exitCommand;
             }
         }
+
+        /// <summary>
+        /// Converts an <see cref="Alternet.UI.Command"/> to
+        /// a <see cref="Microsoft.Maui.Controls.Command"/>.
+        /// </summary>
+        /// <remarks>The returned <see cref="Microsoft.Maui.Controls.Command"/> uses
+        /// the <paramref name="command"/>'s  <see cref="Alternet.UI.Command.Execute"/> and
+        /// <see cref="Alternet.UI.Command.CanExecute"/> delegates for execution and
+        /// command state evaluation.</remarks>
+        /// <param name="command">The <see cref="Alternet.UI.Command"/> instance to convert.
+        /// Cannot be null.</param>
+        /// <returns>A <see cref="Microsoft.Maui.Controls.Command"/> instance that
+        /// wraps the provided <see cref="Alternet.UI.Command"/>.</returns>
+        public static Command ToMaui(this Alternet.UI.Command command)
+        {
+            var result = new Command(command.Execute, command.CanExecute);
+            return result;
+        }
     }
 }
