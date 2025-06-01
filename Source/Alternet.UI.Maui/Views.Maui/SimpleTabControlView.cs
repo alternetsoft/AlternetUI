@@ -38,6 +38,13 @@ namespace Alternet.Maui
             base.Content = grid;
         }
 
+        /// <summary>
+        /// Occurs when the selected tab changes.
+        /// </summary>
+        /// <remarks>This event is triggered whenever the currently selected
+        /// tab is changed by the user or
+        /// programmatically. Subscribers can use this event to perform
+        /// actions based on the newly selected tab.</remarks>
         public event EventHandler? SelectedTabChanged;
 
         /// <summary>

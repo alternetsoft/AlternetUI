@@ -116,7 +116,8 @@ namespace Alternet.Maui
         public Label Label => label;
 
         /// <summary>
-        /// Creates a new instance of <see cref="SimpleInputDialog"/> configured as a "Go To Line" dialog.
+        /// Creates a new instance of <see cref="SimpleInputDialog"/>
+        /// configured as a "Go To Line" dialog.
         /// </summary>
         /// <returns>A <see cref="SimpleInputDialog"/> instance with pre-configured title,
         /// message, and numeric input keyboard.</returns>

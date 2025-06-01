@@ -11,16 +11,49 @@ namespace Alternet.UI
     /// </summary>
     public static class EventArgsUtils
     {
+        /// <summary>
+        /// Provides a pre-initialized <see cref="PropertyChangedEventArgs"/>
+        /// instance for the "Count" property.
+        /// </summary>
+        /// <remarks>This static field can be used to avoid repeatedly creating
+        /// new <see cref="PropertyChangedEventArgs"/> instances for the
+        /// "Count" property, improving performance in scenarios
+        /// where property change notifications for "Count" are frequent.</remarks>
         public static readonly PropertyChangedEventArgs CountPropertyChangedArgs
             = new("Count");
 
+        /// <summary>
+        /// Provides a pre-initialized <see cref="PropertyChangedEventArgs"/>
+        /// instance for the "Items[]" property.
+        /// </summary>
+        /// <remarks>This static field can be used to avoid repeatedly creating
+        /// new <see cref="PropertyChangedEventArgs"/> instances for the
+        /// "Items[]" property, improving performance in scenarios
+        /// where property change notifications for "Items[]" are frequent.</remarks>
         public static readonly PropertyChangedEventArgs IndexerPropertyChangedArgs
             = new("Item[]");
 
+        /// <summary>
+        /// Provides a pre-initialized instance
+        /// of <see cref="NotifyCollectionChangedEventArgs"/>  with the
+        /// <see cref="NotifyCollectionChangedAction.Reset"/> action.
+        /// </summary>
+        /// <remarks>This static field can be used to represent a reset action
+        /// in collection change notifications,  avoiding the need to create
+        /// a new instance of <see cref="NotifyCollectionChangedEventArgs"/>
+        /// each time a reset action is required.</remarks>
         public static readonly NotifyCollectionChangedEventArgs ResetCollectionChangedArgs
             = new(NotifyCollectionChangedAction.Reset);
 
         private static PropertyChangedEventArgs? defaultPropertyChangedEventArgs;
+
+        /// <summary>
+        /// Provides a pre-initialized <see cref="PropertyChangedEventArgs"/>
+        /// instance with an empty
+        /// <see cref="PropertyChangedEventArgs.PropertyName"/>.
+        /// </summary>
+        /// <remarks>This static field can be used to avoid repeatedly creating
+        /// new <see cref="PropertyChangedEventArgs"/> instances, improving performance.</remarks>
 
         /// <summary>
         /// Gets default <see cref="PropertyChangedEventArgs"/> instance with an empty

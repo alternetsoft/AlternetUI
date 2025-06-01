@@ -184,6 +184,25 @@ namespace Alternet.UI
             currentTarget.RaiseMouseUp(eventArgs);
         }
 
+        /// <summary>
+        /// Raises a mouse double-click event for the specified control
+        /// and propagates it to the appropriate target.
+        /// </summary>
+        /// <remarks>This method determines the appropriate target control for the
+        /// mouse double-click event based on the original target and position.
+        /// If no valid target is found, the method exits without
+        /// raising the event.</remarks>
+        /// <param name="originalTarget">The control that was originally targeted by
+        /// the mouse double-click event. Can be <see langword="null"/>.</param>
+        /// <param name="timestamp">The timestamp of the event, typically
+        /// in milliseconds since the application started.</param>
+        /// <param name="changedButton">The mouse button that triggered the double-click event.</param>
+        /// <param name="position">The position of the mouse pointer at the time of
+        /// the event, in device-independent coordinates. Can be <see langword="null"/>.</param>
+        /// <param name="handled">When the method returns, contains <see langword="true"/>
+        /// if the event was handled; otherwise, <see langword="false"/>.</param>
+        /// <param name="deviceType">The type of input device that triggered the event.
+        /// Defaults to <see cref="TouchDeviceType.Mouse"/>.</param>
         public static void BubbleMouseDoubleClick(
             AbstractControl? originalTarget,
             long timestamp,
