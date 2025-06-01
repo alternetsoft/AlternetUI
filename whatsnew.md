@@ -1,3 +1,12 @@
+# 0.9.731 (2025 June 01)
+
+- Maui: Fixed mouse position for events of child controls.
+- Maui: Process mouse double-click events.
+- Maui: SimpleInputDialog.DisplayPromptAsync.
+- SimpleToolBarView: Disabled tab stop on buttons.
+- Maui: Fixed BaseEntry.EscapeClicked event not called in some cases.
+- BaseObservableCollection: List property and other new members.
+
 # 0.9.730 (2025 May 30)
 
 - Maui: Implement App.AddIdleTask (this fixed different issues in the library as many methods use it).

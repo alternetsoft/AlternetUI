@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ApiInfo>
-  <Assembly Name="Alternet.UI.Common, Version=0.9.730.0, Culture=neutral, PublicKeyToken=7fb0fe57212b4b74">
+  <Assembly Name="Alternet.UI.Common, Version=0.9.731.0, Culture=neutral, PublicKeyToken=7fb0fe57212b4b74">
     <Type Name="XamlX.Runtime.IXamlParentStackProviderV1" />
     <Type Name="XamlX.Runtime.IXamlXmlNamespaceInfoProviderV1" />
     <Type Name="XamlX.Runtime.XamlXmlNamespaceInfoV1" />
@@ -14085,6 +14085,7 @@
     <Type Name="Alternet.UI.MacOsUtils+NativeMethods" />
     <Type Name="Alternet.UI.MswUtils+NativeMethods" />
     <Type Name="Alternet.UI.StringUtils+ComparerUsingToString`1" />
+    <Type Name="Alternet.UI.AsyncUtils+ValueWaiter`1" />
     <Type Name="Alternet.UI.XmlUtils+XmlStreamConvertParams" />
     <Type Name="Alternet.Drawing.Graphics+DrawElementsParams+ElementParams" />
     <Type Name="Alternet.UI.ScrollBar+AltPositionInfo+Record" />
