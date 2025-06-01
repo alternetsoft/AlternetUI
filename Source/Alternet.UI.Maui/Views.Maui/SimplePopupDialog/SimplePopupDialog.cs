@@ -16,10 +16,45 @@ using Microsoft.Maui.Handlers;
 namespace Alternet.Maui
 {
     /// <summary>
+    /// Defines delegate that displays a prompt dialog to the application user with
+    /// the intent to capture a single string value.
+    /// </summary>
+    /// <param name="owner">The object which called the prompt dialog.</param>
+    /// <param name="title">The title of the prompt dialog.</param>
+    /// <param name="message">The body text of the prompt dialog.</param>
+    /// <param name="accept">Text to be displayed on the 'Accept' button.</param>
+    /// <param name="cancel">Text to be displayed on the 'Cancel' button.</param>
+    /// <param name="placeholder">The placeholder text to display in the prompt.
+    /// Can be <see langword="null"/> when no placeholder is desired.</param>
+    /// <param name="maxLength">The maximum length of the user response.</param>
+    /// <param name="keyboard">The keyboard type to use for the user response.</param>
+    /// <param name="initialValue">A pre-defined response that will be displayed,
+    /// and which can be edited by the user.</param>
+    /// <returns>A <see cref="Task"/> that displays a prompt display and returns the
+    /// string value as entered by the user.</returns>
+    public delegate Task<string> DisplayPromptAsyncDelegate(
+        object? owner,
+        string title,
+        string message,
+        string accept = "OK",
+        string cancel = "Cancel",
+        string? placeholder = null,
+        int maxLength = -1,
+        Microsoft.Maui.Keyboard? keyboard = default,
+        string initialValue = "");
+
+    /// <summary>
     /// Represents a simple popup dialog with a title, dialog content, and optional action buttons.
     /// </summary>
     public partial class SimplePopupDialog : BaseContentView
     {
+        /// <summary>
+        /// Represents the default horizontal and vertical alignment
+        /// for <see cref="SimplePopupDialog"/>.
+        /// </summary>
+        public static Alternet.UI.HVAlignment DefaultAlignedPosition
+            = Alternet.UI.HVAlignment.TopRight;
+
         /// <summary>
         /// Gets or sets the default placeholder text color for the input field.
         /// </summary>
@@ -156,7 +191,8 @@ namespace Alternet.Maui
         }
 
         /// <summary>
-        /// Gets or sets a value indicating whether the dialog should close when the OK button is clicked.
+        /// Gets or sets a value indicating whether the dialog should close when
+        /// the 'OK' button is clicked.
         /// </summary>
         public virtual bool CloseWhenOkButtonClicked { get; set; } = true;
 
@@ -268,6 +304,8 @@ namespace Alternet.Maui
         /// <returns>True if the alignment was successfully applied; otherwise, false.</returns>
         public virtual bool SetAlignedPosition(AbsoluteLayout? layout, Alternet.UI.HVAlignment? align)
         {
+            align ??= DefaultAlignedPosition;
+
             if (align is null)
                 return false;
 

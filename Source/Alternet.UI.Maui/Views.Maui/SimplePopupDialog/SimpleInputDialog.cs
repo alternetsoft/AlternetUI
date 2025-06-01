@@ -24,6 +24,8 @@ namespace Alternet.Maui
         private readonly Border entryBorder;
         private readonly Label label;
 
+        private Alternet.UI.AsyncUtils.ValueWaiter<string>? valueWaiter;
+
         static SimpleInputDialog()
         {
         }
@@ -131,6 +133,126 @@ namespace Alternet.Maui
             result.Entry.Keyboard = Keyboard.Numeric;
 
             return result;
+        }
+
+        /// <summary>
+        /// Works similar to <see cref="Page.DisplayPromptAsync"/> but is implemented
+        /// internally in the library.
+        /// </summary>
+        public static Task<string> DisplayPromptAsync(
+                object? owner,
+                string title,
+                string message,
+                string accept = "OK",
+                string cancel = "Cancel",
+                string? placeholder = null,
+                int maxLength = -1,
+                Microsoft.Maui.Keyboard? keyboard = default,
+                string initialValue = "")
+        {
+            var page = UI.MauiUtils.GetObjectPage(owner);
+            AbsoluteLayout? absoluteLayout = UI.MauiUtils.GetObjectAbsoluteLayout(owner);
+
+            if(page is not null && absoluteLayout is not null)
+            {
+                SimpleInputDialog? dialog
+                    = UI.MauiUtils.FindViewInContainer<SimpleInputDialog>(absoluteLayout);
+
+                dialog ??= new();
+
+                if(dialog.valueWaiter is not null)
+                {
+                    dialog.valueWaiter.SetValue(null!);
+                    dialog.valueWaiter = null;
+                }
+
+                AssignProperties(dialog);
+                dialog.valueWaiter = new();
+
+                dialog.SetAlignedPosition(absoluteLayout, DefaultAlignedPosition);
+                dialog.Owner = page;
+                dialog.IsVisible = true;
+                dialog.Entry.Focus();
+
+                return dialog.valueWaiter.WaitForValueAsync();
+            }
+
+            void AssignProperties(SimpleInputDialog dialog)
+            {
+                dialog.Title = title;
+                dialog.Message = message;
+                dialog.Text = initialValue;
+                if (maxLength >= 0)
+                    dialog.Entry.MaxLength = maxLength;
+                else
+                    dialog.Entry.MaxLength = int.MaxValue;
+                dialog.Entry.Keyboard = keyboard;
+            }
+
+            return DefaultDisplayPromptAsync(
+                page,
+                title,
+                message,
+                accept,
+                cancel,
+                placeholder,
+                maxLength,
+                keyboard,
+                initialValue);
+        }
+
+        /// <summary>
+        /// Calls <see cref="Page.DisplayPromptAsync"/>.
+        /// </summary>
+        public static Task<string> DefaultDisplayPromptAsync(
+                object? owner,
+                string title,
+                string message,
+                string accept = "OK",
+                string cancel = "Cancel",
+                string? placeholder = null,
+                int maxLength = -1,
+                Microsoft.Maui.Keyboard? keyboard = default,
+                string initialValue = "")
+        {
+            var page = UI.MauiUtils.GetObjectPage(owner);
+
+            if(page is null)
+                return Task.FromResult<string>(null!);
+
+            return page.DisplayPromptAsync(
+                title,
+                message,
+                accept,
+                cancel,
+                placeholder,
+                maxLength,
+                keyboard,
+                initialValue);
+        }
+
+        /// <inheritdoc/>
+        public override void OnOkButtonClicked(Alternet.UI.DialogCloseAction action)
+        {
+            base.OnOkButtonClicked(action);
+
+            if (valueWaiter is not null)
+            {
+                valueWaiter.SetValue(Entry.Text);
+                valueWaiter = null;
+            }
+        }
+
+        /// <inheritdoc/>
+        public override void OnCancelButtonClicked(Alternet.UI.DialogCloseAction action)
+        {
+            base.OnCancelButtonClicked(action);
+
+            if (valueWaiter is not null)
+            {
+                valueWaiter.SetValue(null!);
+                valueWaiter = null;
+            }
         }
 
         /// <inheritdoc/>
