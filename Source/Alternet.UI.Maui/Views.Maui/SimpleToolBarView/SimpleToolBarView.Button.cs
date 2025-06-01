@@ -276,6 +276,22 @@ namespace Alternet.Maui
                     }
                 }
             }
+
+            protected override void OnHandlerChanged()
+            {
+                base.OnHandlerChanged();
+
+#if WINDOWS
+                var platformView = Handler?.PlatformView as Microsoft.Maui.Platform.MauiButton;
+
+                if (platformView is null)
+                    return;
+
+                platformView.IsTabStop = false;
+                platformView.AllowFocusOnInteraction = false;
+                platformView.AllowFocusWhenDisabled = false;
+#endif
+            }
         }
 
         internal partial class ToolbarButtonContainer
