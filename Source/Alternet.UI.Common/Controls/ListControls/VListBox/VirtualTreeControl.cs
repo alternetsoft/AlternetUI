@@ -119,6 +119,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets the underlying <see cref="VirtualListBox"/> used by this tree control.
         /// </summary>
+        [Browsable(false)]
         public virtual VirtualListBox ListBox
         {
             get
@@ -278,6 +279,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets the root item of the tree view.
         /// </summary>
+        [Browsable(false)]
         public virtual TreeControlRootItem RootItem
         {
             get
@@ -302,7 +304,26 @@ namespace Alternet.UI
         /// <summary>
         /// Gets the collection of visible items contained in the tree view.
         /// </summary>
+        [Browsable(false)]
         public IReadOnlyList<ListControlItem> VisibleItems => ListBox.Items;
+
+        internal new LayoutStyle? Layout
+        {
+            get => base.Layout;
+            set => base.Layout = value;
+        }
+
+        internal new Thickness Padding
+        {
+            get => base.Padding;
+            set => base.Padding = value;
+        }
+
+        internal new Thickness? MinChildMargin
+        {
+            get => base.MinChildMargin;
+            set => base.MinChildMargin = value;
+        }
 
         /// <inheritdoc/>
         public virtual Coord GetLevelMargin()
