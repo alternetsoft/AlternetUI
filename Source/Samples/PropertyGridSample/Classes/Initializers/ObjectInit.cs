@@ -281,11 +281,11 @@ namespace PropertyGridSample
                 (c as RadioButton)!.Text = "RadioButton";
             });
 
-            Actions.Add(typeof(TreeView), (c) =>
+            Actions.Add(typeof(VirtualTreeControl), (c) =>
             {
-                TreeView treeView = (c as TreeView)!;
+                VirtualTreeControl treeView = (c as VirtualTreeControl)!;
                 treeView.SuggestedSize = defaultListSize;
-                InitTreeView(treeView);
+                InitVirtualTreeControl(treeView);
             });
 
             Actions.Add(typeof(ListView), (c) =>
@@ -540,6 +540,17 @@ namespace PropertyGridSample
 
         }
 
+        public static void InitVirtualTreeControl(VirtualTreeControl control)
+        {
+            if (App.SafeWindow.UseSmallImages)
+                control.ImageList = LoadImageLists().Small;
+            else
+                control.ImageList = LoadImageLists().Large;
+
+            control.HorizontalAlignment = HorizontalAlignment.Stretch;
+            AddItems(control, 10);
+        }
+
         public static void InitTreeView(TreeView control)
         {
             if (App.SafeWindow.UseSmallImages)
@@ -588,6 +599,45 @@ namespace PropertyGridSample
                     }
 
                     treeView.Items.Add(item);
+                }
+            }
+            finally
+            {
+                treeView.EndUpdate();
+            }
+        }
+
+        private static void AddItems(VirtualTreeControl treeView, int count)
+        {
+            treeView.BeginUpdate();
+            try
+            {
+                for (int i = 0; i < count; i++)
+                {
+                    int imageIndex = i % 4;
+                    var item = new TreeControlItem(
+                        "Item " + GenItemIndex(),
+                        imageIndex);
+                    for (int j = 0; j < 3; j++)
+                    {
+                        var childItem = new TreeControlItem(
+                            item.Text + "." + j,
+                            imageIndex);
+                        item.Add(childItem);
+
+                        if (i < 5)
+                        {
+                            for (int k = 0; k < 2; k++)
+                            {
+                                childItem.Add(
+                                    new TreeControlItem(
+                                        item.Text + "." + k,
+                                        imageIndex));
+                            }
+                        }
+                    }
+
+                    treeView.Add(item);
                 }
             }
             finally

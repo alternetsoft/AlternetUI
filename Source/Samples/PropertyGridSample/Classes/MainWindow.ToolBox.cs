@@ -84,7 +84,7 @@ namespace PropertyGridSample
                 LimitedTypes.Add(typeof(ScrollBar));
                 LimitedTypes.Add(typeof(StackPanel));
                 LimitedTypes.Add(typeof(TextBox));
-                LimitedTypes.Add(typeof(TreeView));
+                LimitedTypes.Add(typeof(VirtualTreeControl));
                 LimitedTypes.Add(typeof(VerticalStackPanel));
                 LimitedTypes.Add(typeof(CardPanel));
                 LimitedTypes.Add(typeof(SpeedButton));
