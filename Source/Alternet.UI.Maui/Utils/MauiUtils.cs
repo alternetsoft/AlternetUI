@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using Alternet.Drawing;
 using Alternet.Maui.Extensions;
 
+using Microsoft.Maui;
 using Microsoft.Maui.ApplicationModel;
 using Microsoft.Maui.Controls;
 using Microsoft.Maui.Devices;
@@ -603,6 +604,203 @@ namespace Alternet.UI
             }
 
             return result;
+        }
+
+        /// <summary>
+        /// Gets main page from the first window of the application.
+        /// </summary>
+        /// <returns></returns>
+        public static Page? GetMainPageFromApplication()
+        {
+            var app = Microsoft.Maui.Controls.Application.Current;
+            if (app is null)
+                return null;
+            var windows = app.Windows;
+            if (windows.Count == 0)
+                return null;
+            var result = windows[0].Page;
+            return result;
+        }
+
+        /// <summary>
+        /// Retrieves the root child element of the specified <see cref="Page"/>.
+        /// </summary>
+        /// <remarks>This method supports <see cref="ContentPage"/>,
+        /// <see cref="NavigationPage"/>, and
+        /// <see cref="Shell"/>. For <see cref="ContentPage"/>, it returns
+        /// the <see cref="ContentPage.Content"/>. For
+        /// <see cref="NavigationPage"/>, it returns the content of the root page
+        /// if the root page is a <see cref="ContentPage"/>. For <see cref="Shell"/>,
+        /// it returns the content of the current page if the current
+        /// page is a <see cref="ContentPage"/>.</remarks>
+        /// <param name="page">The <see cref="Page"/> from which to retrieve the
+        /// root child element.</param>
+        /// <returns>A <see cref="VisualElement"/> representing the root child of
+        /// the specified <see cref="Page"/>,  or
+        /// <see langword="null"/> if the page does not have a root child or is not
+        /// a supported type.</returns>
+        public static VisualElement? GetRootChild(Page page)
+        {
+            if (page is ContentPage contentPage)
+                return contentPage.Content;
+
+            if (page is NavigationPage navPage)
+                return navPage.RootPage is ContentPage navRoot ? navRoot.Content : null;
+
+            if (page is Shell)
+                return Shell.Current.CurrentPage is ContentPage shellPage ? shellPage.Content : null;
+
+            return null;
+        }
+
+        /// <summary>
+        /// Gets the first <see cref="AbsoluteLayout"/> child from a
+        /// <see cref="Page"/> using <see cref="IVisualTreeElement"/>.
+        /// </summary>
+        /// <param name="page">The target page.</param>
+        /// <returns>The <see cref="AbsoluteLayout"/> child if found, otherwise null.</returns>
+        public static AbsoluteLayout? GetAbsoluteLayoutChild(Page page)
+        {
+            if (page is IVisualTreeElement visualTreeElement)
+            {
+                foreach (var child in visualTreeElement.GetVisualChildren())
+                {
+                    if (child is AbsoluteLayout absoluteLayout)
+                        return absoluteLayout;
+                }
+            }
+
+            return GetRootChild(page) as AbsoluteLayout;
+        }
+
+        /// <summary>
+        /// Retrieves the <see cref="Page"/> associated with the specified object instance.
+        /// </summary>
+        /// <remarks>This method attempts to resolve the associated <see cref="Page"/> based
+        /// on the type of the provided <paramref name="instance"/>. If the instance is a
+        /// <see cref="View"/>, the method uses utility logic to locate the parent page.
+        /// If the instance is a <see cref="UI.Control"/>, it attempts to find
+        /// the parent page of the control. If no association can be determined, the main page
+        /// of the application  is returned as a fallback.</remarks>
+        /// <param name="instance">The object for which to retrieve the associated
+        /// <see cref="Page"/>. This can be a <see cref="Page"/>,
+        /// <see cref="View"/>, or <see cref="UI.Control"/>.
+        /// If <paramref name="instance"/> is <c>null</c>, the method
+        /// attempts to retrieve the main page from the application.</param>
+        /// <returns>The <see cref="Page"/> associated with the specified object instance,
+        /// or the main page of the application if no associated page is found.
+        /// Returns <c>null</c> if no page can be determined.</returns>
+        public static Page? GetObjectPage(object? instance)
+        {
+            Page? page = null;
+
+            if (instance is Page asPage)
+            {
+                page = asPage;
+            }
+            else
+            if (instance is View asView)
+            {
+                page = UI.MauiUtils.GetPage(asView);
+            }
+            else
+            if (instance is UI.Control asControl)
+            {
+                page = GetParentPage(asControl);
+            }
+
+            return page ?? GetMainPageFromApplication();
+        }
+
+        /// <summary>
+        /// Retrieves the <see cref="AbsoluteLayout"/> associated with
+        /// the specified object instance.
+        /// </summary>
+        /// <remarks>
+        /// This method determines the <see cref="AbsoluteLayout"/> based
+        /// on the type of the provided instance:
+        /// <list type="bullet">
+        /// <item>
+        /// If the instance is a <see cref="Page"/>, the method attempts
+        /// to retrieve the root child as an <see cref="AbsoluteLayout"/>.
+        /// </item>
+        /// <item>
+        /// If the instance is a <see cref="View"/>, the method attempts to
+        /// retrieve the top-level <see cref="AbsoluteLayout"/>.
+        /// </item>
+        /// <item>
+        /// If the instance is a <see cref="UI.Control"/>, the method retrieves the
+        /// container associated with the control and attempts to retrieve the top-level
+        /// <see cref="AbsoluteLayout"/> from the container.
+        /// </item>
+        /// </list>
+        /// </remarks>
+        /// <param name="instance">The object instance for which to retrieve
+        /// the <see cref="AbsoluteLayout"/>. This can be a
+        /// <see cref="Page"/>, <see cref="View"/>, or <see cref="UI.Control"/>.</param>
+        /// <returns>The <see cref="AbsoluteLayout"/> associated with the specified object
+        /// instance, or <see langword="null"/>
+        /// if no <see cref="AbsoluteLayout"/> is found.</returns>
+        public static AbsoluteLayout? GetObjectAbsoluteLayout(object? instance)
+        {
+            AbsoluteLayout? result = null;
+
+            if (instance is Page asPage)
+            {
+                result = GetAbsoluteLayoutChild(asPage);
+            }
+            else
+            if (instance is View asView)
+            {
+                result = GetTopAbsoluteLayout(asView);
+            }
+            else
+            if (instance is UI.Control asControl)
+            {
+                var container = ControlView.GetContainer(asControl);
+                result = GetTopAbsoluteLayout(container);
+            }
+
+            return result;
+        }
+
+        /// <summary>
+        /// Finds a view of the specified type inside a container.
+        /// </summary>
+        /// <typeparam name="T">The type of view to find.</typeparam>
+        /// <param name="element">The container to search in.</param>
+        /// <returns>The first matching view if found, otherwise null.</returns>
+        public static T? FindViewInContainer<T>(VisualElement element)
+            where T : VisualElement
+        {
+            if (element is IVisualTreeElement visualTreeElement)
+            {
+                foreach (var child in visualTreeElement.GetVisualChildren())
+                {
+                    if (child is T foundView)
+                        return foundView;
+                }
+            }
+
+            return null;
+        }
+
+        /// <summary>
+        /// Gets parent <see cref="Microsoft.Maui.Controls.Page"/> for the specified control.
+        /// If control is not attached to the parent, this function returns main page.
+        /// </summary>
+        /// <param name="control">Control for which to get the parent page.</param>
+        /// <returns></returns>
+        public static Microsoft.Maui.Controls.Page? GetParentPage(AbstractControl? control)
+        {
+            if (control is null)
+                return GetMainPageFromApplication();
+            else
+            {
+                var container = ControlView.GetContainer(control);
+                var page = MauiUtils.GetPage(container);
+                return page ?? GetMainPageFromApplication();
+            }
         }
 
         /// <summary>

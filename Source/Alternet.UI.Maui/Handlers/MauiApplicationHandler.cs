@@ -95,14 +95,7 @@ namespace Alternet.UI
         /// <returns></returns>
         public static Page? GetMainPageFromApplication()
         {
-            var app = Microsoft.Maui.Controls.Application.Current;
-            if (app is null)
-                return null;
-            var windows = app.Windows;
-            if (windows.Count == 0)
-                return null;
-            var result = windows[0].Page;
-            return result;
+            return MauiUtils.GetMainPageFromApplication();
         }
 
         /// <summary>
@@ -113,15 +106,7 @@ namespace Alternet.UI
         /// <returns></returns>
         public static Microsoft.Maui.Controls.Page? GetParentPage(AbstractControl? control)
         {
-            if (control is null)
-                return GetMainPageFromApplication();
-            else
-            {
-                var container = ControlView.GetContainer(control);
-                var window = container?.Window;
-                var page = window?.Page;
-                return page ?? GetMainPageFromApplication();
-            }
+            return MauiUtils.GetParentPage(control);
         }
 
         /// <summary>
