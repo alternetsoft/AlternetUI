@@ -53,5 +53,29 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="func"></param>
         public static T Sync<T>(Func<Task<T>> func) => Task.Run(func).Result;
+
+        /// <summary>
+        /// A utility class that asynchronously waits until a value of type T is assigned.
+        /// </summary>
+        /// <typeparam name="T">The type of value to wait for.</typeparam>
+        public class ValueWaiter<T>
+        {
+            private readonly TaskCompletionSource<T> tcs = new();
+
+            /// <summary>
+            /// Returns a task that waits until a value of type T is assigned.
+            /// </summary>
+            public Task<T> WaitForValueAsync() => tcs.Task;
+
+            /// <summary>
+            /// Assigns a value and completes the waiting task.
+            /// </summary>
+            /// <param name="value">The value to set.</param>
+            public void SetValue(T value)
+            {
+                if (!tcs.Task.IsCompleted)
+                    tcs.SetResult(value);
+            }
+        }
     }
 }
