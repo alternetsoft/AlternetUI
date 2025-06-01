@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -52,6 +53,16 @@ namespace Alternet.Maui
                     if (focusedEntry.Value == this)
                         focusedEntry.Value = null;
                 }
+                else
+                {
+#if WINDOWS
+                    var platformView = Handler.PlatformView as Microsoft.UI.Xaml.Controls.TextBox;
+                    if (platformView is null)
+                        return;
+                    platformView.KeyDown -= OnPlatformViewKeyDown;
+                    platformView.KeyDown += OnPlatformViewKeyDown;
+#endif
+                }
             };
         }
 
@@ -81,7 +92,8 @@ namespace Alternet.Maui
         }
 
         /// <summary>
-        /// Gets or sets a value indicating whether all text should be selected when the control gains focus.
+        /// Gets or sets a value indicating whether all text should be selected when
+        /// the control gains focus.
         /// </summary>
         public bool SelectAllOnFocus { get; set; } = true;
 
@@ -108,5 +120,15 @@ namespace Alternet.Maui
         {
             base.OnTextChanged(oldValue, newValue);
         }
+
+#if WINDOWS
+        private void OnPlatformViewKeyDown(object sender, KeyRoutedEventArgs e)
+        {
+            if (e.Key == Windows.System.VirtualKey.Escape)
+            {
+                RaiseEscapeClicked();
+            }
+        }
+#endif
     }
 }
