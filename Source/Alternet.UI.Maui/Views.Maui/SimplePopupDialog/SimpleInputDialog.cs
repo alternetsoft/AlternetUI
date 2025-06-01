@@ -234,25 +234,25 @@ namespace Alternet.Maui
         /// <inheritdoc/>
         public override void OnOkButtonClicked(Alternet.UI.DialogCloseAction action)
         {
-            base.OnOkButtonClicked(action);
-
             if (valueWaiter is not null)
             {
                 valueWaiter.SetValue(Entry.Text);
                 valueWaiter = null;
             }
+
+            base.OnOkButtonClicked(action);
         }
 
         /// <inheritdoc/>
         public override void OnCancelButtonClicked(Alternet.UI.DialogCloseAction action)
         {
-            base.OnCancelButtonClicked(action);
-
             if (valueWaiter is not null)
             {
                 valueWaiter.SetValue(null!);
                 valueWaiter = null;
             }
+
+            base.OnCancelButtonClicked(action);
         }
 
         /// <inheritdoc/>

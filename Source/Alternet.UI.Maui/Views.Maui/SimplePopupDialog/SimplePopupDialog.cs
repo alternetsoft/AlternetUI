@@ -88,6 +88,7 @@ namespace Alternet.Maui
 
         static SimplePopupDialog()
         {
+/*
             Microsoft.Maui.Handlers.PageHandler.Mapper
                 .AppendToMapping(nameof(PageHandler), (handler, view) =>
             {
@@ -105,6 +106,7 @@ namespace Alternet.Maui
                 };
 #endif
             });
+*/
         }
 
         /// <summary>
