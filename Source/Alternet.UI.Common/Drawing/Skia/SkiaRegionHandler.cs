@@ -30,8 +30,8 @@ namespace Alternet.Drawing
         /// Initializes a new instance of the <see cref="SkiaRegionHandler"/> class
         /// with the specified rectangle.
         /// </summary>
-        /// <param name="rect">Ractangle.</param>
-        /// <param name="scaleFactor">Scale factor.</param>
+        /// <param name="rect">The rectangle.</param>
+        /// <param name="scaleFactor">The scale factor.</param>
         public SkiaRegionHandler(RectD rect, Coord? scaleFactor = null)
         {
             ScaleFactor = scaleFactor;
@@ -51,7 +51,10 @@ namespace Alternet.Drawing
             if (region.Handler is SkiaRegionHandler skiaHandler)
                 this.region = new(skiaHandler.region);
             else
-                throw new ArgumentException("SkiaRegionHandler required in SkiaRegionHandler(Region) constructor");
+            {
+                throw new ArgumentException(
+                    "SkiaRegionHandler required in SkiaRegionHandler constructor");
+            }
         }
 
         /// <summary>
@@ -68,7 +71,7 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
-        /// Gets or sets scale factor used when convertion device-independent units
+        /// Gets or sets scale factor used when conversion device-independent units
         /// to/from pixels is performed.
         /// </summary>
         public Coord? ScaleFactor { get; set; }
@@ -105,9 +108,9 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
-        /// Performs operation on the region using specified operaion kind and rectangle parameter.
+        /// Performs operation on the region using specified operation kind and rectangle parameter.
         /// </summary>
-        /// <param name="rect">Rectangle paramater value for the operation.</param>
+        /// <param name="rect">Rectangle parameter value for the operation.</param>
         /// <param name="op">Operation kind.</param>
         public virtual void Op(RectD rect, SKRegionOperation op)
         {
@@ -115,16 +118,19 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
-        /// Performs operation on this region using specified operaion kind and region parameter.
+        /// Performs operation on this region using specified operation kind and region parameter.
         /// </summary>
-        /// <param name="region">Region paramater value for the operation.</param>
+        /// <param name="region">Region parameter value for the operation.</param>
         /// <param name="op">Operation kind.</param>
         public virtual void Op(Region region, SKRegionOperation op)
         {
             if (region.Handler is SkiaRegionHandler skiaHandler)
                 this.region.Op(skiaHandler.region, op);
             else
-                throw new Exception("Only SkiaRegionHandler is supported in Op(Region, SKRegionOperation)");
+            {
+                throw new Exception(
+                    "Only SkiaRegionHandler is supported in Op(Region, SKRegionOperation)");
+            }
         }
 
         /// <seealso cref="Region.Intersect(RectD)"/>

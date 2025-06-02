@@ -596,7 +596,7 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
-        /// Creates a new <see cref="RectD"/> from a centerpoint and size.
+        /// Creates a new <see cref="RectD"/> from a center point and size.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static RectD FromCenter(PointD center, SizeD size)
