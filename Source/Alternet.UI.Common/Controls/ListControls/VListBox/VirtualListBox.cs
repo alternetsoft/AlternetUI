@@ -55,6 +55,7 @@ namespace Alternet.UI
 
         private readonly bool hasInternalScrollBars;
 
+        private bool isPartialRowVisible = true;
         private Coord scrollOffset;
         private ListBoxItemPaintEventArgs? itemPaintArgs;
         private Coord horizontalExtent;
@@ -221,6 +222,28 @@ namespace Alternet.UI
                 }
 
                 return horizontalScrollBarSettings;
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether partially visible rows are painted.
+        /// </summary>
+        /// <remarks>This property is affected by the application's platform. If the application
+        /// is running on Maui, the property will always return <see langword="false"/> and
+        /// cannot be set.</remarks>
+        public virtual bool IsPartialRowVisible
+        {
+            get
+            {
+                return isPartialRowVisible && !App.IsMaui;
+            }
+
+            set
+            {
+                if (isPartialRowVisible == value || App.IsMaui)
+                    return;
+                isPartialRowVisible = value;
+                Invalidate();
             }
         }
 
@@ -690,6 +713,8 @@ namespace Alternet.UI
         {
             if (DisposingOrDisposed)
                 return default;
+
+            firstVisibleItem = 0;
 
             if (kind == SetItemsKind.Default)
                 kind = DefaultSetItemsKind;
@@ -1163,6 +1188,12 @@ namespace Alternet.UI
                     var hRow = measureItemArgs.ItemHeight;
 
                     rectRow.Height = hRow;
+
+                    if (!IsPartialRowVisible)
+                    {
+                        if (!r.Contains(rectRow))
+                            continue;
+                    }
 
                     var isCurrentItem = IsCurrent(line);
                     var isSelectedItem = IsSelected(line);
