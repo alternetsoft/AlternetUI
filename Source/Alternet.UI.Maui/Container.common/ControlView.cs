@@ -607,7 +607,7 @@ namespace Alternet.UI
 
             control.RaisePaint(new PaintEventArgs(graphics, control.Bounds));
 
-            TemplateUtils.RaisePaintForChildren(control, graphics);
+            TemplateUtils.RaisePaintForChildren(control, graphics, isClipped: false);
 
             dc.Restore();
 

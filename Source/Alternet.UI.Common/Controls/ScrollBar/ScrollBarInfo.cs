@@ -73,7 +73,16 @@ namespace Alternet.UI
         {
             get
             {
-                return Visibility != HiddenOrVisible.Hidden;
+                if (Visibility == HiddenOrVisible.Hidden)
+                    return false;
+
+                if (Visibility == HiddenOrVisible.Auto)
+                {
+                    if (Range <= 0 || PageSize < 0 || PageSize >= Range)
+                        return false;
+                }
+
+                return true;
             }
         }
 

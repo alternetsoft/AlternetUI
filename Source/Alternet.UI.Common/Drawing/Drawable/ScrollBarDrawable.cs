@@ -82,11 +82,6 @@ namespace Alternet.Drawing
         /// </summary>
         public ControlStateObjects<RectangleDrawable>? RightArrow;
 
-        /// <summary>
-        /// Gets of sets whether scrollbar is vertical.
-        /// </summary>
-        public bool IsVertical = true;
-
         private ScrollBar.MetricsInfo? metrics;
 
         /// <summary>
@@ -126,9 +121,14 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
+        /// Gets of sets whether scrollbar is vertical.
+        /// </summary>
+        public virtual bool IsVertical { get; set; } = true;
+
+        /// <summary>
         /// Gets or sets scrollbar information.
         /// </summary>
-        public ScrollBarInfo Position { get; set; }
+        public virtual ScrollBarInfo Position { get; set; }
 
         /// <inheritdoc/>
         public override RectD Bounds
@@ -269,7 +269,8 @@ namespace Alternet.Drawing
                 else
                 {
                     var thumbMaxTop = thumbMaximalBounds.Height - thumbHeight;
-                    var thumbTop = (thumbMaxTop * Position.Position) / (Position.Range - Position.PageSize);
+                    var thumbTop = (thumbMaxTop * Position.Position)
+                        / (Position.Range - Position.PageSize);
                     var vertThumbWidth = Bounds.Width;
                     thumbTop = Math.Min(thumbTop, thumbMaxTop);
                     thumbBounds = (

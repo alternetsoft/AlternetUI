@@ -431,10 +431,10 @@ namespace Alternet.Drawing
             var boundsInsideBorder = Bounds.DeflatedWithPadding(borderWidth);
             var clientRect = boundsInsideBorder;
 
-            var vertVisible = VertVisible;
-            var horzVisible = HorzVisible;
+            var vertVisible = VertVisible && (VertScrollBar?.Position.IsVisible ?? false);
+            var horzVisible = HorzVisible && (HorzScrollBar?.Position.IsVisible ?? false);
             var bothVisible = vertVisible && horzVisible;
-            var cornerVisible = CornerVisible;
+            var cornerVisible = CornerVisible && bothVisible;
 
             var metrics = GetRealMetrics(control);
 
@@ -450,7 +450,7 @@ namespace Alternet.Drawing
             var horzTop = boundsInsideBorder.Bottom - horzHeight;
             var horzBounds = new RectD(horzLeft, horzTop, horzWidth, horzHeight);
 
-            SizeD cornerSize = (vertWidth, horzHeight);
+            SizeD cornerSize = cornerVisible ? (vertWidth, horzHeight) : SizeD.Empty;
             PointD cornerLocation = (
                 boundsInsideBorder.Right - cornerSize.Width,
                 boundsInsideBorder.Bottom - cornerSize.Height);
