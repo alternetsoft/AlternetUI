@@ -56,7 +56,7 @@ namespace Alternet.Drawing
         public abstract RectD GetClippingBox();
 
         /// <summary>
-        /// Calls the specified action inside temprorary clipped rectangle, so painting outside
+        /// Calls the specified action inside temporary clipped rectangle, so painting outside
         /// this rectangle is ignored.
         /// </summary>
         /// <param name="isClipped">Whether to clip rectangle. Optional. Default is <c>true</c>.</param>
@@ -64,7 +64,28 @@ namespace Alternet.Drawing
         /// <param name="action">Action to call.</param>
         public virtual void DoInsideClipped(RectD rect, Action action, bool isClipped = true)
         {
-            if (isClipped)
+            if(!isClipped)
+            {
+                action();
+                return;
+            }
+
+            var useSimpleClipping = false;
+
+            if (useSimpleClipping)
+            {
+                try
+                {
+                    DestroyClippingRegion();
+                    SetClippingRegion(rect);
+                    action();
+                }
+                finally
+                {
+                    DestroyClippingRegion();
+                }
+            }
+            else
             {
                 try
                 {
@@ -77,8 +98,6 @@ namespace Alternet.Drawing
                     PopClip();
                 }
             }
-            else
-                action();
         }
 
         /// <summary>

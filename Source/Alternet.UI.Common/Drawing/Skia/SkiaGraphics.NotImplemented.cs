@@ -130,18 +130,6 @@ namespace Alternet.Drawing
         }
 
         /// <inheritdoc/>
-        public override void DestroyClippingRegion()
-        {
-            throw new NotImplementedException();
-        }
-
-        /// <inheritdoc/>
-        public override void SetClippingRegion(RectD rect)
-        {
-            throw new NotImplementedException();
-        }
-
-        /// <inheritdoc/>
         public override void Pie(
             Pen pen,
             Brush brush,
