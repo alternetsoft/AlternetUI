@@ -187,7 +187,7 @@ namespace Alternet.UI.Integration.VisualStudio.Services
             var buffer = eafs.GetDataBuffer(bufferAdapter);
 
             // HACK: VS has given us an uninitialized IVsTextLines in punkDocDataExisting. Not sure what
-            // we can do here except tell VS to close the tab and repopen it.
+            // we can do here except tell VS to close the tab and reopen it.
             if (buffer == null)
             {
                 ErrorHandler.ThrowOnFailure(VSConstants.VS_E_INCOMPATIBLEDOCDATA);
