@@ -1,4 +1,11 @@
-# 0.9.731 (2025 June 01)
+# 0.9.732 (2025 June 3)
+
+- Maui: Do not show ScrollBars if not needed.
+- VirtualListBox.IsPartialRowVisible.
+- SkiaGraphics: Implement some of the clipping methods.
+- Maui: implemented align origin for internal dialogs.
+
+# 0.9.731 (2025 June 1)
 
 - Maui: Fixed mouse position for events of child controls.
 - Maui: Process mouse double-click events.
