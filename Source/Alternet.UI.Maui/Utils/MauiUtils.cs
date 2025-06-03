@@ -745,6 +745,9 @@ namespace Alternet.UI
         {
             AbsoluteLayout? result = null;
 
+            if (instance is AbsoluteLayout asLayout)
+                return asLayout;
+
             if (instance is Page asPage)
             {
                 result = GetAbsoluteLayoutChild(asPage);
@@ -762,6 +765,33 @@ namespace Alternet.UI
             }
 
             return result;
+        }
+
+        /// <summary>
+        /// Retrieves the <see cref="View"/> associated with the specified object, if available.
+        /// </summary>
+        /// <remarks>If the <paramref name="instance"/> is a <see cref="View"/>,
+        /// it is returned directly.
+        /// If the <paramref name="instance"/> is a <see cref="UI.Control"/>,
+        /// the method attempts to retrieve the container <see cref="View"/> using
+        /// <see cref="ControlView.GetContainer(AbstractControl)"/>.</remarks>
+        /// <param name="instance">The object to retrieve the associated
+        /// <see cref="View"/> from.  This can be a <see cref="View"/> or
+        /// a <see cref="UI.Control"/>.</param>
+        /// <returns>The <see cref="View"/> associated with the specified object,
+        /// or <see langword="null"/> if no association exists.</returns>
+        public static View? GetObjectView(object? instance)
+        {
+            if (instance is View asView)
+                return asView;
+
+            if (instance is UI.Control asControl)
+            {
+                var container = ControlView.GetContainer(asControl);
+                return container;
+            }
+
+            return null;
         }
 
         /// <summary>

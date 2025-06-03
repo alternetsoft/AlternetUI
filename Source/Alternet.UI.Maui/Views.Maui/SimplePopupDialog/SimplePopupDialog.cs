@@ -56,6 +56,11 @@ namespace Alternet.Maui
             = Alternet.UI.HVAlignment.TopRight;
 
         /// <summary>
+        /// Represents the default alignment origin for <see cref="SimplePopupDialog"/>.
+        /// </summary>
+        public static AlignOrigin DefaultAlignedOrigin = AlignOrigin.Owner;
+
+        /// <summary>
         /// Gets or sets the default placeholder text color for the input field.
         /// </summary>
         public static Alternet.Drawing.LightDarkColor DefaultPlaceholderColor
@@ -84,29 +89,11 @@ namespace Alternet.Maui
         private SimpleToolBarView.IToolBarItem? cancelButton;
         private SimpleToolBarView? buttons;
         private Alternet.UI.HVAlignment? alignment;
-        private Alternet.UI.WeakReferenceValue<object> owner = new();
+        private AlignOrigin alignOrigin = DefaultAlignedOrigin;
+        private Alternet.UI.WeakReferenceValue<object> weakOwner = new();
 
         static SimplePopupDialog()
         {
-/*
-            Microsoft.Maui.Handlers.PageHandler.Mapper
-                .AppendToMapping(nameof(PageHandler), (handler, view) =>
-            {
-#if WINDOWS
-                handler.PlatformView.PreviewKeyUp += (s, e) =>
-                {
-                };
-
-                handler.PlatformView.PreviewKeyDown += (s, e) =>
-                {
-                    if (e.Key == Windows.System.VirtualKey.Escape)
-                    {
-                        BaseEntry.FocusedEntry?.RaiseEscapeClicked();
-                    }
-                };
-#endif
-            });
-*/
         }
 
         /// <summary>
@@ -163,6 +150,25 @@ namespace Alternet.Maui
         public event EventHandler? CancelButtonClicked;
 
         /// <summary>
+        /// Specifies the origin point used for alignment calculations.
+        /// </summary>
+        /// <remarks>The alignment origin determines the reference point for positioning elements.
+        /// Use <see cref="Owner"/> to align relative to the owning element,
+        /// or <see cref="Layout"/>  to align relative to the layout container.</remarks>
+        public enum AlignOrigin
+        {
+            /// <summary>
+            /// Align relative to the owning element.
+            /// </summary>
+            Owner,
+
+            /// <summary>
+            /// align relative to the layout container.
+            /// </summary>
+            Layout,
+        }
+
+        /// <summary>
         /// Gets or sets a value indicating whether the dialog should close when
         /// the 'Cancel' button is clicked.
         /// </summary>
@@ -213,10 +219,10 @@ namespace Alternet.Maui
         /// </value>
         public virtual object? Owner
         {
-            get => owner.Value;
+            get => weakOwner.Value;
             set
             {
-                owner.Value = value;
+                weakOwner.Value = value;
             }
         }
 
@@ -293,7 +299,7 @@ namespace Alternet.Maui
                 alignment = value;
                 if (alignment is null)
                     return;
-                SetAlignedPosition(Parent as AbsoluteLayout, alignment.Value);
+                SetAlignedPosition(Owner, alignment.Value, alignOrigin);
             }
         }
 
@@ -301,34 +307,50 @@ namespace Alternet.Maui
         /// Sets the aligned position of the dialog within the specified
         /// layout using the provided alignment.
         /// </summary>
-        /// <param name="layout">The parent layout in which the dialog is to be aligned.</param>
+        /// <param name="owner">The view in which the dialog is to be aligned.</param>
+        /// <param name="origin">Specifies the origin point used for alignment calculations.</param>
         /// <param name="align">The horizontal and vertical alignment to apply.</param>
         /// <returns>True if the alignment was successfully applied; otherwise, false.</returns>
-        public virtual bool SetAlignedPosition(AbsoluteLayout? layout, Alternet.UI.HVAlignment? align)
+        public virtual bool SetAlignedPosition(
+            object? owner,
+            Alternet.UI.HVAlignment? align,
+            AlignOrigin origin = AlignOrigin.Owner)
         {
             align ??= DefaultAlignedPosition;
 
             if (align is null)
                 return false;
 
-            var result = SetAlignedPosition(layout, align.Value.Horizontal, align.Value.Vertical);
+            var result = SetAlignedPosition(
+                owner,
+                align.Value.Horizontal,
+                align.Value.Vertical,
+                origin);
             return result;
         }
 
         /// <summary>
-        /// Sets the aligned position of the dialog within the specified layout using
-        /// the provided horizontal and vertical alignment.
+        /// Sets the aligned position of the dialog within the specified
+        /// layout using the provided alignment.
         /// </summary>
-        /// <param name="layout">The parent layout in which the dialog is to be aligned.</param>
+        /// <param name="owner">The view in which the dialog is to be aligned.</param>
+        /// <param name="origin">Specifies the origin point used for alignment calculations.</param>
+        /// <returns>True if the alignment was successfully applied; otherwise, false.</returns>
         /// <param name="horz">The horizontal alignment to apply.</param>
         /// <param name="vert">The vertical alignment to apply.</param>
-        /// <returns>True if the alignment was successfully applied; otherwise, false.</returns>
         public virtual bool SetAlignedPosition(
-            AbsoluteLayout? layout,
+            object? owner,
             Alternet.UI.HorizontalAlignment horz,
-            Alternet.UI.VerticalAlignment vert)
+            Alternet.UI.VerticalAlignment vert,
+            AlignOrigin origin = AlignOrigin.Owner)
         {
+            Owner = owner;
+
+            var layout = UI.MauiUtils.GetObjectAbsoluteLayout(owner);
+            var view = UI.MauiUtils.GetObjectView(owner);
+
             alignment = new(horz, vert);
+            alignOrigin = origin;
 
             if (layout is null)
                 return false;
@@ -336,7 +358,7 @@ namespace Alternet.Maui
             UpdateParent(layout);
 
             var thisBounds = this.Bounds.ToRectD();
-            var containerBounds = layout.Bounds.ToRectD();
+            var containerBounds = GetContainerBounds();
 
             if (thisBounds.SizeIsEmpty || containerBounds.SizeIsEmpty)
                 return false;
@@ -351,6 +373,23 @@ namespace Alternet.Maui
             alignment = new(horz, vert);
 
             return true;
+
+            Drawing.RectD GetContainerBounds()
+            {
+                if(origin == AlignOrigin.Layout || view is null)
+                    return layout.Bounds.ToRectD();
+                Drawing.SizeD size = (view.Bounds.Size.Width, view.Bounds.Size.Height);
+                Drawing.PointD location = Drawing.PointD.Empty;
+
+                while (view is not AbsoluteLayout && view is not null)
+                {
+                    location.X += view.Bounds.X;
+                    location.Y += view.Bounds.Y;
+                    view = view.Parent as View;
+                }
+
+                return (location, size);
+            }
         }
 
         /// <summary>
@@ -446,7 +485,8 @@ namespace Alternet.Maui
         /// <returns>The placeholder color.</returns>
         public virtual Color GetPlaceholderColor()
         {
-            var placeholderColor = Alternet.UI.MauiUtils.Convert(DefaultPlaceholderColor.LightOrDark(IsDark));
+            var placeholderColor = Alternet.UI.MauiUtils
+                .Convert(DefaultPlaceholderColor.LightOrDark(IsDark));
             return placeholderColor;
         }
 
@@ -455,7 +495,7 @@ namespace Alternet.Maui
         /// </summary>
         protected virtual void OnUpdatePosition()
         {
-            SetAlignedPosition(Parent as AbsoluteLayout, alignment);
+            SetAlignedPosition(Owner, alignment, alignOrigin);
         }
 
         /// <inheritdoc/>
@@ -470,7 +510,7 @@ namespace Alternet.Maui
                 }
                 else
                 {
-                    if (owner.Value is VisualElement view)
+                    if (Owner is VisualElement view)
                     {
                         Alternet.UI.App.AddBackgroundInvokeAction(() =>
                         {
