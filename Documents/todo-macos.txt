@@ -1,2 +1,0 @@
-- Check Events ListView (MouseDown not working on macos)
-
