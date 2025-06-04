@@ -1,3 +1,7 @@
+# 0.9.733 (2025 June 4)
+
+- Update used Microsoft.CodeAnalysis.CSharp nugets.
+
 # 0.9.732 (2025 June 3)
 
 - Maui: Do not show ScrollBars if not needed.
