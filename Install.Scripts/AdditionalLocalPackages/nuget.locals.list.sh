@@ -1,0 +1,1 @@
+dotnet nuget locals all -l
