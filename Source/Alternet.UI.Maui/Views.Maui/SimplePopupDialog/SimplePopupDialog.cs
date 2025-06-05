@@ -103,14 +103,8 @@ namespace Alternet.Maui
         {
             IsVisible = false;
 
-            dialogTitle = new SimpleDialogTitleView();
-
-            dialogBorder = new Border
-            {
-                StrokeShape = new RoundRectangle { CornerRadius = 10 },
-                StrokeThickness = 1,
-                MinimumWidthRequest = 300,
-            };
+            dialogTitle = CreateDialogTitle();
+            dialogBorder = CreateDialogBorder();
 
             dialogTitle.CloseClicked += (s, e) =>
             {
@@ -177,24 +171,34 @@ namespace Alternet.Maui
         /// <summary>
         /// Gets the 'Ok' button of the dialog.
         /// </summary>
-        public SimpleToolBarView.IToolBarItem OkButton
+        public SimpleToolBarView.IToolBarItem? OkButton
         {
             get
             {
                 Buttons.Required();
-                return okButton!;
+                return okButton;
+            }
+
+            protected set
+            {
+                okButton = value;
             }
         }
 
         /// <summary>
         /// Gets the 'Cancel' button of the dialog.
         /// </summary>
-        public SimpleToolBarView.IToolBarItem CancelButton
+        public SimpleToolBarView.IToolBarItem? CancelButton
         {
             get
             {
                 Buttons.Required();
-                return cancelButton!;
+                return cancelButton;
+            }
+
+            protected set
+            {
+                cancelButton = value;
             }
         }
 
@@ -251,9 +255,19 @@ namespace Alternet.Maui
         public VerticalStackLayout ContentLayout => contentLayout;
 
         /// <summary>
+        /// Gets a value indicating whether the "OK" button is required.
+        /// </summary>
+        public virtual bool NeedOkButton => true;
+
+        /// <summary>
+        /// Gets a value indicating whether the "Cancel" button is required.
+        /// </summary>
+        public virtual bool NeedCancelButton => true;
+
+        /// <summary>
         /// Gets the toolbar containing the action buttons of the dialog.
         /// </summary>
-        public SimpleToolBarView Buttons
+        public virtual SimpleToolBarView Buttons
         {
             get
             {
@@ -263,15 +277,16 @@ namespace Alternet.Maui
                     buttons.Margin = new(0, 5, 0, 0);
 
                     buttons.AddExpandingSpace();
-                    okButton = buttons.AddButtonOk(() =>
-                    {
-                        OnOkButtonClicked(UI.DialogCloseAction.OkButton);
-                    });
 
-                    cancelButton = buttons.AddButtonCancel(() =>
+                    if (NeedOkButton)
                     {
-                        OnCancelButtonClicked(UI.DialogCloseAction.CancelButton);
-                    });
+                        AddOkButton();
+                    }
+
+                    if (NeedCancelButton)
+                    {
+                        AddCancelButton();
+                    }
 
                     contentLayout.Children.Add(buttons);
                 }
@@ -288,7 +303,7 @@ namespace Alternet.Maui
         /// <summary>
         /// Gets or sets the alignment of the dialog within its parent layout.
         /// </summary>
-        public Alternet.UI.HVAlignment? Alignment
+        public virtual Alternet.UI.HVAlignment? Alignment
         {
             get => alignment;
 
@@ -326,6 +341,52 @@ namespace Alternet.Maui
                 align.Value.Horizontal,
                 align.Value.Vertical,
                 origin);
+            return result;
+        }
+
+        /// <summary>
+        /// Creates a new <see cref="Border"/> instance for the entry views
+        /// configured with default styling.
+        /// </summary>
+        /// <remarks>This method provides a pre-configured <see cref="Border"/> suitable
+        /// for use as an entry border. The returned border can be further customized
+        /// by the caller if needed.</remarks>
+        /// <returns>A <see cref="Border"/> object with default styling.</returns>
+        public virtual Border CreateEntryBorder()
+        {
+            return new Border
+            {
+                StrokeThickness = 1,
+                Margin = new Thickness(5),
+                Padding = new Thickness(0),
+                StrokeShape = new RoundRectangle { CornerRadius = 5 },
+            };
+        }
+
+        /// <summary>
+        /// Creates a dialog border with predefined styling.
+        /// </summary>
+        /// <returns>A <see cref="Border"/> object configured to be used as dialog border.</returns>
+        public virtual Border CreateDialogBorder()
+        {
+            var result = new Border
+            {
+                StrokeShape = new RoundRectangle { CornerRadius = 10 },
+                StrokeThickness = 1,
+                MinimumWidthRequest = 300,
+            };
+
+            return result;
+        }
+
+        /// <summary>
+        /// Creates and returns a new instance of <see cref="SimpleDialogTitleView"/>.
+        /// </summary>
+        /// <returns>A new <see cref="SimpleDialogTitleView"/> instance representing
+        /// the dialog title view.</returns>
+        public virtual SimpleDialogTitleView CreateDialogTitle()
+        {
+            var result = new SimpleDialogTitleView();
             return result;
         }
 
@@ -470,6 +531,39 @@ namespace Alternet.Maui
         }
 
         /// <summary>
+        /// Adds a "Cancel" button to the dialog if one does not already exist.
+        /// </summary>
+        /// <remarks>The "Cancel" button triggers the <see cref="OnCancelButtonClicked"/>
+        /// method when clicked,  passing <see cref="UI.DialogCloseAction.CancelButton"/>
+        /// as the action. If a "Cancel" button already
+        /// exists, this method does nothing.</remarks>
+        public virtual void AddCancelButton()
+        {
+            if (cancelButton is not null)
+                return;
+            cancelButton = Buttons.AddButtonCancel(() =>
+            {
+                OnCancelButtonClicked(UI.DialogCloseAction.CancelButton);
+            });
+        }
+
+        /// <summary>
+        /// Adds an "OK" button to the dialog if one does not already exist.
+        /// </summary>
+        /// <remarks>When the button is clicked, the
+        /// <see cref="OnOkButtonClicked"/> method is invoked with the
+        /// <see cref="UI.DialogCloseAction.OkButton"/> action.</remarks>
+        public virtual void AddOkButton()
+        {
+            if (okButton is not null)
+                return;
+            okButton = Buttons.AddButtonOk(() =>
+            {
+                OnOkButtonClicked(UI.DialogCloseAction.OkButton);
+            });
+        }
+
+        /// <summary>
         /// Gets the border color of the dialog based on the current theme.
         /// </summary>
         /// <returns>The border color.</returns>
@@ -496,6 +590,18 @@ namespace Alternet.Maui
         protected virtual void OnUpdatePosition()
         {
             SetAlignedPosition(Owner, alignment, alignOrigin);
+        }
+
+        /// <summary>
+        /// Calculates the margin to be applied to a dialog label.
+        /// </summary>
+        /// <remarks>The default implementation returns a uniform margin of 5 units on all sides.
+        /// Override this method in a derived class to provide custom margin values.</remarks>
+        /// <returns>A <see cref="Thickness"/> structure representing the margin values
+        /// for the label.</returns>
+        protected virtual Thickness GetLabelMargin()
+        {
+            return new Thickness(5, 5, 5, 5);
         }
 
         /// <inheritdoc/>

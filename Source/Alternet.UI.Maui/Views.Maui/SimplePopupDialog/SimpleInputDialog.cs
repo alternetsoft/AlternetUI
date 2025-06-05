@@ -40,18 +40,12 @@ namespace Alternet.Maui
             label = new Label
             {
                 Text = GetDefaultMessage(),
-                Margin = new Thickness(5, 5, 5, 5),
+                Margin = GetLabelMargin(),
             };
 
             ContentLayout.Children.Add(label);
 
-            entryBorder = new Border
-            {
-                StrokeThickness = 1,
-                Margin = new Thickness(5),
-                Padding = new Thickness(0),
-                StrokeShape = new RoundRectangle { CornerRadius = 5 },
-            };
+            entryBorder = CreateEntryBorder();
 
             entry = new BaseEntry
             {
@@ -71,6 +65,8 @@ namespace Alternet.Maui
             entryBorder.Content = entry;
             ContentLayout.Children.Add(entryBorder);
 
+            CreateOtherContent();
+
             Buttons.Required();
             ResetColors();
         }
@@ -78,7 +74,7 @@ namespace Alternet.Maui
         /// <summary>
         /// Gets or sets the message displayed in the dialog.
         /// </summary>
-        public virtual string Message
+        public string Message
         {
             get => label.Text;
             set => label.Text = value;
@@ -87,7 +83,7 @@ namespace Alternet.Maui
         /// <summary>
         /// Gets or sets the text entered in the input field.
         /// </summary>
-        public virtual string Text
+        public string Text
         {
             get => entry.Text;
             set => entry.Text = value;
@@ -96,7 +92,7 @@ namespace Alternet.Maui
         /// <summary>
         /// Gets or sets the placeholder text for the input field.
         /// </summary>
-        public virtual string Placeholder
+        public string Placeholder
         {
             get => entry.Placeholder;
             set => entry.Placeholder = value;
@@ -116,6 +112,23 @@ namespace Alternet.Maui
         /// Gets the label displaying the message in the dialog.
         /// </summary>
         public Label Label => label;
+
+        /// <summary>
+        /// Gets or sets the <see cref="Alternet.UI.AsyncUtils.ValueWaiter{T}"/>
+        /// instance used to asynchronously wait for a string value.
+        /// </summary>
+        public virtual Alternet.UI.AsyncUtils.ValueWaiter<string>? ValueWaiter
+        {
+            get
+            {
+                return valueWaiter;
+            }
+
+            set
+            {
+                valueWaiter = value;
+            }
+        }
 
         /// <summary>
         /// Creates a new instance of <see cref="SimpleInputDialog"/>
@@ -276,6 +289,22 @@ namespace Alternet.Maui
         }
 
         /// <summary>
+        /// Cancels the current value waiter, if one exists.
+        /// </summary>
+        /// <remarks>This method sets the value of the active waiter to
+        /// <see langword="null"/> and clears
+        /// the reference to it. It is safe to call this method even
+        /// if no value waiter is active.</remarks>
+        public virtual void CancelValueWaiter()
+        {
+            if (valueWaiter is not null)
+            {
+                valueWaiter.SetValue(null!);
+                valueWaiter = null;
+            }
+        }
+
+        /// <summary>
         /// Gets the default title for the input dialog.
         /// </summary>
         /// <returns>A string representing the default title.</returns>
@@ -300,6 +329,16 @@ namespace Alternet.Maui
         public virtual string GetDefaultPlaceholder()
         {
             return "Type here";
+        }
+
+        /// <summary>
+        /// Creates additional content for the dialog.
+        /// </summary>
+        /// <remarks>This method is intended to be overridden in derived classes to provide
+        /// custom behavior for generating or handling additional content.
+        /// The base implementation does not perform any actions.</remarks>
+        protected virtual void CreateOtherContent()
+        {
         }
     }
 }
