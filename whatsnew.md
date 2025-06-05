@@ -1,3 +1,7 @@
+# 0.9.734 (2025 June 5)
+
+- Maui: Create SimpleTwoFieldInputDialog and SimpleSearchDialog.
+
 # 0.9.733 (2025 June 4)
 
 - Update used Microsoft.CodeAnalysis.CSharp nugets.
