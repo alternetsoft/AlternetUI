@@ -768,6 +768,51 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Disables focus-related interactions for the menu bar on supported platforms.
+        /// </summary>
+        /// <remarks>This method modifies the behavior of the menu bar to suppress
+        /// focus-related interactions, ensuring that the menu bar does not receive
+        /// focus during user interaction. It is applicable
+        /// to specific platforms, such as Windows and MacCatalyst.</remarks>
+        public static void SuppressMenuBarFocus()
+        {
+            Microsoft.Maui.Handlers.MenuBarHandler.Mapper
+                .AppendToMapping("GetPlatformMenuBar", (handler, view) =>
+            {
+#if WINDOWS
+                var nativeMenuBar = handler.PlatformView;
+                nativeMenuBar.IsTabStop = false;
+                nativeMenuBar.AllowFocusOnInteraction = false;
+                nativeMenuBar.AllowFocusWhenDisabled = false;
+                nativeMenuBar.GettingFocus += (s, e) =>
+                {
+                };
+#endif
+
+#if MACCATALYST
+                var nativeMenuBar = handler.PlatformView;
+#endif
+            });
+        }
+
+        /// <summary>
+        /// Attempts to set focus on the specified object within a predefined timeout period.
+        /// </summary>
+        /// <remarks>This method retrieves the associated view of the specified object
+        /// and attempts to set focus on it. If the object does not have an associated
+        /// view or the view is not of type <see cref="ControlView"/>, the method
+        /// does nothing.</remarks>
+        /// <param name="instance">The object to set focus on.
+        /// Can be <see langword="null"/>. If <see langword="null"/>, no action is taken.</param>
+        public static ControlView? TrySetFocusWithTimeout(object? instance)
+        {
+            var container = MauiUtils.GetObjectView(instance) as ControlView;
+            container?.SetFocusIfPossible();
+            container?.TrySetFocusWithTimeout();
+            return container;
+        }
+
+        /// <summary>
         /// Retrieves the <see cref="View"/> associated with the specified object, if available.
         /// </summary>
         /// <remarks>If the <paramref name="instance"/> is a <see cref="View"/>,

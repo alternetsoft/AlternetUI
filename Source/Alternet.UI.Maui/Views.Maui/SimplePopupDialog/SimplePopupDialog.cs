@@ -168,6 +168,10 @@ namespace Alternet.Maui
         /// </summary>
         public virtual bool CloseWhenCancelButtonClicked { get; set; } = true;
 
+        public virtual Action? CancelButtonAction { get; set; }
+
+        public virtual Action? OkButtonAction { get; set; }
+
         /// <summary>
         /// Gets the 'Ok' button of the dialog.
         /// </summary>
@@ -476,6 +480,7 @@ namespace Alternet.Maui
             if (CloseWhenOkButtonClicked)
                 IsVisible = false;
             OkButtonClicked?.Invoke(this, EventArgs.Empty);
+            OkButtonAction?.Invoke();
         }
 
         /// <summary>
@@ -487,6 +492,7 @@ namespace Alternet.Maui
             if (CloseWhenCancelButtonClicked)
                 IsVisible = false;
             CancelButtonClicked?.Invoke(this, EventArgs.Empty);
+            CancelButtonAction?.Invoke();
         }
 
         /// <inheritdoc/>
