@@ -18,7 +18,8 @@ namespace Alternet.UI
     public partial class FindReplaceControl : ToolBarSet
     {
         /// <summary>
-        /// Gets or sets the default minimum width of the edit controls in the Find and Replace dialogs.
+        /// Gets or sets the default minimum width of the edit controls in the
+        /// Find and Replace dialogs.
         /// </summary>
         public static int DefaultMinEditWidth = 150;
 
@@ -1420,7 +1421,8 @@ namespace Alternet.UI
                 return true;
             if (CanReplace && Run(KnownShortcuts.FindReplaceControlKeys.Replace, OnClickReplace))
                 return true;
-            if (CanReplaceAll && Run(KnownShortcuts.FindReplaceControlKeys.ReplaceAll, OnClickReplaceAll))
+            if (CanReplaceAll
+                && Run(KnownShortcuts.FindReplaceControlKeys.ReplaceAll, OnClickReplaceAll))
                 return true;
             if (CanMatchCase && Run(KnownShortcuts.FindReplaceControlKeys.MatchCase, OnClickMatchCase))
                 return true;
