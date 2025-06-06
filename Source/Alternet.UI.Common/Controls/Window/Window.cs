@@ -1227,8 +1227,14 @@ namespace Alternet.UI
 
             void Fn()
             {
+                if (State == WindowState.Minimized)
+                {
+                    State = WindowState.Normal;
+                }
+
                 Show();
                 Raise();
+                App.DoEvents();
                 if(ActiveControl is not null)
                 {
                     ActiveControl?.SetFocusIfPossible();
