@@ -162,6 +162,12 @@ namespace Alternet.UI.Localization
         public string WindowTitleSearchAndReplace { get; set; } = "Search and Replace";
 
         /// <inheritdoc cref="ButtonOk"/>
+        public string WindowTitleSearch { get; set; } = "Search";
+
+        /// <inheritdoc cref="ButtonOk"/>
+        public string WindowTitleReplace { get; set; } = "Replace";
+
+        /// <inheritdoc cref="ButtonOk"/>
         public string WindowTitleListEdit { get; set; } = "List Editor";
 
         /// <inheritdoc cref="ButtonOk"/>
@@ -174,7 +180,7 @@ namespace Alternet.UI.Localization
         public string WindowTitleProperties { get; set; } = "Properties";
 
         /// <inheritdoc cref="ButtonOk"/>
-        public string WindowTitleApplicationAlert { get; set; } = "Aplication says";
+        public string WindowTitleApplicationAlert { get; set; } = "Application says";
 
         // ========================
 
@@ -201,19 +207,28 @@ namespace Alternet.UI.Localization
         // ========================
 
         /// <inheritdoc cref="ButtonOk"/>
+        public string SearchFor { get; set; } = "Search for";
+
+        /// <inheritdoc cref="ButtonOk"/>
+        public string ReplaceWith { get; set; } = "Replace with";
+
+        /// <inheritdoc cref="ButtonOk"/>
         public string FindOptionWrap { get; set; } = "Wrap around";
 
         /// <inheritdoc cref="ButtonOk"/>
         public string FindOptionMatchCase { get; set; } = "Match case";
 
         /// <inheritdoc cref="ButtonOk"/>
-        public string FindOptionUseRegularExpressions { get; set; } = "Use regular expressions";
+        public string FindOptionUseRegularExpressions { get; set; } = "Regular expressions";
 
         /// <inheritdoc cref="ButtonOk"/>
         public string FindOptionMatchWholeWord { get; set; } = "Match whole word";
 
         /// <inheritdoc cref="ButtonOk"/>
         public string FindOptionHighlight { get; set; } = "Highlight";
+
+        /// <inheritdoc cref="ButtonOk"/>
+        public string FindOptionSelectionOnly { get; set; } = "Selection Only";
 
         /// <inheritdoc cref="ButtonOk"/>
         public string FindOptionBackwards { get; set; } = "Backwards";

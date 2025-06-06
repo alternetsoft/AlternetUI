@@ -18,68 +18,9 @@ namespace Alternet.Maui
     /// operations. It inherits functionality from <see cref="SimpleTwoFieldInputDialog"/>.</remarks>
     public partial class SimpleSearchDialog : SimpleTwoFieldInputDialog
     {
-        /// <summary>
-        /// Gets the default text displayed on the "Find Previous" button.
-        /// </summary>
-        public static string DefaultFindPrevButtonText = "Find previous";
-
-        /// <summary>
-        /// Gets the default text displayed on the "Find next" button.
-        /// </summary>
-        public static string DefaultFindNextButtonText = "Find next";
-
-        /// <summary>
-        /// Gets the default text displayed on the "Case sensitive" checkbox.
-        /// </summary>
-        public static string DefaultCaseSensitiveCheckBoxText = "Case sensitive";
-
-        /// <summary>
-        /// Gets the default text displayed on the "Whole words" checkbox.
-        /// </summary>
-        public static string DefaultWholeWordsCheckBoxText = "Whole words";
-
-        /// <summary>
-        /// Gets the default text displayed on the "Regular expressions" checkbox.
-        /// </summary>
-        public static string DefaultRegularExpressionsCheckBoxText = "Regular expressions";
-
-        /// <summary>
-        /// Gets the default text displayed on the "Selection only" checkbox.
-        /// </summary>
-        public static string DefaultSelectionOnlyCheckBoxText = "Selection only";
-
-        /// <summary>
-        /// Gets the default text displayed on the "Replace" button.
-        /// </summary>
-        public static string DefaultReplaceButtonText = "Replace";
-
-        /// <summary>
-        /// Gets the default text displayed on the "Replace all" button.
-        /// </summary>
-        public static string DefaultReplaceAllButtonText = "Replace all";
-
-        /// <summary>
-        /// Represents the default title used for search dialogs.
-        /// </summary>
-        public static string DefaultSearchDialogTitle = "Search";
-
-        /// <summary>
-        /// Represents the default title used for replace dialogs.
-        /// </summary>
-        public static string DefaultReplaceDialogTitle = "Replace";
-
-        /// <summary>
-        /// Represents the default message used for search entry.
-        /// </summary>
-        public static string DefaultSearchForMessage = "Search for";
-
-        /// <summary>
-        /// Represents the default message used for replace entry.
-        /// </summary>
-        public static string DefaultReplaceWithMessage = "Replace with";
-
         private readonly SimpleToolBarView.IToolBarItem firstButton;
         private readonly SimpleToolBarView.IToolBarItem secondButton;
+        private readonly SimpleToolBarView.IToolBarItem toggleReplaceButton;
 
         private CheckBoxWithLabelView? caseSensitiveCheckBox;
         private CheckBoxWithLabelView? wholeWordsCheckBox;
@@ -95,18 +36,20 @@ namespace Alternet.Maui
             SecondLabel.IsVisible = false;
             SecondEntryBorder.IsVisible = false;
 
-            Title = DefaultSearchDialogTitle;
-            Message = DefaultSearchForMessage;
-            SecondMessage = DefaultReplaceWithMessage;
+            var strings = UI.Localization.CommonStrings.Default;
+
+            Title = strings.WindowTitleSearch;
+            Message = strings.SearchFor;
+            SecondMessage = strings.ReplaceWith;
             Placeholder = string.Empty;
             SecondPlaceholder = string.Empty;
 
-            firstButton = Buttons.AddDialogButton(DefaultFindPrevButtonText, null, null, () =>
+            firstButton = Buttons.AddDialogButton(strings.ButtonFindPrevious, null, null, () =>
             {
                 OnFirstButtonClicked();
             });
 
-            secondButton = Buttons.AddDialogButton(DefaultFindNextButtonText, null, null, () =>
+            secondButton = Buttons.AddDialogButton(strings.ButtonFindNext, null, null, () =>
             {
                 OnSecondButtonClicked();
             });
@@ -120,6 +63,16 @@ namespace Alternet.Maui
                     return;
                 settingsLayout.IsVisible = !settingsLayout.IsVisible;
             };
+
+            toggleReplaceButton = DialogTitle.InsertButton(
+                0,
+                null,
+                Alternet.UI.Localization.CommonStrings.Default.ToggleToSwitchBetweenFindReplace,
+                KnownSvgImages.ImgAngleDown,
+                () =>
+                {
+                    IsReplaceVisible = !IsReplaceVisible;
+                });
         }
 
         /// <summary>
@@ -128,26 +81,84 @@ namespace Alternet.Maui
         public VerticalStackLayout SettingsLayout => settingsLayout!;
 
         /// <summary>
-        /// Gets the checkbox control that allows the user to toggle case sensitivity.
+        /// Gets a value indicating whether the current operation or comparison is case-sensitive.
         /// </summary>
-        public CheckBoxWithLabelView CaseSensitiveCheckBox => caseSensitiveCheckBox!;
+        public virtual bool IsCaseSensitive
+        {
+            get
+            {
+                return caseSensitiveCheckBox!.IsChecked;
+            }
+
+            set
+            {
+                caseSensitiveCheckBox!.IsChecked = value;
+            }
+        }
 
         /// <summary>
-        /// Gets the checkbox control that allows users to enable or
-        /// disable the "Match Whole Words" option.
+        /// Gets a value indicating whether the search is restricted to whole words.
         /// </summary>
-        public CheckBoxWithLabelView WholeWordsCheckBox => wholeWordsCheckBox!;
+        public virtual bool IsWholeWords
+        {
+            get
+            {
+                return wholeWordsCheckBox!.IsChecked;
+            }
+
+            set
+            {
+                wholeWordsCheckBox!.IsChecked = value;
+            }
+        }
 
         /// <summary>
-        /// Gets the checkbox control that allows users to enable or disable the
-        /// use of regular expressions.
+        /// Gets a value indicating whether the search string is treated as a regular expression.
         /// </summary>
-        public CheckBoxWithLabelView RegularExpressionsCheckBox => regularExpressionsCheckBox!;
+        public virtual bool IsRegularExpression
+        {
+            get
+            {
+                return regularExpressionsCheckBox!.IsChecked;
+            }
+
+            set
+            {
+                regularExpressionsCheckBox!.IsChecked = value;
+            }
+        }
 
         /// <summary>
-        /// Gets the checkbox control that allows users to toggle the "Selection Only" mode.
+        /// Gets a value indicating whether the current operation is limited to the selected text.
         /// </summary>
-        public CheckBoxWithLabelView SelectionOnlyCheckBox => selectionOnlyCheckBox!;
+        public virtual bool IsSelectionOnly
+        {
+            get
+            {
+                return selectionOnlyCheckBox!.IsChecked;
+            }
+
+            set
+            {
+                selectionOnlyCheckBox!.IsChecked = value;
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether the selection-only mode is enabled.
+        /// </summary>
+        public virtual bool IsSelectionOnlyEnabled
+        {
+            get
+            {
+                return selectionOnlyCheckBox!.IsEnabled;
+            }
+
+            set
+            {
+                selectionOnlyCheckBox!.IsEnabled = value;
+            }
+        }
 
         /// <summary>
         /// Gets the first button in the dialog.
@@ -215,10 +226,18 @@ namespace Alternet.Maui
                 SecondLabel.IsVisible = value;
                 SecondEntryBorder.IsVisible = value;
 
-                Title = value ? DefaultReplaceDialogTitle : DefaultSearchDialogTitle;
+                var strings = UI.Localization.CommonStrings.Default;
 
-                firstButton.Text = value ? DefaultReplaceButtonText : DefaultFindPrevButtonText;
-                secondButton.Text = value ? DefaultReplaceAllButtonText : DefaultFindNextButtonText;
+                Title = value ? strings.WindowTitleReplace : strings.WindowTitleSearch;
+
+                firstButton.Text = value ? strings.ButtonReplace : strings.ButtonFindPrevious;
+                secondButton.Text = value ? strings.ButtonReplaceAll : strings.ButtonFindNext;
+
+                if (toggleReplaceButton is not null)
+                {
+                    toggleReplaceButton.SvgImage = IsReplaceVisible
+                        ? KnownSvgImages.ImgAngleUp : KnownSvgImages.ImgAngleDown;
+                }
             }
         }
 
@@ -260,10 +279,12 @@ namespace Alternet.Maui
 
             base.CreateOtherContent();
 
-            caseSensitiveCheckBox = AddCheckBox(DefaultCaseSensitiveCheckBoxText);
-            wholeWordsCheckBox = AddCheckBox(DefaultWholeWordsCheckBoxText);
-            regularExpressionsCheckBox = AddCheckBox(DefaultRegularExpressionsCheckBoxText);
-            selectionOnlyCheckBox = AddCheckBox(DefaultSelectionOnlyCheckBoxText);
+            var strings = UI.Localization.CommonStrings.Default;
+
+            caseSensitiveCheckBox = AddCheckBox(strings.FindOptionMatchCase);
+            wholeWordsCheckBox = AddCheckBox(strings.FindOptionMatchWholeWord);
+            regularExpressionsCheckBox = AddCheckBox(strings.FindOptionUseRegularExpressions);
+            selectionOnlyCheckBox = AddCheckBox(strings.FindOptionSelectionOnly);
 
             caseSensitiveCheckBox.CheckedChanged += (s, e) =>
             {
