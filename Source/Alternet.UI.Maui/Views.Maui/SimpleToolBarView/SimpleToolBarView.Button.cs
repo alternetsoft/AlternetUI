@@ -58,6 +58,7 @@ namespace Alternet.Maui
             /// </summary>
             public ToolBarButton(SimpleToolBarView toolBar)
             {
+                Padding = DefaultButtonPadding;
                 this.toolBar = toolBar;
             }
 
@@ -320,7 +321,7 @@ namespace Alternet.Maui
             {
                 this.button = button;
 
-                Padding = 5;
+                Padding = DefaultButtonContainerPadding;
 
                 underline.IsVisible = false;
                 underline.Margin = DefaultStickyUnderlineMargin;

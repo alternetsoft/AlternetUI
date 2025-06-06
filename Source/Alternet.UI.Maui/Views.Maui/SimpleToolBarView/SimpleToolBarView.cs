@@ -17,6 +17,20 @@ namespace Alternet.Maui
     public partial class SimpleToolBarView : BaseContentView, Alternet.UI.IRaiseSystemColorsChanged
     {
         /// <summary>
+        /// Represents the default padding applied to button containers.
+        /// </summary>
+        /// <remarks>This value is used to define the spacing around button containers in the user
+        /// interface. It can be adjusted to customize the layout or appearance of buttons.</remarks>
+        public static int DefaultButtonContainerPadding = 2;
+
+        /// <summary>
+        /// Represents the default padding applied to button.
+        /// </summary>
+        /// <remarks>This value is used to define the spacing around button contents in the user
+        /// interface. It can be adjusted to customize the layout or appearance of buttons.</remarks>
+        public static int DefaultButtonPadding = 5;
+
+        /// <summary>
         /// Gets or sets the default width of the toolbar border.
         /// </summary>
         public static int DefaultBorderWidth = 1;
@@ -547,15 +561,24 @@ namespace Alternet.Maui
         }
 
         /// <summary>
-        /// Adds a button to the toolbar.
+        /// Inserts a button into the toolbar at the specified index.
         /// </summary>
-        /// <param name="text">The text to display on the button.</param>
-        /// <param name="toolTip">The tooltip text to display when the mouse
-        /// hovers over the button.</param>
-        /// <param name="image">The image to display on the button.</param>
-        /// <param name="onClick">The action to perform when the button is clicked.</param>
-        /// <returns>The created button item.</returns>
-        public virtual IToolBarItem AddButton(
+        /// <remarks>The method creates a new toolbar button, initializes its properties,
+        /// and inserts it into the toolbar at the specified index.
+        /// If the index is out of range, an exception will be thrown.</remarks>
+        /// <param name="index">The zero-based index at which the button should be inserted.
+        /// Must be within the valid range of the toolbar's items.</param>
+        /// <param name="text">The text to display on the button.
+        /// Can be <see langword="null"/> if no text is required.</param>
+        /// <param name="toolTip">The tooltip text to display when the user hovers
+        /// over the button. Can be <see langword="null"/> if no tooltip is required.</param>
+        /// <param name="image">An optional SVG image to display on the button.
+        /// Can be <see langword="null"/> if no image is required.</param>
+        /// <param name="onClick">An optional action to execute when the button is clicked.
+        /// Can be <see langword="null"/> if no action is required.</param>
+        /// <returns>The newly created toolbar button.</returns>
+        public virtual IToolBarItem InsertButton(
+            int index,
             string? text,
             string? toolTip = null,
             Drawing.SvgImage? image = null,
@@ -564,8 +587,31 @@ namespace Alternet.Maui
             var button = CreateToolBarButton();
             InitButtonProps(button, text, toolTip, image, onClick);
             var container = new ToolBarButtonContainer(button);
-            buttons.Children.Add(container);
+            buttons.Children.Insert(index, container);
             return button;
+        }
+
+        /// <summary>
+        /// Adds a button to the toolbar.
+        /// </summary>
+        /// <param name="text">The text to display on the button.</param>
+        /// <param name="toolTip">The tooltip text to display when the mouse
+        /// hovers over the button.</param>
+        /// <param name="image">The image to display on the button.</param>
+        /// <param name="onClick">The action to perform when the button is clicked.</param>
+        /// <returns>The created button item.</returns>
+        public IToolBarItem AddButton(
+            string? text,
+            string? toolTip = null,
+            Drawing.SvgImage? image = null,
+            Action? onClick = null)
+        {
+            return InsertButton(
+                buttons.Children.Count,
+                text,
+                toolTip,
+                image,
+                onClick);
         }
 
         /// <summary>
