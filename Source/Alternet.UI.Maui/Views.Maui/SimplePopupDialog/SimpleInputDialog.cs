@@ -168,8 +168,9 @@ namespace Alternet.Maui
 
             if(page is not null && absoluteLayout is not null)
             {
-                SimpleInputDialog? dialog
-                    = UI.MauiUtils.FindViewInContainer<SimpleInputDialog>(absoluteLayout);
+                Maui.SimplePopupDialog.HideDialogs(absoluteLayout, typeof(DisplayPromptDialog));
+                DisplayPromptDialog? dialog
+                    = UI.MauiUtils.FindViewInContainer<DisplayPromptDialog>(absoluteLayout);
 
                 dialog ??= new();
 
@@ -338,6 +339,17 @@ namespace Alternet.Maui
         /// custom behavior for generating or handling additional content.
         /// The base implementation does not perform any actions.</remarks>
         protected virtual void CreateOtherContent()
+        {
+        }
+
+        /// <summary>
+        /// Represents a dialog that displays a prompt to the user and allows input.
+        /// </summary>
+        /// <remarks>This class extends <see cref="SimpleInputDialog"/> to provide
+        /// functionality for displaying a prompt message and capturing user input.
+        /// It can be used in scenarios where user interaction is
+        /// required, such as confirming actions or entering data.</remarks>
+        public partial class DisplayPromptDialog : SimpleInputDialog
         {
         }
     }

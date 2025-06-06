@@ -861,6 +861,35 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Hides all child views of the specified type within the given container.
+        /// </summary>
+        /// <remarks>This method iterates through the visual children of the specified
+        /// container and sets the <see cref="VisualElement.IsVisible"/> property
+        /// to <see langword="false"/> for all child elements of the
+        /// specified type <typeparamref name="T"/>.</remarks>
+        /// <typeparam name="T">The type of child views to hide.
+        /// Must derive from <see cref="VisualElement"/>.</typeparam>
+        /// <param name="element">The container element whose child views
+        /// will be evaluated. Must implement <see cref="IVisualTreeElement"/>.</param>
+        /// <param name="noHide">The type of view which will not be hidden.</param>
+        public static void HideViewsInContainer<T>(VisualElement? element, Type? noHide = null)
+            where T : VisualElement
+        {
+            if (element is IVisualTreeElement visualTreeElement)
+            {
+                foreach (var child in visualTreeElement.GetVisualChildren())
+                {
+                    if (child is T foundView)
+                    {
+                        if (child.GetType() == noHide)
+                            continue;
+                        foundView.IsVisible = false;
+                    }
+                }
+            }
+        }
+
+        /// <summary>
         /// Gets parent <see cref="Microsoft.Maui.Controls.Page"/> for the specified control.
         /// If control is not attached to the parent, this function returns main page.
         /// </summary>

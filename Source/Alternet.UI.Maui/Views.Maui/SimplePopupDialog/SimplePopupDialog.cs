@@ -134,12 +134,12 @@ namespace Alternet.Maui
         }
 
         /// <summary>
-        /// Occurs when the 'OK' button is clicked.
+        /// Occurs when the "OK" button is clicked.
         /// </summary>
         public event EventHandler? OkButtonClicked;
 
         /// <summary>
-        /// Occurs when the 'Cancel' button is clicked.
+        /// Occurs when the "Cancel" button is clicked.
         /// </summary>
         public event EventHandler? CancelButtonClicked;
 
@@ -168,8 +168,14 @@ namespace Alternet.Maui
         /// </summary>
         public virtual bool CloseWhenCancelButtonClicked { get; set; } = true;
 
+        /// <summary>
+        /// Gets or sets the action to be executed when the "Cancel" button is pressed.
+        /// </summary>
         public virtual Action? CancelButtonAction { get; set; }
 
+        /// <summary>
+        /// Gets or sets the action to be executed when the "OK" button is pressed.
+        /// </summary>
         public virtual Action? OkButtonAction { get; set; }
 
         /// <summary>
@@ -320,6 +326,21 @@ namespace Alternet.Maui
                     return;
                 SetAlignedPosition(Owner, alignment.Value, alignOrigin);
             }
+        }
+
+        /// <summary>
+        /// Hides all instances of <see cref="SimplePopupDialog"/> within the specified container.
+        /// </summary>
+        /// <remarks>This method searches the provided container for all views of type
+        /// <see cref="SimplePopupDialog"/> and hides them.
+        /// It is typically used to manage the visibility of popup dialogs
+        /// in a UI.</remarks>
+        /// <param name="container">The <see cref="VisualElement"/> that
+        /// contains the dialogs to be hidden.</param>
+        /// <param name="noHide">The type of dialog which will not be hidden.</param>
+        public static void HideDialogs(VisualElement? container, Type? noHide = null)
+        {
+            UI.MauiUtils.HideViewsInContainer<SimplePopupDialog>(container, noHide);
         }
 
         /// <summary>

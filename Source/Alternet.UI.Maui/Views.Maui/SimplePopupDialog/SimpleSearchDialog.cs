@@ -93,7 +93,23 @@ namespace Alternet.Maui
             });
 
             AddCancelButton();
+
+            DialogTitle.AddGearButton();
+            DialogTitle.GearButtonClicked += (s, e) =>
+            {
+                UI.App.Log("Gear button clicked");
+            };
         }
+
+        /// <summary>
+        /// Gets the first button in the dialog.
+        /// </summary>
+        public SimpleToolBarView.IToolBarItem FirstButton => firstButton;
+
+        /// <summary>
+        /// Gets the second button in the dialog.
+        /// </summary>
+        public SimpleToolBarView.IToolBarItem SecondButton => secondButton;
 
         /// <summary>
         /// Occurs when the "Replace" button is clicked.
