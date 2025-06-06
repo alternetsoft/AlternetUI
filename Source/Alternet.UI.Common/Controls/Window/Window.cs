@@ -1301,6 +1301,12 @@ namespace Alternet.UI
             if (DisposingOrDisposed || !Visible)
                 return;
 
+            if (Modal && ModalResult == ModalResult.None)
+            {
+                ModalResult = ModalResult.Canceled;
+                return;
+            }
+
             action ??= CloseAction ?? WindowCloseAction.Dispose;
 
             switch (action)
