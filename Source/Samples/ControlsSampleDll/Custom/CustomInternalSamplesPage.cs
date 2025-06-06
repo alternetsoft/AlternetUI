@@ -7,7 +7,7 @@ namespace Alternet.UI
 {
     public class CustomInternalSamplesPage : Panel
     {
-        private readonly VirtualListBox view = new()
+        private readonly VirtualTreeControl view = new()
         {
             SuggestedWidth = 350,
             SuggestedHeight = 400,
@@ -28,10 +28,10 @@ namespace Alternet.UI
 
         public CustomInternalSamplesPage()
         {
-            view.SelectedIndexChanged += (s, e) =>
+            view.ListBox.SelectedIndexChanged += (s, e) =>
             {
                 App.DebugLogIf(
-                    $"InternalSamples.SelectedIndexChanged: {view.SelectedIndex}",
+                    $"InternalSamples.SelectedIndexChanged: {view.ListBox.SelectedIndex}",
                     false);
             };
 
@@ -45,13 +45,13 @@ namespace Alternet.UI
 
             while (SampleItems.Count > 0)
             {
-                view.Items.Add(SampleItems.Pop());
+                view.RootItem.Add(SampleItems.Pop());
             }
 
             RunWhenIdle(view.SelectFirstItem);
         }
 
-        public static Stack<ListControlItem> SampleItems = new();
+        public static Stack<TreeControlItem> SampleItems = new();
 
         [Conditional("DEBUG")]
         public static void AddIfDebug(string text, Func<Window> createForm)
@@ -61,7 +61,7 @@ namespace Alternet.UI
 
         public static void Add(string text, Func<Window> createForm)
         {
-            ListControlItem item = new(text);
+            TreeControlItem item = new(text);
             item.CustomAttr.SetAttribute<Action>("Fn", Fn);
             SampleItems.Push(item);
 
