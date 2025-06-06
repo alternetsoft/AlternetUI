@@ -369,6 +369,8 @@ namespace Alternet.Maui
 
                 set
                 {
+                    if (IsSticky == value)
+                        return;
                     button.IsSticky = value;
                     UpdateVisualStates(false);
                 }
@@ -384,6 +386,12 @@ namespace Alternet.Maui
             {
                 get => button.Text;
                 set => button.Text = value;
+            }
+
+            public Drawing.SvgImage? SvgImage
+            {
+                get => button.SvgImage;
+                set => button.SvgImage = value;
             }
 
             public virtual void RaiseSystemColorsChanged()

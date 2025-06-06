@@ -245,12 +245,17 @@ namespace Alternet.Maui
             /// <summary>
             /// Occurs when the button is clicked/tapped.
             /// </summary>
-            public event EventHandler? Clicked;
+            event EventHandler? Clicked;
 
             /// <summary>
             /// Gets or sets the action which is invoked when the button is clicked/tapped.
             /// </summary>
-            public Action? ClickedAction { get; set; }
+            Action? ClickedAction { get; set; }
+
+            /// <summary>
+            /// Gets or sets the SVG image associated with this button.
+            /// </summary>
+            Drawing.SvgImage? SvgImage { get; set; }
 
             /// <summary>
             /// Gets or sets the attributes provider for the toolbar item.

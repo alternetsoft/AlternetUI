@@ -88,6 +88,8 @@ namespace Alternet.Maui
                 }
             }
 
+            public Drawing.SvgImage? SvgImage { get; set; }
+
             /// <summary>
             /// Gets the parent toolbar view.
             /// </summary>
