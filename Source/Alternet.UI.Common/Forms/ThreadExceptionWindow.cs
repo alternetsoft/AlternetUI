@@ -15,18 +15,24 @@ namespace Alternet.UI
     ///  Implements a window that is displayed when an exception occurs in
     ///  the application.
     /// </summary>
-    public class ThreadExceptionWindow : DialogWindow
+    public partial class ThreadExceptionWindow : DialogWindow
     {
         /// <summary>
         /// Gets or sets default error image size in device-independent units.
         /// </summary>
         public static int DefaultErrorImageSize = 32;
 
+        /// <summary>
+        /// Indicates whether details should be displayed in a separate dialog.
+        /// </summary>
+        public static bool ShowDetailsInSeparateDialog = false;
+
         private Exception? exception;
         private bool canContinue = true;
         private bool canQuit = true;
         private TextBox? messageTextBox;
         private string? additionalInfo;
+        private Button? detailsButton;
 
         /// <summary>
         ///  Initializes a new instance of the
@@ -137,7 +143,19 @@ namespace Alternet.UI
             return result;
         }
 
-        private void InitializeControls()
+        /// <summary>
+        /// Initializes the controls and layout for the window, setting up its
+        /// appearance, behavior, and child elements.
+        /// </summary>
+        /// <remarks>This method configures the window's size, layout style,
+        /// padding, and other properties
+        /// such as its start location and topmost behavior. It also creates
+        /// and initializes the message grid and
+        /// buttons grid, which are added as child elements to the window.
+        /// The window title is determined based on the
+        /// active window or a default error title. Derived classes can override
+        /// this method to customize the initialization process.</remarks>
+        protected virtual void InitializeControls()
         {
             BeginInit();
 
@@ -145,6 +163,7 @@ namespace Alternet.UI
             Size = (700, 500);
             Layout = LayoutStyle.Vertical;
             Padding = 10;
+            HasSystemMenu = false;
             MinimizeEnabled = false;
             MaximizeEnabled = false;
             StartLocation = WindowStartLocation.CenterScreen;
@@ -232,66 +251,131 @@ namespace Alternet.UI
                         Margin = new Thickness(0, 15, 0, 5),
                     });
 
+                Border border = new()
+                {
+                    VerticalAlignment = VerticalAlignment.Fill,
+                    Parent = messageGrid,
+                };
+
                 messageTextBox = new MultilineTextBox
                 {
                     Text = " ",
                     ReadOnly = true,
+                    HasBorder = false,
                     MinHeight = 150,
-                    VerticalAlignment = VerticalAlignment.Fill,
+                    Parent = border,
                 };
-
-                messageGrid.Children.Add(messageTextBox);
 
                 return messageGrid;
             }
-
-            AbstractControl CreateButtonsGrid()
-            {
-                var buttonsGrid = new HorizontalStackPanel();
-                buttonsGrid.Padding = 10;
-
-                var detailsButton = new Button
-                {
-                    Text = CommonStrings.Default.ButtonDetails + "...",
-                };
-                detailsButton.Click += DetailsButton_Click;
-                buttonsGrid.Children.Add(detailsButton);
-
-                var continueButton =
-                    new Button
-                    {
-                        Text = CommonStrings.Default.ButtonContinue,
-                    };
-                continueButton.Click += ContinueButton_Click;
-                continueButton.HorizontalAlignment = HorizontalAlignment.Right;
-                buttonsGrid.Children.Add(continueButton);
-                continueButton.Visible = CanContinue;
-
-                var quitButton = new Button
-                {
-                    Text = CommonStrings.Default.ButtonQuit,
-                    IsDefault = true,
-                    Visible = canQuit,
-                    HorizontalAlignment = HorizontalAlignment.Right,
-                    Margin = (5, 0, 0, 0),
-                };
-                quitButton.Click += QuitButton_Click;
-                buttonsGrid.Children.Add(quitButton);
-
-                return buttonsGrid;
-            }
         }
 
-        private void QuitButton_Click(object? sender, EventArgs e)
+        /// <summary>
+        /// Creates and returns a grid of buttons arranged horizontally,
+        /// with predefined functionality.
+        /// </summary>
+        /// <remarks>The grid includes three buttons: a "Details" button, a "Continue" button,
+        /// and a "Quit" button. Each button is configured with specific text, alignment,
+        /// visibility, and click event handlers.
+        /// The visibility and alignment of certain buttons depend
+        /// on the state of the application.</remarks>
+        /// <returns>A <see cref="HorizontalStackPanel"/> containing the configured buttons.</returns>
+        protected virtual AbstractControl CreateButtonsGrid()
+        {
+            var buttonsGrid = new HorizontalStackPanel();
+            buttonsGrid.Padding = 10;
+
+            detailsButton = new Button
+            {
+                Text = CommonStrings.Default.ButtonDetails + "...",
+            };
+            detailsButton.Click += OnDetailsButtonClick;
+            buttonsGrid.Children.Add(detailsButton);
+
+            var copyButton = new Button
+            {
+                Text = CommonStrings.Default.ButtonCopy,
+                Parent = buttonsGrid,
+            };
+
+            copyButton.Click += (s, e) =>
+            {
+                Clipboard.SetText(messageTextBox?.Text);
+            };
+
+            var continueButton =
+                new Button
+                {
+                    Text = CommonStrings.Default.ButtonContinue,
+                };
+            continueButton.Click += OnContinueButtonClick;
+            continueButton.HorizontalAlignment = HorizontalAlignment.Right;
+            buttonsGrid.Children.Add(continueButton);
+            continueButton.Visible = CanContinue;
+
+            var quitButton = new Button
+            {
+                Text = CommonStrings.Default.ButtonQuit,
+                IsDefault = true,
+                Visible = canQuit,
+                HorizontalAlignment = HorizontalAlignment.Right,
+                Margin = (5, 0, 0, 0),
+            };
+            quitButton.Click += OnQuitButtonClick;
+            buttonsGrid.Children.Add(quitButton);
+
+            return buttonsGrid;
+        }
+
+        /// <summary>
+        /// Handles the "Quit" button click event.
+        /// </summary>
+        /// <param name="sender">The source of the event.
+        /// This parameter can be <see langword="null"/>.</param>
+        /// <param name="e">The event data associated with the "Quit" button click.</param>
+        protected virtual void OnQuitButtonClick(object? sender, EventArgs e)
         {
             ModalResult = ModalResult.Canceled;
-            Close();
         }
 
-        private void ContinueButton_Click(object? sender, EventArgs e)
+        /// <summary>
+        /// Handles the "Continue" button click event.
+        /// </summary>
+        /// <param name="sender">The source of the event.
+        /// This parameter can be <see langword="null"/>.</param>
+        /// <param name="e">The event data associated with the "Continue" button click.</param>
+        protected virtual void OnContinueButtonClick(object? sender, EventArgs e)
         {
             ModalResult = ModalResult.Accepted;
-            Close();
+        }
+
+        /// <summary>
+        /// Handles the "Details" button click event.
+        /// </summary>
+        /// <param name="sender">The source of the event.
+        /// This parameter can be <see langword="null"/>.</param>
+        /// <param name="e">The event data associated with the "Details" button click.</param>
+        protected virtual void OnDetailsButtonClick(object? sender, EventArgs e)
+        {
+            if (ShowDetailsInSeparateDialog)
+            {
+                var detailsWindow =
+                    new WindowWithMemoAndButton(
+                        CommonStrings.Default.WindowTitleExceptionDetails,
+                        GetDetailsText());
+                detailsWindow.ShowDialogAsync(this, (result) =>
+                {
+                    detailsWindow.Dispose();
+                });
+            }
+            else
+            {
+                if (messageTextBox is null || detailsButton is null)
+                    return;
+                detailsButton.Enabled = false;
+                messageTextBox.Text += Environment.NewLine + GetDetailsText()
+                    + Environment.NewLine;
+            }
         }
 
         /// <summary>
@@ -300,16 +384,6 @@ namespace Alternet.UI
         private void UpdateExceptionText()
         {
             messageTextBox!.Text = GetMessageText();
-        }
-
-        private void DetailsButton_Click(object? sender, EventArgs e)
-        {
-            var detailsWindow =
-                new ThreadExceptionDetailsWindow(GetDetailsText());
-            detailsWindow.ShowDialogAsync(this, (result) =>
-            {
-                detailsWindow.Dispose();
-            });
         }
     }
 }
