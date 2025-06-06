@@ -649,6 +649,9 @@ namespace Alternet.UI
         {
             if (DisposingOrDisposed)
                 return false;
+            var window = ParentWindow;
+            if (window is null || window.State == WindowState.Minimized)
+                return false;
             return Handler.SetFocus();
         }
 
