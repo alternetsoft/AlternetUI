@@ -253,7 +253,7 @@ namespace Alternet.UI
 
                     if (methodParameters.Length == 0 && method.IsStatic)
                     {
-                        replaced += " " + CharUtils.RightArrow;
+                        replaced += " ->";
 
                         doubleClickAction = () =>
                         {
