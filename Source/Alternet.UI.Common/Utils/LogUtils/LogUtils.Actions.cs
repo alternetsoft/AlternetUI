@@ -158,7 +158,15 @@ namespace Alternet.UI
         /// </summary>
         public static void ShowTestActionsDialog()
         {
-            testActionsWindow ??= new();
+            if(testActionsWindow is null)
+            {
+                testActionsWindow = new();
+                testActionsWindow.Disposed += (s, e) =>
+                {
+                    testActionsWindow = null;
+                };
+            }
+
             testActionsWindow.ShowAndFocus();
         }
 
