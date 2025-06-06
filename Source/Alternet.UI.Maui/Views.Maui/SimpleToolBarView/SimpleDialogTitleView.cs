@@ -23,6 +23,7 @@ namespace Alternet.Maui
         private readonly View? owner;
 
         private IToolBarItem? closeButton;
+        private IToolBarItem? gearButton;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="SimpleDialogTitleView"/> class.
@@ -43,12 +44,18 @@ namespace Alternet.Maui
             IsBottomBorderVisible = true;
             titleLabel = AddLabel(string.Empty);
             AddExpandingSpace();
-            AddCloseButton();
+            if(NeedCloseButton)
+                AddCloseButton();
             Margin = DefaultTitleMargin;
         }
 
         /// <summary>
-        /// Occurs when the close button is clicked.
+        /// Occurs when the "Gear" button is clicked.
+        /// </summary>
+        public event EventHandler? GearButtonClicked;
+
+        /// <summary>
+        /// Occurs when the "Close" button is clicked.
         /// </summary>
         public event EventHandler? CloseClicked;
 
@@ -58,9 +65,19 @@ namespace Alternet.Maui
         public virtual View? Owner => owner;
 
         /// <summary>
+        /// Gets the toolbar item that represents the "Gear" button.
+        /// </summary>
+        public IToolBarItem? GearButton => gearButton;
+
+        /// <summary>
         /// Gets the toolbar item that represents the "Close" button.
         /// </summary>
         public IToolBarItem? CloseButton => closeButton;
+
+        /// <summary>
+        /// Gets a value indicating whether a close button is required.
+        /// </summary>
+        public virtual bool NeedCloseButton => true;
 
         /// <summary>
         /// Gets or sets a value indicating whether the close button is visible.
@@ -101,7 +118,32 @@ namespace Alternet.Maui
         }
 
         /// <summary>
-        /// Adds a close button to the dialog title.
+        /// Adds a "Gear" button to the collection of buttons,
+        /// typically used for displaying options or settings.
+        /// </summary>
+        /// <remarks>The gear button is inserted at the appropriate index in the button collection,
+        /// ensuring it appears in the correct order relative to other buttons.
+        /// If a close button is present, the gear button is positioned before it.</remarks>
+        public virtual void AddGearButton()
+        {
+            int index = this.Buttons.Count;
+
+            if (closeButton is not null)
+                index--;
+
+            gearButton = InsertButton(
+                index,
+                null,
+                Alternet.UI.Localization.CommonStrings.Default.ButtonOptions,
+                Alternet.UI.KnownSvgImages.ImgGear,
+                () =>
+                {
+                    GearButtonClicked?.Invoke(Owner ?? this, EventArgs.Empty);
+                });
+        }
+
+        /// <summary>
+        /// Adds a "Close" button to the dialog title.
         /// </summary>
         /// <remarks>The close button displays a "Close" icon.
         /// When clicked, it triggers the <see cref="CloseClicked"/> event,
