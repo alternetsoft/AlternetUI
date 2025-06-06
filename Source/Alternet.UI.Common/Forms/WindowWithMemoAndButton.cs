@@ -66,6 +66,7 @@ namespace Alternet.UI
         /// The "Close" button is set as the default and cancel button for the window.</remarks>
         /// <param name="details">The text to display in the read-only
         /// details section of the window.</param>
+        /// <param name="title">The text to display in title of the window.</param>
         protected virtual void InitializeControls(string title, string details)
         {
             BeginInit();

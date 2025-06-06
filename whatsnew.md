@@ -1,3 +1,21 @@
+# 0.9.735 (2025 June 6)
+
+- Maui: Fixed Item's IsVisible behavior in SimpleToolBarView.
+- Maui: SimpleToolBarView buttons are now rectangular.
+- Maui: SimpleToolBarView.InsertButton method.
+- Maui: It is possible to specify button paddings in SimpleToolBarView.
+- SimpleDialogTitleView: Optional Gear button (add method, on click event)
+- SimpleDialogTitleView: Can be initialized without Close button.
+- Maui: Different improvements in SimplePopupDialog and it's descendants.
+- Control: Fix SetFocus, add check for minimized window.
+- Fix LogUtils.ShowTestActionsDialog, add Disposed event handler.
+- Window: Fix ShowAndFocus for minimized window.
+- ThreadExceptionWindow: add Copy button and fixed border style for the memo.
+- Add WindowWithMemoAndButton form.
+- Window: Fix incorrect modal dialog behavior in some cases.
+- Maui: Add settings panel to SimpleSearchDialog.
+- Maui: SvgImage property in the item of SimpleToolBarView.
+
 # 0.9.734 (2025 June 5)
 
 - Maui: Create SimpleTwoFieldInputDialog and SimpleSearchDialog.
