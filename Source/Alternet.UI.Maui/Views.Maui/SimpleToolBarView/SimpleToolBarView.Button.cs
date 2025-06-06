@@ -105,6 +105,22 @@ namespace Alternet.Maui
                 }
             }
 
+            bool IToolBarItem.IsVisible
+            {
+                get
+                {
+                    return Container?.IsVisible ?? IsVisible;
+                }
+
+                set
+                {
+                    if (Container is not null)
+                        Container.IsVisible = value;
+                }
+            }
+
+            public ToolBarButtonContainer? Container => Parent as ToolBarButtonContainer;
+
             /// <inheritdoc/>
             public virtual bool HasBorder
             {
@@ -294,13 +310,13 @@ namespace Alternet.Maui
             }
         }
 
-        internal partial class ToolbarButtonContainer
+        internal partial class ToolBarButtonContainer
             : VerticalStackLayout, Alternet.UI.IRaiseSystemColorsChanged, IToolBarItem
         {
             private readonly ToolBarButton button;
             private readonly BoxView underline = new();
 
-            public ToolbarButtonContainer(ToolBarButton button)
+            public ToolBarButtonContainer(ToolBarButton button)
             {
                 this.button = button;
 

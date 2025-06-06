@@ -563,7 +563,7 @@ namespace Alternet.Maui
         {
             var button = CreateToolBarButton();
             InitButtonProps(button, text, toolTip, image, onClick);
-            var container = new ToolbarButtonContainer(button);
+            var container = new ToolBarButtonContainer(button);
             buttons.Children.Add(container);
             return button;
         }
@@ -677,7 +677,7 @@ namespace Alternet.Maui
         {
             var button = new ToolBarLabel(this);
             InitButtonProps(button, text, toolTip, image, onClick);
-            var container = new ToolbarButtonContainer(button);
+            var container = new ToolBarButtonContainer(button);
             buttons.Children.Add(container);
             return button;
         }
@@ -691,6 +691,21 @@ namespace Alternet.Maui
             buttons.Children.Add(button);
             button.UpdateVisualStates(true);
             return button;
+        }
+
+        /// <summary>
+        /// Creates a visual border for a toolbar.
+        /// </summary>
+        /// <returns>A <see cref="BoxView"/> configured to serve as the toolbar border.</returns>
+        public virtual BoxView CreateToolBarBorder()
+        {
+            var result = new BoxView
+            {
+                HeightRequest = DefaultBorderWidth,
+                BackgroundColor = GetSeparatorColor(),
+            };
+
+            return result;
         }
 
         internal virtual void InitButtonProps(
@@ -715,17 +730,6 @@ namespace Alternet.Maui
             button.StickyStyle = StickyStyle;
 
             button.UpdateVisualStates(true);
-        }
-
-        internal virtual BoxView CreateToolBarBorder()
-        {
-            var result = new BoxView
-            {
-                HeightRequest = DefaultBorderWidth,
-                BackgroundColor = GetSeparatorColor(),
-            };
-
-            return result;
         }
 
         internal virtual ToolBarButton CreateToolBarButton()

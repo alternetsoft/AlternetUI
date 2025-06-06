@@ -20,7 +20,9 @@ namespace Alternet.Maui
         public static Thickness DefaultTitleMargin = Thickness.Zero;
 
         private readonly IToolBarItem titleLabel;
-        private readonly IToolBarItem closeButton;
+        private readonly View? owner;
+
+        private IToolBarItem? closeButton;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="SimpleDialogTitleView"/> class.
@@ -37,17 +39,11 @@ namespace Alternet.Maui
         /// <param name="owner">The owner view of the dialog title view.</param>
         public SimpleDialogTitleView(View? owner)
         {
+            this.owner = owner;
             IsBottomBorderVisible = true;
             titleLabel = AddLabel(string.Empty);
             AddExpandingSpace();
-            closeButton = AddButton(
-                null,
-                Alternet.UI.Localization.CommonStrings.Default.ButtonClose,
-                Alternet.UI.KnownSvgImages.ImgCancel,
-                () =>
-                {
-                    CloseClicked?.Invoke(owner ?? this, EventArgs.Empty);
-                });
+            AddCloseButton();
             Margin = DefaultTitleMargin;
         }
 
@@ -57,18 +53,31 @@ namespace Alternet.Maui
         public event EventHandler? CloseClicked;
 
         /// <summary>
+        /// Gets the parent view that owns this view.
+        /// </summary>
+        public virtual View? Owner => owner;
+
+        /// <summary>
+        /// Gets the toolbar item that represents the "Close" button.
+        /// </summary>
+        public IToolBarItem? CloseButton => closeButton;
+
+        /// <summary>
         /// Gets or sets a value indicating whether the close button is visible.
         /// </summary>
         public virtual bool HasCloseButton
         {
             get
             {
-                return closeButton.IsVisible;
+                return closeButton?.IsVisible ?? false;
             }
 
             set
             {
-                closeButton.IsVisible = value;
+                if (closeButton is null)
+                    AddCloseButton();
+                if(closeButton is not null)
+                    closeButton.IsVisible = value;
             }
         }
 
@@ -89,6 +98,25 @@ namespace Alternet.Maui
                 titleLabel.IsVisible = !string.IsNullOrEmpty(value);
                 titleLabel.Text = value ?? string.Empty;
             }
+        }
+
+        /// <summary>
+        /// Adds a close button to the dialog title.
+        /// </summary>
+        /// <remarks>The close button displays a "Close" icon.
+        /// When clicked, it triggers the <see cref="CloseClicked"/> event,
+        /// passing the owner of the button or the
+        /// current instance as the sender.</remarks>
+        public virtual void AddCloseButton()
+        {
+            closeButton = AddButton(
+                null,
+                Alternet.UI.Localization.CommonStrings.Default.ButtonClose,
+                Alternet.UI.KnownSvgImages.ImgCancel,
+                () =>
+                {
+                    CloseClicked?.Invoke(Owner ?? this, EventArgs.Empty);
+                });
         }
     }
 }

@@ -127,7 +127,7 @@ namespace Alternet.Maui
         /// <remarks>Subscribe to this event to handle the action triggered
         /// by the "Find Previous" button. The
         /// event provides no additional data beyond the sender and event arguments.</remarks>
-        public virtual Action? FindPreviousButtonClicked { get;set; }
+        public virtual Action? FindPreviousButtonClicked { get; set; }
 
         /// <summary>
         /// Gets or sets a value indicating whether the replace functionality is visible.
