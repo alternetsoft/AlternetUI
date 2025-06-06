@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 using Alternet.UI;
 
+using Microsoft.Maui.Controls;
+using Microsoft.Maui.Graphics;
+
 namespace Alternet.Maui
 {
     /// <summary>
@@ -26,14 +29,24 @@ namespace Alternet.Maui
         public static string DefaultFindNextButtonText = "Find next";
 
         /// <summary>
-        /// Gets the default text displayed on the "Replace previous" button.
+        /// Gets the default text displayed on the "Case sensitive" checkbox.
         /// </summary>
-        public static string DefaultReplacePrevButtonText = "Replace previous";
+        public static string DefaultCaseSensitiveCheckBoxText = "Case sensitive";
 
         /// <summary>
-        /// Gets the default text displayed on the "Replace next" button.
+        /// Gets the default text displayed on the "Whole words" checkbox.
         /// </summary>
-        public static string DefaultReplaceNextButtonText = "Replace next";
+        public static string DefaultWholeWordsCheckBoxText = "Whole words";
+
+        /// <summary>
+        /// Gets the default text displayed on the "Regular expressions" checkbox.
+        /// </summary>
+        public static string DefaultRegularExpressionsCheckBoxText = "Regular expressions";
+
+        /// <summary>
+        /// Gets the default text displayed on the "Selection only" checkbox.
+        /// </summary>
+        public static string DefaultSelectionOnlyCheckBoxText = "Selection only";
 
         /// <summary>
         /// Gets the default text displayed on the "Replace" button.
@@ -68,6 +81,12 @@ namespace Alternet.Maui
         private readonly SimpleToolBarView.IToolBarItem firstButton;
         private readonly SimpleToolBarView.IToolBarItem secondButton;
 
+        private CheckBoxWithLabelView? caseSensitiveCheckBox;
+        private CheckBoxWithLabelView? wholeWordsCheckBox;
+        private CheckBoxWithLabelView? regularExpressionsCheckBox;
+        private CheckBoxWithLabelView? selectionOnlyCheckBox;
+        private VerticalStackLayout? settingsLayout;
+
         /// <summary>
         /// Initializes a new instance of the <see cref="SimpleSearchDialog"/> class.
         /// </summary>
@@ -97,9 +116,38 @@ namespace Alternet.Maui
             DialogTitle.AddGearButton();
             DialogTitle.GearButtonClicked += (s, e) =>
             {
-                UI.App.Log("Gear button clicked");
+                if (settingsLayout is null)
+                    return;
+                settingsLayout.IsVisible = !settingsLayout.IsVisible;
             };
         }
+
+        /// <summary>
+        /// Gets the layout container for settings controls.
+        /// </summary>
+        public VerticalStackLayout SettingsLayout => settingsLayout!;
+
+        /// <summary>
+        /// Gets the checkbox control that allows the user to toggle case sensitivity.
+        /// </summary>
+        public CheckBoxWithLabelView CaseSensitiveCheckBox => caseSensitiveCheckBox!;
+
+        /// <summary>
+        /// Gets the checkbox control that allows users to enable or
+        /// disable the "Match Whole Words" option.
+        /// </summary>
+        public CheckBoxWithLabelView WholeWordsCheckBox => wholeWordsCheckBox!;
+
+        /// <summary>
+        /// Gets the checkbox control that allows users to enable or disable the
+        /// use of regular expressions.
+        /// </summary>
+        public CheckBoxWithLabelView RegularExpressionsCheckBox => regularExpressionsCheckBox!;
+
+        /// <summary>
+        /// Gets the checkbox control that allows users to toggle the "Selection Only" mode.
+        /// </summary>
+        public CheckBoxWithLabelView SelectionOnlyCheckBox => selectionOnlyCheckBox!;
 
         /// <summary>
         /// Gets the first button in the dialog.
@@ -128,6 +176,11 @@ namespace Alternet.Maui
         /// perform operations such as replacing text or updating
         /// data.</remarks>
         public virtual Action? ReplaceAllButtonClicked { get; set; }
+
+        /// <summary>
+        /// Gets or sets the action to be invoked when settings are changed.
+        /// </summary>
+        public virtual Action? SettingsChanged { get; set; }
 
         /// <summary>
         /// Occurs when the "Find Next" button is clicked.
@@ -183,6 +236,68 @@ namespace Alternet.Maui
                 ReplaceButtonClicked?.Invoke();
             else
                 FindNextButtonClicked?.Invoke();
+        }
+
+        /// <inheritdoc/>
+        protected override void CreateOtherContent()
+        {
+            settingsLayout = new Microsoft.Maui.Controls.VerticalStackLayout();
+            settingsLayout.IsVisible = false;
+
+            CheckBoxWithLabelView AddCheckBox(string title)
+            {
+                CheckBoxWithLabelView result = new();
+
+                var labelMargin = GetLabelMargin();
+                result.Margin = new(labelMargin.Left, 0, labelMargin.Right, 0);
+                result.Label.Text = title;
+                result.Padding = 0;
+
+                settingsLayout.Children.Add(result);
+
+                return result;
+            }
+
+            base.CreateOtherContent();
+
+            caseSensitiveCheckBox = AddCheckBox(DefaultCaseSensitiveCheckBoxText);
+            wholeWordsCheckBox = AddCheckBox(DefaultWholeWordsCheckBoxText);
+            regularExpressionsCheckBox = AddCheckBox(DefaultRegularExpressionsCheckBoxText);
+            selectionOnlyCheckBox = AddCheckBox(DefaultSelectionOnlyCheckBoxText);
+
+            caseSensitiveCheckBox.CheckedChanged += (s, e) =>
+            {
+                OnSettingsChanged();
+            };
+
+            wholeWordsCheckBox.CheckedChanged += (s, e) =>
+            {
+                OnSettingsChanged();
+            };
+
+            regularExpressionsCheckBox.CheckedChanged += (s, e) =>
+            {
+                OnSettingsChanged();
+            };
+
+            selectionOnlyCheckBox.CheckedChanged += (s, e) =>
+            {
+                OnSettingsChanged();
+            };
+
+            ContentLayout.Children.Add(settingsLayout);
+        }
+
+        /// <summary>
+        /// Invoked when the settings have changed, triggering the <see cref="SettingsChanged"/> event.
+        /// </summary>
+        /// <remarks>This method is called to notify subscribers that the settings have been updated.
+        /// Derived classes can override this method to perform additional
+        /// actions when settings change. Ensure that any
+        /// overridden implementation calls the base method to maintain event invocation.</remarks>
+        protected virtual void OnSettingsChanged()
+        {
+            SettingsChanged?.Invoke();
         }
 
         /// <summary>

@@ -12,19 +12,37 @@ namespace Alternet.Maui
     /// <summary>
     /// Implements <see cref="CheckBox"/> with <see cref="Label"/>.
     /// </summary>
-    public partial class CheckBoxWithLabelView : StackLayout
+    public partial class CheckBoxWithLabelView : HorizontalStackLayout
     {
         private readonly CheckBox checkBox = new();
         private readonly Label label = new();
+
+        static CheckBoxWithLabelView()
+        {
+#if WINDOWS
+            Microsoft.Maui.Handlers.CheckBoxHandler.Mapper.AppendToMapping(
+                "ReduceSpacing",
+                (handler, view) =>
+                {
+                    handler.PlatformView.Padding = new Microsoft.UI.Xaml.Thickness(0);
+                    handler.PlatformView.Margin = new Microsoft.UI.Xaml.Thickness(0);
+                });
+#endif
+        }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="CheckBoxWithLabelView"/> class.
         /// </summary>
         public CheckBoxWithLabelView()
         {
-            Orientation = StackOrientation.Horizontal;
+            label.Margin = 0;
+            checkBox.Margin = 0;
+            label.Padding = 0;
+            Padding = 0;
+            Margin = 0;
 
-            label.Margin = new Thickness(0, 0, 0, 0);
+            checkBox.HeightRequest = 24;
+            checkBox.WidthRequest = 24;
 
             var ho = checkBox.VerticalOptions;
             ho.Alignment = LayoutAlignment.Center;
