@@ -1672,12 +1672,8 @@ namespace Alternet.UI
             var deviceInfoCurrentPlatform = deviceInfoCurrent?.GetType()
                 .GetProperty("Platform")?.GetValue(deviceInfoCurrent);
 
-            var result = deviceInfoCurrentPlatform == devicePlatformMacCatalyst;
+            var result = deviceInfoCurrentPlatform?.Equals(devicePlatformMacCatalyst) ?? false;
             return result;
-
-            /*
-            return DeviceInfo.Current.Platform == DevicePlatform.MacCatalyst;
-            */
         }
 
         /// <summary>
