@@ -25,7 +25,7 @@ namespace Alternet.UI
         public static readonly ObjectUniqueId NullContainerId = new();
 
         /// <summary>
-        /// Gets default item alignment
+        /// Gets default item alignment.
         /// </summary>
         public static readonly HVAlignment DefaultItemAlignment
             = new(HorizontalAlignment.Left, VerticalAlignment.Center);
@@ -43,8 +43,32 @@ namespace Alternet.UI
 
         private CachedSvgImage<Image> cachedSvg = new();
         private string? text;
+        private string? displayText;
         private HVAlignment alignment = DefaultItemAlignment;
         private IndexedValues<ObjectUniqueId, ContainerRelatedData>? containerRelated;
+        private TextHorizontalAlignment? textLineAlignment;
+        private Coord? textLineDistance;
+        private Coord minHeight;
+        private int? imageIndex;
+        private CheckState checkState;
+        private FontStyle? fontStyle;
+        private Font? font;
+        private bool? checkBoxThreeState;
+        private bool? checkBoxAllowAllStatesForUser;
+        private bool? checkBoxVisible;
+        private bool canRemove = true;
+        private bool hideSelection;
+        private bool hideFocusRect;
+        private Color? foregroundColor;
+        private Color? backgroundColor;
+        private BorderSettings? border;
+        private Thickness foregroundMargin;
+        private DrawLabelFlags labelFlags;
+        private object? value;
+        private Action? action;
+        private Action? doubleClickAction;
+        private Action<IListControlItemContainer?, ListBoxItemPaintEventArgs>? drawBackgroundAction;
+        private Action<IListControlItemContainer?, ListBoxItemPaintEventArgs>? drawForegroundAction;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ListControlItem"/> class
@@ -91,12 +115,20 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets horizontal alignment of the text line within text block.
         /// </summary>
-        public virtual TextHorizontalAlignment? TextLineAlignment { get; set; }
+        public virtual TextHorizontalAlignment? TextLineAlignment
+        {
+            get => textLineAlignment;
+            set => textLineAlignment = value;
+        }
 
         /// <summary>
         /// Gets or sets distance between lines of the text.
         /// </summary>
-        public virtual Coord? TextLineDistance { get; set; }
+        public virtual Coord? TextLineDistance
+        {
+            get => textLineDistance;
+            set => textLineDistance = value;
+        }
 
         /// <summary>
         /// Gets whether <see cref="Image"/> or <see cref="SvgImage"/> is assigned.
@@ -107,7 +139,11 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets text for the display purposes.
         /// </summary>
-        public virtual string? DisplayText { get; set; }
+        public virtual string? DisplayText
+        {
+            get => displayText;
+            set => displayText = value;
+        }
 
         /// <summary>
         /// Gets a value indicating whether the item has a valid image index assigned.
@@ -127,7 +163,11 @@ namespace Alternet.UI
         /// <remarks>
         /// Currently this property is not used by the default item painter.
         /// </remarks>
-        public virtual int? ImageIndex { get; set; }
+        public virtual int? ImageIndex
+        {
+            get => imageIndex;
+            set => imageIndex = value;
+        }
 
         /// <summary>
         /// Gets or sets state of the check box associated with the item.
@@ -136,7 +176,11 @@ namespace Alternet.UI
         /// It is up to control to decide whether and how this property is used.
         /// When this property is changed, you need to repaint the item.
         /// </remarks>
-        public virtual CheckState CheckState { get; set; }
+        public virtual CheckState CheckState
+        {
+            get => checkState;
+            set => checkState = value;
+        }
 
         /// <summary>
         /// Gets or sets a value indicating whether the item is checked.
@@ -197,7 +241,11 @@ namespace Alternet.UI
         /// When this property is changed, you need to repaint the item.
         /// </remarks>
         [DefaultValue(false)]
-        public virtual bool? CheckBoxThreeState { get; set; }
+        public virtual bool? CheckBoxThreeState
+        {
+            get => checkBoxThreeState;
+            set => checkBoxThreeState = value;
+        }
 
         /// <summary>
         /// Gets or sets whether text may contain html bold tags.
@@ -224,7 +272,11 @@ namespace Alternet.UI
         /// It is up to control to decide whether and how this property is used.
         /// </remarks>
         [DefaultValue(false)]
-        public virtual bool? CheckBoxAllowAllStatesForUser { get; set; }
+        public virtual bool? CheckBoxAllowAllStatesForUser
+        {
+            get => checkBoxAllowAllStatesForUser;
+            set => checkBoxAllowAllStatesForUser = value;
+        }
 
         /// <summary>
         /// Gets or sets whether to show check box inside the item. This property (if specified)
@@ -234,7 +286,11 @@ namespace Alternet.UI
         /// It is up to control to decide whether and how this property is used.
         /// When this property is changed, you need to repaint the item.
         /// </remarks>
-        public virtual bool? CheckBoxVisible { get; set; }
+        public virtual bool? CheckBoxVisible
+        {
+            get => checkBoxVisible;
+            set => checkBoxVisible = value;
+        }
 
         /// <summary>
         /// Gets or sets whether item can be removed.
@@ -242,7 +298,11 @@ namespace Alternet.UI
         /// <remarks>
         /// It is up to control to decide whether and how this property is used.
         /// </remarks>
-        public virtual bool CanRemove { get; set; } = true;
+        public virtual bool CanRemove
+        {
+            get => canRemove;
+            set => canRemove = value;
+        }
 
         /// <summary>
         /// Gets or sets <see cref="Image"/> associated with the item.
@@ -314,6 +374,7 @@ namespace Alternet.UI
         public virtual SvgImage? SvgImage
         {
             get => cachedSvg.SvgImage;
+
             set
             {
                 cachedSvg.SvgImage = value;
@@ -341,6 +402,7 @@ namespace Alternet.UI
         public virtual int? SvgImageWidth
         {
             get => SvgImageSize?.Width;
+
             set
             {
                 if(value is null)
@@ -365,6 +427,7 @@ namespace Alternet.UI
         public virtual int? SvgImageHeight
         {
             get => SvgImageSize?.Height;
+
             set
             {
                 if (value is null)
@@ -386,7 +449,11 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets minimal item height.
         /// </summary>
-        public virtual Coord MinHeight { get; set; }
+        public virtual Coord MinHeight
+        {
+            get => minHeight;
+            set => minHeight = value;
+        }
 
         /// <summary>
         /// Gets or sets <see cref="FontStyle"/> associated with the item.
@@ -395,7 +462,11 @@ namespace Alternet.UI
         /// It is up to control to decide whether and how this property is used.
         /// When this property is changed, you need to repaint the item.
         /// </remarks>
-        public virtual FontStyle? FontStyle { get; set; }
+        public virtual FontStyle? FontStyle
+        {
+            get => fontStyle;
+            set => fontStyle = value;
+        }
 
         /// <summary>
         /// Gets or sets <see cref="Font"/> associated with the item.
@@ -404,17 +475,29 @@ namespace Alternet.UI
         /// It is up to control to decide whether and how this property is used.
         /// When this property is changed, you need to repaint the item.
         /// </remarks>
-        public virtual Font? Font { get; set; }
+        public virtual Font? Font
+        {
+            get => font;
+            set => font = value;
+        }
 
         /// <summary>
         /// Gets or sets whether to hide selection for this item.
         /// </summary>
-        public virtual bool HideSelection { get; set; }
+        public virtual bool HideSelection
+        {
+            get => hideSelection;
+            set => hideSelection = value;
+        }
 
         /// <summary>
         /// Gets or sets whether to hide focus rectangle for this item.
         /// </summary>
-        public virtual bool HideFocusRect { get; set; }
+        public virtual bool HideFocusRect
+        {
+            get => hideFocusRect;
+            set => hideFocusRect = value;
+        }
 
         /// <summary>
         /// Gets or sets foreground color of the item.
@@ -423,7 +506,11 @@ namespace Alternet.UI
         /// It is up to control to decide whether and how this property is used.
         /// When this property is changed, you need to repaint the item.
         /// </remarks>
-        public virtual Color? ForegroundColor { get; set; }
+        public virtual Color? ForegroundColor
+        {
+            get => foregroundColor;
+            set => foregroundColor = value;
+        }
 
         /// <summary>
         /// Gets or sets background color of the item.
@@ -432,7 +519,11 @@ namespace Alternet.UI
         /// It is up to control to decide whether and how this property is used.
         /// When this property is changed, you need to repaint the item.
         /// </remarks>
-        public virtual Color? BackgroundColor { get; set; }
+        public virtual Color? BackgroundColor
+        {
+            get => backgroundColor;
+            set => backgroundColor = value;
+        }
 
         /// <summary>
         /// Gets or sets border of the item.
@@ -442,7 +533,11 @@ namespace Alternet.UI
         /// When this property is changed, you need to repaint the item.
         /// </remarks>
         [Browsable(false)]
-        public virtual BorderSettings? Border { get; set; }
+        public virtual BorderSettings? Border
+        {
+            get => border;
+            set => border = value;
+        }
 
         /// <summary>
         /// Gets or sets alignment of the item.
@@ -500,7 +595,11 @@ namespace Alternet.UI
         /// Gets or sets margin of the item when foreground is painted.
         /// </summary>
         [Browsable(false)]
-        public virtual Thickness ForegroundMargin { get; set; }
+        public virtual Thickness ForegroundMargin
+        {
+            get => foregroundMargin;
+            set => foregroundMargin = value;
+        }
 
         /// <summary>
         /// Gets or sets left margin of the item when foreground is painted.
@@ -519,7 +618,11 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets draw label flags.
         /// </summary>
-        public virtual DrawLabelFlags LabelFlags { get; set; }
+        public virtual DrawLabelFlags LabelFlags
+        {
+            get => labelFlags;
+            set => labelFlags = value;
+        }
 
         /// <summary>
         /// Gets or sets text which is displayed when item is painted.
@@ -540,20 +643,32 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets user data. This is different from <see cref="BaseObjectWithAttr.Tag"/>.
         /// </summary>
-        public virtual object? Value { get; set; }
+        public virtual object? Value
+        {
+            get => value;
+            set => this.value = value;
+        }
 
         /// <summary>
         /// Gets or sets <see cref="Action"/> associated with this
         /// <see cref="ListControlItem"/> instance.
         /// </summary>
         [Browsable(false)]
-        public virtual Action? Action { get; set; }
+        public virtual Action? Action
+        {
+            get => action;
+            set => action = value;
+        }
 
         /// <summary>
         /// Gets or sets <see cref="Action"/> which is executed on mouse double click.
         /// </summary>
         [Browsable(false)]
-        public virtual Action? DoubleClickAction { get; set; }
+        public virtual Action? DoubleClickAction
+        {
+            get => doubleClickAction;
+            set => doubleClickAction = value;
+        }
 
         /// <summary>
         /// Gets or sets an action which is called when background is painted for the item.
@@ -561,7 +676,11 @@ namespace Alternet.UI
         /// </summary>
         [Browsable(false)]
         public virtual Action<IListControlItemContainer?, ListBoxItemPaintEventArgs>?
-            DrawBackgroundAction { get; set; }
+            DrawBackgroundAction
+        {
+            get => drawBackgroundAction;
+            set => drawBackgroundAction = value;
+        }
 
         /// <summary>
         /// Gets or sets an action which is called when foreground is painted for the item.
@@ -569,7 +688,11 @@ namespace Alternet.UI
         /// </summary>
         [Browsable(false)]
         public virtual Action<IListControlItemContainer?, ListBoxItemPaintEventArgs>?
-            DrawForegroundAction { get; set; }
+            DrawForegroundAction
+        {
+            get => drawForegroundAction;
+            set => drawForegroundAction = value;
+        }
 
         /// <summary>
         /// Gets font of the container.
