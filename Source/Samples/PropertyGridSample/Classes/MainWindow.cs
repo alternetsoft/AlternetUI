@@ -28,8 +28,6 @@ namespace PropertyGridSample
 
         static MainWindow()
         {
-            FormulaEngine.Init();
-
             // Registers known collection property editors.
             PropertyGrid.RegisterCollectionEditors();
         }
