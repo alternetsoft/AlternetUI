@@ -47,13 +47,12 @@ namespace Alternet.UI
         {
             currentIsDark = IsDark;
             EnableTouchEvents = true;
-            Touch += Canvas_Touch;
-            SizeChanged += SkiaContainer_SizeChanged;
 
-            PaintSurface += Canvas_PaintSurface;
-
-            Focused += SkiaContainer_Focused;
-            Unfocused += SkiaContainer_Unfocused;
+            Touch += OnCanvasTouch;
+            SizeChanged += OnSizeChanged;
+            PaintSurface += OnPaintSurface;
+            Focused += OnFocused;
+            Unfocused += OnUnfocused;
 
             MauiApplicationHandler.RegisterThemeChangedHandler();
 
@@ -96,6 +95,17 @@ namespace Alternet.UI
         /// Gets or sets whether 'DrawImage' methods draw unscaled image. Default is <c>true</c>.
         /// </summary>
         public virtual bool UseUnscaledDrawImage { get; set; } = true;
+
+        /// <summary>
+        /// Gets the parent page of the current view.
+        /// </summary>
+        public Page? ParentPage
+        {
+            get
+            {
+                return Alternet.UI.MauiUtils.GetPage(this);
+            }
+        }
 
         /// <summary>
         /// Gets or sets attached <see cref="Alternet.UI.AbstractControl"/>.
@@ -504,13 +514,58 @@ namespace Alternet.UI
             base.OnParentChanged();
         }
 
-        private void SkiaContainer_SizeChanged(object? sender, EventArgs e)
+        /// <summary>
+        /// Handles the event when the control gains focus.
+        /// </summary>
+        /// <remarks> Derived classes can override this method to provide
+        /// custom behavior when the control gains focus.</remarks>
+        /// <param name="sender">The source of the focus event.
+        /// This can be <see langword="null"/>.</param>
+        /// <param name="e">The event data associated with the focus event.</param>
+        protected virtual void OnFocused(object? sender, FocusEventArgs e)
+        {
+            control?.RaiseGotFocus(GotFocusEventArgs.Empty);
+        }
+
+        /// <summary>
+        /// Handles the event when the control loses focus.
+        /// </summary>
+        /// <remarks> Derived classes can override this method
+        /// to provide custom behavior when the control becomes unfocused.</remarks>
+        /// <param name="sender">The source of the event, typically the control that lost focus.</param>
+        /// <param name="e">The event data associated with the focus change.</param>
+        protected virtual void OnUnfocused(object? sender, FocusEventArgs e)
+        {
+            control?.RaiseLostFocus(LostFocusEventArgs.Empty);
+        }
+
+        /// <summary>
+        /// Handles the size change event for the control and updates its bounds accordingly.
+        /// </summary>
+        /// <remarks>Derived classes can override this method to provide custom behavior when
+        /// the control's size changes.</remarks>
+        /// <param name="sender">The source of the event, typically the control whose
+        /// size has changed.</param>
+        /// <param name="e">An <see cref="EventArgs"/> instance containing the event data.</param>
+        protected virtual void OnSizeChanged(object? sender, EventArgs e)
         {
             UpdateBounds(Bounds.ToRectD());
             control?.RaiseHandlerSizeChanged(e);
         }
 
-        private void Canvas_Touch(object? sender, SKTouchEventArgs e)
+        /// <summary>
+        /// Handles touch events on the canvas and raises the corresponding
+        /// touch event on the associated control.
+        /// </summary>
+        /// <remarks>This method processes touch actions such as
+        /// <see cref="SKTouchAction.Pressed"/> and
+        /// converts them into platform-independent touch events.
+        /// If the associated control is not null, the touch
+        /// event is raised on the control. On Android, wheel change actions
+        /// are handled at the platform level and are ignored by this method.</remarks>
+        /// <param name="sender">The source of the touch event, typically the canvas.</param>
+        /// <param name="e">The touch event arguments containing details about the touch action.</param>
+        protected virtual void OnCanvasTouch(object? sender, SKTouchEventArgs e)
         {
             if (e.ActionType == SKTouchAction.Pressed)
             {
@@ -534,39 +589,19 @@ namespace Alternet.UI
             e.Handled = args.Handled;
         }
 
-        private void UpdateBounds(RectD max)
-        {
-            if (control is null)
-                return;
-
-            control.ResetScaleFactor();
-
-            var bounds = Bounds;
-
-            var newWidth = Math.Min(bounds.Width, max.Width);
-            var newHeight = Math.Min(bounds.Height, max.Height);
-
-            newWidth = Math.Max(0, newWidth);
-            newHeight = Math.Max(0, newHeight);
-
-            RectD newBounds = (0, 0, newWidth, newHeight);
-
-            if (interior is null)
-            {
-                control.Bounds = newBounds;
-            }
-            else
-            {
-                interior.Bounds = newBounds;
-
-                var rectangles = interior.GetLayoutRectangles(control);
-                var clientRect = rectangles[InteriorDrawable.HitTestResult.ClientRect];
-
-                control.Bounds = (0, 0, clientRect.Width, clientRect.Height);
-            }
-        }
-
-        private void Canvas_PaintSurface(object? sender, SKPaintSurfaceEventArgs e)
+        /// <summary>
+        /// Handles the paint surface event to render the control's visual content.
+        /// </summary>
+        /// <remarks>This method is responsible for drawing the control's content
+        /// and its children onto the provided canvas. It applies scaling,
+        /// clears the background, and invokes the control's paint logic.
+        /// Subclasses can override this method to customize the painting behavior.
+        /// When overriding, ensure that the
+        /// base implementation is called to preserve the default rendering logic.</remarks>
+        /// <param name="sender">The source of the event, typically the control
+        /// triggering the paint operation.</param>
+        /// <param name="e">The event data containing the surface and canvas to be painted.</param>
+        protected virtual void OnPaintSurface(object? sender, SKPaintSurfaceEventArgs e)
         {
             if (control is null)
                 return;
@@ -614,7 +649,7 @@ namespace Alternet.UI
             dc.Restore();
 
 #pragma warning disable
-            if(interior is not null)
+            if (interior is not null)
             {
                 interior.Draw(control, graphics);
             }
@@ -657,14 +692,36 @@ namespace Alternet.UI
             dc.Restore();
         }
 
-        private void SkiaContainer_Focused(object? sender, FocusEventArgs e)
+        private void UpdateBounds(RectD max)
         {
-            control?.RaiseGotFocus(GotFocusEventArgs.Empty);
-        }
+            if (control is null)
+                return;
 
-        private void SkiaContainer_Unfocused(object? sender, FocusEventArgs e)
-        {
-            control?.RaiseLostFocus(LostFocusEventArgs.Empty);
+            control.ResetScaleFactor();
+
+            var bounds = Bounds;
+
+            var newWidth = Math.Min(bounds.Width, max.Width);
+            var newHeight = Math.Min(bounds.Height, max.Height);
+
+            newWidth = Math.Max(0, newWidth);
+            newHeight = Math.Max(0, newHeight);
+
+            RectD newBounds = (0, 0, newWidth, newHeight);
+
+            if (interior is null)
+            {
+                control.Bounds = newBounds;
+            }
+            else
+            {
+                interior.Bounds = newBounds;
+
+                var rectangles = interior.GetLayoutRectangles(control);
+                var clientRect = rectangles[InteriorDrawable.HitTestResult.ClientRect];
+
+                control.Bounds = (0, 0, clientRect.Width, clientRect.Height);
+            }
         }
     }
 }
