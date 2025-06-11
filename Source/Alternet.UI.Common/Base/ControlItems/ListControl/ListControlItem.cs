@@ -31,6 +31,12 @@ namespace Alternet.UI
             = new(HorizontalAlignment.Left, VerticalAlignment.Center);
 
         /// <summary>
+        /// Indicates whether images with different sizes are allowed for disabled and selected states.
+        /// Default is false.
+        /// </summary>
+        public static bool AllowDifferentSizeForDisabledImage;
+
+        /// <summary>
         /// Gets or sets the size of the checkbox override. Default is Null.
         /// It is used when checkbox size is determined if specified.
         /// </summary>
@@ -717,11 +723,13 @@ namespace Alternet.UI
         /// <param name="item">Item.</param>
         /// <param name="container">Container of the items.</param>
         /// <param name="svgColor">Color of the svg image when item is selected.</param>
+        /// <param name="onlyNormal">Specifies whether to get image only for the normal state.</param>
         /// <returns></returns>
         public static EnumArrayStateImages GetItemImages(
             ListControlItem? item,
             IListControlItemContainer? container,
-            Color? svgColor)
+            Color? svgColor,
+            bool onlyNormal = false)
         {
             EnumArrayStateImages result = new();
 
@@ -732,8 +740,13 @@ namespace Alternet.UI
             {
                 var img = container.ImageList?.GetImage(item.ImageIndex);
                 result[VisualControlState.Normal] = img;
-                result[VisualControlState.Selected] = img;
-                result[VisualControlState.Disabled] = img?.ToGrayScaleCached();
+
+                if (!onlyNormal)
+                {
+                    result[VisualControlState.Selected] = img;
+                    result[VisualControlState.Disabled] = img?.ToGrayScaleCached();
+                }
+
                 return result;
             }
 
@@ -756,22 +769,25 @@ namespace Alternet.UI
                         isDark);
                 }
 
-                if (!item.HasImage(VisualControlState.Disabled, isDark))
+                if (!onlyNormal)
                 {
-                    item.SetImage(
-                        VisualControlState.Disabled,
-                        svgImage.AsDisabledImage(imageHeight, isDark),
-                        isDark);
-                }
-
-                if (svgColor is not null)
-                {
-                    if (!item.HasImage(VisualControlState.Selected, isDark))
+                    if (!item.HasImage(VisualControlState.Disabled, isDark))
                     {
                         item.SetImage(
-                            VisualControlState.Selected,
-                            svgImage.ImageWithColor(imageHeight, svgColor),
+                            VisualControlState.Disabled,
+                            svgImage.AsDisabledImage(imageHeight, isDark),
                             isDark);
+                    }
+
+                    if (svgColor is not null)
+                    {
+                        if (!item.HasImage(VisualControlState.Selected, isDark))
+                        {
+                            item.SetImage(
+                                VisualControlState.Selected,
+                                svgImage.ImageWithColor(imageHeight, svgColor),
+                                isDark);
+                        }
                     }
                 }
 
@@ -790,16 +806,23 @@ namespace Alternet.UI
             void SetResult(bool isDark)
             {
                 image ??= item.GetImage(VisualControlState.Normal, isDark);
-                disabledImage ??= item.GetImage(VisualControlState.Disabled, isDark);
-                selectedImage ??= item.GetImage(VisualControlState.Selected, isDark);
+
+                if (!onlyNormal)
+                {
+                    disabledImage ??= item.GetImage(VisualControlState.Disabled, isDark);
+                    selectedImage ??= item.GetImage(VisualControlState.Selected, isDark);
+                }
             }
 
-            disabledImage ??= image;
-            selectedImage ??= image;
-
             result[VisualControlState.Normal] = image;
-            result[VisualControlState.Disabled] = disabledImage;
-            result[VisualControlState.Selected] = selectedImage;
+
+            if (!onlyNormal)
+            {
+                disabledImage ??= image;
+                selectedImage ??= image;
+                result[VisualControlState.Disabled] = disabledImage;
+                result[VisualControlState.Selected] = selectedImage;
+            }
 
             return result;
         }
@@ -821,14 +844,22 @@ namespace Alternet.UI
             if (string.IsNullOrEmpty(s))
                 s = "Wy";
 
-            var itemImages = ListControlItem.GetItemImages(item, container, null);
+            var itemImages = ListControlItem.GetItemImages(
+                item,
+                container,
+                null,
+                !AllowDifferentSizeForDisabledImage);
 
             var normal = itemImages[VisualControlState.Normal];
-            var disabled = itemImages[VisualControlState.Disabled];
-            var selected = itemImages[VisualControlState.Selected];
+            var maxHeightI = normal?.Size.Height ?? 0;
 
-            var maxHeightI =
-                MathUtils.Max(normal?.Size.Height, disabled?.Size.Height, selected?.Size.Height);
+            if (AllowDifferentSizeForDisabledImage)
+            {
+                var disabled = itemImages[VisualControlState.Disabled];
+                var selected = itemImages[VisualControlState.Selected];
+                maxHeightI = MathUtils.Max(maxHeightI, disabled?.Size.Height, selected?.Size.Height);
+            }
+
             var maxHeightD = GraphicsFactory.PixelToDip(maxHeightI, dc.ScaleFactor);
 
             var checkBoxSize = GetCheckBoxSize(container).Height + GetAdditionalImageMargin()

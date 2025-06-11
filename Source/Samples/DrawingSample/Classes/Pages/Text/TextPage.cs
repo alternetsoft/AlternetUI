@@ -43,7 +43,6 @@ namespace DrawingSample
 
         public TextPage()
         {
-            /*wrappedControl.Parent = wrappedDocument;*/
         }
 
         public override string Name => "Text";
@@ -233,42 +232,12 @@ namespace DrawingSample
             Coord x = 20;
             Coord y = 20;
 
-            /*
-            bool first = true;
-
-            wrappedDocument.ScaleFactorOverride = dc.ScaleFactor;
-            wrappedDocument.Size = bounds.Size;
-
-            wrappedControl.Text = GetText();
-            wrappedControl.VerticalAlignment = Alternet.UI.VerticalAlignment.Top;
-            wrappedControl.HorizontalAlignment = Alternet.UI.HorizontalAlignment.Left;
-            wrappedControl.IsClipped = false;
-            wrappedControl.PerformLayout();
-            */
-
             foreach (var paragraph in paragraphs)
             {
                 dc.DrawText(paragraph.FontInfo, fontInfoFont, fontInfoBrush, new PointD(x, y));
                 y += dc.MeasureText(paragraph.FontInfo, fontInfoFont).Height + 3;
 
                 UpdateWrappedControl(false);
-
-                /*
-                wrappedControl.Font = paragraph.Font;
-                wrappedControl.ForegroundColor = color;
-                wrappedControl.PerformLayout();
-                */
-
-                /*RectD rect = ((x, y), wrappedControl.Size);
-                dc.FillRectangleBorder(Color.Green.AsBrush, wrappedControl.Bounds.WithLocation(x,y), 1);
-
-                if (first)
-                {
-                    first = false;
-                }
-                
-                TemplateUtils.RaisePaintClipped(wrappedControl, dc, (x, y));
-                */
 
                 RectD blockRect;
 
@@ -334,17 +303,6 @@ namespace DrawingSample
             var control = new TextPageSettings();
             control.Initialize(this);
             return control;
-        }
-
-        private TextFormat GetTextFormat()
-        {
-            return new TextFormat
-            {
-                HorizontalAlignment = HorizontalAlignment,
-                VerticalAlignment = VerticalAlignment,
-                Trimming = Trimming,
-                Wrapping = Wrapping
-            };
         }
 
         private void SetFontStyle(FontStyle style, bool value)
@@ -415,7 +373,6 @@ namespace DrawingSample
 
             public void Dispose()
             {
-                Font.Dispose();
             }
         }
     }

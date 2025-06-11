@@ -142,7 +142,7 @@ namespace Alternet.Drawing
             wrappedText.DoInsideLayout(() =>
             {
                 wrappedText.SetFormat(format.AsRecord);
-                wrappedText.Text = s!;
+                wrappedText.Text = s;
                 wrappedText.Font = font;
                 wrappedText.ForegroundColor = brush.AsColor;
             });
