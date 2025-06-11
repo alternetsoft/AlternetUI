@@ -181,6 +181,9 @@ namespace Alternet.UI
         /// <returns></returns>
         public static int GetDefaultFontSizeIncrement()
         {
+            if (App.IsMaui)
+                return 0;
+
             int GetIncFontSizeHighDpi()
             {
                 var result = Window.IncFontSizeHighDpi
