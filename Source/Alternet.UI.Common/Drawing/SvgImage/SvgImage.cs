@@ -254,7 +254,7 @@ namespace Alternet.Drawing
         /// <returns></returns>
         public virtual Image? AsDisabledImage(int size, bool isDark)
         {
-            return AsImageSet(size, KnownSvgColor.Disabled, isDark)?.AsImage();
+            return AsNormalImage(size, isDark)?.ToGrayScaleCached();
         }
 
         /// <summary>
