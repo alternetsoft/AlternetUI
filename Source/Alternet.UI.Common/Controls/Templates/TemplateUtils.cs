@@ -20,7 +20,7 @@ namespace Alternet.UI
         public static bool ShowDebugCorners = false;
 
         /// <summary>
-        /// Calls <see cref="RaisePaintRecursive(AbstractControl?, Graphics, PointD, bool)"/>
+        /// Calls <see cref="RaisePaintRecursive(AbstractControl?, Graphics, PointD)"/>
         /// inside changed clip rectangle.
         /// </summary>
         /// <param name="control">Control template.</param>
@@ -41,7 +41,7 @@ namespace Alternet.UI
                 (origin, control.Size),
                 () =>
                 {
-                    RaisePaintRecursive(control, dc, origin, isClipped);
+                    RaisePaintRecursive(control, dc, origin);
                 },
                 isClipped);
         }
@@ -54,14 +54,13 @@ namespace Alternet.UI
         public static void RaisePaintRecursive(
             AbstractControl? control,
             Graphics dc,
-            PointD origin,
-            bool isClipped = false)
+            PointD origin)
         {
             if(origin != PointD.Empty)
                 dc.PushAndTranslate(origin.X, origin.Y);
             try
             {
-                RaisePaintRecursive(control, dc, isClipped);
+                RaisePaintRecursive(control, dc);
             }
             finally
             {
@@ -77,8 +76,7 @@ namespace Alternet.UI
         /// </summary>
         public static void RaisePaintForChildren(
             AbstractControl? control,
-            Graphics dc,
-            bool isClipped = false)
+            Graphics dc)
         {
             if (control is null || !control.HasChildren)
                 return;
@@ -90,10 +88,7 @@ namespace Alternet.UI
             {
                 if (!child.Visible)
                     continue;
-                if(isClipped)
-                    RaisePaintClipped(child, dc, child.Location);
-                else
-                    RaisePaintRecursive(child, dc, child.Location);
+                RaisePaintRecursive(child, dc, child.Location);
             }
         }
 
@@ -104,8 +99,7 @@ namespace Alternet.UI
         /// </summary>
         public static void RaisePaintRecursive(
             AbstractControl? control,
-            Graphics dc,
-            bool isClipped = false)
+            Graphics dc)
         {
             if (control is null)
                 return;
@@ -114,17 +108,11 @@ namespace Alternet.UI
             {
                 RectD r = (PointD.Empty, control.Size);
 
-                dc.DoInsideClipped(
-                    r,
-                    () =>
-                    {
-                        PaintEventArgs e = new(() => dc, r);
-                        control.RaisePaint(e);
-                    },
-                    isClipped);
+                PaintEventArgs e = new(() => dc, r);
+                control.RaisePaint(e);
             }
 
-            RaisePaintForChildren(control, dc, isClipped);
+            RaisePaintForChildren(control, dc);
         }
 
         /// <summary>
