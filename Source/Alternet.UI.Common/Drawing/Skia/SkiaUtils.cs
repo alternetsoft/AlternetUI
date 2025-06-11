@@ -21,7 +21,7 @@ namespace Alternet.Drawing
         public static readonly EnumArray<InterpolationMode, SKPaint?> InterpolationModePaints = new();
 
         private static string[]? fontFamilies;
-        private static FontSize defaultFontSize = 12;
+        private static FontSize defaultFontSize = 10;
         private static string? defaultMonoFontName;
         private static SKFont? defaultSkiaFont;
         private static SKTypeface? defaultTypeFace;
