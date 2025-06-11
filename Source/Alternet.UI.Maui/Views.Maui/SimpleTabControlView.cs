@@ -25,7 +25,7 @@ namespace Alternet.Maui
         public SimpleTabControlView()
         {
             tabs.AllowMultipleSticky = false;
-            tabs.StickyStyle = SimpleToolBarView.StickyButtonStyle.UnderlineFull;
+            tabs.StickyStyle = SimpleToolBarView.StickyButtonStyle.Border;
 
             grid.RowDefinitions =
             [

@@ -605,9 +605,11 @@ namespace Alternet.UI
 
             graphics.UseUnscaledDrawImage = UseUnscaledDrawImage;
 
-            control.RaisePaint(new PaintEventArgs(graphics, control.Bounds));
+            var paintArgs = new PaintEventArgs(graphics, control.Bounds);
 
-            TemplateUtils.RaisePaintForChildren(control, graphics, isClipped: false);
+            control.RaisePaint(paintArgs);
+
+            TemplateUtils.RaisePaintForChildren(control, graphics);
 
             dc.Restore();
 
