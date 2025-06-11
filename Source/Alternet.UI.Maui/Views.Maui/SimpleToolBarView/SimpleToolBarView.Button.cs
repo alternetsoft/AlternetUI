@@ -122,6 +122,10 @@ namespace Alternet.Maui
 
             public ToolBarButtonContainer? Container => Parent as ToolBarButtonContainer;
 
+            public View? Button => this;
+
+            public View? ButtonContainer => Container;
+
             /// <inheritdoc/>
             public virtual bool HasBorder
             {
@@ -338,6 +342,24 @@ namespace Alternet.Maui
                 remove => button.Clicked -= value;
             }
 
+            public FontAttributes FontAttributes
+            {
+                get => button.FontAttributes;
+                set => button.FontAttributes = value;
+            }
+
+            public string FontFamily
+            {
+                get => button.FontFamily;
+                set => button.FontFamily = value;
+            }
+
+            public double FontSize
+            {
+                get => button.FontSize;
+                set => button.FontSize = value;
+            }
+
             public Action? ClickedAction
             {
                 get => button.ClickedAction;
@@ -349,6 +371,10 @@ namespace Alternet.Maui
                 get => button.AttributesProvider;
                 set => button.AttributesProvider = value;
             }
+
+            public View? Button => button;
+
+            public View? ButtonContainer => this;
 
             public virtual StickyButtonStyle StickyStyle
             {

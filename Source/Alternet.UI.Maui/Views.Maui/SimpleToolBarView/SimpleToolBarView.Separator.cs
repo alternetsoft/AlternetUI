@@ -88,7 +88,26 @@ namespace Alternet.Maui
                 }
             }
 
+            public ToolBarButtonContainer? Container => Parent as ToolBarButtonContainer;
+
+            public View? Button => this;
+
+            public View? ButtonContainer => Container;
+
             public Drawing.SvgImage? SvgImage { get; set; }
+
+            public FontAttributes FontAttributes { get; set; }
+
+            public string FontFamily
+            {
+                get => Alternet.UI.AbstractControl.DefaultFont.Name;
+
+                set
+                {
+                }
+            }
+
+            public double FontSize { get; set; }
 
             /// <summary>
             /// Gets the parent toolbar view.

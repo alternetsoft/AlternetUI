@@ -294,6 +294,23 @@ namespace Alternet.Maui
             string Text { get; set; }
 
             /// <summary>
+            /// Gets or sets the font attributes applied to the text.
+            /// </summary>
+            FontAttributes FontAttributes { get; set; }
+
+            /// <summary>
+            /// Gets or sets the font family name used for text rendering.
+            /// </summary>
+            /// <remarks>Setting this property to an invalid or unsupported font family name may
+            /// result in a fallback to the default system font.</remarks>
+            string FontFamily { get; set; }
+
+            /// <summary>
+            /// Gets or sets the font size for text rendering.
+            /// </summary>
+            double FontSize { get; set; }
+
+            /// <summary>
             /// Gets or sets the horizontal layout options of the toolbar item.
             /// </summary>
             LayoutOptions HorizontalOptions { get; set; }
@@ -302,6 +319,16 @@ namespace Alternet.Maui
             /// Gets or sets the vertical layout options of the toolbar item.
             /// </summary>
             LayoutOptions VerticalOptions { get; set; }
+
+            /// <summary>
+            /// Gets the button view associated with this instance.
+            /// </summary>
+            View? Button { get; }
+
+            /// <summary>
+            /// Gets the container view that holds the button.
+            /// </summary>
+            View? ButtonContainer { get; }
 
             /// <summary>
             /// Updates the visual states of the item.
@@ -431,6 +458,29 @@ namespace Alternet.Maui
         /// Gets the collection of buttons in the toolbar.
         /// </summary>
         public IList<IView> Buttons => buttons.Children;
+
+        /// <summary>
+        /// Gets the first item in the toolbar, or <see langword="null"/> if the toolbar is empty.
+        /// </summary>
+        public IToolBarItem? FirstItem
+        {
+            get
+            {
+                if (Buttons.Count == 0)
+                    return null;
+                var item = Buttons[0] as IToolBarItem;
+                return item;
+            }
+        }
+
+        /// <summary>
+        /// Gets the first item in the toolbar as <see cref="View"/>,
+        /// or <see langword="null"/> if the toolbar is empty.
+        /// </summary>
+        public View? FirstItemAsView
+        {
+            get => FirstItem as View;
+        }
 
         /// <summary>
         /// Gets the default size of the button image based on the device type.
