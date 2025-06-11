@@ -1096,8 +1096,8 @@ namespace Alternet.UI
         /// </summary>
         public virtual void SetColorThemeToDefault()
         {
-            BackgroundColor = null;
-            ForegroundColor = null;
+            BackColor = DefaultColors.ControlBackColor;
+            ForeColor = DefaultColors.ControlForeColor;
 
             SelectedItemTextColor = null;
             SelectedItemBackColor = null;
