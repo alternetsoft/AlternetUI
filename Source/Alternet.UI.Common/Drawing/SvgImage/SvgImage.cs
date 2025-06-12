@@ -254,7 +254,10 @@ namespace Alternet.Drawing
         /// <returns></returns>
         public virtual Image? AsDisabledImage(int size, bool isDark)
         {
-            return AsNormalImage(size, isDark)?.ToGrayScaleCached();
+            if(IsMono)
+                return AsImageSet(size, KnownSvgColor.Disabled, isDark)?.AsImage();
+            else
+                return AsNormalImage(size, isDark)?.ToGrayScaleCached();
         }
 
         /// <summary>
@@ -423,7 +426,10 @@ namespace Alternet.Drawing
         /// <param name="knownColor">Known svg color</param>
         /// <param name="value">Override color value.</param>
         /// <param name="isDark">Whether override is set for dark or light color theme.</param>
-        public virtual void SetColorOverride(KnownSvgColor knownColor, bool isDark, Color? value)
+        public virtual void SetColorOverride(
+            KnownSvgColor knownColor,
+            bool isDark,
+            Color? value)
         {
             if (isDark)
             {
