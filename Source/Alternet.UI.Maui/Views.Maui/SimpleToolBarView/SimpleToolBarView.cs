@@ -192,6 +192,7 @@ namespace Alternet.Maui
         private bool isTopBorderVisible;
         private BoxView? topBorder;
         private BoxView? bottomBorder;
+        private bool isBoldWhenSticky;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="SimpleToolBarView"/> class.
@@ -227,12 +228,12 @@ namespace Alternet.Maui
             Border,
 
             /// <summary>
-            /// Paints the full underline of the sticky button.
+            /// Paints the full underline of the sticky button. Currently disabled.
             /// </summary>
             UnderlineFull,
 
             /// <summary>
-            /// Paints a partial underline of the sticky button.
+            /// Paints a partial underline of the sticky button. Currently disabled.
             /// </summary>
             UnderlinePartial,
         }
@@ -261,6 +262,12 @@ namespace Alternet.Maui
             /// Gets or sets the attributes provider for the toolbar item.
             /// </summary>
             Alternet.UI.IBaseObjectWithAttr AttributesProvider { get; }
+
+            /// <summary>
+            /// Gets or sets a value indicating whether the text should be displayed
+            /// in bold when item is marked as sticky.
+            /// </summary>
+            bool IsBoldWhenSticky { get; set; }
 
             /// <summary>
             /// Gets or sets a value indicating whether the toolbar item is enabled.
@@ -414,6 +421,29 @@ namespace Alternet.Maui
                     if (child is not IToolBarItem item)
                         continue;
                     item.StickyStyle = value;
+                }
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether toolbar items should
+        /// appear bold when in a sticky state.
+        /// </summary>
+        public virtual bool IsBoldWhenSticky
+        {
+            get => isBoldWhenSticky;
+
+            set
+            {
+                if (isBoldWhenSticky == value)
+                    return;
+                isBoldWhenSticky = value;
+
+                foreach (var child in Buttons)
+                {
+                    if (child is not IToolBarItem item)
+                        continue;
+                    item.IsBoldWhenSticky = value;
                 }
             }
         }
@@ -829,6 +859,7 @@ namespace Alternet.Maui
 
             button.SvgImage = image;
             button.StickyStyle = StickyStyle;
+            button.IsBoldWhenSticky = IsBoldWhenSticky;
 
             button.UpdateVisualStates(true);
         }

@@ -109,6 +109,9 @@ namespace Alternet.Maui
 
             public double FontSize { get; set; }
 
+            /// <inheritdoc/>
+            public bool IsBoldWhenSticky { get; set; }
+
             /// <summary>
             /// Gets the parent toolbar view.
             /// </summary>

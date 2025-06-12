@@ -69,6 +69,8 @@ namespace Alternet.Maui
 
             public virtual Action? ClickedAction { get; set; }
 
+            public virtual bool IsBoldWhenSticky { get; set; }
+
             /// <summary>
             /// Gets or sets the style of the sticky button.
             /// </summary>
@@ -81,9 +83,11 @@ namespace Alternet.Maui
 
                 set
                 {
+                    /*
                     if (stickyStyle == value)
                         return;
                     stickyStyle = value;
+                    */
                 }
             }
 
@@ -222,6 +226,15 @@ namespace Alternet.Maui
             {
                 bool hasStickyBorder = IsSticky && HasBorder && StickyStyle == StickyButtonStyle.Border;
 
+                if (IsSticky && IsBoldWhenSticky)
+                {
+                    FontAttributes |= FontAttributes.Bold;
+                }
+                else
+                {
+                    FontAttributes &= ~FontAttributes.Bold;
+                }
+
                 var visualStateGroup = VisualStateUtils.CreateCommonStatesGroup();
 
                 var normalState = VisualStateUtils.CreateNormalState();
@@ -329,7 +342,6 @@ namespace Alternet.Maui
 
                 underline.IsVisible = false;
                 underline.Margin = DefaultStickyUnderlineMargin;
-                underline.Color = Colors.Transparent;
                 underline.HeightRequest = DefaultStickyUnderlineSize.Height;
 
                 Children.Add(button);
@@ -389,6 +401,18 @@ namespace Alternet.Maui
                 }
             }
 
+            public bool IsBoldWhenSticky
+            {
+                get => button.IsBoldWhenSticky;
+
+                set
+                {
+                    if (IsBoldWhenSticky == value)
+                        return;
+                    button.IsBoldWhenSticky = value;
+                }
+            }
+
             public virtual bool IsSticky
             {
                 get => button.IsSticky;
@@ -434,9 +458,9 @@ namespace Alternet.Maui
                 else
                     color = DefaultStickyUnderlineColorLight;
 
-                underline.Color = IsSticky ? color : Colors.Transparent;
                 underline.IsVisible = IsSticky && (StickyStyle == StickyButtonStyle.UnderlineFull ||
                     StickyStyle == StickyButtonStyle.UnderlinePartial);
+                underline.Color = color;
             }
         }
     }
