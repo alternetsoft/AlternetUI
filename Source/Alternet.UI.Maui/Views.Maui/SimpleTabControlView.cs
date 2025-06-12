@@ -15,6 +15,17 @@ namespace Alternet.Maui
     /// </summary>
     public partial class SimpleTabControlView : BaseContentView
     {
+        /// <summary>
+        /// Gets or sets the default style applied to the tabs.
+        /// </summary>
+        public static SimpleToolBarView.StickyButtonStyle DefaultTabStyle
+            = SimpleToolBarView.StickyButtonStyle.Border;
+
+        /// <summary>
+        /// Indicates whether the tab is displayed in bold when selected.
+        /// </summary>
+        public static bool DefaultTabIsBoldWhenSelected = true;
+
         private readonly SimpleToolBarView tabs = new();
         private readonly Grid grid = new();
         private readonly ContentView content = new();
@@ -25,7 +36,8 @@ namespace Alternet.Maui
         public SimpleTabControlView()
         {
             tabs.AllowMultipleSticky = false;
-            tabs.StickyStyle = SimpleToolBarView.StickyButtonStyle.Border;
+            tabs.StickyStyle = DefaultTabStyle;
+            tabs.IsBoldWhenSticky = DefaultTabIsBoldWhenSelected;
 
             grid.RowDefinitions =
             [
