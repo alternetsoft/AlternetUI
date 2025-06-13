@@ -1,3 +1,15 @@
+# 0.9.736 (2025 June 13)
+
+- VirtualListBox: Fixed SetColorThemeToDefault().
+- SvgImage: Use Image.ToGrayScaleCached in AsDisabledImage for color svg.
+- TemplateUtils: Remove isClipped param from RaisePaintRecursive and other methods.
+- Maui: Move event handlers from private to protected in ControlView.
+- SystemSettings: Do not increment default font size on Maui.
+- SkiaUtils: Changed default font size to 10.
+- Maui: Add font name and size to IToolBarItem.
+- Maui: Add SimpleTabControlView.DefaultTabStyle, DefaultTabIsBoldWhenSelected.
+- Maui: SimpleToolBarView.IsBoldWhenSticky.
+
 # 0.9.735 (2025 June 6)
 
 - Maui: Fixed Item's IsVisible behavior in SimpleToolBarView.
