@@ -4,6 +4,8 @@ apiRules:
 - exclude:
     uidRegex: ^Alternet\.UI\.Port
 - exclude:
+    uidRegex: ^Alternet\.UI\.Tests
+- exclude:
     uidRegex: ^Alternet\.UI\.Markup
 - exclude:
     uidRegex: ^Alternet\.UI\.Dependency

@@ -12,6 +12,10 @@
 		<ReferenceOutputAssembly>true</ReferenceOutputAssembly>
 		<IncludeAssets>all</IncludeAssets>
 	</ProjectReference>
+	<ProjectReference Include="..\..\Source\Alternet.UI.Maui\Alternet.UI.Maui.csproj" PrivateAssets="All">
+		<ReferenceOutputAssembly>true</ReferenceOutputAssembly>
+		<IncludeAssets>all</IncludeAssets>
+	</ProjectReference>
   </ItemGroup>
 
     <PropertyGroup>
@@ -21,7 +25,7 @@
 	<UseLatestDocFx>false</UseLatestDocFx>
 	<UseLatestDocFx Condition="'$(LatestDocFx)'!=''">$(LatestDocFx)</UseLatestDocFx>
 
-        <TargetFramework>net6.0</TargetFramework>
+        <TargetFramework>net9.0-windows10.0.19041.00</TargetFramework>
 
     	<BuildDocumentationTN Condition="!$(UseLatestDocFx)">BuildDocumentation</BuildDocumentationTN>
 	<BuildDocumentationTN Condition="$(UseLatestDocFx)">BuildDocumentation2</BuildDocumentationTN>

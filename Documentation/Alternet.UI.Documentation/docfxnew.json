@@ -11,7 +11,8 @@
           "files": [
 		 "Alternet.UI.Interfaces/Alternet.UI.Interfaces.csproj",
 		 "Alternet.UI.Common/Alternet.UI.Common.csproj",
-		 "Alternet.UI/Alternet.UI.csproj"
+		 "Alternet.UI.Maui/Alternet.UI.Maui.csproj",
+		 "Alternet.UI/Alternet.UI.csproj",
 		 ],
           "exclude":
 		 [
