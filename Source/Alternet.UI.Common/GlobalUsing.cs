@@ -13,6 +13,9 @@ namespace Alternet.UI.Internal
 #pragma warning disable
 namespace Alternet.Base.Collections
 {
+    internal class ThisIsDummyClass
+    {
+    }
 }
 
 namespace Alternet.UI.Threading

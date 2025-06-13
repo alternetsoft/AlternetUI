@@ -1,7 +1,7 @@
 using System;
 using Alternet.UI;
 
-namespace Alternet.Base.Collections
+namespace Alternet.UI
 {
     /// <summary>
     /// Provides data for the <see cref="BaseCollection{T}.ItemInserted"/>
