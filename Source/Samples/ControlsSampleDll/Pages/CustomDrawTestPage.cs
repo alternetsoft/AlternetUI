@@ -17,8 +17,6 @@ namespace ControlsSample
     {
         private ScrollBar.KnownTheme currentTheme = ScrollBar.KnownTheme.WindowsDark;
 
-        /* private static readonly WxControlPainterHandler Painter = new(); */
-
         private readonly PaintActionsControl customDrawControl = new()
         {
             VerticalAlignment = VerticalAlignment.Fill,
@@ -120,7 +118,6 @@ namespace ControlsSample
                 false,
                 "This is a picture on toolbar created from template");
 
-            /* panel.AddAction("Draw Native ComboBox", DrawNativeComboBox); */
             panel.AddAction("Draw Native Checkbox", DrawNativeCheckbox);
             
             /* Do not uncomment, this causes bad results.

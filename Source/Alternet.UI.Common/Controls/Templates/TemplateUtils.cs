@@ -165,6 +165,7 @@ namespace Alternet.UI
                     template.Bounds.Size.Ceiling(),
                     template.ScaleFactor,
                     true);
+                canvas.UseUnscaledDrawImage = true;
 
                 GraphicsFactory.MeasureCanvasOverride = canvas;
 

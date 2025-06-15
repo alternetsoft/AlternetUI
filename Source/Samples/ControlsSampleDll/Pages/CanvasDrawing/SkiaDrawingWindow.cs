@@ -150,22 +150,25 @@ namespace ControlsSample
         private void PaintOnCanvas()
         {
             RectD rectDip = (0, 0, control.Width, control.Height);
-            RectI rect = rectDip.PixelFromDip();
 
-            SKBitmap bitmap = new(rect.Width, rect.Height);
+            var canvas = SkiaUtils.CreateBitmapCanvas(
+                rectDip.Size.Ceiling(),
+                control.ScaleFactor,
+                true);
+            canvas.UseUnscaledDrawImage = true;
+            canvas.Canvas.Clear(Color.White);
 
-            SKCanvas canvas = new(bitmap);
-            canvas.Scale((float)control.ScaleFactor);
-
-            canvas.Clear(Color.White);
-
-            SkiaGraphics graphics = new(canvas);
-
-            PaintEventArgs e = new(graphics, rectDip);
-
-            control.RaisePaint(e);
-
-            pictureBox.Image = (Image)bitmap;
+            try
+            {
+                GraphicsFactory.MeasureCanvasOverride = canvas;
+                PaintEventArgs e = new(canvas, rectDip);
+                control.RaisePaint(e);
+                pictureBox.Image = (Image)canvas.Bitmap!;
+            }
+            finally
+            {
+                GraphicsFactory.MeasureCanvasOverride = null;
+            }
         }
 
         private void DrawBeziersPoint(SKCanvas dc)
@@ -184,9 +187,17 @@ namespace ControlsSample
             {
                  start, control1, control2, end1,
                  control3, control4, end2
-             };
+            };
+
+            SKPoint[] bezierPointsSK =
+            {
+                 start, control1, control2, end1,
+                 control3, control4, end2
+            };
 
             dc.DrawBeziers(blackPen, bezierPoints);
+
+            dc.DrawPoints(SKPointMode.Points, bezierPointsSK, Color.Red.AsPen);
         }
 
         private Bitmap? bitmap;
@@ -200,7 +211,11 @@ namespace ControlsSample
             var width = 700;
             var height = 500;
 
-            var image = GenericImage.Create(PixelFromDip(width), PixelFromDip(height), Color.Aquamarine);
+            var image = GenericImage.Create(
+                PixelFromDip(width),
+                PixelFromDip(height),
+                Color.Aquamarine);
+
             image.HasAlpha = hasAlpha;
 
             using (var canvasLock = image.LockSurface())

@@ -16,7 +16,7 @@ namespace Alternet.UI
         {
             private readonly VerticalStackPanel labels = new();
 
-            private readonly GenericTextControl titleLabel = new();
+            private readonly GenericWrappedTextControl titleLabel = new();
             private readonly GenericWrappedTextControl messageLabel = new();
             private readonly PictureBox pictureBox = new();
 
