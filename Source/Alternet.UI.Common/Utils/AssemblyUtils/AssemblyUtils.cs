@@ -1792,7 +1792,7 @@ namespace Alternet.UI
         /// <param name="methodName">Method name</param>
         /// <param name="obj">Object instance. Optional. Default is null.</param>
         /// <param name="param">Method parameters. Optional. Default is null.</param>
-        /// <param name="paramTypes">Types of prameters. Optional. Default is null.</param>
+        /// <param name="paramTypes">Types of parameters. Optional. Default is null.</param>
         /// <returns>
         /// <c>null</c> if method not found; otherwise result of the method invoke.
         /// </returns>
@@ -1829,7 +1829,7 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Gets all static properties of the specified type in the specifed container type.
+        /// Gets all static properties of the specified type in the specified container type.
         /// Returned only not null properties of the exact type <typeparamref name="TProperty"/>.
         /// </summary>
         /// <typeparam name="TProperty">Type of the properties.</typeparam>
@@ -1858,15 +1858,15 @@ namespace Alternet.UI
         /// Enumerates public objects declared in the specified namespace.
         /// </summary>
         /// <param name="asm">Assembly.</param>
-        /// <param name="namesp">Namespace.</param>
+        /// <param name="nameSpace">Namespace.</param>
         /// <returns></returns>
-        public static IEnumerable<Type> EnumPublicObjectsForNamespace(Assembly asm, string namesp)
+        public static IEnumerable<Type> EnumPublicObjectsForNamespace(Assembly asm, string nameSpace)
         {
             var types = asm.ExportedTypes;
 
             foreach (var t in types)
             {
-                if (t.Namespace == namesp)
+                if (t.Namespace == nameSpace)
                     yield return t;
             }
         }
@@ -1988,7 +1988,8 @@ namespace Alternet.UI
             var methodParameters = method.GetParameters();
             if (methodParameters.Length > 0)
             {
-                App.LogWarning($"{declaringType.Name}.{methodName} has parameters, so it is not called.");
+                App.LogWarning(
+                    $"{declaringType.Name}.{methodName} has parameters, so it is not called.");
                 return false;
             }
 

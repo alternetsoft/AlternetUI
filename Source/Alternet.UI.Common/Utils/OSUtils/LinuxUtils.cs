@@ -41,7 +41,7 @@ namespace Alternet.UI
                         var output = process.StandardOutput.ReadToEnd();
                         isAndroid = string.IsNullOrEmpty(output) ? (bool?)false : (bool?)true;
                     }
-                    catch(Exception e)
+                    catch (Exception e)
                     {
                         LogUtils.LogExceptionIfDebug(e);
                         isAndroid = false;
@@ -80,7 +80,7 @@ namespace Alternet.UI
 
                     return uNameResult;
                 }
-                catch(Exception e)
+                catch (Exception e)
                 {
                     LogUtils.LogExceptionIfDebug(e);
                     uNameResult = string.Empty;
@@ -103,7 +103,7 @@ namespace Alternet.UI
                         var linuxInfo = new System.IO.StreamReader("/etc/os-release").ReadToEnd();
                         isUbuntu = linuxInfo.Contains("Ubuntu");
                     }
-                    catch(Exception e)
+                    catch (Exception e)
                     {
                         LogUtils.LogExceptionIfDebug(e);
                         isUbuntu = false;
@@ -111,6 +111,25 @@ namespace Alternet.UI
                 }
 
                 return isUbuntu.Value;
+            }
+        }
+
+        /// <summary>
+        /// Outputs all signals to debug console.
+        /// </summary>
+        public static void DebugWriteLineSignals()
+        {
+            if (!App.IsLinuxOS)
+                return;
+
+            foreach (var elem in Enum.GetValues(typeof(UnixSignal)))
+            {
+                NativeMethods.signal((int)elem, OnSignal);
+            }
+
+            static void OnSignal(int signal)
+            {
+                Debug.WriteLine($"Received signal: {signal}");
             }
         }
 
@@ -145,7 +164,7 @@ namespace Alternet.UI
 
                 return false;
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 LogUtils.LogExceptionIfDebug(e);
                 return null;
@@ -227,6 +246,37 @@ namespace Alternet.UI
             public const int RTLD_GLOBAL = 8;
 
             internal delegate int DlIteratePhdrCallback(ref DlPhdrInfo info, IntPtr size);
+
+            public delegate void SignalHandler(int signal);
+
+            [DllImport("libc")]
+            public static extern SignalHandler signal(int signum, SignalHandler handler);
+
+            /// <summary>
+            /// Gets process Group ID
+            /// </summary>
+            /// <returns></returns>
+            [DllImport("libc")]
+            public static extern int getpgrp();
+
+            [DllImport("libc")]
+            public static extern int getpgid(int pid);
+
+            /// <summary>
+            /// Makes the process a session leader and starts a new process group.
+            /// </summary>
+            /// <returns></returns>
+            [DllImport("libc")]
+            public static extern int setsid();
+
+            /// <summary>
+            /// Sets process group id. Returns 0 on success.
+            /// </summary>
+            /// <param name="pid"></param>
+            /// <param name="processGroupId"></param>
+            /// <returns></returns>
+            [DllImport("libc")]
+            public static extern int setpgid(int pid, int processGroupId);
 
             /// <summary>
             /// Native method "dlopen", similar to win-api "LoadLibrary".
