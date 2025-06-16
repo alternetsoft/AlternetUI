@@ -441,7 +441,7 @@ namespace Alternet.UI
                 template.TitleLabel.Text = data.Title;
 
                 template.TitleLabel.Font
-                    = data.TitleFont ?? data.Font?.Scaled(1.5) ?? Control.DefaultFont;
+                    = data.TitleFont ?? template.Font?.Scaled(1.5);
                 template.TitleLabel.ForegroundColor
                     = data.TitleForegroundColor ?? RichToolTip.DefaultToolTipTitleForegroundColor;
                 template.MessageLabel.Text = data.Text;

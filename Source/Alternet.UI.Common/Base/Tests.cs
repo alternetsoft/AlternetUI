@@ -17,6 +17,21 @@ namespace Alternet.UI.Tests
         /// Test method for the internal purposes.
         /// </summary>
         [Conditional("DEBUG")]
+        public static void TestRichToolTipImage()
+        {
+            TemplateControls.RichToolTipTemplate template = new();
+            RichToolTipParams data = new();
+            data.Icon = MessageBoxIcon.Information;
+            data.Text = "This is tooltip text";
+            data.Title = "This is title";
+            var image = RichToolTip.CreateToolTipImage(template, data);
+            LogUtils.LogImage(image);
+        }
+
+        /// <summary>
+        /// Test method for the internal purposes.
+        /// </summary>
+        [Conditional("DEBUG")]
         public static void TestLogHoveredControl()
         {
             AbstractControl.HoveredControlChanged -= LogHoveredControl;
@@ -25,7 +40,8 @@ namespace Alternet.UI.Tests
             void LogHoveredControl(object? sender, EventArgs e)
             {
                 var prefix = "Hovered control: ";
-                App.DebugLogReplace($"{prefix}{AbstractControl.HoveredControl?.GetType().Name ?? "null"}", prefix);
+                App.DebugLogReplace(
+                    $"{prefix}{AbstractControl.HoveredControl?.GetType().Name ?? "null"}", prefix);
             }
         }
 
@@ -138,7 +154,7 @@ namespace Alternet.UI.Tests
             double a12 = 5555.15d;
             decimal a13 = decimal.MaxValue;
             DateTime a14 = DateTime.Now;
-            string a15 = "basbasbas";
+            string a15 = "BassBassBass";
 
             PlessVariant v1 = a1;
             PlessVariant v2 = a2;
@@ -185,14 +201,14 @@ namespace Alternet.UI.Tests
         [Browsable(false)]
         public static void TestParseTextWithIndexAccel()
         {
-            var s1 = "Text1 with acell [2]";
-            var s2 = "Text2 with acell [-5]";
+            var s1 = "Text1 with underline [2]";
+            var s2 = "Text2 with underline [-5]";
 
-            var splitted1 = StringUtils.ParseTextWithIndexAccel(s1, 2, FontStyle.Bold);
-            var splitted2 = StringUtils.ParseTextWithIndexAccel(s2, -5, FontStyle.Bold);
+            var split1 = StringUtils.ParseTextWithIndexAccel(s1, 2, FontStyle.Bold);
+            var split2 = StringUtils.ParseTextWithIndexAccel(s2, -5, FontStyle.Bold);
 
-            LogUtils.LogTextAndFontStyle(splitted1);
-            LogUtils.LogTextAndFontStyle(splitted2);
+            LogUtils.LogTextAndFontStyle(split1);
+            LogUtils.LogTextAndFontStyle(split2);
         }
 
         /// <summary>
