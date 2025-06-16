@@ -262,6 +262,15 @@ namespace Alternet.UI
             [DllImport("libc")]
             public static extern int getpgid(int pid);
 
+            [DllImport("libc", SetLastError = true)]
+            public static extern int fork();
+
+            [DllImport("libc", SetLastError = true)]
+            public static extern int execve(string path, string[] argv, string[] envp);
+
+            [DllImport("libc", SetLastError = true)]
+            public static extern int kill(int pid, int sig);
+
             /// <summary>
             /// Makes the process a session leader and starts a new process group.
             /// </summary>
