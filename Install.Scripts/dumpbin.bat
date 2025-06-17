@@ -10,9 +10,7 @@ for /F "tokens=*" %%i in ('"%VSWHERE%" -latest -products * -requires Microsoft.V
 :: Output the installation path
 echo Visual Studio is installed at: %VSINSTALLPATH%
 
-set DumpbinPath=%VSINSTALLPATH%\VC\Tools\MSVC\14.42.34433\bin\Hostx64\x64\dumpbin.exe
-
- 
+set DumpbinPath=%VSINSTALLPATH%\VC\Tools\MSVC\14.44.35207\bin\Hostx64\x64\dumpbin.exe
 
 rem Run dumpbin with the provided arguments
 if not exist "%DumpbinPath%" (
