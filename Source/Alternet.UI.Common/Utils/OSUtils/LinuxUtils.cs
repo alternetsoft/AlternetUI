@@ -115,25 +115,6 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Outputs all signals to debug console.
-        /// </summary>
-        public static void DebugWriteLineSignals()
-        {
-            if (!App.IsLinuxOS)
-                return;
-
-            foreach (var elem in Enum.GetValues(typeof(UnixSignal)))
-            {
-                NativeMethods.signal((int)elem, OnSignal);
-            }
-
-            static void OnSignal(int signal)
-            {
-                Debug.WriteLine($"Received signal: {signal}");
-            }
-        }
-
-        /// <summary>
         /// Gets whether specific package is installed using dpkg utility.
         /// </summary>
         /// <param name="packageName">Package name.</param>
@@ -247,11 +228,6 @@ namespace Alternet.UI
 
             internal delegate int DlIteratePhdrCallback(ref DlPhdrInfo info, IntPtr size);
 
-            public delegate void SignalHandler(int signal);
-
-            [DllImport("libc")]
-            public static extern SignalHandler signal(int signum, SignalHandler handler);
-
             /// <summary>
             /// Gets process Group ID
             /// </summary>
@@ -259,15 +235,84 @@ namespace Alternet.UI
             [DllImport("libc")]
             public static extern int getpgrp();
 
+            /// <summary>
+            /// Retrieves the process group ID of the specified process.
+            /// </summary>
+            /// <remarks>This method is a direct wrapper for the <c>getpgid</c> function in the C
+            /// standard library. If the specified process does not exist or
+            /// the caller lacks the necessary permissions,
+            /// the method will return -1.</remarks>
+            /// <param name="pid">The process ID of the target process. Specify
+            /// <see langword="0"/> to retrieve the process group ID of
+            /// the calling process.</param>
+            /// <returns>The process group ID of the specified process, or -1
+            /// if an error occurs.</returns>
             [DllImport("libc")]
             public static extern int getpgid(int pid);
 
+            /// <summary>
+            /// Creates a new process by duplicating the calling process.
+            /// </summary>
+            /// <remarks>This method is a direct wrapper for the POSIX <c>fork</c> system call.
+            /// It creates a child process that is a copy of the calling process,
+            /// except for certain differences such as
+            /// process ID and resource allocations. <para> The return value distinguishes
+            /// the parent process from the
+            /// child process:
+            /// <list type="bullet">
+            /// <item><description>In the parent process, the return value is the
+            /// process ID of the child.</description>
+            /// </item>
+            /// <item><description>In the child process, the return value
+            /// is <see langword="0"/>.</description>
+            /// </item>
+            /// <item><description>If an error occurs, the return value is
+            /// <see langword="-1"/>, and <c>errno</c> is set to indicate the error.</description>
+            /// </item> </list>
+            /// </para></remarks>
+            /// <returns>The process ID of the child process in the
+            /// parent, <see langword="0"/> in the child process, or <see
+            /// langword="-1"/> if an error occurs.</returns>
             [DllImport("libc", SetLastError = true)]
             public static extern int fork();
 
+            /// <summary>
+            /// Executes a specified program, replacing the current process with the new program.
+            /// </summary>
+            /// <remarks>This method replaces the current process image with a new process image
+            /// specified by <paramref name="path"/>. It does not return on success, as the
+            /// current process is replaced.
+            /// On failure, the method returns -1.</remarks>
+            /// <param name="path">The path to the executable file to be executed.
+            /// This cannot be null or empty.</param>
+            /// <param name="argv">An array of arguments to pass to the program.
+            /// The first element is typically the program name. This
+            /// cannot be null.</param>
+            /// <param name="envp">An array of environment variables to set for the
+            /// new program. Each element should be in the format
+            /// "KEY=VALUE". This can be null to inherit the current process's environment.</param>
+            /// <returns>Returns 0 on success. On failure, returns -1 and sets the
+            /// last error, which can be retrieved.</returns>
             [DllImport("libc", SetLastError = true)]
             public static extern int execve(string path, string[] argv, string[] envp);
 
+            /// <summary>
+            /// Sends a signal to a process or a group of processes.
+            /// </summary>
+            /// <remarks>This method is a direct wrapper for the POSIX `kill` function.
+            /// It is used to send signals to processes for purposes such as
+            /// termination or custom signal handling.</remarks>
+            /// <param name="pid">The process ID or process group ID to which the signal
+            /// is sent.  If positive, the signal is sent to the
+            /// process with the specified ID.  If zero, the signal is sent
+            /// to all processes in the caller's process
+            /// group.  If negative, the signal is sent to all processes
+            /// in the process group with the absolute value of
+            /// <paramref name="pid"/>.</param>
+            /// <param name="sig">The signal to be sent. This is typically
+            /// one of the signal constants defined in the operating system.</param>
+            /// <returns>Returns 0 on success. On failure, returns -1 and sets the
+            /// last error, which can be retrieved.</returns>
             [DllImport("libc", SetLastError = true)]
             public static extern int kill(int pid, int sig);
 
