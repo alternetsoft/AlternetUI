@@ -184,8 +184,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AllQuickStarts", "..\..\..\
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Maui.Scripter", "Maui.Scripter", "{3F75BEA6-1088-4505-A7B2-133971CEB90A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Python.Runtime", "..\..\..\..\pythonnet\src\runtime\Python.Runtime.csproj", "{6861E25A-8820-F0FA-2AB8-45CD6745BD7E}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
