@@ -84,7 +84,7 @@
     <WxWidgetsBinDownloadUrlWindowsOld>https://alternetsoftware.blob.core.windows.net/alternet-ui/wxWidgets-bin-noobjpch-3.2.7.7z</WxWidgetsBinDownloadUrlWindowsOld>
     <WxWidgetsBinDownloadUrlWindowsLocalHost7z>http://localhost/wxWidgets-bin-noobjpch-3.3.0.7z</WxWidgetsBinDownloadUrlWindowsLocalHost7z>
 
-    <WxWidgetsBinDownloadUrlWindows>$(WxWidgetsBinDownloadUrlWindowsLocalHost7z)</WxWidgetsBinDownloadUrlWindows>
+    <WxWidgetsBinDownloadUrlWindows>$(WxWidgetsBinDownloadUrlWindows7z)</WxWidgetsBinDownloadUrlWindows>
     <!-- ========================================== -->
     <WxWidgetsWindowsBuildDirectoryNameParent>build</WxWidgetsWindowsBuildDirectoryNameParent>
     <WxWidgetsWindowsBuildDirectoryName>msw</WxWidgetsWindowsBuildDirectoryName>
