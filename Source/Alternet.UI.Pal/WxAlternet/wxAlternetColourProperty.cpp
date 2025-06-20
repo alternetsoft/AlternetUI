@@ -39,8 +39,8 @@ template<> inline wxVariant WXVARIANT(const wxColourPropertyValue& value)
 namespace Alternet::UI
 {
     // wxEnumProperty based classes cannot use wxPG_PROP_CLASS_SPECIFIC_1
-#define wxPG_PROP_HIDE_CUSTOM_COLOUR        wxPG_PROP_CLASS_SPECIFIC_2
-#define wxPG_PROP_COLOUR_HAS_ALPHA          wxPG_PROP_CLASS_SPECIFIC_3
+#define wxPG_PROP_HIDE_CUSTOM_COLOUR        wxPGPropertyFlags::Reserved_2
+#define wxPG_PROP_COLOUR_HAS_ALPHA          wxPGPropertyFlags::Reserved_3
 
     const wxSize wxCOLOR_DEFAULT_IMAGE_SIZE = wxSize(-1, -1);
 
@@ -81,7 +81,7 @@ namespace Alternet::UI
 
 		Init(value);
 
-		m_flags |= wxPG_PROP_TRANSLATE_CUSTOM;
+		m_flags |= wxPGPropertyFlags::Reserved_1 /*wxPG_PROP_TRANSLATE_CUSTOM*/;
 	}
 
 	wxAlternetColourProperty::~wxAlternetColourProperty()
@@ -110,7 +110,7 @@ namespace Alternet::UI
 		if (editor != wxPGEditor_Choice &&
 			editor != wxPGEditor_ChoiceAndButton &&
 			editor != wxPGEditor_ComboBox)
-			argFlags |= wxPG_PROPERTY_SPECIFIC;
+			argFlags |= wxPGPropValFormatFlags::PropertySpecific;
 
 		return wxAlternetSystemColourProperty::ValueToString(value, argFlags);
 	}
@@ -203,7 +203,8 @@ namespace Alternet::UI
         else
             cpv.Init(type, colour);
 
-        m_flags |= wxPG_PROP_STATIC_CHOICES; // Colour selection cannot be changed.
+        // Colour selection cannot be changed.
+        m_flags |= wxPGPropertyFlags::Reserved_1 /*wxPG_PROP_STATIC_CHOICES*/;
 
         m_value = WXVARIANT(cpv);
 
@@ -388,7 +389,7 @@ namespace Alternet::UI
             }
 
             if (cpv.m_type < wxPG_COLOUR_WEB_BASE ||
-                (m_flags & wxPG_PROP_HIDE_CUSTOM_COLOUR))
+                (((int)m_flags & (int)wxPGPropertyFlags::Reserved_2) /*wxPG_PROP_HIDE_CUSTOM_COLOUR*/))
             {
                 ind = GetIndexForValue(cpv.m_type);
             }
@@ -435,7 +436,7 @@ namespace Alternet::UI
             if (!col.IsOk())
                 return wxEmptyString;
 
-            if ((argFlags & wxPG_FULL_VALUE) || (m_flags & wxPG_PROP_COLOUR_HAS_ALPHA))
+            if (((int)argFlags & (int)wxPGPropValFormatFlags::FullValue) || ((int)m_flags & (int)wxPG_PROP_COLOUR_HAS_ALPHA))
             {
                 return wxString::Format(wxS("(%i,%i,%i,%i)"),
                     (int)col.Red(),
@@ -464,7 +465,7 @@ namespace Alternet::UI
 
         int index;
 
-        if (argFlags & wxPG_VALUE_IS_CURRENT)
+        if ((int)argFlags & (int)wxPGPropValFormatFlags::ValueIsCurrent)
         {
             // GetIndex() only works reliably if wxPG_VALUE_IS_CURRENT flag is set,
             // but we should use it whenever possible.
@@ -509,7 +510,7 @@ namespace Alternet::UI
             return res;
 
         // Must only occur when user triggers event
-        if (!propgrid->HasInternalFlag(wxPG_FL_IN_HANDLECUSTOMEDITOREVENT))
+        if (!propgrid->HasInternalFlag(wxPropertyGrid::wxPG_FL_IN_HANDLECUSTOMEDITOREVENT))
             return res;
 
         wxColourPropertyValue val = GetVal();
@@ -518,7 +519,7 @@ namespace Alternet::UI
 
         wxColourData data;
         data.SetChooseFull(true);
-        data.SetChooseAlpha((m_flags & wxPG_PROP_COLOUR_HAS_ALPHA) != 0);
+        data.SetChooseAlpha(((int)m_flags & (int)wxPG_PROP_COLOUR_HAS_ALPHA) != 0);
         data.SetColour(val.m_colour);
         for (int i = 0; i < wxColourData::NUM_CUSTOM; i++)
         {
@@ -550,7 +551,7 @@ namespace Alternet::UI
 
         if (type == wxPG_COLOUR_CUSTOM)
         {
-            if (!(argFlags & wxPG_PROPERTY_SPECIFIC))
+            if (!(argFlags & wxPGPropValFormatFlags::PropertySpecific))
                 return QueryColourFromUser(variant);
 
             // Call from event handler.
@@ -619,7 +620,7 @@ namespace Alternet::UI
         if (paintdata.m_choiceItem >= 0 &&
             paintdata.m_choiceItem < (int)m_choices.GetCount() &&
             (paintdata.m_choiceItem != GetCustomColourIndex() ||
-                m_flags & wxPG_PROP_HIDE_CUSTOM_COLOUR))
+                (int)m_flags & (int)wxPG_PROP_HIDE_CUSTOM_COLOUR))
         {
             int colInd = m_choices[paintdata.m_choiceItem].GetValue();
             col = GetColour(colInd);
@@ -722,7 +723,7 @@ namespace Alternet::UI
             !(m_flags & wxPG_PROP_HIDE_CUSTOM_COLOUR) &&
             isCustomColour)
         {
-            if (!(argFlags & wxPG_EDITABLE_VALUE))
+            if (!(argFlags & wxPGPropValFormatFlags::EditableValue))
             {
                 // This really should not occur...
                 // wxASSERT(false);
@@ -731,7 +732,7 @@ namespace Alternet::UI
 
             if (!QueryColourFromUser(value))
             {
-                if (!(argFlags & wxPG_PROPERTY_SPECIFIC))
+                if (!((int)argFlags & (int)wxPGPropValFormatFlags::PropertySpecific))
                     return false;
                 // If query for value comes from the event handler
                 // use current pending value to be processed later on in OnEvent().
@@ -748,7 +749,7 @@ namespace Alternet::UI
             {
                 // Try predefined colour first
                 int index;
-                bool res = ValueFromString_(value, &index, colStr, argFlags);
+                bool res = ValueFromString_(value, &index, colStr, (wxPGPropValFormatFlags)argFlags);
                 if (res && index >= 0)
                 {
                     val.m_type = index;
@@ -786,7 +787,7 @@ namespace Alternet::UI
         {
             bool allow = value.GetBool();
 
-            if (allow && (m_flags & wxPG_PROP_HIDE_CUSTOM_COLOUR))
+            if (allow && ((int)m_flags & (int)wxPG_PROP_HIDE_CUSTOM_COLOUR))
             {
                 // Show custom choice
                 /* TRANSLATORS: Custom colour choice entry */

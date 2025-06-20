@@ -35,7 +35,7 @@ namespace Alternet::UI
         bool _hasBorder = true;
         long _createStyle = wxPG_DEFAULT_STYLE;
         PropertyGridVariant* _eventValue = new PropertyGridVariant();
-        int _eventValidationFailureBehavior = 0;
+        wxPGVFBFlags _eventValidationFailureBehavior = wxPGVFBFlags::Null;
         int _eventColumn = 0;
         void* _eventProperty = nullptr;
         string _eventPropertyName = wxStr(wxEmptyString);

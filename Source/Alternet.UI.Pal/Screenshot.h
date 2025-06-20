@@ -16,7 +16,9 @@ namespace Alternet::UI
 
         bool hasChildWindows = false;
         wxWindowList& children = xWindow->GetChildren();
-        for (wxWindowList::Node* node = children.GetFirst(); node; node = node->GetNext())
+
+        for (wxWindowList::compatibility_iterator node = children.GetFirst();
+            node; node = node->GetNext())
         {
             wxWindow* current = (wxWindow*)node->GetData();
 

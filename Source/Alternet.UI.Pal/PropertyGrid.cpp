@@ -389,7 +389,7 @@ namespace Alternet::UI
 		if (wxIsNaN(dbl))
 			return "nan";
 
-		auto result = wxFloatProperty::ValueToString(value, argFlags);
+		auto result = wxFloatProperty::ValueToString(value, (wxPGPropValFormatFlags)argFlags);
 		return result;
 	}
 
@@ -590,7 +590,7 @@ namespace Alternet::UI
 
 	void PropertyGrid::Sort(int flags)
 	{
-		return GetPropGrid()->Sort(flags);
+		return GetPropGrid()->Sort((wxPGPropertyValuesFlags)flags);
 	}
 
 	void PropertyGrid::RefreshProperty(void* p)
@@ -665,13 +665,13 @@ namespace Alternet::UI
 
 	void PropertyGrid::SetValidationFailureBehavior(int vfbFlags)
 	{
-		GetPropGrid()->SetValidationFailureBehavior(vfbFlags);
+		GetPropGrid()->SetValidationFailureBehavior((wxPGVFBFlags)vfbFlags);
 	}
 
 	void PropertyGrid::SortChildren(void* id, int flags)
 	{
 		ToPropArg(id);
-		GetPropGrid()->SortChildren(_propArg, flags);
+		GetPropGrid()->SortChildren(_propArg, (wxPGPropertyValuesFlags)flags);
 	}
 
 	/*static*/ void* PropertyGrid::GetEditorByName(const string& editorName)
@@ -682,7 +682,7 @@ namespace Alternet::UI
 	void PropertyGrid::SetPropertyReadOnly(void* id, bool set, int flags)
 	{
 		ToPropArg(id);
-		GetPropGrid()->SetPropertyReadOnly(_propArg, set, flags);
+		GetPropGrid()->SetPropertyReadOnly(_propArg, set, (wxPGPropertyValuesFlags)flags);
 	}
 
 	void PropertyGrid::SetPropertyValueUnspecified(void* id)
@@ -841,7 +841,7 @@ namespace Alternet::UI
 	bool PropertyGrid::HideProperty(void* id, bool hide, int flags)
 	{
 		ToPropArg(id);
-		return GetPropGrid()->HideProperty(_propArg, hide, flags);
+		return GetPropGrid()->HideProperty(_propArg, hide, (wxPGPropertyValuesFlags)flags);
 	}
 
 	void* PropertyGrid::Insert(void* priorThis, void* newproperty)
@@ -913,19 +913,19 @@ namespace Alternet::UI
 	void PropertyGrid::SetPropertyBackgroundColor(void* id, const Color& color, int flags)
 	{
 		ToPropArg(id);
-		GetPropGrid()->SetPropertyBackgroundColour(_propArg, color, flags);
+		GetPropGrid()->SetPropertyBackgroundColour(_propArg, color, (wxPGPropertyValuesFlags)flags);
 	}
 
 	void PropertyGrid::SetPropertyColorsToDefault(void* id, int flags)
 	{
 		ToPropArg(id);
-		GetPropGrid()->SetPropertyColoursToDefault(_propArg, flags);
+		GetPropGrid()->SetPropertyColoursToDefault(_propArg, (wxPGPropertyValuesFlags)flags);
 	}
 
 	void PropertyGrid::SetPropertyTextColor(void* id, const Color& col, int flags)
 	{
 		ToPropArg(id);
-		GetPropGrid()->SetPropertyTextColour(_propArg, col, flags);
+		GetPropGrid()->SetPropertyTextColour(_propArg, col, (wxPGPropertyValuesFlags)flags);
 	}
 
 	Color PropertyGrid::GetPropertyBackgroundColor(void* id)
@@ -960,12 +960,12 @@ namespace Alternet::UI
 
 	int PropertyGrid::GetEventValidationFailureBehavior()
 	{
-		return _eventValidationFailureBehavior;
+		return (int)_eventValidationFailureBehavior;
 	}
 
 	void PropertyGrid::SetEventValidationFailureBehavior(int value)
 	{
-		_eventValidationFailureBehavior = value;
+		_eventValidationFailureBehavior = (wxPGVFBFlags)value;
 	}
 
 	int PropertyGrid::GetEventColumn()
@@ -995,7 +995,7 @@ namespace Alternet::UI
 
 	string PropertyGrid::GetUnspecifiedValueText(int argFlags)
 	{
-		return wxStr(GetPropGrid()->GetUnspecifiedValueText(argFlags));
+		return wxStr(GetPropGrid()->GetUnspecifiedValueText((wxPGPropValFormatFlags)argFlags));
 	}
 
 	void PropertyGrid::SetVirtualWidth(int width)
@@ -1125,7 +1125,8 @@ namespace Alternet::UI
 
 	void PropertyGrid::AddActionTrigger(int action, int keycode, int modifiers)
 	{
-		GetPropGrid()->AddActionTrigger(action, Keyboard::KeyToWxKey((Key)keycode), modifiers);
+		GetPropGrid()->AddActionTrigger(
+			(wxPGKeyboardAction)action, Keyboard::KeyToWxKey((Key)keycode), modifiers);
 	}
 
 	void PropertyGrid::DedicateKey(int keycode)
@@ -1145,12 +1146,12 @@ namespace Alternet::UI
 
 	void PropertyGrid::ClearActionTriggers(int action)
 	{
-		GetPropGrid()->ClearActionTriggers(action);
+		GetPropGrid()->ClearActionTriggers((wxPGKeyboardAction)action);
 	}
 
 	bool PropertyGrid::CommitChangesFromEditor(uint32_t flags)
 	{
-		return GetPropGrid()->CommitChangesFromEditor(flags);
+		return GetPropGrid()->CommitChangesFromEditor((wxPGSelectPropertyFlags)flags);
 	}
 
 	void PropertyGrid::EditorsValueWasModified()
@@ -1371,7 +1372,8 @@ namespace Alternet::UI
 	{
 		ToPropArg(id);
 		wxVariant v = PropertyGridVariant::ToVar(variant);
-		GetPropGrid()->SetPropertyAttribute(_propArg, wxStr(attrName), v, argFlags);
+		GetPropGrid()->SetPropertyAttribute(
+			_propArg, wxStr(attrName), v, (wxPGPropertyValuesFlags)argFlags);
 	}
 
 	void PropertyGrid::SetPropertyValueAsVariant(void* id, void* variant)

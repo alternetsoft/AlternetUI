@@ -205,7 +205,7 @@ namespace Alternet::UI
     /*static*/ void* Font::OpenFamiliesArray()
     {
         auto facenames = wxFontEnumerator::GetFacenames();
-        return new wxArrayString(facenames.begin(), facenames.end());
+        return new wxArrayString(facenames);
     }
 
     /*static*/ int Font::GetFamiliesItemCount(void* array)
