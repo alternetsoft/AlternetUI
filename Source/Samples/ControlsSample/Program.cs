@@ -80,6 +80,11 @@ namespace ControlsSample
 
             var testBadFont = false;
 
+            if (App.IsWindowsOS)
+            {
+                var appearanceResult = App.SetAppearance(ApplicationAppearance.System);
+            }
+
             var application = new Application();
 
             LogSimple("Application created.");

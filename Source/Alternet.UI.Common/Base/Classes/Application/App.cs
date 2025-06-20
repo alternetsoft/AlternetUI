@@ -136,6 +136,7 @@ namespace Alternet.UI
         private static UnhandledExceptionMode unhandledExceptionModeDebug
             = UnhandledExceptionMode.CatchWithDialogAndThrow;
 
+        private static ApplicationAppearance? appearance;
         private static bool? isMaui;
         private static bool inOnThreadException;
         private static IconSet? icon;
@@ -234,6 +235,10 @@ namespace Alternet.UI
             App.Current = this;
 
             Initialized = true;
+
+            if(appearance is not null)
+                Handler.SetAppearance(appearance.Value);
+
             Window.UpdateDefaultFont();
 
             DebugUtils.DebugCall(() =>
@@ -1020,6 +1025,62 @@ namespace Alternet.UI
         {
             if (condition)
                 Log(obj, kind);
+        }
+
+        /// <summary>
+        /// Updates the application's appearance settings.
+        /// Request using either system default or explicitly light or dark theme for the application.
+        /// </summary>
+        /// <remarks>
+        /// Use this method to apply custom appearance settings to the application,
+        /// such as themes or color schemes.
+        /// </remarks>
+        /// <remarks>
+        /// Under linux and macOS applications use the system default appearance by default,
+        /// and so it is only useful to call this function with either
+        /// <see cref="ApplicationAppearance.Light"/> or <see cref="ApplicationAppearance.Dark"/>
+        /// parameters if you need to override the default system appearance.
+        /// The effect of calling this function is immediate, i.e. this function
+        /// returns <see cref="PropertyUpdateResult.Ok"/>, and affects all the existing
+        /// windows as well as any windows created after this call.
+        /// </remarks>
+        /// <remarks>
+        /// Under Windows, the default appearance is always light and the applications
+        /// that want to follow the system appearance need to explicitly call this function
+        /// with <see cref="ApplicationAppearance.System"/> parameter in order to do it.
+        /// Please note using dark appearance under MSW requires using non-documented system
+        /// functions and has several known limitations, please see MSWEnableDarkMode()
+        /// for more details. Also, on this platform the appearance can be only set before
+        /// any windows are created and calling this function too late will
+        /// return <see cref="PropertyUpdateResult.CannotChange"/>.
+        /// </remarks>
+        /// <param name="appearance">The new appearance settings to apply.</param>
+        /// <returns>A <see cref="PropertyUpdateResult"/> indicating the success
+        /// or failure of the update. Returns <see cref="PropertyUpdateResult.Ok"/>
+        /// if the appearance was updated successfully,
+        /// <see cref="PropertyUpdateResult.CannotChange"/> if the appearance can't be changed
+        /// any more because it's too late to do it but could be changed if done immediately
+        /// on next program launch (only returned by Windows currently)
+        /// or <see cref="PropertyUpdateResult.Failure"/> if changing the appearance
+        /// failed for some other reason.</returns>
+        public static PropertyUpdateResult SetAppearance(ApplicationAppearance appearance)
+        {
+            App.appearance = appearance;
+
+            if (Handler is null)
+            {
+                return PropertyUpdateResult.Ok;
+            }
+
+            try
+            {
+                return Handler.SetAppearance(appearance);
+            }
+            catch (Exception e)
+            {
+                Nop(e);
+                return PropertyUpdateResult.Failure;
+            }
         }
 
         /// <summary>

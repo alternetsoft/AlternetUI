@@ -516,6 +516,11 @@ namespace Alternet::UI
         //throw value;
     }
 
+    PropertyUpdateResult Application::SetAppearance(ApplicationAppearance appearance)
+    {
+        return (PropertyUpdateResult)(_app->SetAppearance((wxApp::Appearance)appearance));
+    }
+
     void Application::Run(Window* window)
     {
         verifyNonNull(window);

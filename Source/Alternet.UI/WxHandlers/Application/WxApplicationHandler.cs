@@ -419,6 +419,12 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
+        public virtual PropertyUpdateResult SetAppearance(ApplicationAppearance appearance)
+        {
+            return nativeApplication.SetAppearance(appearance);
+        }
+
+        /// <inheritdoc/>
         protected override void DisposeManaged()
         {
             base.DisposeManaged();

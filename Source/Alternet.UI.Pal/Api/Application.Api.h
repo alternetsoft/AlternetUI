@@ -210,6 +210,17 @@ ALTERNET_UI_API c_bool Application_GetInvokeRequired_(Application* obj)
     #endif
 }
 
+ALTERNET_UI_API PropertyUpdateResult Application_SetAppearance_(Application* obj, ApplicationAppearance appearance)
+{
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    return MarshalExceptions<PropertyUpdateResult>([&](){
+    #endif
+        return obj->SetAppearance(appearance);
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    });
+    #endif
+}
+
 ALTERNET_UI_API void Application_GetEventIdentifiers_(int* eventIdentifiers, int eventIdentifiersCount)
 {
     #if !defined(__WXMSW__) || defined(_DEBUG)

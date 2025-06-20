@@ -173,6 +173,12 @@ namespace Alternet.UI.Native
             
         }
         
+        public Alternet.UI.PropertyUpdateResult SetAppearance(Alternet.UI.ApplicationAppearance appearance)
+        {
+            CheckDisposed();
+            return NativeApi.Application_SetAppearance_(NativePointer, appearance);
+        }
+        
         public static void GetEventIdentifiers(System.Int32[] eventIdentifiers)
         {
             NativeApi.Application_GetEventIdentifiers_(eventIdentifiers, eventIdentifiers.Length);
@@ -491,6 +497,9 @@ namespace Alternet.UI.Native
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern bool Application_GetInvokeRequired_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern Alternet.UI.PropertyUpdateResult Application_SetAppearance_(IntPtr obj, Alternet.UI.ApplicationAppearance appearance);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void Application_GetEventIdentifiers_(System.Int32[] eventIdentifiers, int eventIdentifiersCount);

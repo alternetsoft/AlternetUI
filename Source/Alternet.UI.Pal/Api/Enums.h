@@ -9,6 +9,13 @@ namespace Alternet::UI
         Save = 1,
     };
     
+    enum class StringAlignment
+    {
+        Near = 0,
+        Center = 1,
+        Far = 2,
+    };
+    
     enum class TextHorizontalAlignment
     {
         Left = 0,
@@ -295,6 +302,7 @@ namespace Alternet::UI
     enum class DrawLabelFlags
     {
         TextHasBold = 1,
+        TextHasNewLineChars = 2,
     };
     
     enum class FillMode
@@ -2426,6 +2434,13 @@ namespace Alternet::UI
         Inherit = 2,
     };
     
+    enum class PropertyUpdateResult
+    {
+        Failure = 0,
+        Ok = 1,
+        CannotChange = 2,
+    };
+    
     enum class Readability
     {
         Unreadable = 0,
@@ -2808,6 +2823,13 @@ namespace Alternet::UI
         First = 6,
         Last = 7,
         EndScroll = 8,
+    };
+    
+    enum class ApplicationAppearance
+    {
+        System = 0,
+        Light = 1,
+        Dark = 2,
     };
     
     enum class GenericDeviceType

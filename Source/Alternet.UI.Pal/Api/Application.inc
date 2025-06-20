@@ -29,6 +29,7 @@ void SetInUixmlPreviewerMode(bool value);
 
 bool GetInvokeRequired();
 
+PropertyUpdateResult SetAppearance(ApplicationAppearance appearance);
 static void GetEventIdentifiers(int* eventIdentifiers, int eventIdentifiersCount);
 static void ThrowError(int value);
 static void SetSystemOptionInt(const string& name, int value);

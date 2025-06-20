@@ -199,6 +199,12 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
+        public virtual PropertyUpdateResult SetAppearance(ApplicationAppearance appearance)
+        {
+            return PropertyUpdateResult.Failure;
+        }
+
+        /// <inheritdoc/>
         public virtual IMouseHandler CreateMouseHandler()
         {
             return new PlessMouseHandler();

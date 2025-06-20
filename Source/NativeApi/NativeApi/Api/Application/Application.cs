@@ -8,6 +8,9 @@ namespace NativeApi.Api
     // https://docs.wxwidgets.org/3.2/classwx_app.html
     public class Application
     {
+        public PropertyUpdateResult SetAppearance(ApplicationAppearance appearance)
+            => default;
+
         public static void GetEventIdentifiers(int[] eventIdentifiers) { }
 
         public string EventArgString { get; }

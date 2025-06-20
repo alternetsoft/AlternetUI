@@ -10,7 +10,7 @@ using Alternet.Drawing.Printing;
 namespace Alternet.UI
 {
     /// <summary>
-    /// Contains methods and properties which allow to control platfrom behavior.
+    /// Contains methods and properties which allow to control platform behavior.
     /// </summary>
     public interface IApplicationHandler : IDisposable
     {
@@ -37,6 +37,19 @@ namespace Alternet.UI
         /// calls to the UI objects because the caller is not on the UI thread.
         /// </summary>
         bool IsInvokeRequired { get; }
+
+        /// <summary>
+        /// Updates the application's appearance settings.
+        /// </summary>
+        /// <remarks>
+        /// Use this method to apply custom appearance settings to the application,
+        /// such as themes or color schemes.
+        /// </remarks>
+        /// <param name="appearance">The new appearance settings to apply.</param>
+        /// <returns>A <see cref="PropertyUpdateResult"/> indicating the success
+        /// or failure of the update. Returns <see cref="PropertyUpdateResult.Ok"/>
+        /// if the appearance was updated successfully.</returns>
+        public PropertyUpdateResult SetAppearance(ApplicationAppearance appearance);
 
         /// <summary>
         /// Creates <see cref="IActionSimulatorHandler"/> implementation specific to the platform.
