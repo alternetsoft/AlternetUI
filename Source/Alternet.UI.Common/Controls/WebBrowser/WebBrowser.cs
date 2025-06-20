@@ -37,6 +37,10 @@ namespace Alternet.UI
     /// has finished loading and<see cref="Error"/> event notifies that an
     /// error has occurred.
     /// </para>
+    /// <para>
+    /// Call <see cref="WebBrowser.SetBackend"/> in order to specify backend used by 
+    /// the next created <see cref="WebBrowser"/> control.
+    /// </para>
     /// </remarks>
     [DefaultProperty("Name")]
     [DefaultEvent("Enter")]
@@ -56,7 +60,7 @@ namespace Alternet.UI
 
         static WebBrowser()
         {
-            IsEdgeBackendEnabled = true;
+            IsEdgeBackendEnabled = false;
         }
 
         /// <summary>
@@ -284,7 +288,12 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Gets or sets whether Edge backend which uses WebView2 is available.
+        /// Gets or sets whether Edge backend which uses WebView2 is available on Windows.
+        /// Default is <c>false</c>.
+        /// Even if this property is <c>false</c>, you can create Edge backend on Windows
+        /// by calling <see cref="WebBrowser.SetBackend"/>
+        /// with <see cref="WebBrowserBackend.Edge"/> parameter before
+        /// creating <see cref="WebBrowser"/>.
         /// </summary>
         public static bool IsEdgeBackendEnabled
         {

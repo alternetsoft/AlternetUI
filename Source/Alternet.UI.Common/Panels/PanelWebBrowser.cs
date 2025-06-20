@@ -107,7 +107,7 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Gets listbox with list of actions. This control is created by demand, it will be shown
+        /// Gets list box with list of actions. This control is created by demand, it will be shown
         /// at the right of the browser.
         /// </summary>
         [Browsable(false)]
@@ -217,7 +217,7 @@ namespace Alternet.UI
         public TextBox UrlTextBox => urlTextBox;
 
         /// <summary>
-        /// Gets whetner IE backend is currently used.
+        /// Gets whether IE backend is currently used.
         /// </summary>
         public bool IsIEBackend
         {

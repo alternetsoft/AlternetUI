@@ -68,7 +68,8 @@ namespace ControlsSample
         public int AddEdgePage(string title)
         {
             var savedValue = WebBrowser.IsEdgeBackendEnabled;
-            if (DebugUtils.IsDebuggerAttached && TestEdgeBackend)
+
+            if (TestEdgeBackend)
                 WebBrowser.IsEdgeBackendEnabled = true;
 
             if (!WebBrowser.IsBackendAvailable(WebBrowserBackend.Edge))
