@@ -1,3 +1,12 @@
+# 0.9.737 (2025 June 20)
+
+- WebBrowser: Fix Edge backend background painting.
+- Update to use wxWidgets 3.3.0.
+- Update to use microsoft.web.webview2.1.0.3296.44.
+- RichToolTip: Fix image size and allow multiline title.
+- RichToolTip: static CreateToolTipImage (allows to create bitmap with aligned title, text and icon).
+- Update documentation to reflect latest API changes.
+
 # 0.9.736 (2025 June 13)
 
 - VirtualListBox: Fixed SetColorThemeToDefault().

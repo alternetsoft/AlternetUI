@@ -1,11 +1,9 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ApiInfo>
-  <Assembly Name="Alternet.UI.Common, Version=0.9.736.0, Culture=neutral, PublicKeyToken=7fb0fe57212b4b74">
+  <Assembly Name="Alternet.UI.Common, Version=0.9.737.0, Culture=neutral, PublicKeyToken=7fb0fe57212b4b74">
     <Type Name="XamlX.Runtime.IXamlParentStackProviderV1" />
     <Type Name="XamlX.Runtime.IXamlXmlNamespaceInfoProviderV1" />
     <Type Name="XamlX.Runtime.XamlXmlNamespaceInfoV1" />
-    <Type Name="Alternet.Base.Collections.CollectionChangeEventArgs`1" />
-    <Type Name="Alternet.Base.Collections.RangeAdditionFinishedEventArgs`1" />
     <Type Name="Alternet.Drawing.StringAlignment" />
     <Type Name="Alternet.Drawing.TextHorizontalAlignment" />
     <Type Name="Alternet.Drawing.TextTrimming" />
@@ -814,6 +812,7 @@
     <Type Name="Alternet.UI.UrlEventHandler" />
     <Type Name="Alternet.UI.UrlEventArgs" />
     <Type Name="Alternet.UI.WindowClosingEventArgs" />
+    <Type Name="Alternet.UI.CollectionChangeEventArgs`1" />
     <Type Name="Alternet.UI.CustomEventArgs" />
     <Type Name="Alternet.UI.DpiChangedEventHandler" />
     <Type Name="Alternet.UI.DpiChangedEventArgs" />
@@ -853,6 +852,7 @@
     <Type Name="Alternet.UI.ObjectPropertyChangedEventArgs" />
     <Type Name="Alternet.UI.PaintEventArgs" />
     <Type Name="Alternet.UI.QueryEncodingEventArgs" />
+    <Type Name="Alternet.UI.RangeAdditionFinishedEventArgs`1" />
     <Type Name="Alternet.UI.ScrollEventHandler" />
     <Type Name="Alternet.UI.ScrollEventArgs" />
     <Type Name="Alternet.UI.SplitterEventHandler" />
@@ -11569,6 +11569,7 @@
       <Event Name="Disposed" />
       <Event Name="PropertyChanged" />
     </Type>
+    <Type Name="Alternet.UI.RichToolTipParams" />
     <Type Name="Alternet.UI.ToolTipFactory" />
     <Type Name="Alternet.UI.TreeView">
       <Event Name="SelectionChanged" />
@@ -13792,6 +13793,7 @@
     <Type Name="Alternet.UI.NativeLibraryInspector" />
     <Type Name="Alternet.UI.OSUtils" />
     <Type Name="Alternet.UI.RegistryUtils" />
+    <Type Name="Alternet.UI.UnixSignal" />
     <Type Name="Alternet.UI.PathUtils" />
     <Type Name="Alternet.UI.PlessUtils" />
     <Type Name="Alternet.UI.CharUtils" />
