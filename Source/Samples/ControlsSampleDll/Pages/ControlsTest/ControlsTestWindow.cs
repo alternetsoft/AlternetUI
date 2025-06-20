@@ -6,7 +6,7 @@ namespace ControlsSample
 {
     internal partial class ControlsTestWindow : Window
     {
-        public static bool TestEdgeBackend = false;
+        public static bool TestEdgeBackend = true;
 
         private readonly StatusBar statusBar = new();
 #pragma warning disable

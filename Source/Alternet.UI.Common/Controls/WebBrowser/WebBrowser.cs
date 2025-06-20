@@ -56,9 +56,7 @@ namespace Alternet.UI
 
         static WebBrowser()
         {
-            // This call is here because current version of wxWidgets
-            // doesn't work with WebView2 browser properly.
-            IsEdgeBackendEnabled = false;
+            IsEdgeBackendEnabled = true;
         }
 
         /// <summary>
@@ -93,7 +91,7 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Occurs when the the page wants to enter or leave fullscreen.
+        /// Occurs when the the page wants to enter or leave full screen.
         /// </summary>
         /// <remarks>
         /// Use the <see cref="WebBrowserEventArgs.IntVal"/> property of the event
@@ -262,7 +260,7 @@ namespace Alternet.UI
         public event EventHandler<WebBrowserEventArgs>? DocumentTitleChanged;
 
         /// <summary>
-        /// Gets or sets <see cref="IWebBrowserFactoryHandler"/> used by the webbrowser control.
+        /// Gets or sets <see cref="IWebBrowserFactoryHandler"/> used by the web browser control.
         /// </summary>
         public static IWebBrowserFactoryHandler Factory
         {
@@ -2469,6 +2467,23 @@ namespace Alternet.UI
         /// </param>
         protected virtual void OnError(WebBrowserEventArgs e)
         {
+        }
+
+        /// <inheritdoc/>
+        protected override void OnHandleCreated(EventArgs e)
+        {
+            base.OnHandleCreated(e);
+        }
+
+        /// <inheritdoc/>
+        protected override void OnResize(EventArgs e)
+        {
+            base.OnResize(e);
+            if (!HasChildren && IsEdgeBackend)
+            {
+                var control = new Control();
+                control.Parent = this;
+            }
         }
 
         private void ZoomInOut(int delta)
