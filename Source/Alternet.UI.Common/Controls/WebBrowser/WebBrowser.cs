@@ -38,7 +38,7 @@ namespace Alternet.UI
     /// error has occurred.
     /// </para>
     /// <para>
-    /// Call <see cref="WebBrowser.SetBackend"/> in order to specify backend used by 
+    /// Call <see cref="WebBrowser.SetBackend"/> in order to specify backend used by
     /// the next created <see cref="WebBrowser"/> control.
     /// </para>
     /// </remarks>

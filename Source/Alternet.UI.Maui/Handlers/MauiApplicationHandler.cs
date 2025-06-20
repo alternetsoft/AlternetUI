@@ -323,6 +323,12 @@ namespace Alternet.UI
         {
         }
 
+        /// <inheritdoc/>
+        public virtual PropertyUpdateResult SetAppearance(ApplicationAppearance appearance)
+        {
+            return PropertyUpdateResult.Failure;
+        }
+
         private static void DeviceDisplay_MainDisplayInfoChanged(
             object? sender,
             DisplayInfoChangedEventArgs e)
