@@ -726,6 +726,13 @@ namespace Alternet.UI
                 {
                     return result.Value;
                 }
+
+                /*
+                Can also use WinApi function like it is done in
+                https://github.com/pruggitorg/detect-windows-version
+                as current implementation sometimes works incorrectly
+                and in some cases depends on application manifest.
+                */
             }
         }
 
