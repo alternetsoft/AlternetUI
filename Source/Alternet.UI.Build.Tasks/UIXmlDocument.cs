@@ -172,7 +172,7 @@ namespace Alternet.UI.Build.Tasks
             if (ns == UINamespace)
                 return "Alternet.UI";
             if(ns == EditorNamespace)
-                return "Alternet.Editor";
+                return "Alternet.Editor.AlternetUI";
             if (ns == DebuggerUINamespace)
                 return "Alternet.Scripter.Debugger.UI.AlternetUI";
 
