@@ -191,6 +191,8 @@ namespace Alternet::UI
 
         if (!hasBorder)
             style = style | wxBORDER_NONE;
+        else
+            style |= wxBORDER_THEME;
 
         auto value = new wxListView2(
             parent,
@@ -199,11 +201,13 @@ namespace Alternet::UI
             wxDefaultSize,
             style);
 
+        /* This is commented out as in dark mode we have problems with this code
 #ifdef __WXMSW__
         auto hWnd = (HWND)value->GetHWND();
         // turn off "explorer style" item hover effects.
         SetWindowTheme(hWnd, L"", NULL); 
 #endif
+*/
 
         ApplySmallImageList(value);
         ApplyLargeImageList(value);
