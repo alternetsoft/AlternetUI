@@ -32,6 +32,11 @@ namespace Alternet.UI
     public partial class Slider : Control
     {
         /// <summary>
+        /// Represents the default tick style for a slider control.
+        /// </summary>
+        public static SliderTickStyle DefaultTickStyle = SliderTickStyle.BottomRight;
+
+        /// <summary>
         /// Gets or sets a default value of the <see cref="AbstractControl.ParentBackColor"/> property.
         /// </summary>
         public static bool? DefaultParentBackColor;
@@ -149,11 +154,11 @@ namespace Alternet.UI
         /// </summary>
         /// <value>
         /// One of the <see cref="SliderTickStyle"/> values. The default is
-        /// <see cref="SliderTickStyle.BottomRight"/>.
+        /// <see cref="DefaultTickStyle"/>.
         /// </value>
         public virtual SliderTickStyle TickStyle
         {
-            get => tickStyle ?? SliderTickStyle.None;
+            get => tickStyle ?? DefaultTickStyle;
             set
             {
                 if (DisposingOrDisposed)
@@ -532,6 +537,12 @@ namespace Alternet.UI
         protected override IControlHandler CreateHandler()
         {
             return ControlFactory.Handler.CreateSliderHandler(this);
+        }
+
+        /// <inheritdoc/>
+        protected override void OnHandleCreated(EventArgs e)
+        {
+            base.OnHandleCreated(e);
         }
     }
 }

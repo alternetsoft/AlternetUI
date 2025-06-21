@@ -28,12 +28,6 @@ namespace Alternet.UI
             if (Control is null)
                 return;
 
-            NativeControl.Minimum = Control.Minimum;
-            NativeControl.Maximum = Control.Maximum;
-            NativeControl.Value = Control.Value;
-            NativeControl.SmallChange = Control.SmallChange;
-            NativeControl.LargeChange = Control.LargeChange;
-            NativeControl.TickFrequency = Control.TickFrequency;
             NativeControl.Orientation = Control.Orientation;
             NativeControl.TickStyle = Control.TickStyle;
 
@@ -45,6 +39,21 @@ namespace Alternet.UI
             Control.TickFrequencyChanged += Control_TickFrequencyChanged;
             Control.OrientationChanged += Control_OrientationChanged;
             Control.TickStyleChanged += Control_TickStyleChanged;
+        }
+
+        public override void OnHandleCreated()
+        {
+            base.OnHandleCreated();
+
+            if (Control is null)
+                return;
+
+            NativeControl.Minimum = Control.Minimum;
+            NativeControl.Maximum = Control.Maximum;
+            NativeControl.Value = Control.Value;
+            NativeControl.SmallChange = Control.SmallChange;
+            NativeControl.LargeChange = Control.LargeChange;
+            NativeControl.TickFrequency = Control.TickFrequency;
         }
 
         protected override void OnDetach()

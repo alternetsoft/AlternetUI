@@ -12,7 +12,7 @@ namespace Alternet.UI
     public interface ISliderHandler
     {
         /// <summary>
-        /// Clears sliderr ticks.
+        /// Clears slider ticks.
         /// </summary>
         void ClearTicks();
     }

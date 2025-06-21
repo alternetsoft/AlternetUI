@@ -2,21 +2,8 @@
 
 namespace Alternet::UI
 {
-    Slider::Slider():
-        _value(*this, 0, &Control::IsWxWindowCreated, &Slider::RetrieveValue, &Slider::ApplyValue),
-        _maximum(*this, 10, &Control::IsWxWindowCreated, &Slider::RetrieveMaximum,
-            &Slider::ApplyMaximum),
-        _minimum(*this, 0, &Control::IsWxWindowCreated, &Slider::RetrieveMinimum,
-            &Slider::ApplyMinimum),
-        _smallChange(*this, 1, &Control::IsWxWindowCreated, &Slider::RetrieveSmallChange,
-            &Slider::ApplySmallChange),
-        _largeChange(*this, 5, &Control::IsWxWindowCreated, &Slider::RetrieveLargeChange,
-            &Slider::ApplyLargeChange),
-        _tickFrequency(*this, 1, &Control::IsWxWindowCreated, &Slider::RetrieveTickFrequency,
-            &Slider::ApplyTickFrequency)
+    Slider::Slider()
     {
-        GetDelayedValues().Add({ &_minimum, &_maximum, &_value, &_smallChange, &_largeChange,
-            &_tickFrequency });
     }
 
     Slider::~Slider()
@@ -64,71 +51,68 @@ namespace Alternet::UI
 
     void Slider::SetTickStyle(SliderTickStyle value)
     {
-        if (_tickStyle == value)
-            return;
-
         _tickStyle = value;
         RecreateWxWindowIfNeeded();
     }
 
     int Slider::GetMinimum()
     {
-        return _minimum.Get();
+        return GetSlider()->GetMin();
     }
 
     void Slider::SetMinimum(int value)
     {
-        _minimum.Set(value);
+        GetSlider()->SetMin(value);
     }
 
     int Slider::GetMaximum()
     {
-        return _maximum.Get();
+        return GetSlider()->GetMax();
     }
 
     void Slider::SetMaximum(int value)
     {
-        _maximum.Set(value);
+        GetSlider()->SetMax(value);
     }
 
     int Slider::GetValue()
     {
-        return _value.Get();
+        return GetSlider()->GetValue();
     }
 
     void Slider::SetValue(int value)
     {
-        _value.Set(value);
+        GetSlider()->SetValue(value);
     }
 
     int Slider::GetSmallChange()
     {
-        return _smallChange.Get();
+        return GetSlider()->GetLineSize();
     }
 
     void Slider::SetSmallChange(int value)
     {
-        _smallChange.Set(value);
+        GetSlider()->SetLineSize(value);
     }
 
     int Slider::GetLargeChange()
     {
-        return _largeChange.Get();
+        return GetSlider()->GetPageSize();
     }
 
     void Slider::SetLargeChange(int value)
     {
-        _largeChange.Set(value);
+        GetSlider()->SetPageSize(value);
     }
 
     int Slider::GetTickFrequency()
     {
-        return _tickFrequency.Get();
+        return GetSlider()->GetTickFreq();
     }
 
     void Slider::SetTickFrequency(int value)
     {
-        _tickFrequency.Set(value);
+        GetSlider()->SetTickFreq(value);
     }
 
     class wxSlider2 : public wxSlider, public wxWidgetExtender
@@ -161,9 +145,9 @@ namespace Alternet::UI
         auto value = new wxSlider2(
             parent,
             wxID_ANY,
-            _value.Get(),
-            _minimum.Get(),
-            _maximum.Get(),
+            0,
+            0,
+            100,
             wxDefaultPosition,
             wxDefaultSize,
             GetStyle());
@@ -184,68 +168,9 @@ namespace Alternet::UI
         return dynamic_cast<wxSlider*>(GetWxWindow());
     }
 
-    int Slider::RetrieveValue()
-    {
-        return GetSlider()->GetValue();
-    }
-
-    void Slider::ApplyValue(const int& value)
-    {
-        GetSlider()->SetValue(value);
-    }
-
-    int Slider::RetrieveMaximum()
-    {
-        return GetSlider()->GetMax();
-    }
-
-    void Slider::ApplyMaximum(const int& value)
-    {
-        GetSlider()->SetMax(value);
-    }
-
-    int Slider::RetrieveMinimum()
-    {
-        return GetSlider()->GetMin();
-    }
-    void Slider::ApplyMinimum(const int& value)
-    {
-        GetSlider()->SetMin(value);
-    }
-
-    int Slider::RetrieveSmallChange()
-    {
-        return GetSlider()->GetLineSize();
-    }
-    
-    void Slider::ApplySmallChange(const int& value)
-    {
-        GetSlider()->SetLineSize(value);
-    }
-
-    int Slider::RetrieveLargeChange()
-    {
-        return GetSlider()->GetPageSize();
-    }
-
-    void Slider::ApplyLargeChange(const int& value)
-    {
-        GetSlider()->SetPageSize(value);
-    }
-
     void Slider::ClearTicks()
     {
         GetSlider()->ClearTicks();
-    }
-
-    int Slider::RetrieveTickFrequency()
-    {
-        return GetSlider()->GetTickFreq();
-    }
-
-    void Slider::ApplyTickFrequency(const int& value)
-    {
-        GetSlider()->SetTickFreq(value);
     }
 
     long Slider::GetStyle()
@@ -261,13 +186,12 @@ namespace Alternet::UI
             case SliderTickStyle::None:
                 return 0;
             case SliderTickStyle::TopLeft:
+            default:
                 return wxSL_AUTOTICKS | (isHorizontal ? wxSL_TOP : wxSL_LEFT);
             case SliderTickStyle::BottomRight:
                 return wxSL_AUTOTICKS | (isHorizontal ? wxSL_BOTTOM : wxSL_RIGHT);
             case SliderTickStyle::Both:
                 return wxSL_AUTOTICKS | wxSL_BOTH;
-            default:
-                throwExNoInfo;
             }
         };
 

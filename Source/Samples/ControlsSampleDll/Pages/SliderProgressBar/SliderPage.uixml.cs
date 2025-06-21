@@ -20,9 +20,12 @@ namespace ControlsSample
                 tickStyleComboBox.Items.Add(item);
             }
 
+            progressBarControlSlider.ValueChanged += ProgressBarControlSlider_ValueChanged;
+            progressBarControlSlider.Value = 1;
+
             tickStyleComboBox.SelectedItemChanged += TickStyleComboBox_SelectedItemChanged;
             tickStyleComboBox.SelectedIndex = 0;
-            progressBarControlSlider.Value = 1;
+            progressBarControlSlider.TickStyle = SliderTickStyle.None;
         }
 
         private void TickStyleComboBox_SelectedItemChanged(object? sender, EventArgs e)
@@ -30,13 +33,10 @@ namespace ControlsSample
             if (tickStyleComboBox.SelectedItem is null)
                 return;
 
-            this.DoInsideUpdate(() =>
+            foreach (var slider in GetAllSliders())
             {
-                foreach (var slider in GetAllSliders())
-                {
-                    slider.TickStyle = (SliderTickStyle)(tickStyleComboBox.SelectedItem);
-                }
-            });
+                slider.TickStyle = (SliderTickStyle)(tickStyleComboBox.SelectedItem);
+            }
         }
 
         private void Slider_ValueChanged(object? sender, EventArgs e)
@@ -68,8 +68,12 @@ namespace ControlsSample
 
         private IEnumerable<Slider> GetAllSliders()
         {
-            return new AbstractControl[] { horizontalSlidersPanel, verticalSlidersGrid }
-                .SelectMany(x => x.Children.OfType<Slider>());
+            return new AbstractControl[]
+            {
+                horizontalSlidersPanel,
+                verticalSlidersGrid,
+            }
+            .SelectMany(x => x.Children.OfType<Slider>());
         }
     }
 }

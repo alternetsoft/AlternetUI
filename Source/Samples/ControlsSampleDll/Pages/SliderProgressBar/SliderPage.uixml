@@ -6,9 +6,9 @@
     <Border HorizontalAlignment="Stretch" Padding="5" Layout="Vertical">
       <StackPanel Orientation="Horizontal" Margin="5">
         <Label Text="Linked:" Margin="0,0,10,0"/>
-        <Slider Name="progressBarControlSlider" TickStyle="None"  
+        <Slider Name="progressBarControlSlider"
                 VerticalAlignment="Center"
-            ValueChanged="ProgressBarControlSlider_ValueChanged" SuggestedWidth="200"/>
+            SuggestedWidth="200"/>
         <ProgressBar Maximum="10" Margin="10,0,0,0" Name="progressBar"
                      SuggestedWidth="200"  VerticalAlignment="Center"/>
       </StackPanel>
