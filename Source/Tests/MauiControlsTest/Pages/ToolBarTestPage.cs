@@ -74,8 +74,8 @@ public partial class ToolBarTestPage : ContentPage
 
         var tabControl = new SimpleTabControlView();
 
-        var tab1 = tabControl.Add("Tab 1", () => panel1);
-        var tab2 = tabControl.Add("Tab 2", () => panel2);
+        var tab1 = tabControl.Add("Tab with CollectionView", () => panel2);
+        var tab2 = tabControl.Add("Tab with ToolBar", () => panel1);
         tabControl.SelectedTab = tab2;
 
         Content = tabControl;
