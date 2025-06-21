@@ -697,6 +697,39 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets a value indicating whether the current operating system is Windows 11
+        /// or a later version.
+        /// </summary>
+        /// <remarks>This property checks the operating system version to determine
+        /// if it meets the minimum requirements for Windows 11.
+        /// It returns <see langword="false"/> if the operating system is not
+        /// Windows.</remarks>
+        public static bool IsWindows11AtLeast
+        {
+            get
+            {
+                if (!IsWindowsOS)
+                    return false;
+
+                var result = AssemblyUtils.InvokeBoolMethod(
+                    typeof(OperatingSystem),
+                    "IsWindowsVersionAtLeast",
+                    null,
+                    new object[] { 10, 0, 22000, 0 });
+
+                if(result is null)
+                {
+                    Version version = Environment.OSVersion.Version;
+                    return version.Major >= 10 && version.Build >= 22000;
+                }
+                else
+                {
+                    return result.Value;
+                }
+            }
+        }
+
+        /// <summary>
         /// Gets whether execution is inside the <see cref="Run"/> method.
         /// </summary>
         public static bool IsRunning { get; protected set; }
