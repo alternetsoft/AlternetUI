@@ -834,6 +834,7 @@ namespace Alternet.UI
             App.LogBeginSection();
             App.Log($"AppearanceIsDark = {SystemSettings.AppearanceIsDark}");
             App.Log($"IsUsingDarkBackground = {SystemSettings.IsUsingDarkBackground}");
+            App.Log($"IsWindows11AtLeast = {App.IsWindows11AtLeast}");
             App.Log($"AppearanceName = {SystemSettings.AppearanceName}");
 
             var defaultColors = AbstractControl.GetStaticDefaultFontAndColor(ControlTypeId.TextBox);
