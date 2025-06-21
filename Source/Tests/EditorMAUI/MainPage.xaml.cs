@@ -5,6 +5,8 @@ using SkiaSharp.Views.Maui;
 using SkiaSharp.Views.Maui.Controls;
 
 using Alternet.Editor;
+using Alternet.Editor.AlternetUI;
+using Alternet.Editor.Maui;
 using Alternet.Scripter;
 using Alternet.Scripter.Debugger;
 

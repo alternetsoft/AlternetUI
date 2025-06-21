@@ -20,7 +20,6 @@ namespace ControlsSample
         private readonly PaintActionsControl customDrawControl = new()
         {
             VerticalAlignment = VerticalAlignment.Fill,
-            Background = Brushes.White,
         };
 
         private readonly SplittedControlsPanel panel = new()

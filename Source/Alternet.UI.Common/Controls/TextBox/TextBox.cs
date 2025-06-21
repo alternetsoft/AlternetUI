@@ -269,7 +269,7 @@ namespace Alternet.UI
         public virtual bool AutoUrlOpen { get; set; } = DefaultAutoUrlOpen;
 
         /// <summary>
-        /// Gets or sets <see cref="ModifierKeys"/> used when clicked url is autoimatically opened
+        /// Gets or sets <see cref="ModifierKeys"/> used when clicked url is automatically opened
         /// in the browser when <see cref="AutoUrlOpen"/> is <c>true</c>.
         /// </summary>
         [Browsable(false)]
@@ -1188,7 +1188,7 @@ namespace Alternet.UI
         /// <param name="text">Text to write to the control.</param>
         /// <remarks>
         /// After the text is appended, the insertion point will be at the end
-        /// of the text control. If this behaviour is not desired,
+        /// of the text control. If this behavior is not desired,
         /// the programmer should use <see cref="GetInsertionPoint"/>
         /// and <see cref="SetInsertionPoint"/>.
         /// </remarks>
@@ -1204,7 +1204,7 @@ namespace Alternet.UI
         /// </summary>
         /// <remarks>
         /// After the text is appended, the insertion point will be at the end
-        /// of the text control. If this behaviour is not desired,
+        /// of the text control. If this behavior is not desired,
         /// the programmer should use <see cref="GetInsertionPoint"/>
         /// and <see cref="SetInsertionPoint"/>.
         /// </remarks>
@@ -1220,7 +1220,7 @@ namespace Alternet.UI
         /// <see cref="ITextBoxTextAttr"/> instances.</param>
         /// <remarks>
         /// After the text is appended, the insertion point will be at the end
-        /// of the text control. If this behaviour is not desired,
+        /// of the text control. If this behavior is not desired,
         /// the programmer should use <see cref="GetInsertionPoint"/>
         /// and <see cref="SetInsertionPoint"/>.
         /// </remarks>
@@ -1611,7 +1611,7 @@ namespace Alternet.UI
         /// also mean that the styles are not supported under this platform).
         /// </returns>
         /// <remarks>
-        /// If either of the font, foreground, or background colour is not set in
+        /// If either of the font, foreground, or background color is not set in
         /// style, the values of the previous default style are used for them. If the
         /// previous default style didn't set them neither, the global font or colors
         /// of the text control itself are used as fall back.
