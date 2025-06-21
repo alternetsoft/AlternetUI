@@ -119,7 +119,7 @@ namespace Alternet.UI
         /// <inheritdoc cref="Calendar.AllowMonthChange"/>
         bool AllowMonthChange();
 
-        /// <inheritdoc cref="Calendar.EnableMonthChange"/>
+        /// Sets value of <see cref="NoMonthChange"/> property.
         bool SetNoMonthChange(bool enable);
 
         /// <inheritdoc cref="Calendar.Mark"/>
