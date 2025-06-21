@@ -104,7 +104,7 @@ namespace Alternet::UI
 	}
 
 	wxString wxAlternetColourProperty::ValueToString(wxVariant& value,
-		int argFlags) const
+        wxPGPropValFormatFlags argFlags) const
 	{
 		const wxPGEditor* editor = GetEditorClass();
 		if (editor != wxPGEditor_Choice &&
@@ -429,7 +429,7 @@ namespace Alternet::UI
 
     wxString wxAlternetSystemColourProperty::ColourToString(const wxColour& col,
         int index,
-        int argFlags) const
+        wxPGPropValFormatFlags argFlags) const
     {
         if (index == wxNOT_FOUND)
         {
@@ -459,7 +459,7 @@ namespace Alternet::UI
     }
 
     wxString wxAlternetSystemColourProperty::ValueToString(wxVariant& value,
-        int argFlags) const
+        wxPGPropValFormatFlags argFlags) const
     {
         wxColourPropertyValue val = GetVal(&value);
 
@@ -673,7 +673,7 @@ namespace Alternet::UI
 
 
     bool wxAlternetSystemColourProperty::StringToValue(
-        wxVariant& value, const wxString& text, int argFlags) const
+        wxVariant& value, const wxString& text, wxPGPropValFormatFlags argFlags) const
     {
         const int custIndex = GetCustomColourIndex();
         wxString custColName;

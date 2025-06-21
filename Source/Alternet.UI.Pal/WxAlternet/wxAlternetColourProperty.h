@@ -29,16 +29,16 @@ namespace Alternet::UI
         // Override in derived class to customize how colours are printed as
         // strings.
         virtual wxString ColourToString(const wxColour& col, int index,
-            int argFlags = 0) const;
+            wxPGPropValFormatFlags argFlags) const;
 
         // Returns index of entry that triggers colour picker dialog
         // (default is last).
         virtual int GetCustomColourIndex() const;
 
-        virtual wxString ValueToString(wxVariant& value, int argFlags = 0) const wxOVERRIDE;
+        virtual wxString ValueToString(wxVariant& value, wxPGPropValFormatFlags argFlags) const wxOVERRIDE;
         virtual bool StringToValue(wxVariant& variant,
             const wxString& text,
-            int argFlags = 0) const wxOVERRIDE;
+            wxPGPropValFormatFlags argFlags) const wxOVERRIDE;
         virtual bool OnEvent(wxPropertyGrid* propgrid,
             wxWindow* primary, wxEvent& event) wxOVERRIDE;
         virtual bool DoSetAttribute(const wxString& name, wxVariant& value) wxOVERRIDE;
@@ -97,7 +97,7 @@ namespace Alternet::UI
             const wxColour& value = *wxWHITE);
         virtual ~wxAlternetColourProperty();
 
-        virtual wxString ValueToString(wxVariant& value, int argFlags = 0) const wxOVERRIDE;
+        virtual wxString ValueToString(wxVariant& value, wxPGPropValFormatFlags argFlags) const wxOVERRIDE;
         virtual wxColour GetColour(int index) const wxOVERRIDE;
         virtual wxSize OnMeasureImage(int item) const wxOVERRIDE;
 
