@@ -112,11 +112,6 @@ namespace Alternet.UI
         public event EventHandler? HasBorderChanged;
 
         /// <summary>
-        /// Gets or sets default value of the <see cref="AutoUrlOpen"/> property.
-        /// </summary>
-        public static bool DefaultAutoUrlOpen { get; set; } = false;
-
-        /// <summary>
         /// Gets or sets default value of the <see cref="AutoUrlModifiers"/> property.
         /// </summary>
         /// <remarks>
@@ -124,6 +119,11 @@ namespace Alternet.UI
         /// <see cref="PlatformDefaults.TextBoxUrlClickModifiers"/> is used as property default.
         /// </remarks>
         public static ModifierKeys? DefaultAutoUrlModifiers { get; set; }
+
+        /// <summary>
+        /// Gets or sets default value of the <see cref="AutoUrlOpen"/> property.
+        /// </summary>
+        public static bool DefaultAutoUrlOpen { get; set; } = false;
 
         /// <inheritdoc/>
         public override bool WantTab
@@ -704,6 +704,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets a value indicating whether urls in the input text
         /// are highlighted and underlined.
+        /// Currently does nothing as WxWidgets implementation is buggy.
         /// </summary>
         /// <returns>
         /// <see langword="true" /> if urls in the input text
@@ -724,16 +725,11 @@ namespace Alternet.UI
         {
             get
             {
-                if (DisposingOrDisposed)
-                    return default;
-                return Handler.AutoUrl;
+                return false;
             }
 
             set
             {
-                if (DisposingOrDisposed)
-                    return;
-                Handler.AutoUrl = value;
             }
         }
 

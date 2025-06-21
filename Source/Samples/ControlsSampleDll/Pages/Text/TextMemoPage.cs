@@ -20,22 +20,12 @@ namespace ControlsSample
         public TextMemoPage()
         {
             memoPanel.TextBox.KeyDown += TextBox_KeyDown;
-            memoPanel.TextBox.AutoUrlOpen = true;
             memoPanel.TextBox.TextUrl += MultiLineTextBox_TextUrl;
             //memoPanel.FileNewClick += MemoPanel_FileNewClick;
             //memoPanel.FileOpenClick += MemoPanel_FileOpenClick;
             //memoPanel.FileSaveClick += MemoPanel_FileSaveClick;
 
-            if (!App.IsMacOS)
-                memoPanel.TextBox.AutoUrlOpen = true;
-
             var multilineDemoText = LoremIpsum;
-
-            if (!SystemSettings.AppearanceIsDark || App.IsWindowsOS)
-            {
-                memoPanel.TextBox.AutoUrl = true;
-                multilineDemoText += "\nSample url: https://www.alternet-ui.com/\n";
-            }
 
             memoPanel.TextBox.CurrentPositionChanged += TextBox_CurrentPositionChanged;
 
