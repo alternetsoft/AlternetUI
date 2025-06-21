@@ -380,7 +380,8 @@ namespace Alternet::UI
 
     bool Calendar::EnableMonthChange(bool enable)
     {
-        return GetCalendar()->EnableMonthChange(enable);
+        SetNoMonthChange(!enable);
+        return true;
     }
 
     void Calendar::Mark(int day, bool mark)

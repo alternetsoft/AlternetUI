@@ -667,7 +667,7 @@ namespace Alternet.UI
         {
         }
 
-        public bool EnableMonthChange(bool enable)
+        public bool SetNoMonthChange(bool enable)
         {
             return default;
         }

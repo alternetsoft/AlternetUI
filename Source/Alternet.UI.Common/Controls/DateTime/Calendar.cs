@@ -262,7 +262,7 @@ namespace Alternet.UI
                     return;
                 if (NoMonthChange == value)
                     return;
-                Handler.EnableMonthChange(!value);
+                Handler.SetNoMonthChange(value);
                 PerformLayout();
             }
         }
@@ -1020,11 +1020,11 @@ namespace Alternet.UI
             return Handler.AllowMonthChange();
         }
 
-        internal bool EnableMonthChange(bool enable = true)
+        internal bool SetNoMonthChange(bool enable = true)
         {
             if (DisposingOrDisposed)
                 return default;
-            return Handler.EnableMonthChange(enable);
+            return Handler.SetNoMonthChange(enable);
         }
 
         internal void EnableHolidayDisplay(bool display = true)

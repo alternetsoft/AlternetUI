@@ -282,9 +282,9 @@ namespace Alternet.UI
             return NativeControl.AllowMonthChange();
         }
 
-        public bool EnableMonthChange(bool enable)
+        public bool SetNoMonthChange(bool enable)
         {
-            return NativeControl.EnableMonthChange(enable);
+            return NativeControl.EnableMonthChange(!enable);
         }
 
         public void Mark(int day, bool mark)
