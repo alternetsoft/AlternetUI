@@ -6,6 +6,10 @@ namespace ControlsSample
 {
     internal partial class NumericInputPage : Panel
     {
+        static NumericInputPage()
+        {
+        }
+
         public NumericInputPage()
         {
             InitializeComponent();

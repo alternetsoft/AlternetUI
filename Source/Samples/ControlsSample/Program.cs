@@ -15,6 +15,7 @@ namespace ControlsSample
         static Program()
         {
             KnownAssemblies.PreloadReferenced();
+            FormulaEngine.Init();
         }
 
         public static void InitSamples()
