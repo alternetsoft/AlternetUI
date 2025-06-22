@@ -92,11 +92,12 @@ namespace Alternet.UI
                         result.MakeAsLinkLabel();
 
                         result.HorizontalAlignment = HorizontalAlignment.Left;
-                        result.Click -= LinkLabelClicked;
-                        result.Click += LinkLabelClicked;
+                        result.MouseLeftButtonUp -= LinkLabelClicked;
+                        result.MouseLeftButtonUp += LinkLabelClicked;
 
-                        void LinkLabelClicked(object? sender, EventArgs e)
+                        void LinkLabelClicked(object? sender, MouseEventArgs e)
                         {
+                            e.Handled = true;
                             result.RunWhenIdle(() =>
                             {
                                 item.ClickAction?.Invoke(item, EventArgs.Empty);
@@ -119,7 +120,7 @@ namespace Alternet.UI
 
                         if (item.ValueType == typeof(Color))
                         {
-                            return CreateOrUpdateColorComboBox(item, control);
+                            return CreateOrUpdateColorEdit(item, control);
                         }
 
                         var result = CreateOrUpdateInput(item, control);
@@ -179,6 +180,7 @@ namespace Alternet.UI
             items.ItemRemoved += ItemRemoved;
             MinChildMargin = 5;
             Layout = LayoutStyle.Vertical;
+            UserPaint = true;
         }
 
         /// <summary>
@@ -202,7 +204,7 @@ namespace Alternet.UI
             object? createdControl);
 
         /// <summary>
-        /// Encapsulates a method that is used when convertion from item
+        /// Encapsulates a method that is used when conversion from item
         /// to control is registered.
         /// </summary>
         /// <param name="kind">Item kind.</param>
@@ -589,27 +591,33 @@ namespace Alternet.UI
             return checkBox;
         }
 
-        private static object? CreateOrUpdateColorComboBox(
+        private static object? CreateOrUpdateColorEdit(
             PanelSettingsItem item,
             object? control)
         {
-            var result = CreateOrUpdateControl<ControlAndLabel<ColorComboBox, Label>>(item, control);
+            var result
+                = CreateOrUpdateControl<ControlAndLabel<ColorPickerAndButton, Label>>(item, control);
             result.LabelToControl = StackPanelOrientation.Vertical;
             UpdateText(item, result.Label);
 
             var colorEditor = result.MainControl;
-
-            colorEditor.AllowMouseWheel = DefaultAllowComboBoxMouseWheel;
+            colorEditor.ButtonClick -= ButtonClick;
+            colorEditor.ButtonClick += ButtonClick;
 
             if (item.Value is not null)
-                colorEditor.Value = (Color)item.Value;
+                colorEditor.ColorPicker.Value = (Color)item.Value;
 
-            colorEditor.SelectedIndexChanged -= SelectorChaned;
-            colorEditor.SelectedIndexChanged += SelectorChaned;
+            colorEditor.ColorPicker.ValueChanged -= SelectorChanged;
+            colorEditor.ColorPicker.ValueChanged += SelectorChanged;
 
-            void SelectorChaned(object? sender, EventArgs e)
+            void ButtonClick(object? sender, ControlAndButtonClickEventArgs e)
             {
-                item.Value = colorEditor.Value;
+                colorEditor.ColorPicker.ShowColorPopup();
+            }
+
+            void SelectorChanged(object? sender, EventArgs e)
+            {
+                item.Value = colorEditor.ColorPicker.Value;
             }
 
             return result;
@@ -670,10 +678,10 @@ namespace Alternet.UI
 
             comboBox.SelectedItem = item.Value;
 
-            comboBox.DelayedTextChanged -= SelectorChaned;
-            comboBox.DelayedTextChanged += SelectorChaned;
+            comboBox.DelayedTextChanged -= SelectorChanged;
+            comboBox.DelayedTextChanged += SelectorChanged;
 
-            void SelectorChaned(object? sender, EventArgs e)
+            void SelectorChanged(object? sender, EventArgs e)
             {
                 item.Value = comboBox.SelectedItem;
             }
