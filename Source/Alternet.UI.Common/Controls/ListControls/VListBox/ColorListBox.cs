@@ -174,6 +174,26 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Retrieves the value of the specified item as a <see cref="Color"/> object.
+        /// </summary>
+        /// <remarks>This method attempts to cast the value of the
+        /// provided <see cref="ListControlItem"/>
+        /// to a <see cref="Color"/>. If the cast is unsuccessful,
+        /// <see langword="null"/> is returned.</remarks>
+        /// <param name="item">The <see cref="ListControlItem"/> whose value
+        /// is to be retrieved. Can be <see langword="null"/>.</param>
+        /// <returns>A <see cref="Color"/> object representing the value of the
+        /// specified item, or <see langword="null"/> if the
+        /// item is <see langword="null"/> or its value is not a <see cref="Color"/>.</returns>
+        public virtual Color? GetItemValue(ListControlItem? item)
+        {
+            if (item is null)
+                return null;
+            var color = item.Value as Color;
+            return color;
+        }
+
+        /// <summary>
         /// Finds item with the specified color.
         /// </summary>
         /// <param name="value">Color value.</param>
@@ -193,6 +213,24 @@ namespace Alternet.UI
         {
             var result = Find(value);
             result ??= AddColor(value, title);
+            return result;
+        }
+
+        /// <summary>
+        /// Finds an existing color that matches the specified value or adds
+        /// a new color if no match is found.
+        /// </summary>
+        /// <remarks>This method attempts to locate a color that matches the specified <paramref
+        /// name="value"/>. If no match is found, a new color is added to the collection.</remarks>
+        /// <param name="value">The color to search for or add. Cannot be null.</param>
+        /// <param name="title">An optional title associated with the color. If provided,
+        /// it may be used to label the color.</param>
+        /// <returns>The matching or newly added <see cref="Color"/> instance,
+        /// or <see langword="null"/> if the operation fails.</returns>
+        public virtual Color? FindOrAddColor(Color value, string? title = null)
+        {
+            var item = FindOrAdd(value, title);
+            var result = GetItemValue(item);
             return result;
         }
 
