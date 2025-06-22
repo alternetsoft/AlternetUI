@@ -1129,6 +1129,43 @@ namespace Alternet.UI
             DisabledImageSet = disabledImage;
         }
 
+        /// <summary>
+        /// Sets the horizontal alignment of the content elements within the control.
+        /// </summary>
+        /// <remarks>This method updates the horizontal alignment of the content elements,
+        /// including the picture, spacer, and label, to the specified alignment.
+        /// After updating the alignment, the layout is
+        /// recalculated and the control is invalidated.</remarks>
+        /// <param name="alignment">The desired horizontal alignment for the content
+        /// elements. Valid values are defined by the
+        /// <see cref="HorizontalAlignment"/> enumeration.</param>
+        public virtual void SetContentHorizontalAlignment(HorizontalAlignment alignment)
+        {
+            picture.HorizontalAlignment = alignment;
+            spacer.HorizontalAlignment = alignment;
+            label.HorizontalAlignment = alignment;
+            PerformLayoutAndInvalidate(null, false);
+        }
+
+        /// <summary>
+        /// Sets the vertical alignment for the content elements within the control.
+        /// </summary>
+        /// <remarks>This method updates the vertical alignment of the picture,
+        /// spacer, and label elements
+        /// within the control. After applying the alignment,
+        /// the layout is recalculated and the control is
+        /// invalidated.</remarks>
+        /// <param name="alignment">The vertical alignment to apply
+        /// to the content elements. Valid values are defined
+        /// by the <see cref="VerticalAlignment"/> enumeration.</param>
+        public virtual void SetContentVerticalAlignment(VerticalAlignment alignment)
+        {
+            picture.VerticalAlignment = alignment;
+            spacer.VerticalAlignment = alignment;
+            label.VerticalAlignment = alignment;
+            PerformLayoutAndInvalidate(null, false);
+        }
+
         /// <inheritdoc/>
         public override void DefaultPaint(PaintEventArgs e)
         {
