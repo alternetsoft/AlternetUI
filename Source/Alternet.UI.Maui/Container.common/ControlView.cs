@@ -31,7 +31,7 @@ namespace Alternet.UI
         private PanGestureRecognizer? panGesture;
         private InteriorDrawable? interior;
         private SkiaGraphics? graphics;
-        private Alternet.UI.Control? control;
+        private Alternet.UI.AbstractControl? control;
         private bool currentIsDark;
 
         static ControlView()
@@ -110,7 +110,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets attached <see cref="Alternet.UI.AbstractControl"/>.
         /// </summary>
-        public virtual Alternet.UI.Control? Control
+        public virtual Alternet.UI.AbstractControl? Control
         {
             get => control;
 
@@ -124,7 +124,9 @@ namespace Alternet.UI
                     if(interior is not null)
                         control.RemoveNotification(interior.Notification);
 
-                    if (control.Handler is MauiControlHandler handler)
+                    var handler = (control as Control)?.Handler as MauiControlHandler;
+
+                    if (handler is not null)
                     {
                         control.RaiseHandleDestroyed(EventArgs.Empty);
                         handler.Container = null;
@@ -137,7 +139,10 @@ namespace Alternet.UI
                 {
                     if (interior is not null && !control.HasOwnInterior)
                         control.AddNotification(interior.Notification);
-                    if (control.Handler is MauiControlHandler handler)
+
+                    var handler = (control as Control)?.Handler as MauiControlHandler;
+
+                    if (handler is not null)
                     {
                         handler.Container = this;
                         control.RaiseHandleCreated(EventArgs.Empty);

@@ -61,7 +61,7 @@ namespace Alternet.UI
         /// added to pages of the application inside <see cref="Alternet.UI.ControlView"/>
         /// elements.
         /// </summary>
-        public static IEnumerable<Alternet.UI.Control> Controls
+        public static IEnumerable<Alternet.UI.AbstractControl> Controls
         {
             get
             {
