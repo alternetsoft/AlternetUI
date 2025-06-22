@@ -115,7 +115,7 @@ namespace Alternet.UI
                 if (!child.Visible)
                     continue;
                 if (child is not GenericControl)
-                    return;
+                    continue;
                 RaisePaintRecursive(child, dc, child.Location);
             }
         }

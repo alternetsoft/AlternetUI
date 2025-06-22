@@ -403,22 +403,7 @@ namespace Alternet.UI
                         MeasureCanvas,
                         RectD.Empty,
                         Color.Empty).Size;
-/*
-            var text = GetFormattedText();
-            if (!string.IsNullOrEmpty(text))
-            {
-                result = MeasureCanvas.GetTextExtent(
-                    text,
-                    GetLabelFont(VisualControlState.Normal));
-            }
 
-            var image = GetImage();
-
-            if(image is not null)
-            {
-                result.Width += PixelToDip(image.Width);
-            }
-*/
             if (!Coord.IsNaN(specifiedWidth))
                 result.Width = Math.Max(result.Width, specifiedWidth);
 

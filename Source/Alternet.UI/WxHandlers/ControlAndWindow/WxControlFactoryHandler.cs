@@ -125,12 +125,6 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        public IControlHandler CreateColorPickerHandler(Control control)
-        {
-            return new ColorPickerHandler();
-        }
-
-        /// <inheritdoc/>
         public IControlHandler CreateGroupBoxHandler(GroupBox control)
         {
             return new WxControlHandler<GroupBox, Native.GroupBox>();
