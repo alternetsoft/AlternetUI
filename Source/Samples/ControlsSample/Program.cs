@@ -81,10 +81,7 @@ namespace ControlsSample
 
             var testBadFont = false;
 
-            if (App.IsWindows11AtLeast && DebugUtils.IsDebugDefinedAndAttached)
-            {
-                var appearanceResult = App.SetAppearance(ApplicationAppearance.System);
-            }
+            AppUtils.SetSystemAppearanceIfDebug();
 
             var application = new Application();
 
