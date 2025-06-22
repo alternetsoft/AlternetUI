@@ -419,6 +419,25 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Sets the application's appearance to match the system appearance
+        /// if the application is running in debug
+        /// mode.
+        /// </summary>
+        /// <remarks>This method applies the system appearance only when the application
+        /// is running on Windows 11 or later and a debugger is attached.
+        /// It has no effect if these conditions are not met.</remarks>
+        public static PropertyUpdateResult SetSystemAppearanceIfDebug()
+        {
+            if (App.IsWindows11AtLeast && DebugUtils.IsDebugDefinedAndAttached)
+            {
+                var appearanceResult = App.SetAppearance(ApplicationAppearance.System);
+                return appearanceResult;
+            }
+
+            return PropertyUpdateResult.Failure;
+        }
+
+        /// <summary>
         /// Splits command line string into array.
         /// </summary>
         /// <param name="cmdLine">Command line string.</param>
