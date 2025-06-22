@@ -53,6 +53,7 @@ namespace Alternet.UI
         private readonly ToolBar buttons;
         private readonly AbstractControl mainControl;
 
+        private bool autoBackColor = false;
         private ObjectUniqueId? idButtonCombo;
         private ObjectUniqueId? idButtonEllipsis;
         private ObjectUniqueId? idButtonPlus;
@@ -357,10 +358,68 @@ namespace Alternet.UI
         [Browsable(false)]
         public AbstractControl MainControl => mainControl;
 
+        /// <summary>
+        /// Gets or sets whether main inner control has border.
+        /// </summary>
+        public virtual bool HasInnerBorder
+        {
+            get
+            {
+                return MainControl.HasBorder;
+            }
+
+            set
+            {
+                MainControl.HasBorder = value;
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets where border is painted (around the child or around the parent).
+        /// When this property is set, background color is also updated
+        /// if <see cref="AutoBackColor"/> is true.
+        /// </summary>
+        public virtual InnerOuterSelector InnerOuterBorder
+        {
+            get
+            {
+                return ConversionUtils.ToInnerOuterSelector(HasBorder, HasInnerBorder);
+            }
+
+            set
+            {
+                if (InnerOuterBorder == value)
+                    return;
+                var (outer, inner) = ConversionUtils.FromInnerOuterSelector(value);
+                var changed = (HasBorder != outer) || (HasInnerBorder != inner);
+                HasBorder = outer;
+                HasInnerBorder = inner;
+                if (changed)
+                    RaiseAutoBackColorChanged();
+            }
+        }
+
         /// <inheritdoc/>
         public override bool HasErrors
         {
             get => (MainControl as INotifyDataErrorInfo)?.HasErrors ?? false;
+        }
+
+        /// <summary>
+        /// Gets or sets whether background color is updated when <see cref="InnerOuterBorder"/>
+        /// property is changed.
+        /// </summary>
+        public virtual bool AutoBackColor
+        {
+            get => autoBackColor;
+            set
+            {
+                if (autoBackColor == value)
+                    return;
+                autoBackColor = value;
+                if (value)
+                    RaiseAutoBackColorChanged();
+            }
         }
 
         [Browsable(false)]
@@ -415,6 +474,18 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Initializes buttons so only combo button with the specified image remains visible.
+        /// </summary>
+        /// <param name="button">Known button identifier.</param>
+        public virtual void SetSingleButton(UI.KnownButton? button)
+        {
+            Buttons.SetChildrenVisible(false);
+            HasBtnComboBox = true;
+            BtnComboBoxSvg = null;
+            ButtonOverride = button;
+        }
+
+        /// <summary>
         /// Gets button name for the debug purposes for the specified button id.
         /// </summary>
         /// <param name="id">Button id.</param>
@@ -432,6 +503,32 @@ namespace Alternet.UI
             if (id == idButtonMinus)
                 return "minus";
             return "other";
+        }
+
+        /// <summary>
+        /// Raised when <see cref="AutoBackColor"/> property is changed.
+        /// </summary>
+        protected virtual void RaiseAutoBackColorChanged()
+        {
+            if (!AutoBackColor)
+                return;
+            switch (InnerOuterBorder)
+            {
+                case InnerOuterSelector.None:
+                    ParentBackColor = true;
+                    break;
+                case InnerOuterSelector.Inner:
+                    ParentBackColor = true;
+                    break;
+                case InnerOuterSelector.Outer:
+                    ParentBackColor = false;
+                    BackColor = MainControl.BackColor;
+                    break;
+                case InnerOuterSelector.Both:
+                    ParentBackColor = false;
+                    BackColor = MainControl.BackColor;
+                    break;
+            }
         }
 
         /// <summary>

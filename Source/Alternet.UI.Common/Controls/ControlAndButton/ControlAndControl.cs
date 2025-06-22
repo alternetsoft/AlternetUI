@@ -28,7 +28,6 @@ namespace Alternet.UI
                     errorPicture.Visible = false;
                     errorPicture.Dock = DockStyle.RightAutoSize;
                     UpdateErrorPictureLayout();
-                    /*errorPicture.Alignment = (HorizontalAlignment.Right, VerticalAlignment.Center);*/
                     errorPicture.Parent = this;
                 }
 

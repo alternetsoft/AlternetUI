@@ -12,8 +12,6 @@ namespace Alternet.UI
     /// </summary>
     public partial class TextBoxAndButton : ControlAndButton
     {
-        private bool autoBackColor = true;
-
         /// <summary>
         /// Initializes a new instance of the <see cref="TextBoxAndButton"/> class.
         /// </summary>
@@ -22,6 +20,7 @@ namespace Alternet.UI
             MainControl.ValidatorReporter = ErrorPicture;
             MainControl.TextChanged += MainControl_TextChanged;
             MainControl.AutoShowError = true;
+            AutoBackColor = true;
         }
 
         /// <summary>
@@ -58,64 +57,6 @@ namespace Alternet.UI
             set
             {
                 MainControl.AutoShowError = value;
-            }
-        }
-
-        /// <summary>
-        /// Gets or sets whether background color is updated when <see cref="InnerOuterBorder"/>
-        /// property is changed.
-        /// </summary>
-        public virtual bool AutoBackColor
-        {
-            get => autoBackColor;
-            set
-            {
-                if (autoBackColor == value)
-                    return;
-                autoBackColor = value;
-                if(value)
-                    RaiseAutoBackColorChanged();
-            }
-        }
-
-        /// <summary>
-        /// Gets or sets where border is painted (around the child or around the parent).
-        /// When this property is set, background color is also updated
-        /// if <see cref="AutoBackColor"/> is true.
-        /// </summary>
-        public virtual InnerOuterSelector InnerOuterBorder
-        {
-            get
-            {
-                return ConversionUtils.ToInnerOuterSelector(HasBorder, HasInnerBorder);
-            }
-
-            set
-            {
-                if (InnerOuterBorder == value)
-                    return;
-                var (outer, inner) = ConversionUtils.FromInnerOuterSelector(value);
-                var changed = (HasBorder != outer) || (HasInnerBorder != inner);
-                HasBorder = outer;
-                HasInnerBorder = inner;
-                if(changed)
-                    RaiseAutoBackColorChanged();
-            }
-        }
-
-        /// <summary>
-        /// Gets or sets whether main inner control has border.
-        /// </summary>
-        public virtual bool HasInnerBorder
-        {
-            get
-            {
-                return TextBox.HasBorder;
-            }
-
-            set
-            {
-                TextBox.HasBorder = value;
             }
         }
 
@@ -187,18 +128,6 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Initializes buttons so only combo button with the specified image remains visible.
-        /// </summary>
-        /// <param name="button">Known button identifier.</param>
-        public virtual void SetSingleButton(UI.KnownButton? button)
-        {
-            Buttons.SetChildrenVisible(false);
-            HasBtnComboBox = true;
-            BtnComboBoxSvg = null;
-            ButtonOverride = button;
-        }
-
-        /// <summary>
         /// Initializes this control for the password editing.
         /// </summary>
         public virtual void InitPasswordEdit()
@@ -229,32 +158,6 @@ namespace Alternet.UI
         protected override AbstractControl CreateControl()
         {
             return new TextBox();
-        }
-
-        /// <summary>
-        /// Raised when <see cref="AutoBackColor"/> property is changed.
-        /// </summary>
-        protected virtual void RaiseAutoBackColorChanged()
-        {
-            if (!AutoBackColor)
-                return;
-            switch (InnerOuterBorder)
-            {
-                case InnerOuterSelector.None:
-                    ParentBackColor = true;
-                    break;
-                case InnerOuterSelector.Inner:
-                    ParentBackColor = true;
-                    break;
-                case InnerOuterSelector.Outer:
-                    ParentBackColor = false;
-                    BackColor = MainControl.BackColor;
-                    break;
-                case InnerOuterSelector.Both:
-                    ParentBackColor = false;
-                    BackColor = MainControl.BackColor;
-                    break;
-            }
         }
 
         /// <summary>

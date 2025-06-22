@@ -797,7 +797,7 @@ namespace Alternet.UI
 
                 var dc = e.Graphics;
 
-                if(!App.IsMaui)
+                if(!App.IsMaui && HasVisibleChildren)
                 {
                     var paintArgs = new PaintEventArgs(dc, new RectD(PointD.Empty, ClientSize));
                     TemplateUtils.RaisePaintForGenericChildren(this, dc);
