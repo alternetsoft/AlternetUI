@@ -794,8 +794,17 @@ namespace Alternet.UI
                     return;
                 OnPaint(e);
                 Paint?.Invoke(this, e);
+
+                var dc = e.Graphics;
+
+                if(!App.IsMaui)
+                {
+                    var paintArgs = new PaintEventArgs(dc, new RectD(PointD.Empty, ClientSize));
+                    TemplateUtils.RaisePaintForGenericChildren(this, dc);
+                }
+
                 PaintCaret(e);
-                PlessMouse.DrawTestMouseRect(this, () => e.Graphics);
+                PlessMouse.DrawTestMouseRect(this, () => dc);
 
                 RaiseNotifications((n) => n.AfterPaint(this, e));
             }

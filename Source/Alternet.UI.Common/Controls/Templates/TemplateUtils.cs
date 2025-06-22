@@ -93,6 +93,34 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Raises paint event for all generic children
+        /// of the specified control.
+        /// </summary>
+        /// <remarks>
+        /// Only controls which are inherited from <see cref="GenericControl"/>
+        /// are painted by this method.
+        /// </remarks>
+        public static void RaisePaintForGenericChildren(
+            AbstractControl? control,
+            Graphics dc)
+        {
+            if (control is null || !control.HasChildren)
+                return;
+
+            // We need Children here, not AllChildrenInLayout
+            var children = control.Children;
+
+            foreach (var child in children)
+            {
+                if (!child.Visible)
+                    continue;
+                if (child is not GenericControl)
+                    return;
+                RaisePaintRecursive(child, dc, child.Location);
+            }
+        }
+
+        /// <summary>
         /// Raises paint event for the control and for all its children.
         /// This method is used for template painting. Controls are painted only if
         /// <see cref="AbstractControl.UserPaint"/> is <c>true</c>.

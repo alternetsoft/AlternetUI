@@ -145,14 +145,7 @@ namespace Alternet.UI
         /// <inheritdoc/>
         public override Brush? GetBackground(VisualControlState state)
         {
-            var overrideValue = Backgrounds?.GetObjectOrNormal(state);
-            if (overrideValue is not null)
-                return overrideValue;
-
-            var result = GetDefaultTheme()?.DarkOrLight(IsDarkBackground);
-            var brush = result?.Backgrounds?.GetObjectOrNormal(state);
-            brush ??= BackgroundColor?.AsBrush;
-            return brush;
+            return HandleGetBackground(this, state);
         }
 
         /// <summary>
@@ -167,43 +160,64 @@ namespace Alternet.UI
         /// <inheritdoc/>
         public override BorderSettings? GetBorderSettings(VisualControlState state)
         {
-            var overrideValue = Borders?.GetObjectOrNull(state);
+            return HandleGetBorderSettings(this, state);
+        }
+
+        internal static Brush? HandleGetBackground(
+            AbstractControl control,
+            VisualControlState state)
+        {
+            var overrideValue = control.Backgrounds?.GetObjectOrNormal(state);
             if (overrideValue is not null)
                 return overrideValue;
 
-            var result = GetDefaultTheme()?.DarkOrLight(IsDarkBackground);
+            var result = control.GetDefaultTheme()?.DarkOrLight(control.IsDarkBackground);
+            var brush = result?.Backgrounds?.GetObjectOrNormal(state);
+            brush ??= control.BackgroundColor?.AsBrush;
+            return brush;
+        }
+
+        internal static BorderSettings? HandleGetBorderSettings(
+            AbstractControl control,
+            VisualControlState state)
+        {
+            var overrideValue = control.Borders?.GetObjectOrNull(state);
+            if (overrideValue is not null)
+                return overrideValue;
+
+            var result = control.GetDefaultTheme()?.DarkOrLight(control.IsDarkBackground);
             return result?.Borders?.GetObjectOrNull(state);
         }
 
-        /// <summary>
-        /// Draw default background.
-        /// </summary>
-        /// <param name="e">Paint arguments.</param>
-        public virtual void DrawDefaultBackground(PaintEventArgs e)
+        internal static void HandleOnVisualStateChanged(
+            AbstractControl control,
+            ControlRefreshOptions refreshOptions)
         {
-            var state = VisualState;
-            var brush = GetBackground(state);
-            var border = GetBorderSettings(state);
+            var options = refreshOptions;
 
-            if (brush is null && (border is null || !HasBorder))
+            if (options.HasFlag(ControlRefreshOptions.RefreshOnState))
+            {
+                control.Refresh();
+                return;
+            }
+
+            var data = control.StateObjects;
+            if (data is null)
                 return;
 
-            var dc = e.Graphics;
-            var rect = e.ClipRectangle;
+            bool RefreshOnBorder() => options.HasFlag(ControlRefreshOptions.RefreshOnBorder) &&
+                data.HasOtherBorders;
+            bool RefreshOnImage() => options.HasFlag(ControlRefreshOptions.RefreshOnImage) &&
+                data.HasOtherImages;
+            bool RefreshOnColor() => options.HasFlag(ControlRefreshOptions.RefreshOnColor) &&
+                data.HasOtherColors;
+            bool RefreshOnBackground() => options.HasFlag(ControlRefreshOptions.RefreshOnBackground) &&
+                data.HasOtherBackgrounds;
 
-            dc.FillBorderRectangle(
-                rect,
-                brush,
-                border,
-                HasBorder,
-                this);
+            if (RefreshOnBorder() || RefreshOnImage() || RefreshOnBackground()
+                || RefreshOnColor())
+                control.Refresh();
         }
-
-        /// <summary>
-        /// Gets default color and style settings.
-        /// </summary>
-        /// <returns></returns>
-        protected virtual ControlColorAndStyle? GetDefaultTheme() => null;
 
         /// <inheritdoc/>
         protected override void OnMouseLeftButtonDown(MouseEventArgs e)
@@ -236,31 +250,7 @@ namespace Alternet.UI
         protected override void OnVisualStateChanged(EventArgs e)
         {
             base.OnVisualStateChanged(e);
-
-            var options = RefreshOptions;
-
-            if (options.HasFlag(ControlRefreshOptions.RefreshOnState))
-            {
-                Refresh();
-                return;
-            }
-
-            var data = StateObjects;
-            if (data is null)
-                return;
-
-            bool RefreshOnBorder() => options.HasFlag(ControlRefreshOptions.RefreshOnBorder) &&
-                data.HasOtherBorders;
-            bool RefreshOnImage() => options.HasFlag(ControlRefreshOptions.RefreshOnImage) &&
-                data.HasOtherImages;
-            bool RefreshOnColor() => options.HasFlag(ControlRefreshOptions.RefreshOnColor) &&
-                data.HasOtherColors;
-            bool RefreshOnBackground() => options.HasFlag(ControlRefreshOptions.RefreshOnBackground) &&
-                data.HasOtherBackgrounds;
-
-            if (RefreshOnBorder() || RefreshOnImage() || RefreshOnBackground()
-                || RefreshOnColor())
-                Refresh();
+            HandleOnVisualStateChanged(this, RefreshOptions);
         }
 
         /// <summary>

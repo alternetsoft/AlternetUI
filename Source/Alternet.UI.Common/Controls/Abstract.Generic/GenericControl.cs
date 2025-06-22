@@ -8,7 +8,8 @@ using Alternet.Drawing;
 namespace Alternet.UI
 {
     /// <summary>
-    /// Implements generic control which is not handled by the operating system.
+    /// Implements generic control which is handled inside the library.
+    /// Generic control doesn't have native handle.
     /// </summary>
     public partial class GenericControl : AbstractControl
     {
@@ -19,7 +20,14 @@ namespace Alternet.UI
         /// </summary>
         public GenericControl()
         {
+            UserPaint = true;
         }
+
+        /// <summary>
+        /// Gets or sets different behavior and visualization options.
+        /// </summary>
+        [Browsable(false)]
+        public virtual ControlRefreshOptions RefreshOptions { get; set; }
 
         /// <inheritdoc/>
         public override bool IsHandleCreated => true;
@@ -73,6 +81,18 @@ namespace Alternet.UI
         /// <param name="e">Event arguments.</param>
         public virtual void DefaultPaint(PaintEventArgs e)
         {
+        }
+
+        /// <inheritdoc/>
+        public override BorderSettings? GetBorderSettings(VisualControlState state)
+        {
+            return UserControl.HandleGetBorderSettings(this, state);
+        }
+
+        /// <inheritdoc/>
+        public override Brush? GetBackground(VisualControlState state)
+        {
+            return UserControl.HandleGetBackground(this, state);
         }
 
         /// <inheritdoc/>

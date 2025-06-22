@@ -529,6 +529,36 @@ namespace Alternet.UI
         public void SetText(object? value) => Text = value.SafeToString();
 
         /// <summary>
+        /// Gets default color and style settings.
+        /// </summary>
+        /// <returns></returns>
+        public virtual ControlColorAndStyle? GetDefaultTheme() => null;
+
+        /// <summary>
+        /// Call this method to draw default background in the user control.
+        /// </summary>
+        /// <param name="e">Paint arguments.</param>
+        public virtual void DrawDefaultBackground(PaintEventArgs e)
+        {
+            var state = VisualState;
+            var brush = GetBackground(state);
+            var border = GetBorderSettings(state);
+
+            if (brush is null && (border is null || !HasBorder))
+                return;
+
+            var dc = e.Graphics;
+            var rect = e.ClipRectangle;
+
+            dc.FillBorderRectangle(
+                rect,
+                brush,
+                border,
+                HasBorder,
+                this);
+        }
+
+        /// <summary>
         /// Executes <see cref="Action"/> and calls <see cref="ProcessException"/>
         /// event if exception was raised during execution.
         /// </summary>

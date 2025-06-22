@@ -1158,7 +1158,7 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        protected override ControlColorAndStyle? GetDefaultTheme()
+        public override ControlColorAndStyle? GetDefaultTheme()
         {
             var theme = UseTheme;
 
