@@ -11,7 +11,7 @@ namespace Alternet.UI
     /// <summary>
     /// Implements generic label control.
     /// </summary>
-    public partial class GenericLabel : GraphicControl
+    public partial class GenericLabel : GenericControl
     {
         private bool imageVisible = true;
         private int? mnemonicCharIndex = null;
