@@ -81,6 +81,18 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets the underlying <see cref="ColorListBox"/> control used within the popup window.
+        /// </summary>
+        [Browsable(false)]
+        public ColorListBox ListBox
+        {
+            get
+            {
+                return PopupWindow.MainControl;
+            }
+        }
+
+        /// <summary>
         /// Gets attached popup window with <see cref="ColorListBox"/>.
         /// </summary>
         [Browsable(false)]
@@ -343,6 +355,20 @@ namespace Alternet.UI
                 if (dlgResult)
                     Value = ColorDialog.Color;
             });
+        }
+
+        /// <summary>
+        /// Finds an existing color in the list or adds the specified color if it does not exist.
+        /// </summary>
+        /// <param name="value">The <see cref="Color"/> to find or add.</param>
+        /// <param name="title">An optional title associated with the color.
+        /// If <see langword="null"/>, no title is assigned.</param>
+        /// <returns>The existing <see cref="Color"/> if found; otherwise,
+        /// the newly added <see cref="Color"/>.  Returns <see langword="null"/>
+        /// if the operation fails.</returns>
+        public Color? FindOrAddColor(Color value, string? title = null)
+        {
+            return ListBox.FindOrAddColor(value, title);
         }
 
         /// <summary>
