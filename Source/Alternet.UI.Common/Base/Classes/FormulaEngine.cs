@@ -92,10 +92,17 @@ namespace Alternet.UI
         /// </summary>
         public static void Init()
         {
-            if (!engineInitialized)
+            try
             {
-                EvaluateAsync<object>("2");
-                engineInitialized = true;
+                if (!engineInitialized)
+                {
+                    EvaluateAsync<object>("2");
+                    engineInitialized = true;
+                }
+            }
+            catch (Exception e)
+            {
+                BaseObject.Nop(e);
             }
         }
     }
