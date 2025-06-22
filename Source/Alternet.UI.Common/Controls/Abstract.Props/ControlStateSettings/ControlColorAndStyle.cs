@@ -108,6 +108,15 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Sets border in the disabled state equal to border in the hovered state.
+        /// </summary>
+        public virtual void DisabledBorderAsHovered()
+        {
+            Dark?.DisabledBorderAsHovered();
+            Light?.DisabledBorderAsHovered();
+        }
+
+        /// <summary>
         /// Sets border in the normal state equal to border in the hovered state.
         /// </summary>
         public virtual void NormalBorderAsHovered()

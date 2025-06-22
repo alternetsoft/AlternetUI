@@ -141,6 +141,7 @@ namespace Alternet.UI
 
             StaticBorderTheme = DefaultTheme.Clone();
             StaticBorderTheme.NormalBorderAsHovered();
+            StaticBorderTheme.DisabledBorderAsHovered();
             StaticBorderTheme.SetBorderColor(tabControlBorderColor);
 
             StickyBorderTheme = DefaultTheme.Clone();
