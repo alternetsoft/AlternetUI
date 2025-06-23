@@ -91,13 +91,13 @@ namespace ControlsSample
 
         private void PopupListBox_AfterHide(object? sender, EventArgs e)
         {
-            var resultItem = popupListBox.ResultItem ?? GenericStrings.NoneInsideLessGreater;
+            var resultItem = popupListBox.ResultItem?.Text ?? GenericStrings.NoneInsideLessGreater;
             App.Log($"PopupResult: {popupListBox.PopupResult}, {GenericStrings.Item}: {resultItem}");
         }
 
         private void PopupVListBox_AfterHide(object? sender, EventArgs e)
         {
-            var resultItem = popupVListBox.ResultItem ?? GenericStrings.NoneInsideLessGreater;
+            var resultItem = popupVListBox.ResultItem?.Text ?? GenericStrings.NoneInsideLessGreater;
             App.Log($"PopupResult: {popupVListBox.PopupResult}, {GenericStrings.Item}: {resultItem}");
         }
 

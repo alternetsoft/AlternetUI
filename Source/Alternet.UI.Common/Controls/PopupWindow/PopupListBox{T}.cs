@@ -56,7 +56,7 @@ namespace Alternet.UI
         /// In cases when <see cref="PopupResult"/> is <see cref="ModalResult.Accepted"/>
         /// it contains selected item.
         /// </remarks>
-        public object? ResultItem
+        public virtual ListControlItem? ResultItem
         {
             get
             {
@@ -77,7 +77,7 @@ namespace Alternet.UI
         /// <see cref="VirtualListControl.SelectedIndex"/>.
         /// </remarks>
         [Browsable(false)]
-        public int? ResultIndex
+        public virtual int? ResultIndex
         {
             get
             {

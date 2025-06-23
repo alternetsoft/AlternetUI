@@ -51,10 +51,10 @@ namespace Alternet.UI
             bottomToolBar.VerticalAlignment = UI.VerticalAlignment.Bottom;
             bottomToolBar.ResumeLayout();
             bottomToolBar.Parent = mainPanel;
-            Deactivated += Popup_Deactivated;
+            Deactivated += OnPopupDeactivated;
             KeyDown += PopupWindow_KeyDown;
             MainControl.Required();
-            Disposed += PopupWindow_Disposed;
+            Disposed += OnPopupWindowDisposed;
             HideOnDeactivate = !App.IsLinuxOS;
         }
 
@@ -575,11 +575,11 @@ namespace Alternet.UI
             HidePopup(ModalResult.Canceled);
         }
 
-        private void PopupWindow_Disposed(object? sender, EventArgs e)
+        private void OnPopupWindowDisposed(object? sender, EventArgs e)
         {
         }
 
-        private void Popup_Deactivated(object? sender, EventArgs e)
+        private void OnPopupDeactivated(object? sender, EventArgs e)
         {
             if (HideOnDeactivate && Visible && !Modal)
                 HidePopup(ModalResult.Canceled);
