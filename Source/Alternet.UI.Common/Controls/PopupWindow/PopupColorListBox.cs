@@ -15,7 +15,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets popup result as <see cref="Color"/>.
         /// </summary>
-        public Color? ResultValue
+        public virtual Color? ResultValue
         {
             get
             {

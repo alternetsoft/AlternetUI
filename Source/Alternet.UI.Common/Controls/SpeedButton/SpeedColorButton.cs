@@ -93,6 +93,11 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets or sets the title displayed when <see cref="Color.Empty"/> is selected.
+        /// </summary>
+        public string? EmptyColorTitle { get; set; }
+
+        /// <summary>
         /// Gets attached popup window with <see cref="ColorListBox"/>.
         /// </summary>
         [Browsable(false)]
@@ -366,9 +371,24 @@ namespace Alternet.UI
         /// <returns>The existing <see cref="Color"/> if found; otherwise,
         /// the newly added <see cref="Color"/>.  Returns <see langword="null"/>
         /// if the operation fails.</returns>
-        public Color? FindOrAddColor(Color value, string? title = null)
+        public virtual Color? FindOrAddColor(Color? value, string? title = null)
         {
             return ListBox.FindOrAddColor(value, title);
+        }
+
+        /// <summary>
+        /// Selects a color and updates the current value to the selected color.
+        /// </summary>
+        /// <remarks>This method finds or adds the specified color to the collection
+        /// and sets it as the current value. If the color already exists,
+        /// it is reused; otherwise, it is added with the provided title.</remarks>
+        /// <param name="value">The color to be selected.</param>
+        /// <param name="title">An optional title associated with
+        /// the selected color. If <see langword="null"/>, no custom title is assigned.</param>
+        public virtual void Select(Color? value, string? title = null)
+        {
+            var color = FindOrAddColor(value, title);
+            Value = color;
         }
 
         /// <summary>
@@ -416,7 +436,15 @@ namespace Alternet.UI
                     return e.Result;
             }
 
-            return Value?.ToDisplayString();
+            var result = Value?.ToDisplayString();
+
+            if(string.IsNullOrEmpty(result) && Value == Color.Empty)
+            {
+                var item = ListBox.Find(Color.Empty);
+                result = item?.DisplayText ?? item?.Text ?? EmptyColorTitle;
+            }
+
+            return result;
         }
 
         /// <inheritdoc/>

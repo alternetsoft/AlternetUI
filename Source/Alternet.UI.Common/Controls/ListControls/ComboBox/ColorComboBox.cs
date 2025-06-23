@@ -239,9 +239,9 @@ namespace Alternet.UI
         /// <see cref="Color.NameLocalized"/> will be used.</param>
         /// <param name="value">Color value.</param>
         /// <returns></returns>
-        public static ListControlItem DefaultCreateItem(Color value, string? title = null)
+        public static ListControlItem DefaultCreateItem(Color? value, string? title = null)
         {
-            title ??= value.NameLocalized;
+            title ??= value?.NameLocalized ?? string.Empty;
             ListControlItem controlItem = new(title, value);
             return controlItem;
         }
@@ -253,7 +253,7 @@ namespace Alternet.UI
         /// <see cref="Color.NameLocalized"/> will be used.</param>
         /// <param name="value">Color value.</param>
         /// <returns></returns>
-        public virtual ListControlItem CreateItem(Color value, string? title = null)
+        public virtual ListControlItem CreateItem(Color? value, string? title = null)
         {
             return DefaultCreateItem(value, title);
         }

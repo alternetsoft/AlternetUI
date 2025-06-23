@@ -209,7 +209,7 @@ namespace Alternet.UI
         /// <param name="value">Color value.</param>
         /// <param name="title">Color title. Optional.</param>
         /// <returns></returns>
-        public virtual ListControlItem FindOrAdd(Color value, string? title = null)
+        public virtual ListControlItem FindOrAdd(Color? value, string? title = null)
         {
             var result = Find(value);
             result ??= AddColor(value, title);
@@ -227,7 +227,7 @@ namespace Alternet.UI
         /// it may be used to label the color.</param>
         /// <returns>The matching or newly added <see cref="Color"/> instance,
         /// or <see langword="null"/> if the operation fails.</returns>
-        public virtual Color? FindOrAddColor(Color value, string? title = null)
+        public virtual Color? FindOrAddColor(Color? value, string? title = null)
         {
             var item = FindOrAdd(value, title);
             var result = GetItemValue(item);
@@ -241,7 +241,7 @@ namespace Alternet.UI
         /// <see cref="Color.NameLocalized"/> will be used.</param>
         /// <param name="value">Color value.</param>
         /// <returns></returns>
-        public virtual ListControlItem CreateItem(Color value, string? title = null)
+        public virtual ListControlItem CreateItem(Color? value, string? title = null)
         {
             return ColorComboBox.DefaultCreateItem(value, title);
         }
@@ -252,7 +252,7 @@ namespace Alternet.UI
         /// <param name="title">Color title. Optional. If not specified,
         /// <see cref="Color.NameLocalized"/> will be used.</param>
         /// <param name="value">Color value.</param>
-        public virtual ListControlItem AddColor(Color value, string? title = null)
+        public virtual ListControlItem AddColor(Color? value, string? title = null)
         {
             var item = CreateItem(value, title);
             Items.Add(item);
