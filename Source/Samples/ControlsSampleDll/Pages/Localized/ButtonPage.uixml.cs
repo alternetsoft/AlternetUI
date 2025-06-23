@@ -90,9 +90,6 @@ namespace ControlsSample
                     showTextCheckBox.Enabled = false;
                 }
 
-                ListControlUtils.AddFontSizes(comboBoxFontSize, true);
-                ListControlUtils.AddFontNames(comboBoxFontName, true);
-
                 comboBoxTextColor.Select(Color.Empty, GenericStrings.Default);
                 comboBoxBackColor.Select(Color.Empty, GenericStrings.Default);
 
@@ -109,8 +106,8 @@ namespace ControlsSample
 
             ApplyAll();
 
-            comboBoxFontName.SelectedItemChanged += Button_Changed;
-            comboBoxFontSize.SelectedItemChanged += Button_Changed;
+            comboBoxFontName.ValueChanged += Button_Changed;
+            comboBoxFontSize.ValueChanged += Button_Changed;
             comboBoxTextColor.ValueChanged += Fore_Changed;
             comboBoxBackColor.ValueChanged += Back_Changed;
             textAlignComboBox.ValueChanged += Button_Changed;
@@ -228,11 +225,11 @@ namespace ControlsSample
 
                 FontStyle fontStyle = boldCheckBox.IsChecked ? FontStyle.Bold : FontStyle.Regular;
 
-                var s = comboBoxFontSize.SelectedItem?.ToString();
+                var s = comboBoxFontSize.Value?.ToString();
                 double fontSize = string.IsNullOrWhiteSpace(s) ?
                     defaultFont.SizeInPoints : Double.Parse(s);
 
-                s = comboBoxFontName.SelectedItem?.ToString();
+                s = comboBoxFontName.Value?.ToString();
                 string fontName = string.IsNullOrWhiteSpace(s) ? defaultFont.Name : s!;
 
                 Font font = Font.GetDefaultOrNew(fontName, fontSize, fontStyle, defaultFont);

@@ -22,13 +22,13 @@
           <Label Text="Text Font" Name="labelFont" Margin="5" IsTextLocalized="true"
                  VerticalAlignment="Center"
                  Grid.Column="0" Grid.Row="1"/>
-          <ComboBox Name="comboBoxFontName" IsEditable="false" Margin="5"
+          <FontNamePicker Name="comboBoxFontName" Margin="5"
                      Grid.Column="1" Grid.Row="1"/>
 
           <Label Text="Text Size" Name="labelSize" IsTextLocalized="true"
                  Margin="5" VerticalAlignment="Center"
                  Grid.Column="0" Grid.Row="2"/>
-          <ComboBox Width="5" Name="comboBoxFontSize" IsEditable="false"
+          <FontSizePicker Width="5" Name="comboBoxFontSize"
                     Margin="5"  Grid.Column="1" Grid.Row="2"/>
         </Grid>
 

@@ -31,7 +31,7 @@ namespace ControlsSample
             HorizontalAlignment = HorizontalAlignment.Left,
         };
 
-        private readonly ColorComboBox comboBox = new()
+        private readonly ColorPicker comboBox = new()
         {
             HorizontalAlignment = HorizontalAlignment.Left,
         };
@@ -48,7 +48,8 @@ namespace ControlsSample
             setColorButton.Parent = panel;
             setColorButton.Click += SetColorButton_Click;
             textVisibleCheckBox.BindBoolProp(listBox, nameof(VirtualListBox.TextVisible));
-            comboBox.SelectedItemChanged += ComboBox_SelectedItemChanged;
+            comboBox.MinWidth = 150;
+            comboBox.ValueChanged += ComboBox_SelectedItemChanged;
         }
 
         private void ComboBox_SelectedItemChanged(object? sender, EventArgs e)
