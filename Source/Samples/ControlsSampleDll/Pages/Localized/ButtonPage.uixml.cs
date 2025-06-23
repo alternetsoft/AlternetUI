@@ -18,10 +18,9 @@ namespace ControlsSample
             RowIndex = 3,
         };
 
-        private readonly ColorComboBox comboBoxBackColor = new()
+        private readonly ColorPicker comboBoxBackColor = new()
         {
             Margin = 5,
-            IsEditable = false,
             ColumnIndex = 1,
             RowIndex = 3,
         };
@@ -34,24 +33,23 @@ namespace ControlsSample
             RowIndex = 2,
         };
 
-        private readonly ColorComboBox comboBoxTextColor = new()
+        private readonly ColorPicker comboBoxTextColor = new()
         {
             Margin = 5,
-            IsEditable = false,
             ColumnIndex = 1,
             RowIndex = 2,
         };
 
         private int imageMargins = 5;
 
-        private static readonly object[] ValidAlign =
+        public enum ButtonAlign
         {
-                    new ListControlItem(GenericStrings.Default, GenericDirection.Default),
-                    new ListControlItem(GenericStrings.GenericDirectionLeft, GenericDirection.Left),
-                    new ListControlItem(GenericStrings.GenericDirectionTop, GenericDirection.Top),
-                    new ListControlItem(GenericStrings.GenericDirectionRight, GenericDirection.Right),
-                    new ListControlItem(GenericStrings.GenericDirectionBottom, GenericDirection.Bottom),
-        };
+            Default,
+            Left,
+            Top,
+            Right,
+            Bottom,
+        }
 
         private ControlStateImages? buttonImages;
 
@@ -79,12 +77,11 @@ namespace ControlsSample
 
                 button.Padding = 5;
 
-                textAlignComboBox.Items.AddRange(ValidAlign);
-                textAlignComboBox.SelectedIndex
-                    = textAlignComboBox.FindStringExact(GenericStrings.Default);
-                imageAlignComboBox.Items.AddRange(ValidAlign);
-                imageAlignComboBox.SelectedIndex
-                    = imageAlignComboBox.FindStringExact(GenericStrings.Default);
+                textAlignComboBox.EnumType = typeof(ButtonAlign);
+                textAlignComboBox.Value = ButtonAlign.Default;
+
+                imageAlignComboBox.EnumType = typeof(ButtonAlign);
+                imageAlignComboBox.Value = ButtonAlign.Default;
 
                 if (!Button.ImagesEnabled)
                 {
@@ -96,12 +93,8 @@ namespace ControlsSample
                 ListControlUtils.AddFontSizes(comboBoxFontSize, true);
                 ListControlUtils.AddFontNames(comboBoxFontName, true);
 
-                comboBoxTextColor.Add(GenericStrings.Default);
-                comboBoxBackColor.Add(GenericStrings.Default);
-                comboBoxTextColor.SelectedIndex
-                    = comboBoxTextColor.FindStringExact(GenericStrings.Default);
-                comboBoxBackColor.SelectedIndex
-                    = comboBoxBackColor.FindStringExact(GenericStrings.Default);
+                comboBoxTextColor.Select(Color.Empty, GenericStrings.Default);
+                comboBoxBackColor.Select(Color.Empty, GenericStrings.Default);
 
                 ControlSet editors = new(
                     textTextBox,
@@ -112,17 +105,16 @@ namespace ControlsSample
                     imageAlignComboBox,
                     comboBoxTextColor);
                 editors.SuggestedHeightToMax().SuggestedWidth(125);
-
             }
 
             ApplyAll();
 
             comboBoxFontName.SelectedItemChanged += Button_Changed;
             comboBoxFontSize.SelectedItemChanged += Button_Changed;
-            comboBoxTextColor.SelectedItemChanged += Fore_Changed;
-            comboBoxBackColor.SelectedItemChanged += Back_Changed;
-            textAlignComboBox.SelectedItemChanged += Button_Changed;
-            imageAlignComboBox.SelectedItemChanged += Button_Changed;
+            comboBoxTextColor.ValueChanged += Fore_Changed;
+            comboBoxBackColor.ValueChanged += Back_Changed;
+            textAlignComboBox.ValueChanged += Button_Changed;
+            imageAlignComboBox.ValueChanged += Button_Changed;
             disabledCheckBox.CheckedChanged += Button_Changed;
             imageCheckBox.CheckedChanged += Button_Changed;
             defaultCheckBox.CheckedChanged += Button_Changed;
@@ -185,16 +177,33 @@ namespace ControlsSample
             button.Refresh();
         }
 
+        private GenericDirection? ButtonAlignToDirection(ButtonAlign buttonAlign)
+        {
+            switch (buttonAlign)
+            {
+                case ButtonAlign.Default:
+                    return GenericDirection.Default;
+                case ButtonAlign.Left:
+                    return GenericDirection.Left;
+                case ButtonAlign.Top:
+                    return GenericDirection.Top;
+                case ButtonAlign.Right:
+                    return GenericDirection.Top;
+                case ButtonAlign.Bottom:
+                    return GenericDirection.Bottom;
+                default:
+                    return null;
+            }
+        }
+
         private void ApplyAll()
         {
             void ApplyTextAlign()
             {
-                if (textAlignComboBox.SelectedItem == null)
-                    return;
-                if (textAlignComboBox.SelectedItem is not ListControlItem item)
+                if (textAlignComboBox.Value is not ButtonAlign buttonAlign)
                     return;
 
-                var direction = (GenericDirection?)item.Value;
+                var direction = ButtonAlignToDirection(buttonAlign);
 
                 if (direction is not null)
                     button.TextAlign = direction.Value;
@@ -204,11 +213,11 @@ namespace ControlsSample
             {
                 if (!imageAlignComboBox.Enabled)
                     return;
-                if (imageAlignComboBox.SelectedItem == null)
+                if (imageAlignComboBox.Value is not ButtonAlign buttonAlign)
                     return;
-                if (imageAlignComboBox.SelectedItem is not ListControlItem item)
-                    return;
-                var direction = (GenericDirection?)item.Value;
+
+                var direction = ButtonAlignToDirection(buttonAlign);
+
                 if (direction is not null)
                     button.SetImagePosition(direction.Value);
             }
@@ -267,18 +276,12 @@ namespace ControlsSample
             App.Log("Button: Click");
         }
 
-        private Color? GetColor(ListControl? control)
+        private Color? GetColor(ColorPicker? control)
         {
-            var text = control?.SelectedItem?.ToString();
-
-            if (string.IsNullOrWhiteSpace(text) || text == GenericStrings.Default
-                || StringUtils.IsHexNumber(text))
-                return null;
-            else
-            {
-                Color newColor = Color.FromName(text!);
-                return newColor;
-            }
+            var result = control?.Value;
+            if (result == Color.Empty)
+                result = null;
+            return result;
         }
 
         private void Button_Changed(object? sender, EventArgs e)

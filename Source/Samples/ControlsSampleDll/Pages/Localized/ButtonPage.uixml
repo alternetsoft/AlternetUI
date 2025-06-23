@@ -37,12 +37,12 @@
         <Grid Margin="10,0,0,0" RowCount="4" ColumnCount="2" Name="propsContainer2">
           <Label Text="Align" VerticalAlignment="Center" Margin="5" IsTextLocalized="true"
                  Grid.Column="0" Grid.Row="0" />
-          <ComboBox IsEditable="false" Name="textAlignComboBox" Margin="5"
+          <EnumPicker Name="textAlignComboBox" Margin="5"
                     Grid.Column="1" Grid.Row="0" />
 
           <Label Text="Image" VerticalAlignment="Center" Margin="5" IsTextLocalized="true"
                  Grid.Column="0" Grid.Row="1" />
-          <ComboBox IsEditable="false" Name="imageAlignComboBox" Margin="5"
+          <EnumPicker Name="imageAlignComboBox" Margin="5"
                     Grid.Column="1" Grid.Row="1"/>
 
           <Button Text="Image Margins..." Name="imageMarginsButton"
