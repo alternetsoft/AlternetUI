@@ -13,6 +13,49 @@ namespace Alternet.UI
     public static class EnumUtils
     {
         /// <summary>
+        /// Converts the values of a specified enumeration type
+        /// into a collection of <see cref="ListControlItem"/>
+        /// objects.
+        /// </summary>
+        /// <remarks>Each <see cref="ListControlItem"/> in the returned collection
+        /// has its <see cref="ListControlItem.Value"/> property set to the enumeration
+        /// value and its <see cref="ListControlItem.Text"/> property set to the
+        /// string representation provided by <paramref name="valueToString"/>.</remarks>
+        /// <param name="enumType">The type of the enumeration to convert.
+        /// Must be a valid enumeration type. If <c>null</c>, the method returns
+        /// <c>null</c>.</param>
+        /// <param name="valueToString">A function that converts an enumeration value
+        /// to its string representation. Cannot be <c>null</c>.</param>
+        /// <returns>A <see cref="BaseCollection{T}"/> containing
+        /// <see cref="ListControlItem"/> objects, where each item
+        /// represents a value from the specified enumeration. Returns <c>null</c>
+        /// if <paramref name="enumType"/> is <c>null</c>.</returns>
+        public static BaseCollection<ListControlItem>? GetEnumItemsAsListItems(
+            Type? enumType,
+            Func<object?, string?>? valueToString = null)
+        {
+            if (enumType is null)
+                return null;
+
+            valueToString ??= (object? obj) =>
+            {
+                return obj?.ToString();
+            };
+
+            var collection = new BaseCollection<ListControlItem>();
+            var values = Enum.GetValues(enumType);
+            foreach (var v in values)
+            {
+                ListControlItem item = new();
+                item.Value = v;
+                item.Text = valueToString(v) ?? string.Empty;
+                collection.Add(item);
+            }
+
+            return collection;
+        }
+
+        /// <summary>
         /// Converts <see cref="ModalResult"/> to <see cref="DialogResult"/>.
         /// </summary>
         /// <param name="value"></param>

@@ -75,12 +75,12 @@ namespace Alternet.UI
         /// If its <c>null</c>, name of the default font is used.</param>
         /// <param name="select">Specifies whether to select default item in the control.</param>
         public static void AddFontNames(
-            IListControl control,
+            ListControl control,
             bool select = true,
             string? defaultName = null)
         {
             var families = FontFamily.FamiliesNamesAscending;
-            foreach(var family in families)
+            foreach (var family in families)
                 control.Add(new ListControlItem(family));
             defaultName ??= AbstractControl.DefaultFont.Name;
             if (select)
@@ -88,6 +88,28 @@ namespace Alternet.UI
                 var found = control.FindStringExact(defaultName);
                 if (found != null)
                     control.SelectedIndex = found.Value;
+            }
+        }
+
+        /// <summary>
+        /// Initializes <see cref="VirtualListBox"/> with list of font names.
+        /// </summary>
+        /// <param name="control">Control instance which items will be filled with font names.</param>
+        /// <param name="defaultName">Select this font name in <see cref="VirtualListBox"/>.
+        /// If its <c>null</c>, name of the default font is used.</param>
+        /// <param name="select">Specifies whether to select default item in the control.</param>
+        public static void AddFontNames(
+            VirtualListBox control,
+            bool select = true,
+            string? defaultName = null)
+        {
+            var families = FontFamily.FamiliesNamesAscending;
+            control.AddRange(families);
+            defaultName ??= AbstractControl.DefaultFont.Name;
+            if (select)
+            {
+                var found = control.FindStringExact(defaultName);
+                control.SelectItemAndScroll(found);
             }
         }
 
@@ -182,7 +204,7 @@ namespace Alternet.UI
         /// If its <c>null</c>, size of the default font is used.</param>
         /// <param name="select">Specifies whether to select default item in the control.</param>
         public static void AddFontSizes(
-            ListControl control,
+            VirtualListBox control,
             bool select = true,
             Coord? defaultSize = null)
         {
@@ -201,12 +223,12 @@ namespace Alternet.UI
             }
 
             AddAdditionalSize(fontSize);
-            control.Items.AddRange(fontSizes.Cast<object>());
+
+            control.AddRange(fontSizes.Cast<object>());
             if (select)
             {
                 var found = control.FindStringExact(fontSize.ToString());
-                if (found != null)
-                    control.SelectedIndex = found.Value;
+                control.SelectItemAndScroll(found);
             }
         }
     }

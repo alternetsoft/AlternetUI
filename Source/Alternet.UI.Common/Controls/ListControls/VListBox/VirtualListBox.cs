@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.ComponentModel;
@@ -1585,6 +1586,34 @@ namespace Alternet.UI
             HorzScrollBarInfo = horzScrollbar;
             if (refresh)
                 Refresh();
+        }
+
+        /// <summary>
+        /// Adds a collection of items to the list control.
+        /// </summary>
+        /// <remarks>If an item in the collection is already a <see cref="ListControlItem"/>,
+        /// it is added directly. Otherwise, a new <see cref="ListControlItem"/> is created
+        /// for the item, with its <c>Value</c>
+        /// property set to the item, and then added to the list.</remarks>
+        /// <param name="items">The collection of items to add.
+        /// Each item can either be a <see cref="ListControlItem"/> or an object that
+        /// will be wrapped in a new <see cref="ListControlItem"/>.</param>
+        public virtual void AddRange(IEnumerable items)
+        {
+            DoInsideUpdate(() =>
+            {
+                foreach (var item in items)
+                {
+                    if (item is ListControlItem listItem)
+                        Add(listItem);
+                    else
+                    {
+                        ListControlItem newItem = new();
+                        newItem.Value = item;
+                        Add(newItem);
+                    }
+                }
+            });
         }
 
         /// <inheritdoc/>
