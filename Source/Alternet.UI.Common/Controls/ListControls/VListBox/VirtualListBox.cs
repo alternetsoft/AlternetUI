@@ -1009,6 +1009,31 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Selects an item at the specified index and scrolls to make it visible.
+        /// </summary>
+        /// <remarks>This method updates the selected item and ensures it is
+        /// visible by scrolling to its position.</remarks>
+        /// <param name="index">The zero-based index of the item to select.
+        /// Must be within the valid range of items.</param>
+        public virtual void SelectItemAndScroll(int? index)
+        {
+            if (DisposingOrDisposed)
+                return;
+
+            if (index is null)
+            {
+                SelectFirstItemAndScroll();
+                return;
+            }
+
+            DoInsideUpdate(() =>
+            {
+                SelectedIndex = index;
+                ScrollToRow(index.Value);
+            });
+        }
+
+        /// <summary>
         /// Gets the number of items currently rendered in the control.
         /// </summary>
         /// <returns>The count of visible items rendered in the control.</returns>
@@ -1503,6 +1528,28 @@ namespace Alternet.UI
         public virtual void SetHorizontalOffsetChars(int offsetInChars)
         {
             SetHorizontalOffset(offsetInChars * GetCharWidth());
+        }
+
+        /// <summary>
+        /// Finds the index of the item with <see cref="ListControlItem.Value"/> property which is
+        /// equal to the specified value.
+        /// </summary>
+        /// <param name="value">Value to search for.</param>
+        /// <returns></returns>
+        public virtual int? FindItemIndexWithValue(object? value)
+        {
+            if (value is null)
+                return null;
+
+            for (int i = 0; i < Items.Count; i++)
+            {
+                var item = Items[i];
+
+                if (value.Equals(item.Value))
+                    return i;
+            }
+
+            return null;
         }
 
         /// <summary>

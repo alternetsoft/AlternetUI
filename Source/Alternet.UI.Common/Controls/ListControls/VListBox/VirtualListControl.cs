@@ -1264,7 +1264,8 @@ namespace Alternet.UI
         /// Handles changes to the columns collection.
         /// </summary>
         /// <param name="sender">The source of the change event.</param>
-        /// <param name="e">Details about the collection change, including added or removed items.</param>
+        /// <param name="e">Details about the collection change, including added
+        /// or removed items.</param>
         /// <remarks>
         /// This method is triggered when the column collection is modified.
         /// Override it to implement custom behavior for handling column updates.
