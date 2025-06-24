@@ -221,7 +221,7 @@ namespace Alternet.UI
 
         /// <summary>
         /// Gets <see cref="IPropertyGridTypeRegistry"/> for the given <see cref="Type"/>
-        /// if its available, othewise returns <c>null</c>.
+        /// if its available, otherwise returns <c>null</c>.
         /// </summary>
         /// <param name="type">Type value.</param>
         public static IPropertyGridTypeRegistry? GetTypeRegistryOrNull(Type type)

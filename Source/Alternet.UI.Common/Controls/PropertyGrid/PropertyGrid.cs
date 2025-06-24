@@ -309,6 +309,47 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Determines whether the specified property represents an enumeration,
+        /// a flags enumeration, or neither.
+        /// </summary>
+        /// <remarks>This method evaluates the property's type to determine if it is
+        /// an enumeration or a flags enumeration. If the property type is not an enumeration,
+        /// <see cref="FlagsOrEnum.None"/> is returned.</remarks>
+        /// <param name="instance">The object instance containing the property to evaluate.</param>
+        /// <param name="propInfo">The metadata information for the property to evaluate.
+        /// Cannot be null.</param>
+        /// <returns>A <see cref="FlagsOrEnum"/> value indicating the type
+        /// of the property: <see cref="FlagsOrEnum.Flags"/> if
+        /// the property is a flags enumeration, <see cref="FlagsOrEnum.Enum"/>
+        /// if the property is a standard
+        /// enumeration, or <see cref="FlagsOrEnum.None"/> if the property is neither.</returns>
+        public static FlagsOrEnum IsFlagsOrEnum(object instance, PropertyInfo propInfo)
+        {
+            var valueType = propInfo.PropertyType ?? typeof(object);
+
+            var realType = AssemblyUtils.GetRealType(valueType);
+            var isEnum = realType.IsEnum;
+
+            if (isEnum)
+            {
+                var prm = PropertyGrid.ConstructNewItemParams(instance, propInfo);
+                bool isFlags;
+                if (prm.EnumIsFlags is null)
+                    isFlags = AssemblyUtils.EnumIsFlags(realType);
+                else
+                    isFlags = prm.EnumIsFlags.Value;
+
+                if (isFlags)
+                    return FlagsOrEnum.Flags;
+                return FlagsOrEnum.Enum;
+            }
+            else
+            {
+                return FlagsOrEnum.None;
+            }
+        }
+
+        /// <summary>
         /// Creates new <see cref="IPropertyGridVariant"/> instance.
         /// </summary>
         public static IPropertyGridVariant CreateVariant()
