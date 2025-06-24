@@ -110,6 +110,16 @@ namespace Alternet.UI
                 /* registration call */
 
                 register(
+                    PanelSettingsItemKind.Enum,
+                    (item, control) =>
+                    {
+                        var result = CreateOrUpdateEnumEdit(item, control);
+                        return result;
+                    });
+
+                /* registration call */
+
+                register(
                     PanelSettingsItemKind.Value,
                     (item, control) =>
                     {
@@ -472,42 +482,25 @@ namespace Alternet.UI
             string propName,
             CustomEventArgs? e = null)
         {
-            var valueSource = new PropertyValueSource(propContainer, propName);
-
-            var realType = AssemblyUtils.GetRealType(valueSource.ValueType);
-            var isEnum = realType.IsEnum;
-
             PanelSettingsItem item;
 
-            if (isEnum)
+            var valueSource = new PropertyValueSource(propContainer, propName);
+            var realType = AssemblyUtils.GetRealType(valueSource.ValueType);
+            var flagsOrEnum = PropertyGrid.IsFlagsOrEnum(propContainer, valueSource.PropInfo);
+
+            switch (flagsOrEnum)
             {
-                var propInfo = valueSource.PropInfo;
-
-                var prm = PropertyGrid.ConstructNewItemParams(propContainer, propInfo);
-                bool isFlags;
-                if (prm.EnumIsFlags is null)
-                    isFlags = AssemblyUtils.EnumIsFlags(realType);
-                else
-                    isFlags = prm.EnumIsFlags.Value;
-
-                if (isFlags)
-                {
+                default:
+                case FlagsOrEnum.None:
+                    item = CreateItemCore(label, PanelSettingsItemKind.Value, valueSource, e);
+                    break;
+                case FlagsOrEnum.Enum:
+                    item = CreateItemCore(label, PanelSettingsItemKind.Enum, valueSource, e);
+                    break;
+                case FlagsOrEnum.Flags:
                     App.LogError("PanelSettings.AddInput: Enum with [Flags] is not supported");
                     item = new PanelSettingsItem();
-                }
-                else
-                {
-                    var pickList = Enum.GetValues(realType);
-                    item = CreateItemCore(label, PanelSettingsItemKind.Selector, valueSource, e);
-                    List<object> list = new(pickList.Length);
-                    foreach (var element in pickList)
-                        list.Add(element);
-                    item.PickList = list;
-                }
-            }
-            else
-            {
-                item = CreateItemCore(label, PanelSettingsItemKind.Value, valueSource, e);
+                    break;
             }
 
             item.ValueType = valueSource.ValueType;
@@ -618,6 +611,39 @@ namespace Alternet.UI
             void SelectorChanged(object? sender, EventArgs e)
             {
                 item.Value = colorEditor.ColorPicker.Value;
+            }
+
+            return result;
+        }
+
+        private static object? CreateOrUpdateEnumEdit(
+            PanelSettingsItem item,
+            object? control)
+        {
+            var result
+                = CreateOrUpdateControl<ControlAndLabel<EnumPickerAndButton, Label>>(item, control);
+            result.LabelToControl = StackPanelOrientation.Vertical;
+            UpdateText(item, result.Label);
+
+            var enumEditor = result.MainControl;
+            enumEditor.ButtonClick -= ButtonClick;
+            enumEditor.ButtonClick += ButtonClick;
+            enumEditor.EnumPicker.EnumType = item.ValueType;
+
+            if (item.Value is not null)
+                enumEditor.EnumPicker.Value = item.Value;
+
+            enumEditor.EnumPicker.ValueChanged -= SelectorChanged;
+            enumEditor.EnumPicker.ValueChanged += SelectorChanged;
+
+            void ButtonClick(object? sender, ControlAndButtonClickEventArgs e)
+            {
+                enumEditor.EnumPicker.ShowPopup();
+            }
+
+            void SelectorChanged(object? sender, EventArgs e)
+            {
+                item.Value = enumEditor.EnumPicker.Value;
             }
 
             return result;

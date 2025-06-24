@@ -53,5 +53,10 @@ namespace Alternet.UI
         /// Items is selector with the list of values and editable text.
         /// </summary>
         EditableSelector,
+
+        /// <summary>
+        /// Item is enumeration selector.
+        /// </summary>
+        Enum,
     }
 }
