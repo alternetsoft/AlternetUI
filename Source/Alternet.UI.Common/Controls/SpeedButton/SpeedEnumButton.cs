@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.ComponentModel;
 
 using Alternet.Drawing;
@@ -13,6 +14,7 @@ namespace Alternet.UI
     public partial class SpeedEnumButton : SpeedButtonWithListPopup<VirtualListBox>
     {
         private Type? enumType;
+        private IEnumerable? excludeValues;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="SpeedEnumButton"/> class.
@@ -52,10 +54,43 @@ namespace Alternet.UI
             }
         }
 
+        /// <summary>
+        /// Gets or sets the values to be excluded from the popup list.
+        /// </summary>
+        [Browsable(false)]
+        public virtual IEnumerable? ExcludeValues
+        {
+            get => excludeValues;
+
+            set
+            {
+                if (excludeValues == value)
+                    return;
+                excludeValues = value;
+                ReloadItems();
+            }
+        }
+
         /// <inheritdoc/>
         protected override BaseCollection<ListControlItem>? GetItems()
         {
-            var collection = EnumUtils.GetEnumItemsAsListItems(enumType, GetValueAsString);
+            var collection = EnumUtils.GetEnumItemsAsListItems(
+                enumType,
+                GetValueAsString,
+                (item) =>
+                {
+                    if (ExcludeValues is null)
+                        return true;
+                    if (ExcludeValues is IList list)
+                        return !list.Contains(item);
+                    foreach (var excludeValue in ExcludeValues)
+                    {
+                        if (excludeValue?.Equals(item) == true)
+                            return false;
+                    }
+
+                    return true;
+                });
             return collection;
         }
     }
