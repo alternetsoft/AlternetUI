@@ -50,6 +50,17 @@ namespace Alternet.UI
         public event EventHandler? ValueChanged;
 
         /// <summary>
+        /// Gets the collection of items in the list box control used within the popup window.
+        /// </summary>
+        public BaseCollection<ListControlItem> Items
+        {
+            get
+            {
+                return ListBox.Items;
+            }
+        }
+
+        /// <summary>
         /// Gets the underlying <see cref="VirtualListBox"/> control used within the popup window.
         /// </summary>
         [Browsable(false)]
