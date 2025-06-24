@@ -180,19 +180,31 @@ namespace Alternet.UI.Localization
         public string WindowTitleProperties { get; set; } = "Properties";
 
         /// <inheritdoc cref="ButtonOk"/>
-        public string WindowTitleApplicationAlert { get; set; } = "Application says";
+        public string WindowTitleApplicationAlert { get; set; } = "Application Says";
 
         /// <inheritdoc cref="ButtonOk"/>
-        public string WindowTitleSelectColor { get; set; } = "Select a color";
+        public string WindowTitleSelectColor { get; set; } = "Select a Color";
 
         /// <inheritdoc cref="ButtonOk"/>
-        public string WindowTitleSelectValue { get; set; } = "Select a value";
+        public string WindowTitleSelectValue { get; set; } = "Select a Value";
 
         /// <inheritdoc cref="ButtonOk"/>
-        public string WindowTitleSelectFontName { get; set; } = "Select a font name";
+        public string WindowTitleSelectValues { get; set; } = "Select Values";
 
         /// <inheritdoc cref="ButtonOk"/>
-        public string WindowTitleSelectFontSize { get; set; } = "Select a font size";
+        public string WindowTitleSelectItem { get; set; } = "Select an Item";
+
+        /// <inheritdoc cref="ButtonOk"/>
+        public string WindowTitleSelectItems { get; set; } = "Select Items";
+
+        /// <inheritdoc cref="ButtonOk"/>
+        public string WindowTitleSelectFontName { get; set; } = "Select a Font Name";
+
+        /// <inheritdoc cref="ButtonOk"/>
+        public string WindowTitleSelectFontSize { get; set; } = "Select a Font Size";
+
+        /// <inheritdoc cref="ButtonOk"/>
+        public string WindowTitleSelectDate { get; set; } = "Select a Date";
 
         // ========================
 
