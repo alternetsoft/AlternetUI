@@ -182,6 +182,18 @@ namespace Alternet.UI.Localization
         /// <inheritdoc cref="ButtonOk"/>
         public string WindowTitleApplicationAlert { get; set; } = "Application says";
 
+        /// <inheritdoc cref="ButtonOk"/>
+        public string WindowTitleSelectColor { get; set; } = "Select a color";
+
+        /// <inheritdoc cref="ButtonOk"/>
+        public string WindowTitleSelectValue { get; set; } = "Select a value";
+
+        /// <inheritdoc cref="ButtonOk"/>
+        public string WindowTitleSelectFontName { get; set; } = "Select a font name";
+
+        /// <inheritdoc cref="ButtonOk"/>
+        public string WindowTitleSelectFontSize { get; set; } = "Select a font size";
+
         // ========================
 
         /// <inheritdoc cref="ButtonOk"/>

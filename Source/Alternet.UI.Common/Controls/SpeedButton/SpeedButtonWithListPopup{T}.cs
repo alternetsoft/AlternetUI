@@ -23,6 +23,7 @@ namespace Alternet.UI
     {
         private object? data;
         private PopupListBox<T>? popupWindow;
+        private string popupWindowTitle = string.Empty;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="SpeedButtonWithListPopup{T}"/> class.
@@ -96,11 +97,32 @@ namespace Alternet.UI
                 if (popupWindow is null)
                 {
                     popupWindow = new();
+                    popupWindow.Title = popupWindowTitle;
                     popupWindow.AfterHide += PopupWindowAfterHideHandler;
                     ReloadItems();
                 }
 
                 return popupWindow;
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets the title of the popup window.
+        /// </summary>
+        public virtual string PopupWindowTitle
+        {
+            get
+            {
+                return popupWindowTitle;
+            }
+
+            set
+            {
+                if (popupWindowTitle == value)
+                    return;
+                popupWindowTitle = value;
+                if (IsPopupWindowCreated)
+                    PopupWindow.Title = popupWindowTitle;
             }
         }
 

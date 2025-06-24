@@ -3,6 +3,7 @@ using System.ComponentModel;
 
 using Alternet.Drawing;
 using Alternet.UI.Extensions;
+using Alternet.UI.Localization;
 
 namespace Alternet.UI
 {
@@ -28,6 +29,7 @@ namespace Alternet.UI
         /// </summary>
         public SpeedEnumButton()
         {
+            PopupWindowTitle = CommonStrings.Default.WindowTitleSelectValue;
         }
 
         /// <summary>

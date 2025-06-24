@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Text;
 
+using Alternet.UI.Localization;
+
 namespace Alternet.UI
 {
     /// <summary>
@@ -18,6 +20,7 @@ namespace Alternet.UI
         /// </summary>
         public FontSizePicker()
         {
+            PopupWindowTitle = CommonStrings.Default.WindowTitleSelectFontSize;
             AddFontSizesAndSelect(true);
         }
     }
