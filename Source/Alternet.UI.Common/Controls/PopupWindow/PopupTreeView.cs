@@ -5,6 +5,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+using Alternet.UI.Localization;
+
 namespace Alternet.UI
 {
     /// <summary>
@@ -18,6 +20,7 @@ namespace Alternet.UI
         public PopupTreeView()
         {
             HideOnClick = false;
+            Title = CommonStrings.Default.WindowTitleSelectValue;
         }
 
         /// <inheritdoc/>

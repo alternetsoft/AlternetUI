@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Alternet.Drawing;
+using Alternet.UI.Localization;
 
 namespace Alternet.UI
 {
@@ -12,6 +13,14 @@ namespace Alternet.UI
     /// </summary>
     public partial class PopupColorListBox : PopupListBox<ColorListBox>
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="PopupColorListBox"/> class.
+        /// </summary>
+        public PopupColorListBox()
+        {
+            Title = CommonStrings.Default.WindowTitleSelectColor;
+        }
+
         /// <summary>
         /// Gets popup result as <see cref="Color"/>.
         /// </summary>

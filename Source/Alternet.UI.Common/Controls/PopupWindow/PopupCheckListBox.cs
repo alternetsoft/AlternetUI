@@ -5,6 +5,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+using Alternet.UI.Localization;
+
 namespace Alternet.UI
 {
     /// <summary>
@@ -17,6 +19,7 @@ namespace Alternet.UI
         /// </summary>
         public PopupCheckListBox()
         {
+            Title = CommonStrings.Default.WindowTitleSelectItems;
             this.HideOnClick = false;
             this.HideOnDoubleClick = true;
         }

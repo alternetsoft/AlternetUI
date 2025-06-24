@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Alternet.Drawing;
+using Alternet.UI.Localization;
 
 namespace Alternet.UI
 {
@@ -23,6 +24,7 @@ namespace Alternet.UI
         public PopupListBox()
         {
             MinimumSize = DefaultMinimumSize;
+            Title = CommonStrings.Default.WindowTitleSelectValue;
         }
 
         /// <summary>
