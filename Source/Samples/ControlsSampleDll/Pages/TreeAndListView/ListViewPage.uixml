@@ -101,21 +101,19 @@
               CheckedChanged="ColumnHeaderVisibleCheckBox_CheckedChanged" />
 
           <Label Text="View:" VerticalAlignment="Center" Margin="0,5,0,0" IsTextLocalized="true"/>
-          <ComboBox IsEditable="false" Name="viewComboBox" Margin="0,3,0,0"
-                    SelectedItemChanged="ViewComboBox_SelectedItemChanged"/>
+          <EnumPicker Name="viewComboBox" Margin="0,3,0,0"
+                    ValueChanged="ViewComboBox_SelectedItemChanged"/>
 
           <Label Text="Lines:" VerticalAlignment="Center" Margin="0,5,0,0" IsTextLocalized="true"/>
-          <ComboBox IsEditable="false" Name="gridLinesComboBox"
+          <EnumPicker Name="gridLinesComboBox"
                     Margin="0,3,0,0"
-                    SelectedItemChanged=
-                            "GridLinesComboBox_SelectedItemChanged"/>
+                    ValueChanged="GridLinesComboBox_SelectedItemChanged"/>
 
           <Label Text="Column width:" VerticalAlignment="Center"
                  Margin="0,5,0,0" IsTextLocalized="true"/>
-          <ComboBox IsEditable="false" Name="columnWidthModeComboBox"
+          <EnumPicker Name="columnWidthModeComboBox"
                     Margin="0,3,0,10"
-                    SelectedItemChanged=
-                            "ColumnWidthModeComboBox_SelectedItemChanged"/>
+                    ValueChanged="ColumnWidthModeComboBox_SelectedItemChanged"/>
         </VerticalStackPanel>
         <!-- ========================= -->
         <VerticalStackPanel VerticalAlignment="Stretch" Name="stackPanel3" Visible="false"
