@@ -3,6 +3,7 @@ using System.ComponentModel;
 
 using Alternet.Drawing;
 using Alternet.UI.Extensions;
+using Alternet.UI.Localization;
 
 namespace Alternet.UI
 {
@@ -108,6 +109,7 @@ namespace Alternet.UI
                 if(popupWindow is null)
                 {
                     popupWindow = new();
+                    popupWindow.Title = CommonStrings.Default.WindowTitleSelectColor;
                     popupWindow.AfterHide += PopupWindowAfterHideHandler;
                 }
 
