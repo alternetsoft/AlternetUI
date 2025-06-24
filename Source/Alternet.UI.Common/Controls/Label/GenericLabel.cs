@@ -359,6 +359,18 @@ namespace Alternet.UI
 
             prm.Visible = foreColor != Color.Empty;
 
+            var result = DrawDefaultText(dc, ref prm);
+            return result;
+        }
+
+        /// <summary>
+        /// Draws text in the default style using the specified parameters.
+        /// </summary>
+        /// <param name="dc">Drawing context.</param>
+        /// <param name="prm">Drawing parameters.</param>
+        /// <returns></returns>
+        public virtual RectD DrawDefaultText(Graphics dc, ref Graphics.DrawLabelParams prm)
+        {
             var result = dc.DrawLabel(ref prm);
             return result;
         }
