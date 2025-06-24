@@ -10,10 +10,8 @@ namespace LayoutSample
         {
             InitializeComponent();
 
-            verticalAlignmentComboBox.Items.AddRange(
-                Enum.GetValues(typeof(VerticalAlignment)).Cast<object>());
-            horizontalAlignmentComboBox.Items.AddRange(
-                Enum.GetValues(typeof(HorizontalAlignment)).Cast<object>());
+            verticalAlignmentComboBox.EnumType = typeof(VerticalAlignment);
+            horizontalAlignmentComboBox.EnumType = typeof(HorizontalAlignment);
         }
 
         AbstractControl? control;
@@ -35,25 +33,25 @@ namespace LayoutSample
                 if (control == null)
                     return;
 
-                horizontalAlignmentComboBox.SelectedItem = control.HorizontalAlignment;
-                verticalAlignmentComboBox.SelectedItem = control.VerticalAlignment;
+                horizontalAlignmentComboBox.Value = control.HorizontalAlignment;
+                verticalAlignmentComboBox.Value = control.VerticalAlignment;
             }
         }
 
         private void HorizontalAlignmentComboBox_SelectedItemChanged(object? sender, EventArgs e)
         {
-            if (control == null)
+            if (control == null || horizontalAlignmentComboBox.Value is null)
                 return;
 
-            control.HorizontalAlignment = (HorizontalAlignment)horizontalAlignmentComboBox.SelectedItem!;
+            control.HorizontalAlignment = (HorizontalAlignment)horizontalAlignmentComboBox.Value;
         }
 
         private void VerticalAlignmentComboBox_SelectedItemChanged(object? sender, EventArgs e)
         {
-            if (control == null)
+            if (control == null || verticalAlignmentComboBox.Value is null)
                 return;
 
-            control.VerticalAlignment = (VerticalAlignment)verticalAlignmentComboBox.SelectedItem!;
+            control.VerticalAlignment = (VerticalAlignment)verticalAlignmentComboBox.Value;
         }
     }
 }

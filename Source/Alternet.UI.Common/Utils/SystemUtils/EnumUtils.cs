@@ -26,13 +26,16 @@ namespace Alternet.UI
         /// <c>null</c>.</param>
         /// <param name="valueToString">A function that converts an enumeration value
         /// to its string representation. Cannot be <c>null</c>.</param>
+        /// <param name="isValueIncluded">A function that determines whether an enumeration
+        /// value is included in the result collection.</param>
         /// <returns>A <see cref="BaseCollection{T}"/> containing
         /// <see cref="ListControlItem"/> objects, where each item
         /// represents a value from the specified enumeration. Returns <c>null</c>
         /// if <paramref name="enumType"/> is <c>null</c>.</returns>
         public static BaseCollection<ListControlItem>? GetEnumItemsAsListItems(
             Type? enumType,
-            Func<object?, string?>? valueToString = null)
+            Func<object?, string?>? valueToString = null,
+            Func<object?, bool>? isValueIncluded = null)
         {
             if (enumType is null)
                 return null;
@@ -46,6 +49,9 @@ namespace Alternet.UI
             var values = Enum.GetValues(enumType);
             foreach (var v in values)
             {
+                if(isValueIncluded != null && !isValueIncluded(v))
+                    continue;
+
                 ListControlItem item = new();
                 item.Value = v;
                 item.Text = valueToString(v) ?? string.Empty;

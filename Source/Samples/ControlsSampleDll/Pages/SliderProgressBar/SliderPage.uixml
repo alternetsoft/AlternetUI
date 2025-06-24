@@ -73,7 +73,7 @@
       Click="ClearTicksButton_Click" IsTextLocalized="true" />
 
       <Label Text="Tick Style:" VerticalAlignment="Center" Margin="20,0,0,0" IsTextLocalized="true"/>
-      <ComboBox IsEditable="false" Name="tickStyleComboBox" Margin="5,0,0,0"
+      <EnumPicker Name="tickStyleComboBox" Margin="5,0,0,0"
                 VerticalAlignment="Center" />
     </StackPanel>
 

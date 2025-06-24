@@ -13,29 +13,32 @@ namespace ControlsSample
 
             clearTicksButton.Visible = App.IsWindowsOS || App.IsLinuxOS;
 
-            foreach (SliderTickStyle item in Enum.GetValues(typeof(SliderTickStyle)))
+            tickStyleComboBox.EnumType = typeof(SliderTickStyle);
+
+            if (App.IsWindowsOS)
             {
-                if (item == SliderTickStyle.Both && !App.IsWindowsOS)
-                    continue;
-                tickStyleComboBox.Items.Add(item);
+                tickStyleComboBox.ExcludeValues = new object[]
+                {
+                    SliderTickStyle.Both,
+                };
             }
 
             progressBarControlSlider.ValueChanged += ProgressBarControlSlider_ValueChanged;
             progressBarControlSlider.Value = 1;
 
-            tickStyleComboBox.SelectedItemChanged += TickStyleComboBox_SelectedItemChanged;
-            tickStyleComboBox.SelectedIndex = 0;
+            tickStyleComboBox.ValueChanged += TickStyleComboBox_SelectedItemChanged;
+            tickStyleComboBox.Value = SliderTickStyle.None;
             progressBarControlSlider.TickStyle = SliderTickStyle.None;
         }
 
         private void TickStyleComboBox_SelectedItemChanged(object? sender, EventArgs e)
         {
-            if (tickStyleComboBox.SelectedItem is null)
+            if (tickStyleComboBox.Value is null)
                 return;
 
             foreach (var slider in GetAllSliders())
             {
-                slider.TickStyle = (SliderTickStyle)(tickStyleComboBox.SelectedItem);
+                slider.TickStyle = (SliderTickStyle)(tickStyleComboBox.Value);
             }
         }
 

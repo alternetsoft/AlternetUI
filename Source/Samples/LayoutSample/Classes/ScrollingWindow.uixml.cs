@@ -10,6 +10,7 @@ namespace LayoutSample
     public partial class ScrollingWindow : Window
     {
         private readonly ImageControl imageControl = new();
+        private double zoomFactor = 0.0;
 
         public ScrollingWindow()
         {
@@ -72,26 +73,26 @@ namespace LayoutSample
 
         private void InitializeComboBoxes()
         {
-            InitializeEnumComboBox(orientationComboBox, StackPanelOrientation.Vertical);
-            InitializeEnumComboBox(stackPanelVerticalAlignmentComboBox, VerticalAlignment.Stretch);
-            InitializeEnumComboBox(stackPanelHorizontalAlignmentComboBox, HorizontalAlignment.Stretch);
+            orientationComboBox.EnumType = typeof(StackPanelOrientation);
+            orientationComboBox.Value = StackPanelOrientation.Vertical;
 
-            InitializeEnumComboBox(gridVerticalAlignmentComboBox, VerticalAlignment.Stretch);
-            InitializeEnumComboBox(gridHorizontalAlignmentComboBox, HorizontalAlignment.Stretch);
-        }
+            stackPanelVerticalAlignmentComboBox.EnumType = typeof(VerticalAlignment);
+            stackPanelVerticalAlignmentComboBox.Value = VerticalAlignment.Stretch;
 
-        private void InitializeEnumComboBox<TEnum>(ComboBox comboBox, TEnum defaultValue)
-            where TEnum : Enum
-        {
-            foreach (var item in Enum.GetValues(typeof(TEnum)))
-                comboBox.Items.Add(item ?? throw new Exception());
-            comboBox.SelectedItem = defaultValue;
+            stackPanelHorizontalAlignmentComboBox.EnumType = typeof(HorizontalAlignment);
+            stackPanelHorizontalAlignmentComboBox.Value = HorizontalAlignment.Stretch;
+
+            gridHorizontalAlignmentComboBox.EnumType = typeof(HorizontalAlignment);
+            gridHorizontalAlignmentComboBox.Value = HorizontalAlignment.Stretch;
+
+            gridVerticalAlignmentComboBox.EnumType = typeof(VerticalAlignment);
+            gridVerticalAlignmentComboBox.Value = VerticalAlignment.Stretch;
         }
 
         private void OrientationComboBox_SelectedItemChanged(object? sender, System.EventArgs e)
         {
             scrollViewerStack.LayoutOffset = PointD.Empty;
-            stackPanel.Orientation = (StackPanelOrientation)orientationComboBox.SelectedItem!;
+            stackPanel.Orientation = (StackPanelOrientation)orientationComboBox.Value!;
         }
 
         private void StackPanelVerticalAlignmentComboBox_SelectedItemChanged(
@@ -99,7 +100,7 @@ namespace LayoutSample
             EventArgs e)
         {
             stackPanel.VerticalAlignment
-                = (VerticalAlignment)stackPanelVerticalAlignmentComboBox.SelectedItem!;
+                = (VerticalAlignment)stackPanelVerticalAlignmentComboBox.Value!;
         }
 
         private void StackPanelHorizontalAlignmentComboBox_SelectedItemChanged(
@@ -107,7 +108,7 @@ namespace LayoutSample
             EventArgs e)
         {
             stackPanel.HorizontalAlignment
-                = (HorizontalAlignment)stackPanelHorizontalAlignmentComboBox.SelectedItem!;
+                = (HorizontalAlignment)stackPanelHorizontalAlignmentComboBox.Value!;
         }
 
         private void AddControlToStackPanelButton_Click(object? sender, EventArgs e)
@@ -160,27 +161,37 @@ namespace LayoutSample
 
         private void GridHorizontalAlignmentComboBox_SelectedItemChanged(object sender, EventArgs e)
         {
-            grid.VerticalAlignment = (VerticalAlignment)gridVerticalAlignmentComboBox.SelectedItem!;
+            if(gridHorizontalAlignmentComboBox.Value != null)
+                grid.HorizontalAlignment = (HorizontalAlignment)gridHorizontalAlignmentComboBox.Value;
         }
 
         private void GridVerticalAlignmentComboBox_SelectedItemChanged(object sender, EventArgs e)
         {
-            if (gridHorizontalAlignmentComboBox.SelectedItem != null)
+            if (gridVerticalAlignmentComboBox.Value != null)
             {
-                grid.HorizontalAlignment
-                    = (HorizontalAlignment)gridHorizontalAlignmentComboBox.SelectedItem!;
+                grid.VerticalAlignment
+                    = (VerticalAlignment)gridVerticalAlignmentComboBox.Value;
             }                
+        }
+
+        private void ZoomMinusButtonClick(object? sender, EventArgs e)
+        {
+            if (zoomFactor > 0)
+                zoomFactor--;
+            UpdateImageZoom();
+        }
+
+        private void ZoomPlusButtonClick(object? sender, EventArgs e)
+        {
+            if (zoomFactor < 20)
+                zoomFactor++;
+            UpdateImageZoom();
         }
 
         private void UpdateImageZoom()
         {
-            if(imageControl != null && zoomSlider!=null)
-                imageControl.Zoom = 1 + 0.1 * zoomSlider.Value;
-        }
-
-        private void ZoomSlider_ValueChanged(object sender, EventArgs e)
-        {
-            UpdateImageZoom();
+            if(imageControl != null)
+                imageControl.Zoom = 1 + 0.1 * zoomFactor;
         }
     }
 }

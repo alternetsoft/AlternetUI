@@ -10,25 +10,23 @@ namespace LayoutSample
         {
             InitializeComponent();
 
-            valueComboBox.Items.AddRange(
-                new[]
-                {
-                    GridLength.Auto,
-                    new GridLength(100),
-                    new GridLength(150),
-                    new GridLength(200),
-                    new GridLength(2, GridUnitType.Star),
-                }.Cast<object>());
+            AddGridLengthItem(GridLength.Auto, "Auto");
+            AddGridLengthItem(new GridLength(100), "100 dips");
+            AddGridLengthItem(new GridLength(150), "150 dips");
+            AddGridLengthItem(new GridLength(200), "200 dips");
+            AddGridLengthItem(new GridLength(1, GridUnitType.Star), "1*");
+            AddGridLengthItem(new GridLength(2, GridUnitType.Star), "2*");
+            AddGridLengthItem(new GridLength(3, GridUnitType.Star), "3*");
 
-            valueComboBox.SelectedIndex = 0;
+            valueComboBox.Value = GridLength.Auto;
         }
 
         public event EventHandler? ValueChanged;
 
         public GridLength Value
         {
-            get => (GridLength)valueComboBox.SelectedItem!;
-            set => valueComboBox.SelectedItem = value;
+            get => (GridLength)valueComboBox.Value!;
+            set => valueComboBox.Value = value;
         }
 
         public string Label
@@ -40,6 +38,21 @@ namespace LayoutSample
         private void ValueComboBox_SelectedItemChanged(object? sender, EventArgs e)
         {
             ValueChanged?.Invoke(this, EventArgs.Empty);
+        }
+
+        public class GridLengthItem : ListControlItem
+        {             
+            public GridLengthItem(GridLength value, string title)
+            {
+                Value = value;
+                Text = title;
+            }
+        }
+
+        public void AddGridLengthItem(GridLength length, string title)
+        {
+            var item = new GridLengthItem(length, title);
+            valueComboBox.Items.Add(item);
         }
     }
 }

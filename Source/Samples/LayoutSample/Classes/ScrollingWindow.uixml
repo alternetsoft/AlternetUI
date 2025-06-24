@@ -10,15 +10,15 @@
     <Panel Title="StackPanel" Padding="10" Grid.Row="0" Grid.Column="0">
       <StackPanel Orientation="Horizontal">
 
-        <Border SuggestedWidth="200" SuggestedHeight="200" Padding="5"
-                        VerticalAlignment="Top" HorizontalAlignment="Left" HasBorder="true">
+        <Border SuggestedHeight="350" Padding="5"
+                        VerticalAlignment="Top" HorizontalAlignment="Fill" HasBorder="true">
           <ScrollViewer Name="scrollViewerStack">
             <StackPanel Name="stackPanel" Orientation="Vertical" MinChildMargin="3">
             </StackPanel>
           </ScrollViewer>
         </Border>
 
-        <Grid Margin="10,0,0,0">
+        <Grid Margin="10,0,0,0" HorizontalAlignment="Right">
           <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
@@ -33,23 +33,22 @@
 
           <Label Text="Orientation:" Margin="0,0,5,0" VerticalAlignment="Center"
                  IsTextLocalized="true" Grid.Column="0" Grid.Row="0" />
-          <ComboBox Name="orientationComboBox" VerticalAlignment="Center" Margin="0,0,0,5"
-                    IsEditable="false"
-                    SelectedItemChanged="OrientationComboBox_SelectedItemChanged"
+          <EnumPicker Name="orientationComboBox" VerticalAlignment="Center" Margin="0,0,0,5"
+                    ValueChanged="OrientationComboBox_SelectedItemChanged"
                     Grid.Column="1" Grid.Row="0" />
 
           <Label Text="Vertical Alignment:" Margin="0,0,5,0" VerticalAlignment="Center"
                  IsTextLocalized="true" Grid.Column="0" Grid.Row="1" />
-          <ComboBox Name="stackPanelVerticalAlignmentComboBox" VerticalAlignment="Center"
-                    Margin="0,0,0,5" IsEditable="false"
-                    SelectedItemChanged="StackPanelVerticalAlignmentComboBox_SelectedItemChanged"
+          <EnumPicker Name="stackPanelVerticalAlignmentComboBox" VerticalAlignment="Center"
+                    Margin="0,0,0,5"
+                    ValueChanged="StackPanelVerticalAlignmentComboBox_SelectedItemChanged"
                     Grid.Column="1" Grid.Row="1" />
 
           <Label Text="Horizontal Alignment:" Margin="0,0,5,0" VerticalAlignment="Center"
                  IsTextLocalized="true" Grid.Column="0" Grid.Row="2" />
-          <ComboBox Name="stackPanelHorizontalAlignmentComboBox" VerticalAlignment="Center"
-                    Margin="0,0,0,5" IsEditable="false"
-                    SelectedItemChanged="StackPanelHorizontalAlignmentComboBox_SelectedItemChanged"
+          <EnumPicker Name="stackPanelHorizontalAlignmentComboBox" VerticalAlignment="Center"
+                    Margin="0,0,0,5"
+                    ValueChanged="StackPanelHorizontalAlignmentComboBox_SelectedItemChanged"
                     Grid.Column="1" Grid.Row="2" />
 
           <Button Text="Add Control" Name="addControlToStackPanelButton" Margin="0,0,0,5"
@@ -68,15 +67,15 @@
     <Panel Title="Grid" Padding="10" Grid.Row="1" Grid.Column="0">
       <StackPanel Orientation="Horizontal">
 
-        <Border SuggestedWidth="200" SuggestedHeight="200" VerticalAlignment="Top"
-                HorizontalAlignment="Left" Padding="5" HasBorder="true">
+        <Border SuggestedHeight="350" VerticalAlignment="Top"
+                HorizontalAlignment="Fill" Padding="5" HasBorder="true">
           <ScrollViewer Name="scrollViewerGrid">
             <Grid Name="grid">
             </Grid>
           </ScrollViewer>
         </Border>
 
-        <Grid Margin="10,0,0,0" MinChildMargin="3">
+        <Grid Margin="10,0,0,0" MinChildMargin="3" HorizontalAlignment="Right">
           <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
@@ -92,16 +91,16 @@
 
           <Label Text="Vertical Alignment:" Margin="0,0,5,0" VerticalAlignment="Center"
                  IsTextLocalized="true" Grid.Column="0" Grid.Row="0" />
-          <ComboBox Name="gridVerticalAlignmentComboBox" VerticalAlignment="Center"
-                    Margin="0,0,0,5" IsEditable="false"
-                    SelectedItemChanged="GridVerticalAlignmentComboBox_SelectedItemChanged"
+          <EnumPicker Name="gridVerticalAlignmentComboBox" VerticalAlignment="Center"
+                    Margin="0,0,0,5"
+                    ValueChanged="GridVerticalAlignmentComboBox_SelectedItemChanged"
                     Grid.Column="1" Grid.Row="0" />
 
           <Label Text="Horizontal Alignment:" Margin="0,0,5,0" VerticalAlignment="Center"
                  IsTextLocalized="true" Grid.Column="0" Grid.Row="1" />
-          <ComboBox Name="gridHorizontalAlignmentComboBox" VerticalAlignment="Center"
-                    Margin="0,0,0,5" IsEditable="false"
-                    SelectedItemChanged="GridHorizontalAlignmentComboBox_SelectedItemChanged"
+          <EnumPicker Name="gridHorizontalAlignmentComboBox" VerticalAlignment="Center"
+                    Margin="0,0,0,5"
+                    ValueChanged="GridHorizontalAlignmentComboBox_SelectedItemChanged"
                     Grid.Column="1" Grid.Row="1" />
 
           <Button Text="Add Column" Name="addColumnToGridButton" Margin="0,0,0,5"
@@ -127,22 +126,19 @@
 
     <Panel Title="Drawing" IsTitleLocalized="true"
               Padding="10" Grid.Row="0" Grid.Column="1" Margin="10,0,0,0">
-      <StackPanel Orientation="Horizontal">
-        <Border VerticalAlignment="Top" HorizontalAlignment="Left" HasBorder="true" Padding="5">
-          <ScrollViewer SuggestedSize="200, 200" Name="imageScrollViewer">
+      <StackPanel Orientation="Vertical">
+        <HorizontalStackPanel >
+          <Label Text="Zoom:" IsTextLocalized="true" Margin="0,0,5,0" VerticalAlignment="Center"/>
+          <Button Name="zoomPlusButton" Click="ZoomPlusButtonClick" Text="+" Margin="0,0,5,0"/>
+          <Button Name="zoomMinusButton" Click="ZoomMinusButtonClick" Text="-"/>
+        </HorizontalStackPanel>
+
+        <Border SuggestedSize="250,250" HorizontalAlignment="Left"
+                HasBorder="true" Padding="5">
+          <ScrollViewer Name="imageScrollViewer">
           </ScrollViewer>
         </Border>
-        <VerticalStackPanel>
-        <Grid Margin="10" HorizontalAlignment="Fill">
-          <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="Auto" />
-            <ColumnDefinition Width="*" />
-          </Grid.ColumnDefinitions>
-          <Label Text="Zoom:" IsTextLocalized="true" Margin="0,0,5,0" VerticalAlignment="Center"/>
-          <Slider Name="zoomSlider" ValueChanged="ZoomSlider_ValueChanged" Minimum="1"
-                  Maximum="20" Value="2" Grid.Column="1" MinWidth="150"/>
-        </Grid>
-        </VerticalStackPanel>
+        
       </StackPanel>
     </Panel>
 

@@ -39,13 +39,17 @@ namespace LayoutSample
 
         protected override void OnPaint(PaintEventArgs e)
         {
-            var bounds = ClientRectangle;
-            e.Graphics.FillRectangle(Brushes.White, bounds);
 
             var image = Image;
 
             if (image != null)
+            {
+                var size = image.SizeDip(this);
+                var bounds = ((0, 0), new SizeD(size.Width * zoom, size.Height * zoom));
+                e.Graphics.FillRectangle(DefaultColors.WindowBackColor.AsBrush, bounds);
                 e.Graphics.DrawImage(image, bounds);
+                e.Graphics.DrawRectangle(LightDarkColors.Red.AsPen, bounds);
+            }
         }
     }
 }

@@ -21,7 +21,7 @@ namespace LayoutSample
         {
             Margin = (10, 10, 10, 5),
         };
-        private readonly ComboBox dockedEdit = new()
+        private readonly EnumPicker dockedEdit = new()
         {
             Margin = (10, 0, 10, 10),
         };
@@ -36,16 +36,15 @@ namespace LayoutSample
             dockedSettings.Parent = tabControlPanel;
             dockedLabel.Parent = dockedSettings;
             dockedEdit.Parent = dockedSettings;
-            dockedEdit.IsEditable = false;
             splitter.Parent = subjectPanel;
             dockedControl.Parent = subjectPanel;
 
-            dockedEdit.Add(DockStyle.Left);
-            dockedEdit.Add(DockStyle.Top);
-            dockedEdit.Add(DockStyle.Right);
-            dockedEdit.Add(DockStyle.Bottom);
-            dockedEdit.SelectedItem = DockStyle.Left;
-            dockedEdit.SelectedItemChanged += DockedEdit_SelectedItemChanged;
+            dockedEdit.Items.Add(new("Left", DockStyle.Left));
+            dockedEdit.Items.Add(new("Top", DockStyle.Top));
+            dockedEdit.Items.Add(new("Right", DockStyle.Right));
+            dockedEdit.Items.Add(new("Bottom", DockStyle.Bottom));
+            dockedEdit.Value = DockStyle.Left;
+            dockedEdit.ValueChanged += DockedEdit_SelectedItemChanged;
 
             tabControlPanel.Add(dockedSettings);
 
@@ -60,7 +59,7 @@ namespace LayoutSample
 
         private void DockedEdit_SelectedItemChanged(object? sender, EventArgs e)
         {
-            if (dockedEdit.SelectedItem is not DockStyle dockStyle)
+            if (dockedEdit.Value is not DockStyle dockStyle)
                 return;
 
             subjectPanel.DoInsideLayout(() =>
