@@ -1,3 +1,28 @@
+# 0.9.738 (2025 June 24)
+
+- Add controls: ColorPickerAndButton, EnumPicker, SpeedEnumButton, EnumPickerAndButton, FontNamePicker, FontSizePicker, ListPicker, SpeedButtonWithListPopup.
+- **Add auto paint of child generic controls**.
+- GenericLabel is now generic control and doesn't use native control handle.
+- Maui: ControlView now supports AbstractControl.
+- SpeedButton: Fixed border in disabled state in StaticBorder theme.
+- App.SetAppearance - allows to set color theme (dark/light/system).
+- TextBox.AutoUrl made dummy as WxWidgets implementation is buggy.
+- Update wxAlternetColourProperty implementation to wxWidgets 3.3.0.
+- Slider: Improve behavior and look in dark theme on Windows.
+- Calendar: Fix NoMonthChange property setter.
+- ListView: improve look in dark mode on MSW.
+- SpeedColorButton: new members ListBox, FindOrAddColor, EmptyColorTitle, Select.
+- ColorListBox: GetItemValue, FindOrAddColor.
+- ColorPicker is now derived from SpeedColorButton.
+- Change base class of HorizontalLine to GenericControl.
+- SpeedButton: new methods SetContentHorizontalAlignment, SetContentVerticalAlignment.
+- PanelSettings: Change used color editor to ColorSelector.
+- PanelSettings: Use EnumPicker as enums editor.
+- VirtualListBox: SelectItemAndScroll, FindItemIndexWithValue.
+- Demo: Use EnumPicker, ColorPicker and other picker controls instead of ComboBox.
+- App.IsWindows11AtLeast, PropertyGrid.IsFlagsOrEnum.
+- Add default localized titles to popup windows.
+
 # 0.9.737 (2025 June 20)
 
 - WebBrowser: Fix Edge backend background painting.
