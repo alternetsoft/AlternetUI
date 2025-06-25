@@ -247,6 +247,16 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
+        /// Gets the normal image representation for a control using it's scale factor and
+        /// color theme settings.
+        /// </summary>
+        public virtual Image? AsNormalImage(AbstractControl control)
+        {
+            var size = ToolBarUtils.GetDefaultImageSize(control).Width;
+            return AsNormalImage(size, control.IsDarkBackground);
+        }
+
+        /// <summary>
         /// Gets image with the specified size and <see cref="KnownSvgColor.Disabled"/> color.
         /// </summary>
         /// <param name="size">Image size in pixels.</param>
