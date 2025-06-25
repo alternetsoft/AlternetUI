@@ -42,7 +42,7 @@
       <VerticalStackPanel Visible="true">
         <StackPanel Orientation="Horizontal" Margin="5">
           <Label Text="Tabs:" VerticalAlignment="Center"  IsTextLocalized="true"/>
-          <ComboBox IsEditable="false" Name="tabAlignmentComboBox" Margin="5,0,0,0"/>
+          <EnumPicker Name="tabAlignmentComboBox" Margin="5,0,0,0"/>
         </StackPanel>
       </VerticalStackPanel>
 

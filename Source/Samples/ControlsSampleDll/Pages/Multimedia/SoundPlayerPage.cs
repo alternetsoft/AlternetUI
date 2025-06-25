@@ -10,7 +10,8 @@ namespace ControlsSample
         private static readonly string ResPrefix = $"Resources/Sounds/Wav/";
         internal static readonly string audioButton = $"{ResPrefix}button-124476.wav";
         internal static readonly string audioNotification1 = $"{ResPrefix}notification-sound-7062.wav";
-        internal static readonly string audioNotification2 = $"{ResPrefix}notifications-sound-127856.wav";
+        internal static readonly string audioNotification2
+            = $"{ResPrefix}notifications-sound-127856.wav";
         internal static readonly string audioTap = $"{ResPrefix}tap-notification-180637.wav";
         internal static readonly string audioDogGrowl = $"{ResPrefix}doggrowl.wav";
         internal static readonly string audioTinkALink = $"{ResPrefix}tinkalink2.wav";       
@@ -19,7 +20,7 @@ namespace ControlsSample
 
         private SimpleSoundPlayer? player;
         
-        private readonly ComboBox selectComboBox = new()
+        private readonly EnumPicker selectComboBox = new()
         {
             Margin = 5,
         };
@@ -28,17 +29,25 @@ namespace ControlsSample
         {
             Padding = 10;
 
-            selectComboBox.IsEditable = false;
-            selectComboBox.Add(audioNotification2);
-            selectComboBox.Add(audioButton);
-            selectComboBox.Add(audioCustom);
-            selectComboBox.Add(audioDogGrowl);
-            selectComboBox.Add(audioTinkALink);
+            new Label("Select sound to play:")
+            {
+                Margin = 5,
+                HorizontalAlignment = HorizontalAlignment.Left,
+            }.Parent = this;
 
-            selectComboBox.SelectedItem = audioNotification2;
+            List<string> audioFiles = new()
+            {
+                audioNotification2,
+                audioButton,
+                audioCustom,
+                audioDogGrowl,
+                audioTinkALink,
+            };
+
+            selectComboBox.ListBox.AddRange(audioFiles);
+            selectComboBox.Value = audioNotification2;
             selectComboBox.Parent = this;
-
-            selectComboBox.SelectedItemChanged += SelectComboBox_SelectedItemChanged;
+            selectComboBox.ValueChanged += SelectComboBox_SelectedItemChanged;
 
             AddVerticalStackPanel().AddButtons(
                 ("Play", Play),
@@ -50,7 +59,7 @@ namespace ControlsSample
         {
             if(url is null)
             {
-                if (selectComboBox.SelectedItem is not string selectedUrl)
+                if (selectComboBox.Value is not string selectedUrl)
                     return;
                 url = Path.Combine(CommonUtils.GetAppFolder(), selectedUrl);
             }
@@ -81,7 +90,7 @@ namespace ControlsSample
 
         private void SelectComboBox_SelectedItemChanged(object? sender, EventArgs e)
         {
-            if (selectComboBox.SelectedItem is not string url)
+            if (selectComboBox.Value is not string url)
                 return;
 
             if (url == audioCustom)

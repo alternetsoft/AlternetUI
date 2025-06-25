@@ -9,7 +9,7 @@ using Alternet.UI;
 2023-11-25: Thanks to @neoxeo! He added new gif animation and open animation file feature.
 We approved his changes with little modifications.
  
- */
+*/
 
 namespace ControlsSample
 {
@@ -26,7 +26,7 @@ namespace ControlsSample
         private readonly AnimationPlayer animation = new();
         private readonly PopupPictureBox popup = new();
         
-        private readonly ComboBox selectComboBox = new()
+        private readonly EnumPicker selectComboBox = new()
         {
             Margin = 5,
         };
@@ -45,16 +45,32 @@ namespace ControlsSample
             animation.LoadFromUrl(defaultAnimationUrl, AnimationType.Gif);
             animation.Play();
 
-            selectComboBox.IsEditable = false;
-            selectComboBox.Add(AnimationHourGlass);
-            selectComboBox.Add(AnimationPlant);
-            selectComboBox.Add(AnimationSpinner);
-            selectComboBox.Add(AnimationAlternet);
-            selectComboBox.Add(AnimationCustom);
-            selectComboBox.SelectedItem = defaultAnimationUrl;
-            selectComboBox.Parent = this;
+            new HorizontalLine
+            {
+                Margin = 5,
+                HorizontalAlignment = HorizontalAlignment.Stretch,
+            }.Parent = this;
 
-            selectComboBox.SelectedItemChanged += SelectComboBox_SelectedItemChanged;
+            new Label
+            {
+                Text = "Select animation to play:",
+                HorizontalAlignment = HorizontalAlignment.Left,
+                Margin = 5,
+            }.Parent = this;
+
+            List<string> animationUrls = new()
+            {
+                AnimationHourGlass,
+                AnimationPlant,
+                AnimationSpinner,
+                AnimationAlternet,
+                AnimationCustom
+            };
+
+            selectComboBox.ListBox.AddRange(animationUrls);
+            selectComboBox.Value = defaultAnimationUrl;
+            selectComboBox.Parent = this;
+            selectComboBox.ValueChanged += SelectComboBox_SelectedItemChanged;
 
             AddVerticalStackPanel().AddButtons(
                 ("Play", () => { animation.Play(); }),
@@ -80,7 +96,7 @@ namespace ControlsSample
 
         private void SelectComboBox_SelectedItemChanged(object? sender, EventArgs e)
         {
-            if (selectComboBox.SelectedItem is not string url)
+            if (selectComboBox.Value is not string url)
                 return;
 
             if (url == AnimationCustom)
@@ -106,7 +122,7 @@ namespace ControlsSample
             else
             {
                 animation.Stop();
-                animation.LoadFromUrl(url);
+                animation.LoadFromUrl(url, AnimationType.Gif);
                 animation.Play();
             }
         }

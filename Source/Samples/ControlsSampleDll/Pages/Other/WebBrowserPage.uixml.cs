@@ -46,7 +46,6 @@ namespace ControlsSample
 
         public WebBrowserPage()
         {
-
             InitializeComponent();
 
             var width = BackButton.Height * 1.5;
@@ -70,16 +69,32 @@ namespace ControlsSample
 
             headerText = HeaderLabel.Text;
             webBrowser.ZoomType = WebBrowserZoomType.Layout;
-            UrlTextBox.Items.Add(SItemPanda);
-            UrlTextBox.Items.Add(SItemGoogle);
+            
+            List<string> items = new()
+            {
+                SItemPanda,
+                SItemGoogle,
+                SItemImage,
+                SItemMP3,
+                SItemWAV,
+                SItemGIF
+            };
 
             if (webBrowser.Backend != WebBrowserBackend.IE &&
                 webBrowser.Backend != WebBrowserBackend.IELatest)
-                UrlTextBox.Items.Add(SItemPDF);
-            UrlTextBox.Items.Add(SItemImage);
-            UrlTextBox.Items.Add(SItemMP3);
-            UrlTextBox.Items.Add(SItemWAV);
-            UrlTextBox.Items.Add(SItemGIF);
+                items.Add(SItemPDF);
+
+            openButton.Image = KnownSvgImages.ImgFileOpen.AsNormalImage(this);
+            openButton.ListBox.AddRange(items);
+            openButton.ValueChanged += OpenButton_ValueChanged;
+            openButton.ImageVisible = true;
+            openButton.TextVisible = false;
+            openButton.UseTheme = SpeedButton.KnownTheme.StaticBorder;
+
+            Idle += (s, e) =>
+            {
+                HeaderLabel.WrapToParent();
+            };
         }
 
         private static string GetPandaFileName()
@@ -149,7 +164,16 @@ namespace ControlsSample
 
         private void WebBrowser1_TitleChanged(object? sender, WebBrowserEventArgs e)
         {
-            HeaderLabel.Text = headerText + " : " + e.Text;
+            if (e.Text == null)
+            {
+                HeaderLabel.Text = headerText ?? string.Empty;
+                return;
+            }
+
+            var title = e.Text.Replace(@"/", @" / ");
+            title = title.Replace(@"\", @" \ ");
+
+            HeaderLabel.Text = headerText + " : " + title;
         }
 
         private void GoButton_Click(object sender, EventArgs e)
@@ -157,11 +181,14 @@ namespace ControlsSample
             LoadUrl(UrlTextBox.Text);
         }
 
-        private void UrlTextBox_SelectedItemChanged(object? sender, EventArgs e)
+        private void OpenButton_ValueChanged(object? sender, EventArgs e)
         {
-            if (UrlTextBox.SelectedIndex != null)
+            var v = openButton.Value?.ToString();
+
+            if (v != null)
             {
-                LoadUrl(UrlTextBox.Text);
+                UrlTextBox.Text = v;
+                LoadUrl(v);
             }
         }
 

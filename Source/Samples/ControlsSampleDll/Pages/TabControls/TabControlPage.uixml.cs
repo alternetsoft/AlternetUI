@@ -35,8 +35,9 @@ namespace ControlsSample
                 var page1 = InsertPage();
                 var page2 = InsertPage();
 
-                tabAlignmentComboBox.AddEnumValues(TabAlignment.Top);
-                tabAlignmentComboBox.SelectedItemChanged +=
+                tabAlignmentComboBox.EnumType = typeof(TabAlignment);
+                tabAlignmentComboBox.Value = TabAlignment.Top;
+                tabAlignmentComboBox.ValueChanged +=
                     TabAlignmentComboBox_SelectedItemChanged;
 
                 ImageSet image;
@@ -178,13 +179,16 @@ namespace ControlsSample
 
         private void TabAlignmentComboBox_SelectedItemChanged(object? sender, EventArgs e)
         {
-            if(tabAlignmentComboBox.SelectedItem is TabAlignment tabAlignment)
+            if(tabAlignmentComboBox.Value is TabAlignment tabAlignment)
                 tabControl.TabAlignment = tabAlignment;
 
             var preferredSize = tabAlignmentComboBox.GetPreferredSize();
             tabAlignmentComboBox.InvalidateBestSize();
             var preferredSize2 = tabAlignmentComboBox.GetPreferredSize();
-            App.DebugLogIf($"tabAlignmentComboBox.PreferredSize = {preferredSize} {preferredSize2}", true);
+
+            App.DebugLogIf(
+                $"tabAlignmentComboBox.PreferredSize = {preferredSize} {preferredSize2}",
+                true);
         }
     }
 }
