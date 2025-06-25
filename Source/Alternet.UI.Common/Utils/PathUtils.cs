@@ -61,6 +61,27 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Checks if the specified path has the given file extension.
+        /// </summary>
+        /// <param name="path">The path to check for the extension.</param>
+        /// <param name="ext">The file extension to check for.</param>
+        /// <param name="comparison">The StringComparison to use for the check.</param>
+        /// <returns><c>true</c> if the path has the specified extension;
+        /// otherwise, <c>false</c>.</returns>
+        public static bool HasExtension(
+            string? path,
+            string ext,
+            StringComparison comparison = StringComparison.OrdinalIgnoreCase)
+        {
+            if (string.IsNullOrEmpty(path))
+                return false;
+            var extension = Path.GetExtension(path);
+            if (string.IsNullOrEmpty(extension))
+                return false;
+            return string.Equals(extension, ext, comparison);
+        }
+
+        /// <summary>
         /// Generates a file path on the desktop for the specified file name.
         /// </summary>
         /// <param name="fileNameWithoutPath">The name of the file without the path.</param>
