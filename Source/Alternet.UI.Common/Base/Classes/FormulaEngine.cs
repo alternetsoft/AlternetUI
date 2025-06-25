@@ -1,23 +1,21 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Reflection;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-
-using Microsoft.CodeAnalysis.CSharp.Scripting;
-using Microsoft.CodeAnalysis.Scripting;
 
 namespace Alternet.UI
 {
     /// <summary>
     /// Represents a method that evaluates the specified C# code
-    /// asynchronously and returns the result as the specified type.
+    /// asynchronously and returns the result.
     /// </summary>
     /// <remarks>This method uses the Roslyn scripting API to evaluate the provided C# code.
-    /// The evaluation is performed in an isolated scripting context,
-    /// and the result is returned as the specified type
-    /// <typeparamref name="T"/>.</remarks>
-    /// <typeparam name="T">The type of the result expected from the evaluation.</typeparam>
+    /// The evaluation is performed in an isolated scripting context.</remarks>
+    /// <param name="owner">An optional object that can be passed to the evaluation method
+    /// in order to determine the context of the evaluation. For example <see cref="Calculator"/>
+    /// passes itself.</param>
     /// <param name="code">The C# code to evaluate. This cannot be null or empty.</param>
     /// <param name="options">Optional script options to configure the evaluation,
     /// such as references and imports. Can be null.</param>
@@ -27,14 +25,14 @@ namespace Alternet.UI
     /// <param name="cancellationToken">A token to monitor for cancellation requests.
     /// Defaults to <see cref="CancellationToken.None"/>.</param>
     /// <returns>A task that represents the asynchronous operation.
-    /// The task result contains the evaluated value of type
-    /// <typeparamref name="T"/>.</returns>
-    public delegate Task<T> EvaluateAsyncDelegate<T>(
-                string code,
-                object? options = null,
-                object? globalObject = null,
-                Type? globalType = null,
-                CancellationToken cancellationToken = default);
+    /// The task result contains the evaluated value.</returns>
+    public delegate Task<object> EvaluateAsyncDelegate(
+            object? owner,
+            string code,
+            object? options = null,
+            object? globalObject = null,
+            Type? globalType = null,
+            CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Provides functionality for evaluating C# code dynamically and managing
@@ -51,14 +49,21 @@ namespace Alternet.UI
         private static bool engineInitialized;
 
         /// <summary>
-        /// Evaluates the specified C# code asynchronously and returns the result
-        /// as the specified type.
+        /// An optional override for the evaluation method.
+        /// This can be set to provide a custom implementation.
+        /// </summary>
+        public static EvaluateAsyncDelegate? EvaluateOverride { get; set; }
+
+        /// <summary>
+        /// Evaluates the specified C# code asynchronously and returns the result.
+        /// If <see cref="EvaluateOverride"/> is set, it will be used instead
+        /// of the default implementation.
         /// </summary>
         /// <remarks>This method uses the Roslyn scripting API to evaluate the provided C# code.
-        /// The evaluation is performed in an isolated scripting context,
-        /// and the result is returned as the specified type
-        /// <typeparamref name="T"/>.</remarks>
-        /// <typeparam name="T">The type of the result expected from the evaluation.</typeparam>
+        /// The evaluation is performed in an isolated scripting context.</remarks>
+        /// <param name="owner">An optional object that can be passed to the evaluation method
+        /// in order to determine the context of the evaluation. For example <see cref="Calculator"/>
+        /// passes itself.</param>
         /// <param name="code">The C# code to evaluate. This cannot be null or empty.</param>
         /// <param name="options">Optional script options to configure the evaluation,
         /// such as references and imports. Can be null.</param>
@@ -68,21 +73,70 @@ namespace Alternet.UI
         /// <param name="cancellationToken">A token to monitor for cancellation requests.
         /// Defaults to <see cref="CancellationToken.None"/>.</param>
         /// <returns>A task that represents the asynchronous operation.
-        /// The task result contains the evaluated value of type
-        /// <typeparamref name="T"/>.</returns>
-        public static Task<T> EvaluateAsync<T>(
+        /// The task result contains the evaluated value.</returns>
+        public static Task<object> EvaluateAsync(
+            object? owner,
             string code,
             object? options = null,
             object? globalObject = null,
             Type? globalType = null,
             CancellationToken cancellationToken = default)
         {
-            var result = CSharpScript.EvaluateAsync<T>(
-                code,
-                (ScriptOptions?)options,
-                globalObject,
-                globalType);
-            return result;
+            try
+            {
+                if (EvaluateOverride != null)
+                {
+                    return EvaluateOverride(
+                        owner,
+                        code,
+                        options,
+                        globalObject,
+                        globalType,
+                        cancellationToken);
+                }
+
+                var engine = new SimpleFormulaEvaluator(code);
+                var result = engine.Evaluate();
+                return Task.FromResult<object>(result);
+
+/*
+                MethodInfo? methodInfo = null;
+
+                var result = AssemblyUtils.InvokeMethodWithResult(
+                    typeof(Microsoft.CodeAnalysis.CSharp.Scripting.CSharpScript),
+                    "EvaluateAsync",
+                    ref methodInfo,
+                    null,
+                    new object?[]
+                    {
+                        code,
+                        options,
+                        globalObject,
+                        globalType,
+                        cancellationToken,
+                    },
+                    new System.Type[]
+                    {
+                        typeof(string),
+                        typeof(Microsoft.CodeAnalysis.Scripting.ScriptOptions),
+                        typeof(object),
+                        typeof(Type),
+                        typeof(CancellationToken),
+                    });
+
+                if (result is not Task<object> taskResult)
+                {
+                    return Task.FromException<object>(
+                        new InvalidOperationException("Evaluation failed."));
+                }
+                return taskResult;
+*/
+            }
+            catch (Exception e)
+            {
+                BaseObject.Nop(e);
+                return Task.FromException<object>(e);
+            }
         }
 
         /// <summary>
@@ -96,7 +150,7 @@ namespace Alternet.UI
             {
                 if (!engineInitialized)
                 {
-                    EvaluateAsync<object>("2");
+                    EvaluateAsync(null, "2");
                     engineInitialized = true;
                 }
             }
