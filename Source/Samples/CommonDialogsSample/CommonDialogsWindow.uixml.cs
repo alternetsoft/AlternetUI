@@ -35,7 +35,7 @@ namespace ControlsSample
                     MessageBoxButtons.YesNo,
                 ];
 
-            messageBoxButtonsComboBox.ListBox.AddRange(messageBoxButtons);
+            messageBoxButtonsComboBox.AddRange(messageBoxButtons);
             messageBoxButtonsComboBox.Value = MessageBoxButtons.OKCancel;
 
             messageBoxIconComboBox.EnumType = typeof(MessageBoxIcon);
@@ -51,7 +51,7 @@ namespace ControlsSample
                     MessageBoxDefaultButton.Button3,
                 ];
 
-            messageBoxDefaultButtonComboBox.ListBox.AddRange(messageBoxDefaultButtons);
+            messageBoxDefaultButtonComboBox.AddRange(messageBoxDefaultButtons);
             messageBoxDefaultButtonComboBox.Value = MessageBoxDefaultButton.Button1;
 
             tabControl.MinSizeGrowMode = WindowSizeToContentMode.Height;

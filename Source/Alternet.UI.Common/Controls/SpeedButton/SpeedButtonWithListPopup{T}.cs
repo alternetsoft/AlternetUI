@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Text;
@@ -24,6 +25,7 @@ namespace Alternet.UI
         private object? data;
         private PopupListBox<T>? popupWindow;
         private string popupWindowTitle = string.Empty;
+        private BaseCollection<ListControlItem>? items;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="SpeedButtonWithListPopup{T}"/> class.
@@ -52,16 +54,31 @@ namespace Alternet.UI
         /// <summary>
         /// Gets the collection of items in the list box control used within the popup window.
         /// </summary>
-        public BaseCollection<ListControlItem> Items
+        public virtual BaseCollection<ListControlItem> Items
         {
             get
             {
-                return ListBox.Items;
+                if (IsPopupWindowCreated)
+                {
+                    return ListBox.Items;
+                }
+                else
+                {
+                    return items ??= new();
+                }
             }
 
             set
             {
-                ListBox.Items = value;
+                if (IsPopupWindowCreated)
+                {
+                    ListBox.Items = value;
+                    items = null;
+                }
+                else
+                {
+                    items = value;
+                }
             }
         }
 
@@ -115,7 +132,14 @@ namespace Alternet.UI
                     popupWindow = new();
                     popupWindow.Title = popupWindowTitle;
                     popupWindow.AfterHide += PopupWindowAfterHideHandler;
-                    ReloadItems();
+                    if(items is null)
+                    {
+                        ReloadItems();
+                    }
+                    else
+                    {
+                        SetItems(items);
+                    }
                 }
 
                 return popupWindow;
@@ -171,6 +195,31 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Adds a collection of items to the list control shown in the popup.
+        /// </summary>
+        public virtual void AddRange(IEnumerable items)
+        {
+            if (IsPopupWindowCreated)
+            {
+                ListBox.AddRange(items);
+            }
+            else
+            {
+                foreach (var item in items)
+                {
+                    if (item is ListControlItem listItem)
+                        Items.Add(listItem);
+                    else
+                    {
+                        ListControlItem newItem = new();
+                        newItem.Value = item;
+                        Items.Add(newItem);
+                    }
+                }
+            }
+        }
+
+        /// <summary>
         /// Sets the items to be displayed in the list control shown in the popup.
         /// </summary>
         /// <remarks>This method updates the list control with the provided collection of items.
@@ -181,10 +230,17 @@ namespace Alternet.UI
         /// <see langword="null"/>, all items are removed from the list.</param>
         public virtual void SetItems(BaseCollection<ListControlItem>? items)
         {
-            if (items is null)
-                ListBox.RemoveAll();
+            if (IsPopupWindowCreated)
+            {
+                if (items is null)
+                    ListBox.RemoveAll();
+                else
+                    ListBox.SetItemsFast(items, VirtualListBox.SetItemsKind.ChangeField);
+            }
             else
-                ListBox.SetItemsFast(items, VirtualListBox.SetItemsKind.ChangeField);
+            {
+                this.items = items;
+            }
         }
 
         /// <summary>
