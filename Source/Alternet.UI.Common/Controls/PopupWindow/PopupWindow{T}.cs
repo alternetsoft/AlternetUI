@@ -363,9 +363,9 @@ namespace Alternet.UI
 
             SetPositionInDips(ptOrigin, sizePopup);
             BeforeShowPopup();
-            Show();
+            ActiveControl = MainControl;
+            ShowAndFocus();
             WasShown = true;
-            FocusMainControl();
         }
 
         /// <summary>

@@ -27,21 +27,32 @@ namespace ControlsSample
             Icon = App.DefaultIcon;
             InitializeComponent();
 
-            messageBoxButtonsComboBox.Add(MessageBoxButtons.OK);
-            messageBoxButtonsComboBox.Add(MessageBoxButtons.OKCancel);
-            messageBoxButtonsComboBox.Add(MessageBoxButtons.YesNoCancel);
-            messageBoxButtonsComboBox.Add(MessageBoxButtons.YesNo);
-            messageBoxButtonsComboBox.SelectedItem = MessageBoxButtons.OKCancel;
+            List<MessageBoxButtons> messageBoxButtons =
+                [
+                    MessageBoxButtons.OK,
+                    MessageBoxButtons.OKCancel,
+                    MessageBoxButtons.YesNoCancel,
+                    MessageBoxButtons.YesNo,
+                ];
 
-            messageBoxIconComboBox.AddEnumValues(typeof(MessageBoxIcon), MessageBoxIcon.None);
-            exceptionTypeComboBox.AddEnumValues(
-                typeof(TestExceptionType),
-                TestExceptionType.FileNotFoundException);
+            messageBoxButtonsComboBox.ListBox.AddRange(messageBoxButtons);
+            messageBoxButtonsComboBox.Value = MessageBoxButtons.OKCancel;
 
-            messageBoxDefaultButtonComboBox.Add(MessageBoxDefaultButton.Button1);
-            messageBoxDefaultButtonComboBox.Add(MessageBoxDefaultButton.Button2);
-            messageBoxDefaultButtonComboBox.Add(MessageBoxDefaultButton.Button3);
-            messageBoxDefaultButtonComboBox.SelectedItem = MessageBoxDefaultButton.Button1;
+            messageBoxIconComboBox.EnumType = typeof(MessageBoxIcon);
+            messageBoxIconComboBox.Value = MessageBoxIcon.None;
+
+            exceptionTypeComboBox.EnumType = typeof(TestExceptionType);
+            exceptionTypeComboBox.Value = TestExceptionType.FileNotFoundException;
+
+            List<MessageBoxDefaultButton> messageBoxDefaultButtons =
+                [
+                    MessageBoxDefaultButton.Button1,
+                    MessageBoxDefaultButton.Button2,
+                    MessageBoxDefaultButton.Button3,
+                ];
+
+            messageBoxDefaultButtonComboBox.ListBox.AddRange(messageBoxDefaultButtons);
+            messageBoxDefaultButtonComboBox.Value = MessageBoxDefaultButton.Button1;
 
             tabControl.MinSizeGrowMode = WindowSizeToContentMode.Height;
 
@@ -154,10 +165,10 @@ namespace ControlsSample
                 MessageBox.Show(
                     "Message Box Text",
                     "Message Box Caption",
-                    (MessageBoxButtons)messageBoxButtonsComboBox.SelectedItem!,
-                    (MessageBoxIcon)messageBoxIconComboBox.SelectedItem!,
-                    (MessageBoxDefaultButton)
-                        messageBoxDefaultButtonComboBox.SelectedItem!,
+                    (MessageBoxButtons?)messageBoxButtonsComboBox.Value ?? MessageBoxButtons.OK,
+                    (MessageBoxIcon?)messageBoxIconComboBox.Value ?? MessageBoxIcon.None,
+                    (MessageBoxDefaultButton?)
+                        messageBoxDefaultButtonComboBox.Value ?? MessageBoxDefaultButton.Button1,
                     (e) =>
                     {
                         LogResult("Message Box Result: " + e.Result);
@@ -173,7 +184,7 @@ namespace ControlsSample
         {
             ExceptionUtils.ForceUnhandledExceptionToUseDialog();
 
-            throw (TestExceptionType)exceptionTypeComboBox.SelectedItem! switch
+            throw (TestExceptionType)exceptionTypeComboBox.Value! switch
             {
                 TestExceptionType.InvalidOperationException => 
                     new InvalidOperationException("Test message"),

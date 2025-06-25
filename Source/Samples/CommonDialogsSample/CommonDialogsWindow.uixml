@@ -47,16 +47,16 @@
       <StackPanel Orientation="Vertical" Padding="5" Title="Message Box" Margin="10">
 
         <Label Text="Buttons:" Margin="5,0,5,10" VerticalAlignment="Center" IsTextLocalized="true" />
-        <ComboBox Name="messageBoxButtonsComboBox" IsEditable="false" Margin="5,0,0,10"
+        <ListPicker Name="messageBoxButtonsComboBox" Margin="5,0,0,10"
                   HorizontalAlignment="Left" />
 
         <Label Text="Icon:" Margin="5,0,5,10" VerticalAlignment="Center" IsTextLocalized="true" />
-        <ComboBox Name="messageBoxIconComboBox" IsEditable="false" Margin="5,0,0,10"
+        <EnumPicker Name="messageBoxIconComboBox" Margin="5,0,0,10"
                   HorizontalAlignment="Left" />
 
         <Label Text="Default Button:" Margin="5,0,5,10"
                VerticalAlignment="Center" IsTextLocalized="true" />
-        <ComboBox Name="messageBoxDefaultButtonComboBox" IsEditable="false" Margin="5,0,0,10"
+        <ListPicker Name="messageBoxDefaultButtonComboBox" Margin="5,0,0,10"
                   HorizontalAlignment="Left" />
 
         <Button Text="Show Message" Name="showMessageBoxButton" IsTextLocalized="true"
@@ -85,8 +85,8 @@
             Click="ThrowExceptionButton_Click" Margin="5,0,0,10" HorizontalAlignment="Left" />
           <Label Text="Exception:" Margin="5,5,5,10" VerticalAlignment="Center"
                    IsTextLocalized="true" />
-          <ComboBox Name="exceptionTypeComboBox"
-                    IsEditable="false" Margin="5,0,0,10" HorizontalAlignment="Left" />
+          <EnumPicker Name="exceptionTypeComboBox"
+                    Margin="5,0,0,10" HorizontalAlignment="Left" />
         </Border>
 
       </VerticalStackPanel>
