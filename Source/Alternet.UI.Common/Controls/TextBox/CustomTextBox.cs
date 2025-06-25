@@ -259,7 +259,7 @@ namespace Alternet.UI
         /// Gets or sets validator reporter object or control.
         /// </summary>
         /// <remarks>
-        /// This propety can be used to store reference to control that
+        /// This property can be used to store reference to control that
         /// reports validation or other errors to the end users. Usually
         /// this is a <see cref="PictureBox"/> with error image.
         /// </remarks>
@@ -360,7 +360,7 @@ namespace Alternet.UI
 
         /// <summary>
         /// Gets or sets method which is used to clear error state
-        /// if error backround color is used for reporting it.
+        /// if error background color is used for reporting it.
         /// </summary>
         [Browsable(false)]
         public virtual ResetColorType? ResetErrorBackgroundMethod { get; set; }
@@ -783,7 +783,7 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Gets "real" maxmimal value taking into account <see cref="CustomTextBox.DataType"/>
+        /// Gets "real" maximal value taking into account <see cref="CustomTextBox.DataType"/>
         /// and <see cref="MinValue"/>.
         /// </summary>
         public virtual object? GetRealMaxValue()
@@ -1007,7 +1007,7 @@ namespace Alternet.UI
         /// Validation errors are reported using <see cref="ReportValidatorError"/>.
         /// </remarks>
         /// <returns>
-        /// <c>true</c> if no validation errors were reported; <c>false</c> otrherwise.
+        /// <c>true</c> if no validation errors were reported; <c>false</c> otherwise.
         /// </returns>
         public virtual bool RunDefaultValidation(Action<string>? errorEnumerator = null)
         {
@@ -1209,7 +1209,7 @@ namespace Alternet.UI
         /// <remarks>
         /// This method uses <see cref="CustomTextBox.Converter"/>,
         /// <see cref="CustomTextBox.DefaultFormat"/> and
-        /// <see cref="CustomTextBox.FormatProvider"/> propertties. Depending
+        /// <see cref="CustomTextBox.FormatProvider"/> properties. Depending
         /// on the values of these properties, different conversion methods are used.
         /// </remarks>
         /// <remarks>
