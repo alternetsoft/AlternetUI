@@ -223,6 +223,20 @@ namespace Alternet.UI
             }
         }
 
+        /// <inheritdoc/>
+        public override string Text
+        {
+            get => base.Text;
+
+            set
+            {
+                if (base.Text == value)
+                    return;
+                base.Text = value;
+                /*PerformLayoutAndInvalidate();*/
+            }
+        }
+
         /// <summary>
         /// Gets or sets the image that is displayed near the text.
         /// </summary>
