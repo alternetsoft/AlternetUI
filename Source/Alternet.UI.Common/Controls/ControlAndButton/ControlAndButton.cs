@@ -486,6 +486,19 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Reports an error information.
+        /// </summary>
+        /// <param name="showError">Indicates whether to show the error.</param>
+        /// <param name="errorText">The error message to display.</param>
+        public virtual void ReportError(
+            bool showError,
+            string? errorText = null)
+        {
+            ErrorPicture.Visible = showError;
+            (ErrorPicture as IValidatorReporter)?.SetErrorStatus(this, showError, errorText);
+        }
+
+        /// <summary>
         /// Gets button name for the debug purposes for the specified button id.
         /// </summary>
         /// <param name="id">Button id.</param>
