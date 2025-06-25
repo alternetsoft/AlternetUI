@@ -188,6 +188,16 @@ namespace Alternet.UI
         {
             if (DisposingOrDisposed)
                 return default;
+            if (string.IsNullOrEmpty(filename))
+                return false;
+            if (!File.Exists(filename))
+                return false;
+            if(PathUtils.HasExtension(filename, ".gif"))
+                type = AnimationType.Gif;
+            else
+            if (PathUtils.HasExtension(filename, ".ani"))
+                type = AnimationType.Ani;
+
             return Handler.LoadFile(filename, type);
         }
 
