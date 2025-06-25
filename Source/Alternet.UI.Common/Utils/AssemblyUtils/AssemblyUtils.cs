@@ -1658,8 +1658,8 @@ namespace Alternet.UI
             if (devicePlatform is null)
                 return false;
 
-            var deviceinfo = essentials.GetType("Microsoft.Maui.Devices.DeviceInfo");
-            if (deviceinfo is null)
+            var deviceInfo = essentials.GetType("Microsoft.Maui.Devices.DeviceInfo");
+            if (deviceInfo is null)
                 return false;
 
             var devicePlatformMacCatalyst =
@@ -1667,7 +1667,7 @@ namespace Alternet.UI
             if (devicePlatformMacCatalyst is null)
                 return false;
 
-            var deviceInfoCurrent = deviceinfo.GetProperty("Current")?.GetValue(null);
+            var deviceInfoCurrent = deviceInfo.GetProperty("Current")?.GetValue(null);
 
             var deviceInfoCurrentPlatform = deviceInfoCurrent?.GetType()
                 .GetProperty("Platform")?.GetValue(deviceInfoCurrent);
@@ -1765,7 +1765,7 @@ namespace Alternet.UI
             Type? type,
             string methodName,
             object? obj = null,
-            object[]? param = null)
+            object?[]? param = null)
         {
             try
             {
@@ -1783,6 +1783,40 @@ namespace Alternet.UI
             {
                 return null;
             }
+        }
+
+        /// <summary>
+        /// Finds a non-generic method in the specified type by name and exact parameter types.
+        /// </summary>
+        /// <param name="type">The <see cref="Type"/> to search for the method.</param>
+        /// <param name="methodName">The name of the method to find.</param>
+        /// <param name="parameterTypes">An array of <see cref="Type"/> objects
+        /// representing the method's parameters.</param>
+        /// <returns>
+        /// A <see cref="MethodInfo"/> representing the matched non-generic method,
+        /// or <c>null</c> if no matching method is found.
+        /// </returns>
+        public static MethodInfo? FindNonGenericMethod(
+            Type type,
+            string methodName,
+            Type[] parameterTypes)
+        {
+            return type.GetMethods(DefaultBindingFlags)
+                .Where(m => m.Name == methodName && !m.IsGenericMethod)
+                .FirstOrDefault(m =>
+                {
+                    var parameters = m.GetParameters();
+                    if (parameters.Length != parameterTypes.Length)
+                        return false;
+
+                    for (int i = 0; i < parameters.Length; i++)
+                    {
+                        if (parameters[i].ParameterType != parameterTypes[i])
+                            return false;
+                    }
+
+                    return true;
+                });
         }
 
         /// <summary>
@@ -1804,15 +1838,25 @@ namespace Alternet.UI
             string methodName,
             ref MethodInfo? methodInfo,
             object? obj = null,
-            object[]? param = null,
+            object?[]? param = null,
             Type[]? paramTypes = null)
         {
             try
             {
-                if (paramTypes == null)
-                    methodInfo ??= type?.GetMethod(methodName);
-                else
-                    methodInfo ??= type?.GetMethod(methodName, paramTypes);
+                if(methodInfo is null)
+                {
+                    if (paramTypes == null)
+                    {
+                        methodInfo = type?.GetMethods()
+                            .Where(m => m.Name == methodName && !m.IsGenericMethod)
+                            .FirstOrDefault();
+                    }
+                    else
+                    {
+                        if(type is not null)
+                            methodInfo = FindNonGenericMethod(type, methodName, paramTypes);
+                    }
+                }
 
                 if (methodInfo is not null)
                 {
