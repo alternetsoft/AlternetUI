@@ -13,8 +13,7 @@ using Alternet.Drawing;
 
 Thanks to https://github.com/neoxeo for the calculator sample
 https://github.com/alternetsoft/AlternetUI/issues/157.
-This control is based on his idea, but for the evaluation we use
-CSharpScript.EvaluateAsync as it gives us more power.
+This control is based on his idea.
 
 */
 
@@ -72,7 +71,7 @@ namespace Alternet.UI
                 RowColumnCount = (6, 4),
             };
 
-            displayTextBox = new TextBoxAndButton
+            displayTextBox = new ()
             {
                 ButtonsVisible = false,
                 InnerOuterBorder = InnerOuterSelector.Outer,
@@ -81,6 +80,12 @@ namespace Alternet.UI
                 Parent = buttonGrid,
                 Margin = (0, 0, 0, DefaultDistanceToDisplay),
             };
+
+            if(displayTextBox is TextBoxAndButton textBoxAndButton)
+            {
+                textBoxAndButton.MainControl.TabStop = false;
+                textBoxAndButton.MainControl.CanSelect = false;
+            }
 
             displayTextBox.MainControl.KeyDown += (s, e) =>
             {
@@ -92,7 +97,7 @@ namespace Alternet.UI
 
             displayTextBox.DelayedTextChanged += (s, e) =>
             {
-                displayTextBox.MainControl.ReportValidatorError(false);
+                displayTextBox.ReportError(false);
             };
 
             string[] buttonLabels =
@@ -133,6 +138,10 @@ namespace Alternet.UI
                 {
                     ButtonClickHandler(button.Text, displayTextBox);
                 };
+                button.DoubleClick += (sender, e) =>
+                {
+                    ButtonClickHandler(button.Text, displayTextBox);
+                };
             }
 
             buttonSet = new(buttons);
@@ -170,7 +179,7 @@ namespace Alternet.UI
         /// Gets display control.
         /// </summary>
         [Browsable(false)]
-        public TextBoxAndButton DisplayTextBox => displayTextBox;
+        public AbstractControl DisplayTextBox => displayTextBox;
 
         /// <summary>
         /// Gets panel with buttons.
@@ -191,42 +200,42 @@ namespace Alternet.UI
         public ControlSet SetOfButtons => buttonSet;
 
         /// <summary>
-        /// Evaluates formula.
+        /// Evaluates formula synchronously and returns the result.
         /// </summary>
         /// <param name="formula">Formula to evaluate.</param>
-        /// <returns></returns>
-        public virtual object Evaluate(string formula)
+        /// <param name="cancellationToken">A token to monitor for cancellation requests.
+        /// Defaults to <see cref="CancellationToken.None"/>.</param>
+        /// <returns>The evaluated result of the formula.</returns>
+        public virtual object Evaluate(
+            string formula,
+            CancellationToken cancellationToken = default)
         {
-            var result = FormulaEngine.EvaluateAsync<object>(
-                formula,
-                FormulaOptions,
-                FormulaGlobalContext,
-                FormulaGlobalType).Result;
+            var result = EvaluateAsync(formula, cancellationToken).Result;
             return result;
         }
 
         /// <summary>
-        /// Asynchronously evaluates the specified formula and returns the result
-        /// as the specified type.
+        /// Asynchronously evaluates the specified formula and returns the result.
         /// </summary>
         /// <remarks>The evaluation process uses the default formula options, global object,
-        /// and global type configured for the current instance. Ensure that the formula
-        /// is compatible with the expected type
-        /// <typeparamref name="T"/> to avoid runtime casting errors.</remarks>
-        /// <typeparam name="T">The type to which the result of the formula evaluation
-        /// will be cast.</typeparam>
+        /// and global type configured for the current instance.</remarks>
         /// <param name="formula">The formula to evaluate.
         /// This must be a valid expression supported by the evaluation engine.</param>
+        /// <param name="cancellationToken">A token to monitor for cancellation requests.
+        /// Defaults to <see cref="CancellationToken.None"/>.</param>
         /// <returns>A task that represents the asynchronous operation.
-        /// The task result contains the evaluated value of the
-        /// formula, cast to the specified type <typeparamref name="T"/>.</returns>
-        public virtual Task<T> EvaluateAsync<T>(string formula)
+        /// The task result contains the evaluated value of the formula.</returns>
+        public virtual Task<object> EvaluateAsync(
+            string formula,
+            CancellationToken cancellationToken = default)
         {
-            var result = FormulaEngine.EvaluateAsync<T>(
+            var result = FormulaEngine.EvaluateAsync(
+                this,
                 formula,
                 FormulaOptions,
                 FormulaGlobalContext,
-                FormulaGlobalType);
+                FormulaGlobalType,
+                cancellationToken);
             return result;
         }
 
@@ -240,6 +249,7 @@ namespace Alternet.UI
             result.UseTheme = SpeedButton.KnownTheme.StaticBorder;
             result.Padding = DefaultButtonPadding;
             result.MinimumSize = DefaultMinButtonSize;
+            result.IsClickRepeated = true;
             return result;
         }
 
@@ -256,13 +266,26 @@ namespace Alternet.UI
             try
             {
                 object? result = Evaluate(displayTextBox.Text);
-                displayTextBox.TextBox.TextAsNumber = result;
-                displayTextBox.MainControl.ReportValidatorError(false);
+
+                if(result is Exception exception)
+                {
+                    ReportError(exception);
+                    return;
+                }
+
+                displayTextBox.Text = result.ToString();
+                displayTextBox.ReportError(false);
             }
             catch (Exception e)
             {
-                displayTextBox.MainControl
-                    .ReportValidatorError(true, $"Error: {e.Message}");
+                ReportError(e);
+            }
+
+            void ReportError(Exception e)
+            {
+                while(e.InnerException != null)
+                    e = e.InnerException;
+                displayTextBox.ReportError(true, $"Error: {e.Message}");
             }
         }
 
@@ -271,7 +294,7 @@ namespace Alternet.UI
         /// </summary>
         public virtual void DoActionClearAll()
         {
-            displayTextBox.TextBox.Clear();
+            displayTextBox.Text = string.Empty;
         }
 
         /// <summary>
@@ -287,7 +310,7 @@ namespace Alternet.UI
         /// <inheritdoc/>
         public override bool SetFocus()
         {
-            return DisplayTextBox.MainControl.SetFocusIfPossible();
+            return false;
         }
 
         /// <summary>
@@ -318,7 +341,7 @@ namespace Alternet.UI
         /// This determines the action to perform.</param>
         /// <param name="displayTextBox">The <see cref="TextBoxAndButton"/> control
         /// associated with the button, used to display or modify text.</param>
-        private void ButtonClickHandler(string buttonText, TextBoxAndButton displayTextBox)
+        private void ButtonClickHandler(string buttonText, AbstractControl displayTextBox)
         {
             switch (buttonText)
             {
