@@ -58,6 +58,11 @@ namespace Alternet.UI
             {
                 return ListBox.Items;
             }
+
+            set
+            {
+                ListBox.Items = value;
+            }
         }
 
         /// <summary>
