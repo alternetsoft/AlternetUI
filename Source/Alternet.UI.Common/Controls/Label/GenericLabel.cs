@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -13,12 +14,18 @@ namespace Alternet.UI
     /// </summary>
     public partial class GenericLabel : GenericControl
     {
+        /// <summary>
+        /// Gets or sets whether to show debug corners when control is painted.
+        /// </summary>
+        public static bool ShowDebugCorners = false;
+
         private bool imageVisible = true;
         private int? mnemonicCharIndex = null;
         private HVAlignment alignment;
         private string? textPrefix;
         private string? textSuffix;
         private string? textFormat;
+        private Graphics.DrawLabelParams prm;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="GenericLabel"/> class.
@@ -55,9 +62,19 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Occurs before the text is drawn.
+        /// </summary>
+        public event EventHandler? BeforeDrawText;
+
+        /// <summary>
         /// Occurs when the <see cref="Image"/> property changes.
         /// </summary>
         public event EventHandler? ImageChanged;
+
+        /// <summary>
+        /// Gets parameters for drawing label.
+        /// </summary>
+        public Graphics.DrawLabelParams DrawLabelParams => prm;
 
         /// <summary>
         /// Gets or sets text prefix.
@@ -233,7 +250,7 @@ namespace Alternet.UI
                 if (base.Text == value)
                     return;
                 base.Text = value;
-                /*PerformLayoutAndInvalidate();*/
+                PerformLayoutAndInvalidate();
             }
         }
 
@@ -361,7 +378,7 @@ namespace Alternet.UI
             var labelBackColor = backColor ?? GetLabelBackColor(state);
             var mnemonicCharIndex = GetMnemonicCharIndex();
 
-            Graphics.DrawLabelParams prm = new(
+            prm = new(
                 labelText,
                 labelFont,
                 labelForeColor,
@@ -373,7 +390,7 @@ namespace Alternet.UI
 
             prm.Visible = foreColor != Color.Empty;
 
-            var result = DrawDefaultText(dc, ref prm);
+            var result = DrawDefaultText(dc);
             return result;
         }
 
@@ -381,11 +398,15 @@ namespace Alternet.UI
         /// Draws text in the default style using the specified parameters.
         /// </summary>
         /// <param name="dc">Drawing context.</param>
-        /// <param name="prm">Drawing parameters.</param>
         /// <returns></returns>
-        public virtual RectD DrawDefaultText(Graphics dc, ref Graphics.DrawLabelParams prm)
+        public virtual RectD DrawDefaultText(Graphics dc)
         {
-            var result = dc.DrawLabel(ref prm);
+            BeforeDrawText?.Invoke(this, EventArgs.Empty);
+
+            RectD result = RectD.Empty;
+
+            result = dc.DrawLabel(ref prm);
+
             return result;
         }
 
@@ -417,6 +438,7 @@ namespace Alternet.UI
                 rect = rect.DeflatedWithPadding(border.Width);
 
             DrawDefaultText(dc, rect);
+            DefaultPaintDebug(e);
         }
 
         /// <inheritdoc/>
@@ -484,6 +506,13 @@ namespace Alternet.UI
         {
             var result = MnemonicCharIndex ?? -1;
             return result;
+        }
+
+        [Conditional("DEBUG")]
+        private void DefaultPaintDebug(PaintEventArgs e)
+        {
+            if (ShowDebugCorners)
+                BorderSettings.DrawDesignCorners(e.Graphics, e.ClipRectangle);
         }
     }
 }
