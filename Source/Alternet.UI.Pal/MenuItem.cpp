@@ -17,6 +17,9 @@ namespace Alternet::UI
 
     void MenuItem::SetNormalImage(ImageSet* value)
     {
+       if (value == _normalImage)
+			return;
+
         if (_normalImage != nullptr)
             _normalImage->Release();
 
@@ -41,6 +44,15 @@ namespace Alternet::UI
 
     void MenuItem::SetDisabledImage(ImageSet* value)
     {
+
+        /*
+		* This is commented out because there are problems with disabled images
+		* on Windows when dark mode is enabled. Also disabled image for menu item
+		* is only supported on Windows.
+         
+       if (value == _disabledImage)
+            return;
+
         if (_disabledImage != nullptr)
             _disabledImage->Release();
 
@@ -55,6 +67,7 @@ namespace Alternet::UI
 #ifdef __WXMSW__
         _menuItem->SetDisabledBitmap(ImageSet::BitmapBundle(value));
 #endif
+        */
     }
 
     MenuItem::MenuItem() : _flags(MenuItemFlags::Enabled)
