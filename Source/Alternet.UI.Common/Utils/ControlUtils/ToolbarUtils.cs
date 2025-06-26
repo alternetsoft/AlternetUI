@@ -133,12 +133,53 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets the normal and disabled images as <see cref="ImageSet"/> from the specified
+        /// <see cref="SvgImage"/> and <see cref="KnownButton"/>.
+        /// </summary>
+        /// <param name="btn">The known button for which images are retrieved.</param>
+        /// <param name="control">The control which affects image rendering and is used
+        /// to get scale factor.</param>
+        /// <param name="svg">The SVG image to process. Optional. If not specified,
+        /// the SVG image is retrieved based on the known button image.</param>
+        /// <param name="size">The size of the image. If not specified, the default
+        /// size for the toolbar images is used.</param>
+        /// <returns>A tuple containing normal and disabled image sets.</returns>
+        public static (ImageSet? Normal, ImageSet? Disabled) GetNormalAndDisabledSvg(
+            SvgImage? svg,
+            KnownButton btn,
+            AbstractControl control,
+            int? size = null)
+        {
+            if (svg is null)
+            {
+                var info = KnownButtons.GetInfo(btn);
+                svg = info?.SvgImage;
+            }
+
+            if (svg is null)
+            {
+                return (null, null);
+            }
+
+            size ??= ToolBarUtils.GetDefaultImageSize(control).Width;
+
+            var normalColor = control.GetSvgColor(KnownSvgColor.Normal);
+            var disabledColor = control.GetSvgColor(KnownSvgColor.Disabled);
+
+            var normalImage = svg.ImageSetWithColor(size.Value, normalColor);
+            var disabledImage = svg.ImageSetWithColor(size.Value, disabledColor);
+
+            return (normalImage, disabledImage);
+        }
+
+        /// <summary>
         /// Initializes a tuple with two instances of the <see cref="ImageSet"/> class
         /// from the specified url which contains svg data. Images are loaded
         /// for the normal and disabled states using <see cref="AbstractControl.GetSvgColor"/>.
         /// </summary>
         /// <param name="size">Image size in pixels. If it is not specified,
-        /// <see cref="ToolBarUtils.GetDefaultImageSize(AbstractControl)"/> is used to get image size.</param>
+        /// <see cref="ToolBarUtils.GetDefaultImageSize(AbstractControl)"/> is
+        /// used to get image size.</param>
         /// <param name="control">Control which <see cref="AbstractControl.GetSvgColor"/>
         /// method is called to get color information.</param>
         /// <returns></returns>
@@ -166,7 +207,8 @@ namespace Alternet.UI
         /// </summary>
         /// <remarks>
         /// This is similar to <see cref="Image.FromSvgUrl"/> but uses
-        /// <see cref="AbstractControl.GetDPI"/> and <see cref="ToolBarUtils.GetDefaultImageSize(Coord)"/>
+        /// <see cref="AbstractControl.GetDPI"/> and
+        /// <see cref="ToolBarUtils.GetDefaultImageSize(Coord)"/>
         /// to get appropriate image size which is best suitable for toolbars.
         /// </remarks>
         /// <param name="url">The file or embedded resource url with Svg data used
@@ -177,7 +219,10 @@ namespace Alternet.UI
         /// on the toolbars.</returns>
         /// <param name="color">Svg fill color. Optional.
         /// If provided, svg fill color is changed to the specified value.</param>
-        public static ImageSet FromSvgUrlForToolbar(string url, AbstractControl control, Color? color = null)
+        public static ImageSet FromSvgUrlForToolbar(
+            string url,
+            AbstractControl control,
+            Color? color = null)
         {
             var imageSize = ToolBarUtils.GetDefaultImageSize(control);
             var result = ImageSet.FromSvgUrl(url, imageSize.Width, imageSize.Height, color);
