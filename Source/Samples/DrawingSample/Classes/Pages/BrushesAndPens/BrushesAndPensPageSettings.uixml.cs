@@ -10,9 +10,9 @@ namespace DrawingSample
         private readonly Label dashStyleLabel = new("Dash Style:");
         private readonly Label lineCapLabel = new("Line Cap:");
         private readonly Label lineJoinLabel = new("Line Join:");
-        private readonly ComboBox dashStyleComboBox = new();
-        private readonly ComboBox lineCapComboBox = new();
-        private readonly ComboBox lineJoinComboBox = new();
+        private readonly EnumPicker dashStyleComboBox = new();
+        private readonly EnumPicker lineCapComboBox = new();
+        private readonly EnumPicker lineJoinComboBox = new();
         private BrushesAndPensPage? page;
 
         public BrushesAndPensPageSettings()
@@ -24,7 +24,7 @@ namespace DrawingSample
                 ControlSet labels = new(dashStyleLabel, lineCapLabel, lineJoinLabel);
                 ControlSet comboBoxes = new(dashStyleComboBox, lineCapComboBox, lineJoinComboBox);
                 labels.Margin(new(0, 5, 10, 5)).VerticalAlignment(VerticalAlignment.Center);
-                comboBoxes.Margin(new(0, 5, 0, 5)).IsEditable(false);
+                comboBoxes.Margin(new(0, 5, 0, 5));
                 var gridControls = ControlSet.GridFromColumns(labels, comboBoxes);
 
                 propGrid.Setup(gridControls);
@@ -35,40 +35,41 @@ namespace DrawingSample
         {
             DataContext = page;
             this.page = page;
-            brushComboBox.AddEnumValues<BrushesAndPensPage.BrushType>();
-            hatchStyleComboBox.AddEnumValues<BrushHatchStyle>();
-            dashStyleComboBox.AddEnumValues<DashStyle>();
-            lineJoinComboBox.AddEnumValues<LineJoin>();
-            lineCapComboBox.AddEnumValues<LineCap>();
 
-            dashStyleComboBox.SelectedItem = page.PenDashStyle;
-            dashStyleComboBox.SelectedItemChanged += (s, e) =>
+            brushComboBox.EnumType = typeof(BrushesAndPensPage.BrushType);
+            hatchStyleComboBox.EnumType = typeof(BrushHatchStyle);
+            dashStyleComboBox.EnumType = typeof(DashStyle);
+            lineJoinComboBox.EnumType = typeof(LineJoin);
+            lineCapComboBox.EnumType = typeof(LineCap);
+
+            dashStyleComboBox.Value = page.PenDashStyle;
+            dashStyleComboBox.ValueChanged += (s, e) =>
             {
-                page.PenDashStyle = dashStyleComboBox.SelectedItemAs<DashStyle>();
+                page.PenDashStyle = dashStyleComboBox.ValueAs<DashStyle>();
             };
 
-            lineCapComboBox.SelectedItem = page.LineCap;
-            lineCapComboBox.SelectedItemChanged += (s, e) =>
+            lineCapComboBox.Value = page.LineCap;
+            lineCapComboBox.ValueChanged += (s, e) =>
             {
-                page.LineCap = lineCapComboBox.SelectedItemAs<LineCap>();
+                page.LineCap = lineCapComboBox.ValueAs<LineCap>();
             };
 
-            lineJoinComboBox.SelectedItem = page.LineJoin;
-            lineJoinComboBox.SelectedItemChanged += (s, e) =>
+            lineJoinComboBox.Value = page.LineJoin;
+            lineJoinComboBox.ValueChanged += (s, e) =>
             {
-                page.LineJoin = lineJoinComboBox.SelectedItemAs<LineJoin>();
+                page.LineJoin = lineJoinComboBox.ValueAs<LineJoin>();
             };
 
-            hatchStyleComboBox.SelectedItem = page.HatchStyle;
-            hatchStyleComboBox.SelectedItemChanged += (s, e) =>
+            hatchStyleComboBox.Value = page.HatchStyle;
+            hatchStyleComboBox.ValueChanged += (s, e) =>
             {
-                page.HatchStyle = hatchStyleComboBox.SelectedItemAs<BrushHatchStyle>();
+                page.HatchStyle = hatchStyleComboBox.ValueAs<BrushHatchStyle>();
             };
 
-            brushComboBox.SelectedItem = page.Brush;
-            brushComboBox.SelectedItemChanged += (s, e) =>
+            brushComboBox.Value = page.Brush;
+            brushComboBox.ValueChanged += (s, e) =>
             {
-                page.Brush = brushComboBox.SelectedItemAs<BrushesAndPensPage.BrushType>();
+                page.Brush = brushComboBox.ValueAs<BrushesAndPensPage.BrushType>();
             };
 
             shapeCountSlider.Value = page.ShapeCount;

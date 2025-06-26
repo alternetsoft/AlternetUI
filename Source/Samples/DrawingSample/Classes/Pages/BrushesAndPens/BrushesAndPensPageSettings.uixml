@@ -4,38 +4,38 @@
         xmlns:local="clr-namespace:DrawingSample;assembly=DrawingSample">
 
   <StackPanel Orientation="Vertical" Margin="5">
-	<HorizontalStackPanel Margin="0,0,0,5">
-    		<Label Text="Shapes:" Margin="0,0,5,0" IsTextLocalized="true"/>
-	    	<Slider Name="shapeCountSlider" Minimum="1" Maximum="100"
-                    Margin="0,0,0,0"  TickStyle="None" MinWidth="150"/>
-	</HorizontalStackPanel>
+    <HorizontalStackPanel Margin="0,0,0,5">
+      <Label Text="Shapes:" IsTextLocalized="true" VerticalAlignment="Center" MarginRight="5"/>
+      <IntPicker Name="shapeCountSlider" Minimum="1" Maximum="100"
+              Margin="0,0,0,0"  MinWidth="150" HorizontalAlignment="Fill"/>
+    </HorizontalStackPanel>
 
-	<HorizontalStackPanel>
-    		<CheckBox Name="rectanglesIncludedCheckBox" Text="Rectangles"
-                      Margin="0,0,0,5" IsTextLocalized="true"/>
-		<CheckBox Name="ellipsesIncludedCheckBox" Text="Ellipses"
-                  Margin="0,0,0,5" IsTextLocalized="true"/>
-	</HorizontalStackPanel>
+    <HorizontalStackPanel>
+      <CheckBox Name="rectanglesIncludedCheckBox" Text="Rectangles"
+                Margin="0,0,0,5" IsTextLocalized="true"/>
+      <CheckBox Name="ellipsesIncludedCheckBox" Text="Ellipses"
+                Margin="0,0,0,5" IsTextLocalized="true"/>
+    </HorizontalStackPanel>
 
-	<HorizontalStackPanel  Margin="0,5,0,5">
-    		<Label Text="Brush:"  Margin="0,0,5,0" IsTextLocalized="true"/>
-		    <ComboBox Name="brushComboBox" IsEditable="false" MinWidth="150"
-			SelectedItemChanged="BrushComboBox_SelectedItemChanged"/>
-	</HorizontalStackPanel>
+    <HorizontalStackPanel  Margin="0,5,0,5">
+      <Label Text="Brush:"  IsTextLocalized="true" VerticalAlignment="Center" MarginRight="5"/>
+      <EnumPicker Name="brushComboBox" MinWidth="150"
+      ValueChanged="BrushComboBox_SelectedItemChanged" HorizontalAlignment="Fill"/>
+    </HorizontalStackPanel>
 
     <StackPanel Name="hatchStylePanel" Visible="false">
       <Label Text="Brush Hatch Style:" Margin="0,5,0,5" />
-      <ComboBox Name="hatchStyleComboBox" IsEditable="false"/>
+      <EnumPicker Name="hatchStyleComboBox"/>
     </StackPanel>
 
     <Label Text="Brush Color:" Margin="0,5,0,5" IsTextLocalized="true"/>
-    <Slider Name="brushColorHueSlider" Minimum="0" Maximum="10" Margin="0,0,0,10"  TickStyle="None"/>
+    <IntPicker Name="brushColorHueSlider" Minimum="0" Maximum="10" Margin="0,0,0,10" />
 
     <Label Text="Pen Color:" Margin="0,5,0,5" IsTextLocalized="true"/>
-    <Slider Name="penColorHueSlider" Minimum="0" Maximum="10" Margin="0,0,0,10"  TickStyle="None"/>
+    <IntPicker Name="penColorHueSlider" Minimum="0" Maximum="10" Margin="0,0,0,10"/>
 
     <Label Text="Pen Width:" Margin="0,5,0,5" IsTextLocalized="true"/>
-    <Slider Name="penWidthSlider" Minimum="0" Maximum="6" Margin="0,0,0,10"  TickStyle="None"/>
+    <IntPicker Name="penWidthSlider" Minimum="0" Maximum="6" Margin="0,0,0,10"/>
 
     <Grid Margin="0,5,0,5" Name="propGrid">
     </Grid>
