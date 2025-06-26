@@ -186,6 +186,7 @@ namespace PropertyGridSample
             Actions.Add(typeof(ComboBoxAndLabel), InitComboBoxAndLabel);
             Actions.Add(typeof(MultilineTextBox), InitMultilineTextBox);
             Actions.Add(typeof(GenericLabel), InitGenericLabel);
+            Actions.Add(typeof(LabelAndButton), InitLabelAndButton);
             Actions.Add(typeof(Label), InitLabel);
             Actions.Add(typeof(GenericTextControl), InitGenericTextControl);
             Actions.Add(typeof(LinkLabel), InitLinkLabel);

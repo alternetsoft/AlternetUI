@@ -102,6 +102,8 @@ namespace PropertyGridSample
                 LimitedTypes.Add(typeof(TextBoxAndButton));
                 LimitedTypes.Add(typeof(FontComboBox));
                 LimitedTypes.Add(typeof(Calculator));
+                LimitedTypes.Add(typeof(LabelAndButton));
+                LimitedTypes.Add(typeof(IntPicker));
 
                 if (DebugUtils.IsDebugDefined)
                 {
