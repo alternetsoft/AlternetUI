@@ -149,5 +149,16 @@ namespace Alternet.UI.Extensions
         {
             return ContainsChar(s, ',');
         }
+
+        /// <summary>
+        /// Removes all space characters from the string.
+        /// </summary>
+        /// <param name="s">String to process.</param>
+        /// <returns>A string without any space characters.</returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static string StripSpaces(this string s)
+        {
+            return s.Replace(" ", string.Empty);
+        }
     }
 }
