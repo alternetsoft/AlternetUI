@@ -43,9 +43,16 @@ namespace Alternet.UI
         /// </summary>
         public SpeedButtonWithListPopup()
         {
+            // Ensure that control occupies space even if value is null.
             base.Text = " ";
+
             TextVisible = true;
-            ImageVisible = false;
+            SetDefaultComboBoxImage();
+            ImageVisible = true;
+            SetContentHorizontalAlignment(
+                        pictureAlignment: HorizontalAlignment.Right,
+                        labelAlignment: HorizontalAlignment.Fill,
+                        spacerAlignment: HorizontalAlignment.Right);
         }
 
         /// <summary>
@@ -115,9 +122,12 @@ namespace Alternet.UI
             {
                 if (data == value)
                     return;
-                data = value;
-                base.Text = Text ?? " ";
-                ValueChanged?.Invoke(this, EventArgs.Empty);
+                PerformLayoutAndInvalidate(() =>
+                {
+                    data = value;
+                    base.Text = Text ?? " ";
+                    ValueChanged?.Invoke(this, EventArgs.Empty);
+                });
             }
         }
 

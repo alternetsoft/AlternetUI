@@ -29,7 +29,6 @@ namespace Alternet.UI
         public ListPicker()
         {
             UseTheme = KnownTheme.StaticBorder;
-            SetContentHorizontalAlignment(HorizontalAlignment.Left);
         }
 
         /// <inheritdoc/>

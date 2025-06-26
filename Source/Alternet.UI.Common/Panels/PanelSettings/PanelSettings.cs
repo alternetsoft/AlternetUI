@@ -623,6 +623,7 @@ namespace Alternet.UI
             var result
                 = CreateOrUpdateControl<ControlAndLabel<EnumPickerAndButton, Label>>(item, control);
             result.LabelToControl = StackPanelOrientation.Vertical;
+            result.MainControl.HasBtnComboBox = false;
             UpdateText(item, result.Label);
 
             var enumEditor = result.MainControl;

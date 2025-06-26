@@ -28,7 +28,6 @@ namespace Alternet.UI
         public EnumPicker()
         {
             UseTheme = KnownTheme.StaticBorder;
-            SetContentHorizontalAlignment(HorizontalAlignment.Left);
         }
 
         /// <inheritdoc/>
