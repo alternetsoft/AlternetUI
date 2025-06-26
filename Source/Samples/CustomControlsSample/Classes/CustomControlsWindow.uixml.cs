@@ -8,23 +8,10 @@ namespace CustomControlsSample
 {
     internal partial class CustomControlsWindow : Window
     {
-        private readonly SpeedColorButton colorPicker = new()
+        private readonly ColorPicker colorPicker = new()
         {
             Value = Color.Red,
             HorizontalAlignment = HorizontalAlignment.Left,
-            MinimumSize = 32,
-            VerticalAlignment = VerticalAlignment.Center,
-            UseTheme = SpeedButton.KnownTheme.StaticBorder,
-        };
-
-        private readonly ColorComboBox colorCombo = new()
-        {
-            Value = Color.Red,
-            VerticalAlignment = VerticalAlignment.Center,
-        };
-
-        private readonly Label colorComboLabel = new("ComboBox:")
-        {
             VerticalAlignment = VerticalAlignment.Center,
         };
 
@@ -58,9 +45,6 @@ namespace CustomControlsSample
             {
                 colorPicker.Parent = colorGroupBox;
 
-                colorComboLabel.Parent = colorGroupBox;
-                colorCombo.Parent = colorGroupBox;
-                
                 ticTacToe.Parent = ticTacToeStackPanel;
                 
                 knobControl.Parent = slidersStackPanel;
