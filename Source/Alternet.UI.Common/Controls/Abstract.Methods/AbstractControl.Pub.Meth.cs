@@ -7,6 +7,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Reflection;
 using System.Runtime.CompilerServices;
+
 using Alternet.Drawing;
 using Alternet.UI.Extensions;
 
@@ -14,6 +15,28 @@ namespace Alternet.UI
 {
     public partial class AbstractControl
     {
+        /// <summary>
+        /// Specifies draw default background flags.
+        /// </summary>
+        [Flags]
+        public enum DrawDefaultBackgroundFlags
+        {
+            /// <summary>
+            /// Specifies that background should be drawn.
+            /// </summary>
+            DrawBackground = 1,
+
+            /// <summary>
+            /// Specifies that border should be drawn.
+            /// </summary>
+            DrawBorder = 2,
+
+            /// <summary>
+            /// Specifies that both background and border should be drawn.
+            /// </summary>
+            DrawBorderAndBackground = DrawBackground | DrawBorder,
+        }
+
         /// <summary>
         /// Adds <see cref="IControlNotification"/> object to the global list of notifications.
         /// </summary>
@@ -74,7 +97,7 @@ namespace Alternet.UI
                     else
                     {
                         var temp = result;
-                        while(temp != control && temp is not null)
+                        while (temp != control && temp is not null)
                         {
                             position -= temp.Location;
                             temp = temp.Parent;
@@ -108,7 +131,7 @@ namespace Alternet.UI
             Func<RectD> getBounds,
             IReadOnlyList<AbstractControl> items)
         {
-            if(layout == LayoutStyle.Scroll)
+            if (layout == LayoutStyle.Scroll)
             {
                 OldLayout.LayoutWhenScroll(container, getBounds, items, true);
                 return;
@@ -253,7 +276,7 @@ namespace Alternet.UI
         {
             if ((CharValidator is not null) && !IgnoreCharValidator)
             {
-                if(ch < 32)
+                if (ch < 32)
                 {
                     if (Alternet.UI.CharValidator.AlwaysValidControlChars)
                         return true;
@@ -538,11 +561,16 @@ namespace Alternet.UI
         /// Call this method to draw default background in the user control.
         /// </summary>
         /// <param name="e">Paint arguments.</param>
-        public virtual void DrawDefaultBackground(PaintEventArgs e)
+        /// <param name="flags"></param>
+        public virtual void DrawDefaultBackground(
+            PaintEventArgs e,
+            DrawDefaultBackgroundFlags flags = DrawDefaultBackgroundFlags.DrawBorderAndBackground)
         {
             var state = VisualState;
-            var brush = GetBackground(state);
-            var border = GetBorderSettings(state);
+            var brush = flags.HasFlag(DrawDefaultBackgroundFlags.DrawBackground)
+                ? GetBackground(state) : null;
+            var border = flags.HasFlag(DrawDefaultBackgroundFlags.DrawBorder)
+                ? GetBorderSettings(state) : null;
 
             if (brush is null && (border is null || !HasBorder))
                 return;
@@ -554,7 +582,7 @@ namespace Alternet.UI
                 rect,
                 brush,
                 border,
-                HasBorder,
+                HasBorder && flags.HasFlag(DrawDefaultBackgroundFlags.DrawBorder),
                 this);
         }
 
@@ -614,7 +642,7 @@ namespace Alternet.UI
                     Keyboard.HideKeyboard(this);
                     break;
                 case GenericControlAction.ShowKeyboardIfNoHardware:
-                    if(Keyboard.IsKeyboardPresent is false)
+                    if (Keyboard.IsKeyboardPresent is false)
                         Keyboard.ShowKeyboard(this);
                     break;
                 case GenericControlAction.ShowKeyboardIfUnknown:
@@ -1866,7 +1894,7 @@ namespace Alternet.UI
 
             foreach (var child in Children)
             {
-                if(child is T control)
+                if (child is T control)
                     action(control);
             }
         }
@@ -2475,12 +2503,12 @@ namespace Alternet.UI
         {
             var allChildren = AllChildren;
 
-            for(int i = allChildren.Count - 1; i >= 0; i--)
+            for (int i = allChildren.Count - 1; i >= 0; i--)
             {
                 var child = allChildren[i];
                 if (!child.Visible)
                     continue;
-                if(child.Bounds.Contains(point))
+                if (child.Bounds.Contains(point))
                     yield return child;
             }
         }
