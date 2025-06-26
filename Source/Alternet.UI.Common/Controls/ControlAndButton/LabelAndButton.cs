@@ -10,48 +10,26 @@ namespace Alternet.UI
     /// <summary>
     /// Implements <see cref="GenericLabel"/> with side buttons.
     /// </summary>
-    public partial class LabelAndButton : ControlAndButton
+    public partial class LabelAndButton : ControlAndButton<GenericLabel>
     {
+        /// <summary>
+        /// Default margin for the label in <see cref="LabelAndButton"/>.
+        /// </summary>
+        public static Thickness DefaultLabelMargin = 2;
+
         /// <summary>
         /// Initializes a new instance of the <see cref="LabelAndButton"/> class.
         /// </summary>
         public LabelAndButton()
         {
+            InnerOuterBorder = InnerOuterSelector.Outer;
+            Label.Margin = DefaultLabelMargin;
         }
 
         /// <summary>
-        /// Gets main child control.
+        /// Gets main child control, same as <see cref="ControlAndButton{T}.MainControl"/>.
         /// </summary>
         [Browsable(false)]
-        public new GenericLabel MainControl => (GenericLabel)base.MainControl;
-
-        /// <summary>
-        /// Gets main child control, same as <see cref="MainControl"/>.
-        /// </summary>
-        [Browsable(false)]
-        public GenericLabel Label => (GenericLabel)base.MainControl;
-
-        /// <summary>
-        /// Gets or sets <see cref="AbstractControl.Text"/> property of the main child control.
-        /// </summary>
-        [Browsable(true)]
-        public override string Text
-        {
-            get
-            {
-                return Label.Text;
-            }
-
-            set
-            {
-                Label.Text = value;
-            }
-        }
-
-        /// <inheritdoc/>
-        protected override AbstractControl CreateControl()
-        {
-            return new GenericLabel();
-        }
+        public GenericLabel Label => (GenericLabel)MainControl;
     }
 }

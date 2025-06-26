@@ -375,6 +375,30 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets combo button if it is available.
+        /// </summary>
+        [Browsable(false)]
+        public SpeedButton? ButtonCombo => buttons.FindTool(IdButtonCombo);
+
+        /// <summary>
+        /// Gets ellipsis button if it is available.
+        /// </summary>
+        [Browsable(false)]
+        public SpeedButton? ButtonEllipsis => buttons.FindTool(IdButtonEllipsis);
+
+        /// <summary>
+        /// Gets 'Plus' button if it is available.
+        /// </summary>
+        [Browsable(false)]
+        public SpeedButton? ButtonPlus => buttons.FindTool(IdButtonPlus);
+
+        /// <summary>
+        /// Gets 'Minus' button if it is available.
+        /// </summary>
+        [Browsable(false)]
+        public SpeedButton? ButtonMinus => buttons.FindTool(IdButtonMinus);
+
+        /// <summary>
         /// Gets or sets where border is painted (around the child or around the parent).
         /// When this property is set, background color is also updated
         /// if <see cref="AutoBackColor"/> is true.
