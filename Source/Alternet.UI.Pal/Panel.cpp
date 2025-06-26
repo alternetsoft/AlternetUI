@@ -76,6 +76,7 @@ namespace Alternet::UI
         }
         */
         auto p = new wxPanel2(this, parent, wxID_ANY, wxDefaultPosition, wxDefaultSize, style);
+        p->SetBackgroundStyle(wxBackgroundStyle::wxBG_STYLE_PAINT);
         return p;
     }
 }

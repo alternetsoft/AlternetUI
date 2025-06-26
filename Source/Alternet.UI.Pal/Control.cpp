@@ -2133,7 +2133,7 @@ namespace Alternet::UI
 
     bool Control::SetBackgroundStyle(int style)
     {
-        return GetWxWindow()->SetBackgroundStyle((wxBackgroundStyle)style);
+        return false;
     }
 
     int Control::GetBackgroundStyle()
@@ -2365,6 +2365,7 @@ namespace Alternet::UI
 */
         auto style = GetDefaultStyle();
         auto p = new wxWindow2(this, parent, wxID_ANY, wxDefaultPosition, wxDefaultSize, style);
+        p->SetBackgroundStyle(wxBackgroundStyle::wxBG_STYLE_PAINT);
         return p;
     }
 
