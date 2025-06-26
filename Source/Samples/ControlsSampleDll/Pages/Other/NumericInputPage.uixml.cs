@@ -23,6 +23,11 @@ namespace ControlsSample
                 calculator.ParentBackColor = false;
                 calcPanel.BackColor = SystemColors.Window;
             };
+
+            intPicker.ValueChanged += (s,e)=>
+            {
+                progressBarControlNumericUpDown.Value = intPicker.Value;
+            };
         }
 
         private void NumericUpDown_ValueChanged(object? sender, EventArgs e)
@@ -34,17 +39,29 @@ namespace ControlsSample
             object? sender, 
             EventArgs e)
         {
-            progressBar.Value = (int)progressBarControlNumericUpDown.Value;
+            intPicker.Value = (int)progressBarControlNumericUpDown.Value;
         }
 
         private void HasBorderButton_Click(object? sender, EventArgs e)
         {
         }
 
-        private void IncreaseAllButton_Click(object? sender, EventArgs e)
+        private void IncAll(int value)
         {
             numericUpDownsPanel.ForEachChild<NumericUpDown>(
-                (x) => { x.IncrementValue(); });
+                (x) => { x.IncrementValue(value); });
+            numericUpDownsPanel.ForEachChild<IntPicker>(
+                (x) => { x.IncrementValue(value); });
+        }
+
+        private void DecreaseAllButton_Click(object? sender, EventArgs e)
+        {
+            IncAll(-1);
+        }
+
+        private void IncreaseAllButton_Click(object? sender, EventArgs e)
+        {
+            IncAll(1);
         }
     }
 }
