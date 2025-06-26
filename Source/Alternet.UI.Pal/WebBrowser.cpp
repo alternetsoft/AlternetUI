@@ -457,6 +457,9 @@ namespace Alternet::UI
         }
 
         webViewParent = parent;
+
+        webView->SetBackgroundStyle(wxBackgroundStyle::wxBG_STYLE_COLOUR);
+        webView->SetBackgroundColour(*wxWHITE);
         
         /*webView->Bind(wxEVT_ERASE_BACKGROUND, &WebBrowser::OnEraseBackground, this);*/
         webView->Bind(wxEVT_WEBVIEW_NAVIGATING, &WebBrowser::OnNavigating, this);

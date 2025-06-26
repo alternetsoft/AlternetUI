@@ -2488,11 +2488,16 @@ namespace Alternet.UI
         protected override void OnResize(EventArgs e)
         {
             base.OnResize(e);
+
+            /*
             if (!HasChildren && IsEdgeBackend)
             {
-                var control = new Control();
+                var control = new HiddenBorder();
+                control.ParentBackColor = true;
+                control.ParentForeColor = true;
                 control.Parent = this;
             }
+            */
         }
 
         private void ZoomInOut(int delta)

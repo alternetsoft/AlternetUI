@@ -295,6 +295,7 @@ namespace Alternet::UI
             break;
         }
 
+        /* frame->SetBackgroundStyle(wxBackgroundStyle::wxBG_STYLE_PAINT);*/
         ApplyIcon(frame);
 
         frame->Bind(wxEVT_CLOSE_WINDOW, &Window::OnClose, this);
