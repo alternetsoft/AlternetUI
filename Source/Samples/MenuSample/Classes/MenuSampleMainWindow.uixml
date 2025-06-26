@@ -156,10 +156,9 @@
         </StackPanel>
         <StackPanel Margin="10,0,0,0">
           <Label Text="Image to Text:" Margin="5,5,0,3" IsTextLocalized="true"/>
-          <ComboBox IsEditable="false"
+          <EnumPicker
               Name="imageToTextDisplayModeComboBox"
-              SelectedItemChanged=
-                        "ImageToTextDisplayModeComboBox_SelectedItemChanged"
+              ValueChanged= "ImageToTextDisplayModeComboBox_SelectedItemChanged"
               Margin="5,5,0,5"/>
         </StackPanel>
       </HorizontalStackPanel>

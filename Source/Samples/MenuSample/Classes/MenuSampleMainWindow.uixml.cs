@@ -101,10 +101,8 @@ namespace MenuSample
 
             AddDynamicToolbarItem();
 
-            foreach (var value in Enum.GetValues(typeof(ImageToText)))
-                imageToTextDisplayModeComboBox.Items.Add(value!);
-            imageToTextDisplayModeComboBox.SelectedItem =
-                ImageToText.Horizontal;
+            imageToTextDisplayModeComboBox.EnumType = typeof(ImageToText);
+            imageToTextDisplayModeComboBox.Value = ImageToText.Horizontal;
 
             this.Closing += MainWindow_Closing;
 
@@ -536,7 +534,9 @@ namespace MenuSample
 
         private void ImageToTextDisplayModeComboBox_SelectedItemChanged(object sender, EventArgs e)
         {
-            toolbar.ImageToText = (ImageToText)imageToTextDisplayModeComboBox.SelectedItem!;
+            if (toolbar == null || imageToTextDisplayModeComboBox.Value is not ImageToText value)
+                return;
+            toolbar.ImageToText = value;
             VerticalCheckBox_Changed(null, EventArgs.Empty);
         }
 
