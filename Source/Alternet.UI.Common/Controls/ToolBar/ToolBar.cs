@@ -815,6 +815,50 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Adds a default combo box button with optional SVG override.
+        /// </summary>
+        /// <param name="svg">The SVG image associated with the button.
+        /// This parameter can be used to specify optional image override.</param>
+        /// <param name="action">The action to perform when the button is clicked.</param>
+        /// <returns>The unique ID of the added button.</returns>
+        public virtual ObjectUniqueId AddDefaultComboBoxBtn(
+            SvgImage? svg,
+            EventHandler? action = null)
+        {
+            return AddSpeedBtn(
+                ControlAndButton.DefaultBtnComboBoxImage,
+                svg ?? ControlAndButton.DefaultBtnComboBoxSvg,
+                action);
+        }
+
+        /// <summary>
+        /// Adds a known speed button to the toolbar with optional svg override.
+        /// </summary>
+        /// <param name="btn">The known button to add.</param>
+        /// <param name="svg">The SVG image associated with the button.
+        /// This parameter can be used to specify optional image override.</param>
+        /// <param name="action">The action to perform when the button is clicked.</param>
+        /// <returns>The unique ID of the added button.</returns>
+        public virtual ObjectUniqueId AddSpeedBtn(
+            KnownButton btn,
+            SvgImage? svg,
+            EventHandler? action = null)
+        {
+            ObjectUniqueId id;
+
+            if (svg is null)
+            {
+                id = AddSpeedBtn(btn, action);
+            }
+            else
+            {
+                id = AddSpeedBtn(null, svg, action);
+            }
+
+            return id;
+        }
+
+        /// <summary>
         /// Adds known <see cref="SpeedButton"/> to the control.
         /// </summary>
         public virtual ObjectUniqueId AddSpeedBtn(KnownButton button, EventHandler? action = null)
