@@ -104,5 +104,19 @@ namespace Alternet.UI
             get => canvas ??= canvasFunc();
             set => canvas = value;
         }
+
+        /// <summary>
+        /// Creates a new instance of PaintEventArgs with the same canvas and
+        /// the specified rectangle.
+        /// </summary>
+        /// <param name="rect">The rectangle to use for painting.</param>
+        /// <returns>A new instance of PaintEventArgs with the same canvas
+        /// and the given rectangle.</returns>
+        public virtual PaintEventArgs WithRect(RectD rect)
+        {
+            if (rect == ClipRectangle)
+                return this;
+            return new PaintEventArgs(canvasFunc, rect);
+        }
     }
 }
