@@ -47,6 +47,8 @@ namespace Alternet.UI
         public WindowTextInput()
         {
             Padding = DefaultMargin;
+            HasSystemMenu = false;
+            CloseEnabled = false;
             MinimizeEnabled = false;
             StartLocation = WindowStartLocation.CenterOwner;
             MaximizeEnabled = false;
