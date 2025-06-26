@@ -105,7 +105,7 @@ namespace Alternet.UI
             Alignment = HVAlignment.Center,
         };
 
-        private readonly GenericTextControl label = new()
+        private readonly GenericLabel label = new()
         {
             Visible = false,
             Alignment = HVAlignment.Center,
@@ -724,7 +724,30 @@ namespace Alternet.UI
                 if (TextVisible)
                 {
                     if (HasImage)
-                        return new AbstractControl[] { PictureBox, spacer, Label };
+                    {
+                        if(ImageToText == ImageToText.Horizontal)
+                        {
+                            if (PictureBox.HorizontalAlignment == HorizontalAlignment.Right)
+                            {
+                                return new AbstractControl[] { Label, spacer, PictureBox };
+                            }
+                            else
+                            {
+                                return new AbstractControl[] { PictureBox, spacer, Label };
+                            }
+                        }
+                        else
+                        {
+                            if (PictureBox.VerticalAlignment == VerticalAlignment.Bottom)
+                            {
+                                return new AbstractControl[] { Label, spacer, PictureBox };
+                            }
+                            else
+                            {
+                                return new AbstractControl[] { PictureBox, spacer, Label };
+                            }
+                        }
+                    }
                     else
                         return new AbstractControl[] { Label };
                 }
@@ -1003,7 +1026,7 @@ namespace Alternet.UI
         /// Gets inner <see cref="GenericLabel"/> control.
         /// </summary>
         [Browsable(false)]
-        internal GenericTextControl Label => label;
+        internal GenericLabel Label => label;
 
         /// <summary>
         /// Initializes default colors and styles for the <see cref="SpeedButton"/>
@@ -1102,6 +1125,82 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Resets the image and disabled image to null.
+        /// </summary>
+        public virtual void ResetImages()
+        {
+            SetImages(null, null, null, null);
+        }
+
+        /// <summary>
+        /// Sets the images for the control.
+        /// </summary>
+        /// <param name="image">The normal image to display.</param>
+        /// <param name="disabledImage">The image to display when disabled.</param>
+        public void SetImages(Image? image, Image? disabledImage)
+        {
+            SetImages(image, disabledImage, null, null);
+        }
+
+        /// <summary>
+        /// Sets the images for the control.
+        /// </summary>
+        /// <param name="image">The set of images to use.</param>
+        /// <param name="disabledImage">The set of images to use when disabled.</param>
+        public void SetImageSets(ImageSet? image, ImageSet? disabledImage)
+        {
+            SetImages(null, null, image, disabledImage);
+        }
+
+        /// <summary>
+        /// Sets the images for the control.
+        /// </summary>
+        /// <param name="image">The normal image to display.</param>
+        /// <param name="disabledImage">The image to display when disabled.</param>
+        /// <param name="imageSet">The set of images to use.</param>
+        /// <param name="disabledImageSet">The set of images to use when disabled.</param>
+        public virtual void SetImages(
+            Image? image,
+            Image? disabledImage,
+            ImageSet? imageSet,
+            ImageSet? disabledImageSet)
+        {
+            PerformLayoutAndInvalidate(() =>
+            {
+                drawable.Image = image;
+                drawable.DisabledImage = disabledImage;
+                drawable.ImageSet = imageSet;
+                drawable.DisabledImageSet = disabledImageSet;
+                PictureSizeChanged();
+            });
+        }
+
+        /// <summary>
+        /// Sets the default combo box image for the control.
+        /// </summary>
+        public virtual void SetDefaultComboBoxImage()
+        {
+            SetSvgImage(ControlAndButton.DefaultBtnComboBoxSvg, KnownButton.TextBoxCombo);
+        }
+
+        /// <summary>
+        /// Sets the SVG image for the control.
+        /// </summary>
+        /// <param name="svg">SVG image to be set. If null, known button image will be used.</param>
+        /// <param name="btn">Known button type.</param>
+        /// <param name="size">Optional size for the image.</param>
+        public virtual void SetSvgImage(
+            SvgImage? svg,
+            KnownButton btn,
+            int? size = null)
+        {
+            var (normalImage, disabledImage)
+                = ToolBarUtils.GetNormalAndDisabledSvg(svg, btn, this, size);
+
+            SetImageSets(normalImage, disabledImage);
+        }
+
+        /// <summary>
         /// Loads normal and disabled image from the specified file or resource url.
         /// Loaded images assigned to <see cref="ImageSet"/> and
         /// <see cref="DisabledImageSet"/> properties.
@@ -1148,6 +1247,23 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Sets the horizontal alignment for the content elements within the control.
+        /// </summary>
+        /// <param name="pictureAlignment">The desired horizontal alignment for the picture.</param>
+        /// <param name="labelAlignment">The desired horizontal alignment for the label.</param>
+        /// <param name="spacerAlignment">The desired horizontal alignment for the spacer.</param>
+        public virtual void SetContentHorizontalAlignment(
+            HorizontalAlignment pictureAlignment,
+            HorizontalAlignment labelAlignment,
+            HorizontalAlignment spacerAlignment)
+        {
+            picture.HorizontalAlignment = pictureAlignment;
+            spacer.HorizontalAlignment = spacerAlignment;
+            label.HorizontalAlignment = labelAlignment;
+            PerformLayoutAndInvalidate(null, false);
+        }
+
+        /// <summary>
         /// Sets the vertical alignment for the content elements within the control.
         /// </summary>
         /// <remarks>This method updates the vertical alignment of the picture,
@@ -1171,15 +1287,7 @@ namespace Alternet.UI
         {
             var state = VisualState;
 
-            DrawDefaultBackground(e);
-            if (HasImage)
-            {
-                drawable.VisualState = Enabled
-                    ? VisualControlState.Normal : VisualControlState.Disabled;
-
-                drawable.Bounds = PictureBox.Bounds;
-                drawable.Draw(this, e.Graphics);
-            }
+            DrawDefaultBackground(e, DrawDefaultBackgroundFlags.DrawBackground);
 
             if (TextVisible)
             {
@@ -1193,6 +1301,30 @@ namespace Alternet.UI
                 Label.ForegroundColor = foreColor;
                 TemplateUtils.RaisePaintRecursive(Label, e.Graphics, Label.Location);
             }
+
+            if (HasImage)
+            {
+                if(ImageToText == ImageToText.Horizontal
+                    && ImageHorizontalAlignment == HorizontalAlignment.Right)
+                {
+                    var newRect = new RectD(
+                        spacer.Location.X,
+                        0,
+                        ClientRectangle.Width - spacer.Location.X,
+                        e.ClipRectangle.Height);
+                    DrawDefaultBackground(
+                        e.WithRect(newRect),
+                        DrawDefaultBackgroundFlags.DrawBackground);
+                }
+
+                drawable.VisualState = Enabled
+                    ? VisualControlState.Normal : VisualControlState.Disabled;
+
+                drawable.Bounds = PictureBox.Bounds;
+                drawable.Draw(this, e.Graphics);
+            }
+
+            DrawDefaultBackground(e, DrawDefaultBackgroundFlags.DrawBorder);
         }
 
         /// <inheritdoc/>
