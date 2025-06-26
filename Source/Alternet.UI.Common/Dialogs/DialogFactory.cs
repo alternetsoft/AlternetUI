@@ -123,7 +123,7 @@ namespace Alternet.UI
         /// <param name="defaultValue">Default value. Optional. If not specified, uses 0.</param>
         /// <param name="maxValue">Maximal value. Optional. If not specified, uses 255.</param>
         public static void AskByteAsync(
-            string title,
+            string? title,
             Action<byte> onApply,
             byte defaultValue = 0,
             byte maxValue = 255)
@@ -138,6 +138,38 @@ namespace Alternet.UI
                 {
                     if (v is not null)
                         onApply(Convert.ToByte(v.Value));
+                },
+            };
+
+            GetNumberFromUserAsync(prm);
+        }
+
+        /// <summary>
+        /// Shows dialog which asks to enter a <see cref="byte"/> value.
+        /// </summary>
+        /// <param name="title">Dialog title.</param>
+        /// <param name="onApply">Action to call when 'Ok' button is pressed in the dialog.</param>
+        /// <param name="defaultValue">Default value. Optional. If not specified, uses 0.</param>
+        /// <param name="minValue">Minimal value. Optional. If not specified, uses 0.</param>
+        /// <param name="maxValue">Maximal value. Optional. If not specified, uses 255.</param>
+        public static void AskIntAsync(
+            string? title,
+            Action<int> onApply,
+            int defaultValue = 0,
+            int minValue = 0,
+            int maxValue = 255)
+        {
+            ByteFromUserParams prm = new()
+            {
+                MaxValue = maxValue,
+                MinValue = minValue,
+                Title = title /*?? CommonStrings.Default.WindowTitleInput*/,
+                Message = $"{title} (0..{maxValue})",
+                DefaultValue = defaultValue,
+                OnApply = (v) =>
+                {
+                    if (v is not null)
+                        onApply(Convert.ToInt32(v.Value));
                 },
             };
 
