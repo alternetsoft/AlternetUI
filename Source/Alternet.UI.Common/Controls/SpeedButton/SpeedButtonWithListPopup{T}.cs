@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Runtime.CompilerServices;
 using System.Text;
 
 using Alternet.Drawing;
@@ -95,6 +96,11 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets a value indicating whether the popup window has been created.
+        /// </summary>
+        public bool IsPopupWindowCreated => popupWindow is not null;
+
+        /// <summary>
         /// Gets or sets selected color.
         /// </summary>
         public virtual object? Value
@@ -113,11 +119,6 @@ namespace Alternet.UI
                 ValueChanged?.Invoke(this, EventArgs.Empty);
             }
         }
-
-        /// <summary>
-        /// Gets a value indicating whether the popup window has been created.
-        /// </summary>
-        public bool IsPopupWindowCreated => popupWindow is not null;
 
         /// <summary>
         /// Gets attached popup window.
@@ -193,6 +194,14 @@ namespace Alternet.UI
             get => base.DisabledImage;
             set => base.DisabledImage = value;
         }
+
+        /// <summary>
+        /// Casts selected item to <typeparamref name="T"/> type.
+        /// </summary>
+        /// <typeparam name="T2">Type of the result.</typeparam>
+        /// <returns></returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public T2? ValueAs<T2>() => (T2?)Value;
 
         /// <summary>
         /// Adds a collection of items to the list control shown in the popup.
