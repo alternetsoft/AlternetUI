@@ -13,6 +13,8 @@ namespace Alternet.UI
     {
         private int minimum = 0;
         private int maximum = 100;
+        private int smallChange = 1;
+        private int largeChange = 5;
         private int val = 0;
 
         /// <summary>
@@ -63,6 +65,66 @@ namespace Alternet.UI
         /// Occurs when the value of the <see cref="Maximum"/> property changes.
         /// </summary>
         public event EventHandler? MaximumChanged;
+
+        /// <summary>
+        /// Occurs when the value of the <see cref="SmallChange"/> property changes.
+        /// </summary>
+        public event EventHandler? SmallChangeChanged;
+
+        /// <summary>
+        /// Occurs when the value of the <see cref="LargeChange"/> property changes.
+        /// </summary>
+        public event EventHandler? LargeChangeChanged;
+
+        /// <summary>
+        /// Gets or sets the value added to or subtracted from the <see cref="Value"/> property
+        /// when the plus/minus buttons are pressed.
+        /// </summary>
+        /// <value>A numeric value. The default value is 1.</value>
+        public virtual int SmallChange
+        {
+            get
+            {
+                return smallChange;
+            }
+
+            set
+            {
+                if (DisposingOrDisposed)
+                    return;
+                if (value < 0)
+                    value = 0;
+                if (smallChange == value)
+                    return;
+                smallChange = value;
+                SmallChangeChanged?.Invoke(this, EventArgs.Empty);
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets a value to be added to or subtracted from the <see cref="Value"/> property
+        /// when the plus/minus buttons are pressed while holding Ctrl key.
+        /// </summary>
+        /// <value>A numeric value. The default is 5.</value>
+        public virtual int LargeChange
+        {
+            get
+            {
+                return largeChange;
+            }
+
+            set
+            {
+                if (DisposingOrDisposed)
+                    return;
+                if (value < 0)
+                    value = 0;
+                if (largeChange == value)
+                    return;
+                largeChange = value;
+                LargeChangeChanged?.Invoke(this, EventArgs.Empty);
+            }
+        }
 
         /// <summary>
         /// Gets or sets the value assigned to control.
@@ -204,14 +266,16 @@ namespace Alternet.UI
         /// <inheritdoc/>
         public override void OnButtonClick(ControlAndButtonClickEventArgs e)
         {
+            var change = Keyboard.IsControlPressed ? LargeChange : SmallChange;
+
             if (e.IsButtonMinus(this))
             {
-                IncrementValue(-1);
+                IncrementValue(-change);
             }
             else
             if (e.IsButtonPlus(this))
             {
-                IncrementValue();
+                IncrementValue(change);
             }
         }
 

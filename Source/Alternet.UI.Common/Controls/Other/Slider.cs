@@ -269,7 +269,6 @@ namespace Alternet.UI
         /// when the scroll box is moved a small distance.
         /// </summary>
         /// <value>A numeric value. The default value is 1.</value>
-        /// <exception cref="ArgumentException">The assigned value is less than 0.</exception>
         public virtual int SmallChange
         {
             get
@@ -295,7 +294,6 @@ namespace Alternet.UI
         /// when the scroll box is moved a large distance.
         /// </summary>
         /// <value>A numeric value. The default is 5.</value>
-        /// <exception cref="ArgumentException">The assigned value is less than 0.</exception>
         public virtual int LargeChange
         {
             get
