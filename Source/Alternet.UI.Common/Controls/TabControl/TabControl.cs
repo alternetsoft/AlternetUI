@@ -19,7 +19,7 @@ namespace Alternet.UI
     [ControlCategory("Containers")]
     [DefaultProperty("Pages")]
     [DefaultEvent("SelectedIndexChanged")]
-    public partial class TabControl : Control
+    public partial class TabControl : HiddenBorder
     {
         /// <summary>
         /// Gets or sets default minimal tab size in the header.
@@ -35,6 +35,9 @@ namespace Alternet.UI
 
         private readonly CardPanelHeader cardPanelHeader = new()
         {
+            ParentBackColor = true,
+            ParentForeColor = true,
+            ParentFont = true,
         };
 
         private bool hasInteriorBorder = true;
@@ -62,7 +65,7 @@ namespace Alternet.UI
             ParentForeColor = true;
 
             cardPanelHeader.UserPaint = true;
-            cardPanelHeader.Paint += Header_Paint;
+            cardPanelHeader.Paint += OnHeaderPaint;
             UserPaint = true;
 
             base.Layout = LayoutStyle.Vertical;
@@ -81,8 +84,8 @@ namespace Alternet.UI
 
             cardPanelHeader.CardPanel = cardPanel;
 
-            cardPanel.Children.ItemInserted += Pages_ItemInserted;
-            cardPanel.Children.ItemRemoved += Pages_ItemRemoved;
+            cardPanel.Children.ItemInserted += OnPagesItemInserted;
+            cardPanel.Children.ItemRemoved += OnPagesItemRemoved;
         }
 
         /// <summary>
@@ -1040,6 +1043,7 @@ namespace Alternet.UI
         {
             if (DisposingOrDisposed)
                 return;
+            base.OnPaint(e);
             if (!hasInteriorBorder || TabCount == 0 || !TabsVisible)
                 return;
             var r = Header.Bounds;
@@ -1085,12 +1089,12 @@ namespace Alternet.UI
             GrowMinSize(MinSizeGrowMode);
         }
 
-        private void Pages_ItemRemoved(object? sender, int index, AbstractControl item)
+        private void OnPagesItemRemoved(object? sender, int index, AbstractControl item)
         {
             Remove(item);
         }
 
-        private void Pages_ItemInserted(object? sender, int index, AbstractControl item)
+        private void OnPagesItemInserted(object? sender, int index, AbstractControl item)
         {
             if (DisposingOrDisposed)
                 return;
@@ -1101,7 +1105,7 @@ namespace Alternet.UI
             Add(item);
         }
 
-        private void Header_Paint(object? sender, PaintEventArgs e)
+        private void OnHeaderPaint(object? sender, PaintEventArgs e)
         {
             if (DisposingOrDisposed)
                 return;

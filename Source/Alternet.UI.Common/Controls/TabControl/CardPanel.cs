@@ -17,7 +17,7 @@ namespace Alternet.UI
     /// It behaves like <see cref="TabControl"/> but has no tab titles.
     /// </remarks>
     [ControlCategory("Containers")]
-    public partial class CardPanel : Panel
+    public partial class CardPanel : HiddenBorder
     {
         private CardPanelItem? selectedCard;
 
@@ -36,6 +36,8 @@ namespace Alternet.UI
         /// </summary>
         public CardPanel()
         {
+            ParentBackColor = true;
+            ParentForeColor = true;
             Cards.ThrowOnNullAdd = true;
             Cards.ItemInserted += Cards_ItemInserted;
             Cards.ItemRemoved += Cards_ItemRemoved;
