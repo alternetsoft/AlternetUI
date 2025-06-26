@@ -3,13 +3,14 @@ using Alternet.UI;
 
 namespace PaintSample
 {
-    public class CanvasControl : Control
+    public class CanvasControl : HiddenBorder
     {
         private PaintSampleDocument? document;
 
         public CanvasControl()
         {
             UserPaint = true;
+            BackgroundColor = Color.White;
         }
 
         public PaintSampleDocument? Document

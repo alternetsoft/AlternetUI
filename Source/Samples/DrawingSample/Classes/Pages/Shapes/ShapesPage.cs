@@ -63,6 +63,8 @@ namespace DrawingSample
 
         public override void Draw(Graphics dc, RectD bounds)
         {
+            dc.FillRectangle(Color.White.AsBrush, bounds);
+
             var s = shapes;
 
             var actions = new[]

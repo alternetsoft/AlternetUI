@@ -102,7 +102,7 @@ namespace PrintingSample
             }
         }
 
-        private void PrintImmediatelyMenuItem_Click(object sender, System.EventArgs e)
+        private void PrintImmediatelyMenuItem_Click(object? sender, System.EventArgs e)
         {
             var document = CreatePrintDocument();
             document.PrintPage += Document_PrintPage;
@@ -137,7 +137,7 @@ namespace PrintingSample
             return document;
         }
 
-        private void PrintMenuItem_Click(object sender, System.EventArgs e)
+        private void PrintMenuItem_Click(object? sender, System.EventArgs e)
         {
             var dialog = new PrintDialog();
             var document = CreatePrintDocument();
@@ -154,7 +154,7 @@ namespace PrintingSample
             });
         }
 
-        private void PageSetupMenuItem_Click(object sender, System.EventArgs e)
+        private void PageSetupMenuItem_Click(object? sender, System.EventArgs e)
         {
             var pageSetupDialog = new PageSetupDialog();
             var document = CreatePrintDocument();
@@ -175,7 +175,7 @@ namespace PrintingSample
             });
         }
 
-        private void PrintPreviewMenuItem_Click(object sender, System.EventArgs e)
+        private void PrintPreviewMenuItem_Click(object? sender, System.EventArgs e)
         {
             var dialog = new PrintPreviewDialog();
             var document = CreatePrintDocument();

@@ -1,3 +1,4 @@
+using System;
 using Alternet.Drawing;
 using Alternet.UI;
 using System.Collections.Generic;
@@ -20,7 +21,7 @@ namespace PaintSample
             Color.White,
         };
 
-        private readonly List<ColorSwatch> swatches = new();
+        private readonly List<SpeedButton> swatches = new();
         private readonly SelectedColorDisplay selectedColorDisplay = new();
 
         public ColorSelector()
@@ -62,23 +63,27 @@ namespace PaintSample
 
             foreach (var color in SwatchColors)
             {
-                var swatch = new ColorSwatch(color)
+                var swatch = new SpeedButton()
                 {
                     VerticalAlignment = VerticalAlignment.Center,
+                    Image = (Image)color.AsImage((int)(sizePixels * 1.5)),
+			SuggestedSize = biggerSize + 5,
                     Margin = (0, 5, 5, 5),
-                    SuggestedSize = biggerSize,
+                    Padding = 2,
                 };
 
-                swatch.MouseLeftButtonDown += Swatch_MouseLeftButtonDown;
+                swatch.CustomAttr.SetAttribute("SwatchColor", color);
+                swatch.Click += Swatch_Click;
 
                 swatches.Add(swatch);
                 container.Children.Add(swatch);
             }
         }
 
-        private void Swatch_MouseLeftButtonDown(object sender, MouseEventArgs e)
+        private void Swatch_Click(object? sender, EventArgs e)
         {
-            selectedColorDisplay.SelectedColor = ((ColorSwatch)sender!).SwatchColor;
+            selectedColorDisplay.SelectedColor =
+                (((SpeedButton)sender!).CustomAttr.GetAttribute("SwatchColor") as Color)!;
         }
     }
 }

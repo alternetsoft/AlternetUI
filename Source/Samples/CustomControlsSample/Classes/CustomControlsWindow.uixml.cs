@@ -63,7 +63,7 @@ namespace CustomControlsSample
             knobControl.LongTap += TicTacToe_LongTap;
         }
 
-        private void TicTacToe_LongTap(object sender, LongTapEventArgs e)
+        private void TicTacToe_LongTap(object? sender, LongTapEventArgs e)
         {
             App.Log("Fancy slider: LongTap");
         }

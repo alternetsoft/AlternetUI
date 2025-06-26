@@ -3,7 +3,7 @@ using Alternet.UI;
 
 namespace PaintSample
 {
-    internal class SelectedColorDisplay : Control
+    internal class SelectedColorDisplay : HiddenBorder
     {
         private Color selectedColor = Color.Empty;
 

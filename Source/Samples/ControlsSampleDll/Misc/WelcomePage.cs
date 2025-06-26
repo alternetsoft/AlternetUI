@@ -3,7 +3,7 @@ using Alternet.UI;
 
 namespace ControlsSample
 {
-    internal class WelcomePage : Control
+    internal class WelcomePage : HiddenBorder
     {
         private readonly RichTextBox richText = new()
         {

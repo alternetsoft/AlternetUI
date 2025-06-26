@@ -5,7 +5,7 @@ using Alternet.UI.Extensions;
 
 namespace LayoutSample
 {
-    internal class ImageControl : Control
+    internal class ImageControl : HiddenBorder
     {
         private double zoom = 1;
 

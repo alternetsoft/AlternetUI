@@ -3,7 +3,7 @@ using Alternet.UI;
 
 namespace PropertyGridSample
 {
-    internal class WelcomePage : Control
+    internal class WelcomePage : HiddenBorder
     {
         private readonly RichTextBox richText = new()
         {

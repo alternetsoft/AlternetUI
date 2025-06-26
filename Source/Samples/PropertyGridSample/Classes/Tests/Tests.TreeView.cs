@@ -103,6 +103,9 @@ namespace PropertyGridSample
                 int index = 0;
 
                 var folder = dialog.DirectoryName;
+
+		if (folder is null)
+			return;
                 var files = Directory.GetFiles(folder, "*.png");
 
                 Array.Sort(files);
@@ -166,6 +169,9 @@ namespace PropertyGridSample
                 int index = 0;
 
                 var folder = dialog.DirectoryName;
+
+		if (folder is null)
+			return;
                 var files = Directory.GetFiles(folder, "*.svg");
 
                 Array.Sort(files);

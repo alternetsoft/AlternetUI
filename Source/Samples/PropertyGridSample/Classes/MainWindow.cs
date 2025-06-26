@@ -481,9 +481,8 @@ namespace PropertyGridSample
         {
         }
 
-        public class SettingsControl : Control
+        public class SettingsControl : HiddenBorder
         {
-
         }
     }
 }

@@ -139,17 +139,17 @@ namespace MenuSample
             aboutMenuItem.SvgImage = KnownColorSvgImages.ImgLogo;
         }
 
-        private void MenuItem_Highlighted(object sender, EventArgs e)
+        private void MenuItem_Highlighted(object? sender, EventArgs e)
         {
             LogEvent($"Menu Item '{(sender as MenuItem)?.Name}': Highlighted");
         }
 
-        private void MenuItem_Closed(object sender, EventArgs e)
+        private void MenuItem_Closed(object? sender, EventArgs e)
         {
             LogEvent($"Menu Item '{(sender as MenuItem)?.Name}': Closed");
         }
 
-        private void MenuItem_Opened(object sender, EventArgs e)
+        private void MenuItem_Opened(object? sender, EventArgs e)
         {
             LogEvent($"Menu Item '{(sender as MenuItem)?.Name}': Opened");
         }
@@ -369,9 +369,9 @@ namespace MenuSample
             LogEvent("Page Scrolling Clicked");
         }
 
-        private void GridMenuItem_Click(object sender, EventArgs e)
+        private void GridMenuItem_Click(object? sender, EventArgs e)
         {
-            LogEvent("Grid item is checked: " + ((MenuItem)sender).Checked);
+            LogEvent($"Grid item is checked: {(sender as MenuItem)?.Checked}");
         }
 
         private void ToggleSeparatorMenuItem_Click(object? sender, System.EventArgs e)
@@ -532,7 +532,7 @@ namespace MenuSample
             LogEvent($"Toolbar drop down menu item clicked: {item?.Text.Replace("_", "")}.");
         }
 
-        private void ImageToTextDisplayModeComboBox_SelectedItemChanged(object sender, EventArgs e)
+        private void ImageToTextDisplayModeComboBox_SelectedItemChanged(object? sender, EventArgs e)
         {
             if (toolbar == null || imageToTextDisplayModeComboBox.Value is not ImageToText value)
                 return;
