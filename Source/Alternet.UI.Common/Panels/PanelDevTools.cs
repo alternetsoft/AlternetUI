@@ -14,7 +14,7 @@ using SkiaSharp;
 
 namespace Alternet.UI
 {
-    internal class PanelDevTools : Control
+    internal class PanelDevTools : HiddenBorder
     {
         private static WindowDevTools? devToolsWindow;
 

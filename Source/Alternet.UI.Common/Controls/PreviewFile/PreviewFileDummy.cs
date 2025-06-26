@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Alternet.UI
 {
-    internal class PreviewFileDummy : Control, IFilePreview
+    internal class PreviewFileDummy : HiddenBorder, IFilePreview
     {
         public string? FileName { get; set; }
 

@@ -11,7 +11,7 @@ namespace Alternet.UI
     /// Implements preview control which uses <see cref="MultilineTextBox"/> for the preview
     /// of the files.
     /// </summary>
-    public partial class PreviewTextFile : Control, IFilePreview
+    public partial class PreviewTextFile : HiddenBorder, IFilePreview
     {
         /// <summary>
         /// Gets or sets default encoding for the "txt" files.

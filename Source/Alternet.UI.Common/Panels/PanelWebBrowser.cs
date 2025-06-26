@@ -15,7 +15,7 @@ namespace Alternet.UI
     /// web navigation buttons.
     /// </summary>
     [ControlCategory("Panels")]
-    public partial class PanelWebBrowser : Control
+    public partial class PanelWebBrowser : HiddenBorder
     {
         /// <summary>
         /// Gets or sets find parameters.

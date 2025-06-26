@@ -13,7 +13,7 @@ namespace Alternet.UI
     /// <summary>
     /// Allows to preview the file using one of the registered preview controls.
     /// </summary>
-    public partial class PreviewFile : Control, IFilePreview
+    public partial class PreviewFile : HiddenBorder, IFilePreview
     {
         private readonly Label label = new()
         {

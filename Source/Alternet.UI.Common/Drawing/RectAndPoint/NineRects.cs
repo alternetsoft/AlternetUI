@@ -225,7 +225,7 @@ namespace Alternet.Drawing
         /// <summary>
         /// Sample preview control for the <see cref="NineRects"/> structure.
         /// </summary>
-        public class PreviewControl : Control
+        public class PreviewControl : HiddenBorder
         {
             private VerticalAlignment selectedVert = VerticalAlignment.Top;
             private HorizontalAlignment selectedHorz = HorizontalAlignment.Left;
