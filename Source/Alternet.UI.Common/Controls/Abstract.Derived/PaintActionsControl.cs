@@ -9,8 +9,7 @@ using Alternet.Drawing;
 namespace Alternet.UI
 {
     /// <summary>
-    /// <see cref="UserControl"/> descendant with <see cref="PaintActions"/> property.
-    /// Extends it's ancestor with an ability to call custom paint actions.
+    /// A custom control for executing paint actions.
     /// </summary>
     public partial class PaintActionsControl : HiddenBorder
     {
@@ -21,6 +20,7 @@ namespace Alternet.UI
         /// </summary>
         public PaintActionsControl()
         {
+
         }
 
         /// <summary>
@@ -48,9 +48,7 @@ namespace Alternet.UI
         /// <inheritdoc/>
         public override void DefaultPaint(PaintEventArgs e)
         {
-            var brush = this.Background;
-            if (brush != null)
-                e.Graphics.FillRectangle(brush, e.ClipRectangle);
+            base.DefaultPaint(e);
 
             if (paintActions is null)
                 return;
