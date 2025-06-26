@@ -43,6 +43,7 @@ namespace Alternet.UI
         /// </summary>
         public SpeedButtonWithListPopup()
         {
+            base.Text = " ";
             TextVisible = true;
             ImageVisible = false;
         }
@@ -115,7 +116,7 @@ namespace Alternet.UI
                 if (data == value)
                     return;
                 data = value;
-                base.Text = GetValueAsString(data) ?? string.Empty;
+                base.Text = Text ?? " ";
                 ValueChanged?.Invoke(this, EventArgs.Empty);
             }
         }
@@ -175,7 +176,10 @@ namespace Alternet.UI
         {
             get
             {
-                return GetValueAsString(data);
+                string s = GetValueAsString(data) ?? " ";
+                if (string.IsNullOrEmpty(s))
+                    s = " ";
+                return s;
             }
 
             set
@@ -225,6 +229,95 @@ namespace Alternet.UI
                         Items.Add(newItem);
                     }
                 }
+            }
+        }
+
+        /// <summary>
+        /// Adds enum values to the items collection.
+        /// </summary>
+        /// <typeparam name="T2">Type of the enum which values are added.</typeparam>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public void AddEnumValues<T2>()
+            where T2 : Enum
+        {
+            AddEnumValues(typeof(T));
+        }
+
+        /// <summary>
+        /// Adds enum values to items collection.
+        /// </summary>
+        /// <typeparam name="T2">Type of the enum which values are added.</typeparam>
+        /// <param name="selectValue">New selected item value.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public void AddEnumValues<T2>(T2 selectValue)
+            where T2 : Enum
+        {
+            AddEnumValues(typeof(T2), selectValue);
+        }
+
+        /// <summary>
+        /// Adds enum values to the items collection.
+        /// </summary>
+        /// <param name="type">Type of the enum which values are added.</param>
+        /// <param name="selectValue">New selected item value.</param>
+        public virtual void AddEnumValues(Type type, object? selectValue = default)
+        {
+            foreach (var item in Enum.GetValues(type))
+                Add(new ListControlItem(item.ToString(), item));
+            if (selectValue is not null)
+                Value = selectValue;
+        }
+
+        /// <summary>
+        /// Adds an item to the list control shown in the popup.
+        /// </summary>
+        /// <param name="title">Display text of the item which is shown to the user.</param>
+        /// <param name="value">Value associated with the item.</param>
+        public virtual void Add(string title, object value)
+        {
+            ListControlItem newItem = new()
+            {
+                Value = value,
+                Text = title,
+            };
+            Add(newItem);
+        }
+
+        /// <summary>
+        /// Adds an item to the list control shown in the popup.
+        /// </summary>
+        /// <param name="item">Item to add.</param>
+        /// <remarks>
+        /// If item is not of type <see cref="ListControlItem"/>,
+        /// a new <see cref="ListControlItem"/> will be created with the provided value.
+        /// </remarks>
+        public virtual void Add(object item)
+        {
+            if (item is ListControlItem listItem)
+                Add(listItem);
+            else
+            {
+                ListControlItem newItem = new()
+                {
+                    Value = item,
+                };
+                Add(newItem);
+            }
+        }
+
+        /// <summary>
+        /// Adds an item to the list control shown in the popup.
+        /// </summary>
+        /// <param name="item">Item to add.</param>
+        public virtual void Add(ListControlItem item)
+        {
+            if (IsPopupWindowCreated)
+            {
+                ListBox.Add(item);
+            }
+            else
+            {
+                Items.Add(item);
             }
         }
 
