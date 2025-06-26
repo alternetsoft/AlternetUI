@@ -26,6 +26,23 @@ namespace Alternet.UI
             HasBtnComboBox = false;
             Text = val.ToString();
             UpdateButtonsEnabled();
+            Label.MouseLeftButtonUp += (s, e) =>
+            {
+                App.AddIdleTask(() =>
+                {
+                    DialogFactory.AskIntAsync(
+                                null,
+                                (v) =>
+                                {
+                                    if (DisposingOrDisposed)
+                                        return;
+                                    Value = v;
+                                },
+                                val,
+                                minimum,
+                                maximum);
+                });
+            };
         }
 
         /// <summary>
