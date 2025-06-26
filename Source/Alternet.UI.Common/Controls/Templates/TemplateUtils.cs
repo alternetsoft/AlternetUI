@@ -102,7 +102,7 @@ namespace Alternet.UI
         /// </remarks>
         public static void RaisePaintForGenericChildren(
             AbstractControl? control,
-            Graphics dc)
+            Func<Graphics> dc)
         {
             if (control is null || !control.HasChildren)
                 return;
@@ -116,7 +116,7 @@ namespace Alternet.UI
                     continue;
                 if (child is not GenericControl)
                     continue;
-                RaisePaintRecursive(child, dc, child.Location);
+                RaisePaintRecursive(child, dc(), child.Location);
             }
         }
 
