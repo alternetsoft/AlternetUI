@@ -14,7 +14,7 @@
     <HorizontalStackPanel Name="actionsPanel" Title="Actions" IsTitleLocalized="true"
                           HorizontalAlignment="Stretch">
 
-      <Border Margin="5" IsTextLocalized="true" >
+      <Border Margin="5" IsTextLocalized="true" HorizontalAlignment="Fill">
         <StackPanel Padding="10" >
           <Button Text="Create Window" Name="createAndShowWindowButton"
               Click="CreateAndShowWindowButton_Click" IsTextLocalized="true"
@@ -33,11 +33,12 @@
 
           <HorizontalStackPanel>
             <Label Text="Start Location:" Margin="0,0,5,5" IsTextLocalized="true" />
-            <ComboBox IsEditable="false" Name="startLocationComboBox" Margin="0,0,0,5"/>
+            <ListPicker Name="startLocationComboBox" Margin="0,0,0,5"/>
           </HorizontalStackPanel>
         </StackPanel>
       </Border>
-      <VerticalStackPanel>
+      
+      <VerticalStackPanel HorizontalAlignment="Right">
         <Border HorizontalAlignment="Stretch" IsTitleLocalized="true"
             Grid.ColumnSpan="2"  Margin="5">
           <StackPanel Padding="10" HorizontalAlignment="Stretch" SuggestedWidth="400">
@@ -52,6 +53,7 @@
         <Button Text="All Properties..." IsTextLocalized="true"
                 Name="propertiesButton" Click="PropertiesButton_Click"/>
       </VerticalStackPanel>
+      
     </HorizontalStackPanel>
     <!-- ========================= -->
     <HorizontalStackPanel Name="settingsPanel" Visible="false" Title="Settings">
@@ -88,8 +90,8 @@
 
       <StackPanel Padding="10" >
         <Label Text="Window State:" Margin="0,0,0,3" IsTextLocalized="true" />
-        <ComboBox IsEditable="false" Name="stateComboBox"
-            SelectedItemChanged="StateComboBox_SelectedItemChanged"/>
+        <EnumPicker Name="stateComboBox"
+            ValueChanged="StateComboBox_SelectedItemChanged"/>
         <CheckBox Text="Hide Window" Name="hideWindowCheckBox"
                   Margin="0,10,0,0" IsTextLocalized="true"
             CheckedChanged="HideWindowCheckBox_CheckedChanged"/>
@@ -127,7 +129,7 @@
 
       <Border Margin="5" IsTitleLocalized="true" 
                 VerticalAlignment="Top" Padding="10" Layout="Vertical">
-            <ComboBox IsEditable="false" Name="sizeToContentModeComboBox" VerticalAlignment="Center"/>
+            <EnumPicker Name="sizeToContentModeComboBox" VerticalAlignment="Center"/>
             <Button Name="setSizeToContentButton" Click="SetSizeToContentButton_Click"
                 Text="Set Size to Content" VerticalAlignment="Center" IsTextLocalized="true" />
       </Border>

@@ -27,12 +27,12 @@ namespace WindowPropertiesSample
             InitializeComponent();
             pageControl.TabsVisible = true;
 
-            stateComboBox.AddEnumValues<WindowState>();
+            stateComboBox.EnumType = typeof(WindowState);
             
             startLocationComboBox.AddEnumValues(WindowStartLocation.Default);
             startLocationComboBox.Add("250, 250, 450, 450");
             startLocationComboBox.Add("50, 50, 500, 500");
-            startLocationComboBox.SelectedItem = WindowStartLocation.CenterScreen;
+            startLocationComboBox.Value = WindowStartLocation.CenterScreen;
 
             sizeToContentModeComboBox.AddEnumValues(WindowSizeToContentMode.WidthAndHeight);
             UpdateControls();
@@ -157,11 +157,11 @@ namespace WindowPropertiesSample
         private void CreateWindowAndSetProperties(Type type, Window? parent = null)
         {
             WindowStartLocation? sLocation = null;
-            var startLocationItem = startLocationComboBox.SelectedItem;
+            var startLocationItem = startLocationComboBox.Value;
 
-            if (startLocationItem is WindowStartLocation)
+            if (startLocationItem is WindowStartLocation startLocation)
             {
-                sLocation = (WindowStartLocation)startLocationComboBox.SelectedItem!;
+                sLocation = startLocation;
             }
 
             if (startLocationItem is string s)
@@ -280,7 +280,7 @@ namespace WindowPropertiesSample
 
         private void UpdateWindowState()
         {
-            stateComboBox.SelectedItem = testWindow?.State;
+            stateComboBox.Value = testWindow?.State;
         }
 
         private void UpdateActiveWindowInfoLabel()
@@ -501,8 +501,8 @@ namespace WindowPropertiesSample
 
         private void StateComboBox_SelectedItemChanged(object sender, EventArgs e)
         {
-            if (testWindow != null)
-                testWindow.State = (WindowState)(stateComboBox.SelectedItem ?? throw new Exception());
+            if (testWindow != null && stateComboBox.Value is WindowState windowState)
+                testWindow.State = windowState;
         }
 
         private void SetIcon1Button_Click(object sender, EventArgs e)
@@ -562,8 +562,8 @@ namespace WindowPropertiesSample
 
         private void SetSizeToContentButton_Click(object sender, System.EventArgs e)
         {
-            testWindow?.SetSizeToContent(
-                (WindowSizeToContentMode)sizeToContentModeComboBox.SelectedItem!);
+            if(sizeToContentModeComboBox.Value is WindowSizeToContentMode mode)
+                testWindow?.SetSizeToContent(mode);
         }
 
         public class SetBoundsProperties : BaseOwnedObject<Window>
