@@ -16,11 +16,13 @@ namespace EmployeeFormSample
 
             InitializeComponent();
 
-            employeeFoto.Image = Image.FromAssemblyUrl(GetType().Assembly, "Resources.EmployeePhoto.jpg");
+            employeeFoto.Image = Image.FromAssemblyUrl(
+                GetType().Assembly,
+                "Resources.EmployeePhoto.jpg");
 
-            prefixComboBox.AddEnumValues<Employee.EmployeePrefix>();
-            stateComboBox.AddEnumValues<Employee.States>();
-            departmentComboBox.AddEnumValues<Employee.EmployeeDepartment>();
+            prefixComboBox.EnumType = typeof(Employee.EmployeePrefix);
+            stateComboBox.EnumType = typeof(Employee.States);
+            departmentComboBox.EnumType = typeof(Employee.EmployeeDepartment);
 
             var employee = new Employee
             {
@@ -35,7 +37,7 @@ namespace EmployeeFormSample
                 ZipCode = "85001",
                 HomePhone = "(341) 433-4377",
                 MobilePhone = "(341) 232-6535",
-                Email = "AliceJ@mycompany.com",
+                Email = "AliceJ@company.com",
                 Skype = "AliceJ12",
                 Department = Employee.EmployeeDepartment.Sales,
                 HireDate = new System.DateTime(2018, 3, 5),
@@ -45,19 +47,19 @@ namespace EmployeeFormSample
             DataContext = employee;
 
             evaluationsListView.Items.Add(new ListViewItem(new[] {
-                new DateTime(2018,12,4).ToShortDateString(),
+                new DateTime(2018,12,21).ToShortDateString(),
                 "2018 Employee Review", "James Smith" }));
             evaluationsListView.Items.Add(new ListViewItem(new[] {
                 new DateTime(2019,12,10).ToShortDateString(),
                 "2019 Employee Review", "James Smith" }));
             evaluationsListView.Items.Add(new ListViewItem(new[] {
-                new DateTime(2020,12,1).ToShortDateString(),
+                new DateTime(2020,12,13).ToShortDateString(),
                 "2020 Employee Review", "James Smith" }));
             evaluationsListView.Items.Add(new ListViewItem(new[] {
                 new DateTime(2021,12,20).ToShortDateString(),
                 "2021 Employee Review", "James Smith" }));
             evaluationsListView.Items.Add(new ListViewItem(new[] {
-                new DateTime(2022,12,5).ToShortDateString(),
+                new DateTime(2022,12,15).ToShortDateString(),
                 "2022 Employee Review", "James Smith" }));
             evaluationsListView.Columns[0].WidthMode = ListViewColumnWidthMode.AutoSize;
             evaluationsListView.Columns[1].WidthMode = ListViewColumnWidthMode.AutoSize;
@@ -136,22 +138,22 @@ namespace EmployeeFormSample
                 employee.MobilePhone = mobilePhone.Text;
             };
 
-            prefixComboBox.SelectedItem = employee.Prefix;
-            prefixComboBox.SelectedItemChanged += (s, e) =>
+            prefixComboBox.Value = employee.Prefix;
+            prefixComboBox.ValueChanged += (s, e) =>
             {
-                employee.Prefix = prefixComboBox.SelectedItemAs<Employee.EmployeePrefix>();
+                employee.Prefix = prefixComboBox.ValueAs<Employee.EmployeePrefix>();
             };
 
-            stateComboBox.SelectedItem = employee.State;
-            stateComboBox.SelectedItemChanged += (s, e) =>
+            stateComboBox.Value = employee.State;
+            stateComboBox.ValueChanged += (s, e) =>
             {
-                employee.State = stateComboBox.SelectedItemAs<Employee.States>();
+                employee.State = stateComboBox.ValueAs<Employee.States>();
             };
 
-            departmentComboBox.SelectedItem = employee.Department;
-            departmentComboBox.SelectedItemChanged += (s, e) =>
+            departmentComboBox.Value = employee.Department;
+            departmentComboBox.ValueChanged += (s, e) =>
             {
-                employee.Department = departmentComboBox.SelectedItemAs<Employee.EmployeeDepartment>();
+                employee.Department = departmentComboBox.ValueAs<Employee.EmployeeDepartment>();
             };
 
             birthDatePicker.Value = employee.BirthDate;

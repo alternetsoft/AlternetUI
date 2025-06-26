@@ -28,7 +28,7 @@ namespace DrawingSample
         private void PenColorCombo_Changed(object? sender, EventArgs e)
         {
             if (page is not null && penColorCombo.Value is not null)
-                page.BrushColor = penColorCombo.Value;
+                page.PenColor = penColorCombo.Value;
         }
     }
 }

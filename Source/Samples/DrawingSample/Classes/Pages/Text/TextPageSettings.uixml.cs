@@ -10,10 +10,10 @@ namespace DrawingSample
         private readonly Label vertAlignLabel = new("Vert Align:");
         private readonly Label trimmingLabel = new("Trimming:");
         private readonly Label wrappingLabel = new("Wrapping:");
-        private readonly ComboBox horizontalAlignmentComboBox = new();
-        private readonly ComboBox verticalAlignmentComboBox = new();
-        private readonly ComboBox wrappingComboBox = new();
-        private readonly ComboBox trimmingComboBox = new();
+        private readonly EnumPicker horizontalAlignmentComboBox = new();
+        private readonly EnumPicker verticalAlignmentComboBox = new();
+        private readonly EnumPicker wrappingComboBox = new();
+        private readonly EnumPicker trimmingComboBox = new();
 
         public TextPageSettings()
         {
@@ -100,42 +100,41 @@ namespace DrawingSample
                 page.ShortText = !page.ShortText;
             };
 
-            customFontFamilyComboBox.Items.AddRange(FontFamily.FamiliesNames);
-            wrappingComboBox.AddEnumValues<TextWrapping>();
-            trimmingComboBox.AddEnumValues<TextTrimming>();
-            verticalAlignmentComboBox.AddEnumValues<TextVerticalAlignment>();
-            horizontalAlignmentComboBox.AddEnumValues<TextHorizontalAlignment>();
+            wrappingComboBox.EnumType = typeof(TextWrapping);
+            trimmingComboBox.EnumType = typeof(TextTrimming);
+            verticalAlignmentComboBox.EnumType = typeof(TextVerticalAlignment);
+            horizontalAlignmentComboBox.EnumType = typeof(TextHorizontalAlignment);
 
-            horizontalAlignmentComboBox.SelectedItem = page.HorizontalAlignment;
-            horizontalAlignmentComboBox.SelectedItemChanged += (s, e) =>
+            horizontalAlignmentComboBox.Value = page.HorizontalAlignment;
+            horizontalAlignmentComboBox.ValueChanged += (s, e) =>
             {
                 page.HorizontalAlignment = 
-                    horizontalAlignmentComboBox.SelectedItemAs<TextHorizontalAlignment>();
+                    horizontalAlignmentComboBox.ValueAs<TextHorizontalAlignment>();
             };
 
-            verticalAlignmentComboBox.SelectedItem = page.VerticalAlignment;
-            verticalAlignmentComboBox.SelectedItemChanged += (s, e) =>
+            verticalAlignmentComboBox.Value = page.VerticalAlignment;
+            verticalAlignmentComboBox.ValueChanged += (s, e) =>
             {
                 page.VerticalAlignment
-                    = verticalAlignmentComboBox.SelectedItemAs<TextVerticalAlignment>();
+                    = verticalAlignmentComboBox.ValueAs<TextVerticalAlignment>();
             };
 
-            wrappingComboBox.SelectedItem = page.Wrapping;
-            wrappingComboBox.SelectedItemChanged += (s, e) =>
+            wrappingComboBox.Value = page.Wrapping;
+            wrappingComboBox.ValueChanged += (s, e) =>
             {
-                page.Wrapping = wrappingComboBox.SelectedItemAs<TextWrapping>();
+                page.Wrapping = wrappingComboBox.ValueAs<TextWrapping>();
             };
 
-            trimmingComboBox.SelectedItem = page.Trimming;
-            trimmingComboBox.SelectedItemChanged += (s, e) =>
+            trimmingComboBox.Value = page.Trimming;
+            trimmingComboBox.ValueChanged += (s, e) =>
             {
-                page.Trimming = trimmingComboBox.SelectedItemAs<TextTrimming>();
+                page.Trimming = trimmingComboBox.ValueAs<TextTrimming>();
             };
 
             fontSizeSlider.Value = (int)page.FontSize;
             fontSizeSlider.ValueChanged += (s, e) =>
             {
-                page.FontSize = fontSizeSlider.Value;
+                page.FontSize = fontSizeSlider.ValueAs<double>();
             };
 
             boldCheckBox.IsChecked = page.Bold;
@@ -188,10 +187,10 @@ namespace DrawingSample
                 page.TextHeightValue = textHeightValueSlider.Value;
             };
 
-            customFontFamilyComboBox.SelectedItem = page.CustomFontFamilyName;
-            customFontFamilyComboBox.SelectedItemChanged += (s, e) =>
+            customFontFamilyComboBox.Value = page.CustomFontFamilyName;
+            customFontFamilyComboBox.ValueChanged += (s, e) =>
             {
-                page.CustomFontFamilyName = customFontFamilyComboBox.SelectedItemAs<string>()
+                page.CustomFontFamilyName = customFontFamilyComboBox.ValueAs<string>()
                     ?? Control.DefaultFont.Name;
             };
 

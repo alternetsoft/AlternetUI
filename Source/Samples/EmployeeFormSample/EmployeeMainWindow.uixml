@@ -57,8 +57,8 @@
 
         <Label Text="Prefix" Grid.Row="4" Grid.Column="0" VerticalAlignment="Center"
                IsTextLocalized="true" Margin="0,0,10,20"/>
-        <ComboBox Name="prefixComboBox"
-                  Grid.Row="4" Grid.Column="1" IsEditable="false"
+        <EnumPicker Name="prefixComboBox"
+                  Grid.Row="4" Grid.Column="1"
                   VerticalAlignment="Center" Margin="0,0,0,10"/>
 
         <Label Text="Address" Grid.Row="5" Grid.Column="0" VerticalAlignment="Center"
@@ -74,8 +74,8 @@
 
         <Label Text="State" Grid.Row="7" Grid.Column="0" VerticalAlignment="Center"
                IsTextLocalized="true" Margin="0,0,10,5"/>
-        <ComboBox Name="stateComboBox" Grid.ColumnSpan="2"
-            Grid.Row="7" Grid.Column="1" IsEditable="false" VerticalAlignment="Center"
+        <EnumPicker Name="stateComboBox" Grid.ColumnSpan="2"
+            Grid.Row="7" Grid.Column="1" VerticalAlignment="Center"
                   Margin="0,0,0,5"/>
 
         <Label Text="ZIP Code" VerticalAlignment="Center" Margin="0,0,10,5" Grid.Row="8"
@@ -111,8 +111,8 @@
 
         <Label Text="Department" Grid.Row="0" Grid.Column="0" VerticalAlignment="Center"
                IsTextLocalized="true" Margin="0,0,10,5"/>
-        <ComboBox Name="departmentComboBox" Grid.Row="0"
-                  Grid.Column="1" IsEditable="false"
+        <EnumPicker Name="departmentComboBox" Grid.Row="0"
+                  Grid.Column="1"
                   VerticalAlignment="Center" Margin="0,0,0,5"/>
 
         <Label Text="Hire Date" Grid.Row="1" Grid.Column="0" VerticalAlignment="Center"

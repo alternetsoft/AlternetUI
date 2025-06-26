@@ -5,12 +5,12 @@
   <Grid Margin="5" RowCount="2" ColumnCount="2">
     <Label Text="Brush Color:" IsTextLocalized="true"
            Margin="0,5,15,5" Grid.Column="0" Grid.Row="0"/>
-    <ColorComboBox Name="brushColorCombo" SelectedItemChanged="BrushColorCombo_Changed"
+    <ColorPicker Name="brushColorCombo" ValueChanged="BrushColorCombo_Changed"
       Margin="0,0,0,10" Grid.Column="1" Grid.Row="0" />
 
     <Label Text="Pen Color:" IsTextLocalized="true"
            Margin="0,5,15,5" Grid.Column="0" Grid.Row="1"/>
-    <ColorComboBox Name="penColorCombo" SelectedItemChanged="PenColorCombo_Changed"
+    <ColorPicker Name="penColorCombo" ValueChanged="PenColorCombo_Changed"
       Margin="0,0,0,10" Grid.Column="1" Grid.Row="1"/>
   </Grid>
 </Panel>
