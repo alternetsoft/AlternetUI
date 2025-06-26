@@ -373,6 +373,12 @@ namespace Alternet.UI
             }
         }
 
+        /// <summary>
+        /// Gets or sets whether double click on the button is treated as a single click.
+        /// Default is false.
+        /// </summary>
+        public virtual bool DoubleClickAsClick { get; set; }
+
         /// <inheritdoc/>
         public override Brush? Background
         {
@@ -1464,7 +1470,7 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="id">Item id.</param>
         /// <returns></returns>
-        public virtual AbstractControl? GetToolControl(ObjectUniqueId id)
+        public virtual AbstractControl? GetToolControl(ObjectUniqueId? id)
         {
             var result = FindChild(id);
             return result;
@@ -1743,7 +1749,7 @@ namespace Alternet.UI
         /// <see cref="SpeedButton"/> as a control, returns Null.
         /// </summary>
         /// <param name="id">Item id.</param>
-        public SpeedButton? FindTool(ObjectUniqueId id)
+        public SpeedButton? FindTool(ObjectUniqueId? id)
         {
             var result = GetToolControl(id) as SpeedButton;
             return result;
@@ -1913,7 +1919,16 @@ namespace Alternet.UI
             UpdateItemProps(speedButton, itemKind);
 
             if (action is not null)
+            {
+                speedButton.DoubleClick += (s, e) =>
+                {
+                    if(DoubleClickAsClick)
+                        action(s, e);
+                };
+
                 speedButton.Click += action;
+            }
+
             speedButton.Parent = this;
 
             return speedButton;
