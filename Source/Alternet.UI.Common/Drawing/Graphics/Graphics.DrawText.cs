@@ -360,7 +360,9 @@ namespace Alternet.Drawing
                     if (parsed is null)
                     {
                         if (splitText is null)
+                        {
                             DrawText(s, rect.Location, font, foreColor, backColor);
+                        }
                         else
                         {
                             DrawStrings(

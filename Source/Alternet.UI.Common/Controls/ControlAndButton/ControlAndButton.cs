@@ -629,14 +629,7 @@ namespace Alternet.UI
                         RaiseButtonClick(args);
                     }
 
-                    if(svg is null)
-                    {
-                        id = Buttons.AddSpeedBtn(btn, ClickAction);
-                    }
-                    else
-                    {
-                        id = Buttons.AddSpeedBtn(null, svg, ClickAction);
-                    }
+                    id = Buttons.AddSpeedBtn(btn, svg, ClickAction);
 
                     if (isClickRepeat)
                     {
