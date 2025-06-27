@@ -1220,6 +1220,29 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Finds the index of the item with <see cref="ListControlItem.Value"/> property which is
+        /// equal to the specified value.
+        /// </summary>
+        /// <param name="collection">The collection of <c>ListControlItem</c>.</param>
+        /// <param name="value">The value to search for.</param>
+        /// <returns></returns>
+        public static int? FindItemIndexWithValue(IList<ListControlItem> collection, object? value)
+        {
+            if (value is null)
+                return null;
+
+            for (int i = 0; i < collection.Count; i++)
+            {
+                var item = collection[i];
+
+                if (value.Equals(item.Value))
+                    return i;
+            }
+
+            return null;
+        }
+
+        /// <summary>
         /// Default method which draws item foreground.
         /// </summary>
         public static void DefaultDrawForeground(
