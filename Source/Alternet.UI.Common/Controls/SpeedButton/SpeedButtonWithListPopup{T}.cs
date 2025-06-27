@@ -127,6 +127,19 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets the index of the <see cref="Value"/> in the items collection.
+        /// </summary>
+        public virtual int? IndexOfValue
+        {
+            get
+            {
+                if (Value is null)
+                    return null;
+                return ListControlItem.FindItemIndexWithValue(Items, Value);
+            }
+        }
+
+        /// <summary>
         /// Gets attached popup window.
         /// </summary>
         [Browsable(false)]
