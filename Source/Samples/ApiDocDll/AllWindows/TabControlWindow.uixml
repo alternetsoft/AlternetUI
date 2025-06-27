@@ -4,7 +4,7 @@
         Title="Examples.TabControl">
   <StackPanel Orientation="Vertical" Name="mainPanel">
     <!-- <CreateUixmlDeclaration> -->
-    <TabControl SuggestedHeight="150" Name="tabControl" Margin="8">
+    <TabControl SuggestedHeight="150" Name="tabControl" Margin="10">
       <TabPage Title="Page 1"></TabPage>
       <TabPage Title="Page 2"></TabPage>
       <TabPage Title="Page 3"></TabPage>
