@@ -47,7 +47,8 @@ namespace Alternet.UI
         /// Gets a collection of <see cref="StatusBarPanel"/> objects associated with the control.
         /// </summary>
         [Content]
-        public virtual BaseCollection<StatusBarPanel> Panels { get; } = new() { ThrowOnNullAdd = true };
+        public virtual BaseCollection<StatusBarPanel> Panels { get; }
+            = new() { ThrowOnNullAdd = true };
 
         /// <summary>
         /// Gets or sets whether to ignore <see cref="Panels"/>.
@@ -287,7 +288,7 @@ namespace Alternet.UI
         /// <param name="index">Panel index, starting from zero.</param>
         /// <returns><c>true</c> if success; <c>false</c> otherwise.</returns>
         /// <remarks>
-        /// This method doesn't affect <see cref="Panels"/>, it wortks with the native control.
+        /// This method doesn't affect <see cref="Panels"/>, it works with the native control.
         /// </remarks>
         /// <seealso cref="PopStatusText"/>
         public virtual bool PushStatusText(string? text = null, int index = 0)
@@ -306,7 +307,7 @@ namespace Alternet.UI
         /// <param name="index">Panel index, starting from zero.</param>
         /// <returns><c>true</c> if success; <c>false</c> otherwise.</returns>
         /// <remarks>
-        /// This method doesn't affect <see cref="Panels"/>, it wortks with the native control.
+        /// This method doesn't affect <see cref="Panels"/>, it works with the native control.
         /// </remarks>
         /// <seealso cref="PushStatusText"/>
         /// <remarks>
@@ -331,7 +332,7 @@ namespace Alternet.UI
         /// panel if negative. </param>
         /// <returns><c>true</c> if success; <c>false</c> otherwise.</returns>
         /// <remarks>
-        /// This method doesn't affect <see cref="Panels"/>, it wortks with the native control.
+        /// This method doesn't affect <see cref="Panels"/>, it works with the native control.
         /// </remarks>
         /// <remarks>
         /// There are two types of panels: fixed widths and variable width panels. For the fixed
@@ -369,7 +370,7 @@ namespace Alternet.UI
         /// <param name="count">New number of panels. Must be greater than zero.</param>
         /// <returns><c>true</c> if success; <c>false</c> otherwise.</returns>
         /// <remarks>
-        /// This method doesn't affect <see cref="Panels"/>, it wortks with the native control.
+        /// This method doesn't affect <see cref="Panels"/>, it works with the native control.
         /// </remarks>
         /// <remarks>
         /// If <paramref name="count"/> is greater than the previous number of panels,
@@ -391,7 +392,7 @@ namespace Alternet.UI
         /// <see cref="int"/> with the panel width if success; <c>null</c> otherwise.
         /// </returns>
         /// <remarks>
-        /// This method doesn't affect <see cref="Panels"/>, it wortks with the native control.
+        /// This method doesn't affect <see cref="Panels"/>, it works with the native control.
         /// </remarks>
         public virtual int? GetStatusWidth(int index)
         {
@@ -406,7 +407,7 @@ namespace Alternet.UI
         /// <param name="index">Panel index, starting from zero.</param>
         /// <returns></returns>
         /// <remarks>
-        /// This method doesn't affect <see cref="Panels"/>, it wortks with the native control.
+        /// This method doesn't affect <see cref="Panels"/>, it works with the native control.
         /// </remarks>
         public virtual StatusBarPanelStyle? GetStatusStyle(int index)
         {
@@ -423,7 +424,7 @@ namespace Alternet.UI
         /// the styles for each panel.</param>
         /// <returns><c>true</c> if success; <c>false</c> otherwise.</returns>
         /// <remarks>
-        /// This method doesn't affect <see cref="Panels"/>, it wortks with the native control.
+        /// This method doesn't affect <see cref="Panels"/>, it works with the native control.
         /// </remarks>
         /// <remarks>
         /// Size of the <paramref name="styles"/> array must be equal to the number passed to
@@ -445,7 +446,7 @@ namespace Alternet.UI
         /// <returns><see cref="RectI"/> with the size and position of a panels's
         /// internal bounding rectangle on success; <c>null</c> otherwise.</returns>
         /// <remarks>
-        /// This method doesn't affect <see cref="Panels"/>, it wortks with the native control.
+        /// This method doesn't affect <see cref="Panels"/>, it works with the native control.
         /// </remarks>
         public virtual RectI? GetFieldRect(int index)
         {
