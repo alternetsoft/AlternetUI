@@ -43,6 +43,7 @@ namespace Alternet.UI
         {
             TextVisible = true;
             OnColorImageChanged(false);
+            ShowComboBoxImageAtRight();
         }
 
         /// <summary>
@@ -491,7 +492,7 @@ namespace Alternet.UI
                     imageColor = disabledColor;
             }
 
-            Image = imageColor.AsImageWithBorder(colorImageSize, ScaleFactor);
+            LabelImage = imageColor.AsImageWithBorder(colorImageSize, ScaleFactor);
 
             if(refresh)
                 Refresh();

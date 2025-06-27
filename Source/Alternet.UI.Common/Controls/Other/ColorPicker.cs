@@ -27,7 +27,6 @@ namespace Alternet.UI
         public ColorPicker()
         {
             UseTheme = KnownTheme.StaticBorder;
-            SetContentHorizontalAlignment(HorizontalAlignment.Left);
         }
 
         /// <inheritdoc/>

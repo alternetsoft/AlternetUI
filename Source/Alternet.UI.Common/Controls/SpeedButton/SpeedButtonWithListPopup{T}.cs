@@ -47,12 +47,7 @@ namespace Alternet.UI
             base.Text = " ";
 
             TextVisible = true;
-            SetDefaultComboBoxImage();
-            ImageVisible = true;
-            SetContentHorizontalAlignment(
-                        pictureAlignment: HorizontalAlignment.Right,
-                        labelAlignment: HorizontalAlignment.Fill,
-                        spacerAlignment: HorizontalAlignment.Right);
+            ShowComboBoxImageAtRight();
         }
 
         /// <summary>

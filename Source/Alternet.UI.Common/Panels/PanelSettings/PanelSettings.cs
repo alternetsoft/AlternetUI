@@ -592,6 +592,7 @@ namespace Alternet.UI
                 = CreateOrUpdateControl<ControlAndLabel<ColorPickerAndButton, Label>>(item, control);
             result.LabelToControl = StackPanelOrientation.Vertical;
             UpdateText(item, result.Label);
+            result.MainControl.HasBtnComboBox = false;
 
             var colorEditor = result.MainControl;
             colorEditor.ButtonClick -= ButtonClick;
