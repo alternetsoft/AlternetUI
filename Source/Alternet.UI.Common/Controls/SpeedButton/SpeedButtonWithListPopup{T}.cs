@@ -316,6 +316,22 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Selects the first item in the list and sets its value
+        /// to the <see cref="Value"/> property.
+        /// </summary>
+        public virtual void SelectFirstItem()
+        {
+            if (Items.Count > 0)
+            {
+                Value = Items[0].Value;
+            }
+            else
+            {
+                Value = null;
+            }
+        }
+
+        /// <summary>
         /// Adds an item to the list control shown in the popup.
         /// </summary>
         /// <param name="item">Item to add.</param>
