@@ -2,11 +2,11 @@
 {
     public static class WinFormsUtils
     {
-        public static Alternet.UI.SystemColorMode ApplicationColorMode
+        public static Alternet.UI.SystemColorModeType ApplicationColorMode
         {
             get
             {
-                return (Alternet.UI.SystemColorMode)Application.ColorMode;
+                return (Alternet.UI.SystemColorModeType)Application.ColorMode;
             }
 
             set
@@ -15,11 +15,11 @@
             }
         }
 
-        public static Alternet.UI.SystemColorMode ApplicationSystemColorMode
+        public static Alternet.UI.SystemColorModeType ApplicationSystemColorMode
         {
             get
             {
-                return (Alternet.UI.SystemColorMode)Application.SystemColorMode;
+                return (Alternet.UI.SystemColorModeType)Application.SystemColorMode;
             }
         }
 

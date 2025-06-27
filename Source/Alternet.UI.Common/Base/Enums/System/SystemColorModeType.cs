@@ -7,7 +7,7 @@ namespace Alternet.UI
     /// <summary>
     /// Enumerates known system color modes.
     /// </summary>
-    public enum SystemColorMode
+    public enum SystemColorModeType
     {
         /// <summary>
         /// Dark mode is or should be disabled.
