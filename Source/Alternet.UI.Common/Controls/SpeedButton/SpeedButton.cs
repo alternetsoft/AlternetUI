@@ -852,6 +852,29 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets or sets the image that is displayed by the control's label.
+        /// This is an additional image that can be displayed
+        /// alongside the main <see cref="Image"/>.
+        /// </summary>
+        public virtual Image? LabelImage
+        {
+            get
+            {
+                return Label.Image;
+            }
+
+            set
+            {
+                if (LabelImage == value)
+                    return;
+                PerformLayoutAndInvalidate(() =>
+                {
+                    Label.Image = value;
+                });
+            }
+        }
+
+        /// <summary>
         /// Gets or sets the image that is displayed by the control.
         /// </summary>
         [DefaultValue(null)]
@@ -1264,6 +1287,19 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Shows default combo box image at the right side of the control.
+        /// </summary>
+        public virtual void ShowComboBoxImageAtRight()
+        {
+            SetDefaultComboBoxImage();
+            ImageVisible = true;
+            SetContentHorizontalAlignment(
+                        pictureAlignment: HorizontalAlignment.Right,
+                        labelAlignment: HorizontalAlignment.Fill,
+                        spacerAlignment: HorizontalAlignment.Right);
+        }
+
+        /// <summary>
         /// Sets the vertical alignment for the content elements within the control.
         /// </summary>
         /// <remarks>This method updates the vertical alignment of the picture,
@@ -1304,7 +1340,7 @@ namespace Alternet.UI
 
             if (HasImage)
             {
-                if(ImageToText == ImageToText.Horizontal
+                if(ImageToText == ImageToText.Horizontal && TextVisible
                     && ImageHorizontalAlignment == HorizontalAlignment.Right)
                 {
                     var newRect = new RectD(
