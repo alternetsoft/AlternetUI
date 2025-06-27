@@ -1,3 +1,33 @@
+# 0.9.739 (2025 June 27)
+
+- **WebBrowser: Fix background painting for Edge backend.**
+- **Create SimpleFormulaEvaluator, LabelAndButton, IntPicker, generic ControlAndButton.**
+- FormulaEngine: Do not use Microsoft.CodeAnalysis.CSharp.Scripting anymore, now use SimpleFormulaEvaluator.
+- Label: Add DrawDefaultText override.
+- AnimationPlayer: Fix LoadFile when animation type is not specified.
+- SvgImage.AsNormalImage override.
+- SpeedButtonWithListPopup: Fixed behavior if child of form used as control.
+- SpeedButtonWithListPopup: Fixed to be at least one line in height.
+- SpeedButtonWithListPopup: Items, ValueAs.
+- ImageList: AddResized, AddImageStrip and 5 new constructors.
+- AssemblyUtils: FindNonGenericMethod, fix InvokeMethodWithResult.
+- ControlAndButton: ButtonCombo, ButtonEllipsis, ButtonPlus, ButtonMinus.
+- Demo: Replace Slider, ComboBox with new picker controls (as not working properly when dark theme is used on MSW).
+- WindowTextInput: hide system menu and close btn in title.
+- MenuItem: Commented out disabled images assign as WxWidgets implementation was buggy on Windows 11 when dark theme is selected.
+- New members: SpeedEnumButton.ExcludeValues, ControlAndButton.ReportError, DialogFactory.AskIntAsync, Keyboard.IsControlPressed, 
+PaintEventArgs.WithRect, ToolbarUtils.GetNormalAndDisabledSvg.
+- Toolbar: AddDefaultComboBoxBtn, DoubleClickAsClick, AddSpeedBtn override.
+- AbstractControl: Do not create dc if paint is not needed.
+- AbstractControl.DrawDefaultbackground now has flags parameter.
+- All Picker controls: draw combo btn on the right.
+- TemplateUtils.RaisePaintForGenericChildren: do not create dc if no painting is performed.
+- Control and Panel: do not paint extra background (overall speed up in controls painting as previously default background was always painted).
+- GenericLabel: new members ShowDebugCorners, BeforeDrawText event, DrawLabelParams.
+- SpeedButton: Clip long text so it will not paint over the image (if image is aligned to the right of the text).
+- SpeedButton: Label is now GenericLabel (and has more features  than GenericTextControl used previously).
+- SpeedButton: ResetImages, SetImages, SetImageSets, SetDefaultComboBoxImage, SetSvgImage, SetContentHorizontalAlignment override.
+
 # 0.9.738 (2025 June 24)
 
 - Add controls: ColorPickerAndButton, EnumPicker, SpeedEnumButton, EnumPickerAndButton, FontNamePicker, FontSizePicker, ListPicker, SpeedButtonWithListPopup.
