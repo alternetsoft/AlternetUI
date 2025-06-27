@@ -8,7 +8,6 @@ namespace ApiDoc
         public GridWindow()
         {
             InitializeComponent();
-            grid.HasBorder = true;
             grid.Padding = 5;
         }
 
@@ -20,10 +19,10 @@ namespace ApiDoc
             Grid.RowDefinitions.Add(new Alternet.UI.RowDefinition { Height = new Alternet.UI.GridLength(1, Alternet.UI.GridUnitType.Auto) });
             var bt1 = new Button { Text = "First button" };
             var bt2 = new Button { Text = "Second button" };
-            Grid.Children.Add(bt1);
-            Grid.Children.Add(bt2);
             Alternet.UI.Grid.SetRow(bt1, 0);
             Alternet.UI.Grid.SetRow(bt2, 1);
+            Grid.Children.Add(bt1);
+            Grid.Children.Add(bt2);
             #endregion
         }
     }

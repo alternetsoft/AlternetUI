@@ -3,27 +3,29 @@
         x:Class="ApiDoc.GridWindow"
         Title="Examples.Grid">
     <!-- <CreateUixmlDeclaration> -->
-  <Grid Name="grid" Margin="16,16,16,246">
-    <Grid.ColumnDefinitions>
-      <ColumnDefinition />
-      <ColumnDefinition />
-      <ColumnDefinition />
-    </Grid.ColumnDefinitions>
-    <Grid.RowDefinitions>
-      <RowDefinition />
-      <RowDefinition />
-      <RowDefinition />
-      <RowDefinition />
-    </Grid.RowDefinitions>
+  <Border HorizontalAlignment="Left" VerticalAlignment="Top">
+    <Grid Name="grid" Margin="16,16,16,16" MinChildMargin="5">
+      <Grid.ColumnDefinitions>
+        <ColumnDefinition />
+        <ColumnDefinition />
+        <ColumnDefinition />
+      </Grid.ColumnDefinitions>
+      <Grid.RowDefinitions>
+        <RowDefinition />
+        <RowDefinition />
+        <RowDefinition />
+        <RowDefinition />
+      </Grid.RowDefinitions>
 
-    <Label Grid.ColumnSpan="3" Grid.Row="0" Text="2021 Products Shipped"/>
-    <Label Grid.Row="1" Grid.Column="0" Text="Quarter 1"/>
-    <Label Grid.Row="1" Grid.Column="1" Text="Quarter 2"/>
-    <Label Grid.Row="1" Grid.Column="2" Text="Quarter 3"/>
-    <Label Grid.Row="2" Grid.Column="0" Text="50000"/>
-    <Label Grid.Row="2" Grid.Column="1" Text="100000"/>
-    <Label Grid.Row="2" Grid.Column="2" Text="150000"/>
-    <Label Grid.ColumnSpan="3" Grid.Row="3" Text="Total Units: 300000"/>
-  </Grid>
+      <Label Grid.ColumnSpan="3" Grid.Row="0" Text="2021 Products Shipped" IsBold="True"/>
+      <Label Grid.Row="1" Grid.Column="0" Text="Quarter 1" MinWidth="100"/>
+      <Label Grid.Row="1" Grid.Column="1" Text="Quarter 2" MinWidth="100"/>
+      <Label Grid.Row="1" Grid.Column="2" Text="Quarter 3" MinWidth="100"/>
+      <Label Grid.Row="2" Grid.Column="0" Text="50000"/>
+      <Label Grid.Row="2" Grid.Column="1" Text="100000"/>
+      <Label Grid.Row="2" Grid.Column="2" Text="150000"/>
+      <Label Grid.ColumnSpan="3" Grid.Row="3" Text="Total Units: 300000"/>
+    </Grid>
+  </Border>
     <!-- </CreateUixmlDeclaration> -->
 </Window>

@@ -20,7 +20,6 @@ namespace Alternet.UI
         /// </summary>
         public PaintActionsControl()
         {
-
         }
 
         /// <summary>

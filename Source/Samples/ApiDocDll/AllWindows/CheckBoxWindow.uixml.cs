@@ -27,9 +27,9 @@ namespace ApiDoc
         }
 
         #region CheckBoxEventHandler
-        private void AllowTextEditingCheckBox_CheckedChanged(object? sender, EventArgs e)
+        private void IsEnabledCheckBox_CheckedChanged(object? sender, EventArgs e)
         {
-            comboBox.IsEditable = allowTextEditingCheckBox.IsChecked;
+            comboBox.IsEnabled = isEnabledCheckBox.IsChecked;
         }
         #endregion    
     }

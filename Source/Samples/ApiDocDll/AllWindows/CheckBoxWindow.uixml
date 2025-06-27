@@ -3,9 +3,9 @@
         x:Class="ApiDoc.CheckBoxWindow"
         Title="CheckBox">
   <StackPanel Orientation="Vertical">
-    <ComboBox Width="200" Name="comboBox" IsEditable="false" VerticalAlignment="Top" Margin="8"/>
+    <ListPicker Width="200" Name="comboBox" VerticalAlignment="Top" Margin="8"/>
     <!-- <CreateUixmlDeclaration> -->
-    <CheckBox Text="Allow Text Editing" Name="allowTextEditingCheckBox" Margin="8" CheckedChanged="AllowTextEditingCheckBox_CheckedChanged"/>
+    <CheckBox Text="ListPicker is enabled" Name="isEnabledCheckBox" IsChecked="True" Margin="8" CheckedChanged="IsEnabledCheckBox_CheckedChanged"/>
     <!-- </CreateUixmlDeclaration> -->
 
   </StackPanel>

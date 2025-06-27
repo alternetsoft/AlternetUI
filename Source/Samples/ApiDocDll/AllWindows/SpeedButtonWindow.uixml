@@ -5,11 +5,11 @@
 
   <VerticalStackPanel Name="mainPanel">
     <LogListBox SuggestedHeight="200" Name="logListBox" Margin="10"/>
-    <Control Layout="Horizontal" MinChildMargin="5" Name="buttonPanel" Padding="5">
+    <Panel Layout="Horizontal" MinChildMargin="5" Name="buttonPanel" Padding="5">
       <!-- <CreateUixmlDeclaration> -->
       <SpeedButton Name="button1" Click="Button_Click" HorizontalAlignment="Right"
                    ToolTip = "Some hint" Shortcut="Ctrl+O" Text="Ok" TextVisible="true"/>
       <!-- </CreateUixmlDeclaration> -->
-    </Control>
+    </Panel>
   </VerticalStackPanel>
 </Window>

@@ -12,18 +12,11 @@
       <Button Name="ForwardButton" Text="&#62;" Margin="0,10,0,5" Click="ForwardButton_Click"/>
       <Button Name="ZoomInButton" Text="+" Margin="0,10,0,5" Click="ZoomInButton_Click" />
       <Button Name="ZoomOutButton" Text="-" Margin="0,10,0,5" Click="ZoomOutButton_Click" />
-      <ComboBox SuggestedWidth="300" Margin="0,10,0,5" Name="UrlTextBox"
-             KeyDown="UrlTextBox_KeyDown" IsEditable="true"
-			/>
-      <Button Text="Go" Margin="0,10,0,5" Click="GoButton_Click" Name="goButton"/>
+      <TextBox SuggestedWidth="300" Margin="0,10,0,5" Name="UrlTextBox"
+             KeyDown="UrlTextBox_KeyDown" HorizontalAlignment="Fill"/>
+      <Button Text="Go" Margin="0,10,0,5" Click="GoButton_Click"
+              Name="goButton" HorizontalAlignment="Right"/>
     </StackPanel>
-
-    <StackPanel  Grid.Row="3" Grid.Column="0"  Orientation="Horizontal">
-      <TextBox SuggestedWidth="300" Margin="0,10,0,5" Name="FindTextBox" Text=""/>
-      <Button Text="Find" Margin="0,10,0,5" Click="FindButton_Click" Name="findButton"/>
-    </StackPanel>
-
-    <!-- ==================================== -->
 
     <!-- <CreateUixmlDeclaration> -->
     <WebBrowser
@@ -35,6 +28,12 @@
           DocumentTitleChanged="WebBrowser1_TitleChanged"
 			/>
     <!-- </CreateUixmlDeclaration> -->
+
+    <StackPanel  Grid.Row="3" Grid.Column="0"  Orientation="Horizontal">
+      <TextBox SuggestedWidth="300" Margin="0,10,0,5" Name="FindTextBox" Text=""/>
+      <Button Text="Find" Margin="0,10,0,5" Click="FindButton_Click" Name="findButton"/>
+    </StackPanel>
+
   </VerticalStackPanel>
 </Window>
 
