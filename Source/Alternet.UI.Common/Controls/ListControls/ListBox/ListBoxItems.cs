@@ -25,7 +25,8 @@ namespace Alternet.UI
     /// <seealso cref="ICollection"/>
     /// <seealso cref="IList"/>
     public class ListBoxItems : ICollection<object>, IEnumerable<object>,
-        IEnumerable, IList<object>, IReadOnlyCollection<object>, IReadOnlyList<object>, ICollection, IList
+        IEnumerable, IList<object>, IReadOnlyCollection<object>, IReadOnlyList<object>,
+        ICollection, IList
     {
         private readonly BaseCollection<ListControlItem> items;
 
@@ -39,6 +40,16 @@ namespace Alternet.UI
 
             items.PropertyChanged += Items_PropertyChanged;
             items.CollectionChanged += Items_CollectionChanged;
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ListBoxItems"/> class.
+        /// </summary>
+        /// <param name="items"></param>
+        public ListBoxItems(IEnumerable<object> items)
+            : this(new BaseCollection<ListControlItem>())
+        {
+            AddRange(items);
         }
 
         /// <summary>
@@ -97,6 +108,15 @@ namespace Alternet.UI
             {
                 items[index].Value = value;
             }
+        }
+
+        /// <summary>
+        /// Implicitly converts an object collection to a ListBoxItems collection.
+        /// </summary>
+        /// <param name="items">The array of objects to convert.</param>
+        public static implicit operator ListBoxItems(object[] items)
+        {
+            return new ListBoxItems(items);
         }
 
         /// <inheritdoc/>
