@@ -380,6 +380,17 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Adds color to the list of colors.
+        /// </summary>
+        /// <param name="title">Color title. Optional. If not specified,
+        /// <see cref="Color.NameLocalized"/> will be used.</param>
+        /// <param name="value">Color value.</param>
+        public virtual ListControlItem AddColor(Color? value, string? title = null)
+        {
+            return ListBox.AddColor(value, title);
+        }
+
+        /// <summary>
         /// Selects a color and updates the current value to the selected color.
         /// </summary>
         /// <remarks>This method finds or adds the specified color to the collection
