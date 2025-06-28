@@ -7,7 +7,7 @@
 
       <VerticalStackPanel Margin="5" Name="textBoxesPanel">
         <Label Text="Date:" Margin="0,0,0,5" IsTextLocalized="true"/>
-        <DateTimePicker
+        <DatePicker
           SuggestedWidth="200" HorizontalAlignment="Left"
           Margin="0,0,0,5" Name="datePicker"
           ValueChanged="DatePicker_DateChanged"/>
@@ -27,13 +27,13 @@
           <Border Layout="Vertical" Margin="5" Padding="5">
             <Label Text="Date Editor:" Margin="0,0,0,5"/>
             <RadioButton Text="Default" Margin="0,0,0,5" IsChecked="True"  IsTextLocalized="true"
-                         Name="DefaultRadioButton"
+                         Name="DefaultRadioButton" IsEnabled="False"
                          CheckedChanged="Popup_CheckedChanged" />
             <RadioButton Text="Spin" Margin="0,0,0,5"  IsTextLocalized="true"
-                         Name="SpinRadioButton"
+                         Name="SpinRadioButton" IsEnabled="False"
                          CheckedChanged="Popup_CheckedChanged" />
             <RadioButton Text="DropDown" Margin="0,0,0,5" IsTextLocalized="true"
-                         Name="DropDownRadioButton"
+                         Name="DropDownRadioButton" IsEnabled="False"
                          CheckedChanged="Popup_CheckedChanged" />
           </Border>
           <Button Text="Set Date/Time" Click="SetNow_Click" Margin="0,0,0,5" IsTextLocalized="true"

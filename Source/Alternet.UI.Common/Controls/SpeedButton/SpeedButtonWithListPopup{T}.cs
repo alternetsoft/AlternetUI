@@ -20,7 +20,7 @@ namespace Alternet.UI
     /// <typeparam name="T">The type of the virtual list box used within the popup window.
     /// Must inherit from <see cref="VirtualListBox"/>
     /// and have a parameterless constructor.</typeparam>
-    public partial class SpeedButtonWithListPopup<T> : SpeedButton
+    public partial class SpeedButtonWithListPopup<T> : SpeedButtonWithPopup<PopupListBox<T>, T>
         where T : VirtualListBox, new()
     {
         /// <summary>
@@ -29,9 +29,6 @@ namespace Alternet.UI
         public static SpeedButtonWithListPopup.PopupWindowKind DefaultPopupKind
             = SpeedButtonWithListPopup.PopupWindowKind.ListBox;
 
-        private object? data;
-        private PopupListBox<T>? popupWindow;
-        private string popupWindowTitle = string.Empty;
         private BaseCollection<ListControlItem>? items;
         private ObjectUniqueId? createdMenuId;
 
@@ -50,18 +47,7 @@ namespace Alternet.UI
         /// </summary>
         public SpeedButtonWithListPopup()
         {
-            // Ensure that control occupies space even if value is null.
-            base.Text = " ";
-
-            TextVisible = true;
-            ShowComboBoxImageAtRight();
-            ShowDropDownMenuWhenClicked = false;
         }
-
-        /// <summary>
-        /// Occurs when <see cref="Value"/> property is changed.
-        /// </summary>
-        public event EventHandler? ValueChanged;
 
         /// <summary>
         /// Gets or sets the kind of popup window used by the control.
@@ -119,40 +105,12 @@ namespace Alternet.UI
         {
             get
             {
-                return PopupWindow.MainControl;
+                return (VirtualListBox)PopupWindow.MainControl;
             }
         }
 
         /// <summary>
-        /// Gets a value indicating whether the popup window has been created.
-        /// </summary>
-        public virtual bool IsPopupWindowCreated => popupWindow is not null;
-
-        /// <summary>
-        /// Gets or sets selected color.
-        /// </summary>
-        public virtual object? Value
-        {
-            get
-            {
-                return data;
-            }
-
-            set
-            {
-                if (data == value)
-                    return;
-                PerformLayoutAndInvalidate(() =>
-                {
-                    data = value;
-                    base.Text = Text ?? " ";
-                    ValueChanged?.Invoke(this, EventArgs.Empty);
-                });
-            }
-        }
-
-        /// <summary>
-        /// Gets the index of the <see cref="Value"/> in the items collection.
+        /// Gets the index of the value in the items collection.
         /// </summary>
         public virtual int? IndexOfValue
         {
@@ -168,84 +126,7 @@ namespace Alternet.UI
         /// Gets attached popup window.
         /// </summary>
         [Browsable(false)]
-        public virtual PopupListBox<T> PopupWindow
-        {
-            get
-            {
-                if (popupWindow is null)
-                {
-                    popupWindow = new();
-                    popupWindow.Title = popupWindowTitle;
-                    popupWindow.AfterHide += PopupWindowAfterHideHandler;
-                }
-
-                return popupWindow;
-            }
-
-            set
-            {
-                popupWindow = value;
-            }
-        }
-
-        /// <summary>
-        /// Gets or sets the title of the popup window.
-        /// </summary>
-        public virtual string PopupWindowTitle
-        {
-            get
-            {
-                return popupWindowTitle;
-            }
-
-            set
-            {
-                if (popupWindowTitle == value)
-                    return;
-                popupWindowTitle = value;
-                if (IsPopupWindowCreated)
-                    PopupWindow.Title = popupWindowTitle;
-            }
-        }
-
-        /// <summary>
-        /// Gets or sets <see cref="Value"/> as <see cref="string"/>.
-        /// </summary>
-        [Browsable(false)]
-        public new string? Text
-        {
-            get
-            {
-                string s = GetValueAsString(data) ?? " ";
-                if (string.IsNullOrEmpty(s))
-                    s = " ";
-                return s;
-            }
-
-            set
-            {
-            }
-        }
-
-        internal new Image? Image
-        {
-            get => base.Image;
-            set => base.Image = value;
-        }
-
-        internal new Image? DisabledImage
-        {
-            get => base.DisabledImage;
-            set => base.DisabledImage = value;
-        }
-
-        /// <summary>
-        /// Casts selected item to <typeparamref name="T"/> type.
-        /// </summary>
-        /// <typeparam name="T2">Type of the result.</typeparam>
-        /// <returns></returns>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public T2? ValueAs<T2>() => (T2?)Value;
+        public PopupListBox<T> PopupListBox => (PopupListBox<T>)PopupWindow;
 
         /// <summary>
         /// Adds a collection of items to the list control shown in the popup.
@@ -339,8 +220,7 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Selects the first item in the list and sets its value
-        /// to the <see cref="Value"/> property.
+        /// Selects the first item in the list and sets its value to the control.
         /// </summary>
         public virtual void SelectFirstItem()
         {
@@ -373,10 +253,8 @@ namespace Alternet.UI
             items = GetItems();
         }
 
-        /// <summary>
-        /// Shows popup window with the list of enum values.
-        /// </summary>
-        public virtual void ShowPopup()
+        /// <inheritdoc/>
+        public override void ShowPopup()
         {
             if (!Enabled)
                 return;
@@ -444,34 +322,7 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        protected override void OnClick(EventArgs e)
-        {
-            base.OnClick(e);
-            ShowPopup();
-        }
-
-        /// <summary>
-        /// Gets enum value as string.
-        /// </summary>
-        /// <returns></returns>
-        protected virtual string? GetValueAsString(object? d)
-        {
-            return d?.ToString();
-        }
-
-        /// <inheritdoc/>
-        protected override void OnEnabledChanged(EventArgs e)
-        {
-            base.OnEnabledChanged(e);
-        }
-
-        /// <summary>
-        /// Fired after popup window is closed. Applies color selected in the popup window
-        /// to the control.
-        /// </summary>
-        /// <param name="sender">Event sender.</param>
-        /// <param name="e">Event arguments</param>
-        protected virtual void PopupWindowAfterHideHandler(object? sender, EventArgs e)
+        protected override void OnPopupWindowClosed(object? sender, EventArgs e)
         {
             if (PopupWindow.PopupResult == ModalResult.Accepted)
             {
@@ -482,8 +333,6 @@ namespace Alternet.UI
         /// <inheritdoc/>
         protected override void DisposeManaged()
         {
-            SafeDispose(ref popupWindow);
-
             if(DropDownMenu is not null && DropDownMenu.UniqueId == createdMenuId)
             {
                 var menu = DropDownMenu;

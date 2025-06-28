@@ -18,9 +18,7 @@ namespace ControlsSample
 
         private void DatePicker_DateChanged(object? sender, EventArgs e)
         {
-            var v = datePicker.Value;
-            var s = v.ToShortDateString();
-            dateLabel.Text = $"Selected: {s}";
+            dateLabel.Text = $"Selected: {datePicker.Text}";
         }
 
         private void TimePicker_Changed(object? sender, EventArgs e)
@@ -77,6 +75,7 @@ namespace ControlsSample
 
         private void Popup_CheckedChanged(object? sender, EventArgs e)
         {
+            /*
             if (SpinRadioButton.IsChecked)
             {
                 datePicker.PopupKind = DateTimePickerPopupKind.Spin;
@@ -94,6 +93,7 @@ namespace ControlsSample
                 datePicker.PopupKind = DateTimePickerPopupKind.Default;
                 return;
             }
+            */
         }
     }
 }

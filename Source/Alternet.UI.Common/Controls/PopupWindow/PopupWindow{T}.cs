@@ -227,6 +227,12 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets whether popup was accepted.
+        /// </summary>
+        [Browsable(false)]
+        public bool IsPopupAccepted => PopupResult == ModalResult.Accepted;
+
+        /// <summary>
         /// Gets or sets main control used in the popup window.
         /// </summary>
         [Browsable(false)]

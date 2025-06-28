@@ -23,7 +23,7 @@ namespace Alternet.UI
         {
             Title = CommonStrings.Default.WindowTitleSelectDate;
             HideOnClick = false;
-            HideOnDoubleClick = true;
+            HideOnDoubleClick = false;
             SetSizeToContent();
         }
 
