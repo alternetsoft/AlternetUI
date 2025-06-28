@@ -53,6 +53,7 @@ namespace Alternet.UI
 
             TextVisible = true;
             ShowComboBoxImageAtRight();
+            ShowDropDownMenuWhenClicked = false;
         }
 
         /// <summary>
@@ -81,7 +82,7 @@ namespace Alternet.UI
         /// Default is <c>null</c>.
         /// If not set, the <see cref="DefaultPopupKind"/> is used.
         /// </summary>
-        public PopupWindowKind? PopupKind { get; set; }
+        public virtual PopupWindowKind? PopupKind { get; set; }
 
         /// <summary>
         /// Gets the collection of items in the list box control used within the popup window.
@@ -106,7 +107,7 @@ namespace Alternet.UI
         /// Gets the underlying <see cref="VirtualListBox"/> control used within the popup window.
         /// </summary>
         [Browsable(false)]
-        public VirtualListBox ListBox
+        public virtual VirtualListBox ListBox
         {
             get
             {
@@ -117,7 +118,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets a value indicating whether the popup window has been created.
         /// </summary>
-        public bool IsPopupWindowCreated => popupWindow is not null;
+        public virtual bool IsPopupWindowCreated => popupWindow is not null;
 
         /// <summary>
         /// Gets or sets selected color.
@@ -171,6 +172,11 @@ namespace Alternet.UI
                 }
 
                 return popupWindow;
+            }
+
+            set
+            {
+                popupWindow = value;
             }
         }
 
@@ -367,14 +373,51 @@ namespace Alternet.UI
             if (!Enabled)
                 return;
 
-            ShowListBox();
+            var kind = PopupKind ?? DefaultPopupKind;
+
+            switch (kind)
+            {
+                case PopupWindowKind.ListBox:
+                default:
+                    ShowListBox();
+                    break;
+                case PopupWindowKind.ContextMenu:
+                    ShowPopupMenu();
+                    break;
+            }
+
+            void ShowPopupMenu()
+            {
+                DropDownMenu ??= new ContextMenu();
+
+                DropDownMenu.Items.SetCount(Items.Count, () => new MenuItem());
+
+                for (int i = 0; i < Items.Count; i++)
+                {
+                    var item = Items[i];
+                    var menuItem = DropDownMenu.Items[i];
+                    menuItem.Text
+                        = item.DisplayText ?? item.Text ?? item.Value?.ToString() ?? string.Empty;
+                    menuItem.Tag = item.Value;
+                    menuItem.Click -= MenuItemClickHandler;
+                    menuItem.Click += MenuItemClickHandler;
+
+                    void MenuItemClickHandler(object? sender, EventArgs e)
+                    {
+                        if (sender is MenuItem menuItemSender)
+                        {
+                            Value = menuItemSender.Tag;
+                        }
+                    }
+                }
+            }
 
             void ShowListBox()
             {
-                if (items is null)
+                if (Items is null)
                     ListBox.RemoveAll();
                 else
-                    ListBox.SetItemsFast(items, VirtualListBox.SetItemsKind.ChangeField);
+                    ListBox.SetItemsFast(Items, VirtualListBox.SetItemsKind.ChangeField);
 
                 var index = ListBox.FindItemIndexWithValue(Value);
                 ListBox.SelectItemAndScroll(index);
