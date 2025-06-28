@@ -121,6 +121,13 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets or sets a value indicating whether the drop down menu
+        /// is shown when the control is clicked. Default is <see langword="true"/>.
+        /// </summary>
+        [Browsable(true)]
+        public virtual bool ShowDropDownMenuWhenClicked { get; set; } = true;
+
+        /// <summary>
         /// Sets <see cref="AbstractControl.StateObjects"/> colors and backgrounds
         /// for the state specified
         /// in the <paramref name="state"/> parameter to the
@@ -226,6 +233,8 @@ namespace Alternet.UI
             if (!Enabled)
                 return;
             RaiseClick(e);
+            if(ShowDropDownMenuWhenClicked)
+                ShowDropDownMenu();
             ShowDropDownMenu();
             Invalidate();
         }
