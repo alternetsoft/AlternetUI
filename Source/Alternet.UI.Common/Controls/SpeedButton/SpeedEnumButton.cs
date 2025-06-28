@@ -11,7 +11,7 @@ namespace Alternet.UI
     /// <summary>
     /// Implements <see cref="SpeedButton"/> for selecting of the enum values.
     /// </summary>
-    public partial class SpeedEnumButton : SpeedButtonWithListPopup<VirtualListBox>
+    public partial class SpeedEnumButton : SpeedButtonWithListPopup
     {
         /// <summary>
         /// Gets or sets the default kind of popup window used by the control.

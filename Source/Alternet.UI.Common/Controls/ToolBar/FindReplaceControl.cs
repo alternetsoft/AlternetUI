@@ -40,9 +40,10 @@ namespace Alternet.UI
         private static Color? defaultFindEditBorderColorLight;
         private static Color? defaultFindEditBorderColorDark;
 
-        private readonly ComboBox scopeEdit = new()
+        private readonly ListPicker scopeEdit = new()
         {
             HasBorder = false,
+            UseContextMenuAsPopup = true,
             VerticalAlignment = VerticalAlignment.Center,
         };
 
@@ -126,7 +127,6 @@ namespace Alternet.UI
 
             void Fn()
             {
-                scopeEdit.IsEditable = false;
                 UpdateFindScope();
 
                 replaceEdit.DelayedTextChanged += OnReplaceEditTextChanged;
@@ -476,7 +476,7 @@ namespace Alternet.UI
                     return;
                 if (value is null)
                 {
-                    scopeEdit.SelectedItem = null;
+                    scopeEdit.Value = null;
                     return;
                 }
 
@@ -495,7 +495,7 @@ namespace Alternet.UI
                         IsScopeSelectionOnly = true;
                         break;
                     default:
-                        scopeEdit.SelectedItem = null;
+                        scopeEdit.Value = null;
                         break;
                 }
             }
@@ -509,7 +509,7 @@ namespace Alternet.UI
         {
             get
             {
-                return scopeEdit.SelectedItem == scopeAllOpenDocuments;
+                return scopeEdit.Value == scopeAllOpenDocuments;
             }
 
             set
@@ -519,11 +519,11 @@ namespace Alternet.UI
                 if (value)
                 {
                     if (canFindInAllOpenDocuments)
-                        scopeEdit.SelectedItem = scopeAllOpenDocuments;
+                        scopeEdit.Value = scopeAllOpenDocuments;
                 }
                 else
                 {
-                    scopeEdit.SelectedItem = null;
+                    scopeEdit.Value = null;
                 }
             }
         }
@@ -570,7 +570,7 @@ namespace Alternet.UI
         {
             get
             {
-                return scopeEdit.SelectedItem == scopeCurrentProject;
+                return scopeEdit.Value == scopeCurrentProject;
             }
 
             set
@@ -580,11 +580,11 @@ namespace Alternet.UI
                 if (value)
                 {
                     if (canFindInCurrentProject)
-                        scopeEdit.SelectedItem = scopeCurrentProject;
+                        scopeEdit.Value = scopeCurrentProject;
                 }
                 else
                 {
-                    scopeEdit.SelectedItem = null;
+                    scopeEdit.Value = null;
                 }
             }
         }
@@ -597,7 +597,7 @@ namespace Alternet.UI
         {
             get
             {
-                return scopeEdit.SelectedItem == scopeSelectionOnly;
+                return scopeEdit.Value == scopeSelectionOnly;
             }
 
             set
@@ -607,11 +607,11 @@ namespace Alternet.UI
                 if (value)
                 {
                     if (canFindInSelectionOnly)
-                        scopeEdit.SelectedItem = scopeSelectionOnly;
+                        scopeEdit.Value = scopeSelectionOnly;
                 }
                 else
                 {
-                    scopeEdit.SelectedItem = null;
+                    scopeEdit.Value = null;
                 }
             }
         }
@@ -675,7 +675,7 @@ namespace Alternet.UI
         {
             get
             {
-                return scopeEdit.SelectedItem == scopeCurrentDocument;
+                return scopeEdit.Value == scopeCurrentDocument;
             }
 
             set
@@ -685,11 +685,11 @@ namespace Alternet.UI
                 if (value)
                 {
                     if (canFindInCurrentDocument)
-                        scopeEdit.SelectedItem = scopeCurrentDocument;
+                        scopeEdit.Value = scopeCurrentDocument;
                 }
                 else
                 {
-                    scopeEdit.SelectedItem = null;
+                    scopeEdit.Value = null;
                 }
             }
         }
@@ -1167,10 +1167,10 @@ namespace Alternet.UI
         public ComboBox FindEdit => findEdit;
 
         /// <summary>
-        /// Gets <see cref="ComboBox"/> which allows to specify text to find.
+        /// Gets <see cref="ListPicker"/> which allows to specify text to find.
         /// </summary>
         [Browsable(false)]
-        public ComboBox ScopeEdit => scopeEdit;
+        public ListPicker ScopeEdit => scopeEdit;
 
         /// <summary>
         /// Gets <see cref="ComboBox"/> which allows to specify text to replace.
@@ -1572,7 +1572,7 @@ namespace Alternet.UI
 
         private void UpdateFindScope()
         {
-            void AddOrRemove(object item, bool add)
+            void AddOrRemove(ListControlItem item, bool add)
             {
                 if (add)
                 {
@@ -1589,7 +1589,7 @@ namespace Alternet.UI
             {
                 if (select && !selected)
                 {
-                    scopeEdit.SelectedItem = item;
+                    scopeEdit.Value = item;
                     selected = true;
                 }
             }

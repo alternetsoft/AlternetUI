@@ -26,12 +26,14 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets the default kind of popup window used by the control.
         /// </summary>
-        public static PopupWindowKind DefaultPopupKind = PopupWindowKind.ListBox;
+        public static SpeedButtonWithListPopup.PopupWindowKind DefaultPopupKind
+            = SpeedButtonWithListPopup.PopupWindowKind.ListBox;
 
         private object? data;
         private PopupListBox<T>? popupWindow;
         private string popupWindowTitle = string.Empty;
         private BaseCollection<ListControlItem>? items;
+        private ObjectUniqueId? createdMenuId;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="SpeedButtonWithListPopup{T}"/> class.
@@ -62,27 +64,33 @@ namespace Alternet.UI
         public event EventHandler? ValueChanged;
 
         /// <summary>
-        /// Represents the kind of popup window used by the control.
-        /// </summary>
-        public enum PopupWindowKind
-        {
-            /// <summary>
-            /// Popup window inherited from <see cref="PopupListBox"/>.
-            /// </summary>
-            ListBox,
-
-            /// <summary>
-            /// Use context menu as a popup window.
-            /// </summary>
-            ContextMenu,
-        }
-
-        /// <summary>
         /// Gets or sets the kind of popup window used by the control.
         /// Default is <c>null</c>.
         /// If not set, the <see cref="DefaultPopupKind"/> is used.
         /// </summary>
-        public virtual PopupWindowKind? PopupKind { get; set; }
+        public virtual SpeedButtonWithListPopup.PopupWindowKind? PopupKind { get; set; }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether to use a context menu as the popup window.
+        /// </summary>
+        /// <remarks>
+        /// If set to <see langword="true"/>, the popup window will be a context menu.
+        /// Otherwise, it will use the default popup kind.
+        /// </remarks>
+        public virtual bool UseContextMenuAsPopup
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => PopupKind == SpeedButtonWithListPopup.PopupWindowKind.ContextMenu;
+
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            set
+            {
+                if (value)
+                    PopupKind = SpeedButtonWithListPopup.PopupWindowKind.ContextMenu;
+                else
+                    PopupKind = null;
+            }
+        }
 
         /// <summary>
         /// Gets the collection of items in the list box control used within the popup window.
@@ -91,7 +99,7 @@ namespace Alternet.UI
         {
             get
             {
-                if(items is not null)
+                if (items is not null)
                     return items;
                 items = GetItems();
                 return items;
@@ -377,18 +385,22 @@ namespace Alternet.UI
 
             switch (kind)
             {
-                case PopupWindowKind.ListBox:
+                case SpeedButtonWithListPopup.PopupWindowKind.ListBox:
                 default:
                     ShowListBox();
                     break;
-                case PopupWindowKind.ContextMenu:
+                case SpeedButtonWithListPopup.PopupWindowKind.ContextMenu:
                     ShowPopupMenu();
                     break;
             }
 
             void ShowPopupMenu()
             {
-                DropDownMenu ??= new ContextMenu();
+                if (DropDownMenu is null)
+                {
+                    DropDownMenu = new ContextMenu();
+                    createdMenuId = DropDownMenu.UniqueId;
+                }
 
                 DropDownMenu.Items.SetCount(Items.Count, () => new MenuItem());
 
@@ -398,7 +410,7 @@ namespace Alternet.UI
                     var menuItem = DropDownMenu.Items[i];
                     menuItem.Text
                         = item.DisplayText ?? item.Text ?? item.Value?.ToString() ?? string.Empty;
-                    menuItem.Tag = item.Value;
+                    menuItem.Tag = item.Value ?? item;
                     menuItem.Click -= MenuItemClickHandler;
                     menuItem.Click += MenuItemClickHandler;
 
@@ -462,13 +474,22 @@ namespace Alternet.UI
         protected virtual void PopupWindowAfterHideHandler(object? sender, EventArgs e)
         {
             if (PopupWindow.PopupResult == ModalResult.Accepted)
-                Value = PopupWindow.ResultItem?.Value;
+            {
+                Value = PopupWindow.ResultItem?.Value ?? PopupWindow.ResultItem;
+            }
         }
 
         /// <inheritdoc/>
         protected override void DisposeManaged()
         {
             SafeDispose(ref popupWindow);
+
+            if(DropDownMenu is not null && DropDownMenu.UniqueId == createdMenuId)
+            {
+                var menu = DropDownMenu;
+                DropDownMenu = null;
+                menu?.Dispose();
+            }
 
             base.DisposeManaged();
         }

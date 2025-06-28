@@ -14,6 +14,22 @@ namespace Alternet.UI
     public class SpeedButtonWithListPopup : SpeedButtonWithListPopup<VirtualListBox>
     {
         /// <summary>
+        /// Represents the kind of popup window used by the control.
+        /// </summary>
+        public enum PopupWindowKind
+        {
+            /// <summary>
+            /// Popup window inherited from <see cref="PopupListBox"/>.
+            /// </summary>
+            ListBox,
+
+            /// <summary>
+            /// Use context menu as a popup window.
+            /// </summary>
+            ContextMenu,
+        }
+
+        /// <summary>
         /// Adds a list of font sizes to the associated list control and optionally
         /// selects a specified font size.
         /// </summary>
