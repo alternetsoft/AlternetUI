@@ -14,6 +14,8 @@ namespace Alternet.UI
     /// </summary>
     public partial class PopupCalendar : PopupWindow<Calendar>
     {
+        private static PopupCalendar? defaultCalendar;
+
         /// <summary>
         /// Initializes a new instance of the <see cref="PopupCalendar"/> class.
         /// </summary>
@@ -23,6 +25,27 @@ namespace Alternet.UI
             HideOnClick = false;
             HideOnDoubleClick = true;
             SetSizeToContent();
+        }
+
+        /// <summary>
+        /// Gets or sets default instance of the <see cref="PopupCalendar"/>.
+        /// </summary>
+        public static new PopupCalendar Default
+        {
+            get
+            {
+                if (defaultCalendar == null)
+                {
+                    defaultCalendar = new PopupCalendar();
+                }
+
+                return defaultCalendar;
+            }
+
+            set
+            {
+                defaultCalendar = value;
+            }
         }
 
         /// <inheritdoc/>
