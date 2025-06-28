@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
@@ -31,7 +32,8 @@ namespace Alternet.UI
             = new(HorizontalAlignment.Left, VerticalAlignment.Center);
 
         /// <summary>
-        /// Indicates whether images with different sizes are allowed for disabled and selected states.
+        /// Indicates whether images with different sizes are allowed
+        /// for disabled and selected states.
         /// Default is false.
         /// </summary>
         public static bool AllowDifferentSizeForDisabledImage;
@@ -1037,6 +1039,30 @@ namespace Alternet.UI
             else
             {
                 return control.RealBackgroundColor;
+            }
+        }
+
+        /// <summary>
+        /// Adds a range of values to the specified collection of items.
+        /// For each value, a new <see cref="ListControlItem"/> is created
+        /// and added to the collection.
+        /// </summary>
+        /// <param name="items">The collection of list control items to which
+        /// values will be added.</param>
+        /// <param name="values">The values to add to the collection.</param>
+        public static void AddRangeOfValues(
+            BaseCollection<ListControlItem>? items,
+            IEnumerable? values)
+        {
+            if (items is null)
+                return;
+            if (values is null)
+                return;
+            foreach (var value in values)
+            {
+                var item = new ListControlItem();
+                item.Value = value;
+                items.Add(item);
             }
         }
 
