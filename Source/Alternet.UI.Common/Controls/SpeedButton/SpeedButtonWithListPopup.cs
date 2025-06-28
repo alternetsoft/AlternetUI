@@ -29,7 +29,7 @@ namespace Alternet.UI
         public virtual void AddFontSizesAndSelect(bool select = false, Coord? size = null)
         {
             size ??= Control.DefaultFont.Size;
-            ListControlUtils.AddFontSizes(ListBox, false, size);
+            ListControlUtils.AddFontSizes(Items, size);
             if(select)
                 Value = size;
         }
@@ -47,10 +47,9 @@ namespace Alternet.UI
         /// the default font name is used.</param>
         public virtual void AddFontNamesAndSelect(bool select = false, string? fontName = default)
         {
-            fontName ??= Control.DefaultFont.Name;
-            ListControlUtils.AddFontNames(ListBox, false, fontName);
+            ListControlUtils.AddFontNames(Items);
             if (select)
-                Value = fontName;
+                Value = fontName ?? Control.DefaultFont.Name;
         }
     }
 }

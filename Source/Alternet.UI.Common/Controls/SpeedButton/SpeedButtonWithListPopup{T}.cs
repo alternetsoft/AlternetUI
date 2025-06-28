@@ -23,6 +23,11 @@ namespace Alternet.UI
     public partial class SpeedButtonWithListPopup<T> : SpeedButton
         where T : VirtualListBox, new()
     {
+        /// <summary>
+        /// Gets or sets the default kind of popup window used by the control.
+        /// </summary>
+        public static PopupWindowKind DefaultPopupKind = PopupWindowKind.ListBox;
+
         private object? data;
         private PopupListBox<T>? popupWindow;
         private string popupWindowTitle = string.Empty;
@@ -56,33 +61,44 @@ namespace Alternet.UI
         public event EventHandler? ValueChanged;
 
         /// <summary>
+        /// Represents the kind of popup window used by the control.
+        /// </summary>
+        public enum PopupWindowKind
+        {
+            /// <summary>
+            /// Popup window inherited from <see cref="PopupListBox"/>.
+            /// </summary>
+            ListBox,
+
+            /// <summary>
+            /// Use context menu as a popup window.
+            /// </summary>
+            ContextMenu,
+        }
+
+        /// <summary>
+        /// Gets or sets the kind of popup window used by the control.
+        /// Default is <c>null</c>.
+        /// If not set, the <see cref="DefaultPopupKind"/> is used.
+        /// </summary>
+        public PopupWindowKind? PopupKind { get; set; }
+
+        /// <summary>
         /// Gets the collection of items in the list box control used within the popup window.
         /// </summary>
         public virtual BaseCollection<ListControlItem> Items
         {
             get
             {
-                if (IsPopupWindowCreated)
-                {
-                    return ListBox.Items;
-                }
-                else
-                {
-                    return items ??= new();
-                }
+                if(items is not null)
+                    return items;
+                items = GetItems();
+                return items;
             }
 
             set
             {
-                if (IsPopupWindowCreated)
-                {
-                    ListBox.Items = value;
-                    items = null;
-                }
-                else
-                {
-                    items = value;
-                }
+                items = value;
             }
         }
 
@@ -152,14 +168,6 @@ namespace Alternet.UI
                     popupWindow = new();
                     popupWindow.Title = popupWindowTitle;
                     popupWindow.AfterHide += PopupWindowAfterHideHandler;
-                    if(items is null)
-                    {
-                        ReloadItems();
-                    }
-                    else
-                    {
-                        SetItems(items);
-                    }
                 }
 
                 return popupWindow;
@@ -230,22 +238,15 @@ namespace Alternet.UI
         /// </summary>
         public virtual void AddRange(IEnumerable items)
         {
-            if (IsPopupWindowCreated)
+            foreach (var item in items)
             {
-                ListBox.AddRange(items);
-            }
-            else
-            {
-                foreach (var item in items)
+                if (item is ListControlItem listItem)
+                    Items.Add(listItem);
+                else
                 {
-                    if (item is ListControlItem listItem)
-                        Items.Add(listItem);
-                    else
-                    {
-                        ListControlItem newItem = new();
-                        newItem.Value = item;
-                        Items.Add(newItem);
-                    }
+                    ListControlItem newItem = new();
+                    newItem.Value = item;
+                    Items.Add(newItem);
                 }
             }
         }
@@ -345,38 +346,7 @@ namespace Alternet.UI
         /// <param name="item">Item to add.</param>
         public virtual void Add(ListControlItem item)
         {
-            if (IsPopupWindowCreated)
-            {
-                ListBox.Add(item);
-            }
-            else
-            {
-                Items.Add(item);
-            }
-        }
-
-        /// <summary>
-        /// Sets the items to be displayed in the list control shown in the popup.
-        /// </summary>
-        /// <remarks>This method updates the list control with the provided collection of items.
-        /// If <paramref name="items"/> is <see langword="null"/>, the list
-        /// control is cleared.</remarks>
-        /// <param name="items">A collection of <see cref="ListControlItem"/> objects
-        /// to populate the list control. If <paramref name="items"/> is
-        /// <see langword="null"/>, all items are removed from the list.</param>
-        public virtual void SetItems(BaseCollection<ListControlItem>? items)
-        {
-            if (IsPopupWindowCreated)
-            {
-                if (items is null)
-                    ListBox.RemoveAll();
-                else
-                    ListBox.SetItemsFast(items, VirtualListBox.SetItemsKind.ChangeField);
-            }
-            else
-            {
-                this.items = items;
-            }
+            Items.Add(item);
         }
 
         /// <summary>
@@ -386,10 +356,7 @@ namespace Alternet.UI
         /// or populating them with values.</remarks>
         public virtual void ReloadItems()
         {
-            if (!IsPopupWindowCreated)
-                return;
-            var collection = GetItems();
-            SetItems(collection);
+            items = GetItems();
         }
 
         /// <summary>
@@ -400,15 +367,25 @@ namespace Alternet.UI
             if (!Enabled)
                 return;
 
-            var index = ListBox.FindItemIndexWithValue(Value);
-            ListBox.SelectItemAndScroll(index);
-            PopupWindow.ShowPopup(this);
+            ShowListBox();
 
-            App.InvokeIdle(() =>
+            void ShowListBox()
             {
+                if (items is null)
+                    ListBox.RemoveAll();
+                else
+                    ListBox.SetItemsFast(items, VirtualListBox.SetItemsKind.ChangeField);
+
+                var index = ListBox.FindItemIndexWithValue(Value);
                 ListBox.SelectItemAndScroll(index);
-                ListBox.Refresh();
-            });
+                PopupWindow.ShowPopup(this);
+
+                App.InvokeIdle(() =>
+                {
+                    ListBox.SelectItemAndScroll(index);
+                    ListBox.Refresh();
+                });
+            }
         }
 
         /// <inheritdoc/>
@@ -463,9 +440,9 @@ namespace Alternet.UI
         /// <returns>A <see cref="BaseCollection{T}"/> containing
         /// <see cref="ListControlItem"/> objects, or <see
         /// langword="null"/> if no items are available.</returns>
-        protected virtual BaseCollection<ListControlItem>? GetItems()
+        protected virtual BaseCollection<ListControlItem> GetItems()
         {
-            return null;
+            return new();
         }
     }
 }

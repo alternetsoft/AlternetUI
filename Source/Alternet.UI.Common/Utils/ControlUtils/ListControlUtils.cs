@@ -14,6 +14,12 @@ namespace Alternet.UI
     public static class ListControlUtils
     {
         /// <summary>
+        /// Gets or sets array of font sizes used for picker controls.
+        /// </summary>
+        public static double[] DefaultFontSizesForPicker
+            = new double[] { 8, 9, 10, 11, 12, 14, 18, 24, 30, 36, 48, 60, 72, 96 };
+
+        /// <summary>
         /// Adds test child items to the specified <see cref="TreeControlItem"/>.
         /// </summary>
         /// <param name="tree">The tree control item to which test items will be added.</param>
@@ -88,28 +94,6 @@ namespace Alternet.UI
                 var found = control.FindStringExact(defaultName);
                 if (found != null)
                     control.SelectedIndex = found.Value;
-            }
-        }
-
-        /// <summary>
-        /// Initializes <see cref="VirtualListBox"/> with list of font names.
-        /// </summary>
-        /// <param name="control">Control instance which items will be filled with font names.</param>
-        /// <param name="defaultName">Select this font name in <see cref="VirtualListBox"/>.
-        /// If its <c>null</c>, name of the default font is used.</param>
-        /// <param name="select">Specifies whether to select default item in the control.</param>
-        public static void AddFontNames(
-            VirtualListBox control,
-            bool select = true,
-            string? defaultName = null)
-        {
-            var families = FontFamily.FamiliesNamesAscending;
-            control.AddRange(families);
-            defaultName ??= AbstractControl.DefaultFont.Name;
-            if (select)
-            {
-                var found = control.FindStringExact(defaultName);
-                control.SelectItemAndScroll(found);
             }
         }
 
@@ -197,20 +181,28 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Adds font names to the specified collection.
+        /// </summary>
+        /// <param name="items"></param>
+        public static void AddFontNames(BaseCollection<ListControlItem> items)
+        {
+            var families = FontFamily.FamiliesNamesAscending;
+            ListControlItem.AddRangeOfValues(items, families);
+        }
+
+        /// <summary>
         /// Initializes <see cref="ListControl"/> with list of font sizes.
         /// </summary>
-        /// <param name="control">Control instance which items will be filled with font sizes.</param>
+        /// <param name="items">The collection of list control items
+        /// to which font sizes will be added.</param>
         /// <param name="defaultSize">Select this font size in <see cref="ListControl"/>.
         /// If its <c>null</c>, size of the default font is used.</param>
-        /// <param name="select">Specifies whether to select default item in the control.</param>
         public static void AddFontSizes(
-            VirtualListBox control,
-            bool select = true,
+            BaseCollection<ListControlItem> items,
             Coord? defaultSize = null)
         {
             var fontSizes = new List<Coord>();
-            fontSizes.AddRange(
-                new double[] { 8, 9, 10, 11, 12, 14, 18, 24, 30, 36, 48, 60, 72, 96 });
+            fontSizes.AddRange(DefaultFontSizesForPicker);
             var fontSize = defaultSize ?? AbstractControl.DefaultFont.SizeInPoints;
 
             void AddAdditionalSize(Coord value)
@@ -222,14 +214,8 @@ namespace Alternet.UI
                 }
             }
 
+            ListControlItem.AddRangeOfValues(items, fontSizes);
             AddAdditionalSize(fontSize);
-
-            control.AddRange(fontSizes.Cast<object>());
-            if (select)
-            {
-                var found = control.FindStringExact(fontSize.ToString());
-                control.SelectItemAndScroll(found);
-            }
         }
     }
 }

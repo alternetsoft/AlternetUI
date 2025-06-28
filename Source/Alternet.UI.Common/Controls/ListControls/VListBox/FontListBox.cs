@@ -54,7 +54,7 @@ namespace Alternet.UI
         /// <param name="control">Control to initialize.</param>
         public static void InitDefaultFonts(FontListBox control)
         {
-            ListControlUtils.AddFontNames(control);
+            ListControlUtils.AddFontNames(control.Items);
         }
 
         /// <summary>

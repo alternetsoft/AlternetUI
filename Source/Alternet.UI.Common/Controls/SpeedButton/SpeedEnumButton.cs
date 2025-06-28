@@ -72,7 +72,7 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        protected override BaseCollection<ListControlItem>? GetItems()
+        protected override BaseCollection<ListControlItem> GetItems()
         {
             var collection = EnumUtils.GetEnumItemsAsListItems(
                 enumType,
@@ -91,7 +91,7 @@ namespace Alternet.UI
 
                     return true;
                 });
-            return collection;
+            return collection ?? new();
         }
     }
 }
