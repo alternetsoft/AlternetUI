@@ -13,6 +13,11 @@ namespace Alternet.UI
     /// </summary>
     public partial class SpeedEnumButton : SpeedButtonWithListPopup<VirtualListBox>
     {
+        /// <summary>
+        /// Gets or sets the default kind of popup window used by the control.
+        /// </summary>
+        public static new PopupWindowKind DefaultPopupKind = PopupWindowKind.ContextMenu;
+
         private Type? enumType;
         private IEnumerable? excludeValues;
 
@@ -32,6 +37,7 @@ namespace Alternet.UI
         public SpeedEnumButton()
         {
             PopupWindowTitle = CommonStrings.Default.WindowTitleSelectValue;
+            PopupKind = DefaultPopupKind;
         }
 
         /// <summary>
