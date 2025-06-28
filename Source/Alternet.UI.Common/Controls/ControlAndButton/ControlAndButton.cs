@@ -130,6 +130,34 @@ namespace Alternet.UI
         public event EventHandler<ControlAndButtonClickEventArgs>? ButtonClick;
 
         /// <summary>
+        /// Gets or sets 'Plus' button image as <see cref="UI.KnownButton"/>.
+        /// Default is null, which means that <see cref="DefaultBtnPlusImage"/> is used.
+        /// </summary>
+        [Browsable(false)]
+        public virtual KnownButton? BtnPlusImage { get; set; }
+
+        /// <summary>
+        /// Gets or sets 'Plus' button image as <see cref="SvgImage"/>.
+        /// Default is null, which means that <see cref="BtnPlusImage"/> is used.
+        /// </summary>
+        [Browsable(false)]
+        public virtual SvgImage? BtnPlusImageSvg { get; set; }
+
+        /// <summary>
+        /// Gets or sets 'Minus' button image as <see cref="SvgImage"/>.
+        /// Default is null, which means that <see cref="BtnMinusImage"/> is used.
+        /// </summary>
+        [Browsable(false)]
+        public virtual SvgImage? BtnMinusImageSvg { get; set; }
+
+        /// <summary>
+        /// Gets or sets 'Minus' button image as <see cref="UI.KnownButton"/>.
+        /// Default is null, which means that <see cref="DefaultBtnMinusImage"/> is used.
+        /// </summary>
+        [Browsable(false)]
+        public virtual KnownButton? BtnMinusImage { get; set; }
+
+        /// <summary>
         /// Gets or sets whether 'ComboBox' button is visible.
         /// </summary>
         public virtual bool HasBtnComboBox
@@ -254,12 +282,20 @@ namespace Alternet.UI
 
                 void TogglePlusButton()
                 {
-                    SetHasButton(DefaultBtnPlusImage, ref idButtonPlus, value);
+                    SetHasButton(
+                        BtnPlusImage ?? DefaultBtnPlusImage,
+                        ref idButtonPlus,
+                        value,
+                        BtnPlusImageSvg);
                 }
 
                 void ToggleMinusButton()
                 {
-                    SetHasButton(DefaultBtnMinusImage, ref idButtonMinus, value);
+                    SetHasButton(
+                        BtnMinusImage ?? DefaultBtnMinusImage,
+                        ref idButtonMinus,
+                        value,
+                        BtnMinusImageSvg);
                 }
             }
         }
@@ -491,6 +527,82 @@ namespace Alternet.UI
             return result;
         }
 
+        /// <summary>
+        /// Sets the SVG image and/or known image for the 'Minus' button.
+        /// </summary>
+        /// <param name="svg">The SVG image for the 'Minus' button.</param>
+        /// <param name="knownImage">The known image for the 'Minus' button.</param>
+        public virtual void SetMinusImage(SvgImage? svg, KnownButton? knownImage)
+        {
+            BtnMinusImage = knownImage;
+            BtnMinusImageSvg = svg;
+
+            if (IdButtonMinus is not null)
+            {
+                if (svg is not null)
+                {
+                    Buttons.SetToolSvg(IdButtonMinus.Value, BtnMinusImageSvg);
+                }
+                else
+                {
+                    Buttons.SetToolImage(
+                    IdButtonMinus.Value,
+                    BtnMinusImage ?? DefaultBtnMinusImage);
+                }
+            }
+        }
+
+        /// <summary>
+        /// Sets the SVG image and/or known image for the 'Plus' button.
+        /// </summary>
+        /// <param name="svg">The SVG image for the 'Plus' button.</param>
+        /// <param name="knownImage">The known image for the 'Plus' button.</param>
+        public virtual void SetPlusImage(SvgImage? svg, KnownButton? knownImage)
+        {
+            BtnPlusImage = knownImage;
+            BtnPlusImageSvg = svg;
+
+            if (IdButtonPlus is not null)
+            {
+                if (svg is not null)
+                {
+                    Buttons.SetToolSvg(IdButtonPlus.Value, BtnPlusImageSvg);
+                }
+                else
+                {
+                    Buttons.SetToolImage(
+                    IdButtonPlus.Value,
+                    BtnPlusImage ?? DefaultBtnPlusImage);
+                }
+            }
+        }
+
+        /// <summary>
+        /// Sets images for the plus and minus buttons.
+        /// </summary>
+        /// <param name="plusImage">The image for the plus button.</param>
+        /// <param name="minusImage">The image for the minus button.</param>
+        public virtual void SetPlusMinusImages(
+            SvgImage? plusImage,
+            SvgImage? minusImage)
+        {
+            SetMinusImage(minusImage, null);
+            SetPlusImage(plusImage, null);
+        }
+
+        /// <summary>
+        /// Sets images for the plus and minus buttons.
+        /// </summary>
+        /// <param name="plusImage">The image for the plus button.</param>
+        /// <param name="minusImage">The image for the minus button.</param>
+        public virtual void SetPlusMinusImages(
+            KnownButton? plusImage,
+            KnownButton? minusImage)
+        {
+            SetMinusImage(null, minusImage);
+            SetPlusImage(null, plusImage);
+        }
+
         /// <inheritdoc/>
         public override bool SetFocus()
         {
@@ -615,7 +727,10 @@ namespace Alternet.UI
             SvgImage? svg = null)
         {
             if (HasButton(id) == value)
+            {
                 return;
+            }
+
             if (value)
             {
                 if (id is null)

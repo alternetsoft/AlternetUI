@@ -28,6 +28,9 @@ namespace ControlsSample
             {
                 progressBarControlNumericUpDown.Value = intPicker.Value;
             };
+
+            intPicker2.SetPlusMinusImages(KnownButton.TextBoxUp,KnownButton.TextBoxDown);
+            intPicker3.SetPlusMinusImages(KnownSvgImages.ImgAngleUp, KnownSvgImages.ImgAngleDown);
         }
 
         private void NumericUpDown_ValueChanged(object? sender, EventArgs e)
