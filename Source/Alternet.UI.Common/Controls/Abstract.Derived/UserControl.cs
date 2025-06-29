@@ -17,6 +17,7 @@ namespace Alternet.UI
     {
         private bool hasBorder;
         private RichTextBoxScrollBars scrollBars = RichTextBoxScrollBars.None;
+        private bool showDropDownMenuWhenClicked = true;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="UserControl"/> class.
@@ -125,7 +126,15 @@ namespace Alternet.UI
         /// is shown when the control is clicked. Default is <see langword="true"/>.
         /// </summary>
         [Browsable(true)]
-        public virtual bool ShowDropDownMenuWhenClicked { get; set; } = true;
+        public virtual bool ShowDropDownMenuWhenClicked
+        {
+            get => showDropDownMenuWhenClicked;
+
+            set
+            {
+                showDropDownMenuWhenClicked = value;
+            }
+        }
 
         /// <summary>
         /// Sets <see cref="AbstractControl.StateObjects"/> colors and backgrounds
