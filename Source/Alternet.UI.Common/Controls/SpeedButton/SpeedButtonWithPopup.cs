@@ -36,6 +36,12 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Occurs when value is converted to <see cref="string"/>
+        /// for the display purposes.
+        /// </summary>
+        public event EventHandler<ValueConvertEventArgs<object?, string?>>? ValueToDisplayString;
+
+        /// <summary>
         /// Occurs when <see cref="Value"/> property is changed.
         /// </summary>
         public event EventHandler? ValueChanged;
@@ -205,6 +211,21 @@ namespace Alternet.UI
         /// <returns></returns>
         protected virtual string? GetValueAsString(object? d)
         {
+            if (ValueToDisplayString is not null)
+            {
+                var e = new ValueConvertEventArgs<object?, string?>(this);
+                ValueToDisplayString(null, e);
+                if (e.Handled)
+                    return e.Result;
+            }
+
+            if (d is ListControlItem item)
+            {
+                var result = item.DisplayText ?? item.Text;
+                if(!string.IsNullOrEmpty(result))
+                    return result;
+            }
+
             return d?.ToString();
         }
 
