@@ -20,6 +20,7 @@ namespace Alternet.UI
         private bool textVisible = false;
         private bool imageVisible = true;
         private ImageToText imageToText = ImageToText.Horizontal;
+        private Type? customButtonType;
 
         static ToolBar()
         {
@@ -1020,7 +1021,7 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="text">Text string.</param>
         /// <returns><see cref="ObjectUniqueId"/> of the added item.</returns>
-        public virtual ObjectUniqueId AddText(string text)
+        public virtual ObjectUniqueId AddText(string? text = null)
         {
             var label = AddTextCore(text);
             return label.UniqueId;
@@ -1032,11 +1033,11 @@ namespace Alternet.UI
         /// <param name="text">Text string.</param>
         /// <returns><see cref="AbstractControl"/> which is used to show text
         /// for the added item.</returns>
-        public virtual AbstractControl AddTextCore(string text)
+        public virtual AbstractControl AddTextCore(string? text = null)
         {
             var label = CreateToolLabel();
             label.VerticalAlignment = UI.VerticalAlignment.Center;
-            label.Text = text;
+            label.Text = text ?? string.Empty;
             label.Margin = DefaultTextMargin;
             label.Parent = this;
 
@@ -1055,6 +1056,17 @@ namespace Alternet.UI
         /// <returns><see cref="ObjectUniqueId"/> of the added item.</returns>
         public virtual ObjectUniqueId AddSpacer(Coord? size = null)
         {
+            var control = AddSpacerCore(size);
+            return control.UniqueId;
+        }
+
+        /// <summary>
+        /// Adds an empty space with the specified or default size.
+        /// </summary>
+        /// <param name="size">The optional spacer size.</param>
+        /// <returns><see cref="AbstractControl"/> which represents the spacer added.</returns>
+        public virtual AbstractControl AddSpacerCore(Coord? size = null)
+        {
             Spacer control = new()
             {
                 SuggestedSize = size ?? DefaultSpacerSize,
@@ -1063,7 +1075,7 @@ namespace Alternet.UI
             UpdateItemProps(control, ItemKind.Spacer);
 
             control.Parent = this;
-            return control.UniqueId;
+            return control;
         }
 
         /// <summary>
@@ -1807,7 +1819,7 @@ namespace Alternet.UI
         /// <param name="toolTip">Item tooltip.</param>
         /// <returns><see cref="ObjectUniqueId"/> of the added item.</returns>
         public virtual ObjectUniqueId AddTextBtn(
-            string? text,
+            string? text = null,
             string? toolTip = null,
             EventHandler? action = null)
         {
@@ -1821,8 +1833,8 @@ namespace Alternet.UI
         /// <param name="text">Item text.</param>
         /// <param name="action">Click action.</param>
         /// <param name="toolTip">Item tooltip.</param>
-        public virtual SpeedTextButton AddTextBtnCore(
-            string? text,
+        public virtual SpeedButton AddTextBtnCore(
+            string? text = null,
             string? toolTip = null,
             EventHandler? action = null)
         {
@@ -1979,6 +1991,31 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Adds custom <see cref="SpeedButton"/> to the control.
+        /// </summary>
+        /// <param name="type">The type of the button to add. This value must inherit from
+        /// <see cref="SpeedButton"/>.</param>
+        /// <param name="factory">Factory method to create the button.</param>
+        /// <returns>The created <see cref="SpeedButton"/>.</returns>
+        public virtual SpeedButton AddCustomBtn(Type type, Func<SpeedButton> factory)
+        {
+            if (!typeof(SpeedButton).IsAssignableFrom(type))
+            {
+                throw new ArgumentException($"{type.Name} must inherit from {nameof(SpeedButton)}");
+            }
+            
+            try
+            {
+                customButtonType = type;
+                return factory();
+            }
+            finally
+            {
+                customButtonType = null;
+            }
+        }
+
+        /// <summary>
         /// Creates control for use in the toolbar as a label.
         /// Override to create customized label controls.
         /// </summary>
@@ -1995,7 +2032,9 @@ namespace Alternet.UI
         /// <returns></returns>
         protected virtual SpeedButton CreateToolSpeedButton()
         {
-            return new SpeedButton();
+            if (customButtonType is null)
+                return new SpeedButton();
+            return (SpeedButton)Activator.CreateInstance(customButtonType);
         }
 
         /// <summary>
@@ -2003,9 +2042,11 @@ namespace Alternet.UI
         /// Override to create customized speed text buttons.
         /// </summary>
         /// <returns></returns>
-        protected virtual SpeedTextButton CreateToolSpeedTextButton()
+        protected virtual SpeedButton CreateToolSpeedTextButton()
         {
-            return new SpeedTextButton();
+            if(customButtonType is null)
+                return new SpeedTextButton();
+            return (SpeedButton)Activator.CreateInstance(customButtonType);
         }
 
         /// <summary>
