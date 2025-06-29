@@ -59,6 +59,8 @@
         <VerticalStackPanel Margin="5" Title="Other" Padding="5">
           <Button Text="Date Formats" Margin="0,0,0,5" IsTextLocalized="true"
                   Name="buttonDateFormats"/>
+          <Button Text="Clear Date" Margin="0,0,0,5" IsTextLocalized="true"
+                  Name="buttonClearDate"/>
         </VerticalStackPanel>
 
       </TabControl>

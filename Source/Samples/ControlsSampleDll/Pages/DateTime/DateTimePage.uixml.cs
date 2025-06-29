@@ -31,6 +31,11 @@ namespace ControlsSample
             
             dateFormatContextMenu = CreateDateFormatContextMenu();
             buttonDateFormats.DropDownMenu = dateFormatContextMenu;
+
+            buttonClearDate.Click += (s, e) =>
+            {
+                datePicker.Value = null;
+            };
         }
 
         public ContextMenu CreateDateFormatContextMenu()

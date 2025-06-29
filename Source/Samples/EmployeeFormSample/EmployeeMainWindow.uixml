@@ -47,7 +47,7 @@
 
         <Label Text="Birth Date" Grid.Row="2" Grid.Column="0" VerticalAlignment="Center"
                IsTextLocalized="true" Margin="0,0,10,5"/>
-        <DateTimePicker Grid.Row="2" Grid.Column="1" Name="birthDatePicker"
+        <DatePicker Grid.Row="2" Grid.Column="1" Name="birthDatePicker"
                  VerticalAlignment="Center" Margin="0,0,0,5"/>
 
         <Label Text="Title" Grid.Row="3" Grid.Column="0" VerticalAlignment="Center"
@@ -117,7 +117,7 @@
 
         <Label Text="Hire Date" Grid.Row="1" Grid.Column="0" VerticalAlignment="Center"
                IsTextLocalized="true" Margin="0,0,10,5"/>
-        <DateTimePicker Grid.Row="1" Grid.Column="1"
+        <DatePicker Grid.Row="1" Grid.Column="1"
                         VerticalAlignment="Center" Margin="0,0,0,5" Name="hireDatePicker"/>
 
         <Label Text="Status" Grid.Row="2" Grid.Column="0" VerticalAlignment="Center"

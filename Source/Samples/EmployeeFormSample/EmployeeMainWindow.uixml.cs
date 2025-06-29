@@ -175,7 +175,7 @@ namespace EmployeeFormSample
         {
             private string? firstName;
             private string? lastName;
-            private DateTime birthDate;
+            private DateTime? birthDate;
             private string? title;
             private EmployeePrefix prefix;
             private string? address;
@@ -187,7 +187,7 @@ namespace EmployeeFormSample
             private string? email;
             private string? skype;
             private EmployeeDepartment department;
-            private DateTime hireDate;
+            private DateTime? hireDate;
             private EmployeeStatus status;
 
             public string? FirstName
@@ -202,7 +202,7 @@ namespace EmployeeFormSample
                 set => lastName = value;
             }
 
-            public DateTime BirthDate
+            public DateTime? BirthDate
             {
                 get => birthDate;
                 set => birthDate = value;
@@ -274,7 +274,7 @@ namespace EmployeeFormSample
                 set => department = value;
             }
 
-            public DateTime HireDate
+            public DateTime? HireDate
             {
                 get => hireDate;
                 set => hireDate = value;
