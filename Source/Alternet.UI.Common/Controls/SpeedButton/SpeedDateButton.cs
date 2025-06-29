@@ -25,7 +25,7 @@ namespace Alternet.UI
         /// </summary>
         public SpeedDateButton()
         {
-            Title = CommonStrings.Default.WindowTitleSelectDate;
+            PopupWindowTitle = CommonStrings.Default.WindowTitleSelectDate;
             Value = DateTime.Now;
         }
 
