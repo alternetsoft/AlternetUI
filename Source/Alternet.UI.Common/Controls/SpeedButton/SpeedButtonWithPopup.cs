@@ -62,7 +62,7 @@ namespace Alternet.UI
                 PerformLayoutAndInvalidate(() =>
                 {
                     data = value;
-                    base.Text = Text ?? " ";
+                    UpdateBaseText();
                     RaiseValueChanged(EventArgs.Empty);
                 });
             }
@@ -173,6 +173,14 @@ namespace Alternet.UI
                 return;
             OnValueChanged(e);
             ValueChanged?.Invoke(this, e);
+        }
+
+        /// <summary>
+        /// Called when the text of the control changes.
+        /// </summary>
+        public virtual void UpdateBaseText()
+        {
+            base.Text = Text ?? " ";
         }
 
         /// <inheritdoc/>
