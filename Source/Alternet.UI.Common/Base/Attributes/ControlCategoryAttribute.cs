@@ -34,13 +34,24 @@ namespace Alternet.UI
         public string CategoryId => categoryId;
 
         /// <summary>
-        /// Gets whether category is hidden.
+        /// Gets whether category is 'Hidden'.
         /// </summary>
         public bool IsHidden
         {
             get
             {
                 return CategoryId.Equals("hidden", StringComparison.OrdinalIgnoreCase);
+            }
+        }
+
+        /// <summary>
+        /// Gets whether category is 'Internal'.
+        /// </summary>
+        public bool IsInternal
+        {
+            get
+            {
+                return CategoryId.Equals("internal", StringComparison.OrdinalIgnoreCase);
             }
         }
 

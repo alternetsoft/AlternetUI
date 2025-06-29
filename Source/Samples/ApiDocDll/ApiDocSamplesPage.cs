@@ -20,6 +20,9 @@ namespace ApiDoc
 
             if(windowType is not null)
             {
+                if (AssemblyUtils.IsControlCategoryInternal(windowType))
+                    return;
+
                 Add(title, () =>
                 {
                     var result = (Window?)Activator.CreateInstance(windowType);
@@ -38,6 +41,8 @@ namespace ApiDoc
 
             foreach(var type in types)
             {
+                if (AssemblyUtils.IsControlCategoryHidden(type))
+                    continue;
                 AddSample(type);
             }
         }

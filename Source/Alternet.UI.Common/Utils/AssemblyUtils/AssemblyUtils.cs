@@ -1243,6 +1243,32 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets whether toolbox category of the control is 'Hidden'.
+        /// </summary>
+        /// <param name="type">Type of the control.</param>
+        /// <returns></returns>
+        public static bool IsControlCategoryHidden(Type type)
+        {
+            var category = AssemblyUtils.GetControlCategory(type);
+            if (category is not null && category.IsHidden)
+                return true;
+            return false;
+        }
+
+        /// <summary>
+        /// Gets whether toolbox category of the control is 'Internal'.
+        /// </summary>
+        /// <param name="type">Type of the control.</param>
+        /// <returns></returns>
+        public static bool IsControlCategoryInternal(Type type)
+        {
+            var category = AssemblyUtils.GetControlCategory(type);
+            if (category is not null && category.IsInternal)
+                return true;
+            return false;
+        }
+
+        /// <summary>
         /// Returns toolbox category of the control.
         /// </summary>
         /// <param name="type">Type of the control.</param>
