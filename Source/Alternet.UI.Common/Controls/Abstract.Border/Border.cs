@@ -32,6 +32,8 @@ namespace Alternet.UI
         /// </summary>
         public Border()
         {
+            TabStop = false;
+            CanSelect = false;
             ParentBackColor = GetDefaultParentBackColor();
             ParentForeColor = GetDefaultParentForeColor();
             RefreshOptions = ControlRefreshOptions.RefreshOnBorder

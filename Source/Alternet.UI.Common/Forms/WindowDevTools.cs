@@ -139,6 +139,9 @@ namespace Alternet.UI
 
             var windowTitle = control.ParentWindow?.Title ?? control.ParentWindow?.GetType().Name;
 
+            App.Log($"FocusedControl: {control.GetType().FullName}");
+
+            /*
             App.LogSeparator();
             App.LogNameValue("Name", control.Name);
             App.LogNameValue("Type", control.GetType().FullName);
@@ -155,6 +158,7 @@ namespace Alternet.UI
             App.LogNameValue("PixelToDip(100)", control.PixelToDip(100));
             App.LogNameValue("DPI", control.GetDPI());
             App.LogSeparator();
+            */
         }
     }
 }

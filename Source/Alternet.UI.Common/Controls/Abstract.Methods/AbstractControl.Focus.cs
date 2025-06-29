@@ -347,7 +347,7 @@ namespace Alternet.UI
 
                 if (!control.TabStop || !control.VisibleOnScreen || !control.IsEnabled
                     || !control.CanSelect || !control.CanFocus || control.IsGraphicControl
-                    || control.HasChildren || control.HasFocusableChildren(true))
+                    || control.HasFocusableChildren(true))
                     continue;
 
                 yield return control;

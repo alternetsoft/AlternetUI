@@ -606,7 +606,9 @@ namespace Alternet.UI
         /// <inheritdoc/>
         public override bool SetFocus()
         {
-            return MainControl.SetFocus();
+            if(MainControl.CanFocus)
+                return MainControl.SetFocus();
+            return base.SetFocus();
         }
 
         /// <summary>

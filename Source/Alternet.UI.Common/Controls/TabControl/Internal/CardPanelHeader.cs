@@ -76,6 +76,8 @@ namespace Alternet.UI
         {
             ParentBackColor = true;
             ParentForeColor = true;
+            TabStop = false;
+            CanSelect = false;
             Layout = LayoutStyle.Horizontal;
             tabs.ThrowOnNullAdd = true;
             tabs.ItemInserted += Tabs_ItemInserted;

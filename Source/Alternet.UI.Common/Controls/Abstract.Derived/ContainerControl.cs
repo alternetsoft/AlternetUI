@@ -31,6 +31,8 @@ namespace Alternet.UI
         /// </summary>
         public ContainerControl()
         {
+            TabStop = false;
+            CanSelect = false;
             ParentBackColor = true;
             ParentForeColor = true;
         }

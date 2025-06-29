@@ -238,7 +238,7 @@ namespace Alternet.UI
                 DotNetUtils.LogInstalledRuntimes();
 
                 App.LogEmptyLine();
-                App.Log("Installed net sdks:");
+                App.Log("Installed net sdk:");
                 DotNetUtils.LogInstalledSdks();
                 App.LogEmptyLine();
 
