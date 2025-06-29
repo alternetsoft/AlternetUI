@@ -13,6 +13,13 @@ namespace Alternet.UI
     public partial class TimePicker : ControlAndButton<ToolBar>
     {
         /// <summary>
+        /// Gets or sets whether to assign default control colors
+        /// in the constructor using <see cref="AbstractControl.UseControlColors"/>.
+        /// Default is <c>true</c>.
+        /// </summary>
+        public static bool DefaultUseControlColors = true;
+
+        /// <summary>
         /// Gets or sets the default image used for incrementing the time.
         /// </summary>
         public static SvgImage? DefaultIncrementImage;
@@ -44,6 +51,7 @@ namespace Alternet.UI
         /// </summary>
         public TimePicker()
         {
+            UseControlColors(DefaultUseControlColors);
             WantChars = true;
             IsGraphicControl = false;
             CanSelect = true;

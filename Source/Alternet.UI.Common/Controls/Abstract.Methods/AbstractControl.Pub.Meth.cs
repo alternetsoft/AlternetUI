@@ -454,6 +454,29 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Sets back and fore colors to <see cref="AbstractControl.BackColor"/>
+        /// and <see cref="AbstractControl.ForeColor"/>.
+        /// </summary>
+        /// <param name="useControlColors">Whether to use
+        /// <see cref="DefaultColors.ControlBackColor"/>
+        /// and <see cref="DefaultColors.ControlForeColor"/>.</param>
+        public virtual void UseControlColors(bool useControlColors)
+        {
+            if (useControlColors)
+            {
+                ParentBackColor = false;
+                ParentForeColor = false;
+                BackColor = DefaultColors.ControlBackColor;
+                ForeColor = DefaultColors.ControlForeColor;
+            }
+            else
+            {
+                ParentBackColor = true;
+                ParentForeColor = true;
+            }
+        }
+
+        /// <summary>
         /// Invalidates the specified region of the control (adds it to the control's
         /// update region, which is the area that will be repainted at the next
         /// paint operation), and causes a paint message to be sent to the

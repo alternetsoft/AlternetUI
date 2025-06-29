@@ -11,6 +11,13 @@ namespace Alternet.UI
     /// </summary>
     public class IntPicker : LabelAndButton
     {
+        /// <summary>
+        /// Gets or sets whether to assign default control colors
+        /// in the constructor using <see cref="AbstractControl.UseControlColors"/>.
+        /// Default is <c>true</c>.
+        /// </summary>
+        public static bool DefaultUseControlColors = true;
+
         private int minimum = 0;
         private int maximum = 100;
         private int smallChange = 1;
@@ -22,6 +29,7 @@ namespace Alternet.UI
         /// </summary>
         public IntPicker()
         {
+            UseControlColors(DefaultUseControlColors);
             Buttons.DoubleClickAsClick = true;
             IsBtnClickRepeated = true;
             HasBtnPlusMinus = true;

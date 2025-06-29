@@ -95,8 +95,7 @@ namespace Alternet.UI
             UserPaint = true;
             SuggestedSize = 200;
 
-            BackColor = DefaultColors.ControlBackColor;
-            ForeColor = DefaultColors.ControlForeColor;
+            UseControlColors(true);
 
             if (hasInternalScrollBars)
             {
