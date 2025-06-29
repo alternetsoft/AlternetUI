@@ -235,7 +235,6 @@ namespace Alternet.UI
             RaiseClick(e);
             if(ShowDropDownMenuWhenClicked)
                 ShowDropDownMenu();
-            ShowDropDownMenu();
             Invalidate();
         }
 
@@ -244,8 +243,7 @@ namespace Alternet.UI
         /// </summary>
         protected virtual void ShowDropDownMenu()
         {
-            PointD pt = (0, Bounds.Height);
-            DropDownMenu?.Show(this, (pt.X, pt.Y));
+            DropDownMenu?.ShowAsDropDown(this);
         }
 
         /// <inheritdoc/>

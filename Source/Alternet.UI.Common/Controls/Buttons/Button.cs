@@ -289,11 +289,11 @@ namespace Alternet.UI
 
         /// <summary>
         /// Gets or sets a value that indicates whether a <see cref="Button"/>
-        /// is a Cancel button. In a modal dialog, a
-        /// user can activate the Cancel button by pressing the ESC key.
+        /// is a 'Cancel' button. In a modal dialog, a
+        /// user can activate the 'Cancel' button by pressing the ESC key.
         /// </summary>
         /// <value>
-        /// <see langword="true"/> if the <see cref="Button"/> is a Cancel
+        /// <see langword="true"/> if the <see cref="Button"/> is a 'Cancel'
         /// button; otherwise, <see langword="false"/>.
         /// The default is <see langword="false"/>.
         /// </value>
@@ -309,6 +309,19 @@ namespace Alternet.UI
                 isCancel = value;
             }
         }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether the drop down menu
+        /// is shown when the control is clicked. Default is <see langword="true"/>.
+        /// </summary>
+        [Browsable(true)]
+        public virtual bool ShowDropDownMenuWhenClicked { get; set; } = true;
+
+        /// <summary>
+        /// Gets or sets <see cref="ContextMenu"/> which is shown when control is clicked.
+        /// </summary>
+        [Browsable(false)]
+        public virtual ContextMenu? DropDownMenu { get; set; }
 
         /// <summary>
         /// Gets or sets visibility of the text in the bitmap.
@@ -455,6 +468,24 @@ namespace Alternet.UI
 
         void IControlStateObjectChanged.SelectedChanged(object? sender)
         {
+        }
+
+        /// <summary>
+        /// Shows attached drop down menu.
+        /// </summary>
+        protected virtual void ShowDropDownMenu()
+        {
+            DropDownMenu?.ShowAsDropDown(this);
+        }
+
+        /// <inheritdoc/>
+        protected override void OnMouseLeftButtonDown(MouseEventArgs e)
+        {
+            base.OnMouseLeftButtonDown(e);
+            if (!Enabled)
+                return;
+            if (ShowDropDownMenuWhenClicked)
+                ShowDropDownMenu();
         }
 
         /// <inheritdoc/>
