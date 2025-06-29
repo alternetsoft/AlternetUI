@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+
 using Alternet.UI;
 
 namespace ControlsSample
@@ -28,7 +29,7 @@ namespace ControlsSample
 
             datePicker.Value = DateTime.Now;
             timePicker.Value = DateTime.Now;
-            
+
             dateFormatContextMenu = CreateDateFormatContextMenu();
             buttonDateFormats.DropDownMenu = dateFormatContextMenu;
 
@@ -36,6 +37,23 @@ namespace ControlsSample
             {
                 datePicker.Value = null;
             };
+
+            hourFormatPicker.EnumType = typeof(TimePickerHourFormat);
+            hourFormatPicker.Value = TimePickerHourFormat.System;
+            hourFormatPicker.ValueChanged += (s,e) =>
+            {
+                timePicker.HourFormat = (TimePickerHourFormat)hourFormatPicker.Value;
+            };
+
+            showSecondsCheckBox.CheckedChanged += (s, e) =>
+            {
+                timePicker.SecondsVisible = showSecondsCheckBox.IsChecked;
+            };
+        }
+
+        private void HourFormatPicker_ValueChanged(object sender, EventArgs e)
+        {
+            throw new NotImplementedException();
         }
 
         public ContextMenu CreateDateFormatContextMenu()

@@ -14,7 +14,7 @@
         <Label Text="Selected:" Margin="0,10,0,5" Name="dateLabel" IsTextLocalized="true"/>
 
         <Label Text="Time:" Margin="0,10,0,5" IsTextLocalized="true"/>
-        <DateTimePicker Kind="Time"
+        <TimePicker 
           SuggestedWidth="200" HorizontalAlignment="Left"
           Margin="0,0,0,5" Name="timePicker"
           ValueChanged="TimePicker_Changed"/>
@@ -61,6 +61,10 @@
                   Name="buttonDateFormats"/>
           <Button Text="Clear Date" Margin="0,0,0,5" IsTextLocalized="true"
                   Name="buttonClearDate"/>
+          <CheckBox Name="showSecondsCheckBox" Margin="0,0,0,5" IsChecked="True"
+                    Text="Show Seconds" IsTextLocalized="true"/>
+          <Label Text="Hour Format:" Margin="0,0,0,5"/>
+          <EnumPicker Name="hourFormatPicker" Margin="0,0,0,5" />
         </VerticalStackPanel>
 
       </TabControl>
