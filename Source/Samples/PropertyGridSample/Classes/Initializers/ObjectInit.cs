@@ -138,6 +138,42 @@ namespace PropertyGridSample
             }
         }
 
+        public static void InitDatePicker(DatePicker control)
+        {
+        }
+
+        public static void InitTimePicker(TimePicker control)
+        {
+        }
+
+        public static void InitListPicker(ListPicker control)
+        {
+            control.Add("Item 1");
+            control.Add("Item 2");
+            control.Add("Item 3");
+            control.Add("Item 4");
+            control.Add("Item 5");
+            control.Add("Item 6");
+            control.Add("Item 7");
+            control.Add("Item 8");
+
+            control.Value = "Item 4";
+        }
+
+        public static void InitEnumPicker(EnumPicker control)
+        {
+            control.EnumType = typeof(FontStyle);
+            control.Value = FontStyle.Regular;
+        }
+
+        public static void InitFontNamePicker(FontNamePicker control)
+        {
+        }
+
+        public static void InitColorPicker(ColorPicker control)
+        {
+        }
+
         public static void InitRichToolTip(RichToolTip control)
         {
             control.HorizontalAlignment = HorizontalAlignment.Stretch;
@@ -162,6 +198,12 @@ namespace PropertyGridSample
         static ObjectInit()
         {
             AddAction<RichToolTip>(InitRichToolTip);
+            AddAction<DatePicker>(InitDatePicker);
+            AddAction<TimePicker>(InitTimePicker);
+            AddAction<ListPicker>(InitListPicker);
+            AddAction<EnumPicker>(InitEnumPicker);
+            AddAction<ColorPicker>(InitColorPicker);
+            AddAction<FontNamePicker>(InitFontNamePicker);
 
             Actions.Add(typeof(PageSetupDialog), InitPageSetupDialog);
             Actions.Add(typeof(PrintPreviewDialog), InitPrintPreviewDialog);

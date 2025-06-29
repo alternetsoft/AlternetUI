@@ -63,7 +63,6 @@ namespace PropertyGridSample
                 LimitedTypes.Add(typeof(Calendar));
                 LimitedTypes.Add(typeof(CheckBox));
                 LimitedTypes.Add(typeof(ComboBox));
-                LimitedTypes.Add(typeof(DateTimePicker));
                 LimitedTypes.Add(typeof(GroupBox));
                 LimitedTypes.Add(typeof(HorizontalStackPanel));
                 LimitedTypes.Add(typeof(Label));
@@ -88,22 +87,25 @@ namespace PropertyGridSample
                 LimitedTypes.Add(typeof(VerticalStackPanel));
                 LimitedTypes.Add(typeof(CardPanel));
                 LimitedTypes.Add(typeof(SpeedButton));
-                LimitedTypes.Add(typeof(ComboBoxAndLabel));
                 LimitedTypes.Add(typeof(TextBoxAndLabel));
                 LimitedTypes.Add(typeof(SpeedTextButton));
                 LimitedTypes.Add(typeof(SpeedColorButton));
                 LimitedTypes.Add(typeof(ToolBarSet));
                 LimitedTypes.Add(typeof(SideBarPanel));
-                LimitedTypes.Add(typeof(ColorComboBox));
                 LimitedTypes.Add(typeof(ColorListBox));
                 LimitedTypes.Add(typeof(VirtualListBox));
                 LimitedTypes.Add(typeof(UserControl));
                 LimitedTypes.Add(typeof(RichToolTip));
                 LimitedTypes.Add(typeof(TextBoxAndButton));
-                LimitedTypes.Add(typeof(FontComboBox));
+                LimitedTypes.Add(typeof(FontNamePicker));
                 LimitedTypes.Add(typeof(Calculator));
                 LimitedTypes.Add(typeof(LabelAndButton));
                 LimitedTypes.Add(typeof(IntPicker));
+                LimitedTypes.Add(typeof(DatePicker));
+                LimitedTypes.Add(typeof(TimePicker));
+                LimitedTypes.Add(typeof(ListPicker));
+                LimitedTypes.Add(typeof(EnumPicker));
+                LimitedTypes.Add(typeof(ColorPicker));
 
                 if (DebugUtils.IsDebugDefined)
                 {
