@@ -6,6 +6,20 @@ namespace ControlsSample
 {
     internal partial class DateTimePage : Panel
     {
+        private string?[] dateFormats = new[]
+        {
+            null,           // Default format
+            "M/d/yyyy",     // 4/5/2017
+            "M/d/yy",       // 4/5/17
+            "MM/dd/yy",     // 04/05/17
+            "MM/dd/yyyy",   // 04/05/2017
+            "yy/MM/dd",     // 17/04/05
+            "yyyy-MM-dd",   // 2017-04-05
+            "dd-MMM-yy",     // 05-Apr-17,
+        };
+
+        private ContextMenu dateFormatContextMenu;
+
         public DateTimePage()
         {
             InitializeComponent();
@@ -14,6 +28,27 @@ namespace ControlsSample
 
             datePicker.Value = DateTime.Now;
             timePicker.Value = DateTime.Now;
+            
+            dateFormatContextMenu = CreateDateFormatContextMenu();
+            buttonDateFormats.DropDownMenu = dateFormatContextMenu;
+        }
+
+        public ContextMenu CreateDateFormatContextMenu()
+        {
+            var contextMenu = new ContextMenu();
+            foreach (var format in dateFormats)
+            {
+                var menuItem = new MenuItem();
+                menuItem.Text = format is null
+                    ? "Default" : DateTime.Now.ToString(format);
+                menuItem.Tag = format;
+                menuItem.Click += (s, e) =>
+                {
+                    datePicker.Format = format;
+                };
+                contextMenu.Items.Add(menuItem);
+            }
+            return contextMenu;
         }
 
         private void DatePicker_DateChanged(object? sender, EventArgs e)

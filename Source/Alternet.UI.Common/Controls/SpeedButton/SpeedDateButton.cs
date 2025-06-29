@@ -13,6 +13,8 @@ namespace Alternet.UI
     /// </summary>
     public partial class SpeedDateButton : SpeedButtonWithPopup<PopupCalendar, Calendar>
     {
+        private IFormatProvider? formatProvider;
+        private string? format;
         private DateTime max = DateTime.MaxValue;
         private DateTime min = DateTime.MinValue;
         private bool useMinDate = false;
@@ -28,9 +30,49 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets or sets the format provider used for formatting the date.
+        /// </summary>
+        [Browsable(false)]
+        public virtual IFormatProvider? FormatProvider
+        {
+            get
+            {
+                return formatProvider;
+            }
+
+            set
+            {
+                if (formatProvider == value)
+                    return;
+                formatProvider = value;
+                UpdateBaseText();
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets the format used for formatting the date.
+        /// </summary>
+        [Browsable(false)]
+        public virtual string? Format
+        {
+            get
+            {
+                return format;
+            }
+
+            set
+            {
+                if (format == value)
+                    return;
+                format = value;
+                UpdateBaseText();
+            }
+        }
+
+        /// <summary>
         /// Gets or sets selected date.
         /// </summary>
-        public new DateTime? Value
+        public new virtual DateTime? Value
         {
             get => (DateTime?)base.Value;
             set => base.Value = value;
@@ -212,7 +254,23 @@ namespace Alternet.UI
         /// <inheritdoc/>
         protected override string? GetValueAsString(object? d)
         {
-            return Value?.ToShortDateString();
+            if (d is not DateTime dateTime)
+                return null;
+
+            if (Format is null)
+            {
+                if (FormatProvider is null)
+                    return dateTime.ToShortDateString();
+                else
+                    return dateTime.ToString(FormatProvider);
+            }
+            else
+            {
+                if (FormatProvider is null)
+                    return dateTime.ToString(Format);
+                else
+                    return dateTime.ToString(Format, FormatProvider);
+            }
         }
 
         /// <inheritdoc/>
