@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace Alternet.UI
 {
     /// <summary>
-    /// Provides data for the value convertion events. <typeparamref name="TFrom"/> specifies
+    /// Provides data for the value conversion events. <typeparamref name="TFrom"/> specifies
     /// type of the source data. <typeparamref name="TResult"/> specifies
     /// type of the destination data.
     /// </summary>

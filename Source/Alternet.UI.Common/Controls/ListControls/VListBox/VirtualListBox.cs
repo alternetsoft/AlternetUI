@@ -1855,7 +1855,8 @@ namespace Alternet.UI
         /// Handles the logic for item selection when an item is clicked.
         /// </summary>
         /// <param name="item">The index of the item that was clicked.</param>
-        /// <param name="flags">Flags indicating the type of click (e.g., Shift, Ctrl, Keyboard).</param>
+        /// <param name="flags">Flags indicating the type
+        /// of click (e.g., Shift, Ctrl, Keyboard).</param>
         /// <remarks>
         /// This method processes item selection based on the current selection mode
         /// (single or multiple). It supports Shift-click for range selection and
