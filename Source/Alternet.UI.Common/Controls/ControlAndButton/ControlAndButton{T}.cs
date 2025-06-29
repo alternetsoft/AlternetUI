@@ -12,7 +12,7 @@ namespace Alternet.UI
     /// </summary>
     /// <typeparam name="T">The type of the generic child control.</typeparam>
     public partial class ControlAndButton<T> : ControlAndButton
-        where T : GenericControl, new()
+        where T : AbstractControl, new()
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="ControlAndButton{T}"/> class.
