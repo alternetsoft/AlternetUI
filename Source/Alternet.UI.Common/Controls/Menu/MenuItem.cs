@@ -18,6 +18,7 @@ namespace Alternet.UI
         private CachedSvgImage<ImageSet> svgImage = new();
         private bool shortcutEnabled = true;
         private CommandSourceStruct commandSource;
+        private Func<bool>? enabledFunc;
 
         static MenuItem()
         {
@@ -285,8 +286,8 @@ namespace Alternet.UI
         [Browsable(false)]
         public virtual Func<bool>? EnabledFunc
         {
-            get;
-            set;
+            get => enabledFunc;
+            set => enabledFunc = value;
         }
 
         /// <summary>
@@ -505,7 +506,10 @@ namespace Alternet.UI
         /// <summary>
         /// Raises <see cref="Highlighted"/> event.
         /// </summary>
-        public void RaiseHighlighted() => Highlighted?.Invoke(this, EventArgs.Empty);
+        public void RaiseHighlighted()
+        {
+            Highlighted?.Invoke(this, EventArgs.Empty);
+        }
 
         /// <summary>
         /// Returns a string that represents the current object.

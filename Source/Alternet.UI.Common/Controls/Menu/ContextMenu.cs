@@ -56,19 +56,31 @@ namespace Alternet.UI
         /// This property has no meaning.
         /// </summary>
         [Browsable(false)]
-        public override bool Visible { get => base.Visible; set => base.Visible = value; }
+        public override bool Visible
+        {
+            get => base.Visible;
+            set => base.Visible = value;
+        }
 
         /// <summary>
         /// This property has no meaning.
         /// </summary>
         [Browsable(false)]
-        public override bool Enabled { get => base.Enabled; set => base.Enabled = value; }
+        public override bool Enabled
+        {
+            get => base.Enabled;
+            set => base.Enabled = value;
+        }
 
         /// <summary>
         /// This property has no meaning.
         /// </summary>
         [Browsable(false)]
-        public override string? ToolTip { get => base.ToolTip; set => base.ToolTip = value; }
+        public override string? ToolTip
+        {
+            get => base.ToolTip;
+            set => base.ToolTip = value;
+        }
 
         /// <inheritdoc/>
         public override ControlTypeId ControlKind => ControlTypeId.ContextMenu;
@@ -78,6 +90,22 @@ namespace Alternet.UI
         /// </summary>
         [Browsable(false)]
         public new IContextMenuHandler Handler => (IContextMenuHandler)base.Handler;
+
+        /// <summary>
+        /// Shows the context menu as a drop-down menu under the specified control.
+        /// </summary>
+        /// <param name="control">The control with which this context menu is associated.</param>
+        public virtual void ShowAsDropDown(AbstractControl control)
+        {
+            if (control is null)
+                throw new ArgumentNullException(nameof(control));
+
+            App.AddIdleTask(() =>
+            {
+                PointD pt = (0, control.Bounds.Height);
+                Show(control, (pt.X, pt.Y));
+            });
+        }
 
         /// <summary>
         /// Raises the <see cref="Closing" /> event and <see cref="OnClosing"/> method.</summary>
@@ -113,7 +141,8 @@ namespace Alternet.UI
         /// <summary>
         /// Displays the menu at the specified position.
         /// </summary>
-        /// <param name="control">A <see cref="AbstractControl"/> that specifies the control with which
+        /// <param name="control">A <see cref="AbstractControl"/> that specifies
+        /// the control with which
         /// this shortcut menu is associated.</param>
         /// <param name="position">
         /// A <see cref="PointD"/> that specifies the coordinates at which to display the menu.
@@ -131,7 +160,7 @@ namespace Alternet.UI
         /// If <paramref name="position"/> is <c>null</c> (default value), popup menu is shown
         /// under the control specified in the <paramref name="control"/> parameter.
         /// </remarks>
-        public void Show(AbstractControl control, PointD? position = null)
+        public virtual void Show(AbstractControl control, PointD? position = null)
         {
             if (Items.Count == 0)
                 return;

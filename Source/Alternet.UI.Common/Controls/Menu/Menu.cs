@@ -29,8 +29,8 @@ namespace Alternet.UI
                 if(items == null)
                 {
                     items = new() { ThrowOnNullAdd = true };
-                    items.ItemInserted += Items_ItemInserted;
-                    items.ItemRemoved += Items_ItemRemoved;
+                    items.ItemInserted += OnItemInserted;
+                    items.ItemRemoved += OnItemRemoved;
                 }
 
                 return items;
@@ -112,13 +112,13 @@ namespace Alternet.UI
             return item;
         }
 
-        private void Items_ItemInserted(object? sender, int index, MenuItem item)
+        private void OnItemInserted(object? sender, int index, MenuItem item)
         {
             // This is required for data binding inheritance.
             Children.Add(item);
         }
 
-        private void Items_ItemRemoved(object? sender, int index, MenuItem item)
+        private void OnItemRemoved(object? sender, int index, MenuItem item)
         {
             Children.Remove(item);
         }
