@@ -41,6 +41,7 @@ namespace Alternet.UI
         /// </summary>
         public SpeedColorButton()
         {
+            base.Text = GetColorAsString() ?? string.Empty;
             TextVisible = true;
             OnColorImageChanged(false);
             ShowComboBoxImageAtRight();
