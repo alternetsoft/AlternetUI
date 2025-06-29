@@ -6,6 +6,7 @@ using System.Runtime.CompilerServices;
 using System.Text;
 
 using Alternet.Drawing;
+using Alternet.UI.Localization;
 
 namespace Alternet.UI
 {
@@ -46,6 +47,7 @@ namespace Alternet.UI
         /// </summary>
         public SpeedButtonWithListPopup()
         {
+            PopupWindowTitle = CommonStrings.Default.WindowTitleSelectValue;
         }
 
         /// <summary>
@@ -225,7 +227,7 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="title">Display text of the item which is shown to the user.</param>
         /// <param name="value">Value associated with the item.</param>
-        public virtual void Add(string title, object value)
+        public virtual ListControlItem Add(string title, object value)
         {
             ListControlItem newItem = new()
             {
@@ -233,6 +235,7 @@ namespace Alternet.UI
                 Text = title,
             };
             Add(newItem);
+            return newItem;
         }
 
         /// <summary>
@@ -243,10 +246,13 @@ namespace Alternet.UI
         /// If item is not of type <see cref="ListControlItem"/>,
         /// a new <see cref="ListControlItem"/> will be created with the provided value.
         /// </remarks>
-        public virtual void Add(object item)
+        public virtual ListControlItem Add(object item)
         {
             if (item is ListControlItem listItem)
+            {
                 Add(listItem);
+                return listItem;
+            }
             else
             {
                 ListControlItem newItem = new()
@@ -254,6 +260,7 @@ namespace Alternet.UI
                     Value = item,
                 };
                 Add(newItem);
+                return newItem;
             }
         }
 
