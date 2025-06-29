@@ -21,7 +21,8 @@ namespace Alternet.UI
     public partial class Splitter : GraphicControl
     {
         /// <summary>
-        /// Gets or sets a default value of the <see cref="AbstractControl.ParentBackColor"/> property.
+        /// Gets or sets a default value of the
+        /// <see cref="AbstractControl.ParentBackColor"/> property.
         /// </summary>
         public static bool DefaultParentBackColor = false;
 
@@ -491,7 +492,7 @@ namespace Alternet.UI
 
         /// <summary>
         /// Calculates the bounding rect of the split line. minWeight refers
-        /// to the minimum height or width of the splitline.
+        /// to the minimum height or width of the split line.
         /// </summary>
         private RectD CalcSplitLine(Coord splitSize, Coord minWeight)
         {
