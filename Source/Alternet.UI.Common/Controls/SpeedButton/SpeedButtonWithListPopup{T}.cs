@@ -26,8 +26,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets the default kind of popup window used by the control.
         /// </summary>
-        public static SpeedButtonWithListPopup.PopupWindowKind DefaultPopupKind
-            = SpeedButtonWithListPopup.PopupWindowKind.ListBox;
+        public static PickerPopupKind DefaultPopupKind = PickerPopupKind.ListBox;
 
         private BaseCollection<ListControlItem>? items;
         private ObjectUniqueId? createdMenuId;
@@ -54,7 +53,7 @@ namespace Alternet.UI
         /// Default is <c>null</c>.
         /// If not set, the <see cref="DefaultPopupKind"/> is used.
         /// </summary>
-        public virtual SpeedButtonWithListPopup.PopupWindowKind? PopupKind { get; set; }
+        public virtual PickerPopupKind? PopupKind { get; set; }
 
         /// <summary>
         /// Gets or sets a value indicating whether to use a context menu as the popup window.
@@ -66,13 +65,13 @@ namespace Alternet.UI
         public virtual bool UseContextMenuAsPopup
         {
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
-            get => PopupKind == SpeedButtonWithListPopup.PopupWindowKind.ContextMenu;
+            get => PopupKind == PickerPopupKind.ContextMenu;
 
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
             set
             {
                 if (value)
-                    PopupKind = SpeedButtonWithListPopup.PopupWindowKind.ContextMenu;
+                    PopupKind = PickerPopupKind.ContextMenu;
                 else
                     PopupKind = null;
             }
@@ -302,11 +301,11 @@ namespace Alternet.UI
 
             switch (kind)
             {
-                case SpeedButtonWithListPopup.PopupWindowKind.ListBox:
+                case PickerPopupKind.ListBox:
                 default:
                     ShowListBox();
                     break;
-                case SpeedButtonWithListPopup.PopupWindowKind.ContextMenu:
+                case PickerPopupKind.ContextMenu:
                     ShowPopupMenu();
                     break;
             }

@@ -16,7 +16,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets the default kind of popup window used by the control.
         /// </summary>
-        public static new PopupWindowKind DefaultPopupKind = PopupWindowKind.ContextMenu;
+        public static new PickerPopupKind DefaultPopupKind = PickerPopupKind.ContextMenu;
 
         private Type? enumType;
         private IEnumerable? excludeValues;

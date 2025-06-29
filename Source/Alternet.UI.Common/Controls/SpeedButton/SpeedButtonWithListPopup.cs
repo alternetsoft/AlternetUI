@@ -13,20 +13,5 @@ namespace Alternet.UI
     /// where a quick selection from a list is required.</remarks>
     public class SpeedButtonWithListPopup : SpeedButtonWithListPopup<VirtualListBox>
     {
-        /// <summary>
-        /// Represents the kind of popup window used by the control.
-        /// </summary>
-        public enum PopupWindowKind
-        {
-            /// <summary>
-            /// Popup window inherited from <see cref="PopupListBox"/>.
-            /// </summary>
-            ListBox,
-
-            /// <summary>
-            /// Use context menu as a popup window.
-            /// </summary>
-            ContextMenu,
-        }
     }
 }
