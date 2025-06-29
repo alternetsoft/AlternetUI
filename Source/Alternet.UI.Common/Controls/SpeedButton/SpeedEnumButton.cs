@@ -77,6 +77,24 @@ namespace Alternet.UI
             }
         }
 
+        /// <summary>
+        /// Sets display text of the enum item.
+        /// </summary>
+        /// <param name="value">The value of the enum item.</param>
+        /// <param name="text">The display text to assign.</param>
+        /// <returns></returns>
+        public virtual bool SetDisplayText(object value, string text)
+        {
+            var item = FindItemWithValue(value);
+            if (item is not null)
+            {
+                item.DisplayText = text;
+                return true;
+            }
+
+            return false;
+        }
+
         /// <inheritdoc/>
         protected override BaseCollection<ListControlItem> GetItems()
         {
