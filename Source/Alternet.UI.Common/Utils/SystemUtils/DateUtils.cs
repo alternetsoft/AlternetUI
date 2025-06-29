@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
@@ -13,7 +14,56 @@ namespace Alternet.UI
     public static class DateUtils
     {
         /// <summary>
-        /// Gets <see cref="DateTime"/> format used in Javascript
+        /// Gets the <see cref="DateTimeFormatInfo"/> from the specified format provider,
+        /// or uses the current culture if the provider is <c>null</c>.
+        /// </summary>
+        /// <param name="formatProvider">The format provider to retrieve the
+        /// culture-specific information from. If <c>null</c>, the current
+        /// culture will be used.</param>
+        /// <returns>The <see cref="DateTimeFormatInfo"/> associated with
+        /// the specified format provider.</returns>
+        public static DateTimeFormatInfo GetFormatInfo(IFormatProvider? formatProvider)
+        {
+            return DateTimeFormatInfo.GetInstance(formatProvider ?? CultureInfo.CurrentCulture);
+        }
+
+        /// <summary>
+        /// Returns <c>true</c> if the specified format provider has AM or PM designators
+        /// and 12 hour time format can be used.
+        /// </summary>
+        public static bool HasAmPmDesignators(IFormatProvider? formatProvider)
+        {
+            var info = GetFormatInfo(formatProvider);
+            return !string.IsNullOrEmpty(info.AMDesignator)
+                || !string.IsNullOrEmpty(info.PMDesignator);
+        }
+
+        /// <summary>
+        /// Gets the localized time separator from the specified format provider,
+        /// or uses the current culture if the provider is <c>null</c>.
+        /// </summary>
+        /// <param name="formatProvider">The format provider to retrieve the
+        /// culture-specific information from. If <c>null</c>, the current
+        /// culture will be used.</param>
+        /// <returns>The time separator character as a string.</returns>
+        public static string GetTimeSeparator(IFormatProvider? formatProvider)
+        {
+            var info = GetFormatInfo(formatProvider);
+            return info.TimeSeparator;
+        }
+
+        /// <summary>
+        /// Gets the localized AM and PM designators from the specified format provider,
+        /// or uses the current culture if the provider is <c>null</c>.
+        /// </summary>
+        public static (string AM, string PM) GetAmPmDesignators(IFormatProvider? formatProvider)
+        {
+            var info = GetFormatInfo(formatProvider);
+            return (info.AMDesignator, info.PMDesignator);
+        }
+
+        /// <summary>
+        /// Gets <see cref="DateTime"/> format used in Java Script
         /// or in other situations.
         /// </summary>
         public static string DateFormatJs { get; set; } = "yyyy-MM-ddTHH:mm:ss.fffK";
