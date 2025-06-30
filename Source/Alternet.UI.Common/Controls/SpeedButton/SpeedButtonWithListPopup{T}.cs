@@ -31,6 +31,7 @@ namespace Alternet.UI
 
         private BaseCollection<ListControlItem>? items;
         private ObjectUniqueId? createdMenuId;
+        private ListBoxItems? simpleItems;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="SpeedButtonWithListPopup{T}"/> class.
@@ -80,7 +81,20 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Gets the collection of items in the list box control used within the popup window.
+        /// Gets simple items where item is <c>object</c>.
+        /// It is mapped from <see cref="ListControlItem.Value"/> elements
+        /// of the <see cref="Items"/> collection.
+        /// </summary>
+        public virtual ListBoxItems SimpleItems
+        {
+            get
+            {
+                return simpleItems ??= new(Items);
+            }
+        }
+
+        /// <summary>
+        /// Gets the collection of items used in the list box control within the popup window.
         /// </summary>
         public virtual BaseCollection<ListControlItem> Items
         {
@@ -95,6 +109,7 @@ namespace Alternet.UI
             set
             {
                 items = value;
+                simpleItems = null;
             }
         }
 
@@ -326,6 +341,8 @@ namespace Alternet.UI
             if (!Enabled)
                 return;
 
+            RaiseBeforeShowPopup(EventArgs.Empty);
+
             var kind = PopupKind ?? DefaultPopupKind;
 
             switch (kind)
@@ -380,7 +397,7 @@ namespace Alternet.UI
 
                 var index = ListBox.FindItemIndexWithValue(Value);
                 ListBox.SelectItemAndScroll(index);
-                PopupWindow.ShowPopup(this);
+                PopupWindow.ShowPopup(PopupOwner ?? this);
 
                 App.InvokeIdle(() =>
                 {
@@ -397,6 +414,9 @@ namespace Alternet.UI
             {
                 Value = PopupWindow.ResultItem?.Value ?? PopupWindow.ResultItem;
             }
+
+            var focusedControl = PopupWindow.PopupOwner;
+            focusedControl?.SetFocusIdle();
         }
 
         /// <inheritdoc/>
