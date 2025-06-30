@@ -130,6 +130,13 @@ namespace Alternet.UI
         public event EventHandler<ControlAndButtonClickEventArgs>? ButtonClick;
 
         /// <summary>
+        /// Gets or sets 'Ellipsis' button image as <see cref="UI.KnownButton"/>.
+        /// Default is null, which means that <see cref="DefaultBtnEllipsisImage"/> is used.
+        /// </summary>
+        [Browsable(false)]
+        public virtual KnownButton? BtnEllipsisImage { get; set; }
+
+        /// <summary>
         /// Gets or sets 'Plus' button image as <see cref="UI.KnownButton"/>.
         /// Default is null, which means that <see cref="DefaultBtnPlusImage"/> is used.
         /// </summary>
@@ -142,6 +149,13 @@ namespace Alternet.UI
         /// </summary>
         [Browsable(false)]
         public virtual SvgImage? BtnPlusImageSvg { get; set; }
+
+        /// <summary>
+        /// Gets or sets 'Ellipsis' button image as <see cref="SvgImage"/>.
+        /// Default is null, which means that <see cref="BtnEllipsisImage"/> is used.
+        /// </summary>
+        [Browsable(false)]
+        public virtual SvgImage? BtnEllipsisImageSvg { get; set; }
 
         /// <summary>
         /// Gets or sets 'Minus' button image as <see cref="SvgImage"/>.
@@ -169,11 +183,14 @@ namespace Alternet.UI
 
             set
             {
-                SetHasButton(
-                    comboBoxKnownImage ?? DefaultBtnComboBoxImage,
-                    ref idButtonCombo,
-                    value,
-                    comboBoxSvg ?? DefaultBtnComboBoxSvg);
+                Buttons.OverrideButtonType(GetBtnComboType(), () =>
+                {
+                    SetHasButton(
+                        comboBoxKnownImage ?? DefaultBtnComboBoxImage,
+                        ref idButtonCombo,
+                        value,
+                        comboBoxSvg ?? DefaultBtnComboBoxSvg);
+                });
             }
         }
 
@@ -253,7 +270,14 @@ namespace Alternet.UI
 
             set
             {
-                SetHasButton(DefaultBtnEllipsisImage, ref idButtonEllipsis, value);
+                Buttons.OverrideButtonType(GetBtnEllipsisType(), () =>
+                {
+                    SetHasButton(
+                        BtnEllipsisImage ?? DefaultBtnEllipsisImage,
+                        ref idButtonEllipsis,
+                        value,
+                        BtnEllipsisImageSvg);
+                });
             }
         }
 
@@ -282,20 +306,26 @@ namespace Alternet.UI
 
                 void TogglePlusButton()
                 {
-                    SetHasButton(
-                        BtnPlusImage ?? DefaultBtnPlusImage,
-                        ref idButtonPlus,
-                        value,
-                        BtnPlusImageSvg);
+                    Buttons.OverrideButtonType(GetBtnPlusMinusType(), () =>
+                    {
+                        SetHasButton(
+                            BtnPlusImage ?? DefaultBtnPlusImage,
+                            ref idButtonPlus,
+                            value,
+                            BtnPlusImageSvg);
+                    });
                 }
 
                 void ToggleMinusButton()
                 {
-                    SetHasButton(
-                        BtnMinusImage ?? DefaultBtnMinusImage,
-                        ref idButtonMinus,
-                        value,
-                        BtnMinusImageSvg);
+                    Buttons.OverrideButtonType(GetBtnPlusMinusType(), () =>
+                    {
+                        SetHasButton(
+                            BtnMinusImage ?? DefaultBtnMinusImage,
+                            ref idButtonMinus,
+                            value,
+                            BtnMinusImageSvg);
+                    });
                 }
             }
         }
@@ -713,6 +743,36 @@ namespace Alternet.UI
             }
             else
                 Buttons.SetToolSvg(idButtonCombo.Value, comboBoxSvg ?? DefaultBtnComboBoxSvg);
+        }
+
+        /// <summary>
+        /// Gets type of the <see cref="SpeedButton"/> ancestor class used
+        /// as combo box button.
+        /// </summary>
+        /// <returns></returns>
+        protected virtual Type GetBtnComboType()
+        {
+            return typeof(SpeedButton);
+        }
+
+        /// <summary>
+        /// Gets type of the <see cref="SpeedButton"/> ancestor class used
+        /// as 'Plus' and 'Minus' buttons.
+        /// </summary>
+        /// <returns></returns>
+        protected virtual Type GetBtnPlusMinusType()
+        {
+            return typeof(SpeedButton);
+        }
+
+        /// <summary>
+        /// Gets type of the <see cref="SpeedButton"/> ancestor class used
+        /// as 'Ellipsis' button.
+        /// </summary>
+        /// <returns></returns>
+        protected virtual Type GetBtnEllipsisType()
+        {
+            return typeof(SpeedButton);
         }
 
         /// <summary>
