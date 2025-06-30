@@ -204,6 +204,8 @@ namespace Alternet.UI
                         AddControl(type);
                     }
 
+                    typesListBox.Items.Sort();
+
                     centerNotebook.Add("Types", typesListBox);
                 }
 
