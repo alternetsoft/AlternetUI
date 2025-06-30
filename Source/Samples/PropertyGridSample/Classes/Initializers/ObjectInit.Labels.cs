@@ -24,12 +24,14 @@ namespace PropertyGridSample
             label.DisabledImage = DefaultImage.ToGrayScale();
             label.SuggestedSize = (300, 300);
 
+            SetBackgrounds(label);
+
             label.Borders ??= new();
             var border = BorderSettings.Default.Clone();
             border.UniformCornerRadius = 15;
             border.UniformRadiusIsPercent = true;
             var doubleBorder = border.Clone();
-            doubleBorder.Width = 2;
+            doubleBorder.Width = 5;
 
             label.Borders.SetAll(border);
             label.Borders.SetObject(doubleBorder, VisualControlState.Hovered);
@@ -39,7 +41,35 @@ namespace PropertyGridSample
             label.StateObjects ??= new();
             label.StateObjects.Colors ??= new();
             label.StateObjects.Colors.SetObject(colors, VisualControlState.Hovered);
-            SetBackgrounds(label);
+
+            label.VisualStateChanged += Label_VisualStateChanged;
+
+            static void Label_VisualStateChanged(object? sender, EventArgs e)
+            {
+                App.LogReplace(
+                    $"Label.VisualState = {(sender as AbstractControl)?.VisualState}",
+                    "Label.VisualState");
+            }
+
+            /*
+                            var border = (c as Border)!;
+                            border.ParentBackColor = false;
+                            border.ParentForeColor = false;
+                            border.SuggestedSize = defaultListSize;
+                            SetBackgrounds(border);
+
+                            border.Layout = LayoutStyle.Vertical;
+                            Button button = new();
+                            button.Text = "Click me";
+                            button.Parent = border;
+                            button.Click += Button_Click;
+
+                            static void Button_Click(object? sender, EventArgs e)
+                            {
+                                App.Log("Button in Border clicked.");
+                            }
+
+            */
         }
 
         public static void InitLabelAndButton(object control)

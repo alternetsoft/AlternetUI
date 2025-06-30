@@ -375,8 +375,8 @@ namespace Alternet::UI
         wxWindow->Unbind(wxEVT_DESTROY, &Control::OnDestroy, this);
         wxWindow->Unbind(wxEVT_SHOW, &Control::OnVisibleChanged, this);
         wxWindow->Unbind(wxEVT_MOUSE_CAPTURE_LOST, &Control::OnMouseCaptureLost, this);
-        wxWindow->Unbind(wxEVT_ENTER_WINDOW, &Control::OnMouseEnter, this);
-        wxWindow->Unbind(wxEVT_LEAVE_WINDOW, &Control::OnMouseLeave, this);
+        /*wxWindow->Unbind(wxEVT_ENTER_WINDOW, &Control::OnMouseEnter, this);
+        wxWindow->Unbind(wxEVT_LEAVE_WINDOW, &Control::OnMouseLeave, this);*/
         wxWindow->Unbind(wxEVT_ACTIVATE, &Control::OnActivate, this);
         wxWindow->Unbind(wxEVT_SIZE, &Control::OnSizeChanged, this);
         wxWindow->Unbind(wxEVT_MOVE, &Control::OnLocationChanged, this);
@@ -976,8 +976,8 @@ namespace Alternet::UI
         _wxWindow->Bind(wxEVT_DESTROY, &Control::OnDestroy, this);
         _wxWindow->Bind(wxEVT_SHOW, &Control::OnVisibleChanged, this);
         _wxWindow->Bind(wxEVT_MOUSE_CAPTURE_LOST, &Control::OnMouseCaptureLost, this);
-        _wxWindow->Bind(wxEVT_ENTER_WINDOW, &Control::OnMouseEnter, this);
-        _wxWindow->Bind(wxEVT_LEAVE_WINDOW, &Control::OnMouseLeave, this);
+        /*_wxWindow->Bind(wxEVT_ENTER_WINDOW, &Control::OnMouseEnter, this);
+        _wxWindow->Bind(wxEVT_LEAVE_WINDOW, &Control::OnMouseLeave, this);*/
         _wxWindow->Bind(wxEVT_SIZE, &Control::OnSizeChanged, this);
         _wxWindow->Bind(wxEVT_MOVE, &Control::OnLocationChanged, this);
         _wxWindow->Bind(wxEVT_SET_FOCUS, &Control::OnGotFocus, this);

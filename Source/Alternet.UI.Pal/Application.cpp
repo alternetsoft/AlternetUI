@@ -260,6 +260,10 @@ namespace Alternet::UI
 #define Event_Key_Down 19
 #define Event_Key_Up 20 
 
+#define Event_Set_Cursor 21 
+#define Event_Enter_Window 22 
+#define Event_Leave_Window 23 
+
         eventIdentifiers[Event_MouseMove] = wxEVT_MOTION;
         eventIdentifiers[Event_MouseWheel] = wxEVT_MOUSEWHEEL;
         eventIdentifiers[Event_MouseDoubleClick_Left] = wxEVT_LEFT_DCLICK;
@@ -282,6 +286,10 @@ namespace Alternet::UI
         eventIdentifiers[Event_Char_Hook] = wxEVT_CHAR_HOOK;
         eventIdentifiers[Event_Key_Down] = wxEVT_KEY_DOWN;
         eventIdentifiers[Event_Key_Up] = wxEVT_KEY_UP;
+
+        eventIdentifiers[Event_Set_Cursor] = wxEVT_SET_CURSOR;
+        eventIdentifiers[Event_Enter_Window] = wxEVT_ENTER_WINDOW;
+        eventIdentifiers[Event_Leave_Window] = wxEVT_LEAVE_WINDOW;
     }
 
     void* Application::GetDisplayMode()

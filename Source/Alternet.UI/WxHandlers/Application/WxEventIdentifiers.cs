@@ -36,6 +36,12 @@ namespace Alternet.UI
         KeyDown  =19,
         KeyUp = 20,
 
-        Max = KeyUp,
+        SetCursor = 21,
+        EnterWindow = 22,
+        LeaveWindow = 23,
+
+        Max = LeaveWindow,
     }
 }
+
+

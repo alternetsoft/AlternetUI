@@ -20,6 +20,13 @@ namespace Alternet.UI
 
             nativeMouse.MouseChanged += NativeMouse_MouseChanged;
 
+            events[(int)WxEventIdentifiers.SetCursor] = () =>
+            {
+            };
+
+            events[(int)WxEventIdentifiers.EnterWindow] = ReportEnterWindow;
+            events[(int)WxEventIdentifiers.LeaveWindow] = ReportLeaveWindow;
+
             events[(int)WxEventIdentifiers.MouseMove] = ReportMouseMove;
             events[(int)WxEventIdentifiers.MouseWheel] = ReportMouseWheel;
 
@@ -139,6 +146,16 @@ namespace Alternet.UI
         private void ReportMouseDown(MouseButton button)
         {
             AbstractControl.BubbleMouseDown(targetControl, timestamp, button, null, out _);
+        }
+
+        private void ReportEnterWindow()
+        {
+            AbstractControl.BubbleMouseEnter(targetControl, timestamp, null, out _);
+        }
+
+        private void ReportLeaveWindow()
+        {
+            AbstractControl.BubbleMouseLeave(targetControl, timestamp, null, out _);
         }
 
         private void ReportMouseMove()

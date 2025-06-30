@@ -23,6 +23,50 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Bubbles mouse enter event with the specified parameters.
+        /// </summary>
+        /// <param name="originalTarget">Control on which event is originally fired.</param>
+        /// <param name="timestamp">Event time.</param>
+        /// <param name="position">Mouse position.</param>
+        /// <param name="handled">Result of the event processing.</param>
+        public static void BubbleMouseEnter(
+            AbstractControl? originalTarget,
+            long timestamp,
+            PointD? position,
+            out bool handled)
+        {
+            handled = false;
+            var currentTarget = AbstractControl.GetMouseTargetControl(
+                ref originalTarget,
+                ref position);
+            if (currentTarget is null || position is null)
+                return;
+            currentTarget.RaiseMouseEnter(EventArgs.Empty);
+        }
+
+        /// <summary>
+        /// Bubbles mouse leave event with the specified parameters.
+        /// </summary>
+        /// <param name="originalTarget">Control on which event is originally fired.</param>
+        /// <param name="timestamp">Event time.</param>
+        /// <param name="position">Mouse position.</param>
+        /// <param name="handled">Result of the event processing.</param>
+        public static void BubbleMouseLeave(
+            AbstractControl? originalTarget,
+            long timestamp,
+            PointD? position,
+            out bool handled)
+        {
+            handled = false;
+            var currentTarget = AbstractControl.GetMouseTargetControl(
+                ref originalTarget,
+                ref position);
+            if (currentTarget is null || position is null)
+                return;
+            currentTarget.RaiseMouseLeave(EventArgs.Empty);
+        }
+
+        /// <summary>
         /// Bubbles mouse move event with the specified parameters.
         /// </summary>
         /// <param name="originalTarget">Control on which event is originally fired.</param>
@@ -36,7 +80,9 @@ namespace Alternet.UI
             out bool handled)
         {
             handled = false;
-            var currentTarget = AbstractControl.GetMouseTargetControl(ref originalTarget, ref position);
+            var currentTarget = AbstractControl.GetMouseTargetControl(
+                ref originalTarget,
+                ref position);
             if (currentTarget is null || position is null)
                 return;
 
@@ -46,6 +92,18 @@ namespace Alternet.UI
                 timestamp,
                 position.Value);
             currentTarget.RaiseMouseMove(eventArgs);
+
+            /*
+            if (currentTarget is GenericControl generic)
+            {
+                App.Log($"{generic.GetType()}");
+                (originalTarget as Control)?.UpdateCursor(currentTarget.Cursor);
+            }
+            else
+            {
+                (originalTarget as Control)?.UpdateCursor();
+            }
+            */
         }
 
         /// <summary>
@@ -69,7 +127,9 @@ namespace Alternet.UI
                 return;
             mouseWheelTimestamp = timestamp;
 
-            var currentTarget = AbstractControl.GetMouseTargetControl(ref originalTarget, ref position);
+            var currentTarget = AbstractControl.GetMouseTargetControl(
+                ref originalTarget,
+                ref position);
             if (currentTarget == null || position is null)
                 return;
 
@@ -103,7 +163,9 @@ namespace Alternet.UI
             PlessMouse.SetButtonPressed(changedButton);
 
             handled = false;
-            var currentTarget = AbstractControl.GetMouseTargetControl(ref originalTarget, ref position);
+            var currentTarget = AbstractControl.GetMouseTargetControl(
+                ref originalTarget,
+                ref position);
             if (currentTarget is null || position is null)
                 return;
 
@@ -134,7 +196,9 @@ namespace Alternet.UI
             out bool handled)
         {
             handled = false;
-            var currentTarget = AbstractControl.GetMouseTargetControl(ref originalTarget, ref position);
+            var currentTarget = AbstractControl.GetMouseTargetControl(
+                ref originalTarget,
+                ref position);
             if (currentTarget is null || position is null)
                 return;
 
@@ -168,7 +232,9 @@ namespace Alternet.UI
             PlessMouse.SetButtonPressed(changedButton, false);
 
             handled = false;
-            var currentTarget = AbstractControl.GetMouseTargetControl(ref originalTarget, ref position);
+            var currentTarget = AbstractControl.GetMouseTargetControl(
+                ref originalTarget,
+                ref position);
             if (currentTarget is null || position is null)
                 return;
 
@@ -196,7 +262,8 @@ namespace Alternet.UI
         /// the mouse double-click event. Can be <see langword="null"/>.</param>
         /// <param name="timestamp">The timestamp of the event, typically
         /// in milliseconds since the application started.</param>
-        /// <param name="changedButton">The mouse button that triggered the double-click event.</param>
+        /// <param name="changedButton">The mouse button that triggered
+        /// the double-click event.</param>
         /// <param name="position">The position of the mouse pointer at the time of
         /// the event, in device-independent coordinates. Can be <see langword="null"/>.</param>
         /// <param name="handled">When the method returns, contains <see langword="true"/>
@@ -212,7 +279,9 @@ namespace Alternet.UI
             TouchDeviceType deviceType = TouchDeviceType.Mouse)
         {
             handled = false;
-            var currentTarget = AbstractControl.GetMouseTargetControl(ref originalTarget, ref position);
+            var currentTarget = AbstractControl.GetMouseTargetControl(
+                ref originalTarget,
+                ref position);
             if (currentTarget is null || position is null)
                 return;
 
@@ -337,8 +406,8 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Calls <see cref="BubbleKeyPress(KeyPressEventArgs)"/> for the focused control with
-        /// the specified parameters.
+        /// Calls <see cref="BubbleKeyPress(KeyPressEventArgs)"/> for the focused
+        /// control with the specified parameters.
         /// </summary>
         /// <param name="keyChar">Character of the pressed Key.</param>
         /// <param name="handled">Result of the key processing.</param>
