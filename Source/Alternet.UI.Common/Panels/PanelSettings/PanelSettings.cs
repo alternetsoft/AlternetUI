@@ -43,140 +43,7 @@ namespace Alternet.UI
 
         static PanelSettings()
         {
-            Fn(RegisterConversion);
-
-            void Fn(RegisterConversionDelegate register)
-            {
-                /* registration call */
-
-                register(
-                    PanelSettingsItemKind.Line,
-                    (item, control) =>
-                    {
-                        var spacer = CreateOrUpdateControl<HorizontalLine>(item, control);
-                        return spacer;
-                    });
-
-                /* registration call */
-
-                register(
-                    PanelSettingsItemKind.Spacer,
-                    (item, control) =>
-                    {
-                        var spacer = CreateOrUpdateControl<Spacer>(item, control);
-                        spacer.SuggestedSize = DefaultSpacerSize;
-                        return spacer;
-                    });
-
-                /* registration call */
-
-                register(
-                    PanelSettingsItemKind.Label,
-                    (item, control) =>
-                    {
-                        var result = CreateOrUpdateControl<GenericLabel>(item, control);
-                        result.HorizontalAlignment = HorizontalAlignment.Left;
-                        UpdateText(item, result);
-                        return result;
-                    });
-
-                /* registration call */
-
-                register(
-                    PanelSettingsItemKind.LinkLabel,
-                    (item, control) =>
-                    {
-                        var result = CreateOrUpdateControl<GenericLabel>(item, control);
-                        UpdateText(item, result);
-
-                        result.MakeAsLinkLabel();
-
-                        result.HorizontalAlignment = HorizontalAlignment.Left;
-                        result.MouseLeftButtonUp -= LinkLabelClicked;
-                        result.MouseLeftButtonUp += LinkLabelClicked;
-
-                        void LinkLabelClicked(object? sender, MouseEventArgs e)
-                        {
-                            e.Handled = true;
-                            result.RunWhenIdle(() =>
-                            {
-                                item.ClickAction?.Invoke(item, EventArgs.Empty);
-                            });
-                        }
-
-                        return result;
-                    });
-
-                /* registration call */
-
-                register(
-                    PanelSettingsItemKind.Enum,
-                    (item, control) =>
-                    {
-                        var result = CreateOrUpdateEnumEdit(item, control);
-                        return result;
-                    });
-
-                /* registration call */
-
-                register(
-                    PanelSettingsItemKind.Value,
-                    (item, control) =>
-                    {
-                        if (item.ValueType == typeof(bool))
-                        {
-                            return CreateOrUpdateCheckBox(item, control);
-                        }
-
-                        if (item.ValueType == typeof(Color))
-                        {
-                            return CreateOrUpdateColorEdit(item, control);
-                        }
-
-                        var result = CreateOrUpdateInput(item, control);
-                        return result;
-                    });
-
-                /* registration call */
-
-                register(
-                    PanelSettingsItemKind.Button,
-                    (item, control) =>
-                    {
-                        var result = CreateOrUpdateControl<Button>(item, control);
-                        UpdateText(item, result);
-
-                        result.ClickAction = () =>
-                        {
-                            result.RunWhenIdle(() =>
-                            {
-                                item.ClickAction?.Invoke(item, EventArgs.Empty);
-                            });
-                        };
-
-                        return result;
-                    });
-
-                /* registration call */
-
-                register(
-                    PanelSettingsItemKind.Selector,
-                    (item, control) =>
-                    {
-                        var result = CreateOrUpdateSelector(item, control, false);
-                        return result;
-                    });
-
-                /* registration call */
-
-                register(
-                    PanelSettingsItemKind.EditableSelector,
-                    (item, control) =>
-                    {
-                        var result = CreateOrUpdateSelector(item, control, true);
-                        return result;
-                    });
-            }
+            RegisterDefaultConversions(RegisterConversion);
         }
 
         /// <summary>
@@ -249,6 +116,198 @@ namespace Alternet.UI
             {
                 return items;
             }
+        }
+
+        /// <summary>
+        /// Registers default conversions in the specified register.
+        /// </summary>
+        /// <param name="register">The delegate to call for the registration.</param>
+        public static void RegisterDefaultConversions(RegisterConversionDelegate register)
+        {
+            register(PanelSettingsItemKind.Line, DefaultItemToLineControl);
+            register(PanelSettingsItemKind.Spacer, DefaultItemToSpacerControl);
+            register(PanelSettingsItemKind.Label, DefaultItemToLabelControl);
+            register(PanelSettingsItemKind.LinkLabel, DefaultItemToLinkLabelControl);
+            register(PanelSettingsItemKind.Enum, DefaultItemToEnumControl);
+            register(PanelSettingsItemKind.Value, DefaultItemToValueControl);
+            register(PanelSettingsItemKind.Button, DefaultItemToButtonControl);
+            register(PanelSettingsItemKind.Selector, DefaultItemToSelectorControl);
+            register(PanelSettingsItemKind.EditableSelector, DefaultItemToEditableSelector);
+        }
+
+        /// <summary>
+        /// Default conversion method from <see cref="PanelSettingsItemKind.Line"/> item
+        /// to the appropriate control.
+        /// </summary>
+        /// <param name="item">Item to convert.</param>
+        /// <param name="control">The existing control which properties should
+        /// be updated using item's properties. Can be null, in this case new control
+        /// need to be created.</param>
+        /// <returns>The control used to represent <see cref="PanelSettingsItem"/>.</returns>
+        public static object? DefaultItemToLineControl(PanelSettingsItem item, object? control)
+        {
+            var spacer = CreateOrUpdateControl<HorizontalLine>(item, control);
+            return spacer;
+        }
+
+        /// <summary>
+        /// Default conversion method from <see cref="PanelSettingsItemKind.Spacer"/> item
+        /// to the appropriate control.
+        /// </summary>
+        /// <param name="item">Item to convert.</param>
+        /// <param name="control">The existing control which properties should
+        /// be updated using item's properties. Can be null, in this case new control
+        /// need to be created.</param>
+        /// <returns>The control used to represent <see cref="PanelSettingsItem"/>.</returns>
+        public static object? DefaultItemToSpacerControl(PanelSettingsItem item, object? control)
+        {
+            var spacer = CreateOrUpdateControl<Spacer>(item, control);
+            spacer.SuggestedSize = DefaultSpacerSize;
+            return spacer;
+        }
+
+        /// <summary>
+        /// Default conversion method from <see cref="PanelSettingsItemKind.Label"/> item
+        /// to the appropriate control.
+        /// </summary>
+        /// <param name="item">Item to convert.</param>
+        /// <param name="control">The existing control which properties should
+        /// be updated using item's properties. Can be null, in this case new control
+        /// need to be created.</param>
+        /// <returns>The control used to represent <see cref="PanelSettingsItem"/>.</returns>
+        public static object? DefaultItemToLabelControl(PanelSettingsItem item, object? control)
+        {
+            var result = CreateOrUpdateControl<GenericLabel>(item, control);
+            result.HorizontalAlignment = HorizontalAlignment.Left;
+            UpdateText(item, result);
+            return result;
+        }
+
+        /// <summary>
+        /// Default conversion method from <see cref="PanelSettingsItemKind.LinkLabel"/> item
+        /// to the appropriate control.
+        /// </summary>
+        /// <param name="item">Item to convert.</param>
+        /// <param name="control">The existing control which properties should
+        /// be updated using item's properties. Can be null, in this case new control
+        /// need to be created.</param>
+        /// <returns>The control used to represent <see cref="PanelSettingsItem"/>.</returns>
+        public static object? DefaultItemToLinkLabelControl(PanelSettingsItem item, object? control)
+        {
+            var result = CreateOrUpdateControl<GenericLabel>(item, control);
+            UpdateText(item, result);
+
+            result.MakeAsLinkLabel();
+
+            result.HorizontalAlignment = HorizontalAlignment.Left;
+            result.MouseLeftButtonUp -= LinkLabelClicked;
+            result.MouseLeftButtonUp += LinkLabelClicked;
+
+            void LinkLabelClicked(object? sender, MouseEventArgs e)
+            {
+                e.Handled = true;
+                result.RunWhenIdle(() =>
+                {
+                    item.ClickAction?.Invoke(item, EventArgs.Empty);
+                });
+            }
+
+            return result;
+        }
+
+        /// <summary>
+        /// Default conversion method from <see cref="PanelSettingsItemKind.Enum"/> item
+        /// to the appropriate control.
+        /// </summary>
+        /// <param name="item">Item to convert.</param>
+        /// <param name="control">The existing control which properties should
+        /// be updated using item's properties. Can be null, in this case new control
+        /// need to be created.</param>
+        /// <returns>The control used to represent <see cref="PanelSettingsItem"/>.</returns>
+        public static object? DefaultItemToEnumControl(PanelSettingsItem item, object? control)
+        {
+            var result = CreateOrUpdateEnumEdit(item, control);
+            return result;
+        }
+
+        /// <summary>
+        /// Default conversion method from <see cref="PanelSettingsItemKind.Value"/> item
+        /// to the appropriate control.
+        /// </summary>
+        /// <param name="item">Item to convert.</param>
+        /// <param name="control">The existing control which properties should
+        /// be updated using item's properties. Can be null, in this case new control
+        /// need to be created.</param>
+        /// <returns>The control used to represent <see cref="PanelSettingsItem"/>.</returns>
+        public static object? DefaultItemToValueControl(PanelSettingsItem item, object? control)
+        {
+            if (item.ValueType == typeof(bool))
+            {
+                return CreateOrUpdateCheckBox(item, control);
+            }
+
+            if (item.ValueType == typeof(Color))
+            {
+                return CreateOrUpdateColorEdit(item, control);
+            }
+
+            var result = CreateOrUpdateInput(item, control);
+            return result;
+        }
+
+        /// <summary>
+        /// Default conversion method from <see cref="PanelSettingsItemKind.Button"/> item
+        /// to the appropriate control.
+        /// </summary>
+        /// <param name="item">Item to convert.</param>
+        /// <param name="control">The existing control which properties should
+        /// be updated using item's properties. Can be null, in this case new control
+        /// need to be created.</param>
+        /// <returns>The control used to represent <see cref="PanelSettingsItem"/>.</returns>
+        public static object? DefaultItemToButtonControl(PanelSettingsItem item, object? control)
+        {
+            var result = CreateOrUpdateControl<Button>(item, control);
+            UpdateText(item, result);
+
+            result.ClickAction = () =>
+            {
+                result.RunWhenIdle(() =>
+                {
+                    item.ClickAction?.Invoke(item, EventArgs.Empty);
+                });
+            };
+
+            return result;
+        }
+
+        /// <summary>
+        /// Default conversion method from <see cref="PanelSettingsItemKind.Selector"/> item
+        /// to the appropriate control.
+        /// </summary>
+        /// <param name="item">Item to convert.</param>
+        /// <param name="control">The existing control which properties should
+        /// be updated using item's properties. Can be null, in this case new control
+        /// need to be created.</param>
+        /// <returns>The control used to represent <see cref="PanelSettingsItem"/>.</returns>
+        public static object? DefaultItemToSelectorControl(PanelSettingsItem item, object? control)
+        {
+            var result = CreateOrUpdateSelector(item, control, false);
+            return result;
+        }
+
+        /// <summary>
+        /// Default conversion method from <see cref="PanelSettingsItemKind.EditableSelector"/> item
+        /// to the appropriate control.
+        /// </summary>
+        /// <param name="item">Item to convert.</param>
+        /// <param name="control">The existing control which properties should
+        /// be updated using item's properties. Can be null, in this case new control
+        /// need to be created.</param>
+        /// <returns>The control used to represent <see cref="PanelSettingsItem"/>.</returns>
+        public static object? DefaultItemToEditableSelector(PanelSettingsItem item, object? control)
+        {
+            var result = CreateOrUpdateSelector(item, control, true);
+            return result;
         }
 
         /// <summary>
