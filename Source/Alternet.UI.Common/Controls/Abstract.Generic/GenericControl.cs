@@ -33,6 +33,60 @@ namespace Alternet.UI
         public override bool IsHandleCreated => true;
 
         /// <summary>
+        /// Gets the first parent control in the parent chain which
+        /// is not <see cref="GenericControl"/>.
+        /// </summary>
+        public AbstractControl? NonGenericParent
+        {
+            get
+            {
+                var result = Parent;
+
+                while (result is not null && result is GenericControl)
+                {
+                    result = result.Parent;
+                }
+
+                return result;
+            }
+        }
+
+        /// <summary>
+        /// Gets the first parent control in the parent chain which
+        /// has attached native control.
+        /// </summary>
+        public Control? ParentWithNativeControl
+        {
+            get
+            {
+                var result = Parent;
+
+                while (result is not null && result is not Control)
+                {
+                    result = result.Parent;
+                }
+
+                return result as Control;
+            }
+        }
+
+        /// <inheritdoc/>
+        public override Cursor? Cursor
+        {
+            get
+            {
+                return base.Cursor;
+            }
+
+            set
+            {
+                if (Cursor == value)
+                    return;
+                base.Cursor = value;
+            }
+        }
+
+        /// <summary>
         /// Gets or sets whether control contents is clipped and is not painted outside it's bounds.
         /// </summary>
         [Browsable(true)]
@@ -99,6 +153,13 @@ namespace Alternet.UI
         protected override void OnVisibleChanged(EventArgs e)
         {
             base.OnVisibleChanged(e);
+        }
+
+        /// <inheritdoc/>
+        protected override void OnVisualStateChanged(EventArgs e)
+        {
+            base.OnVisualStateChanged(e);
+            UserControl.HandleOnVisualStateChanged(this, RefreshOptions);
         }
 
         /// <inheritdoc/>
