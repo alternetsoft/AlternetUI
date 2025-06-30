@@ -87,12 +87,11 @@ namespace NativeApi.Api
 
         public event EventHandler? Idle;
         public event EventHandler? Paint;
-        public event EventHandler? MouseEnter;
-        public event EventHandler? MouseLeave;
         public event EventHandler? MouseClick;
         public event EventHandler? VisibleChanged;
         public event EventHandler? MouseCaptureLost;
         public event EventHandler? DpiChanged;
+        public event EventHandler? RequestCursor;
 
         public event EventHandler? Destroyed;
         public event EventHandler? TextChanged;

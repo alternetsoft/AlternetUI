@@ -211,12 +211,11 @@ enum class ControlEvent
 {
     Idle,
     Paint,
-    MouseEnter,
-    MouseLeave,
     MouseClick,
     VisibleChanged,
     MouseCaptureLost,
     DpiChanged,
+    RequestCursor,
     Destroyed,
     TextChanged,
     GotFocus,

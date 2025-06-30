@@ -107,6 +107,13 @@ namespace Alternet.UI.Native
             UIControl?.RaiseMouseCaptureLost(EventArgs.Empty);
         }
 
+        public void OnPlatformEventRequestCursor()
+        {
+            var uiControl = UIControl;
+            if (uiControl is null)
+                return;
+        }
+
         public void OnPlatformEventDpiChanged()
         {
             var uiControl = UIControl;

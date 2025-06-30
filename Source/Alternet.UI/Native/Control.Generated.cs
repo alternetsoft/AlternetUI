@@ -1178,14 +1178,6 @@ namespace Alternet.UI.Native
                 {
                     OnPlatformEventPaint(); return IntPtr.Zero;
                 }
-                case NativeApi.ControlEvent.MouseEnter:
-                {
-                    OnPlatformEventMouseEnter(); return IntPtr.Zero;
-                }
-                case NativeApi.ControlEvent.MouseLeave:
-                {
-                    OnPlatformEventMouseLeave(); return IntPtr.Zero;
-                }
                 case NativeApi.ControlEvent.MouseClick:
                 {
                     OnPlatformEventMouseClick(); return IntPtr.Zero;
@@ -1201,6 +1193,10 @@ namespace Alternet.UI.Native
                 case NativeApi.ControlEvent.DpiChanged:
                 {
                     OnPlatformEventDpiChanged(); return IntPtr.Zero;
+                }
+                case NativeApi.ControlEvent.RequestCursor:
+                {
+                    OnPlatformEventRequestCursor(); return IntPtr.Zero;
                 }
                 case NativeApi.ControlEvent.Destroyed:
                 {
@@ -1290,12 +1286,11 @@ namespace Alternet.UI.Native
             {
                 Idle,
                 Paint,
-                MouseEnter,
-                MouseLeave,
                 MouseClick,
                 VisibleChanged,
                 MouseCaptureLost,
                 DpiChanged,
+                RequestCursor,
                 Destroyed,
                 TextChanged,
                 GotFocus,

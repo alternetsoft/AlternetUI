@@ -976,21 +976,18 @@ namespace Alternet.UI
         protected override void OnMouseMove(MouseEventArgs e)
         {
             base.OnMouseMove(e);
-            UpdateCursor();
         }
 
         /// <inheritdoc/>
         protected override void OnMouseLeave(EventArgs e)
         {
             base.OnMouseLeave(e);
-            UpdateCursor();
         }
 
         /// <inheritdoc/>
         protected override void OnMouseEnter(EventArgs e)
         {
             base.OnMouseEnter(e);
-            UpdateCursor();
         }
 
         private class EmptyControl : Control

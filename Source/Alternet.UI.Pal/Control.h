@@ -189,9 +189,12 @@ namespace Alternet::UI
 
         void OnMouseCaptureLost(wxEvent& event);
 
+        /*
         virtual void OnMouseEnter(wxMouseEvent& event);
-        virtual void OnMouseWheel(wxMouseEvent& event);
         virtual void OnMouseLeave(wxMouseEvent& event);
+        */
+
+        virtual void OnMouseWheel(wxMouseEvent& event);
         virtual void OnContextMenu(wxContextMenuEvent& event);
         virtual void OnMouseLeftUp(wxMouseEvent& event);
         virtual void OnMouseRightUp(wxMouseEvent& event);

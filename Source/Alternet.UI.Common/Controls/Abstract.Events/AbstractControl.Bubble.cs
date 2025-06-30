@@ -554,20 +554,22 @@ namespace Alternet.UI
             AbstractControl? originalTarget,
             AbstractControl? currentTarget)
         {
-            /*
             if (currentTarget is GenericControl generic)
             {
+                /*
                 var s = $"UpdateCursor: {generic.GetType()}";
                 App.LogReplace(s, s);
+                */
                 (originalTarget as Control)?.UpdateCursor(generic.Cursor);
             }
             else
             {
+                /*
                 var s = $"UpdateCursor: {originalTarget?.GetType()}";
                 App.LogReplace(s, s);
+                */
                 (originalTarget as Control)?.UpdateCursor();
             }
-            */
         }
     }
 }

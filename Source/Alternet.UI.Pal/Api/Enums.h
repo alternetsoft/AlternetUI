@@ -289,28 +289,6 @@ namespace Alternet::UI
         MenuHighlight = 174,
     };
     
-    enum class CombineMode
-    {
-        Replace = 0,
-        Intersect = 1,
-        Union = 2,
-        Xor = 3,
-        Exclude = 4,
-        Complement = 5,
-    };
-    
-    enum class DrawLabelFlags
-    {
-        TextHasBold = 1,
-        TextHasNewLineChars = 2,
-    };
-    
-    enum class FillMode
-    {
-        Alternate = 0,
-        Winding = 1,
-    };
-    
     enum class FontEncoding
     {
         Default = 0,
@@ -532,18 +510,6 @@ namespace Alternet::UI
         ITULAB = 10,
     };
     
-    enum class GraphicsUnit
-    {
-        World = 0,
-        Display = 1,
-        Pixel = 2,
-        Point = 3,
-        Inch = 4,
-        Document = 5,
-        Millimeter = 6,
-        Dip = 7,
-    };
-    
     enum class ImageBitsFormatKind
     {
         Native = 0,
@@ -601,28 +567,32 @@ namespace Alternet::UI
         Format64bppArgb = 3424269,
     };
     
-    enum class DashStyle
+    enum class CombineMode
     {
-        Solid = 0,
-        Dot = 1,
-        Dash = 2,
-        DashDot = 3,
-        DashDotDot = 3,
-        Custom = 4,
+        Replace = 0,
+        Intersect = 1,
+        Union = 2,
+        Xor = 3,
+        Exclude = 4,
+        Complement = 5,
     };
     
-    enum class LineCap
+    enum class FillMode
     {
-        Flat = 0,
-        Square = 1,
-        Round = 2,
+        Alternate = 0,
+        Winding = 1,
     };
     
-    enum class LineJoin
+    enum class GraphicsUnit
     {
-        Miter = 0,
-        Bevel = 1,
-        Round = 2,
+        World = 0,
+        Display = 1,
+        Pixel = 2,
+        Point = 3,
+        Inch = 4,
+        Document = 5,
+        Millimeter = 6,
+        Dip = 7,
     };
     
     enum class RasterOperationMode
@@ -651,6 +621,30 @@ namespace Alternet::UI
         InRegion = 2,
     };
     
+    enum class DashStyle
+    {
+        Solid = 0,
+        Dot = 1,
+        Dash = 2,
+        DashDot = 3,
+        DashDotDot = 3,
+        Custom = 4,
+    };
+    
+    enum class LineCap
+    {
+        Flat = 0,
+        Square = 1,
+        Round = 2,
+    };
+    
+    enum class LineJoin
+    {
+        Miter = 0,
+        Bevel = 1,
+        Round = 2,
+    };
+    
     enum class SvgImageDataKind
     {
         Url = 0,
@@ -664,6 +658,12 @@ namespace Alternet::UI
         Two = 1,
         Many = 2,
         Uknown = 3,
+    };
+    
+    enum class DrawLabelFlags
+    {
+        TextHasBold = 1,
+        TextHasNewLineChars = 2,
     };
     
     enum class TextFormatFlags
@@ -1242,6 +1242,16 @@ namespace Alternet::UI
         Sunken = 3,
     };
     
+    enum class ToolStripDropDownCloseReason
+    {
+        AppFocusChange = 0,
+        AppClicked = 1,
+        ItemClicked = 2,
+        Keyboard = 3,
+        CloseCalled = 4,
+        Other = 5,
+    };
+    
     enum class VisualControlState
     {
         Normal = 0,
@@ -1288,6 +1298,21 @@ namespace Alternet::UI
         Default = 0,
         Spin = 1,
         DropDown = 2,
+    };
+    
+    enum class TimePickerHourFormat
+    {
+        System = 0,
+        Hour12 = 1,
+        Hour24 = 2,
+    };
+    
+    enum class TimePickerValuePart
+    {
+        Hour = 0,
+        Minute = 1,
+        Second = 2,
+        AmPm = 3,
     };
     
     enum class LogItemKind
@@ -1370,18 +1395,29 @@ namespace Alternet::UI
         ServiceNotification = 2097152,
     };
     
-    enum class AppColorTheme
+    enum class ResetColorType
     {
-        Default = 0,
-        Light = 1,
-        Dark = 2,
+        Auto = 0,
+        EmptyColor = 1,
+        NullColor = 2,
+        DefaultAttributes = 3,
+        DefaultAttributesTextBox = 4,
+        DefaultAttributesListBox = 5,
+        DefaultAttributesButton = 6,
+        ColorMenu = 7,
+        ColorActiveCaption = 8,
+        ColorInactiveCaption = 9,
+        ColorInfo = 10,
+        ColorWindow = 11,
+        ColorHighlight = 12,
+        ColorButtonFace = 13,
     };
     
-    enum class DrawMode
+    enum class FontDialogRestrictSelection
     {
-        Normal = 0,
-        OwnerDrawFixed = 1,
-        OwnerDrawVariable = 2,
+        None = 0,
+        Scalable = 1,
+        FixedPitch = 2,
     };
     
     enum class BitmapType
@@ -1410,6 +1446,36 @@ namespace Alternet::UI
         CursorDefaultType = -1,
     };
     
+    enum class AppColorTheme
+    {
+        Default = 0,
+        Light = 1,
+        Dark = 2,
+    };
+    
+    enum class DrawItemState
+    {
+        None = 0,
+        Selected = 1,
+        Grayed = 2,
+        Disabled = 4,
+        Checked = 8,
+        Focus = 16,
+        Default = 32,
+        HotLight = 64,
+        Inactive = 128,
+        NoAccelerator = 256,
+        NoFocusRect = 512,
+        ComboBoxEdit = 4096,
+    };
+    
+    enum class DrawMode
+    {
+        Normal = 0,
+        OwnerDrawFixed = 1,
+        OwnerDrawVariable = 2,
+    };
+    
     enum class KnownSvgColor
     {
         Normal = 0,
@@ -1429,6 +1495,20 @@ namespace Alternet::UI
         Middle = 3,
     };
     
+    enum class TrimTextRules
+    {
+        TrimRoundBrackets = 1,
+        TrimSquareBrackets = 2,
+        TrimFigureBrackets = 4,
+        TrimAngleBrackets = 8,
+        TrimBrackets = 15,
+        TrimWhiteChars = 16,
+        TrimBracketsAndWhiteChars = 31,
+        TrimSpaces = 32,
+        NoLeading = 64,
+        NoTrailing = 128,
+    };
+    
     enum class DialogCloseAction
     {
         None = 0,
@@ -1438,6 +1518,24 @@ namespace Alternet::UI
         EscapeKey = 4,
         CloseButtonInTitleBar = 5,
         Other = 6,
+    };
+    
+    enum class ImeMode
+    {
+        NoControl = 0,
+        On = 1,
+        Off = 2,
+        Disable = 3,
+        Hiragana = 4,
+        Katakana = 5,
+        KatakanaHalf = 6,
+        AlphaFull = 7,
+        Alpha = 8,
+        HangulFull = 9,
+        Hangul = 10,
+        Close = 11,
+        OnHalf = 12,
+        Inherit = -1,
     };
     
     enum class Key
@@ -2355,27 +2453,11 @@ namespace Alternet::UI
         All = -2147483645,
     };
     
-    enum class DrawItemState
+    enum class FlagsOrEnum
     {
         None = 0,
-        Selected = 1,
-        Grayed = 2,
-        Disabled = 4,
-        Checked = 8,
-        Focus = 16,
-        Default = 32,
-        HotLight = 64,
-        Inactive = 128,
-        NoAccelerator = 256,
-        NoFocusRect = 512,
-        ComboBoxEdit = 4096,
-    };
-    
-    enum class FontDialogRestrictSelection
-    {
-        None = 0,
-        Scalable = 1,
-        FixedPitch = 2,
+        Enum = 1,
+        Flags = 2,
     };
     
     enum class GridUnitType
@@ -2401,24 +2483,6 @@ namespace Alternet::UI
         Auto = 0,
         Hidden = 1,
         Visible = 2,
-    };
-    
-    enum class ImeMode
-    {
-        NoControl = 0,
-        On = 1,
-        Off = 2,
-        Disable = 3,
-        Hiragana = 4,
-        Katakana = 5,
-        KatakanaHalf = 6,
-        AlphaFull = 7,
-        Alpha = 8,
-        HangulFull = 9,
-        Hangul = 10,
-        Close = 11,
-        OnHalf = 12,
-        Inherit = -1,
     };
     
     enum class ListBoxSelectionMode
@@ -2448,24 +2512,6 @@ namespace Alternet::UI
         Inherit = 2,
     };
     
-    enum class ResetColorType
-    {
-        Auto = 0,
-        EmptyColor = 1,
-        NullColor = 2,
-        DefaultAttributes = 3,
-        DefaultAttributesTextBox = 4,
-        DefaultAttributesListBox = 5,
-        DefaultAttributesButton = 6,
-        ColorMenu = 7,
-        ColorActiveCaption = 8,
-        ColorInactiveCaption = 9,
-        ColorInfo = 10,
-        ColorWindow = 11,
-        ColorHighlight = 12,
-        ColorButtonFace = 13,
-    };
-    
     enum class RichToolTipKind
     {
         None = 0,
@@ -2491,38 +2537,6 @@ namespace Alternet::UI
         One = 1,
         MultiSimple = 2,
         MultiExtended = 3,
-    };
-    
-    enum class ToolStripDropDownCloseReason
-    {
-        AppFocusChange = 0,
-        AppClicked = 1,
-        ItemClicked = 2,
-        Keyboard = 3,
-        CloseCalled = 4,
-        Other = 5,
-    };
-    
-    enum class TrimTextRules
-    {
-        TrimRoundBrackets = 1,
-        TrimSquareBrackets = 2,
-        TrimFigureBrackets = 4,
-        TrimAngleBrackets = 8,
-        TrimBrackets = 15,
-        TrimWhiteChars = 16,
-        TrimBracketsAndWhiteChars = 31,
-        TrimSpaces = 32,
-        NoLeading = 64,
-        NoTrailing = 128,
-    };
-    
-    enum class ValueInRangeResult
-    {
-        Unknown = 0,
-        Ok = 1,
-        Less = 2,
-        Greater = 3,
     };
     
     enum class PropertyGridApplyFlags
@@ -2842,6 +2856,15 @@ namespace Alternet::UI
         Watch = 5,
     };
     
+    enum class HighDpiMode
+    {
+        DpiUnaware = 0,
+        SystemAware = 1,
+        PerMonitor = 2,
+        PerMonitorV2 = 3,
+        DpiUnawareGdiScaled = 4,
+    };
+    
     enum class NetFrameworkIdentifier
     {
         Net = 0,
@@ -2864,7 +2887,7 @@ namespace Alternet::UI
         Any = 63,
     };
     
-    enum class SystemColorMode
+    enum class SystemColorModeType
     {
         Classic = 0,
         System = 1,
@@ -2995,6 +3018,12 @@ namespace Alternet::UI
         UDouble = 12,
         Decimal = 13,
         UDecimal = 14,
+    };
+    
+    enum class PickerPopupKind
+    {
+        ListBox = 0,
+        ContextMenu = 1,
     };
     
     enum class RichTextFileType
@@ -3228,6 +3257,14 @@ namespace Alternet::UI
         Multiple = 1,
     };
     
+    enum class ValueInRangeResult
+    {
+        Unknown = 0,
+        Ok = 1,
+        Less = 2,
+        Greater = 3,
+    };
+    
     enum class ValueValidatorKind
     {
         Generic = 0,
@@ -3456,11 +3493,11 @@ namespace Alternet::UI
     
 }
 template<> struct enable_bitmask_operators<Alternet::UI::KnownColorCategory> { static const bool enable = true; };
-template<> struct enable_bitmask_operators<Alternet::UI::DrawLabelFlags> { static const bool enable = true; };
 template<> struct enable_bitmask_operators<Alternet::UI::FontStyle> { static const bool enable = true; };
 template<> struct enable_bitmask_operators<Alternet::UI::FontWeight> { static const bool enable = true; };
 template<> struct enable_bitmask_operators<Alternet::UI::GenericImageLoadFlags> { static const bool enable = true; };
 template<> struct enable_bitmask_operators<Alternet::UI::GenericImagePngSetFilter> { static const bool enable = true; };
+template<> struct enable_bitmask_operators<Alternet::UI::DrawLabelFlags> { static const bool enable = true; };
 template<> struct enable_bitmask_operators<Alternet::UI::TextFormatFlags> { static const bool enable = true; };
 template<> struct enable_bitmask_operators<Alternet::UI::GenericAlignment> { static const bool enable = true; };
 template<> struct enable_bitmask_operators<Alternet::UI::GenericDirection> { static const bool enable = true; };
@@ -3476,6 +3513,9 @@ template<> struct enable_bitmask_operators<Alternet::UI::VisualControlStates> { 
 template<> struct enable_bitmask_operators<Alternet::UI::DatePickerStyleFlags> { static const bool enable = true; };
 template<> struct enable_bitmask_operators<Alternet::UI::LogItemKindFlags> { static const bool enable = true; };
 template<> struct enable_bitmask_operators<Alternet::UI::MessageBoxOptions> { static const bool enable = true; };
+template<> struct enable_bitmask_operators<Alternet::UI::FontDialogRestrictSelection> { static const bool enable = true; };
+template<> struct enable_bitmask_operators<Alternet::UI::DrawItemState> { static const bool enable = true; };
+template<> struct enable_bitmask_operators<Alternet::UI::TrimTextRules> { static const bool enable = true; };
 template<> struct enable_bitmask_operators<Alternet::UI::Keys> { static const bool enable = true; };
 template<> struct enable_bitmask_operators<Alternet::UI::KeyStates> { static const bool enable = true; };
 template<> struct enable_bitmask_operators<Alternet::UI::ModifierKeys> { static const bool enable = true; };
@@ -3486,9 +3526,6 @@ template<> struct enable_bitmask_operators<Alternet::UI::VirtualKeyboardFlags> {
 template<> struct enable_bitmask_operators<Alternet::UI::ListViewHitTestLocations> { static const bool enable = true; };
 template<> struct enable_bitmask_operators<Alternet::UI::SoundPlayFlags> { static const bool enable = true; };
 template<> struct enable_bitmask_operators<Alternet::UI::DragDropEffects> { static const bool enable = true; };
-template<> struct enable_bitmask_operators<Alternet::UI::DrawItemState> { static const bool enable = true; };
-template<> struct enable_bitmask_operators<Alternet::UI::FontDialogRestrictSelection> { static const bool enable = true; };
-template<> struct enable_bitmask_operators<Alternet::UI::TrimTextRules> { static const bool enable = true; };
 template<> struct enable_bitmask_operators<Alternet::UI::PropertyGridApplyFlags> { static const bool enable = true; };
 template<> struct enable_bitmask_operators<Alternet::UI::PropertyGridCreateStyle> { static const bool enable = true; };
 template<> struct enable_bitmask_operators<Alternet::UI::PropertyGridCreateStyleEx> { static const bool enable = true; };

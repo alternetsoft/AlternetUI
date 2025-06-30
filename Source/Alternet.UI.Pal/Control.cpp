@@ -1398,11 +1398,11 @@ namespace Alternet::UI
         {
             auto cursor = (wxCursor*)handle;
             _cursor = wxCursor(*cursor);
+        }
 
-            if (_wxWindow != nullptr)
-            {
-                _wxWindow->SetCursor(_cursor);
-            }
+        if (_wxWindow != nullptr)
+        {
+            _wxWindow->SetCursor(_cursor);
         }
     }
 
@@ -1421,6 +1421,8 @@ namespace Alternet::UI
     {
         if (IsNullOrDeleting())
             return;
+
+        RaiseEvent(ControlEvent::RequestCursor);
 
         auto wxWindow = GetWxWindow();
 
@@ -1471,7 +1473,7 @@ namespace Alternet::UI
             return;
         RaiseEvent(ControlEvent::MouseCaptureLost);
     }
-
+    /*
     void Control::OnMouseEnter(wxMouseEvent& event)
     {
         event.Skip();
@@ -1487,7 +1489,7 @@ namespace Alternet::UI
 
             window = window->GetParent();
         }
-    }
+    }*/
 
     void Control::OnMouseWheel(wxMouseEvent& event)
     {
@@ -1516,7 +1518,7 @@ namespace Alternet::UI
     {
         event.Skip();
     }
-
+    /*
     void Control::OnMouseLeave(wxMouseEvent& event)
     {
         event.Skip();
@@ -1532,7 +1534,7 @@ namespace Alternet::UI
 
             window = window->GetParent();
         }
-    }
+    }*/
 
     void Control::OnVisibleChanged(wxShowEvent& event)
     {
