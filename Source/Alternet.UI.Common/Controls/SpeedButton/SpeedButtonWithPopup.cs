@@ -47,6 +47,11 @@ namespace Alternet.UI
         public event EventHandler? ValueChanged;
 
         /// <summary>
+        /// Occurs before popup window is shown.
+        /// </summary>
+        public event EventHandler? BeforeShowPopup;
+
+        /// <summary>
         /// Gets a value indicating whether the popup window has been created.
         /// </summary>
         public virtual bool IsPopupWindowCreated => popupWindow is not null;
@@ -119,6 +124,11 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets or sets a control used as a popup owner.
+        /// </summary>
+        public virtual AbstractControl? PopupOwner { get; set; }
+
+        /// <summary>
         /// Gets or sets value as <see cref="string"/>.
         /// </summary>
         [Browsable(false)]
@@ -164,7 +174,22 @@ namespace Alternet.UI
         {
             if (!Enabled)
                 return;
-            PopupWindow.ShowPopup(this);
+            RaiseBeforeShowPopup(EventArgs.Empty);
+            PopupWindow.ShowPopup(PopupOwner ?? this);
+        }
+
+        /// <summary>
+        /// Raises the <see cref="ValueChanged"/> event and calls
+        /// <see cref="OnValueChanged(EventArgs)"/>.
+        /// </summary>
+        /// <param name="e">An <see cref="EventArgs"/> that contains the
+        /// event data.</param>
+        public void RaiseBeforeShowPopup(EventArgs e)
+        {
+            if (DisposingOrDisposed)
+                return;
+            OnBeforeShowPopup(e);
+            BeforeShowPopup?.Invoke(this, e);
         }
 
         /// <summary>
@@ -179,6 +204,30 @@ namespace Alternet.UI
                 return;
             OnValueChanged(e);
             ValueChanged?.Invoke(this, e);
+        }
+
+        /// <summary>
+        /// Gets enum value as string.
+        /// </summary>
+        /// <returns></returns>
+        public virtual string? GetValueAsString(object? d)
+        {
+            if (ValueToDisplayString is not null)
+            {
+                var e = new ValueConvertEventArgs<object?, string?>(this);
+                ValueToDisplayString(null, e);
+                if (e.Handled)
+                    return e.Result;
+            }
+
+            if (d is ListControlItem item)
+            {
+                var result = item.DisplayText ?? item.Text;
+                if (!string.IsNullOrEmpty(result))
+                    return result;
+            }
+
+            return d?.ToString();
         }
 
         /// <summary>
@@ -206,27 +255,12 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Gets enum value as string.
+        /// Called before popup window is shown..
         /// </summary>
-        /// <returns></returns>
-        protected virtual string? GetValueAsString(object? d)
+        /// <param name="e">An <see cref="EventArgs"/> that contains the
+        /// event data.</param>
+        protected virtual void OnBeforeShowPopup(EventArgs e)
         {
-            if (ValueToDisplayString is not null)
-            {
-                var e = new ValueConvertEventArgs<object?, string?>(this);
-                ValueToDisplayString(null, e);
-                if (e.Handled)
-                    return e.Result;
-            }
-
-            if (d is ListControlItem item)
-            {
-                var result = item.DisplayText ?? item.Text;
-                if(!string.IsNullOrEmpty(result))
-                    return result;
-            }
-
-            return d?.ToString();
         }
 
         /// <inheritdoc/>
