@@ -334,7 +334,8 @@ namespace Alternet.UI
         /// <param name="right">Whether right border side is visible.</param>
         /// <param name="bottom">Whether bottom border side is visible.</param>
         /// <param name="width">The width assigned to the border side
-        /// when side is visible. If Null, value from <see cref="DefaultBorderWidth"/> is used.</param>
+        /// when side is visible. If Null, value from
+        /// <see cref="DefaultBorderWidth"/> is used.</param>
         public virtual void SetVisibleBorders(
             bool left,
             bool top = false,
@@ -414,7 +415,8 @@ namespace Alternet.UI
         /// <summary>
         /// Gets default value for <see cref="AbstractControl.ParentBackColor"/> property.
         /// </summary>
-        /// <returns>True if the parent background color is used by default; otherwise, false.</returns>
+        /// <returns>True if the parent background color is used by default;
+        /// otherwise, false.</returns>
         protected virtual bool GetDefaultParentBackColor()
         {
             return true;
@@ -423,7 +425,8 @@ namespace Alternet.UI
         /// <summary>
         /// Gets default value for <see cref="AbstractControl.ParentForeColor"/> property.
         /// </summary>
-        /// <returns>True if the parent foreground color is used by default; otherwise, false.</returns>
+        /// <returns>True if the parent foreground color is used by default;
+        /// otherwise, false.</returns>
         protected virtual bool GetDefaultParentForeColor()
         {
             return true;

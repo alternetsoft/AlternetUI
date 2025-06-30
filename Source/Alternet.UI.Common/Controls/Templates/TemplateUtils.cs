@@ -147,10 +147,13 @@ namespace Alternet.UI
         /// Gets template contents as <see cref="ImageSet"/>.
         /// </summary>
         /// <param name="template">Template control</param>
-        /// <param name="backColor">Background color. Optional. If not specified, background color
+        /// <param name="backColor">Background color. Optional.
+        /// If not specified, background color
         /// of the template control is used.</param>
         /// <returns></returns>
-        public static ImageSet GetTemplateAsImageSet(TemplateControl template, Color? backColor = null)
+        public static ImageSet GetTemplateAsImageSet(
+            TemplateControl template,
+            Color? backColor = null)
         {
             ImageSet imageSet = new(GetTemplateAsImage(template, backColor));
             return imageSet;

@@ -9,6 +9,7 @@ namespace Alternet.UI
 {
     /// <summary>
     /// Control handled by the operating system.
+    /// It is not suggested to create <see cref="Control"/> directly.
     /// </summary>
     public partial class Control : AbstractControl
     {
@@ -55,7 +56,7 @@ namespace Alternet.UI
                 if (Cursor == value)
                     return;
                 base.Cursor = value;
-                SafeHandler?.SetCursor(value);
+                UpdateCursor();
             }
         }
 
@@ -762,6 +763,17 @@ namespace Alternet.UI
                 Handler.HorzScrollBarInfo = value;
         }
 
+        /// <summary>
+        /// Updates cursor and call's <see cref="IControlHandler.SetCursor"/>.
+        /// </summary>
+        public virtual void UpdateCursor(Cursor? overrideCursor = null)
+        {
+            if(overrideCursor is null)
+                SafeHandler?.SetCursor(Cursor);
+            else
+                SafeHandler?.SetCursor(overrideCursor);
+        }
+
         /// <inheritdoc/>
         public override void RaiseHandleCreated(EventArgs e)
         {
@@ -958,6 +970,27 @@ namespace Alternet.UI
         protected override void OnToolTipChanged(EventArgs e)
         {
             SafeHandler?.SetToolTip(GetRealToolTip());
+        }
+
+        /// <inheritdoc/>
+        protected override void OnMouseMove(MouseEventArgs e)
+        {
+            base.OnMouseMove(e);
+            UpdateCursor();
+        }
+
+        /// <inheritdoc/>
+        protected override void OnMouseLeave(EventArgs e)
+        {
+            base.OnMouseLeave(e);
+            UpdateCursor();
+        }
+
+        /// <inheritdoc/>
+        protected override void OnMouseEnter(EventArgs e)
+        {
+            base.OnMouseEnter(e);
+            UpdateCursor();
         }
 
         private class EmptyControl : Control
