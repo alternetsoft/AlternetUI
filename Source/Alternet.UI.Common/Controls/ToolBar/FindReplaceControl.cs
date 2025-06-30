@@ -42,20 +42,22 @@ namespace Alternet.UI
 
         private readonly ListPicker scopeEdit = new()
         {
-            HasBorder = false,
+            Margin = (2, 0, 2, 0),
             UseContextMenuAsPopup = true,
             VerticalAlignment = VerticalAlignment.Center,
         };
 
-        private readonly ComboBox findEdit = new()
+        private readonly TextBoxWithListPopup findEdit = new()
         {
-            HasBorder = false,
+            Margin = (2, 0, 2, 0),
+            UseContextMenuAsPopup = true,
             VerticalAlignment = VerticalAlignment.Center,
         };
 
-        private readonly ComboBox replaceEdit = new()
+        private readonly TextBoxWithListPopup replaceEdit = new()
         {
-            HasBorder = false,
+            Margin = (2, 0, 2, 0),
+            UseContextMenuAsPopup = true,
             VerticalAlignment = VerticalAlignment.Center,
         };
 
@@ -77,24 +79,6 @@ namespace Alternet.UI
         private readonly ListControlItem scopeSelectionOnly = new()
         {
             Text = CommonStrings.Default.FindScopeSelectionOnly,
-        };
-
-        private readonly Border scopeEditBorder = new()
-        {
-            Margin = (2, 0, 2, 0),
-            VerticalAlignment = VerticalAlignment.Center,
-        };
-
-        private readonly Border findEditBorder = new()
-        {
-            Margin = (2, 0, 2, 0),
-            VerticalAlignment = VerticalAlignment.Center,
-        };
-
-        private readonly Border replaceEditBorder = new()
-        {
-            Margin = (2, 0, 2, 0),
-            VerticalAlignment = VerticalAlignment.Center,
         };
 
         private IFindReplaceConnect? manager;
@@ -119,9 +103,9 @@ namespace Alternet.UI
         /// </summary>
         public FindReplaceControl()
         {
-            findEditBorder.BorderColor = FindEditBorderColor;
-            replaceEditBorder.BorderColor = FindEditBorderColor;
-            scopeEditBorder.BorderColor = FindEditBorderColor;
+            findEdit.BorderColor = FindEditBorderColor;
+            replaceEdit.BorderColor = FindEditBorderColor;
+            scopeEdit.BorderColor = FindEditBorderColor;
 
             DoInsideLayout(Fn);
 
@@ -165,9 +149,9 @@ namespace Alternet.UI
                     IdUseRegularExpressions,
                     KnownShortcuts.FindReplaceControlKeys.UseRegularExpressions);
 
-                scopeEdit.Parent = scopeEditBorder;
+                scopeEdit.HorizontalAlignment = HorizontalAlignment.Fill;
 
-                IdScopeEdit = OptionsToolBar.AddControl(scopeEditBorder);
+                IdScopeEdit = OptionsToolBar.AddControl(scopeEdit);
 
                 /* Find ToolBar */
 
@@ -175,15 +159,14 @@ namespace Alternet.UI
                     CommonStrings.Default.ToggleToSwitchBetweenFindReplace,
                     KnownSvgImages.ImgAngleDown);
 
-                findEdit.EmptyTextHint = EmptyTextHints.FindEdit;
+                findEdit.MainControl.EmptyTextHint = EmptyTextHints.FindEdit;
+                findEdit.SyncTextAndComboButton();
+                replaceEdit.SyncTextAndComboButton();
 
-                findEditBorder.MinWidth = DefaultMinEditWidth;
+                findEdit.MinWidth = DefaultMinEditWidth;
+                findEdit.HorizontalAlignment = HorizontalAlignment.Fill;
 
-                findEditBorder.HorizontalAlignment = HorizontalAlignment.Fill;
-
-                findEdit.Parent = findEditBorder;
-
-                IdFindEdit = FindToolBar.AddControl(findEditBorder);
+                IdFindEdit = FindToolBar.AddControl(findEdit);
 
                 IdFindNext = FindToolBar.AddSpeedBtn(
                     CommonStrings.Default.ButtonFindNext,
@@ -208,14 +191,13 @@ namespace Alternet.UI
 
                 /* Replace ToolBar */
 
-                replaceEditBorder.MinWidth = DefaultMinEditWidth;
-                replaceEditBorder.HorizontalAlignment = HorizontalAlignment.Fill;
+                replaceEdit.MinWidth = DefaultMinEditWidth;
+                replaceEdit.HorizontalAlignment = HorizontalAlignment.Fill;
 
                 IdReplaceEmptyButton1 = ReplaceToolBar.AddSpeedBtn();
 
-                replaceEdit.Parent = replaceEditBorder;
-                IdReplaceEdit = ReplaceToolBar.AddControl(replaceEditBorder);
-                replaceEdit.EmptyTextHint = EmptyTextHints.ReplaceEdit;
+                IdReplaceEdit = ReplaceToolBar.AddControl(replaceEdit);
+                replaceEdit.MainControl.EmptyTextHint = EmptyTextHints.ReplaceEdit;
 
                 IdReplace = ReplaceToolBar.AddSpeedBtn(
                     CommonStrings.Default.ButtonReplace,
@@ -531,17 +513,17 @@ namespace Alternet.UI
         /// <summary>
         /// Represents the search history.
         /// </summary>
-        public virtual BaseCollection<object> SearchList
+        public virtual ListBoxItems SearchList
         {
-            get => FindEdit.Items;
+            get => FindEdit.SimpleItems;
         }
 
         /// <summary>
         /// Represents the replace history.
         /// </summary>
-        public virtual BaseCollection<object> ReplaceList
+        public virtual ListBoxItems ReplaceList
         {
-            get => ReplaceEdit.Items;
+            get => ReplaceEdit.SimpleItems;
         }
 
         /// <summary>
@@ -623,12 +605,12 @@ namespace Alternet.UI
         {
             get
             {
-                return FindEdit.EmptyTextHint;
+                return FindEdit.MainControl.EmptyTextHint;
             }
 
             set
             {
-                FindEdit.EmptyTextHint = value;
+                FindEdit.MainControl.EmptyTextHint = value;
             }
         }
 
@@ -639,12 +621,12 @@ namespace Alternet.UI
         {
             get
             {
-                return ReplaceEdit.EmptyTextHint;
+                return ReplaceEdit.MainControl.EmptyTextHint;
             }
 
             set
             {
-                ReplaceEdit.EmptyTextHint = value;
+                ReplaceEdit.MainControl.EmptyTextHint = value;
             }
         }
 
@@ -698,13 +680,13 @@ namespace Alternet.UI
         /// Gets border of the <see cref="FindEdit"/>.
         /// </summary>
         [Browsable(false)]
-        public Border FindEditBorder => findEditBorder;
+        public Border FindEditBorder => findEdit;
 
         /// <summary>
         /// Gets border of the <see cref="ReplaceEdit"/>.
         /// </summary>
         [Browsable(false)]
-        public Border ReplaceEditBorder => replaceEditBorder;
+        public Border ReplaceEditBorder => replaceEdit;
 
         /// <summary>
         /// Gets border color of the find text editor.
@@ -754,11 +736,11 @@ namespace Alternet.UI
                 showErrorBorder = value;
                 if (value)
                 {
-                    findEditBorder.BorderColor = NotFoundBorderColor;
+                    findEdit.BorderColor = NotFoundBorderColor;
                 }
                 else
                 {
-                    findEditBorder.BorderColor = FindEditBorderColor;
+                    findEdit.BorderColor = FindEditBorderColor;
                 }
             }
         }
@@ -1164,7 +1146,7 @@ namespace Alternet.UI
         /// Gets <see cref="ComboBox"/> which allows to specify text to find.
         /// </summary>
         [Browsable(false)]
-        public ComboBox FindEdit => findEdit;
+        public TextBoxWithListPopup FindEdit => findEdit;
 
         /// <summary>
         /// Gets <see cref="ListPicker"/> which allows to specify text to find.
@@ -1176,7 +1158,7 @@ namespace Alternet.UI
         /// Gets <see cref="ComboBox"/> which allows to specify text to replace.
         /// </summary>
         [Browsable(false)]
-        public ComboBox ReplaceEdit => replaceEdit;
+        public TextBoxWithListPopup ReplaceEdit => replaceEdit;
 
         /// <summary>
         /// Gets <see cref="ToolBar"/> with find buttons.
@@ -1441,7 +1423,7 @@ namespace Alternet.UI
         /// </summary>
         public void SelectAllTextInFindEditor()
         {
-            FindEdit.SelectAllText();
+            FindEdit.MainControl.SelectAll();
         }
 
         /// <summary>
