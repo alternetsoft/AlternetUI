@@ -20,6 +20,10 @@ namespace PropertyGridSample
             findReplace.HasBorder = true;
             findReplace.ReplaceVisible = true;
             findReplace.Manager = findReplace.CreateLogger();
+
+            findReplace.FindEdit.SimpleItems.Add("Item 1");
+            findReplace.FindEdit.SimpleItems.Add("Item 2");
+            findReplace.FindEdit.SimpleItems.Add("Item 3");
         }
 
         public static void InitGenericToolBarSet(object control)
