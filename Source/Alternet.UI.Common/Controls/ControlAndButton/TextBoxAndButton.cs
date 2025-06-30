@@ -20,6 +20,7 @@ namespace Alternet.UI
             MainControl.ValidatorReporter = ErrorPicture;
             MainControl.TextChanged += MainControl_TextChanged;
             MainControl.AutoShowError = true;
+            MainControl.VerticalAlignment = VerticalAlignment.Center;
             AutoBackColor = true;
         }
 
