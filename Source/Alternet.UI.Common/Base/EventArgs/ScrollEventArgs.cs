@@ -137,6 +137,28 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets whether <see cref="Type"/> is <see cref="ScrollEventType.SmallIncrement"/>.
+        /// </summary>
+        public bool IsSmallIncrement
+        {
+            get
+            {
+                return Type == ScrollEventType.SmallIncrement;
+            }
+        }
+
+        /// <summary>
+        /// Gets whether <see cref="Type"/> is <see cref="ScrollEventType.SmallDecrement"/>.
+        /// </summary>
+        public bool IsSmallDecrement
+        {
+            get
+            {
+                return Type == ScrollEventType.SmallDecrement;
+            }
+        }
+
+        /// <summary>
         /// Gets or sets the type of scroll event that occurred.
         /// </summary>
         /// <returns>One of the <see cref="ScrollEventType" /> values.</returns>
