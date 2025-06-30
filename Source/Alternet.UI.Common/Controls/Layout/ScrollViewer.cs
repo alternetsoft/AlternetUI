@@ -50,6 +50,31 @@ namespace Alternet.UI
         public override ControlTypeId ControlKind => ControlTypeId.ScrollViewer;
 
         /// <summary>
+        /// Gets default value used to offset scrollbar position when scroll
+        /// wheel event is handled.
+        /// </summary>
+        /// <param name="measureCanvas">The canvas used for text measuring.</param>
+        /// <param name="font">The font used for text measuring.</param>
+        /// <param name="isVert">Whether to get value for
+        /// the vertical of horizontal scrollbar.</param>
+        /// <returns></returns>
+        public static int GetDefaultScrollWheelDelta(Graphics measureCanvas, Font font, bool isVert)
+        {
+            if (isVert)
+            {
+                var h = measureCanvas.GetTextExtent("Wg", font).Height;
+                h *= DefaultMouseWheelScrollFactor.Height;
+                return (int)h;
+            }
+            else
+            {
+                var w = measureCanvas.GetTextExtent("W", font).Width;
+                w *= DefaultMouseWheelScrollFactor.Width;
+                return (int)w;
+            }
+        }
+
+        /// <summary>
         /// Creates <see cref="ScrollViewer"/> with the specified child control.
         /// </summary>
         /// <param name="child">Child control.</param>
@@ -76,22 +101,6 @@ namespace Alternet.UI
         protected virtual bool IgnoreChildMouseWheel(AbstractControl? child)
         {
             return false;
-        }
-
-        public static int GetDefaultScrollWheelDelta(Graphics measureCanvas, Font font, bool isVert)
-        {
-            if (isVert)
-            {
-                var h = measureCanvas.GetTextExtent("Wg", font).Height;
-                h *= DefaultMouseWheelScrollFactor.Height;
-                return (int)h;
-            }
-            else
-            {
-                var w = measureCanvas.GetTextExtent("W", font).Width;
-                w *= DefaultMouseWheelScrollFactor.Width;
-                return (int)w;
-            }
         }
 
         /// <inheritdoc/>
