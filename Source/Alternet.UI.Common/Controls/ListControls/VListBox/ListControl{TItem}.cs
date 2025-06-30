@@ -18,7 +18,8 @@ namespace Alternet.UI
     /// </summary>
     /// <typeparam name="TItem">Type of the item. Can be <see cref="object"/>,
     /// <see cref="ListControlItem"/> or any other type.</typeparam>
-    public abstract partial class ListControl<TItem> : UserControl, IReadOnlyStrings, IListControl<TItem>
+    public abstract partial class ListControl<TItem>
+        : UserControl, IReadOnlyStrings, IListControl<TItem>
         where TItem : class, new()
     {
         private StringSearch? search;
@@ -48,6 +49,13 @@ namespace Alternet.UI
                 search = value;
             }
         }
+
+        /// <summary>
+        /// Gets or sets format provider used to get text representation of the item
+        /// for the display and other purposes. Default is <c>null</c>.
+        /// If not specified, <see cref="CultureInfo.CurrentCulture"/> is used.
+        /// </summary>
+        public virtual IFormatProvider? FormatProvider { get; set; }
 
         /// <summary>
         /// Gets last item in the control or <c>null</c> if there are no items.
@@ -481,14 +489,31 @@ namespace Alternet.UI
             if (item is string s)
                 return s;
 
-            if (forDisplay)
+            if (item is ListControlItem listItem)
             {
-                if (item is ListControlItem listItem && listItem.DisplayText is not null)
-                    return listItem.DisplayText;
+                object result;
+
+                if (forDisplay)
+                {
+                    result = listItem.DisplayText ?? listItem.Text ?? listItem.Value ?? string.Empty;
+                }
+                else
+                {
+                    result = listItem.Text ?? listItem.Value ?? string.Empty;
+                }
+
+                return Cnv(result);
+            }
+            else
+            {
+                return Cnv(item);
             }
 
-            var result = Convert.ToString(item, CultureInfo.CurrentCulture) ?? string.Empty;
-            return result;
+            string Cnv(object v)
+            {
+                var result = Convert.ToString(v, FormatProvider ?? CultureInfo.CurrentCulture);
+                return result ?? string.Empty;
+            }
         }
 
         /// <summary>
