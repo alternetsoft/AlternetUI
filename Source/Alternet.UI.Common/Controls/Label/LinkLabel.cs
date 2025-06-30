@@ -13,6 +13,27 @@ namespace Alternet.UI
     public partial class LinkLabel : Control
     {
         /// <summary>
+        /// Gets or sets default normal color which is assigned to the control
+        /// in the constructor.
+        /// </summary>
+        public static LightDarkColor DefaultNormalColor
+            = new(light: (0, 0, 255), dark: (86, 156, 198));
+
+        /// <summary>
+        /// Gets or sets default visited color which is assigned to the control
+        /// in the constructor. Default is <c>null</c>. If this value
+        /// is not assigned, <see cref="DefaultNormalColor"/> is used.
+        /// </summary>
+        public static LightDarkColor? DefaultVisitedColor;
+
+        /// <summary>
+        /// Gets or sets default hover color which is assigned to the control
+        /// in the constructor. Default is <c>null</c>. If this value
+        /// is not assigned, <see cref="DefaultNormalColor"/> is used.
+        /// </summary>
+        public static LightDarkColor? DefaultHoverColor;
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="LinkLabel"/> class.
         /// </summary>
         /// <param name="parent">Parent of the control.</param>
@@ -233,6 +254,15 @@ namespace Alternet.UI
                 e.Cancel = true;
                 AppUtils.OpenUrl(Url);
             }
+        }
+
+        /// <inheritdoc/>
+        protected override void OnHandleCreated(EventArgs e)
+        {
+            base.OnHandleCreated(e);
+            NormalColor = DefaultNormalColor;
+            VisitedColor = DefaultVisitedColor ?? DefaultNormalColor;
+            HoverColor = DefaultHoverColor ?? DefaultNormalColor;
         }
 
         /// <inheritdoc/>
