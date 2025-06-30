@@ -18,7 +18,7 @@ namespace Alternet.UI
         /// displays validation error information.
         /// </summary>
         [Browsable(false)]
-        public ErrorPictureBox ErrorPicture
+        public virtual ErrorPictureBox ErrorPicture
         {
             get
             {

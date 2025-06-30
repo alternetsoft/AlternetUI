@@ -544,7 +544,6 @@ namespace Alternet.UI
             PanelSettingsItem item;
 
             var valueSource = new PropertyValueSource(propContainer, propName);
-            var realType = AssemblyUtils.GetRealType(valueSource.ValueType);
             var flagsOrEnum = PropertyGrid.IsFlagsOrEnum(propContainer, valueSource.PropInfo);
 
             switch (flagsOrEnum)

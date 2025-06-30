@@ -228,7 +228,7 @@ namespace Alternet.UI
         /// </summary>
         public virtual bool SetFocusIfPossible()
         {
-            if (!IsDisposed && Visible && CanFocus)
+            if (!DisposingOrDisposed && Visible && CanFocus)
                 return SetFocus();
             else
                 return false;

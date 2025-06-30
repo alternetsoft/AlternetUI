@@ -40,7 +40,7 @@ namespace Alternet.UI
             if (enumType is null)
                 return null;
 
-            valueToString ??= (object? obj) =>
+            valueToString ??= (obj) =>
             {
                 return obj?.ToString();
             };

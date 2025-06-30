@@ -252,7 +252,7 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        protected override string? GetValueAsString(object? d)
+        public override string? GetValueAsString(object? d)
         {
             if (d is not DateTime dateTime)
                 return null;

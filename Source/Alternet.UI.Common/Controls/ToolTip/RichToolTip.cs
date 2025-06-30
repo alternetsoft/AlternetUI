@@ -64,10 +64,13 @@ namespace Alternet.UI
 
         private int? timeoutInMilliseconds;
         private int showDelayInMilliseconds;
-        private RichToolTipParams data = new();
         private Timer? showTimer;
         private Timer? hideTimer;
         private HVAlignment toolTipAlignment;
+
+#pragma warning disable
+        private RichToolTipParams data = new();
+#pragma warning restore
 
         /// <summary>
         /// Initializes a new instance of the <see cref="RichToolTip"/> class.
@@ -643,11 +646,11 @@ namespace Alternet.UI
         /// hiding the tooltip automatically entirely by passing 0 in this parameter
         /// </remarks>
         /// <param name="milliseconds">Timeout value.</param>
-        /// <param name="millisecondsShowdelay">Show delay value.</param>
-        public virtual IRichToolTip SetTimeout(uint? milliseconds, uint millisecondsShowdelay = 0)
+        /// <param name="millisecondsShowDelay">Show delay value.</param>
+        public virtual IRichToolTip SetTimeout(uint? milliseconds, uint millisecondsShowDelay = 0)
         {
             TimeoutInMilliseconds = (int?)milliseconds;
-            ShowDelayInMilliseconds = (int)millisecondsShowdelay;
+            ShowDelayInMilliseconds = (int)millisecondsShowDelay;
             return this;
         }
 
