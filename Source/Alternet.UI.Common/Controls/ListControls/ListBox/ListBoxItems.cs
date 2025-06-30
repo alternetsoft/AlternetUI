@@ -33,7 +33,16 @@ namespace Alternet.UI
         /// <summary>
         /// Initializes a new instance of the <see cref="ListBoxItems"/> class.
         /// </summary>
-        /// <param name="items"></param>
+        public ListBoxItems()
+            : this(new BaseCollection<ListControlItem>())
+        {
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ListBoxItems"/> class
+        /// to use live items from the specified collection.
+        /// </summary>
+        /// <param name="items">The source of the items.</param>
         public ListBoxItems(BaseCollection<ListControlItem> items)
         {
             this.items = items;
