@@ -58,7 +58,8 @@ namespace Alternet.UI
             RefreshOptions = ControlRefreshOptions.RefreshOnBorder
                 | ControlRefreshOptions.RefreshOnColor
                 | ControlRefreshOptions.RefreshOnBackground
-                | ControlRefreshOptions.RefreshOnImage;
+                | ControlRefreshOptions.RefreshOnImage
+                | ControlRefreshOptions.RefreshOnState;
         }
 
         /// <summary>

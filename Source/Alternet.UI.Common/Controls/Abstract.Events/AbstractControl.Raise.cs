@@ -348,21 +348,6 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Calls <see cref="OnChildMouseLeave"/> method of the parent control.
-        /// </summary>
-        [Browsable(false)]
-        public void RaiseChildMouseLeave(object? sender, EventArgs e)
-        {
-            if (DisposingOrDisposed)
-                return;
-            if (Parent is null)
-                return;
-            PlessMouse.LastMousePosition = (null, null);
-            Parent.OnChildMouseLeave(sender, e);
-            Parent.RaiseChildMouseLeave(sender, e);
-        }
-
-        /// <summary>
         /// Calls <see cref="OnChildLostFocus"/> method of the parent control.
         /// </summary>
         [Browsable(false)]
@@ -491,7 +476,8 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Raises the <see cref="HandleCreated" /> event and <see cref="OnHandleCreated"/> method.
+        /// Raises the <see cref="HandleCreated" /> event
+        /// and <see cref="OnHandleCreated"/> method.
         /// </summary>
         [Browsable(false)]
         public virtual void RaiseHandleCreated(EventArgs e)
@@ -505,7 +491,8 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Raises the <see cref="HandleDestroyed" /> event and <see cref="OnHandleDestroyed"/> method.
+        /// Raises the <see cref="HandleDestroyed" /> event
+        /// and <see cref="OnHandleDestroyed"/> method.
         /// </summary>
         [Browsable(false)]
         public void RaiseHandleDestroyed(EventArgs e)
@@ -581,6 +568,47 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Calls <see cref="OnChildMouseLeave"/> method of the parent control.
+        /// </summary>
+        [Browsable(false)]
+        public void RaiseChildMouseLeave(object? sender, EventArgs e)
+        {
+            if (DisposingOrDisposed)
+                return;
+            if (Parent is null)
+                return;
+            PlessMouse.LastMousePosition = (null, null);
+            Parent.OnChildMouseLeave(sender, e);
+            Parent.RaiseChildMouseLeave(sender, e);
+        }
+
+        /// <summary>
+        /// Raises the <see cref="MouseLeave" /> event
+        /// and <see cref="OnMouseLeave"/> method.
+        /// </summary>
+        [Browsable(false)]
+        public void RaiseMouseLeave(EventArgs e)
+        {
+            if (DisposingOrDisposed)
+                return;
+            PlessMouse.CancelLongTapTimer();
+            if (HoveredControl == this)
+                HoveredControl = null;
+            RaiseIsMouseOverChanged(e);
+            IsMouseLeftButtonDown = false;
+            OnMouseLeave(e);
+            RaiseChildMouseLeave(this, e);
+            MouseLeave?.Invoke(this, e);
+
+            RaiseNotifications((n) => n.AfterMouseLeave(this, e));
+
+            if (PlessMouse.ShowTestMouseInControl)
+            {
+                Refresh();
+            }
+        }
+
+        /// <summary>
         /// Raises the <see cref="MouseEnter" /> event and <see cref="OnMouseEnter"/> method.
         /// </summary>
         [Browsable(false)]
@@ -629,11 +657,6 @@ namespace Alternet.UI
         {
             if (DisposingOrDisposed)
                 return;
-/*
-            var reportedHovered = reportedVisualStates?.HasFlag(VisualControlStates.Hovered);
-            if (reportedHovered == IsMouseOver)
-                return;
-*/
             OnIsMouseOverChanged(e);
             IsMouseOverChanged?.Invoke(this, e);
             RaiseVisualStateChanged(e);
@@ -678,32 +701,6 @@ namespace Alternet.UI
                     if (child.ParentForeColor)
                         child.ForegroundColor = ForeColor;
                 }
-            }
-        }
-
-        /// <summary>
-        /// Raises the <see cref="MouseLeave" /> event
-        /// and <see cref="OnMouseLeave"/> method.
-        /// </summary>
-        [Browsable(false)]
-        public void RaiseMouseLeave(EventArgs e)
-        {
-            if (DisposingOrDisposed)
-                return;
-            PlessMouse.CancelLongTapTimer();
-            if (HoveredControl == this)
-                HoveredControl = null;
-            RaiseIsMouseOverChanged(e);
-            IsMouseLeftButtonDown = false;
-            OnMouseLeave(e);
-            RaiseChildMouseLeave(this, e);
-            MouseLeave?.Invoke(this, e);
-
-            RaiseNotifications((n) => n.AfterMouseLeave(this, e));
-
-            if (PlessMouse.ShowTestMouseInControl)
-            {
-                Refresh();
             }
         }
 

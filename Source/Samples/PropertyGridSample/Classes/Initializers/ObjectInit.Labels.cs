@@ -13,7 +13,8 @@ namespace PropertyGridSample
         {
             if (control is not GenericLabel label)
                 return;
-            label.ParentBackColor = true;
+            label.ParentBackColor = false;
+            label.ParentForeColor = false;
             label.Text = "GenericLabel";
             label.HorizontalAlignment = HorizontalAlignment.Left;
             label.ForegroundColor = Color.Sienna;
@@ -41,35 +42,40 @@ namespace PropertyGridSample
             label.StateObjects ??= new();
             label.StateObjects.Colors ??= new();
             label.StateObjects.Colors.SetObject(colors, VisualControlState.Hovered);
+            LogMouseEvents(label);
+        }
 
-            label.VisualStateChanged += Label_VisualStateChanged;
+        public static void LogMouseEvents(AbstractControl control)
+        {
+            var s = control.GetType();
 
-            static void Label_VisualStateChanged(object? sender, EventArgs e)
+            control.VisualStateChanged += (s, e) =>
             {
                 App.LogReplace(
-                    $"Label.VisualState = {(sender as AbstractControl)?.VisualState}",
-                    "Label.VisualState");
-            }
+                    $"{s}.VisualState = {(s as AbstractControl)?.VisualState}",
+                    $"{s}.VisualState");
+            };
 
-            /*
-                            var border = (c as Border)!;
-                            border.ParentBackColor = false;
-                            border.ParentForeColor = false;
-                            border.SuggestedSize = defaultListSize;
-                            SetBackgrounds(border);
-
-                            border.Layout = LayoutStyle.Vertical;
-                            Button button = new();
-                            button.Text = "Click me";
-                            button.Parent = border;
-                            button.Click += Button_Click;
-
-                            static void Button_Click(object? sender, EventArgs e)
-                            {
-                                App.Log("Button in Border clicked.");
-                            }
-
-            */
+            control.MouseEnter += (s, e) =>
+            {
+                App.Log($"{s}.MouseEnter");
+            };
+            control.MouseLeave += (s, e) =>
+            {
+                App.Log($"{s}.MouseLeave");
+            };
+            control.MouseDown += (s, e) =>
+            {
+                App.Log($"{s}.MouseDown");
+            };
+            control.MouseMove += (s, e) =>
+            {
+                App.LogReplace($"{s}.MouseMove: {e.Location}", $"{s}.MouseMove");
+            };
+            control.MouseUp += (s, e) =>
+            {
+                App.Log($"{s}.MouseUp");
+            };
         }
 
         public static void InitLabelAndButton(object control)
@@ -95,6 +101,7 @@ namespace PropertyGridSample
             label.Text = LoremIpsum.Replace("\n",StringUtils.OneSpace).Trim();
             label.HorizontalAlignment = HorizontalAlignment.Left;
             label.MaxTextWidth = 200;
+            LogMouseEvents(label);
         }
 
         public static void InitLinkLabel(object control)

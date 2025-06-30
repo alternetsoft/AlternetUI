@@ -249,6 +249,12 @@ namespace PropertyGridSample
                 var control = (c as UserControl)!;
                 control.HasBorder = true;
                 control.SuggestedSize = 200;
+                control.ParentBackColor = true;
+                control.Paint += (sender, e) =>
+                {
+                    e.Graphics.FillRectangle(control.RealBackgroundColor.AsBrush, e.ClipRectangle);
+                    (sender as UserControl)?.DrawDefaultBackground(e);
+                };
             });
 
             Actions.Add(typeof(SaveFileDialog), (c) =>

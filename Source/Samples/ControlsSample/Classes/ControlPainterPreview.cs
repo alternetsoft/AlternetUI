@@ -9,7 +9,7 @@ using Alternet.Drawing;
 
 namespace PropertyGridSample
 {
-    public class ControlPainterPreview : UserControl
+    public class ControlPainterPreview : Panel
     {
         private static readonly WxControlPainterHandler Painter = new();
 
@@ -57,6 +57,8 @@ namespace PropertyGridSample
 
         public override void DefaultPaint(PaintEventArgs e)
         {
+            base.DefaultPaint(e);
+
             var dc = e.Graphics;
             var bounds = e.ClipRectangle;
 

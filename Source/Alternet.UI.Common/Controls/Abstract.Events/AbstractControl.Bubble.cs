@@ -42,6 +42,7 @@ namespace Alternet.UI
             if (currentTarget is null || position is null)
                 return;
             currentTarget.RaiseMouseEnter(EventArgs.Empty);
+            UpdateCursor(originalTarget, currentTarget);
         }
 
         /// <summary>
@@ -64,6 +65,7 @@ namespace Alternet.UI
             if (currentTarget is null || position is null)
                 return;
             currentTarget.RaiseMouseLeave(EventArgs.Empty);
+            UpdateCursor(originalTarget, currentTarget);
         }
 
         /// <summary>
@@ -92,18 +94,7 @@ namespace Alternet.UI
                 timestamp,
                 position.Value);
             currentTarget.RaiseMouseMove(eventArgs);
-
-            /*
-            if (currentTarget is GenericControl generic)
-            {
-                App.Log($"{generic.GetType()}");
-                (originalTarget as Control)?.UpdateCursor(currentTarget.Cursor);
-            }
-            else
-            {
-                (originalTarget as Control)?.UpdateCursor();
-            }
-            */
+            UpdateCursor(originalTarget, currentTarget);
         }
 
         /// <summary>
@@ -557,6 +548,26 @@ namespace Alternet.UI
                 currentTarget.ErrorsChanged?.Invoke(currentTarget, e);
                 currentTarget = currentTarget.Parent;
             }
+        }
+
+        private static void UpdateCursor(
+            AbstractControl? originalTarget,
+            AbstractControl? currentTarget)
+        {
+            /*
+            if (currentTarget is GenericControl generic)
+            {
+                var s = $"UpdateCursor: {generic.GetType()}";
+                App.LogReplace(s, s);
+                (originalTarget as Control)?.UpdateCursor(generic.Cursor);
+            }
+            else
+            {
+                var s = $"UpdateCursor: {originalTarget?.GetType()}";
+                App.LogReplace(s, s);
+                (originalTarget as Control)?.UpdateCursor();
+            }
+            */
         }
     }
 }
