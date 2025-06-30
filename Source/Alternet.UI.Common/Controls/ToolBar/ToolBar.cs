@@ -1991,6 +1991,32 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Overrides button type used when items are created and calls the specified action.
+        /// After action is called an override is cleared.
+        /// </summary>
+        /// <param name="type">The type of the button to use as override.</param>
+        /// <param name="action">Action to call.</param>
+        /// <exception cref="ArgumentException">Thrown when <paramref name="type"/>
+        /// is not derived from <see cref="SpeedButton"/>.</exception>
+        public virtual void OverrideButtonType(Type type, Action action)
+        {
+            if (!typeof(SpeedButton).IsAssignableFrom(type))
+            {
+                throw new ArgumentException($"{type.Name} must inherit from {nameof(SpeedButton)}");
+            }
+
+            try
+            {
+                customButtonType = type;
+                action();
+            }
+            finally
+            {
+                customButtonType = null;
+            }
+        }
+
+        /// <summary>
         /// Adds custom <see cref="SpeedButton"/> to the control.
         /// </summary>
         /// <param name="type">The type of the button to add. This value must inherit from
@@ -1999,20 +2025,14 @@ namespace Alternet.UI
         /// <returns>The created <see cref="SpeedButton"/>.</returns>
         public virtual SpeedButton AddCustomBtn(Type type, Func<SpeedButton> factory)
         {
-            if (!typeof(SpeedButton).IsAssignableFrom(type))
+            SpeedButton? result = null;
+
+            OverrideButtonType(type, () =>
             {
-                throw new ArgumentException($"{type.Name} must inherit from {nameof(SpeedButton)}");
-            }
-            
-            try
-            {
-                customButtonType = type;
-                return factory();
-            }
-            finally
-            {
-                customButtonType = null;
-            }
+                result = factory();
+            });
+
+            return result!;
         }
 
         /// <summary>
