@@ -18,7 +18,7 @@ namespace Alternet.UI
     /// list controls. This class has <see cref="Text"/>,
     /// <see cref="Value"/> and other properties which allow to customize look of the item.
     /// </summary>
-    public partial class ListControlItem : BaseControlItem
+    public partial class ListControlItem : BaseControlItem, IComparable<ListControlItem>
     {
         /// <summary>
         /// Gets id of the null container.
@@ -1722,6 +1722,16 @@ namespace Alternet.UI
             result.TextRect = textRect;
             result.Bounds = rect;
             return result;
+        }
+
+        /// <inheritdoc/>
+        public int CompareTo(ListControlItem other)
+        {
+            var thisItemText = DisplayText ?? Text ?? Value?.ToString() ?? string.Empty;
+            var otherItemText = other.DisplayText ?? other.Text
+                ?? other.Value?.ToString() ?? string.Empty;
+
+            return string.Compare(thisItemText, otherItemText, StringComparison.CurrentCulture);
         }
 
         /// <summary>
