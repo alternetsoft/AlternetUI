@@ -13,6 +13,12 @@ namespace Alternet.UI
     public partial class ScrollViewer : ContainerControl
     {
         /// <summary>
+        /// Gets or sets default mouse wheel scroll factor. This value is multiplied
+        /// with line height and used as an offset when control is scrolled using mouse wheel.
+        /// </summary>
+        public static SizeD DefaultMouseWheelScrollFactor = (2, 2);
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="ScrollViewer"/> class.
         /// </summary>
         /// <param name="parent">Parent of the control.</param>
@@ -72,6 +78,22 @@ namespace Alternet.UI
             return false;
         }
 
+        public static int GetDefaultScrollWheelDelta(Graphics measureCanvas, Font font, bool isVert)
+        {
+            if (isVert)
+            {
+                var h = measureCanvas.GetTextExtent("Wg", font).Height;
+                h *= DefaultMouseWheelScrollFactor.Height;
+                return (int)h;
+            }
+            else
+            {
+                var w = measureCanvas.GetTextExtent("W", font).Width;
+                w *= DefaultMouseWheelScrollFactor.Width;
+                return (int)w;
+            }
+        }
+
         /// <inheritdoc/>
         protected override void OnBeforeChildMouseWheel(object? sender, MouseEventArgs e)
         {
@@ -80,16 +102,16 @@ namespace Alternet.UI
                 return;
 
             var sign = Math.Sign(e.Delta);
+            var isVert = !Keyboard.IsShiftPressed;
+            var delta = GetDefaultScrollWheelDelta(MeasureCanvas, RealFont, isVert);
 
-            if (Keyboard.IsShiftPressed)
+            if (isVert)
             {
-                var w = (int)MeasureCanvas.GetTextExtent("W", RealFont).Width;
-                IncHorizontalLayoutOffset(sign * w);
+                IncVerticalLayoutOffset(sign * delta);
             }
             else
             {
-                var h = (int)MeasureCanvas.GetTextExtent("Wg", RealFont).Height;
-                IncVerticalLayoutOffset(sign * h);
+                IncHorizontalLayoutOffset(sign * delta);
             }
 
             e.Handled = true;
