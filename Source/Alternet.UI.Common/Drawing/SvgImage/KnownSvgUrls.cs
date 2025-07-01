@@ -231,6 +231,11 @@ namespace Alternet.UI
         public static string UrlImageOk { get; set; } = GetImageUrl("alternet-check");
 
         /// <summary>
+        /// Gets or sets url used to load paint brush svg image.
+        /// </summary>
+        public static string UrlImagePaintBrush { get; set; } = GetImageUrl("alternet-paintbrush");
+
+        /// <summary>
         /// Gets or sets url used to load svg image used in "Cancel" toolbar buttons.
         /// </summary>
         public static string UrlImageCancel { get; set; } = GetImageUrl("alternet-xmark");

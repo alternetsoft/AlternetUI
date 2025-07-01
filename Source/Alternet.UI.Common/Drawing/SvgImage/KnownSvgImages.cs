@@ -13,6 +13,7 @@ namespace Alternet.UI
     /// </summary>
     public static class KnownSvgImages
     {
+        private static SvgImage? imgPaintBrush;
         private static SvgImage? imgDebugRun;
         private static SvgImage? imgTrashCan;
         private static SvgImage? imgCopy;
@@ -625,6 +626,15 @@ namespace Alternet.UI
         {
             get => imgMoreActionsHorz ??= new MonoSvgImage(KnownSvgUrls.UrlImageMoreActionsHorz);
             set => imgMoreActionsHorz = value;
+        }
+
+        /// <summary>
+        /// Gets or sets image that can be used in "Remove" toolbar buttons.
+        /// </summary>
+        public static SvgImage ImgPaintBrush
+        {
+            get => imgPaintBrush ??= new MonoSvgImage(KnownSvgUrls.UrlImagePaintBrush);
+            set => imgPaintBrush = value;
         }
 
         /// <summary>
