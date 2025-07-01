@@ -536,5 +536,13 @@ namespace Alternet.UI
         [Browsable(false)]
         [EditorBrowsable(EditorBrowsableState.Advanced)]
         public event InvalidateEventHandler? Invalidated;
+
+        /// <summary>
+        /// Resets the <see cref="AfterHide"/> event handler.
+        /// </summary>
+        public void ResetAfterHideEvent()
+        {
+            AfterHide = null;
+        }
     }
 }
