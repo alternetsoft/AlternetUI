@@ -242,7 +242,10 @@ namespace Alternet.UI
         protected override void OnClick(EventArgs e)
         {
             base.OnClick(e);
-            ShowPopup();
+            if(IsPopupWindowCreated && PopupWindow.IsVisible)
+                PopupWindow.HidePopup(ModalResult.Canceled);
+            else
+                ShowPopup();
         }
 
         /// <summary>
