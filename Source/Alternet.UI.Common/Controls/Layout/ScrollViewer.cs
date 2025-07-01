@@ -13,6 +13,13 @@ namespace Alternet.UI
     public partial class ScrollViewer : ContainerControl
     {
         /// <summary>
+        /// Gets or sets default multiplier used in calculation
+        /// of total size of the scroll area in the <see cref="ScrollViewer"/>.
+        /// This value is assigned to the scrollbar's total size.
+        /// </summary>
+        public static SizeD DefaultScrollBarTotalSizeMultiplier = 2;
+
+        /// <summary>
         /// Gets or sets default mouse wheel scroll factor. This value is multiplied
         /// with line height and used as an offset when control is scrolled using mouse wheel.
         /// </summary>

@@ -43,6 +43,12 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
+        public override void DefaultPaint(PaintEventArgs e)
+        {
+            base.DefaultPaint(e);
+        }
+
+        /// <inheritdoc/>
         protected override IControlHandler CreateHandler()
         {
             return ControlFactory.Handler.CreatePanelHandler(this);

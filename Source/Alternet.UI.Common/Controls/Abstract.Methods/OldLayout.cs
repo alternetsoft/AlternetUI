@@ -304,7 +304,7 @@ namespace Alternet.UI
             IReadOnlyList<AbstractControl> controls,
             bool updateScrollbars)
         {
-            const Coord sizeMultiplicator = 2;
+            const Coord sizeMultiplicator = 1;
 
             if (updateScrollbars && container.IsScrollable)
             {
@@ -315,8 +315,8 @@ namespace Alternet.UI
                 // 1. We need to have the ability to scroll further than calculated
                 // max total size because there could be on-screen keyboard shown.
                 // 2. Currently totalSize is calculated incorrectly.
-                totalSize.Width *= sizeMultiplicator;
-                totalSize.Height *= sizeMultiplicator;
+                totalSize.Width *= ScrollViewer.DefaultScrollBarTotalSizeMultiplier.Width;
+                totalSize.Height *= ScrollViewer.DefaultScrollBarTotalSizeMultiplier.Height;
 
                 container.SetScrollBarInfo(getBounds().Size, totalSize);
             }
