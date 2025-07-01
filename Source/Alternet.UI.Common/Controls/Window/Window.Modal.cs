@@ -82,11 +82,13 @@ namespace Alternet.UI
 
             try
             {
-                App.DoEvents();
                 ApplyStartLocationOnce(owner);
-                ActiveControl?.SetFocusIfPossible();
-                App.DoEvents();
                 ShowAndFocus();
+
+                App.AddIdleTask(() =>
+                {
+                    ActiveControl?.SetFocusIfPossible();
+                });
             }
             catch
             {
