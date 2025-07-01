@@ -10,7 +10,7 @@ namespace Alternet.UI
     /// <summary>
     /// Represents an item in a tree control.
     /// </summary>
-    public partial class TreeControlItem : ListControlItemWithNotify
+    public partial class TreeControlItem : ListControlItemWithNotify, IComparable<TreeControlItem>
     {
         private bool isVisible = true;
         private BaseCollection<TreeControlItem>? items;
@@ -396,6 +396,12 @@ namespace Alternet.UI
             Parent = null;
         }
 
+        /// <inheritdoc/>
+        public virtual int CompareTo(TreeControlItem other)
+        {
+            return base.CompareTo(other);
+        }
+
         /// <summary>
         /// Expands the tree item.
         /// </summary>
@@ -551,7 +557,8 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Inserts the specified <see cref="TreeControlItem"/> at the given index within the item list.
+        /// Inserts the specified <see cref="TreeControlItem"/> at the given
+        /// index within the item list.
         /// </summary>
         /// <param name="index">The position at which to insert the item.</param>
         /// <param name="item">The item to insert.</param>
@@ -571,6 +578,58 @@ namespace Alternet.UI
                     RaisePropertyChanged(nameof(HasItems));
 
                 Owner?.RaiseItemAdded(item);
+            }
+        }
+
+        /// <summary>
+        /// Sets child items of this tree control item to the specified collection.
+        /// </summary>
+        /// <param name="items">The items to set.</param>
+        public virtual void SetItems(IEnumerable<TreeControlItem> items)
+        {
+            SmartInvoke(Internal);
+            void Internal()
+            {
+                Owner?.BeginUpdate();
+                try
+                {
+                    Clear();
+                    AddRange(items);
+                }
+                finally
+                {
+                    Owner?.EndUpdate();
+                }
+            }
+        }
+
+        /// <summary>
+        /// Adds a range of <see cref="TreeControlItem"/> child items to this tree control item.
+        /// </summary>
+        /// <param name="items">The items to add.</param>
+        public virtual void AddRange(IEnumerable<TreeControlItem> items)
+        {
+            SmartInvoke(Internal);
+            void Internal()
+            {
+                if (items is null)
+                    return;
+                Owner?.BeginUpdate();
+                try
+                {
+                    foreach (var item in items)
+                    {
+                        item.InternalSetParent(this);
+                        Add(item);
+                    }
+
+                    Owner?.TreeChanged();
+                    RaisePropertyChanged(nameof(HasItems));
+                }
+                finally
+                {
+                    Owner?.EndUpdate();
+                }
             }
         }
 

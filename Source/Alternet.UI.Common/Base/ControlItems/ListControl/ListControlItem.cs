@@ -1725,7 +1725,7 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        public int CompareTo(ListControlItem other)
+        public virtual int CompareTo(ListControlItem other)
         {
             var thisItemText = DisplayText ?? Text ?? Value?.ToString() ?? string.Empty;
             var otherItemText = other.DisplayText ?? other.Text
