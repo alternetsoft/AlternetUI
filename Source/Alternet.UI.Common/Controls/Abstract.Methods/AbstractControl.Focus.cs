@@ -228,10 +228,28 @@ namespace Alternet.UI
         /// </summary>
         public virtual bool SetFocusIfPossible()
         {
-            if (!DisposingOrDisposed && Visible && CanFocus)
-                return SetFocus();
-            else
+            if (DisposingOrDisposed || !Visible)
                 return false;
+
+            if (CanFocus)
+                return SetFocus();
+
+            if(!HasChildren)
+                return false;
+
+            var items = GetFocusableChildren(true, true);
+
+            if(items.Length == 0)
+                return false;
+            foreach (var item in items)
+            {
+                if(item.SetFocusIfPossible())
+                {
+                    return true;
+                }
+            }
+
+            return false;
         }
 
         /// <summary>
