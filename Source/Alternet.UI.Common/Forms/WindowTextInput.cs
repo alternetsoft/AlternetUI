@@ -56,13 +56,15 @@ namespace Alternet.UI
             Title = CommonStrings.Default.WindowTitleInput;
             Layout = LayoutStyle.Vertical;
 
-            label.Parent = this;
-
-            edit.HorizontalAlignment = HorizontalAlignment.Stretch;
-            edit.Parent = this;
-
-            buttons.Margin = (0, DefaultMargin, 0, 0);
-            buttons.Parent = this;
+            DoInsideLayout(() =>
+            {
+                label.Parent = this;
+                edit.HorizontalAlignment = HorizontalAlignment.Stretch;
+                edit.InnerOuterBorder = InnerOuterSelector.Outer;
+                edit.Parent = this;
+                buttons.Margin = (0, DefaultMargin, 0, 0);
+                buttons.Parent = this;
+            });
 
             SetSizeToContent();
             ActiveControl = edit;
