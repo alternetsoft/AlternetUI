@@ -705,6 +705,15 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Sets items to the new value using the fastest method.
+        /// </summary>
+        /// <param name="value">Collection with the new items.</param>
+        public virtual void SetItemsFastest(BaseCollection<ListControlItem> value)
+        {
+            SetItemsFast(value, SetItemsKind.ChangeField);
+        }
+
+        /// <summary>
         /// Sets items to the new value using the specified method.
         /// </summary>
         /// <param name="value">Collection with the new items.</param>
