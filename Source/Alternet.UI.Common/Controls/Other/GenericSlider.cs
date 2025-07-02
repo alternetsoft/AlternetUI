@@ -182,6 +182,18 @@ namespace Alternet.UI
         public SliderThumb ThumbControl => thumb;
 
         /// <summary>
+        /// Gets the left/top spacer control of the slider.
+        /// </summary>
+        [Browsable(false)]
+        public AbstractControl LeftTopSpacer => leftTopSpacer;
+
+        /// <summary>
+        /// Gets the right/bottom spacer control of the slider.
+        /// </summary>
+        [Browsable(false)]
+        public AbstractControl RightBottomSpacer => rightBottomSpacer;
+
+        /// <summary>
         /// Gets or sets a value indicating the horizontal or vertical orientation of the slider.
         /// </summary>
         /// <value>One of the <see cref="SliderOrientation"/> values.</value>

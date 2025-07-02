@@ -168,9 +168,18 @@ namespace PropertyGridSample
 
         public static void InitGenericSlider(GenericSlider control)
         {
+            control.LeftTopSpacer.SizeChanged+=(s, e) =>
+            {
+                if(control.IsHorizontal)
+                {
+                    App.LogReplace(
+                        $"GenericSlider: V: {control.Value}, LTS: {control.LeftTopSpacer.Width}, W:{control.ClientSize.Width - control.ThumbControl.Width - control.ThumbControl.Margin.Horizontal - control.Padding.Horizontal}",
+                        "GenericSlider:");
+                }
+            };
+
             control.ValueChanged += (s,e) =>
             {
-                App.LogNameValueReplace("GenericSlider.Value", control.Value);
             };
         }
 
