@@ -14,6 +14,12 @@ namespace Alternet.UI
     public static class DateUtils
     {
         /// <summary>
+        /// Gets <see cref="DateTime"/> format used in Java Script
+        /// or in other situations.
+        /// </summary>
+        public static string DateFormatJs { get; set; } = "yyyy-MM-ddTHH:mm:ss.fffK";
+
+        /// <summary>
         /// Gets the <see cref="DateTimeFormatInfo"/> from the specified format provider,
         /// or uses the current culture if the provider is <c>null</c>.
         /// </summary>
@@ -61,12 +67,6 @@ namespace Alternet.UI
             var info = GetFormatInfo(formatProvider);
             return (info.AMDesignator, info.PMDesignator);
         }
-
-        /// <summary>
-        /// Gets <see cref="DateTime"/> format used in Java Script
-        /// or in other situations.
-        /// </summary>
-        public static string DateFormatJs { get; set; } = "yyyy-MM-ddTHH:mm:ss.fffK";
 
         /// <summary>
         /// Subtracts <see cref="DateTime.Now"/>

@@ -51,15 +51,19 @@ namespace Alternet.UI
         private readonly AbstractControl leftTopSpacer = new Panel()
         {
             Dock = DockStyle.Left,
+            /*
             ParentBackColor = false,
             BackColor = Color.Red,
+            */
         };
 
         private readonly AbstractControl rightBottomSpacer = new Panel()
         {
             Dock = DockStyle.Fill,
+            /*
             BackColor = Color.Green,
             ParentBackColor = false,
+            */
         };
 
         private readonly SliderThumb thumb = new SliderThumb()

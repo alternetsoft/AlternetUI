@@ -1,3 +1,37 @@
+# 0.9.740 (2025 July 2)
+
+- **Create SpeedButtonWithPopup, SpeedDateButton, DatePicker, TimePicker, TextBoxWithListPopup.**
+- SpeedButton: LabelImage, ShowComboBoxImageAtRight().
+- Fixed cursor for generic controls.
+- Button: ShowDropDownMenuWhenClicked, DropDownMenu, ShowDropDownMenu().
+- ColorPicker: Show combo button at right.
+- SpeedButtonWithListPopup: IndexOfValue, PopupKind.
+- SpeedButtonWithListPopup: Unbind Items from popup window items, so popup window is not created when you access items.
+- SpeedEnumButton: show context menu as popup by default.
+- FindReplaceControl: Use ListPicker as scope editor. Use TextBoxWithListPopup instead of ComboBox.
+- ControlAndButton: BtnPlusImage, BtnPlusImageSvg, BtnMinusImage, BtnMinusImageSvg, SetMinusImage, SetPlusImage, SetPlusMinusImages.
+- SpeedDateButton: Set default title for the popup.
+- Improved focus related code.
+- ToolBar: AddSpacerCore, AddCustomBtn.
+- Use default control back and fore colors in pickers.
+- SpeedButtonWithListPopup: ValueToDisplayString, fix GetValueAsString.
+- LinkLabel: DefaultNormalColor, DefaultVisitedColor, DefaultHoverColor and fix color on MSW dark theme.
+- SpeedColorButton.AddColor, ListControlItem.AddRangeOfValues, UserControl.ShowDropDownMenuWhenClicked, ContextMenu.ShowAsDropDown.
+- ListControlItem: Add IComparable support.
+- ListControl: Add FormatProvider and redo get item text.
+- Redo mouse enter and mouse leave event handling to support generic controls.
+- ScrollViewer: up/down scroll delta is used when ScrollBar is clicked.
+- ScrollViewer: Do not multiply size in GetSuggesstedSize.
+- ControlAndButton: BtnEllipsisImage, BtnEllipsisImageSvg, GetBtnComboType(), GetBtnPlusMinusType(), GetBtnEllipsisType().
+- TextBoxAndButton: Fix vertical align of the inner TextBox.
+- ToolBar.OverrideButtonType.
+- SpeedButtonWithPopup: Close popup if it is opened when control clicked.
+- AbstractControl: Fixed SetFocusIfPossible. Now it will focus child control if needed.
+- WindowTextInput: Fix editor layout.
+- Window: Fix show modal, add set focus of active control.
+- TreeControlItem: Add support for IComparable.
+- Splitter: new members which allow to customize behavior and look.
+
 # 0.9.739 (2025 June 27)
 
 - **WebBrowser: Fix background painting for Edge backend.**

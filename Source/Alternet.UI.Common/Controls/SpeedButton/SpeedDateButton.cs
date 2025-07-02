@@ -222,6 +222,28 @@ namespace Alternet.UI
             base.ShowPopup();
         }
 
+        /// <inheritdoc/>
+        public override string? GetValueAsString(object? d)
+        {
+            if (d is not DateTime dateTime)
+                return null;
+
+            if (Format is null)
+            {
+                if (FormatProvider is null)
+                    return dateTime.ToShortDateString();
+                else
+                    return dateTime.ToString(FormatProvider);
+            }
+            else
+            {
+                if (FormatProvider is null)
+                    return dateTime.ToString(Format);
+                else
+                    return dateTime.ToString(Format, FormatProvider);
+            }
+        }
+
         /// <summary>
         /// Updates possible date range using current settings.
         /// </summary>
@@ -249,28 +271,6 @@ namespace Alternet.UI
             Calendar.MaxDate = effectiveMax;
             Calendar.UseMinDate = UseMinDate;
             Calendar.UseMaxDate = UseMaxDate;
-        }
-
-        /// <inheritdoc/>
-        public override string? GetValueAsString(object? d)
-        {
-            if (d is not DateTime dateTime)
-                return null;
-
-            if (Format is null)
-            {
-                if (FormatProvider is null)
-                    return dateTime.ToShortDateString();
-                else
-                    return dateTime.ToString(FormatProvider);
-            }
-            else
-            {
-                if (FormatProvider is null)
-                    return dateTime.ToString(Format);
-                else
-                    return dateTime.ToString(Format, FormatProvider);
-            }
         }
 
         /// <inheritdoc/>

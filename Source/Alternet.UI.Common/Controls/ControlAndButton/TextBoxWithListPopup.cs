@@ -70,7 +70,6 @@ namespace Alternet.UI
             }
         }
 
-
         /// <summary>
         /// Gets combo button if it is available.
         /// </summary>
