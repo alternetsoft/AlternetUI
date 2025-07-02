@@ -15,7 +15,7 @@ namespace Alternet.UI
     /// Implements main control of the Find and Replace dialogs.
     /// </summary>
     [ControlCategory("MenusAndToolbars")]
-    public partial class FindReplaceControl : ToolBarSet
+    public partial class FindReplaceControl : ToolBarSet, IFindReplaceControlHandler
     {
         /// <summary>
         /// Gets or sets the default minimum width of the edit controls in the
