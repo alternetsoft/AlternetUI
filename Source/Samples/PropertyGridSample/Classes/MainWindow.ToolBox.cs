@@ -111,6 +111,7 @@ namespace PropertyGridSample
                 if (DebugUtils.IsDebugDefined)
                 {
                     LimitedTypes.Add(typeof(GenericTextControl));
+                    LimitedTypes.Add(typeof(GenericSlider));
                 }
 
                 LimitedTypes.AddRange(LimitedTypesStatic);
