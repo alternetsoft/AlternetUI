@@ -94,6 +94,12 @@ namespace Alternet.UI
         /// </summary>
         public GenericSlider()
         {
+            Padding = 1;
+            thumb.Margin = 1;
+            thumb.MinSize = 0;
+            thumb.MinExtra = 2;
+            thumb.SizeDelta = 0;
+
             MinimumSize = 20;
 
             if (DefaultParentBackColor is not null)
@@ -109,7 +115,6 @@ namespace Alternet.UI
             rightBottomSpacer.Parent = this;
             thumb.Parent = this;
             leftTopSpacer.Parent = this;
-            Padding = 1;
 
             thumb.SplitterMoved += (s, e) =>
             {
@@ -199,7 +204,40 @@ namespace Alternet.UI
                 if (orientation == value)
                     return;
                 orientation = value;
+                ThumbControl.Dock = value == SliderOrientation.Horizontal
+                    ? DockStyle.Left : DockStyle.Top;
+                Invalidate();
                 OrientationChanged?.Invoke(this, EventArgs.Empty);
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether the slider is horizontal.
+        /// </summary>
+        [Browsable(false)]
+        public bool IsHorizontal
+        {
+            get => Orientation == SliderOrientation.Horizontal;
+            set
+            {
+                if (DisposingOrDisposed)
+                    return;
+                Orientation = value ? SliderOrientation.Horizontal : SliderOrientation.Vertical;
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether the slider is vertical.
+        /// </summary>
+        [Browsable(false)]
+        public bool IsVertical
+        {
+            get => Orientation == SliderOrientation.Vertical;
+            set
+            {
+                if (DisposingOrDisposed)
+                    return;
+                Orientation = value ? SliderOrientation.Vertical : SliderOrientation.Horizontal;
             }
         }
 
@@ -221,17 +259,18 @@ namespace Alternet.UI
                     return;
                 tickStyle = value;
                 TickStyleChanged?.Invoke(this, EventArgs.Empty);
+                PerformLayoutAndInvalidate();
             }
         }
 
         /// <summary>
-        /// Gets or sets a numeric value that represents the current position of the scroll box
+        /// Gets or sets a numeric value that represents the current position of the thumb
         /// on the slider.
         /// </summary>
         /// <value>A numeric value that is within the <see cref="Minimum"/> and
         /// <see cref="Maximum"/> range. The default value is 0.</value>
         /// <remarks>The <see cref="Value"/> property contains the number that represents
-        /// the current position of the scroll box on the slider.</remarks>
+        /// the current position of the thumb on the slider.</remarks>
         public virtual int Value
         {
             get
@@ -320,7 +359,7 @@ namespace Alternet.UI
 
         /// <summary>
         /// Gets or sets the value added to or subtracted from the <see cref="Value"/> property
-        /// when the scroll box is moved a small distance.
+        /// when the thumb is moved a small distance.
         /// </summary>
         /// <value>A numeric value. The default value is 1.</value>
         public virtual int SmallChange
@@ -345,7 +384,7 @@ namespace Alternet.UI
 
         /// <summary>
         /// Gets or sets a value to be added to or subtracted from the <see cref="Value"/> property
-        /// when the scroll box is moved a large distance.
+        /// when the thumb is moved a large distance.
         /// </summary>
         /// <value>A numeric value. The default is 5.</value>
         public virtual int LargeChange
@@ -386,6 +425,12 @@ namespace Alternet.UI
                 if (tickFrequency == value)
                     return;
                 tickFrequency = value;
+
+                if(TickStyle != SliderTickStyle.None)
+                {
+                    Invalidate();
+                }
+
                 TickFrequencyChanged?.Invoke(this, EventArgs.Empty);
             }
         }
@@ -477,14 +522,9 @@ namespace Alternet.UI
         /// <summary>
         /// Clears the ticks.
         /// </summary>
-        /// <remarks>
-        /// Availability: only available for the Windows, Linux ports.
-        /// </remarks>
         public virtual void ClearTicks()
         {
-            if (DisposingOrDisposed)
-                return;
-            /* Do something */
+            TickStyle = SliderTickStyle.None;
         }
 
         /// <summary>
@@ -595,11 +635,7 @@ namespace Alternet.UI
             /// </summary>
             public SliderThumb()
             {
-                Margin = 0;
-                MinSize = 1;
-                MinExtra = 1;
                 DefaultCursor = Cursors.Default;
-                SizeDelta = 1;
                 HasBorder = true;
             }
 

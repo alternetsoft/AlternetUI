@@ -275,7 +275,7 @@ namespace Alternet.UI
                 splitSize = value;
                 DrawSplitBar(DrawSplitBarKind.End);
 
-                if (spd.Target == null)
+                if (spd.Target == null || Parent is null)
                 {
                     splitSize = -1;
                     return;
@@ -292,7 +292,11 @@ namespace Alternet.UI
                         bounds.Height = value;
                         break;
                     case DockStyle.Left:
-                        bounds.Width = value;
+
+                        var mw = Parent.ClientRectangle.Width - Parent.Padding.Right
+                            - Margin.Right - Width - MinExtra;
+
+                        bounds.Width = Math.Min(value, mw);
                         break;
                     case DockStyle.Right:
                         bounds.X += bounds.Width - splitSize;
@@ -308,7 +312,7 @@ namespace Alternet.UI
 
                 Parent?.DoInsideUpdate(() =>
                 {
-                    spd.Target.Bounds = boundsI;
+                    spd.Target.Bounds = bounds;
                 });
                 Parent?.Refresh();
                 var args = new SplitterEventArgs(
@@ -630,7 +634,7 @@ namespace Alternet.UI
                     initTargetSize = target.Bounds.Width;
                 else
                     initTargetSize = target.Bounds.Height;
-                var children = parent.Children;
+                var children = parent.GetVisibleChildren();
                 int count = children.Count;
                 Coord dockWidth = 0, dockHeight = 0;
                 for (int i = 0; i < count; i++)
@@ -772,7 +776,7 @@ namespace Alternet.UI
         private bool SplitMove(Coord x, Coord y)
         {
             var size = GetSplitSize(x - Left + anchor.X, y - Top + anchor.Y);
-            if (Math.Abs(splitSize - size) > SizeDelta)
+            if (Math.Abs(splitSize - size) >= SizeDelta)
             {
                 splitSize = size;
                 DrawSplitBar(DrawSplitBarKind.Move);

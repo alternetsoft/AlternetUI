@@ -166,6 +166,14 @@ namespace PropertyGridSample
             control.Value = FontStyle.Regular;
         }
 
+        public static void InitGenericSlider(GenericSlider control)
+        {
+            control.ValueChanged += (s,e) =>
+            {
+                App.LogNameValueReplace("GenericSlider.Value", control.Value);
+            };
+        }
+
         public static void InitTextBoxWithListPopup(TextBoxWithListPopup control)
         {
             var btn = control.ButtonCombo;
@@ -221,6 +229,7 @@ namespace PropertyGridSample
             AddAction<ColorPicker>(InitColorPicker);
             AddAction<FontNamePicker>(InitFontNamePicker);
             AddAction<TextBoxWithListPopup>(InitTextBoxWithListPopup);
+            AddAction<GenericSlider>(InitGenericSlider);
 
             Actions.Add(typeof(PageSetupDialog), InitPageSetupDialog);
             Actions.Add(typeof(PrintPreviewDialog), InitPrintPreviewDialog);
