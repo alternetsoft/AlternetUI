@@ -46,10 +46,11 @@ namespace Alternet.UI
         private PointD anchor = PointD.Empty;
         private AbstractControl? splitTarget;
         private Coord splitSize = -1;
-        private Coord splitterThickness = DefaultWidth;
+        private Coord splitterThickness;
         private Coord initTargetSize;
         private Coord lastDrawSplit = -1;
         private Coord maxSize;
+        private Cursor? defaultCursor;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Splitter"/> class.
@@ -66,9 +67,10 @@ namespace Alternet.UI
         /// </summary>
         public Splitter()
         {
+            splitterThickness = GetDefaultWidth();
             TabStop = false;
             CanSelect = false;
-            Size = (DefaultWidth, DefaultWidth);
+            Size = (GetDefaultWidth(), GetDefaultWidth());
             Dock = DockStyle.Left;
             ParentBackColor = DefaultParentBackColor;
 
@@ -293,13 +295,13 @@ namespace Alternet.UI
                 if (Horizontal)
                 {
                     if (value.Width < 1)
-                        value.Width = DefaultWidth;
+                        value.Width = GetDefaultWidth();
                     splitterThickness = value.Width;
                 }
                 else
                 {
                     if (value.Height < 1)
-                        value.Height = DefaultWidth;
+                        value.Height = GetDefaultWidth();
                     splitterThickness = value.Height;
                 }
 
@@ -310,24 +312,35 @@ namespace Alternet.UI
         /// <summary>
         /// Gets default splitter cursor.
         /// </summary>
-        protected virtual Cursor DefaultCursor
+        [Browsable(false)]
+        public virtual Cursor DefaultCursor
         {
             get
             {
+                if(defaultCursor != null)
+                    return defaultCursor;
+
                 if (Dock.IsTopOrBottom())
                     return Cursors.HSplit;
                 else
                     return Cursors.VSplit;
             }
+
+            set
+            {
+                defaultCursor = value;
+            }
         }
 
-        /// <inheritdoc/>
-        public override void DefaultPaint(PaintEventArgs e)
+        /// <summary>
+        /// Resolves the splitter colors based on the current theme and background.
+        /// </summary>
+        /// <param name="backColor">The background color to be set.</param>
+        /// <param name="foreColor">The foreground color to be set.</param>
+        public virtual void ResolveSplitterColors(out Color? backColor, out Color? foreColor)
         {
-            var dc = e.Graphics;
-            var rect = e.ClipRectangle;
-
             var colors = NormalColors;
+
             Color defaultColor;
             if (IsDarkBackground)
             {
@@ -346,24 +359,50 @@ namespace Alternet.UI
                     defaultColor = KnownOSColorConsts.WindowsLight.ExplorerSplitter;
             }
 
-            var backColor = colors?.BackgroundColor ?? defaultColor;
-            if (backColor is not null)
-                dc.FillRectangle(backColor.AsBrush, rect);
+            backColor = colors?.BackgroundColor ?? defaultColor;
+            foreColor = colors?.ForegroundColor;
+        }
 
-            var foreColor = colors?.ForegroundColor;
-            if (foreColor is null)
+        /// <summary>
+        /// Draws the foreground of the splitter.
+        /// </summary>
+        /// <param name="e">The paint event arguments.</param>
+        /// <param name="color">The color to be used for drawing.</param>
+        public virtual void DrawSplitterForeground(PaintEventArgs e, Color? color)
+        {
+            if (color is null)
                 return;
 
-            if (!Horizontal)
+            if (Horizontal)
             {
-                var horzLine = DrawingUtils.GetCenterLineHorz(rect);
-                dc.FillRectangle(foreColor.AsBrush, horzLine);
+                var vertLine = DrawingUtils.GetCenterLineVert(e.ClipRectangle);
+                e.Graphics.FillRectangle(color.AsBrush, vertLine);
             }
             else
             {
-                var vertLine = DrawingUtils.GetCenterLineVert(rect);
-                dc.FillRectangle(foreColor.AsBrush, vertLine);
+                var horzLine = DrawingUtils.GetCenterLineHorz(e.ClipRectangle);
+                e.Graphics.FillRectangle(color.AsBrush, horzLine);
             }
+        }
+
+        /// <summary>
+        /// Draws the background of the splitter.
+        /// </summary>
+        /// <param name="e">The paint event arguments.</param>
+        /// <param name="color">The color to be used for drawing.</param>
+        public virtual void DrawSplitterBackground(PaintEventArgs e, Color? color)
+        {
+            if (color is null)
+                return;
+            e.Graphics.FillRectangle(color.AsBrush, e.ClipRectangle);
+        }
+
+        /// <inheritdoc/>
+        public override void DefaultPaint(PaintEventArgs e)
+        {
+            ResolveSplitterColors(out var backColor, out var foreColor);
+            DrawSplitterBackground(e, backColor);
+            DrawSplitterForeground(e, foreColor);
         }
 
         /// <summary>
@@ -437,6 +476,15 @@ namespace Alternet.UI
                 if(SplitMove(e.SplitX, e.SplitY))
                     ApplySplitPosition();
             }
+        }
+
+        /// <summary>
+        /// Gets the default width of the splitter.
+        /// </summary>
+        /// <returns>The default width of the splitter.</returns>
+        protected virtual Coord GetDefaultWidth()
+        {
+            return DefaultWidth;
         }
 
         /// <inheritdoc/>

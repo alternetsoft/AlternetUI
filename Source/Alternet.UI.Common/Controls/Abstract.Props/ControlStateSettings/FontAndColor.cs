@@ -18,7 +18,8 @@ namespace Alternet.UI
         /// Gets <see cref="IReadOnlyFontAndColor"/> instance with
         /// <see cref="Color.Empty"/> colors and null font.
         /// </summary>
-        public static readonly IReadOnlyFontAndColor Empty = new FontAndColor(Color.Empty, Color.Empty);
+        public static readonly IReadOnlyFontAndColor Empty
+            = new FontAndColor(Color.Empty, Color.Empty);
 
         /// <summary>
         /// Gets <see cref="IReadOnlyFontAndColor"/> with all properties set to null.
@@ -238,7 +239,8 @@ namespace Alternet.UI
             private readonly ControlRenderSizeVariant renderSize;
 
             /// <summary>
-            /// Initializes a new instance of the <see cref="ControlStaticDefaultFontAndColor"/> class.
+            /// Initializes a new instance of the
+            /// <see cref="ControlStaticDefaultFontAndColor"/> class.
             /// </summary>
             /// <param name="controlType">Type of the control.</param>
             /// <param name="renderSize">Render size. Optional.</param>
