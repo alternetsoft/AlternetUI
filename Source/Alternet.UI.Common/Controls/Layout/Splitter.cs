@@ -18,7 +18,7 @@ namespace Alternet.UI
     /// </summary>
     [DefaultEvent("SplitterMoved")]
     [DefaultProperty("Dock")]
-    public partial class Splitter : GraphicControl
+    public partial class Splitter : HiddenBorder
     {
         /// <summary>
         /// Gets or sets a default value of the
@@ -41,7 +41,7 @@ namespace Alternet.UI
         /// </summary>
         public static IReadOnlyFontAndColor? DefaultDarkColors;
 
-        private Coord minSize = 25;
+        private Coord minTargetSize = 25;
         private Coord minExtra = 25;
         private PointD anchor = PointD.Empty;
         private AbstractControl? splitTarget;
@@ -201,13 +201,51 @@ namespace Alternet.UI
         {
             get
             {
-                return minSize;
+                return minTargetSize;
             }
 
             set
             {
                 if (value < 0) value = 0;
-                minSize = value;
+                minTargetSize = value;
+            }
+        }
+
+        /// <inheritdoc/>
+        public override RectD Bounds
+        {
+            get => base.Bounds;
+            set
+            {
+                if (Horizontal)
+                {
+                    if (value.Width < 1)
+                        value.Width = GetDefaultWidth();
+                    splitterThickness = value.Width;
+                }
+                else
+                {
+                    if (value.Height < 1)
+                        value.Height = GetDefaultWidth();
+                    splitterThickness = value.Height;
+                }
+
+                if (Parent is null)
+                {
+                    base.Bounds = value;
+                    return;
+                }
+
+                value.X = Math.Max(value.X, Parent.Padding.Left + Margin.Left);
+                value.Y = Math.Max(value.Y, Parent.Padding.Top + Margin.Top);
+                value.Right = Math.Min(
+                    value.Right,
+                    Parent.ClientSize.Width - Parent.Padding.Right - Margin.Right);
+                value.Bottom = Math.Min(
+                    value.Bottom,
+                    Parent.ClientSize.Height - Parent.Padding.Bottom - Margin.Bottom);
+
+                base.Bounds = value;
             }
         }
 
@@ -232,7 +270,7 @@ namespace Alternet.UI
             {
                 var spd = CalcSplitBounds();
 
-                value = MathUtils.ApplyMinMax(value, minSize, maxSize);
+                value = MathUtils.ApplyMinMax(value, minTargetSize, maxSize);
 
                 splitSize = value;
                 DrawSplitBar(DrawSplitBarKind.End);
@@ -282,33 +320,6 @@ namespace Alternet.UI
             }
         }
 
-        /// <inheritdoc/>
-        public override RectD Bounds
-        {
-            get
-            {
-                return base.Bounds;
-            }
-
-            set
-            {
-                if (Horizontal)
-                {
-                    if (value.Width < 1)
-                        value.Width = GetDefaultWidth();
-                    splitterThickness = value.Width;
-                }
-                else
-                {
-                    if (value.Height < 1)
-                        value.Height = GetDefaultWidth();
-                    splitterThickness = value.Height;
-                }
-
-                base.Bounds = value;
-            }
-        }
-
         /// <summary>
         /// Gets default splitter cursor.
         /// </summary>
@@ -328,7 +339,10 @@ namespace Alternet.UI
 
             set
             {
+                if(defaultCursor == value)
+                    return;
                 defaultCursor = value;
+                Cursor = DefaultCursor;
             }
         }
 
@@ -403,6 +417,10 @@ namespace Alternet.UI
             ResolveSplitterColors(out var backColor, out var foreColor);
             DrawSplitterBackground(e, backColor);
             DrawSplitterForeground(e, foreColor);
+            if(HasBorder)
+            {
+                DrawDefaultBackground(e, DrawDefaultBackgroundFlags.DrawBorder);
+            }
         }
 
         /// <summary>
@@ -636,9 +654,9 @@ namespace Alternet.UI
 
                 SizeD clientSize = parent.ClientSize;
                 if (Horizontal)
-                    maxSize = clientSize.Width - dockWidth - minExtra;
+                    maxSize = clientSize.Width - dockWidth - minExtra - parent.Padding.Horizontal;
                 else
-                    maxSize = clientSize.Height - dockHeight - minExtra;
+                    maxSize = clientSize.Height - dockHeight - minExtra - parent.Padding.Vertical;
                 spd.DockWidth = dockWidth;
                 spd.DockHeight = dockHeight;
             }
@@ -694,7 +712,7 @@ namespace Alternet.UI
                     break;
             }
 
-            return Math.Max(Math.Min(size, maxSize), minSize);
+            return Math.Max(Math.Min(size, maxSize), minTargetSize);
         }
 
         /// <summary>
@@ -703,7 +721,7 @@ namespace Alternet.UI
         private void SplitBegin(Coord x, Coord y)
         {
             var spd = CalcSplitBounds();
-            if (spd.Target != null && (minSize < maxSize))
+            if (spd.Target != null && (minTargetSize < maxSize))
             {
                 anchor = new PointD(x, y);
                 splitTarget = spd.Target;
@@ -731,7 +749,8 @@ namespace Alternet.UI
             {
                 /* no need to call ApplySplitPosition() as splitter is live */
             }
-            else if (splitSize != initTargetSize)
+            else
+            if (splitSize != initTargetSize)
             {
                 SplitPosition = initTargetSize;
             }
@@ -766,7 +785,9 @@ namespace Alternet.UI
         private class SplitData
         {
             public Coord DockWidth = -1;
+
             public Coord DockHeight = -1;
+
             public AbstractControl? Target;
         }
     }
