@@ -26,6 +26,7 @@ namespace Alternet.UI
         private static Coord? maxScaleFactor;
         private static Coord? minScaleFactor;
         private static SizeI? baseDPI;
+        private static Display? primary;
 
         private Coord? scaleFactor;
 
@@ -303,7 +304,7 @@ namespace Alternet.UI
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
             get
             {
-                return new Display();
+                return primary ??= new Display();
             }
         }
 
@@ -635,6 +636,7 @@ namespace Alternet.UI
             baseDPI = null;
             maxScaleFactor = null;
             minScaleFactor = null;
+            primary = null;
         }
 
         /// <summary>
