@@ -11,7 +11,15 @@
         /// <summary>
         /// Initializes a new instance of the <see cref="BaseEventArgs{T}"/> class.
         /// </summary>
-        /// <param name="value"></param>
+        public BaseEventArgs()
+            : this(default!)
+        {
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="BaseEventArgs{T}"/> class.
+        /// </summary>
+        /// <param name="value">The value to assign to the parameter.</param>
         public BaseEventArgs(T value)
         {
             this.val = value;
