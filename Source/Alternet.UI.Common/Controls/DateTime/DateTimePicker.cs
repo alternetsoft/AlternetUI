@@ -12,6 +12,10 @@ namespace Alternet.UI
     /// <summary>
     /// Represents control that displays a selected date and allows to change it.
     /// </summary>
+    /// <remarks>
+    /// Currently this control doesn't look good on MSW with dark theme.
+    /// It is recommended to use <see cref="DatePicker"/> or <see cref="TimePicker"/> controls.
+    /// </remarks>
     [DefaultProperty("Value")]
     [DefaultEvent("ValueChanged")]
     [DefaultBindingProperty("Value")]

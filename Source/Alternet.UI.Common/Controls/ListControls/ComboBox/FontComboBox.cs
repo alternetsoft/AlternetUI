@@ -11,6 +11,10 @@ namespace Alternet.UI
     /// <summary>
     /// <see cref="ComboBox"/> descendant for selecting font names.
     /// </summary>
+    /// <remarks>
+    /// Currently this control doesn't look good on MSW with dark theme.
+    /// It is recommended to use <see cref="FontNamePicker"/> control.
+    /// </remarks>
     public partial class FontComboBox : ComboBox
     {
         /// <summary>

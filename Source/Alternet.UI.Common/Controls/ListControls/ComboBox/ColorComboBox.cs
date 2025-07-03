@@ -17,6 +17,10 @@ namespace Alternet.UI
     /// <see cref="ListControlItem.Value"/> is <see cref="Color"/> and
     /// <see cref="ListControlItem.Text"/> is label of the color.
     /// </remarks>
+    /// <remarks>
+    /// Currently this control doesn't look good on MSW with dark theme.
+    /// It is recommended to use <see cref="ColorPicker"/> control.
+    /// </remarks>
     public partial class ColorComboBox : ComboBox
     {
         /// <summary>
