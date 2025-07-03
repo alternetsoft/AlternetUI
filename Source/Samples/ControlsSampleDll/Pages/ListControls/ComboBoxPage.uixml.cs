@@ -5,7 +5,7 @@ namespace ControlsSample
 {
     internal partial class ComboBoxPage : Panel, IComboBoxItemPainter
     {
-        private const bool supressUpDown = false;
+        private const bool suppressUpDown = false;
 
         private readonly bool ignoreEvents = false;
         private readonly IComboBoxItemPainter painter = new ComboBox.DefaultItemPainter();
@@ -17,8 +17,8 @@ namespace ControlsSample
             ignoreEvents = true;
             InitializeComponent();
 
-            LoadDefaultItems();
-            comboBox.SelectedIndex = 1;
+            LoadDefaultItems(ownerDrawCheckBox.IsChecked);
+            comboBox.Text = comboBox.Items[1].Text;
             ignoreEvents = false;
 
             addItemButton.KeyDown += AddItemButton_KeyDown;
@@ -75,16 +75,17 @@ namespace ControlsSample
 
         private void LoadDefaultItems(bool ownerDraw = false)
         {
-            comboBox.RemoveAll();
+            BaseCollection<ListControlItem> items = new();
+
             if (ownerDraw)
             {
                 PropertyGridSample.ObjectInit.
                     AddDefaultOwnerDrawItems(comboBox, (s) =>
                     {
-                        comboBox.Add(s);
+                        items.Add(s);
                     }, false);
 
-                var item = comboBox.Items.Last() as ListControlItem;
+                var item = items.Last();
                 if(item is not null)
                 {
                     item.DisplayText = "(" + item.Text + ")";
@@ -92,12 +93,12 @@ namespace ControlsSample
             }
             else
             {
-                comboBox.Items.Add("One");
-                comboBox.Items.Add("Two");
-                comboBox.Items.Add("Three");
+                items.Add(new("One"));
+                items.Add(new("Two"));
+                items.Add(new("Three"));
             }
 
-            comboBox.SelectedIndex = 1;
+            comboBox.Items = items;
         }
 
         private void ComboBoxPage_KeyDown(object? sender, KeyEventArgs e)
@@ -106,23 +107,23 @@ namespace ControlsSample
 
         private void AddItemButton_KeyDown(object? sender, KeyEventArgs e)
         {
-            if ((e.Key == Key.Up || e.Key == Key.Down) && supressUpDown)
+            if ((e.Key == Key.Up || e.Key == Key.Down) && suppressUpDown)
                 e.Handled = true;
         }
 
         private void Editor_Click(object? sender, System.EventArgs e)
         {
-            DialogFactory.EditItemsWithListEditor(comboBox);
+            DialogFactory.EditItemsWithListEditor(comboBox.ListBox);
         }
 
         private void SetSelectedItemToNullButton_Click(object? sender, EventArgs e)
         {
-            comboBox.SelectedItem = null;
+            comboBox.Text = string.Empty;
         }
 
         private void SetSelectedIndexTo2_Click(object? sender, EventArgs e)
         {
-            comboBox.SelectedIndex = 2;
+            comboBox.Text = comboBox.Items[2].Text;
         }
 
         private void SetTextToEmptyStringButton_Click(object? sender, EventArgs e)
@@ -132,15 +133,13 @@ namespace ControlsSample
 
         private void AddManyItemsButton_Click(object? sender, EventArgs e)
         {
-            comboBox.BeginUpdate();
             try
             {
                 for (int i = 0; i < 500; i++)
-                    comboBox.Items.Add("Item " + GenItemIndex());
+                    comboBox.Items.Add(new("Item " + GenItemIndex()));
             }
             finally
             {
-                comboBox.EndUpdate();
             }
         }
 
@@ -161,6 +160,7 @@ namespace ControlsSample
             App.LogReplace($"{prefix} {text}{fromDropDown}", prefix);
         }
 
+        /*
         private void ComboBox_SelectedItemChanged(object? sender, EventArgs e)
         {
             if (ignoreEvents)
@@ -169,10 +169,16 @@ namespace ControlsSample
             var prefix = "ComboBox: SelectedItemChanged - SelectedIndex:";
             App.LogReplace($"{prefix} {s} Item: <{comboBox.SelectedItem}>", prefix);
         }
+        */
 
         private void OwnerDrawCheckBox_CheckedChanged(object? sender, EventArgs e)
         {
-            LoadDefaultItems(ownerDrawCheckBox.IsChecked);
+            App.AddIdleTask(() =>
+            {
+                LoadDefaultItems(ownerDrawCheckBox.IsChecked);
+            });
+
+            /*
             if (ownerDrawCheckBox.IsChecked)
             {
                 comboBox.ItemPainter = this;
@@ -183,6 +189,7 @@ namespace ControlsSample
                 comboBox.ItemPainter = null;
                 comboBox.OwnerDrawItem = false;
             }
+            */
         }
 
         private void AllowTextEditingCheckBox_CheckedChanged(object? sender, EventArgs e)
@@ -193,7 +200,7 @@ namespace ControlsSample
         private void RemoveItemButton_Click(object? sender, EventArgs e)
         {
             if (comboBox.Items.Count > 0)
-                comboBox.Items.RemoveAt(comboBox.SelectedIndex ?? comboBox.Items.Count - 1);
+                comboBox.Items.RemoveAt(comboBox.Items.Count - 1);
         }
 
         private int GenItemIndex()
@@ -204,7 +211,7 @@ namespace ControlsSample
 
         private void AddItemButton_Click(object? sender, EventArgs e)
         {
-            comboBox.Items.Add("Item " + GenItemIndex());
+            comboBox.Items.Add(new("Item " + GenItemIndex()));
         }
 
         private bool CheckComboBoxIsEditable()
@@ -222,7 +229,8 @@ namespace ControlsSample
             if (!CheckComboBoxIsEditable())
                 return;
 
-            comboBox.SelectTextRange(2, 3);
+            comboBox.TextBox.SelectionStart = 2;
+            comboBox.TextBox.SelectionLength = 3;
         }
 
         private void GetTextSelectionButton_Click(object? sender, System.EventArgs e)
@@ -239,7 +247,7 @@ namespace ControlsSample
 
         private void SetItem_Click(object? sender, System.EventArgs e)
         {
-            comboBox.Items[2] = "hello";
+            comboBox.Items[2].Text = "hello";
         }
 
         private void SetTextToAbcButton_Click(object? sender, System.EventArgs e)
@@ -271,9 +279,17 @@ namespace ControlsSample
                 point.Offset(-5, 0);
 
                 if (e.IsSelected)
-                    e.Graphics.FillRectangle(Color.Yellow.AsBrush, (point, (10, e.ClipRectangle.Height)));
+                {
+                    e.Graphics.FillRectangle(
+                        Color.Yellow.AsBrush,
+                        (point, (10, e.ClipRectangle.Height)));
+                }
                 else
-                    e.Graphics.FillRectangle(Color.Green.AsBrush, (point, (10, e.ClipRectangle.Height)));
+                {
+                    e.Graphics.FillRectangle(
+                        Color.Green.AsBrush,
+                        (point, (10, e.ClipRectangle.Height)));
+                }
             }
         }
 
