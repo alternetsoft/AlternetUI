@@ -720,6 +720,9 @@ namespace Alternet.UI
         /// <param name="kind">The method which is used when items are set.</param>
         public virtual bool SetItemsFast(BaseCollection<ListControlItem> value, SetItemsKind kind)
         {
+            if (value == Items)
+                return true;
+
             if (DisposingOrDisposed)
                 return default;
 
