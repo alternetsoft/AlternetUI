@@ -8,8 +8,8 @@ using Alternet.Drawing;
 namespace Alternet.UI
 {
     /// <summary>
-    /// Contains static methods related to <see cref="ListControl"/> and its descendants
-    /// like <see cref="ListBox"/> and <see cref="ComboBox"/>.
+    /// Contains static methods related to list controls
+    /// including <see cref="ListBox"/> and <see cref="ComboBox"/>.
     /// </summary>
     public static class ListControlUtils
     {
@@ -74,10 +74,10 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Initializes <see cref="ListControl"/> with list of font names.
+        /// Initializes <see cref="ComboBox"/> with list of font names.
         /// </summary>
         /// <param name="control">Control instance which items will be filled with font names.</param>
-        /// <param name="defaultName">Select this font name in <see cref="ListControl"/>.
+        /// <param name="defaultName">Select this font name in <see cref="ComboBox"/>.
         /// If its <c>null</c>, name of the default font is used.</param>
         /// <param name="select">Specifies whether to select default item in the control.</param>
         public static void AddFontNames(
@@ -98,11 +98,11 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Initializes <see cref="ListControl"/> with list of known color names
+        /// Initializes <see cref="ComboBox"/> with list of known color names
         /// (Web and Standard colors are used).
         /// </summary>
         /// <param name="control">Control instance which items will be filled with color names.</param>
-        /// <param name="defaultValue">Select this color name in <see cref="ListControl"/>.</param>
+        /// <param name="defaultValue">Select this color name in <see cref="ComboBox"/>.</param>
         /// <param name="select">Specifies whether to select default item in the control.</param>
         /// <param name="onlyVisible">Whether to process only
         /// colors which are visible to the end-user. Optional. Default is True.</param>
@@ -138,10 +138,10 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Initializes <see cref="ListControl"/> with list of known colors.
+        /// Initializes <see cref="IListControl"/> with list of known colors.
         /// </summary>
         /// <param name="control">Control instance which items will be filled with colors.</param>
-        /// <param name="defaultValue">Select this color in <see cref="ListControl"/>.</param>
+        /// <param name="defaultValue">Select this color in <see cref="IListControl"/>.</param>
         /// <param name="select">Specifies whether to select default item in the control.</param>
         /// <param name="cats">Array of categories to add colors from. Optional. If not specified,
         /// standard and web colors will be added.</param>
@@ -191,12 +191,11 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Initializes <see cref="ListControl"/> with list of font sizes.
+        /// Initializes collection of <see cref="ListControlItem"/> with list of font sizes.
         /// </summary>
         /// <param name="items">The collection of list control items
         /// to which font sizes will be added.</param>
-        /// <param name="defaultSize">Select this font size in <see cref="ListControl"/>.
-        /// If its <c>null</c>, size of the default font is used.</param>
+        /// <param name="defaultSize">Optional. The additional size to add to the collection.</param>
         public static void AddFontSizes(
             BaseCollection<ListControlItem> items,
             Coord? defaultSize = null)

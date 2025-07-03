@@ -167,14 +167,6 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Gets or sets the currently selected item in the control.
-        /// </summary>
-        /// <value>An object that represents the current selection in the
-        /// control, or <c>null</c> if no item is selected.</value>
-        [Browsable(false)]
-        public abstract TItem? SelectedItem { get; set; }
-
-        /// <summary>
         /// Gets or sets the items of the control.
         /// </summary>
         /// <value>A collection representing the items
@@ -200,15 +192,6 @@ namespace Alternet.UI
                 });
             }
         }
-
-        /// <summary>
-        /// Gets or sets the zero-based index of the currently selected item in
-        /// the control.
-        /// </summary>
-        /// <value>A zero-based index of the currently selected item. A value
-        /// of <c>null</c> is returned if no item is selected.</value>
-        [Browsable(false)]
-        public abstract int? SelectedIndex { get; set; }
 
         /// <summary>
         /// Gets or sets the zero-based index of the currently selected item in
@@ -446,7 +429,6 @@ namespace Alternet.UI
         /// <summary>
         /// Selects last item in the control.
         /// </summary>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public virtual void SelectLastItem()
         {
             if (Count > 0)
@@ -519,7 +501,6 @@ namespace Alternet.UI
         /// <summary>
         /// Selects first item in the control.
         /// </summary>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public virtual void SelectFirstItem()
         {
             DoInsideUpdate(() =>
@@ -538,7 +519,7 @@ namespace Alternet.UI
             where T : TItem => (T?)SelectedItem;
 
         /// <summary>
-        /// Removed all items from the control.
+        /// Removes all items from the control.
         /// </summary>
         public virtual void RemoveAll()
         {
@@ -601,25 +582,21 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc cref="StringSearch.FindString(string)"/>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public virtual int? FindString(string? s) => Search.FindString(s);
 
         /// <inheritdoc cref="StringSearch.FindString(string, int?)"/>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public virtual int? FindString(string? s, int? startIndex)
         {
             return Search.FindString(s, startIndex);
         }
 
         /// <inheritdoc cref="StringSearch.FindStringExact(string)"/>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public virtual int? FindStringExact(string? s)
         {
             return Search.FindStringExact(s);
         }
 
         /// <inheritdoc cref="StringSearch.FindStringEx(string?, int?, bool, bool)"/>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public virtual int? FindStringEx(
          string? str,
          int? startIndex,
