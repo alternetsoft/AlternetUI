@@ -13,10 +13,10 @@ namespace Alternet.UI
     public class CardPanelItem : BaseControlItem
     {
         /// <summary>
-        /// Gets or sets default value for the <see cref="SupressException"/>. It is used
-        /// if <see cref="SupressException"/> is Null.
+        /// Gets or sets default value for the <see cref="SuppressException"/>. It is used
+        /// if <see cref="SuppressException"/> is Null.
         /// </summary>
-        public static bool DefaultSupressException = true;
+        public static bool DefaultSuppressException = true;
 
         private readonly Func<AbstractControl>? action;
         private AbstractControl? control;
@@ -49,11 +49,11 @@ namespace Alternet.UI
 
         /// <summary>
         /// Gets or sets whether to suppress exception when card is created.
-        /// In case when exception is supressed, a card with error is created and shown
+        /// In case when exception is suppressed, a card with error is created and shown
         /// instead of the card. Default is Null and
-        /// <see cref="DefaultSupressException"/> is used.
+        /// <see cref="DefaultSuppressException"/> is used.
         /// </summary>
-        public bool? SupressException { get; set; }
+        public bool? SuppressException { get; set; }
 
         /// <summary>
         /// Child control.
@@ -71,7 +71,7 @@ namespace Alternet.UI
                 }
                 catch (Exception e)
                 {
-                    if (SupressException ?? DefaultSupressException)
+                    if (SuppressException ?? DefaultSuppressException)
                         control = CreateErrorCard(e);
                     else
                         throw;
