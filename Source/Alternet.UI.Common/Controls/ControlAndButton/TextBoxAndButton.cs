@@ -25,6 +25,11 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Occurs when the <see cref="IsEditable"/> property value changes.
+        /// </summary>
+        public event EventHandler? IsEditableChanged;
+
+        /// <summary>
         /// Gets main child control.
         /// </summary>
         [Browsable(false)]
@@ -58,6 +63,66 @@ namespace Alternet.UI
             set
             {
                 MainControl.AutoShowError = value;
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets a value that enables or disables editing of the text in
+        /// text box area of the control.
+        /// </summary>
+        /// <value><c>true</c> if the text in the control can be edited;
+        /// otherwise <c>false</c>.</value>
+        [Category("Appearance")]
+        [DefaultValue(true)]
+        public virtual bool IsEditable
+        {
+            get
+            {
+                return !UseSubstituteControl;
+            }
+
+            set
+            {
+                if (IsEditable == value)
+                    return;
+                UseSubstituteControl = !value;
+                IsEditableChanged?.Invoke(this, EventArgs.Empty);
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets a value specifying the style of the control.
+        /// </summary>
+        /// <returns>
+        /// One of the <see cref="ComboBoxStyle" /> values.
+        /// </returns>
+        [Category("Appearance")]
+        [DefaultValue(ComboBoxStyle.DropDown)]
+        [RefreshProperties(RefreshProperties.Repaint)]
+        [Browsable(false)]
+        public virtual ComboBoxStyle DropDownStyle
+        {
+            get
+            {
+                if (IsEditable)
+                    return ComboBoxStyle.DropDown;
+                else
+                    return ComboBoxStyle.DropDownList;
+            }
+
+            set
+            {
+                if (DropDownStyle == value)
+                    return;
+                switch (value)
+                {
+                    case ComboBoxStyle.DropDown:
+                        IsEditable = true;
+                        break;
+                    case ComboBoxStyle.DropDownList:
+                        IsEditable = false;
+                        break;
+                }
             }
         }
 
