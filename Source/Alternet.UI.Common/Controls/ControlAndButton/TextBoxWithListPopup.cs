@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Text;
 
+using Alternet.Drawing;
+
 namespace Alternet.UI
 {
     /// <summary>
@@ -62,6 +64,36 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets or sets a value indicating whether to perform lookup by value
+        /// when popup window is opened.
+        /// </summary>
+        public virtual bool LookupByValue
+        {
+            get => ButtonCombo.LookupByValue;
+            set => ButtonCombo.LookupByValue = value;
+        }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether to perform an exact text lookup
+        /// when popup window is opened.
+        /// </summary>
+        public virtual bool LookupExactText
+        {
+            get => ButtonCombo.LookupExactText;
+            set => ButtonCombo.LookupExactText = value;
+        }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether to ignore case when looking up items
+        /// in the popup window.
+        /// </summary>
+        public virtual bool LookupIgnoreCase
+        {
+            get => ButtonCombo.LookupIgnoreCase;
+            set => ButtonCombo.LookupIgnoreCase = value;
+        }
+
+        /// <summary>
         /// Gets or sets a value indicating whether to use a context menu as the popup window.
         /// </summary>
         /// <remarks>
@@ -91,6 +123,17 @@ namespace Alternet.UI
             get
             {
                 return ButtonCombo.SimpleItems;
+            }
+        }
+
+        /// <summary>
+        /// Gets the list box control used in the popup window.
+        /// </summary>
+        public VirtualListBox ListBox
+        {
+            get
+            {
+                return ButtonCombo.ListBox;
             }
         }
 
@@ -173,6 +216,19 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Shows the popup window associated with the control.
+        /// </summary>
+        public virtual void ShowPopup()
+        {
+            App.AddIdleTask(() =>
+            {
+                if (DisposingOrDisposed || ButtonCombo.DisposingOrDisposed)
+                    return;
+                ButtonCombo.ShowPopup();
+            });
+        }
+
+        /// <summary>
         /// Synchronizes text property of the main control and value selected
         /// in the popup window which is shown when combo button is clicked.
         /// </summary>
@@ -181,8 +237,9 @@ namespace Alternet.UI
             var btn = ButtonCombo;
 
             btn.BeforeShowPopup -= OnButtonComboBeforeShowPopup;
-            btn.ValueChanged -= OnButtonComboValueChanged;
             btn.BeforeShowPopup += OnButtonComboBeforeShowPopup;
+
+            btn.ValueChanged -= OnButtonComboValueChanged;
             btn.ValueChanged += OnButtonComboValueChanged;
         }
 
@@ -198,19 +255,6 @@ namespace Alternet.UI
             if(!ButtonCombo.IsPopupWindowCreated)
                 return;
             ButtonCombo.PopupWindow.HidePopup(result);
-        }
-
-        /// <summary>
-        /// Shows the popup window associated with the control.
-        /// </summary>
-        public virtual void ShowPopup()
-        {
-            App.AddIdleTask(() =>
-            {
-                if (DisposingOrDisposed || ButtonCombo.DisposingOrDisposed)
-                    return;
-                ButtonCombo.ShowPopup();
-            });
         }
 
         /// <summary>
@@ -278,7 +322,7 @@ namespace Alternet.UI
         {
             if (DisposingOrDisposed || ButtonCombo.DisposingOrDisposed)
                 return;
-            ButtonCombo.PopupOwner = UseSubstituteControl ? this : MainControl;
+            ButtonCombo.PopupOwner = this;
             ButtonCombo.Value = Text;
             RaiseDropDown();
         }
@@ -289,7 +333,7 @@ namespace Alternet.UI
             base.OnSubstituteControlMouseLeftButtonDown(sender, e);
             if (e.Handled)
                 return;
-            ShowPopup();
+            DroppedDown = !DroppedDown;
             e.Handled = true;
         }
 
@@ -300,6 +344,7 @@ namespace Alternet.UI
                 return;
             var useTextHint = string.IsNullOrEmpty(MainControl.Text);
             SubstituteControl.Text = useTextHint ? EmptyTextHint ?? string.Empty : MainControl.Text;
+            SubstituteControl.Refresh();
         }
 
         /// <inheritdoc/>
