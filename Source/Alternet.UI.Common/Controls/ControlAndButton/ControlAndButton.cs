@@ -860,8 +860,11 @@ namespace Alternet.UI
         /// classes to customize the behavior.</remarks>
         protected virtual void UpdateSubstituteControlText()
         {
-            if (substituteControl != null)
-                substituteControl.Text = mainControl.Text;
+            if (!IsSubstituteControlCreated)
+                return;
+
+            SubstituteControl.Text = mainControl.Text;
+            SubstituteControl.Refresh();
         }
 
         /// <summary>

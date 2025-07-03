@@ -1289,7 +1289,7 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Redos the last edit operation in the control.
+        /// Redo the last edit operation in the control.
         /// </summary>
         public virtual void Redo()
         {
