@@ -81,7 +81,7 @@ namespace Alternet.UI
         /// If its <c>null</c>, name of the default font is used.</param>
         /// <param name="select">Specifies whether to select default item in the control.</param>
         public static void AddFontNames(
-            ListControl control,
+            ComboBox control,
             bool select = true,
             string? defaultName = null)
         {
@@ -107,7 +107,7 @@ namespace Alternet.UI
         /// <param name="onlyVisible">Whether to process only
         /// colors which are visible to the end-user. Optional. Default is True.</param>
         public static void AddColorNames(
-            ListControl control,
+            ComboBox control,
             bool select = true,
             Color? defaultValue = null,
             bool onlyVisible = true)

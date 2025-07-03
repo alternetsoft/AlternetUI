@@ -20,7 +20,6 @@ namespace PropertyGridSample
 
         private readonly ContextMenuStrip propGridContextMenu = new();
         private MenuItem? resetMenu;
-        private readonly StatusBar statusBar = new();
 
         private bool updatePropertyGrid = false;
         private bool useIdle = false;
@@ -96,8 +95,6 @@ namespace PropertyGridSample
                 Title = "Alternet UI PropertyGrid Sample";
                 Size = (900, 700);
                 StartLocation = WindowStartLocation.CenterScreen;
-                StatusBar = statusBar;
-                statusBar.Text = "Ready";
                 Padding = 5;
                 Activated += MainWindow_Activated;
                 Deactivated += MainWindow_Deactivated;

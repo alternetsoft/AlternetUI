@@ -326,6 +326,6 @@ namespace Alternet.UI
         /// <param name="control">Control which items will be edited.</param>
         public static void EditItemsWithListEditor<T>(ListControl<T> control)
             where T : class, new()
-            => EditPropertyWithListEditor(control, nameof(ListControl.Items));
+            => EditPropertyWithListEditor(control, "Items");
     }
 }
