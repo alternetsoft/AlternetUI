@@ -119,12 +119,6 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        public IControlHandler CreateSliderHandler(Slider control)
-        {
-            return new SliderHandler();
-        }
-
-        /// <inheritdoc/>
         public IControlHandler CreateGroupBoxHandler(GroupBox control)
         {
             return new WxControlHandler<GroupBox, Native.GroupBox>();

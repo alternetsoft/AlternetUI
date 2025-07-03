@@ -26,7 +26,6 @@ namespace Alternet.UI
         IRadioButtonHandler,
         IRichTextBox,
         IScrollBarHandler,
-        ISliderHandler,
         ITextBoxHandler,
         ITreeViewHandler,
         IWebBrowserLite,

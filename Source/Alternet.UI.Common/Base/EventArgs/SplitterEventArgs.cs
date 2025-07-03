@@ -17,8 +17,8 @@ namespace Alternet.UI
     /// </summary>
     public class SplitterEventArgs : BaseEventArgs
     {
-        private readonly Coord x;
-        private readonly Coord y;
+        private Coord x;
+        private Coord y;
         private Coord splitX;
         private Coord splitY;
 
@@ -42,16 +42,27 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Gets the x-coordinate of the mouse pointer.
+        /// Gets or sets the x-coordinate of the mouse pointer.
         /// </summary>
         /// <returns>The x-coordinate of the mouse pointer.</returns>
         /// <remarks>
         /// Property value is in client coordinates.
         /// </remarks>
-        public Coord X => x;
+        public Coord X
+        {
+            get
+            {
+                return x;
+            }
+
+            set
+            {
+                x = value;
+            }
+        }
 
         /// <summary>
-        /// Gets the y-coordinate of the mouse pointer.
+        /// Gets or sets the y-coordinate of the mouse pointer.
         /// </summary>
         /// <returns>
         /// The y-coordinate of the mouse pointer.
@@ -59,7 +70,18 @@ namespace Alternet.UI
         /// <remarks>
         /// Property value is in client coordinates.
         /// </remarks>
-        public Coord Y => y;
+        public Coord Y
+        {
+            get
+            {
+                return y;
+            }
+
+            set
+            {
+                y = value;
+            }
+        }
 
         /// <summary>
         /// Gets or sets the x-coordinate of the upper-left corner of the splitter.

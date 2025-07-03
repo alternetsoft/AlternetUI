@@ -11,7 +11,7 @@ using Alternet.UI.Markup;
 namespace Alternet.Drawing
 {
     /*
-        Please do not remove StructLayout(LayoutKind.Sequential) atrtribute.
+        Please do not remove StructLayout(LayoutKind.Sequential) attribute.
         Also do not change order of the fields.
     */
 
@@ -269,7 +269,7 @@ namespace Alternet.Drawing
             new(RectD.CoordToInt(p.Width), RectD.CoordToInt(p.Height));
 
         /// <summary>
-        /// Implicit operator convertion from tuple with two <see cref="Coord"/> values
+        /// Implicit operator conversion from tuple with two <see cref="Coord"/> values
         /// to <see cref="SizeD"/>.
         /// </summary>
         /// <param name="d">New size value.</param>
@@ -291,13 +291,13 @@ namespace Alternet.Drawing
         public static explicit operator SizeD(Vector2 vector) => new(vector);
 
         /// <summary>
-        /// Initializes <see cref="Drawing.SizeD"/> with equal width and hegiht.
+        /// Initializes <see cref="Drawing.SizeD"/> with equal width and height.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static implicit operator SizeD(Coord widthAndHeight) => new(widthAndHeight);
 
         /// <summary>
-        /// Initializes <see cref="Drawing.SizeD"/> with equal width and hegiht.
+        /// Initializes <see cref="Drawing.SizeD"/> with equal width and height.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static implicit operator SizeD(int widthAndHeight) => new(widthAndHeight);
@@ -488,6 +488,25 @@ namespace Alternet.Drawing
             var height = MathUtils.Max(heights);
 
             return new(width, height);
+        }
+
+        /// <summary>
+        /// Gets a new <see cref="SizeD"/> with swapped <see cref="Width"/> and
+        /// Height values.
+        /// </summary>
+        /// <returns>A new <see cref="SizeD"/> instance with swapped width and height.</returns>
+        public readonly SizeD WithSwappedWidthAndHeight()
+        {
+            return new SizeD(height, width);
+        }
+
+        /// <summary>
+        /// Swaps <see cref="Width"/> and <see cref="Height"/> values.
+        /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public void SwapWidthAndHeight()
+        {
+            (height, width) = (width, height);
         }
 
         /// <summary>

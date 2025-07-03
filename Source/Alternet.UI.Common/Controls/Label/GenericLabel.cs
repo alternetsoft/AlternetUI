@@ -403,11 +403,7 @@ namespace Alternet.UI
         public virtual RectD DrawDefaultText(Graphics dc)
         {
             BeforeDrawText?.Invoke(this, EventArgs.Empty);
-
-            RectD result = RectD.Empty;
-
-            result = dc.DrawLabel(ref prm);
-
+            var result = dc.DrawLabel(ref prm);
             return result;
         }
 

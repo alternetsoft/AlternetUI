@@ -33,13 +33,6 @@ namespace Alternet.UI
         IControlHandler CreateButtonHandler(Button control);
 
         /// <summary>
-        /// Creates <see cref="ISliderHandler"/> interface provider.
-        /// </summary>
-        /// <param name="control">Owner.</param>
-        /// <returns></returns>
-        IControlHandler CreateSliderHandler(Slider control);
-
-        /// <summary>
         /// Creates <see cref="IControlHandler"/> interface provider.
         /// for the <see cref="ProgressBar"/>.
         /// </summary>

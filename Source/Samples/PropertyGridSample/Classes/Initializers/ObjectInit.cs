@@ -166,14 +166,14 @@ namespace PropertyGridSample
             control.Value = FontStyle.Regular;
         }
 
-        public static void InitGenericSlider(GenericSlider control)
+        public static void InitGenericSlider(Slider control)
         {
             control.LeftTopSpacer.SizeChanged+=(s, e) =>
             {
                 if(control.IsHorizontal)
                 {
                     App.LogReplace(
-                        $"GenericSlider: V: {control.Value}, LTS: {control.LeftTopSpacer.Width}, W:{control.ClientSize.Width - control.ThumbControl.Width - control.ThumbControl.Margin.Horizontal - control.Padding.Horizontal}",
+                        $"GenericSlider: V: {control.Value}, LTS: {control.LeftTopSpacer.Width}, W:{control.MaxLeftTopSpacerSize}",
                         "GenericSlider:");
                 }
             };
@@ -238,7 +238,7 @@ namespace PropertyGridSample
             AddAction<ColorPicker>(InitColorPicker);
             AddAction<FontNamePicker>(InitFontNamePicker);
             AddAction<TextBoxWithListPopup>(InitTextBoxWithListPopup);
-            AddAction<GenericSlider>(InitGenericSlider);
+            AddAction<Slider>(InitGenericSlider);
 
             Actions.Add(typeof(PageSetupDialog), InitPageSetupDialog);
             Actions.Add(typeof(PrintPreviewDialog), InitPrintPreviewDialog);
@@ -302,12 +302,6 @@ namespace PropertyGridSample
             {
                 var control = (c as OpenFileDialog)!;
                 control.Title = "Some title";
-            });
-
-            Actions.Add(typeof(Slider), (c) =>
-            {
-                Slider control = (c as Slider)!;
-                control.SuggestedSize = 200;
             });
 
             Actions.Add(typeof(NumericUpDown), (c) =>

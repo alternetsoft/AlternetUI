@@ -92,9 +92,9 @@ namespace Alternet.UI
         internal static void PerformDefaultLayout(
             AbstractControl container,
             RectD childrenLayoutBounds,
-            IReadOnlyList<AbstractControl> childs)
+            IReadOnlyList<AbstractControl> childControls)
         {
-            foreach (var control in childs)
+            foreach (var control in childControls)
             {
                 if (control.Dock != DockStyle.None || control.IgnoreLayout)
                     continue;

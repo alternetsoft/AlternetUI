@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.ComponentModel;
 
 using Alternet.Drawing;
@@ -7,11 +7,11 @@ using Alternet.UI.Localization;
 namespace Alternet.UI
 {
     /// <summary>
-    /// Represents a slider control (also known as track bar).
+    /// Represents a generic slider control (also known as track bar).
     /// </summary>
     /// <remarks>
     /// <para>
-    /// The <see cref="Slider"/> is a scrollable control similar to the scroll bar control.
+    /// This is a scrollable control similar to the scroll bar control.
     /// You can configure ranges through which the value of the <see cref="Value"/> property of a
     /// slider scrolls by setting the <see cref="Minimum"/> property to specify the lower end
     /// of the range and the <see cref="Maximum"/> property to specify the upper end of the range.
@@ -29,8 +29,21 @@ namespace Alternet.UI
     [DefaultEvent("ValueChanged")]
     [DefaultBindingProperty("Value")]
     [ControlCategory("Common")]
-    public partial class Slider : Control
+    public partial class Slider : Border
     {
+        /// <summary>
+        /// Represents the default minimum size for a slider control.
+        /// </summary>
+        /// <remarks>This value is used to define the smallest allowable size for a slider.
+        /// It can be used
+        /// as a baseline for UI layout calculations or constraints.</remarks>
+        public static Coord DefaultSliderMinimumSize = 20;
+
+        /// <summary>
+        /// Represents the default width of the slider's thumb.
+        /// </summary>
+        public static Coord DefaultSliderThumbWidth = 15;
+
         /// <summary>
         /// Represents the default tick style for a slider control.
         /// </summary>
@@ -48,6 +61,20 @@ namespace Alternet.UI
         /// </summary>
         public static bool? DefaultParentForeColor;
 
+        private readonly AbstractControl leftTopSpacer = new Panel()
+        {
+            Dock = DockStyle.Left,
+        };
+
+        private readonly AbstractControl rightBottomSpacer = new Panel()
+        {
+            Dock = DockStyle.Fill,
+        };
+
+        private readonly SliderThumb thumb = new ()
+        {
+        };
+
         private int maximum = 10;
         private int minimum = 0;
         private int val = 0;
@@ -55,7 +82,7 @@ namespace Alternet.UI
         private int largeChange = 5;
         private int tickFrequency = 1;
         private SliderOrientation orientation;
-        private SliderTickStyle? tickStyle;
+        private SliderTickStyle tickStyle;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Slider"/> class.
@@ -72,10 +99,34 @@ namespace Alternet.UI
         /// </summary>
         public Slider()
         {
-            if(DefaultParentBackColor is not null)
+            tickStyle = DefaultTickStyle;
+            Padding = 1;
+            thumb.Margin = 1;
+            thumb.MinSize = 0;
+            thumb.MinExtra = 2;
+            thumb.SizeDelta = 0;
+
+            MinimumSize = DefaultSliderMinimumSize;
+            SuggestedSize = (200, Coord.NaN);
+
+            if (DefaultParentBackColor is not null)
                 ParentBackColor = DefaultParentBackColor.Value;
-            if(DefaultParentForeColor is not null)
+            if (DefaultParentForeColor is not null)
                 ParentForeColor = DefaultParentForeColor.Value;
+
+            UseControlColors(true);
+
+            Layout = LayoutStyle.Dock;
+            leftTopSpacer.Width = 0;
+
+            rightBottomSpacer.Parent = this;
+            thumb.Parent = this;
+            leftTopSpacer.Parent = this;
+
+            thumb.SplitterMoved += OnThumbSplitterMoved;
+            thumb.SplitterMoving += OnThumbSplitterMoving;
+            leftTopSpacer.MouseLeftButtonDown += OnLeftTopSpacerMouseDown;
+            rightBottomSpacer.MouseLeftButtonDown += OnRightBottomSpacerMouseDown;
         }
 
         /// <summary>
@@ -125,6 +176,128 @@ namespace Alternet.UI
         public override ControlTypeId ControlKind => ControlTypeId.Slider;
 
         /// <summary>
+        /// Gets the thumb control of the slider.
+        /// </summary>
+        [Browsable(false)]
+        public SliderThumb ThumbControl => thumb;
+
+        /// <summary>
+        /// Gets the left/top spacer control of the slider.
+        /// </summary>
+        [Browsable(false)]
+        public AbstractControl LeftTopSpacer => leftTopSpacer;
+
+        /// <inheritdoc/>
+        public override HorizontalAlignment HorizontalAlignment
+        {
+            get
+            {
+                return HorizontalAlignment.Left;
+            }
+
+            set
+            {
+                base.HorizontalAlignment = value;
+            }
+        }
+
+        /// <inheritdoc/>
+        public override VerticalAlignment VerticalAlignment
+        {
+            get
+            {
+                return base.VerticalAlignment;
+            }
+
+            set
+            {
+                base.VerticalAlignment = value;
+            }
+        }
+
+        /// <summary>
+        /// Gets the right/bottom spacer control of the slider.
+        /// </summary>
+        [Browsable(false)]
+        public AbstractControl RightBottomSpacer => rightBottomSpacer;
+
+        /// <summary>
+        /// Gets the maximum possible size of the left/top spacer control.
+        /// </summary>
+        [Browsable(false)]
+        public virtual Coord MaxLeftTopSpacerSize
+        {
+            get
+            {
+                Coord result;
+
+                if (IsHorizontal)
+                {
+                    result = ClientSize.Width - ThumbControl.Width
+                    - ThumbControl.Margin.Horizontal - Padding.Horizontal;
+                }
+                else
+                {
+                    result = ClientSize.Height - ThumbControl.Height
+                    - ThumbControl.Margin.Vertical - Padding.Vertical;
+                }
+
+                return result;
+            }
+        }
+
+        /// <summary>
+        /// Gets the current size of the left/top spacer control.
+        /// </summary>
+        [Browsable(false)]
+        public virtual Coord LeftTopSpacerSize
+        {
+            get
+            {
+                if (IsHorizontal)
+                    return LeftTopSpacer.Width;
+                else
+                    return LeftTopSpacer.Height;
+            }
+
+            set
+            {
+                if (IsHorizontal)
+                    LeftTopSpacer.Width = value;
+                else
+                    LeftTopSpacer.Height = value;
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets a numeric value that represents the current position of the thumb
+        /// on the slider.
+        /// </summary>
+        /// <value>A numeric value that is within the <see cref="Minimum"/> and
+        /// <see cref="Maximum"/> range. The default value is 0.</value>
+        /// <remarks>The <see cref="Value"/> property contains the number that represents
+        /// the current position of the thumb on the slider.</remarks>
+        public virtual int Value
+        {
+            get
+            {
+                return val;
+            }
+
+            set
+            {
+                if (DisposingOrDisposed)
+                    return;
+                value = CoerceValue(value);
+                if (this.val == value)
+                    return;
+                this.val = value;
+                UpdateThumbPositionFromValue();
+                RaiseValueChanged();
+            }
+        }
+
+        /// <summary>
         /// Gets or sets a value indicating the horizontal or vertical orientation of the slider.
         /// </summary>
         /// <value>One of the <see cref="SliderOrientation"/> values.</value>
@@ -147,7 +320,45 @@ namespace Alternet.UI
                 if (orientation == value)
                     return;
                 orientation = value;
+
+                PerformLayoutAndInvalidate(() =>
+                {
+                    if (SuggestedSize.IsNanWidthOrHeight)
+                        SuggestedSize = SuggestedSize.WithSwappedWidthAndHeight();
+
+                    LeftTopSpacer.Dock = value == SliderOrientation.Horizontal
+                        ? DockStyle.Left : DockStyle.Top;
+                    ThumbControl.Dock = value == SliderOrientation.Horizontal
+                        ? DockStyle.Left : DockStyle.Top;
+                });
+
                 OrientationChanged?.Invoke(this, EventArgs.Empty);
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether the slider is horizontal.
+        /// </summary>
+        [Browsable(false)]
+        public bool IsHorizontal
+        {
+            get => Orientation == SliderOrientation.Horizontal;
+            set
+            {
+                Orientation = value ? SliderOrientation.Horizontal : SliderOrientation.Vertical;
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether the slider is vertical.
+        /// </summary>
+        [Browsable(false)]
+        public bool IsVertical
+        {
+            get => Orientation == SliderOrientation.Vertical;
+            set
+            {
+                Orientation = value ? SliderOrientation.Vertical : SliderOrientation.Horizontal;
             }
         }
 
@@ -160,7 +371,7 @@ namespace Alternet.UI
         /// </value>
         public virtual SliderTickStyle TickStyle
         {
-            get => tickStyle ?? DefaultTickStyle;
+            get => tickStyle;
             set
             {
                 if (DisposingOrDisposed)
@@ -168,41 +379,15 @@ namespace Alternet.UI
                 if (tickStyle == value)
                     return;
                 tickStyle = value;
+                PerformLayoutAndInvalidate();
                 TickStyleChanged?.Invoke(this, EventArgs.Empty);
             }
         }
 
         /// <summary>
-        /// Gets or sets a numeric value that represents the current position of the scroll box
-        /// on the slider.
+        /// Gets or sets the lower limit of the range this control is working with.
         /// </summary>
-        /// <value>A numeric value that is within the <see cref="Minimum"/> and
-        /// <see cref="Maximum"/> range. The default value is 0.</value>
-        /// <remarks>The <see cref="Value"/> property contains the number that represents
-        /// the current position of the scroll box on the slider.</remarks>
-        public virtual int Value
-        {
-            get
-            {
-                return val;
-            }
-
-            set
-            {
-                if (DisposingOrDisposed)
-                    return;
-                value = CoerceValue(value);
-                if (this.val == value)
-                    return;
-                this.val = value;
-                RaiseValueChanged();
-            }
-        }
-
-        /// <summary>
-        /// Gets or sets the lower limit of the range this <see cref="Slider"/> is working with.
-        /// </summary>
-        /// <value>The minimum value for the <see cref="Slider"/>. The default is 0.</value>
+        /// <value>The minimum value for the Value property. The default is 0.</value>
         /// <remarks>
         /// The minimum and maximum values of the Value property are specified by the
         /// <see cref="Minimum"/> and <see cref="Maximum"/> properties.
@@ -229,13 +414,14 @@ namespace Alternet.UI
                 minimum = value;
                 RaiseMinimumChanged(EventArgs.Empty);
                 Maximum = maximum;
+                Value = Value;
             }
         }
 
         /// <summary>
-        /// Gets or sets the upper limit of the range this <see cref="Slider"/> is working with.
+        /// Gets or sets the upper limit of the range this control is working with.
         /// </summary>
-        /// <value>The maximum value for the <see cref="Slider"/>. The default is 10.</value>
+        /// <value>The maximum value for the Value property. The default is 10.</value>
         /// <remarks>
         /// The minimum and maximum values of the Value property are specified by the
         /// <see cref="Minimum"/> and <see cref="Maximum"/> properties.
@@ -262,13 +448,13 @@ namespace Alternet.UI
                     return;
                 maximum = value;
                 RaiseMaximumChanged(EventArgs.Empty);
-                Value = value;
+                Value = Value;
             }
         }
 
         /// <summary>
         /// Gets or sets the value added to or subtracted from the <see cref="Value"/> property
-        /// when the scroll box is moved a small distance.
+        /// when the thumb is moved a small distance.
         /// </summary>
         /// <value>A numeric value. The default value is 1.</value>
         public virtual int SmallChange
@@ -287,13 +473,14 @@ namespace Alternet.UI
                 if (smallChange == value)
                     return;
                 smallChange = value;
+
                 SmallChangeChanged?.Invoke(this, EventArgs.Empty);
             }
         }
 
         /// <summary>
         /// Gets or sets a value to be added to or subtracted from the <see cref="Value"/> property
-        /// when the scroll box is moved a large distance.
+        /// when the thumb is moved a large distance.
         /// </summary>
         /// <value>A numeric value. The default is 5.</value>
         public virtual int LargeChange
@@ -317,12 +504,6 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Gets control handler.
-        /// </summary>
-        [Browsable(false)]
-        public new ISliderHandler Handler => (ISliderHandler)base.Handler;
-
-        /// <summary>
         /// Gets or sets a value that specifies the delta between ticks drawn on the control.
         /// </summary>
         /// <value>The numeric value representing the delta between ticks. The default is 1.</value>
@@ -337,9 +518,17 @@ namespace Alternet.UI
             {
                 if (DisposingOrDisposed)
                     return;
+                if (value < 1)
+                    value = 1;
                 if (tickFrequency == value)
                     return;
                 tickFrequency = value;
+
+                if (TickStyle != SliderTickStyle.None)
+                {
+                    Invalidate();
+                }
+
                 TickFrequencyChanged?.Invoke(this, EventArgs.Empty);
             }
         }
@@ -431,14 +620,9 @@ namespace Alternet.UI
         /// <summary>
         /// Clears the ticks.
         /// </summary>
-        /// <remarks>
-        /// Availability: only available for the Windows, Linux ports.
-        /// </remarks>
         public virtual void ClearTicks()
         {
-            if (DisposingOrDisposed)
-                return;
-            Handler.ClearTicks();
+            TickStyle = SliderTickStyle.None;
         }
 
         /// <summary>
@@ -468,6 +652,46 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Decreases the <see cref="Value"/> property by the <see cref="LargeChange"/> value.
+        /// </summary>
+        public virtual void DecValueLarge()
+        {
+            if (DisposingOrDisposed)
+                return;
+            Value -= LargeChange;
+        }
+
+        /// <summary>
+        /// Decreases the <see cref="Value"/> property by the <see cref="SmallChange"/> value.
+        /// </summary>
+        public virtual void DecValue()
+        {
+            if (DisposingOrDisposed)
+                return;
+            Value -= SmallChange;
+        }
+
+        /// <summary>
+        /// Increases the <see cref="Value"/> property by the <see cref="LargeChange"/> value.
+        /// </summary>
+        public virtual void IncValueLarge()
+        {
+            if (DisposingOrDisposed)
+                return;
+            Value += LargeChange;
+        }
+
+        /// <summary>
+        /// Increases the <see cref="Value"/> property by the <see cref="SmallChange"/> value.
+        /// </summary>
+        public virtual void IncValue()
+        {
+            if (DisposingOrDisposed)
+                return;
+            Value += SmallChange;
+        }
+
+        /// <summary>
         /// Raises the <see cref="ValueChanged"/> event and calls
         /// <see cref="OnValueChanged(EventArgs)"/>.
         /// </summary>
@@ -478,6 +702,88 @@ namespace Alternet.UI
             OnValueChanged(EventArgs.Empty);
             ValueChanged?.Invoke(this, EventArgs.Empty);
             Designer?.RaisePropertyChanged(this, nameof(Value));
+        }
+
+        /// <inheritdoc/>
+        public override SizeD GetPreferredSize(SizeD availableSize)
+        {
+            Coord WidthFromParent()
+            {
+                if (Parent is not null)
+                    return Parent.ClientSize.Width - Parent.Padding.Horizontal - Margin.Horizontal;
+                return 150;
+            }
+
+            Coord HeightFromParent()
+            {
+                if (Parent is not null)
+                    return Parent.ClientSize.Height - Parent.Padding.Vertical - Margin.Vertical;
+                return 150;
+            }
+
+            Coord? minimumHeight = null;
+
+            Coord GetMinimumHeight()
+            {
+                minimumHeight ??= MeasureCanvas.GetTextExtent("Wg", RealFont).Height;
+                return minimumHeight.Value;
+            }
+
+            var specifiedWidth = SuggestedWidth;
+            var specifiedHeight = SuggestedHeight;
+
+            if (IsHorizontal)
+            {
+                if (Coord.IsNaN(specifiedWidth))
+                {
+                    if (CoordUtils.IsInfinityOrNanOrMax(availableSize.Width))
+                        specifiedWidth = WidthFromParent();
+                    else
+                        specifiedWidth = Math.Min(WidthFromParent(), availableSize.Width);
+                }
+
+                if (Coord.IsNaN(specifiedHeight))
+                {
+                    specifiedHeight = MathUtils.Max(
+                        MinimumSize.Height,
+                        DefaultSliderMinimumSize,
+                        GetMinimumHeight() + Padding.Vertical + 1);
+                }
+            }
+            else
+            {
+                if (Coord.IsNaN(specifiedWidth))
+                {
+                    specifiedWidth = Math.Max(MinimumSize.Width, DefaultSliderMinimumSize);
+                }
+
+                if (Coord.IsNaN(specifiedHeight))
+                {
+                    if (CoordUtils.IsInfinityOrNanOrMax(availableSize.Height))
+                        specifiedHeight = HeightFromParent();
+                    else
+                        specifiedHeight = Math.Min(HeightFromParent(), availableSize.Height);
+                }
+            }
+
+            return (specifiedWidth, specifiedHeight);
+        }
+
+        /// <summary>
+        /// Sets the colors of the left/top and right/bottom spacers.
+        /// </summary>
+        /// <param name="leftTopSpacerColor">The color of the left/top spacer.
+        /// If <c>null</c>, the left/top spacer will use the parent's background color.</param>
+        /// <param name="rightBottomSpacerColor">The color of the right/bottom spacer.
+        /// If <c>null</c>, the right/bottom spacer will use the parent's background color.</param>
+        public virtual void SetSpacerColors(
+            Color? leftTopSpacerColor,
+            Color? rightBottomSpacerColor)
+        {
+            leftTopSpacer.ParentBackColor = leftTopSpacerColor is null;
+            leftTopSpacer.BackgroundColor = leftTopSpacerColor;
+            rightBottomSpacer.ParentBackColor = rightBottomSpacerColor is null;
+            rightBottomSpacer.BackgroundColor = rightBottomSpacerColor;
         }
 
         /// <summary>
@@ -505,6 +811,61 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Updates the <see cref="Value"/> property based on the current
+        /// position of the thumb control.
+        /// </summary>
+        protected virtual void UpdateValueFromThumbPosition()
+        {
+            if (LeftTopSpacerSize <= 0)
+            {
+                Value = Minimum;
+                return;
+            }
+
+            if (LeftTopSpacerSize >= MaxLeftTopSpacerSize)
+            {
+                Value = Maximum;
+                return;
+            }
+
+            var computedValue = ((Maximum - Minimum) * LeftTopSpacerSize) / MaxLeftTopSpacerSize;
+            var asInt = Convert.ToInt32(computedValue);
+            Value = Minimum + asInt;
+        }
+
+        /// <inheritdoc/>
+        protected override void OnSizeChanged(EventArgs e)
+        {
+            base.OnSizeChanged(e);
+            UpdateThumbPositionFromValue();
+        }
+
+        /// <summary>
+        /// Updates the position of the thumb control based on the current
+        /// state of the control.
+        /// </summary>
+        protected virtual void UpdateThumbPositionFromValue()
+        {
+            if (DisposingOrDisposed)
+                return;
+
+            if (Value <= Minimum)
+                LeftTopSpacerSize = 0;
+            else
+            if (Value >= Maximum)
+                LeftTopSpacerSize = MaxLeftTopSpacerSize;
+            else
+            {
+                var v = Value - Minimum;
+                var maxV = Maximum - Minimum;
+
+                var newSpacerSize = (v * MaxLeftTopSpacerSize) / maxV;
+
+                LeftTopSpacerSize = Math.Min(Math.Max(0, newSpacerSize), MaxLeftTopSpacerSize);
+            }
+        }
+
+        /// <summary>
         /// Coerces minimal value the have the valid range.
         /// </summary>
         /// <param name="value">Value to coerce.</param>
@@ -515,6 +876,68 @@ namespace Alternet.UI
             if (value < min)
                 return min;
             return value;
+        }
+
+        /// <summary>
+        /// Handles the mouse down event on the left/top spacer.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The mouse event data.</param>
+        protected virtual void OnLeftTopSpacerMouseDown(object? sender, MouseEventArgs e)
+        {
+            if (DisposingOrDisposed)
+                return;
+            if (IsHorizontal)
+                Value -= LargeChange;
+            else
+                Value += LargeChange;
+        }
+
+        /// <summary>
+        /// Handles the event triggered when the thumb splitter is moved.
+        /// </summary>
+        /// <remarks>This method is intended to be overridden in derived classes
+        /// to provide custom
+        /// handling for the thumb splitter movement event.</remarks>
+        /// <param name="sender">The source of the event, typically the control
+        /// that raised the event. Can be <see langword="null"/>.</param>
+        /// <param name="e">An instance of <see cref="SplitterEventArgs"/> containing
+        /// event data related to the splitter movement.</param>
+        protected virtual void OnThumbSplitterMoved(object? sender, SplitterEventArgs e)
+        {
+            if (DisposingOrDisposed)
+                return;
+        }
+
+        /// <summary>
+        /// Handles the event triggered when the thumb splitter is moving.
+        /// </summary>
+        /// <remarks>This method is intended to be overridden in derived classes
+        /// to provide custom
+        /// handling for the thumb splitter movement event.</remarks>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">An instance of <see cref="SplitterEventArgs"/> containing event
+        /// data related to the splitter movement.</param>
+        protected virtual void OnThumbSplitterMoving(object? sender, SplitterEventArgs e)
+        {
+            if (DisposingOrDisposed)
+                return;
+            UpdateValueFromThumbPosition();
+        }
+
+        /// <summary>
+        /// Handles the mouse down event on the right/bottom spacer.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The mouse event data.</param>
+        protected virtual void OnRightBottomSpacerMouseDown(object? sender, MouseEventArgs e)
+        {
+            if (DisposingOrDisposed)
+                return;
+            if (IsHorizontal)
+                Value += LargeChange;
+            else
+                Value -= LargeChange;
         }
 
         /// <summary>
@@ -534,15 +957,30 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        protected override IControlHandler CreateHandler()
-        {
-            return ControlFactory.Handler.CreateSliderHandler(this);
-        }
-
-        /// <inheritdoc/>
         protected override void OnHandleCreated(EventArgs e)
         {
             base.OnHandleCreated(e);
+        }
+
+        /// <summary>
+        /// Represents the slider thumb control.
+        /// </summary>
+        public class SliderThumb : Splitter
+        {
+            /// <summary>
+            /// Initializes a new instance of the <see cref="SliderThumb"/> class.
+            /// </summary>
+            public SliderThumb()
+            {
+                DefaultCursor = Cursors.Default;
+                HasBorder = true;
+            }
+
+            /// <inheritdoc/>
+            protected override Coord GetDefaultWidth()
+            {
+                return DefaultSliderThumbWidth;
+            }
         }
     }
 }

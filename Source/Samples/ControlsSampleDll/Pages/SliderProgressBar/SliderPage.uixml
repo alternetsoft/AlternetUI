@@ -74,7 +74,7 @@
 
       <Label Text="Tick Style:" VerticalAlignment="Center" Margin="20,0,0,0" IsTextLocalized="true"/>
       <EnumPicker Name="tickStyleComboBox" Margin="5,0,0,0"
-                VerticalAlignment="Center" />
+                VerticalAlignment="Center" IsEnabled="False"/>
     </StackPanel>
 
   </StackPanel>

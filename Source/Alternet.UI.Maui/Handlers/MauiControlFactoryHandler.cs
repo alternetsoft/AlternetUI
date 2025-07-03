@@ -118,11 +118,6 @@ namespace Alternet.UI
             return new PlessScrollBarHandler();
         }
 
-        IControlHandler IControlFactoryHandler.CreateSliderHandler(Slider control)
-        {
-            return new HandlerForDisposed();
-        }
-
         IStatusBarHandler IControlFactoryHandler.CreateStatusBarHandler(StatusBar control)
         {
             return new PlessStatusBarHandler();

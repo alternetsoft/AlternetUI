@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.ComponentModel;
 
 using Alternet.Drawing;
@@ -7,11 +7,11 @@ using Alternet.UI.Localization;
 namespace Alternet.UI
 {
     /// <summary>
-    /// Represents a generic slider control (also known as track bar).
+    /// Represents a slider control (also known as track bar).
     /// </summary>
     /// <remarks>
     /// <para>
-    /// This is a scrollable control similar to the scroll bar control.
+    /// The <see cref="Slider"/> is a scrollable control similar to the scroll bar control.
     /// You can configure ranges through which the value of the <see cref="Value"/> property of a
     /// slider scrolls by setting the <see cref="Minimum"/> property to specify the lower end
     /// of the range and the <see cref="Maximum"/> property to specify the upper end of the range.
@@ -29,7 +29,7 @@ namespace Alternet.UI
     [DefaultEvent("ValueChanged")]
     [DefaultBindingProperty("Value")]
     [ControlCategory("Common")]
-    public partial class GenericSlider : Border
+    public partial class Slider : Control
     {
         /// <summary>
         /// Represents the default tick style for a slider control.
@@ -48,28 +48,6 @@ namespace Alternet.UI
         /// </summary>
         public static bool? DefaultParentForeColor;
 
-        private readonly AbstractControl leftTopSpacer = new Panel()
-        {
-            Dock = DockStyle.Left,
-            /*
-            ParentBackColor = false,
-            BackColor = Color.Red,
-            */
-        };
-
-        private readonly AbstractControl rightBottomSpacer = new Panel()
-        {
-            Dock = DockStyle.Fill,
-            /*
-            BackColor = Color.Green,
-            ParentBackColor = false,
-            */
-        };
-
-        private readonly SliderThumb thumb = new SliderThumb()
-        {
-        };
-
         private int maximum = 10;
         private int minimum = 0;
         private int val = 0;
@@ -80,53 +58,24 @@ namespace Alternet.UI
         private SliderTickStyle? tickStyle;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="GenericSlider"/> class.
+        /// Initializes a new instance of the <see cref="Slider"/> class.
         /// </summary>
         /// <param name="parent">Parent of the control.</param>
-        public GenericSlider(Control parent)
+        public Slider(Control parent)
             : this()
         {
             Parent = parent;
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="GenericSlider"/> class.
+        /// Initializes a new instance of the <see cref="Slider"/> class.
         /// </summary>
-        public GenericSlider()
+        public Slider()
         {
-            Padding = 1;
-            thumb.Margin = 1;
-            thumb.MinSize = 0;
-            thumb.MinExtra = 2;
-            thumb.SizeDelta = 0;
-
-            MinimumSize = 20;
-
-            if (DefaultParentBackColor is not null)
+            if(DefaultParentBackColor is not null)
                 ParentBackColor = DefaultParentBackColor.Value;
-            if (DefaultParentForeColor is not null)
+            if(DefaultParentForeColor is not null)
                 ParentForeColor = DefaultParentForeColor.Value;
-
-            UseControlColors(true);
-
-            Layout = LayoutStyle.Dock;
-            leftTopSpacer.Width = 50;
-
-            rightBottomSpacer.Parent = this;
-            thumb.Parent = this;
-            leftTopSpacer.Parent = this;
-
-            thumb.SplitterMoved += (s, e) =>
-            {
-                if (DisposingOrDisposed)
-                    return;
-            };
-
-            thumb.SplitterMoving += (s, e) =>
-            {
-                if (DisposingOrDisposed)
-                    return;
-            };
         }
 
         /// <summary>
@@ -176,24 +125,6 @@ namespace Alternet.UI
         public override ControlTypeId ControlKind => ControlTypeId.Slider;
 
         /// <summary>
-        /// Gets the thumb control of the slider.
-        /// </summary>
-        [Browsable(false)]
-        public SliderThumb ThumbControl => thumb;
-
-        /// <summary>
-        /// Gets the left/top spacer control of the slider.
-        /// </summary>
-        [Browsable(false)]
-        public AbstractControl LeftTopSpacer => leftTopSpacer;
-
-        /// <summary>
-        /// Gets the right/bottom spacer control of the slider.
-        /// </summary>
-        [Browsable(false)]
-        public AbstractControl RightBottomSpacer => rightBottomSpacer;
-
-        /// <summary>
         /// Gets or sets a value indicating the horizontal or vertical orientation of the slider.
         /// </summary>
         /// <value>One of the <see cref="SliderOrientation"/> values.</value>
@@ -216,40 +147,7 @@ namespace Alternet.UI
                 if (orientation == value)
                     return;
                 orientation = value;
-                ThumbControl.Dock = value == SliderOrientation.Horizontal
-                    ? DockStyle.Left : DockStyle.Top;
-                Invalidate();
                 OrientationChanged?.Invoke(this, EventArgs.Empty);
-            }
-        }
-
-        /// <summary>
-        /// Gets or sets a value indicating whether the slider is horizontal.
-        /// </summary>
-        [Browsable(false)]
-        public bool IsHorizontal
-        {
-            get => Orientation == SliderOrientation.Horizontal;
-            set
-            {
-                if (DisposingOrDisposed)
-                    return;
-                Orientation = value ? SliderOrientation.Horizontal : SliderOrientation.Vertical;
-            }
-        }
-
-        /// <summary>
-        /// Gets or sets a value indicating whether the slider is vertical.
-        /// </summary>
-        [Browsable(false)]
-        public bool IsVertical
-        {
-            get => Orientation == SliderOrientation.Vertical;
-            set
-            {
-                if (DisposingOrDisposed)
-                    return;
-                Orientation = value ? SliderOrientation.Vertical : SliderOrientation.Horizontal;
             }
         }
 
@@ -271,18 +169,17 @@ namespace Alternet.UI
                     return;
                 tickStyle = value;
                 TickStyleChanged?.Invoke(this, EventArgs.Empty);
-                PerformLayoutAndInvalidate();
             }
         }
 
         /// <summary>
-        /// Gets or sets a numeric value that represents the current position of the thumb
+        /// Gets or sets a numeric value that represents the current position of the scroll box
         /// on the slider.
         /// </summary>
         /// <value>A numeric value that is within the <see cref="Minimum"/> and
         /// <see cref="Maximum"/> range. The default value is 0.</value>
         /// <remarks>The <see cref="Value"/> property contains the number that represents
-        /// the current position of the thumb on the slider.</remarks>
+        /// the current position of the scroll box on the slider.</remarks>
         public virtual int Value
         {
             get
@@ -303,9 +200,9 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Gets or sets the lower limit of the range this control is working with.
+        /// Gets or sets the lower limit of the range this <see cref="Slider"/> is working with.
         /// </summary>
-        /// <value>The minimum value for the Value property. The default is 0.</value>
+        /// <value>The minimum value for the <see cref="Slider"/>. The default is 0.</value>
         /// <remarks>
         /// The minimum and maximum values of the Value property are specified by the
         /// <see cref="Minimum"/> and <see cref="Maximum"/> properties.
@@ -336,9 +233,9 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Gets or sets the upper limit of the range this control is working with.
+        /// Gets or sets the upper limit of the range this <see cref="Slider"/> is working with.
         /// </summary>
-        /// <value>The maximum value for the Value property. The default is 10.</value>
+        /// <value>The maximum value for the <see cref="Slider"/>. The default is 10.</value>
         /// <remarks>
         /// The minimum and maximum values of the Value property are specified by the
         /// <see cref="Minimum"/> and <see cref="Maximum"/> properties.
@@ -371,7 +268,7 @@ namespace Alternet.UI
 
         /// <summary>
         /// Gets or sets the value added to or subtracted from the <see cref="Value"/> property
-        /// when the thumb is moved a small distance.
+        /// when the scroll box is moved a small distance.
         /// </summary>
         /// <value>A numeric value. The default value is 1.</value>
         public virtual int SmallChange
@@ -396,7 +293,7 @@ namespace Alternet.UI
 
         /// <summary>
         /// Gets or sets a value to be added to or subtracted from the <see cref="Value"/> property
-        /// when the thumb is moved a large distance.
+        /// when the scroll box is moved a large distance.
         /// </summary>
         /// <value>A numeric value. The default is 5.</value>
         public virtual int LargeChange
@@ -420,6 +317,12 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets control handler.
+        /// </summary>
+        [Browsable(false)]
+        public new ISliderHandler Handler => (ISliderHandler)base.Handler;
+
+        /// <summary>
         /// Gets or sets a value that specifies the delta between ticks drawn on the control.
         /// </summary>
         /// <value>The numeric value representing the delta between ticks. The default is 1.</value>
@@ -437,12 +340,6 @@ namespace Alternet.UI
                 if (tickFrequency == value)
                     return;
                 tickFrequency = value;
-
-                if(TickStyle != SliderTickStyle.None)
-                {
-                    Invalidate();
-                }
-
                 TickFrequencyChanged?.Invoke(this, EventArgs.Empty);
             }
         }
@@ -534,9 +431,14 @@ namespace Alternet.UI
         /// <summary>
         /// Clears the ticks.
         /// </summary>
+        /// <remarks>
+        /// Availability: only available for the Windows, Linux ports.
+        /// </remarks>
         public virtual void ClearTicks()
         {
-            TickStyle = SliderTickStyle.None;
+            if (DisposingOrDisposed)
+                return;
+            Handler.ClearTicks();
         }
 
         /// <summary>
@@ -632,30 +534,15 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
+        protected override IControlHandler CreateHandler()
+        {
+            return ControlFactory.Handler.CreateSliderHandler(this);
+        }
+
+        /// <inheritdoc/>
         protected override void OnHandleCreated(EventArgs e)
         {
             base.OnHandleCreated(e);
-        }
-
-        /// <summary>
-        /// Represents the slider thumb control.
-        /// </summary>
-        public class SliderThumb : Splitter
-        {
-            /// <summary>
-            /// Initializes a new instance of the <see cref="SliderThumb"/> class.
-            /// </summary>
-            public SliderThumb()
-            {
-                DefaultCursor = Cursors.Default;
-                HasBorder = true;
-            }
-
-            /// <inheritdoc/>
-            protected override Coord GetDefaultWidth()
-            {
-                return 15;
-            }
         }
     }
 }

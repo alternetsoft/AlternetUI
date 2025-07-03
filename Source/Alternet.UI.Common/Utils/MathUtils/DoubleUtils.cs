@@ -239,10 +239,42 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Determines whether the specified <paramref name="value"/> is either
+        /// infinite (positive or negative) or not a number (NaN).
+        /// </summary>
+        /// <param name="value">The double-precision floating-point number to evaluate.</param>
+        /// <returns>
+        /// <c>true</c> if <paramref name="value"/> is <see cref="double.NaN"/>,
+        /// <see cref="double.PositiveInfinity"/>, or <see cref="double.NegativeInfinity"/>;
+        /// otherwise, <c>false</c>.
+        /// </returns>
+        public static bool IsInfinityOrNan(double value)
+        {
+            return IsNaN(value) || double.IsInfinity(value);
+        }
+
+        /// <summary>
+        /// Determines whether the specified double-precision floating-point value is NaN,
+        /// infinite, or equal to the
+        /// maximum representable value.
+        /// </summary>
+        /// <remarks>This method can be used to validate or filter double values that are
+        /// not finite or exceed typical numeric ranges.</remarks>
+        /// <param name="value">The double-precision floating-point value to evaluate.</param>
+        /// <returns><see langword="true"/> if <paramref name="value"/> is NaN, infinite,
+        /// or equal to <see
+        /// cref="double.MaxValue"/>;  otherwise, <see langword="false"/>. </returns>
+        public static bool IsInfinityOrNanOrMax(double value)
+        {
+            return value == double.MaxValue || IsNaN(value) || double.IsInfinity(value);
+        }
+
+        /// <summary>
         /// Fast implementation of the <see cref="double.IsNaN"/> method.
         /// </summary>
-        /// <param name="value"></param>
-        /// <returns></returns>
+        /// <param name="value">The double-precision floating-point number to evaluate.</param>
+        /// <returns><c>true</c> if <paramref name="value"/> is <see cref="double.NaN"/>;
+        /// otherwise, <c>false</c>.</returns>
         public static bool IsNaN(double value)
         {
             // The standard CLR double.IsNaN() function is approximately 100 times slower
