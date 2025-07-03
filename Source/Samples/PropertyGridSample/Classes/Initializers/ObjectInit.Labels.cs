@@ -17,7 +17,7 @@ namespace PropertyGridSample
             label.ParentForeColor = false;
             label.Text = "GenericLabel";
             label.HorizontalAlignment = HorizontalAlignment.Left;
-            label.ForegroundColor = Color.Sienna;
+            label.ForegroundColor = LightDarkColors.Blue;
             label.MnemonicCharIndex = 3;
             label.ImageVisible = true;
             label.TextAlignment = HVAlignment.Center;

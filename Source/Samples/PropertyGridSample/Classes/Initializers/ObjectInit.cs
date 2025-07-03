@@ -16,217 +16,23 @@ namespace PropertyGridSample
     public partial class ObjectInit
     {
         private const int defaultListHeight = 250;
-        public const string LoremIpsum =
-            "Lorem ipsum dolor sit amet,\nconsectetur adipiscing elit. " +
-            "Suspendisse tincidunt orci vitae arcu congue commodo. " +
-            "Proin fermentum rhoncus dictum.\n";
+
+        public static string LoremIpsum =
+"Beneath a sky stitched with teacup clouds, the girl tiptoed across checkerboard moss. " +
+"Each step made a peculiar sound—like libraries whispering to mushrooms. " +
+"Trees bent inward to eavesdrop, their leaves rustling riddles only crickets could decipher." +
+Environment.NewLine + Environment.NewLine +
+"The map she carried was drawn entirely in nonsense, but somehow it felt correct. " +
+"It pulsed faintly in her hands, humming with ink made from stolen dreams and marmalade." +
+Environment.NewLine + Environment.NewLine +
+"“Left is usually right,” said the rabbit-shaped shadow, bowing courteously. " +
+"“Unless, of course, you're upside-down.”" +
+Environment.NewLine + Environment.NewLine +
+"And so, with a smile too wide for logic, she stepped forward—into a world where clocks " +
+"melted politely and hats outgrew heads.";
 
         private static ImageLists? imageLists;
         private static SizeD defaultListSize = new(defaultListHeight, defaultListHeight);
-
-        public static ImageLists LoadImageLists()
-        {
-            imageLists ??= LoadImageListsCore();
-
-            return imageLists;
-        }
-
-        public static readonly Dictionary<Type, Action<Object>> Actions = new();
-
-        internal static string AsmResPrefix
-            = AssemblyUtils.GetAssemblyResPrefix(typeof(ObjectInit).Assembly)+"Resources.";
-        internal static string UrlResPrefix
-            = AssemblyUtils.GetImageUrlInAssembly(typeof(ObjectInit).Assembly, "Resources.");
-        internal static string ResPrefixImage = $"{UrlResPrefix}logo128x128.png";
-
-        internal static readonly Image DefaultImage = Image.FromUrl(ResPrefixImage);
-
-        private static int newItemIndex = 0;
-
-        public static void SetBackgrounds(AbstractControl control)
-        {
-            if(control.IsDarkBackground)
-            {
-                control.Backgrounds = new()
-                {
-                    Normal = Color.PaleTurquoise.Darker().AsBrush,
-                    Hovered = Color.IndianRed.Darker().AsBrush,
-                    Disabled = Color.DarkGray.Darker().AsBrush,
-                    Pressed = Color.Cornsilk.Darker().AsBrush,
-                    Focused = Color.DarkOrange.Darker().AsBrush,
-                };                
-            }
-            else
-            {
-                control.Backgrounds = new()
-                {
-                    Normal = Color.PaleTurquoise.AsBrush,
-                    Hovered = Color.IndianRed.AsBrush,
-                    Disabled = Color.DarkGray.AsBrush,
-                    Pressed = Color.Cornsilk.AsBrush,
-                    Focused = Color.DarkOrange.AsBrush,
-                };
-            }            
-        }
-
-        public static void InitPageSetupDialog(object control)
-        {
-            if (control is not PageSetupDialog dialog)
-                return;
-            dialog.Document = CreatePrintDocument();
-        }
-
-        public static void InitPrintPreviewDialog(object control)
-        {
-            if (control is not PrintPreviewDialog dialog)
-                return;
-            dialog.Document = CreatePrintDocument();
-        }
-
-        public static void InitPrintDialog(object control)
-        {
-            if (control is not PrintDialog dialog)
-                return;
-            dialog.Document = CreatePrintDocument();
-        }
-
-        public static PrintDocument CreatePrintDocument()
-        {
-            var document = new PrintDocument
-            {
-                OriginAtMargins = false,
-                DocumentName = "Sample document",
-            };
-
-            document.PrinterSettings.FromPage = 1;
-            document.PrinterSettings.MinimumPage = 1;
-
-            var maxPage = 3 + 1;
-            document.PrinterSettings.MaximumPage = maxPage;
-            document.PrinterSettings.ToPage = maxPage;
-
-            document.PageSettings.Color = true;
-            document.PageSettings.Margins = 20;
-
-            document.PrintPage += Document_PrintPage;
-
-            return document;
-
-            void Document_PrintPage(object? sender, PrintPageEventArgs e)
-            {
-                int pageNumber = e.PageNumber;
-
-                var bounds = new RectD(new PointD(), e.PrintablePageBounds.Size);
-
-                if (pageNumber == 1)
-                {
-                    PrintingSample.PrintingMainWindow.DrawFirstPage(
-                        e.DrawingContext,
-                        bounds);
-                }
-                else
-                {
-                    PrintingSample.PrintingMainWindow.DrawAdditionalPage(
-                        e.DrawingContext,
-                        pageNumber,
-                        bounds);
-                }
-
-                var v = 3;
-
-                e.HasMorePages = pageNumber - 1 < v;
-            }
-        }
-
-        public static void InitDatePicker(DatePicker control)
-        {
-        }
-
-        public static void InitTimePicker(TimePicker control)
-        {
-        }
-
-        public static void InitListPicker(ListPicker control)
-        {
-            control.Add("Item 1");
-            control.Add("Item 2");
-            control.Add("Item 3");
-            control.Add("Item 4");
-            control.Add("Item 5");
-            control.Add("Item 6");
-            control.Add("Item 7");
-            control.Add("Item 8");
-
-            control.Value = "Item 4";
-        }
-
-        public static void InitEnumPicker(EnumPicker control)
-        {
-            control.EnumType = typeof(FontStyle);
-            control.Value = FontStyle.Regular;
-        }
-
-        public static void InitGenericSlider(Slider control)
-        {
-            control.LeftTopSpacer.SizeChanged+=(s, e) =>
-            {
-                if(control.IsHorizontal)
-                {
-                    App.LogReplace(
-                        $"GenericSlider: V: {control.Value}, LTS: {control.LeftTopSpacer.Width}, W:{control.MaxLeftTopSpacerSize}",
-                        "GenericSlider:");
-                }
-            };
-
-            control.ValueChanged += (s,e) =>
-            {
-            };
-        }
-
-        public static void InitTextBoxWithListPopup(TextBoxWithListPopup control)
-        {
-            var btn = control.ButtonCombo;
-
-            btn.Add("Item 1");
-            btn.Add("Item 2");
-            btn.Add("Item 3");
-            btn.Add("Item 4");
-            btn.Add("Item 5");
-            btn.Add("Item 6");
-            btn.Add("Item 7");
-            btn.Add("Item 8");
-
-            control.SyncTextAndComboButton();
-        }
-
-        public static void InitFontNamePicker(FontNamePicker control)
-        {
-        }
-
-        public static void InitColorPicker(ColorPicker control)
-        {
-        }
-
-        public static void InitRichToolTip(RichToolTip control)
-        {
-            control.HorizontalAlignment = HorizontalAlignment.Stretch;
-            control.MaxWidth = 450;
-
-            control.ShowToolTip(
-                "This is title",
-                LoremIpsum,
-                MessageBoxIcon.Information,
-                0);
-        }
-
-        public static void AddAction<T>(Action<T> action)
-        {
-            Actions.Add(typeof(T), (o) =>
-            {
-                if (o is T tObject)
-                    action(tObject);
-            });
-        }
 
         static ObjectInit()
         {
@@ -421,6 +227,212 @@ namespace PropertyGridSample
             {
                 PanelOkCancelButtons control = (c as PanelOkCancelButtons)!;
                 control.HasBorder = true;
+            });
+        }
+
+        public static ImageLists LoadImageLists()
+        {
+            imageLists ??= LoadImageListsCore();
+
+            return imageLists;
+        }
+
+        public static readonly Dictionary<Type, Action<Object>> Actions = new();
+
+        internal static string AsmResPrefix
+            = AssemblyUtils.GetAssemblyResPrefix(typeof(ObjectInit).Assembly)+"Resources.";
+        internal static string UrlResPrefix
+            = AssemblyUtils.GetImageUrlInAssembly(typeof(ObjectInit).Assembly, "Resources.");
+        internal static string ResPrefixImage = $"{UrlResPrefix}logo128x128.png";
+
+        internal static readonly Image DefaultImage = Image.FromUrl(ResPrefixImage);
+
+        private static int newItemIndex = 0;
+
+        public static void SetBackgrounds(AbstractControl control)
+        {
+            if(control.IsDarkBackground)
+            {
+                control.Backgrounds = new()
+                {
+                    Normal = Color.PaleTurquoise.Darker().AsBrush,
+                    Hovered = Color.IndianRed.Darker().AsBrush,
+                    Disabled = Color.DarkGray.Darker().AsBrush,
+                    Pressed = Color.Cornsilk.Darker().AsBrush,
+                    Focused = Color.DarkOrange.Darker().AsBrush,
+                };                
+            }
+            else
+            {
+                control.Backgrounds = new()
+                {
+                    Normal = Color.PaleTurquoise.AsBrush,
+                    Hovered = Color.IndianRed.AsBrush,
+                    Disabled = Color.DarkGray.AsBrush,
+                    Pressed = Color.Cornsilk.AsBrush,
+                    Focused = Color.DarkOrange.AsBrush,
+                };
+            }            
+        }
+
+        public static void InitPageSetupDialog(object control)
+        {
+            if (control is not PageSetupDialog dialog)
+                return;
+            dialog.Document = CreatePrintDocument();
+        }
+
+        public static void InitPrintPreviewDialog(object control)
+        {
+            if (control is not PrintPreviewDialog dialog)
+                return;
+            dialog.Document = CreatePrintDocument();
+        }
+
+        public static void InitPrintDialog(object control)
+        {
+            if (control is not PrintDialog dialog)
+                return;
+            dialog.Document = CreatePrintDocument();
+        }
+
+        public static PrintDocument CreatePrintDocument()
+        {
+            var document = new PrintDocument
+            {
+                OriginAtMargins = false,
+                DocumentName = "Sample document",
+            };
+
+            document.PrinterSettings.FromPage = 1;
+            document.PrinterSettings.MinimumPage = 1;
+
+            var maxPage = 3 + 1;
+            document.PrinterSettings.MaximumPage = maxPage;
+            document.PrinterSettings.ToPage = maxPage;
+
+            document.PageSettings.Color = true;
+            document.PageSettings.Margins = 20;
+
+            document.PrintPage += Document_PrintPage;
+
+            return document;
+
+            void Document_PrintPage(object? sender, PrintPageEventArgs e)
+            {
+                int pageNumber = e.PageNumber;
+
+                var bounds = new RectD(new PointD(), e.PrintablePageBounds.Size);
+
+                if (pageNumber == 1)
+                {
+                    PrintingSample.PrintingMainWindow.DrawFirstPage(
+                        e.DrawingContext,
+                        bounds);
+                }
+                else
+                {
+                    PrintingSample.PrintingMainWindow.DrawAdditionalPage(
+                        e.DrawingContext,
+                        pageNumber,
+                        bounds);
+                }
+
+                var v = 3;
+
+                e.HasMorePages = pageNumber - 1 < v;
+            }
+        }
+
+        public static void InitDatePicker(DatePicker control)
+        {
+        }
+
+        public static void InitTimePicker(TimePicker control)
+        {
+        }
+
+        public static void InitListPicker(ListPicker control)
+        {
+            control.Add("Item 1");
+            control.Add("Item 2");
+            control.Add("Item 3");
+            control.Add("Item 4");
+            control.Add("Item 5");
+            control.Add("Item 6");
+            control.Add("Item 7");
+            control.Add("Item 8");
+
+            control.Value = "Item 4";
+        }
+
+        public static void InitEnumPicker(EnumPicker control)
+        {
+            control.EnumType = typeof(FontStyle);
+            control.Value = FontStyle.Regular;
+        }
+
+        public static void InitGenericSlider(Slider control)
+        {
+            control.LeftTopSpacer.SizeChanged+=(s, e) =>
+            {
+                if(control.IsHorizontal)
+                {
+                    App.LogReplace(
+                        $"GenericSlider: V: {control.Value}, LTS: {control.LeftTopSpacer.Width}, W:{control.MaxLeftTopSpacerSize}",
+                        "GenericSlider:");
+                }
+            };
+
+            control.ValueChanged += (s,e) =>
+            {
+            };
+        }
+
+        public static void InitTextBoxWithListPopup(TextBoxWithListPopup control)
+        {
+            control.Text = "some text";
+
+            var btn = control.ButtonCombo;
+
+            btn.Add("Item 1");
+            btn.Add("Item 2");
+            btn.Add("Item 3");
+            btn.Add("Item 4");
+            btn.Add("Item 5");
+            btn.Add("Item 6");
+            btn.Add("Item 7");
+            btn.Add("Item 8");
+
+            control.SyncTextAndComboButton();
+        }
+
+        public static void InitFontNamePicker(FontNamePicker control)
+        {
+        }
+
+        public static void InitColorPicker(ColorPicker control)
+        {
+        }
+
+        public static void InitRichToolTip(RichToolTip control)
+        {
+            control.HorizontalAlignment = HorizontalAlignment.Stretch;
+            control.MaxWidth = 450;
+
+            control.ShowToolTip(
+                "This is title",
+                LoremIpsum,
+                MessageBoxIcon.Information,
+                0);
+        }
+
+        public static void AddAction<T>(Action<T> action)
+        {
+            Actions.Add(typeof(T), (o) =>
+            {
+                if (o is T tObject)
+                    action(tObject);
             });
         }
 

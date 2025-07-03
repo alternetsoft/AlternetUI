@@ -100,13 +100,13 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Occurs when the drop-down portion of the <see cref="ComboBox" /> is no longer visible.
+        /// Occurs when the drop-down portion of the control is no longer visible.
         /// </summary>
         [Category("Behavior")]
         public event EventHandler? DropDownClosed;
 
         /// <summary>
-        /// Occurs when the drop-down portion of a <see cref="ComboBox" /> is shown.
+        /// Occurs when the drop-down portion of the control is shown.
         /// </summary>
         [Category("Behavior")]
         public event EventHandler? DropDown;
