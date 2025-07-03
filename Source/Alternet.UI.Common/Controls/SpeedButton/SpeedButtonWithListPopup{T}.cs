@@ -52,6 +52,35 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Occurs when a lookup operation is performed and provides the resulting value.
+        /// Implementation of this event should lookup 'Value' in the <see cref="ListBox"/>
+        /// control and assign index of the found item to result
+        /// in the event data.
+        /// </summary>
+        /// <remarks>This event is triggered to notify subscribers of the outcome of a lookup operation.
+        /// The event arguments contain the lookup result, which may be null
+        /// if the operation fails or no value is found.</remarks>
+        public event EventHandler<BaseEventArgs<int?>>? LookupValue;
+
+        /// <summary>
+        /// Gets or sets a value indicating whether to perform lookup by value
+        /// when popup window is opened.
+        /// </summary>
+        public virtual bool LookupByValue { get; set; } = true;
+
+        /// <summary>
+        /// Gets or sets a value indicating whether to perform an exact text lookup
+        /// when popup window is opened.
+        /// </summary>
+        public virtual bool LookupExactText { get; set; } = true;
+
+        /// <summary>
+        /// Gets or sets a value indicating whether to ignore case when looking up items
+        /// in the popup window.
+        /// </summary>
+        public virtual bool LookupIgnoreCase { get; set; } = true;
+
+        /// <summary>
         /// Gets or sets the kind of popup window used by the control.
         /// Default is <c>null</c>.
         /// If not set, the <see cref="DefaultPopupKind"/> is used.
@@ -110,6 +139,10 @@ namespace Alternet.UI
             {
                 items = value;
                 simpleItems = null;
+                if(IsPopupWindowCreated)
+                {
+                    ListBox.SetItemsFastest(items);
+                }
             }
         }
 
@@ -393,9 +426,38 @@ namespace Alternet.UI
                 if (Items is null)
                     ListBox.RemoveAll();
                 else
-                    ListBox.SetItemsFast(Items, VirtualListBox.SetItemsKind.ChangeField);
+                    ListBox.SetItemsFastest(Items);
 
-                var index = ListBox.FindItemIndexWithValue(Value);
+                int? index = null;
+
+                if(LookupValue is not null)
+                {
+                    var lookupEventArgs = new BaseEventArgs<int?>();
+                    LookupValue(this, lookupEventArgs);
+                    index = lookupEventArgs.Value;
+                }
+
+                if (index is null)
+                {
+                    var v = Value;
+
+                    if (LookupByValue && v is not null)
+                    {
+                        index = ListBox.FindItemIndexWithValue(v);
+                    }
+
+                    var s = Text;
+
+                    if (index is null && !string.IsNullOrEmpty(s))
+                    {
+                        index = ListBox.FindAndSelect(
+                         s,
+                         startIndex: 0,
+                         exact: LookupExactText,
+                         ignoreCase: LookupIgnoreCase);
+                    }
+                }
+
                 ListBox.SelectItemAndScroll(index);
                 PopupWindow.ShowPopup(PopupOwner ?? this);
 
