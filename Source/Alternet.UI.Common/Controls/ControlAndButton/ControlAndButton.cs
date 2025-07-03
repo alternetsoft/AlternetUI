@@ -60,6 +60,7 @@ namespace Alternet.UI
         private ObjectUniqueId? idButtonMinus;
         private KnownButton? comboBoxKnownImage;
         private SvgImage? comboBoxSvg;
+        private AbstractControl? substituteControl;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ControlAndButton"/> class
@@ -88,6 +89,11 @@ namespace Alternet.UI
                 mainControl = CreateControl();
                 mainControl.Alignment = (HorizontalAlignment.Fill, VerticalAlignment.Center);
                 mainControl.Parent = this;
+
+                mainControl.TextChanged += (s, e) =>
+                {
+                    UpdateSubstituteControlText();
+                };
 
                 buttons = new();
                 buttons.Alignment = (HorizontalAlignment.Right, VerticalAlignment.Center);
@@ -128,6 +134,68 @@ namespace Alternet.UI
         /// Occurs when button is clicked.
         /// </summary>
         public event EventHandler<ControlAndButtonClickEventArgs>? ButtonClick;
+
+        /// <summary>
+        /// Gets whether substitute control is created.
+        /// </summary>
+        [Browsable(false)]
+        public bool IsSubstituteControlCreated => substituteControl != null;
+
+        /// <summary>
+        /// Gets or sets whether substitute control is used instead of the main child control.
+        /// </summary>
+        public virtual bool UseSubstituteControl
+        {
+            get => !mainControl.Visible;
+            set
+            {
+                if (value)
+                {
+                    DoInsideLayout(() =>
+                    {
+                        MainControl.Visible = false;
+                        SubstituteControl.Visible = true;
+                    });
+                }
+                else
+                {
+                    DoInsideLayout(() =>
+                    {
+                        substituteControl?.SetVisible(false);
+                        MainControl.Visible = true;
+                    });
+                }
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets substitute control which can be used instead of the main child control.
+        /// </summary>
+        [Browsable(false)]
+        public virtual AbstractControl SubstituteControl
+        {
+            get
+            {
+                if (substituteControl != null)
+                    return substituteControl;
+                SubstituteControl = CreateSubstituteControl();
+                return substituteControl!;
+            }
+
+            set
+            {
+                substituteControl = value;
+                if (substituteControl != null)
+                {
+                    substituteControl.Visible = false;
+                    substituteControl.Alignment = MainControl.Alignment;
+                    substituteControl.Parent = this;
+                    substituteControl.MouseLeftButtonDown -= OnSubstituteControlMouseLeftButtonDown;
+                    substituteControl.MouseLeftButtonDown += OnSubstituteControlMouseLeftButtonDown;
+                    UpdateSubstituteControlText();
+                }
+            }
+        }
 
         /// <summary>
         /// Gets or sets 'Ellipsis' button image as <see cref="UI.KnownButton"/>.
@@ -687,6 +755,15 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Called when mouse left button is pressed on the substitute control.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The event data.</param>
+        protected virtual void OnSubstituteControlMouseLeftButtonDown(object sender, MouseEventArgs e)
+        {
+        }
+
+        /// <summary>
         /// Raised when <see cref="AutoBackColor"/> property is changed.
         /// </summary>
         protected virtual void RaiseAutoBackColorChanged()
@@ -727,6 +804,16 @@ namespace Alternet.UI
         protected abstract AbstractControl CreateControl();
 
         /// <summary>
+        /// Creates substitute control which can be optionally used instead of the main child control.
+        /// By default, it is <see cref="GenericLabel"/>.
+        /// </summary>
+        /// <returns></returns>
+        protected virtual AbstractControl CreateSubstituteControl()
+        {
+            return new GenericLabel();
+        }
+
+        /// <summary>
         /// Called when combo box image needs to be updated. Assigns combo box image
         /// using different properties of the control.
         /// </summary>
@@ -763,6 +850,18 @@ namespace Alternet.UI
         protected virtual Type GetBtnPlusMinusType()
         {
             return typeof(SpeedButton);
+        }
+
+        /// <summary>
+        /// Updates the text of the substitute control to match the text of the main control.
+        /// </summary>
+        /// <remarks>This method synchronizes the text of the substitute control with
+        /// the text of the main control. It is intended to be overridden in derived
+        /// classes to customize the behavior.</remarks>
+        protected virtual void UpdateSubstituteControlText()
+        {
+            if (substituteControl != null)
+                substituteControl.Text = mainControl.Text;
         }
 
         /// <summary>
