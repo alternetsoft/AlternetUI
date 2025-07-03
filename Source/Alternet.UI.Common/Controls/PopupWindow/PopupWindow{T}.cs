@@ -87,6 +87,12 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets or sets the increment of the popup window location.
+        /// This is used to ensure that the popup window does not overlap owner control.
+        /// </summary>
+        public virtual SizeD PopupLocationIncrement { get; set; }
+
+        /// <summary>
         /// Gets or sets whether 'Cancel' button is visible.
         /// </summary>
         public virtual bool ShowCancelButton
@@ -334,7 +340,8 @@ namespace Alternet.UI
         {
             PopupOwner = control;
 
-            var posDip = control.ClientToScreen(new PointD(0, 0));
+            var posDip = control.ClientToScreen(PointD.Empty);
+            posDip += PopupLocationIncrement;
             var szDip = control.Size;
             var sz = (0, szDip.Height);
 
