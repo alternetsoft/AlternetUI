@@ -407,52 +407,7 @@ namespace PropertyGridSample
 
                     App.AddIdleTask(() =>
                     {
-                        panel.RemoveActions();
-                        panel.AddActions(type);
-
-                        var methods = AssemblyUtils.EnumMethods(type);
-                        foreach (var method in methods)
-                        {
-                            if (method.IsSpecialName)
-                                continue;
-                            if (method.IsGenericMethod)
-                                continue;
-                            var retParam = method.ReturnParameter;
-                            var resultIsVoid = retParam.ParameterType == typeof(void);
-
-                            var methodParameters = method.GetParameters();
-                            if (methodParameters.Length > 0)
-                                continue;
-                            var browsable = AssemblyUtils.GetBrowsable(method);
-                            if (!browsable)
-                                continue;
-                            var methodName = $"{method.Name}()";
-                            var methodNameForDisplay = $"<b>{methodName}</b>";
-                            
-                            if (resultIsVoid)
-                            {
-                                methodNameForDisplay = $"{methodNameForDisplay} : void";
-                            }
-                            else
-                            {
-                                var retParamDisplayName =
-                                AssemblyUtils.GetTypeDisplayName(retParam.ParameterType);
-
-                                methodNameForDisplay
-                                = $"{methodNameForDisplay} : {retParamDisplayName}";
-                            }
-
-                            var item = panel.AddAction(methodName, () =>
-                            {
-                                var selectedControl = GetSelectedControl<Control>();
-                                if (selectedControl is null)
-                                    return;
-                                AssemblyUtils.InvokeMethodAndLogResult(selectedControl, method);
-                            });
-
-                            item.DisplayText = methodNameForDisplay;
-                            item.TextHasBold = true;
-                        }
+                        panel.SetMethodsAndActions(type, GetSelectedControl<Control>());
                     });
                 }
 

@@ -98,7 +98,40 @@ namespace ControlsSample
             };
 
             popup.Add("Log Information", Log);
-            
+
+            void ZoomFont(int incValue)
+            {
+                toolTip.HideToolTip();
+                toolTip.Font = toolTip.RealFont.WithSize(toolTip.RealFont.Size + incValue);
+                toolTip.Font.ResetSkiaFont();
+                ShowToolTipButton_Click(this, EventArgs.Empty);
+            }
+
+            popup.Add("Zoom in font", () =>
+            {
+                ZoomFont(1);
+            });
+
+            popup.Add("Zoom out font", () =>
+            {
+                ZoomFont(-1);
+            });
+
+            popup.Add("Reset SkiaFont and reshow", () =>
+            {
+                toolTip.HideToolTip();
+                toolTip.RealFont.ResetSkiaFont();
+                ShowToolTipButton_Click(this, EventArgs.Empty);
+            });
+
+            popup.Add("Show SkiaSharp Font defaults", () =>
+            {
+                SkiaFontSettings.ShowFontSettingsDialog(() =>
+                {
+                    toolTip.HideToolTip();
+                });
+            });
+
             popup.Add("Next Alignment", NextAligment);
 
             atCenterCheckBox.CheckedChanged += (s, e) =>

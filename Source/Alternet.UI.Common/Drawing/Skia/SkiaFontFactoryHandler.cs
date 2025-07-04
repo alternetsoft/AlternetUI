@@ -74,7 +74,7 @@ namespace Alternet.Drawing
         /// <summary>
         /// Gets generic font family name.
         /// </summary>
-        /// <param name="genericFamily">Generci font family id.</param>
+        /// <param name="genericFamily">Generic font family id.</param>
         /// <returns></returns>
         public virtual string GetFontFamilyName(GenericFontFamily genericFamily)
             => SkiaUtils.GetFontFamilyName(genericFamily);

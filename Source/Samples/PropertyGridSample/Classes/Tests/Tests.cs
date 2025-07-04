@@ -54,6 +54,21 @@ namespace PropertyGridSample
             InitTestsButton();
             InitTestsSpeedButton();
             InitTestsTabControl();
+            InitTestsSlider();
+
+            void InitTestsSlider()
+            {
+                AddControlAction<Slider>("SetSpacerColor", (c) =>
+                {
+                    c.SetSpacerColor(LightDarkColors.Red);
+                });
+
+                AddControlAction<Slider>("SetSliderRange(50,120)", (s) =>
+                {
+                    s.Minimum = 50;
+                    s.Maximum = 120;
+                });
+            }
 
             void InitTestsTabControl()
             {
