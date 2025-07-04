@@ -30,6 +30,31 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Shows properties popup window with specified object as a source of properties.
+        /// </summary>
+        /// <param name="propSource">The object to retrieve properties from.</param>
+        /// <param name="onClose">The optional callback to be invoked
+        /// when the dialog is accepted.</param>
+        public static void ShowPropertiesPopup(object propSource, Action? onClose = null)
+        {
+            var dialog = PopupPropertyGrid.CreatePropertiesPopup();
+            dialog.MainControl.SetProps(propSource);
+            dialog.ShowPopup(
+                HorizontalAlignment.Right,
+                VerticalAlignment.Top,
+                null,
+                shrinkSize: true);
+            dialog.ShowPopup();
+            dialog.AfterHide += (s, e) =>
+            {
+                if (dialog.IsPopupAccepted)
+                {
+                    onClose?.Invoke();
+                }
+            };
+        }
+
+        /// <summary>
         /// Creates properties popup window.
         /// </summary>
         /// <remarks>
