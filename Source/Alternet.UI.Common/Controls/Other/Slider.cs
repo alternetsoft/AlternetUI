@@ -32,6 +32,11 @@ namespace Alternet.UI
     public partial class Slider : Border
     {
         /// <summary>
+        /// Represents the default size of the left/top and right/bottom indicators.
+        /// </summary>
+        public static Coord DefaultIndicatorSize = 6;
+
+        /// <summary>
         /// Represents the default minimum size for a slider control.
         /// </summary>
         /// <remarks>This value is used to define the smallest allowable size for a slider.
@@ -47,7 +52,7 @@ namespace Alternet.UI
         /// <summary>
         /// Represents the default tick style for a slider control.
         /// </summary>
-        public static SliderTickStyle DefaultTickStyle = SliderTickStyle.BottomRight;
+        public static SliderTickStyle DefaultTickStyle = SliderTickStyle.None;
 
         /// <summary>
         /// Gets or sets a default value of the
@@ -62,6 +67,8 @@ namespace Alternet.UI
         public static bool? DefaultParentForeColor;
 
         private readonly AbstractControl leftTopSpacer;
+        private readonly AbstractControl leftTopIndicator;
+        private readonly AbstractControl rightBottomIndicator;
         private readonly SliderThumb thumb;
 
         private int maximum = 10;
@@ -88,6 +95,13 @@ namespace Alternet.UI
         /// </summary>
         public Slider()
         {
+            leftTopIndicator = CreateIndicator(isLeftTop: true);
+            leftTopIndicator.Dock = DockStyle.Top;
+            leftTopIndicator.MinimumSize = DefaultIndicatorSize;
+            rightBottomIndicator = CreateIndicator(isLeftTop: false);
+            rightBottomIndicator.Dock = DockStyle.Bottom;
+            rightBottomIndicator.MinimumSize = DefaultIndicatorSize;
+
             leftTopSpacer = CreateSpacer();
             leftTopSpacer.ParentBackColor = true;
             leftTopSpacer.Dock = DockStyle.Left;
@@ -114,8 +128,12 @@ namespace Alternet.UI
             Layout = LayoutStyle.Dock;
             leftTopSpacer.Width = 0;
 
+            UpdateIndicatorVisibility();
+
             thumb.Parent = this;
             leftTopSpacer.Parent = this;
+            leftTopIndicator.Parent = this;
+            rightBottomIndicator.Parent = this;
 
             thumb.SplitterMoved += OnThumbSplitterMoved;
             thumb.SplitterMoving += OnThumbSplitterMoving;
@@ -313,10 +331,21 @@ namespace Alternet.UI
                     if (SuggestedSize.IsNanWidthOrHeight)
                         SuggestedSize = SuggestedSize.WithSwappedWidthAndHeight();
 
-                    LeftTopSpacer.Dock = value == SliderOrientation.Horizontal
-                        ? DockStyle.Left : DockStyle.Top;
-                    ThumbControl.Dock = value == SliderOrientation.Horizontal
-                        ? DockStyle.Left : DockStyle.Top;
+                    var isHorizontal = value == SliderOrientation.Horizontal;
+                    var dockStyle = isHorizontal ? DockStyle.Left : DockStyle.Top;
+                    LeftTopSpacer.Dock = dockStyle;
+                    ThumbControl.Dock = dockStyle;
+
+                    if (isHorizontal)
+                    {
+                        leftTopIndicator.Dock = DockStyle.Top;
+                        rightBottomIndicator.Dock = DockStyle.Bottom;
+                    }
+                    else
+                    {
+                        leftTopIndicator.Dock = DockStyle.Left;
+                        rightBottomIndicator.Dock = DockStyle.Right;
+                    }
                 });
 
                 OrientationChanged?.Invoke(this, EventArgs.Empty);
@@ -366,7 +395,11 @@ namespace Alternet.UI
                 if (tickStyle == value)
                     return;
                 tickStyle = value;
-                PerformLayoutAndInvalidate();
+                DoInsideLayout(() =>
+                {
+                    UpdateIndicatorVisibility();
+                });
+
                 TickStyleChanged?.Invoke(this, EventArgs.Empty);
             }
         }
@@ -735,6 +768,16 @@ namespace Alternet.UI
                         MinimumSize.Height,
                         DefaultSliderMinimumSize,
                         GetMinimumHeight() + Padding.Vertical + 1);
+
+                    if (leftTopIndicator.IsVisible)
+                    {
+                        specifiedHeight += leftTopIndicator.Height;
+                    }
+
+                    if (rightBottomIndicator.IsVisible)
+                    {
+                        specifiedHeight += rightBottomIndicator.Height;
+                    }
                 }
             }
             else
@@ -742,6 +785,16 @@ namespace Alternet.UI
                 if (Coord.IsNaN(specifiedWidth))
                 {
                     specifiedWidth = Math.Max(MinimumSize.Width, DefaultSliderMinimumSize);
+
+                    if (leftTopIndicator.IsVisible)
+                    {
+                        specifiedWidth += leftTopIndicator.Width;
+                    }
+
+                    if (rightBottomIndicator.IsVisible)
+                    {
+                        specifiedWidth += rightBottomIndicator.Width;
+                    }
                 }
 
                 if (Coord.IsNaN(specifiedHeight))
@@ -766,6 +819,11 @@ namespace Alternet.UI
             leftTopSpacer.ParentBackColor = leftTopSpacerColor is null;
             leftTopSpacer.BackgroundColor = leftTopSpacerColor;
             leftTopSpacer.Update();
+        }
+
+        internal void SetDebugColors()
+        {
+            SetSpacerColor(LightDarkColors.Green);
         }
 
         /// <summary>
@@ -945,6 +1003,19 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Creates an indicator control for the slider.
+        /// </summary>
+        /// <param name="isLeftTop">Whether to create a red or green indicator
+        /// based on the position.</param>
+        /// <returns>A new instance of <see cref="AbstractControl"/>
+        /// representing the indicator.</returns>
+        protected virtual AbstractControl CreateIndicator(bool isLeftTop)
+        {
+            var indicator = new Spacer();
+            return indicator;
+        }
+
+        /// <summary>
         /// Creates a spacer control for the slider.
         /// </summary>
         /// <returns>A new spacer control instance.</returns>
@@ -962,9 +1033,31 @@ namespace Alternet.UI
             return new SliderThumb();
         }
 
-        private void SetDebugColors()
+        /// <summary>
+        /// Updates the visibility of the indicators based on the current
+        /// state of the <see cref="TickStyle"/> property.
+        /// </summary>
+        protected virtual void UpdateIndicatorVisibility()
         {
-            SetSpacerColor(LightDarkColors.Green);
+            switch (TickStyle)
+            {
+                case SliderTickStyle.None:
+                    leftTopIndicator.IsVisible = false;
+                    rightBottomIndicator.IsVisible = false;
+                    break;
+                case SliderTickStyle.Both:
+                    leftTopIndicator.IsVisible = true;
+                    rightBottomIndicator.IsVisible = true;
+                    break;
+                case SliderTickStyle.TopLeft:
+                    leftTopIndicator.IsVisible = true;
+                    rightBottomIndicator.IsVisible = false;
+                    break;
+                case SliderTickStyle.BottomRight:
+                    leftTopIndicator.IsVisible = false;
+                    rightBottomIndicator.IsVisible = true;
+                    break;
+            }
         }
 
         /// <summary>

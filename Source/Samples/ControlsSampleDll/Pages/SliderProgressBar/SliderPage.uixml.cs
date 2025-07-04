@@ -15,14 +15,6 @@ namespace ControlsSample
 
             tickStyleComboBox.EnumType = typeof(SliderTickStyle);
 
-            if (App.IsWindowsOS)
-            {
-                tickStyleComboBox.ExcludeValues = new object[]
-                {
-                    SliderTickStyle.Both,
-                };
-            }
-
             progressBarControlSlider.ValueChanged += ProgressBarControlSlider_ValueChanged;
             progressBarControlSlider.Value = 1;
 
