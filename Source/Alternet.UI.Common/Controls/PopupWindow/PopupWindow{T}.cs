@@ -69,6 +69,20 @@ namespace Alternet.UI
         public static Thickness DefaultPadding { get; set; } = (5, 5, 5, 10);
 
         /// <summary>
+        /// Gets or sets whether 'Ok' and 'Cancel' buttons are visible.
+        /// </summary>
+        [Browsable(false)]
+        public bool ShowOkAndCancel
+        {
+            get => ShowOkButton && ShowCancelButton;
+            set
+            {
+                ShowOkButton = value;
+                ShowCancelButton = value;
+            }
+        }
+
+        /// <summary>
         /// Gets or sets whether 'Ok' button is visible.
         /// </summary>
         public virtual bool ShowOkButton
@@ -367,19 +381,50 @@ namespace Alternet.UI
         /// </remarks>
         public virtual void ShowPopup(PointD ptOrigin, SizeD sizePopup)
         {
-            PopupResult = ModalResult.None;
-
             if (!WasShown)
             {
                 SetClientSizeTo(MainControl.Size);
             }
 
             SetPositionInDips(ptOrigin, sizePopup);
+            ShowPopup();
+        }
+
+        /// <summary>
+        /// Shows popup window without changing its position and size.
+        /// </summary>
+        public virtual void ShowPopup()
+        {
+            PopupResult = ModalResult.None;
             BeforeShowPopup();
             ActiveControl = MainControl;
             ShowAndFocus();
             WasShown = true;
         }
+
+        /// <summary>
+        /// Shows popup window using the specified options.
+        /// This method aligns popup window location inside the specified display's
+        /// client area using given horizontal and vertical alignment.
+        /// </summary>
+        /// <param name="horz">Horizontal alignment of the window
+        /// inside display's client area.</param>
+        /// <param name="vert">Vertical alignment of the window
+        /// inside display's client area.</param>
+        /// <param name="display">Display which client area is used
+        /// as a container for the window.</param>
+        /// <param name="shrinkSize">Whether to shrink size of the window
+        /// to fit in the display client area. Optional. Default is <c>true</c>.</param>
+        public virtual void ShowPopup(
+            HorizontalAlignment? horz,
+            VerticalAlignment? vert,
+            Display? display = null,
+            bool shrinkSize = true)
+        {
+            SetLocationOnDisplay(horz, vert, display, shrinkSize);
+            ShowPopup();
+        }
+
 
         /// <summary>
         /// Hides popup window.
@@ -412,7 +457,7 @@ namespace Alternet.UI
         /// <param name="size">The size of the popup window.</param>
         /// <remarks>
         /// The popup is positioned at (ptOrigin + size) if it opens below and to the right
-        /// (default), at (ptOrigin - sizePopup) if it opens above and to the left.
+        /// (default), at (ptOrigin - size) if it opens above and to the left.
         /// </remarks>
         /// <remarks>
         /// <paramref name="ptOrigin"/> and <paramref name="size"/> are specified in
