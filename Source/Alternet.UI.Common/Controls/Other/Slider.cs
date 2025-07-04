@@ -61,19 +61,8 @@ namespace Alternet.UI
         /// </summary>
         public static bool? DefaultParentForeColor;
 
-        private readonly AbstractControl leftTopSpacer = new Panel()
-        {
-            Dock = DockStyle.Left,
-        };
-
-        private readonly AbstractControl rightBottomSpacer = new Panel()
-        {
-            Dock = DockStyle.Fill,
-        };
-
-        private readonly SliderThumb thumb = new ()
-        {
-        };
+        private readonly AbstractControl leftTopSpacer;
+        private readonly SliderThumb thumb;
 
         private int maximum = 10;
         private int minimum = 0;
@@ -99,6 +88,12 @@ namespace Alternet.UI
         /// </summary>
         public Slider()
         {
+            leftTopSpacer = CreateSpacer();
+            leftTopSpacer.ParentBackColor = true;
+            leftTopSpacer.Dock = DockStyle.Left;
+
+            thumb = CreateSliderThumb();
+
             tickStyle = DefaultTickStyle;
             Padding = 1;
             thumb.Margin = 1;
@@ -119,14 +114,12 @@ namespace Alternet.UI
             Layout = LayoutStyle.Dock;
             leftTopSpacer.Width = 0;
 
-            rightBottomSpacer.Parent = this;
             thumb.Parent = this;
             leftTopSpacer.Parent = this;
 
             thumb.SplitterMoved += OnThumbSplitterMoved;
             thumb.SplitterMoving += OnThumbSplitterMoving;
             leftTopSpacer.MouseLeftButtonDown += OnLeftTopSpacerMouseDown;
-            rightBottomSpacer.MouseLeftButtonDown += OnRightBottomSpacerMouseDown;
         }
 
         /// <summary>
@@ -214,12 +207,6 @@ namespace Alternet.UI
                 base.VerticalAlignment = value;
             }
         }
-
-        /// <summary>
-        /// Gets the right/bottom spacer control of the slider.
-        /// </summary>
-        [Browsable(false)]
-        public AbstractControl RightBottomSpacer => rightBottomSpacer;
 
         /// <summary>
         /// Gets the maximum possible size of the left/top spacer control.
@@ -774,16 +761,11 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="leftTopSpacerColor">The color of the left/top spacer.
         /// If <c>null</c>, the left/top spacer will use the parent's background color.</param>
-        /// <param name="rightBottomSpacerColor">The color of the right/bottom spacer.
-        /// If <c>null</c>, the right/bottom spacer will use the parent's background color.</param>
-        public virtual void SetSpacerColors(
-            Color? leftTopSpacerColor,
-            Color? rightBottomSpacerColor)
+        public virtual void SetSpacerColor(Color? leftTopSpacerColor)
         {
             leftTopSpacer.ParentBackColor = leftTopSpacerColor is null;
             leftTopSpacer.BackgroundColor = leftTopSpacerColor;
-            rightBottomSpacer.ParentBackColor = rightBottomSpacerColor is null;
-            rightBottomSpacer.BackgroundColor = rightBottomSpacerColor;
+            leftTopSpacer.Update();
         }
 
         /// <summary>
@@ -960,6 +942,29 @@ namespace Alternet.UI
         protected override void OnHandleCreated(EventArgs e)
         {
             base.OnHandleCreated(e);
+        }
+
+        /// <summary>
+        /// Creates a spacer control for the slider.
+        /// </summary>
+        /// <returns>A new spacer control instance.</returns>
+        protected virtual AbstractControl CreateSpacer()
+        {
+            return new Spacer();
+        }
+
+        /// <summary>
+        /// Creates slider thumb control.
+        /// </summary>
+        /// <returns>New instance of <see cref="SliderThumb"/> or its descendant.</returns>
+        protected virtual SliderThumb CreateSliderThumb()
+        {
+            return new SliderThumb();
+        }
+
+        private void SetDebugColors()
+        {
+            SetSpacerColor(LightDarkColors.Green);
         }
 
         /// <summary>
