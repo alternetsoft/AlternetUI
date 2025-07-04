@@ -640,8 +640,12 @@ namespace Alternet.UI
                 for (int i = 0; i < count; i++)
                 {
                     AbstractControl ctl = children[i];
+
                     if (ctl != target)
                     {
+                        if (ctl.IgnoreLayout)
+                            continue;
+
                         switch (ctl.Dock)
                         {
                             case DockStyle.Left:
