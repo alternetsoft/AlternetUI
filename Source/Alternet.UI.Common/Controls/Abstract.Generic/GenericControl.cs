@@ -119,6 +119,19 @@ namespace Alternet.UI
         /// </summary>
         public override void Invalidate()
         {
+            var result = Parent;
+            var bounds = Bounds;
+
+            while (result is not null && result is not Control)
+            {
+                bounds.Location += result.Location;
+                result = result.Parent;
+            }
+
+            if (result is not Control)
+                return;
+
+            result.Invalidate(bounds);
         }
 
         /// <summary>
@@ -126,6 +139,7 @@ namespace Alternet.UI
         /// </summary>
         public override void Update()
         {
+            Invalidate();
         }
 
         /// <summary>
