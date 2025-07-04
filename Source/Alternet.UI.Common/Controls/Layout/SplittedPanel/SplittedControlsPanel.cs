@@ -203,6 +203,87 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Sets methods and actions for the specified <paramref name="type"/>
+        /// and <paramref name="instance"/>.
+        /// </summary>
+        /// <param name="type">The type for which methods and actions are added.</param>
+        /// <param name="instance">The instance of the specified type which is
+        /// used when invoking methods.</param>
+        /// <param name="addMethods">Whether to add methods of the specified type as actions.</param>
+        public virtual void SetMethodsAndActions(
+            Type type,
+            object? instance,
+            bool addMethods = true)
+        {
+            BeginUpdateActions();
+            try
+            {
+                RemoveActions();
+                AddActions(type);
+                if (addMethods)
+                    AddMethodsAsActions(type, instance);
+            }
+            finally
+            {
+                EndUpdateActions();
+            }
+        }
+
+        /// <summary>
+        /// Adds methods of the <paramref name="type"/> as actions to the
+        /// <see cref="ActionsControl"/>.
+        /// </summary>
+        /// <param name="type">The type for which methods are added as actions.</param>
+        /// <param name="instance">The instance of the specified type which is
+        /// used when invoking methods.</param>
+        public virtual void AddMethodsAsActions(Type type, object? instance)
+        {
+            var methods = AssemblyUtils.EnumMethods(type);
+            foreach (var method in methods)
+            {
+                if (method.IsSpecialName)
+                    continue;
+                if (method.IsGenericMethod)
+                    continue;
+                var retParam = method.ReturnParameter;
+                var resultIsVoid = retParam.ParameterType == typeof(void);
+
+                var methodParameters = method.GetParameters();
+                if (methodParameters.Length > 0)
+                    continue;
+                var browsable = AssemblyUtils.GetBrowsable(method);
+                if (!browsable)
+                    continue;
+                var methodName = $"{method.Name}()";
+                var methodNameForDisplay = $"<b>{methodName}</b>";
+
+                if (resultIsVoid)
+                {
+                    methodNameForDisplay = $"{methodNameForDisplay} : void";
+                }
+                else
+                {
+                    var retParamDisplayName =
+                    AssemblyUtils.GetTypeDisplayName(retParam.ParameterType);
+
+                    methodNameForDisplay
+                    = $"{methodNameForDisplay} : {retParamDisplayName}";
+                }
+
+                var item = AddAction(methodName, () =>
+                {
+                    var selectedControl = instance;
+                    if (selectedControl is null)
+                        return;
+                    AssemblyUtils.InvokeMethodAndLogResult(selectedControl, method);
+                });
+
+                item.DisplayText = methodNameForDisplay;
+                item.TextHasBold = true;
+            }
+        }
+
+        /// <summary>
         /// Adds simple actions for <paramref name="type"/>.
         /// </summary>
         /// <param name="type">Type for which required simple actions are registered.</param>
@@ -216,6 +297,39 @@ namespace Alternet.UI
             {
                 AddAction(action.Title, action.Action);
             }
+        }
+
+        /// <summary>
+        /// Prepares the associated actions control for a batch of updates,
+        /// minimizing redraws and improving
+        /// performance.
+        /// </summary>
+        /// <remarks>This method should be called before performing multiple
+        /// updates to the actions
+        /// control to avoid unnecessary rendering and improve efficiency. Ensure that
+        /// <see cref="EndUpdateActions"/>
+        /// is called after the updates are completed to resume normal rendering.</remarks>
+        public virtual void BeginUpdateActions()
+        {
+            if (actionsControl is null)
+                return;
+            actionsControl.BeginUpdate();
+        }
+
+        /// <summary>
+        /// Ends the update process for the associated actions control, applying
+        /// any pending changes.
+        /// </summary>
+        /// <remarks>This method should be called after making multiple updates
+        /// to the actions control to
+        /// finalize the changes and refresh its state. If the actions control
+        /// is null, the method performs no
+        /// operation.</remarks>
+        public virtual void EndUpdateActions()
+        {
+            if (actionsControl is null)
+                return;
+            actionsControl.EndUpdate();
         }
 
         /// <summary>
