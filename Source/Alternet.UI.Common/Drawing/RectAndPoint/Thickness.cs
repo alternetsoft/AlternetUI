@@ -10,7 +10,7 @@ using Alternet.UI.Localization;
 namespace Alternet.UI
 {
     /*
-     Please do not remove StructLayout(LayoutKind.Sequential) atrtribute.
+     Please do not remove StructLayout(LayoutKind.Sequential) attribute.
      Also do not change order of the fields.
     */
 
@@ -218,7 +218,7 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Implicit operator convertion from a single value to
+        /// Implicit operator conversion from a single value to
         /// <see cref="Thickness"/>. All fields of thickness instance are assigned
         /// with the same value.
         /// </summary>
@@ -227,7 +227,7 @@ namespace Alternet.UI
         public static implicit operator Thickness(Coord d) => new(d);
 
         /// <summary>
-        /// Implicit operator convertion from <see cref="int"/> to
+        /// Implicit operator conversion from <see cref="int"/> to
         /// <see cref="Thickness"/>. All fields of thickness instance are assigned
         /// with the same int value.
         /// </summary>
@@ -236,12 +236,13 @@ namespace Alternet.UI
         public static implicit operator Thickness(int d) => new(d);
 
         /// <summary>
-        /// Implicit operator convertion from tuple with four values
+        /// Implicit operator conversion from tuple with four values
         /// to <see cref="Thickness"/>.
         /// </summary>
         /// <param name="d">New thickness value.</param>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static implicit operator Thickness((Coord Left, Coord Top, Coord Right, Coord Bottom) d) =>
+        public static implicit operator Thickness(
+            (Coord Left, Coord Top, Coord Right, Coord Bottom) d) =>
             new(d.Left, d.Top, d.Right, d.Bottom);
 
         /// <summary>
@@ -284,18 +285,18 @@ namespace Alternet.UI
         /// <summary>
         /// Creates <see cref="Thickness"/> from array of 1, 2 or 4 values.
         /// </summary>
-        /// <param name="coord">Array with values.</param>
+        /// <param name="coordinate">Array with values.</param>
         /// <returns></returns>
-        public static Thickness? FromArray(float[]? coord)
+        public static Thickness? FromArray(float[]? coordinate)
         {
-            switch (coord?.Length)
+            switch (coordinate?.Length)
             {
                 case 1:
-                    return new(coord[0]);
+                    return new(coordinate[0]);
                 case 2:
-                    return new(coord[0], coord[1]);
+                    return new(coordinate[0], coordinate[1]);
                 case 4:
-                    return new(coord[0], coord[1], coord[2], coord[3]);
+                    return new(coordinate[0], coordinate[1], coordinate[2], coordinate[3]);
             }
 
             return null;
@@ -455,7 +456,7 @@ namespace Alternet.UI
         /// Gets <see cref="Vertical"/> or <see cref="Horizontal"/> depending on the
         /// <paramref name="isVert"/> parameter value.
         /// </summary>
-        /// <param name="isVert">The flag which detremines whether to return
+        /// <param name="isVert">The flag which determines whether to return
         /// <see cref="Vertical"/> or <see cref="Horizontal"/> property value.
         /// </param>
         /// <returns></returns>
@@ -465,6 +466,36 @@ namespace Alternet.UI
                 return Vertical;
             else
                 return Horizontal;
+        }
+
+        /// <summary>
+        /// Gets <see cref="Top"/> or <see cref="Left"/> depending on the
+        /// <paramref name="isVert"/> parameter value.
+        /// </summary>
+        /// <param name="isVert">The flag which determines whether to return
+        /// <see cref="Top"/> or <see cref="Left"/> property value.</param>
+        /// <returns></returns>
+        public readonly Coord GetNear(bool isVert)
+        {
+            if (isVert)
+                return top;
+            else
+                return left;
+        }
+
+        /// <summary>
+        /// Gets <see cref="Bottom"/> or <see cref="Right"/> depending on the
+        /// <paramref name="isVert"/> parameter value.
+        /// </summary>
+        /// <param name="isVert">The flag which determines whether to return
+        /// <see cref="Bottom"/> or <see cref="Right"/> property value.</param>
+        /// <returns></returns>
+        public readonly Coord GetFar(bool isVert)
+        {
+            if (isVert)
+                return bottom;
+            else
+                return right;
         }
 
         /// <summary>
@@ -503,7 +534,7 @@ namespace Alternet.UI
         /// <see cref="Thickness"/> instance.
         /// </summary>
         /// <param name="min">Minimal possible thickness.</param>
-        /// <param name="max">Maximal possible thikness.</param>
+        /// <param name="max">Maximal possible thickness.</param>
         public void ApplyMinMax(Coord min, Coord max)
         {
             Coord SetMinMaxValue(Coord value)
