@@ -70,9 +70,9 @@ namespace Alternet.UI
 
             base.Layout = LayoutStyle.Vertical;
             cardPanelHeader.TabHasBorder = false;
-            cardPanelHeader.BeforeTabClick += CardPanelHeader_BeforeTabClick;
-            cardPanelHeader.TabClick += CardPanelHeader_TabClick;
-            cardPanelHeader.ButtonSizeChanged += CardPanelHeader_ButtonSizeChanged;
+            cardPanelHeader.BeforeTabClick += OnCardPanelHeaderBeforeTabClick;
+            cardPanelHeader.TabClick += OnCardPanelHeaderTabClick;
+            cardPanelHeader.ButtonSizeChanged += OnCardPanelHeaderButtonSizeChanged;
             cardPanelHeader.VerticalAlignment = UI.VerticalAlignment.Top;
             cardPanelHeader.UpdateCardsMode = WindowSizeToContentMode.None;
             cardPanelHeader.Parent = this;
@@ -981,6 +981,19 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Raises the <see cref="SelectedIndexChanged"/> and <see cref="SelectedPageChanged"/>
+        /// events and updates the minimum size of the control based on the current settings.
+        /// </summary>
+        public void RaiseSelectedIndexChanged()
+        {
+            if (DisposingOrDisposed)
+                return;
+            SelectedIndexChanged?.Invoke(this, EventArgs.Empty);
+            SelectedPageChanged?.Invoke(this, EventArgs.Empty);
+            GrowMinSize(MinSizeGrowMode);
+        }
+
+        /// <summary>
         /// Gets tab page at the specified index.
         /// </summary>
         /// <param name="index"></param>
@@ -1056,7 +1069,12 @@ namespace Alternet.UI
                 tabPaintAlignment ?? TabAlignment);
         }
 
-        private void CardPanelHeader_ButtonSizeChanged(
+        /// <summary>
+        /// Called when the size of the header button changes.
+        /// </summary>
+        /// <param name="sender">The event source.</param>
+        /// <param name="e">Event arguments containing information about the size change.</param>
+        protected virtual void OnCardPanelHeaderButtonSizeChanged(
             object? sender,
             BaseEventArgs<AbstractControl> e)
         {
@@ -1066,35 +1084,48 @@ namespace Alternet.UI
             Invalidate();
         }
 
-        private void CardPanelHeader_BeforeTabClick(object sender, BaseCancelEventArgs e)
+        /// <summary>
+        /// Called before a tab header is clicked.
+        /// </summary>
+        /// <param name="sender">The event source.</param>
+        /// <param name="e">Event arguments containing information about the click event.</param>
+        protected virtual void OnCardPanelHeaderBeforeTabClick(object sender, BaseCancelEventArgs e)
         {
             if (DisposingOrDisposed)
                 return;
             GrowMinSize(MinSizeGrowMode);
         }
 
-        private void CardPanelHeader_TabClick(object? sender, EventArgs e)
+        /// <summary>
+        /// Called when a tab header is clicked.
+        /// </summary>
+        /// <param name="sender">The event source.</param>
+        /// <param name="e">Event arguments containing information about the click event.</param>
+        protected virtual void OnCardPanelHeaderTabClick(object? sender, EventArgs e)
         {
             if (DisposingOrDisposed)
                 return;
             RaiseSelectedIndexChanged();
         }
 
-        private void RaiseSelectedIndexChanged()
-        {
-            if (DisposingOrDisposed)
-                return;
-            SelectedIndexChanged?.Invoke(this, EventArgs.Empty);
-            SelectedPageChanged?.Invoke(this, EventArgs.Empty);
-            GrowMinSize(MinSizeGrowMode);
-        }
-
-        private void OnPagesItemRemoved(object? sender, int index, AbstractControl item)
+        /// <summary>
+        /// Called when item is removed from the pages collection.
+        /// </summary>
+        /// <param name="sender">The event source.</param>
+        /// <param name="index">The index of the item.</param>
+        /// <param name="item">The item that was removed.</param>
+        protected virtual void OnPagesItemRemoved(object? sender, int index, AbstractControl item)
         {
             Remove(item);
         }
 
-        private void OnPagesItemInserted(object? sender, int index, AbstractControl item)
+        /// <summary>
+        /// Called when item is inserted into the pages collection.
+        /// </summary>
+        /// <param name="sender">The event source.</param>
+        /// <param name="index">The index of the item.</param>
+        /// <param name="item">The item that was removed.</param>
+        protected virtual void OnPagesItemInserted(object? sender, int index, AbstractControl item)
         {
             if (DisposingOrDisposed)
                 return;
@@ -1105,7 +1136,12 @@ namespace Alternet.UI
             Add(item);
         }
 
-        private void OnHeaderPaint(object? sender, PaintEventArgs e)
+        /// <summary>
+        /// Called when the header is painted.
+        /// </summary>
+        /// <param name="sender">The event source.</param>
+        /// <param name="e">The event arguments containing information about the paint event.</param>
+        protected virtual void OnHeaderPaint(object? sender, PaintEventArgs e)
         {
             if (DisposingOrDisposed)
                 return;
