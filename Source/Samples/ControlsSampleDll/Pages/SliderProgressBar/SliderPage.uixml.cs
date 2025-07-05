@@ -11,6 +11,8 @@ namespace ControlsSample
         {
             InitializeComponent();
 
+            mainTabControl.MinSizeGrowMode = WindowSizeToContentMode.Height;
+
             tickStyleComboBox.EnumType = typeof(SliderTickStyle);
 
             progressBarControlSlider.ValueChanged += ProgressBarControlSlider_ValueChanged;

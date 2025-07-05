@@ -11,6 +11,8 @@ namespace ControlsSample
         {
             InitializeComponent();
 
+            mainTabControl.MinSizeGrowMode = WindowSizeToContentMode.Height;
+
             if (App.IsMacOS)
             {
                 verticalProgressBarsGrid.Parent = null;

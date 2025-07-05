@@ -14,7 +14,7 @@
       </StackPanel>
     </Border>
 
-    <TabControl Margin="0,10,0,0">
+    <TabControl Margin="0,10,0,0" Name="mainTabControl">
       <Panel Grid.Column="0" Padding="5" Title="Horizontal">
         <Grid Margin="5" Name="horizontalSlidersPanel" ColumnCount="2" RowCount="4">
           
