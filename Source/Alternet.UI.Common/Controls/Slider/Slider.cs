@@ -67,8 +67,8 @@ namespace Alternet.UI
         public static bool? DefaultParentForeColor;
 
         private readonly AbstractControl leftTopSpacer;
-        private readonly AbstractControl leftTopIndicator;
-        private readonly AbstractControl rightBottomIndicator;
+        private readonly SliderScale leftTopScale;
+        private readonly SliderScale rightBottomScale;
         private readonly SliderThumb thumb;
 
         private int maximum = 10;
@@ -95,12 +95,12 @@ namespace Alternet.UI
         /// </summary>
         public Slider()
         {
-            leftTopIndicator = CreateIndicator(isLeftTop: true);
-            leftTopIndicator.Dock = DockStyle.Top;
-            leftTopIndicator.MinimumSize = DefaultIndicatorSize;
-            rightBottomIndicator = CreateIndicator(isLeftTop: false);
-            rightBottomIndicator.Dock = DockStyle.Bottom;
-            rightBottomIndicator.MinimumSize = DefaultIndicatorSize;
+            leftTopScale = CreateScale(isLeftTop: true);
+            leftTopScale.Dock = DockStyle.Top;
+            leftTopScale.MinimumSize = DefaultIndicatorSize;
+            rightBottomScale = CreateScale(isLeftTop: false);
+            rightBottomScale.Dock = DockStyle.Bottom;
+            rightBottomScale.MinimumSize = DefaultIndicatorSize;
 
             leftTopSpacer = CreateSpacer();
             leftTopSpacer.ParentBackColor = true;
@@ -132,8 +132,8 @@ namespace Alternet.UI
 
             thumb.Parent = this;
             leftTopSpacer.Parent = this;
-            leftTopIndicator.Parent = this;
-            rightBottomIndicator.Parent = this;
+            leftTopScale.Parent = this;
+            rightBottomScale.Parent = this;
 
             thumb.SplitterMoved += OnThumbSplitterMoved;
             thumb.SplitterMoving += OnThumbSplitterMoving;
@@ -191,6 +191,16 @@ namespace Alternet.UI
         /// </summary>
         [Browsable(false)]
         public SliderThumb ThumbControl => thumb;
+
+        /// <summary>
+        /// Gets the left/top scale control of the slider.
+        /// </summary>
+        public SliderScale LeftTopScale => leftTopScale;
+
+        /// <summary>
+        /// Gets the right/bottom scale control of the slider.
+        /// </summary>
+        public SliderScale RightBottomScale => rightBottomScale;
 
         /// <summary>
         /// Gets the left/top spacer control of the slider.
@@ -338,13 +348,13 @@ namespace Alternet.UI
 
                     if (isHorizontal)
                     {
-                        leftTopIndicator.Dock = DockStyle.Top;
-                        rightBottomIndicator.Dock = DockStyle.Bottom;
+                        leftTopScale.Dock = DockStyle.Top;
+                        rightBottomScale.Dock = DockStyle.Bottom;
                     }
                     else
                     {
-                        leftTopIndicator.Dock = DockStyle.Left;
-                        rightBottomIndicator.Dock = DockStyle.Right;
+                        leftTopScale.Dock = DockStyle.Left;
+                        rightBottomScale.Dock = DockStyle.Right;
                     }
                 });
 
@@ -769,14 +779,14 @@ namespace Alternet.UI
                         DefaultSliderMinimumSize,
                         GetMinimumHeight() + Padding.Vertical + 1);
 
-                    if (leftTopIndicator.IsVisible)
+                    if (leftTopScale.IsVisible)
                     {
-                        specifiedHeight += leftTopIndicator.Height;
+                        specifiedHeight += leftTopScale.Height;
                     }
 
-                    if (rightBottomIndicator.IsVisible)
+                    if (rightBottomScale.IsVisible)
                     {
-                        specifiedHeight += rightBottomIndicator.Height;
+                        specifiedHeight += rightBottomScale.Height;
                     }
                 }
             }
@@ -786,14 +796,14 @@ namespace Alternet.UI
                 {
                     specifiedWidth = Math.Max(MinimumSize.Width, DefaultSliderMinimumSize);
 
-                    if (leftTopIndicator.IsVisible)
+                    if (leftTopScale.IsVisible)
                     {
-                        specifiedWidth += leftTopIndicator.Width;
+                        specifiedWidth += leftTopScale.Width;
                     }
 
-                    if (rightBottomIndicator.IsVisible)
+                    if (rightBottomScale.IsVisible)
                     {
-                        specifiedWidth += rightBottomIndicator.Width;
+                        specifiedWidth += rightBottomScale.Width;
                     }
                 }
 
@@ -1003,15 +1013,14 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Creates an indicator control for the slider.
+        /// Creates an scale control for the slider.
         /// </summary>
-        /// <param name="isLeftTop">Whether to create a red or green indicator
-        /// based on the position.</param>
-        /// <returns>A new instance of <see cref="AbstractControl"/>
-        /// representing the indicator.</returns>
-        protected virtual AbstractControl CreateIndicator(bool isLeftTop)
+        /// <param name="isLeftTop">Whether to create a left or top slider scale.</param>
+        /// <returns>A new instance of <see cref="SliderScale"/>
+        /// representing the slider scale with ticks and labels.</returns>
+        protected virtual SliderScale CreateScale(bool isLeftTop)
         {
-            var indicator = new Spacer();
+            var indicator = new SliderScale();
             return indicator;
         }
 
@@ -1042,20 +1051,20 @@ namespace Alternet.UI
             switch (TickStyle)
             {
                 case SliderTickStyle.None:
-                    leftTopIndicator.IsVisible = false;
-                    rightBottomIndicator.IsVisible = false;
+                    leftTopScale.IsVisible = false;
+                    rightBottomScale.IsVisible = false;
                     break;
                 case SliderTickStyle.Both:
-                    leftTopIndicator.IsVisible = true;
-                    rightBottomIndicator.IsVisible = true;
+                    leftTopScale.IsVisible = true;
+                    rightBottomScale.IsVisible = true;
                     break;
                 case SliderTickStyle.TopLeft:
-                    leftTopIndicator.IsVisible = true;
-                    rightBottomIndicator.IsVisible = false;
+                    leftTopScale.IsVisible = true;
+                    rightBottomScale.IsVisible = false;
                     break;
                 case SliderTickStyle.BottomRight:
-                    leftTopIndicator.IsVisible = false;
-                    rightBottomIndicator.IsVisible = true;
+                    leftTopScale.IsVisible = false;
+                    rightBottomScale.IsVisible = true;
                     break;
             }
         }
