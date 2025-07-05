@@ -81,8 +81,6 @@ Environment.NewLine + Environment.NewLine +
             Actions.Add(typeof(VirtualListBox), InitVListBox);
             Actions.Add(typeof(ListBox), InitListBox);
             Actions.Add(typeof(ComboBox), InitComboBox);
-            Actions.Add(typeof(ColorComboBox), InitColorComboBox);
-            Actions.Add(typeof(FontComboBox), InitFontComboBox);
             Actions.Add(typeof(CheckListBox), InitCheckListBox);
 
             Actions.Add(typeof(UserControl), (c) =>
@@ -113,12 +111,6 @@ Environment.NewLine + Environment.NewLine +
             Actions.Add(typeof(NumericUpDown), (c) =>
             {
                 NumericUpDown control = (c as NumericUpDown)!;
-                control.SuggestedWidth = 200;
-            });
-
-            Actions.Add(typeof(DateTimePicker), (c) =>
-            {
-                DateTimePicker control = (c as DateTimePicker)!;
                 control.SuggestedWidth = 200;
             });
 

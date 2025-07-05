@@ -20,6 +20,7 @@ namespace Alternet.UI
     [DefaultEvent("ValueChanged")]
     [DefaultBindingProperty("Value")]
     [ControlCategory("Common")]
+    [Obsolete("Use DatePicker or TimePicker instead.")]
     public partial class DateTimePicker : CustomDateEdit
     {
         private DateTime val = DateTime.Now;

@@ -7,8 +7,10 @@ using System.Threading.Tasks;
 
 namespace Alternet.UI
 {
+#pragma warning disable
     internal class DateTimePickerHandler
         : WxControlHandler<DateTimePicker, Native.DateTimePicker>, IDateTimePickerHandler
+#pragma warning restore
     {
         public DateTimePickerHandler()
         {

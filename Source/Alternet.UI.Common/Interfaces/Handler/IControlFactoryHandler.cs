@@ -197,7 +197,9 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="control">Owner.</param>
         /// <returns></returns>
+#pragma warning disable
         IControlHandler CreateDateTimePickerHandler(DateTimePicker control);
+#pragma warning restore
 
         /// <summary>
         /// Creates <see cref="IControlHandler"/> interface provider.

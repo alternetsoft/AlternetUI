@@ -227,7 +227,7 @@ namespace Alternet.UI
         /// <remarks>
         /// This color is used for painting color image when control is disabled.
         /// If this property is null, color image will be painted using
-        /// <see cref="ColorComboBox.DefaultDisabledImageColor"/>.
+        /// <see cref="ColorListBox.DefaultDisabledImageColor"/>.
         /// </remarks>
         public virtual Color? DisabledImageColor
         {
@@ -499,7 +499,7 @@ namespace Alternet.UI
 
             if (!Enabled && useDisabledImageColor)
             {
-                var disabledColor = DisabledImageColor ?? ColorComboBox.DefaultDisabledImageColor;
+                var disabledColor = DisabledImageColor ?? ColorListBox.DefaultDisabledImageColor;
                 if (disabledColor is not null)
                     imageColor = disabledColor;
             }

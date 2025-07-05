@@ -21,19 +21,9 @@ namespace Alternet.UI
     /// Currently this control doesn't look good on MSW with dark theme.
     /// It is recommended to use <see cref="ColorPicker"/> control.
     /// </remarks>
+    [Obsolete("Use ColorPicker instead.")]
     public partial class ColorComboBox : ComboBox
     {
-        /// <summary>
-        /// Gets or sets default disabled image color.
-        /// </summary>
-        /// <remarks>
-        /// This color is used when <see cref="ColorComboBox"/> is disabled
-        /// for painting color image when <see cref="ColorComboBox.DisabledImageColor"/> is null.
-        /// If this property is null, color image will be painted in the same way like it is done
-        /// when control is enabled.
-        /// </remarks>
-        public static Color? DefaultDisabledImageColor = Color.LightGray;
-
         /// <summary>
         /// Gets or sets default painter for the <see cref="ColorComboBox"/> items.
         /// </summary>
@@ -43,12 +33,6 @@ namespace Alternet.UI
         /// Gets or sets default method that initializes items in <see cref="ColorComboBox"/>.
         /// </summary>
         public static Action<ColorComboBox>? InitColors = InitDefaultColors;
-
-        /// <summary>
-        /// Gets or sets method that paints color image in the item. Borders around
-        /// color image are also painted by this method.
-        /// </summary>
-        public static Action<Graphics, RectD, Color> PaintColorImage = PaintDefaultColorImage;
 
         private Color? disabledImageColor;
         private bool useDisabledImageColor = true;
@@ -110,7 +94,7 @@ namespace Alternet.UI
         /// <remarks>
         /// This color is used for painting color image when control is disabled.
         /// If this property is null, color image will be painted using
-        /// <see cref="DefaultDisabledImageColor"/>.
+        /// <see cref="ColorListBox.DefaultDisabledImageColor"/>.
         /// </remarks>
         public virtual Color? DisabledImageColor
         {
@@ -182,50 +166,6 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Paints color image in the item with the default style. Borders around
-        /// color image are also painted by this method.
-        /// This is default value of the <see cref="PaintColorImage"/> field.
-        /// </summary>
-        /// <param name="canvas"><see cref="Graphics"/> where drawing is performed.</param>
-        /// <param name="rect"><see cref="RectD"/> where drawing is performed.</param>
-        /// <param name="color">Color value.</param>
-        public static void PaintDefaultColorImage(Graphics canvas, RectD rect, Color color)
-        {
-            RectD colorRect = DrawingUtils.DrawDoubleBorder(
-                canvas,
-                rect,
-                Color.Empty,
-                ComboBox.DefaultImageBorderColor);
-
-            canvas.FillRectangle(color.AsBrush, colorRect);
-        }
-
-        /// <summary>
-        /// Finds item with the specified color in the collection of the color items.
-        /// </summary>
-        /// <param name="value">Color value.</param>
-        /// <param name="items">Collection of the color items.</param>
-        /// <returns></returns>
-        public static ListControlItem? Find(Color? value, IEnumerable items)
-        {
-            if (value is null)
-                return null;
-
-            foreach (var item in items)
-            {
-                if (item is not ListControlItem item2)
-                    continue;
-                if (item2.Value is not Color color)
-                    continue;
-                if (color.AsStruct != value.AsStruct)
-                    continue;
-                return item2;
-            }
-
-            return null;
-        }
-
-        /// <summary>
         /// Adds color items to the <see cref="ColorComboBox"/>. This is default
         /// implementation of the initialization method. It is assigned to
         /// <see cref="InitColors"/> property by default.
@@ -237,20 +177,6 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Default method of the item creation for the specified color and title.
-        /// </summary>
-        /// <param name="title">Color title. Optional. If not specified,
-        /// <see cref="Color.NameLocalized"/> will be used.</param>
-        /// <param name="value">Color value.</param>
-        /// <returns></returns>
-        public static ListControlItem DefaultCreateItem(Color? value, string? title = null)
-        {
-            title ??= value?.NameLocalized ?? string.Empty;
-            ListControlItem controlItem = new(title, value);
-            return controlItem;
-        }
-
-        /// <summary>
         /// Creates item for the specified color and title.
         /// </summary>
         /// <param name="title">Color title. Optional. If not specified,
@@ -259,7 +185,7 @@ namespace Alternet.UI
         /// <returns></returns>
         public virtual ListControlItem CreateItem(Color? value, string? title = null)
         {
-            return DefaultCreateItem(value, title);
+            return ColorListBox.DefaultCreateItem(value, title);
         }
 
         /// <summary>
@@ -295,7 +221,7 @@ namespace Alternet.UI
         /// <returns></returns>
         public virtual ListControlItem? Find(Color? value)
         {
-            return Find(value, Items);
+            return ColorListBox.Find(value, Items);
         }
 
         /// <summary>
@@ -328,7 +254,7 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Default item painter for the <see cref="ColorComboBox"/> items.
+        /// Default item painter for the items with <see cref="Color"/>.
         /// </summary>
         public class DefaultColorItemPainter : DefaultItemPainter, IComboBoxItemPainter
         {
@@ -358,13 +284,13 @@ namespace Alternet.UI
                 if (e.IsPaintingControl && !sender.Enabled && useDisabledImageColor)
                 {
                     var disabledColor = colorComboBox?.DisabledImageColor
-                        ?? DefaultDisabledImageColor;
+                        ?? ColorListBox.DefaultDisabledImageColor;
                     if(disabledColor is not null)
                         itemColor = disabledColor;
                 }
 
                 var (colorRect, itemRect) = sender.GetItemImageRect(e);
-                PaintColorImage(e.Graphics, colorRect, itemColor);
+                ColorListBox.PaintColorImage(e.Graphics, colorRect, itemColor);
                 e.ClipRectangle = itemRect;
                 sender.DefaultItemPaint(e);
             }

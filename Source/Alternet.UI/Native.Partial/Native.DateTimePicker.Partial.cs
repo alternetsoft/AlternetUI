@@ -9,8 +9,10 @@ namespace Alternet.UI.Native
     {
         public void OnPlatformEventValueChanged()
         {
+#pragma warning disable
             if (UIControl is not UI.DateTimePicker uiControl)
                 return;
+#pragma warning restore
             uiControl.Value = Value;
         }
     }
