@@ -1,0 +1,10 @@
+If your app works well under X11, you can launch it with:
+
+GDK_BACKEND=x11 ./your-app
+
+Or modify the .desktop file:
+
+Exec=env GDK_BACKEND=x11 your-app
+
+This bypasses Wayland and restores expected behavior for many wxWidgets features
+
