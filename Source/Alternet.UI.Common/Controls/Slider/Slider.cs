@@ -32,9 +32,16 @@ namespace Alternet.UI
     public partial class Slider : Border, ISliderScaleContainer
     {
         /// <summary>
+        /// Gets or sets a value indicating whether the slider control uses the
+        /// <see cref="DefaultColors.ControlBackColor"/> and
+        /// <see cref="DefaultColors.ControlForeColor"/>. Default is <c>true</c>.
+        /// </summary>
+        public static bool DefaultUseControlColors = true;
+
+        /// <summary>
         /// Represents the default size of the left/top and right/bottom indicators.
         /// </summary>
-        public static Coord DefaultIndicatorSize = 5;
+        public static Coord DefaultScaleSize = 5;
 
         /// <summary>
         /// Represents the default minimum size for a slider control.
@@ -54,18 +61,6 @@ namespace Alternet.UI
         /// </summary>
         public static SliderTickStyle DefaultTickStyle = SliderTickStyle.None;
 
-        /// <summary>
-        /// Gets or sets a default value of the
-        /// <see cref="AbstractControl.ParentBackColor"/> property.
-        /// </summary>
-        public static bool? DefaultParentBackColor;
-
-        /// <summary>
-        /// Gets or sets a default value of the
-        /// <see cref="AbstractControl.ParentForeColor"/> property.
-        /// </summary>
-        public static bool? DefaultParentForeColor;
-
         private readonly AbstractControl leftTopSpacer;
         private readonly SliderScale leftTopScale;
         private readonly SliderScale rightBottomScale;
@@ -84,6 +79,7 @@ namespace Alternet.UI
         private EventHandler<FormatValueEventArgs<int>>? formatValueForDisplay;
         private bool isFirstTickVisible = true;
         private bool isLastTickVisible = true;
+        private bool autoSize = true;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Slider"/> class.
@@ -100,12 +96,21 @@ namespace Alternet.UI
         /// </summary>
         public Slider()
         {
+            AutoPadding = false;
+
             leftTopScale = CreateScale(isLeftTop: true);
             leftTopScale.Dock = DockStyle.Top;
-            leftTopScale.MinimumSize = DefaultIndicatorSize;
+            leftTopScale.MinimumSize = DefaultScaleSize;
+            leftTopScale.Height = DefaultScaleSize;
+            leftTopScale.Padding = 0;
+            leftTopScale.Margin = 0;
+
             rightBottomScale = CreateScale(isLeftTop: false);
             rightBottomScale.Dock = DockStyle.Bottom;
-            rightBottomScale.MinimumSize = DefaultIndicatorSize;
+            rightBottomScale.MinimumSize = DefaultScaleSize;
+            rightBottomScale.Height = DefaultScaleSize;
+            rightBottomScale.Padding = 0;
+            rightBottomScale.Margin = 0;
 
             leftTopSpacer = CreateSpacer();
             leftTopSpacer.ParentBackColor = true;
@@ -113,32 +118,25 @@ namespace Alternet.UI
 
             thumb = CreateSliderThumb();
 
+            SuggestedSize = 150;
+
             tickStyle = DefaultTickStyle;
             Padding = 1;
-            thumb.Margin = 1;
+
+            thumb.Margin = (1, 1, 1, 1);
             thumb.MinSize = 0;
-            thumb.MinExtra = 2;
+            thumb.MinExtra = 1;
             thumb.SizeDelta = 0;
 
             MinimumSize = DefaultSliderMinimumSize;
-            SuggestedSize = (200, Coord.NaN);
 
-            if (DefaultParentBackColor is not null)
-                ParentBackColor = DefaultParentBackColor.Value;
-            if (DefaultParentForeColor is not null)
-                ParentForeColor = DefaultParentForeColor.Value;
-
-            UseControlColors(true);
+            UseControlColors(DefaultUseControlColors);
 
             Layout = LayoutStyle.Dock;
             leftTopSpacer.Width = 0;
 
-            UpdateIndicatorVisibility();
-
             thumb.Parent = this;
             leftTopSpacer.Parent = this;
-            leftTopScale.Parent = this;
-            rightBottomScale.Parent = this;
 
             thumb.SplitterMoved += OnThumbSplitterMoved;
             thumb.SplitterMoving += OnThumbSplitterMoving;
@@ -212,8 +210,41 @@ namespace Alternet.UI
         public override ControlTypeId ControlKind => ControlTypeId.Slider;
 
         /// <summary>
+        /// Gets or sets a value indicating whether the slider control automatically sizes itself.
+        /// If slider is horizontal and is set to auto-size, it will adjust its height automatically.
+        /// If slider is vertical and is set to auto-size, it will adjust its width automatically.
+        /// Default is <c>true</c>.
+        /// </summary>
+        public virtual bool AutoSize
+        {
+            get => autoSize;
+            set
+            {
+                if (autoSize == value)
+                    return;
+                autoSize = value;
+                PerformLayoutAndInvalidate();
+            }
+        }
+
+        /// <inheritdoc/>
+        public override SizeD SuggestedSize
+        {
+            get
+            {
+                return base.SuggestedSize;
+            }
+
+            set
+            {
+                base.SuggestedSize = value;
+            }
+        }
+
+        /// <summary>
         /// Gets or sets whether the first tick mark is visible on the slider scale.
         /// </summary>
+        [Browsable(false)]
         public virtual bool IsFirstTickVisible
         {
             get => isFirstTickVisible;
@@ -229,6 +260,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets whether the last tick mark is visible on the slider scale.
         /// </summary>
+        [Browsable(false)]
         public virtual bool IsLastTickVisible
         {
             get => isLastTickVisible;
@@ -286,11 +318,13 @@ namespace Alternet.UI
         /// <summary>
         /// Gets the left/top scale control of the slider.
         /// </summary>
+        [Browsable(false)]
         public SliderScale LeftTopScale => leftTopScale;
 
         /// <summary>
         /// Gets the right/bottom scale control of the slider.
         /// </summary>
+        [Browsable(false)]
         public SliderScale RightBottomScale => rightBottomScale;
 
         /// <summary>
@@ -429,11 +463,9 @@ namespace Alternet.UI
 
                 PerformLayoutAndInvalidate(() =>
                 {
-                    if (SuggestedSize.IsNanWidthOrHeight)
-                        SuggestedSize = SuggestedSize.WithSwappedWidthAndHeight();
-
                     var isHorizontal = value == SliderOrientation.Horizontal;
                     var dockStyle = isHorizontal ? DockStyle.Left : DockStyle.Top;
+
                     LeftTopSpacer.Dock = dockStyle;
                     ThumbControl.Dock = dockStyle;
 
@@ -447,6 +479,13 @@ namespace Alternet.UI
                         leftTopScale.Dock = DockStyle.Left;
                         rightBottomScale.Dock = DockStyle.Right;
                     }
+
+                    leftTopScale.Size = 0;
+                    rightBottomScale.Size = 0;
+                    leftTopSpacer.Size = 0;
+                    thumb.Size = 0;
+                    Size = GetPreferredSize(Size);
+                    UpdateThumbPositionFromValue();
                 });
 
                 OrientationChanged?.Invoke(this, EventArgs.Empty);
@@ -496,11 +535,7 @@ namespace Alternet.UI
                 if (tickStyle == value)
                     return;
                 tickStyle = value;
-                DoInsideLayout(() =>
-                {
-                    UpdateIndicatorVisibility();
-                });
-
+                UpdateScaleVisibility();
                 TickStyleChanged?.Invoke(this, EventArgs.Empty);
             }
         }
@@ -690,20 +725,6 @@ namespace Alternet.UI
         }
 
         [Browsable(false)]
-        internal new Color? BackgroundColor
-        {
-            get => base.BackgroundColor;
-            set => base.BackgroundColor = value;
-        }
-
-        [Browsable(false)]
-        internal new Color? ForegroundColor
-        {
-            get => base.ForegroundColor;
-            set => base.ForegroundColor = value;
-        }
-
-        [Browsable(false)]
         internal new Thickness? MinChildMargin
         {
             get => base.MinChildMargin;
@@ -711,31 +732,19 @@ namespace Alternet.UI
         }
 
         [Browsable(false)]
-        internal new Thickness Padding
-        {
-            get => base.Padding;
-            set => base.Padding = value;
-        }
-
-        [Browsable(false)]
-        internal new bool ParentForeColor
-        {
-            get => base.ParentForeColor;
-            set => base.ParentForeColor = value;
-        }
-
-        [Browsable(false)]
-        internal new bool ParentBackColor
-        {
-            get => base.ParentBackColor;
-            set => base.ParentBackColor = value;
-        }
-
-        [Browsable(false)]
         internal new LayoutStyle? Layout
         {
             get => base.Layout;
             set => base.Layout = value;
+        }
+
+        /// <inheritdoc/>
+        protected override Thickness MinPadding
+        {
+            get
+            {
+                return 1;
+            }
         }
 
         /// <summary>
@@ -829,27 +838,17 @@ namespace Alternet.UI
         /// <inheritdoc/>
         public override SizeD GetPreferredSize(SizeD availableSize)
         {
-            Coord WidthFromParent()
-            {
-                if (Parent is not null)
-                    return Parent.ClientSize.Width - Parent.Padding.Horizontal - Margin.Horizontal;
-                return 150;
-            }
-
-            Coord HeightFromParent()
-            {
-                if (Parent is not null)
-                    return Parent.ClientSize.Height - Parent.Padding.Vertical - Margin.Vertical;
-                return 150;
-            }
+            const Coord defaultAutoWidth = 150;
 
             Coord? minimumHeight = null;
 
+#pragma warning disable
             Coord GetMinimumHeight()
             {
                 minimumHeight ??= MeasureCanvas.GetTextExtent("Wg", RealFont).Height;
                 return minimumHeight.Value;
             }
+#pragma warning restore
 
             var specifiedWidth = SuggestedWidth;
             var specifiedHeight = SuggestedHeight;
@@ -859,52 +858,62 @@ namespace Alternet.UI
                 if (Coord.IsNaN(specifiedWidth))
                 {
                     if (CoordUtils.IsInfinityOrNanOrMax(availableSize.Width))
-                        specifiedWidth = WidthFromParent();
+                        specifiedWidth = defaultAutoWidth;
                     else
-                        specifiedWidth = Math.Min(WidthFromParent(), availableSize.Width);
+                        specifiedWidth = Math.Min(defaultAutoWidth, availableSize.Width);
+                }
+                else
+                {
                 }
 
-                if (Coord.IsNaN(specifiedHeight))
+                if (Coord.IsNaN(specifiedHeight) || AutoSize)
                 {
                     specifiedHeight = MathUtils.Max(
                         MinimumSize.Height,
-                        DefaultSliderMinimumSize,
-                        GetMinimumHeight() + Padding.Vertical + 1);
+                        DefaultSliderMinimumSize);
+                    specifiedHeight = Math.Ceiling(specifiedHeight);
 
-                    if (leftTopScale.IsVisible)
+                    if (leftTopScale.Parent is not null)
                     {
-                        specifiedHeight += leftTopScale.Height;
+                        specifiedHeight += leftTopScale.Height + leftTopScale.Margin.Vertical;
                     }
 
-                    if (rightBottomScale.IsVisible)
+                    if (rightBottomScale.Parent is not null)
                     {
-                        specifiedHeight += rightBottomScale.Height;
+                        specifiedHeight
+                            += rightBottomScale.Height + rightBottomScale.Margin.Vertical;
                     }
+                }
+                else
+                {
                 }
             }
             else
             {
-                if (Coord.IsNaN(specifiedWidth))
+                if (Coord.IsNaN(specifiedWidth) || AutoSize)
                 {
-                    specifiedWidth = Math.Max(MinimumSize.Width, DefaultSliderMinimumSize);
+                    specifiedWidth = MathUtils.Max(
+                        MinimumSize.Width,
+                        DefaultSliderMinimumSize);
 
-                    if (leftTopScale.IsVisible)
+                    if (leftTopScale.Parent is not null)
                     {
-                        specifiedWidth += leftTopScale.Width;
+                        specifiedWidth += leftTopScale.Width + leftTopScale.Margin.Horizontal;
                     }
 
-                    if (rightBottomScale.IsVisible)
+                    if (rightBottomScale.Parent is not null)
                     {
-                        specifiedWidth += rightBottomScale.Width;
+                        specifiedWidth
+                            += rightBottomScale.Width + rightBottomScale.Margin.Horizontal;
                     }
                 }
 
                 if (Coord.IsNaN(specifiedHeight))
                 {
                     if (CoordUtils.IsInfinityOrNanOrMax(availableSize.Height))
-                        specifiedHeight = HeightFromParent();
+                        specifiedHeight = defaultAutoWidth;
                     else
-                        specifiedHeight = Math.Min(HeightFromParent(), availableSize.Height);
+                        specifiedHeight = Math.Min(defaultAutoWidth, availableSize.Height);
                 }
             }
 
@@ -1181,27 +1190,30 @@ namespace Alternet.UI
         /// Updates the visibility of the indicators based on the current
         /// state of the <see cref="TickStyle"/> property.
         /// </summary>
-        protected virtual void UpdateIndicatorVisibility()
+        protected virtual void UpdateScaleVisibility()
         {
-            switch (TickStyle)
+            DoInsideLayout(() =>
             {
-                case SliderTickStyle.None:
-                    leftTopScale.IsVisible = false;
-                    rightBottomScale.IsVisible = false;
-                    break;
-                case SliderTickStyle.Both:
-                    leftTopScale.IsVisible = true;
-                    rightBottomScale.IsVisible = true;
-                    break;
-                case SliderTickStyle.TopLeft:
-                    leftTopScale.IsVisible = true;
-                    rightBottomScale.IsVisible = false;
-                    break;
-                case SliderTickStyle.BottomRight:
-                    leftTopScale.IsVisible = false;
-                    rightBottomScale.IsVisible = true;
-                    break;
-            }
+                switch (TickStyle)
+                {
+                    case SliderTickStyle.None:
+                        leftTopScale.Parent = null;
+                        rightBottomScale.Parent = null;
+                        break;
+                    case SliderTickStyle.Both:
+                        leftTopScale.Parent = this;
+                        rightBottomScale.Parent = this;
+                        break;
+                    case SliderTickStyle.TopLeft:
+                        leftTopScale.Parent = this;
+                        rightBottomScale.Parent = null;
+                        break;
+                    case SliderTickStyle.BottomRight:
+                        leftTopScale.Parent = null;
+                        rightBottomScale.Parent = this;
+                        break;
+                }
+            });
         }
 
         private void InvalidateScales()
@@ -1225,6 +1237,53 @@ namespace Alternet.UI
             {
                 DefaultCursor = Cursors.Default;
                 HasBorder = true;
+            }
+
+            /// <summary>
+            /// Gets the container that holds the slider scale.
+            /// In the default implementation, this property returns the parent control
+            /// that implements the <see cref="ISliderScaleContainer"/> interface.
+            /// </summary>
+            [Browsable(false)]
+            public virtual ISliderScaleContainer? Container
+            {
+                get
+                {
+                    return Parent as ISliderScaleContainer;
+                }
+            }
+
+            /// <summary>
+            /// Gets a value indicating whether the slider's orientation is horizontal.
+            /// </summary>
+            public bool IsHorizontal
+            {
+                get
+                {
+                    return Orientation == SliderOrientation.Horizontal;
+                }
+            }
+
+            /// <summary>
+            /// Gets the orientation of the slider.
+            /// </summary>
+            [Browsable(false)]
+            public SliderOrientation Orientation
+            {
+                get
+                {
+                    return Container?.Orientation ?? SliderOrientation.Horizontal;
+                }
+            }
+
+            /// <inheritdoc/>
+            public override RectD Bounds
+            {
+                get => base.Bounds;
+                set
+                {
+                    base.Bounds = value;
+                }
             }
 
             /// <inheritdoc/>

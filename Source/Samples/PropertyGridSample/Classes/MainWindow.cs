@@ -45,8 +45,14 @@ namespace PropertyGridSample
 
             // Sample localization of Enum property values
             var brushTypeChoices = PropertyGrid.GetChoices<BrushType>();
-            brushTypeChoices.SetLabelForValue<BrushType>(BrushType.LinearGradient, "Linear Gradient");
-            brushTypeChoices.SetLabelForValue<BrushType>(BrushType.RadialGradient, "Radial Gradient");
+            
+            brushTypeChoices.SetLabelForValue<BrushType>(
+                BrushType.LinearGradient,
+                "Linear Gradient");
+            
+            brushTypeChoices.SetLabelForValue<BrushType>(
+                BrushType.RadialGradient,
+                "Radial Gradient");
 
             // Sample of hiding Enum value in PropertyGrid
             var knownColorsChoices = PropertyGrid.GetChoices<PropertyGridKnownColors>();
@@ -175,6 +181,8 @@ namespace PropertyGridSample
                 panel.FillPanel.DragStart += ControlPanel_DragStart;
 
                 updatePropertyGrid = true;
+
+                ControlParent.HasBorder = true;
             }
 
             panel.AfterDoubleClickAction += (s, e) =>

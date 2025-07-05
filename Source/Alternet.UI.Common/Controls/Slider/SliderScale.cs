@@ -30,6 +30,7 @@ namespace Alternet.UI
         {
             ParentForeColor = true;
             ParentBackColor = true;
+            MinimumSize = (5, 5);
         }
 
         /// <summary>
@@ -106,6 +107,17 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets a value indicating whether the slider's orientation is horizontal.
+        /// </summary>
+        public bool IsVertical
+        {
+            get
+            {
+                return Orientation == SliderOrientation.Vertical;
+            }
+        }
+
+        /// <summary>
         /// Gets the frequency of ticks on the slider scale.
         /// </summary>
         [Browsable(false)]
@@ -128,58 +140,55 @@ namespace Alternet.UI
 
             var min = Minimum;
             var max = Maximum;
-            var value = Value;
             var frequency = TickFrequency;
+            var isVertical = IsVertical;
 
-            var firstIndex = Container.Minimum;
+            var firstIndex = min;
             if (!Container.IsFirstTickVisible)
                 firstIndex++;
 
-            var lastIndex = Container.Maximum;
+            var lastIndex = max;
             if (!Container.IsLastTickVisible)
                 lastIndex--;
 
-            if (IsHorizontal)
+            var thumbSize = Container.ThumbSize.GetSize(isVertical);
+            var scaleSize = ClientRectangle
+                .GetSize(!isVertical) - Padding.GetSize(!isVertical);
+            var isEven = scaleSize % 2 == 0;
+            var tickSize = DefaultTickSize;
+            var tickSizeIsEven = tickSize % 2 == 0;
+            if (isEven != tickSizeIsEven)
             {
-                HorizontalDefaultPaint();
+                tickSize++;
             }
-            else
+
+            var otherPosition = Padding.GetNear(!isVertical) + ((scaleSize - tickSize) / 2);
+
+            for (
+                int i = firstIndex;
+                i <= lastIndex;
+                i += frequency)
             {
-                VerticalDefaultPaint();
-            }
+                var tickPosition = Container.ScaleValueToPosition(i);
+                var thisPosition
+                    = tickPosition + (int)(thumbSize / 2) + Padding.GetNear(isVertical);
 
-            void HorizontalDefaultPaint()
-            {
-                var thumbSize = Container.ThumbSize.Width;
-                var scaleHeight = ClientRectangle.Height - Padding.Vertical;
-                var isEven = scaleHeight % 2 == 0;
-                var tickSize = DefaultTickSize;
-                var tickSizeIsEven = tickSize % 2 == 0;
-                if(isEven != tickSizeIsEven)
+                if (isVertical)
                 {
-                    tickSize++;
-                }
-
-                var top = Padding.Top + ((scaleHeight - tickSize) / 2);
-
-                for (
-                    int i = firstIndex;
-                    i <= lastIndex;
-                    i += Container.TickFrequency)
-                {
-                    var tickPosition = Container.ScaleValueToPosition(i);
-
-                    e.Graphics.DrawVertLine(
+                    e.Graphics.DrawHorzLine(
                         RealForegroundColor.AsBrush,
-                        (tickPosition + (thumbSize / 2), top),
+                        (thisPosition, otherPosition),
                         tickSize,
                         1);
                 }
-            }
-
-            void VerticalDefaultPaint()
-            {
-                var thumbSize = Container.ThumbSize.Height;
+                else
+                {
+                    e.Graphics.DrawVertLine(
+                        RealForegroundColor.AsBrush,
+                        (thisPosition, otherPosition),
+                        tickSize,
+                        1);
+                }
             }
         }
     }
