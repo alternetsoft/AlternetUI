@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Text;
 
+using Alternet.Drawing;
+
 namespace Alternet.UI
 {
     /// <summary>
@@ -14,6 +16,11 @@ namespace Alternet.UI
     public partial class SliderScale : Spacer
     {
         /// <summary>
+        /// Gets or sets the default tick size for the slider scale.
+        /// </summary>
+        public static Coord DefaultTickSize = 1;
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="SliderScale"/> class.
         /// </summary>
         /// <remarks>This constructor creates a default instance of the
@@ -21,6 +28,8 @@ namespace Alternet.UI
         /// Use this to set up a slider scale with default settings.</remarks>
         public SliderScale()
         {
+            ParentForeColor = true;
+            ParentBackColor = true;
         }
 
         /// <summary>
@@ -122,6 +131,14 @@ namespace Alternet.UI
             var value = Value;
             var frequency = TickFrequency;
 
+            var firstIndex = Container.Minimum;
+            if (!Container.IsFirstTickVisible)
+                firstIndex++;
+
+            var lastIndex = Container.Maximum;
+            if (!Container.IsLastTickVisible)
+                lastIndex--;
+
             if (IsHorizontal)
             {
                 HorizontalDefaultPaint();
@@ -133,10 +150,36 @@ namespace Alternet.UI
 
             void HorizontalDefaultPaint()
             {
+                var thumbSize = Container.ThumbSize.Width;
+                var scaleHeight = ClientRectangle.Height - Padding.Vertical;
+                var isEven = scaleHeight % 2 == 0;
+                var tickSize = DefaultTickSize;
+                var tickSizeIsEven = tickSize % 2 == 0;
+                if(isEven != tickSizeIsEven)
+                {
+                    tickSize++;
+                }
+
+                var top = Padding.Top + ((scaleHeight - tickSize) / 2);
+
+                for (
+                    int i = firstIndex;
+                    i <= lastIndex;
+                    i += Container.TickFrequency)
+                {
+                    var tickPosition = Container.ScaleValueToPosition(i);
+
+                    e.Graphics.DrawVertLine(
+                        RealForegroundColor.AsBrush,
+                        (tickPosition + (thumbSize / 2), top),
+                        tickSize,
+                        1);
+                }
             }
 
             void VerticalDefaultPaint()
             {
+                var thumbSize = Container.ThumbSize.Height;
             }
         }
     }

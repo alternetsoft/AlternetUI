@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Text;
 
+using Alternet.Drawing;
+
 namespace Alternet.UI
 {
     /// <summary>
@@ -14,6 +16,11 @@ namespace Alternet.UI
         /// Gets the current value selected by the slider.
         /// </summary>
         int Value { get; }
+
+        /// <summary>
+        /// Gets the size of the thumb control.
+        /// </summary>
+        SizeD ThumbSize { get; }
 
         /// <summary>
         /// Gets the orientation of the slider, indicating whether it is rendered
@@ -39,5 +46,27 @@ namespace Alternet.UI
         /// between Minimum and Maximum.
         /// </summary>
         int TickFrequency { get; }
+
+        /// <summary>
+        /// Scales a position value to a coordinate on the slider scale.
+        /// </summary>
+        /// <param name="val">The position value to be scaled.</param>
+        /// <returns>The corresponding coordinate on the slider scale.</returns>
+        Coord ScaleValueToPosition(int val);
+
+        /// <summary>
+        /// Gets whether the first tick mark is visible on the slider scale.
+        /// </summary>
+        bool IsFirstTickVisible { get; }
+
+        /// <summary>
+        /// Gets whether the last tick mark is visible on the slider scale.
+        /// </summary>
+        bool IsLastTickVisible { get; }
+
+        /// <summary>
+        /// Gets whether the slider scale is enabled.
+        /// </summary>
+        bool IsEnabled { get; }
     }
 }

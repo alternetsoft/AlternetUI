@@ -38,6 +38,9 @@ namespace ControlsSample
             sliderh3.ValueDisplay = displayH3;
             sliderh4.ValueDisplay = displayH4;
 
+            sliderh3.TickFrequency = 10;
+            sliderh4.TickFrequency = 10;
+
             sliderh4.ValueFormat = "{0:0.00} miles";
 
             sliderh3.FormatValueForDisplay += (s, e) =>

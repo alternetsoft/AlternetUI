@@ -34,7 +34,7 @@ namespace Alternet.UI
         /// <summary>
         /// Represents the default size of the left/top and right/bottom indicators.
         /// </summary>
-        public static Coord DefaultIndicatorSize = 6;
+        public static Coord DefaultIndicatorSize = 5;
 
         /// <summary>
         /// Represents the default minimum size for a slider control.
@@ -82,6 +82,8 @@ namespace Alternet.UI
         private WeakReferenceValue<AbstractControl> valueDisplay = new();
         private string? valueFormat;
         private EventHandler<FormatValueEventArgs<int>>? formatValueForDisplay;
+        private bool isFirstTickVisible = true;
+        private bool isLastTickVisible = true;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Slider"/> class.
@@ -210,6 +212,36 @@ namespace Alternet.UI
         public override ControlTypeId ControlKind => ControlTypeId.Slider;
 
         /// <summary>
+        /// Gets or sets whether the first tick mark is visible on the slider scale.
+        /// </summary>
+        public virtual bool IsFirstTickVisible
+        {
+            get => isFirstTickVisible;
+            set
+            {
+                if (isFirstTickVisible == value)
+                    return;
+                isFirstTickVisible = value;
+                InvalidateScales();
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets whether the last tick mark is visible on the slider scale.
+        /// </summary>
+        public virtual bool IsLastTickVisible
+        {
+            get => isLastTickVisible;
+            set
+            {
+                if (isLastTickVisible == value)
+                    return;
+                isLastTickVisible = value;
+                InvalidateScales();
+            }
+        }
+
+        /// <summary>
         /// Gets or sets the format string used to display the value of the slider.
         /// </summary>
         public virtual string? ValueFormat
@@ -244,6 +276,12 @@ namespace Alternet.UI
         /// </summary>
         [Browsable(false)]
         public SliderThumb ThumbControl => thumb;
+
+        /// <summary>
+        /// Gets the size of the thumb control.
+        /// </summary>
+        [Browsable(false)]
+        public SizeD ThumbSize => thumb.Size;
 
         /// <summary>
         /// Gets the left/top scale control of the slider.
@@ -874,6 +912,30 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Scales a numeric value to a position on the slider.
+        /// </summary>
+        /// <param name="val">The numeric value to be scaled.</param>
+        /// <returns>The position on the slider corresponding to the specified value.</returns>
+        public virtual Coord ScaleValueToPosition(int val)
+        {
+            if (val <= Minimum)
+                return 0;
+            else
+            if (val >= Maximum)
+                return MaxLeftTopSpacerSize;
+            else
+            {
+                var v = val - Minimum;
+                var maxV = Maximum - Minimum;
+
+                var newSpacerSize = (v * MaxLeftTopSpacerSize) / maxV;
+
+                var result = Math.Min(Math.Max(0, newSpacerSize), MaxLeftTopSpacerSize);
+                return result;
+            }
+        }
+
+        /// <summary>
         /// Sets the colors of the left/top and right/bottom spacers.
         /// </summary>
         /// <param name="leftTopSpacerColor">The color of the left/top spacer.
@@ -953,24 +1015,11 @@ namespace Alternet.UI
             if (DisposingOrDisposed)
                 return;
 
-            if (Value <= Minimum)
-                LeftTopSpacerSize = 0;
-            else
-            if (Value >= Maximum)
-                LeftTopSpacerSize = MaxLeftTopSpacerSize;
-            else
-            {
-                var v = Value - Minimum;
-                var maxV = Maximum - Minimum;
-
-                var newSpacerSize = (v * MaxLeftTopSpacerSize) / maxV;
-
-                LeftTopSpacerSize = Math.Min(Math.Max(0, newSpacerSize), MaxLeftTopSpacerSize);
-            }
+            LeftTopSpacerSize = ScaleValueToPosition(Value);
         }
 
         /// <summary>
-        /// Coerces minimal value the have the valid range.
+        /// Coerces minimal value to have the valid range.
         /// </summary>
         /// <param name="value">Value to coerce.</param>
         /// <returns></returns>
@@ -1152,6 +1201,15 @@ namespace Alternet.UI
                     leftTopScale.IsVisible = false;
                     rightBottomScale.IsVisible = true;
                     break;
+            }
+        }
+
+        private void InvalidateScales()
+        {
+            if (TickStyle != SliderTickStyle.None)
+            {
+                leftTopScale.Invalidate();
+                rightBottomScale.Invalidate();
             }
         }
 
