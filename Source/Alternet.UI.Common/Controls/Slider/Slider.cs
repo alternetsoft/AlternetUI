@@ -29,7 +29,7 @@ namespace Alternet.UI
     [DefaultEvent("ValueChanged")]
     [DefaultBindingProperty("Value")]
     [ControlCategory("Common")]
-    public partial class Slider : Border
+    public partial class Slider : Border, ISliderScaleContainer
     {
         /// <summary>
         /// Represents the default size of the left/top and right/bottom indicators.
@@ -79,6 +79,9 @@ namespace Alternet.UI
         private int tickFrequency = 1;
         private SliderOrientation orientation;
         private SliderTickStyle tickStyle;
+        private WeakReferenceValue<AbstractControl> valueDisplay = new();
+        private string? valueFormat;
+        private EventHandler<FormatValueEventArgs<int>>? formatValueForDisplay;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Slider"/> class.
@@ -141,6 +144,26 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Occurs when the <see cref="Value"/> property is formatted for display
+        /// before it is assigned to display control specified in
+        /// the <see cref="ValueDisplay"/> property.
+        /// </summary>
+        public event EventHandler<FormatValueEventArgs<int>>? FormatValueForDisplay
+        {
+            add
+            {
+                formatValueForDisplay += value;
+                UpdateValueDisplay();
+            }
+
+            remove
+            {
+                formatValueForDisplay -= value;
+                UpdateValueDisplay();
+            }
+        }
+
+        /// <summary>
         /// Occurs when the <see cref="Value"/> property of a slider changes,
         /// either by movement of the scroll box or by manipulation in code.
         /// </summary>
@@ -185,6 +208,36 @@ namespace Alternet.UI
 
         /// <inheritdoc/>
         public override ControlTypeId ControlKind => ControlTypeId.Slider;
+
+        /// <summary>
+        /// Gets or sets the format string used to display the value of the slider.
+        /// </summary>
+        public virtual string? ValueFormat
+        {
+            get => valueFormat;
+            set
+            {
+                if (valueFormat != value)
+                {
+                    valueFormat = value;
+                    UpdateValueDisplay();
+                }
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets the display control for the slider value.
+        /// </summary>
+        public AbstractControl? ValueDisplay
+        {
+            get => valueDisplay.Value;
+
+            set
+            {
+                valueDisplay.Value = value;
+                UpdateValueDisplay();
+            }
+        }
 
         /// <summary>
         /// Gets the thumb control of the slider.
@@ -732,6 +785,7 @@ namespace Alternet.UI
             OnValueChanged(EventArgs.Empty);
             ValueChanged?.Invoke(this, EventArgs.Empty);
             Designer?.RaisePropertyChanged(this, nameof(Value));
+            UpdateValueDisplay();
         }
 
         /// <inheritdoc/>
@@ -1040,6 +1094,38 @@ namespace Alternet.UI
         protected virtual SliderThumb CreateSliderThumb()
         {
             return new SliderThumb();
+        }
+
+        /// <summary>
+        /// Updates the display of the current value in the
+        /// <see cref="ValueDisplay"/> control.
+        /// </summary>
+        protected virtual void UpdateValueDisplay()
+        {
+            if (DisposingOrDisposed)
+                return;
+            if (ValueDisplay is null || ValueDisplay.DisposingOrDisposed)
+                return;
+
+            if(formatValueForDisplay is not null)
+            {
+                var formatEventArgs = new FormatValueEventArgs<int>(Value);
+                formatValueForDisplay(this, formatEventArgs);
+                ValueDisplay.Text = formatEventArgs.FormattedValue ?? DefaultValueToString();
+                return;
+            }
+
+            ValueDisplay.Text = DefaultValueToString();
+
+            string DefaultValueToString()
+            {
+                if(ValueFormat is not null)
+                {
+                    return string.Format(ValueFormat, Value);
+                }
+
+                return Value.ToString() ?? string.Empty;
+            }
         }
 
         /// <summary>

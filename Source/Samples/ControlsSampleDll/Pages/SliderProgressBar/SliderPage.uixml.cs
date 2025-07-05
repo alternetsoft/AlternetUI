@@ -32,6 +32,18 @@ namespace ControlsSample
             sliderh2.TickStyle = SliderTickStyle.TopLeft;
             sliderh3.TickStyle = SliderTickStyle.BottomRight;
             sliderh4.TickStyle = SliderTickStyle.Both;
+
+            sliderh1.ValueDisplay = displayH1;
+            sliderh2.ValueDisplay = displayH2;
+            sliderh3.ValueDisplay = displayH3;
+            sliderh4.ValueDisplay = displayH4;
+
+            sliderh4.ValueFormat = "{0:0.00} miles";
+
+            sliderh3.FormatValueForDisplay += (s, e) =>
+            {
+                e.FormattedValue = $"{e.Value} km";
+            };
         }
 
         private void TickStyleComboBox_SelectedItemChanged(object? sender, EventArgs e)
