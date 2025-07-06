@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Text;
 
 using Alternet.Drawing;
+using Alternet.UI.Extensions;
 
 namespace Alternet.UI
 {
@@ -843,6 +844,50 @@ namespace Alternet.UI
 
                 RefreshTree();
             }
+        }
+
+        /// <summary>
+        /// Applies a visibility filter to items within the tree control,
+        /// updating their <c>IsVisible</c> property
+        /// based on a text-matching condition.
+        /// </summary>
+        /// <param name="filter">
+        /// The text used to determine item visibility. If <c>null</c> or empty,
+        /// all items will be visible.
+        /// </param>
+        /// <param name="comparison">
+        /// The <see cref="StringComparison"/> strategy used to compare item text
+        /// against the filter.
+        /// Defaults to <see cref="StringComparison.CurrentCultureIgnoreCase"/>.
+        /// </param>
+        /// <remarks>
+        /// This method enumerates all items (including those not currently visible),
+        /// extracts their textual representation
+        /// and sets each item's <c>IsVisible</c> flag accordingly.
+        /// The update is wrapped in <see cref="TreeControlItem.DoInsideUpdate"/>
+        /// to optimize rendering and batch changes.
+        /// </remarks>
+        public virtual void ApplyVisibilityFilter(
+            string? filter,
+            StringComparison comparison = StringComparison.CurrentCultureIgnoreCase)
+        {
+            TreeControlItem.EnumExpandedItemsParams prm = new();
+            prm.OnlyVisible = false;
+            prm.OnlyExpanded = false;
+
+            var items = RootItem.EnumExpandedItems(prm);
+
+            var noFilter = string.IsNullOrEmpty(filter);
+            filter ??= string.Empty;
+
+            RootItem.DoInsideUpdate(() =>
+            {
+                foreach (var item in items)
+                {
+                    var txt = ListBox.GetItemText(item, true);
+                    item.IsVisible = noFilter || txt.Contains(filter, comparison);
+                }
+            });
         }
 
         /// <summary>
