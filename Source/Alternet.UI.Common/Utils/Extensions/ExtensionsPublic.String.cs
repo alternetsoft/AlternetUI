@@ -160,5 +160,19 @@ namespace Alternet.UI.Extensions
         {
             return s.Replace(" ", string.Empty);
         }
+
+        /// <summary>
+        /// Checks whether the source string contains the specified substring
+        /// using the specified comparison type.
+        /// </summary>
+        /// <param name="source">The source string to check.</param>
+        /// <param name="toCheck">The substring to seek.</param>
+        /// <param name="comparison">The comparison to use.</param>
+        /// <returns><c>true</c> if the substring is found; otherwise, <c>false</c>.</returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static bool Contains(this string source, string toCheck, StringComparison comparison)
+        {
+            return source?.IndexOf(toCheck, comparison) >= 0;
+        }
     }
 }

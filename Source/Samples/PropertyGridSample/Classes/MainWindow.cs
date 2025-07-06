@@ -9,6 +9,7 @@ using Alternet.Drawing;
 using Alternet.UI;
 using Alternet.Base.Collections;
 using Alternet.UI.Localization;
+using Alternet.UI.Extensions;
 
 namespace PropertyGridSample
 {
@@ -45,11 +46,11 @@ namespace PropertyGridSample
 
             // Sample localization of Enum property values
             var brushTypeChoices = PropertyGrid.GetChoices<BrushType>();
-            
+
             brushTypeChoices.SetLabelForValue<BrushType>(
                 BrushType.LinearGradient,
                 "Linear Gradient");
-            
+
             brushTypeChoices.SetLabelForValue<BrushType>(
                 BrushType.RadialGradient,
                 "Radial Gradient");
@@ -61,7 +62,7 @@ namespace PropertyGridSample
 
             // Sample localization of the property label
             var prm = PropertyGrid.GetNewItemParams(typeof(AbstractControl), "Name");
-            if(prm is not null)
+            if (prm is not null)
                 prm.Label = "(name)";
         }
 
@@ -135,7 +136,7 @@ namespace PropertyGridSample
                     if (!ShowDesignCorners)
                         return;
                     var rect = panel.FillPanel.FirstVisibleChild?.Bounds;
-                    if(rect is not null)
+                    if (rect is not null)
                     {
                         var inflated = rect.Value.Inflated();
                         BorderSettings.DrawDesignCorners(
@@ -169,8 +170,6 @@ namespace PropertyGridSample
                     Key.DownArrow,
                     Alternet.UI.ModifierKeys.Control);
 
-                ToolBox.SelectFirstItem();
-
                 RunTests();
 
                 ComponentDesigner.InitDefault();
@@ -183,13 +182,38 @@ namespace PropertyGridSample
                 updatePropertyGrid = true;
 
                 ControlParent.HasBorder = true;
+
+                toolBoxFilterEdit.VerticalAlignment = VerticalAlignment.Top;
+                toolBoxFilterEdit.MarginBottom = 2;
+                panel.LeftPanel.Children.Prepend(toolBoxFilterEdit);
+
+                toolBoxFilterEdit.InitFilterEdit();
+                panel.LeftPanel.Layout = LayoutStyle.Vertical;
             }
 
             panel.AfterDoubleClickAction += (s, e) =>
+                    {
+                        PropGrid.ReloadPropertyValues();
+                    };
+
+            App.AddIdleTask(() =>
             {
-                PropGrid.ReloadPropertyValues();
+                ToolBox.SelectFirstItemAndScroll();
+            });
+
+            toolBoxFilterEdit.DelayedTextChanged += (s, e) =>
+            {
+                if (DisposingOrDisposed)
+                    return;
+                var filter = toolBoxFilterEdit.TextBox.Text;
+                ToolBox.ApplyVisibilityFilter(filter);
             };
         }
+
+
+        private readonly TextBoxAndButton toolBoxFilterEdit = new()
+        {
+        };
 
         public VirtualTreeControl ToolBox => panel.LeftListBox;
 
