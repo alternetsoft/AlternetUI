@@ -1,3 +1,40 @@
+# 0.9.741 (2025 July 6)
+
+- **Slider: Complete reimplementation on c# inside the library.** This is mainly because WxWidgets slider under MSW on black theme 
+is not working properly. Also new Slider will work fine on Maui platform.
+- **Display**: Cache Primary display as new WxWidgets sometimes raised exception.
+- **ComboBox**: Simplify inheritance chain and started to reimplement ComboBox inside the library (Currently it is GenericComboBox but
+in later builds will be used instead of ComboBox).
+- **ControlAndButton**: IsSubstituteControlCreated, UseSubstituteControl, SubstituteControl and other related methods.
+- **TextBoxAndButton**: IsEditableChanged, IsEditable, DropDownStyle.
+- **TextBoxWithListPopup**: Enhance with dropdown events and properties. Added DropDown and DropDownClosed events, DroppedDown property, 
+and methods to show/hide the popup. Introduced properties for text selection and empty text hint. Refactored event handling for popup display 
+and value changes, and improved substitute control text update logic.
+- **TextBoxWithListPopup**: Add lookup and popup enhancements. Introduced properties for lookup behavior (LookupByValue, LookupExactText, 
+LookupIgnoreCase) and exposed the ListBox control. Improved popup handling by updating ShowPopup logic, ensuring proper event subscription, 
+and refreshing the substitute control after text updates. Also adjusted popup owner assignment and mouse event handling for better consistency.
+- **VirtualListBox**: Prevent redundant SetItemsFast calls. Added a check in SetItemsFast to return early if the provided collection is the 
+same as the current Items, avoiding unnecessary operations.
+- **SpeedButtonWithListPopup**: Add lookup customization options. Introduced the LookupValue event and properties LookupByValue, 
+LookupExactText, and LookupIgnoreCase to allow more flexible and configurable item lookup behavior when opening the popup window. 
+Updated logic to use these new options and improved item selection in the popup.
+- GenericControl: implement Invalidate and Update methods.
+- Spacer: now paints border and background if it specified.
+- Splitter: Fix to ignore controls with IgnoreLayout = true.
+- **Font**: Add Skia font rendering defaults and reset method. Introduces static properties for default Skia font rendering options 
+(ScaleX, Subpixel, ForceAutoHinting, Hinting, Edging) to control text appearance when converting to SKFont. 
+Adds ResetSkiaFont() method to clear cached SKFont instances, ensuring updated rendering settings are applied. 
+- **GraphicsFactory**: Set default Skia font properties. Added initialization of SKFont properties (Subpixel, Hinting, Edging, ScaleX, 
+ForceAutoHinting) using default values from the Font class when creating a new SKFont instance. 
+This ensures consistent font rendering settings across the application.
+- **Add guide for Linux .desktop files.** Created a comprehensive markdown document explaining .desktop file usage on Linux, including 
+file locations, categories, icon formats, recommended icon sizes, and best practices for user and system-wide launchers.
+- **Add notes on running wxWidgets apps under X11.** Created a documentation file with instructions for launching wxWidgets applications 
+using the X11 backend to bypass Wayland, including environment variable usage and .desktop file modification.
+- **TabControl**: Refactor event handlers to protected virtual methods. Renamed and refactored several private event handler methods in TabControl 
+to protected virtual methods, improving extensibility and enabling derived classes to override event handling. 
+- **Thickness**: GetNear, GetFar.
+
 # 0.9.740 (2025 July 2)
 
 - **Create SpeedButtonWithPopup, SpeedDateButton, DatePicker, TimePicker, TextBoxWithListPopup.**
