@@ -509,14 +509,6 @@ namespace Alternet.Drawing
                     return;
                 }
 
-                if (App.IsWindowsOS)
-                {
-                    // here we set light colors as Windows port
-                    // currently doesn't support dark theme.
-                    SetColorsFrom(SystemColorsLight.Default);
-                    return;
-                }
-
                 SetColorsFrom(SystemColorsDarkLinux.Default);
             }
             else
