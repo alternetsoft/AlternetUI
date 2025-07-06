@@ -425,7 +425,6 @@ namespace Alternet.UI
             ShowPopup();
         }
 
-
         /// <summary>
         /// Hides popup window.
         /// </summary>

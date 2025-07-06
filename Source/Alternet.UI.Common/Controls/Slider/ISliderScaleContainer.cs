@@ -48,13 +48,6 @@ namespace Alternet.UI
         int TickFrequency { get; }
 
         /// <summary>
-        /// Scales a position value to a coordinate on the slider scale.
-        /// </summary>
-        /// <param name="val">The position value to be scaled.</param>
-        /// <returns>The corresponding coordinate on the slider scale.</returns>
-        Coord ScaleValueToPosition(int val);
-
-        /// <summary>
         /// Gets whether the first tick mark is visible on the slider scale.
         /// </summary>
         bool IsFirstTickVisible { get; }
@@ -68,5 +61,12 @@ namespace Alternet.UI
         /// Gets whether the slider scale is enabled.
         /// </summary>
         bool IsEnabled { get; }
+
+        /// <summary>
+        /// Scales a position value to a coordinate on the slider scale.
+        /// </summary>
+        /// <param name="val">The position value to be scaled.</param>
+        /// <returns>The corresponding coordinate on the slider scale.</returns>
+        Coord ScaleValueToPosition(int val);
     }
 }

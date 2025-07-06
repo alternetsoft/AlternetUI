@@ -75,7 +75,6 @@ namespace Alternet.Drawing
         /// <inheritdoc cref="Font.DefaultSkiaFontForceAutoHinting"/>.
         public bool ForceAutoHinting
         {
-
             get => Font.DefaultSkiaFontForceAutoHinting;
 
             set
