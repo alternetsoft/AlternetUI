@@ -604,6 +604,32 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Calls the specified action inside an update block,
+        /// ensuring that the owner of this tree control item is updated correctly.
+        /// </summary>
+        /// <param name="action">The action to call.</param>
+        /// <param name="treeChanged">Whether to update owner control.</param>
+        public virtual void DoInsideUpdate(Action action, bool treeChanged = true)
+        {
+            SmartInvoke(Internal);
+
+            void Internal()
+            {
+                Owner?.BeginUpdate();
+                try
+                {
+                    action();
+                    if(treeChanged)
+                        Owner?.TreeChanged();
+                }
+                finally
+                {
+                    Owner?.EndUpdate();
+                }
+            }
+        }
+
+        /// <summary>
         /// Adds a range of <see cref="TreeControlItem"/> child items to this tree control item.
         /// </summary>
         /// <param name="items">The items to add.</param>
@@ -697,8 +723,12 @@ namespace Alternet.UI
                     continue;
                 yield return item;
 
-                if (!prm.Recursive || !item.HasItems || !item.IsExpanded)
+                if (!prm.Recursive || !item.HasItems)
                     continue;
+
+                if (prm.OnlyExpanded && !item.IsExpanded)
+                    continue;
+
                 var subItems = item.EnumExpandedItems(prm);
 
                 foreach(var subItem in subItems)
@@ -755,6 +785,12 @@ namespace Alternet.UI
             /// Defaults to <c>true</c>.
             /// </summary>
             public bool OnlyVisible = true;
+
+            /// <summary>
+            /// Specifies whether to include only items with expanded parents in the enumeration.
+            /// Defaults to <c>true</c>.
+            /// </summary>
+            public bool OnlyExpanded = true;
 
             /// <summary>
             /// Specifies whether to process all child items recursively.
