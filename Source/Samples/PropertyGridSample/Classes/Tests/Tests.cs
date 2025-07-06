@@ -55,6 +55,15 @@ namespace PropertyGridSample
             InitTestsSpeedButton();
             InitTestsTabControl();
             InitTestsSlider();
+            InitTestsLabel();
+
+            void InitTestsLabel()
+            {
+                AddControlAction<GenericLabel>("MakeComplexLabel", (c) =>
+                {
+                    ObjectInit.MakeComplexLabel(c);
+                });
+            }
 
             void InitTestsSlider()
             {

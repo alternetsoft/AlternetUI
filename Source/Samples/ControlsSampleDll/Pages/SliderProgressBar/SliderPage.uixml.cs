@@ -41,12 +41,37 @@ namespace ControlsSample
             sliderh3.TickFrequency = 10;
             sliderh4.TickFrequency = 10;
 
+            sliderv2.TickFrequency = 10;
+            sliderv3.TickFrequency = 10;
+
             sliderh4.ValueFormat = "{0:0.00} miles";
 
             sliderh3.FormatValueForDisplay += (s, e) =>
             {
                 e.FormattedValue = $"{e.Value} km";
             };
+        }
+
+        private void HasBorderButton_Click(object? sender, EventArgs e)
+        {
+            DoInsideLayout(() =>
+            {
+                foreach (var slider in GetAllSliders())
+                {
+                    slider.HasBorder = !slider.HasBorder;
+                }
+            });
+        }
+
+        private void ToggleColorsButton_Click(object? sender, EventArgs e)
+        {
+            DoInsideLayout(() =>
+            {
+                foreach (var slider in GetAllSliders())
+                {
+                    slider.UseControlColors(slider.ParentBackColor);
+                }
+            });
         }
 
         private void TickStyleComboBox_SelectedItemChanged(object? sender, EventArgs e)

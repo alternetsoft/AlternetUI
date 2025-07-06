@@ -373,13 +373,15 @@ namespace Alternet.UI
 
                 if (IsHorizontal)
                 {
-                    result = ClientSize.Width - ThumbControl.Width
-                    - ThumbControl.Margin.Horizontal - Padding.Horizontal;
+                    result = ClientSize.Width - Padding.Horizontal;
+                    if (ThumbControl.Parent is not null)
+                        result = result - ThumbControl.Width - ThumbControl.Margin.Horizontal;
                 }
                 else
                 {
-                    result = ClientSize.Height - ThumbControl.Height
-                    - ThumbControl.Margin.Vertical - Padding.Vertical;
+                    result = ClientSize.Height - Padding.Vertical;
+                    if (ThumbControl.Parent is not null)
+                        result = result - ThumbControl.Height - ThumbControl.Margin.Vertical;
                 }
 
                 return result;

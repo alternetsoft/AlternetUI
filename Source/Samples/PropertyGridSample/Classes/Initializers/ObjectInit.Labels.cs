@@ -9,10 +9,8 @@ namespace PropertyGridSample
 {
     public partial class ObjectInit
     {
-        public static void InitGenericLabel(object control)
+        public static void MakeComplexLabel(GenericLabel label)
         {
-            if (control is not GenericLabel label)
-                return;
             label.ParentBackColor = false;
             label.ParentForeColor = false;
             label.Text = "GenericLabel";
@@ -43,6 +41,16 @@ namespace PropertyGridSample
             label.StateObjects.Colors ??= new();
             label.StateObjects.Colors.SetObject(colors, VisualControlState.Hovered);
             LogMouseEvents(label);
+
+            label.PerformLayoutAndInvalidate();
+        }
+
+        public static void InitGenericLabel(object control)
+        {
+            if (control is not GenericLabel label)
+                return;
+            label.Text = "GenericLabel";
+            label.HorizontalAlignment = HorizontalAlignment.Left;
         }
 
         public static void LogMouseEvents(AbstractControl control)

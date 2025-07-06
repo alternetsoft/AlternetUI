@@ -177,7 +177,7 @@ namespace Alternet.UI
                 {
                     e.Graphics.DrawHorzLine(
                         RealForegroundColor.AsBrush,
-                        (thisPosition, otherPosition),
+                        (otherPosition, thisPosition),
                         tickSize,
                         1);
                 }
