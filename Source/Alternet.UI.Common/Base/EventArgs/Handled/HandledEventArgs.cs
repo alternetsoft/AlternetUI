@@ -11,6 +11,12 @@ namespace Alternet.UI
     /// </summary>
     public class HandledEventArgs : BaseEventArgs
     {
+        /// <summary>
+        /// Gets <see cref="HandledEventArgs"/> instance which <see cref="Handled"/>
+        /// property is always <c>false</c>.
+        /// </summary>
+        public static readonly HandledEventArgs NotHandled = new NotHandledEventArgs();
+
         private bool handled;
 
         /// <summary>
@@ -21,7 +27,7 @@ namespace Alternet.UI
         /// otherwise, <see langword="false" /> to also pass the event along to the
         /// default control handler.
         /// </returns>
-        public bool Handled
+        public virtual bool Handled
         {
             get
             {
@@ -32,6 +38,11 @@ namespace Alternet.UI
             {
                 handled = value;
             }
+        }
+
+        private class NotHandledEventArgs : HandledEventArgs
+        {
+            public override bool Handled { get => false; }
         }
     }
 }
