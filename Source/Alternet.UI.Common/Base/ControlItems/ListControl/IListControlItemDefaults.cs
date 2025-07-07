@@ -88,6 +88,16 @@ namespace Alternet.UI
         HVAlignment ItemAlignment { get; set; }
 
         /// <summary>
+        /// Gets or sets selected item text color for the unfocused container.
+        /// </summary>
+        Color? UnfocusedSelectedItemTextColor { get; set; }
+
+        /// <summary>
+        /// Gets or sets selected item back color for the unfocused container.
+        /// </summary>
+        Color? UnfocusedSelectedItemBackColor { get; set; }
+
+        /// <summary>
         /// Gets or sets selected item text color.
         /// </summary>
         Color? SelectedItemTextColor { get; set; }

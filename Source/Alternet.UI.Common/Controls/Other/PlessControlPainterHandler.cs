@@ -8,7 +8,8 @@ using Alternet.UI;
 namespace Alternet.Drawing
 {
     /// <summary>
-    /// Provides methods to paint and measure control parts such as checkboxes, expanders, and header buttons.
+    /// Provides methods to paint and measure control parts such as checkboxes,
+    /// expanders, and header buttons.
     /// </summary>
     public class PlessControlPainterHandler : DisposableObject, IControlPainterHandler
     {
@@ -72,7 +73,8 @@ namespace Alternet.Drawing
         /// <summary>
         /// Gets the SVG image corresponding to the specified checkbox state.
         /// </summary>
-        /// <param name="checkState">The state of the checkbox (unchecked, checked, or indeterminate).</param>
+        /// <param name="checkState">The state of the checkbox (unchecked, checked,
+        /// or indeterminate).</param>
         /// <returns>The SVG image representing the checkbox state.</returns>
         public static SvgImage GetCheckBoxSvg(CheckState checkState)
         {
@@ -101,8 +103,10 @@ namespace Alternet.Drawing
         /// <param name="control">The control associated with the checkbox.</param>
         /// <param name="canvas">The graphics context where the checkbox will be drawn.</param>
         /// <param name="rect">The rectangle defining the bounds of the checkbox.</param>
-        /// <param name="checkState">The state of the checkbox (checked, unchecked, or indeterminate).</param>
-        /// <param name="controlState">The visual state of the control (e.g., normal, hovered, pressed).</param>
+        /// <param name="checkState">The state of the checkbox (checked, unchecked,
+        /// or indeterminate).</param>
+        /// <param name="controlState">The visual state of the control
+        /// (e.g., normal, hovered, pressed).</param>
         public static void DrawCheckBoxSvg(
             AbstractControl control,
             Graphics canvas,

@@ -31,6 +31,18 @@ namespace Alternet.UI
         public static Thickness DefaultItemMargin = 2;
 
         /// <summary>
+        /// Gets or sets default selected item text color for the unfocused container.
+        /// </summary>
+        public static LightDarkColor DefaultUnfocusedSelectedItemTextColor
+            = Color.LightDark(light: SystemColors.WindowText, dark: SystemColors.HighlightText);
+
+        /// <summary>
+        /// Gets or sets default selected item background color for the unfocused container.
+        /// </summary>
+        public static LightDarkColor DefaultUnfocusedSelectedItemBackColor
+            = Color.LightDark(light: (227, 227, 227), dark: SystemColors.Highlight);
+
+        /// <summary>
         /// Gets or sets default selected item text color.
         /// </summary>
         public static LightDarkColor DefaultSelectedItemTextColor
@@ -68,6 +80,8 @@ namespace Alternet.UI
         private Color? itemTextColor;
         private Color? selectedItemBackColor;
         private Color? disabledItemTextColor;
+        private Color? unfocusedSelectedItemBackColor;
+        private Color? unfocusedSelectedItemTextColor;
 
         private Thickness itemMargin = DefaultItemMargin;
         private IListBoxItemPainter? painter;
@@ -636,6 +650,48 @@ namespace Alternet.UI
                     return;
                 selectedItemBackColor = value;
                 Invalidate();
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets selected item text color for the unfocused control.
+        /// </summary>
+        [Browsable(false)]
+        public virtual Color? UnfocusedSelectedItemTextColor
+        {
+            get
+            {
+                return unfocusedSelectedItemTextColor;
+            }
+
+            set
+            {
+                if (unfocusedSelectedItemTextColor == value)
+                    return;
+                unfocusedSelectedItemTextColor = value;
+                if (!Focused)
+                    Invalidate();
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets selected item back color for the unfocused control.
+        /// </summary>
+        [Browsable(false)]
+        public virtual Color? UnfocusedSelectedItemBackColor
+        {
+            get
+            {
+                return unfocusedSelectedItemBackColor;
+            }
+
+            set
+            {
+                if (unfocusedSelectedItemBackColor == value)
+                    return;
+                unfocusedSelectedItemBackColor = value;
+                if(!Focused)
+                    Invalidate();
             }
         }
 

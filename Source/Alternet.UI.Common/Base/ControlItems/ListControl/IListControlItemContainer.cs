@@ -48,6 +48,11 @@ namespace Alternet.UI
         IListControlItemDefaults Defaults { get; }
 
         /// <summary>
+        /// Gets whether container is focused.
+        /// </summary>
+        bool Focused { get; }
+
+        /// <summary>
         /// Gets <see cref="ListControlItem"/> item with the specified index.
         /// If index of the item is invalid or item is not <see cref="ListControlItem"/>,
         /// returns <c>null</c>.

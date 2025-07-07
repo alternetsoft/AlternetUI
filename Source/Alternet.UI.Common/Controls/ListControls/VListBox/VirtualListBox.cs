@@ -1677,7 +1677,8 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Responds to changes in the item count by updating the scrollbars and invalidating the control.
+        /// Responds to changes in the item count by updating the scrollbars
+        /// and invalidating the control.
         /// </summary>
         protected virtual void CountChanged()
         {

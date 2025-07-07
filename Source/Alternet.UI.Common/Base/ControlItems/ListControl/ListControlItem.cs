@@ -1033,8 +1033,16 @@ namespace Alternet.UI
 
             if (control.Enabled && defaults.SelectionVisible)
             {
-                return defaults.SelectedItemBackColor
-                    ?? VirtualListBox.DefaultSelectedItemBackColor;
+                if (container.Focused)
+                {
+                    return defaults.SelectedItemBackColor
+                        ?? VirtualListBox.DefaultSelectedItemBackColor;
+                }
+                else
+                {
+                    return defaults.UnfocusedSelectedItemBackColor
+                        ?? VirtualListBox.DefaultUnfocusedSelectedItemBackColor;
+                }
             }
             else
             {
@@ -1375,8 +1383,16 @@ namespace Alternet.UI
             {
                 if (IsContainerEnabled(container))
                 {
-                    return container?.Defaults.SelectedItemTextColor
-                            ?? VirtualListBox.DefaultSelectedItemTextColor;
+                    if (container?.Focused ?? true)
+                    {
+                        return container?.Defaults.SelectedItemTextColor
+                                    ?? VirtualListBox.DefaultSelectedItemTextColor;
+                    }
+                    else
+                    {
+                        return container?.Defaults.UnfocusedSelectedItemTextColor
+                                    ?? VirtualListBox.DefaultUnfocusedSelectedItemTextColor;
+                    }
                 }
                 else
                     return GetDisabledTextColor(item, container);

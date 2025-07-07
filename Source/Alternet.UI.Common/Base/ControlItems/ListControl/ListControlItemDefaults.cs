@@ -63,5 +63,11 @@ namespace Alternet.UI
 
         /// <inheritdoc/>
         public virtual BorderSettings? SelectionBorder { get; set; }
+
+        /// <inheritdoc/>
+        public Color? UnfocusedSelectedItemTextColor { get; set; }
+
+        /// <inheritdoc/>
+        public Color? UnfocusedSelectedItemBackColor { get; set; }
     }
 }
