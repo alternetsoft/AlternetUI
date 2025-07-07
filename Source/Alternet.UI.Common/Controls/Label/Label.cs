@@ -30,6 +30,7 @@ namespace Alternet.UI
     public partial class Label : Control
     {
         private Coord? maxTextWidth;
+        private bool wordWrap;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Label"/> class
@@ -78,6 +79,23 @@ namespace Alternet.UI
             SuspendHandlerTextChange();
         }
 
+        /// <summary>
+        /// Gets or sets whether text is word wrapped in order to fit label in the parent's
+        /// client area. Default is False.
+        /// </summary>
+        public virtual bool WordWrap
+        {
+            get => wordWrap;
+            set
+            {
+                if(wordWrap == value)
+                    return;
+                wordWrap = value;
+                if (value)
+                    WrapToParent();
+            }
+        }
+
         /// <inheritdoc/>
         public override ControlTypeId ControlKind => ControlTypeId.Label;
 
@@ -110,10 +128,6 @@ namespace Alternet.UI
                 maxTextWidth = value;
                 StateFlags |= ControlFlags.ForceTextChange;
                 Text = Text;
-
-                /* App.LogReplace(
-                    $"LabelMaxTextWidth {Size}/_{value}_/{Parent?.ClientSize.Width}",
-                    "LabelMaxTextWidth");*/
             }
         }
 
@@ -145,6 +159,8 @@ namespace Alternet.UI
         /// </summary>
         public virtual void WrapToParent()
         {
+            if (Parent is null)
+                return;
             App.AddBackgroundInvokeAction(() =>
             {
                 if (DisposingOrDisposed)
@@ -154,6 +170,14 @@ namespace Alternet.UI
                 MaxTextWidth = Parent.ClientSize.Width
                 - Parent.Padding.Horizontal - Margin.Horizontal;
             });
+        }
+
+        /// <inheritdoc/>
+        protected override void OnAfterParentSizeChanged(object? sender, HandledEventArgs e)
+        {
+            base.OnAfterParentSizeChanged(sender, e);
+            if(WordWrap)
+                WrapToParent();
         }
 
         /// <inheritdoc/>
@@ -168,6 +192,22 @@ namespace Alternet.UI
                 RealFont,
                 MeasureCanvas);
             return result;
+        }
+
+        /// <inheritdoc/>
+        protected override void OnParentChanged(EventArgs e)
+        {
+            base.OnParentChanged(e);
+            if(WordWrap)
+                WrapToParent();
+        }
+
+        /// <inheritdoc/>
+        protected override void OnVisibleChanged(EventArgs e)
+        {
+            base.OnVisibleChanged(e);
+            if(Visible && WordWrap)
+                WrapToParent();
         }
 
         /// <inheritdoc/>

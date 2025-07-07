@@ -108,7 +108,7 @@ namespace PropertyGridSample
                 return;
             label.Text = LoremIpsum.Replace("\n",StringUtils.OneSpace).Trim();
             label.HorizontalAlignment = HorizontalAlignment.Left;
-            label.MaxTextWidth = 200;
+            label.WordWrap = true;
             LogMouseEvents(label);
         }
 
