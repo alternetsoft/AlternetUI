@@ -1199,7 +1199,6 @@ namespace Alternet.UI
             };
         }
 
-
         /// <summary>
         /// Gets maximal possible variable value for the given <see cref="TypeCode"/>.
         /// </summary>

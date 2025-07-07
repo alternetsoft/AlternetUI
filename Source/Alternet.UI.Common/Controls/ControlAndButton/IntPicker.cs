@@ -32,6 +32,16 @@ namespace Alternet.UI
         /// <summary>
         /// Initializes a new instance of the <see cref="IntPicker"/> class.
         /// </summary>
+        /// <param name="parent">Parent of the control.</param>
+        public IntPicker(Control parent)
+            : this()
+        {
+            Parent = parent;
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="IntPicker"/> class.
+        /// </summary>
         public IntPicker()
         {
             TextBox.MinValue = 0;

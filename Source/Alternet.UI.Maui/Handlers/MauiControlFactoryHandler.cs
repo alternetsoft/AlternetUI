@@ -90,11 +90,6 @@ namespace Alternet.UI
             return new PlessMenuItemHandler();
         }
 
-        IControlHandler IControlFactoryHandler.CreateNumericUpDownHandler(NumericUpDown control)
-        {
-            return new HandlerForDisposed();
-        }
-
         IControlHandler IControlFactoryHandler.CreateProgressBarHandler(ProgressBar control)
         {
             return new HandlerForDisposed();

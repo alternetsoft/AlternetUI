@@ -200,12 +200,5 @@ namespace Alternet.UI
 #pragma warning disable
         IControlHandler CreateDateTimePickerHandler(DateTimePicker control);
 #pragma warning restore
-
-        /// <summary>
-        /// Creates <see cref="IControlHandler"/> interface provider.
-        /// </summary>
-        /// <param name="control">Owner.</param>
-        /// <returns></returns>
-        IControlHandler CreateNumericUpDownHandler(NumericUpDown control);
     }
 }
