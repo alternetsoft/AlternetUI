@@ -20,6 +20,14 @@ namespace Alternet.UI
         });
 
         /// <summary>
+        /// Gets 'Alternet.UI' assembly if it is used in the application.
+        /// </summary>
+        public static readonly LazyStruct<Assembly?> LibraryAlternetUI = new(() =>
+        {
+            return AssemblyUtils.GetAssemblyByName("Alternet.UI");
+        });
+
+        /// <summary>
         /// Gets 'Microsoft.Maui' assembly if it is used in the application.
         /// </summary>
         public static readonly LazyStruct<Assembly?> LibraryMicrosoftMaui = new(() =>
