@@ -48,7 +48,10 @@ namespace Alternet.UI
             buttonPanel.HorizontalAlignment = HorizontalAlignment.Right;
             buttonPanel.Parent = this;
 
-            AddDefaultItems();
+            view.DoInsideUpdate(() =>
+            {
+                AddDefaultItems();
+            });
 
             view.SelectionChanged += OnSelectionChanged;
 
@@ -68,7 +71,7 @@ namespace Alternet.UI
         public Button OpenButton => openButton;
 
         /// <summary>
-        /// Gets listbox with the list of forms.
+        /// Gets control with the list of forms.
         /// </summary>
         public VirtualTreeControl View => view;
 
@@ -110,6 +113,7 @@ namespace Alternet.UI
                 HideSelection = true,
                 HideFocusRect = true,
                 IsExpanded = true,
+                ExpandOnClick = true,
             };
 
             item.CustomAttr["IsGroupItem"] = true;

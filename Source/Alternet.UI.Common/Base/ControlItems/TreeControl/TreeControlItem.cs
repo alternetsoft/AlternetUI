@@ -54,6 +54,11 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets or sets whether item is expanded when it is clicked.
+        /// </summary>
+        public virtual bool ExpandOnClick { get; set; }
+
+        /// <summary>
         /// Gets or sets the parent item of this tree control item.
         /// </summary>
         public virtual TreeControlItem? Parent
@@ -699,6 +704,45 @@ namespace Alternet.UI
             if (Owner is null || Owner.TreeButtons != TreeViewButtonsKind.Null)
                 result.KeepTextPaddingWithoutCheckBox = true;
             return result;
+        }
+
+        /// <summary>
+        /// Sets <see cref="IsExpanded"/> property of child items.
+        /// </summary>
+        /// <param name="expanded">New value of <see cref="IsExpanded" property./></param>
+        /// <param name="onlyVisible">Whether to update only visible items.</param>
+        public virtual void SetItemsExpanded(bool expanded, bool onlyVisible = true)
+        {
+            if (!HasItems)
+                return;
+
+            DoInsideUpdate(() =>
+            {
+                foreach(var item in Items)
+                {
+                    if (onlyVisible && !item.IsVisible)
+                        continue;
+                    if (!item.HasItems)
+                        continue;
+                    item.IsExpanded = expanded;
+                }
+            });
+        }
+
+        /// <summary>
+        /// Expands child items.
+        /// </summary>
+        public void ExpandItems(bool onlyVisible = true)
+        {
+            SetItemsExpanded(expanded: true, onlyVisible);
+        }
+
+        /// <summary>
+        /// Collapses child items.
+        /// </summary>
+        public void CollapseItems(bool onlyVisible = true)
+        {
+            SetItemsExpanded(expanded: false, onlyVisible);
         }
 
         /// <summary>

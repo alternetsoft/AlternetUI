@@ -43,10 +43,21 @@ namespace Alternet.UI
 
             ListBox.MouseDown += (s, e) =>
             {
-                var itemIndex = ListBox.HitTestCheckBox(e.Location);
+                var isOnCheckBox = false;
+
+                var itemIndex = ListBox.HitTest(e.Location);
                 if (itemIndex is null)
                     return;
-                ToggleExpanded(ListBox.Items[itemIndex.Value] as TreeControlItem);
+
+                if (ListBox.HitTestCheckBox(e.Location) is not null)
+                    isOnCheckBox = true;
+
+                var item = ListBox.Items[itemIndex] as TreeControlItem;
+
+                if (item is not null && (isOnCheckBox || item.ExpandOnClick))
+                {
+                    ToggleExpanded(item);
+                }
             };
 
             ListBox.DoubleClick += (s, e) =>
