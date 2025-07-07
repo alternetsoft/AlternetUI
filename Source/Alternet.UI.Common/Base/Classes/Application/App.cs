@@ -1952,6 +1952,20 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Shows <see cref="ThreadExceptionWindow"/> with
+        /// disabled "Quit" button.
+        /// </summary>
+        /// <param name="exception">Exception information.</param>
+        public static void AlertException(Exception exception)
+        {
+            ShowExceptionWindow(
+                exception,
+                additionalInfo: null,
+                canContinue: true,
+                canQuit: false);
+        }
+
+        /// <summary>
         /// Shows <see cref="ThreadExceptionWindow"/> on the screen.
         /// </summary>
         /// <param name="onClose">Action to call when dialog is closed.</param>
@@ -2021,22 +2035,16 @@ namespace Alternet.UI
 
             void HandleWithDialog(Action<bool>? onResult = null)
             {
-                var td = new ThreadExceptionWindow(exception);
-
-                td.ShowDialogAsync(null, (result) =>
+                ShowExceptionWindow(exception, (result) =>
                 {
-                    AddIdleTask(() =>
-                    {
-                        td.Dispose();
-                    });
-
                     if (!result)
                     {
-                        ExitAndTerminate(ThreadExceptionExitCode);
-                        onResult?.Invoke(true);
+                        AddIdleTask(() =>
+                        {
+                            ExitAndTerminate(ThreadExceptionExitCode);
+                            onResult?.Invoke(true);
+                        });
                     }
-
-                    onResult?.Invoke(false);
                 });
             }
 
