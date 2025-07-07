@@ -17,13 +17,6 @@ namespace Alternet.UI
         /// </summary>
         public static bool DefaultUseCharValidator = false;
 
-        /// <summary>
-        /// Gets or sets whether to assign default control colors
-        /// in the constructor using <see cref="AbstractControl.UseControlColors"/>.
-        /// Default is <c>true</c>.
-        /// </summary>
-        public static bool DefaultUseControlColors = true;
-
         private int smallChange = 1;
         private int largeChange = 5;
         private int val = 0;
