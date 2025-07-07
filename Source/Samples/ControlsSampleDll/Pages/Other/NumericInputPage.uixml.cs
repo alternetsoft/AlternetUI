@@ -13,7 +13,6 @@ namespace ControlsSample
         public NumericInputPage()
         {
             InitializeComponent();
-            progressBarControlNumericUpDown.Value = 1;
 
             calcPanel.Click += (s, e) =>
             {
@@ -24,25 +23,23 @@ namespace ControlsSample
                 calcPanel.BackColor = SystemColors.Window;
             };
 
-            intPicker.ValueChanged += (s,e)=>
-            {
-                progressBarControlNumericUpDown.Value = intPicker.Value;
-            };
-
             intPicker2.SetPlusMinusImages(KnownButton.TextBoxUp,KnownButton.TextBoxDown);
             intPicker3.SetPlusMinusImages(KnownSvgImages.ImgAngleUp, KnownSvgImages.ImgAngleDown);
+
+            intPicker1.ValueChanged += IntPicker_ValueChanged;
+            intPicker2.ValueChanged += IntPicker_ValueChanged;
+            intPicker3.ValueChanged += IntPicker_ValueChanged;
+            intPicker4.ValueChanged += IntPicker_ValueChanged;
+        }
+
+        private void IntPicker_ValueChanged(object sender, EventArgs e)
+        {
+            App.LogNameValueReplace("IntPicker.ValueChanged", (sender as IntPicker)?.Value);
         }
 
         private void NumericUpDown_ValueChanged(object? sender, EventArgs e)
         {
             App.Log("New NumericUpDown value is: " + ((NumericUpDown)sender!).Value);
-        }
-
-        private void ProgressBarControlNumericUpDown_ValueChanged(
-            object? sender, 
-            EventArgs e)
-        {
-            intPicker.Value = (int)progressBarControlNumericUpDown.Value;
         }
 
         private void HasBorderButton_Click(object? sender, EventArgs e)

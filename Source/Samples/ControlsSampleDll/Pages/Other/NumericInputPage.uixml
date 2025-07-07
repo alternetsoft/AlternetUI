@@ -12,12 +12,12 @@
         <Grid Name="numericUpDownsPanel" Margin="5" ColumnCount="2" RowCount="4">
           <Label Text="[-50..10]" Margin="0,0,0,5" Grid.Column="0" Grid.Row="0"
                  VerticalAlignment="Center"/>
-          <NumericUpDown Margin="10,0,0,5" Maximum="10" Minimum="-50" Value="-5"
-                         Name="numberUpDown1" SuggestedWidth="300" Grid.Column="1" Grid.Row="0"/>
+          <IntPicker Margin="10,0,0,5" Maximum="10" Minimum="-50" Value="-5"
+                         Name="intPicker1" SuggestedWidth="300" Grid.Column="1" Grid.Row="0"/>
 
           <Label Text="[0..20]" Margin="0,0,0,5"  Grid.Column="0" Grid.Row="1"
                  VerticalAlignment="Center"/>
-          <IntPicker Maximum="20" Value="5" Margin="10,0,0,5"
+          <IntPicker Maximum="20" Value="5" Margin="10,0,0,5" Name="intPicker4"
                          SuggestedWidth="300" Grid.Column="1" Grid.Row="1"/>
 
           <Label Text="[0..100]" Margin="0,0,0,5"  Grid.Column="0" Grid.Row="2"
@@ -40,15 +40,6 @@
                   Click="HasBorderButton_Click" Visible="false" IsTextLocalized="true"/>
         </StackPanel>
       </HorizontalStackPanel>
-
-      <Border Layout="Vertical" Padding="5" Margin="0,10,0,10" IsTitleLocalized="true" 
-              HorizontalAlignment="Left">
-        <Label Text="Linked IntPicker:" Margin="0,0,0,10"/>
-        <NumericUpDown Margin="0,0,0,10"  Maximum="10"
-                       Name="progressBarControlNumericUpDown"
-                       ValueChanged="ProgressBarControlNumericUpDown_ValueChanged" />
-        <IntPicker Maximum="10" Margin="0,0,0,10" Name="intPicker" HorizontalAlignment="Stretch"/>
-      </Border>
 
     </VerticalStackPanel>
 

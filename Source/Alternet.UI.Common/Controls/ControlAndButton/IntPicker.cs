@@ -9,8 +9,14 @@ namespace Alternet.UI
     /// This class represents a label with plus and minus buttons
     /// which allow users to increment and decrement an integer value.
     /// </summary>
-    public class IntPicker : LabelAndButton
+    public class IntPicker : TextBoxAndButton
     {
+        /// <summary>
+        /// Gets or sets whether to use char validator to limit unwanted chars in the input.
+        /// Default is False.
+        /// </summary>
+        public static bool DefaultUseCharValidator = false;
+
         /// <summary>
         /// Gets or sets whether to assign default control colors
         /// in the constructor using <see cref="AbstractControl.UseControlColors"/>.
@@ -18,41 +24,28 @@ namespace Alternet.UI
         /// </summary>
         public static bool DefaultUseControlColors = true;
 
-        private int minimum = 0;
-        private int maximum = 100;
         private int smallChange = 1;
         private int largeChange = 5;
         private int val = 0;
+        private int textUpdateSuppressed;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="IntPicker"/> class.
         /// </summary>
         public IntPicker()
         {
-            UseControlColors(DefaultUseControlColors);
+            TextBox.MinValue = 0;
+            TextBox.MaxValue = 100;
+            TextBox.Text = "0";
             Buttons.DoubleClickAsClick = true;
             IsBtnClickRepeated = true;
             HasBtnPlusMinus = true;
             HasBtnComboBox = false;
-            Text = val.ToString();
             UpdateButtonsEnabled();
-            Label.MouseLeftButtonUp += (s, e) =>
-            {
-                App.AddIdleTask(() =>
-                {
-                    DialogFactory.AskIntAsync(
-                                null,
-                                (v) =>
-                                {
-                                    if (DisposingOrDisposed)
-                                        return;
-                                    Value = v;
-                                },
-                                val,
-                                minimum,
-                                maximum);
-                });
-            };
+            InnerOuterBorder = InnerOuterSelector.Outer;
+            InitAsNumericEdit(
+                NumericTypeCode.Int32,
+                InitAsNumericEditParams.WithCharValidator(DefaultUseCharValidator));
         }
 
         /// <summary>
@@ -156,7 +149,7 @@ namespace Alternet.UI
                 if (this.val == value)
                     return;
                 this.val = value;
-                Text = val.ToString();
+                UpdateTextFromValue();
                 RaiseValueChanged(EventArgs.Empty);
             }
         }
@@ -181,18 +174,24 @@ namespace Alternet.UI
         {
             get
             {
-                return minimum;
+                var result = TextBox.GetRealMinValue();
+
+                if (result is null)
+                    return default;
+
+                return Convert.ToInt32(result);
             }
 
             set
             {
-                if (value > maximum)
-                    value = maximum;
-                if (minimum == value)
+                if (value > Maximum)
+                    value = Maximum;
+                if (Minimum == value)
                     return;
-                minimum = value;
-                if (Value < minimum)
-                    Value = minimum;
+                TextBox.MinValue = value;
+                UpdateErrorText();
+                if (Value < value)
+                    Value = value;
                 RaiseMinimumChanged(EventArgs.Empty);
             }
         }
@@ -214,18 +213,24 @@ namespace Alternet.UI
         {
             get
             {
-                return maximum;
+                var result = TextBox.GetRealMaxValue();
+
+                if (result is null)
+                    return 100;
+
+                return Convert.ToInt32(result);
             }
 
             set
             {
-                if (value < minimum)
-                    value = minimum;
-                if (maximum == value)
+                if (value < Minimum)
+                    value = Minimum;
+                if (Maximum == value)
                     return;
-                maximum = value;
-                if (Value > maximum)
-                    Value = maximum;
+                TextBox.MaxValue = value;
+                UpdateErrorText();
+                if (Value > value)
+                    Value = value;
                 RaiseMaximumChanged(EventArgs.Empty);
             }
         }
@@ -296,6 +301,13 @@ namespace Alternet.UI
         {
         }
 
+        /// <inheritdoc/>
+        protected override void OnLostFocus(EventArgs e)
+        {
+            base.OnLostFocus(e);
+            UpdateTextFromValue();
+        }
+
         /// <summary>
         /// Called when the minimum of the <see cref="Minimum"/> property changes.
         /// </summary>
@@ -347,7 +359,7 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="e">An <see cref="EventArgs"/> that contains the
         /// event data.</param>
-        private void RaiseMinimumChanged(EventArgs e)
+        protected void RaiseMinimumChanged(EventArgs e)
         {
             if (DisposingOrDisposed)
                 return;
@@ -362,13 +374,58 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="e">An <see cref="EventArgs"/> that contains the
         /// event data.</param>
-        private void RaiseMaximumChanged(EventArgs e)
+        protected void RaiseMaximumChanged(EventArgs e)
         {
             if (DisposingOrDisposed)
                 return;
             OnMaximumChanged(e);
             MaximumChanged?.Invoke(this, e);
             UpdateButtonsEnabled();
+        }
+
+        /// <inheritdoc/>
+        protected override void MainControlTextChanged()
+        {
+            base.MainControlTextChanged();
+            UpdateValueFromText();
+        }
+
+        /// <summary>
+        /// Updates <see cref="Value"/> with text entered in the inner
+        /// <see cref="TextBox"/> control.
+        /// </summary>
+        protected virtual void UpdateValueFromText()
+        {
+            textUpdateSuppressed++;
+            try
+            {
+                Value = TextBox.TextAsInt32;
+            }
+            finally
+            {
+                textUpdateSuppressed--;
+            }
+        }
+
+        /// <summary>
+        /// Sets appropriate error text using <see cref="Minimum"/>, <see cref="Maximum"/>
+        /// and other properties.
+        /// </summary>
+        protected virtual void UpdateErrorText()
+        {
+            SetErrorText(
+                NumericTypeCode.Int32,
+                InitAsNumericEditParams.WithCharValidator(DefaultUseCharValidator));
+        }
+
+        /// <summary>
+        /// Updates text of the inner <see cref="TextBox"/> control with the <see cref="Value"/>.
+        /// </summary>
+        protected virtual void UpdateTextFromValue()
+        {
+            if(textUpdateSuppressed > 0)
+                return;
+            TextBox.SetTextAsNumber(NumericTypeCode.Int32, Value);
         }
     }
 }
