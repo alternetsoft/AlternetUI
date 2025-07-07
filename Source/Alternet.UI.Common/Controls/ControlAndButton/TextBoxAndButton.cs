@@ -194,6 +194,71 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Sets appropriate error text using the specified parameters.
+        /// </summary>
+        /// <param name="typeCode">The numeric type code.</param>
+        /// <param name="prm">The additional parameters.</param>
+        public virtual void SetErrorText(
+            NumericTypeCode typeCode,
+            InitAsNumericEditParams? prm = null)
+        {
+            if (AssemblyUtils.IsTypeCodeFloat((TypeCode)typeCode))
+            {
+                if (prm?.UnsignedFloat ?? false)
+                {
+                    TextBox.SetErrorText(ValueValidatorKnownError.UnsignedFloatIsExpected);
+                }
+                else
+                {
+                    TextBox.SetErrorText(ValueValidatorKnownError.FloatIsExpected);
+                }
+            }
+            else
+            {
+                if (AssemblyUtils.IsTypeCodeUnsignedInt((TypeCode)typeCode))
+                {
+                    TextBox.SetErrorText(ValueValidatorKnownError.UnsignedNumberIsExpected);
+                }
+                else
+                {
+                    TextBox.SetErrorText(ValueValidatorKnownError.NumberIsExpected);
+                }
+            }
+        }
+
+        /// <summary>
+        /// Initializes this control as a numeric editor with the specified parameters.
+        /// </summary>
+        /// <param name="typeCode">The numeric type code.</param>
+        /// <param name="prm">The additional parameters.</param>
+        public virtual void InitAsNumericEdit(
+            NumericTypeCode typeCode,
+            InitAsNumericEditParams? prm = null)
+        {
+            var type = AssemblyUtils.TypeFromTypeCode((TypeCode)typeCode);
+
+            TextBox.Options |= TextBoxOptions.DefaultValidation;
+            TextBox.DataType = type;
+            if (prm?.UseCharValidator ?? false)
+                CharValidator = Alternet.UI.CharValidator.CreateValidator(type);
+
+            SetErrorText(typeCode, prm);
+        }
+
+        /// <summary>
+        /// Initializes this control as the <see cref="int"/> editor.
+        /// </summary>
+        /// <param name="useCharValidator"></param>
+        public virtual void InitAsInt32Edit(bool useCharValidator = false)
+        {
+            TextBox.Options |= TextBoxOptions.DefaultValidation;
+            TextBox.DataType = typeof(int);
+            if (useCharValidator)
+                TextBox.UseCharValidator<int>();
+            TextBox.SetErrorText(ValueValidatorKnownError.NumberIsExpected);
+        }
+
+        /// <summary>
         /// Initializes this control for the password editing.
         /// </summary>
         public virtual void InitPasswordEdit()
@@ -237,6 +302,61 @@ namespace Alternet.UI
         private void MainControl_TextChanged(object? sender, EventArgs e)
         {
             MainControlTextChanged();
+        }
+
+        /// <summary>
+        /// Defines configuration parameters for initializing a numeric editing control.
+        /// Used to customize behavior such as validation logic and numeric format constraints.
+        /// </summary>
+        public struct InitAsNumericEditParams
+        {
+            /// <summary>
+            /// Gets the default instance of <see cref="InitAsNumericEditParams"/>.
+            /// </summary>
+            public static readonly InitAsNumericEditParams Default = new ();
+
+            /// <summary>
+            /// Indicates whether the numeric control should accept only unsigned
+            /// floating-point values (i.e. no negative sign).
+            /// </summary>
+            public bool UnsignedFloat;
+
+            /// <summary>
+            /// Determines whether character-level input validation should be applied
+            /// during editing.
+            /// For example, restricts input to digits and a single decimal separator.
+            /// </summary>
+            public bool UseCharValidator;
+
+            /// <summary>
+            /// Initializes a new instance of the <see cref="InitAsNumericEditParams"/>
+            /// structure with default settings.
+            /// </summary>
+            public InitAsNumericEditParams()
+            {
+            }
+
+            /// <summary>
+            /// Gets <see cref="InitAsNumericEditParams"/> with the specified value
+            /// of the <see cref="UseCharValidator"/> property.
+            /// </summary>
+            /// <param name="useCharValidator">Value of the
+            /// <see cref="UseCharValidator"/> property.</param>
+            /// <returns></returns>
+            public static InitAsNumericEditParams WithCharValidator(bool useCharValidator)
+            {
+                if (useCharValidator)
+                {
+                    return new()
+                    {
+                        UseCharValidator = true,
+                    };
+                }
+                else
+                {
+                    return Default;
+                }
+            }
         }
     }
 }
