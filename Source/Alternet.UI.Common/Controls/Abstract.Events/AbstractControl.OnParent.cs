@@ -78,6 +78,15 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Called after the <see cref="SizeChanged" /> event of the <see cref="Parent"/> is raised.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">An <see cref="KeyEventArgs" /> that contains the event data.</param>
+        protected virtual void OnAfterParentSizeChanged(object? sender, HandledEventArgs e)
+        {
+        }
+
+        /// <summary>
         /// Called before the <see cref="KeyPress" /> event of the <see cref="Parent"/> is raised.
         /// </summary>
         /// <param name="e">A <see cref="KeyPressEventArgs" /> that contains the event data.</param>

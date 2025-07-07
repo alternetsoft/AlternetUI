@@ -565,6 +565,10 @@ namespace Alternet.UI
             OnResize(e);
 
             RaiseNotifications((n) => n.AfterSizeChanged(this, e));
+
+            ForEachVisibleChild(
+                HandledEventArgs.NotHandled,
+                (control, e) => control.OnAfterParentSizeChanged(this, e));
         }
 
         /// <summary>
