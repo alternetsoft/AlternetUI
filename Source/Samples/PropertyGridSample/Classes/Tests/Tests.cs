@@ -56,6 +56,20 @@ namespace PropertyGridSample
             InitTestsTabControl();
             InitTestsSlider();
             InitTestsLabel();
+            InitTestsPanel();
+
+            void InitTestsPanel()
+            {
+                AddControlAction<Panel>("Add Paint event", (c) =>
+                {
+                    c.Paint += (s, e) =>
+                    {
+                        e.Graphics.DrawText("Hello", (10, 10));
+                    };
+
+                    c.Refresh();
+                });
+            }
 
             void InitTestsLabel()
             {
