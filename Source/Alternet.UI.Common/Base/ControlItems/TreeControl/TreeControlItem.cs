@@ -709,7 +709,7 @@ namespace Alternet.UI
         /// <summary>
         /// Sets <see cref="IsExpanded"/> property of child items.
         /// </summary>
-        /// <param name="expanded">New value of <see cref="IsExpanded" property./></param>
+        /// <param name="expanded">New value of <see cref="IsExpanded"/> property.</param>
         /// <param name="onlyVisible">Whether to update only visible items.</param>
         public virtual void SetItemsExpanded(bool expanded, bool onlyVisible = true)
         {
