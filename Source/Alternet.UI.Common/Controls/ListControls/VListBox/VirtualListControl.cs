@@ -40,7 +40,7 @@ namespace Alternet.UI
         /// Gets or sets default selected item background color for the unfocused container.
         /// </summary>
         public static LightDarkColor DefaultUnfocusedSelectedItemBackColor
-            = Color.LightDark(light: (227, 227, 227), dark: SystemColors.Highlight);
+            = Color.LightDark(light: (227, 227, 227), dark: (61, 61, 61));
 
         /// <summary>
         /// Gets or sets default selected item text color.
