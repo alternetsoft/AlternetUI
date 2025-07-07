@@ -117,9 +117,6 @@ namespace Alternet.UI
         /// <inheritdoc cref="CustomTextBox.DataTypeIsNumber"/>
         bool DataTypeIsNumber();
 
-        /// <inheritdoc cref="CustomTextBox.GetMinMaxRangeStr"/>
-        string? GetMinMaxRangeStr(string? format = null);
-
         /// <inheritdoc cref="CustomTextBox.SetTextAsSByte"/>
         void SetTextAsSByte(sbyte value);
 

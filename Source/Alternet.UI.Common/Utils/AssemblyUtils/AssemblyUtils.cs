@@ -559,7 +559,8 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="assembly">The assembly whose location is to be retrieved.</param>
         /// <returns>
-        /// The location of the assembly as a string, or <c>null</c> if the location cannot be determined.
+        /// The location of the assembly as a string, or <c>null</c> if the location
+        /// cannot be determined.
         /// </returns>
         public static string? GetLocationSafe(Assembly? assembly)
         {
@@ -1025,7 +1026,8 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="type">Type where to search for the property.</param>
         /// <param name="propName">Property name.</param>
-        /// <param name="bindingFlags">Binding flags used when property is searched. Optional.</param>
+        /// <param name="bindingFlags">Binding flags used when property
+        /// is searched. Optional.</param>
         /// <returns></returns>
         public static PropertyInfo? GetPropertySafe(
             Type? type,
@@ -1079,9 +1081,16 @@ namespace Alternet.UI
             TypeCode code,
             string? format = null,
             object? minValue = null,
-            object? maxValue = null)
+            object? maxValue = null,
+            bool needUnsigned = false)
         {
             var minValueT = MathUtils.Max(GetMinValue(code), minValue);
+
+            if (needUnsigned)
+            {
+                minValueT = MathUtils.Max(minValueT, GetDefaultValue(code));
+            }
+
             var maxValueT = MathUtils.Min(GetMaxValue(code), maxValue);
             if (minValueT is null || maxValueT is null)
                 return null;
@@ -1166,6 +1175,30 @@ namespace Alternet.UI
                 _ => null,
             };
         }
+
+        /// <summary>
+        /// Gets maximal possible variable value for the given <see cref="TypeCode"/>.
+        /// </summary>
+        public static Type? TypeFromTypeCode(TypeCode code)
+        {
+            return code switch
+            {
+                TypeCode.SByte => typeof(sbyte),
+                TypeCode.Byte => typeof(byte),
+                TypeCode.Int16 => typeof(short),
+                TypeCode.UInt16 => typeof(ushort),
+                TypeCode.Int32 => typeof(int),
+                TypeCode.UInt32 => typeof(uint),
+                TypeCode.Int64 => typeof(long),
+                TypeCode.UInt64 => typeof(ulong),
+                TypeCode.Single => typeof(float),
+                TypeCode.Double => typeof(double),
+                TypeCode.Decimal => typeof(decimal),
+                TypeCode.DateTime => typeof(DateTime),
+                _ => null,
+            };
+        }
+
 
         /// <summary>
         /// Gets maximal possible variable value for the given <see cref="TypeCode"/>.

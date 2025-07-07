@@ -485,6 +485,68 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets <see cref="AbstractControl.Text"/> property value as <see cref="int"/>.
+        /// </summary>
+        [Browsable(false)]
+        public virtual int TextAsInt32
+        {
+            get
+            {
+                try
+                {
+                    var resultAsNumber = TextAsNumber;
+
+                    if (resultAsNumber is null)
+                        return 0;
+
+                    int result = Convert.ToInt32(resultAsNumber);
+                    return result;
+                }
+                catch (Exception ex)
+                {
+                    Nop(ex);
+                    return 0;
+                }
+            }
+
+            set
+            {
+                SetTextAsInt32(value);
+            }
+        }
+
+        /// <summary>
+        /// Gets <see cref="AbstractControl.Text"/> property value as <see cref="long"/>.
+        /// </summary>
+        [Browsable(false)]
+        public virtual long TextAsInt64
+        {
+            get
+            {
+                try
+                {
+                    var resultAsNumber = TextAsNumber;
+
+                    if (resultAsNumber is null)
+                        return 0;
+
+                    var result = Convert.ToInt64(resultAsNumber);
+                    return result;
+                }
+                catch (Exception ex)
+                {
+                    Nop(ex);
+                    return 0;
+                }
+            }
+
+            set
+            {
+                SetTextAsInt64(value);
+            }
+        }
+
+        /// <summary>
         /// Gets or sets <see cref="AbstractControl.Text"/> property value
         /// as <see cref="object"/> of a number type.
         /// </summary>
@@ -1064,12 +1126,20 @@ namespace Alternet.UI
         /// as a range string and formats it using <paramref name="format"/>.
         /// </summary>
         /// <param name="format">Range string format. Example: "Range is [{0}]."</param>
+        /// <param name="needUnsigned">Whether to force 0 as min value if it is less than 0.</param>
         /// <remarks>
         /// If <paramref name="format"/> is <c>null</c>, range string is returned unformatted.
         /// </remarks>
-        public virtual string? GetMinMaxRangeStr(string? format = null)
+        public virtual string? GetMinMaxRangeStr(
+            string? format = null,
+            bool needUnsigned = false)
         {
-            var s = AssemblyUtils.GetMinMaxRangeStr(GetDataTypeCode(), format, MinValue, MaxValue);
+            var s = AssemblyUtils.GetMinMaxRangeStr(
+                GetDataTypeCode(),
+                format,
+                GetRealMinValue(),
+                GetRealMaxValue(),
+                needUnsigned);
             return s;
         }
 
@@ -1084,6 +1154,18 @@ namespace Alternet.UI
         public virtual void SetTextAsByte(byte value)
         {
             DataType ??= typeof(byte);
+            SetTextAsObject(value);
+        }
+
+        /// <summary>
+        /// Assigns <see cref="DataType"/> from the specified <paramref name="typeCode"/>
+        /// and calls <see cref="SetTextAsObject"/>.
+        /// </summary>
+        /// <param name="typeCode"></param>
+        /// <param name="value"></param>
+        public virtual void SetTextAsNumber(NumericTypeCode typeCode, object value)
+        {
+            DataType = AssemblyUtils.TypeFromTypeCode((TypeCode)typeCode);
             SetTextAsObject(value);
         }
 
@@ -1428,11 +1510,16 @@ namespace Alternet.UI
         /// <param name="kind">Error kind.</param>
         public virtual string? GetKnownErrorText(ValueValidatorKnownError kind)
         {
+            var needUnsigned = kind == ValueValidatorKnownError.UnsignedNumberIsExpected
+                || kind == ValueValidatorKnownError.UnsignedFloatIsExpected;
+
             string AddRangeSuffix(string s)
             {
                 if (options.HasFlag(TextBoxOptions.IntRangeInError))
                 {
-                    var rangeStr = GetMinMaxRangeStr(ErrorMessages.Default.ValidationRangeFormat);
+                    var rangeStr = GetMinMaxRangeStr(
+                            ErrorMessages.Default.ValidationRangeFormat,
+                            needUnsigned);
                     return $"{s} {rangeStr}".Trim();
                 }
                 else
@@ -1460,9 +1547,13 @@ namespace Alternet.UI
                 case ValueValidatorKnownError.MaximumLength:
                     return string.Format(ErrorMessages.Default.ValidationMaximumLength, MaxLength);
                 case ValueValidatorKnownError.MinimumValue:
-                    return string.Format(ErrorMessages.Default.ValidationMinimumValue, MinValue);
+                    return string.Format(
+                        ErrorMessages.Default.ValidationMinimumValue,
+                        GetMinValueAsString(needUnsigned));
                 case ValueValidatorKnownError.MaximumValue:
-                    return string.Format(ErrorMessages.Default.ValidationMaximumValue, MaxValue);
+                    return string.Format(
+                        ErrorMessages.Default.ValidationMaximumValue,
+                        GetRealMaxValue());
                 case ValueValidatorKnownError.MinMaxLength:
                     return string.Format(
                         ErrorMessages.Default.ValidationMinMaxLength,
@@ -1478,6 +1569,31 @@ namespace Alternet.UI
                     var defaultResult = ValidatorErrorText ?? DefaultValidatorErrorText;
                     return defaultResult ?? ErrorMessages.Default.ValidationInvalidFormat;
             }
+        }
+
+        /// <summary>
+        /// Gets minimal possible value as <see cref="string"/>.
+        /// </summary>
+        /// <param name="needUnsigned">Whether to return 0 even if
+        /// minimal value is less than 0.</param>
+        /// <returns></returns>
+        protected virtual object? GetMinValueAsString(bool needUnsigned)
+        {
+            var result = GetRealMinValue();
+
+            if (!needUnsigned)
+            {
+                return result;
+            }
+
+            if (result == null)
+                return null;
+            var resultStr = result.ToString().Trim();
+            if (resultStr.Length == 0)
+                return result;
+            if (resultStr[0] == '-')
+                return "0";
+            return result;
         }
     }
 }
