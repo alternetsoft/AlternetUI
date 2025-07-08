@@ -59,6 +59,26 @@ namespace Alternet.UI
         public virtual bool ExpandOnClick { get; set; }
 
         /// <summary>
+        /// Indicates whether expanding this tree item should automatically
+        /// collapse its sibling items.
+        /// When enabled, the item enforces exclusive expansion behavior within
+        /// its level in the hierarchy.
+        /// </summary>
+        /// <remarks>
+        /// This setting affects only user-driven interactions, such as clicks or keyboard expansion.
+        /// Programmatic expansion through code is not affected and will not trigger sibling collapse.
+        /// </remarks>
+        /// <remarks>
+        /// This is useful in scenarios where a tree control mimics
+        /// an accordion-style UI, allowing only one child to be expanded at a time.
+        /// </remarks>
+        /// <example>
+        /// If <c>AutoCollapseSiblings</c> is <c>true</c>, expanding
+        /// one item will collapse others at the same depth.
+        /// </example>
+        public virtual bool AutoCollapseSiblings { get; set; }
+
+        /// <summary>
         /// Gets or sets the parent item of this tree control item.
         /// </summary>
         public virtual TreeControlItem? Parent
