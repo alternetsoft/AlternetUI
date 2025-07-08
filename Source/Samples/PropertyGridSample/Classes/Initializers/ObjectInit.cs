@@ -36,6 +36,7 @@ Environment.NewLine + Environment.NewLine +
 
         static ObjectInit()
         {
+            AddAction<CardPanelHeader>(InitCardPanelHeader);
             AddAction<RichToolTip>(InitRichToolTip);
             AddAction<DatePicker>(InitDatePicker);
             AddAction<TimePicker>(InitTimePicker);

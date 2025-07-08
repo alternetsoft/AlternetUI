@@ -107,6 +107,7 @@ namespace PropertyGridSample
                 LimitedTypes.Add(typeof(EnumPicker));
                 LimitedTypes.Add(typeof(ColorPicker));
                 LimitedTypes.Add(typeof(TextBoxWithListPopup));
+                LimitedTypes.Add(typeof(CardPanelHeader));
 
                 if (DebugUtils.IsDebugDefined)
                 {

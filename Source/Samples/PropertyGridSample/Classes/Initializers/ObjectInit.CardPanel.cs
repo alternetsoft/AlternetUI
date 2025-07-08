@@ -9,6 +9,23 @@ namespace PropertyGridSample
 {
     public partial class ObjectInit
     {
+        public static void InitCardPanelHeader(CardPanelHeader control)
+        {
+            control.Add("Item 1");
+            control.Add("Item 2");
+            control.Add("Item 3");
+
+            var item0 = control.Tabs[0];
+            var item1 = control.Tabs[1];
+            var item2 = control.Tabs[2];
+
+            var size = 32;
+
+            item0.Image = MessageBoxSvg.GetAsBitmap(MessageBoxIcon.Error, size, control);
+            item1.Image = MessageBoxSvg.GetAsBitmap(MessageBoxIcon.Information, size, control);
+            item2.Image = MessageBoxSvg.GetAsBitmap(MessageBoxIcon.Warning, size, control);
+        }
+
         public static void InitSideBarPanel(object c)
         {
             if (c is not SideBarPanel control)

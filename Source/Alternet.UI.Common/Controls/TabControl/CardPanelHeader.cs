@@ -18,7 +18,7 @@ namespace Alternet.UI
     /// on the card title.
     /// </remarks>
     [ControlCategory("Panels")]
-    internal partial class CardPanelHeader : HiddenBorder, ITextProperty
+    public partial class CardPanelHeader : HiddenBorder, ITextProperty
     {
         /// <summary>
         /// Gets or sets function which creates button for the <see cref="CardPanelHeader"/>.
@@ -28,7 +28,9 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets default value for the tab margin.
         /// </summary>
-        // Do not change it from 1, as current tab interior border will be painted badly.
+        /// <remarks>
+        /// Do not change it from 1, as current tab interior border will be painted badly.
+        /// </remarks>
         public static Thickness DefaultTabMargin = 1;
 
         /// <summary>
@@ -58,6 +60,8 @@ namespace Alternet.UI
         private IReadOnlyFontAndColor? inactiveTabColors;
         private HorizontalAlignment tabHorizontalAlignment = HorizontalAlignment.Left;
         private SpeedButton.KnownTheme tabTheme = SpeedButton.KnownTheme.TabControl;
+        private bool hasInteriorBorder = true;
+        private TabAlignment tabAlignment = TabAlignment.Top;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="CardPanelHeader"/> class.
@@ -80,8 +84,8 @@ namespace Alternet.UI
             CanSelect = false;
             Layout = LayoutStyle.Horizontal;
             tabs.ThrowOnNullAdd = true;
-            tabs.ItemInserted += Tabs_ItemInserted;
-            tabs.ItemRemoved += Tabs_ItemRemoved;
+            tabs.ItemInserted += OnTabsItemInserted;
+            tabs.ItemRemoved += OnTabsItemRemoved;
         }
 
         /// <summary>
@@ -102,7 +106,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets default value of the <see cref="TabHasBorder"/>.
         /// </summary>
-        public static bool DefaultTabHasBorder { get; set; } = true;
+        public static bool DefaultTabHasBorder { get; set; } = false;
 
         /// <summary>
         /// Gets or sets default value for the <see cref="UseTabBold"/> property.
@@ -128,6 +132,28 @@ namespace Alternet.UI
         /// Gets or sets default inactive tab colors.
         /// </summary>
         public static IReadOnlyFontAndColor? DefaultInactiveTabColors { get; set; }
+
+        /// <summary>
+        /// Gets or sets the area of the control (for example, along the top) where
+        /// the tabs are aligned.
+        /// </summary>
+        /// <value>One of the <see cref="TabAlignment"/> values. The default is
+        /// <see cref="TabAlignment.Top"/>.</value>
+        public virtual TabAlignment TabAlignment
+        {
+            get
+            {
+                return tabAlignment;
+            }
+
+            set
+            {
+                if (TabAlignment == value)
+                    return;
+                tabAlignment = value;
+                Invalidate();
+            }
+        }
 
         /// <summary>
         /// Gets or sets individual tab margin.
@@ -368,6 +394,22 @@ namespace Alternet.UI
             set
             {
                 FontAndColor.ChangeColor(ref activeTabColors, value, true, UpdateTabs);
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets whether tab interior border is visible.
+        /// </summary>
+        public virtual bool HasInteriorBorder
+        {
+            get => hasInteriorBorder;
+
+            set
+            {
+                if (hasInteriorBorder == value)
+                    return;
+                hasInteriorBorder = value;
+                Invalidate();
             }
         }
 
@@ -699,14 +741,14 @@ namespace Alternet.UI
             var button = CreateHeaderButton();
 
             button.Text = text;
-            button.SizeChanged += Button_SizeChanged;
+            button.SizeChanged += OnButtonSizeChanged;
             button.Margin = TabMargin ?? DefaultTabMargin;
             button.Padding = TabPadding ?? DefaultTabPadding;
             button.HasBorder = TabHasBorder;
             button.HorizontalAlignment = UI.HorizontalAlignment.Center;
             Children.Insert(index ?? Children.Count, button);
             button.Parent = this;
-            button.Click += Item_Click;
+            button.Click += OnItemClick;
 
             var item = new CardPanelHeaderItem(button)
             {
@@ -823,7 +865,34 @@ namespace Alternet.UI
             return result;
         }
 
-        private void Button_SizeChanged(object? sender, EventArgs e)
+        /// <inheritdoc/>
+        public override void DefaultPaint(PaintEventArgs e)
+        {
+            base.DefaultPaint(e);
+
+            if (HasInteriorBorder)
+            {
+                TabControl.DrawTabHeaderInterior(
+                    this,
+                    e.Graphics,
+                    e.ClipRectangle,
+                    GetInteriorBorderColor().AsBrush,
+                    TabAlignment);
+            }
+        }
+
+        /// <summary>
+        /// Gets interior border color.
+        /// </summary>
+        /// <returns></returns>
+        protected virtual Color GetInteriorBorderColor()
+        {
+            var color = Borders?.GetObjectOrNull(VisualControlState.Normal)?.Color;
+            color ??= ColorUtils.GetTabControlInteriorBorderColor(IsDarkBackground);
+            return color;
+        }
+
+        private void OnButtonSizeChanged(object? sender, EventArgs e)
         {
             if(sender is AbstractControl control)
                 ButtonSizeChanged?.Invoke(this, new BaseEventArgs<AbstractControl>(control));
@@ -909,15 +978,15 @@ namespace Alternet.UI
             Refresh();
         }
 
-        private void Tabs_ItemRemoved(object? sender, int index, CardPanelHeaderItem item)
+        private void OnTabsItemRemoved(object? sender, int index, CardPanelHeaderItem item)
         {
         }
 
-        private void Tabs_ItemInserted(object? sender, int index, CardPanelHeaderItem item)
+        private void OnTabsItemInserted(object? sender, int index, CardPanelHeaderItem item)
         {
         }
 
-        private void Item_Click(object? sender, EventArgs e)
+        private void OnItemClick(object? sender, EventArgs e)
         {
             if (sender is not AbstractControl control)
                 return;
