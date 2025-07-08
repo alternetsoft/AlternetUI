@@ -101,8 +101,6 @@ namespace ControlsSample
                 actionsListBox.Add(newItem);
             }
 
-            Idle += SkiaSharpExamplesWindow_Idle;
-
             if (actionsListBox.RootItem.ItemCount > 0)
             {
                 actionsListBox.SelectionChanged += ActionsListBox_SelectionChanged;
@@ -123,21 +121,15 @@ namespace ControlsSample
             AppUtils.ShellExecute(obj);
         }
 
-        private void SkiaSharpExamplesWindow_Idle(object? sender, EventArgs e)
-        {
-            if (!refreshRequested)
-                return;
-            DrawSelectedItem();
-            refreshRequested = false;
-        }
-
         private void OnRefreshRequested(object? sender, EventArgs e)
         {
             if (sender is not SkiaSharpSample.SampleBase sample)
                 return;
             string title = sample.Title;
             if (title == (actionsListBox.SelectedItem as ListControlItem)?.Text)
-                refreshRequested = true;
+            {
+                Invoke(DrawSelectedItem);
+            }
         }
 
         private void Draw(Action<SKCanvas,int,int> action)

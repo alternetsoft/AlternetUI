@@ -35,7 +35,6 @@ namespace Alternet.UI.Native
 
         public void OnPlatformEventIdle()
         {
-            UIControl?.RaiseIdle(EventArgs.Empty);
         }
 
         public void OnPlatformEventPaint()

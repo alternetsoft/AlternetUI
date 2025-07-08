@@ -26,7 +26,6 @@ namespace Alternet.UI
         {
             App.SetUnhandledExceptionModes(UnhandledExceptionMode.CatchWithThrow);
             DeviceDisplay.MainDisplayInfoChanged += DeviceDisplay_MainDisplayInfoChanged;
-            App.WakeUpIdleWithTimer = false;
         }
 
         /// <inheritdoc/>

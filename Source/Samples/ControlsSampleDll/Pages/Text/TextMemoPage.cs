@@ -16,6 +16,7 @@ namespace ControlsSample
             "Proin fermentum rhoncus dictum.\n";
 
         private readonly PanelMultilineTextBox memoPanel = new();
+        private Timer timer = new(100);
 
         public TextMemoPage()
         {
@@ -31,7 +32,13 @@ namespace ControlsSample
 
             PerformLayout();
 
-            Idle += TextInputPage_Idle;
+            timer.TickAction = () =>
+            {
+                if (Visible)
+                    memoPanel.TextBox.IdleAction();
+            };
+
+            timer.StartRepeated();
 
             memoPanel.Parent = this;
             memoPanel.TextBox.Text = multilineDemoText;
@@ -42,10 +49,10 @@ namespace ControlsSample
             memoPanel.ToolBar.SetToolEnabled(memoPanel.ButtonIdSave, false);
         }
 
-        private void TextInputPage_Idle(object? sender, EventArgs e)
+        protected override void DisposeManaged()
         {
-            if (Visible)
-                memoPanel.TextBox.IdleAction();
+            timer.Stop();
+            base.DisposeManaged();
         }
 
         private void TextBox_KeyDown(object? sender, KeyEventArgs e)

@@ -146,8 +146,12 @@ namespace Alternet.UI
         private static App? current;
         private static string? logFilePath;
         private static Window? mainWindow;
+
+        /*
         private static bool wakeUpIdleWithTimer = true;
         private static Timer? wakeUpIdleTimer;
+        */
+
         private static bool? isNetOrCoreApp;
         private static string? previousNativeMessage;
 
@@ -247,7 +251,7 @@ namespace Alternet.UI
                 WebBrowser.CrtSetDbgFlag(0);
             });
 
-            UpdateWakeUpIdleTimer();
+            Invoke(ProcessIdleTasks);
         }
 
         /// <summary>
@@ -282,11 +286,13 @@ namespace Alternet.UI
         /// </summary>
         public static event EventHandler<LogMessageEventArgs>? LogMessage;
 
+        /*
         /// <summary>
         /// Occurs when the application finishes processing events and is
         /// about to enter the idle state.
         /// </summary>
         public static event EventHandler? Idle;
+        */
 
         /// <summary>
         /// Gets whether application is running on the desktop operating system.
@@ -616,25 +622,6 @@ namespace Alternet.UI
         /// Gets whether application is executed on Maui platform.
         /// </summary>
         public static bool IsMaui => isMaui ??= KnownAssemblies.LibraryMaui.Value is not null;
-
-        /// <summary>
-        /// Uses timer to call <see cref="WakeUpIdle"/> periodically.
-        /// Default value is <c>true</c>. Default timeout value is
-        /// <see cref="TimerUtils.DefaultWakeUpIdleTimeout"/>.
-        /// </summary>
-        public static bool WakeUpIdleWithTimer
-        {
-            get
-            {
-                return wakeUpIdleWithTimer;
-            }
-
-            set
-            {
-                wakeUpIdleWithTimer = value;
-                UpdateWakeUpIdleTimer();
-            }
-        }
 
         /// <summary>
         /// Returns true if between two <see cref="BeginBusyCursor"/> and
@@ -1247,6 +1234,14 @@ namespace Alternet.UI
             else
             {
                 IdleTasks.Enqueue((task, param));
+
+                if (App.Terminating)
+                    return;
+
+                if (HasApplication)
+                {
+                    Invoke(ProcessIdleTasks);
+                }
             }
         }
 
@@ -1677,18 +1672,20 @@ namespace Alternet.UI
         /// </summary>
         public static bool ProcessIdleTask()
         {
+            if (App.Terminating)
+                return false;
+
+            if (IdleTasks.TryDequeue(out var task))
+            {
+                task.Action(task.Data);
+                return true;
+            }
+
+            return false;
+
+            /*
             try
             {
-                if (App.Terminating)
-                    return false;
-
-                if (IdleTasks.TryDequeue(out var task))
-                {
-                    task.Action(task.Data);
-                    return true;
-                }
-
-                return false;
             }
             catch (Exception e)
             {
@@ -1701,6 +1698,7 @@ namespace Alternet.UI
 
                 return false;
             }
+            */
         }
 
         /// <summary>
@@ -1708,14 +1706,23 @@ namespace Alternet.UI
         /// </summary>
         public static void ProcessIdleTasks()
         {
-            int count = 0;
+            /*
+                        int count = 0;
 
-            while (count < 10)
-            {
-                count++;
-                if (!ProcessIdleTask())
-                    break;
-            }
+                        while (count < 10)
+                        {
+                            count++;
+                            if (!ProcessIdleTask())
+                                break;
+                        }
+            */
+
+            if (App.Terminating)
+                return;
+
+            ProcessIdleTask();
+            if (!IdleTasks.IsEmpty)
+                Invoke(ProcessIdleTasks);
         }
 
         /// <summary>
@@ -2203,22 +2210,6 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Raises <see cref="Idle"/> event.
-        /// </summary>
-        public static void RaiseIdle()
-        {
-            if (App.Terminating)
-                return;
-
-            if (HasForms)
-            {
-                ProcessIdleTasks();
-            }
-
-            Idle?.Invoke(current, EventArgs.Empty);
-        }
-
-        /// <summary>
         /// Instructs the application how to respond to unhandled exceptions.
         /// </summary>
         /// <param name="value">An <see cref="UnhandledExceptionMode"/>
@@ -2436,6 +2427,7 @@ namespace Alternet.UI
             LogMessage(null, args);
         }
 
+        /*
         private static void UpdateWakeUpIdleTimer()
         {
             if (wakeUpIdleWithTimer)
@@ -2454,6 +2446,7 @@ namespace Alternet.UI
                 SafeDispose(ref wakeUpIdleTimer);
             }
         }
+        */
 
         internal sealed class Destructor
         {

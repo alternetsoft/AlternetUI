@@ -103,7 +103,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets left control as <see cref="TreeView"/>.
         /// </summary>
-        public TreeView? TreeView => leftControl as TreeView;
+        public VirtualTreeControl? TreeView => leftControl as VirtualTreeControl;
 
         /// <summary>
         /// Gets left control as <see cref="VirtualListBox"/>.
@@ -118,7 +118,7 @@ namespace Alternet.UI
             get
             {
                 if(kind == TreeKind.TreeView)
-                    return TreeView?.SelectedItem?.Index;
+                    return TreeView?.ListBox.SelectedIndex;
                 else
                     return ListBox?.SelectedIndex;
             }
@@ -126,9 +126,9 @@ namespace Alternet.UI
             set
             {
                 if (kind == TreeKind.TreeView)
-                    TreeView?.SetSelectedIndex(value);
+                    TreeView?.ListBox.SelectItemAndScroll(value);
                 else
-                    ListBox?.SetSelectedIndex(value);
+                    ListBox?.SelectItemAndScroll(value);
                 SetActiveCard();
             }
         }
@@ -143,11 +143,10 @@ namespace Alternet.UI
 
         /// <summary>
         /// Calls <see cref="TreeView.MakeAsListBox"/> for the left control if
-        /// it is <see cref="TreeView"/>.
+        /// it is tree view.
         /// </summary>
         public virtual void MakeAsListBox()
         {
-            TreeView?.MakeAsListBox();
         }
 
         /// <summary>
@@ -180,7 +179,7 @@ namespace Alternet.UI
 
             if(LeftControlKind is TreeKind.TreeView)
             {
-                var item = new TreeViewItem(title)
+                var item = new TreeControlItem(title)
                 {
                     Tag = index,
                 };

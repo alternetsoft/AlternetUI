@@ -288,6 +288,7 @@ namespace Alternet.UI
             }
         }
 
+        /*
         /// <summary>
         /// Gets or sets whether <see cref="AbstractControl.Idle"/> event is fired.
         /// </summary>
@@ -306,6 +307,7 @@ namespace Alternet.UI
                 Handler.ProcessIdle = value;
             }
         }
+        */
 
         /// <inheritdoc/>
         public override bool IsGraphicControl

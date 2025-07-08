@@ -331,6 +331,7 @@ namespace Alternet.UI
         [Browsable(false)]
         public new IWindowHandler Handler => (IWindowHandler)base.Handler;
 
+        /*
         /// <inheritdoc/>
         [Browsable(false)]
         public override bool ProcessIdle
@@ -347,6 +348,7 @@ namespace Alternet.UI
                 base.ProcessIdle = true;
             }
         }
+        */
 
         /// <summary>
         /// Gets or sets a value indicating whether the form will receive key events
@@ -2104,7 +2106,6 @@ namespace Alternet.UI
             };
 
             SetVisibleValue(false);
-            ProcessIdle = true;
             BackColor = DefaultColors.WindowBackColor;
             ForeColor = DefaultColors.WindowForeColor;
 

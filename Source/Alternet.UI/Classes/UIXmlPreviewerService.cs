@@ -51,7 +51,7 @@ namespace Alternet.UI.Integration
             App.SetUnhandledExceptionMode(UnhandledExceptionMode.ThrowException);
             application.InUixmlPreviewerMode = true;
 
-            Application.Idle += Application_Idle;
+            (Application.Handler as WxApplicationHandler)!.IdleAction = Application_Idle;
 
             queueTimer = new Timer(TimeSpan.FromMilliseconds(100), OnQueueTimerTick);
 
@@ -120,7 +120,7 @@ namespace Alternet.UI.Integration
             onTick();
         }
 
-        private void Application_Idle(object? sender, EventArgs e)
+        private void Application_Idle()
         {
             onTick();
         }

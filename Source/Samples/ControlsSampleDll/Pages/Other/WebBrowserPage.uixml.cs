@@ -91,10 +91,7 @@ namespace ControlsSample
             openButton.TextVisible = false;
             openButton.UseTheme = SpeedButton.KnownTheme.StaticBorder;
 
-            Idle += (s, e) =>
-            {
-                HeaderLabel.WrapToParent();
-            };
+            HeaderLabel.WordWrap = true;
         }
 
         private static string GetPandaFileName()

@@ -72,7 +72,7 @@ namespace Alternet.UI
             */
 
             Native.Application.GlobalObject = nativeApplication;
-            nativeApplication.Idle = App.RaiseIdle;
+            /*nativeApplication.Idle = App.RaiseIdle;*/
             nativeApplication.LogMessage += NativeApplication_LogMessage;
             nativeApplication.Name = Path.GetFileNameWithoutExtension(
                 Process.GetCurrentProcess()?.MainModule?.FileName!);
@@ -103,6 +103,22 @@ namespace Alternet.UI
         /// This can be used for testing purposes.
         /// </summary>
         public static bool UseDummyTimer { get; set; } = false;
+
+        /// <summary>
+        /// Gets or sets idle action of the native application.
+        /// </summary>
+        public Action? IdleAction
+        {
+            get
+            {
+                return nativeApplication.Idle;
+            }
+
+            set
+            {
+                nativeApplication.Idle = value;
+            }
+        }
 
         /// <summary>
         /// Gets the version of the used WxWidgets library.

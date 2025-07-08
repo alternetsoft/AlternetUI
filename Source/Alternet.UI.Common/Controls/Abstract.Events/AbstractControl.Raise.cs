@@ -138,22 +138,6 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Raises the <see cref="Idle"/> event and calls
-        /// <see cref="OnIdle(EventArgs)"/>.
-        /// See <see cref="Idle"/> event description for more details.
-        /// </summary>
-        [Browsable(false)]
-        public void RaiseIdle(EventArgs e)
-        {
-            if (DisposingOrDisposed)
-                return;
-            OnIdle(e);
-            Idle?.Invoke(this, e);
-
-            RaiseNotifications((n) => n.AfterIdle(this, e));
-        }
-
-        /// <summary>
         /// Raises the <see cref="MouseMove" /> event and <see cref="OnMouseMove"/> method.
         /// </summary>
         public void RaiseMouseMove(MouseEventArgs e)

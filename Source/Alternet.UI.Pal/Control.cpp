@@ -169,7 +169,7 @@ namespace Alternet::UI
 
     void Control::SetProcessIdle(bool value)
     {
-        SetExtraStyle(wxWS_EX_PROCESS_IDLE, value);
+        SetExtraStyle(wxWS_EX_PROCESS_IDLE, false);
     }
 
     int Control::DrawingFromDip(double value, void* window)
@@ -370,7 +370,7 @@ namespace Alternet::UI
         wxWindow->Unbind(wxEVT_DPI_CHANGED, &Control::OnDpiChanged, this);
         wxWindow->Unbind(wxEVT_TEXT, &Control::OnTextChanged, this);
         wxWindow->Unbind(wxEVT_SET_CURSOR, &Control::OnSetCursor, this);
-        wxWindow->Unbind(wxEVT_IDLE, &Control::OnIdle, this);
+        /*wxWindow->Unbind(wxEVT_IDLE, &Control::OnIdle, this);*/
         wxWindow->Unbind(wxEVT_PAINT, &Control::OnPaint, this);
         wxWindow->Unbind(wxEVT_DESTROY, &Control::OnDestroy, this);
         wxWindow->Unbind(wxEVT_SHOW, &Control::OnVisibleChanged, this);
@@ -986,7 +986,7 @@ namespace Alternet::UI
         _wxWindow->Bind(wxEVT_CONTEXT_MENU, &Control::OnContextMenu, this);
         _wxWindow->Bind(wxEVT_LEFT_UP, &Control::OnMouseLeftUp, this);
         _wxWindow->Bind(wxEVT_RIGHT_UP, &Control::OnMouseRightUp, this);
-        _wxWindow->Bind(wxEVT_IDLE, &Control::OnIdle, this);
+        /*_wxWindow->Bind(wxEVT_IDLE, &Control::OnIdle, this);*/
         _wxWindow->Bind(wxEVT_SYS_COLOUR_CHANGED, &Control::OnSysColorChanged, this);
         _wxWindow->Bind(wxEVT_SET_CURSOR, &Control::OnSetCursor, this);
 
@@ -1448,10 +1448,12 @@ namespace Alternet::UI
 
     void Control::OnIdle(wxIdleEvent& event)
     {
+        /*
         event.Skip();
         if (IsNullOrDeleting())
             return;
         RaiseEvent(ControlEvent::Idle);
+        */
     }
 
     void Control::OnPaint(wxPaintEvent& event)
