@@ -64,6 +64,12 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
+        /// Gets or sets the default color of a checkbox in its normal state.
+        /// </summary>
+        public static LightDarkColor DefaultCheckBoxColor { get; set; }
+            = new(light: (0, 103, 192), dark: new(76, 194, 255));
+
+        /// <summary>
         /// Gets or sets default border color of the user control.
         /// </summary>
         public static LightDarkColor BorderColor

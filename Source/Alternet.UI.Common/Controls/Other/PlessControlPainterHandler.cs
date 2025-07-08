@@ -14,12 +14,6 @@ namespace Alternet.Drawing
     public class PlessControlPainterHandler : DisposableObject, IControlPainterHandler
     {
         /// <summary>
-        /// Gets or sets the default color of a checkbox in its normal state.
-        /// </summary>
-        public static LightDarkColor DefaultCheckBoxColor
-            = new(light: (0, 103, 192) /*(0, 95, 184)*/, dark: new(76, 194, 255));
-
-        /// <summary>
         /// Gets or sets the default size of a check mark in device-independent units.
         /// </summary>
         public static SizeD DefaultCheckMarkSize = (20, 20);
@@ -129,7 +123,7 @@ namespace Alternet.Drawing
                         image = svg.AsDisabledImage(size, control.IsDarkBackground);
                         break;
                     case VisualControlState.Selected:
-                        color = DefaultCheckBoxColor.LightOrDark(isDark: true);
+                        color = DefaultColors.DefaultCheckBoxColor.LightOrDark(isDark: true);
                         image = svg.ImageWithColor(size, color);
                         break;
                     default:
@@ -139,7 +133,8 @@ namespace Alternet.Drawing
                         }
                         else
                         {
-                            color = DefaultCheckBoxColor.LightOrDark(control.IsDarkBackground);
+                            color = DefaultColors.DefaultCheckBoxColor
+                                .LightOrDark(control.IsDarkBackground);
                         }
 
                         image = svg.ImageWithColor(size, color);
