@@ -24,6 +24,13 @@ namespace PropertyGridSample
             item0.Image = MessageBoxSvg.GetAsBitmap(MessageBoxIcon.Error, size, control);
             item1.Image = MessageBoxSvg.GetAsBitmap(MessageBoxIcon.Information, size, control);
             item2.Image = MessageBoxSvg.GetAsBitmap(MessageBoxIcon.Warning, size, control);
+
+            control.TabClick += (s, e) =>
+            {
+                App.LogReplace(
+                    $"CarPanelHeader.TabClick: {control.SelectedTabIndex}",
+                    "CarPanelHeader.TabClick");
+            };
         }
 
         public static void InitSideBarPanel(object c)

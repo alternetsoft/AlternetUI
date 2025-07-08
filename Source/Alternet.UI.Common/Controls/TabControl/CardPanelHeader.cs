@@ -173,7 +173,6 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets colors and styles theme of the tabs.
         /// </summary>
-        [Browsable(false)]
         public virtual SpeedButton.KnownTheme TabTheme
         {
             get => tabTheme;

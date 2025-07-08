@@ -2031,7 +2031,6 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets minimal value of the child's <see cref="Margin"/> property.
         /// </summary>
-        [Browsable(false)]
         [DefaultValue(null)]
         public virtual Thickness? MinChildMargin
         {
