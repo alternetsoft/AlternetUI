@@ -59,6 +59,13 @@ namespace PropertyGridSample
             button.TextVisible = true;
             button.Click += LogClick;
             button.LoadSvg(KnownSvgUrls.UrlImageOk, 32);
+
+            button.StickyChanged += (s, e) =>
+            {
+                App.LogReplace(
+                    $"SpeedButton.Sticky changed to [{button.Sticky}]",
+                    $"SpeedButton.Sticky");
+            };
         }
     }
 }

@@ -74,6 +74,13 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets default color and style settings
         /// for all <see cref="SpeedButton"/> controls
+        /// which have <see cref="UseTheme"/> equal to <see cref="KnownTheme.CheckBorder"/>.
+        /// </summary>
+        public static ControlColorAndStyle CheckBorderTheme;
+
+        /// <summary>
+        /// Gets or sets default color and style settings
+        /// for all <see cref="SpeedButton"/> controls
         /// which have <see cref="UseTheme"/> equal to <see cref="KnownTheme.NoBorder"/>.
         /// </summary>
         public static ControlColorAndStyle NoBorderTheme = new();
@@ -144,13 +151,20 @@ namespace Alternet.UI
             StaticBorderTheme.DisabledBorderAsHovered();
             StaticBorderTheme.SetBorderColor(tabControlBorderColor);
 
-            StickyBorderTheme = DefaultTheme.Clone();
-            StickyBorderTheme
-                .SetBorderFromBorder(
-                stateToChange: VisualControlState.Normal,
-                assignFromState: VisualControlState.Hovered);
-            StickyBorderTheme.SetBorderWidth(DefaultStickyBorderWidth);
-            StickyBorderTheme.SetBorderColor(tabControlBorderColor);
+            StickyBorderTheme = CreateBordered(tabControlBorderColor);
+            CheckBorderTheme = CreateBordered(DefaultColors.DefaultCheckBoxColor);
+
+            ControlColorAndStyle CreateBordered(LightDarkColor? color)
+            {
+                var result = DefaultTheme.Clone();
+                result
+                    .SetBorderFromBorder(
+                    stateToChange: VisualControlState.Normal,
+                    assignFromState: VisualControlState.Hovered);
+                result.SetBorderWidth(DefaultStickyBorderWidth);
+                result.SetBorderColor(color);
+                return result;
+            }
         }
 
         /// <summary>
@@ -187,6 +201,11 @@ namespace Alternet.UI
             drawable.CenterVert = true;
             drawable.Stretch = false;
         }
+
+        /// <summary>
+        /// Occurs when <see cref="Sticky"/> property is changed.
+        /// </summary>
+        public event EventHandler? StickyChanged;
 
         /// <summary>
         /// Enumerates known color and style themes for the <see cref="SpeedButton"/>.
@@ -227,6 +246,11 @@ namespace Alternet.UI
             /// Theme <see cref="NoBorderTheme"/> is used.
             /// </summary>
             NoBorder,
+
+            /// <summary>
+            /// Theme <see cref="CheckBorderTheme"/> is used.
+            /// </summary>
+            CheckBorder,
         }
 
         /// <summary>
@@ -829,6 +853,7 @@ namespace Alternet.UI
                     return;
                 sticky = value;
                 Invalidate();
+                RaiseStickyChanged(EventArgs.Empty);
             }
         }
 
@@ -1176,6 +1201,18 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Raises <see cref="StickyChanged"/> event and <see cref="OnStickyChanged"/> method.
+        /// </summary>
+        /// <param name="e"></param>
+        public void RaiseStickyChanged(EventArgs e)
+        {
+            if (DisposingOrDisposed)
+                return;
+            OnStickyChanged(e);
+            StickyChanged?.Invoke(this, e);
+        }
+
+        /// <summary>
         /// Sets the images for the control.
         /// </summary>
         /// <param name="image">The normal image to display.</param>
@@ -1383,6 +1420,8 @@ namespace Alternet.UI
                     return StickyBorderTheme;
                 case KnownTheme.NoBorder:
                     return NoBorderTheme;
+                case KnownTheme.CheckBorder:
+                    return CheckBorderTheme;
                 case KnownTheme.Default:
                 default:
                     return DefaultTheme;
@@ -1435,6 +1474,14 @@ namespace Alternet.UI
                 SubscribeClickRepeated();
             else
                 UnsubscribeClickRepeated();
+        }
+
+        /// <summary>
+        /// Called when <see cref="Sticky"/> property is changed.
+        /// </summary>
+        /// <param name="e">The event arguments.</param>
+        protected virtual void OnStickyChanged(EventArgs e)
+        {
         }
 
         /// <inheritdoc/>

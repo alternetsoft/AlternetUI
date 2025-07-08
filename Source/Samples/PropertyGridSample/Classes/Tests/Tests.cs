@@ -117,6 +117,14 @@ namespace PropertyGridSample
                     c.Command = NamedCommands.CommandAppLog;
                     c.CommandParameter = "SpeedButton.Command executed";
                 });
+
+                AddControlAction<SpeedButton>("Setup like bordered CheckBox", (c) =>
+                {
+                    c.Sticky = true; // Similar to IsChecked in CheckBox.
+                    c.StickyToggleOnClick = true;
+                    c.UseThemeForSticky = SpeedButton.KnownTheme.CheckBorder;
+                    c.UseTheme = SpeedButton.KnownTheme.StaticBorder;
+                });
             }
 
             void InitTestsListBox()
