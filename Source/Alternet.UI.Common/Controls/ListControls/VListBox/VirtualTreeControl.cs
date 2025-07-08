@@ -66,6 +66,15 @@ namespace Alternet.UI
             };
 
             TreeButtons = DefaultTreeButtons;
+
+            void ToggleExpanded(TreeControlItem? item)
+            {
+                App.AddIdleTask(() =>
+                {
+                    ToggleExpandedAndCollapseSiblings(item, item?.AutoCollapseSiblings ?? false);
+                    ListBox.SelectItemAndScroll(item);
+                });
+            }
         }
 
         /// <summary>
@@ -740,21 +749,68 @@ namespace Alternet.UI
         /// <summary>
         /// Toggles the expanded or collapsed state of the specified tree control item.
         /// </summary>
-        /// <param name="treeItem">The <see cref="TreeControlItem"/> to toggle. If null or not
+        /// <param name="item">The <see cref="TreeControlItem"/> to toggle. If null or not
         /// a valid tree item, no action is taken.</param>
         /// <remarks>
         /// If the specified item has child items, this method switches its state
         /// between expanded and collapsed.
         /// It does not affect the state of child items.
         /// </remarks>
-        public virtual void ToggleExpanded(TreeControlItem? treeItem)
+        public virtual bool ToggleExpanded(TreeControlItem? item)
         {
-            if (treeItem is not TreeControlItem item)
-                return;
+            if (item is null)
+                return false;
             if (!item.HasItems)
-                return;
+                return false;
 
             item.IsExpanded = !item.IsExpanded;
+            return true;
+        }
+
+        /// <summary>
+        /// Toggles the expanded state of the specified tree item and optionally
+        /// collapses its sibling items.
+        /// If <paramref name="collapseSiblings"/> is <c>true</c> and the item has
+        /// a parent, all sibling items are collapsed before toggling.
+        /// </summary>
+        /// <param name="item">The target tree item to expand or collapse.</param>
+        /// <param name="collapseSiblings">
+        /// Indicates whether sibling items under the same parent should be collapsed
+        /// before expanding the target item.
+        /// </param>
+        /// <returns>
+        /// <c>true</c> if the toggle action was successfully applied; <c>false</c>
+        /// if the item is <c>null</c> or has no child items.
+        /// </returns>
+        /// <remarks>
+        /// This method is typically used during user interactions to enforce exclusive
+        /// expansion behavior.
+        /// It does not apply collapse logic if the item has no parent or
+        /// if <paramref name="collapseSiblings"/> is <c>false</c>.
+        /// </remarks>
+        public virtual bool ToggleExpandedAndCollapseSiblings(
+            TreeControlItem? item,
+            bool collapseSiblings)
+        {
+            if (item is null)
+                return false;
+            if (!item.HasItems)
+                return false;
+
+            if (!collapseSiblings || item.Parent is null)
+            {
+                item.IsExpanded = !item.IsExpanded;
+                return true;
+            }
+
+            DoInsideUpdate(() =>
+            {
+                var oldExpanded = item.IsExpanded;
+                item.Parent.CollapseItems(false);
+                item.IsExpanded = !oldExpanded;
+            });
+
+            return true;
         }
 
         /// <summary>

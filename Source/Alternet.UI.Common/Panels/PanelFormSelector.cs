@@ -114,6 +114,7 @@ namespace Alternet.UI
                 HideFocusRect = true,
                 IsExpanded = true,
                 ExpandOnClick = true,
+                AutoCollapseSiblings = true,
             };
 
             item.CustomAttr["IsGroupItem"] = true;
