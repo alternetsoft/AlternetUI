@@ -1021,6 +1021,23 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Selects the specified item in the list and scrolls it into view if necessary.
+        /// </summary>
+        /// <param name="item">The item to select and bring into view.
+        /// If <c>null</c>, no action is performed.</param>
+        /// <remarks>
+        /// This method delegates index resolution to <see cref="FindItemIndex"/>
+        /// and scrolls using an index-based overload.
+        /// Intended for user interaction scenarios where focus or visibility
+        /// of a selected item is required.
+        /// </remarks>
+        public virtual void SelectItemAndScroll(ListControlItem? item)
+        {
+            var index = FindItemIndex(item);
+            SelectItemAndScroll(index);
+        }
+
+        /// <summary>
         /// Selects an item at the specified index and scrolls to make it visible.
         /// </summary>
         /// <remarks>This method updates the selected item and ensures it is
@@ -1558,6 +1575,32 @@ namespace Alternet.UI
                 var item = Items[i];
 
                 if (value.Equals(item.Value))
+                    return i;
+            }
+
+            return null;
+        }
+
+        /// <summary>
+        /// Searches for the specified item within the current list and returns its index if found.
+        /// </summary>
+        /// <param name="value">The item to locate within the
+        /// <see cref="ListControl{T}.Items"/> collection.</param>
+        /// <returns>
+        /// The zero-based index of the item if it exists in the collection; otherwise, <c>null</c>.
+        /// Returns <c>null</c> if <paramref name="value"/> is <c>null</c>.
+        /// </returns>
+        /// <remarks>
+        /// This method performs a reference equality check to locate the item.
+        /// </remarks>
+        public virtual int? FindItemIndex(ListControlItem? value)
+        {
+            if (value is null)
+                return null;
+
+            for (int i = 0; i < Items.Count; i++)
+            {
+                if (Items[i] == value)
                     return i;
             }
 
