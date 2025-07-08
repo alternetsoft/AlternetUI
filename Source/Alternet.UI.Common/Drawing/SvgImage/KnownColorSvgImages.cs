@@ -63,9 +63,12 @@ namespace Alternet.UI
         /// If size is not specified, gets image for the default toolbar image size.
         /// </summary>
         /// <param name="size">Image size.</param>
-        public static Image? GetErrorImage(int? size = null)
+        /// <param name="control">The control for which image is requested.
+        /// Used to get scale factor. Optional. If not specified,
+        /// default scale factor is used.</param>
+        public static Image? GetErrorImage(int? size = null, AbstractControl? control = null)
         {
-            size ??= ToolBarUtils.GetDefaultImageSize().Width;
+            size ??= ToolBarUtils.GetDefaultImageSize(control).Width;
             var imageSet = KnownColorSvgImages.ImgError.AsImageSet(size.Value);
             var image = imageSet?.AsImage(size.Value);
             return image;

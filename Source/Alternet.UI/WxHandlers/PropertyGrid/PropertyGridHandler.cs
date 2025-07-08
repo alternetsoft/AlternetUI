@@ -1458,7 +1458,7 @@ namespace Alternet.UI
                 return;
             PropertyGrid.StaticFlags |= PropertyGrid.StaticStateFlags.KnownColorsAdded;
 
-            var items = ColorUtils.GetColorInfos();
+            var items = ColorUtils.GetColorInfoItems();
 
             KnownColorsClear();
 

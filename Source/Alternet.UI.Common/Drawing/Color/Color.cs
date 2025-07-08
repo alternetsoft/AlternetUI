@@ -1448,7 +1448,7 @@ namespace Alternet.Drawing
         {
             List<Color> colors = new();
 
-            var items = ColorUtils.GetColorInfos();
+            var items = ColorUtils.GetColorInfoItems();
 
             foreach (var item in items)
             {

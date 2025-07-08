@@ -65,7 +65,7 @@ namespace Alternet.Drawing
         /// <param name="visible">Show or hide colors.</param>
         public static void SetVisibleColors(KnownColorCategory category, bool visible)
         {
-            var colors = GetColorInfos();
+            var colors = GetColorInfoItems();
 
             foreach (var color in colors)
             {
@@ -111,7 +111,7 @@ namespace Alternet.Drawing
         /// <summary>
         /// Gets all registered <see cref="IKnownColorInfo"/> items.
         /// </summary>
-        public static IEnumerable<IKnownColorInfo> GetColorInfos()
+        public static IEnumerable<IKnownColorInfo> GetColorInfoItems()
         {
             return KnownColorItems.Values;
         }
