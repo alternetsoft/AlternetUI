@@ -38,6 +38,7 @@ namespace Alternet.UI
             ParentBackColor = true,
             ParentForeColor = true,
             ParentFont = true,
+            HasInteriorBorder = false,
         };
 
         private bool hasInteriorBorder = true;
@@ -442,10 +443,6 @@ namespace Alternet.UI
         /// </summary>
         /// <value>One of the <see cref="TabAlignment"/> values. The default is
         /// <see cref="TabAlignment.Top"/>.</value>
-        /// <remarks>
-        /// Currently only <see cref="TabAlignment.Top"/> and <see cref="TabAlignment.Bottom"/>
-        /// alignment is supported.
-        /// </remarks>
         public virtual TabAlignment TabAlignment
         {
             get
@@ -1153,7 +1150,7 @@ namespace Alternet.UI
             if (r.Height > ClientSize.Height)
                 r.Height = ClientSize.Height;
 
-            DrawTabsInterior(
+            DrawTabHeaderInterior(
                 Header,
                 e.Graphics,
                 r,

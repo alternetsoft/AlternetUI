@@ -5,10 +5,13 @@ namespace Alternet.UI
 {
     public partial class TabControl
     {
-        internal static void DrawTabControlInterior(
+        /// <summary>
+        /// Draws <see cref="TabControl"/> interior.
+        /// </summary>
+        public static void DrawTabControlInterior(
             Graphics dc,
             RectD bounds,
-            RectD header,
+            RectD headerBounds,
             Brush brush,
             TabAlignment tabAlignment)
         {
@@ -39,34 +42,43 @@ namespace Alternet.UI
 
             void DrawInteriorTop()
             {
-                RectD rect =
-                    (bounds.Left, header.Bottom, bounds.Width, bounds.Height - header.Height);
+                RectD rect = (
+                    bounds.Left,
+                    headerBounds.Bottom,
+                    bounds.Width,
+                    bounds.Height - headerBounds.Height);
                 DrawBorder(rect, (1, 0, 1, 1));
             }
 
             void DrawInteriorBottom()
             {
                 RectD rect =
-                    (bounds.Left, bounds.Top, bounds.Width, bounds.Height - header.Height);
+                    (bounds.Left, bounds.Top, bounds.Width, bounds.Height - headerBounds.Height);
                 DrawBorder(rect, (1, 1, 1, 0));
             }
 
             void DrawInteriorLeft()
             {
-                RectD rect =
-                    (header.Right, bounds.Top, bounds.Width - header.Width, bounds.Height);
+                RectD rect = (
+                    headerBounds.Right,
+                    bounds.Top,
+                    bounds.Width - headerBounds.Width,
+                    bounds.Height);
                 DrawBorder(rect, (0, 1, 1, 1));
             }
 
             void DrawInteriorRight()
             {
                 RectD rect =
-                    (bounds.Left, bounds.Top, bounds.Width - header.Width, bounds.Height);
+                    (bounds.Left, bounds.Top, bounds.Width - headerBounds.Width, bounds.Height);
                 DrawBorder(rect, (1, 1, 0, 1));
             }
         }
 
-        internal static void DrawTabsInterior(
+        /// <summary>
+        /// Draws tab header interior.
+        /// </summary>
+        public static void DrawTabHeaderInterior(
             CardPanelHeader control,
             Graphics dc,
             RectD rect,
@@ -80,7 +92,7 @@ namespace Alternet.UI
             var tab = control.Tabs[tabIndex];
             var tabRect = tab.HeaderButton.Bounds;
 
-            DrawTabsInterior(
+            DrawTabHeaderItemsInterior(
                         dc,
                         rect,
                         tabRect,
@@ -114,7 +126,10 @@ namespace Alternet.UI
             }
         }
 
-        internal static void DrawTabsInterior(
+        /// <summary>
+        /// Draws tab header items interior.
+        /// </summary>
+        public static void DrawTabHeaderItemsInterior(
             Graphics dc,
             RectD rect,
             RectD tabRect,
