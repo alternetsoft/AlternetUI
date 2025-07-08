@@ -84,7 +84,8 @@ namespace Alternet.UI
         public static readonly ConcurrentQueue<LogUtils.LogItem> LogQueue = new();
 
         /// <summary>
-        /// Gets whether <see cref="LogQueue"/> is used for saving the logged items. Default is false;
+        /// Gets whether <see cref="LogQueue"/> is used for saving the logged items.
+        /// Default is false;
         /// </summary>
         public static bool UseLogQueue = false;
 
@@ -296,6 +297,24 @@ namespace Alternet.UI
         /// Gets whether device the app is running on is desktop.
         /// </summary>
         public static bool IsDesktopDevice => DeviceType == GenericDeviceType.Desktop;
+
+        /// <summary>
+        /// Provides guaranteed access to the application-level handler.
+        /// Throws a <see cref="NullReferenceException"/> if the underlying
+        /// <c>App.Handler</c> is <c>null</c>.
+        /// </summary>
+        /// <remarks>
+        /// Intended for use in contexts where the application handler is expected
+        /// to be initialized and available.
+        /// This property ensures that access is fail-fast and explicit,
+        /// preventing silent <c>null</c> propagation.
+        /// </remarks>
+        /// <exception cref="NullReferenceException">
+        /// Thrown if <c>App.Handler</c> is <c>null</c>, indicating
+        /// a misconfiguration or improper initialization sequence.
+        /// </exception>
+        public static IApplicationHandler SafeHandler => App.Handler
+            ?? throw new NullReferenceException("Application handler is null");
 
         /// <summary>
         /// Gets whether the process architecture of the currently running app is Arm.
@@ -940,7 +959,7 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Executes <see cref="App.IdleLog"/> using <see cref="BaseObject.Invoke"/>.
+        /// Executes <see cref="App.IdleLog"/> using <see cref="BaseObject.Invoke(Action)"/>.
         /// </summary>
         /// <param name="obj">Message text or object to log.</param>
         /// <param name="kind">Message kind.</param>
@@ -953,7 +972,8 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Executes action in the application idle state using <see cref="BaseObject.Invoke"/>.
+        /// Executes action in the application idle state
+        /// using <see cref="BaseObject.Invoke(Action)"/>.
         /// </summary>
         /// <param name="action">Action to execute.</param>
         public static void InvokeIdle(Action? action)
@@ -1170,8 +1190,10 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Calls <paramref name="func"/> inside try-catch block if specified by the exception handling
-        /// settings <see cref="FastThreadExceptions"/> and <see cref="GetUnhandledExceptionMode()"/>.
+        /// Calls <paramref name="func"/> inside try-catch block if specified
+        /// by the exception handling
+        /// settings <see cref="FastThreadExceptions"/> and
+        /// <see cref="GetUnhandledExceptionMode()"/>.
         /// </summary>
         /// <typeparam name="T">Type of the function result.</typeparam>
         /// <param name="func">Function to call.</param>
@@ -1187,8 +1209,10 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Calls <paramref name="action"/> inside try-catch block if specified by the exception handling
-        /// settings <see cref="FastThreadExceptions"/> and <see cref="GetUnhandledExceptionMode()"/>.
+        /// Calls <paramref name="action"/> inside try-catch block
+        /// if specified by the exception handling
+        /// settings <see cref="FastThreadExceptions"/>
+        /// and <see cref="GetUnhandledExceptionMode()"/>.
         /// </summary>
         /// <param name="action">Action to call.</param>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -1237,7 +1261,7 @@ namespace Alternet.UI
         {
             if (task is null)
                 return;
-            AddIdleTask((object? param) => task());
+            AddIdleTask(param => task());
         }
 
         /// <summary>
@@ -1869,7 +1893,7 @@ namespace Alternet.UI
 
         /// <summary>
         /// Schedules the specified action to run in the background.
-        /// Action is called using <see cref="BaseObject.Invoke"/>.
+        /// Action is called using <see cref="BaseObject.Invoke(Action)"/>.
         /// Uses <see cref="Alternet.UI.Threading.BackgroundWorkManager.Default"/>
         /// </summary>
         /// <param name="taskAction">Action to run in the background.</param>
