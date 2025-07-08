@@ -91,7 +91,7 @@ namespace Alternet.UI
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
             get
             {
-                var result = !App.IsAppThread /*|| (App.Handler?.IsInvokeRequired ?? false)*/;
+                var result = !App.IsAppThread;
                 return result;
             }
         }
@@ -230,15 +230,34 @@ namespace Alternet.UI
         /// <returns>An <see cref="object"/> that contains the return value
         /// from the delegate being invoked, or <c>null</c> if the delegate has
         /// no return value.</returns>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static object? Invoke(Delegate? method, object?[]? args = null)
+        public static object? Invoke(Delegate? method, object?[]? args)
         {
             if (method is null)
                 return null;
-            if (!InvokeRequired)
-                return method.DynamicInvoke(args);
-            else
+            if (InvokeRequired)
                 return EndInvoke(BeginInvoke(method, args));
+            else
+                return method.DynamicInvoke(args);
+        }
+
+        /// <summary>
+        /// Executes the specified action, on the UI thread.
+        /// </summary>
+        public static void Invoke(Action? action)
+        {
+            if (action is null)
+                return;
+
+            if (InvokeRequired)
+            {
+                var handler = App.Handler
+                    ?? throw new NullReferenceException("Application handler is null");
+                handler.BeginInvoke(action);
+            }
+            else
+            {
+                action?.Invoke();
+            }
         }
 
         /// <summary>
