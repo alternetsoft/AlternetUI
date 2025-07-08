@@ -159,25 +159,64 @@ namespace Alternet.Drawing
         /// <summary>
         /// Sets message box icon with the specified index.
         /// </summary>
-        /// <param name="messabeBoxIcon">The message box icon index specified using
+        /// <param name="messageBoxIcon">The message box icon index specified using
         /// <see cref="MessageBoxIcon"/> enum.</param>
         /// <param name="image">Svg image.</param>
-        public static void SetImage(MessageBoxIcon messabeBoxIcon, SvgImage? image)
+        public static void SetImage(MessageBoxIcon messageBoxIcon, SvgImage? image)
         {
-            svg[messabeBoxIcon] = image;
-            svgActions[messabeBoxIcon] = null;
+            svg[messageBoxIcon] = image;
+            svgActions[messageBoxIcon] = null;
         }
 
         /// <summary>
         /// Gets message box icon as <see cref="SvgImage"/> with the specified index.
         /// </summary>
-        /// <param name="messabeBoxIcon">The message box icon index specified using
+        /// <param name="messageBoxIcon">The message box icon index specified using
         /// <see cref="MessageBoxIcon"/> enum.</param>
         /// <returns></returns>
-        public static SvgImage? GetImage(MessageBoxIcon messabeBoxIcon)
+        public static SvgImage? GetImage(MessageBoxIcon messageBoxIcon)
         {
-            var result = svg[messabeBoxIcon] ?? svgActions[messabeBoxIcon]?.Invoke();
+            var result = svg[messageBoxIcon] ?? svgActions[messageBoxIcon]?.Invoke();
             return result;
+        }
+
+        /// <summary>
+        /// Gets bitmap as <see cref="ImageSet"/> for the specified message box icon.
+        /// If bitmap size is not specified, gets bitmap for the default toolbar image size.
+        /// </summary>
+        /// <param name="messageBoxIcon">The message box icon identifier.</param>
+        /// <param name="size">Image size.</param>
+        /// <param name="control">The control for which bitmap is requested.
+        /// Used to get scale factor. Optional. If not specified,
+        /// default scale factor is used.</param>
+        public static ImageSet? GetAsImageSet(
+            MessageBoxIcon messageBoxIcon,
+            int? size = null,
+            AbstractControl? control = null)
+        {
+            size ??= ToolBarUtils.GetDefaultImageSize(control).Width;
+            var imageSet = GetImage(messageBoxIcon)?.AsImageSet(size.Value);
+            return imageSet;
+        }
+
+        /// <summary>
+        /// Gets bitmap as <see cref="Image"/> for the specified message box icon.
+        /// If bitmap size is not specified, gets bitmap for the default toolbar image size.
+        /// </summary>
+        /// <param name="messageBoxIcon">The message box icon identifier.</param>
+        /// <param name="size">Image size.</param>
+        /// <param name="control">The control for which bitmap is requested.
+        /// Used to get scale factor. Optional. If not specified,
+        /// default scale factor is used.</param>
+        public static Image? GetAsBitmap(
+            MessageBoxIcon messageBoxIcon,
+            int? size = null,
+            AbstractControl? control = null)
+        {
+            size ??= ToolBarUtils.GetDefaultImageSize(control).Width;
+            var imageSet = GetAsImageSet(messageBoxIcon, size, control);
+            var image = imageSet?.AsImage(size.Value);
+            return image;
         }
 
         /// <summary>
