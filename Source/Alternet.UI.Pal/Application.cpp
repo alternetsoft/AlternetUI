@@ -462,7 +462,7 @@ namespace Alternet::UI
 
     void Application::BeginInvoke(PInvokeCallbackActionType action)
     {
-        ParkingWindow::GetWindow()->CallAfter([=]() { action(); });
+        _app->CallAfter([=]() { action(); });
     }
 
     Mouse* Application::GetMouseInternal()

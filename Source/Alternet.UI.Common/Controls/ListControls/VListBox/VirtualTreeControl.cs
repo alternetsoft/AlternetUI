@@ -738,12 +738,12 @@ namespace Alternet.UI
 
         void ITreeControlItemContainer.BeginUpdate()
         {
-            Invoke(BeginUpdate);
+            Invoke(() => BeginUpdate());
         }
 
         void ITreeControlItemContainer.EndUpdate()
         {
-            Invoke(EndUpdate);
+            Invoke(() => EndUpdate());
         }
 
         /// <summary>
