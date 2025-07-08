@@ -1213,8 +1213,7 @@ namespace Alternet.UI
         /// <summary>
         /// Shows window and focuses it.
         /// </summary>
-        /// <param name="useIdle">Whether to use <see cref="App.Idle"/>
-        /// event to show the window.</param>
+        /// <param name="useIdle">Whether to post show command to the message queue.</param>
         public virtual void ShowAndFocus(bool useIdle = false)
         {
             if (DisposingOrDisposed)

@@ -441,8 +441,7 @@ namespace Alternet.UI
 
         /// <summary>
         /// Occurs when the application finishes processing events and is
-        /// about to enter the idle state. This is the same as <see cref="App.Idle"/>
-        /// but on the control level.
+        /// about to enter the idle state.
         /// </summary>
         /// <remarks>
         /// Use <see cref="Control.ProcessIdle"/> property to specify whether <see cref="Idle"/>

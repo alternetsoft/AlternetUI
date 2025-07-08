@@ -293,13 +293,6 @@ namespace Alternet.UI
         event EventHandler? SizeChanged;
 
         /// <summary>
-        /// Occurs when the application finishes processing events and is
-        /// about to enter the idle state. This is the same as <see cref="App.Idle"/>
-        /// but on the control level.
-        /// </summary>
-        event EventHandler? Idle;
-
-        /// <summary>
         /// Occurs when the control's size is changed.
         /// </summary>
         event EventHandler? Resize;
@@ -1317,12 +1310,6 @@ namespace Alternet.UI
         /// See <see cref="Click"/> event description for more details.
         /// </summary>
         void RaiseClick(EventArgs e);
-
-        /// <summary>
-        /// Raises the <see cref="Idle"/> event.
-        /// See <see cref="Idle"/> event description for more details.
-        /// </summary>
-        void RaiseIdle(EventArgs e);
 
         /// <summary>
         /// Displays the control to the user.

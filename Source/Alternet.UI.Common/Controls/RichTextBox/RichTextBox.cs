@@ -41,8 +41,7 @@ namespace Alternet.UI
         /// Occurs when <see cref="CurrentPosition"/> property value changes.
         /// </summary>
         /// <remarks>
-        /// You need to call <see cref="IdleAction"/> in the
-        /// <see cref="App.Idle"/> event handler in order to enable
+        /// You need to call <see cref="IdleAction"/> periodically in order to enable
         /// <see cref="CurrentPositionChanged"/> event firing.
         /// </remarks>
         public event EventHandler? CurrentPositionChanged;
@@ -166,7 +165,7 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Gets or sets <see cref="ModifierKeys"/> used when clicked url is autoimatically opened
+        /// Gets or sets <see cref="ModifierKeys"/> used when clicked url is automatically opened
         /// in the browser when <see cref="AutoUrlOpen"/> is <c>true</c>.
         /// </summary>
         [Browsable(false)]
@@ -567,7 +566,7 @@ namespace Alternet.UI
         /// <see cref="ITextBoxTextAttr"/> instances.</param>
         /// <remarks>
         /// After the text is appended, the insertion point will be at the end
-        /// of the text control. If this behaviour is not desired,
+        /// of the text control. If this behavior is not desired,
         /// the programmer should use <see cref="GetInsertionPoint"/>
         /// and <see cref="SetInsertionPoint"/>.
         /// </remarks>
@@ -810,7 +809,7 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Sets flags that change the behaviour of loading or saving.
+        /// Sets flags that change the behavior of loading or saving.
         /// See the documentation for each handler class to see what flags are
         /// relevant for each handler.
         /// </summary>
@@ -822,7 +821,7 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Returns flags that change the behaviour of loading or saving.
+        /// Returns flags that change the behavior of loading or saving.
         /// See the documentation for each handler class to see what flags are
         /// relevant for each handler.
         /// </summary>
@@ -1318,7 +1317,7 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Begins applying a left indent and subindent in tenths of a millimetre.
+        /// Begins applying a left indent and sub-indent in tenths of a millimeter.
         /// </summary>
         /// <param name="leftIndent">
         /// The distance between the margin and the bullet.
@@ -1329,7 +1328,7 @@ namespace Alternet.UI
         /// </param>
         /// <returns></returns>
         /// <remarks>
-        /// The subindent is an offset from the left edge of the paragraph, and is
+        /// The sub-indent is an offset from the left edge of the paragraph, and is
         /// used for all but the first line in a paragraph. A positive value will
         /// cause the first line to appear to the left of the subsequent lines, and
         /// a negative value will cause the first line to be indented to the right
@@ -1356,7 +1355,7 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Begins a right indent, specified in tenths of a millimetre.
+        /// Begins a right indent, specified in tenths of a millimeter.
         /// </summary>
         public virtual bool BeginRightIndent(int rightIndent)
         {
@@ -1377,7 +1376,7 @@ namespace Alternet.UI
 
         /// <summary>
         /// Begins paragraph spacing; pass the before-paragraph and after-paragraph spacing
-        /// in tenths of a millimetre.
+        /// in tenths of a millimeter.
         /// </summary>
         public virtual bool BeginParagraphSpacing(int before, int after)
         {
@@ -1426,8 +1425,8 @@ namespace Alternet.UI
         /// Begins a numbered bullet.
         /// </summary>
         /// <param name="bulletNumber">A number, usually starting with 1</param>
-        /// <param name="leftIndent">A value in tenths of a millimetre.</param>
-        /// <param name="leftSubIndent">A value in tenths of a millimetre.</param>
+        /// <param name="leftIndent">A value in tenths of a millimeter.</param>
+        /// <param name="leftSubIndent">A value in tenths of a millimeter.</param>
         /// <param name="bulletStyle">Bullet style.</param>
         /// <remarks>
         /// This call will be needed for each item in the list, and the
@@ -1990,7 +1989,7 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Sets the scale factor for displaying fonts, for example for more comfortableediting.
+        /// Sets the scale factor for displaying fonts, for example for more comfortable editing.
         /// </summary>
         public virtual void SetFontScale(Coord fontScale, bool refresh = false)
         {
@@ -2108,7 +2107,7 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Transforms logical (unscrolled) position to physical window position.
+        /// Transforms logical (not scrolled) position to physical window position.
         /// </summary>
         public virtual PointI GetPhysicalPoint(PointI ptLogical)
         {
@@ -2118,7 +2117,7 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Transforms physical window position to logical (unscrolled) position.
+        /// Transforms physical window position to logical (not scrolled) position.
         /// </summary>
         public virtual PointI GetLogicalPoint(PointI ptPhysical)
         {
@@ -2632,7 +2631,7 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Call this method in <see cref="App.Idle"/> event handler
+        /// Call this method periodically
         /// in order to update information related to the current selection and caret position.
         /// </summary>
         public virtual void IdleAction()

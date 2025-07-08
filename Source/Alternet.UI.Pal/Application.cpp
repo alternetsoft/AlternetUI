@@ -670,7 +670,7 @@ This function is called if an unhandled exception occurs inside the main applica
 It can return true to ignore the exception and to continue running the loop or false to exit the
 loop and terminate the program.
 
-The default behaviour of this function is the latter in all ports except under Windows where a dialog
+The default behavior of this function is the latter in all ports except under Windows where a dialog
 is shown to the user which allows him to choose between the different options. You may override this
 function in your class to do something more appropriate.
 

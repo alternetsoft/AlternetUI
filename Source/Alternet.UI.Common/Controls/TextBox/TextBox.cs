@@ -75,8 +75,7 @@ namespace Alternet.UI
         /// Occurs when <see cref="CurrentPosition"/> property value changes.
         /// </summary>
         /// <remarks>
-        /// You need to call <see cref="IdleAction"/> in the
-        /// <see cref="App.Idle"/> event handler in order to enable
+        /// You need to call <see cref="IdleAction"/> periodically in order to enable
         /// <see cref="CurrentPositionChanged"/> event firing.
         /// </remarks>
         public event EventHandler? CurrentPositionChanged;
@@ -1357,7 +1356,7 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Call this method in <see cref="App.Idle"/> event handler
+        /// Call this method periodically
         /// in order to update information related to the current selection and caret position.
         /// </summary>
         public virtual void IdleAction()

@@ -16,8 +16,6 @@ namespace InputSample
 
             SetSizeToContent();
 
-            App.Idle += Current_Idle;
-
             lb.BindApplicationLog();
 
             logMoveCheckBox.BindBoolProp(this, nameof(MouseMoveLogged));
@@ -58,10 +56,6 @@ namespace InputSample
 
             buttonInfo.Text = s;
             buttonInfo.Refresh();
-        }
-
-        private void Current_Idle(object? sender, EventArgs e)
-        {
         }
 
         private void HelloButton_Click(object sender, EventArgs e)
