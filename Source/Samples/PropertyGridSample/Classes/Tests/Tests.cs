@@ -125,6 +125,14 @@ namespace PropertyGridSample
                     c.UseThemeForSticky = SpeedButton.KnownTheme.CheckBorder;
                     c.UseTheme = SpeedButton.KnownTheme.StaticBorder;
                 });
+
+                AddControlAction<SpeedButton>("Setup as Checkable PushButton", (c) =>
+                {
+                    c.Sticky = true; // Similar to IsChecked in CheckBox.
+                    c.StickyToggleOnClick = true;
+                    c.UseThemeForSticky = SpeedButton.KnownTheme.PushButtonHovered;
+                    c.UseTheme = SpeedButton.KnownTheme.PushButton;
+                });
             }
 
             void InitTestsListBox()

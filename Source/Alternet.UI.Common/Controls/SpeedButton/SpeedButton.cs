@@ -88,6 +88,28 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets default color and style settings
         /// for all <see cref="SpeedButton"/> controls
+        /// which have <see cref="UseTheme"/> equal to <see cref="KnownTheme.PushButton"/>.
+        /// </summary>
+        public static ControlColorAndStyle PushButtonTheme = new();
+
+        /// <summary>
+        /// Gets or sets default color and style settings
+        /// for all <see cref="SpeedButton"/> controls
+        /// which have <see cref="UseTheme"/> equal to <see cref="KnownTheme.PushButtonHovered"/>.
+        /// </summary>
+        public static ControlColorAndStyle PushButtonHoveredTheme = new();
+
+        /// <summary>
+        /// Gets or sets default color and style settings
+        /// for all <see cref="SpeedButton"/> controls
+        /// which have <see cref="UseTheme"/> equal to <see cref="KnownTheme.PushButtonPressed"/>.
+        /// </summary>
+        public static ControlColorAndStyle PushButtonPressedTheme = new();
+
+
+        /// <summary>
+        /// Gets or sets default color and style settings
+        /// for all <see cref="SpeedButton"/> controls
         /// which have <see cref="UseTheme"/> equal to <see cref="KnownTheme.Custom"/>.
         /// </summary>
         public static ControlColorAndStyle? DefaultCustomTheme = null;
@@ -164,6 +186,21 @@ namespace Alternet.UI
                     assignFromState: VisualControlState.Hovered);
                 result.SetBorderWidth(DefaultStickyBorderWidth);
                 result.SetBorderColor(color);
+                return result;
+            }
+
+            PushButtonTheme = CreatePushButtonTheme(null);
+            PushButtonHoveredTheme = CreatePushButtonTheme(DrawingUtils.DrawPushButtonHovered);
+            PushButtonPressedTheme = CreatePushButtonTheme(DrawingUtils.DrawPushButtonPressed);
+
+            ControlColorAndStyle CreatePushButtonTheme(PaintEventHandler? normalStateOverride)
+            {
+                var result = DefaultTheme.Clone();
+                result.SetAsPushButton();
+                if (normalStateOverride is null)
+                    return result;
+                result.Light.BackgroundActions!.Normal = normalStateOverride;
+                result.Dark.BackgroundActions!.Normal = normalStateOverride;
                 return result;
             }
         }
@@ -252,6 +289,21 @@ namespace Alternet.UI
             /// Theme <see cref="CheckBorderTheme"/> is used.
             /// </summary>
             CheckBorder,
+
+            /// <summary>
+            /// Theme <see cref="PushButtonTheme"/> is used.
+            /// </summary>
+            PushButton,
+
+            /// <summary>
+            /// Theme <see cref="PushButtonHoveredTheme"/> is used.
+            /// </summary>
+            PushButtonHovered,
+
+            /// <summary>
+            /// Theme <see cref="PushButtonPressedTheme"/> is used.
+            /// </summary>
+            PushButtonPressed,
         }
 
         /// <summary>
@@ -1447,6 +1499,12 @@ namespace Alternet.UI
                     return NoBorderTheme;
                 case KnownTheme.CheckBorder:
                     return CheckBorderTheme;
+                case KnownTheme.PushButton:
+                    return PushButtonTheme;
+                case KnownTheme.PushButtonHovered:
+                    return PushButtonHoveredTheme;
+                case KnownTheme.PushButtonPressed:
+                    return PushButtonPressedTheme;
                 case KnownTheme.Default:
                 default:
                     return DefaultTheme;
