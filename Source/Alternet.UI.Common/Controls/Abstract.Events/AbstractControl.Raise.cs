@@ -1254,8 +1254,8 @@ namespace Alternet.UI
         {
             if (DisposingOrDisposed)
                 return;
-            var nn = Notifications;
-            var nn2 = GlobalNotifications;
+            var nn = Notifications.ToArray();
+            var nn2 = GlobalNotifications.ToArray();
 
             foreach (var n in nn)
             {
