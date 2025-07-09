@@ -117,8 +117,12 @@ namespace ControlsSample
                 false,
                 "This is a picture on toolbar created from template");
 
-            panel.AddAction("Draw Native Checkbox", DrawNativeCheckbox);
-            
+            panel.AddAction("Draw Checkbox", DrawNativeCheckbox);
+
+            panel.AddAction("Draw Push Button", DrawNativePushButton);
+
+            panel.AddAction("Draw Radio Button", DrawNativeRadioButton);
+
             /* Do not uncomment, this causes bad results.
             panel.AddAction("Test Bad Image Assert", TestBadImageAssert);
             */
@@ -219,25 +223,74 @@ namespace ControlsSample
             }
         }
 
+        public void DrawNativeRadioButton()
+        {
+            customDrawControl.SetPaintAction((control, canvas, rect) =>
+            {
+                Fn((50, 50), false, VisualControlState.Normal, "[ ] normal");
+
+                Fn((150, 50), true, VisualControlState.Normal, "[x] normal");
+
+                Fn(
+                    (250, 50),
+                    true,
+                    VisualControlState.Hovered,
+                    "[x] hovered");
+
+                Fn(
+                    (50, 100),
+                    true,
+                    VisualControlState.Disabled,
+                    "[x] disabled");
+
+                Fn(
+                    (150, 100),
+                    false,
+                    VisualControlState.Disabled,
+                    "[ ] disabled");
+
+
+                void Fn(
+                    PointD location,
+                    bool isChecked,
+                    VisualControlState controlState,
+                    string title)
+                {
+                    var size = DrawingUtils.GetCheckBoxSize(
+                        control,
+                        isChecked ? CheckState.Checked : CheckState.Unchecked,
+                        controlState);
+                    var rect = (location, size);
+                    canvas.DrawRadioButton(
+                        control,
+                        rect,
+                        isChecked,
+                        controlState);
+                    location.Y += size.Height;
+                    canvas.DrawText(title, location, Font.Default, LightDarkColors.Green, Color.Empty);
+                }
+            });
+        }
+
         public void DrawNativeCheckbox()
         {
             customDrawControl.SetPaintAction((control, canvas, rect) =>
             {
-                Fn((50, 50), CheckState.Unchecked, VisualControlState.Normal, "unchecked");
+                Fn((50, 50), CheckState.Unchecked, VisualControlState.Normal, "[ ] normal");
 
-                Fn((150, 50), CheckState.Checked, VisualControlState.Normal, "checked");
+                Fn((150, 50), CheckState.Checked, VisualControlState.Normal, "[x] normal");
 
                 Fn(
                     (250, 50),
                     CheckState.Checked,
                     VisualControlState.Hovered,
-                    "checked, current");
+                    "[x] current");
 
                 Fn(
                     (50, 100),
                     CheckState.Checked,
                     VisualControlState.Disabled,
-                    "disabled");
+                    "[x] disabled");
 
                 Fn(
                     (150, 100),
@@ -259,7 +312,43 @@ namespace ControlsSample
                         checkState,
                         controlState);
                     location.Y += size.Height;
-                    canvas.DrawText(title, location);
+                    canvas.DrawText(
+                        title,
+                        location,
+                        Font.Default,
+                        LightDarkColors.Green,
+                        Color.Empty);
+                }
+            });
+        }
+
+        public void DrawNativePushButton()
+        {
+            customDrawControl.SetPaintAction((control, canvas, rect) =>
+            {
+                Fn((50, 50), VisualControlState.Normal, "normal");
+
+                Fn((150, 50), VisualControlState.Disabled, "disabled");
+
+                Fn((250, 50), VisualControlState.Focused, "focused");
+
+                Fn((50, 100), VisualControlState.Hovered, "hovered");
+
+                Fn((150, 100), VisualControlState.Pressed, "pressed");
+
+                void Fn(
+                    PointD location,
+                    VisualControlState controlState,
+                    string title)
+                {
+                    SizeD size = (75, 30);
+                    var rect = (location, size);
+                    canvas.DrawPushButton(
+                        control,
+                        rect,
+                        controlState);
+                    location.Y += size.Height;
+                    canvas.DrawText(title, location, Font.Default, LightDarkColors.Green, Color.Empty);
                 }
             });
         }

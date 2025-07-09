@@ -172,6 +172,36 @@ namespace Alternet.UI
                 controlState);
         }
 
+        /// <inheritdoc cref="IControlPainterHandler.DrawPushButton"/>
+        public static void DrawPushButton(
+            this Graphics canvas,
+            AbstractControl control,
+            RectD rect,
+            VisualControlState controlState)
+        {
+            ControlPaint.Handler.DrawPushButton(
+                control,
+                canvas,
+                rect,
+                controlState);
+        }
+
+        /// <inheritdoc cref="IControlPainterHandler.DrawRadioButton"/>
+        public static void DrawRadioButton(
+            this Graphics canvas,
+            AbstractControl control,
+            RectD rect,
+            bool isChecked,
+            VisualControlState controlState)
+        {
+            ControlPaint.Handler.DrawRadioButton(
+                control,
+                canvas,
+                rect,
+                isChecked,
+                controlState);
+        }
+
         /// <summary>
         /// Fills rectangle background and draws its border using the specified border settings.
         /// </summary>

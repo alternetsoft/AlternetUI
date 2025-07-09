@@ -386,9 +386,10 @@ namespace Alternet.UI
         /// <inheritdoc/>
         public IControlPainterHandler CreateControlPainterHandler()
         {
+            PlessControlPainterHandler.NativeHandler = new WxControlPainterHandler();
             if (UseInternalControlPainter)
                 return new PlessControlPainterHandler();
-            return new WxControlPainterHandler();
+            return PlessControlPainterHandler.NativeHandler;
         }
 
         /// <inheritdoc/>

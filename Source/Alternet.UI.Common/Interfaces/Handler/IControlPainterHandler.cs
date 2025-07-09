@@ -77,5 +77,42 @@ namespace Alternet.Drawing
             RectD rect,
             CheckState checkState,
             VisualControlState controlState);
+
+        /// <summary>
+        /// Draws a push button control within the specified bounds and visual state.
+        /// </summary>
+        /// <param name="control">The <see cref="AbstractControl"/> instance
+        /// where button will be painted. Used for scale factor and dark mode determination.</param>
+        /// <param name="canvas">The <see cref="Graphics"/> surface used for rendering.</param>
+        /// <param name="rect">The bounding <see cref="RectD"/> that defines
+        /// the button’s layout region.</param>
+        /// <param name="controlState">The current <see cref="VisualControlState"/>
+        /// used to render visual feedback (e.g., hover, pressed, disabled).</param>
+        void DrawPushButton(
+            AbstractControl control,
+            Graphics canvas,
+            RectD rect,
+            VisualControlState controlState);
+
+        /// <summary>
+        /// Draws a radio button control within the specified bounds, reflecting
+        /// its checked state and visual appearance.
+        /// </summary>
+        /// <param name="control">The <see cref="AbstractControl"/> instance
+        /// where radio button will be painted. Used for scale factor and dark mode
+        /// determination.</param>
+        /// <param name="canvas">The <see cref="Graphics"/> surface used for rendering.</param>
+        /// <param name="rect">The bounding <see cref="RectD"/> that
+        /// defines the button’s layout region.</param>
+        /// <param name="isChecked">Indicates whether the radio
+        /// button is currently checked.</param>
+        /// <param name="controlState">The current <see cref="VisualControlState"/>
+        /// used to render visual feedback (e.g., selected, inactive).</param>
+        void DrawRadioButton(
+            AbstractControl control,
+            Graphics canvas,
+            RectD rect,
+            bool isChecked,
+            VisualControlState controlState);
     }
 }

@@ -1003,6 +1003,29 @@ namespace Alternet.Drawing
             }
         }
 
+        /// <inheritdoc/>
+        public void DrawPushButton(
+            AbstractControl control,
+            Graphics canvas,
+            RectD rect,
+            VisualControlState controlState)
+        {
+            var flags = Convert(CheckState.Unchecked, controlState);
+            DrawPushButton(control, canvas, rect, flags);
+        }
+
+        /// <inheritdoc/>
+        public void DrawRadioButton(AbstractControl control,
+            Graphics canvas,
+            RectD rect,
+            bool isChecked,
+            VisualControlState controlState)
+        {
+            CheckState state = isChecked ? CheckState.Checked : CheckState.Unchecked;
+            var flags = Convert(state, controlState);
+            DrawRadioBitmap(control, canvas, rect, flags);
+        }
+
         /// <summary>
         /// Defines parameters for the <see cref="DrawHeaderButton"/>.
         /// </summary>

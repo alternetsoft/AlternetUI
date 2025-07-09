@@ -132,7 +132,9 @@ namespace Alternet.Drawing
 
             void Draw(Pen pen)
             {
-                graphics.DrawRectangle(pen, (bounds.X, bounds.Y, bounds.Width - 1, bounds.Height - 1));
+                graphics.DrawRectangle(
+                    pen,
+                    (bounds.X, bounds.Y, bounds.Width - 1, bounds.Height - 1));
             }
         }
 
@@ -146,7 +148,8 @@ namespace Alternet.Drawing
                 App.Log($"ExpanderSize: {Handler.GetExpanderSize(control)}");
                 App.Log($"ExpanderSize: {Handler.GetExpanderSize(control)}");
 
-                var collapseButtonSize = Handler.GetCollapseButtonSize(control, control.MeasureCanvas);
+                var collapseButtonSize
+                = Handler.GetCollapseButtonSize(control, control.MeasureCanvas);
 
                 App.Log($"CollapseButtonSize: {collapseButtonSize}");
                 App.Log($"HeaderButtonHeight: {Handler.GetHeaderButtonHeight(control)}");
