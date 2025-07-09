@@ -1552,7 +1552,7 @@ namespace Alternet.UI
                     Parent.ForEachVisibleChild(Uncheck, recursive: false);
                     break;
                 case CheckedSpreadMode.SingleInGroup:
-                    var group = Parent.GetGroups(GroupIndexes, false);
+                    var group = Parent.GetMembersOfGroups(GroupIndexes, false);
                     group.ForEachVisible(Uncheck);
                     break;
             }

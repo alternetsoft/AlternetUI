@@ -1239,9 +1239,22 @@ namespace Alternet.UI
         /// <summary>
         /// Returns whether property, method or other member is browsable.
         /// </summary>
-        /// <param name="p">Property info.</param>
+        /// <param name="p">Member info.</param>
         /// <returns><c>true</c> if property is browsable, <c>false</c> otherwise.</returns>
         public static bool GetBrowsable(MemberInfo p)
+        {
+            var browsable = p.GetCustomAttribute(typeof(BrowsableAttribute)) as BrowsableAttribute;
+            if (browsable is not null)
+                return browsable.Browsable;
+            return true;
+        }
+
+        /// <summary>
+        /// Returns whether type is browsable.
+        /// </summary>
+        /// <param name="p">The type to check.</param>
+        /// <returns><c>true</c> if type is browsable, <c>false</c> otherwise.</returns>
+        public static bool TypeIsBrowsable(Type p)
         {
             var browsable = p.GetCustomAttribute(typeof(BrowsableAttribute)) as BrowsableAttribute;
             if (browsable is not null)
