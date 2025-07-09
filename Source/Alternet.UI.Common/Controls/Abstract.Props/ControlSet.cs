@@ -182,7 +182,7 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Sets vertical alignmnent for all the controls in the set.
+        /// Sets vertical alignment for all the controls in the set.
         /// </summary>
         /// <param name="value">A vertical alignment setting.</param>
         /// <returns>Returns this object instance for use in the call sequences.</returns>
@@ -248,7 +248,8 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Calls <see cref="AbstractControl.SuspendLayout()"/> for all parents of the controls in the set.
+        /// Calls <see cref="AbstractControl.SuspendLayout()"/> for all parents
+        /// of the controls in the set.
         /// </summary>
         /// <returns>Returns this object instance for use in the call sequences.</returns>
         public virtual ControlSet SuspendLayout()
@@ -262,7 +263,8 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Calls <see cref="AbstractControl.SuspendLayout()"/> for all parents of the controls in the set.
+        /// Calls <see cref="AbstractControl.SuspendLayout()"/> for all parents
+        /// of the controls in the set.
         /// </summary>
         /// <returns>Returns this object instance for use in the call sequences.</returns>
         public virtual ControlSet ResumeLayout()
@@ -431,7 +433,7 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Sets horizontal alignmnent for all the controls in the set.
+        /// Sets horizontal alignment for all the controls in the set.
         /// </summary>
         /// <param name="value">A horizontal alignment setting.</param>
         /// <returns>Returns this object instance for use in the call sequences.</returns>
@@ -447,7 +449,7 @@ namespace Alternet.UI
         /// <summary>
         /// Sets <see cref="AbstractControl.Margin"/> property for all the controls in the set.
         /// </summary>
-        /// <param name="value">An oouter margin of a control.</param>
+        /// <param name="value">An outer margin of a control.</param>
         /// <returns>Returns this object instance for use in the call sequences.</returns>
         public virtual ControlSet Margin(Thickness value)
         {
@@ -636,7 +638,8 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Sets <see cref="AbstractControl.PaddingBottom"/> property for all the controls in the set.
+        /// Sets <see cref="AbstractControl.PaddingBottom"/> property for all the
+        /// controls in the set.
         /// </summary>
         /// <param name="value">The margin value.</param>
         /// <returns>Returns this object instance for use in the call sequences.</returns>
@@ -678,7 +681,7 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Sets suggested width for inner childs of the controls in the set.
+        /// Sets suggested width for inner children of the controls in the set.
         /// </summary>
         /// <returns>Returns this object instance for use in the call sequences.</returns>
         public virtual ControlSet InnerSuggestedWidthToMax()
@@ -747,7 +750,8 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Sets <see cref="AbstractControl.ParentBackColor"/> property for all the controls in the set.
+        /// Sets <see cref="AbstractControl.ParentBackColor"/> property for all the
+        /// controls in the set.
         /// </summary>
         public virtual ControlSet ParentBackColor(bool value)
         {
@@ -788,6 +792,49 @@ namespace Alternet.UI
             }
 
             return this;
+        }
+
+        /// <summary>
+        /// Executes the specified <paramref name="action"/> on each
+        /// visible <see cref="AbstractControl"/>
+        /// contained in the current collection.
+        /// </summary>
+        /// <param name="action">
+        /// The <see cref="Action{AbstractControl}"/> to perform on each visible item.
+        /// </param>
+        /// <remarks>
+        /// This method filters the items by their <c>Visible</c> property and
+        /// applies the provided action
+        /// only to those that are currently displayed or intended to be rendered.
+        /// </remarks>
+        public virtual void ForEachVisible(Action<AbstractControl> action)
+        {
+            foreach (var item in items)
+            {
+                if (item.Visible)
+                    action(item);
+            }
+        }
+
+        /// <summary>
+        /// Executes the specified <paramref name="action"/> on every
+        /// <see cref="AbstractControl"/>
+        /// in the current collection, regardless of visibility.
+        /// </summary>
+        /// <param name="action">
+        /// The <see cref="Action{AbstractControl}"/> to perform on each item.
+        /// </param>
+        /// <remarks>
+        /// This method iterates through all items without filtering, allowing
+        /// bulk operations or analysis
+        /// over the entire set of controls.
+        /// </remarks>
+        public virtual void ForEach(Action<AbstractControl> action)
+        {
+            foreach (var item in items)
+            {
+                action(item);
+            }
         }
     }
 }
