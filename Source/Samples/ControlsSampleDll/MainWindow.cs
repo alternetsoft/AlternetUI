@@ -228,8 +228,9 @@ namespace ControlsSample
         }
 
         AbstractControl CreateWebBrowserPage() => new WebBrowserPage();
-        /*AbstractControl CreateAllSamplesPage() => new AllSamplesPage();*/
+
         AbstractControl CreateInternalSamplesPage() => new InternalSamplesPage();
+
         AbstractControl CreateWelcomePage() => new WelcomePage();
 
         private void LinkLabel_LinkClicked(

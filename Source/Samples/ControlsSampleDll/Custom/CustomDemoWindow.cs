@@ -94,6 +94,11 @@ namespace Alternet.UI
             MinimumSize = (800, 600);
 
             StartLocation = WindowStartLocation.CenterScreen;
+
+            App.AddIdleTask(() =>
+            {
+                pageContainer!.SelectedIndex = 0;
+            });
         }
 
         public static bool FormLoadFromResName(string resName, object obj, UixmlLoader.Flags flags)
@@ -184,11 +189,6 @@ namespace Alternet.UI
             }
 
             ActiveControl = pageContainer.LeftControl;
-
-            App.AddIdleTask(() =>
-            {
-                pageContainer.SelectedIndex = 0;
-            });           
         }
 
         protected virtual void AddPages()

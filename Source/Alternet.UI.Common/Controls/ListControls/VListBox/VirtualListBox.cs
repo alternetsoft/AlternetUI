@@ -1290,17 +1290,20 @@ namespace Alternet.UI
                     else
                     {
                         if (itemPaintArgs is null)
+                        {
                             itemPaintArgs = new(this, dc, rectRow, line);
+                        }
                         else
                         {
                             itemPaintArgs.Graphics = dc;
                             itemPaintArgs.ClipRectangle = rectRow;
                             itemPaintArgs.ItemIndex = line;
-                            itemPaintArgs.IsCurrent = IsCurrent(line);
-                            itemPaintArgs.IsSelected = IsSelected(line);
-                            itemPaintArgs.LabelMetrics = new();
-                            itemPaintArgs.Visible = true;
                         }
+
+                        itemPaintArgs.LabelMetrics = new();
+                        itemPaintArgs.IsCurrent = IsCurrent(line);
+                        itemPaintArgs.IsSelected = IsSelected(line);
+                        itemPaintArgs.Visible = true;
 
                         DrawItemBackground(itemPaintArgs);
                         DrawItemForeground(itemPaintArgs);
