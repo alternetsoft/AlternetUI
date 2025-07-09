@@ -869,7 +869,7 @@ namespace Alternet.UI
 
             maxHeightD = Math.Max(checkBoxSize, maxHeightD);
 
-            var font = ListControlItem.GetFont(item, container).AsBold;
+            var font = ListControlItem.GetFont(item, container, true).AsBold;
 
             var hasNewLineChars = item?.LabelFlags.HasFlag(DrawLabelFlags.TextHasNewLineChars) ?? false;
 
@@ -922,12 +922,28 @@ namespace Alternet.UI
         /// Gets font when item is inside the specified container. Result must not be <c>null</c>.
         /// </summary>
         /// <returns></returns>
-        public static Font GetFont(ListControlItem? item, IListControlItemContainer? container)
+        public static Font GetFont(
+            ListControlItem? item,
+            IListControlItemContainer? container,
+            bool isSelectedItem)
         {
+            Font result;
+
             if (item is null)
-                return GetContainerFont(container);
+            {
+                result = GetContainerFont(container);
+            }
             else
-                return item.GetFont(container);
+            {
+                result = item.GetFont(container);
+            }
+
+            if (isSelectedItem && (container?.Defaults.SelectedItemIsBold ?? false))
+            {
+                result = result.AsBold;
+            }
+
+            return result;
         }
 
         /// <summary>

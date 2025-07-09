@@ -769,9 +769,9 @@ namespace Alternet.UI
         /// Gets item font. It must not be <c>null</c>.
         /// </summary>
         /// <returns></returns>
-        public virtual Font GetItemFont(int itemIndex = -1)
+        public virtual Font GetItemFont(int itemIndex, bool isSelected)
         {
-            return ListControlItem.GetFont(SafeItem(itemIndex), this);
+            return ListControlItem.GetFont(SafeItem(itemIndex), this, isSelected);
         }
 
         /// <summary>

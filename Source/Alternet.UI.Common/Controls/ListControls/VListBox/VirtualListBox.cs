@@ -1257,13 +1257,14 @@ namespace Alternet.UI
                         var item = SafeItem(line);
                         drawItemArgs.Bounds = rectRow;
                         drawItemArgs.Index = line;
-                        drawItemArgs.Font = ListControlItem.GetFont(item, this);
 
                         DrawItemState state = 0;
                         if (isCurrentItem)
                             state |= DrawItemState.Focus;
                         if (isSelectedItem)
                             state |= DrawItemState.Selected;
+
+                        drawItemArgs.Font = ListControlItem.GetFont(item, this, isSelectedItem);
 
                         drawItemArgs.State = state;
 
@@ -1535,7 +1536,7 @@ namespace Alternet.UI
         /// </returns>
         public virtual Coord GetCharWidth()
         {
-            var result = MeasureCanvas.GetTextExtent("W", GetItemFont()).Width;
+            var result = MeasureCanvas.GetTextExtent("W", GetItemFont(-1, true)).Width;
             if (result <= 0)
                 result = 16;
             return result;
