@@ -802,15 +802,16 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Gets <see cref="ControlSet"/> with all controls which are members of the
+        /// Gets <see cref="ControlSet"/> with all child controls which are members of the
         /// specified group.
         /// </summary>
         /// <param name="groupIndex">Index of the group.</param>
         /// <param name="recursive">Whether to check child controls recursively.</param>
-        public virtual ControlSet GetGroup(int groupIndex, bool recursive = false)
+        public virtual ControlSet GetGroup(int? groupIndex, bool recursive = false)
         {
-            if (!HasChildren)
+            if (!HasChildren || groupIndex is null)
                 return ControlSet.Empty;
+
             List<AbstractControl> result = new();
             foreach (var control in Children)
             {
@@ -819,6 +820,32 @@ namespace Alternet.UI
                 if (recursive)
                 {
                     ControlSet subSet = control.GetGroup(groupIndex, true);
+                    result.AddRange(subSet.Items);
+                }
+            }
+
+            return new ControlSet(result);
+        }
+
+        /// <summary>
+        /// Gets <see cref="ControlSet"/> with all child controls which are members of the
+        /// specified groups.
+        /// </summary>
+        /// <param name="groupIndexes">The group indexes.</param>
+        /// <param name="recursive">Whether to check child controls recursively.</param>
+        public virtual ControlSet GetMembersOfGroups(int[]? groupIndexes, bool recursive = false)
+        {
+            if (!HasChildren || groupIndexes is null)
+                return ControlSet.Empty;
+
+            List<AbstractControl> result = new();
+            foreach (var control in Children)
+            {
+                if (control.MemberOfAnyGroup(groupIndexes))
+                    result.Add(control);
+                if (recursive)
+                {
+                    ControlSet subSet = control.GetMembersOfGroups(groupIndexes, true);
                     result.AddRange(subSet.Items);
                 }
             }
@@ -908,16 +935,38 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Determines whether this control belongs to any of the specified groups.
+        /// </summary>
+        /// <param name="groupIndexes">A collection of group indexes to check against.</param>
+        public virtual bool MemberOfAnyGroup(int[]? groupIndexes)
+        {
+            if (groupIndexes is null)
+                return false;
+
+            foreach (var groupIndex in groupIndexes)
+            {
+                var isMember = MemberOfGroup(groupIndex);
+                if(isMember)
+                    return true;
+            }
+
+            return false;
+        }
+
+        /// <summary>
         /// Checks whether this control is a member of the specified group.
         /// </summary>
         /// <param name="groupIndex">Index of the group.</param>
-        public virtual bool MemberOfGroup(int groupIndex)
+        public virtual bool MemberOfGroup(int? groupIndex)
         {
+            if (groupIndex is null)
+                return false;
+
             var indexes = GroupIndexes;
 
             if (indexes is null)
                 return false;
-            return Array.IndexOf<int>(indexes, groupIndex) >= 0;
+            return Array.IndexOf<int>(indexes, groupIndex.Value) >= 0;
         }
 
         /// <summary>

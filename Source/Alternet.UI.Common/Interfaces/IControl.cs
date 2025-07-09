@@ -1332,7 +1332,7 @@ namespace Alternet.UI
         /// Checks whether this control is a member of the specified group.
         /// </summary>
         /// <param name="groupIndex">Index of the group.</param>
-        bool MemberOfGroup(int groupIndex);
+        bool MemberOfGroup(int? groupIndex);
 
         /// <summary>
         /// Executes <paramref name="action"/> between calls to <see cref="SuspendLayout"/>

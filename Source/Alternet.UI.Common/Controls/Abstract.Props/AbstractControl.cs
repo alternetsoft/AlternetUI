@@ -219,7 +219,7 @@ namespace Alternet.UI
         /// Gets global collection of the attached <see cref="IControlNotification"/> objects.
         /// These notifications are called for the each created control.
         /// </summary>
-        public static IEnumerable<IControlNotification> GlobalNotifications
+        public static IReadOnlyList<IControlNotification> GlobalNotifications
         {
             get
             {
@@ -2667,7 +2667,7 @@ namespace Alternet.UI
 
         /// <summary>
         /// Gets or sets group indexes of this control. Group indexes are used
-        /// in <see cref="GetGroup(int, bool)"/> method.
+        /// in <see cref="GetGroup(int?, bool)"/> method.
         /// </summary>
         /// <remarks>
         /// This property modifies <see cref="GroupIndexes"/>.
@@ -3420,7 +3420,7 @@ namespace Alternet.UI
         /// Gets collection of the attached <see cref="IControlNotification"/> objects.
         /// </summary>
         [Browsable(false)]
-        public virtual IEnumerable<IControlNotification> Notifications
+        public virtual IReadOnlyList<IControlNotification> Notifications
         {
             get
             {
