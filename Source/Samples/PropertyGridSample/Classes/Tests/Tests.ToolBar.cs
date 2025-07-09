@@ -16,6 +16,10 @@ namespace PropertyGridSample
     {
         void InitTestsToolBar()
         {
+            PropertyGrid.AddSimpleAction<ToolBarSet>(
+                "Add Sticky Grouped Buttons",
+                TestStickyGroupedButtons);
+
             PropertyGrid.AddSimpleAction<ToolBar>("Test Visible", TestGenericToolBarVisible);
             PropertyGrid.AddSimpleAction<ToolBar>("Test Enabled", TestGenericToolBarEnabled);
 
@@ -136,6 +140,37 @@ namespace PropertyGridSample
                 return;
             control.Background = null;
             control.BackgroundColor = null;
+        }
+
+        void TestStickyGroupedButtons()
+        {
+            var control = GetSelectedControl<ToolBarSet>();
+            if (control is null)
+                return;
+            var toolBar = control[0];
+
+            var item1Id = toolBar.AddStickyBtn(null, KnownSvgImages.ImgBold);
+            var item1 = toolBar.FindTool(item1Id);
+            item1!.StickySpreadMode = CheckedSpreadMode.SingleInGroup;
+            item1.StickyToggleOnClick = true;
+            item1.Name = "item1";
+            item1.GroupIndex = 53;
+            item1.ToolTip = "Member of sticky group";
+            item1.Sticky = true;
+
+            var item2Id = toolBar.AddStickyBtn(null, KnownSvgImages.ImgUnderline);
+            var item2 = toolBar.FindTool(item2Id);
+            item2!.StickySpreadMode = CheckedSpreadMode.SingleInGroup;
+            item2.StickyToggleOnClick = true;
+            item2.ToolTip = "Member of sticky group";
+            item2.GroupIndex = 53;
+            item2.Name = "item2";
+
+            var item3Id = toolBar.AddStickyBtn(null, KnownSvgImages.ImgItalic);
+            var item3 = toolBar.FindTool(item3Id);
+            item3!.ToolTip = "Not member of group";
+            item3.StickyToggleOnClick = true;
+            item3.Name = "item3";
         }
 
         void TestGenericToolBarVisible()

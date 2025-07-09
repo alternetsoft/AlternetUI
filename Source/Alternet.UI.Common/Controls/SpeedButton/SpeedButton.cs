@@ -138,6 +138,7 @@ namespace Alternet.UI
         private int clickRepeatDelay = DefaultClickRepeatDelay;
         private CommandSourceStruct commandSource;
         private ImageToText imageToText = ImageToText.Horizontal;
+        private CheckedSpreadMode stickySpreadMode;
 
         static SpeedButton()
         {
@@ -278,6 +279,29 @@ namespace Alternet.UI
                 spacer.SuggestedSize = value;
                 if(HasImage && TextVisible)
                     PerformLayoutAndInvalidate();
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets the mode that defines how the <see cref="Sticky"/> state
+        /// is propagated to sibling <see cref="SpeedButton"/> controls
+        /// when this control becomes sticky.
+        /// </summary>
+        /// <remarks>
+        /// This property determines whether other <see cref="SpeedButton"/> controls
+        /// in the same group or hierarchy
+        /// should be influenced when this control becomes sticky
+        /// (<c>IsSticky</c> is <c>true</c>).
+        /// </remarks>
+        public virtual CheckedSpreadMode StickySpreadMode
+        {
+            get => stickySpreadMode;
+            set
+            {
+                if(stickySpreadMode == value)
+                    return;
+                stickySpreadMode = value;
+                UpdateSiblingStickyState();
             }
         }
 
@@ -853,6 +877,7 @@ namespace Alternet.UI
                     return;
                 sticky = value;
                 Invalidate();
+                UpdateSiblingStickyState();
                 RaiseStickyChanged(EventArgs.Empty);
             }
         }
@@ -1498,6 +1523,46 @@ namespace Alternet.UI
             base.OnClick(e);
             clickAction?.Invoke();
             commandSource.Execute();
+        }
+
+        /// <summary>
+        /// Updates the sticky state of sibling <c>SpeedButton</c> controls
+        /// based on the current button’s
+        /// <c>IsSticky</c> setting and <see cref="StickySpreadMode"/>.
+        /// </summary>
+        /// <remarks>
+        /// This method is invoked when the current button becomes sticky and may
+        /// modify sibling buttons within the same container or logical group to
+        /// enforce exclusive selection,
+        /// group-wide activation, or other propagation behavior
+        /// as defined by <see cref="CheckedSpreadMode"/>.
+        /// Override this method to customize spread logic or integrate group rules.
+        /// </remarks>
+        protected virtual void UpdateSiblingStickyState()
+        {
+            if(Parent is null || !Sticky)
+                return;
+
+            switch (StickySpreadMode)
+            {
+                case CheckedSpreadMode.None:
+                default:
+                    return;
+                case CheckedSpreadMode.SingleSibling:
+                    Parent.ForEachVisibleChild(Uncheck, recursive: false);
+                    break;
+                case CheckedSpreadMode.SingleInGroup:
+                    var group = Parent.GetGroups(GroupIndexes, false);
+                    group.ForEachVisible(Uncheck);
+                    break;
+            }
+
+            void Uncheck(AbstractControl control)
+            {
+                if (control is not SpeedButton button || button == this)
+                    return;
+                button.Sticky = false;
+            }
         }
 
         private void OnClickRepeatTimerEvent()
