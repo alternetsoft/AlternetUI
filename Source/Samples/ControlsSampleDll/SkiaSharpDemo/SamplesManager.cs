@@ -4,6 +4,8 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 
+using Alternet.UI;
+
 namespace SkiaSharpSample
 {
 	public static class SamplesManager
@@ -55,8 +57,16 @@ namespace SkiaSharpSample
 
 		public static IEnumerable<SampleBase> GetSamples(SamplePlatforms platform)
 		{
-			return sampleList.Where(s => s.SupportedPlatform.HasFlag(platform));
-		}
+			return sampleList.Where(IsOk);
+
+            bool IsOk(SampleBase s)
+            {
+				if(!AssemblyUtils.TypeIsBrowsable(s.GetType()))
+					return false;
+
+                return s.SupportedPlatform.HasFlag(platform);
+            }
+        }
 
 		public static SampleBase? GetSample(string title)
 		{

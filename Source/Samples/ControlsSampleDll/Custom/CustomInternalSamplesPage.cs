@@ -48,7 +48,7 @@ namespace Alternet.UI
                 view.RootItem.Add(SampleItems.Pop());
             }
 
-            RunWhenIdle(view.SelectFirstItem);
+            RunWhenIdle(view.SelectFirstItemAndScroll);
         }
 
         public static Stack<TreeControlItem> SampleItems = new();

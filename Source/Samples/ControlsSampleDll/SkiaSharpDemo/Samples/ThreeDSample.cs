@@ -6,6 +6,7 @@ using SkiaSharp;
 namespace SkiaSharpSample.Samples
 {
 	[Preserve(AllMembers = true)]
+	[Browsable(false)]
 	public class ThreeDSample : AnimatedSampleBase
 	{
 		private SKMatrix44 rotationMatrix;
