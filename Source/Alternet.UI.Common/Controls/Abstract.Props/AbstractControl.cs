@@ -1072,6 +1072,21 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets or sets background paint actions attached to this control.
+        /// Usage of this property depends on the control. Not all controls support it.
+        /// </summary>
+        [Browsable(false)]
+        public virtual ControlStatePaintActions? BackgroundActions
+        {
+            get => stateObjects?.BackgroundActions;
+            set
+            {
+                stateObjects ??= new();
+                stateObjects.BackgroundActions = value;
+            }
+        }
+
+        /// <summary>
         /// Gets or sets foreground brushes attached to this control.
         /// Usage of this property depends on the control. Not all controls support it.
         /// </summary>

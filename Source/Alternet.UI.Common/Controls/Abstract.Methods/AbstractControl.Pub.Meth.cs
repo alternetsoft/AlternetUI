@@ -339,6 +339,14 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets the background paint action for specified state of the control.
+        /// </summary>
+        public virtual PaintEventHandler? GetBackgroundAction(VisualControlState state)
+        {
+            return BackgroundActions?.GetObjectOrNull(state);
+        }
+
+        /// <summary>
         /// Gets the border settings for specified state of the control.
         /// </summary>
         public virtual BorderSettings? GetBorderSettings(VisualControlState state)
@@ -590,10 +598,30 @@ namespace Alternet.UI
             DrawDefaultBackgroundFlags flags = DrawDefaultBackgroundFlags.DrawBorderAndBackground)
         {
             var state = VisualState;
-            var brush = flags.HasFlag(DrawDefaultBackgroundFlags.DrawBackground)
-                ? GetBackground(state) : null;
-            var border = flags.HasFlag(DrawDefaultBackgroundFlags.DrawBorder)
-                ? GetBorderSettings(state) : null;
+
+            Brush? brush;
+
+            var drawBorder = flags.HasFlag(DrawDefaultBackgroundFlags.DrawBorder);
+
+            if (flags.HasFlag(DrawDefaultBackgroundFlags.DrawBackground))
+            {
+                var action = GetBackgroundAction(state);
+
+                if(action is null)
+                    brush = GetBackground(state);
+                else
+                {
+                    brush = null;
+                    action(this, e);
+                    return;
+                }
+            }
+            else
+            {
+                brush = null;
+            }
+
+            var border = drawBorder ? GetBorderSettings(state) : null;
 
             if (brush is null && (border is null || !HasBorder))
                 return;

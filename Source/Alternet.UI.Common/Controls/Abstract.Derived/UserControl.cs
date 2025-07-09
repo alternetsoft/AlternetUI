@@ -164,6 +164,12 @@ namespace Alternet.UI
             return HandleGetBackground(this, state);
         }
 
+        /// <inheritdoc/>
+        public override PaintEventHandler? GetBackgroundAction(VisualControlState state)
+        {
+            return HandleGetBackgroundActions(this, state);
+        }
+
         /// <summary>
         /// Default painting method of the <see cref="UserControl"/>
         /// and its descendants.
@@ -191,6 +197,19 @@ namespace Alternet.UI
             var brush = result?.Backgrounds?.GetObjectOrNormal(state);
             brush ??= control.BackgroundColor?.AsBrush;
             return brush;
+        }
+
+        internal static PaintEventHandler? HandleGetBackgroundActions(
+            AbstractControl control,
+            VisualControlState state)
+        {
+            var overrideValue = control.BackgroundActions?.GetObjectOrNormal(state);
+            if (overrideValue is not null)
+                return overrideValue;
+
+            var theme = control.GetDefaultTheme()?.DarkOrLight(control.IsDarkBackground);
+            var result = theme?.BackgroundActions?.GetObjectOrNormal(state);
+            return result;
         }
 
         internal static BorderSettings? HandleGetBorderSettings(

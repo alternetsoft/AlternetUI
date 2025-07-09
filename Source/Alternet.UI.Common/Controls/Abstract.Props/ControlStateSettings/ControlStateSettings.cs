@@ -7,10 +7,16 @@ using System.Threading.Tasks;
 namespace Alternet.UI
 {
     /// <summary>
-    /// Specifies sets of objects (images, colors, borders, pens, brushes) for different control states.
+    /// Specifies sets of objects (images, colors, borders, pens, brushes)
+    /// for different control states.
     /// </summary>
     public class ControlStateSettings
     {
+        /// <summary>
+        /// Gets or sets <see cref="ControlStatePaintActions"/>.
+        /// </summary>
+        public ControlStatePaintActions? BackgroundActions { get; set; }
+
         /// <summary>
         /// Gets or sets <see cref="ControlStateBrushes"/>.
         /// </summary>
@@ -83,6 +89,7 @@ namespace Alternet.UI
         {
             ControlStateSettings result = new();
 
+            result.BackgroundActions = BackgroundActions?.Clone();
             result.Backgrounds = Backgrounds?.Clone();
             result.Foregrounds = Foregrounds?.Clone();
             result.Pens = Pens?.Clone();
@@ -113,6 +120,17 @@ namespace Alternet.UI
             if (Borders is null)
                 return;
             Borders.Normal = Borders.Hovered;
+        }
+
+        /// <summary>
+        /// Sets background paint actions to draw push button background.
+        /// <see cref="AbstractControl.DrawDefaultBackground"/> uses
+        /// this information when it paints background of the control.
+        /// </summary>
+        public virtual void SetAsPushButton()
+        {
+            BackgroundActions ??= new();
+            BackgroundActions.SetAsPushButton();
         }
     }
 }

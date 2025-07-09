@@ -158,6 +158,12 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
+        public override PaintEventHandler? GetBackgroundAction(VisualControlState state)
+        {
+            return UserControl.HandleGetBackgroundActions(this, state);
+        }
+
+        /// <inheritdoc/>
         public override Brush? GetBackground(VisualControlState state)
         {
             return UserControl.HandleGetBackground(this, state);

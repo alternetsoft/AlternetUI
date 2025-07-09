@@ -186,6 +186,84 @@ namespace Alternet.UI
                 controlState);
         }
 
+        /// <summary>
+        /// Draw push button using the specified parameters.
+        /// </summary>
+        /// <param name="sender">The container control where drawing is performed.</param>
+        /// <param name="e">The paint arguments including canvas and bounding rectangle.</param>
+        /// <param name="controlState">The state of the push button.</param>
+        public static void DrawPushButton(
+            object? sender,
+            PaintEventArgs e,
+            VisualControlState controlState)
+        {
+            if (sender is not AbstractControl control)
+            {
+                return;
+            }
+
+            DrawPushButton(
+                        e.Graphics,
+                        control,
+                        e.ClipRectangle,
+                        controlState);
+        }
+
+        /// <summary>
+        /// Draw push button in the <see cref="VisualControlState.Normal"/> state
+        /// using the specified parameters.
+        /// </summary>
+        /// <param name="sender">The container control where drawing is performed.</param>
+        /// <param name="e">The paint arguments including canvas and bounding rectangle.</param>
+        public static void DrawPushButtonNormal(object? sender, PaintEventArgs e)
+        {
+            DrawPushButton(sender, e, VisualControlState.Normal);
+        }
+
+        /// <summary>
+        /// Draw push button in the <see cref="VisualControlState.Hovered"/> state
+        /// using the specified parameters.
+        /// </summary>
+        /// <param name="sender">The container control where drawing is performed.</param>
+        /// <param name="e">The paint arguments including canvas and bounding rectangle.</param>
+        public static void DrawPushButtonHovered(object? sender, PaintEventArgs e)
+        {
+            DrawPushButton(sender, e, VisualControlState.Hovered);
+        }
+
+        /// <summary>
+        /// Draw push button in the <see cref="VisualControlState.Pressed"/> state
+        /// using the specified parameters.
+        /// </summary>
+        /// <param name="sender">The container control where drawing is performed.</param>
+        /// <param name="e">The paint arguments including canvas and bounding rectangle.</param>
+        public static void DrawPushButtonPressed(object? sender, PaintEventArgs e)
+        {
+            DrawPushButton(sender, e, VisualControlState.Pressed);
+        }
+
+        /// <summary>
+        /// Draw push button in the <see cref="VisualControlState.Disabled"/> state
+        /// using the specified parameters.
+        /// </summary>
+        /// <param name="sender">The container control where drawing is performed.</param>
+        /// <param name="e">The paint arguments including canvas and bounding rectangle.</param>
+        public static void DrawPushButtonDisabled(object? sender, PaintEventArgs e)
+        {
+            DrawPushButton(sender, e, VisualControlState.Disabled);
+        }
+
+        /// <summary>
+        /// Draw push button in the <see cref="VisualControlState.Focused"/> state
+        /// using the specified parameters.
+        /// </summary>
+        /// <param name="sender">The container control where drawing is performed.</param>
+        /// <param name="e">The paint arguments including canvas and bounding rectangle.</param>
+        public static void DrawPushButtonFocused(object? sender, PaintEventArgs e)
+        {
+            DrawPushButton(sender, e, VisualControlState.Focused);
+        }
+
         /// <inheritdoc cref="IControlPainterHandler.DrawRadioButton"/>
         public static void DrawRadioButton(
             this Graphics canvas,

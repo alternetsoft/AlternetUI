@@ -117,6 +117,17 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Sets background paint actions to draw push button background.
+        /// <see cref="AbstractControl.DrawDefaultBackground"/> uses
+        /// this information when it paints background of the control.
+        /// </summary>
+        public virtual void SetAsPushButton()
+        {
+            Dark?.SetAsPushButton();
+            Light?.SetAsPushButton();
+        }
+
+        /// <summary>
         /// Sets border in the normal state equal to border in the hovered state.
         /// </summary>
         public virtual void NormalBorderAsHovered()

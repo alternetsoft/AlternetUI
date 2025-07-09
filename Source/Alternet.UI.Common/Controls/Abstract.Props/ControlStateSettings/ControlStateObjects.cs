@@ -240,6 +240,14 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Resets data for all the states.
+        /// </summary>
+        public virtual void Reset()
+        {
+            SetAll(default);
+        }
+
+        /// <summary>
         /// Sets data for all the states with the <paramref name="value"/>.
         /// </summary>
         /// <param name="value">Object value.</param>
