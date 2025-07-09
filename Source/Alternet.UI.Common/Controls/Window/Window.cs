@@ -32,7 +32,6 @@ namespace Alternet.UI
         private IconSet? icon = null;
         private object? menu = null;
         private WeakReferenceValue<Window> owner;
-        private bool needLayout = false;
         private int? oldDisplay;
         private bool loadedCalled;
 
@@ -1919,27 +1918,12 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        protected override void OnIdle(EventArgs e)
-        {
-            if (DisposingOrDisposed)
-                return;
-            base.OnIdle(e);
-
-            if (needLayout)
-            {
-                PerformLayout();
-                needLayout = false;
-            }
-        }
-
-        /// <inheritdoc/>
         protected override void OnHandlerSizeChanged(EventArgs e)
         {
             if (DisposingOrDisposed)
                 return;
             base.OnHandlerSizeChanged(e);
-            PerformLayout();
-            needLayout = true;
+            App.Invoke(() => PerformLayout());
         }
 
         /// <summary>

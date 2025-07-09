@@ -22,7 +22,6 @@ namespace PropertyGridSample
         private readonly ContextMenuStrip propGridContextMenu = new();
         private MenuItem? resetMenu;
 
-        private bool updatePropertyGrid = false;
         private bool useIdle = false;
         private bool showDesignCorners;
 
@@ -179,7 +178,7 @@ namespace PropertyGridSample
                 panel.FillPanel.MouseDown += ControlPanel_MouseDown;
                 panel.FillPanel.DragStart += ControlPanel_DragStart;
 
-                updatePropertyGrid = true;
+                Invoke(UpdatePropertyGrid);
 
                 ControlParent.HasBorder = true;
 
@@ -219,62 +218,7 @@ namespace PropertyGridSample
 
         private void PropGrid_PropertyCustomCreate(object? sender, CreatePropertyEventArgs e)
         {
-            /*
-            if (e.PropInfo.PropertyType != typeof(Color))
-                return;
-            e.PropertyItem = CreatePropertyAsColor(e.Label, e.PropName, e.Instance, e.PropInfo);
-            e.Handled = true;
-            */
         }
-
-        /*public virtual IPropertyGridItem CreatePropertyAsColor(
-                    string? label,
-                    string? name,
-                    object instance,
-                    PropertyInfo propInfo)
-        {
-            string propName = propInfo.Name;
-            label ??= propName;
-
-            var color = propInfo.GetValue(instance, null) as Color;
-            string strValue = PropGrid.ColorToString(color);
-
-            var prm = PropertyGrid.GetNewItemParams(instance.GetType(), propInfo);
-            prm.EditKindString = PropertyGridEditKindString.Ellipsis;
-            prm.ButtonClick += Prm_ButtonClick;
-            prm = prm.Constructed;
-
-            var prop = PropGrid.CreateStringItemWithKind(label, propName, strValue, prm);
-
-            PropGrid.OnPropertyCreated(prop, instance, propInfo, prm);
-            return prop;
-
-            void Prm_ButtonClick(object? sender, EventArgs e)
-            {
-                Application.AddIdleTask(Fn);
-
-                void Fn()
-                {
-                    if (sender is not IPropertyGridItem item)
-                        return;
-                    var value = PropGrid.GetPropertyValueAsString(item);
-                    Color? color = null;
-
-                    PropGrid.AvoidException(() =>
-                    {
-                        color = Color.Parse(value);
-                    });
-
-                    ColorDialog.Default.Color = color ?? Color.Black;
-                    if (ColorDialog.Default.ShowModal() != ModalResult.Accepted)
-                        return;
-                    var newValue = PropGrid.ColorToString(ColorDialog.Default.Color);
-                    if (newValue == value)
-                        return;
-                    PropGrid.SetPropertyValueAsStr(item, newValue);
-                }
-            }
-        }*/
 
         private void MainWindow_SizeChanged(object? sender, EventArgs e)
         {
@@ -338,7 +282,7 @@ namespace PropertyGridSample
                 if (type == typeof(WelcomePage))
                     return;
                 if (item?.PropInstance == e.Instance || e.Instance is null)
-                    updatePropertyGrid = true;
+                    Invoke(UpdatePropertyGrid);
             });
         }
 
@@ -350,7 +294,7 @@ namespace PropertyGridSample
 
         private void ControlsListBox_SelectionChanged(object? sender, EventArgs e)
         {
-            updatePropertyGrid = true;
+            Invoke(UpdatePropertyGrid);
         }
 
         internal void AfterSetProps()
@@ -358,7 +302,12 @@ namespace PropertyGridSample
 
         }
 
-        internal void UpdatePropertyGrid(object? instance = null)
+        internal void UpdatePropertyGrid()
+        {
+            UpdatePropertyGrid(null);
+        }
+
+        internal void UpdatePropertyGrid(object? instance)
         {
             if (instance != null)
             {

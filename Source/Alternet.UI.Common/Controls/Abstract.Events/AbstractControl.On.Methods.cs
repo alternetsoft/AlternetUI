@@ -66,17 +66,6 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Called when when the application finishes processing events and is
-        /// about to enter the idle state.
-        /// </summary>
-        /// <param name="e">An <see cref="EventArgs"/> that contains the event
-        /// data.</param>
-        [EditorBrowsable(EditorBrowsableState.Advanced)]
-        protected virtual void OnIdle(EventArgs e)
-        {
-        }
-
-        /// <summary>
         /// Called when the <see cref="Resize" /> event is raised.
         /// </summary>
         /// <param name="e">An <see cref="EventArgs" /> that contains the event data.</param>

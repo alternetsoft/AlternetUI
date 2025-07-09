@@ -84,8 +84,6 @@ namespace Alternet.UI
 
         ControlBackgroundStyle IControlHandler.BackgroundStyle { get; set; }
 
-        bool IControlHandler.ProcessIdle { get; set; }
-
         SizeD IControlHandler.ClientSize
         {
             get => ((IControlHandler)this).Bounds.Size;

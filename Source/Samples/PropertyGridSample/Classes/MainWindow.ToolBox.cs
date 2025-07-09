@@ -196,22 +196,5 @@ namespace PropertyGridSample
             };
             ToolBox.Add(item);
         }
-
-        protected override void OnIdle(EventArgs e)
-        {
-            if (updatePropertyGrid)
-            {
-                updatePropertyGrid = false;
-                try
-                {
-                    UpdatePropertyGrid();
-                }
-                catch
-                {
-                    if (DebugUtils.IsDebugDefined)
-                        throw;
-                }
-            }
-        }
     }
 }

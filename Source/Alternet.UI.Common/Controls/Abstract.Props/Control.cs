@@ -288,27 +288,6 @@ namespace Alternet.UI
             }
         }
 
-        /*
-        /// <summary>
-        /// Gets or sets whether <see cref="AbstractControl.Idle"/> event is fired.
-        /// </summary>
-        [Browsable(false)]
-        public virtual bool ProcessIdle
-        {
-            get
-            {
-                return SafeHandler?.ProcessIdle ?? false;
-            }
-
-            set
-            {
-                if (DisposingOrDisposed)
-                    return;
-                Handler.ProcessIdle = value;
-            }
-        }
-        */
-
         /// <inheritdoc/>
         public override bool IsGraphicControl
         {

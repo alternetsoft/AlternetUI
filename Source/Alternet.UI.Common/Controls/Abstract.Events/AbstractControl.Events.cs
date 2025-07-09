@@ -439,19 +439,6 @@ namespace Alternet.UI
         [Category("Layout")]
         public event EventHandler? SizeChanged;
 
-        /*
-        /// <summary>
-        /// Occurs when the application finishes processing events and is
-        /// about to enter the idle state.
-        /// </summary>
-        /// <remarks>
-        /// Use <see cref="Control.ProcessIdle"/> property to specify whether <see cref="Idle"/>
-        /// event is fired.
-        /// </remarks>
-        [Category("Behavior")]
-        public event EventHandler? Idle;
-        */
-
         /// <summary>
         /// Occurs when the control's size is changed.
         /// </summary>

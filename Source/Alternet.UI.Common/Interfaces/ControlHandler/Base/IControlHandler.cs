@@ -84,9 +84,6 @@ namespace Alternet.UI
         /// <inheritdoc cref="Control.BackgroundStyle"/>
         ControlBackgroundStyle BackgroundStyle { get; set; }
 
-        /// <inheritdoc cref="Control.ProcessIdle"/>
-        bool ProcessIdle { get; set; }
-
         /// <inheritdoc cref="AbstractControl.ClientSize"/>
         SizeD ClientSize { get; set; }
 

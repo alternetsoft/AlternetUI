@@ -241,11 +241,6 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Executes the specified delegate, on the UI thread.
-        /// </summary>
-        public static void Invoke(Delegate? action) => Invoke((Action?)action);
-
-        /// <summary>
         /// Executes the specified action, on the UI thread.
         /// </summary>
         public static void Invoke(Action? action)

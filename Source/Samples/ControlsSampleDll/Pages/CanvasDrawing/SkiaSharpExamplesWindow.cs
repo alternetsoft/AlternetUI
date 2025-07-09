@@ -37,7 +37,6 @@ namespace ControlsSample
         {
         };
 
-        private bool refreshRequested;
         private SkiaSharpSample.SampleBase? currentSample;
 
         public SkiaSharpExamplesWindow()
@@ -104,8 +103,14 @@ namespace ControlsSample
             if (actionsListBox.RootItem.ItemCount > 0)
             {
                 actionsListBox.SelectionChanged += ActionsListBox_SelectionChanged;
-                actionsListBox.SelectFirstItem();
-                refreshRequested = true;
+                actionsListBox.ListBox.SelectedItemIsBold = true;
+
+                App.AddIdleTask(() =>
+                {
+                    actionsListBox.SelectFirstItemAndScroll();
+                    DrawSelectedItem();
+                    actionsListBox.ListBox.Refresh();
+                });
             }
 
             pictureBox.Click += PictureBox_Click;
@@ -128,7 +133,7 @@ namespace ControlsSample
             string title = sample.Title;
             if (title == (actionsListBox.SelectedItem as ListControlItem)?.Text)
             {
-                Invoke(DrawSelectedItem);
+                DrawSelectedItem();
             }
         }
 
@@ -151,14 +156,17 @@ namespace ControlsSample
 
         private void ActionsListBox_SelectionChanged(object? sender, EventArgs e)
         {
-            refreshRequested = true;
+            DrawSelectedItem();
         }
 
         private void DrawSelectedItem()
         {
-            if (actionsListBox.SelectedItem is not ListControlItem item)
-                return;
-            item.Action?.Invoke();
+            Invoke(() =>
+            {
+                if (actionsListBox.SelectedItem is not ListControlItem item)
+                    return;
+                item.Action?.Invoke();
+            });
         }
     }
 }
