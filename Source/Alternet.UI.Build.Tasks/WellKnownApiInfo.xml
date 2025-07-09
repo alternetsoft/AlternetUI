@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ApiInfo>
-  <Assembly Name="Alternet.UI.Common, Version=0.9.741.0, Culture=neutral, PublicKeyToken=7fb0fe57212b4b74">
+  <Assembly Name="Alternet.UI.Common, Version=0.9.742.0, Culture=neutral, PublicKeyToken=7fb0fe57212b4b74">
     <Type Name="XamlX.Runtime.IXamlParentStackProviderV1" />
     <Type Name="XamlX.Runtime.IXamlXmlNamespaceInfoProviderV1" />
     <Type Name="XamlX.Runtime.XamlXmlNamespaceInfoV1" />
@@ -655,6 +655,7 @@
     <Type Name="Alternet.UI.ClipboardDataFormatId" />
     <Type Name="Alternet.UI.TextDataFormat" />
     <Type Name="Alternet.UI.BoundsSpecified" />
+    <Type Name="Alternet.UI.CheckedSpreadMode" />
     <Type Name="Alternet.UI.CheckState" />
     <Type Name="Alternet.UI.ControlBackgroundStyle" />
     <Type Name="Alternet.UI.ControlFlags" />
@@ -795,6 +796,7 @@
     <Type Name="Alternet.UI.TreeViewCreateStyle" />
     <Type Name="Alternet.UI.TreeViewHitTestLocations" />
     <Type Name="Alternet.UI.TreeViewSelectionMode" />
+    <Type Name="Alternet.UI.NumericTypeCode" />
     <Type Name="Alternet.UI.ValueInRangeResult" />
     <Type Name="Alternet.UI.ValueValidatorKind" />
     <Type Name="Alternet.UI.ValueValidatorKnownError" />
@@ -1041,7 +1043,6 @@
       <Event Name="VerticalAlignmentChanged" />
       <Event Name="HorizontalAlignmentChanged" />
       <Event Name="SizeChanged" />
-      <Event Name="Idle" />
       <Event Name="Resize" />
       <Event Name="LocationChanged" />
       <Event Name="DragStart" />
@@ -1124,7 +1125,6 @@
       <Event Name="VerticalAlignmentChanged" />
       <Event Name="HorizontalAlignmentChanged" />
       <Event Name="SizeChanged" />
-      <Event Name="Idle" />
       <Event Name="Resize" />
       <Event Name="LocationChanged" />
       <Event Name="DragStart" />
@@ -1198,7 +1198,6 @@
       <Event Name="VerticalAlignmentChanged" />
       <Event Name="HorizontalAlignmentChanged" />
       <Event Name="SizeChanged" />
-      <Event Name="Idle" />
       <Event Name="Resize" />
       <Event Name="LocationChanged" />
       <Event Name="DragStart" />
@@ -1272,7 +1271,6 @@
       <Event Name="VerticalAlignmentChanged" />
       <Event Name="HorizontalAlignmentChanged" />
       <Event Name="SizeChanged" />
-      <Event Name="Idle" />
       <Event Name="Resize" />
       <Event Name="LocationChanged" />
       <Event Name="DragStart" />
@@ -1346,7 +1344,6 @@
       <Event Name="VerticalAlignmentChanged" />
       <Event Name="HorizontalAlignmentChanged" />
       <Event Name="SizeChanged" />
-      <Event Name="Idle" />
       <Event Name="Resize" />
       <Event Name="LocationChanged" />
       <Event Name="DragStart" />
@@ -1421,7 +1418,6 @@
       <Event Name="VerticalAlignmentChanged" />
       <Event Name="HorizontalAlignmentChanged" />
       <Event Name="SizeChanged" />
-      <Event Name="Idle" />
       <Event Name="Resize" />
       <Event Name="LocationChanged" />
       <Event Name="DragStart" />
@@ -1495,7 +1491,6 @@
       <Event Name="VerticalAlignmentChanged" />
       <Event Name="HorizontalAlignmentChanged" />
       <Event Name="SizeChanged" />
-      <Event Name="Idle" />
       <Event Name="Resize" />
       <Event Name="LocationChanged" />
       <Event Name="DragStart" />
@@ -1569,7 +1564,6 @@
       <Event Name="VerticalAlignmentChanged" />
       <Event Name="HorizontalAlignmentChanged" />
       <Event Name="SizeChanged" />
-      <Event Name="Idle" />
       <Event Name="Resize" />
       <Event Name="LocationChanged" />
       <Event Name="DragStart" />
@@ -1643,7 +1637,6 @@
       <Event Name="VerticalAlignmentChanged" />
       <Event Name="HorizontalAlignmentChanged" />
       <Event Name="SizeChanged" />
-      <Event Name="Idle" />
       <Event Name="Resize" />
       <Event Name="LocationChanged" />
       <Event Name="DragStart" />
@@ -1717,7 +1710,6 @@
       <Event Name="VerticalAlignmentChanged" />
       <Event Name="HorizontalAlignmentChanged" />
       <Event Name="SizeChanged" />
-      <Event Name="Idle" />
       <Event Name="Resize" />
       <Event Name="LocationChanged" />
       <Event Name="DragStart" />
@@ -1792,7 +1784,6 @@
       <Event Name="VerticalAlignmentChanged" />
       <Event Name="HorizontalAlignmentChanged" />
       <Event Name="SizeChanged" />
-      <Event Name="Idle" />
       <Event Name="Resize" />
       <Event Name="LocationChanged" />
       <Event Name="DragStart" />
@@ -1866,7 +1857,6 @@
       <Event Name="VerticalAlignmentChanged" />
       <Event Name="HorizontalAlignmentChanged" />
       <Event Name="SizeChanged" />
-      <Event Name="Idle" />
       <Event Name="Resize" />
       <Event Name="LocationChanged" />
       <Event Name="DragStart" />
@@ -1940,7 +1930,6 @@
       <Event Name="VerticalAlignmentChanged" />
       <Event Name="HorizontalAlignmentChanged" />
       <Event Name="SizeChanged" />
-      <Event Name="Idle" />
       <Event Name="Resize" />
       <Event Name="LocationChanged" />
       <Event Name="DragStart" />
@@ -2086,7 +2075,6 @@
       <Event Name="VerticalAlignmentChanged" />
       <Event Name="HorizontalAlignmentChanged" />
       <Event Name="SizeChanged" />
-      <Event Name="Idle" />
       <Event Name="Resize" />
       <Event Name="LocationChanged" />
       <Event Name="DragStart" />
@@ -2160,7 +2148,6 @@
       <Event Name="VerticalAlignmentChanged" />
       <Event Name="HorizontalAlignmentChanged" />
       <Event Name="SizeChanged" />
-      <Event Name="Idle" />
       <Event Name="Resize" />
       <Event Name="LocationChanged" />
       <Event Name="DragStart" />
@@ -2234,7 +2221,6 @@
       <Event Name="VerticalAlignmentChanged" />
       <Event Name="HorizontalAlignmentChanged" />
       <Event Name="SizeChanged" />
-      <Event Name="Idle" />
       <Event Name="Resize" />
       <Event Name="LocationChanged" />
       <Event Name="DragStart" />
@@ -2308,7 +2294,6 @@
       <Event Name="VerticalAlignmentChanged" />
       <Event Name="HorizontalAlignmentChanged" />
       <Event Name="SizeChanged" />
-      <Event Name="Idle" />
       <Event Name="Resize" />
       <Event Name="LocationChanged" />
       <Event Name="DragStart" />
@@ -2396,7 +2381,6 @@
       <Event Name="VerticalAlignmentChanged" />
       <Event Name="HorizontalAlignmentChanged" />
       <Event Name="SizeChanged" />
-      <Event Name="Idle" />
       <Event Name="Resize" />
       <Event Name="LocationChanged" />
       <Event Name="DragStart" />
@@ -2473,6 +2457,16 @@
       <Event Name="PropertyChanged" />
     </Type>
     <Type Name="Alternet.UI.ControlStateObjects`1">
+      <Event Name="NormalChanged" />
+      <Event Name="FocusedChanged" />
+      <Event Name="HoveredChanged" />
+      <Event Name="PressedChanged" />
+      <Event Name="DisabledChanged" />
+      <Event Name="SelectedChanged" />
+      <Event Name="Disposed" />
+      <Event Name="PropertyChanged" />
+    </Type>
+    <Type Name="Alternet.UI.ControlStatePaintActions">
       <Event Name="NormalChanged" />
       <Event Name="FocusedChanged" />
       <Event Name="HoveredChanged" />
@@ -2567,7 +2561,6 @@
       <Event Name="VerticalAlignmentChanged" />
       <Event Name="HorizontalAlignmentChanged" />
       <Event Name="SizeChanged" />
-      <Event Name="Idle" />
       <Event Name="Resize" />
       <Event Name="LocationChanged" />
       <Event Name="DragStart" />
@@ -2641,7 +2634,6 @@
       <Event Name="VerticalAlignmentChanged" />
       <Event Name="HorizontalAlignmentChanged" />
       <Event Name="SizeChanged" />
-      <Event Name="Idle" />
       <Event Name="Resize" />
       <Event Name="LocationChanged" />
       <Event Name="DragStart" />
@@ -2716,7 +2708,6 @@
       <Event Name="VerticalAlignmentChanged" />
       <Event Name="HorizontalAlignmentChanged" />
       <Event Name="SizeChanged" />
-      <Event Name="Idle" />
       <Event Name="Resize" />
       <Event Name="LocationChanged" />
       <Event Name="DragStart" />
@@ -2791,7 +2782,6 @@
       <Event Name="VerticalAlignmentChanged" />
       <Event Name="HorizontalAlignmentChanged" />
       <Event Name="SizeChanged" />
-      <Event Name="Idle" />
       <Event Name="Resize" />
       <Event Name="LocationChanged" />
       <Event Name="DragStart" />
@@ -2866,7 +2856,6 @@
       <Event Name="VerticalAlignmentChanged" />
       <Event Name="HorizontalAlignmentChanged" />
       <Event Name="SizeChanged" />
-      <Event Name="Idle" />
       <Event Name="Resize" />
       <Event Name="LocationChanged" />
       <Event Name="DragStart" />
@@ -2942,7 +2931,6 @@
       <Event Name="VerticalAlignmentChanged" />
       <Event Name="HorizontalAlignmentChanged" />
       <Event Name="SizeChanged" />
-      <Event Name="Idle" />
       <Event Name="Resize" />
       <Event Name="LocationChanged" />
       <Event Name="DragStart" />
@@ -3017,7 +3005,6 @@
       <Event Name="VerticalAlignmentChanged" />
       <Event Name="HorizontalAlignmentChanged" />
       <Event Name="SizeChanged" />
-      <Event Name="Idle" />
       <Event Name="Resize" />
       <Event Name="LocationChanged" />
       <Event Name="DragStart" />
@@ -3092,7 +3079,6 @@
       <Event Name="VerticalAlignmentChanged" />
       <Event Name="HorizontalAlignmentChanged" />
       <Event Name="SizeChanged" />
-      <Event Name="Idle" />
       <Event Name="Resize" />
       <Event Name="LocationChanged" />
       <Event Name="DragStart" />
@@ -3166,7 +3152,6 @@
       <Event Name="VerticalAlignmentChanged" />
       <Event Name="HorizontalAlignmentChanged" />
       <Event Name="SizeChanged" />
-      <Event Name="Idle" />
       <Event Name="Resize" />
       <Event Name="LocationChanged" />
       <Event Name="DragStart" />
@@ -3241,7 +3226,6 @@
       <Event Name="VerticalAlignmentChanged" />
       <Event Name="HorizontalAlignmentChanged" />
       <Event Name="SizeChanged" />
-      <Event Name="Idle" />
       <Event Name="Resize" />
       <Event Name="LocationChanged" />
       <Event Name="DragStart" />
@@ -3264,6 +3248,7 @@
       <Event Name="MaximumChanged" />
       <Event Name="SmallChangeChanged" />
       <Event Name="LargeChangeChanged" />
+      <Event Name="IsEditableChanged" />
       <Event Name="TextChanged" />
       <Event Name="DelayedTextChanged" />
       <Event Name="ButtonClick" />
@@ -3321,7 +3306,6 @@
       <Event Name="VerticalAlignmentChanged" />
       <Event Name="HorizontalAlignmentChanged" />
       <Event Name="SizeChanged" />
-      <Event Name="Idle" />
       <Event Name="Resize" />
       <Event Name="LocationChanged" />
       <Event Name="DragStart" />
@@ -3396,7 +3380,6 @@
       <Event Name="VerticalAlignmentChanged" />
       <Event Name="HorizontalAlignmentChanged" />
       <Event Name="SizeChanged" />
-      <Event Name="Idle" />
       <Event Name="Resize" />
       <Event Name="LocationChanged" />
       <Event Name="DragStart" />
@@ -3472,7 +3455,6 @@
       <Event Name="VerticalAlignmentChanged" />
       <Event Name="HorizontalAlignmentChanged" />
       <Event Name="SizeChanged" />
-      <Event Name="Idle" />
       <Event Name="Resize" />
       <Event Name="LocationChanged" />
       <Event Name="DragStart" />
@@ -3550,7 +3532,6 @@
       <Event Name="VerticalAlignmentChanged" />
       <Event Name="HorizontalAlignmentChanged" />
       <Event Name="SizeChanged" />
-      <Event Name="Idle" />
       <Event Name="Resize" />
       <Event Name="LocationChanged" />
       <Event Name="DragStart" />
@@ -3626,7 +3607,6 @@
       <Event Name="VerticalAlignmentChanged" />
       <Event Name="HorizontalAlignmentChanged" />
       <Event Name="SizeChanged" />
-      <Event Name="Idle" />
       <Event Name="Resize" />
       <Event Name="LocationChanged" />
       <Event Name="DragStart" />
@@ -3701,7 +3681,6 @@
       <Event Name="VerticalAlignmentChanged" />
       <Event Name="HorizontalAlignmentChanged" />
       <Event Name="SizeChanged" />
-      <Event Name="Idle" />
       <Event Name="Resize" />
       <Event Name="LocationChanged" />
       <Event Name="DragStart" />
@@ -3775,7 +3754,6 @@
       <Event Name="VerticalAlignmentChanged" />
       <Event Name="HorizontalAlignmentChanged" />
       <Event Name="SizeChanged" />
-      <Event Name="Idle" />
       <Event Name="Resize" />
       <Event Name="LocationChanged" />
       <Event Name="DragStart" />
@@ -3849,7 +3827,6 @@
       <Event Name="VerticalAlignmentChanged" />
       <Event Name="HorizontalAlignmentChanged" />
       <Event Name="SizeChanged" />
-      <Event Name="Idle" />
       <Event Name="Resize" />
       <Event Name="LocationChanged" />
       <Event Name="DragStart" />
@@ -3923,7 +3900,6 @@
       <Event Name="VerticalAlignmentChanged" />
       <Event Name="HorizontalAlignmentChanged" />
       <Event Name="SizeChanged" />
-      <Event Name="Idle" />
       <Event Name="Resize" />
       <Event Name="LocationChanged" />
       <Event Name="DragStart" />
@@ -3997,7 +3973,6 @@
       <Event Name="VerticalAlignmentChanged" />
       <Event Name="HorizontalAlignmentChanged" />
       <Event Name="SizeChanged" />
-      <Event Name="Idle" />
       <Event Name="Resize" />
       <Event Name="LocationChanged" />
       <Event Name="DragStart" />
@@ -4071,7 +4046,6 @@
       <Event Name="VerticalAlignmentChanged" />
       <Event Name="HorizontalAlignmentChanged" />
       <Event Name="SizeChanged" />
-      <Event Name="Idle" />
       <Event Name="Resize" />
       <Event Name="LocationChanged" />
       <Event Name="DragStart" />
@@ -4145,7 +4119,6 @@
       <Event Name="VerticalAlignmentChanged" />
       <Event Name="HorizontalAlignmentChanged" />
       <Event Name="SizeChanged" />
-      <Event Name="Idle" />
       <Event Name="Resize" />
       <Event Name="LocationChanged" />
       <Event Name="DragStart" />
@@ -4219,7 +4192,6 @@
       <Event Name="VerticalAlignmentChanged" />
       <Event Name="HorizontalAlignmentChanged" />
       <Event Name="SizeChanged" />
-      <Event Name="Idle" />
       <Event Name="Resize" />
       <Event Name="LocationChanged" />
       <Event Name="DragStart" />
@@ -4293,7 +4265,6 @@
       <Event Name="VerticalAlignmentChanged" />
       <Event Name="HorizontalAlignmentChanged" />
       <Event Name="SizeChanged" />
-      <Event Name="Idle" />
       <Event Name="Resize" />
       <Event Name="LocationChanged" />
       <Event Name="DragStart" />
@@ -4367,7 +4338,6 @@
       <Event Name="VerticalAlignmentChanged" />
       <Event Name="HorizontalAlignmentChanged" />
       <Event Name="SizeChanged" />
-      <Event Name="Idle" />
       <Event Name="Resize" />
       <Event Name="LocationChanged" />
       <Event Name="DragStart" />
@@ -4442,7 +4412,6 @@
       <Event Name="VerticalAlignmentChanged" />
       <Event Name="HorizontalAlignmentChanged" />
       <Event Name="SizeChanged" />
-      <Event Name="Idle" />
       <Event Name="Resize" />
       <Event Name="LocationChanged" />
       <Event Name="DragStart" />
@@ -4517,7 +4486,6 @@
       <Event Name="VerticalAlignmentChanged" />
       <Event Name="HorizontalAlignmentChanged" />
       <Event Name="SizeChanged" />
-      <Event Name="Idle" />
       <Event Name="Resize" />
       <Event Name="LocationChanged" />
       <Event Name="DragStart" />
@@ -4592,7 +4560,6 @@
       <Event Name="VerticalAlignmentChanged" />
       <Event Name="HorizontalAlignmentChanged" />
       <Event Name="SizeChanged" />
-      <Event Name="Idle" />
       <Event Name="Resize" />
       <Event Name="LocationChanged" />
       <Event Name="DragStart" />
@@ -4666,7 +4633,6 @@
       <Event Name="VerticalAlignmentChanged" />
       <Event Name="HorizontalAlignmentChanged" />
       <Event Name="SizeChanged" />
-      <Event Name="Idle" />
       <Event Name="Resize" />
       <Event Name="LocationChanged" />
       <Event Name="DragStart" />
@@ -4740,7 +4706,6 @@
       <Event Name="VerticalAlignmentChanged" />
       <Event Name="HorizontalAlignmentChanged" />
       <Event Name="SizeChanged" />
-      <Event Name="Idle" />
       <Event Name="Resize" />
       <Event Name="LocationChanged" />
       <Event Name="DragStart" />
@@ -4814,7 +4779,6 @@
       <Event Name="VerticalAlignmentChanged" />
       <Event Name="HorizontalAlignmentChanged" />
       <Event Name="SizeChanged" />
-      <Event Name="Idle" />
       <Event Name="Resize" />
       <Event Name="LocationChanged" />
       <Event Name="DragStart" />
@@ -4888,7 +4852,6 @@
       <Event Name="VerticalAlignmentChanged" />
       <Event Name="HorizontalAlignmentChanged" />
       <Event Name="SizeChanged" />
-      <Event Name="Idle" />
       <Event Name="Resize" />
       <Event Name="LocationChanged" />
       <Event Name="DragStart" />
@@ -4962,7 +4925,6 @@
       <Event Name="VerticalAlignmentChanged" />
       <Event Name="HorizontalAlignmentChanged" />
       <Event Name="SizeChanged" />
-      <Event Name="Idle" />
       <Event Name="Resize" />
       <Event Name="LocationChanged" />
       <Event Name="DragStart" />
@@ -5036,7 +4998,6 @@
       <Event Name="VerticalAlignmentChanged" />
       <Event Name="HorizontalAlignmentChanged" />
       <Event Name="SizeChanged" />
-      <Event Name="Idle" />
       <Event Name="Resize" />
       <Event Name="LocationChanged" />
       <Event Name="DragStart" />
@@ -5110,7 +5071,6 @@
       <Event Name="VerticalAlignmentChanged" />
       <Event Name="HorizontalAlignmentChanged" />
       <Event Name="SizeChanged" />
-      <Event Name="Idle" />
       <Event Name="Resize" />
       <Event Name="LocationChanged" />
       <Event Name="DragStart" />
@@ -5189,7 +5149,6 @@
       <Event Name="VerticalAlignmentChanged" />
       <Event Name="HorizontalAlignmentChanged" />
       <Event Name="SizeChanged" />
-      <Event Name="Idle" />
       <Event Name="Resize" />
       <Event Name="LocationChanged" />
       <Event Name="DragStart" />
@@ -5263,7 +5222,6 @@
       <Event Name="VerticalAlignmentChanged" />
       <Event Name="HorizontalAlignmentChanged" />
       <Event Name="SizeChanged" />
-      <Event Name="Idle" />
       <Event Name="Resize" />
       <Event Name="LocationChanged" />
       <Event Name="DragStart" />
@@ -5338,7 +5296,6 @@
       <Event Name="VerticalAlignmentChanged" />
       <Event Name="HorizontalAlignmentChanged" />
       <Event Name="SizeChanged" />
-      <Event Name="Idle" />
       <Event Name="Resize" />
       <Event Name="LocationChanged" />
       <Event Name="DragStart" />
@@ -5419,7 +5376,6 @@
       <Event Name="VerticalAlignmentChanged" />
       <Event Name="HorizontalAlignmentChanged" />
       <Event Name="SizeChanged" />
-      <Event Name="Idle" />
       <Event Name="Resize" />
       <Event Name="LocationChanged" />
       <Event Name="DragStart" />
@@ -5493,7 +5449,6 @@
       <Event Name="VerticalAlignmentChanged" />
       <Event Name="HorizontalAlignmentChanged" />
       <Event Name="SizeChanged" />
-      <Event Name="Idle" />
       <Event Name="Resize" />
       <Event Name="LocationChanged" />
       <Event Name="DragStart" />
@@ -5567,7 +5522,6 @@
       <Event Name="VerticalAlignmentChanged" />
       <Event Name="HorizontalAlignmentChanged" />
       <Event Name="SizeChanged" />
-      <Event Name="Idle" />
       <Event Name="Resize" />
       <Event Name="LocationChanged" />
       <Event Name="DragStart" />
@@ -5642,7 +5596,6 @@
       <Event Name="VerticalAlignmentChanged" />
       <Event Name="HorizontalAlignmentChanged" />
       <Event Name="SizeChanged" />
-      <Event Name="Idle" />
       <Event Name="Resize" />
       <Event Name="LocationChanged" />
       <Event Name="DragStart" />
@@ -5720,7 +5673,6 @@
       <Event Name="VerticalAlignmentChanged" />
       <Event Name="HorizontalAlignmentChanged" />
       <Event Name="SizeChanged" />
-      <Event Name="Idle" />
       <Event Name="Resize" />
       <Event Name="LocationChanged" />
       <Event Name="DragStart" />
@@ -5805,7 +5757,6 @@
       <Event Name="VerticalAlignmentChanged" />
       <Event Name="HorizontalAlignmentChanged" />
       <Event Name="SizeChanged" />
-      <Event Name="Idle" />
       <Event Name="Resize" />
       <Event Name="LocationChanged" />
       <Event Name="DragStart" />
@@ -5879,7 +5830,6 @@
       <Event Name="VerticalAlignmentChanged" />
       <Event Name="HorizontalAlignmentChanged" />
       <Event Name="SizeChanged" />
-      <Event Name="Idle" />
       <Event Name="Resize" />
       <Event Name="LocationChanged" />
       <Event Name="DragStart" />
@@ -5953,7 +5903,6 @@
       <Event Name="VerticalAlignmentChanged" />
       <Event Name="HorizontalAlignmentChanged" />
       <Event Name="SizeChanged" />
-      <Event Name="Idle" />
       <Event Name="Resize" />
       <Event Name="LocationChanged" />
       <Event Name="DragStart" />
@@ -6028,7 +5977,6 @@
       <Event Name="VerticalAlignmentChanged" />
       <Event Name="HorizontalAlignmentChanged" />
       <Event Name="SizeChanged" />
-      <Event Name="Idle" />
       <Event Name="Resize" />
       <Event Name="LocationChanged" />
       <Event Name="DragStart" />
@@ -6103,7 +6051,6 @@
       <Event Name="VerticalAlignmentChanged" />
       <Event Name="HorizontalAlignmentChanged" />
       <Event Name="SizeChanged" />
-      <Event Name="Idle" />
       <Event Name="Resize" />
       <Event Name="LocationChanged" />
       <Event Name="DragStart" />
@@ -6178,7 +6125,6 @@
       <Event Name="VerticalAlignmentChanged" />
       <Event Name="HorizontalAlignmentChanged" />
       <Event Name="SizeChanged" />
-      <Event Name="Idle" />
       <Event Name="Resize" />
       <Event Name="LocationChanged" />
       <Event Name="DragStart" />
@@ -6252,7 +6198,6 @@
       <Event Name="VerticalAlignmentChanged" />
       <Event Name="HorizontalAlignmentChanged" />
       <Event Name="SizeChanged" />
-      <Event Name="Idle" />
       <Event Name="Resize" />
       <Event Name="LocationChanged" />
       <Event Name="DragStart" />
@@ -6328,7 +6273,6 @@
       <Event Name="VerticalAlignmentChanged" />
       <Event Name="HorizontalAlignmentChanged" />
       <Event Name="SizeChanged" />
-      <Event Name="Idle" />
       <Event Name="Resize" />
       <Event Name="LocationChanged" />
       <Event Name="DragStart" />
@@ -6403,7 +6347,6 @@
       <Event Name="VerticalAlignmentChanged" />
       <Event Name="HorizontalAlignmentChanged" />
       <Event Name="SizeChanged" />
-      <Event Name="Idle" />
       <Event Name="Resize" />
       <Event Name="LocationChanged" />
       <Event Name="DragStart" />
@@ -6478,7 +6421,6 @@
       <Event Name="VerticalAlignmentChanged" />
       <Event Name="HorizontalAlignmentChanged" />
       <Event Name="SizeChanged" />
-      <Event Name="Idle" />
       <Event Name="Resize" />
       <Event Name="LocationChanged" />
       <Event Name="DragStart" />
@@ -6553,7 +6495,6 @@
       <Event Name="VerticalAlignmentChanged" />
       <Event Name="HorizontalAlignmentChanged" />
       <Event Name="SizeChanged" />
-      <Event Name="Idle" />
       <Event Name="Resize" />
       <Event Name="LocationChanged" />
       <Event Name="DragStart" />
@@ -6633,7 +6574,6 @@
       <Event Name="VerticalAlignmentChanged" />
       <Event Name="HorizontalAlignmentChanged" />
       <Event Name="SizeChanged" />
-      <Event Name="Idle" />
       <Event Name="Resize" />
       <Event Name="LocationChanged" />
       <Event Name="DragStart" />
@@ -6713,7 +6653,6 @@
       <Event Name="VerticalAlignmentChanged" />
       <Event Name="HorizontalAlignmentChanged" />
       <Event Name="SizeChanged" />
-      <Event Name="Idle" />
       <Event Name="Resize" />
       <Event Name="LocationChanged" />
       <Event Name="DragStart" />
@@ -6793,7 +6732,6 @@
       <Event Name="VerticalAlignmentChanged" />
       <Event Name="HorizontalAlignmentChanged" />
       <Event Name="SizeChanged" />
-      <Event Name="Idle" />
       <Event Name="Resize" />
       <Event Name="LocationChanged" />
       <Event Name="DragStart" />
@@ -6871,7 +6809,6 @@
       <Event Name="VerticalAlignmentChanged" />
       <Event Name="HorizontalAlignmentChanged" />
       <Event Name="SizeChanged" />
-      <Event Name="Idle" />
       <Event Name="Resize" />
       <Event Name="LocationChanged" />
       <Event Name="DragStart" />
@@ -6970,7 +6907,6 @@
       <Event Name="VerticalAlignmentChanged" />
       <Event Name="HorizontalAlignmentChanged" />
       <Event Name="SizeChanged" />
-      <Event Name="Idle" />
       <Event Name="Resize" />
       <Event Name="LocationChanged" />
       <Event Name="DragStart" />
@@ -7052,7 +6988,6 @@
       <Event Name="VerticalAlignmentChanged" />
       <Event Name="HorizontalAlignmentChanged" />
       <Event Name="SizeChanged" />
-      <Event Name="Idle" />
       <Event Name="Resize" />
       <Event Name="LocationChanged" />
       <Event Name="DragStart" />
@@ -7138,7 +7073,6 @@
       <Event Name="VerticalAlignmentChanged" />
       <Event Name="HorizontalAlignmentChanged" />
       <Event Name="SizeChanged" />
-      <Event Name="Idle" />
       <Event Name="Resize" />
       <Event Name="LocationChanged" />
       <Event Name="DragStart" />
@@ -7220,7 +7154,6 @@
       <Event Name="VerticalAlignmentChanged" />
       <Event Name="HorizontalAlignmentChanged" />
       <Event Name="SizeChanged" />
-      <Event Name="Idle" />
       <Event Name="Resize" />
       <Event Name="LocationChanged" />
       <Event Name="DragStart" />
@@ -7304,7 +7237,6 @@
       <Event Name="VerticalAlignmentChanged" />
       <Event Name="HorizontalAlignmentChanged" />
       <Event Name="SizeChanged" />
-      <Event Name="Idle" />
       <Event Name="Resize" />
       <Event Name="LocationChanged" />
       <Event Name="DragStart" />
@@ -7386,7 +7318,6 @@
       <Event Name="VerticalAlignmentChanged" />
       <Event Name="HorizontalAlignmentChanged" />
       <Event Name="SizeChanged" />
-      <Event Name="Idle" />
       <Event Name="Resize" />
       <Event Name="LocationChanged" />
       <Event Name="DragStart" />
@@ -7461,7 +7392,6 @@
       <Event Name="VerticalAlignmentChanged" />
       <Event Name="HorizontalAlignmentChanged" />
       <Event Name="SizeChanged" />
-      <Event Name="Idle" />
       <Event Name="Resize" />
       <Event Name="LocationChanged" />
       <Event Name="DragStart" />
@@ -7543,7 +7473,6 @@
       <Event Name="VerticalAlignmentChanged" />
       <Event Name="HorizontalAlignmentChanged" />
       <Event Name="SizeChanged" />
-      <Event Name="Idle" />
       <Event Name="Resize" />
       <Event Name="LocationChanged" />
       <Event Name="DragStart" />
@@ -7625,7 +7554,6 @@
       <Event Name="VerticalAlignmentChanged" />
       <Event Name="HorizontalAlignmentChanged" />
       <Event Name="SizeChanged" />
-      <Event Name="Idle" />
       <Event Name="Resize" />
       <Event Name="LocationChanged" />
       <Event Name="DragStart" />
@@ -7707,7 +7635,6 @@
       <Event Name="VerticalAlignmentChanged" />
       <Event Name="HorizontalAlignmentChanged" />
       <Event Name="SizeChanged" />
-      <Event Name="Idle" />
       <Event Name="Resize" />
       <Event Name="LocationChanged" />
       <Event Name="DragStart" />
@@ -7787,7 +7714,6 @@
       <Event Name="VerticalAlignmentChanged" />
       <Event Name="HorizontalAlignmentChanged" />
       <Event Name="SizeChanged" />
-      <Event Name="Idle" />
       <Event Name="Resize" />
       <Event Name="LocationChanged" />
       <Event Name="DragStart" />
@@ -7869,7 +7795,6 @@
       <Event Name="VerticalAlignmentChanged" />
       <Event Name="HorizontalAlignmentChanged" />
       <Event Name="SizeChanged" />
-      <Event Name="Idle" />
       <Event Name="Resize" />
       <Event Name="LocationChanged" />
       <Event Name="DragStart" />
@@ -7951,7 +7876,6 @@
       <Event Name="VerticalAlignmentChanged" />
       <Event Name="HorizontalAlignmentChanged" />
       <Event Name="SizeChanged" />
-      <Event Name="Idle" />
       <Event Name="Resize" />
       <Event Name="LocationChanged" />
       <Event Name="DragStart" />
@@ -8031,7 +7955,6 @@
       <Event Name="VerticalAlignmentChanged" />
       <Event Name="HorizontalAlignmentChanged" />
       <Event Name="SizeChanged" />
-      <Event Name="Idle" />
       <Event Name="Resize" />
       <Event Name="LocationChanged" />
       <Event Name="DragStart" />
@@ -8105,7 +8028,6 @@
       <Event Name="VerticalAlignmentChanged" />
       <Event Name="HorizontalAlignmentChanged" />
       <Event Name="SizeChanged" />
-      <Event Name="Idle" />
       <Event Name="Resize" />
       <Event Name="LocationChanged" />
       <Event Name="DragStart" />
@@ -8179,7 +8101,6 @@
       <Event Name="VerticalAlignmentChanged" />
       <Event Name="HorizontalAlignmentChanged" />
       <Event Name="SizeChanged" />
-      <Event Name="Idle" />
       <Event Name="Resize" />
       <Event Name="LocationChanged" />
       <Event Name="DragStart" />
@@ -8261,7 +8182,6 @@
       <Event Name="VerticalAlignmentChanged" />
       <Event Name="HorizontalAlignmentChanged" />
       <Event Name="SizeChanged" />
-      <Event Name="Idle" />
       <Event Name="Resize" />
       <Event Name="LocationChanged" />
       <Event Name="DragStart" />
@@ -8352,7 +8272,6 @@
       <Event Name="VerticalAlignmentChanged" />
       <Event Name="HorizontalAlignmentChanged" />
       <Event Name="SizeChanged" />
-      <Event Name="Idle" />
       <Event Name="Resize" />
       <Event Name="LocationChanged" />
       <Event Name="DragStart" />
@@ -8434,7 +8353,6 @@
       <Event Name="VerticalAlignmentChanged" />
       <Event Name="HorizontalAlignmentChanged" />
       <Event Name="SizeChanged" />
-      <Event Name="Idle" />
       <Event Name="Resize" />
       <Event Name="LocationChanged" />
       <Event Name="DragStart" />
@@ -8516,7 +8434,6 @@
       <Event Name="VerticalAlignmentChanged" />
       <Event Name="HorizontalAlignmentChanged" />
       <Event Name="SizeChanged" />
-      <Event Name="Idle" />
       <Event Name="Resize" />
       <Event Name="LocationChanged" />
       <Event Name="DragStart" />
@@ -8590,7 +8507,6 @@
       <Event Name="VerticalAlignmentChanged" />
       <Event Name="HorizontalAlignmentChanged" />
       <Event Name="SizeChanged" />
-      <Event Name="Idle" />
       <Event Name="Resize" />
       <Event Name="LocationChanged" />
       <Event Name="DragStart" />
@@ -8664,7 +8580,6 @@
       <Event Name="VerticalAlignmentChanged" />
       <Event Name="HorizontalAlignmentChanged" />
       <Event Name="SizeChanged" />
-      <Event Name="Idle" />
       <Event Name="Resize" />
       <Event Name="LocationChanged" />
       <Event Name="DragStart" />
@@ -8685,6 +8600,7 @@
       <Event Name="ValueChanged" />
       <Event Name="StringToColor" />
       <Event Name="ColorToString" />
+      <Event Name="StickyChanged" />
       <Event Name="ContextMenuCreated" />
       <Event Name="CellChanged" />
       <Event Name="Activated" />
@@ -8741,7 +8657,6 @@
       <Event Name="VerticalAlignmentChanged" />
       <Event Name="HorizontalAlignmentChanged" />
       <Event Name="SizeChanged" />
-      <Event Name="Idle" />
       <Event Name="Resize" />
       <Event Name="LocationChanged" />
       <Event Name="DragStart" />
@@ -8826,7 +8741,6 @@
       <Event Name="VerticalAlignmentChanged" />
       <Event Name="HorizontalAlignmentChanged" />
       <Event Name="SizeChanged" />
-      <Event Name="Idle" />
       <Event Name="Resize" />
       <Event Name="LocationChanged" />
       <Event Name="DragStart" />
@@ -8847,6 +8761,12 @@
       <Event Name="ValueChanged" />
       <Event Name="MinimumChanged" />
       <Event Name="MaximumChanged" />
+      <Event Name="SmallChangeChanged" />
+      <Event Name="LargeChangeChanged" />
+      <Event Name="IsEditableChanged" />
+      <Event Name="TextChanged" />
+      <Event Name="DelayedTextChanged" />
+      <Event Name="ButtonClick" />
       <Event Name="ContextMenuCreated" />
       <Event Name="CellChanged" />
       <Event Name="Activated" />
@@ -8871,8 +8791,6 @@
       <Event Name="KeyDown" />
       <Event Name="KeyUp" />
       <Event Name="LostFocus" />
-      <Event Name="TextChanged" />
-      <Event Name="DelayedTextChanged" />
       <Event Name="KeyPress" />
       <Event Name="PreviewKeyDown" />
       <Event Name="VisualStateChanged" />
@@ -8903,7 +8821,6 @@
       <Event Name="VerticalAlignmentChanged" />
       <Event Name="HorizontalAlignmentChanged" />
       <Event Name="SizeChanged" />
-      <Event Name="Idle" />
       <Event Name="Resize" />
       <Event Name="LocationChanged" />
       <Event Name="DragStart" />
@@ -8978,7 +8895,6 @@
       <Event Name="VerticalAlignmentChanged" />
       <Event Name="HorizontalAlignmentChanged" />
       <Event Name="SizeChanged" />
-      <Event Name="Idle" />
       <Event Name="Resize" />
       <Event Name="LocationChanged" />
       <Event Name="DragStart" />
@@ -9057,7 +8973,6 @@
       <Event Name="VerticalAlignmentChanged" />
       <Event Name="HorizontalAlignmentChanged" />
       <Event Name="SizeChanged" />
-      <Event Name="Idle" />
       <Event Name="Resize" />
       <Event Name="LocationChanged" />
       <Event Name="DragStart" />
@@ -9150,7 +9065,6 @@
       <Event Name="VerticalAlignmentChanged" />
       <Event Name="HorizontalAlignmentChanged" />
       <Event Name="SizeChanged" />
-      <Event Name="Idle" />
       <Event Name="Resize" />
       <Event Name="LocationChanged" />
       <Event Name="DragStart" />
@@ -9243,7 +9157,6 @@
       <Event Name="VerticalAlignmentChanged" />
       <Event Name="HorizontalAlignmentChanged" />
       <Event Name="SizeChanged" />
-      <Event Name="Idle" />
       <Event Name="Resize" />
       <Event Name="LocationChanged" />
       <Event Name="DragStart" />
@@ -9336,7 +9249,6 @@
       <Event Name="VerticalAlignmentChanged" />
       <Event Name="HorizontalAlignmentChanged" />
       <Event Name="SizeChanged" />
-      <Event Name="Idle" />
       <Event Name="Resize" />
       <Event Name="LocationChanged" />
       <Event Name="DragStart" />
@@ -9429,7 +9341,6 @@
       <Event Name="VerticalAlignmentChanged" />
       <Event Name="HorizontalAlignmentChanged" />
       <Event Name="SizeChanged" />
-      <Event Name="Idle" />
       <Event Name="Resize" />
       <Event Name="LocationChanged" />
       <Event Name="DragStart" />
@@ -9522,7 +9433,6 @@
       <Event Name="VerticalAlignmentChanged" />
       <Event Name="HorizontalAlignmentChanged" />
       <Event Name="SizeChanged" />
-      <Event Name="Idle" />
       <Event Name="Resize" />
       <Event Name="LocationChanged" />
       <Event Name="DragStart" />
@@ -9615,7 +9525,6 @@
       <Event Name="VerticalAlignmentChanged" />
       <Event Name="HorizontalAlignmentChanged" />
       <Event Name="SizeChanged" />
-      <Event Name="Idle" />
       <Event Name="Resize" />
       <Event Name="LocationChanged" />
       <Event Name="DragStart" />
@@ -9708,7 +9617,6 @@
       <Event Name="VerticalAlignmentChanged" />
       <Event Name="HorizontalAlignmentChanged" />
       <Event Name="SizeChanged" />
-      <Event Name="Idle" />
       <Event Name="Resize" />
       <Event Name="LocationChanged" />
       <Event Name="DragStart" />
@@ -9801,7 +9709,6 @@
       <Event Name="VerticalAlignmentChanged" />
       <Event Name="HorizontalAlignmentChanged" />
       <Event Name="SizeChanged" />
-      <Event Name="Idle" />
       <Event Name="Resize" />
       <Event Name="LocationChanged" />
       <Event Name="DragStart" />
@@ -9894,7 +9801,6 @@
       <Event Name="VerticalAlignmentChanged" />
       <Event Name="HorizontalAlignmentChanged" />
       <Event Name="SizeChanged" />
-      <Event Name="Idle" />
       <Event Name="Resize" />
       <Event Name="LocationChanged" />
       <Event Name="DragStart" />
@@ -9987,7 +9893,6 @@
       <Event Name="VerticalAlignmentChanged" />
       <Event Name="HorizontalAlignmentChanged" />
       <Event Name="SizeChanged" />
-      <Event Name="Idle" />
       <Event Name="Resize" />
       <Event Name="LocationChanged" />
       <Event Name="DragStart" />
@@ -10062,7 +9967,6 @@
       <Event Name="VerticalAlignmentChanged" />
       <Event Name="HorizontalAlignmentChanged" />
       <Event Name="SizeChanged" />
-      <Event Name="Idle" />
       <Event Name="Resize" />
       <Event Name="LocationChanged" />
       <Event Name="DragStart" />
@@ -10136,7 +10040,6 @@
       <Event Name="VerticalAlignmentChanged" />
       <Event Name="HorizontalAlignmentChanged" />
       <Event Name="SizeChanged" />
-      <Event Name="Idle" />
       <Event Name="Resize" />
       <Event Name="LocationChanged" />
       <Event Name="DragStart" />
@@ -10210,7 +10113,6 @@
       <Event Name="VerticalAlignmentChanged" />
       <Event Name="HorizontalAlignmentChanged" />
       <Event Name="SizeChanged" />
-      <Event Name="Idle" />
       <Event Name="Resize" />
       <Event Name="LocationChanged" />
       <Event Name="DragStart" />
@@ -10284,7 +10186,6 @@
       <Event Name="VerticalAlignmentChanged" />
       <Event Name="HorizontalAlignmentChanged" />
       <Event Name="SizeChanged" />
-      <Event Name="Idle" />
       <Event Name="Resize" />
       <Event Name="LocationChanged" />
       <Event Name="DragStart" />
@@ -10358,7 +10259,6 @@
       <Event Name="VerticalAlignmentChanged" />
       <Event Name="HorizontalAlignmentChanged" />
       <Event Name="SizeChanged" />
-      <Event Name="Idle" />
       <Event Name="Resize" />
       <Event Name="LocationChanged" />
       <Event Name="DragStart" />
@@ -10432,7 +10332,6 @@
       <Event Name="VerticalAlignmentChanged" />
       <Event Name="HorizontalAlignmentChanged" />
       <Event Name="SizeChanged" />
-      <Event Name="Idle" />
       <Event Name="Resize" />
       <Event Name="LocationChanged" />
       <Event Name="DragStart" />
@@ -10527,7 +10426,6 @@
       <Event Name="VerticalAlignmentChanged" />
       <Event Name="HorizontalAlignmentChanged" />
       <Event Name="SizeChanged" />
-      <Event Name="Idle" />
       <Event Name="Resize" />
       <Event Name="LocationChanged" />
       <Event Name="DragStart" />
@@ -10609,7 +10507,6 @@
       <Event Name="VerticalAlignmentChanged" />
       <Event Name="HorizontalAlignmentChanged" />
       <Event Name="SizeChanged" />
-      <Event Name="Idle" />
       <Event Name="Resize" />
       <Event Name="LocationChanged" />
       <Event Name="DragStart" />
@@ -10685,7 +10582,6 @@
       <Event Name="VerticalAlignmentChanged" />
       <Event Name="HorizontalAlignmentChanged" />
       <Event Name="SizeChanged" />
-      <Event Name="Idle" />
       <Event Name="Resize" />
       <Event Name="LocationChanged" />
       <Event Name="DragStart" />
@@ -10765,7 +10661,6 @@
       <Event Name="VerticalAlignmentChanged" />
       <Event Name="HorizontalAlignmentChanged" />
       <Event Name="SizeChanged" />
-      <Event Name="Idle" />
       <Event Name="Resize" />
       <Event Name="LocationChanged" />
       <Event Name="DragStart" />
@@ -10846,7 +10741,6 @@
       <Event Name="VerticalAlignmentChanged" />
       <Event Name="HorizontalAlignmentChanged" />
       <Event Name="SizeChanged" />
-      <Event Name="Idle" />
       <Event Name="Resize" />
       <Event Name="LocationChanged" />
       <Event Name="DragStart" />
@@ -10930,7 +10824,6 @@
       <Event Name="VerticalAlignmentChanged" />
       <Event Name="HorizontalAlignmentChanged" />
       <Event Name="SizeChanged" />
-      <Event Name="Idle" />
       <Event Name="Resize" />
       <Event Name="LocationChanged" />
       <Event Name="DragStart" />
@@ -11004,7 +10897,6 @@
       <Event Name="VerticalAlignmentChanged" />
       <Event Name="HorizontalAlignmentChanged" />
       <Event Name="SizeChanged" />
-      <Event Name="Idle" />
       <Event Name="Resize" />
       <Event Name="LocationChanged" />
       <Event Name="DragStart" />
@@ -11025,6 +10917,7 @@
       <Event Name="ValueToDisplayString" />
       <Event Name="ValueChanged" />
       <Event Name="BeforeShowPopup" />
+      <Event Name="StickyChanged" />
       <Event Name="ContextMenuCreated" />
       <Event Name="CellChanged" />
       <Event Name="Activated" />
@@ -11081,7 +10974,6 @@
       <Event Name="VerticalAlignmentChanged" />
       <Event Name="HorizontalAlignmentChanged" />
       <Event Name="SizeChanged" />
-      <Event Name="Idle" />
       <Event Name="Resize" />
       <Event Name="LocationChanged" />
       <Event Name="DragStart" />
@@ -11103,6 +10995,7 @@
       <Event Name="ValueToDisplayString" />
       <Event Name="ValueChanged" />
       <Event Name="BeforeShowPopup" />
+      <Event Name="StickyChanged" />
       <Event Name="ContextMenuCreated" />
       <Event Name="CellChanged" />
       <Event Name="Activated" />
@@ -11159,7 +11052,6 @@
       <Event Name="VerticalAlignmentChanged" />
       <Event Name="HorizontalAlignmentChanged" />
       <Event Name="SizeChanged" />
-      <Event Name="Idle" />
       <Event Name="Resize" />
       <Event Name="LocationChanged" />
       <Event Name="DragStart" />
@@ -11181,6 +11073,7 @@
       <Event Name="ValueToDisplayString" />
       <Event Name="ValueChanged" />
       <Event Name="BeforeShowPopup" />
+      <Event Name="StickyChanged" />
       <Event Name="ContextMenuCreated" />
       <Event Name="CellChanged" />
       <Event Name="Activated" />
@@ -11237,7 +11130,6 @@
       <Event Name="VerticalAlignmentChanged" />
       <Event Name="HorizontalAlignmentChanged" />
       <Event Name="SizeChanged" />
-      <Event Name="Idle" />
       <Event Name="Resize" />
       <Event Name="LocationChanged" />
       <Event Name="DragStart" />
@@ -11259,6 +11151,7 @@
       <Event Name="ValueToDisplayString" />
       <Event Name="ValueChanged" />
       <Event Name="BeforeShowPopup" />
+      <Event Name="StickyChanged" />
       <Event Name="ContextMenuCreated" />
       <Event Name="CellChanged" />
       <Event Name="Activated" />
@@ -11315,7 +11208,6 @@
       <Event Name="VerticalAlignmentChanged" />
       <Event Name="HorizontalAlignmentChanged" />
       <Event Name="SizeChanged" />
-      <Event Name="Idle" />
       <Event Name="Resize" />
       <Event Name="LocationChanged" />
       <Event Name="DragStart" />
@@ -11337,6 +11229,7 @@
       <Event Name="ValueToDisplayString" />
       <Event Name="ValueChanged" />
       <Event Name="BeforeShowPopup" />
+      <Event Name="StickyChanged" />
       <Event Name="ContextMenuCreated" />
       <Event Name="CellChanged" />
       <Event Name="Activated" />
@@ -11393,7 +11286,6 @@
       <Event Name="VerticalAlignmentChanged" />
       <Event Name="HorizontalAlignmentChanged" />
       <Event Name="SizeChanged" />
-      <Event Name="Idle" />
       <Event Name="Resize" />
       <Event Name="LocationChanged" />
       <Event Name="DragStart" />
@@ -11411,6 +11303,7 @@
       <Event Name="PropertyChanged" />
     </Type>
     <Type Name="Alternet.UI.SpeedButton">
+      <Event Name="StickyChanged" />
       <Event Name="ContextMenuCreated" />
       <Event Name="CellChanged" />
       <Event Name="Activated" />
@@ -11467,7 +11360,6 @@
       <Event Name="VerticalAlignmentChanged" />
       <Event Name="HorizontalAlignmentChanged" />
       <Event Name="SizeChanged" />
-      <Event Name="Idle" />
       <Event Name="Resize" />
       <Event Name="LocationChanged" />
       <Event Name="DragStart" />
@@ -11489,6 +11381,7 @@
       <Event Name="ValueToDisplayString" />
       <Event Name="ValueChanged" />
       <Event Name="BeforeShowPopup" />
+      <Event Name="StickyChanged" />
       <Event Name="ContextMenuCreated" />
       <Event Name="CellChanged" />
       <Event Name="Activated" />
@@ -11545,7 +11438,6 @@
       <Event Name="VerticalAlignmentChanged" />
       <Event Name="HorizontalAlignmentChanged" />
       <Event Name="SizeChanged" />
-      <Event Name="Idle" />
       <Event Name="Resize" />
       <Event Name="LocationChanged" />
       <Event Name="DragStart" />
@@ -11567,6 +11459,7 @@
       <Event Name="ValueToDisplayString" />
       <Event Name="ValueChanged" />
       <Event Name="BeforeShowPopup" />
+      <Event Name="StickyChanged" />
       <Event Name="ContextMenuCreated" />
       <Event Name="CellChanged" />
       <Event Name="Activated" />
@@ -11623,7 +11516,6 @@
       <Event Name="VerticalAlignmentChanged" />
       <Event Name="HorizontalAlignmentChanged" />
       <Event Name="SizeChanged" />
-      <Event Name="Idle" />
       <Event Name="Resize" />
       <Event Name="LocationChanged" />
       <Event Name="DragStart" />
@@ -11644,6 +11536,7 @@
       <Event Name="ValueToDisplayString" />
       <Event Name="ValueChanged" />
       <Event Name="BeforeShowPopup" />
+      <Event Name="StickyChanged" />
       <Event Name="ContextMenuCreated" />
       <Event Name="CellChanged" />
       <Event Name="Activated" />
@@ -11700,7 +11593,6 @@
       <Event Name="VerticalAlignmentChanged" />
       <Event Name="HorizontalAlignmentChanged" />
       <Event Name="SizeChanged" />
-      <Event Name="Idle" />
       <Event Name="Resize" />
       <Event Name="LocationChanged" />
       <Event Name="DragStart" />
@@ -11721,6 +11613,7 @@
       <Event Name="ValueChanged" />
       <Event Name="StringToColor" />
       <Event Name="ColorToString" />
+      <Event Name="StickyChanged" />
       <Event Name="ContextMenuCreated" />
       <Event Name="CellChanged" />
       <Event Name="Activated" />
@@ -11777,7 +11670,6 @@
       <Event Name="VerticalAlignmentChanged" />
       <Event Name="HorizontalAlignmentChanged" />
       <Event Name="SizeChanged" />
-      <Event Name="Idle" />
       <Event Name="Resize" />
       <Event Name="LocationChanged" />
       <Event Name="DragStart" />
@@ -11798,6 +11690,7 @@
       <Event Name="ValueToDisplayString" />
       <Event Name="ValueChanged" />
       <Event Name="BeforeShowPopup" />
+      <Event Name="StickyChanged" />
       <Event Name="ContextMenuCreated" />
       <Event Name="CellChanged" />
       <Event Name="Activated" />
@@ -11854,7 +11747,6 @@
       <Event Name="VerticalAlignmentChanged" />
       <Event Name="HorizontalAlignmentChanged" />
       <Event Name="SizeChanged" />
-      <Event Name="Idle" />
       <Event Name="Resize" />
       <Event Name="LocationChanged" />
       <Event Name="DragStart" />
@@ -11876,6 +11768,7 @@
       <Event Name="ValueToDisplayString" />
       <Event Name="ValueChanged" />
       <Event Name="BeforeShowPopup" />
+      <Event Name="StickyChanged" />
       <Event Name="ContextMenuCreated" />
       <Event Name="CellChanged" />
       <Event Name="Activated" />
@@ -11932,7 +11825,6 @@
       <Event Name="VerticalAlignmentChanged" />
       <Event Name="HorizontalAlignmentChanged" />
       <Event Name="SizeChanged" />
-      <Event Name="Idle" />
       <Event Name="Resize" />
       <Event Name="LocationChanged" />
       <Event Name="DragStart" />
@@ -11950,6 +11842,7 @@
       <Event Name="PropertyChanged" />
     </Type>
     <Type Name="Alternet.UI.SpeedTextButton">
+      <Event Name="StickyChanged" />
       <Event Name="ContextMenuCreated" />
       <Event Name="CellChanged" />
       <Event Name="Activated" />
@@ -12006,7 +11899,6 @@
       <Event Name="VerticalAlignmentChanged" />
       <Event Name="HorizontalAlignmentChanged" />
       <Event Name="SizeChanged" />
-      <Event Name="Idle" />
       <Event Name="Resize" />
       <Event Name="LocationChanged" />
       <Event Name="DragStart" />
@@ -12095,7 +11987,6 @@
       <Event Name="VerticalAlignmentChanged" />
       <Event Name="HorizontalAlignmentChanged" />
       <Event Name="SizeChanged" />
-      <Event Name="Idle" />
       <Event Name="Resize" />
       <Event Name="LocationChanged" />
       <Event Name="DragStart" />
@@ -12110,6 +12001,85 @@
       <Event Name="LayoutUpdated" />
       <Event Name="Scroll" />
       <Event Name="Disposed" />
+      <Event Name="PropertyChanged" />
+    </Type>
+    <Type Name="Alternet.UI.CardPanelHeader">
+      <Event Name="ButtonSizeChanged" />
+      <Event Name="BeforeTabClick" />
+      <Event Name="TabClick" />
+      <Event Name="ContextMenuCreated" />
+      <Event Name="CellChanged" />
+      <Event Name="Activated" />
+      <Event Name="TitleChanged" />
+      <Event Name="MouseMove" />
+      <Event Name="Touch" />
+      <Event Name="MouseDown" />
+      <Event Name="MouseUp" />
+      <Event Name="MouseWheel" />
+      <Event Name="MouseLeftButtonDown" />
+      <Event Name="MouseRightButtonDown" />
+      <Event Name="MouseRightButtonUp" />
+      <Event Name="CustomLayout" />
+      <Event Name="MouseDoubleClick" />
+      <Event Name="DoubleClick" />
+      <Event Name="MouseLeftButtonUp" />
+      <Event Name="HandleCreated" />
+      <Event Name="HandleDestroyed" />
+      <Event Name="Deactivated" />
+      <Event Name="GotFocus" />
+      <Event Name="QueryContinueDrag" />
+      <Event Name="KeyDown" />
+      <Event Name="KeyUp" />
+      <Event Name="LostFocus" />
+      <Event Name="TextChanged" />
+      <Event Name="DelayedTextChanged" />
+      <Event Name="KeyPress" />
+      <Event Name="PreviewKeyDown" />
+      <Event Name="VisualStateChanged" />
+      <Event Name="ToolTipChanged" />
+      <Event Name="IsMouseOverChanged" />
+      <Event Name="LongTap" />
+      <Event Name="Click" />
+      <Event Name="ParentChanged" />
+      <Event Name="Paint" />
+      <Event Name="MarginChanged" />
+      <Event Name="PaddingChanged" />
+      <Event Name="VisibleChanged" />
+      <Event Name="AfterShow" />
+      <Event Name="AfterHide" />
+      <Event Name="MouseCaptureLost" />
+      <Event Name="MouseCaptureChanged" />
+      <Event Name="HelpRequested" />
+      <Event Name="ProcessException" />
+      <Event Name="MouseEnter" />
+      <Event Name="MouseLeave" />
+      <Event Name="ChildRemoved" />
+      <Event Name="ChildVisibleChanged" />
+      <Event Name="ChildInserted" />
+      <Event Name="EnabledChanged" />
+      <Event Name="BackgroundChanged" />
+      <Event Name="ForegroundChanged" />
+      <Event Name="FontChanged" />
+      <Event Name="VerticalAlignmentChanged" />
+      <Event Name="HorizontalAlignmentChanged" />
+      <Event Name="SizeChanged" />
+      <Event Name="Resize" />
+      <Event Name="LocationChanged" />
+      <Event Name="DragStart" />
+      <Event Name="DragDrop" />
+      <Event Name="DragOver" />
+      <Event Name="DragEnter" />
+      <Event Name="DragLeave" />
+      <Event Name="DpiChanged" />
+      <Event Name="SystemColorsChanged" />
+      <Event Name="ErrorsChanged" />
+      <Event Name="Invalidated" />
+      <Event Name="LayoutUpdated" />
+      <Event Name="Scroll" />
+      <Event Name="Disposed" />
+      <Event Name="PropertyChanged" />
+    </Type>
+    <Type Name="Alternet.UI.CardPanelHeaderItem">
       <Event Name="PropertyChanged" />
     </Type>
     <Type Name="Alternet.UI.CardPanelItem">
@@ -12181,7 +12151,6 @@
       <Event Name="VerticalAlignmentChanged" />
       <Event Name="HorizontalAlignmentChanged" />
       <Event Name="SizeChanged" />
-      <Event Name="Idle" />
       <Event Name="Resize" />
       <Event Name="LocationChanged" />
       <Event Name="DragStart" />
@@ -12258,7 +12227,6 @@
       <Event Name="VerticalAlignmentChanged" />
       <Event Name="HorizontalAlignmentChanged" />
       <Event Name="SizeChanged" />
-      <Event Name="Idle" />
       <Event Name="Resize" />
       <Event Name="LocationChanged" />
       <Event Name="DragStart" />
@@ -12332,7 +12300,6 @@
       <Event Name="VerticalAlignmentChanged" />
       <Event Name="HorizontalAlignmentChanged" />
       <Event Name="SizeChanged" />
-      <Event Name="Idle" />
       <Event Name="Resize" />
       <Event Name="LocationChanged" />
       <Event Name="DragStart" />
@@ -12406,7 +12373,6 @@
       <Event Name="VerticalAlignmentChanged" />
       <Event Name="HorizontalAlignmentChanged" />
       <Event Name="SizeChanged" />
-      <Event Name="Idle" />
       <Event Name="Resize" />
       <Event Name="LocationChanged" />
       <Event Name="DragStart" />
@@ -12483,7 +12449,6 @@
       <Event Name="VerticalAlignmentChanged" />
       <Event Name="HorizontalAlignmentChanged" />
       <Event Name="SizeChanged" />
-      <Event Name="Idle" />
       <Event Name="Resize" />
       <Event Name="LocationChanged" />
       <Event Name="DragStart" />
@@ -12565,7 +12530,6 @@
       <Event Name="VerticalAlignmentChanged" />
       <Event Name="HorizontalAlignmentChanged" />
       <Event Name="SizeChanged" />
-      <Event Name="Idle" />
       <Event Name="Resize" />
       <Event Name="LocationChanged" />
       <Event Name="DragStart" />
@@ -12648,7 +12612,6 @@
       <Event Name="VerticalAlignmentChanged" />
       <Event Name="HorizontalAlignmentChanged" />
       <Event Name="SizeChanged" />
-      <Event Name="Idle" />
       <Event Name="Resize" />
       <Event Name="LocationChanged" />
       <Event Name="DragStart" />
@@ -12731,7 +12694,6 @@
       <Event Name="VerticalAlignmentChanged" />
       <Event Name="HorizontalAlignmentChanged" />
       <Event Name="SizeChanged" />
-      <Event Name="Idle" />
       <Event Name="Resize" />
       <Event Name="LocationChanged" />
       <Event Name="DragStart" />
@@ -12815,7 +12777,6 @@
       <Event Name="VerticalAlignmentChanged" />
       <Event Name="HorizontalAlignmentChanged" />
       <Event Name="SizeChanged" />
-      <Event Name="Idle" />
       <Event Name="Resize" />
       <Event Name="LocationChanged" />
       <Event Name="DragStart" />
@@ -12889,7 +12850,6 @@
       <Event Name="VerticalAlignmentChanged" />
       <Event Name="HorizontalAlignmentChanged" />
       <Event Name="SizeChanged" />
-      <Event Name="Idle" />
       <Event Name="Resize" />
       <Event Name="LocationChanged" />
       <Event Name="DragStart" />
@@ -12968,7 +12928,6 @@
       <Event Name="VerticalAlignmentChanged" />
       <Event Name="HorizontalAlignmentChanged" />
       <Event Name="SizeChanged" />
-      <Event Name="Idle" />
       <Event Name="Resize" />
       <Event Name="LocationChanged" />
       <Event Name="DragStart" />
@@ -13056,7 +13015,6 @@
       <Event Name="VerticalAlignmentChanged" />
       <Event Name="HorizontalAlignmentChanged" />
       <Event Name="SizeChanged" />
-      <Event Name="Idle" />
       <Event Name="Resize" />
       <Event Name="LocationChanged" />
       <Event Name="DragStart" />
@@ -13157,7 +13115,6 @@
       <Event Name="VerticalAlignmentChanged" />
       <Event Name="HorizontalAlignmentChanged" />
       <Event Name="SizeChanged" />
-      <Event Name="Idle" />
       <Event Name="Resize" />
       <Event Name="LocationChanged" />
       <Event Name="DragStart" />
@@ -13252,7 +13209,6 @@
       <Event Name="VerticalAlignmentChanged" />
       <Event Name="HorizontalAlignmentChanged" />
       <Event Name="SizeChanged" />
-      <Event Name="Idle" />
       <Event Name="Resize" />
       <Event Name="LocationChanged" />
       <Event Name="DragStart" />
@@ -13345,7 +13301,6 @@
       <Event Name="VerticalAlignmentChanged" />
       <Event Name="HorizontalAlignmentChanged" />
       <Event Name="SizeChanged" />
-      <Event Name="Idle" />
       <Event Name="Resize" />
       <Event Name="LocationChanged" />
       <Event Name="DragStart" />
@@ -13438,7 +13393,6 @@
       <Event Name="VerticalAlignmentChanged" />
       <Event Name="HorizontalAlignmentChanged" />
       <Event Name="SizeChanged" />
-      <Event Name="Idle" />
       <Event Name="Resize" />
       <Event Name="LocationChanged" />
       <Event Name="DragStart" />
@@ -13531,7 +13485,6 @@
       <Event Name="VerticalAlignmentChanged" />
       <Event Name="HorizontalAlignmentChanged" />
       <Event Name="SizeChanged" />
-      <Event Name="Idle" />
       <Event Name="Resize" />
       <Event Name="LocationChanged" />
       <Event Name="DragStart" />
@@ -13628,7 +13581,6 @@
       <Event Name="VerticalAlignmentChanged" />
       <Event Name="HorizontalAlignmentChanged" />
       <Event Name="SizeChanged" />
-      <Event Name="Idle" />
       <Event Name="Resize" />
       <Event Name="LocationChanged" />
       <Event Name="DragStart" />
@@ -13787,7 +13739,6 @@
       <Event Name="VerticalAlignmentChanged" />
       <Event Name="HorizontalAlignmentChanged" />
       <Event Name="SizeChanged" />
-      <Event Name="Idle" />
       <Event Name="Resize" />
       <Event Name="LocationChanged" />
       <Event Name="DragStart" />
@@ -13880,7 +13831,6 @@
       <Event Name="VerticalAlignmentChanged" />
       <Event Name="HorizontalAlignmentChanged" />
       <Event Name="SizeChanged" />
-      <Event Name="Idle" />
       <Event Name="Resize" />
       <Event Name="LocationChanged" />
       <Event Name="DragStart" />
@@ -13973,7 +13923,6 @@
       <Event Name="VerticalAlignmentChanged" />
       <Event Name="HorizontalAlignmentChanged" />
       <Event Name="SizeChanged" />
-      <Event Name="Idle" />
       <Event Name="Resize" />
       <Event Name="LocationChanged" />
       <Event Name="DragStart" />
@@ -14066,7 +14015,6 @@
       <Event Name="VerticalAlignmentChanged" />
       <Event Name="HorizontalAlignmentChanged" />
       <Event Name="SizeChanged" />
-      <Event Name="Idle" />
       <Event Name="Resize" />
       <Event Name="LocationChanged" />
       <Event Name="DragStart" />
@@ -14159,7 +14107,6 @@
       <Event Name="VerticalAlignmentChanged" />
       <Event Name="HorizontalAlignmentChanged" />
       <Event Name="SizeChanged" />
-      <Event Name="Idle" />
       <Event Name="Resize" />
       <Event Name="LocationChanged" />
       <Event Name="DragStart" />
@@ -14252,7 +14199,6 @@
       <Event Name="VerticalAlignmentChanged" />
       <Event Name="HorizontalAlignmentChanged" />
       <Event Name="SizeChanged" />
-      <Event Name="Idle" />
       <Event Name="Resize" />
       <Event Name="LocationChanged" />
       <Event Name="DragStart" />
@@ -14345,7 +14291,6 @@
       <Event Name="VerticalAlignmentChanged" />
       <Event Name="HorizontalAlignmentChanged" />
       <Event Name="SizeChanged" />
-      <Event Name="Idle" />
       <Event Name="Resize" />
       <Event Name="LocationChanged" />
       <Event Name="DragStart" />
@@ -14438,7 +14383,6 @@
       <Event Name="VerticalAlignmentChanged" />
       <Event Name="HorizontalAlignmentChanged" />
       <Event Name="SizeChanged" />
-      <Event Name="Idle" />
       <Event Name="Resize" />
       <Event Name="LocationChanged" />
       <Event Name="DragStart" />
@@ -14550,7 +14494,6 @@
       <Event Name="VerticalAlignmentChanged" />
       <Event Name="HorizontalAlignmentChanged" />
       <Event Name="SizeChanged" />
-      <Event Name="Idle" />
       <Event Name="Resize" />
       <Event Name="LocationChanged" />
       <Event Name="DragStart" />
@@ -14697,7 +14640,6 @@
       <Event Name="VerticalAlignmentChanged" />
       <Event Name="HorizontalAlignmentChanged" />
       <Event Name="SizeChanged" />
-      <Event Name="Idle" />
       <Event Name="Resize" />
       <Event Name="LocationChanged" />
       <Event Name="DragStart" />
@@ -14774,7 +14716,6 @@
       <Event Name="VerticalAlignmentChanged" />
       <Event Name="HorizontalAlignmentChanged" />
       <Event Name="SizeChanged" />
-      <Event Name="Idle" />
       <Event Name="Resize" />
       <Event Name="LocationChanged" />
       <Event Name="DragStart" />
@@ -14849,7 +14790,6 @@
       <Event Name="VerticalAlignmentChanged" />
       <Event Name="HorizontalAlignmentChanged" />
       <Event Name="SizeChanged" />
-      <Event Name="Idle" />
       <Event Name="Resize" />
       <Event Name="LocationChanged" />
       <Event Name="DragStart" />
@@ -14926,7 +14866,6 @@
       <Event Name="VerticalAlignmentChanged" />
       <Event Name="HorizontalAlignmentChanged" />
       <Event Name="SizeChanged" />
-      <Event Name="Idle" />
       <Event Name="Resize" />
       <Event Name="LocationChanged" />
       <Event Name="DragStart" />
@@ -15000,7 +14939,6 @@
       <Event Name="VerticalAlignmentChanged" />
       <Event Name="HorizontalAlignmentChanged" />
       <Event Name="SizeChanged" />
-      <Event Name="Idle" />
       <Event Name="Resize" />
       <Event Name="LocationChanged" />
       <Event Name="DragStart" />
@@ -15079,7 +15017,6 @@
       <Event Name="VerticalAlignmentChanged" />
       <Event Name="HorizontalAlignmentChanged" />
       <Event Name="SizeChanged" />
-      <Event Name="Idle" />
       <Event Name="Resize" />
       <Event Name="LocationChanged" />
       <Event Name="DragStart" />
@@ -15153,7 +15090,6 @@
       <Event Name="VerticalAlignmentChanged" />
       <Event Name="HorizontalAlignmentChanged" />
       <Event Name="SizeChanged" />
-      <Event Name="Idle" />
       <Event Name="Resize" />
       <Event Name="LocationChanged" />
       <Event Name="DragStart" />
@@ -15260,6 +15196,7 @@
     <Type Name="Alternet.UI.Port.IUixmlProvideValueTarget" />
     <Type Name="Alternet.UI.Port.IUixmlRootObjectProvider" />
     <Type Name="Alternet.UI.Port.IUixmlUriContext" />
+    <Type Name="Alternet.Drawing.PlessControlPainterHandler+GetCheckBoxSvgDelegate" />
     <Type Name="Alternet.Drawing.Color+StateFlags" />
     <Type Name="Alternet.Drawing.Color+ColorNameLocalizedComparer" />
     <Type Name="Alternet.Drawing.Color+ColorNameComparer" />
@@ -15331,7 +15268,6 @@
       <Event Name="VerticalAlignmentChanged" />
       <Event Name="HorizontalAlignmentChanged" />
       <Event Name="SizeChanged" />
-      <Event Name="Idle" />
       <Event Name="Resize" />
       <Event Name="LocationChanged" />
       <Event Name="DragStart" />
@@ -15381,6 +15317,7 @@
     </Type>
     <Type Name="Alternet.UI.FontAndColor+ControlDefaultFontAndColor" />
     <Type Name="Alternet.UI.FontAndColor+ControlStaticDefaultFontAndColor" />
+    <Type Name="Alternet.UI.TextBoxAndButton+InitAsNumericEditParams" />
     <Type Name="Alternet.UI.Calendar+HitTestResult" />
     <Type Name="Alternet.UI.SplittedTreeAndCards+TreeKind" />
     <Type Name="Alternet.UI.ColorComboBox+DefaultColorItemPainter" />
@@ -15473,7 +15410,6 @@
       <Event Name="VerticalAlignmentChanged" />
       <Event Name="HorizontalAlignmentChanged" />
       <Event Name="SizeChanged" />
-      <Event Name="Idle" />
       <Event Name="Resize" />
       <Event Name="LocationChanged" />
       <Event Name="DragStart" />
@@ -15549,7 +15485,6 @@
       <Event Name="VerticalAlignmentChanged" />
       <Event Name="HorizontalAlignmentChanged" />
       <Event Name="SizeChanged" />
-      <Event Name="Idle" />
       <Event Name="Resize" />
       <Event Name="LocationChanged" />
       <Event Name="DragStart" />
@@ -15623,7 +15558,6 @@
       <Event Name="VerticalAlignmentChanged" />
       <Event Name="HorizontalAlignmentChanged" />
       <Event Name="SizeChanged" />
-      <Event Name="Idle" />
       <Event Name="Resize" />
       <Event Name="LocationChanged" />
       <Event Name="DragStart" />

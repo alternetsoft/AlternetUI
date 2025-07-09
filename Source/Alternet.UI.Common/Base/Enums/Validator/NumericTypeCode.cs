@@ -67,15 +67,3 @@ namespace Alternet.UI
         Decimal = TypeCode.Decimal,
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-

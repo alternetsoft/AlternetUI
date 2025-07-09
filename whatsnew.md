@@ -1,3 +1,32 @@
+# 0.9.742 (2025 July 9)
+
+- **Label.WordWrap.**
+- **VirtualBox: Fix draw parameters when first item is painted.**
+- **BaseObject.Invoke overload with Action param which requires much less resources to execute. Faster Invoke processing.**
+- **IntPicker is now derived from TextBoxAndButton and is editable.**
+- VirtualListBox: paint unfocused selection in different color.
+- VirtualListBox: Fixed SelectedItemIsBold (was ignored)
+- Made CardPanelHeader control public.
+- VirtualListControl: DefaultUnfocusedSelectedItemTextColor, DefaultUnfocusedSelectedItemBackColor, UnfocusedSelectedItemTextColor, UnfocusedSelectedItemBackColor.
+- VirtualListBox: Change unfocused selection color in dark mode.
+- TextBoxAndButton: SetErrorText, InitAsNumericEdit.
+- CustomTextBox: TextAsInt32, TextAsInt64, SetTextAsNumber.
+- NumericUpDown: Derive from IntPicker.
+- TreeControlItem: ExpandOnClick, SetItemsExpanded, ExpandItems, CollapseItems, DoInsideUpdate, AutoCollapseSiblings.
+- VirtualTreeControl.ApplyVisibilityFilter.
+- AbstractControl.OnAfterParentSizeChanged.
+- MessageBoxSvg: GetAsImageSet, GetAsBitmap.
+- TabControl: Made public interior paint methods.
+- VirtualListBox: SelectItemAndScroll overload, FindItemIndex.
+- SpeedButton: Add themes PushButton, PushButtonHovered, PushButtonPressed, CheckBorder.
+- SpeedButton: StickyChanged event, StickySpreadMode.
+- Remove all Idle events.
+- AbstractControl: Fix exception in notifications when collection is updated.
+- AbstractControl: GetMembersOfGroups, MemberOfAnyGroup.
+- ControlSet: ForEach, ForEachVisible.
+- ControlPainter: DrawRadioButton, DrawPushButton.
+- ControlStateSettings: Add background paint actions.
+
 # 0.9.741 (2025 July 6)
 
 - **Slider: Complete reimplementation on c# inside the library.** This is mainly because WxWidgets slider under MSW on black theme 

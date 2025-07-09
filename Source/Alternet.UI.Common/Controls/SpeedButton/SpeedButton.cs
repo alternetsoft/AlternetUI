@@ -106,7 +106,6 @@ namespace Alternet.UI
         /// </summary>
         public static ControlColorAndStyle PushButtonPressedTheme = new();
 
-
         /// <summary>
         /// Gets or sets default color and style settings
         /// for all <see cref="SpeedButton"/> controls
