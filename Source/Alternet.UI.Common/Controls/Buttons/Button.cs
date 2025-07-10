@@ -479,9 +479,9 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        protected override void OnMouseLeftButtonDown(MouseEventArgs e)
+        protected override void OnMouseLeftButtonUp(MouseEventArgs e)
         {
-            base.OnMouseLeftButtonDown(e);
+            base.OnMouseLeftButtonUp(e);
             if (!Enabled)
                 return;
             if (ShowDropDownMenuWhenClicked)
