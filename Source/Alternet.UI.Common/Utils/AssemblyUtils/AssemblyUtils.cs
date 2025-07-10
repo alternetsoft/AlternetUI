@@ -220,6 +220,35 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Loads a set of assemblies by their names and returns those that
+        /// are successfully resolved.
+        /// </summary>
+        /// <param name="assemblies">
+        /// A collection of assembly name strings to be loaded.
+        /// These can be simple names (e.g., "System.Xml")
+        /// or fully qualified assembly names.
+        /// </param>
+        /// <returns>
+        /// An <see cref="IEnumerable{Assembly}"/> containing the assemblies that
+        /// were successfully loaded.
+        /// Assemblies that cannot be resolved or are null are excluded from the result.
+        /// </returns>
+        /// <remarks>
+        /// Uses <c>AssemblyUtils.GetOrLoadAssemblyByName</c> to perform loading.
+        /// If an assembly name does not
+        /// correspond to a valid or accessible assembly, it is silently skipped.
+        /// </remarks>
+        public static IEnumerable<Assembly> LoadAssemblies(IEnumerable<string> assemblies)
+        {
+            foreach (var asm in assemblies)
+            {
+                var loadedAssembly = AssemblyUtils.GetOrLoadAssemblyByName(asm);
+                if (loadedAssembly != null)
+                    yield return loadedAssembly;
+            }
+        }
+
+        /// <summary>
         /// Gets <see cref="Assembly"/> with the specified name
         /// searching it through all assemblies of the current domain.
         /// </summary>
