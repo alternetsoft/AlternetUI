@@ -5,7 +5,7 @@ using Alternet.UI;
 
 namespace ControlsSample
 {
-    internal partial class DateTimePage : Panel
+    internal partial class DatePage : Panel
     {
         private string?[] dateFormats = new[]
         {
@@ -21,14 +21,13 @@ namespace ControlsSample
 
         private ContextMenu dateFormatContextMenu;
 
-        public DateTimePage()
+        public DatePage()
         {
             InitializeComponent();
 
             tabControl2.MinSizeGrowMode = WindowSizeToContentMode.Width;
 
             datePicker.Value = DateTime.Now;
-            timePicker.Value = DateTime.Now;
 
             dateFormatContextMenu = CreateDateFormatContextMenu();
             buttonDateFormats.DropDownMenu = dateFormatContextMenu;
@@ -37,23 +36,6 @@ namespace ControlsSample
             {
                 datePicker.Value = null;
             };
-
-            hourFormatPicker.EnumType = typeof(TimePickerHourFormat);
-            hourFormatPicker.Value = TimePickerHourFormat.System;
-            hourFormatPicker.ValueChanged += (s,e) =>
-            {
-                timePicker.HourFormat = (TimePickerHourFormat)hourFormatPicker.Value;
-            };
-
-            showSecondsCheckBox.CheckedChanged += (s, e) =>
-            {
-                timePicker.SecondsVisible = showSecondsCheckBox.IsChecked;
-            };
-        }
-
-        private void HourFormatPicker_ValueChanged(object sender, EventArgs e)
-        {
-            throw new NotImplementedException();
         }
 
         public ContextMenu CreateDateFormatContextMenu()
@@ -79,29 +61,19 @@ namespace ControlsSample
             dateLabel.Text = $"Selected: {datePicker.Text}";
         }
 
-        private void TimePicker_Changed(object? sender, EventArgs e)
-        {
-            var v = timePicker.Value;
-            var s = v.ToLongTimeString();
-            timeLabel.Text = $"Selected: {s}";
-        }
-
         private void SetNow_Click(object? sender, EventArgs e)
         {
             datePicker.Value = DateTime.Now;
-            timePicker.Value = DateTime.Now;
         }
 
         private void SetNowDate_Click(object? sender, EventArgs e)
         {
             datePicker.Value = DateTime.Today;
-            timePicker.Value = DateTime.Today;
         }
 
         private void HasBorderButton_Click(object? sender, EventArgs e)
         {
-            //datePicker.HasBorder = !datePicker.HasBorder;
-            //timePicker.HasBorder = !timePicker.HasBorder;
+            datePicker.HasBorder = !datePicker.HasBorder;
         }
 
         private void RangeAnyDate_Click(object? sender, EventArgs e)
@@ -129,29 +101,6 @@ namespace ControlsSample
             datePicker.MaxDate = DateTime.Today.AddDays(1);
             datePicker.MinDate = DateTime.Today.AddDays(-1);
             datePicker.UseMinMaxDate = true;
-        }
-
-        private void Popup_CheckedChanged(object? sender, EventArgs e)
-        {
-            /*
-            if (SpinRadioButton.IsChecked)
-            {
-                datePicker.PopupKind = DateTimePickerPopupKind.Spin;
-                return;
-            }
-
-            if (DropDownRadioButton.IsChecked)
-            {
-                datePicker.PopupKind = DateTimePickerPopupKind.DropDown;
-                return;
-            }
-
-            if (DefaultRadioButton.IsChecked)
-            {
-                datePicker.PopupKind = DateTimePickerPopupKind.Default;
-                return;
-            }
-            */
         }
     }
 }

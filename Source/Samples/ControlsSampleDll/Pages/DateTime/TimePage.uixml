@@ -1,0 +1,36 @@
+﻿<Panel x:Class="ControlsSample.TimePage"
+        xmlns="http://schemas.alternetsoft.com/ui/2021"
+        xmlns:x="http://schemas.alternetsoft.com/ui/2021/uixml"
+        xmlns:local="clr-namespace:ControlsSample;assembly=ControlsSample">
+  <StackPanel Orientation="Vertical" Padding="10">
+    <HorizontalStackPanel>
+
+      <VerticalStackPanel Margin="5" Name="textBoxesPanel" MinChildMargin="5">
+        <Label Text="Time:" Margin="0,10,0,5" IsTextLocalized="true"/>
+        <TimePicker 
+          SuggestedWidth="200" HorizontalAlignment="Left"
+          Margin="0,0,0,5" Name="timePicker"
+          ValueChanged="TimePicker_Changed"/>
+        <Label Text="Selected:" Margin="0,10,0,5" Name="timeLabel" IsTextLocalized="true"/>
+      </VerticalStackPanel>
+
+      <TabControl Name="tabControl2" Margin="10,5,5,5">
+
+        <VerticalStackPanel Margin="5" Title="Options" MinChildMargin="5">
+          <CheckBox Name="showSecondsCheckBox" Margin="0,0,0,5" IsChecked="True"
+                    Text="Show Seconds" IsTextLocalized="true"/>
+          <Label Text="Hour Format:" Margin="0,0,0,5"/>
+          <EnumPicker Name="hourFormatPicker" Margin="0,0,0,5" />
+
+          <Button Text="Set Now" Click="SetNow_Click" Margin="0,0,0,5" IsTextLocalized="true"
+                  Name="buttonSetNow"/>
+          <Button Text="Has Border" Margin="0,0,0,5" Name="hasBorderButton" IsTextLocalized="true"
+            Click="HasBorderButton_Click" Visible="true"/>
+
+        </VerticalStackPanel>
+
+      </TabControl>
+
+    </HorizontalStackPanel>
+  </StackPanel>
+</Panel>

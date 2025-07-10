@@ -177,7 +177,8 @@ namespace ControlsSample
         {
             NameValue<Func<AbstractControl>>[] pages =
             {
-                new("DateTime", () => new DateTimePage()),
+                new("Time", () => new TimePage()),
+                new("Date", () => new DatePage()),
                 new("Calendar", () => new CalendarPage()),
                 new("Popup", () => new DateTimePopups()),
             };
