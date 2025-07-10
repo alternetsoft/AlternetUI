@@ -315,11 +315,11 @@ namespace Alternet.UI
         {
             if (mainControl is not null)
             {
-                mainControl.SetFocusIfPossible();
+                mainControl.SetFocusIdle();
             }
             else
             {
-                SetFocusIfPossible();
+                SetFocusIdle();
             }
         }
 
@@ -437,12 +437,11 @@ namespace Alternet.UI
 
             RunWhenIdle(() =>
             {
-                Hide();
-                App.DoEvents();
+                Invoke(Hide);
                 if (PopupOwner is not null && FocusPopupOwnerOnHide)
                 {
-                    PopupOwner.ParentWindow?.Activate();
-                    PopupOwner.SetFocusIfPossible();
+                    /*Invoke(() => PopupOwner.ParentWindow?.Activate());*/
+                    PopupOwner.SetFocusIdle();
                 }
 
                 PopupOwner = null;

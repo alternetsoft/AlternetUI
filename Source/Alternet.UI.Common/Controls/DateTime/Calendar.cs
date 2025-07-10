@@ -198,7 +198,7 @@ namespace Alternet.UI
         /// <remarks>
         /// When this property is changed from the code and not by the user, events are not fired.
         /// </remarks>
-        public override DateTime Value
+        public override DateTime? Value
         {
             get
             {
@@ -211,7 +211,7 @@ namespace Alternet.UI
             {
                 if (DisposingOrDisposed)
                     return;
-                Handler.Value = value;
+                Handler.Value = value ?? DateTime.Now;
             }
         }
 

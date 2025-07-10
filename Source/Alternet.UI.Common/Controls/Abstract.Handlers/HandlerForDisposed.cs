@@ -18,7 +18,6 @@ namespace Alternet.UI
         ICheckBoxHandler,
         IComboBoxHandler,
         IContextMenuHandler,
-        IDateTimePickerHandler,
         ILinkLabelHandler,
         IListViewHandler,
         IMainMenuHandler,

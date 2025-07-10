@@ -12,18 +12,17 @@ namespace Alternet.UI
     /// <summary>
     /// Represents control that displays a selected date and allows to change it.
     /// </summary>
-    /// <remarks>
-    /// Currently this control doesn't look good on MSW with dark theme.
-    /// It is recommended to use <see cref="DatePicker"/> or <see cref="TimePicker"/> controls.
-    /// </remarks>
     [DefaultProperty("Value")]
     [DefaultEvent("ValueChanged")]
     [DefaultBindingProperty("Value")]
     [ControlCategory("Common")]
-    [Obsolete("Use DatePicker or TimePicker instead.")]
     public partial class DateTimePicker : CustomDateEdit
     {
-        private DateTime val = DateTime.Now;
+        private readonly DatePicker datePicker = new();
+        private readonly TimePicker timePicker = new();
+
+        private DateTimePickerKind kind = DateTimePickerKind.Date;
+        private DateTimePickerPopupKind popupKind = DateTimePickerPopupKind.DropDown;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="DateTimePicker"/> class.
@@ -40,6 +39,24 @@ namespace Alternet.UI
         /// </summary>
         public DateTimePicker()
         {
+            datePicker.Parent = this;
+            timePicker.Visible = false;
+            timePicker.Parent = this;
+
+            timePicker.SizeChanged += (s, e) =>
+            {
+            };
+
+            datePicker.ValueChanged += (s, e) =>
+            {
+                timePicker.Value = Value ?? DateTime.Now;
+                RaiseValueChanged(e);
+            };
+
+            timePicker.ValueChanged += (s, e) =>
+            {
+                Value = (Value ?? DateTime.Now).Date + timePicker.Value.TimeOfDay;
+            };
         }
 
         /// <summary>
@@ -59,21 +76,16 @@ namespace Alternet.UI
         /// Gets or sets the value assigned to the <see cref="DateTimePicker"/>
         /// as a selected <see cref="DateTime"/>.
         /// </summary>
-        public override DateTime Value
+        public override DateTime? Value
         {
             get
             {
-                return val;
+                return datePicker.Value;
             }
 
             set
             {
-                if (DisposingOrDisposed)
-                    return;
-                if (value == this.val)
-                    return;
-                this.val = value;
-                RaiseValueChanged(EventArgs.Empty);
+                datePicker.Value = value;
             }
         }
 
@@ -85,43 +97,38 @@ namespace Alternet.UI
         {
             get
             {
-                if (DisposingOrDisposed)
-                    return default;
-                return Handler.Kind;
+                return kind;
             }
 
             set
             {
-                if (DisposingOrDisposed)
+                if (kind == value)
                     return;
-                Handler.Kind = value;
+                kind = value;
+
+                var isDate = kind == DateTimePickerKind.Date;
+
+                DoInsideLayout(() =>
+                {
+                    timePicker.Visible = !isDate;
+                    datePicker.Visible = isDate;
+                });
             }
         }
 
         /// <summary>
-        /// Gets control handler.
-        /// </summary>
-        [Browsable(false)]
-        public new IDateTimePickerHandler Handler =>
-            (IDateTimePickerHandler)base.Handler;
-
-        /// <summary>
         /// Gets or sets whether to show calendar popup or edit date with spin control.
+        /// Currently only <see cref="DateTimePickerPopupKind.DropDown"/> is implemented.
         /// </summary>
         public virtual DateTimePickerPopupKind PopupKind
         {
             get
             {
-                if (DisposingOrDisposed)
-                    return default;
-                return Handler.PopupKind;
+                return popupKind;
             }
 
             set
             {
-                if (DisposingOrDisposed)
-                    return;
-                Handler.PopupKind = value;
             }
         }
 
@@ -147,9 +154,12 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        protected override IControlHandler CreateHandler()
+        public override bool SetFocus()
         {
-            return ControlFactory.Handler.CreateDateTimePickerHandler(this);
+            if(datePicker.Visible)
+                return datePicker.SetFocus();
+            else
+                return timePicker.SetFocus();
         }
 
         /// <summary>
@@ -164,9 +174,6 @@ namespace Alternet.UI
         /// <inheritdoc/>
         protected override void SetRange(DateTime min, DateTime max)
         {
-            if (DisposingOrDisposed)
-                return;
-            Handler.SetRange(min, max, UseMinDate, UseMaxDate);
         }
     }
 }

@@ -191,14 +191,5 @@ namespace Alternet.UI
         /// <param name="control">Owner.</param>
         /// <returns></returns>
         IControlHandler CreateListViewHandler(ListView control);
-
-        /// <summary>
-        /// Creates <see cref="IDateTimePickerHandler"/> interface provider.
-        /// </summary>
-        /// <param name="control">Owner.</param>
-        /// <returns></returns>
-#pragma warning disable
-        IControlHandler CreateDateTimePickerHandler(DateTimePicker control);
-#pragma warning restore
     }
 }

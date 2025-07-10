@@ -181,7 +181,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets the currently selected date.
         /// </summary>
-        public abstract DateTime Value { get; set; }
+        public abstract DateTime? Value { get; set; }
 
         /// <summary>Gets or sets the minimum date and time that can be
         /// selected in the control.</summary>
@@ -249,7 +249,9 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="min">Minimal possible date.</param>
         /// <param name="max">Maximal possible date.</param>
-        protected abstract void SetRange(DateTime min, DateTime max);
+        protected virtual void SetRange(DateTime min, DateTime max)
+        {
+        }
 
         /// <summary>
         /// Updates possible date range using current settings.

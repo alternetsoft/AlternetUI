@@ -102,6 +102,7 @@ namespace PropertyGridSample
                 LimitedTypes.Add(typeof(LabelAndButton));
                 LimitedTypes.Add(typeof(IntPicker));
                 LimitedTypes.Add(typeof(DatePicker));
+                LimitedTypes.Add(typeof(DateTimePicker));
                 LimitedTypes.Add(typeof(TimePicker));
                 LimitedTypes.Add(typeof(ListPicker));
                 LimitedTypes.Add(typeof(EnumPicker));

@@ -8,7 +8,10 @@ namespace Alternet.UI
     /// <summary>
     /// Represents a control that displays a date and shows popup calendar when it is clicked.
     /// </summary>
-    [ControlCategory("Other")]
+    [DefaultProperty("Value")]
+    [DefaultEvent("ValueChanged")]
+    [DefaultBindingProperty("Value")]
+    [ControlCategory("Common")]
     public partial class DatePicker : SpeedDateButton
     {
         /// <summary>

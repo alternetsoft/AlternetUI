@@ -10,6 +10,10 @@ namespace Alternet.UI
     /// <summary>
     /// Represents a control that displays a time and allows to edit it.
     /// </summary>
+    [DefaultProperty("Value")]
+    [DefaultEvent("ValueChanged")]
+    [DefaultBindingProperty("Value")]
+    [ControlCategory("Common")]
     public partial class TimePicker : ControlAndButton<ToolBar>
     {
         /// <summary>

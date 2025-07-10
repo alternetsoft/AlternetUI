@@ -53,13 +53,6 @@ namespace Alternet.UI
             return new MauiControlHandler();
         }
 
-#pragma warning disable
-        IControlHandler IControlFactoryHandler.CreateDateTimePickerHandler(DateTimePicker control)
-#pragma warning restore
-        {
-            return new HandlerForDisposed();
-        }
-
         IControlHandler IControlFactoryHandler.CreateGroupBoxHandler(GroupBox control)
         {
             return new HandlerForDisposed();

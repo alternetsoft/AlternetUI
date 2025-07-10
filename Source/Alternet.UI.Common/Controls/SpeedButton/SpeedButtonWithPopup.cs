@@ -239,13 +239,23 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
+        protected override void OnMouseDoubleClick(MouseEventArgs e)
+        {
+            base.OnMouseDoubleClick(e);
+            if (IsPopupWindowCreated && PopupWindow.IsVisible)
+                Invoke(() => PopupWindow.HidePopup(ModalResult.Canceled));
+            else
+                Invoke(ShowPopup);
+        }
+
+        /// <inheritdoc/>
         protected override void OnClick(EventArgs e)
         {
             base.OnClick(e);
             if(IsPopupWindowCreated && PopupWindow.IsVisible)
-                PopupWindow.HidePopup(ModalResult.Canceled);
+                Invoke(() => PopupWindow.HidePopup(ModalResult.Canceled));
             else
-                ShowPopup();
+                Invoke(ShowPopup);
         }
 
         /// <summary>

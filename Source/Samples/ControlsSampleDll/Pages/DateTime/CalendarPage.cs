@@ -174,7 +174,7 @@ namespace ControlsSample
 
         private void Calendar_DayDoubleClick(object? sender, EventArgs e)
         {
-            var s = calendar.Value.ToString("yyyy-MM-dd");
+            var s = calendar.Value?.ToString("yyyy-MM-dd");
             LogEvent($"DayDoubleClick {s}");
         }
 
@@ -195,7 +195,7 @@ namespace ControlsSample
 
         private void Calendar_SelectionChanged(object? sender, EventArgs e)
         {
-            var s = calendar.Value.ToString("yyyy-MM-dd");
+            var s = calendar.Value?.ToString("yyyy-MM-dd");
             LogEvent($"SelectionChanged {s}");
         }
 

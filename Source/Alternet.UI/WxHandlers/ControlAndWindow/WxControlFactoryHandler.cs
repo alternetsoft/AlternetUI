@@ -72,14 +72,6 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-#pragma warning disable
-        public IControlHandler CreateDateTimePickerHandler(DateTimePicker control)
-#pragma warning restore
-        {
-            return new DateTimePickerHandler();
-        }
-
-        /// <inheritdoc/>
         public IControlHandler CreateNumericUpDownHandler(NumericUpDown control)
         {
             return new NumericUpDownHandler();
