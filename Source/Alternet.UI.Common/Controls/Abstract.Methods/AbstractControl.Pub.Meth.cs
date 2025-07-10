@@ -1292,8 +1292,11 @@ namespace Alternet.UI
         [Browsable(false)]
         public void Refresh()
         {
-            Invalidate();
-            Update();
+            Invoke(() =>
+            {
+                Invalidate();
+                Update();
+            });
         }
 
         /// <summary>

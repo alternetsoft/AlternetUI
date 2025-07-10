@@ -22,9 +22,15 @@ namespace Alternet.UI
         /// </summary>
         public static IDialogFactoryHandler Handler
         {
-            get => handler ??= App.Handler.CreateDialogFactoryHandler();
+            get
+            {
+                return handler ??= App.Handler.CreateDialogFactoryHandler();
+            }
 
-            set => handler = value;
+            set
+            {
+                handler = value;
+            }
         }
 
         /// <summary>

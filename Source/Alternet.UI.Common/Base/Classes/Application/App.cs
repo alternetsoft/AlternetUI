@@ -2166,7 +2166,10 @@ namespace Alternet.UI
             if (App.Terminating)
                 return;
 
-            Current?.ProcessPendingEvents();
+            Invoke(() =>
+            {
+                Current?.ProcessPendingEvents();
+            });
         }
 
         /// <summary>
