@@ -134,7 +134,7 @@ namespace DrawingSample
             fontSizeSlider.Value = (int)page.FontSize;
             fontSizeSlider.ValueChanged += (s, e) =>
             {
-                page.FontSize = fontSizeSlider.ValueAs<double>();
+                page.FontSize = fontSizeSlider.Value;
             };
 
             boldCheckBox.IsChecked = page.Bold;

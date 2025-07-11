@@ -17,7 +17,7 @@ namespace Alternet.Drawing
             if (text is null || text.Length == 0)
                 return SizeD.Empty;
 
-            text = text.Replace(' ', '\u00A0');
+            /*text = text.Replace(' ', '\u00A0');*/
 
             var result = dc.GetTextExtentSimple(
                 text,
@@ -79,7 +79,7 @@ namespace Alternet.Drawing
             if (!foreColor.IsOk)
                 return;
 
-            text = text.Replace(' ', '\u00A0');
+            /*text = text.Replace(' ', '\u00A0');*/
 
             font = TransformFontForDrawText(font);
             dc.DrawText(

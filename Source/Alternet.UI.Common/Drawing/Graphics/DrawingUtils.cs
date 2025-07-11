@@ -786,7 +786,8 @@ namespace Alternet.UI
 
             foreach (var word in words)
             {
-                var lineAndWord = line + word;
+                var lineAndWord = line + (line.Length > 0 ? " " : string.Empty) + word;
+
                 var measureResult = GetWidth(lineAndWord);
 
                 if (measureResult > maxWidth)
@@ -796,7 +797,7 @@ namespace Alternet.UI
                 }
                 else
                 {
-                    line += (line.Length > 0 ? " " : string.Empty) + word;
+                    line = lineAndWord;
                 }
             }
 
