@@ -1227,11 +1227,15 @@ namespace Alternet.UI
             bool AddToDestination(IEnumerable<ListControlItem> items)
             {
                 var result = true;
+                var ttt = items.ToArray();
                 Invoke(() =>
                 {
                     if (DisposingOrDisposed || !continueFunc())
                         result = false;
-                    Items.AddRange(items);
+                    DoInsideUpdate(() =>
+                    {
+                        Items.AddRange(ttt);
+                    });
                 });
                 Thread.Sleep(sleepAfterBufferMsec);
                 return result;

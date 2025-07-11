@@ -71,8 +71,13 @@ namespace Alternet.UI
             {
                 App.AddIdleTask(() =>
                 {
-                    ToggleExpandedAndCollapseSiblings(item, item?.AutoCollapseSiblings ?? false);
-                    ListBox.SelectItemAndScroll(item);
+                    DoInsideUpdate(() =>
+                    {
+                        var visibleBegin = ListBox.TopIndex;
+                        ToggleExpandedAndCollapseSiblings(item, item?.AutoCollapseSiblings ?? false);
+                        ListBox.SelectItemAndScroll(item);
+                        ListBox.TopIndex = visibleBegin;
+                    });
                 });
             }
         }

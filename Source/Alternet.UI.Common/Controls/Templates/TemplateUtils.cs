@@ -116,7 +116,32 @@ namespace Alternet.UI
                     continue;
                 if (child is not GenericControl)
                     continue;
-                RaisePaintRecursive(child, dc(), child.Location);
+
+                try
+                {
+                    var scaleFactor = child.ScaleFactor;
+
+                    GraphicsFactory.MeasureCanvasOverride
+                        = SkiaUtils.CreateMeasureCanvas(scaleFactor);
+
+                    var canvas = SkiaUtils.CreateBitmapCanvas(
+                        child.Bounds.Size,
+                        scaleFactor,
+                        true);
+                    canvas.UseUnscaledDrawImage = true;
+
+                    GraphicsFactory.MeasureCanvasOverride = canvas;
+
+                    RaisePaintRecursive(child, canvas, PointD.Empty);
+
+                    var skBitmap = canvas.Bitmap ?? new SKBitmap();
+                    var bitmap = (Image)skBitmap;
+                    dc().DrawImage(bitmap, child.Location);
+                }
+                finally
+                {
+                    GraphicsFactory.MeasureCanvasOverride = null;
+                }
             }
         }
 
