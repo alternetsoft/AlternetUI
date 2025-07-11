@@ -382,7 +382,7 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Creates used <see cref="BorderSettings"/> instance. Override to use have border
+        /// Creates used <see cref="BorderSettings"/> instance. Override to have border
         /// painting or non-default behavior.
         /// </summary>
         protected virtual BorderSettings CreateBorderSettings(BorderSettings defaultSettings)
