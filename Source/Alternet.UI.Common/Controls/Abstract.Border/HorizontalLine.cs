@@ -11,7 +11,12 @@ namespace Alternet.UI
     /// </summary>
     public partial class HorizontalLine : GenericControl
     {
-        private Coord lineHeight = 1;
+        /// <summary>
+        /// Gets or sets default height of the horizontal line.
+        /// </summary>
+        public static Coord DefaultHeight = 1;
+
+        private Coord lineHeight = DefaultHeight;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="HorizontalLine"/> class.
@@ -37,7 +42,7 @@ namespace Alternet.UI
             get
             {
                 var result = base.SuggestedSize;
-                return (result.Width, lineHeight);
+                return (result.Width, lineHeight + Padding.Vertical);
             }
 
             set
@@ -64,9 +69,9 @@ namespace Alternet.UI
         /// <inheritdoc/>
         public override void DefaultPaint(PaintEventArgs e)
         {
-            var rect = e.ClipRectangle;
+            var rect = ClientRectangle;
             var brush = DefaultColors.GetControlBorderBrush(this);
-            e.Graphics.DrawHorzLine(brush, rect.TopLeft, rect.Width, LineHeight);
+            e.Graphics.DrawHorzLine(brush, (rect.Left, rect.Top + Padding.Top), rect.Width, LineHeight);
         }
     }
 }
