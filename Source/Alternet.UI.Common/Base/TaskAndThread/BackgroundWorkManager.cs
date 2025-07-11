@@ -86,6 +86,10 @@ namespace Alternet.UI.Threading
                                 t.Start();
                             await t;
                         }
+                        catch (OperationCanceledException)
+                        {
+                            return;
+                        }
                         catch (Exception ex)
                         {
                             Invoke(() =>
