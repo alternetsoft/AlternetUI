@@ -119,17 +119,22 @@ namespace Alternet.UI
         /// </summary>
         public override void Invalidate()
         {
+            if (!VisibleOnScreen)
+                return;
+
             var result = Parent;
             var bounds = Bounds;
 
-            while (result is not null && result is not Control)
+            while (true)
             {
+                if (result is null)
+                    return;
+                if (result is Control)
+                    break;
+
                 bounds.Location += result.Location;
                 result = result.Parent;
             }
-
-            if (result is not Control)
-                return;
 
             result.Invalidate(bounds);
         }

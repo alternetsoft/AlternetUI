@@ -120,7 +120,7 @@ namespace Alternet.UI
         /// </summary>
         public static ControlColorAndStyle? TabControlTheme = DefaultTheme;
 
-        private readonly Spacer picture = new()
+        private readonly Spacer pictureSpacer = new()
         {
             Visible = false,
             Alignment = HVAlignment.Center,
@@ -387,14 +387,14 @@ namespace Alternet.UI
         {
             get
             {
-                return picture.HorizontalAlignment;
+                return pictureSpacer.HorizontalAlignment;
             }
 
             set
             {
                 if (ImageHorizontalAlignment == value)
                     return;
-                picture.HorizontalAlignment = value;
+                pictureSpacer.HorizontalAlignment = value;
                 PerformLayoutAndInvalidate(null, false);
             }
         }
@@ -406,14 +406,14 @@ namespace Alternet.UI
         {
             get
             {
-                return picture.VerticalAlignment;
+                return pictureSpacer.VerticalAlignment;
             }
 
             set
             {
                 if (ImageVerticalAlignment == value)
                     return;
-                picture.VerticalAlignment = value;
+                pictureSpacer.VerticalAlignment = value;
                 PerformLayoutAndInvalidate(null, false);
             }
         }
@@ -1144,7 +1144,7 @@ namespace Alternet.UI
         /// Gets inner <see cref="PictureBox"/> control.
         /// </summary>
         [Browsable(false)]
-        internal Spacer PictureBox => picture;
+        internal Spacer PictureBox => pictureSpacer;
 
         /// <summary>
         /// Gets inner <see cref="GenericLabel"/> control.
@@ -1376,7 +1376,7 @@ namespace Alternet.UI
         /// <see cref="HorizontalAlignment"/> enumeration.</param>
         public virtual void SetContentHorizontalAlignment(HorizontalAlignment alignment)
         {
-            picture.HorizontalAlignment = alignment;
+            pictureSpacer.HorizontalAlignment = alignment;
             spacer.HorizontalAlignment = alignment;
             label.HorizontalAlignment = alignment;
             PerformLayoutAndInvalidate(null, false);
@@ -1393,7 +1393,7 @@ namespace Alternet.UI
             HorizontalAlignment labelAlignment,
             HorizontalAlignment spacerAlignment)
         {
-            picture.HorizontalAlignment = pictureAlignment;
+            pictureSpacer.HorizontalAlignment = pictureAlignment;
             spacer.HorizontalAlignment = spacerAlignment;
             label.HorizontalAlignment = labelAlignment;
             PerformLayoutAndInvalidate(null, false);
@@ -1425,7 +1425,7 @@ namespace Alternet.UI
         /// by the <see cref="VerticalAlignment"/> enumeration.</param>
         public virtual void SetContentVerticalAlignment(VerticalAlignment alignment)
         {
-            picture.VerticalAlignment = alignment;
+            pictureSpacer.VerticalAlignment = alignment;
             spacer.VerticalAlignment = alignment;
             label.VerticalAlignment = alignment;
             PerformLayoutAndInvalidate(null, false);

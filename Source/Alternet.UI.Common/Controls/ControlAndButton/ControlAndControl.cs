@@ -14,6 +14,13 @@ namespace Alternet.UI
         private ErrorPictureBox? errorPicture;
 
         /// <summary>
+        /// Initializes a new instance of the <see cref="ControlAndControl"/> class.
+        /// </summary>
+        public ControlAndControl()
+        {
+        }
+
+        /// <summary>
         /// Gets attached <see cref="PictureBox"/> control which
         /// displays validation error information.
         /// </summary>

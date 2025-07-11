@@ -59,6 +59,7 @@ namespace Alternet.UI
         /// </summary>
         public TextBox()
         {
+            UseControlColors(true);
         }
 
         /// <summary>

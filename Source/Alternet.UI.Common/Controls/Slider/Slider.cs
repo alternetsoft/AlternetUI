@@ -61,7 +61,7 @@ namespace Alternet.UI
         /// </summary>
         public static SliderTickStyle DefaultTickStyle = SliderTickStyle.None;
 
-        private readonly AbstractControl leftTopSpacer;
+        private readonly Spacer leftTopSpacer;
         private readonly SliderScale leftTopScale;
         private readonly SliderScale rightBottomScale;
         private readonly SliderThumb thumb;
@@ -842,16 +842,6 @@ namespace Alternet.UI
         {
             const Coord defaultAutoWidth = 150;
 
-            Coord? minimumHeight = null;
-
-#pragma warning disable
-            Coord GetMinimumHeight()
-            {
-                minimumHeight ??= MeasureCanvas.GetTextExtent("Wg", RealFont).Height;
-                return minimumHeight.Value;
-            }
-#pragma warning restore
-
             var specifiedWidth = SuggestedWidth;
             var specifiedHeight = SuggestedHeight;
 
@@ -955,7 +945,7 @@ namespace Alternet.UI
         {
             leftTopSpacer.ParentBackColor = leftTopSpacerColor is null;
             leftTopSpacer.BackgroundColor = leftTopSpacerColor;
-            leftTopSpacer.Update();
+            leftTopSpacer.HasBackground = leftTopSpacerColor is not null;
         }
 
         internal void SetDebugColors()
@@ -1142,7 +1132,7 @@ namespace Alternet.UI
         /// Creates a spacer control for the slider.
         /// </summary>
         /// <returns>A new spacer control instance.</returns>
-        protected virtual AbstractControl CreateSpacer()
+        protected virtual Spacer CreateSpacer()
         {
             return new Spacer();
         }

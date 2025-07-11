@@ -7,7 +7,7 @@ namespace Alternet.UI
 {
     /// <summary>
     /// Used for the layout purposes to occupy some space.
-    /// Doesn't perform any painting.
+    /// Doesn't perform any painting by default.
     /// </summary>
     public partial class Spacer : GenericControl
     {
@@ -16,6 +16,8 @@ namespace Alternet.UI
         /// </summary>
         public static bool ShowDebugCorners = false;
 
+        private bool hasBackground = false;
+
         /// <summary>
         /// Initializes a new instance of the <see cref="Spacer"/> class.
         /// </summary>
@@ -23,11 +25,34 @@ namespace Alternet.UI
         {
         }
 
+        /// <summary>
+        /// Gets or sets whether background of the control is actually painted.
+        /// Default is False.
+        /// </summary>
+        public virtual bool HasBackground
+        {
+            get
+            {
+                return hasBackground;
+            }
+
+            set
+            {
+                if (hasBackground == value)
+                    return;
+                hasBackground = value;
+                Invalidate();
+            }
+        }
+
         /// <inheritdoc/>
         public override void DefaultPaint(PaintEventArgs e)
         {
-            DrawDefaultBackground(e);
-            DefaultPaintDebug(e);
+            if (HasBackground)
+            {
+                DrawDefaultBackground(e);
+                DefaultPaintDebug(e);
+            }
         }
 
         [Conditional("DEBUG")]
