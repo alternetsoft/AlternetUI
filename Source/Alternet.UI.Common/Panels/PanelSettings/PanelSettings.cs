@@ -17,6 +17,11 @@ namespace Alternet.UI
     public partial class PanelSettings : HiddenBorder
     {
         /// <summary>
+        /// Gets or sets default horizontal line margin.
+        /// </summary>
+        public static Coord DefaultHorizontalLineMargin = 5;
+
+        /// <summary>
         /// Gets or sets a value indicating whether the <see cref="ComboBox"/> mouse
         /// wheel is allowed by default when it is used in the <see cref="PanelSettings"/>.
         /// </summary>
@@ -147,6 +152,8 @@ namespace Alternet.UI
         public static object? DefaultItemToLineControl(PanelSettingsItem item, object? control)
         {
             var spacer = CreateOrUpdateControl<HorizontalLine>(item, control);
+            spacer.MarginTop = DefaultHorizontalLineMargin;
+            spacer.MarginBottom = DefaultHorizontalLineMargin;
             return spacer;
         }
 
