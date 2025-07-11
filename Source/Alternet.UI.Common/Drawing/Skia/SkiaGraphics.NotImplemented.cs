@@ -26,17 +26,13 @@ namespace Alternet.Drawing
         }
 
         /// <inheritdoc/>
-        public override void Path(Pen pen, Brush brush, GraphicsPath path)
-        {
-            /* var (fill, stroke) = GetFillAndStrokePaint(pen, brush);*/
-            throw new NotImplementedException();
-        }
-
-        /// <inheritdoc/>
         public override void DrawPath(Pen pen, GraphicsPath path)
         {
             DebugPenAssert(pen);
             throw new NotImplementedException();
+            /*
+            var paint = GetStrokePaint(pen);
+            */
         }
 
         /// <inheritdoc/>
@@ -44,30 +40,9 @@ namespace Alternet.Drawing
         {
             DebugBrushAssert(brush);
             throw new NotImplementedException();
-        }
-
-        /// <inheritdoc/>
-        public override void FillPie(
-            Brush brush,
-            PointD center,
-            Coord radius,
-            Coord startAngle,
-            Coord sweepAngle)
-        {
-            DebugBrushAssert(brush);
-            throw new NotImplementedException();
-        }
-
-        /// <inheritdoc/>
-        public override void DrawPie(
-            Pen pen,
-            PointD center,
-            Coord radius,
-            Coord startAngle,
-            Coord sweepAngle)
-        {
-            DebugPenAssert(pen);
-            throw new NotImplementedException();
+            /*
+            var paint = GetFillPaint(brush);
+            */
         }
 
         /// <inheritdoc/>
@@ -75,21 +50,6 @@ namespace Alternet.Drawing
         {
             DebugFontAssert(font);
             DebugBrushAssert(brush);
-            throw new NotImplementedException();
-        }
-
-        /// <inheritdoc/>
-        public override void Pie(
-            Pen pen,
-            Brush brush,
-            PointD center,
-            Coord radius,
-            Coord startAngle,
-            Coord sweepAngle)
-        {
-            /*
-            var paint = GetFillAndStrokePaint(pen, brush);
-            */
             throw new NotImplementedException();
         }
     }

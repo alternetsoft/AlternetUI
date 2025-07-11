@@ -404,6 +404,85 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
+        /// Creates an <see cref="SKPath"/> representing a pie segment.
+        /// </summary>
+        /// <param name="center">The center point of the circular pie.</param>
+        /// <param name="radius">The radius of the pie segment.</param>
+        /// <param name="startAngle">
+        /// The angle (in degrees) at which the pie segment starts, measured clockwise from the X-axis.
+        /// </param>
+        /// <param name="sweepAngle">
+        /// The angle (in degrees) the segment sweeps clockwise from the start angle.
+        /// </param>
+        /// <returns>
+        /// An <see cref="SKPath"/> that describes the pie segment as an
+        /// arc closed by a line to the center.
+        /// </returns>
+        public virtual SKPath CreatePiePath(
+            PointD center,
+            Coord radius,
+            Coord startAngle,
+            Coord sweepAngle)
+        {
+            var path = new SKPath();
+
+            SKRect oval = new(
+                (float)(center.X - radius),
+                (float)(center.Y - radius),
+                (float)(center.X + radius),
+                (float)(center.Y + radius));
+
+            path.AddArc(oval, (float)startAngle, (float)sweepAngle);
+            path.LineTo(center);
+            path.Close();
+            return path;
+        }
+
+        /// <inheritdoc/>
+        public override void FillPie(
+            Brush brush,
+            PointD center,
+            Coord radius,
+            Coord startAngle,
+            Coord sweepAngle)
+        {
+            DebugBrushAssert(brush);
+            var path = CreatePiePath(center, radius, startAngle, sweepAngle);
+            canvas.DrawPath(path, brush);
+        }
+
+        /// <inheritdoc/>
+        public override void DrawPie(
+            Pen pen,
+            PointD center,
+            Coord radius,
+            Coord startAngle,
+            Coord sweepAngle)
+        {
+            DebugPenAssert(pen);
+            var path = CreatePiePath(center, radius, startAngle, sweepAngle);
+            canvas.DrawPath(path, pen);
+        }
+
+        /// <inheritdoc/>
+        public override void Pie(
+            Pen pen,
+            Brush brush,
+            PointD center,
+            Coord radius,
+            Coord startAngle,
+            Coord sweepAngle)
+        {
+            DebugBrushAssert(brush);
+            DebugPenAssert(pen);
+            var path = CreatePiePath(center, radius, startAngle, sweepAngle);
+            if (brush is not null)
+                canvas.DrawPath(path, brush);
+            if(pen is not null)
+                canvas.DrawPath(path, pen);
+        }
+
+        /// <summary>
         /// Gets <see cref="SKPath"/> from array of points and fill mode.
         /// </summary>
         /// <param name="points">The array of points.</param>
@@ -446,6 +525,13 @@ namespace Alternet.Drawing
                 canvas.DrawPath(path, fill);
             if (stroke is not null)
                 canvas.DrawPath(path, stroke);
+        }
+
+        /// <inheritdoc/>
+        public override void Path(Pen pen, Brush brush, GraphicsPath path)
+        {
+            FillPath(brush, path);
+            DrawPath(pen, path);
         }
 
         /// <inheritdoc/>
