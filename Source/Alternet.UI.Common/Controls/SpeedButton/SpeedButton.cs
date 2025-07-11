@@ -1460,7 +1460,7 @@ namespace Alternet.UI
                         spacer.Location.X,
                         0,
                         ClientRectangle.Width - spacer.Location.X,
-                        e.ClipRectangle.Height);
+                        ClientRectangle.Height);
                     DrawDefaultBackground(
                         e.WithRect(newRect),
                         DrawDefaultBackgroundFlags.DrawBackground);

@@ -116,7 +116,7 @@ namespace Alternet.UI
         {
             if (rect == ClipRectangle)
                 return this;
-            return new PaintEventArgs(canvasFunc, rect);
+            return new PaintEventArgs(() => Graphics, rect);
         }
     }
 }
