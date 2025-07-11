@@ -947,6 +947,11 @@ namespace Alternet.UI
                 if (prop.FieldType == typeof(Color))
                     LogUtils.LogColor(prop.Name, (Color)prop.GetValue(null)!);
             }
+
+            var bgColor = AbstractControl.GetClassDefaultAttributesBgColor(ControlTypeId.TextBox);
+            var fgColor = AbstractControl.GetClassDefaultAttributesFgColor(ControlTypeId.TextBox);
+            LogUtils.LogColor("TextBox.ClassDefaultBgColor", bgColor);
+            LogUtils.LogColor("TextBox.ClassDefaultFgColor", fgColor);
         }
 
         /// <summary>

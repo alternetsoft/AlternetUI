@@ -19,7 +19,10 @@ namespace Alternet.UI
         public TextBoxWithListPopup()
         {
             HasBtnComboBox = true;
-            InnerOuterBorder = InnerOuterSelector.Outer;
+            if (!App.IsMacOS)
+                InnerOuterBorder = InnerOuterSelector.Outer;
+            else
+                InnerOuterBorder = InnerOuterSelector.Inner;
             ButtonCombo.PopupOwner = MainControl;
         }
 

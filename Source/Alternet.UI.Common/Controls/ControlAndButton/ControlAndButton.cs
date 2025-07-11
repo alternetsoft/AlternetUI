@@ -188,6 +188,7 @@ namespace Alternet.UI
                 if (substituteControl != null)
                 {
                     substituteControl.Visible = false;
+                    substituteControl.HasBorder = MainControl.HasBorder;
                     substituteControl.Alignment = MainControl.Alignment;
                     substituteControl.Parent = this;
                     substituteControl.MouseLeftButtonDown -= OnSubstituteControlMouseLeftButtonDown;
@@ -505,6 +506,8 @@ namespace Alternet.UI
             set
             {
                 MainControl.HasBorder = value;
+                if(substituteControl is not null)
+                    substituteControl.HasBorder = value;
             }
         }
 

@@ -59,7 +59,6 @@ namespace Alternet.UI
         /// </summary>
         public TextBox()
         {
-            UseControlColors(true);
         }
 
         /// <summary>
@@ -714,7 +713,7 @@ namespace Alternet.UI
         /// </returns>
         /// <remarks>
         /// We do not suggest using this property as there is no known way to specify color
-        /// of the url text. On dark themes auto urls don’t look good on Linux. If you need
+        /// of the url text. On dark themes auto urls donï¿½t look good on Linux. If you need
         /// to highlight urls, use RichTextBox control.
         /// </remarks>
         /// <remarks>

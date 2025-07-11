@@ -2,20 +2,24 @@
   "profiles": {
     "WSL": {
       "commandName": "WSL2",
+      "requireExactSource": false,
       "distributionName": ""
     },
     "ControlsSample": {
       "commandName": "Project",
+      "requireExactSource": false,
       "nativeDebugging": true
     },
     "UILanguage=ru": {
       "commandName": "Project",
       "commandLineArgs": "UILanguage=ru",
+      "requireExactSource": false,
       "nativeDebugging": true
     },
     "IsDark": {
       "commandName": "Project",
       "commandLineArgs": "-IsDark=true",
+      "requireExactSource": false,
       "nativeDebugging": true
     }
   }
