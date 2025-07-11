@@ -137,8 +137,11 @@ namespace Alternet.UI
         {
             var wrappedWidth = availableSize.Width;
 
-            wrappedText
-                = DrawingUtils.WrapTextToList(TextForPaint, wrappedWidth, font, dc);
+            wrappedText = DrawingUtils.WrapTextToList(
+                    TextForPaint,
+                    wrappedWidth,
+                    font,
+                    dc);
 
             var result = DrawInternal(dc, (PointD.Empty, availableSize), font);
             return result;
@@ -156,11 +159,12 @@ namespace Alternet.UI
             var textRect = rect.WithHeight(size.Height);
 
             var vertAlignment = AlignUtils.Convert(TextVerticalAlignment);
+            var horzAlignment = AlignUtils.Convert(TextHorizontalAlignment);
 
             var alignedItemRect = AlignUtils.AlignRectInRect(
                 textRect,
                 rect,
-                null,
+                horzAlignment,
                 vertAlignment);
 
             DrawInternal(dc, alignedItemRect, font, foreColor, backColor);
@@ -177,7 +181,7 @@ namespace Alternet.UI
                         rect,
                         font,
                         wrappedText,
-                        TextHorizontalAlignment.Left,
+                        TextHorizontalAlignment,
                         LineDistance,
                         foreColor,
                         backColor);

@@ -39,11 +39,6 @@ namespace Alternet.Drawing
         public ImageSet? DisabledImageSet;
 
         /// <summary>
-        /// Gets or sets source rectangle which specifies part of the image to draw.
-        /// </summary>
-        public RectI? SourceRect = null;
-
-        /// <summary>
         /// Gets whether or not to center this object vertically. Default is <c>true</c>.
         /// </summary>
         public bool CenterVert = true;
@@ -158,22 +153,16 @@ namespace Alternet.Drawing
 
             if (Stretch)
             {
-                if (SourceRect is null)
                     dc.DrawImage(image, Bounds);
-                else
-                    dc.DrawImage(image, Bounds, SourceRect.Value);
             }
             else
             {
                 if (CenterHorzOrVert)
                 {
-                    var imageRect = SourceRect ?? image.BoundsDip(control);
+                    var imageRect = image.BoundsDip(control);
                     var destRect = Bounds;
                     var centeredRect = imageRect.CenterIn(destRect, CenterHorz, CenterVert);
-                    if (SourceRect is null)
-                        dc.DrawImage(image, centeredRect.Location);
-                    else
-                        dc.DrawImage(image, centeredRect, SourceRect.Value);
+                    dc.DrawImage(image, centeredRect.Location);
                 }
                 else
                     dc.DrawImage(image, Location);

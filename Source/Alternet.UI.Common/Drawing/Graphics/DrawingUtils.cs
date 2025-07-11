@@ -16,6 +16,11 @@ namespace Alternet.UI
     public static class DrawingUtils
     {
         /// <summary>
+        /// Gets or sets space characters used to split strings when they are word wrapped.
+        /// </summary>
+        public static char[] SpaceCharsUsedToSplit = new char[] { ' ', '\u00A0' };
+
+        /// <summary>
         /// Creates <see cref="Image"/> with the size specified by <paramref name="sizeAndDrawFunc"/>
         /// and with pixels filled with <paramref name="drawAction"/>
         /// (or <paramref name="sizeAndDrawFunc"/> if it is null).
@@ -762,22 +767,22 @@ namespace Alternet.UI
         /// <param name="maxWidth">Max width of the text in device-independent units.</param>
         /// <param name="font">Text font.</param>
         /// <param name="canvas">Graphics context.</param>
+        /// <param name="splitOptions">The string split options.</param>
         /// <returns></returns>
         public static IEnumerable<string> WrapTextLineToList(
             string text,
             Coord maxWidth,
             Font font,
-            Graphics canvas)
+            Graphics canvas,
+            StringSplitOptions splitOptions = StringSplitOptions.None)
         {
             if (text is null || text.Length == 0)
             {
-                maxWidth = 0;
                 yield break;
             }
 
-            var words = text.Split(' ');
+            var words = text.Split(SpaceCharsUsedToSplit, splitOptions);
             var line = string.Empty;
-            List<string> wrappedLines = new();
 
             foreach (var word in words)
             {
@@ -800,68 +805,6 @@ namespace Alternet.UI
             Coord GetWidth(string s)
             {
                 return canvas.MeasureText(s, font).Ceiling().Width;
-            }
-        }
-
-        /// <summary>
-        /// Draws sliced image with the specified
-        /// <see cref="NinePatchImagePaintParams"/> parameters. This method can be used,
-        /// for example, for drawing complex button backgrounds using predefined templates.
-        /// </summary>
-        /// <param name="canvas"><see cref="Graphics"/> where to draw.</param>
-        /// <param name="e">Draw parameters.</param>
-        /// <remarks>
-        /// Source image is sliced into 9 pieces. All parts of the image except corners
-        /// (top-left, top-right, bottom-right, bottom-left parts) are used
-        /// by <see cref="TextureBrush"/> to fill larger destination rectangle.
-        /// </remarks>
-        /// <remarks>
-        /// Issue with details is here:
-        /// <see href="https://github.com/alternetsoft/AlternetUI/issues/115"/>.
-        /// </remarks>
-        internal static void DrawImageSliced(this Graphics canvas, NinePatchImagePaintParams e)
-        {
-            var src = e.SourceRect;
-            var dst = e.DestRect;
-            var patchSrc = e.PatchRect;
-
-            var offsetX = patchSrc.X - src.X;
-            var offsetY = patchSrc.Y - src.Y;
-
-            RectI patchDst = patchSrc;
-
-            NineRects srcNine = new(src, patchSrc);
-
-            patchDst.X = dst.X + offsetX;
-            patchDst.Y = dst.Y + offsetY;
-            patchDst.Width = dst.Width - (src.Width - patchSrc.Width);
-            patchDst.Height = dst.Height - (src.Height - patchSrc.Height);
-
-            NineRects dstNine = new(dst, patchDst);
-
-            CopyRect(srcNine.Center, dstNine.Center);
-            CopyRect(srcNine.TopCenter, dstNine.TopCenter);
-            CopyRect(srcNine.BottomCenter, dstNine.BottomCenter);
-            CopyRect(srcNine.CenterLeft, dstNine.CenterLeft);
-            CopyRect(srcNine.CenterRight, dstNine.CenterRight);
-
-            canvas.DrawImage(e.Image, dstNine.TopLeft, srcNine.TopLeft, GraphicsUnit.Pixel);
-            canvas.DrawImage(e.Image, dstNine.TopRight, srcNine.TopRight, GraphicsUnit.Pixel);
-            canvas.DrawImage(e.Image, dstNine.BottomLeft, srcNine.BottomLeft, GraphicsUnit.Pixel);
-            canvas.DrawImage(e.Image, dstNine.BottomRight, srcNine.BottomRight, GraphicsUnit.Pixel);
-
-            void CopyRect(RectI srcRect, RectI dstRect)
-            {
-                if (e.Tile)
-                {
-                    var subImage = e.Image.GetSubBitmap(srcRect);
-                    var brush = subImage.AsBrush;
-                    canvas.FillRectangle(brush, dstRect, GraphicsUnit.Pixel);
-                }
-                else
-                {
-                    canvas.DrawImage(e.Image, dstRect, srcRect, GraphicsUnit.Pixel);
-                }
             }
         }
     }

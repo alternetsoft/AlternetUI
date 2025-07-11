@@ -151,14 +151,6 @@ namespace DrawingSample
 
             if (drawTexts)
             {
-                dc.DrawRotatedText(
-                            "Rotated Text",
-                            innerFrame.Location.OffsetBy(450, 290),
-                            Control.DefaultFont.Scaled(3),
-                            Color.Red,
-                            Color.YellowGreen,
-                            250);
-
                 dc.DrawText(
                     "AlterNET UI",
                     Control.DefaultFont.Scaled(1.5),

@@ -1088,6 +1088,13 @@ namespace Alternet::UI
         All = 15,
     };
     
+    enum class CheckedSpreadMode
+    {
+        None = 0,
+        SingleSibling = 1,
+        SingleInGroup = 2,
+    };
+    
     enum class CheckState
     {
         Unchecked = 0,

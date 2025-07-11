@@ -113,83 +113,6 @@ ALTERNET_UI_API void* DrawingContext_GetHandle_(DrawingContext* obj)
     #endif
 }
 
-ALTERNET_UI_API void DrawingContext_DrawRotatedText_(DrawingContext* obj, const char16_t* text, PointD location, Font* font, Color foreColor, Color backColor, double angle)
-{
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    MarshalExceptions<void>([&](){
-    #endif
-        obj->DrawRotatedText(text, location, font, foreColor, backColor, angle);
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    });
-    #endif
-}
-
-ALTERNET_UI_API void DrawingContext_DrawRotatedTextI_(DrawingContext* obj, const char16_t* text, PointI location, Font* font, Color foreColor, Color backColor, double angle)
-{
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    MarshalExceptions<void>([&](){
-    #endif
-        obj->DrawRotatedTextI(text, location, font, foreColor, backColor, angle);
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    });
-    #endif
-}
-
-ALTERNET_UI_API Image* DrawingContext_GetAsBitmapI_(DrawingContext* obj, RectI subrect)
-{
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    return MarshalExceptions<Image*>([&](){
-    #endif
-        return obj->GetAsBitmapI(subrect);
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    });
-    #endif
-}
-
-ALTERNET_UI_API c_bool DrawingContext_Blit_(DrawingContext* obj, PointD destPt, SizeD sz, DrawingContext* source, PointD srcPt, int rop, c_bool useMask, PointD srcPtMask)
-{
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    return MarshalExceptions<c_bool>([&](){
-    #endif
-        return obj->Blit(destPt, sz, source, srcPt, rop, useMask, srcPtMask);
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    });
-    #endif
-}
-
-ALTERNET_UI_API c_bool DrawingContext_StretchBlit_(DrawingContext* obj, PointD dstPt, SizeD dstSize, DrawingContext* source, PointD srcPt, SizeD srcSize, int rop, c_bool useMask, PointD srcMaskPt)
-{
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    return MarshalExceptions<c_bool>([&](){
-    #endif
-        return obj->StretchBlit(dstPt, dstSize, source, srcPt, srcSize, rop, useMask, srcMaskPt);
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    });
-    #endif
-}
-
-ALTERNET_UI_API c_bool DrawingContext_BlitI_(DrawingContext* obj, PointI destPt, SizeI sz, DrawingContext* source, PointI srcPt, int rop, c_bool useMask, PointI srcPtMask)
-{
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    return MarshalExceptions<c_bool>([&](){
-    #endif
-        return obj->BlitI(destPt, sz, source, srcPt, rop, useMask, srcPtMask);
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    });
-    #endif
-}
-
-ALTERNET_UI_API c_bool DrawingContext_StretchBlitI_(DrawingContext* obj, PointI dstPt, SizeI dstSize, DrawingContext* source, PointI srcPt, SizeI srcSize, int rop, c_bool useMask, PointI srcMaskPt)
-{
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    return MarshalExceptions<c_bool>([&](){
-    #endif
-        return obj->StretchBlitI(dstPt, dstSize, source, srcPt, srcSize, rop, useMask, srcMaskPt);
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    });
-    #endif
-}
-
 ALTERNET_UI_API void DrawingContext_DestroyClippingRegion_(DrawingContext* obj)
 {
     #if !defined(__WXMSW__) || defined(_DEBUG)
@@ -262,17 +185,6 @@ ALTERNET_UI_API void DrawingContext_ImageFromGenericImageDC_(Image* image, void*
     MarshalExceptions<void>([&](){
     #endif
         DrawingContext::ImageFromGenericImageDC(image, source, dc);
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    });
-    #endif
-}
-
-ALTERNET_UI_API RectD_C DrawingContext_GetTextExtent_(DrawingContext* obj, const char16_t* text, Font* font, void* control)
-{
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    return MarshalExceptions<RectD_C>([&](){
-    #endif
-        return obj->GetTextExtent(text, font, control);
     #if !defined(__WXMSW__) || defined(_DEBUG)
     });
     #endif
@@ -443,17 +355,6 @@ ALTERNET_UI_API void DrawingContext_DrawEllipse_(DrawingContext* obj, Pen* pen, 
     #endif
 }
 
-ALTERNET_UI_API void DrawingContext_FloodFill_(DrawingContext* obj, Brush* brush, PointD point)
-{
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    MarshalExceptions<void>([&](){
-    #endif
-        obj->FloodFill(brush, point);
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    });
-    #endif
-}
-
 ALTERNET_UI_API void DrawingContext_DrawPath_(DrawingContext* obj, Pen* pen, GraphicsPath* path)
 {
     #if !defined(__WXMSW__) || defined(_DEBUG)
@@ -493,28 +394,6 @@ ALTERNET_UI_API void DrawingContext_DrawImageAtRect_(DrawingContext* obj, Image*
     MarshalExceptions<void>([&](){
     #endif
         obj->DrawImageAtRect(image, destinationRect, useMask);
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    });
-    #endif
-}
-
-ALTERNET_UI_API void DrawingContext_DrawImagePortionAtRect_(DrawingContext* obj, Image* image, RectD destinationRect, RectD sourceRect)
-{
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    MarshalExceptions<void>([&](){
-    #endif
-        obj->DrawImagePortionAtRect(image, destinationRect, sourceRect);
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    });
-    #endif
-}
-
-ALTERNET_UI_API void DrawingContext_DrawImagePortionAtPixelRect_(DrawingContext* obj, Image* image, RectI destinationRect, RectI sourceRect)
-{
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    MarshalExceptions<void>([&](){
-    #endif
-        obj->DrawImagePortionAtPixelRect(image, destinationRect, sourceRect);
     #if !defined(__WXMSW__) || defined(_DEBUG)
     });
     #endif
@@ -702,28 +581,6 @@ ALTERNET_UI_API void DrawingContext_FillRectangles_(DrawingContext* obj, Brush* 
     MarshalExceptions<void>([&](){
     #endif
         obj->FillRectangles(brush, rects, rectsCount);
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    });
-    #endif
-}
-
-ALTERNET_UI_API Color_C DrawingContext_GetPixel_(DrawingContext* obj, PointD p)
-{
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    return MarshalExceptions<Color_C>([&](){
-    #endif
-        return obj->GetPixel(p);
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    });
-    #endif
-}
-
-ALTERNET_UI_API void DrawingContext_SetPixel_(DrawingContext* obj, PointD p, Pen* pen)
-{
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    MarshalExceptions<void>([&](){
-    #endif
-        obj->SetPixel(p, pen);
     #if !defined(__WXMSW__) || defined(_DEBUG)
     });
     #endif

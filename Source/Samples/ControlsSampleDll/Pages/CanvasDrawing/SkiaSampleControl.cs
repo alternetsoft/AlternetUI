@@ -73,10 +73,6 @@ namespace Alternet.UI
                 Color.Red,
                 Color.LightGreen);
 
-            dc.SetPixel(5, 0, Color.Red);
-            dc.SetPixel(160, 0, Color.Red);
-            dc.SetPixel(50, 150, Color.Red);
-
             dc.DrawRectangle(Color.Red.AsPen, rect);
 
             dc.DrawImage(image, (50, 150));

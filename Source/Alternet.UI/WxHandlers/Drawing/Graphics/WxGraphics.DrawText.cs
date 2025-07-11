@@ -17,10 +17,13 @@ namespace Alternet.Drawing
             if (text is null || text.Length == 0)
                 return SizeD.Empty;
 
+            text = text.Replace(' ', '\u00A0');
+
             var result = dc.GetTextExtentSimple(
                 text,
                 (UI.Native.Font)font.Handler,
                 default);
+
             return result;
         }
 
@@ -42,36 +45,6 @@ namespace Alternet.Drawing
                 (UI.Native.Font)font.Handler,
                 controlPtr);
             return result;
-        }
-
-        /// <inheritdoc/>
-        public override void DrawRotatedText(
-            string text,
-            PointD location,
-            Font font,
-            Color foreColor,
-            Color backColor,
-            Coord angle,
-            GraphicsUnit unit = GraphicsUnit.Dip)
-        {
-            DebugTextAssert(text);
-            DebugFontAssert(font);
-            if (!foreColor.IsOk)
-                return;
-
-            font = TransformFontForDrawText(font);
-            location = TransformPointForDrawText(location);
-
-            ToPixels(ref location, unit);
-
-            font = TransformFontForDrawText(font);
-            dc.DrawRotatedTextI(
-                text,
-                location.ToPoint(),
-                (UI.Native.Font)font.Handler,
-                foreColor,
-                backColor,
-                angle);
         }
 
         /// <inheritdoc/>
@@ -105,6 +78,9 @@ namespace Alternet.Drawing
             DebugFontAssert(font);
             if (!foreColor.IsOk)
                 return;
+
+            text = text.Replace(' ', '\u00A0');
+
             font = TransformFontForDrawText(font);
             dc.DrawText(
                 text,
@@ -117,7 +93,8 @@ namespace Alternet.Drawing
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         private bool GetNoTransformForDrawText()
         {
-            return App.IsWindowsOS || !HasTransform || WxGlobals.NoTransformForDrawText;
+            return true;
+            /* return App.IsWindowsOS || !HasTransform || WxGlobals.NoTransformForDrawText; */
         }
 
         private PointD TransformPointForDrawText(PointD value)

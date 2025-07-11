@@ -474,12 +474,12 @@ ALTERNET_UI_API void Application_SetTopWindow_(Application* obj, void* window)
     #endif
 }
 
-ALTERNET_UI_API void Application_SetUseBestVisual_(Application* obj, c_bool flag, c_bool forceTrueColour)
+ALTERNET_UI_API void Application_SetUseBestVisual_(Application* obj, c_bool flag, c_bool forceTrueColor)
 {
     #if !defined(__WXMSW__) || defined(_DEBUG)
     MarshalExceptions<void>([&](){
     #endif
-        obj->SetUseBestVisual(flag, forceTrueColour);
+        obj->SetUseBestVisual(flag, forceTrueColor);
     #if !defined(__WXMSW__) || defined(_DEBUG)
     });
     #endif

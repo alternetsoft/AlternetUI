@@ -68,7 +68,11 @@ namespace DrawingSample
                 dc.DrawText(factor * 100 + "%", font, Brushes.Black, new PointD(x, y));
 
                 var sourceRect = new RectD(new PointD(x, y + textHeight + spacing / 2), magnifiedRect.Size * factor);
-                dc.DrawImage(image, sourceRect, magnifiedRect);
+                var pixels = magnifiedRect.PixelFromDip(control.ScaleFactor);
+
+                var subImage = image.GetSubBitmap(pixels);
+
+                dc.DrawImage(subImage, sourceRect);
 
                 x += spacing + sourceRect.Width;
             }

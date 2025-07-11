@@ -12,7 +12,6 @@ namespace PaintSample
 
         PenTool? pen;
         EraserTool? eraser;
-        FloodFillTool? floodFill;
         AirbrushTool? airbrush;
 
         public Tools(Func<PaintSampleDocument> getDocument, ISelectedColors selectedColors, UndoService undoService, CanvasControl canvasControl)
@@ -25,7 +24,6 @@ namespace PaintSample
 
         public PenTool Pen => pen ??= new PenTool(getDocument, selectedColors, undoService);
         public EraserTool Eraser => eraser ??= new EraserTool(getDocument, selectedColors, undoService);
-        public FloodFillTool FloodFill => floodFill ??= new FloodFillTool(getDocument, selectedColors, undoService);
         public AirbrushTool Airbrush => airbrush ??= new AirbrushTool(getDocument, selectedColors, undoService);
 
         public IEnumerable<Tool> AllTools

@@ -10,7 +10,7 @@ using Alternet.UI;
 namespace Alternet.Drawing
 {
     /// <summary>
-    /// Contains methods and properties which allow to painton the drawing context.
+    /// Contains methods and properties which allow to paint on the drawing context.
     /// </summary>
     public interface IGraphics
     {
@@ -31,39 +31,6 @@ namespace Alternet.Drawing
 
         /// <inheritdoc cref="Graphics.NativeObject"/>
         object NativeObject { get; }
-
-        /// <inheritdoc cref="Graphics.DrawRotatedText"/>
-        void DrawRotatedText(
-            string text,
-            PointD location,
-            Font font,
-            Color foreColor,
-            Color backColor,
-            Coord angle,
-            GraphicsUnit unit = GraphicsUnit.Dip);
-
-        /// <inheritdoc cref="Graphics.Blit"/>
-        bool Blit(
-            PointD destPt,
-            SizeD sz,
-            Graphics source,
-            PointD srcPt,
-            RasterOperationMode rop = RasterOperationMode.Copy,
-            bool useMask = false,
-            PointD? srcPtMask = null,
-            GraphicsUnit unit = GraphicsUnit.Dip);
-
-        /// <inheritdoc cref="Graphics.StretchBlit"/>
-        bool StretchBlit(
-            PointD dstPt,
-            SizeD dstSize,
-            Graphics source,
-            PointD srcPt,
-            SizeD srcSize,
-            RasterOperationMode rop = RasterOperationMode.Copy,
-            bool useMask = false,
-            PointD? srcPtMask = null,
-            GraphicsUnit unit = GraphicsUnit.Dip);
 
         /// <inheritdoc cref="Graphics.RoundedRectangle"/>
         void RoundedRectangle(
@@ -170,9 +137,6 @@ namespace Alternet.Drawing
         /// <inheritdoc cref="Graphics.FillEllipse"/>
         void FillEllipse(Brush brush, RectD bounds);
 
-        /// <inheritdoc cref="Graphics.FloodFill"/>
-        void FloodFill(Brush brush, PointD point);
-
         /// <inheritdoc cref="Graphics.DrawRectangle"/>
         void DrawRectangle(Pen pen, RectD rectangle);
 
@@ -199,25 +163,6 @@ namespace Alternet.Drawing
 
         /// <inheritdoc cref="Graphics.DrawImage(Image, RectD)"/>
         void DrawImage(Image image, RectD destinationRect);
-
-        /// <inheritdoc cref="Graphics.DrawImage(Image, RectD, RectD)"/>
-        void DrawImage(Image image, RectD destinationRect, RectD sourceRect);
-
-        /// <inheritdoc cref="Graphics.SetPixel(PointD, Pen)"/>
-        void SetPixel(PointD point, Pen pen);
-
-        /// <inheritdoc cref="Graphics.SetPixel(Coord, Coord, Pen)"/>
-        void SetPixel(Coord x, Coord y, Pen pen);
-
-        /// <inheritdoc cref="Graphics.SetPixel(Coord, Coord, Color)"/>
-        void SetPixel(Coord x, Coord y, Color color);
-
-        /// <inheritdoc cref="Graphics.DrawImage(Image,RectD,RectD,GraphicsUnit)"/>
-        void DrawImage(
-            Image image,
-            RectD destinationRect,
-            RectD sourceRect,
-            GraphicsUnit unit);
 
         /// <inheritdoc cref="Graphics.DrawText(string, Font, Brush, PointD)"/>
         void DrawText(string text, Font font, Brush brush, PointD origin);

@@ -9,7 +9,7 @@ using Alternet.UI;
 namespace Alternet.Drawing
 {
     /// <summary>
-    /// Drawing context which raises <see cref="NotImplementedException"/> exeption
+    /// Drawing context which raises <see cref="NotImplementedException"/> exception
     /// on every method or property call.
     /// </summary>
     public class NotImplementedGraphics : Graphics
@@ -61,20 +61,6 @@ namespace Alternet.Drawing
             {
                 throw new NotImplementedException();
             }
-        }
-
-        /// <inheritdoc/>
-        public override bool Blit(
-            PointD destPt,
-            SizeD sz,
-            Graphics source,
-            PointD srcPt,
-            RasterOperationMode rop = RasterOperationMode.Copy,
-            bool useMask = false,
-            PointD? srcPtMask = null,
-            GraphicsUnit unit = GraphicsUnit.Dip)
-        {
-            throw new NotImplementedException();
         }
 
         /// <inheritdoc/>
@@ -132,18 +118,6 @@ namespace Alternet.Drawing
         }
 
         /// <inheritdoc/>
-        public override void DrawImage(Image image, RectD destinationRect, RectD sourceRect)
-        {
-            throw new NotImplementedException();
-        }
-
-        /// <inheritdoc/>
-        public override void DrawImage(Image image, RectD destinationRect, RectD sourceRect, GraphicsUnit unit)
-        {
-            throw new NotImplementedException();
-        }
-
-        /// <inheritdoc/>
         public override void DrawLine(Pen pen, PointD a, PointD b)
         {
             throw new NotImplementedException();
@@ -187,19 +161,6 @@ namespace Alternet.Drawing
 
         /// <inheritdoc/>
         public override void DrawRectangles(Pen pen, RectD[] rects)
-        {
-            throw new NotImplementedException();
-        }
-
-        /// <inheritdoc/>
-        public override void DrawRotatedText(
-            string text,
-            PointD location,
-            Font font,
-            Color foreColor,
-            Color backColor,
-            Coord angle,
-            GraphicsUnit unit = GraphicsUnit.Dip)
         {
             throw new NotImplementedException();
         }
@@ -289,12 +250,6 @@ namespace Alternet.Drawing
         }
 
         /// <inheritdoc/>
-        public override void FloodFill(Brush brush, PointD point)
-        {
-            throw new NotImplementedException();
-        }
-
-        /// <inheritdoc/>
         public override RectD GetClippingBox()
         {
             throw new NotImplementedException();
@@ -344,39 +299,6 @@ namespace Alternet.Drawing
 
         /// <inheritdoc/>
         public override void SetClippingRegion(RectD rect)
-        {
-            throw new NotImplementedException();
-        }
-
-        /// <inheritdoc/>
-        public override void SetPixel(PointD point, Pen pen)
-        {
-            throw new NotImplementedException();
-        }
-
-        /// <inheritdoc/>
-        public override void SetPixel(Coord x, Coord y, Pen pen)
-        {
-            throw new NotImplementedException();
-        }
-
-        /// <inheritdoc/>
-        public override void SetPixel(Coord x, Coord y, Color color)
-        {
-            throw new NotImplementedException();
-        }
-
-        /// <inheritdoc/>
-        public override bool StretchBlit(
-            PointD dstPt,
-            SizeD dstSize,
-            Graphics source,
-            PointD srcPt,
-            SizeD srcSize,
-            RasterOperationMode rop = RasterOperationMode.Copy,
-            bool useMask = false,
-            PointD? srcPtMask = null,
-            GraphicsUnit unit = GraphicsUnit.Dip)
         {
             throw new NotImplementedException();
         }

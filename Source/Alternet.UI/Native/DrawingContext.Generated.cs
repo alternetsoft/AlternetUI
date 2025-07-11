@@ -97,51 +97,6 @@ namespace Alternet.UI.Native
             return NativeApi.DrawingContext_GetHandle_(NativePointer);
         }
         
-        public void DrawRotatedText(string text, Alternet.Drawing.PointD location, Font font, Alternet.Drawing.Color foreColor, Alternet.Drawing.Color backColor, double angle)
-        {
-            CheckDisposed();
-            NativeApi.DrawingContext_DrawRotatedText_(NativePointer, text, location, font.NativePointer, foreColor, backColor, angle);
-        }
-        
-        public void DrawRotatedTextI(string text, Alternet.Drawing.PointI location, Font font, Alternet.Drawing.Color foreColor, Alternet.Drawing.Color backColor, double angle)
-        {
-            CheckDisposed();
-            NativeApi.DrawingContext_DrawRotatedTextI_(NativePointer, text, location, font.NativePointer, foreColor, backColor, angle);
-        }
-        
-        public Image GetAsBitmapI(Alternet.Drawing.RectI subrect)
-        {
-            CheckDisposed();
-            var _nnn = NativeApi.DrawingContext_GetAsBitmapI_(NativePointer, subrect);
-            var _mmm = NativeObject.GetFromNativePointer<Image>(_nnn, p => new Image(p))!;
-            ReleaseNativeObjectPointer(_nnn);
-            return _mmm;
-        }
-        
-        public bool Blit(Alternet.Drawing.PointD destPt, Alternet.Drawing.SizeD sz, DrawingContext source, Alternet.Drawing.PointD srcPt, int rop, bool useMask, Alternet.Drawing.PointD srcPtMask)
-        {
-            CheckDisposed();
-            return NativeApi.DrawingContext_Blit_(NativePointer, destPt, sz, source.NativePointer, srcPt, rop, useMask, srcPtMask);
-        }
-        
-        public bool StretchBlit(Alternet.Drawing.PointD dstPt, Alternet.Drawing.SizeD dstSize, DrawingContext source, Alternet.Drawing.PointD srcPt, Alternet.Drawing.SizeD srcSize, int rop, bool useMask, Alternet.Drawing.PointD srcMaskPt)
-        {
-            CheckDisposed();
-            return NativeApi.DrawingContext_StretchBlit_(NativePointer, dstPt, dstSize, source.NativePointer, srcPt, srcSize, rop, useMask, srcMaskPt);
-        }
-        
-        public bool BlitI(Alternet.Drawing.PointI destPt, Alternet.Drawing.SizeI sz, DrawingContext source, Alternet.Drawing.PointI srcPt, int rop, bool useMask, Alternet.Drawing.PointI srcPtMask)
-        {
-            CheckDisposed();
-            return NativeApi.DrawingContext_BlitI_(NativePointer, destPt, sz, source.NativePointer, srcPt, rop, useMask, srcPtMask);
-        }
-        
-        public bool StretchBlitI(Alternet.Drawing.PointI dstPt, Alternet.Drawing.SizeI dstSize, DrawingContext source, Alternet.Drawing.PointI srcPt, Alternet.Drawing.SizeI srcSize, int rop, bool useMask, Alternet.Drawing.PointI srcMaskPt)
-        {
-            CheckDisposed();
-            return NativeApi.DrawingContext_StretchBlitI_(NativePointer, dstPt, dstSize, source.NativePointer, srcPt, srcSize, rop, useMask, srcMaskPt);
-        }
-        
         public void DestroyClippingRegion()
         {
             CheckDisposed();
@@ -180,12 +135,6 @@ namespace Alternet.UI.Native
         public static void ImageFromGenericImageDC(Image image, System.IntPtr source, DrawingContext dc)
         {
             NativeApi.DrawingContext_ImageFromGenericImageDC_(image.NativePointer, source, dc.NativePointer);
-        }
-        
-        public Alternet.Drawing.RectD GetTextExtent(string text, Font font, System.IntPtr control)
-        {
-            CheckDisposed();
-            return NativeApi.DrawingContext_GetTextExtent_(NativePointer, text, font.NativePointer, control);
         }
         
         public Alternet.Drawing.SizeD GetTextExtentSimple(string text, Font font, System.IntPtr control)
@@ -282,12 +231,6 @@ namespace Alternet.UI.Native
             NativeApi.DrawingContext_DrawEllipse_(NativePointer, pen.NativePointer, bounds);
         }
         
-        public void FloodFill(Brush brush, Alternet.Drawing.PointD point)
-        {
-            CheckDisposed();
-            NativeApi.DrawingContext_FloodFill_(NativePointer, brush.NativePointer, point);
-        }
-        
         public void DrawPath(Pen pen, GraphicsPath path)
         {
             CheckDisposed();
@@ -310,18 +253,6 @@ namespace Alternet.UI.Native
         {
             CheckDisposed();
             NativeApi.DrawingContext_DrawImageAtRect_(NativePointer, image.NativePointer, destinationRect, useMask);
-        }
-        
-        public void DrawImagePortionAtRect(Image image, Alternet.Drawing.RectD destinationRect, Alternet.Drawing.RectD sourceRect)
-        {
-            CheckDisposed();
-            NativeApi.DrawingContext_DrawImagePortionAtRect_(NativePointer, image.NativePointer, destinationRect, sourceRect);
-        }
-        
-        public void DrawImagePortionAtPixelRect(Image image, Alternet.Drawing.RectI destinationRect, Alternet.Drawing.RectI sourceRect)
-        {
-            CheckDisposed();
-            NativeApi.DrawingContext_DrawImagePortionAtPixelRect_(NativePointer, image.NativePointer, destinationRect, sourceRect);
         }
         
         public void SetTransformValues(double m11, double m12, double m21, double m22, double dx, double dy)
@@ -426,18 +357,6 @@ namespace Alternet.UI.Native
             NativeApi.DrawingContext_FillRectangles_(NativePointer, brush.NativePointer, rects, rects.Length);
         }
         
-        public Alternet.Drawing.Color GetPixel(Alternet.Drawing.PointD p)
-        {
-            CheckDisposed();
-            return NativeApi.DrawingContext_GetPixel_(NativePointer, p);
-        }
-        
-        public void SetPixel(Alternet.Drawing.PointD p, Pen pen)
-        {
-            CheckDisposed();
-            NativeApi.DrawingContext_SetPixel_(NativePointer, p, pen.NativePointer);
-        }
-        
         
         [SuppressUnmanagedCodeSecurity]
         public class NativeApi : NativeApiProvider
@@ -472,27 +391,6 @@ namespace Alternet.UI.Native
             public static extern System.IntPtr DrawingContext_GetHandle_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void DrawingContext_DrawRotatedText_(IntPtr obj, string text, Alternet.Drawing.PointD location, IntPtr font, NativeApiTypes.Color foreColor, NativeApiTypes.Color backColor, double angle);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void DrawingContext_DrawRotatedTextI_(IntPtr obj, string text, Alternet.Drawing.PointI location, IntPtr font, NativeApiTypes.Color foreColor, NativeApiTypes.Color backColor, double angle);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern IntPtr DrawingContext_GetAsBitmapI_(IntPtr obj, Alternet.Drawing.RectI subrect);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern bool DrawingContext_Blit_(IntPtr obj, Alternet.Drawing.PointD destPt, Alternet.Drawing.SizeD sz, IntPtr source, Alternet.Drawing.PointD srcPt, int rop, bool useMask, Alternet.Drawing.PointD srcPtMask);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern bool DrawingContext_StretchBlit_(IntPtr obj, Alternet.Drawing.PointD dstPt, Alternet.Drawing.SizeD dstSize, IntPtr source, Alternet.Drawing.PointD srcPt, Alternet.Drawing.SizeD srcSize, int rop, bool useMask, Alternet.Drawing.PointD srcMaskPt);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern bool DrawingContext_BlitI_(IntPtr obj, Alternet.Drawing.PointI destPt, Alternet.Drawing.SizeI sz, IntPtr source, Alternet.Drawing.PointI srcPt, int rop, bool useMask, Alternet.Drawing.PointI srcPtMask);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern bool DrawingContext_StretchBlitI_(IntPtr obj, Alternet.Drawing.PointI dstPt, Alternet.Drawing.SizeI dstSize, IntPtr source, Alternet.Drawing.PointI srcPt, Alternet.Drawing.SizeI srcSize, int rop, bool useMask, Alternet.Drawing.PointI srcMaskPt);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void DrawingContext_DestroyClippingRegion_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
@@ -512,9 +410,6 @@ namespace Alternet.UI.Native
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void DrawingContext_ImageFromGenericImageDC_(IntPtr image, System.IntPtr source, IntPtr dc);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern Alternet.Drawing.RectD DrawingContext_GetTextExtent_(IntPtr obj, string text, IntPtr font, System.IntPtr control);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern Alternet.Drawing.SizeD DrawingContext_GetTextExtentSimple_(IntPtr obj, string text, IntPtr font, System.IntPtr control);
@@ -562,9 +457,6 @@ namespace Alternet.UI.Native
             public static extern void DrawingContext_DrawEllipse_(IntPtr obj, IntPtr pen, Alternet.Drawing.RectD bounds);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void DrawingContext_FloodFill_(IntPtr obj, IntPtr brush, Alternet.Drawing.PointD point);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void DrawingContext_DrawPath_(IntPtr obj, IntPtr pen, IntPtr path);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
@@ -575,12 +467,6 @@ namespace Alternet.UI.Native
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void DrawingContext_DrawImageAtRect_(IntPtr obj, IntPtr image, Alternet.Drawing.RectD destinationRect, bool useMask);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void DrawingContext_DrawImagePortionAtRect_(IntPtr obj, IntPtr image, Alternet.Drawing.RectD destinationRect, Alternet.Drawing.RectD sourceRect);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void DrawingContext_DrawImagePortionAtPixelRect_(IntPtr obj, IntPtr image, Alternet.Drawing.RectI destinationRect, Alternet.Drawing.RectI sourceRect);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void DrawingContext_SetTransformValues_(IntPtr obj, double m11, double m12, double m21, double m22, double dx, double dy);
@@ -632,12 +518,6 @@ namespace Alternet.UI.Native
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void DrawingContext_FillRectangles_(IntPtr obj, IntPtr brush, Alternet.Drawing.RectD[] rects, int rectsCount);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern NativeApiTypes.Color DrawingContext_GetPixel_(IntPtr obj, Alternet.Drawing.PointD p);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void DrawingContext_SetPixel_(IntPtr obj, Alternet.Drawing.PointD p, IntPtr pen);
             
         }
     }

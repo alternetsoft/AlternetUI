@@ -249,6 +249,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Remove="..\PaintSample\Classes\Tools\FloodFill\FloodFillTool.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <EmbeddedResource Remove="Resources\SamplePandaPdf.pdf" />
   </ItemGroup>
 

@@ -14,13 +14,6 @@ void SetInterpolationMode(InterpolationMode value);
 static DrawingContext* CreateMemoryDC(double scaleFactor);
 static DrawingContext* CreateMemoryDCFromImage(Image* image);
 void* GetHandle();
-void DrawRotatedText(const string& text, const PointD& location, Font* font, const Color& foreColor, const Color& backColor, double angle);
-void DrawRotatedTextI(const string& text, const PointI& location, Font* font, const Color& foreColor, const Color& backColor, double angle);
-Image* GetAsBitmapI(const RectI& subrect);
-bool Blit(const PointD& destPt, const SizeD& sz, DrawingContext* source, const PointD& srcPt, int rop, bool useMask, const PointD& srcPtMask);
-bool StretchBlit(const PointD& dstPt, const SizeD& dstSize, DrawingContext* source, const PointD& srcPt, const SizeD& srcSize, int rop, bool useMask, const PointD& srcMaskPt);
-bool BlitI(const PointI& destPt, const SizeI& sz, DrawingContext* source, const PointI& srcPt, int rop, bool useMask, const PointI& srcPtMask);
-bool StretchBlitI(const PointI& dstPt, const SizeI& dstSize, DrawingContext* source, const PointI& srcPt, const SizeI& srcSize, int rop, bool useMask, const PointI& srcMaskPt);
 void DestroyClippingRegion();
 void SetClippingRegion(const RectD& rect);
 RectD GetClippingBox();
@@ -28,7 +21,6 @@ void DrawText(const string& text, const PointD& location, Font* font, const Colo
 SizeI GetDpi();
 static void ImageFromDrawingContext(Image* image, int width, int height, DrawingContext* dc);
 static void ImageFromGenericImageDC(Image* image, void* source, DrawingContext* dc);
-RectD GetTextExtent(const string& text, Font* font, void* control);
 SizeD GetTextExtentSimple(const string& text, Font* font, void* control);
 static DrawingContext* FromImage(Image* image);
 static DrawingContext* FromScreen();
@@ -44,13 +36,10 @@ void FillRectangleI(Brush* brush, const RectI& rectangle);
 void DrawRectangle(Pen* pen, const RectD& rectangle);
 void FillEllipse(Brush* brush, const RectD& bounds);
 void DrawEllipse(Pen* pen, const RectD& bounds);
-void FloodFill(Brush* brush, const PointD& point);
 void DrawPath(Pen* pen, GraphicsPath* path);
 void FillPath(Brush* brush, GraphicsPath* path);
 void DrawImageAtPoint(Image* image, const PointD& origin, bool useMask);
 void DrawImageAtRect(Image* image, const RectD& destinationRect, bool useMask);
-void DrawImagePortionAtRect(Image* image, const RectD& destinationRect, const RectD& sourceRect);
-void DrawImagePortionAtPixelRect(Image* image, const RectI& destinationRect, const RectI& sourceRect);
 void SetTransformValues(double m11, double m12, double m21, double m22, double dx, double dy);
 void DrawLine(Pen* pen, const PointD& a, const PointD& b);
 void DrawLines(Pen* pen, PointD* points, int pointsCount);
@@ -68,8 +57,6 @@ void DrawPolygon(Pen* pen, PointD* points, int pointsCount);
 void FillPolygon(Brush* brush, PointD* points, int pointsCount, FillMode fillMode);
 void DrawRectangles(Pen* pen, RectD* rects, int rectsCount);
 void FillRectangles(Brush* brush, RectD* rects, int rectsCount);
-Color GetPixel(const PointD& p);
-void SetPixel(const PointD& p, Pen* pen);
 
 private:
 DrawingContext() {}

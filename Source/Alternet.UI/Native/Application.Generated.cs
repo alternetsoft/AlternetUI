@@ -320,10 +320,10 @@ namespace Alternet.UI.Native
             NativeApi.Application_SetTopWindow_(NativePointer, window);
         }
         
-        public void SetUseBestVisual(bool flag, bool forceTrueColour)
+        public void SetUseBestVisual(bool flag, bool forceTrueColor)
         {
             CheckDisposed();
-            NativeApi.Application_SetUseBestVisual_(NativePointer, flag, forceTrueColour);
+            NativeApi.Application_SetUseBestVisual_(NativePointer, flag, forceTrueColor);
         }
         
         static GCHandle eventCallbackGCHandle;
@@ -571,7 +571,7 @@ namespace Alternet.UI.Native
             public static extern void Application_SetTopWindow_(IntPtr obj, System.IntPtr window);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void Application_SetUseBestVisual_(IntPtr obj, bool flag, bool forceTrueColour);
+            public static extern void Application_SetUseBestVisual_(IntPtr obj, bool flag, bool forceTrueColor);
             
         }
     }

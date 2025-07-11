@@ -77,97 +77,11 @@ namespace Alternet.Drawing
         }
 
         /// <inheritdoc/>
-        public override bool Blit(
-            PointD destPt,
-            SizeD sz,
-            Graphics source,
-            PointD srcPt,
-            RasterOperationMode rop = RasterOperationMode.Copy,
-            bool useMask = false,
-            PointD? srcPtMask = null,
-            GraphicsUnit unit = GraphicsUnit.Dip)
-        {
-            var srcPtMaskValue = srcPtMask ?? PointI.MinusOne;
-
-            if (unit == GraphicsUnit.Pixel)
-            {
-                var result = dc.BlitI(
-                            destPt.ToPoint(),
-                            sz.ToSize(),
-                            (UI.Native.DrawingContext)source.NativeObject,
-                            srcPt.ToPoint(),
-                            (int)rop,
-                            useMask,
-                            srcPtMaskValue.ToPoint());
-                return result;
-            }
-
-            ToDip(ref destPt, unit);
-            ToDip(ref sz, unit);
-            ToDip(ref srcPt, unit);
-
-            if (srcPtMaskValue != PointI.MinusOne)
-                ToDip(ref srcPtMaskValue, unit);
-
-            return dc.Blit(
-                        destPt,
-                        sz,
-                        (UI.Native.DrawingContext)source.NativeObject,
-                        srcPt,
-                        (int)rop,
-                        useMask,
-                        srcPtMaskValue);
-        }
-
-        /// <inheritdoc/>
-        public override bool StretchBlit(
-            PointD dstPt,
-            SizeD dstSize,
-            Graphics source,
-            PointD srcPt,
-            SizeD srcSize,
-            RasterOperationMode rop = RasterOperationMode.Copy,
-            bool useMask = false,
-            PointD? srcPtMask = null,
-            GraphicsUnit unit = GraphicsUnit.Dip)
-        {
-            var srcPtMaskValue = srcPtMask ?? PointI.MinusOne;
-
-            if (unit == GraphicsUnit.Pixel)
-            {
-                var result = dc.StretchBlitI(
-                    dstPt.ToPoint(),
-                    dstSize.ToSize(),
-                    (UI.Native.DrawingContext)source.NativeObject,
-                    srcPt.ToPoint(),
-                    srcSize.ToSize(),
-                    (int)rop,
-                    useMask,
-                    srcPtMaskValue.ToPoint());
-                return result;
-            }
-
-            ToDip(ref dstPt, unit);
-            ToDip(ref dstSize, unit);
-            ToDip(ref srcPt, unit);
-            ToDip(ref srcSize, unit);
-
-            if (srcPtMaskValue != PointI.MinusOne)
-                ToDip(ref srcPtMaskValue, unit);
-
-            return dc.StretchBlit(
-                dstPt,
-                dstSize,
-                (UI.Native.DrawingContext)source.NativeObject,
-                srcPt,
-                srcSize,
-                (int)rop,
-                useMask,
-                srcPtMaskValue);
-        }
-
-        /// <inheritdoc/>
-        public override void RoundedRectangle(Pen pen, Brush brush, RectD rectangle, Coord cornerRadius)
+        public override void RoundedRectangle(
+            Pen pen,
+            Brush brush,
+            RectD rectangle,
+            Coord cornerRadius)
         {
             dc.RoundedRectangle(
                 (UI.Native.Pen)pen.Handler,
@@ -403,13 +317,6 @@ namespace Alternet.Drawing
         }
 
         /// <inheritdoc/>
-        public override void FloodFill(Brush brush, PointD point)
-        {
-            DebugSolidBrushAssert(brush);
-            dc.FloodFill((UI.Native.Brush)brush.Handler, point);
-        }
-
-        /// <inheritdoc/>
         public override void DrawRectangle(Pen pen, RectD rectangle)
         {
             DebugPenAssert(pen);
@@ -469,59 +376,6 @@ namespace Alternet.Drawing
                 (UI.Native.Image)image.Handler,
                 destinationRect,
                 false);
-        }
-
-        /// <inheritdoc/>
-        public override void SetPixel(PointD point, Pen pen)
-        {
-            DebugPenAssert(pen);
-            dc.SetPixel(point, (UI.Native.Pen)pen.Handler);
-        }
-
-        /// <inheritdoc/>
-        public override void SetPixel(Coord x, Coord y, Pen pen)
-        {
-            DebugPenAssert(pen);
-            dc.SetPixel(new PointD(x, y), (UI.Native.Pen)pen.Handler);
-        }
-
-        /// <inheritdoc/>
-        public override void SetPixel(Coord x, Coord y, Color color)
-        {
-            DebugColorAssert(color);
-            dc.SetPixel(new PointD(x, y), (UI.Native.Pen)color.AsPen.Handler);
-        }
-
-        /// <inheritdoc/>
-        public override void DrawImage(
-            Image image,
-            RectD destinationRect,
-            RectD sourceRect,
-            GraphicsUnit unit)
-        {
-            if(unit == GraphicsUnit.Pixel)
-            {
-                dc.DrawImagePortionAtPixelRect(
-                    (UI.Native.Image)image.Handler,
-                    destinationRect.ToRect(),
-                    sourceRect.ToRect());
-                return;
-            }
-
-            ToDip(ref destinationRect, unit);
-            ToDip(ref sourceRect, unit);
-
-            DrawImage(image, destinationRect, sourceRect);
-        }
-
-        /// <inheritdoc/>
-        public override void DrawImage(Image image, RectD destinationRect, RectD sourceRect)
-        {
-            DebugImageAssert(image);
-            dc.DrawImagePortionAtRect(
-                (UI.Native.Image)image.Handler,
-                destinationRect,
-                sourceRect);
         }
 
         /// <inheritdoc/>

@@ -137,17 +137,17 @@ namespace Alternet.Drawing
             if (rect.HasEmptyHeight)
                 rect.Height = HalfOfMaxValue;
 
-            document.Size = rect.Size;
-
             wrappedText.DoInsideLayout(() =>
             {
+                document.Size = rect.Size;
                 wrappedText.SetFormat(format.AsRecord);
+                wrappedText.Text = string.Empty;
                 wrappedText.Text = s;
                 wrappedText.Font = font;
                 wrappedText.ForegroundColor = brush.AsColor;
             });
 
-            TemplateUtils.RaisePaintClipped(wrappedText, this, rect.Location);
+            TemplateUtils.RaisePaintClipped(wrappedText, this, rect.Location, isClipped: true);
             var result = wrappedText.Bounds.WithLocation(rect.Location);
             return result;
         }

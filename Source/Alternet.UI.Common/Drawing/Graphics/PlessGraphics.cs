@@ -44,20 +44,6 @@ namespace Alternet.Drawing
         }
 
         /// <inheritdoc/>
-        public override bool Blit(
-            PointD destPt,
-            SizeD sz,
-            Graphics source,
-            PointD srcPt,
-            RasterOperationMode rop = RasterOperationMode.Copy,
-            bool useMask = false,
-            PointD? srcPtMask = null,
-            GraphicsUnit unit = GraphicsUnit.Dip)
-        {
-            return false;
-        }
-
-        /// <inheritdoc/>
         public override void Circle(Pen pen, Brush brush, PointD center, Coord radius)
         {
         }
@@ -103,16 +89,6 @@ namespace Alternet.Drawing
         }
 
         /// <inheritdoc/>
-        public override void DrawImage(Image image, RectD destinationRect, RectD sourceRect)
-        {
-        }
-
-        /// <inheritdoc/>
-        public override void DrawImage(Image image, RectD destinationRect, RectD sourceRect, GraphicsUnit unit)
-        {
-        }
-
-        /// <inheritdoc/>
         public override void DrawLine(Pen pen, PointD a, PointD b)
         {
         }
@@ -149,18 +125,6 @@ namespace Alternet.Drawing
 
         /// <inheritdoc/>
         public override void DrawRectangles(Pen pen, RectD[] rects)
-        {
-        }
-
-        /// <inheritdoc/>
-        public override void DrawRotatedText(
-            string text,
-            PointD location,
-            Font font,
-            Color foreColor,
-            Color backColor,
-            Coord angle,
-            GraphicsUnit unit = GraphicsUnit.Dip)
         {
         }
 
@@ -235,11 +199,6 @@ namespace Alternet.Drawing
         }
 
         /// <inheritdoc/>
-        public override void FloodFill(Brush brush, PointD point)
-        {
-        }
-
-        /// <inheritdoc/>
         public override RectD GetClippingBox()
         {
             return default;
@@ -285,36 +244,6 @@ namespace Alternet.Drawing
         /// <inheritdoc/>
         public override void SetClippingRegion(RectD rect)
         {
-        }
-
-        /// <inheritdoc/>
-        public override void SetPixel(PointD point, Pen pen)
-        {
-        }
-
-        /// <inheritdoc/>
-        public override void SetPixel(Coord x, Coord y, Pen pen)
-        {
-        }
-
-        /// <inheritdoc/>
-        public override void SetPixel(Coord x, Coord y, Color color)
-        {
-        }
-
-        /// <inheritdoc/>
-        public override bool StretchBlit(
-            PointD dstPt,
-            SizeD dstSize,
-            Graphics source,
-            PointD srcPt,
-            SizeD srcSize,
-            RasterOperationMode rop = RasterOperationMode.Copy,
-            bool useMask = false,
-            PointD? srcPtMask = null,
-            GraphicsUnit unit = GraphicsUnit.Dip)
-        {
-            return default;
         }
 
         /// <inheritdoc/>

@@ -148,8 +148,13 @@ namespace Alternet.Drawing
                 Color.Empty);
         }
 
-        /// <inheritdoc/>
-        public override void SetPixel(Coord x, Coord y, Color color)
+        /// <summary>
+        /// Sets pixel at the specified coordinates to the specified color.
+        /// </summary>
+        /// <param name="x">The X coordinate of the point.</param>
+        /// <param name="y">The Y coordinate of the point.</param>
+        /// <param name="color">The color used to set the pixel.</param>
+        public void SetPixel(Coord x, Coord y, Color color)
         {
             canvas.DrawPoint((float)x, (float)y, color.AsFillPaint);
         }
@@ -375,39 +380,24 @@ namespace Alternet.Drawing
             AfterDrawImage();
         }
 
-        /// <inheritdoc/>
-        public override void DrawImage(Image image, RectD destinationRect, RectD sourceRect)
-        {
-            if (BeforeDrawImage(ref image, ref destinationRect))
-            {
-                sourceRect.Scale(OriginalScaleFactor);
-            }
-
-            canvas.DrawBitmap((SKBitmap)image, sourceRect, destinationRect, InterpolationModePaint);
-            AfterDrawImage();
-        }
-
-        /// <inheritdoc/>
-        public override void DrawImage(
-            Image image,
-            RectD destinationRect,
-            RectD sourceRect,
-            GraphicsUnit unit)
-        {
-            ToDip(ref destinationRect, unit);
-            ToDip(ref sourceRect, unit);
-            DrawImage(image, destinationRect, sourceRect);
-        }
-
-        /// <inheritdoc/>
-        public override void SetPixel(PointD point, Pen pen)
+        /// <summary>
+        /// Sets pixel at the specified coordinates to the color of the specified pen.
+        /// </summary>
+        /// <param name="point">The coordinates of the point.</param>
+        /// <param name="pen">The pen which color is used to set the pixel.</param>
+        public void SetPixel(PointD point, Pen pen)
         {
             DebugPenAssert(pen);
             canvas.DrawPoint((float)point.X, (float)point.Y, pen.Color.AsFillPaint);
         }
 
-        /// <inheritdoc/>
-        public override void SetPixel(Coord x, Coord y, Pen pen)
+        /// <summary>
+        /// Sets pixel at the specified coordinates to the specified color.
+        /// </summary>
+        /// <param name="x">The X coordinate of the point.</param>
+        /// <param name="y">The Y coordinate of the point.</param>
+        /// <param name="pen">The pen which color is used to set the pixel.</param>
+        public void SetPixel(Coord x, Coord y, Pen pen)
         {
             DebugPenAssert(pen);
             canvas.DrawPoint((float)x, (float)y, pen.Color.AsFillPaint);

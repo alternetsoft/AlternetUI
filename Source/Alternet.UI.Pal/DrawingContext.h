@@ -27,18 +27,10 @@ namespace Alternet::UI
         wxDC* GetDC();
 
         void SetDoNotDeleteDC(bool value);
-        void SetIsPrinterDC(bool value);
 
         static wxWindow* GetWindow(wxDC* dc);
 
     private:
-        void ApplyTransform(bool useDC);
-
-        void UseDC();
-        void UseGC();
-
-        bool NeedToUseDC();
-
         static wxInterpolationQuality GetInterpolationQuality(InterpolationMode mode);
 
         wxAffineMatrix2D _currentTransform;
@@ -48,16 +40,15 @@ namespace Alternet::UI
         wxDC* _dc = nullptr;
         wxGraphicsContext* _graphicsContext = nullptr;
 
-        wxGraphicsRenderer* _dcRenderer = nullptr;
-
         wxGraphicsBrush GetGraphicsBrush(Brush* brush, const wxPoint2DDouble& offset);
         wxGraphicsPen GetGraphicsPen(Pen* pen);
 
+        void DrawImage(const wxBitmap& image,
+            const wxRect2DDouble& destinationRect,
+            const wxRect2DDouble& sourceRect);
+
         Region* _clip = nullptr;
 
-        bool _nonIdentityTransformSet = false;
-
         bool _doNotDeleteDC = false;
-        bool _isPrinterDC = false;
     };
 }
