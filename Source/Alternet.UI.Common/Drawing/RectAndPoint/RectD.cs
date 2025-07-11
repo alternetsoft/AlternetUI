@@ -425,6 +425,18 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
+        /// Gets center point on the left border of the rectangle.
+        /// </summary>
+        [Browsable(false)]
+        public readonly PointD LeftLineCenter
+        {
+            get
+            {
+                return (x, y + (height / CoordD.Two));
+            }
+        }
+
+        /// <summary>
         /// Gets center point on the bottom border of the rectangle.
         /// </summary>
         [Browsable(false)]
