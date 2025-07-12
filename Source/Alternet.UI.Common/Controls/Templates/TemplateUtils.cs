@@ -15,9 +15,27 @@ namespace Alternet.UI
     public static class TemplateUtils
     {
         /// <summary>
+        /// Gets or sets whether SkiaSharp engine is used when painting generic child controls.
+        /// </summary>
+        public static bool UseSkiaForPaintGenericChildren;
+
+        /// <summary>
         /// Gets or sets whether to show debug corners when control is painted.
         /// </summary>
         public static bool ShowDebugCorners = false;
+
+        static TemplateUtils()
+        {
+            if (App.PlatformKind == UIPlatformKind.WxWidgets)
+            {
+                UseSkiaForPaintGenericChildren = true;
+            }
+            else
+            if (App.PlatformKind == UIPlatformKind.Maui)
+            {
+                UseSkiaForPaintGenericChildren = false;
+            }
+        }
 
         /// <summary>
         /// Calls <see cref="RaisePaintRecursive(AbstractControl?, Graphics, PointD)"/>
@@ -112,36 +130,58 @@ namespace Alternet.UI
 
             foreach (var child in children)
             {
-                if (!child.Visible || child.Bounds.SizeIsEmpty)
+                if (!child.Visible)
                     continue;
                 if (child is not GenericControl)
                     continue;
 
-                try
-                {
-                    var scaleFactor = child.ScaleFactor;
+                if(UseSkiaForPaintGenericChildren)
+                    RaisePaintRecursiveSkia(child, dc, child.Location);
+                else
+                    RaisePaintRecursive(child, dc(), child.Location);
+            }
+        }
 
-                    GraphicsFactory.MeasureCanvasOverride
-                        = SkiaUtils.CreateMeasureCanvas(scaleFactor);
+        /// <summary>
+        /// Raises paint event for the control and for all its children at the specified point.
+        /// This method is used for template painting. Controls are painted only if
+        /// <see cref="AbstractControl.UserPaint"/> is <c>true</c>.
+        /// </summary>
+        /// <remarks>
+        /// This method uses SkiaSharp engine in order to paint controls.
+        /// </remarks>
+        public static void RaisePaintRecursiveSkia(
+            AbstractControl? control,
+            Func<Graphics> dc,
+            PointD origin)
+        {
+            if (control is null || control.Bounds.SizeIsEmpty)
+                return;
 
-                    var canvas = SkiaUtils.CreateBitmapCanvas(
-                        child.Bounds.Size,
-                        scaleFactor,
-                        isTransparent: true);
-                    canvas.UseUnscaledDrawImage = true;
+            try
+            {
+                var scaleFactor = control.ScaleFactor;
 
-                    GraphicsFactory.MeasureCanvasOverride = canvas;
+                GraphicsFactory.MeasureCanvasOverride
+                    = SkiaUtils.CreateMeasureCanvas(scaleFactor);
 
-                    RaisePaintRecursive(child, canvas, PointD.Empty);
+                var canvas = SkiaUtils.CreateBitmapCanvas(
+                    control.Bounds.Size,
+                    scaleFactor,
+                    isTransparent: true);
+                canvas.UseUnscaledDrawImage = true;
 
-                    var skBitmap = canvas.Bitmap ?? new SKBitmap();
-                    var bitmap = (Image)skBitmap;
-                    dc().DrawImage(bitmap, child.Location);
-                }
-                finally
-                {
-                    GraphicsFactory.MeasureCanvasOverride = null;
-                }
+                GraphicsFactory.MeasureCanvasOverride = canvas;
+
+                RaisePaintRecursive(control, canvas, PointD.Empty);
+
+                var skBitmap = canvas.Bitmap ?? new SKBitmap();
+                var bitmap = (Image)skBitmap;
+                dc().DrawImage(bitmap, control.Location);
+            }
+            finally
+            {
+                GraphicsFactory.MeasureCanvasOverride = null;
             }
         }
 
