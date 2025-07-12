@@ -55,8 +55,6 @@ void DrawRoundedRectangle(Pen* pen, const RectD& rect, double cornerRadius);
 void FillRoundedRectangle(Brush* brush, const RectD& rect, double cornerRadius);
 void DrawPolygon(Pen* pen, PointD* points, int pointsCount);
 void FillPolygon(Brush* brush, PointD* points, int pointsCount, FillMode fillMode);
-void DrawRectangles(Pen* pen, RectD* rects, int rectsCount);
-void FillRectangles(Brush* brush, RectD* rects, int rectsCount);
 
 private:
 DrawingContext() {}

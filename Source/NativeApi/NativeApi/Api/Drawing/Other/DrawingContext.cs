@@ -121,10 +121,6 @@ namespace NativeApi.Api
         public void FillPolygon(Brush brush, PointD[] points, FillMode fillMode)
             => throw new Exception();
 
-        public void DrawRectangles(Pen pen, RectD[] rects) => throw new Exception();
-
-        public void FillRectangles(Brush brush, RectD[] rects) => throw new Exception();
-
         public Region? Clip { get; set; }
 
         public InterpolationMode InterpolationMode { get; set; }

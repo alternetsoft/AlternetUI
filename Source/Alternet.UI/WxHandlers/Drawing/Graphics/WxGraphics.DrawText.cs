@@ -17,8 +17,6 @@ namespace Alternet.Drawing
             if (text is null || text.Length == 0)
                 return SizeD.Empty;
 
-            /*text = text.Replace(' ', '\u00A0');*/
-
             var result = dc.GetTextExtentSimple(
                 text,
                 (UI.Native.Font)font.Handler,
@@ -50,7 +48,7 @@ namespace Alternet.Drawing
         /// <inheritdoc/>
         public override void DrawText(string text, Font font, Brush brush, RectD bounds)
         {
-            DoInsideClipped(bounds, () =>
+            DoInsideClipped(TransformRectToNative(bounds), () =>
             {
                 DrawText(text, font, brush, bounds.Location);
             });
@@ -79,51 +77,63 @@ namespace Alternet.Drawing
             if (!foreColor.IsOk)
                 return;
 
-            /*text = text.Replace(' ', '\u00A0');*/
-
-            font = TransformFontForDrawText(font);
+            font = TransformFontSizeToNative(font);
             dc.DrawText(
                 text,
-                TransformPointForDrawText(location),
+                TransformPointToNative(location),
                 (UI.Native.Font)font.Handler,
                 foreColor,
                 backColor);
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        private bool GetNoTransformForDrawText()
+        protected bool GetNoTransformToNative()
         {
-            return true;
-            /* return App.IsWindowsOS || !HasTransform || WxGlobals.NoTransformForDrawText; */
+            if (!WxGlobalSettings.InternalGraphicsTransform || !HasTransform)
+                return true;
+            return false;
         }
 
-        private PointD TransformPointForDrawText(PointD value)
+        protected PointD[] TransformPointsToNative(PointD[] points)
         {
-            if(GetNoTransformForDrawText())
+            if (GetNoTransformToNative())
+                return points;
+
+            PointD[] result = new PointD[points.Length];
+            for(int i = 0; i < points.Length; i++)
+            {
+                result[i] = Transform.TransformPoint(points[i]);
+            }
+
+            return result;
+        }
+
+        protected PointD TransformPointToNative(PointD value)
+        {
+            if(GetNoTransformToNative())
                 return value;
 
             return Transform.TransformPoint(value);
         }
 
-        private Font TransformFontForDrawText(Font value)
+        protected Font TransformFontSizeToNative(Font value)
         {
-            if (GetNoTransformForDrawText())
+            if (GetNoTransformToNative())
                 return value;
             var scaledSize = Transform.TransformSize(value.Size);
             return value.WithSize(scaledSize.Height);
         }
 
-        private SizeD TransformSizeForDrawText(SizeD value)
+        protected SizeD TransformSizeToNative(SizeD value)
         {
-            if (GetNoTransformForDrawText())
+            if (GetNoTransformToNative())
                 return value;
             return Transform.TransformSize(value);
         }
 
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        private RectD TransformRectForDrawText(RectD value)
+        protected RectD TransformRectToNative(RectD value)
         {
-            return (TransformPointForDrawText(value.Location), TransformSizeForDrawText(value.Size));
+            return (TransformPointToNative(value.Location), TransformSizeToNative(value.Size));
         }
     }
 }

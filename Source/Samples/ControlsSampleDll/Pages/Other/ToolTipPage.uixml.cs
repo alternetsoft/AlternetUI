@@ -138,7 +138,7 @@ namespace ControlsSample
                 });
             });
 
-            popup.Add("Next Alignment", NextAligment);
+            popup.Add("Next Alignment", NextAlignment);
 
             atCenterCheckBox.CheckedChanged += (s, e) =>
             {
@@ -221,7 +221,7 @@ namespace ControlsSample
             ShowToolTipButton_Click(this, EventArgs.Empty);
         }
 
-        internal void NextAligment()
+        internal void NextAlignment()
         {
             toolTip.ToolTipAlignment = toolTip.ToolTipAlignment.NextValueNoStretchOrFill();
         }
@@ -252,12 +252,12 @@ namespace ControlsSample
 
         private void LoadImages()
         {
-            ImageSet? GetImage(string resname, int backgupColorImageSize)
+            ImageSet? GetImage(string resName, int backupColorImageSize)
             {
-                var stream = typeof(ToolTipPage).Assembly.GetManifestResourceStream(resname);
+                var stream = typeof(ToolTipPage).Assembly.GetManifestResourceStream(resName);
                 ImageSet? result;
                 if (stream is null)
-                    result = (ImageSet)(Image)Color.Blue.AsImage(backgupColorImageSize);
+                    result = (ImageSet)(Image)Color.Blue.AsImage(backupColorImageSize);
                 else
                     result = new(stream);
                 return result;

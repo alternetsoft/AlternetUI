@@ -337,18 +337,6 @@ namespace Alternet::UI
         path->Release();
     }
 
-    void DrawingContext::DrawRectangles(Pen* pen, Rect* rects, int rectsCount)
-    {
-        for (int i = 0; i < rectsCount; i++)
-            DrawRectangle(pen, rects[i]);
-    }
-
-    void DrawingContext::FillRectangles(Brush* brush, Rect* rects, int rectsCount)
-    {
-        for (int i = 0; i < rectsCount; i++)
-            FillRectangle(brush, rects[i]);
-    }
-
     /*static*/ DrawingContext* DrawingContext::FromImage(Image* image)
     {
         auto bitmap = image->GetBitmap();

@@ -602,27 +602,18 @@ namespace Alternet.Drawing
         [Conditional("DEBUG")]
         public virtual void DrawDebugPoints(RectD rect, Pen? pen = null)
         {
+            pen ??= Pens.Red;
+
             void DrawDebugPoint(PointD p)
             {
-                DrawPoint(pen, p.X, p.Y);
+                DrawingUtils.DrawHorzLine(this, pen.AsBrush, p, 1, 1);
             }
-
-            pen ??= Pens.Red;
 
             DrawDebugPoint(rect.TopLeft);
             DrawDebugPoint(new PointD(rect.Right - 1, rect.Top));
             DrawDebugPoint(new PointD(rect.Right - 1, rect.Bottom - 1));
             DrawDebugPoint(new PointD(rect.Left, rect.Bottom - 1));
         }
-
-        /// <summary>
-        /// Draws point with the specified color.
-        /// </summary>
-        /// <param name="pen">Color of the point.</param>
-        /// <param name="x">X-coordinate of the point.</param>
-        /// <param name="y">Y-coordinate of the point.</param>
-        /// <exception cref="ArgumentNullException">if <paramref name="pen"/> is <c>null</c>.</exception>
-        public abstract void DrawPoint(Pen pen, Coord x, Coord y);
 
         /// <summary>
         /// Fills the interior of a pie section defined by a circle specified by a center
@@ -765,7 +756,11 @@ namespace Alternet.Drawing
         /// of the outlines of the rectangles.</param>
         /// <param name="rects">Array of <see cref="RectD"/> structures that represent the
         /// rectangles to draw.</param>
-        public abstract void DrawRectangles(Pen pen, RectD[] rects);
+        public void DrawRectangles(Pen pen, RectD[] rects)
+        {
+            for (int i = 0; i < rects.Length; i++)
+                DrawRectangle(pen, rects[i]);
+        }
 
         /// <summary>
         /// Fills a series of rectangles specified by <see cref="RectD"/> structures.
@@ -774,7 +769,11 @@ namespace Alternet.Drawing
         /// of the fill.</param>
         /// <param name="rects">Array of <see cref="RectD"/> structures that represent the
         /// rectangles to fill.</param>
-        public abstract void FillRectangles(Brush brush, RectD[] rects);
+        public void FillRectangles(Brush brush, RectD[] rects)
+        {
+            for (int i = 0; i < rects.Length; i++)
+                FillRectangle(brush, rects[i]);
+        }
 
         /// <summary>
         /// Fills the interior of an ellipse defined by a bounding rectangle specified by

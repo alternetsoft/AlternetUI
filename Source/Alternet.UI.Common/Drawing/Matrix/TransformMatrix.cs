@@ -14,9 +14,9 @@ namespace Alternet.Drawing
     SKMatrix:
     https://learn.microsoft.com/en-us/previous-versions/xamarin/xamarin-forms/user-interface/graphics/skiasharp/transforms/matrix
 
-    ScaleX  SkewY   Persp0
-    SkewX   ScaleY  Persp1
-    TransX  TransY  Persp2
+    ScaleX  SkewY   Perspective0
+    SkewX   ScaleY  Perspective1
+    TransX  TransY  Perspective2
 
     TransformMatrix:
     https://docs.wxwidgets.org/3.0/classwx_affine_matrix2_d.html

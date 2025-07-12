@@ -17,7 +17,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets whether SkiaSharp engine is used when painting generic child controls.
         /// </summary>
-        public static bool UseSkiaForPaintGenericChildren;
+        public static bool UseSkiaForPaintGenericChildren = false;
 
         /// <summary>
         /// Gets or sets whether to show debug corners when control is painted.
@@ -26,6 +26,7 @@ namespace Alternet.UI
 
         static TemplateUtils()
         {
+            /*
             if (App.PlatformKind == UIPlatformKind.WxWidgets)
             {
                 if(App.IsWindowsOS)
@@ -38,6 +39,7 @@ namespace Alternet.UI
             {
                 UseSkiaForPaintGenericChildren = false;
             }
+            */
         }
 
         /// <summary>

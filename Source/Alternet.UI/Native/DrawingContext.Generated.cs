@@ -345,18 +345,6 @@ namespace Alternet.UI.Native
             NativeApi.DrawingContext_FillPolygon_(NativePointer, brush.NativePointer, points, points.Length, fillMode);
         }
         
-        public void DrawRectangles(Pen pen, Alternet.Drawing.RectD[] rects)
-        {
-            CheckDisposed();
-            NativeApi.DrawingContext_DrawRectangles_(NativePointer, pen.NativePointer, rects, rects.Length);
-        }
-        
-        public void FillRectangles(Brush brush, Alternet.Drawing.RectD[] rects)
-        {
-            CheckDisposed();
-            NativeApi.DrawingContext_FillRectangles_(NativePointer, brush.NativePointer, rects, rects.Length);
-        }
-        
         
         [SuppressUnmanagedCodeSecurity]
         public class NativeApi : NativeApiProvider
@@ -512,12 +500,6 @@ namespace Alternet.UI.Native
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void DrawingContext_FillPolygon_(IntPtr obj, IntPtr brush, Alternet.Drawing.PointD[] points, int pointsCount, Alternet.Drawing.FillMode fillMode);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void DrawingContext_DrawRectangles_(IntPtr obj, IntPtr pen, Alternet.Drawing.RectD[] rects, int rectsCount);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void DrawingContext_FillRectangles_(IntPtr obj, IntPtr brush, Alternet.Drawing.RectD[] rects, int rectsCount);
             
         }
     }

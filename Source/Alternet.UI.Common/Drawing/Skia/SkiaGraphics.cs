@@ -308,13 +308,6 @@ namespace Alternet.Drawing
         }
 
         /// <inheritdoc/>
-        public override void DrawPoint(Pen pen, Coord x, Coord y)
-        {
-            DebugPenAssert(pen);
-            canvas.DrawPoint((float)x, (float)y, pen.Color.AsFillPaint);
-        }
-
-        /// <inheritdoc/>
         public override void DrawCircle(Pen pen, PointD center, Coord radius)
         {
             DebugPenAssert(pen);
@@ -326,20 +319,6 @@ namespace Alternet.Drawing
         {
             DebugBrushAssert(brush);
             canvas.DrawCircle(center, (float)radius, brush);
-        }
-
-        /// <inheritdoc/>
-        public override void DrawRectangles(Pen pen, RectD[] rects)
-        {
-            foreach (var rect in rects)
-                DrawRectangle(pen, rect);
-        }
-
-        /// <inheritdoc/>
-        public override void FillRectangles(Brush brush, RectD[] rects)
-        {
-            foreach (var rect in rects)
-                FillRectangle(brush, rect);
         }
 
         /// <inheritdoc/>

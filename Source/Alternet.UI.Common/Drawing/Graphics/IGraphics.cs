@@ -77,9 +77,6 @@ namespace Alternet.Drawing
             Coord startAngle,
             Coord sweepAngle);
 
-        /// <inheritdoc cref="Graphics.DrawPoint"/>
-        void DrawPoint(Pen pen, Coord x, Coord y);
-
         /// <inheritdoc cref="Graphics.FillPie"/>
         void FillPie(
             Brush brush,

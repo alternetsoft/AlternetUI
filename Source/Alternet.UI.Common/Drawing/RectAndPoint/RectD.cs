@@ -1273,23 +1273,23 @@ namespace Alternet.Drawing
         /// <summary>
         /// Returns new rectangle with location and width of this rectangle and the specified height.
         /// </summary>
-        /// <param name="aheight">New height.</param>
+        /// <param name="aHeight">New height.</param>
         /// <returns>Rectangle object with the new height.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public readonly RectD WithHeight(Coord aheight)
+        public readonly RectD WithHeight(Coord aHeight)
         {
-            return new(x, y, width, aheight);
+            return new(x, y, width, aHeight);
         }
 
         /// <summary>
         /// Returns new rectangle with location and height of this rectangle and the specified width.
         /// </summary>
-        /// <param name="awidth">New width.</param>
+        /// <param name="aWidth">New width.</param>
         /// <returns>Rectangle object with the new width.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public readonly RectD WithWidth(Coord awidth)
+        public readonly RectD WithWidth(Coord aWidth)
         {
-            return new(x, y, awidth, height);
+            return new(x, y, aWidth, height);
         }
 
         /// <summary>

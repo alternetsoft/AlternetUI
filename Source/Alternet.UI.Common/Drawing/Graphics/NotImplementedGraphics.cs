@@ -142,12 +142,6 @@ namespace Alternet.Drawing
         }
 
         /// <inheritdoc/>
-        public override void DrawPoint(Pen pen, Coord x, Coord y)
-        {
-            throw new NotImplementedException();
-        }
-
-        /// <inheritdoc/>
         public override void DrawPolygon(Pen pen, PointD[] points)
         {
             throw new NotImplementedException();
@@ -155,12 +149,6 @@ namespace Alternet.Drawing
 
         /// <inheritdoc/>
         public override void DrawRectangle(Pen pen, RectD rectangle)
-        {
-            throw new NotImplementedException();
-        }
-
-        /// <inheritdoc/>
-        public override void DrawRectangles(Pen pen, RectD[] rects)
         {
             throw new NotImplementedException();
         }
@@ -233,12 +221,6 @@ namespace Alternet.Drawing
 
         /// <inheritdoc/>
         public override void FillRectangle(Brush brush, RectD rectangle, GraphicsUnit unit)
-        {
-            throw new NotImplementedException();
-        }
-
-        /// <inheritdoc/>
-        public override void FillRectangles(Brush brush, RectD[] rects)
         {
             throw new NotImplementedException();
         }

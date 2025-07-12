@@ -9,15 +9,21 @@ namespace Alternet.UI
     /// <summary>
     /// Contains static properties which allow to customize WxWidgets behavior.
     /// </summary>
-    public static class WxGlobals
+    public static class WxGlobalSettings
     {
         /// <summary>
-        /// Gets or sets whether to disable fix for Graphics.DrawText
-        /// on non-Windows operating systems. When this fix is enabled (by default), additional
-        /// coordinates transformations are applied so Graphics.Transform is taken into account
-        /// when Graphics.DrawText is performed.
+        /// Gets or sets whether to disable native point and size transformations
+        /// inside the library. When <see cref="InternalGraphicsTransform"/> is True,
+        /// Graphics.Transform is processed inside the library. By default it is False on Windows
+        /// and True on macOs and Linux.
         /// </summary>
-        public static bool NoTransformForDrawText = false;
+        public static bool InternalGraphicsTransform;
+
+        static WxGlobalSettings()
+        {
+            InternalGraphicsTransform = !App.IsWindowsOS;
+            InternalGraphicsTransform = true;
+        }
 
         /// <summary>
         /// Contains macOs related settings.

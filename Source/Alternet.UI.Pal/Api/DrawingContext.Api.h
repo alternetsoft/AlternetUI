@@ -564,25 +564,3 @@ ALTERNET_UI_API void DrawingContext_FillPolygon_(DrawingContext* obj, Brush* bru
     #endif
 }
 
-ALTERNET_UI_API void DrawingContext_DrawRectangles_(DrawingContext* obj, Pen* pen, RectD* rects, int rectsCount)
-{
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    MarshalExceptions<void>([&](){
-    #endif
-        obj->DrawRectangles(pen, rects, rectsCount);
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    });
-    #endif
-}
-
-ALTERNET_UI_API void DrawingContext_FillRectangles_(DrawingContext* obj, Brush* brush, RectD* rects, int rectsCount)
-{
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    MarshalExceptions<void>([&](){
-    #endif
-        obj->FillRectangles(brush, rects, rectsCount);
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    });
-    #endif
-}
-
