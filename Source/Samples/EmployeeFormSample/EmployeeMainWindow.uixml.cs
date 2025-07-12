@@ -65,6 +65,8 @@ namespace EmployeeFormSample
             evaluationsListView.Columns[1].WidthMode = ListViewColumnWidthMode.AutoSize;
             evaluationsListView.Columns[2].WidthMode = ListViewColumnWidthMode.AutoSize;
 
+            stateComboBox.PopupKind = PickerPopupKind.ListBox;
+
             // On Linux height of the ComboBox is greater than height of the TextBox.
             // We need to increase height of all window's TextBoxes.
             TextBoxUtils.AdjustTextBoxesHeight(this);
