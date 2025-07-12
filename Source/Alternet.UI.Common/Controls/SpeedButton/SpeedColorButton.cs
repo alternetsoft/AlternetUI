@@ -23,6 +23,7 @@ namespace Alternet.UI
         private PopupColorListBox? popupWindow;
         private ClickActionKind actionKind = ClickActionKind.ShowPopup;
         private ClickActionKind longTapAction = ClickActionKind.None;
+        private ClickActionKind ctrlAction = ClickActionKind.ShowDialog;
         private Color? disabledImageColor;
         private bool useDisabledImageColor = true;
 
@@ -134,6 +135,15 @@ namespace Alternet.UI
                     return;
                 actionKind = ClickActionKind.ShowDialog;
             }
+        }
+
+        /// <summary>
+        /// Gets or sets what happens when the user clicks this button while Ctrl key is pressed.
+        /// </summary>
+        public virtual ClickActionKind CtrlActionKind
+        {
+            get => ctrlAction;
+            set => ctrlAction = value;
         }
 
         /// <summary>
@@ -434,7 +444,11 @@ namespace Alternet.UI
         protected override void OnClick(EventArgs e)
         {
             base.OnClick(e);
-            ShowColorSelector();
+
+            if(Keyboard.IsControlPressed)
+                ShowColorSelector(ctrlAction);
+            else
+                ShowColorSelector();
         }
 
         /// <summary>
