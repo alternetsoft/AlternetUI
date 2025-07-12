@@ -710,6 +710,8 @@ namespace Alternet.Drawing
             }
             else
             {
+                if (bitmap.Width == 0 || bitmap.Height == 0)
+                    return new Bitmap();
                 var genericImage = GenericImage.FromSkia(bitmap);
                 return (Image)genericImage;
             }
