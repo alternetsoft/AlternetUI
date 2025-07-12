@@ -52,7 +52,7 @@
       <HorizontalStackPanel Margin="0,0,0,0">
         <Label Text="Icon" Margin="0,0,5,0" VerticalAlignment="Center"
                Name="tooltipIconLabel" IsTextLocalized="true"/>
-        <ComboBox Name="tooltipIconComboBox" Margin="0,0,0,0"
+        <EnumPicker Name="tooltipIconComboBox" Margin="0,0,0,0"
                  SuggestedWidth="250" VerticalAlignment="Center"/>
       </HorizontalStackPanel>
 

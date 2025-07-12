@@ -48,14 +48,20 @@ namespace ControlsSample
                 tooltipIconLabel)
             .SuggestedWidthToMax();
 
-            tooltipIconComboBox.BindEnumProp(
-                this,
-                nameof(ToolTipIcon),
-                (item) =>
-                {
-                    var icon = (MessageBoxIcon)item;
+            tooltipIconComboBox.IncludeValuePredicate = (item) =>
+            {
+                if(item is MessageBoxIcon icon)
                     return icon == MessageBoxIcon.None || MessageBoxSvg.GetImage(icon) is not null;
-                });
+                return false;
+            };
+
+            tooltipIconComboBox.EnumType = typeof(MessageBoxIcon);
+            tooltipIconComboBox.Value = ToolTipIcon;
+            tooltipIconComboBox.ValueChanged += (s, e) =>
+            {
+                var icon = (MessageBoxIcon)tooltipIconComboBox.Value;
+                ToolTipIcon = icon;
+            };
 
             showToolTipButton.Click += ShowToolTipButton_Click;
             hideToolTipButton.Click += HideToolTipButton_Click;

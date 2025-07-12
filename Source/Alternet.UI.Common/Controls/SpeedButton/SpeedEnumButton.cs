@@ -78,6 +78,22 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets or sets a predicate used to determine whether a given enum element
+        /// should be included in the popup list.
+        /// </summary>
+        /// <remarks>
+        /// The predicate receives an item as input (which may be <c>null</c>) and returns <c>true</c> 
+        /// if the item should be included, or <c>false</c> otherwise. 
+        /// </remarks>
+        /// <value>
+        /// A delegate of type <see cref="Predicate{Object}"/> that returns <c>true</c>
+        /// for items to include;
+        /// otherwise, <c>false</c>. May be <c>null</c> to disable filtering.
+        /// </value>
+        [Browsable(false)]
+        public virtual Predicate<object?>? IncludeValuePredicate { get; set; }
+
+        /// <summary>
         /// Sets display text of the enum item.
         /// </summary>
         /// <param name="value">The value of the enum item.</param>
@@ -103,6 +119,13 @@ namespace Alternet.UI
                 GetValueAsString,
                 (item) =>
                 {
+                    if(IncludeValuePredicate is not null)
+                    {
+                        var isIncluded = IncludeValuePredicate(item);
+                        if (!isIncluded)
+                            return false;
+                    }
+
                     if (ExcludeValues is null)
                         return true;
                     if (ExcludeValues is IList list)
