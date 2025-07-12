@@ -21,8 +21,7 @@ namespace Alternet.UI
 
         static WxGlobalSettings()
         {
-            InternalGraphicsTransform = !App.IsWindowsOS;
-            InternalGraphicsTransform = true;
+            InternalGraphicsTransform = App.IsMacOS;
         }
 
         /// <summary>

@@ -521,8 +521,8 @@ namespace Alternet::UI
         _graphicsContext->DrawEllipse(rect.x, rect.y, rect.width, rect.height);
     }
 
-    void DrawingContext::DrawText(const string& text, const PointD& location, Font* font,
-        const Color& foreColor, const Color& backColor)
+    void DrawingContext::DrawText(const string& text, const PointD& location,
+        Font* font, const Color& foreColor, const Color& backColor, double angle)
     {
         auto window = DrawingContext::GetWindow(_dc);
 
@@ -538,15 +538,21 @@ namespace Alternet::UI
 
         wxString wxText = wxStr(text);
 
-        if (backColor.IsEmpty())
-        {
-            _graphicsContext->DrawText(wxText, x, y);
-        }
-        else
+        if (useBackColor)
         {
             wxBrush bgBrush(backColor);
             wxGraphicsBrush gBrush = _graphicsContext->CreateBrush(bgBrush);
-            _graphicsContext->DrawText(wxText, x, y, gBrush);
+            if (angle == 0)
+                _graphicsContext->DrawText(wxText, x, y, gBrush);
+            else
+                _graphicsContext->DrawText(wxText, x, y, angle, gBrush);
+        }
+        else
+        {
+            if(angle == 0)
+                _graphicsContext->DrawText(wxText, x, y);
+            else
+                _graphicsContext->DrawText(wxText, x, y, angle);
         }
     }
 

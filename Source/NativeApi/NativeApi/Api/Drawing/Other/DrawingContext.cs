@@ -22,8 +22,17 @@ namespace NativeApi.Api
 
         public RectD GetClippingBox() => default;
 
+        /*
+        str The text to draw.
+        x The x coordinate position to draw the text at.
+        y The y coordinate position to draw the text at.
+        angle The angle, in radians, relative to the (default) horizontal direction to draw the string.
+        backgroundBrush Brush to fill the text with.
+        */
         public void DrawText(string text, PointD location, Font font,
-            Color foreColor, Color backColor) { }
+            Color foreColor, Color backColor, double angle)
+        {
+        }        
 
         public SizeI GetDpi() => default;
 

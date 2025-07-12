@@ -77,24 +77,31 @@ namespace Alternet.Drawing
             if (!foreColor.IsOk)
                 return;
 
+            double angle;
+
+            if (GetNoTransformToNative())
+                angle = 0;
+            else
+                angle = Transform.GetRotationAngleInRadians();
+
             font = TransformFontSizeToNative(font);
             dc.DrawText(
                 text,
                 TransformPointToNative(location),
                 (UI.Native.Font)font.Handler,
                 foreColor,
-                backColor);
+                backColor,
+                angle);
         }
 
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        protected bool GetNoTransformToNative()
+        protected virtual bool GetNoTransformToNative()
         {
             if (!WxGlobalSettings.InternalGraphicsTransform || !HasTransform)
                 return true;
             return false;
         }
 
-        protected PointD[] TransformPointsToNative(PointD[] points)
+        protected virtual PointD[] TransformPointsToNative(PointD[] points)
         {
             if (GetNoTransformToNative())
                 return points;
@@ -108,7 +115,7 @@ namespace Alternet.Drawing
             return result;
         }
 
-        protected PointD TransformPointToNative(PointD value)
+        protected virtual PointD TransformPointToNative(PointD value)
         {
             if(GetNoTransformToNative())
                 return value;
@@ -116,7 +123,7 @@ namespace Alternet.Drawing
             return Transform.TransformPoint(value);
         }
 
-        protected Font TransformFontSizeToNative(Font value)
+        protected virtual Font TransformFontSizeToNative(Font value)
         {
             if (GetNoTransformToNative())
                 return value;
@@ -124,7 +131,7 @@ namespace Alternet.Drawing
             return value.WithSize(scaledSize.Height);
         }
 
-        protected SizeD TransformSizeToNative(SizeD value)
+        protected virtual SizeD TransformSizeToNative(SizeD value)
         {
             if (GetNoTransformToNative())
                 return value;

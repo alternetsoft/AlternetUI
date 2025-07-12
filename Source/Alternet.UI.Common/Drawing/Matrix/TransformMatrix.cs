@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.ComponentModel;
 using System.Numerics;
 using System.Runtime.CompilerServices;
@@ -602,6 +602,71 @@ namespace Alternet.Drawing
         public readonly override int GetHashCode()
         {
             return HashCode.Combine(M11, M12, M21, M22, DX, DY);
+        }
+
+        /// <summary>
+        /// Determines whether the current transformation matrix represents an identity rotation.
+        /// </summary>
+        /// <remarks>
+        /// This method checks the rotational components <c>M11</c> and <c>M21</c> of the matrix.
+        /// If <c>M11</c> is approximately <c>1</c> and <c>M21</c> is approximately <c>0</c>,
+        /// the matrix is considered to have no rotation.
+        /// </remarks>
+        /// <returns>
+        /// <c>true</c> if the matrix has no rotational transformation; otherwise, <c>false</c>.
+        /// </returns>
+        public bool IsRotationIdentity()
+        {
+            const Coord epsilon = 0.00001d;
+
+            // Identity rotation: no angle (i.e. cos(θ) = 1, sin(θ) = 0)
+            bool isRotationIdentity =
+                Math.Abs(M11 - 1d) < epsilon &&
+                Math.Abs(M21) < epsilon;
+            return isRotationIdentity;
+        }
+
+        /// <summary>
+        /// Extracts the clockwise rotation angle in radians from the transform matrix.
+        /// Compatible with wxGraphicsContext::DrawText angle parameter.
+        /// </summary>
+        /// <returns>
+        /// The rotation angle in radians. Returns 0 if the matrix has no rotation.
+        /// </returns>
+        public double GetRotationAngleInRadians()
+        {
+            if(IsRotationIdentity())
+                return 0d;
+
+            // Extract angle using clockwise convention
+            double angleRadians = Math.Atan2(M21, M11);
+
+            // Normalize to [0, 2π) if needed
+            if (angleRadians < 0d)
+                angleRadians += 2d * Math.PI;
+
+            return angleRadians;
+        }
+
+        /// <summary>
+        /// Extracts the rotation angle in degrees from this matrix.
+        /// Returns 0 if there’s no rotational component (identity rotation).
+        /// </summary>
+        /// <returns>The rotation angle in degrees.</returns>
+        public Coord GetRotationAngleInDegrees()
+        {
+            Coord angleRadians = GetRotationAngleInRadians();
+
+            if (angleRadians == 0d)
+                return 0d;
+
+            Coord angleDegrees = (Coord)(angleRadians * (180.0 / Math.PI));
+
+            // Ensure angle is in [0, 360)
+            if (angleDegrees < 0)
+                angleDegrees += 360f;
+
+            return angleDegrees;
         }
     }
 }

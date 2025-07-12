@@ -17,5 +17,7 @@
 
     <Label Text="Rotation:" IsTextLocalized="true"/>
     <IntPicker Name="rotationSlider" Minimum="0" Maximum="90" Margin="0,0,0,20"/>
+
+    <Button Name="resetButton" Text="Reset transform"/>
   </StackPanel>
 </Panel>
