@@ -158,11 +158,23 @@ namespace Alternet.UI
             controller = null;
         }
 
-        private void ResetListBox()
+        private void ResetListBox(Action? afterThreadStopped)
         {
-            StopThread();
-            listBox.RemoveAll();
-            statusPanel?.SetText(0);
+            if(controller is not null)
+            {
+                controller.ThreadActionFinished = () =>
+                {
+                    listBox.RemoveAll();
+                    statusPanel?.SetText(0);
+                    afterThreadStopped?.Invoke();
+                };
+
+                StopThread();
+            }
+            else
+            {
+                afterThreadStopped?.Invoke();
+            }
         }
 
         private void ComboBox_TextChanged(object sender, EventArgs e)
@@ -174,18 +186,22 @@ namespace Alternet.UI
 
         private void StartThread()
         {
-            ResetListBox();
-            controller = CreateController();
-            controller?.Start(() =>
+            ResetListBox(Internal);
+
+            void Internal()
             {
-                if (DisposingOrDisposed)
-                    return;
-                if (closeRequested)
+                controller = CreateController();
+                controller?.Start(() =>
                 {
-                    closeRequested = false;
-                    Close(WindowCloseAction.Dispose);
-                }
-            });
+                    if (DisposingOrDisposed)
+                        return;
+                    if (closeRequested)
+                    {
+                        closeRequested = false;
+                        Close(WindowCloseAction.Dispose);
+                    }
+                });
+            }
         }
 
         private Image? GetImage(MemberTypes memberType)
@@ -230,7 +246,7 @@ namespace Alternet.UI
 
             if (string.IsNullOrEmpty(containsText))
             {
-                ResetListBox();
+                ResetListBox(null);
                 return null;
             }
 

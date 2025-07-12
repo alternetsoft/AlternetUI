@@ -1429,6 +1429,11 @@ namespace Alternet.UI
             }
 
             /// <summary>
+            /// Gets or sets action which is called when thread action is finished.
+            /// </summary>
+            public Action? ThreadActionFinished { get; set; }
+
+            /// <summary>
             /// Gets name of the object safely so it will always be not empty.
             /// </summary>
             public virtual string SafeName => Name ?? ("ListBox.RangeAdditionController" + uniqueNumber);
@@ -1460,25 +1465,30 @@ namespace Alternet.UI
             {
                 Stop();
 
-                cts = new();
-                var ctsCopy = cts;
+                Internal();
 
-                App.AddBackgroundTask(() =>
+                void Internal()
                 {
-                    Task result;
+                    cts = new();
+                    var ctsCopy = cts;
 
-                    if (DisposingOrDisposed || cts is null || cts.Token.IsCancellationRequested)
-                        result = Task.CompletedTask;
-                    else
-                        result = new Task(ThreadAction, ctsCopy.Token);
-
-                    result.ContinueWith((task) =>
+                    App.AddBackgroundTask(() =>
                     {
-                        Invoke(onComplete);
-                    });
+                        Task result;
 
-                    return result;
-                });
+                        if (DisposingOrDisposed || cts is null || cts.Token.IsCancellationRequested)
+                            result = Task.CompletedTask;
+                        else
+                            result = new Task(ThreadAction, ctsCopy.Token);
+
+                        result.ContinueWith((task) =>
+                        {
+                            Invoke(onComplete);
+                        });
+
+                        return result;
+                    });
+                }                
             }
 
             /// <inheritdoc/>
@@ -1506,6 +1516,7 @@ namespace Alternet.UI
                     BufferSize,
                     SleepAfterBufferMsec);
                 App.DebugLogIf($"{SafeName} Finished.", logControllerState);
+                ThreadActionFinished?.Invoke();
             }
         }
     }
