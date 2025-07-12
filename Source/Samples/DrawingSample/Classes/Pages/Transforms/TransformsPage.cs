@@ -147,7 +147,7 @@ namespace DrawingSample
             DrawFrame();
             DrawFigure();
 
-            var drawTexts = App.IsWindowsOS;
+            var drawTexts = true;
 
             if (drawTexts)
             {

@@ -22,8 +22,9 @@ namespace Alternet.UI
         /// </summary>
         public FancySlider()
         {
+            ForEachChild(c => c.Hide());
             UserPaint = true;
-            ValueChanged += Control_ValueChanged;
+            ValueChanged += Control_ValueChanged;            
         }
 
         /// <inheritdoc/>
@@ -68,15 +69,29 @@ namespace Alternet.UI
             if (dragging)
             {
                 var location = e.Location;
-                int opos = Value;
-                int pos = opos;
-                var delta = dragStartPosition.Y - location.Y;
+                int oldPos = Value;
+                int pos = oldPos;
+                
+                var deltaY = dragStartPosition.Y - location.Y;
+                var deltaX = dragStartPosition.X - location.X;
+
+                double delta;
+
+                if (Math.Abs(deltaY) > Math.Abs(deltaX))
+                {
+                    delta = deltaY;
+                }
+                else
+                {
+                    delta = deltaX;
+                }
+
                 pos += (int)delta;
                 int min = Minimum;
                 int max = Maximum;
                 if (pos < min) pos = min;
                 if (pos > max) pos = max;
-                if (pos != opos)
+                if (pos != oldPos)
                 {
                     Value = pos;
                     dragStartPosition = location;
