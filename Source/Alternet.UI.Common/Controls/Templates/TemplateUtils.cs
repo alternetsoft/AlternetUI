@@ -112,7 +112,7 @@ namespace Alternet.UI
 
             foreach (var child in children)
             {
-                if (!child.Visible)
+                if (!child.Visible || child.Bounds.SizeIsEmpty)
                     continue;
                 if (child is not GenericControl)
                     continue;
@@ -127,7 +127,7 @@ namespace Alternet.UI
                     var canvas = SkiaUtils.CreateBitmapCanvas(
                         child.Bounds.Size,
                         scaleFactor,
-                        true);
+                        isTransparent: true);
                     canvas.UseUnscaledDrawImage = true;
 
                     GraphicsFactory.MeasureCanvasOverride = canvas;
