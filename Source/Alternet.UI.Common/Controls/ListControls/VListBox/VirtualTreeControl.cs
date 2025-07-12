@@ -69,14 +69,19 @@ namespace Alternet.UI
 
             void ToggleExpanded(TreeControlItem? item)
             {
-                App.AddIdleTask(() =>
+                Invoke(() =>
                 {
-                    DoInsideUpdate(() =>
+                    var visibleBegin = ListBox.TopIndex;
+
+                    ListBox.DoInsideUpdate(() =>
                     {
-                        var visibleBegin = ListBox.TopIndex;
-                        ToggleExpandedAndCollapseSiblings(item, item?.AutoCollapseSiblings ?? false);
-                        ListBox.SelectItemAndScroll(item);
-                        ListBox.TopIndex = visibleBegin;
+                        DoInsideUpdate(() =>
+                        {
+                            ToggleExpandedAndCollapseSiblings(item, item?.AutoCollapseSiblings ?? false);
+                            ListBox.SelectedItem = item;
+                        });
+
+                        ListBox.ScrollToRow(visibleBegin, false);
                     });
                 });
             }
