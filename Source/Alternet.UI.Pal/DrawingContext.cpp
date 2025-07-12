@@ -584,11 +584,13 @@ namespace Alternet::UI
 
         _graphicsContext->GetTextExtent(wText, &width, &height, nullptr, nullptr);
         
-        int fontSize = wxf.GetPointSize();
+        /*int fontSize = wxf.GetPointSize();*/
 
-        width += fontSize * 0.2;
+        /*width += fontSize * 0.2;*/
 
-        width = std::ceil(width);
+        /*width = std::ceil(width);
+        */
+
         height = std::ceil(height);
 
         width = toDip(width, wxw);
