@@ -28,7 +28,10 @@ namespace Alternet.UI
         {
             if (App.PlatformKind == UIPlatformKind.WxWidgets)
             {
-                UseSkiaForPaintGenericChildren = true;
+                if(App.IsWindowsOS)
+                    UseSkiaForPaintGenericChildren = false;
+                else
+                    UseSkiaForPaintGenericChildren = true;
             }
             else
             if (App.PlatformKind == UIPlatformKind.Maui)
@@ -130,7 +133,7 @@ namespace Alternet.UI
 
             foreach (var child in children)
             {
-                if (!child.Visible)
+                if (!child.Visible || !control.ClientRectangle.IntersectsWith(child.Bounds))
                     continue;
                 if (child is not GenericControl)
                     continue;
