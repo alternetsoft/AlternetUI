@@ -178,7 +178,11 @@ namespace Alternet.UI
 
                 RaisePaintRecursive(control, canvas, PointD.Empty);
 
-                var skBitmap = canvas.Bitmap ?? new SKBitmap();
+                var skBitmap = canvas.Bitmap;
+
+                if (skBitmap is null || skBitmap.Width == 0 || skBitmap.Height == 0)
+                    return;
+
                 var bitmap = (Image)skBitmap;
                 dc().DrawImage(bitmap, control.Location);
             }
