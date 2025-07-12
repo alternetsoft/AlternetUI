@@ -44,6 +44,15 @@ namespace ControlsSample
             sliderv2.TickFrequency = 10;
             sliderv3.TickFrequency = 10;
 
+            sliderh1.SetSpacerColorToDefault();
+
+            sliderh3.SetSpacerColor(LightDarkColors.Green);
+
+            sliderv3.SetFarSpacerColorToDefault();
+            sliderv4.SetFarSpacerColor(DefaultColors.WindowBackColor);
+
+            sliderh4.SetSpacerColor(DefaultColors.WindowBackColor);
+
             sliderh4.ValueFormat = "{0:0.00} miles";
 
             sliderh3.FormatValueForDisplay += (s, e) =>

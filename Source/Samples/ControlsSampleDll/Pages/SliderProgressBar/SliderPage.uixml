@@ -20,7 +20,7 @@
 
           <Label Text="H1 [0..10]" Grid.Column="0" Grid.Row="0"
                  VerticalAlignment="Center" MarginRight="10"/>
-          <Slider Value="0" Name="sliderh1"
+          <Slider Value="7" Name="sliderh1"
                   Grid.Column="1" Grid.Row="0" SuggestedWidth ="200" VerticalAlignment="Center"/>
           <Label Margin="5" Grid.Column="3" Grid.Row="0" Name="displayH1"
                  VerticalAlignment="Center"/>
@@ -34,7 +34,7 @@
 
           <Label Text="H3 [0..100]" Grid.Column="0" Grid.Row="2"
                  VerticalAlignment="Center" MarginRight="10"/>
-          <Slider Maximum="100" Value="100" Name="sliderh3"
+          <Slider Maximum="100" Value="70" Name="sliderh3"
                   Grid.Column="1" Grid.Row="2" SuggestedWidth ="200" VerticalAlignment="Center"/>
           <Label Margin="5" Grid.Column="3" Grid.Row="2" Name="displayH3"
                  VerticalAlignment="Center"/>

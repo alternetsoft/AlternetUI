@@ -32,6 +32,21 @@ namespace Alternet.UI
     public partial class Slider : Border, ISliderScaleContainer
     {
         /// <summary>
+        /// Gets or sets default slider thumb border color.
+        /// </summary>
+        public static Color? DefaultThumbBorderColor = SystemColors.WindowText;
+
+        /// <summary>
+        /// Gets or sets whether to use default spacer color.
+        /// </summary>
+        public static bool UseDefaultSpacerColor = false;
+
+        /// <summary>
+        /// Gets or sets whether slider thumb has border by default.
+        /// </summary>
+        public static bool DefaultThumbHasBorder = true;
+
+        /// <summary>
         /// Gets or sets a value indicating whether the slider control uses the
         /// <see cref="DefaultColors.ControlBackColor"/> and
         /// <see cref="DefaultColors.ControlForeColor"/>. Default is <c>true</c>.
@@ -61,7 +76,10 @@ namespace Alternet.UI
         /// </summary>
         public static SliderTickStyle DefaultTickStyle = SliderTickStyle.None;
 
+        private static Color? defaultSpacerColor;
+
         private readonly Spacer leftTopSpacer;
+        private readonly Spacer rightBottomSpacer;
         private readonly SliderScale leftTopScale;
         private readonly SliderScale rightBottomScale;
         private readonly SliderThumb thumb;
@@ -118,6 +136,10 @@ namespace Alternet.UI
 
             thumb = CreateSliderThumb();
 
+            rightBottomSpacer = CreateSpacer();
+            rightBottomSpacer.ParentBackColor = true;
+            rightBottomSpacer.Dock = DockStyle.Fill;
+
             SuggestedSize = 150;
 
             tickStyle = DefaultTickStyle;
@@ -135,12 +157,22 @@ namespace Alternet.UI
             Layout = LayoutStyle.Dock;
             leftTopSpacer.Width = 0;
 
+            rightBottomSpacer.Parent = this;
             thumb.Parent = this;
             leftTopSpacer.Parent = this;
 
             thumb.SplitterMoved += OnThumbSplitterMoved;
             thumb.SplitterMoving += OnThumbSplitterMoving;
+
             leftTopSpacer.MouseLeftButtonDown += OnLeftTopSpacerMouseDown;
+            leftTopSpacer.MouseDoubleClick += OnLeftTopSpacerMouseDown;
+            rightBottomSpacer.MouseLeftButtonDown += OnRightBottomSpacerMouseDown;
+            rightBottomSpacer.MouseDoubleClick += OnRightBottomSpacerMouseDown;
+
+            if (UseDefaultSpacerColor)
+            {
+                SetSpacerColor(DefaultSpacerColor);
+            }
         }
 
         /// <summary>
@@ -205,6 +237,16 @@ namespace Alternet.UI
         /// Occurs when the value of the <see cref="TickFrequency"/> property changes.
         /// </summary>
         public event EventHandler? TickFrequencyChanged;
+
+        /// <summary>
+        /// Gets default spacer color of the slider.
+        /// This value is used when <see cref="UseDefaultSpacerColor"/> is True.
+        /// </summary>
+        public static Color DefaultSpacerColor
+        {
+            get => defaultSpacerColor ?? DefaultColors.DefaultCheckBoxColor;
+            set => defaultSpacerColor = value;
+        }
 
         /// <inheritdoc/>
         public override ControlTypeId ControlKind => ControlTypeId.Slider;
@@ -332,6 +374,12 @@ namespace Alternet.UI
         /// </summary>
         [Browsable(false)]
         public AbstractControl LeftTopSpacer => leftTopSpacer;
+
+        /// <summary>
+        /// Gets the right/bottom spacer control of the slider.
+        /// </summary>
+        [Browsable(false)]
+        public AbstractControl RightBottomSpacer => rightBottomSpacer;
 
         /// <inheritdoc/>
         public override HorizontalAlignment HorizontalAlignment
@@ -937,7 +985,15 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Sets the colors of the left/top and right/bottom spacers.
+        /// Sets left/top spacer color to default.
+        /// </summary>
+        public virtual void SetSpacerColorToDefault()
+        {
+            SetSpacerColor(DefaultSpacerColor);
+        }
+
+        /// <summary>
+        /// Sets the colors of the left/top spacer.
         /// </summary>
         /// <param name="leftTopSpacerColor">The color of the left/top spacer.
         /// If <c>null</c>, the left/top spacer will use the parent's background color.</param>
@@ -946,6 +1002,28 @@ namespace Alternet.UI
             leftTopSpacer.ParentBackColor = leftTopSpacerColor is null;
             leftTopSpacer.BackgroundColor = leftTopSpacerColor;
             leftTopSpacer.HasBackground = leftTopSpacerColor is not null;
+            leftTopSpacer.HasBackground = leftTopSpacerColor is not null;
+        }
+
+        /// <summary>
+        /// Sets the colors of the right/bottom spacer.
+        /// </summary>
+        /// <param name="spacerColor">The color of the right/bottom spacer.
+        /// If <c>null</c>, the right/bottom spacer will use the parent's background color.</param>
+        public virtual void SetFarSpacerColor(Color? spacerColor)
+        {
+            rightBottomSpacer.ParentBackColor = spacerColor is null;
+            rightBottomSpacer.BackgroundColor = spacerColor;
+            rightBottomSpacer.HasBackground = spacerColor is not null;
+            rightBottomSpacer.HasBackground = spacerColor is not null;
+        }
+
+        /// <summary>
+        /// Sets right/bottom spacer color to default.
+        /// </summary>
+        public virtual void SetFarSpacerColorToDefault()
+        {
+            SetFarSpacerColor(DefaultSpacerColor);
         }
 
         internal void SetDebugColors()
@@ -1044,6 +1122,21 @@ namespace Alternet.UI
             if (IsHorizontal)
                 Value -= LargeChange;
             else
+                Value -= LargeChange;
+        }
+
+        /// <summary>
+        /// Handles the mouse down event on the right/bottom spacer.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The mouse event data.</param>
+        protected virtual void OnRightBottomSpacerMouseDown(object? sender, MouseEventArgs e)
+        {
+            if (DisposingOrDisposed)
+                return;
+            if (IsHorizontal)
+                Value += LargeChange;
+            else
                 Value += LargeChange;
         }
 
@@ -1077,21 +1170,6 @@ namespace Alternet.UI
             if (DisposingOrDisposed)
                 return;
             UpdateValueFromThumbPosition();
-        }
-
-        /// <summary>
-        /// Handles the mouse down event on the right/bottom spacer.
-        /// </summary>
-        /// <param name="sender">The source of the event.</param>
-        /// <param name="e">The mouse event data.</param>
-        protected virtual void OnRightBottomSpacerMouseDown(object? sender, MouseEventArgs e)
-        {
-            if (DisposingOrDisposed)
-                return;
-            if (IsHorizontal)
-                Value += LargeChange;
-            else
-                Value -= LargeChange;
         }
 
         /// <summary>
@@ -1228,7 +1306,8 @@ namespace Alternet.UI
             public SliderThumb()
             {
                 DefaultCursor = Cursors.Default;
-                HasBorder = true;
+                HasBorder = DefaultThumbHasBorder;
+                BorderColor = DefaultThumbBorderColor;
             }
 
             /// <summary>
