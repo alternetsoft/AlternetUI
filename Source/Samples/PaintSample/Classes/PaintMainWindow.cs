@@ -46,6 +46,8 @@ namespace PaintSample
 
         public PaintMainWindow()
         {
+            toolbar.SetMargins(true, true, true, true);
+
             var optionsId = toolbar.AddControl(optionsPlaceholder);
             toolbar.SetToolAlignCenter(optionsId, true);
 
