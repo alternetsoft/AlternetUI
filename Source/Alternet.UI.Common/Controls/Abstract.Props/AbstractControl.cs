@@ -1630,6 +1630,11 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets or sets whether invalidates are currently suppressed.
+        /// </summary>
+        public virtual bool SuppressInvalidate { get; set; }
+
+        /// <summary>
         /// Gets whether control is visible on screen.
         /// </summary>
         [Browsable(false)]

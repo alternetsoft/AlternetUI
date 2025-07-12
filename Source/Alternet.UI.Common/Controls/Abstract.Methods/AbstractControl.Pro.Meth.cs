@@ -184,7 +184,7 @@ namespace Alternet.UI
         /// <returns></returns>
         protected virtual bool CanSkipInvalidate()
         {
-            if (InUpdates)
+            if (InUpdates || SuppressInvalidate)
                 return true;
             if (Parent is not null && Parent.CanSkipInvalidate())
                 return true;
