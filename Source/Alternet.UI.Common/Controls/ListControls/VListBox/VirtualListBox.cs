@@ -531,18 +531,23 @@ namespace Alternet.UI
         /// Scrolls to the specified row.
         /// </summary>
         /// <param name="row">It will become the first visible row in the control.</param>
+        /// <param name="validate">Whether to perform validation on the specified item index.
+        /// Optional. Default is True.</param>
         /// <returns>True if we scrolled the control, False if nothing was done.</returns>
-        public virtual bool ScrollToRow(int row)
+        public virtual bool ScrollToRow(int row, bool validate = true)
         {
             if (DisposingOrDisposed || Count == 0)
                 return default;
             row = Math.Min(Count - 1, row);
             row = Math.Max(0, row);
 
-            // determine the real first unit to scroll to: we shouldn't scroll beyond the end
-            var unitFirstLast = FindFirstVisibleFromLast(Count - 1, true);
-            if (row > unitFirstLast)
-                row = unitFirstLast;
+            if (validate)
+            {
+                // determine the real first unit to scroll to: we shouldn't scroll beyond the end
+                var unitFirstLast = FindFirstVisibleFromLast(Count - 1, true);
+                if (row > unitFirstLast)
+                    row = unitFirstLast;
+            }
 
             if (row == firstVisibleItem)
                 return false;
