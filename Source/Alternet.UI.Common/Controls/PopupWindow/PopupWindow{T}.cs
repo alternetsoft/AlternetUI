@@ -16,6 +16,11 @@ namespace Alternet.UI
     public partial class PopupWindow<T> : Window
         where T : AbstractControl, new()
     {
+        /// <summary>
+        /// Gets or sets whether popup window has an additional border by default.
+        /// </summary>
+        public static bool DefaultHasAdditionalBorder = true;
+
         private readonly VerticalStackPanel mainPanel = new();
         private readonly ToolBar bottomToolBar = new();
         private ModalResult popupResult;
@@ -35,6 +40,7 @@ namespace Alternet.UI
             CloseEnabled = DefaultCloseEnabled;
             HasSystemMenu = false;
 
+            mainPanel.HasBorder = DefaultHasAdditionalBorder;
             mainPanel.Parent = this;
             Padding = DefaultPadding;
             var buttons = bottomToolBar.AddSpeedBtn(KnownButton.OK, KnownButton.Cancel);
@@ -55,7 +61,7 @@ namespace Alternet.UI
             KeyDown += PopupWindow_KeyDown;
             MainControl.Required();
             Disposed += OnPopupWindowDisposed;
-            HideOnDeactivate = !App.IsLinuxOS;
+            HideOnDeactivate = true;
         }
 
         /// <summary>
@@ -436,7 +442,7 @@ namespace Alternet.UI
                 return;
             PopupResult = result;
 
-            Invoke(Hide);
+            Post(Hide);
 
             var a = PopupOwner;
 
@@ -444,7 +450,7 @@ namespace Alternet.UI
 
             if (focusOwner)
             {
-                Invoke(() =>
+                Post(() =>
                 {
                     if (a is not null)
                     {
@@ -649,7 +655,7 @@ namespace Alternet.UI
         {
             if (HideOnDeactivate && Visible)
             {
-                Invoke(() => HidePopup(ModalResult.Canceled, focusOwner: false));
+                Post(() => HidePopup(ModalResult.Canceled, focusOwner: false));
             }
         }
     }
