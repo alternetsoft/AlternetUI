@@ -46,6 +46,16 @@ namespace Alternet.UI
         private Coord right;
         private Coord bottom;
 
+        private Coord? minLeft;
+        private Coord? minTop;
+        private Coord? minRight;
+        private Coord? minBottom;
+
+        private Coord? maxLeft;
+        private Coord? maxTop;
+        private Coord? maxRight;
+        private Coord? maxBottom;
+
         /// <summary>
         /// Initializes a new instance of the <see cref="Thickness"/> struct
         /// with the same value on every side.
@@ -101,18 +111,68 @@ namespace Alternet.UI
         /// (greater than 0).
         /// </summary>
         [Browsable(false)]
-        public readonly bool IsPositive =>
-            (left > CoordD.Empty) && (right > CoordD.Empty)
-            && (top > CoordD.Empty) && (bottom > CoordD.Empty);
+        public readonly bool IsPositive
+        {
+            get
+            {
+                return (left > CoordD.Empty) && (right > CoordD.Empty)
+                    && (top > CoordD.Empty) && (bottom > CoordD.Empty);
+            }
+        }
+
+        /// <summary>
+        /// Gets the minimum allowed value for the left thickness edge.
+        /// </summary>
+        public readonly Coord? MinLeft => minLeft;
+
+        /// <summary>
+        /// Gets the minimum allowed value for the top thickness edge.
+        /// </summary>
+        public readonly Coord? MinTop => minTop;
+
+        /// <summary>
+        /// Gets the minimum allowed value for the right thickness edge.
+        /// </summary>
+        public readonly Coord? MinRight => minRight;
+
+        /// <summary>
+        /// Gets the minimum allowed value for the bottom thickness edge.
+        /// </summary>
+        public readonly Coord? MinBottom => minBottom;
+
+        /// <summary>
+        /// Gets the maximum allowed value for the left thickness edge.
+        /// </summary>
+        public readonly Coord? MaxLeft => maxLeft;
+
+        /// <summary>
+        /// Gets the maximum allowed value for the top thickness edge.
+        /// </summary>
+        public readonly Coord? MaxTop => maxTop;
+
+        /// <summary>
+        /// Gets the maximum allowed value for the right thickness edge.
+        /// </summary>
+        public readonly Coord? MaxRight => maxRight;
+
+        /// <summary>
+        /// Gets the maximum allowed value for the bottom thickness edge.
+        /// </summary>
+        public readonly Coord? MaxBottom => maxBottom;
 
         /// <summary>
         /// Returns whether any value on the side is positive
         /// (greater than 0).
         /// </summary>
         [Browsable(false)]
-        public readonly bool IsAnyPositive =>
-            (left > CoordD.Empty) || (right > CoordD.Empty)
-            || (top > CoordD.Empty) || (bottom > CoordD.Empty);
+        public readonly bool IsAnyPositive
+        {
+            get
+            {
+                return (left > CoordD.Empty) || (right > CoordD.Empty)
+                || (top > CoordD.Empty) || (bottom > CoordD.Empty);
+            }
+        }
 
         /// <summary>
         /// Gets the combined padding information in the form of a
@@ -158,7 +218,7 @@ namespace Alternet.UI
         public readonly Coord Vertical => top + bottom;
 
         /// <summary>
-        /// This property is the length on the thickness' left side.
+        /// Gets or sets the size of the left side.
         /// </summary>
         public Coord Left
         {
@@ -169,11 +229,13 @@ namespace Alternet.UI
 
             set
             {
-                left = value;
+                left = MathUtils.ApplyMinMaxCoord(value, minLeft, maxLeft);
             }
         }
 
-        /// <summary>This property is the length on the thickness' top side.</summary>
+        /// <summary>
+        /// Gets or sets the size of the top side.
+        /// </summary>
         public Coord Top
         {
             readonly get
@@ -183,12 +245,12 @@ namespace Alternet.UI
 
             set
             {
-                top = value;
+                top = MathUtils.ApplyMinMaxCoord(value, minTop, maxTop);
             }
         }
 
         /// <summary>
-        /// This property is the Length on the thickness' right side.
+        /// Gets or sets the size of the right side.
         /// </summary>
         public Coord Right
         {
@@ -199,11 +261,13 @@ namespace Alternet.UI
 
             set
             {
-                right = value;
+                right = MathUtils.ApplyMinMaxCoord(value, minRight, maxRight);
             }
         }
 
-        /// <summary>This property is the length on the thickness' bottom side.</summary>
+        /// <summary>
+        /// Gets or sets the size of the bottom side.
+        /// </summary>
         public Coord Bottom
         {
             readonly get
@@ -213,7 +277,7 @@ namespace Alternet.UI
 
             set
             {
-                bottom = value;
+                bottom = MathUtils.ApplyMinMaxCoord(value, minBottom, maxBottom);
             }
         }
 
@@ -339,17 +403,16 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Inflate all fields of the <see cref="Thickness"/> instance on
-        /// the same value.
+        /// Inflates Left, Top, Right and Bottom on the same value.
         /// </summary>
         /// <param name="value"></param>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void Inflate(Coord value = 1)
         {
-            left += value;
-            top += value;
-            right += value;
-            bottom += value;
+            Left += value;
+            Top += value;
+            Right += value;
+            Bottom += value;
         }
 
         /// <summary>
@@ -385,8 +448,7 @@ namespace Alternet.UI
         /// <returns>A hash code for the current object.</returns>
         public override readonly int GetHashCode()
         {
-            return left.GetHashCode() ^ top.GetHashCode() ^
-                right.GetHashCode() ^ bottom.GetHashCode();
+            return (left, right, top, bottom).GetHashCode();
         }
 
         /// <summary>
@@ -499,39 +561,39 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Sets all fields to 0 if <paramref name="reset"/> is True.
+        /// Sets Left, Top, Right and Bottom to 0 if <paramref name="reset"/> is True.
         /// </summary>
-        /// <param name="reset"></param>
+        /// <param name="reset">Whether to reset all fields. Optional. Default is True.</param>
         public void Reset(bool reset = true)
         {
             if (!reset)
                 return;
-            left = CoordD.Empty;
-            top = CoordD.Empty;
-            right = CoordD.Empty;
-            bottom = CoordD.Empty;
+            Left = CoordD.Empty;
+            Top = CoordD.Empty;
+            Right = CoordD.Empty;
+            Bottom = CoordD.Empty;
         }
 
         /// <summary>
-        /// Apply minimal limits to all the fields of the
-        /// <see cref="Thickness"/> instance.
+        /// Apply minimal limits to Left, Top, Right and Bottom using values from the specified
+        /// <see cref="Thickness"/> object.
         /// </summary>
         /// <param name="min">Minimal possible thickness.</param>
         public void ApplyMin(Thickness min)
         {
             if (left < min.left)
-                left = min.left;
+                Left = min.left;
             if (top < min.top)
-                top = min.top;
+                Top = min.top;
             if (right < min.right)
-                right = min.right;
+                Right = min.right;
             if (bottom < min.bottom)
-                bottom = min.bottom;
+                Bottom = min.bottom;
         }
 
         /// <summary>
-        /// Apply minimal and maximal limits to all the fields of the
-        /// <see cref="Thickness"/> instance.
+        /// Apply minimal and maximal limits to Left, Top, Right and Bottom using values
+        /// from the specified <see cref="Thickness"/> object.
         /// </summary>
         /// <param name="min">Minimal possible thickness.</param>
         /// <param name="max">Maximal possible thickness.</param>
@@ -546,10 +608,82 @@ namespace Alternet.UI
                 return value;
             }
 
-            left = SetMinMaxValue(left);
-            top = SetMinMaxValue(top);
-            right = SetMinMaxValue(right);
-            bottom = SetMinMaxValue(bottom);
+            Left = SetMinMaxValue(left);
+            Top = SetMinMaxValue(top);
+            Right = SetMinMaxValue(right);
+            Bottom = SetMinMaxValue(bottom);
+        }
+
+        /// <summary>
+        /// Sets the minimum allowed value for the left thickness edge.
+        /// </summary>
+        /// <param name="value">The minimum constraint to apply, or <c>null</c> to remove it.</param>
+        public void SetMinLeft(Coord? value)
+        {
+            minLeft = value;
+        }
+
+        /// <summary>
+        /// Sets the minimum allowed value for the top thickness edge.
+        /// </summary>
+        /// <param name="value">The minimum constraint to apply, or <c>null</c> to remove it.</param>
+        public void SetMinTop(Coord? value)
+        {
+            minTop = value;
+        }
+
+        /// <summary>
+        /// Sets the minimum allowed value for the right thickness edge.
+        /// </summary>
+        /// <param name="value">The minimum constraint to apply, or <c>null</c> to remove it.</param>
+        public void SetMinRight(Coord? value)
+        {
+            minRight = value;
+        }
+
+        /// <summary>
+        /// Sets the minimum allowed value for the bottom thickness edge.
+        /// </summary>
+        /// <param name="value">The minimum constraint to apply, or <c>null</c> to remove it.</param>
+        public void SetMinBottom(Coord? value)
+        {
+            minBottom = value;
+        }
+
+        /// <summary>
+        /// Sets the maximum allowed value for the left thickness edge.
+        /// </summary>
+        /// <param name="value">The maximum constraint to apply, or <c>null</c> to remove it.</param>
+        public void SetMaxLeft(Coord? value)
+        {
+            maxLeft = value;
+        }
+
+        /// <summary>
+        /// Sets the maximum allowed value for the top thickness edge.
+        /// </summary>
+        /// <param name="value">The maximum constraint to apply, or <c>null</c> to remove it.</param>
+        public void SetMaxTop(Coord? value)
+        {
+            maxTop = value;
+        }
+
+        /// <summary>
+        /// Sets the maximum allowed value for the right thickness edge.
+        /// </summary>
+        /// <param name="value">The maximum constraint to apply, or <c>null</c> to remove it.</param>
+        public void SetMaxRight(Coord? value)
+        {
+            maxRight = value;
+        }
+
+        /// <summary>
+        /// Sets the maximum allowed value for the bottom thickness edge.
+        /// </summary>
+        /// <param name="value">The maximum constraint to apply, or <c>null</c> to remove it.</param>
+        public void SetMaxBottom(Coord? value)
+        {
+            maxBottom = value;
         }
     }
 }
