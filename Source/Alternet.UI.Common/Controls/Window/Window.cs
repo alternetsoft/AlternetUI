@@ -1869,6 +1869,14 @@ namespace Alternet.UI
         {
         }
 
+        /// <inheritdoc/>
+        protected override void OnPaint(PaintEventArgs e)
+        {
+            base.OnPaint(e);
+
+            DrawDefaultBackground(e);
+        }
+
         /// <summary>
         /// Called when the value of the <see cref="Owner"/> property changes.
         /// </summary>
@@ -2087,6 +2095,8 @@ namespace Alternet.UI
         /// </summary>
         private void Initialize()
         {
+            UserPaint = true;
+
             owner.Changed = () =>
             {
                 if (DisposingOrDisposed)

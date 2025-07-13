@@ -26,6 +26,13 @@
         <ProjectReference Include="..\..\Alternet.UI\Alternet.UI.csproj" />
     </ItemGroup>
 
+
+    <ItemGroup>
+      <None Update="ControlsSample.sh">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </None>
+    </ItemGroup>
+
   <Import Project="$(SignToolPath)" Condition="Exists('$(SignToolPath)')" />
 
 </Project>
