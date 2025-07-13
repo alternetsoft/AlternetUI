@@ -63,6 +63,8 @@ namespace Alternet.UI
         private bool visible = true;
         private bool allowDefaultContextMenu = true;
 
+        private int suppressInvalidate;
+
         private ControlStyles controlStyle = ControlStyles.UserPaint | ControlStyles.StandardClick
             | ControlStyles.Selectable | ControlStyles.StandardDoubleClick
             | ControlStyles.AllPaintingInWmPaint | ControlStyles.UseTextForAccessibility;
@@ -1653,11 +1655,6 @@ namespace Alternet.UI
                 return ParentWindow?.Visible ?? false;
             }
         }
-
-        /// <summary>
-        /// Gets or sets whether invalidates are currently suppressed.
-        /// </summary>
-        public virtual bool SuppressInvalidate { get; set; }
 
         /// <summary>
         /// Gets whether control is visible on screen.

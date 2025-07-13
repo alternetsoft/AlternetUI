@@ -577,6 +577,37 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Increments the suppression counter to temporarily disable repaint logic.
+        /// </summary>
+        /// <remarks>
+        /// Use this method to batch updates or prevent unnecessary visual refreshes
+        /// during layout or property changes.
+        /// Each call to <see cref="SuppressInvalidate"/> must be balanced with
+        /// a corresponding call to <see cref="EndInvalidateSuppression"/>.
+        /// While suppression is active, calls to <c>Invalidate()</c> should be
+        /// ignored or deferred.
+        /// </remarks>
+        public void SuppressInvalidate()
+        {
+            suppressInvalidate++;
+        }
+
+        /// <summary>
+        /// Decrements the suppression counter, potentially re-enabling repaint logic.
+        /// </summary>
+        /// <remarks>
+        /// This method reverses a previous call to <see cref="SuppressInvalidate"/>.
+        /// Repaint behavior resumes only when the suppression count returns to zero.
+        /// If multiple suppression layers are stacked, each must be released to allow invalidation.
+        /// </remarks>
+        public void EndInvalidateSuppression(bool refresh)
+        {
+            suppressInvalidate--;
+            if (refresh)
+                Refresh();
+        }
+
+        /// <summary>
         /// Sets value of the <see cref="Text"/> property.
         /// </summary>
         /// <param name="value">New value of the <see cref="Text"/> property.</param>
