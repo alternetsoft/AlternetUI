@@ -173,13 +173,9 @@ namespace Alternet.Drawing
         /// <returns>A hash code for the current object.</returns>
         public override int GetHashCode()
         {
-            var hashCode = new HashCode();
-            hashCode.Add(tileMode);
-            hashCode.Add(localMatrix);
-            foreach (var gradientStop in GradientStops)
-                hashCode.Add(gradientStop);
-
-            return hashCode.ToHashCode();
+            var hashCode1 = (tileMode, localMatrix).GetHashCode();
+            var hashCode2 = MathUtils.SequentialValuesHash(GradientStops);
+            return MathUtils.CombineHashCodes(hashCode1, hashCode2);
         }
 
         /// <summary>

@@ -468,35 +468,56 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Computes a hash code for an array by combining the hash codes of its individual elements.
+        /// Combines two integer hash codes into a single value using high-entropy bit mixing.
         /// </summary>
-        /// <typeparam name="T">The element type of the array.</typeparam>
-        /// <param name="array">
-        /// The array whose contents will be used to calculate the hash code.
-        /// If <c>null</c>, the method returns <c>0</c>.
-        /// </param>
+        /// <param name="newKey">The new hash code to incorporate.</param>
+        /// <param name="currentKey">The current accumulated hash code.</param>
         /// <returns>
-        /// A 32-bit hash code that reflects the array's contents. Equal arrays produce equal hash codes.
+        /// A 32-bit integer representing the combined hash value.
         /// </returns>
         /// <remarks>
-        /// This method uses an order-sensitive hash combination strategy with prime-based mixing.
-        /// If element types override <see cref="object.GetHashCode"/>, their implementations
-        /// contribute directly.
+        /// This method multiplies <paramref name="currentKey"/> by <c>0xA5555529</c>,
+        /// a high-dispersion constant,
+        /// and adds <paramref name="newKey"/> to it. The result achieves better distribution
+        /// across bit space
+        /// than simpler prime-based mixing strategies, and mirrors techniques used
+        /// in internal .NET hashing.
         /// </remarks>
-        public static int GetArrayHashCode<T>(T[] array)
+        public static int CombineHashCodes(int newKey, int currentKey)
         {
-            if (array == null)
+            return unchecked((currentKey * (int)0xA5555529) + newKey);
+        }
+
+        /// <summary>
+        /// Computes a sequence-sensitive hash code for a collection
+        /// of values using high-entropy mixing.
+        /// </summary>
+        /// <typeparam name="T">The type of elements in the input sequence.</typeparam>
+        /// <param name="values">
+        /// An <see cref="IEnumerable{T}"/> of values to hash. If <c>null</c>, returns <c>0</c>.
+        /// </param>
+        /// <returns>
+        /// A 32-bit hash code representing the ordered contents of the sequence.
+        /// Equal sequences produce equal hashes.
+        /// </returns>
+        /// <remarks>
+        /// This method combines the hash codes of each item using a dispersion-aware
+        /// mixing strategy defined in <c>CombineHashCodes</c>.
+        /// The order of elements influences the result, making the hash sensitive
+        /// to positional changes.
+        /// </remarks>
+        public static int SequentialValuesHash<T>(IEnumerable<T> values)
+        {
+            if (values is null)
                 return 0;
 
-            unchecked
+            int hash = 0;
+            foreach (var value in values)
             {
-                int hash = 17;
-                foreach (T item in array)
-                {
-                    hash = hash * 31 + (item?.GetHashCode() ?? 0);
-                }
-                return hash;
+                hash = CombineHashCodes(hash, value?.GetHashCode() ?? 0);
             }
+
+            return hash;
         }
     }
 }
