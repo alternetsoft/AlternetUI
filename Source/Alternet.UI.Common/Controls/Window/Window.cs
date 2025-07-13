@@ -2059,6 +2059,12 @@ namespace Alternet.UI
             });
         }
 
+        /// <inheritdoc/>
+        protected override bool GetDefaultVisible()
+        {
+            return false;
+        }
+
         /// <summary>
         /// Gets window kind used instead of the default value.
         /// </summary>
@@ -2089,7 +2095,6 @@ namespace Alternet.UI
                 OwnerChanged?.Invoke(this, EventArgs.Empty);
             };
 
-            SetVisibleValue(false);
             BackColor = DefaultColors.WindowBackColor;
             ForeColor = DefaultColors.WindowForeColor;
 

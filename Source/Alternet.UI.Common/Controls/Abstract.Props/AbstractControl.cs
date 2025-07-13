@@ -60,7 +60,7 @@ namespace Alternet.UI
         private bool ignoreSuggestedWidth;
         private bool ignoreSuggestedHeight;
         private bool inLayout;
-        private bool visible = true;
+        private bool visible;
         private bool allowDefaultContextMenu = true;
 
         private int suppressInvalidate;
@@ -138,6 +138,7 @@ namespace Alternet.UI
         /// </summary>
         public AbstractControl()
         {
+            visible = GetDefaultVisible();
             var defaults = GetDefaults(ControlKind);
             defaults.RaiseInitDefaults(this);
             OnCreateControl();

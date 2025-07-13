@@ -179,6 +179,15 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets default value of the <see cref="Visible"/> property.
+        /// </summary>
+        /// <returns></returns>
+        protected virtual bool GetDefaultVisible()
+        {
+            return true;
+        }
+
+        /// <summary>
         /// Gets whether <see cref="Invalidate()"/> and <see cref="Refresh"/> can be skipped.
         /// </summary>
         /// <returns></returns>
