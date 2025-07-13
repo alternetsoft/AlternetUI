@@ -367,18 +367,14 @@ Environment.NewLine + Environment.NewLine +
 
         public static void InitGenericSlider(Slider control)
         {
-            control.LeftTopSpacer.SizeChanged+=(s, e) =>
-            {
-                if(control.IsHorizontal)
-                {
-                    App.LogReplace(
-                        $"GenericSlider: V: {control.Value}, LTS: {control.LeftTopSpacer.Width}, W:{control.MaxLeftTopSpacerSize}",
-                        "GenericSlider:");
-                }
-            };
-
             control.ValueChanged += (s,e) =>
             {
+                App.Invoke(() =>
+                {
+                    App.LogReplace(
+                        $"GenericSlider: V: {control.Value}, LTS: {control.LeftTopSpacerSize}, W:{control.MaxLeftTopSpacerSize}",
+                        "GenericSlider:");
+                });
             };
         }
 

@@ -46,13 +46,9 @@ namespace ControlsSample
 
             progressBarControlSlider.SetSpacerColorToDefault();
 
-            sliderh3.SetSpacerColor(LightDarkColors.Green);
-            sliderv1.SetSpacerColor(LightDarkColors.Green);
-
-            sliderv3.SetFarSpacerColorToDefault();
-            sliderv4.SetFarSpacerColor(DefaultColors.WindowBackColor);
-
-            sliderh4.SetSpacerColor(DefaultColors.WindowBackColor);
+            sliderh3.SetFarSpacerColor(LightDarkColors.Green);
+            sliderv1.SetFarSpacerColor(LightDarkColors.Green);
+            sliderv2.SetFarSpacerColor(LightDarkColors.Red);
 
             sliderh1.SetBorderColors(Color.Transparent);
             sliderh1.SetBottomBorderColor(DefaultColors.BorderColor);
@@ -102,7 +98,10 @@ namespace ControlsSample
 
         private void ProgressBarControlSlider_ValueChanged(object? sender, EventArgs e)
         {
-            progressBar.Value = progressBarControlSlider.Value;
+            Invoke(() =>
+            {
+                progressBar.Value = progressBarControlSlider.Value;
+            });
         }
 
         private void ClearTicksButton_Click(object? sender, EventArgs e)

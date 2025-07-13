@@ -39,7 +39,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets whether to use default spacer color.
         /// </summary>
-        public static bool UseDefaultSpacerColor = false;
+        public static bool DefaultUseSpacerColor = true;
 
         /// <summary>
         /// Gets or sets whether slider thumb has border by default.
@@ -51,12 +51,37 @@ namespace Alternet.UI
         /// <see cref="DefaultColors.ControlBackColor"/> and
         /// <see cref="DefaultColors.ControlForeColor"/>. Default is <c>true</c>.
         /// </summary>
-        public static bool DefaultUseControlColors = true;
+        public static bool DefaultUseControlColors = false;
+
+        /// <summary>
+        /// Gets or sets whether control has border by default.
+        /// </summary>
+        public static bool DefaultHasBorder = true;
+
+        /// <summary>
+        /// Gets or sets whether top border is visible by default.
+        /// </summary>
+        public static bool DefaultTopBorderVisible = false;
+
+        /// <summary>
+        /// Gets or sets whether bottom border is visible by default.
+        /// </summary>
+        public static bool DefaultBottomBorderVisible = false;
+
+        /// <summary>
+        /// Gets or sets whether left border is visible by default.
+        /// </summary>
+        public static bool DefaultLeftBorderVisible = false;
+
+        /// <summary>
+        /// Gets or sets whether right border is visible by default.
+        /// </summary>
+        public static bool DefaultRightBorderVisible = false;
 
         /// <summary>
         /// Represents the default size of the left/top and right/bottom indicators.
         /// </summary>
-        public static Coord DefaultScaleSize = 5;
+        public static Coord DefaultScaleSize = 7;
 
         /// <summary>
         /// Represents the default minimum size for a slider control.
@@ -77,6 +102,7 @@ namespace Alternet.UI
         public static SliderTickStyle DefaultTickStyle = SliderTickStyle.None;
 
         private static Color? defaultSpacerColor;
+        private static Color? defaultSecondarySpacerColor;
 
         private readonly Spacer leftTopSpacer;
         private readonly Spacer rightBottomSpacer;
@@ -98,6 +124,7 @@ namespace Alternet.UI
         private bool isFirstTickVisible = true;
         private bool isLastTickVisible = true;
         private bool autoSize = true;
+        private bool useSpacerColor;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Slider"/> class.
@@ -115,6 +142,7 @@ namespace Alternet.UI
         public Slider()
         {
             AutoPadding = false;
+            useSpacerColor = DefaultUseSpacerColor;
 
             leftTopScale = CreateScale(isLeftTop: true);
             leftTopScale.Dock = DockStyle.Top;
@@ -172,12 +200,15 @@ namespace Alternet.UI
             rightBottomSpacer.MouseLeftButtonDown += OnRightBottomSpacerMouseDown;
             rightBottomSpacer.MouseDoubleClick += OnRightBottomSpacerMouseDown;
 
-            if (UseDefaultSpacerColor)
-            {
-                SetSpacerColor(DefaultSpacerColor);
-            }
+            UpdateDefaultSpacerColors();
 
             thumb.Bounds = thumb.Bounds;
+
+            SetVisibleBorders(
+                DefaultLeftBorderVisible,
+                DefaultTopBorderVisible,
+                DefaultRightBorderVisible,
+                DefaultBottomBorderVisible);
         }
 
         /// <summary>
@@ -245,7 +276,7 @@ namespace Alternet.UI
 
         /// <summary>
         /// Gets default spacer color of the slider.
-        /// This value is used when <see cref="UseDefaultSpacerColor"/> is True.
+        /// This value is used when <see cref="UseSpacerColor"/> is True.
         /// </summary>
         public static Color DefaultSpacerColor
         {
@@ -253,8 +284,35 @@ namespace Alternet.UI
             set => defaultSpacerColor = value;
         }
 
+        /// <summary>
+        /// Gets default secondary spacer color of the slider.
+        /// This value is used when <see cref="UseSpacerColor"/> is True.
+        /// </summary>
+        public static Color DefaultSecondarySpacerColor
+        {
+            get => defaultSecondarySpacerColor ?? DefaultColors.ControlBackColor;
+            set => defaultSecondarySpacerColor = value;
+        }
+
         /// <inheritdoc/>
         public override ControlTypeId ControlKind => ControlTypeId.Slider;
+
+        /// <summary>
+        /// Gets or sets whether spacer background colors are automatically updated
+        /// with the default spacer colors.
+        /// </summary>
+        public virtual bool UseSpacerColor
+        {
+            get => useSpacerColor;
+
+            set
+            {
+                if (useSpacerColor == value)
+                    return;
+                useSpacerColor = value;
+                UpdateDefaultSpacerColors();
+            }
+        }
 
         /// <summary>
         /// Gets or sets a value indicating whether the slider control automatically sizes itself.
@@ -512,9 +570,17 @@ namespace Alternet.UI
                 value = CoerceValue(value);
                 if (this.val == value)
                     return;
-                this.val = value;
-                UpdateThumbPositionFromValue();
-                RaiseValueChanged();
+                try
+                {
+                    SuppressInvalidate();
+                    this.val = value;
+                    UpdateThumbPositionFromValue();
+                    RaiseValueChanged();
+                }
+                finally
+                {
+                    EndInvalidateSuppression(true);
+                }
             }
         }
 
@@ -584,6 +650,8 @@ namespace Alternet.UI
                     thumb.Size = 0;
                     Size = GetPreferredSize(Size);
                     UpdateThumbPositionFromValue();
+
+                    UpdateDefaultSpacerColors();
                 });
 
                 OrientationChanged?.Invoke(this, EventArgs.Empty);
@@ -928,9 +996,13 @@ namespace Alternet.UI
             if (DisposingOrDisposed)
                 return;
             OnValueChanged(EventArgs.Empty);
-            ValueChanged?.Invoke(this, EventArgs.Empty);
-            Designer?.RaisePropertyChanged(this, nameof(Value));
             UpdateValueDisplay();
+
+            Invoke(() =>
+            {
+                ValueChanged?.Invoke(this, EventArgs.Empty);
+                Designer?.RaisePropertyChanged(this, nameof(Value));
+            });
         }
 
         /// <inheritdoc/>
@@ -1115,21 +1187,24 @@ namespace Alternet.UI
         /// </summary>
         protected virtual void UpdateValueFromThumbPosition()
         {
-            if (LeftTopSpacerSize <= 0)
+            DoInsideLayout(() =>
             {
-                Value = Minimum;
-                return;
-            }
+                if (LeftTopSpacerSize <= 0)
+                {
+                    Value = Minimum;
+                    return;
+                }
 
-            if (LeftTopSpacerSize >= MaxLeftTopSpacerSize)
-            {
-                Value = Maximum;
-                return;
-            }
+                if (LeftTopSpacerSize >= MaxLeftTopSpacerSize)
+                {
+                    Value = Maximum;
+                    return;
+                }
 
-            var computedValue = ((Maximum - Minimum) * LeftTopSpacerSize) / MaxLeftTopSpacerSize;
-            var asInt = Convert.ToInt32(computedValue);
-            Value = Minimum + asInt;
+                var computedValue = ((Maximum - Minimum) * LeftTopSpacerSize) / MaxLeftTopSpacerSize;
+                var asInt = Convert.ToInt32(computedValue);
+                Value = Minimum + asInt;
+            });
         }
 
         /// <inheritdoc/>
@@ -1147,8 +1222,10 @@ namespace Alternet.UI
         {
             if (DisposingOrDisposed)
                 return;
-
-            LeftTopSpacerSize = ScaleValueToPosition(Value);
+            DoInsideLayout(() =>
+            {
+                LeftTopSpacerSize = ScaleValueToPosition(Value);
+            });
         }
 
         /// <summary>
@@ -1307,6 +1384,32 @@ namespace Alternet.UI
                 }
 
                 return Value.ToString() ?? string.Empty;
+            }
+        }
+
+        /// <inheritdoc/>
+        protected override bool GetDefaultHasBorder()
+        {
+            return DefaultHasBorder;
+        }
+
+        /// <summary>
+        /// Updates default spacer colors.
+        /// </summary>
+        protected virtual void UpdateDefaultSpacerColors()
+        {
+            if (UseSpacerColor)
+            {
+                if (IsHorizontal)
+                {
+                    SetSpacerColor(DefaultSpacerColor);
+                    SetFarSpacerColor(DefaultSecondarySpacerColor);
+                }
+                else
+                {
+                    SetSpacerColor(DefaultSecondarySpacerColor);
+                    SetFarSpacerColor(DefaultSpacerColor);
+                }
             }
         }
 

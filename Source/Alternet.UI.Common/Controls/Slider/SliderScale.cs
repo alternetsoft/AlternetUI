@@ -30,7 +30,7 @@ namespace Alternet.UI
         {
             ParentForeColor = true;
             ParentBackColor = true;
-            MinimumSize = (5, 5);
+            MinimumSize = Slider.DefaultScaleSize;
         }
 
         /// <summary>
