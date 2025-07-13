@@ -1,3 +1,5 @@
+#include <cstdlib>
+
 #if defined(__WXGTK__)
 #include <gtk/gtk.h>
 
@@ -22,6 +24,8 @@ namespace Alternet::UI
     App::App()
     {
 #if defined(__WXGTK__)
+
+        setenv("GTK_OVERLAY_SCROLLING", "0", 1); // 1 = overwrite if already set
         wxApp::GTKAllowDiagnosticsControl();
         gdk_set_allowed_backends("x11,*");
 #endif

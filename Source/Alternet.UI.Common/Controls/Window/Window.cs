@@ -1051,6 +1051,7 @@ namespace Alternet.UI
                 {
                     ApplyStartLocationOnce(null);
                     RaiseLoadedOnce();
+                    Refresh();
                 }
 
                 base.Visible = value;
