@@ -1,3 +1,24 @@
+# 0.9.743 (2025 July 13)
+
+- Slider: Bug fixes and new members, improve behavior and default look.
+- Button: Show drop down menu on mouse up.
+- DateTimePicker: Reimplemented inside the library.
+- Fix macOs related painting and layout issues.
+- DrawingUtils: Fix WrapTextLineToList.
+- SkiaGraphics: Implement Pie, FillPie, DrawPie.
+- SpeedEnumButton.IncludeValuePredicate.
+- SpeedColorButton.CtrlActionKind.
+- Image: Fix conversion from SkBitmap when empty image.
+- TemplateUtils: Check SkBitmap size when paint generic child.
+- Graphics: Implement Transform internally (needed for better macOs compatibility).
+- VirtualTreeControl: Do not scroll to 0 when expand/collapse.
+- VirtualListControl: Fix RangeAdditionController.
+- Border: new members SetBorderColors, SetLeftBorderColor, SetTopBorderColor, SetRightBorderColor, SetBottomBorderColor.
+- AbstractControl: BackgroundPadding, MinimumLocation.
+- Implement GetHashCode() using tuples (through the library).
+- AbstractControl: SupressInvalidate, EndInvalidateSuppression.
+- Slider: thumb corner radius settings.
+
 # 0.9.742 (2025 July 9)
 
 - **Label.WordWrap.**
