@@ -1,3 +1,9 @@
+#if defined(__WXGTK__)
+#include <gtk/gtk.h>
+
+extern "C" void gdk_set_allowed_backends(const char*);
+#endif
+
 #include "Application.h"
 #include "Common.h"
 #include "Window.h"
@@ -7,9 +13,6 @@
 
 #include <wx/sysopt.h>
 
-#if defined(__WXGTK__)
-#include <gtk/gtk.h>
-#endif
 
 IMPLEMENT_APP_NO_MAIN(Alternet::UI::App);
 IMPLEMENT_WX_THEME_SUPPORT;
