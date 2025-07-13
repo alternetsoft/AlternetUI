@@ -279,10 +279,89 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc cref="BorderSettings.SetColors"/>
-        public virtual void SetBorderColors(Color left, Color top, Color right, Color bottom)
+        public virtual void SetBorderColors(Color? left, Color? top, Color? right, Color? bottom)
         {
             if (NormalBorder.SetColors(left, top, right, bottom))
                 Refresh();
+        }
+
+        /// <summary>
+        /// Sets the color for all four borders (left, right, top, bottom) simultaneously.
+        /// </summary>
+        /// <param name="value">
+        /// A <see cref="Color"/> to apply to all border sides.
+        /// </param>
+        public virtual void SetBorderColors(Color? value)
+        {
+            SetBorderColors(value, value, value, value);
+        }
+
+        /// <summary>
+        /// Sets the color of the left border.
+        /// </summary>
+        /// <param name="value">
+        /// A <see cref="Color"/> to apply to the left border.
+        /// </param>
+        /// <remarks>
+        /// Triggers a visual update if the color is changed.
+        /// </remarks>
+        public virtual void SetLeftBorderColor(Color? value)
+        {
+            if (NormalBorder.Left.Color == value)
+                return;
+            NormalBorder.Left.Color = value;
+            Refresh();
+        }
+
+        /// <summary>
+        /// Sets the color of the right border.
+        /// </summary>
+        /// <param name="value">
+        /// A <see cref="Color"/> to apply to the right border.
+        /// </param>
+        /// <remarks>
+        /// Triggers a visual update if the color is changed.
+        /// </remarks>
+        public virtual void SetRightBorderColor(Color? value)
+        {
+            if (NormalBorder.Right.Color == value)
+                return;
+            NormalBorder.Right.Color = value;
+            Refresh();
+        }
+
+        /// <summary>
+        /// Sets the color of the top border.
+        /// </summary>
+        /// <param name="value">
+        /// A <see cref="Color"/> to apply to the top border.
+        /// </param>
+        /// <remarks>
+        /// Triggers a visual update if the color is changed.
+        /// </remarks>
+        public virtual void SetTopBorderColor(Color? value)
+        {
+            if (NormalBorder.Top.Color == value)
+                return;
+            NormalBorder.Top.Color = value;
+            Refresh();
+        }
+
+        /// <summary>
+        /// Sets the color of the bottom border.
+        /// </summary>
+        /// <param name="value">
+        /// A <see cref="Color"/> to apply to the bottom border.
+        /// </param>
+        /// <remarks>
+        /// Triggers a visual update if the color is changed.
+        /// </remarks>
+        public virtual void SetBottomBorderColor(Color? value)
+        {
+            if (NormalBorder.Bottom.Color == value)
+                return;
+            NormalBorder.Bottom.Color = value;
+            Refresh();
         }
 
         /// <inheritdoc/>
