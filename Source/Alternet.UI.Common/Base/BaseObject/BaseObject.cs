@@ -241,6 +241,19 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Adds specified action to the message queue and executes it on the UI thread.
+        /// </summary>
+        public static void Post(Action? action)
+        {
+            if (action is null)
+                return;
+
+            var handler = App.Handler
+                ?? throw new NullReferenceException("Application handler is null");
+            handler.BeginInvoke(action);
+        }
+
+        /// <summary>
         /// Executes the specified action, on the UI thread.
         /// </summary>
         public static void Invoke(Action? action)
