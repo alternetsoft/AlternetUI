@@ -133,21 +133,24 @@ namespace Alternet.UI
             leftTopSpacer = CreateSpacer();
             leftTopSpacer.ParentBackColor = true;
             leftTopSpacer.Dock = DockStyle.Left;
+            leftTopSpacer.BackgroundPadding = 4;
 
             thumb = CreateSliderThumb();
 
             rightBottomSpacer = CreateSpacer();
             rightBottomSpacer.ParentBackColor = true;
             rightBottomSpacer.Dock = DockStyle.Fill;
+            rightBottomSpacer.Margin = 1;
+            rightBottomSpacer.BackgroundPadding = 4;
 
             SuggestedSize = 150;
 
             tickStyle = DefaultTickStyle;
             Padding = 1;
 
-            thumb.Margin = (1, 1, 1, 1);
+            thumb.Margin = (0, 0, 1, 1);
             thumb.MinSize = 0;
-            thumb.MinExtra = 1;
+            thumb.MinExtra = 0;
             thumb.SizeDelta = 0;
 
             MinimumSize = DefaultSliderMinimumSize;
@@ -173,6 +176,8 @@ namespace Alternet.UI
             {
                 SetSpacerColor(DefaultSpacerColor);
             }
+
+            thumb.Bounds = thumb.Bounds;
         }
 
         /// <summary>
@@ -267,6 +272,32 @@ namespace Alternet.UI
                 autoSize = value;
                 PerformLayoutAndInvalidate();
             }
+        }
+
+        /// <inheritdoc/>
+        public override bool HasBorder
+        {
+            get
+            {
+                return base.HasBorder;
+            }
+
+            set
+            {
+                base.HasBorder = value;
+                thumb.Bounds = thumb.Bounds;
+            }
+        }
+
+        /// <inheritdoc/>
+        public override Color? BorderColor
+        {
+            get
+            {
+                return base.BorderColor;
+            }
+
+            set => base.BorderColor = value;
         }
 
         /// <inheritdoc/>
@@ -484,6 +515,23 @@ namespace Alternet.UI
                 this.val = value;
                 UpdateThumbPositionFromValue();
                 RaiseValueChanged();
+            }
+        }
+
+        /// <inheritdoc/>
+        public override Thickness Padding
+        {
+            get
+            {
+                var result = base.Padding;
+                result.ApplyMin(1);
+                return result;
+            }
+
+            set
+            {
+                value.ApplyMin(1);
+                base.Padding = value;
             }
         }
 
@@ -888,76 +936,82 @@ namespace Alternet.UI
         /// <inheritdoc/>
         public override SizeD GetPreferredSize(SizeD availableSize)
         {
-            const Coord defaultAutoWidth = 150;
+            var width = NormalBorder.Width;
+            return Internal() + (width.Horizontal, width.Vertical);
 
-            var specifiedWidth = SuggestedWidth;
-            var specifiedHeight = SuggestedHeight;
-
-            if (IsHorizontal)
+            SizeD Internal()
             {
-                if (Coord.IsNaN(specifiedWidth))
+                const Coord defaultAutoWidth = 150;
+
+                var specifiedWidth = SuggestedWidth;
+                var specifiedHeight = SuggestedHeight;
+
+                if (IsHorizontal)
                 {
-                    if (CoordUtils.IsInfinityOrNanOrMax(availableSize.Width))
-                        specifiedWidth = defaultAutoWidth;
+                    if (Coord.IsNaN(specifiedWidth))
+                    {
+                        if (CoordUtils.IsInfinityOrNanOrMax(availableSize.Width))
+                            specifiedWidth = defaultAutoWidth;
+                        else
+                            specifiedWidth = Math.Min(defaultAutoWidth, availableSize.Width);
+                    }
                     else
-                        specifiedWidth = Math.Min(defaultAutoWidth, availableSize.Width);
+                    {
+                    }
+
+                    if (Coord.IsNaN(specifiedHeight) || AutoSize)
+                    {
+                        specifiedHeight = MathUtils.Max(
+                            MinimumSize.Height,
+                            DefaultSliderMinimumSize);
+                        specifiedHeight = Math.Ceiling(specifiedHeight);
+
+                        if (leftTopScale.Parent is not null)
+                        {
+                            specifiedHeight += leftTopScale.Height + leftTopScale.Margin.Vertical;
+                        }
+
+                        if (rightBottomScale.Parent is not null)
+                        {
+                            specifiedHeight
+                                += rightBottomScale.Height + rightBottomScale.Margin.Vertical;
+                        }
+                    }
+                    else
+                    {
+                    }
                 }
                 else
                 {
-                }
-
-                if (Coord.IsNaN(specifiedHeight) || AutoSize)
-                {
-                    specifiedHeight = MathUtils.Max(
-                        MinimumSize.Height,
-                        DefaultSliderMinimumSize);
-                    specifiedHeight = Math.Ceiling(specifiedHeight);
-
-                    if (leftTopScale.Parent is not null)
+                    if (Coord.IsNaN(specifiedWidth) || AutoSize)
                     {
-                        specifiedHeight += leftTopScale.Height + leftTopScale.Margin.Vertical;
+                        specifiedWidth = MathUtils.Max(
+                            MinimumSize.Width,
+                            DefaultSliderMinimumSize);
+
+                        if (leftTopScale.Parent is not null)
+                        {
+                            specifiedWidth += leftTopScale.Width + leftTopScale.Margin.Horizontal;
+                        }
+
+                        if (rightBottomScale.Parent is not null)
+                        {
+                            specifiedWidth
+                                += rightBottomScale.Width + rightBottomScale.Margin.Horizontal;
+                        }
                     }
 
-                    if (rightBottomScale.Parent is not null)
+                    if (Coord.IsNaN(specifiedHeight))
                     {
-                        specifiedHeight
-                            += rightBottomScale.Height + rightBottomScale.Margin.Vertical;
+                        if (CoordUtils.IsInfinityOrNanOrMax(availableSize.Height))
+                            specifiedHeight = defaultAutoWidth;
+                        else
+                            specifiedHeight = Math.Min(defaultAutoWidth, availableSize.Height);
                     }
                 }
-                else
-                {
-                }
+
+                return (specifiedWidth, specifiedHeight);
             }
-            else
-            {
-                if (Coord.IsNaN(specifiedWidth) || AutoSize)
-                {
-                    specifiedWidth = MathUtils.Max(
-                        MinimumSize.Width,
-                        DefaultSliderMinimumSize);
-
-                    if (leftTopScale.Parent is not null)
-                    {
-                        specifiedWidth += leftTopScale.Width + leftTopScale.Margin.Horizontal;
-                    }
-
-                    if (rightBottomScale.Parent is not null)
-                    {
-                        specifiedWidth
-                            += rightBottomScale.Width + rightBottomScale.Margin.Horizontal;
-                    }
-                }
-
-                if (Coord.IsNaN(specifiedHeight))
-                {
-                    if (CoordUtils.IsInfinityOrNanOrMax(availableSize.Height))
-                        specifiedHeight = defaultAutoWidth;
-                    else
-                        specifiedHeight = Math.Min(defaultAutoWidth, availableSize.Height);
-                }
-            }
-
-            return (specifiedWidth, specifiedHeight);
         }
 
         /// <summary>
@@ -1310,6 +1364,26 @@ namespace Alternet.UI
                 BorderColor = DefaultThumbBorderColor;
             }
 
+            /// <inheritdoc/>
+            public override PointD? MinimumLocation
+            {
+                get
+                {
+                    var baseLocation = base.MinimumLocation;
+
+                    if(baseLocation is null)
+                    {
+                        if (Parent is not null && Parent.HasBorder)
+                            return (2, 2);
+                        return (1, 1);
+                    }
+
+                    return baseLocation;
+                }
+
+                set => base.MinimumLocation = value;
+            }
+
             /// <summary>
             /// Gets the container that holds the slider scale.
             /// In the default implementation, this property returns the parent control
@@ -1350,7 +1424,11 @@ namespace Alternet.UI
             /// <inheritdoc/>
             public override RectD Bounds
             {
-                get => base.Bounds;
+                get
+                {
+                    return base.Bounds;
+                }
+
                 set
                 {
                     base.Bounds = value;

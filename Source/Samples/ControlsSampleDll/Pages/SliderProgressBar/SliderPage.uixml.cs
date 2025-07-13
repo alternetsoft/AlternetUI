@@ -16,7 +16,7 @@ namespace ControlsSample
             tickStyleComboBox.EnumType = typeof(SliderTickStyle);
 
             progressBarControlSlider.ValueChanged += ProgressBarControlSlider_ValueChanged;
-            progressBarControlSlider.Value = 1;
+            progressBarControlSlider.Value = 6;
 
             tickStyleComboBox.ValueChanged += TickStyleComboBox_SelectedItemChanged;
             tickStyleComboBox.Value = SliderTickStyle.None;
@@ -44,14 +44,19 @@ namespace ControlsSample
             sliderv2.TickFrequency = 10;
             sliderv3.TickFrequency = 10;
 
-            sliderh1.SetSpacerColorToDefault();
+            progressBarControlSlider.SetSpacerColorToDefault();
 
             sliderh3.SetSpacerColor(LightDarkColors.Green);
+            sliderv1.SetSpacerColor(LightDarkColors.Green);
 
             sliderv3.SetFarSpacerColorToDefault();
             sliderv4.SetFarSpacerColor(DefaultColors.WindowBackColor);
 
             sliderh4.SetSpacerColor(DefaultColors.WindowBackColor);
+
+            sliderh1.SetBorderColors(Color.Transparent);
+            sliderh1.SetBottomBorderColor(DefaultColors.BorderColor);
+            sliderh1.UseControlColors(false);
 
             sliderh4.ValueFormat = "{0:0.00} miles";
 
