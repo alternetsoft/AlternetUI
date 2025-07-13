@@ -318,7 +318,7 @@ namespace Alternet.Drawing
         /// <returns>A hash code for the current object.</returns>
         public override int GetHashCode()
         {
-            return HashCode.Combine(Color, DashStyle, Width);
+            return (Color, DashStyle, Width).GetHashCode();
         }
 
         /// <summary>

@@ -58,7 +58,7 @@ namespace Alternet.Drawing
         /// <summary>
         /// Gets the hash code for this <see cref='RectD'/>.
         /// </summary>
-        public override readonly int GetHashCode() => HashCode.Combine(Hue, Saturation, Value);
+        public override readonly int GetHashCode() => (Hue, Saturation, Value).GetHashCode();
 
         /// <summary>
         /// Gets string representation of this object.

@@ -278,11 +278,7 @@ namespace Alternet.UI
         /// <returns>A hash code for the current object.</returns>
         public readonly override int GetHashCode()
         {
-            return HashCode.Combine(
-                (int)visibility,
-                position,
-                range,
-                pageSize);
+            return (visibility, position, range, pageSize).GetHashCode();
         }
 
         /// <summary>

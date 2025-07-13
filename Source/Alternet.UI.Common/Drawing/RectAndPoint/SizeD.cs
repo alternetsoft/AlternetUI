@@ -611,7 +611,7 @@ namespace Alternet.Drawing
         /// </summary>
         /// <returns>A hash code for the current object.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public override readonly int GetHashCode() => HashCode.Combine(Width, Height);
+        public override readonly int GetHashCode() => (Width, Height).GetHashCode();
 
         /// <summary>
         /// Returns new <see cref="SizeD"/> value with ceiling of the <see cref="Width"/> and

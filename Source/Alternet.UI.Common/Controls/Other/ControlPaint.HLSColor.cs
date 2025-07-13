@@ -156,7 +156,7 @@ public static partial class ControlPaint
                 && isSystemColorsControl == other.isSystemColorsControl;
         }
 
-        public override int GetHashCode() => HashCode.Combine(hue, saturation, Luminosity, alpha);
+        public override int GetHashCode() => (hue, saturation, Luminosity, alpha).GetHashCode();
 
         public ColorStruct Lighter(float percentLighter)
         {

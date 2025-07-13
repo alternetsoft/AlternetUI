@@ -274,7 +274,7 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
-        /// Implicit operator convertion from tuple with four <see cref="int"/> values
+        /// Implicit operator conversion from tuple with four <see cref="int"/> values
         /// to <see cref="RectI"/>.
         /// </summary>
         /// <param name="d">New rectangle value.</param>
@@ -283,7 +283,7 @@ namespace Alternet.Drawing
             new(d.X, d.Y, d.Width, d.Height);
 
         /// <summary>
-        /// Implicit operator convertion from tuple (<see cref="PointI"/>, <see cref="SizeI"/>)
+        /// Implicit operator conversion from tuple (<see cref="PointI"/>, <see cref="SizeI"/>)
         /// to <see cref="RectI"/>.
         /// </summary>
         /// <param name="d">New rectangle value.</param>
@@ -292,7 +292,7 @@ namespace Alternet.Drawing
             => new(d.Location, d.Size);
 
         /// <summary>
-        /// Implicit operator convertion from <see cref="RectI"/> to <see cref="SKRectI"/>.
+        /// Implicit operator conversion from <see cref="RectI"/> to <see cref="SKRectI"/>.
         /// </summary>
         /// <param name="rect">Rectangle.</param>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -304,7 +304,7 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
-        /// Implicit operator convertion from <see cref="SKRectI"/> to <see cref="RectI"/>.
+        /// Implicit operator conversion from <see cref="SKRectI"/> to <see cref="RectI"/>.
         /// </summary>
         /// <param name="rect">Rectangle.</param>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -549,7 +549,7 @@ namespace Alternet.Drawing
         /// </summary>
         /// <returns>A hash code for the current object.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public override readonly int GetHashCode() => HashCode.Combine(x, y, width, height);
+        public override readonly int GetHashCode() => (x, y, width, height).GetHashCode();
 
         /// <summary>
         /// Inflates this <see cref='RectI'/> by the specified amount.

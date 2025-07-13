@@ -20,17 +20,17 @@ namespace Alternet.Drawing
     public struct PointI : IEquatable<PointI>
     {
         /// <summary>
-        /// Gets an empty point with (0, 0) ccordinates.
+        /// Gets an empty point with (0, 0) coordinates.
         /// </summary>
         public static readonly PointI Empty;
 
         /// <summary>
-        /// Gets a point with (-1, -1) ccordinates.
+        /// Gets a point with (-1, -1) coordinates.
         /// </summary>
         public static readonly PointI MinusOne = new(-1, -1);
 
         /// <summary>
-        /// Gets a point with (1, 1) ccordinates.
+        /// Gets a point with (1, 1) coordinates.
         /// </summary>
         public static readonly PointI One = new(1, 1);
 
@@ -174,7 +174,7 @@ namespace Alternet.Drawing
         public static explicit operator SizeI(PointI p) => p.size;
 
         /// <summary>
-        /// Implicit operator convertion from tuple with two <see cref="int"/> values
+        /// Implicit operator conversion from tuple with two <see cref="int"/> values
         /// to <see cref="PointI"/>.
         /// </summary>
         /// <param name="d">New point value.</param>
@@ -295,7 +295,7 @@ namespace Alternet.Drawing
         /// <summary>
         /// Returns a hash code.
         /// </summary>
-        public override readonly int GetHashCode() => HashCode.Combine(x, y);
+        public override readonly int GetHashCode() => (x, y).GetHashCode();
 
         /// <summary>
         /// Translates this <see cref='Drawing.PointI'/> by the specified amount.

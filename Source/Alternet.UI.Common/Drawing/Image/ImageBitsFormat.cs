@@ -296,14 +296,7 @@ namespace Alternet.Drawing
         /// <returns></returns>
         public readonly override int GetHashCode()
         {
-            return HashCode.Combine(
-                BitsPerPixel.GetHashCode(),
-                HasAlpha.GetHashCode(),
-                SizePixel.GetHashCode(),
-                Red.GetHashCode(),
-                Green.GetHashCode(),
-                Blue.GetHashCode(),
-                Alpha.GetHashCode());
+            return (BitsPerPixel, HasAlpha, SizePixel, Red, Green, Blue, Alpha).GetHashCode();
         }
     }
 }

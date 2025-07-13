@@ -333,7 +333,7 @@ namespace Alternet.UI
         /// <returns>A hash code for the current object.</returns>
         public override int GetHashCode()
         {
-            return HashCode.Combine(Horizontal, Vertical);
+            return (Horizontal, Vertical).GetHashCode();
         }
 
         /// <summary>

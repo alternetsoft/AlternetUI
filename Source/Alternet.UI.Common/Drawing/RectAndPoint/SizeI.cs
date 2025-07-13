@@ -9,7 +9,7 @@ using Alternet.UI.Localization;
 namespace Alternet.Drawing
 {
     /*
-        Please do not remove StructLayout(LayoutKind.Sequential) atrtribute.
+        Please do not remove StructLayout(LayoutKind.Sequential) attribute.
         Also do not change order of the fields.
     */
 
@@ -170,7 +170,7 @@ namespace Alternet.Drawing
             new(size.Width, size.Height);
 
         /// <summary>
-        /// Implicit operator convertion from tuple with two <see cref="int"/> values
+        /// Implicit operator conversion from tuple with two <see cref="int"/> values
         /// to <see cref="SizeI"/>.
         /// </summary>
         /// <param name="d">New size value.</param>
@@ -401,8 +401,7 @@ namespace Alternet.Drawing
         /// <summary>
         /// Returns a hash code.
         /// </summary>
-        public override readonly int GetHashCode() =>
-            HashCode.Combine(Width, Height);
+        public override readonly int GetHashCode() => (Width, Height).GetHashCode();
 
         /// <summary>
         /// Creates new <see cref="SizeI"/> with the height of this object

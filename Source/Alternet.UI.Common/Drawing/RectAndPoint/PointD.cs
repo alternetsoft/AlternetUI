@@ -14,7 +14,7 @@ using SkiaSharp;
 namespace Alternet.Drawing
 {
     /*
-        Please do not remove StructLayout(LayoutKind.Sequential) atrtribute.
+        Please do not remove StructLayout(LayoutKind.Sequential) attribute.
         Also do not change order of the fields.
     */
 
@@ -37,17 +37,17 @@ namespace Alternet.Drawing
         public static readonly PointD MaxValue = new(Coord.MaxValue);
 
         /// <summary>
-        /// Gets an empty point with (0, 0) ccordinates.
+        /// Gets an empty point with (0, 0) coordinates.
         /// </summary>
         public static readonly PointD Empty;
 
         /// <summary>
-        /// Gets a point with (-1, -1) ccordinates.
+        /// Gets a point with (-1, -1) coordinates.
         /// </summary>
         public static readonly PointD MinusOne = new(CoordD.MinusOne, CoordD.MinusOne);
 
         /// <summary>
-        /// Gets a point with (1, 1) ccordinates.
+        /// Gets a point with (1, 1) coordinates.
         /// </summary>
         public static readonly PointD One = new(CoordD.One, CoordD.One);
 
@@ -148,7 +148,7 @@ namespace Alternet.Drawing
             new(RectD.CoordToInt(p.X), RectD.CoordToInt(p.Y));
 
         /// <summary>
-        /// Implicit operator convertion from tuple with two values
+        /// Implicit operator conversion from tuple with two values
         /// to <see cref="PointD"/>.
         /// </summary>
         /// <param name="d">New point value.</param>
@@ -457,7 +457,7 @@ namespace Alternet.Drawing
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public override readonly int GetHashCode()
         {
-            return HashCode.Combine(X.GetHashCode(), Y.GetHashCode());
+            return (X, Y).GetHashCode();
         }
 
         /// <summary>
@@ -476,7 +476,7 @@ namespace Alternet.Drawing
         /// Converts this point to the pixel point using the specified scale factor.
         /// </summary>
         /// <param name="scaleFactor">Scale factor. Optional. If not specified, the default
-        /// scale factor is used for the convertion.</param>
+        /// scale factor is used for the conversion.</param>
         /// <returns></returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public readonly PointI PixelFromDip(Coord? scaleFactor = null)

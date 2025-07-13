@@ -977,7 +977,7 @@ namespace Alternet.Drawing
         /// Gets the hash code for this <see cref='RectD'/>.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public override readonly int GetHashCode() => HashCode.Combine(x, y, width, height);
+        public override readonly int GetHashCode() => (x, y, width, height).GetHashCode();
 
         /// <summary>
         /// Inflates this <see cref='RectD'/> by the specified amount.

@@ -282,7 +282,7 @@ namespace Alternet.UI
                 /// <inheritdoc/>
                 public readonly override int GetHashCode()
                 {
-                    return HashCode.Combine(Minimum, Maximum, SmallChange, LargeChange, Value);
+                    return (Minimum, Maximum, SmallChange, LargeChange, Value).GetHashCode();
                 }
             }
         }

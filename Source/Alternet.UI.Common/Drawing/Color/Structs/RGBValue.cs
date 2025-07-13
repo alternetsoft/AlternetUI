@@ -62,7 +62,7 @@ namespace Alternet.Drawing
         public readonly string AsDebugString => $"{{RGB=({R}, {G}, {B})}}";
 
         /// <summary>
-        /// Implicit operator convertion from tuple with three <see cref="byte"/> values
+        /// Implicit operator conversion from tuple with three <see cref="byte"/> values
         /// to <see cref="RGBValue"/>.
         /// </summary>
         /// <param name="d">New <see cref="RGBValue"/>.</param>
@@ -89,14 +89,14 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
-        /// Implicit operator convertion from <see cref="HSVValue"/> to <see cref="RGBValue"/>.
+        /// Implicit operator conversion from <see cref="HSVValue"/> to <see cref="RGBValue"/>.
         /// </summary>
         /// <param name="d">New <see cref="RGBValue"/>.</param>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static implicit operator RGBValue(HSVValue d) => Color.HSVtoRGB(d);
 
         /// <summary>
-        /// Implicit operator convertion from <see cref="RGBValue"/> to <see cref="HSVValue"/>.
+        /// Implicit operator conversion from <see cref="RGBValue"/> to <see cref="HSVValue"/>.
         /// </summary>
         /// <param name="d">New <see cref="HSVValue"/>.</param>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -156,7 +156,7 @@ namespace Alternet.Drawing
         /// <summary>
         /// Gets the hash code for this <see cref='RectD'/>.
         /// </summary>
-        public override readonly int GetHashCode() => HashCode.Combine(R, G, B);
+        public override readonly int GetHashCode() => (R, G, B).GetHashCode();
 
         /// <summary>
         /// Gets string representation of this object.

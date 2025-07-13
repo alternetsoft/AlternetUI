@@ -601,7 +601,7 @@ namespace Alternet.Drawing
         /// <inheritdoc/>
         public readonly override int GetHashCode()
         {
-            return HashCode.Combine(M11, M12, M21, M22, DX, DY);
+            return (M11, M12, M21, M22, DX, DY).GetHashCode();
         }
 
         /// <summary>
@@ -615,11 +615,10 @@ namespace Alternet.Drawing
         /// <returns>
         /// <c>true</c> if the matrix has no rotational transformation; otherwise, <c>false</c>.
         /// </returns>
-        public bool IsRotationIdentity()
+        public readonly bool IsRotationIdentity()
         {
             const Coord epsilon = 0.00001d;
 
-            // Identity rotation: no angle (i.e. cos(θ) = 1, sin(θ) = 0)
             bool isRotationIdentity =
                 Math.Abs(M11 - 1d) < epsilon &&
                 Math.Abs(M21) < epsilon;
@@ -633,7 +632,7 @@ namespace Alternet.Drawing
         /// <returns>
         /// The rotation angle in radians. Returns 0 if the matrix has no rotation.
         /// </returns>
-        public double GetRotationAngleInRadians()
+        public readonly double GetRotationAngleInRadians()
         {
             if(IsRotationIdentity())
                 return 0d;
@@ -641,7 +640,7 @@ namespace Alternet.Drawing
             // Extract angle using clockwise convention
             double angleRadians = Math.Atan2(M21, M11);
 
-            // Normalize to [0, 2π) if needed
+            // Normalize to [0, 2*pi) if needed
             if (angleRadians < 0d)
                 angleRadians += 2d * Math.PI;
 
@@ -650,10 +649,10 @@ namespace Alternet.Drawing
 
         /// <summary>
         /// Extracts the rotation angle in degrees from this matrix.
-        /// Returns 0 if there’s no rotational component (identity rotation).
+        /// Returns 0 if there's no rotational component (identity rotation).
         /// </summary>
         /// <returns>The rotation angle in degrees.</returns>
-        public Coord GetRotationAngleInDegrees()
+        public readonly Coord GetRotationAngleInDegrees()
         {
             Coord angleRadians = GetRotationAngleInRadians();
 

@@ -2066,10 +2066,7 @@ namespace Alternet.Drawing
             if (name != null && !IsKnownColor)
                 return name.GetHashCode();
 
-            return HashCode.Combine(
-                color.Value.GetHashCode(),
-                state.GetHashCode(),
-                knownColor.GetHashCode());
+            return (color, state, knownColor).GetHashCode();
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]

@@ -466,5 +466,37 @@ namespace Alternet.UI
         {
             return Math.Min(Math.Max(v, min), max);
         }
+
+        /// <summary>
+        /// Computes a hash code for an array by combining the hash codes of its individual elements.
+        /// </summary>
+        /// <typeparam name="T">The element type of the array.</typeparam>
+        /// <param name="array">
+        /// The array whose contents will be used to calculate the hash code.
+        /// If <c>null</c>, the method returns <c>0</c>.
+        /// </param>
+        /// <returns>
+        /// A 32-bit hash code that reflects the array's contents. Equal arrays produce equal hash codes.
+        /// </returns>
+        /// <remarks>
+        /// This method uses an order-sensitive hash combination strategy with prime-based mixing.
+        /// If element types override <see cref="object.GetHashCode"/>, their implementations
+        /// contribute directly.
+        /// </remarks>
+        public static int GetArrayHashCode<T>(T[] array)
+        {
+            if (array == null)
+                return 0;
+
+            unchecked
+            {
+                int hash = 17;
+                foreach (T item in array)
+                {
+                    hash = hash * 31 + (item?.GetHashCode() ?? 0);
+                }
+                return hash;
+            }
+        }
     }
 }
