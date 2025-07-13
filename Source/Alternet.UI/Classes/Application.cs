@@ -55,10 +55,6 @@ namespace Alternet.UI
         public Application(IApplicationHandler? handler)
             : base(handler ?? Handler ?? CreateDefaultHandler())
         {
-            if (ForceX11OnLinux && App.IsLinuxOS)
-            {
-                Environment.SetEnvironmentVariable("GDK_BACKEND", "x11,*");
-            }
         }
     }
 }

@@ -237,6 +237,11 @@ namespace Alternet.UI
             finally
             {
                 DeviceType = AssemblyUtils.InvokeMauiUtilsGetDeviceType();
+
+                if (ForceX11OnLinux && App.IsLinuxOS)
+                {
+                    Environment.SetEnvironmentVariable("GDK_BACKEND", "x11,*");
+                }
             }
         }
 
