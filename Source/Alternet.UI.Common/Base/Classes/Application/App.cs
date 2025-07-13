@@ -90,6 +90,19 @@ namespace Alternet.UI
         public static bool UseLogQueue = false;
 
         /// <summary>
+        /// Forces the application to use the X11 windowing system on Linux platforms.
+        /// Default is True.
+        /// </summary>
+        /// <remarks>
+        /// If set to <c>true</c>, the application bypasses automatic platform detection and
+        /// explicitly selects X11 as the rendering and event backend on supported
+        /// Linux environments.
+        /// This can be useful for compatibility or debugging purposes where Wayland
+        /// or other backends cause issues.
+        /// </remarks>
+        public static bool ForceX11OnLinux = true;
+
+        /// <summary>
         /// Gets device the app is running on, such as a desktop computer or a tablet.
         /// </summary>
         public static GenericDeviceType DeviceType;
@@ -224,6 +237,11 @@ namespace Alternet.UI
             finally
             {
                 DeviceType = AssemblyUtils.InvokeMauiUtilsGetDeviceType();
+
+                if (ForceX11OnLinux && App.IsLinuxOS && PlatformKind == UIPlatformKind.WxWidgets)
+                {
+                    Environment.SetEnvironmentVariable("GDK_BACKEND", "x11,*");
+                }
             }
         }
 
