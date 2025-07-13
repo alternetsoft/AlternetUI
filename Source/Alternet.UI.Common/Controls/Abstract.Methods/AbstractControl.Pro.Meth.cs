@@ -403,6 +403,35 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Adjusts the specified rectangle to conform to minimum and maximum size constraints,
+        /// and optionally restricts its position based on <see cref="MinimumLocation"/>.
+        /// </summary>
+        /// <param name="value">The input bounds to coerce.</param>
+        /// <returns>
+        /// A <see cref="RectD"/> adjusted to fit within configured size and
+        /// positional constraints.
+        /// </returns>
+        /// <remarks>
+        /// This method ensures that the rectangle's dimensions respect
+        /// the <see cref="MinimumSize"/> and <see cref="MaximumSize"/>
+        /// limits. If <see cref="MinimumLocation"/> is defined, the rectangle's top-left
+        /// corner is coerced to remain
+        /// at or below the specified minimum location.
+        /// </remarks>
+        protected virtual RectD CoerceBounds(RectD value)
+        {
+            value.Size = value.Size.ApplyMinMax(MinimumSize, MaximumSize);
+
+            if (MinimumLocation is not null)
+            {
+                value.X = Math.Max(MinimumLocation.Value.X, value.X);
+                value.Y = Math.Max(MinimumLocation.Value.Y, value.Y);
+            }
+
+            return value;
+        }
+
+        /// <summary>
         /// Sets visible field value. This is internal method and should not be called
         /// directly.
         /// </summary>
