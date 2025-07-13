@@ -84,7 +84,9 @@ namespace Alternet.UI
         private SizeD maximumSize;
         private SizeD? dpi;
         private SizeD suggestedSize = DefaultControlSize;
+        private Thickness backgroundPadding;
 
+        private PointD? minimumLocation;
         private PointD layoutOffset;
         private SizeD? layoutMaxSize;
 
@@ -1243,6 +1245,29 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets or sets the padding applied around the background area of the control.
+        /// This value is used in <see cref="AbstractControl.DrawDefaultBackground"/>.
+        /// </summary>
+        /// <value>
+        /// A <see cref="Thickness"/> structure that defines the amount of space to reserve
+        /// between the background and the borders on each side (left, top, right, bottom).
+        /// </value>
+        /// <remarks>
+        /// Changing this value triggers a redraw of the control.
+        /// </remarks>
+        public virtual Thickness BackgroundPadding
+        {
+            get => backgroundPadding;
+            set
+            {
+                if (backgroundPadding == value)
+                    return;
+                backgroundPadding = value;
+                Invalidate();
+            }
+        }
+
+        /// <summary>
         /// Gets or sets the <see cref="AbstractControl"/> bounds relative to the parent,
         /// in device-independent units.
         /// </summary>
@@ -1252,7 +1277,7 @@ namespace Alternet.UI
             get => bounds;
             set
             {
-                value.Size = value.Size.ApplyMinMax(MinimumSize, MaximumSize);
+                value = CoerceBounds(value);
                 if (Bounds == value)
                     return;
                 bounds = value;
@@ -2300,6 +2325,31 @@ namespace Alternet.UI
         /// </summary>
         [Browsable(false)]
         public virtual IToolTipProvider? ToolTipProvider { get; set; }
+
+        /// <summary>
+        /// Gets or sets the minimum location constraint for layout positioning.
+        /// </summary>
+        /// <remarks>
+        /// This optional point represents the lowest bound (typically top-left) that an
+        /// element is allowed
+        /// to occupy during layout computations. When set, any changes trigger a layout
+        /// recalculation via <see cref="PerformLayout"/>.
+        /// </remarks>
+        /// <value>
+        /// A nullable <see cref="PointD"/> indicating the minimum allowable location,
+        /// or <c>null</c> if unconstrained.
+        /// </value>
+        public virtual PointD? MinimumLocation
+        {
+            get => minimumLocation;
+            set
+            {
+                if (minimumLocation == value)
+                    return;
+                minimumLocation = value;
+                PerformLayout();
+            }
+        }
 
         /// <summary>
         /// Gets or sets the minimum size the window can be resized to.

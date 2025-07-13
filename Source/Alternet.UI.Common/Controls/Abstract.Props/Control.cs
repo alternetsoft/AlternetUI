@@ -191,7 +191,7 @@ namespace Alternet.UI
             get => SafeHandler?.Bounds ?? RectD.Empty;
             set
             {
-                value.Size = value.Size.ApplyMinMax(MinimumSize, MaximumSize);
+                value = CoerceBounds(value);
                 if (Bounds == value || DisposingOrDisposed)
                     return;
                 Handler.Bounds = value;

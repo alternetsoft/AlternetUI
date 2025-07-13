@@ -597,6 +597,10 @@ namespace Alternet.UI
             PaintEventArgs e,
             DrawDefaultBackgroundFlags flags = DrawDefaultBackgroundFlags.DrawBorderAndBackground)
         {
+            var rect = e.ClipRectangle.DeflatedWithPadding(BackgroundPadding);
+            if (rect.SizeIsEmpty)
+                return;
+
             var state = VisualState;
 
             Brush? brush;
@@ -627,7 +631,6 @@ namespace Alternet.UI
                 return;
 
             var dc = e.Graphics;
-            var rect = e.ClipRectangle;
 
             dc.FillBorderRectangle(
                 rect,
