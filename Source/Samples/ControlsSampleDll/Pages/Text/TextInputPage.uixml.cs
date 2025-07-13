@@ -69,7 +69,7 @@ namespace ControlsSample
                 });
             };
 
-            panelSettings.DoInsideUpdate(() =>
+            panelSettings.DoInsideLayout(() =>
             {
                 panelSettings.AddInput("ReadOnly", textBox, nameof(TextBox.ReadOnly));
                 panelSettings.AddInput("Password", textBox, nameof(TextBox.IsPassword));
@@ -118,6 +118,8 @@ namespace ControlsSample
                 panelSettings.AddInput("Log Text", this, nameof(LogText));
                 panelSettings.AddInput("Log Position", this, nameof(LogPosition));
                 panelSettings.AddInput("Log Selection", this, nameof(LogSelection));
+
+                panelSettings.AddHorizontalLine();
             });
         }
 

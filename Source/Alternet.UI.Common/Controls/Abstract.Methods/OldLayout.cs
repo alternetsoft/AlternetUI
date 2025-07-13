@@ -306,6 +306,8 @@ namespace Alternet.UI
         {
             const Coord sizeMultiplicator = 1;
 
+            var childrenLayoutBounds = getBounds();
+
             if (updateScrollbars && container.IsScrollable)
             {
                 var totalSize = container.LayoutMaxSize
@@ -318,10 +320,8 @@ namespace Alternet.UI
                 totalSize.Width *= ScrollViewer.DefaultScrollBarTotalSizeMultiplier.Width;
                 totalSize.Height *= ScrollViewer.DefaultScrollBarTotalSizeMultiplier.Height;
 
-                container.SetScrollBarInfo(getBounds().Size, totalSize);
+                container.SetScrollBarInfo(childrenLayoutBounds.Size, totalSize);
             }
-
-            var childrenLayoutBounds = getBounds();
 
             foreach (var control in controls)
             {
@@ -368,8 +368,8 @@ namespace Alternet.UI
                 control.Bounds = new RectD(
                     horizontalPosition.Origin + layoutOffset.X,
                     verticalPosition.Origin + layoutOffset.Y,
-                    horizontalPosition.Size,
-                    verticalPosition.Size);
+                    unboundedPreferredSize.Width,
+                    unboundedPreferredSize.Height);
             }
         }
 

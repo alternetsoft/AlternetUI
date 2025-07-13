@@ -17,7 +17,7 @@ namespace Alternet.UI
         /// of total size of the scroll area in the <see cref="ScrollViewer"/>.
         /// This value is assigned to the scrollbar's total size.
         /// </summary>
-        public static SizeD DefaultScrollBarTotalSizeMultiplier = 2;
+        public static SizeD DefaultScrollBarTotalSizeMultiplier = 1;
 
         /// <summary>
         /// Gets or sets default mouse wheel scroll factor. This value is multiplied
