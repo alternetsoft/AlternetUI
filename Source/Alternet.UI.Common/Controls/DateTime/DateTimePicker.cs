@@ -89,6 +89,34 @@ namespace Alternet.UI
             }
         }
 
+        /// <inheritdoc/>
+        public override bool UseMinDate
+        {
+            get => datePicker.UseMinDate;
+            set => datePicker.UseMinDate = value;
+        }
+
+        /// <inheritdoc/>
+        public override bool UseMaxDate
+        {
+            get => datePicker.UseMaxDate;
+            set => datePicker.UseMaxDate = value;
+        }
+
+        /// <inheritdoc/>
+        public override DateTime MinDate
+        {
+            get => datePicker.MinDate;
+            set => datePicker.MinDate = value;
+        }
+
+        /// <inheritdoc/>
+        public override DateTime MaxDate
+        {
+            get => datePicker.MaxDate;
+            set => datePicker.MaxDate = value;
+        }
+
         /// <summary>
         /// Gets or sets whether to edit date part or time part of
         /// the <see cref="DateTime"/> value.

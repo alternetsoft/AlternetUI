@@ -35,7 +35,7 @@ namespace Alternet.UI
         /// Specifies the default corner radius to apply to the slider thumb.
         /// </summary>
         /// <remarks>
-        /// The value is expressed in either absolute units or as a percentage, depending on 
+        /// The value is expressed in either absolute units or as a percentage, depending on
         /// the value of <see cref="DefaultThumbCornerRadiusIsPercent"/>.
         /// A <c>null</c> value indicates no corner radius.
         /// </remarks>
