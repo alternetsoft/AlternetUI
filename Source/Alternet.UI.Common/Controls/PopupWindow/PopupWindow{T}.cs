@@ -429,23 +429,33 @@ namespace Alternet.UI
         /// Hides popup window.
         /// </summary>
         /// <param name="result">New <see cref="PopupResult"/> value.</param>
-        public virtual void HidePopup(ModalResult result)
+        /// <param name="focusOwner"></param>
+        public virtual void HidePopup(ModalResult result, bool focusOwner = true)
         {
             if (!Visible)
                 return;
             PopupResult = result;
 
-            RunWhenIdle(() =>
-            {
-                Invoke(Hide);
-                if (PopupOwner is not null && FocusPopupOwnerOnHide)
-                {
-                    /*Invoke(() => PopupOwner.ParentWindow?.Activate());*/
-                    PopupOwner.SetFocusIdle();
-                }
+            Invoke(Hide);
 
-                PopupOwner = null;
-            });
+            var a = PopupOwner;
+
+            PopupOwner = null;
+
+            if (focusOwner)
+            {
+                Invoke(() =>
+                {
+                    if (a is not null)
+                    {
+                        if (FocusPopupOwnerOnHide)
+                        {
+                            a.ParentWindow?.ShowAndFocus();
+                            a.SetFocusIfPossible();
+                        }
+                    }
+                });
+            }
         }
 
         /// <summary>
@@ -637,8 +647,10 @@ namespace Alternet.UI
 
         private void OnPopupDeactivated(object? sender, EventArgs e)
         {
-            if (HideOnDeactivate && Visible && !Modal)
-                HidePopup(ModalResult.Canceled);
+            if (HideOnDeactivate && Visible)
+            {
+                Invoke(() => HidePopup(ModalResult.Canceled, focusOwner: false));
+            }
         }
     }
 }

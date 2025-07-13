@@ -90,7 +90,7 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        public override void HidePopup(ModalResult result)
+        public override void HidePopup(ModalResult result, bool focusOwner = true)
         {
             if (!MainControl.ClearSelection(true))
                 return;
