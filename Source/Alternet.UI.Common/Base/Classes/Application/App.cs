@@ -240,7 +240,14 @@ namespace Alternet.UI
 
                 if (ForceX11OnLinux && App.IsLinuxOS)
                 {
-                    Environment.SetEnvironmentVariable("GDK_BACKEND", "x11,*");
+                    Environment.SetEnvironmentVariable(
+                        "GDK_BACKEND",
+                        "x11,*",
+                        EnvironmentVariableTarget.User);
+                    Environment.SetEnvironmentVariable(
+                        "GDK_BACKEND",
+                        "x11,*",
+                        EnvironmentVariableTarget.Process);
                 }
             }
         }

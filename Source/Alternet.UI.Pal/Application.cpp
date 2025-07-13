@@ -7,6 +7,10 @@
 
 #include <wx/sysopt.h>
 
+#if defined(__WXGTK__)
+#include <gtk/gtk.h>
+#endif
+
 IMPLEMENT_APP_NO_MAIN(Alternet::UI::App);
 IMPLEMENT_WX_THEME_SUPPORT;
 
@@ -14,6 +18,10 @@ namespace Alternet::UI
 {
     App::App()
     {
+#if defined(__WXGTK__)
+        wxApp::GTKAllowDiagnosticsControl();
+        gdk_set_allowed_backends("x11,*");
+#endif
     }
 
     wxWindow* App::GetTopWindow() const
@@ -49,10 +57,6 @@ namespace Alternet::UI
 
     bool App::OnInit()
     {
-#if defined(__WXGTK__)
-        wxApp::GTKAllowDiagnosticsControl();
-#endif
-
         wxLog::SetActiveTarget(new wxAlternetLog());
         wxLog::GetActiveTarget()->SetFormatter(new wxAlternetLogFormatter());
 
