@@ -32,9 +32,24 @@ namespace Alternet.UI
     public partial class Slider : Border, ISliderScaleContainer
     {
         /// <summary>
-        /// Gets or sets default slider thumb border color.
+        /// Specifies the default corner radius to apply to the slider thumb.
         /// </summary>
-        public static Color? DefaultThumbBorderColor = SystemColors.WindowText;
+        /// <remarks>
+        /// The value is expressed in either absolute units or as a percentage, depending on 
+        /// the value of <see cref="DefaultThumbCornerRadiusIsPercent"/>.
+        /// A <c>null</c> value indicates no corner radius.
+        /// </remarks>
+        public static Coord? DefaultThumbCornerRadius = 25;
+
+        /// <summary>
+        /// Indicates whether the default thumb corner radius is expressed as a percentage.
+        /// </summary>
+        /// <remarks>
+        /// If <c>true</c>, the value of <see cref="DefaultThumbCornerRadius"/> is treated
+        /// as a percentage of the thumb's bounding dimensions.
+        /// If <c>false</c>, the value is interpreted as an absolute coordinate unit.
+        /// </remarks>
+        public static bool DefaultThumbCornerRadiusIsPercent = true;
 
         /// <summary>
         /// Gets or sets whether to use default spacer color.
@@ -103,6 +118,8 @@ namespace Alternet.UI
 
         private static Color? defaultSpacerColor;
         private static Color? defaultSecondarySpacerColor;
+        private static Color? defaultThumbBorderColor;
+        private static Color? defaultThumbBackColor;
 
         private readonly Spacer leftTopSpacer;
         private readonly Spacer rightBottomSpacer;
@@ -282,6 +299,24 @@ namespace Alternet.UI
         {
             get => defaultSpacerColor ?? DefaultColors.DefaultCheckBoxColor;
             set => defaultSpacerColor = value;
+        }
+
+        /// <summary>
+        /// Gets or sets default slider thumb border color.
+        /// </summary>
+        public static Color? DefaultThumbBorderColor
+        {
+            get => defaultThumbBorderColor ?? DefaultColors.WindowForeColor;
+            set => defaultThumbBorderColor = value;
+        }
+
+        /// <summary>
+        /// Gets or sets default slider thumb background color.
+        /// </summary>
+        public static Color? DefaultThumbBackColor
+        {
+            get => defaultThumbBackColor ?? DefaultColors.WindowBackColor;
+            set => defaultThumbBackColor = value;
         }
 
         /// <summary>
@@ -1465,6 +1500,9 @@ namespace Alternet.UI
                 DefaultCursor = Cursors.Default;
                 HasBorder = DefaultThumbHasBorder;
                 BorderColor = DefaultThumbBorderColor;
+                BackgroundColor = DefaultThumbBackColor;
+                UniformBorderRadiusIsPercent = DefaultThumbCornerRadiusIsPercent;
+                UniformBorderCornerRadius = DefaultThumbCornerRadius;
             }
 
             /// <inheritdoc/>
@@ -1536,6 +1574,14 @@ namespace Alternet.UI
                 {
                     base.Bounds = value;
                 }
+            }
+
+            /// <inheritdoc/>
+            public override void ResolveSplitterColors(out Color? backColor, out Color? foreColor)
+            {
+                base.ResolveSplitterColors(out backColor, out foreColor);
+                if (BackgroundColor is not null)
+                    backColor = BackgroundColor;
             }
 
             /// <inheritdoc/>
