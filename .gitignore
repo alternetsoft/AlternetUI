@@ -48,3 +48,4 @@ Documentation/Alternet.UI.Documentation/Build.Result.txt
 *.snupkg
 node_modules
 External/Svg/
+*.tmp
