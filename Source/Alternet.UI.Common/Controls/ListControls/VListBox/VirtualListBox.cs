@@ -811,6 +811,30 @@ namespace Alternet.UI
             return itemRect;
         }
 
+        /// <summary>
+        /// Returns the zero-based index of the item, if specified coordinates are over checkbox;
+        /// otherwise returns <c>null</c>.
+        /// </summary>
+        /// <param name="position">A <see cref="PointD"/> object containing
+        /// the coordinates used to obtain the item
+        /// index.</param>
+        public virtual int? HitTestCheckBox(PointD position)
+        {
+            var itemIndex = HitTest(position);
+            if (itemIndex is null)
+                return null;
+            var rect = GetItemRect(itemIndex);
+            if (rect is null)
+                return null;
+            var info = GetCheckBoxInfo(itemIndex.Value, rect.Value);
+            if (info is null || !info.IsCheckBoxVisible)
+                return null;
+            var checkRect = info.CheckRect;
+            checkRect.Inflate(2);
+            var isOverCheck = checkRect.Contains(position);
+            return isOverCheck ? itemIndex : null;
+        }
+
         /// <inheritdoc/>
         public override int? HitTest(PointD position)
         {
@@ -1368,30 +1392,6 @@ namespace Alternet.UI
             var newRow = FindFirstVisibleFromLast(index, full: true);
             var result = ScrollToRow(newRow);
             return result;
-        }
-
-        /// <summary>
-        /// Returns the zero-based index of the item, if specified coordinates are over checkbox;
-        /// otherwise returns <c>null</c>.
-        /// </summary>
-        /// <param name="position">A <see cref="PointD"/> object containing
-        /// the coordinates used to obtain the item
-        /// index.</param>
-        public virtual int? HitTestCheckBox(PointD position)
-        {
-            var itemIndex = HitTest(position);
-            if (itemIndex is null)
-                return null;
-            var rect = GetItemRect(itemIndex);
-            if (rect is null)
-                return null;
-            var info = GetCheckBoxInfo(itemIndex.Value, rect.Value);
-            if (info is null || !info.IsCheckBoxVisible)
-                return null;
-            var checkRect = info.CheckRect;
-            checkRect.Inflate(2);
-            var isOverCheck = checkRect.Contains(position);
-            return isOverCheck ? itemIndex : null;
         }
 
         /// <summary>
