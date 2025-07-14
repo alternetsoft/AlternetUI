@@ -21,7 +21,7 @@ namespace Alternet::UI
         App();
 
 #if defined(__WXGTK__)
-        void InjectGtkCss()
+        void InjectGtkCss();
 #endif
 
         void OnAssertFailure(const wxChar* file, int line, const wxChar* func,
