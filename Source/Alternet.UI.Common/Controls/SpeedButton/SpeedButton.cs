@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+
 using Alternet.Drawing;
 
 namespace Alternet.UI
@@ -328,7 +329,7 @@ namespace Alternet.UI
                 if (ImageLabelDistance == value)
                     return;
                 spacer.SuggestedSize = value;
-                if(HasImage && TextVisible)
+                if (HasImage && TextVisible)
                     PerformLayoutAndInvalidate();
             }
         }
@@ -349,7 +350,7 @@ namespace Alternet.UI
             get => stickySpreadMode;
             set
             {
-                if(stickySpreadMode == value)
+                if (stickySpreadMode == value)
                     return;
                 stickySpreadMode = value;
                 UpdateSiblingStickyState();
@@ -744,7 +745,7 @@ namespace Alternet.UI
             {
                 if (UseDefaultTheme == value)
                     return;
-                if(value)
+                if (value)
                     UseTheme = KnownTheme.Default;
                 else
                     UseTheme = KnownTheme.None;
@@ -824,7 +825,7 @@ namespace Alternet.UI
                 {
                     if (HasImage)
                     {
-                        if(ImageToText == ImageToText.Horizontal)
+                        if (ImageToText == ImageToText.Horizontal)
                         {
                             if (PictureBox.HorizontalAlignment == HorizontalAlignment.Right)
                             {
@@ -1441,7 +1442,7 @@ namespace Alternet.UI
             if (TextVisible)
             {
                 var foreColor = StateObjects?.Colors?.GetObjectOrNull(state)?.ForegroundColor;
-                if(foreColor is null)
+                if (foreColor is null)
                 {
                     var theme = GetDefaultTheme()?.DarkOrLight(IsDarkBackground);
                     foreColor ??= theme?.Colors?.GetObjectOrNull(state)?.ForegroundColor;
@@ -1453,7 +1454,7 @@ namespace Alternet.UI
 
             if (HasImage)
             {
-                if(ImageToText == ImageToText.Horizontal && TextVisible
+                if (ImageToText == ImageToText.Horizontal && TextVisible
                     && ImageHorizontalAlignment == HorizontalAlignment.Right)
                 {
                     var newRect = new RectD(
@@ -1597,7 +1598,7 @@ namespace Alternet.UI
         /// </remarks>
         protected virtual void UpdateSiblingStickyState()
         {
-            if(Parent is null || !Sticky)
+            if (Parent is null || !Sticky)
                 return;
 
             switch (StickySpreadMode)

@@ -210,7 +210,7 @@ namespace Alternet.UI
             get
             {
                 var result = Window.ActiveWindow ?? App.MainWindow ?? App.FirstWindow();
-                if(result is null)
+                if (result is null)
                 {
                     dummy ??= new();
                     return dummy;
@@ -824,11 +824,11 @@ namespace Alternet.UI
         {
             get
             {
-                if(Owner is not null)
+                if (Owner is not null)
                 {
                     yield return Owner;
 
-                    foreach(var window in Owner.OwnersCollection)
+                    foreach (var window in Owner.OwnersCollection)
                     {
                         yield return window;
                     }
@@ -1236,7 +1236,7 @@ namespace Alternet.UI
                 Show();
                 Raise();
                 App.DoEvents();
-                if(ActiveControl is not null)
+                if (ActiveControl is not null)
                 {
                     ActiveControl?.SetFocusIfPossible();
                 }
@@ -1351,7 +1351,7 @@ namespace Alternet.UI
         public virtual bool CanClose(bool askOwned)
         {
             var modalDialog = App.TopModalDialog;
-            if(modalDialog is not null)
+            if (modalDialog is not null)
             {
                 if (modalDialog != this)
                     return false;
@@ -1765,7 +1765,7 @@ namespace Alternet.UI
         protected override void DisposeManaged()
         {
             var ownedWindows = OwnedWindowsCollection.ToArray();
-            foreach(var window in ownedWindows)
+            foreach (var window in ownedWindows)
             {
                 window.RaiseClosed();
                 ignoreClosedEvent = true;
@@ -2063,7 +2063,7 @@ namespace Alternet.UI
             RunWhenIdle(() =>
             {
                 var dialog = App.TopModalDialog;
-                if(dialog != this)
+                if (dialog != this)
                     dialog?.ShowAndFocus(true);
             });
         }

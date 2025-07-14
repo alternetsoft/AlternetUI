@@ -1488,7 +1488,7 @@ namespace Alternet.UI
 
                         return result;
                     });
-                }                
+                }
             }
 
             /// <inheritdoc/>
