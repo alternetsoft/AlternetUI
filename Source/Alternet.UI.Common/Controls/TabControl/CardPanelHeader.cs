@@ -58,7 +58,7 @@ namespace Alternet.UI
         private CardPanel? cardPanel;
         private IReadOnlyFontAndColor? activeTabColors;
         private IReadOnlyFontAndColor? inactiveTabColors;
-        private HorizontalAlignment tabHorizontalAlignment = HorizontalAlignment.Left;
+        private HorizontalAlignment? tabHorizontalAlignment;
         private SpeedButton.KnownTheme tabTheme = SpeedButton.KnownTheme.TabControl;
         private bool hasInteriorBorder = true;
         private TabAlignment tabAlignment = TabAlignment.Top;
@@ -137,9 +137,9 @@ namespace Alternet.UI
         /// Gets or sets the area of the control (for example, along the top) where
         /// the tabs are aligned.
         /// </summary>
-        /// <value>One of the <see cref="TabAlignment"/> values. The default is
+        /// <value>One of the <see cref="TabsAlignment"/> values. The default is
         /// <see cref="TabAlignment.Top"/>.</value>
-        public virtual TabAlignment TabAlignment
+        public virtual TabAlignment TabsAlignment
         {
             get
             {
@@ -148,10 +148,18 @@ namespace Alternet.UI
 
             set
             {
-                if (TabAlignment == value)
+                if (TabsAlignment == value)
                     return;
-                tabAlignment = value;
-                Invalidate();
+
+                DoInsideLayout(() =>
+                {
+                    tabAlignment = value;
+
+                    foreach (var tab in Tabs)
+                    {
+                        tab.HeaderButton.HorizontalAlignment = GetRealTabHorizontalAlignment();
+                    }
+                });
             }
         }
 
@@ -226,7 +234,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets <see cref="HorizontalAlignment"/> of the tabs.
         /// </summary>
-        public virtual HorizontalAlignment TabHorizontalAlignment
+        public virtual HorizontalAlignment? TabHorizontalAlignment
         {
             get
             {
@@ -739,12 +747,16 @@ namespace Alternet.UI
         {
             var button = CreateHeaderButton();
 
+            if (button.MinimumSize.IsEmpty)
+                button.MinimumSize = TabControl.DefaultMinTabSize;
+
             button.Text = text;
             button.SizeChanged += OnButtonSizeChanged;
             button.Margin = TabMargin ?? DefaultTabMargin;
             button.Padding = TabPadding ?? DefaultTabPadding;
             button.HasBorder = TabHasBorder;
-            button.HorizontalAlignment = UI.HorizontalAlignment.Center;
+            button.VerticalAlignment = UI.VerticalAlignment.Center;
+            button.SetContentHorizontalAlignment(HorizontalAlignment.Left);
             Children.Insert(index ?? Children.Count, button);
             button.Parent = this;
             button.Click += OnItemClick;
@@ -819,8 +831,6 @@ namespace Alternet.UI
         public virtual SpeedButton CreateHeaderButton()
         {
             var result = CreateButton?.Invoke() ?? Fn();
-            if (result.MinimumSize.IsEmpty)
-                result.MinimumSize = TabControl.DefaultMinTabSize;
             return result;
 
             static SpeedButton Fn()
@@ -876,8 +886,22 @@ namespace Alternet.UI
                     e.Graphics,
                     e.ClipRectangle,
                     GetInteriorBorderColor().AsBrush,
-                    TabAlignment);
+                    TabsAlignment);
             }
+        }
+
+        /// <summary>
+        /// Gets real tab horizontal alignment which depends on <see cref="TabHorizontalAlignment"/>
+        /// and <see cref="TabsAlignment"/>.
+        /// </summary>
+        /// <returns></returns>
+        protected HorizontalAlignment GetRealTabHorizontalAlignment()
+        {
+            if (TabHorizontalAlignment is not null)
+                return TabHorizontalAlignment.Value;
+
+            var isLeft = tabAlignment == TabAlignment.Top || tabAlignment == TabAlignment.Bottom;
+            return isLeft ? HorizontalAlignment.Left : HorizontalAlignment.Stretch;
         }
 
         /// <summary>
@@ -891,20 +915,34 @@ namespace Alternet.UI
             return color;
         }
 
-        private void OnButtonSizeChanged(object? sender, EventArgs e)
+        /// <summary>
+        /// Called when size of the tab button is changed.
+        /// </summary>
+        /// <param name="sender">The event sender.</param>
+        /// <param name="e">The event parameters.</param>
+        protected virtual void OnButtonSizeChanged(object? sender, EventArgs e)
         {
             if(sender is AbstractControl control)
                 ButtonSizeChanged?.Invoke(this, new BaseEventArgs<AbstractControl>(control));
         }
 
-        private IReadOnlyFontAndColor GetColors(bool isActive)
+        /// <summary>
+        /// Gets colors of the active or inactive tab.
+        /// </summary>
+        /// <param name="isActive">Whether to get colors for the active or inactive item.</param>
+        /// <returns></returns>
+        protected virtual IReadOnlyFontAndColor GetColors(bool isActive)
         {
             if (isActive)
                 return GetActiveColors();
             return GetInactiveColors();
         }
 
-        private IReadOnlyFontAndColor GetActiveColors()
+        /// <summary>
+        /// Gets colors of the active tab.
+        /// </summary>
+        /// <returns></returns>
+        protected virtual IReadOnlyFontAndColor GetActiveColors()
         {
             var colors = ActiveTabColors ?? DefaultActiveTabColors;
             if (colors is not null)
@@ -915,7 +953,11 @@ namespace Alternet.UI
             return colors;
         }
 
-        private IReadOnlyFontAndColor GetInactiveColors()
+        /// <summary>
+        /// Gets colors of the inactive tab.
+        /// </summary>
+        /// <returns></returns>
+        protected virtual IReadOnlyFontAndColor GetInactiveColors()
         {
             var colors = InactiveTabColors ?? DefaultInactiveTabColors;
             if (colors is not null)
@@ -926,7 +968,11 @@ namespace Alternet.UI
             return colors;
         }
 
-        private void UpdateTab(CardPanelHeaderItem item)
+        /// <summary>
+        /// Updates tab properties.
+        /// </summary>
+        /// <param name="item">The item which properties to update.</param>
+        protected virtual void UpdateTab(CardPanelHeaderItem item)
         {
             if (item is null)
                 return;
@@ -957,11 +1003,14 @@ namespace Alternet.UI
 
             item.HeaderButton.Margin = TabMargin ?? DefaultTabMargin;
             item.HeaderButton.Padding = TabPadding ?? DefaultTabPadding;
-            item.HeaderButton.HorizontalAlignment = TabHorizontalAlignment;
+            item.HeaderButton.HorizontalAlignment = GetRealTabHorizontalAlignment();
             item.HeaderButton.UseTheme = tabTheme;
         }
 
-        private void UpdateTabs()
+        /// <summary>
+        /// Updates all tabs properties.
+        /// </summary>
+        protected virtual void UpdateTabs()
         {
             DoInsideLayout(Fn);
 
@@ -977,15 +1026,32 @@ namespace Alternet.UI
             Refresh();
         }
 
-        private void OnTabsItemRemoved(object? sender, int index, CardPanelHeaderItem item)
+        /// <summary>
+        /// Called when tab is removed.
+        /// </summary>
+        /// <param name="sender">The sender of the event.</param>
+        /// <param name="index">The index of the tab.</param>
+        /// <param name="item">The tab which is removed.</param>
+        protected virtual void OnTabsItemRemoved(object? sender, int index, CardPanelHeaderItem item)
         {
         }
 
-        private void OnTabsItemInserted(object? sender, int index, CardPanelHeaderItem item)
+        /// <summary>
+        /// Called when tab is inserted.
+        /// </summary>
+        /// <param name="sender">The sender of the event.</param>
+        /// <param name="index">The index of the tab.</param>
+        /// <param name="item">The tab which is inserted.</param>
+        protected virtual void OnTabsItemInserted(object? sender, int index, CardPanelHeaderItem item)
         {
         }
 
-        private void OnItemClick(object? sender, EventArgs e)
+        /// <summary>
+        /// Called when tab is clicked.
+        /// </summary>
+        /// <param name="sender">The sender of the event.</param>
+        /// <param name="e">The event arguments.</param>
+        protected virtual void OnItemClick(object? sender, EventArgs e)
         {
             if (sender is not AbstractControl control)
                 return;

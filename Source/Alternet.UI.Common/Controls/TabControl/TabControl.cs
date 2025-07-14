@@ -473,6 +473,8 @@ namespace Alternet.UI
                 {
                     var isVertical = value == TabAlignment.Top || value == TabAlignment.Bottom;
 
+                    Header.TabsAlignment = value;
+
                     if (isVertical)
                     {
                         Header.HorizontalAlignment = UI.HorizontalAlignment.Stretch;
@@ -480,9 +482,13 @@ namespace Alternet.UI
                         base.Layout = LayoutStyle.Vertical;
                         Header.Layout = LayoutStyle.Horizontal;
                         if (value == TabAlignment.Bottom)
+                        {
                             Header.VerticalAlignment = UI.VerticalAlignment.Bottom;
+                        }
                         else
+                        {
                             Header.VerticalAlignment = UI.VerticalAlignment.Top;
+                        }
                     }
                     else
                     {
@@ -491,9 +497,13 @@ namespace Alternet.UI
                         base.Layout = LayoutStyle.Horizontal;
                         Header.Layout = LayoutStyle.Vertical;
                         if (value == TabAlignment.Right)
+                        {
                             Header.HorizontalAlignment = UI.HorizontalAlignment.Right;
+                        }
                         else
+                        {
                             Header.HorizontalAlignment = UI.HorizontalAlignment.Left;
+                        }
                     }
                 });
                 Invalidate();
