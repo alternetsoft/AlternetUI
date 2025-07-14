@@ -1,5 +1,7 @@
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
+
 using Alternet.Base.Collections;
 
 namespace Alternet.UI
@@ -16,6 +18,22 @@ namespace Alternet.UI
         /// </summary>
         protected Menu()
         {
+        }
+
+        /// <summary>
+        /// Indicates whether this <see cref="MenuItem"/> contains any child items.
+        /// </summary>
+        /// <remarks>
+        /// Returns <c>true</c> if the internal <c>Items</c> collection has been initialized;
+        /// otherwise, <c>false</c>.
+        /// </remarks>
+        [Browsable(false)]
+        public bool HasItems
+        {
+            get
+            {
+                return items != null;
+            }
         }
 
         /// <summary>
@@ -73,6 +91,88 @@ namespace Alternet.UI
                 action(child);
                 if (recursive)
                     child.ForEachItem(action, true);
+            }
+        }
+
+        /// <summary>
+        /// Searches the menu for an item whose <see cref="BaseObjectWithAttr.Tag"/>
+        /// matches the specified value.
+        /// </summary>
+        /// <param name="value">The object to compare with each item's <c>Tag</c> property.</param>
+        /// <returns>
+        /// The first <see cref="MenuItem"/> with a matching <c>Tag</c>, or <c>null</c> if
+        /// no match is found or <paramref name="value"/> is <c>null</c>.
+        /// </returns>
+        /// <remarks>
+        /// Useful for retrieving a menu item based on externally assigned metadata or identifiers.
+        /// </remarks>
+        public virtual MenuItem? FindItemWithTag(object? value)
+        {
+            if (items is null)
+                return null;
+            if (value is null)
+                return null;
+
+            for (int i = 0; i < Items.Count; i++)
+            {
+                var item = Items[i];
+
+                if (value.Equals(item.Tag))
+                    return item;
+            }
+
+            return null;
+        }
+
+        /// <summary>
+        /// Checks the menu item whose <c>Tag</c> matches the specified value, and unchecks all others.
+        /// </summary>
+        /// <param name="value">The value to search for in each item's <c>Tag</c>.</param>
+        /// <remarks>
+        /// Uses <see cref="FindItemWithTag(object?)"/> to locate the target item, then
+        /// delegates to <see cref="CheckSingleItem(MenuItem?)"/>.
+        /// Ensures exclusive checked state among sibling items.
+        /// </remarks>
+        public virtual void CheckSingleItemWithTag(object? value)
+        {
+            var item = FindItemWithTag(value);
+            CheckSingleItem(item);
+        }
+
+        /// <summary>
+        /// Checks the specified item and unchecks all other sibling menu items.
+        /// </summary>
+        /// <param name="item">The item to check exclusively; may be <c>null</c>.</param>
+        /// <remarks>
+        /// If <paramref name="item"/> is not <c>null</c>, its <c>Checked</c> property
+        /// will be set to <c>true</c>.
+        /// All other items will be unchecked to maintain exclusivity.
+        /// </remarks>
+        public virtual void CheckSingleItem(MenuItem? item)
+        {
+            UncheckItems();
+            if (item is not null)
+                item.Checked = true;
+        }
+
+        /// <summary>
+        /// Unchecks all child menu items by setting their <c>Checked</c> property to <c>false</c>.
+        /// </summary>
+        /// <remarks>
+        /// Iterates through the <see cref="Items"/> collection and clears the checked state
+        /// of each item.
+        /// If the <c>Items</c> collection is not initialized, the method exits
+        /// without performing any action.
+        /// </remarks>
+        public virtual void UncheckItems()
+        {
+            if (items is null)
+                return;
+            for (int i = 0; i < Items.Count; i++)
+            {
+                var item = Items[i];
+
+                item.Checked = false;
             }
         }
 

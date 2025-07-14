@@ -177,15 +177,6 @@ namespace Alternet.UI
             }
             finally
             {
-                /*
-                var hoveredControl = AbstractControl.HoveredControl;
-
-                if (hoveredControl is not null)
-                {
-                    AbstractControl.HoveredControl = null;
-                    hoveredControl.Invalidate();
-                }
-                */
             }
         }
 
