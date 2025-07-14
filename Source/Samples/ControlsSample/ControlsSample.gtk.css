@@ -1,0 +1,20 @@
+﻿scrollbar {
+    background-color: transparent;
+    border: none;
+}
+
+scrollbar trough {
+    background-color: transparent;
+}
+
+scrollbar slider {
+    background-color: red; /* #888 */
+    min-width: 12px;
+    min-height: 12px;
+}
+
+scrollbar.vertical,
+scrollbar.horizontal {
+    padding: 0;
+    margin: 0;
+}

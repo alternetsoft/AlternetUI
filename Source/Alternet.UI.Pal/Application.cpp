@@ -21,10 +21,88 @@ IMPLEMENT_WX_THEME_SUPPORT;
 
 namespace Alternet::UI
 {
+
+    bool Application::_injectGtkCss = false;
+
+    wxString Application::_gtkCss = R"(
+scrollbar{
+        background-color: transparent;
+        border: none;
+}
+
+scrollbar trough{
+    background-color: transparent;
+}
+
+scrollbar slider{
+    background-color: #888;
+    min-width: 12px;
+    min-height: 12px;
+}
+
+scrollbar.vertical,
+scrollbar.horizontal{
+    padding : 0;
+    margin : 0;
+}
+            )";
+
+#if defined(__WXGTK__)
+    void App::InjectGtkCss()
+    {
+        // Create a new CSS provider
+        GtkCssProvider* provider = gtk_css_provider_new();
+
+        wxCharBuffer buffer = _gtkCss.ToUTF8();  // Converts to UTF-8
+        const gchar* gtkString = buffer.data();   // gchar* is just char*
+
+        /*
+        // Load CSS from a string
+        const gchar* css = R"(
+
+    scrollbar {
+            background-color: transparent;
+            border: none;
+        }
+
+        scrollbar trough {
+            background-color: transparent;
+        }
+
+        scrollbar slider {
+            background-color: #888;
+            min-width: 12px;
+            min-height: 12px;
+        }
+
+        scrollbar.vertical,
+        scrollbar.horizontal {
+            padding: 0;
+            margin: 0;
+        }    
+    )";
+    */
+
+        gtk_css_provider_load_from_data(provider, css, -1, nullptr);
+
+        // Get the default screen
+        GdkScreen* screen = gdk_screen_get_default();
+
+        // Apply the CSS provider to the screen
+        gtk_style_context_add_provider_for_screen(
+            screen,
+            GTK_STYLE_PROVIDER(provider),
+            GTK_STYLE_PROVIDER_PRIORITY_APPLICATION
+        );
+
+        // Unref the provider when done
+        g_object_unref(provider);
+    }
+#endif
+
     App::App()
     {
 #if defined(__WXGTK__)
-
         setenv("GTK_OVERLAY_SCROLLING", "0", 1); // 1 = overwrite if already set
         wxApp::GTKAllowDiagnosticsControl();
         gdk_set_allowed_backends("x11,*");
@@ -33,37 +111,16 @@ namespace Alternet::UI
 
     wxWindow* App::GetTopWindow() const
     {
-        return wxApp::GetTopWindow();
-     
-        /*
-        wxWindow* window = m_topWindow;
-
-        // If there is no top window or it is about to be destroyed,
-        // we need to search for the first TLW which is not pending delete
-        if (!window || wxPendingDelete.Member(window))
-        {
-            window = NULL;
-            wxWindowList::compatibility_iterator node = wxTopLevelWindows.GetFirst();
-            while (node)
-            {
-                wxWindow* win = node->GetData();
-                if (!wxPendingDelete.Member(win))
-                {
-                    //if (win->IsShownOnScreen())
-                    {
-                        window = win;
-                        break;
-                    }
-                }
-                node = node->GetNext();
-            }
-        }
-
-        return window;*/
+        return wxApp::GetTopWindow();     
     }
 
     bool App::OnInit()
     {
+#if defined(__WXGTK__)
+        if(_owner->_injectGtkCss)
+            InjectGtkCss();
+#endif
+
         wxLog::SetActiveTarget(new wxAlternetLog());
         wxLog::GetActiveTarget()->SetFormatter(new wxAlternetLogFormatter());
 
@@ -241,6 +298,12 @@ namespace Alternet::UI
 
         _clipboard->Release();
         _clipboard = nullptr;
+    }
+
+    void Application::SetGtkCss(bool inject, const string& css)
+    {
+        _injectGtkCss = inject;
+        _gtkCss = wxStr(css);
     }
 
     void Application::GetEventIdentifiers(int* eventIdentifiers, int eventIdentifiersCount)

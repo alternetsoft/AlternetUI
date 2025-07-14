@@ -50,6 +50,49 @@ namespace Alternet.UI
         /// </summary>
         public static class Linux
         {
+            /// <summary>
+            /// Indicates whether GTK CSS should be loaded automatically at application startup.
+            /// </summary>
+            /// <remarks>
+            /// If set to <c>true</c>, the system will attempt to read and apply a stylesheet from
+            /// a file named &lt;ApplicationFileName&gt;.gtk.css located in the application directory.
+            /// <para><b>Note:</b> This property should be set <i>before</i> the application
+            /// is created to have any effect.</para>
+            /// </remarks>
+            public static bool LoadGtkCss = true;
+
+            /// <summary>
+            /// Indicates whether custom GTK CSS should be injected during application startup.
+            /// </summary>
+            /// <remarks>
+            /// <para>
+            /// If set to <c>true</c>, the value of <see cref="GtkCss"/> will be applied
+            /// to relevant GTK widgets using a <c>GtkCssProvider</c>.
+            /// This allows for dynamic theming or visual customization of scrollbars,
+            /// backgrounds, or other interface elements.
+            /// </para>
+            /// <para>
+            /// <b>Important:</b> This must be set <i>before</i> the application is created
+            /// to have any effect.
+            /// </para>
+            /// </remarks>
+            public static bool InjectGtkCss = true;
+
+            /// <summary>
+            /// Contains the GTK CSS stylesheet to be injected, if <see cref="InjectGtkCss"/> is enabled.
+            /// </summary>
+            /// <remarks>
+            /// <para>
+            /// The stylesheet should follow GTK's CSS syntax, targeting elements
+            /// like <c>scrollbar</c>, <c>button</c>, or <c>window</c>.
+            /// Can be modified at runtime to enable theme switching or fine-grained styling control.
+            /// </para>
+            /// <para>
+            /// <b>Important:</b> This must be set <i>before</i> the application is created
+            /// to have any effect.
+            /// </para>
+            /// </remarks>
+            public static string? GtkCss;
         }
     }
 }

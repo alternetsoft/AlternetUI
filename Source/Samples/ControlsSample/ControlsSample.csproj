@@ -28,6 +28,9 @@
 
 
     <ItemGroup>
+      <None Update="ControlsSample.gtk.css">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </None>
       <None Update="ControlsSample.sh">
         <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       </None>

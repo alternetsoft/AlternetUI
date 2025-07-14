@@ -173,6 +173,11 @@ namespace Alternet.UI.Native
             
         }
         
+        public static void SetGtkCss(bool inject, string css)
+        {
+            NativeApi.Application_SetGtkCss_(inject, css);
+        }
+        
         public Alternet.UI.PropertyUpdateResult SetAppearance(Alternet.UI.ApplicationAppearance appearance)
         {
             CheckDisposed();
@@ -497,6 +502,9 @@ namespace Alternet.UI.Native
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern bool Application_GetInvokeRequired_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void Application_SetGtkCss_(bool inject, string css);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern Alternet.UI.PropertyUpdateResult Application_SetAppearance_(IntPtr obj, Alternet.UI.ApplicationAppearance appearance);

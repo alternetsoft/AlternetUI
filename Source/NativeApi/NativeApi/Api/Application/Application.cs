@@ -8,6 +8,8 @@ namespace NativeApi.Api
     // https://docs.wxwidgets.org/3.2/classwx_app.html
     public class Application
     {
+        public static void SetGtkCss(bool inject, string css) { }
+        
         public PropertyUpdateResult SetAppearance(ApplicationAppearance appearance)
             => default;
 

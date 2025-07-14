@@ -29,6 +29,7 @@ void SetInUixmlPreviewerMode(bool value);
 
 bool GetInvokeRequired();
 
+static void SetGtkCss(bool inject, const string& css);
 PropertyUpdateResult SetAppearance(ApplicationAppearance appearance);
 static void GetEventIdentifiers(int* eventIdentifiers, int eventIdentifiersCount);
 static void ThrowError(int value);

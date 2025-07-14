@@ -20,6 +20,10 @@ namespace Alternet::UI
     public:
         App();
 
+#if defined(__WXGTK__)
+        void InjectGtkCss()
+#endif
+
         void OnAssertFailure(const wxChar* file, int line, const wxChar* func,
             const wxChar* cond, const wxChar* msg) override;
         void OnUnhandledException() override;
@@ -47,6 +51,9 @@ namespace Alternet::UI
     {
 #include "Api/Application.inc"
     public:
+        static wxString _gtkCss;
+        static bool _injectGtkCss;
+
         Mouse* GetMouseInternal();
         Keyboard* GetKeyboardInternal();
 
