@@ -82,8 +82,8 @@ namespace Alternet.UI
         /// should be included in the popup list.
         /// </summary>
         /// <remarks>
-        /// The predicate receives an item as input (which may be <c>null</c>) and returns <c>true</c> 
-        /// if the item should be included, or <c>false</c> otherwise. 
+        /// The predicate receives an item as input (which may be <c>null</c>) and returns <c>true</c>
+        /// if the item should be included, or <c>false</c> otherwise.
         /// </remarks>
         /// <value>
         /// A delegate of type <see cref="Predicate{Object}"/> that returns <c>true</c>
