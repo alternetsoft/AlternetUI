@@ -428,7 +428,8 @@ namespace Alternet.Drawing
         {
             if (dpi == DefaultDPI || dpi <= 0)
                 return 1;
-            return (Coord)dpi / (Coord)DefaultDPI;
+            var result = (Coord)dpi / (Coord)DefaultDPI;
+            return result < 1 ? 1 : result;
         }
 
         /// <summary>

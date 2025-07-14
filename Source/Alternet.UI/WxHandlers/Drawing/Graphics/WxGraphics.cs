@@ -405,7 +405,8 @@ namespace Alternet.Drawing
         /// <inheritdoc/>
         public override SizeI GetDPI()
         {
-            return dc.GetDpi();
+            var result = dc.GetDpi();
+            return (result.Width < 96 || result.Height < 96) ? 96 : result;
         }
 
         /// <inheritdoc/>

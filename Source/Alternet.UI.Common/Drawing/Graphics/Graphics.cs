@@ -92,7 +92,9 @@ namespace Alternet.Drawing
         {
             get
             {
-                return GraphicsFactory.ScaleFactorFromDpi(GetDPI().Width);
+                var dpi = GetDPI().Width;
+                var result = GraphicsFactory.ScaleFactorFromDpi(dpi);
+                return result;
             }
         }
 

@@ -10,6 +10,11 @@ namespace Alternet.Drawing
 {
     public partial class Graphics
     {
+        /// <summary>
+        /// Gets or sets whether debug corners are painted in some of the graphics methods.
+        /// </summary>
+        public static bool DrawDebugCorners = false;
+
 #if DEBUG
         /// <summary>
         /// Internal use only.
@@ -257,7 +262,7 @@ namespace Alternet.Drawing
             var foreColor = prm.ForegroundColor;
             var backColor = prm.BackgroundColor;
             var isVertical = prm.IsVertical;
-            var drawDebugCorners = prm.DrawDebugCorners;
+            var drawDebugCorners = prm.DrawDebugCorners || DrawDebugCorners;
 
             var textHorizontalAlignment = prm.TextHorizontalAlignment;
             var lineDistance = prm.LineDistance;
@@ -280,9 +285,11 @@ namespace Alternet.Drawing
             {
                 imageElement = new()
                 {
+                    IsImage = true,
                     GetSize = () =>
                     {
-                        return image.SizeDip(ScaleFactor);
+                        var result = image.SizeDip(ScaleFactor);
+                        return result;
                     },
                     Draw = (dc, rect) =>
                     {
@@ -547,7 +554,7 @@ namespace Alternet.Drawing
                     prm.Rect,
                     prm.Alignment.Horizontal,
                     prm.Alignment.Vertical,
-                    shrinkSize: true);
+                    shrinkSize: false);
             }
 
 #if DEBUG
@@ -591,6 +598,10 @@ namespace Alternet.Drawing
                         if(DebugElementId == prm.DebugId && prm.DebugId is not null)
                         {
                         }
+                    }
+
+                    if (element.IsImage)
+                    {
                     }
 #endif
                     var elementAfterAlign = AlignUtils.AlignRectInRect(
@@ -719,6 +730,11 @@ namespace Alternet.Drawing
                 /// Gets or sets element alignment.
                 /// </summary>
                 public HVAlignment Alignment;
+
+                /// <summary>
+                /// Gets or sets whether element is image.
+                /// </summary>
+                public bool IsImage;
 
                 /// <summary>
                 /// Initializes a new instance of the <see cref="ElementParams"/> struct.
