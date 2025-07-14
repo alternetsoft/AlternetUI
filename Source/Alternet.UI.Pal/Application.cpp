@@ -53,37 +53,10 @@ scrollbar.horizontal{
         // Create a new CSS provider
         GtkCssProvider* provider = gtk_css_provider_new();
 
-        wxCharBuffer buffer = _gtkCss.ToUTF8();  // Converts to UTF-8
+        wxCharBuffer buffer = _owner->_gtkCss.ToUTF8();  // Converts to UTF-8
         const gchar* gtkString = buffer.data();   // gchar* is just char*
 
-        /*
-        // Load CSS from a string
-        const gchar* css = R"(
-
-    scrollbar {
-            background-color: transparent;
-            border: none;
-        }
-
-        scrollbar trough {
-            background-color: transparent;
-        }
-
-        scrollbar slider {
-            background-color: #888;
-            min-width: 12px;
-            min-height: 12px;
-        }
-
-        scrollbar.vertical,
-        scrollbar.horizontal {
-            padding: 0;
-            margin: 0;
-        }    
-    )";
-    */
-
-        gtk_css_provider_load_from_data(provider, css, -1, nullptr);
+        gtk_css_provider_load_from_data(provider, gtkString, -1, nullptr);
 
         // Get the default screen
         GdkScreen* screen = gdk_screen_get_default();
