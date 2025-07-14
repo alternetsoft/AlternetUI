@@ -59,7 +59,7 @@ namespace Alternet.UI
             /// <para><b>Note:</b> This property should be set <i>before</i> the application
             /// is created to have any effect.</para>
             /// </remarks>
-            public static bool LoadGtkCss = true;
+            public static bool LoadGtkCss = false;
 
             /// <summary>
             /// Indicates whether custom GTK CSS should be injected during application startup.
@@ -92,7 +92,11 @@ namespace Alternet.UI
             /// to have any effect.
             /// </para>
             /// </remarks>
-            public static string? GtkCss;
+            public static string? GtkCss = @"
+* {
+    background-image: none;
+}
+";
         }
     }
 }

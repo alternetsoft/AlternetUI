@@ -1,29 +1,3 @@
-﻿scrollbar {
-    background-color: transparent;
-    border: none;
-}
-
-scrollbar trough {
-    background-color: transparent;
-}
-
-scrollbar slider {
-    background-color: #888;
-    min-width: 12px;
-    min-height: 12px;
-}
-
-scrollbar.vertical,
-scrollbar.horizontal {
-    padding: 0;
-    margin: 0;
-}
-
-GtkScrolledWindow,
-.wxPizza {
-    background-color: transparent;
+﻿* {
     background-image: none;
-    border: 1px solid #444; /* Your desired border color */
-    box-shadow: none;
-    border-radius: 0;
 }
