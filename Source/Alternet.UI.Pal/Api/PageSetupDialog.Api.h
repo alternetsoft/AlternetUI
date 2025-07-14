@@ -43,23 +43,89 @@ ALTERNET_UI_API void PageSetupDialog_SetDocument_(PageSetupDialog* obj, PrintDoc
     #endif
 }
 
-ALTERNET_UI_API Thickness_C PageSetupDialog_GetMinMargins_(PageSetupDialog* obj)
+ALTERNET_UI_API double PageSetupDialog_GetMinMarginLeft_(PageSetupDialog* obj)
 {
     #if !defined(__WXMSW__) || defined(_DEBUG)
-    return MarshalExceptions<Thickness_C>([&](){
+    return MarshalExceptions<double>([&](){
     #endif
-        return obj->GetMinMargins();
+        return obj->GetMinMarginLeft();
     #if !defined(__WXMSW__) || defined(_DEBUG)
     });
     #endif
 }
 
-ALTERNET_UI_API void PageSetupDialog_SetMinMargins_(PageSetupDialog* obj, Thickness value)
+ALTERNET_UI_API void PageSetupDialog_SetMinMarginLeft_(PageSetupDialog* obj, double value)
 {
     #if !defined(__WXMSW__) || defined(_DEBUG)
     MarshalExceptions<void>([&](){
     #endif
-        obj->SetMinMargins(value);
+        obj->SetMinMarginLeft(value);
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    });
+    #endif
+}
+
+ALTERNET_UI_API double PageSetupDialog_GetMinMarginTop_(PageSetupDialog* obj)
+{
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    return MarshalExceptions<double>([&](){
+    #endif
+        return obj->GetMinMarginTop();
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    });
+    #endif
+}
+
+ALTERNET_UI_API void PageSetupDialog_SetMinMarginTop_(PageSetupDialog* obj, double value)
+{
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    MarshalExceptions<void>([&](){
+    #endif
+        obj->SetMinMarginTop(value);
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    });
+    #endif
+}
+
+ALTERNET_UI_API double PageSetupDialog_GetMinMarginRight_(PageSetupDialog* obj)
+{
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    return MarshalExceptions<double>([&](){
+    #endif
+        return obj->GetMinMarginRight();
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    });
+    #endif
+}
+
+ALTERNET_UI_API void PageSetupDialog_SetMinMarginRight_(PageSetupDialog* obj, double value)
+{
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    MarshalExceptions<void>([&](){
+    #endif
+        obj->SetMinMarginRight(value);
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    });
+    #endif
+}
+
+ALTERNET_UI_API double PageSetupDialog_GetMinMarginBottom_(PageSetupDialog* obj)
+{
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    return MarshalExceptions<double>([&](){
+    #endif
+        return obj->GetMinMarginBottom();
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    });
+    #endif
+}
+
+ALTERNET_UI_API void PageSetupDialog_SetMinMarginBottom_(PageSetupDialog* obj, double value)
+{
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    MarshalExceptions<void>([&](){
+    #endif
+        obj->SetMinMarginBottom(value);
     #if !defined(__WXMSW__) || defined(_DEBUG)
     });
     #endif

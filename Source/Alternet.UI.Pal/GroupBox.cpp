@@ -55,14 +55,18 @@ namespace Alternet::UI
         return staticBox;
     }
 
-    Thickness GroupBox::GetIntrinsicLayoutPadding()
+    SizeD GroupBox::GetAutoPaddingRightBottom()
     {
-        return GetIntrinsicPadding(/*preferredSize:*/ false);
+        auto padding = GetIntrinsicPadding(/*preferredSize:*/ false);
+
+        return SizeD(padding.Right, padding.Bottom);
     }
 
-    Thickness GroupBox::GetIntrinsicPreferredSizePadding()
+    SizeD GroupBox::GetAutoPaddingLeftTop()
     {
-        return GetIntrinsicPadding(/*preferredSize:*/ true);
+        auto padding = GetIntrinsicPadding(/*preferredSize:*/ false);
+
+        return SizeD(padding.Left, padding.Top);
     }
 
     int GroupBox::GetTopBorderForSizer()

@@ -40,7 +40,7 @@ namespace Alternet.UI
             {
                 var childrenBounds = ClientRectangle;
                 var padding = Padding;
-                var intrinsicPadding = IntrinsicLayoutPadding;
+                var intrinsicPadding = NativePadding;
                 var borderWidth = Border.SafeBorderWidth(this);
 
                 var sz = childrenBounds.Size;

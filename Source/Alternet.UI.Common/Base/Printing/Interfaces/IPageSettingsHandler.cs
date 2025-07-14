@@ -20,8 +20,25 @@ namespace Alternet.Drawing.Printing
         /// <inheritdoc cref="PageSettings.Landscape"/>
         public bool Landscape { get; set; }
 
-        /// <inheritdoc cref="PageSettings.Margins"/>
-        public Thickness Margins { get; set; }
+        /// <summary>
+        /// Gets or sets left margin.
+        /// </summary>
+        public Coord MarginLeft { get; set; }
+
+        /// <summary>
+        /// Gets or sets top margin.
+        /// </summary>
+        public Coord MarginTop { get; set; }
+
+        /// <summary>
+        /// Gets or sets right margin.
+        /// </summary>
+        public Coord MarginRight { get; set; }
+
+        /// <summary>
+        /// Gets or sets bottom margin.
+        /// </summary>
+        public Coord MarginBottom { get; set; }
 
         /// <summary>
         /// Gets or sets custom paper size.

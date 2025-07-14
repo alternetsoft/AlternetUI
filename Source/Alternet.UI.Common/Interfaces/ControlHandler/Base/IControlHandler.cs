@@ -51,11 +51,8 @@ namespace Alternet.UI
         /// </summary>
         bool IsNativeControlCreated { get; }
 
-        /// <inheritdoc cref="AbstractControl.IntrinsicLayoutPadding"/>
-        Thickness IntrinsicLayoutPadding { get; }
-
-        /// <inheritdoc cref="AbstractControl.IntrinsicPreferredSizePadding"/>
-        Thickness IntrinsicPreferredSizePadding { get; }
+        /// <inheritdoc cref="AbstractControl.NativePadding"/>
+        Thickness NativePadding { get; }
 
         /// <inheritdoc cref="AbstractControl.Bounds"/>
         RectD Bounds { get; set; }

@@ -39,9 +39,7 @@ namespace Alternet.UI
             get => false;
         }
 
-        Thickness IControlHandler.IntrinsicLayoutPadding { get; }
-
-        Thickness IControlHandler.IntrinsicPreferredSizePadding { get; }
+        Thickness IControlHandler.NativePadding { get; }
 
         /// <inheritdoc/>
         public RectD Bounds { get; set; }

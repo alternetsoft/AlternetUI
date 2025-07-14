@@ -4,8 +4,17 @@ public:
 PrintDocument* GetDocument();
 void SetDocument(PrintDocument* value);
 
-Thickness GetMinMargins();
-void SetMinMargins(const Thickness& value);
+double GetMinMarginLeft();
+void SetMinMarginLeft(double value);
+
+double GetMinMarginTop();
+void SetMinMarginTop(double value);
+
+double GetMinMarginRight();
+void SetMinMarginRight(double value);
+
+double GetMinMarginBottom();
+void SetMinMarginBottom(double value);
 
 bool GetMinMarginsValueSet();
 void SetMinMarginsValueSet(bool value);

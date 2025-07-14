@@ -12,7 +12,14 @@ namespace NativeApi.Api
     {
         public bool Color { get; set; }
         public bool Landscape { get; set; }
-        public Thickness Margins { get; set; }
+        public double MarginLeft { get; set; }
+
+        public double MarginRight { get; set; }
+
+        public double MarginTop { get; set; }
+
+        public double MarginBottom { get; set; }
+
         public SizeD CustomPaperSize { get; set; }
         public bool UseCustomPaperSize { get => throw new Exception(); set => throw new Exception(); }
         public PaperKind PaperSize { get => throw new Exception(); set => throw new Exception(); }

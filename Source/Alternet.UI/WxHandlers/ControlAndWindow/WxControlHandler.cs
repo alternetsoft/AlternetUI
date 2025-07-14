@@ -75,14 +75,14 @@ namespace Alternet.UI
             set => NativeControl.Bounds = value;
         }
 
-        public Thickness IntrinsicLayoutPadding
+        public Thickness NativePadding
         {
-            get => NativeControl.IntrinsicLayoutPadding;
-        }
-
-        public Thickness IntrinsicPreferredSizePadding
-        {
-            get => NativeControl.IntrinsicPreferredSizePadding;
+            get
+            {
+                var leftTop = NativeControl.AutoPaddingLeftTop;
+                var rightBottom = NativeControl.AutoPaddingRightBottom;
+                return (leftTop.Width, leftTop.Height, rightBottom.Width, rightBottom.Height);
+            }
         }
 
         public bool Visible

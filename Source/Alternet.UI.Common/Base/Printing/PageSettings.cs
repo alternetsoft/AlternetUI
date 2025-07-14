@@ -79,12 +79,15 @@ namespace Alternet.Drawing.Printing
         {
             get
             {
-                return Handler.Margins;
+                return (Handler.MarginLeft, Handler.MarginTop, Handler.MarginRight, Handler.MarginBottom);
             }
 
             set
             {
-                Handler.Margins = value;
+                Handler.MarginLeft = value.Left;
+                Handler.MarginTop = value.Top;
+                Handler.MarginRight = value.Right;
+                Handler.MarginBottom = value.Bottom;
             }
         }
 

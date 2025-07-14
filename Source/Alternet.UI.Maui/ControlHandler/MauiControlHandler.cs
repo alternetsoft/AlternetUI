@@ -70,9 +70,7 @@ namespace Alternet.UI
 
         public virtual ControlBorderStyle BorderStyle { get; set; }
 
-        public virtual Thickness IntrinsicLayoutPadding { get; set; }
-
-        public virtual Thickness IntrinsicPreferredSizePadding { get; set; }
+        public virtual Thickness NativePadding { get; set; }
 
         public virtual RectD Bounds
         {

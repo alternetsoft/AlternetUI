@@ -954,16 +954,6 @@ namespace Alternet.UI
         int? GroupIndex { get; set; }
 
         /// <summary>
-        /// Gets intrinsic layout padding of the native control.
-        /// </summary>
-        Thickness IntrinsicLayoutPadding { get; }
-
-        /// <summary>
-        /// Gets intrinsic preferred size padding of the native control.
-        /// </summary>
-        Thickness IntrinsicPreferredSizePadding { get; }
-
-        /// <summary>
         /// Gets native control instance.
         /// </summary>
         object NativeControl { get; }

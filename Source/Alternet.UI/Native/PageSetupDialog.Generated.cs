@@ -41,18 +41,63 @@ namespace Alternet.UI.Native
             }
         }
         
-        public Alternet.UI.Thickness MinMargins
+        public double MinMarginLeft
         {
             get
             {
                 CheckDisposed();
-                return NativeApi.PageSetupDialog_GetMinMargins_(NativePointer);
+                return NativeApi.PageSetupDialog_GetMinMarginLeft_(NativePointer);
             }
             
             set
             {
                 CheckDisposed();
-                NativeApi.PageSetupDialog_SetMinMargins_(NativePointer, value);
+                NativeApi.PageSetupDialog_SetMinMarginLeft_(NativePointer, value);
+            }
+        }
+        
+        public double MinMarginTop
+        {
+            get
+            {
+                CheckDisposed();
+                return NativeApi.PageSetupDialog_GetMinMarginTop_(NativePointer);
+            }
+            
+            set
+            {
+                CheckDisposed();
+                NativeApi.PageSetupDialog_SetMinMarginTop_(NativePointer, value);
+            }
+        }
+        
+        public double MinMarginRight
+        {
+            get
+            {
+                CheckDisposed();
+                return NativeApi.PageSetupDialog_GetMinMarginRight_(NativePointer);
+            }
+            
+            set
+            {
+                CheckDisposed();
+                NativeApi.PageSetupDialog_SetMinMarginRight_(NativePointer, value);
+            }
+        }
+        
+        public double MinMarginBottom
+        {
+            get
+            {
+                CheckDisposed();
+                return NativeApi.PageSetupDialog_GetMinMarginBottom_(NativePointer);
+            }
+            
+            set
+            {
+                CheckDisposed();
+                NativeApi.PageSetupDialog_SetMinMarginBottom_(NativePointer, value);
             }
         }
         
@@ -153,10 +198,28 @@ namespace Alternet.UI.Native
             public static extern void PageSetupDialog_SetDocument_(IntPtr obj, IntPtr value);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern Alternet.UI.Thickness PageSetupDialog_GetMinMargins_(IntPtr obj);
+            public static extern double PageSetupDialog_GetMinMarginLeft_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void PageSetupDialog_SetMinMargins_(IntPtr obj, Alternet.UI.Thickness value);
+            public static extern void PageSetupDialog_SetMinMarginLeft_(IntPtr obj, double value);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern double PageSetupDialog_GetMinMarginTop_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void PageSetupDialog_SetMinMarginTop_(IntPtr obj, double value);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern double PageSetupDialog_GetMinMarginRight_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void PageSetupDialog_SetMinMarginRight_(IntPtr obj, double value);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern double PageSetupDialog_GetMinMarginBottom_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void PageSetupDialog_SetMinMarginBottom_(IntPtr obj, double value);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern bool PageSetupDialog_GetMinMarginsValueSet_(IntPtr obj);

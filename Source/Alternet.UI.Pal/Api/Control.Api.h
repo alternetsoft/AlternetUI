@@ -671,23 +671,23 @@ ALTERNET_UI_API void Control_SetClientSize_(Control* obj, SizeD value)
     #endif
 }
 
-ALTERNET_UI_API Thickness_C Control_GetIntrinsicLayoutPadding_(Control* obj)
+ALTERNET_UI_API SizeD_C Control_GetAutoPaddingLeftTop_(Control* obj)
 {
     #if !defined(__WXMSW__) || defined(_DEBUG)
-    return MarshalExceptions<Thickness_C>([&](){
+    return MarshalExceptions<SizeD_C>([&](){
     #endif
-        return obj->GetIntrinsicLayoutPadding();
+        return obj->GetAutoPaddingLeftTop();
     #if !defined(__WXMSW__) || defined(_DEBUG)
     });
     #endif
 }
 
-ALTERNET_UI_API Thickness_C Control_GetIntrinsicPreferredSizePadding_(Control* obj)
+ALTERNET_UI_API SizeD_C Control_GetAutoPaddingRightBottom_(Control* obj)
 {
     #if !defined(__WXMSW__) || defined(_DEBUG)
-    return MarshalExceptions<Thickness_C>([&](){
+    return MarshalExceptions<SizeD_C>([&](){
     #endif
-        return obj->GetIntrinsicPreferredSizePadding();
+        return obj->GetAutoPaddingRightBottom();
     #if !defined(__WXMSW__) || defined(_DEBUG)
     });
     #endif

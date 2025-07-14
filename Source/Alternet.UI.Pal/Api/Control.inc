@@ -98,9 +98,9 @@ RectD GetEventBounds();
 SizeD GetClientSize();
 void SetClientSize(const SizeD& value);
 
-virtual Thickness GetIntrinsicLayoutPadding();
+virtual SizeD GetAutoPaddingLeftTop();
 
-virtual Thickness GetIntrinsicPreferredSizePadding();
+virtual SizeD GetAutoPaddingRightBottom();
 
 bool GetVisible();
 void SetVisible(bool value);

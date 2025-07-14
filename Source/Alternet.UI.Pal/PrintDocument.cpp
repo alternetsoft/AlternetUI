@@ -281,7 +281,8 @@ namespace Alternet::UI
 
         auto pageSettings = GetPageSettingsCore();
 
-        auto margins = pageSettings->GetMargins();
+        auto margins = Thickness(pageSettings->GetMarginLeft(), pageSettings->GetMarginTop(),
+            pageSettings->GetMarginRight(), pageSettings->GetMarginBottom());
 
         data.SetMarginTopLeft(wxPoint(fromDip(margins.Left, nullptr), fromDip(margins.Top, nullptr)));
         data.SetMarginBottomRight(wxPoint(fromDip(margins.Right, nullptr),
@@ -452,12 +453,10 @@ namespace Alternet::UI
         auto topLeft = data.GetMarginTopLeft();
         auto bottomRight = data.GetMarginBottomRight();
 
-        pageSettings->SetMargins(
-            Thickness(
-                toDip(topLeft.x, nullptr),
-                toDip(topLeft.y, nullptr),
-                toDip(bottomRight.x, nullptr),
-                toDip(bottomRight.y, nullptr)));
+        pageSettings->SetMarginLeft(toDip(topLeft.x, nullptr));
+        pageSettings->SetMarginRight(toDip(bottomRight.x, nullptr));
+        pageSettings->SetMarginTop(toDip(topLeft.y, nullptr));
+        pageSettings->SetMarginBottom(toDip(bottomRight.y, nullptr));
     }
 
     PrintRange PrintDocument::GetPrintRangeFromData(wxPrintDialogData& data)

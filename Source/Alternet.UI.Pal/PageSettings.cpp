@@ -30,17 +30,47 @@ namespace Alternet::UI
     {
         _landscape = value;
     }
-    
-    Thickness PageSettings::GetMargins()
+
+    double PageSettings::GetMarginBottom()
     {
-        return _margins;
+        return _margins.Bottom;
+    }
+
+    double PageSettings::GetMarginTop()
+    {
+        return _margins.Top;
+    }
+
+    double PageSettings::GetMarginRight()
+    {
+        return _margins.Right;
+    }
+
+    double PageSettings::GetMarginLeft()
+    {
+        return _margins.Left;
     }
     
-    void PageSettings::SetMargins(const Thickness& value)
+    void PageSettings::SetMarginTop(double value)
     {
-        _margins = value;
+        _margins.Top = value;
     }
-    
+
+    void PageSettings::SetMarginBottom(double value)
+    {
+        _margins.Bottom = value;
+    }
+
+    void PageSettings::SetMarginRight(double value)
+    {
+        _margins.Right = value;
+    }
+
+    void PageSettings::SetMarginLeft(double value)
+    {
+        _margins.Left = value;
+    }
+
     PaperKind PageSettings::GetPaperSize()
     {
         return _paperSize;

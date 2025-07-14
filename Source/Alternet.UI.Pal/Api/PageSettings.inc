@@ -7,8 +7,17 @@ void SetColor(bool value);
 bool GetLandscape();
 void SetLandscape(bool value);
 
-Thickness GetMargins();
-void SetMargins(const Thickness& value);
+double GetMarginLeft();
+void SetMarginLeft(double value);
+
+double GetMarginRight();
+void SetMarginRight(double value);
+
+double GetMarginTop();
+void SetMarginTop(double value);
+
+double GetMarginBottom();
+void SetMarginBottom(double value);
 
 SizeD GetCustomPaperSize();
 void SetCustomPaperSize(const SizeD& value);

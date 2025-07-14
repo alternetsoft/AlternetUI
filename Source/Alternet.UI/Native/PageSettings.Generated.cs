@@ -53,18 +53,63 @@ namespace Alternet.UI.Native
             }
         }
         
-        public Alternet.UI.Thickness Margins
+        public double MarginLeft
         {
             get
             {
                 CheckDisposed();
-                return NativeApi.PageSettings_GetMargins_(NativePointer);
+                return NativeApi.PageSettings_GetMarginLeft_(NativePointer);
             }
             
             set
             {
                 CheckDisposed();
-                NativeApi.PageSettings_SetMargins_(NativePointer, value);
+                NativeApi.PageSettings_SetMarginLeft_(NativePointer, value);
+            }
+        }
+        
+        public double MarginRight
+        {
+            get
+            {
+                CheckDisposed();
+                return NativeApi.PageSettings_GetMarginRight_(NativePointer);
+            }
+            
+            set
+            {
+                CheckDisposed();
+                NativeApi.PageSettings_SetMarginRight_(NativePointer, value);
+            }
+        }
+        
+        public double MarginTop
+        {
+            get
+            {
+                CheckDisposed();
+                return NativeApi.PageSettings_GetMarginTop_(NativePointer);
+            }
+            
+            set
+            {
+                CheckDisposed();
+                NativeApi.PageSettings_SetMarginTop_(NativePointer, value);
+            }
+        }
+        
+        public double MarginBottom
+        {
+            get
+            {
+                CheckDisposed();
+                return NativeApi.PageSettings_GetMarginBottom_(NativePointer);
+            }
+            
+            set
+            {
+                CheckDisposed();
+                NativeApi.PageSettings_SetMarginBottom_(NativePointer, value);
             }
         }
         
@@ -150,10 +195,28 @@ namespace Alternet.UI.Native
             public static extern void PageSettings_SetLandscape_(IntPtr obj, bool value);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern Alternet.UI.Thickness PageSettings_GetMargins_(IntPtr obj);
+            public static extern double PageSettings_GetMarginLeft_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void PageSettings_SetMargins_(IntPtr obj, Alternet.UI.Thickness value);
+            public static extern void PageSettings_SetMarginLeft_(IntPtr obj, double value);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern double PageSettings_GetMarginRight_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void PageSettings_SetMarginRight_(IntPtr obj, double value);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern double PageSettings_GetMarginTop_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void PageSettings_SetMarginTop_(IntPtr obj, double value);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern double PageSettings_GetMarginBottom_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void PageSettings_SetMarginBottom_(IntPtr obj, double value);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern Alternet.Drawing.SizeD PageSettings_GetCustomPaperSize_(IntPtr obj);

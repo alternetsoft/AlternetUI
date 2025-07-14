@@ -134,8 +134,11 @@ namespace NativeApi.Api
         public RectD EventBounds { get; }
 
         public SizeD ClientSize { get; set; }
-        public virtual Thickness IntrinsicLayoutPadding { get; }
-        public virtual Thickness IntrinsicPreferredSizePadding { get; }
+
+        public virtual SizeD AutoPaddingLeftTop { get; }
+
+        public virtual SizeD AutoPaddingRightBottom { get; }
+
         public bool Visible { get; set; }
         public virtual bool Enabled { get; set; }
         public bool UserPaint { get; set; }

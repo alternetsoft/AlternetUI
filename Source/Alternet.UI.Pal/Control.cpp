@@ -1373,14 +1373,14 @@ namespace Alternet::UI
         return toDip(window->WindowToClientSize(fromDip(size, window)), window);
     }
 
-    Thickness Control::GetIntrinsicLayoutPadding()
+    SizeD Control::GetAutoPaddingRightBottom()
     {
-        return Thickness();
+        return SizeD();
     }
 
-    Thickness Control::GetIntrinsicPreferredSizePadding()
+    SizeD Control::GetAutoPaddingLeftTop()
     {
-        return Thickness();
+        return SizeD();
     }
 
     bool Control::EventsSuspended()

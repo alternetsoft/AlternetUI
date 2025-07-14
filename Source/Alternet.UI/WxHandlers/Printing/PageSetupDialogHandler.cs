@@ -14,7 +14,12 @@ namespace Alternet.UI.Native
         {
             get
             {
-                return MinMarginsValueSet ? MinMargins : null;
+                Thickness MinMargins()
+                {
+                    return (MinMarginLeft, MinMarginTop, MinMarginRight, MinMarginBottom);
+                }
+
+                return MinMarginsValueSet ? MinMargins() : null;
             }
 
             set
@@ -22,7 +27,12 @@ namespace Alternet.UI.Native
                 MinMarginsValueSet = value != null;
 
                 if (value != null)
-                    MinMargins = value.Value;
+                {
+                    MinMarginTop = value.Value.Top;
+                    MinMarginBottom = value.Value.Bottom;
+                    MinMarginRight = value.Value.Right;
+                    MinMarginLeft = value.Value.Left;
+                }
             }
         }
 

@@ -29,14 +29,44 @@ namespace Alternet::UI
             _document->AddRef();
     }
 
-    Thickness PageSetupDialog::GetMinMargins()
+    double PageSetupDialog::GetMinMarginBottom()
     {
-        return _minMargins;
+        return _minMargins.Bottom;
     }
 
-    void PageSetupDialog::SetMinMargins(const Thickness& value)
+    double PageSetupDialog::GetMinMarginTop()
     {
-        _minMargins = value;
+        return _minMargins.Top;
+    }
+
+    double PageSetupDialog::GetMinMarginRight()
+    {
+        return _minMargins.Right;
+    }
+
+    double PageSetupDialog::GetMinMarginLeft()
+    {
+        return _minMargins.Left;
+    }
+
+    void PageSetupDialog::SetMinMarginBottom(double value)
+    {
+        _minMargins.Bottom = value;
+    }
+
+    void PageSetupDialog::SetMinMarginTop(double value)
+    {
+        _minMargins.Top = value;
+    }
+
+    void PageSetupDialog::SetMinMarginRight(double value)
+    {
+        _minMargins.Right = value;
+    }
+
+    void PageSetupDialog::SetMinMarginLeft(double value)
+    {
+        _minMargins.Left = value;
     }
 
     bool PageSetupDialog::GetMinMarginsValueSet()
@@ -94,7 +124,8 @@ namespace Alternet::UI
         data.SetDefaultMinMargins(!_minMarginsValueSet);
         if (_minMarginsValueSet)
         {
-            auto minMargins = GetMinMargins();
+            auto minMargins = Thickness(
+                GetMinMarginLeft(), GetMinMarginTop(), GetMinMarginRight(), GetMinMarginBottom());
 
             data.SetMinMarginTopLeft(wxPoint(fromDip(minMargins.Left, nullptr),
                 fromDip(minMargins.Top, nullptr)));

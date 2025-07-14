@@ -515,22 +515,22 @@ namespace Alternet.UI.Native
             }
         }
         
-        public Alternet.UI.Thickness IntrinsicLayoutPadding
+        public Alternet.Drawing.SizeD AutoPaddingLeftTop
         {
             get
             {
                 CheckDisposed();
-                return NativeApi.Control_GetIntrinsicLayoutPadding_(NativePointer);
+                return NativeApi.Control_GetAutoPaddingLeftTop_(NativePointer);
             }
             
         }
         
-        public Alternet.UI.Thickness IntrinsicPreferredSizePadding
+        public Alternet.Drawing.SizeD AutoPaddingRightBottom
         {
             get
             {
                 CheckDisposed();
-                return NativeApi.Control_GetIntrinsicPreferredSizePadding_(NativePointer);
+                return NativeApi.Control_GetAutoPaddingRightBottom_(NativePointer);
             }
             
         }
@@ -1494,10 +1494,10 @@ namespace Alternet.UI.Native
             public static extern void Control_SetClientSize_(IntPtr obj, Alternet.Drawing.SizeD value);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern Alternet.UI.Thickness Control_GetIntrinsicLayoutPadding_(IntPtr obj);
+            public static extern Alternet.Drawing.SizeD Control_GetAutoPaddingLeftTop_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern Alternet.UI.Thickness Control_GetIntrinsicPreferredSizePadding_(IntPtr obj);
+            public static extern Alternet.Drawing.SizeD Control_GetAutoPaddingRightBottom_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern bool Control_GetVisible_(IntPtr obj);

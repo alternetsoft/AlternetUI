@@ -2761,22 +2761,10 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Gets intrinsic layout padding of the native control.
+        /// Gets auto padding of the native control.
         /// </summary>
         [Browsable(false)]
-        public virtual Thickness IntrinsicLayoutPadding
-        {
-            get
-            {
-                return Thickness.Empty;
-            }
-        }
-
-        /// <summary>
-        /// Gets intrinsic preferred size padding of the native control.
-        /// </summary>
-        [Browsable(false)]
-        public virtual Thickness IntrinsicPreferredSizePadding
+        public virtual Thickness NativePadding
         {
             get
             {
