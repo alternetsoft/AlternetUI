@@ -96,10 +96,8 @@ namespace Alternet.UI
         /// </remarks>
         public virtual bool UseContextMenuAsPopup
         {
-            [MethodImpl(MethodImplOptions.AggressiveInlining)]
             get => PopupKind == PickerPopupKind.ContextMenu;
 
-            [MethodImpl(MethodImplOptions.AggressiveInlining)]
             set
             {
                 if (value)
@@ -418,6 +416,7 @@ namespace Alternet.UI
                     }
                 }
 
+                DropDownMenu.CheckSingleItemWithTag(Value);
                 ShowDropDownMenu();
             }
 
