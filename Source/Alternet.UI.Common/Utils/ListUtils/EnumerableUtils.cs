@@ -123,18 +123,49 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Removes the specified prefix from each string in the sequence,
+        /// using the given comparison rule.
+        /// </summary>
+        /// <param name="items">The collection of strings to process.</param>
+        /// <param name="prefix">The prefix to remove from each string.</param>
+        /// <param name="comparison">
+        /// The <see cref="StringComparison"/> option to use when matching the prefix.
+        /// For example, use <see cref="StringComparison.OrdinalIgnoreCase"/> for
+        /// case-insensitive matching.
+        /// </param>
+        /// <returns>
+        /// A sequence of strings with the prefix removed where applicable.
+        /// If an item does not start with the prefix (based on the specified comparison),
+        /// it is returned unchanged.
+        /// </returns>
+        public static IEnumerable<string?> RemovePrefix(
+            IEnumerable<string?> items,
+            string prefix,
+            StringComparison comparison = StringComparison.CurrentCulture)
+        {
+            foreach (var item in items)
+            {
+                if (item is null)
+                    yield return null;
+
+                if (item!.StartsWith(prefix, comparison))
+                    yield return item.Substring(prefix.Length);
+                else
+                    yield return item;
+            }
+        }
+
+        /// <summary>
         /// Inserts <paramref name="prefix"/> in the beginning of the each string
         /// in <paramref name="items"/>.
         /// </summary>
         /// <param name="items">Strings.</param>
         /// <param name="prefix">This string is inserted in the beginning.</param>
         /// <returns></returns>
-        public static IEnumerable<string> InsertPrefix(IEnumerable<string> items, string prefix)
+        public static IEnumerable<string?> InsertPrefix(IEnumerable<string?> items, string? prefix)
         {
-            List<string> result = new();
             foreach (var item in items)
-                result.Add($"{prefix}{item}");
-            return result;
+                yield return $"{prefix}{item}";
         }
 
         /// <summary>
