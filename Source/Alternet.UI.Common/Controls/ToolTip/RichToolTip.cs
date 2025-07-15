@@ -884,7 +884,7 @@ namespace Alternet.UI
             PointD? location = null)
         {
             return ShowToolTip(
-                        title ?? "Error",
+                        title ?? ErrorMessages.Default.ErrorTitle,
                         e.Message,
                         MessageBoxIcon.Error,
                         timeoutMilliseconds,
