@@ -1955,6 +1955,17 @@ namespace Alternet.UI
             });
         }
 
+        /// <summary>
+        /// Schedules the specified actions to run in the background.
+        /// Uses <see cref="Alternet.UI.Threading.BackgroundWorkManager.Default"/>
+        /// </summary>
+        /// <param name="taskActions">The list of actions to run in the background.</param>
+        public static void AddBackgroundActions(IEnumerable<Action> taskActions)
+        {
+            foreach (var action in taskActions)
+                AddBackgroundAction(action);
+        }
+
         /// <inheritdoc cref="LogReplace"/>
         /// <remarks>
         /// Works only if DEBUG conditional is defined.
