@@ -26,6 +26,7 @@ namespace Alternet.UI
         private string? textSuffix;
         private string? textFormat;
         private Graphics.DrawLabelParams prm;
+        private bool isVerticalText;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="GenericLabel"/> class.
@@ -97,6 +98,24 @@ namespace Alternet.UI
                     return;
                 textPrefix = value;
                 PerformLayoutAndInvalidate();
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether the text should be rendered vertically.
+        /// </summary>
+        /// <remarks>
+        /// When this property is set, the layout is refreshed to reflect the vertical text orientation.
+        /// </remarks>
+        public virtual bool IsVerticalText
+        {
+            get => isVerticalText;
+            set
+            {
+                if (isVerticalText == value)
+                    return;
+                isVerticalText = value;
+                PerformLayout();
             }
         }
 
@@ -389,6 +408,7 @@ namespace Alternet.UI
                 alignment,
                 mnemonicCharIndex);
 
+            prm.IsVerticalText = isVerticalText;
             prm.Visible = foreColor != Color.Empty;
 
             var result = DrawDefaultText(dc);
