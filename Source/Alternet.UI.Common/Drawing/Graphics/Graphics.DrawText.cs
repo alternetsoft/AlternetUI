@@ -491,11 +491,25 @@ namespace Alternet.Drawing
             var origin = rect.Location;
             SizeD totalMeasure = (wrappedWidth, 0);
 
+            double? emptyStringMeasure = null;
+
             foreach (var s in wrappedText)
             {
-                var measure = MeasureText(s, font).Ceiling();
+                SizeD measure;
 
-                if (foreColor is not null)
+                var isEmpty = s is null || s.Length == 0;
+
+                if (isEmpty)
+                {
+                    emptyStringMeasure ??= font.GetHeight(this);
+                    measure = (0d, emptyStringMeasure.Value);
+                }
+                else
+                {
+                    measure = MeasureText(s, font).Ceiling();
+                }
+
+                if (!isEmpty && foreColor is not null)
                 {
                     PointD location;
 
@@ -520,7 +534,7 @@ namespace Alternet.Drawing
                     }
 
                     DrawText(
-                        s,
+                        s!,
                         location,
                         font,
                         foreColor,

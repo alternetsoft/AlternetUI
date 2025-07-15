@@ -102,6 +102,15 @@ namespace PropertyGridSample
             label.HorizontalAlignment = HorizontalAlignment.Left;
         }
 
+        public static void InitGenericWrappedTextControl(object control)
+        {
+            if (control is not GenericWrappedTextControl label)
+                return;
+            label.TextWrapping = TextWrapping.Word;
+            label.Text = "This is text";
+            label.HorizontalAlignment = HorizontalAlignment.Left;
+        }
+
         public static void InitLabel(object control)
         {
             if (control is not Label label)

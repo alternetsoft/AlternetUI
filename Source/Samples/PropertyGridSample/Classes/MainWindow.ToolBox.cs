@@ -65,8 +65,6 @@ namespace PropertyGridSample
                 LimitedTypes.Add(typeof(ComboBox));
                 LimitedTypes.Add(typeof(GroupBox));
                 LimitedTypes.Add(typeof(HorizontalStackPanel));
-                LimitedTypes.Add(typeof(Label));
-                LimitedTypes.Add(typeof(GenericLabel));
                 LimitedTypes.Add(typeof(TabControl));
                 LimitedTypes.Add(typeof(LinkLabel));
                 LimitedTypes.Add(typeof(ListBox));
@@ -110,9 +108,13 @@ namespace PropertyGridSample
                 LimitedTypes.Add(typeof(TextBoxWithListPopup));
                 LimitedTypes.Add(typeof(CardPanelHeader));
 
+                LimitedTypes.Add(typeof(GenericLabel));
+                LimitedTypes.Add(typeof(Label));
+
                 if (DebugUtils.IsDebugDefined)
                 {
                     LimitedTypes.Add(typeof(GenericTextControl));
+                    LimitedTypes.Add(typeof(GenericWrappedTextControl));
                 }
 
                 LimitedTypes.AddRange(LimitedTypesStatic);

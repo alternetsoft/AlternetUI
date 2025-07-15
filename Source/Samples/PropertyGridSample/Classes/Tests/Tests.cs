@@ -77,6 +77,21 @@ namespace PropertyGridSample
                 {
                     ObjectInit.MakeComplexLabel(c);
                 });
+
+                AddControlAction<GenericLabel>("Set LoremIpsum", (c) =>
+                {
+                    c.Text = ObjectInit.LoremIpsum;
+                });
+
+                AddControlAction<GenericTextControl>("Set LoremIpsum", (c) =>
+                {
+                    c.Text = ObjectInit.LoremIpsum;
+                });
+
+                AddControlAction<GenericWrappedTextControl>("Set LoremIpsum", (c) =>
+                {
+                    c.Text = ObjectInit.LoremIpsum;
+                });
             }
 
             void InitTestsSlider()

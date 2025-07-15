@@ -778,6 +778,7 @@ namespace Alternet.UI
         {
             if (text is null || text.Length == 0)
             {
+                yield return string.Empty;
                 yield break;
             }
 
