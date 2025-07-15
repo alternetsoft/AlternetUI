@@ -176,6 +176,29 @@ namespace Alternet.Drawing
         }
 
         /// <inheritdoc/>
+        public override void DrawTextWithAngle(
+            string text,
+            PointD location,
+            Font font,
+            Color foreColor,
+            Color backColor,
+            double angle)
+        {
+            canvas.Save();
+            canvas.Translate((float)location.X, (float)location.Y);
+            canvas.RotateDegrees((float)angle);
+
+            canvas.DrawText(
+                text,
+                location,
+                font,
+                foreColor,
+                backColor);
+
+            canvas.Restore();
+        }
+
+        /// <inheritdoc/>
         public override void DrawPolygon(Pen pen, PointD[] points)
         {
             DebugPenAssert(pen);

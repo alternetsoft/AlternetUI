@@ -19,7 +19,6 @@ namespace Alternet::UI
 #endif
     }
 
-
     DrawingContext::~DrawingContext()
     {
         wxDELETE(_graphicsContext);
@@ -522,7 +521,7 @@ namespace Alternet::UI
     }
 
     void DrawingContext::DrawText(const string& text, const PointD& location,
-        Font* font, const Color& foreColor, const Color& backColor, double angle)
+        Font* font, const Color& foreColor, Brush* backColor, double angle)
     {
         auto window = DrawingContext::GetWindow(_dc);
 
@@ -531,7 +530,7 @@ namespace Alternet::UI
         auto x = static_cast<double>(point.x);
         auto y = static_cast<double>(point.y);
 
-        bool useBackColor = !backColor.IsEmpty();
+        bool useBackColor = backColor != nullptr;
 
         wxGraphicsFont gFont = _graphicsContext->CreateFont(font->GetWxFont(), foreColor);
         _graphicsContext->SetFont(gFont);
@@ -540,8 +539,7 @@ namespace Alternet::UI
 
         if (useBackColor)
         {
-            wxBrush bgBrush(backColor);
-            wxGraphicsBrush gBrush = _graphicsContext->CreateBrush(bgBrush);
+            wxGraphicsBrush gBrush = _graphicsContext->CreateBrush(backColor->GetWxBrush());
             if (angle == 0)
                 _graphicsContext->DrawText(wxText, x, y, gBrush);
             else

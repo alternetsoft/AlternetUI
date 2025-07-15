@@ -43,10 +43,6 @@ namespace Alternet::UI
         wxGraphicsBrush GetGraphicsBrush(Brush* brush, const wxPoint2DDouble& offset);
         wxGraphicsPen GetGraphicsPen(Pen* pen);
 
-        void DrawImage(const wxBitmap& image,
-            const wxRect2DDouble& destinationRect,
-            const wxRect2DDouble& sourceRect);
-
         Region* _clip = nullptr;
 
         bool _doNotDeleteDC = false;

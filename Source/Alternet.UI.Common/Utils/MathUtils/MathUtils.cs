@@ -14,9 +14,24 @@ namespace Alternet.UI
     public static class MathUtils
     {
         /// <summary>
-        /// Gets <see cref="Math.PI"/> divided by 180.
+        /// Gets <see cref="Math.PI"/> divided by 180d.
         /// </summary>
-        public const double DegToRad = Math.PI / 180;
+        public const double DegToRad = Math.PI / 180d;
+
+        /// <summary>
+        /// Gets 180d divided by <see cref="Math.PI"/>.
+        /// </summary>
+        public const double RadToDeg = 180d / Math.PI;
+
+        /// <summary>
+        /// Gets <see cref="Math.PI"/> divided by 180f.
+        /// </summary>
+        public const float DegToRadF = (float)Math.PI / 180f;
+
+        /// <summary>
+        /// Gets 180f divided by <see cref="Math.PI"/>.
+        /// </summary>
+        public const float RadToDegF = 180f / (float)Math.PI;
 
         /// <summary>
         /// Gets high <see cref="short"/> of the <see cref="int"/> value.
@@ -518,6 +533,70 @@ namespace Alternet.UI
             }
 
             return hash;
+        }
+
+        /// <summary>
+        /// Converts an angle from degrees to radians.
+        /// </summary>
+        /// <param name="degrees">Angle in degrees.</param>
+        /// <returns>Angle in radians.</returns>
+        public static float ToRadians(float degrees)
+        {
+            var angleRadians = degrees * DegToRadF;
+
+            // Normalize to [0, 2*pi) if needed
+            if (angleRadians < 0f)
+                angleRadians += 2f * (float)Math.PI;
+
+            return angleRadians;
+        }
+
+        /// <summary>
+        /// Converts an angle from radians to degrees.
+        /// </summary>
+        /// <param name="radians">Angle in radians.</param>
+        /// <returns>Angle in degrees.</returns>
+        public static float ToDegrees(float radians)
+        {
+            var angleDegrees = radians * RadToDegF;
+
+            // Ensure angle is in [0, 360)
+            if (angleDegrees < 0f)
+                angleDegrees += 360f;
+
+            return angleDegrees;
+        }
+
+        /// <summary>
+        /// Converts an angle from degrees to radians.
+        /// </summary>
+        /// <param name="degrees">Angle in degrees.</param>
+        /// <returns>Angle in radians.</returns>
+        public static double ToRadians(double degrees)
+        {
+            var angleRadians = degrees * DegToRadF;
+
+            // Normalize to [0, 2*pi) if needed
+            if (angleRadians < 0d)
+                angleRadians += 2d * Math.PI;
+
+            return angleRadians;
+        }
+
+        /// <summary>
+        /// Converts an angle from radians to degrees.
+        /// </summary>
+        /// <param name="radians">Angle in radians.</param>
+        /// <returns>Angle in degrees.</returns>
+        public static double ToDegrees(double radians)
+        {
+            var angleDegrees = radians * RadToDeg;
+
+            // Ensure angle is in [0, 360)
+            if (angleDegrees < 0d)
+                angleDegrees += 360d;
+
+            return angleDegrees;
         }
     }
 }

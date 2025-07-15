@@ -6,8 +6,8 @@
 #include "Region.h"
 #include "Image.h"
 #include "Font.h"
-#include "Pen.h"
 #include "Brush.h"
+#include "Pen.h"
 #include "GraphicsPath.h"
 #include "ApiUtils.h"
 #include "Exceptions.h"
@@ -146,7 +146,7 @@ ALTERNET_UI_API RectD_C DrawingContext_GetClippingBox_(DrawingContext* obj)
     #endif
 }
 
-ALTERNET_UI_API void DrawingContext_DrawText_(DrawingContext* obj, const char16_t* text, PointD location, Font* font, Color foreColor, Color backColor, double angle)
+ALTERNET_UI_API void DrawingContext_DrawText_(DrawingContext* obj, const char16_t* text, PointD location, Font* font, Color foreColor, Brush* backColor, double angle)
 {
     #if !defined(__WXMSW__) || defined(_DEBUG)
     MarshalExceptions<void>([&](){

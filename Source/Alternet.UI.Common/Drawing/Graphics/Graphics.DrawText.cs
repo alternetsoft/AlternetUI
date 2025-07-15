@@ -76,6 +76,25 @@ namespace Alternet.Drawing
             Color backColor);
 
         /// <summary>
+        /// Draws text with the specified angle, font, background and foreground colors.
+        /// </summary>
+        /// <param name="location">Location used to draw the text.</param>
+        /// <param name="text">Text to draw.</param>
+        /// <param name="font">Font used to draw the text.</param>
+        /// <param name="foreColor">Foreground color of the text.</param>
+        /// <param name="backColor">Background color of the text. If parameter is equal
+        /// to <see cref="Color.Empty"/>, background will not be painted. </param>
+        /// <param name="angle">The angle, in degrees, relative to the (default) horizontal
+        /// direction to draw the string.</param>
+        public abstract void DrawTextWithAngle(
+            string text,
+            PointD location,
+            Font font,
+            Color foreColor,
+            Color backColor,
+            double angle);
+
+        /// <summary>
         /// Draws text inside the bounds with the specified font, background and foreground colors.
         /// </summary>
         /// <param name="rect">Bounding rectangle used to draw the text.</param>

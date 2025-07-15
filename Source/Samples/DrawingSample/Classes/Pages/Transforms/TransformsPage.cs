@@ -151,6 +151,22 @@ namespace DrawingSample
 
             if (drawTexts)
             {
+                dc.DrawTextWithAngle(
+                    "Vertical Text",
+                    innerFrame.Location.OffsetBy(280, 50),
+                    Control.DefaultFont.Scaled(1.3).AsBold,
+                    Color.Red,
+                    Color.Empty,
+                    270);
+
+                dc.DrawTextWithAngle(
+                    "Text with angle = 25",
+                    innerFrame.Location.OffsetBy(180, 250),
+                    Control.DefaultFont.Scaled(1.3),
+                    Color.DarkKhaki,
+                    Color.Gray100,
+                    25);
+
                 dc.DrawText(
                     "AlterNET UI",
                     Control.DefaultFont.Scaled(1.5),

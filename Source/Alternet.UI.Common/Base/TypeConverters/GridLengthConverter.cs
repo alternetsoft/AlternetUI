@@ -23,7 +23,7 @@ namespace Alternet.UI
         /// for this call.</param>
         /// <param name="sourceType">The Type being queried for support.</param>
         /// <returns>
-        /// <c>true</c> if thie converter can convert from the provided type,
+        /// <c>true</c> if this converter can convert from the provided type,
         /// <c>false</c> otherwise.
         /// </returns>
         public override bool CanConvertFrom(

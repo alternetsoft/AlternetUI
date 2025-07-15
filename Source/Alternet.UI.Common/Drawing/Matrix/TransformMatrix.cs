@@ -659,11 +659,7 @@ namespace Alternet.Drawing
             if (angleRadians == 0d)
                 return 0d;
 
-            Coord angleDegrees = (Coord)(angleRadians * (180.0 / Math.PI));
-
-            // Ensure angle is in [0, 360)
-            if (angleDegrees < 0)
-                angleDegrees += 360f;
+            Coord angleDegrees = MathUtils.ToDegrees(angleRadians);
 
             return angleDegrees;
         }

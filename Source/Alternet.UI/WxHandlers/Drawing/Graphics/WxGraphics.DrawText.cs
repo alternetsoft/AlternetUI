@@ -25,26 +25,6 @@ namespace Alternet.Drawing
             return result;
         }
 
-        public SizeD GetTextExtent(string text, Font font, Control? control)
-        {
-            if (text is null || text.Length == 0)
-                return SizeD.Empty;
-
-            IntPtr controlPtr = default;
-
-            if(control is not null)
-            {
-                var wxHandler = control.Handler as WxControlHandler;
-                controlPtr = wxHandler?.NativeControl.WxWidget ?? default;
-            }
-
-            var result = dc.GetTextExtentSimple(
-                text,
-                (UI.Native.Font)font.Handler,
-                controlPtr);
-            return result;
-        }
-
         /// <inheritdoc/>
         public override void DrawText(string text, Font font, Brush brush, RectD bounds)
         {
@@ -90,8 +70,38 @@ namespace Alternet.Drawing
                 TransformPointToNative(location),
                 (UI.Native.Font)font.Handler,
                 foreColor,
-                backColor,
+                (UI.Native.Brush)backColor.AsBrush.Handler,
                 angle);
+        }
+
+        public override void DrawTextWithAngle(
+            string text,
+            PointD location,
+            Font font,
+            Color foreColor,
+            Color backColor,
+            double angle)
+        {
+            DebugTextAssert(text);
+            DebugFontAssert(font);
+            if (!foreColor.IsOk)
+                return;
+
+            double angle2;
+
+            if (GetNoTransformToNative())
+                angle2 = 0;
+            else
+                angle2 = Transform.GetRotationAngleInRadians();
+
+            font = TransformFontSizeToNative(font);
+            dc.DrawText(
+                text,
+                TransformPointToNative(location),
+                (UI.Native.Font)font.Handler,
+                foreColor,
+                (UI.Native.Brush)backColor.AsBrush.Handler,
+                MathUtils.ToRadians(angle) + angle2);
         }
 
         protected virtual bool GetNoTransformToNative()

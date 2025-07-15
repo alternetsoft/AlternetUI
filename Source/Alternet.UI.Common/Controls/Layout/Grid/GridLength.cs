@@ -55,7 +55,7 @@ namespace Alternet.UI
         /// then passed in value is ignored and replaced with <c>1</c>.
         /// </remarks>
         /// <exception cref="ArgumentException">
-        /// If <c>value</c> parameter is invinity or is not a number.
+        /// If <c>value</c> parameter is infinity or is not a number.
         /// </exception>
         public GridLength(Coord value = 0, GridUnitType type = GridUnitType.Auto)
         {

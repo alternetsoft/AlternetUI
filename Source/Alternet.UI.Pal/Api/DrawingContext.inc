@@ -17,7 +17,7 @@ void* GetHandle();
 void DestroyClippingRegion();
 void SetClippingRegion(const RectD& rect);
 RectD GetClippingBox();
-void DrawText(const string& text, const PointD& location, Font* font, const Color& foreColor, const Color& backColor, double angle);
+void DrawText(const string& text, const PointD& location, Font* font, const Color& foreColor, Brush* backColor, double angle);
 SizeI GetDpi();
 static void ImageFromDrawingContext(Image* image, int width, int height, DrawingContext* dc);
 static void ImageFromGenericImageDC(Image* image, void* source, DrawingContext* dc);
