@@ -281,6 +281,7 @@ namespace Alternet.Drawing
             var foreColor = prm.ForegroundColor;
             var backColor = prm.BackgroundColor;
             var isVertical = prm.IsVertical;
+            var isVerticalText = prm.IsVerticalText;
             var drawDebugCorners = prm.DrawDebugCorners || DrawDebugCorners;
 
             var textHorizontalAlignment = prm.TextHorizontalAlignment;
@@ -358,7 +359,14 @@ namespace Alternet.Drawing
                         SizeD result;
 
                         if(splitText is null)
+                        {
                             result = MeasureText(s, font);
+
+                            if (isVerticalText)
+                            {
+                                result.SwapWidthAndHeight();
+                            }
+                        }
                         else
                         {
                             result = DrawStrings(
@@ -387,7 +395,18 @@ namespace Alternet.Drawing
                     {
                         if (splitText is null)
                         {
-                            DrawText(s, rect.Location, font, foreColor, backColor);
+                            if (isVerticalText)
+                            {
+                                DrawTextWithAngle(
+                                    s,
+                                    (rect.X + rect.Width, rect.Y),
+                                    font,
+                                    foreColor,
+                                    backColor,
+                                    270);
+                            }
+                            else
+                                DrawText(s, rect.Location, font, foreColor, backColor);
                         }
                         else
                         {
@@ -790,6 +809,11 @@ namespace Alternet.Drawing
             /// Gets or sets distance between lines of text.
             /// </summary>
             public Coord LineDistance;
+
+            /// <summary>
+            /// Gets or sets a value indicating whether the text should be rendered vertically.
+            /// </summary>
+            public bool IsVerticalText;
 
             /// <summary>
             /// Gets or sets horizontal alignment of the text line within the text block.
