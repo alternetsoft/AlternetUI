@@ -63,6 +63,40 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Builds a file dialog filter string from an array of
+        /// <see cref="FileDialogFilterItem"/> objects.
+        /// </summary>
+        /// <param name="filters">An array of filter items, each representing a file type
+        /// description and pattern.</param>
+        /// <returns>
+        /// A combined string suitable for use with file dialogs, where individual filters
+        /// are separated by a vertical bar ('|').
+        /// </returns>
+        /// <remarks>
+        /// This utility simplifies creating filter strings
+        /// like: <c>"Images (*.png)|*.png|Text Files (*.txt)|*.txt"</c>.
+        /// </remarks>
+        public static string ToFileDialogFilter(params FileDialogFilterItem[] filters)
+        {
+            string result = string.Empty;
+
+            foreach (var filter in filters)
+            {
+                var s = filter?.ToString();
+
+                if (s is null)
+                    continue;
+
+                if (result.Length == 0)
+                    result = s;
+                else
+                    result += "|" + s;
+            }
+
+            return result;
+        }
+
+        /// <summary>
         /// Gets string like "Image Files (*.png; *.jpg)|*.png;*.jpg", but with all supported
         /// image format extensions for the save file dialog.
         /// </summary>
@@ -73,6 +107,32 @@ namespace Alternet.UI
 
         /// <summary>
         /// Generates file dialog filter.
+        /// Result example:"Image Files (*.png; *.jpg)|*.png;*.jpg".
+        /// </summary>
+        /// <param name="title">The title for the filter item.</param>
+        /// <param name="extensions">Array of file extensions. Each item is an extension
+        /// with or without "." in the beginning. Example: ".exe", "exe".</param>
+        /// <param name="addAllFiles"></param>
+        /// <returns></returns>
+        public static string GetFileDialogFilter(
+            string title,
+            IEnumerable<string> extensions,
+            bool addAllFiles = false)
+        {
+            var withoutDot = EnumerableUtils.RemovePrefix(extensions, ".");
+            var withAsterix = EnumerableUtils.InsertPrefix(withoutDot, "*.");
+
+            var extensionStr = StringUtils.ToString(withAsterix, string.Empty, string.Empty, ";");
+
+            var result = $"{title} ({extensionStr})|{extensionStr}";
+
+            if (addAllFiles)
+                result = $"{result}|{FileDialogFilterAllFiles}";
+            return result;
+        }
+
+        /// <summary>
+        /// Generates file dialog filter for the images.
         /// Result example:"Image Files (*.png; *.jpg)|*.png;*.jpg|All Files (*.*)|*.*".
         /// </summary>
         /// <param name="extensions">Array of extensions. Each item is an extension with "."
@@ -83,14 +143,7 @@ namespace Alternet.UI
             IEnumerable<string> extensions,
             bool addAllFiles = false)
         {
-            var withAsterix = EnumerableUtils.InsertPrefix(extensions, "*");
-
-            var extensionStr = StringUtils.ToString(withAsterix, string.Empty, string.Empty, ";");
-
-            var result = $"{StrImageFiles} ({extensionStr})|{extensionStr}";
-
-            if (addAllFiles)
-                result = $"{result}|{FileDialogFilterAllFiles}";
+            var result = GetFileDialogFilter(StrImageFiles, extensions, addAllFiles);
             return result;
         }
     }
