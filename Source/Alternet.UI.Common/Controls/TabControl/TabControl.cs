@@ -22,6 +22,18 @@ namespace Alternet.UI
     public partial class TabControl : HiddenBorder
     {
         /// <summary>
+        /// Gets or sets default svg size for normal-dpi displays
+        /// used in <see cref="SetTabSvg"/>.
+        /// </summary>
+        public static int DefaultSmallSvgSize = 16;
+
+        /// <summary>
+        /// Gets or sets default svg size for high-dpi displays
+        /// used in <see cref="SetTabSvg"/>.
+        /// </summary>
+        public static int DefaultLargeSvgSize = 32;
+
+        /// <summary>
         /// Gets or sets default minimal tab size in the header.
         /// </summary>
         public static SizeD DefaultMinTabSize = (0, 0);
@@ -217,6 +229,47 @@ namespace Alternet.UI
                 Header.SelectedTabIndex = value;
                 Invalidate();
                 RaiseSelectedIndexChanged();
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets the layout relationship between the image and text content
+        /// within the tab (vertical or horizontal align).
+        /// </summary>
+        public virtual ImageToText ImageToText
+        {
+            get => Header.ImageToText;
+
+            set
+            {
+                if (ImageToText == value)
+                    return;
+                DoInsideLayout(() =>
+                {
+                    Header.ImageToText = value;
+                });
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether the text should be rendered vertically.
+        /// </summary>
+        /// <remarks>
+        /// When this property is set, the layout is refreshed to reflect the vertical text orientation.
+        /// </remarks>
+        public virtual bool IsVerticalText
+        {
+            get => Header.IsVerticalText;
+
+            set
+            {
+                if (IsVerticalText == value)
+                    return;
+
+                DoInsideLayout(() =>
+                {
+                    Header.IsVerticalText = value;
+                });
             }
         }
 
@@ -946,6 +999,21 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Resets images for the tab.
+        /// </summary>
+        /// <param name="index">The index of the tab page.</param>
+        public virtual void ResetTabImage(int? index)
+        {
+            var item = Header.GetTab(index);
+            if (item is null)
+                return;
+            item.Image = null;
+            item.DisabledImage = null;
+            item.ImageSet = null;
+            item.DisabledImageSet = null;
+        }
+
+        /// <summary>
         /// Sets images for the tab.
         /// </summary>
         /// <param name="index">The index of the tab page.</param>
@@ -973,6 +1041,37 @@ namespace Alternet.UI
                 return;
             item.ImageSet = image;
             item.DisabledImageSet = disabledImage;
+        }
+
+        /// <summary>
+        /// Sets svg image for the tab.
+        /// </summary>
+        /// <param name="index">The index of the tab page.</param>
+        /// <param name="svg">Tab image.</param>
+        /// <param name="size">Size of the image. Optional. If not specified,
+        /// defaults will be used.</param>
+        /// <param name="color">Color of the svg image. Optional. If not specified,
+        /// default svg color is used.</param>
+        public virtual void SetTabSvg(int? index, SvgImage? svg, int? size = null, Color? color = null)
+        {
+            if(index is null)
+                return;
+            if(svg is null)
+            {
+                ResetTabImage(index);
+                return;
+            }
+
+            size ??= UseSmallImages ? DefaultSmallSvgSize : DefaultLargeSvgSize;
+
+            ImageSet? image;
+
+            if (color is null)
+                image = svg.AsNormal(size.Value, IsDarkBackground);
+            else
+                image = svg.ImageSetWithColor(size.Value, color);
+
+            SetTabImage(index, image);
         }
 
         /// <summary>
