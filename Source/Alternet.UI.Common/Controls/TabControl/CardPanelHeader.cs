@@ -62,6 +62,8 @@ namespace Alternet.UI
         private SpeedButton.KnownTheme tabTheme = SpeedButton.KnownTheme.TabControl;
         private bool hasInteriorBorder = true;
         private TabAlignment tabAlignment = TabAlignment.Top;
+        private bool isVerticalText;
+        private ImageToText imageToText;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="CardPanelHeader"/> class.
@@ -158,6 +160,60 @@ namespace Alternet.UI
                     foreach (var tab in Tabs)
                     {
                         tab.HeaderButton.HorizontalAlignment = GetRealTabHorizontalAlignment();
+                    }
+                });
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets the layout relationship between the image and text content
+        /// within the tab (vertical or horizontal align).
+        /// </summary>
+        public virtual ImageToText ImageToText
+        {
+            get => imageToText;
+
+            set
+            {
+                if(imageToText == value)
+                    return;
+                DoInsideLayout(() =>
+                {
+                    imageToText = value;
+
+                    foreach (var tab in Tabs)
+                    {
+                        tab.HeaderButton.ImageToText = value;
+                    }
+                });
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether the text should be rendered vertically.
+        /// </summary>
+        /// <remarks>
+        /// When this property is set, the layout is refreshed to reflect the vertical text orientation.
+        /// </remarks>
+        public virtual bool IsVerticalText
+        {
+            get
+            {
+                return isVerticalText;
+            }
+
+            set
+            {
+                if (isVerticalText == value)
+                    return;
+
+                DoInsideLayout(() =>
+                {
+                    isVerticalText = value;
+
+                    foreach (var tab in Tabs)
+                    {
+                        tab.HeaderButton.IsVerticalText = value;
                     }
                 });
             }
@@ -1004,6 +1060,8 @@ namespace Alternet.UI
             item.HeaderButton.Margin = TabMargin ?? DefaultTabMargin;
             item.HeaderButton.Padding = TabPadding ?? DefaultTabPadding;
             item.HeaderButton.HorizontalAlignment = GetRealTabHorizontalAlignment();
+            item.HeaderButton.IsVerticalText = IsVerticalText;
+            item.HeaderButton.ImageToText = ImageToText;
             item.HeaderButton.UseTheme = tabTheme;
         }
 
