@@ -1451,12 +1451,12 @@ namespace Alternet.Drawing
             baseFont?.ResetSkiaFont();
         }
 
-        public Coord GetWidth(Graphics dc)
+        public virtual Coord GetWidth(Graphics dc)
         {
             return dc.MeasureText("x", this).Width;
         }
 
-        public Coord GetHeight(Graphics dc)
+        public virtual Coord GetHeight(Graphics dc)
         {
             return dc.MeasureText("Wg", this).Height;
         }

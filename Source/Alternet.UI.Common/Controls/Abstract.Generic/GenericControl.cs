@@ -36,6 +36,7 @@ namespace Alternet.UI
         /// Gets the first parent control in the parent chain which
         /// is not <see cref="GenericControl"/>.
         /// </summary>
+        [Browsable(false)]
         public AbstractControl? NonGenericParent
         {
             get
@@ -55,6 +56,7 @@ namespace Alternet.UI
         /// Gets the first parent control in the parent chain which
         /// has attached native control.
         /// </summary>
+        [Browsable(false)]
         public Control? ParentWithNativeControl
         {
             get
