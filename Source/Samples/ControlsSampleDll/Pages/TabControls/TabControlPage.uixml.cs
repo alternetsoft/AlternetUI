@@ -41,21 +41,18 @@ namespace ControlsSample
                     TabAlignmentComboBox_SelectedItemChanged;
 
                 ImageSet image;
-                ImageSet? svgImage;
 
                 if(UseSmallImages)
                 {
                     image = ImageSet.FromUrl($"{ResPrefixSmall}Calendar16.png");
-                    svgImage = KnownSvgImages.ImgGear.AsNormal(16, IsDarkBackground);
                 }
                 else
                 {
                     image = ImageSet.FromUrl($"{ResPrefixLarge}Calendar32.png");
-                    svgImage = KnownSvgImages.ImgGear.AsNormal(32, IsDarkBackground);
                 }
 
                 tabControl.SetTabImage(0, image);
-                tabControl.SetTabImage(2, svgImage);
+                tabControl.SetTabSvg(2, KnownSvgImages.ImgGear, null, LightDarkColors.Blue);
 
                 tabControl.TabSizeChanged += TabControl_TabSizeChanged;
                 tabControl.SelectedIndexChanged += TabControl_SelectedIndexChanged;
@@ -81,6 +78,20 @@ namespace ControlsSample
                         () => App.Log("Disabled command 2 clicked"));
                     item.Enabled = false;
                 }
+
+                tabControl.HeaderControl.ContextMenuStrip.Add("Toggle vertical text", () =>
+                {
+                    if(tabControl.IsVerticalText)
+                    {
+                        tabControl.ImageToText = ImageToText.Horizontal;
+                        tabControl.IsVerticalText = false;
+                    }
+                    else
+                    {
+                        tabControl.ImageToText = ImageToText.Vertical;
+                        tabControl.IsVerticalText = true;
+                    }
+                });
             }
         }
 

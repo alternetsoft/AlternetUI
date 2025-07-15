@@ -95,6 +95,13 @@ namespace PropertyGridSample
 
             void InitTestsTabControl()
             {
+                AddControlAction<TabControl>("Align text vertically", (c) =>
+                {
+                    c.TabAlignment = TabAlignment.Left;
+                    c.ImageToText = ImageToText.Vertical;
+                    c.IsVerticalText = true;
+                });
+
                 AddControlAction<TabControl>("Enum loaded pages", (c) =>
                 {
                     LogUtils.LogRange(c.LoadedPages.Select(x => x.GetType()));
