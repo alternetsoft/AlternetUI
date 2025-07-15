@@ -335,6 +335,26 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets or sets a value indicating whether the text should be rendered vertically.
+        /// </summary>
+        /// <remarks>
+        /// When this property is set, the layout is refreshed to reflect the vertical text orientation.
+        /// </remarks>
+        public virtual bool IsVerticalText
+        {
+            get => Label.IsVerticalText;
+            set
+            {
+                if (IsVerticalText == value)
+                    return;
+                DoInsideLayout(() =>
+                {
+                    Label.IsVerticalText = value;
+                });
+            }
+        }
+
+        /// <summary>
         /// Gets or sets the mode that defines how the <see cref="Sticky"/> state
         /// is propagated to sibling <see cref="SpeedButton"/> controls
         /// when this control becomes sticky.
@@ -881,8 +901,13 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Gets or sets a value which specifies label and control alignment.
+        /// Gets or sets the layout relationship between the image and text content
+        /// within the control.
         /// </summary>
+        /// <remarks>
+        /// This property defines how text is aligned relative to the associated image
+        /// (vertical or horizontal alignment).
+        /// </remarks>
         public virtual ImageToText ImageToText
         {
             get
