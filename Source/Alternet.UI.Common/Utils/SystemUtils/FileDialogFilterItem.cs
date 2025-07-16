@@ -4,6 +4,9 @@ using System.Text;
 
 namespace Alternet.UI
 {
+    /// <summary>
+    /// Represents a filter item for file dialogs, allowing to specify a title and file extensions.
+    /// </summary>
     public class FileDialogFilterItem : BaseObject
     {
         /// <summary>
@@ -39,23 +42,50 @@ namespace Alternet.UI
             Extensions = [];
         }
 
+        /// <summary>
+        /// Enumerates the kinds of file dialog filter items.
+        /// </summary>
         public enum Kind
         {
+            /// <summary>
+            /// Item is a custom file dialog filter.
+            /// </summary>
             Custom,
 
+            /// <summary>
+            /// Item is 'All Files'.
+            /// </summary>
             AllFiles,
 
+            /// <summary>
+            /// Item is 'Library Files'.
+            /// </summary>
             LibraryFiles,
 
+            /// <summary>
+            /// Item is for opening images.
+            /// </summary>
             ImageOpen,
 
+            /// <summary>
+            /// Item is for saving images.
+            /// </summary>
             ImageSave,
         }
 
+        /// <summary>
+        /// Gets or sets the title of the item.
+        /// </summary>
         public string Title { get; set; }
 
+        /// <summary>
+        /// Gets or sets the file extensions associated with the current operation.
+        /// </summary>
         public string[] Extensions { get; set; }
 
+        /// <summary>
+        /// Gets or sets the kind of item represented by this instance.
+        /// </summary>
         public Kind ItemKind { get; set; }
 
         /// <inheritdoc/>
