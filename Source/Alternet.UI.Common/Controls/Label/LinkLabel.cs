@@ -10,28 +10,29 @@ namespace Alternet.UI
     [DefaultProperty("Text")]
     [DefaultBindingProperty("Text")]
     [ControlCategory("Other")]
-    public partial class LinkLabel : Control
+    public partial class LinkLabel : GenericLabel
     {
         /// <summary>
-        /// Gets or sets default normal color which is assigned to the control
-        /// in the constructor.
-        /// </summary>
-        public static LightDarkColor DefaultNormalColor
-            = new(light: (0, 0, 255), dark: (86, 156, 198));
-
-        /// <summary>
-        /// Gets or sets default visited color which is assigned to the control
-        /// in the constructor. Default is <c>null</c>. If this value
+        /// Gets or sets default visited hyperlink color which is used in the control.
+        /// Default is <c>null</c>. If this value
         /// is not assigned, <see cref="DefaultNormalColor"/> is used.
         /// </summary>
         public static LightDarkColor? DefaultVisitedColor;
 
         /// <summary>
-        /// Gets or sets default hover color which is assigned to the control
-        /// in the constructor. Default is <c>null</c>. If this value
+        /// Gets or sets default hyperlink hover color which is used in the control.
+        /// Default is <c>null</c>. If this value
         /// is not assigned, <see cref="DefaultNormalColor"/> is used.
         /// </summary>
         public static LightDarkColor? DefaultHoverColor;
+
+        private static LightDarkColor? defaultNormalColor;
+
+        private string? url;
+        private Color? hoverColor;
+        private Color? visitedColor;
+        private Color? normalColor;
+        private bool visited;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="LinkLabel"/> class.
@@ -51,6 +52,9 @@ namespace Alternet.UI
             HorizontalAlignment = HorizontalAlignment.Left;
             CanSelect = false;
             TabStop = false;
+            IsUnderline = true;
+            ParentForeColor = false;
+            Cursor = Cursors.Hand;
         }
 
         /// <summary>
@@ -68,29 +72,18 @@ namespace Alternet.UI
         public event CancelEventHandler? LinkClicked;
 
         /// <summary>
-        /// Gets or sets whether to use generic or native control for <see cref="LinkLabel"/>.
+        /// Gets or sets default normal hyperlink color which is used in the control.
         /// </summary>
-        public static bool UseGenericControl { get; set; }
-
-        /// <summary>
-        /// Gets control handler.
-        /// </summary>
-        [Browsable(false)]
-        public new ILinkLabelHandler Handler =>
-            (ILinkLabelHandler)base.Handler;
-
-        /// <inheritdoc/>
-        public override string Text
+        public static LightDarkColor DefaultNormalColor
         {
             get
             {
-                return base.Text;
+                return defaultNormalColor ??= new LightDarkColor((0, 0, 255), (86, 156, 198));
             }
 
             set
             {
-                value ??= StringUtils.OneSpace;
-                base.Text = value;
+                defaultNormalColor = value;
             }
         }
 
@@ -100,20 +93,16 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets the URL associated with the hyperlink.
         /// </summary>
-        public virtual string Url
+        public virtual string? Url
         {
             get
             {
-                if (DisposingOrDisposed)
-                    return string.Empty;
-                return Handler.Url;
+                return url;
             }
 
             set
             {
-                if (DisposingOrDisposed)
-                    return;
-                Handler.Url = value;
+                url = value;
             }
         }
 
@@ -122,20 +111,19 @@ namespace Alternet.UI
         /// over the control.
         /// </summary>
         [Browsable(false)]
-        public virtual Color HoverColor
+        public virtual Color? HoverColor
         {
             get
             {
-                if (DisposingOrDisposed)
-                    return Color.Empty;
-                return Handler.HoverColor;
+                return hoverColor;
             }
 
             set
             {
-                if (DisposingOrDisposed)
+                if(hoverColor == value)
                     return;
-                Handler.HoverColor = value;
+                hoverColor = value;
+                Invalidate();
             }
         }
 
@@ -145,20 +133,19 @@ namespace Alternet.UI
         /// not over the control.
         /// </summary>
         [Browsable(false)]
-        public virtual Color NormalColor
+        public virtual Color? NormalColor
         {
             get
             {
-                if (DisposingOrDisposed)
-                    return Color.Empty;
-                return Handler.NormalColor;
+                return normalColor;
             }
 
             set
             {
-                if (DisposingOrDisposed)
+                if(normalColor == value)
                     return;
-                Handler.NormalColor = value;
+                normalColor = value;
+                Invalidate();
             }
         }
 
@@ -168,20 +155,19 @@ namespace Alternet.UI
         /// before (i.e. the link has been visited).
         /// </summary>
         [Browsable(false)]
-        public virtual Color VisitedColor
+        public virtual Color? VisitedColor
         {
             get
             {
-                if (DisposingOrDisposed)
-                    return Color.Empty;
-                return Handler.VisitedColor;
+                return visitedColor;
             }
 
             set
             {
-                if (DisposingOrDisposed)
+                if(visitedColor == value)
                     return;
-                Handler.VisitedColor = value;
+                visitedColor = value;
+                Invalidate();
             }
         }
 
@@ -194,16 +180,15 @@ namespace Alternet.UI
         {
             get
             {
-                if (DisposingOrDisposed)
-                    return default;
-                return Handler.Visited;
+                return visited;
             }
 
             set
             {
-                if (DisposingOrDisposed)
+                if(visited == value)
                     return;
-                Handler.Visited = value;
+                visited = value;
+                Invalidate();
             }
         }
 
@@ -211,31 +196,6 @@ namespace Alternet.UI
         internal new LayoutStyle? Layout
         {
             get => base.Layout;
-        }
-
-        /// <inheritdoc/>
-        public override SizeD GetPreferredSize(SizeD availableSize)
-        {
-            var specifiedWidth = SuggestedWidth;
-            var specifiedHeight = SuggestedHeight;
-
-            SizeD result = 0;
-
-            var text = Text;
-            if (!string.IsNullOrEmpty(text))
-            {
-                result = MeasureCanvas.GetTextExtent(
-                    text,
-                    GetLabelFont(VisualControlState.Normal));
-            }
-
-            if (!Coord.IsNaN(specifiedWidth))
-                result.Width = Math.Max(result.Width, specifiedWidth);
-
-            if (!Coord.IsNaN(specifiedHeight))
-                result.Height = Math.Max(result.Height, specifiedHeight);
-
-            return result + Padding.Size;
         }
 
         /// <summary>
@@ -257,18 +217,46 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        protected override void OnHandleCreated(EventArgs e)
+        protected override void OnClick(EventArgs e)
         {
-            base.OnHandleCreated(e);
-            NormalColor = DefaultNormalColor;
-            VisitedColor = DefaultVisitedColor ?? DefaultNormalColor;
-            HoverColor = DefaultHoverColor ?? DefaultNormalColor;
+            base.OnClick(e);
+
+            Post(() =>
+            {
+                RaiseLinkClicked(new CancelEventArgs());
+            });
         }
 
         /// <inheritdoc/>
-        protected override IControlHandler CreateHandler()
+        protected override void OnMouseDoubleClick(MouseEventArgs e)
         {
-            return ControlFactory.Handler.CreateLinkLabelHandler(this);
+            base.OnMouseDoubleClick(e);
+            Post(() =>
+            {
+                RaiseLinkClicked(new CancelEventArgs());
+            });
+        }
+
+        /// <inheritdoc/>
+        protected override Color GetLabelForeColor(VisualControlState state)
+        {
+            if (state == VisualControlState.Hovered)
+            {
+                var realHoveredColor = HoverColor ?? DefaultHoverColor;
+                if (realHoveredColor is not null)
+                    return realHoveredColor;
+            }
+
+            if (Visited)
+            {
+                var realVisitedColor = VisitedColor ?? DefaultVisitedColor;
+                if (realVisitedColor is not null)
+                    return realVisitedColor;
+            }
+
+            var realNormalColor = NormalColor ?? DefaultNormalColor ?? LightDarkColors.Blue;
+
+            return realNormalColor;
         }
 
         /// <summary>

@@ -363,7 +363,7 @@ namespace Alternet.UI
         {
             IsUnderline = true;
             ParentForeColor = false;
-            ForeColor = LightDarkColors.Blue;
+            ForeColor = LinkLabel.DefaultNormalColor ?? LightDarkColors.Blue;
             Cursor = Cursors.Hand;
         }
 

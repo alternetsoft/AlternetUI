@@ -72,12 +72,6 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        public IControlHandler CreateNumericUpDownHandler(NumericUpDown control)
-        {
-            return new NumericUpDownHandler();
-        }
-
-        /// <inheritdoc/>
         public IControlHandler CreateCheckBoxHandler(CheckBox control)
         {
             return new CheckBoxHandler();
@@ -87,13 +81,6 @@ namespace Alternet.UI
         public IControlHandler CreateButtonHandler(Button control)
         {
             return new WxButtonHandler();
-        }
-
-        /// <inheritdoc/>
-        public IControlHandler CreateLinkLabelHandler(LinkLabel control)
-        {
-            Native.LinkLabel.UseGenericControl = LinkLabel.UseGenericControl;
-            return new LinkLabelHandler();
         }
 
         /// <inheritdoc/>

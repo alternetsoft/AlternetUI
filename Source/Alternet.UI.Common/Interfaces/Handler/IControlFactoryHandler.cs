@@ -165,13 +165,6 @@ namespace Alternet.UI
         IControlHandler CreateControlHandler(AbstractControl control);
 
         /// <summary>
-        /// Creates <see cref="ILinkLabelHandler"/> interface provider.
-        /// </summary>
-        /// <param name="control">Owner.</param>
-        /// <returns></returns>
-        IControlHandler CreateLinkLabelHandler(LinkLabel control);
-
-        /// <summary>
         /// Creates <see cref="IAnimationPlayerHandler"/> interface provider.
         /// </summary>
         /// <param name="control">Owner.</param>

@@ -201,19 +201,17 @@ namespace Alternet.UI
         /// <returns>The control used to represent <see cref="PanelSettingsItem"/>.</returns>
         public static object? DefaultItemToLinkLabelControl(PanelSettingsItem item, object? control)
         {
-            var result = CreateOrUpdateControl<GenericLabel>(item, control);
+            var result = CreateOrUpdateControl<LinkLabel>(item, control);
             UpdateText(item, result);
 
-            result.MakeAsLinkLabel();
-
             result.HorizontalAlignment = HorizontalAlignment.Left;
-            result.MouseLeftButtonUp -= LinkLabelClicked;
-            result.MouseLeftButtonUp += LinkLabelClicked;
+            result.LinkClicked -= LinkLabelClicked;
+            result.LinkClicked += LinkLabelClicked;
 
-            void LinkLabelClicked(object? sender, MouseEventArgs e)
+            void LinkLabelClicked(object? sender, CancelEventArgs e)
             {
-                e.Handled = true;
-                result.RunWhenIdle(() =>
+                e.Cancel = true;
+                Post(() =>
                 {
                     item.ClickAction?.Invoke(item, EventArgs.Empty);
                 });

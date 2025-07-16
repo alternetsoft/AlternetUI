@@ -63,11 +63,6 @@ namespace Alternet.UI
             return new HandlerForDisposed();
         }
 
-        IControlHandler IControlFactoryHandler.CreateLinkLabelHandler(LinkLabel control)
-        {
-            return new HandlerForDisposed();
-        }
-
         IControlHandler IControlFactoryHandler.CreateListViewHandler(ListView control)
         {
             return new HandlerForDisposed();
