@@ -298,6 +298,41 @@ namespace Alternet.UI.Native
             }
         }
         
+        public static void SetItemBold(System.IntPtr handle, System.IntPtr item, bool bold)
+        {
+            NativeApi.TreeView_SetItemBold_(handle, item, bold);
+        }
+        
+        public static Alternet.Drawing.Color GetItemTextColor(System.IntPtr handle, System.IntPtr item)
+        {
+            return NativeApi.TreeView_GetItemTextColor_(handle, item);
+        }
+        
+        public static Alternet.Drawing.Color GetItemBackgroundColor(System.IntPtr handle, System.IntPtr item)
+        {
+            return NativeApi.TreeView_GetItemBackgroundColor_(handle, item);
+        }
+        
+        public static void SetItemTextColor(System.IntPtr handle, System.IntPtr item, Alternet.Drawing.Color color)
+        {
+            NativeApi.TreeView_SetItemTextColor_(handle, item, color);
+        }
+        
+        public static void SetItemBackgroundColor(System.IntPtr handle, System.IntPtr item, Alternet.Drawing.Color color)
+        {
+            NativeApi.TreeView_SetItemBackgroundColor_(handle, item, color);
+        }
+        
+        public static void ResetItemTextColor(System.IntPtr handle, System.IntPtr item)
+        {
+            NativeApi.TreeView_ResetItemTextColor_(handle, item);
+        }
+        
+        public static void ResetItemBackgroundColor(System.IntPtr handle, System.IntPtr item)
+        {
+            NativeApi.TreeView_ResetItemBackgroundColor_(handle, item);
+        }
+        
         public void SetNodeUniqueId(System.IntPtr node, long uniqueId)
         {
             CheckDisposed();
@@ -668,6 +703,27 @@ namespace Alternet.UI.Native
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void TreeView_CloseSelectedItemsArray_(IntPtr obj, System.IntPtr array);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void TreeView_SetItemBold_(System.IntPtr handle, System.IntPtr item, bool bold);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern NativeApiTypes.Color TreeView_GetItemTextColor_(System.IntPtr handle, System.IntPtr item);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern NativeApiTypes.Color TreeView_GetItemBackgroundColor_(System.IntPtr handle, System.IntPtr item);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void TreeView_SetItemTextColor_(System.IntPtr handle, System.IntPtr item, NativeApiTypes.Color color);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void TreeView_SetItemBackgroundColor_(System.IntPtr handle, System.IntPtr item, NativeApiTypes.Color color);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void TreeView_ResetItemTextColor_(System.IntPtr handle, System.IntPtr item);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void TreeView_ResetItemBackgroundColor_(System.IntPtr handle, System.IntPtr item);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void TreeView_SetNodeUniqueId_(IntPtr obj, System.IntPtr node, long uniqueId);

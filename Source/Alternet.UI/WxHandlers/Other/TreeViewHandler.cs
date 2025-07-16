@@ -293,7 +293,7 @@ namespace Alternet.UI
             var p = GetHandleFromItem(item);
             if (p == IntPtr.Zero)
                 return;
-            Native.WxTreeViewFactory.SetItemBold(NativeControl.WxWidget, p, isBold);
+            Native.TreeView.SetItemBold(NativeControl.WxWidget, p, isBold);
         }
 
         public void SetItemBackgroundColor(TreeViewItem item, Color? color)
@@ -302,9 +302,9 @@ namespace Alternet.UI
             if (p == IntPtr.Zero)
                 return;
             if (color is null)
-                Native.WxTreeViewFactory.ResetItemBackgroundColor(NativeControl.WxWidget, p);
+                Native.TreeView.ResetItemBackgroundColor(NativeControl.WxWidget, p);
             else
-                Native.WxTreeViewFactory.SetItemBackgroundColor(NativeControl.WxWidget, p, color);
+                Native.TreeView.SetItemBackgroundColor(NativeControl.WxWidget, p, color);
         }
 
         public void SetItemTextColor(TreeViewItem item, Color? color)
@@ -313,9 +313,9 @@ namespace Alternet.UI
             if (p == IntPtr.Zero)
                 return;
             if (color is null)
-                Native.WxTreeViewFactory.ResetItemTextColor(NativeControl.WxWidget, p);
+                Native.TreeView.ResetItemTextColor(NativeControl.WxWidget, p);
             else
-                Native.WxTreeViewFactory.SetItemTextColor(NativeControl.WxWidget, p, color);
+                Native.TreeView.SetItemTextColor(NativeControl.WxWidget, p, color);
         }
 
         public void MakeAsListBox()

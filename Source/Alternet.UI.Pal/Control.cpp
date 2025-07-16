@@ -2,7 +2,6 @@
 #include "Application.h"
 #include "Screenshot.h"
 #include "Window.h"
-#include "Popup.h"
 
 namespace Alternet::UI
 {

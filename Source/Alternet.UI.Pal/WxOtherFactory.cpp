@@ -1,6 +1,5 @@
 #include "WxOtherFactory.h"
 #include "Application.h"
-#include "WxAlternet/wxAlternetRichToolTip.h"
 #include "Api/InputStream.h"
 #include "Api/OutputStream.h"
 #include "ManagedInputStream.h"
@@ -238,72 +237,6 @@ namespace Alternet::UI
 		m_simplePopup->Popup();
 	}
 
-	bool WxOtherFactory::GetRichToolTipUseGeneric()
-	{
-		return wxRichToolTip2::AlternetRichTooltip;
-	}
-	
-	void WxOtherFactory::SetRichToolTipUseGeneric(bool value)
-	{
-		wxRichToolTip2::AlternetRichTooltip = value;
-	}
-
-	void WxOtherFactory::RichToolTipSetTitleFgColor(void* handle, const Color& color)
-	{
-		((wxRichToolTip2*)handle)->SetTitleForegroundColour(color);
-	}
-
-	void WxOtherFactory::RichToolTipSetFgColor(void* handle, const Color& color)
-	{
-		((wxRichToolTip2*)handle)->SetForegroundColour(color);
-	}
-
-	void* WxOtherFactory::CreateRichToolTip(const string& title, const string& message)
-	{
-		return new wxRichToolTip2(wxStr(title), wxStr(message));
-	}
-
-	void WxOtherFactory::DeleteRichToolTip(void* handle)
-	{
-		delete (wxRichToolTip2*)handle;
-	}
-
-	void WxOtherFactory::RichToolTipSetBkColor(void* handle, const Color& color, const Color& endColor)
-	{
-		if(endColor.IsEmpty())
-			((wxRichToolTip2*)handle)->SetBackgroundColour(color);
-		else
-			((wxRichToolTip2*)handle)->SetBackgroundColour(color, endColor);
-	}
-
-	void WxOtherFactory::RichToolTipSetIcon(void* handle, ImageSet* bitmapBundle)
-	{
-		((wxRichToolTip2*)handle)->SetIcon(ImageSet::BitmapBundle(bitmapBundle));
-	}
-
-	void WxOtherFactory::RichToolTipSetIcon2(void* handle, int icon)
-	{
-		((wxRichToolTip2*)handle)->SetIcon(icon);
-	}
-
-	void WxOtherFactory::RichToolTipSetTimeout(void* handle, uint32_t milliseconds, uint32_t millisecondsShowdelay)
-	{
-		((wxRichToolTip2*)handle)->SetTimeout(milliseconds, millisecondsShowdelay);
-	}
-
-	void WxOtherFactory::RichToolTipSetTipKind(void* handle, int tipKind)
-	{
-		((wxRichToolTip2*)handle)->SetTipKind((wxTipKind)tipKind);
-	}
-
-	void WxOtherFactory::RichToolTipSetTitleFont(void* handle, Font* font)
-	{
-		if (font == nullptr)
-			((wxRichToolTip2*)handle)->SetTitleFont(wxNullFont);
-		else
-			((wxRichToolTip2*)handle)->SetTitleFont(font->GetWxFont());
-	}
-
 	void* WxOtherFactory::CreateToolTip(const string& tip)
 	{
 		return new wxToolTip(wxStr(tip));
@@ -363,37 +296,6 @@ namespace Alternet::UI
 
 	WxOtherFactory::~WxOtherFactory()
 	{
-	}
-
-	SizeI WxOtherFactory::RichToolTipGetSize(void* handle)
-	{
-		auto tooltip = (wxRichToolTip2*)handle;
-		return tooltip->GetSize();
-	}
-
-	void WxOtherFactory::RichToolTipSetLocationDecrement(void* handle, bool decrementX, bool decrementY)
-	{
-		auto tooltip = (wxRichToolTip2*)handle;
-		tooltip->SetLocationDecrement(decrementX, decrementY);
-	}
-
-	void WxOtherFactory::RichToolTipShowFor(
-		void* handle,
-		void* window,
-		const Int32Rect& rect,
-		bool adjustPos)
-	{
-		auto tooltip = (wxRichToolTip2*)handle;
-		tooltip->SetAdjustPos(adjustPos);
-
-		if(rect.IsZero())
-			tooltip->ShowFor((wxWindow*)window);
-		else
-		{
-			auto wxr = new wxRect(rect.X, rect.Y, rect.Width, rect.Height);
-			tooltip->ShowFor((wxWindow*)window, wxr);
-			delete wxr;
-		}
 	}
 
 	void* WxOtherFactory::CreateCursor()

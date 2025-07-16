@@ -24,56 +24,6 @@ namespace NativeApi.Api
 
         public static void TestPopupWindow(IntPtr parent, PointI pos, SizeI sz) { }
 
-        // =================== RichToolTip
-
-        // Ctor must specify the tooltip title and main message, additional
-        // attributes can be set later.
-        public static IntPtr CreateRichToolTip(string title, string message) => default;
-        public static void DeleteRichToolTip(IntPtr handle) { }
-
-        // Set the background color: if two colors are specified, the background
-        // is drawn using a gradient from top to bottom, otherwise a single solid
-        // color is used.
-        public static void RichToolTipSetBkColor(IntPtr handle, Color color, Color endColor) { }
-
-        public static void RichToolTipSetFgColor(IntPtr handle, Color color) { }
-
-        public static void RichToolTipSetTitleFgColor(IntPtr handle, Color color) { }
-
-        public static bool RichToolTipUseGeneric { get; set; }
-
-        // Set the small icon to show: either one of the standard information/
-        // warning/error ones(the question icon doesn't make sense for a tooltip)
-        // or a custom icon.
-        public static void RichToolTipSetIcon(IntPtr handle, ImageSet? bitmapBundle) { }
-        public static void RichToolTipSetIcon2(IntPtr handle, int icon) { } // wxICON_* in defs.h
-
-        // Set timeout after which the tooltip should disappear, in milliseconds.
-        // By default the tooltip is hidden after system-dependent interval of time
-        // elapses but this method can be used to change this or also disable
-        // hiding the tooltip automatically entirely by passing 0 in this parameter
-        //(but doing this can result in native version not being used).
-        // Optionally specify a show delay.
-        public static void RichToolTipSetTimeout(IntPtr handle, uint milliseconds,
-            uint millisecondsShowdelay = 0)
-        { }
-
-        // Choose the tip kind, possibly none. By default the tip is positioned
-        // automatically, as if wxTipKind_Auto was used.
-        public static void RichToolTipSetTipKind(IntPtr handle, int tipKind) { } // wxTipKind
-
-        // Set the title text font. By default it's emphasized using the font style
-        // or colour appropriate for the current platform.
-        public static void RichToolTipSetTitleFont(IntPtr handle, Font? font) { }
-
-        // Show the tooltip for the given window and optionally a specified area.
-        public static void RichToolTipShowFor(IntPtr handle, IntPtr window, RectI rect, bool adjustPos) { }
-
-        public static SizeI RichToolTipGetSize(IntPtr handle) => default;
-
-        public static void RichToolTipSetLocationDecrement(
-            IntPtr handle, bool decrementX, bool decrementY) { }
-
         // =================== ToolTip
 
         public static IntPtr CreateToolTip(string tip) => default;

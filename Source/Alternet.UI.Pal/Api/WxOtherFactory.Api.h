@@ -3,9 +3,8 @@
 #pragma once
 
 #include "WxOtherFactory.h"
-#include "ImageSet.h"
-#include "Font.h"
 #include "Image.h"
+#include "Font.h"
 #include "DrawingContext.h"
 #include "ApiUtils.h"
 #include "Exceptions.h"
@@ -23,177 +22,12 @@ ALTERNET_UI_API WxOtherFactory* WxOtherFactory_Create_()
     #endif
 }
 
-ALTERNET_UI_API c_bool WxOtherFactory_GetRichToolTipUseGeneric_()
-{
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    return MarshalExceptions<c_bool>([&](){
-    #endif
-        return WxOtherFactory::GetRichToolTipUseGeneric();
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    });
-    #endif
-}
-
-ALTERNET_UI_API void WxOtherFactory_SetRichToolTipUseGeneric_(c_bool value)
-{
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    MarshalExceptions<void>([&](){
-    #endif
-        WxOtherFactory::SetRichToolTipUseGeneric(value);
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    });
-    #endif
-}
-
 ALTERNET_UI_API void WxOtherFactory_TestPopupWindow_(void* parent, PointI pos, SizeI sz)
 {
     #if !defined(__WXMSW__) || defined(_DEBUG)
     MarshalExceptions<void>([&](){
     #endif
         WxOtherFactory::TestPopupWindow(parent, pos, sz);
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    });
-    #endif
-}
-
-ALTERNET_UI_API void* WxOtherFactory_CreateRichToolTip_(const char16_t* title, const char16_t* message)
-{
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    return MarshalExceptions<void*>([&](){
-    #endif
-        return WxOtherFactory::CreateRichToolTip(title, message);
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    });
-    #endif
-}
-
-ALTERNET_UI_API void WxOtherFactory_DeleteRichToolTip_(void* handle)
-{
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    MarshalExceptions<void>([&](){
-    #endif
-        WxOtherFactory::DeleteRichToolTip(handle);
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    });
-    #endif
-}
-
-ALTERNET_UI_API void WxOtherFactory_RichToolTipSetBkColor_(void* handle, Color color, Color endColor)
-{
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    MarshalExceptions<void>([&](){
-    #endif
-        WxOtherFactory::RichToolTipSetBkColor(handle, color, endColor);
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    });
-    #endif
-}
-
-ALTERNET_UI_API void WxOtherFactory_RichToolTipSetFgColor_(void* handle, Color color)
-{
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    MarshalExceptions<void>([&](){
-    #endif
-        WxOtherFactory::RichToolTipSetFgColor(handle, color);
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    });
-    #endif
-}
-
-ALTERNET_UI_API void WxOtherFactory_RichToolTipSetTitleFgColor_(void* handle, Color color)
-{
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    MarshalExceptions<void>([&](){
-    #endif
-        WxOtherFactory::RichToolTipSetTitleFgColor(handle, color);
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    });
-    #endif
-}
-
-ALTERNET_UI_API void WxOtherFactory_RichToolTipSetIcon_(void* handle, ImageSet* bitmapBundle)
-{
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    MarshalExceptions<void>([&](){
-    #endif
-        WxOtherFactory::RichToolTipSetIcon(handle, bitmapBundle);
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    });
-    #endif
-}
-
-ALTERNET_UI_API void WxOtherFactory_RichToolTipSetIcon2_(void* handle, int icon)
-{
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    MarshalExceptions<void>([&](){
-    #endif
-        WxOtherFactory::RichToolTipSetIcon2(handle, icon);
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    });
-    #endif
-}
-
-ALTERNET_UI_API void WxOtherFactory_RichToolTipSetTimeout_(void* handle, uint32_t milliseconds, uint32_t millisecondsShowdelay)
-{
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    MarshalExceptions<void>([&](){
-    #endif
-        WxOtherFactory::RichToolTipSetTimeout(handle, milliseconds, millisecondsShowdelay);
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    });
-    #endif
-}
-
-ALTERNET_UI_API void WxOtherFactory_RichToolTipSetTipKind_(void* handle, int tipKind)
-{
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    MarshalExceptions<void>([&](){
-    #endif
-        WxOtherFactory::RichToolTipSetTipKind(handle, tipKind);
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    });
-    #endif
-}
-
-ALTERNET_UI_API void WxOtherFactory_RichToolTipSetTitleFont_(void* handle, Font* font)
-{
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    MarshalExceptions<void>([&](){
-    #endif
-        WxOtherFactory::RichToolTipSetTitleFont(handle, font);
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    });
-    #endif
-}
-
-ALTERNET_UI_API void WxOtherFactory_RichToolTipShowFor_(void* handle, void* window, RectI rect, c_bool adjustPos)
-{
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    MarshalExceptions<void>([&](){
-    #endif
-        WxOtherFactory::RichToolTipShowFor(handle, window, rect, adjustPos);
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    });
-    #endif
-}
-
-ALTERNET_UI_API SizeI_C WxOtherFactory_RichToolTipGetSize_(void* handle)
-{
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    return MarshalExceptions<SizeI_C>([&](){
-    #endif
-        return WxOtherFactory::RichToolTipGetSize(handle);
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    });
-    #endif
-}
-
-ALTERNET_UI_API void WxOtherFactory_RichToolTipSetLocationDecrement_(void* handle, c_bool decrementX, c_bool decrementY)
-{
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    MarshalExceptions<void>([&](){
-    #endif
-        WxOtherFactory::RichToolTipSetLocationDecrement(handle, decrementX, decrementY);
     #if !defined(__WXMSW__) || defined(_DEBUG)
     });
     #endif

@@ -7,6 +7,20 @@ namespace NativeApi.Api
 {
     public class TreeView : Control
     {
+        public static void SetItemBold(IntPtr handle, IntPtr item, bool bold = true) { }
+
+        public static Color GetItemTextColor(IntPtr handle, IntPtr item) => default;
+
+        public static Color GetItemBackgroundColor(IntPtr handle, IntPtr item) => default;
+
+        public static void SetItemTextColor(IntPtr handle, IntPtr item, Color color) {}
+
+        public static void SetItemBackgroundColor(IntPtr handle, IntPtr item, Color color) { }
+
+        public static void ResetItemTextColor(IntPtr handle, IntPtr item) { }
+
+        public static void ResetItemBackgroundColor(IntPtr handle, IntPtr item) { }
+
         public void SetNodeUniqueId(IntPtr node, long uniqueId) { }
         public long GetNodeUniqueId(IntPtr node) => default;
 

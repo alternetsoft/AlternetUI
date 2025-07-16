@@ -7,7 +7,6 @@
 #include "Brush.h"
 #include "Pen.h"
 #include "GraphicsPath.h"
-#include "TransformMatrix.h"
 #include "Region.h"
 
 namespace Alternet::UI

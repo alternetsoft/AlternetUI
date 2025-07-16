@@ -215,10 +215,8 @@
     <ClCompile Include="CheckBox.cpp" />
     <ClCompile Include="Clipboard.cpp" />
     <ClCompile Include="ColorDialog.cpp" />
-    <ClCompile Include="ColorPicker.cpp" />
     <ClCompile Include="ComboBox.cpp" />
     <ClCompile Include="Control.cpp" />
-    <ClCompile Include="DateTimePicker.cpp" />
     <ClCompile Include="DrawingContext.cpp" />
     <ClCompile Include="DropTarget.cpp" />
     <ClCompile Include="Exceptions.cpp" />
@@ -236,7 +234,6 @@
     <ClCompile Include="Keyboard.cpp" />
     <ClCompile Include="Label.cpp" />
     <ClCompile Include="LinearGradientBrush.cpp" />
-    <ClCompile Include="LinkLabel.cpp" />
     <ClCompile Include="ListView.cpp" />
     <ClCompile Include="MainMenu.cpp" />
     <ClCompile Include="ManagedServerApi.cpp" />
@@ -246,13 +243,11 @@
     <ClCompile Include="MessageBoxObj.cpp" />
     <ClCompile Include="Mouse.cpp" />
     <ClCompile Include="NotifyIcon.cpp" />
-    <ClCompile Include="NumericUpDown.cpp" />
     <ClCompile Include="Object.cpp" />
     <ClCompile Include="PageSettings.cpp" />
     <ClCompile Include="PageSetupDialog.cpp" />
     <ClCompile Include="Panel.cpp" />
     <ClCompile Include="Pen.cpp" />
-    <ClCompile Include="Popup.cpp" />
     <ClCompile Include="PrintDialog.cpp" />
     <ClCompile Include="PrintDocument.cpp" />
     <ClCompile Include="PrinterSettings.cpp" />
@@ -267,14 +262,12 @@
     <ClCompile Include="RichTextBox.cpp" />
     <ClCompile Include="ScrollBar.cpp" />
     <ClCompile Include="SelectDirectoryDialog.cpp" />
-    <ClCompile Include="Slider.cpp" />
     <ClCompile Include="SolidBrush.cpp" />
     <ClCompile Include="StatusBar.cpp" />
     <ClCompile Include="TextBox.cpp" />
     <ClCompile Include="TextBoxTextAttr.cpp" />
     <ClCompile Include="TextureBrush.cpp" />
     <ClCompile Include="Timer.cpp" />
-    <ClCompile Include="TransformMatrix.cpp" />
     <ClCompile Include="TreeView.cpp" />
     <ClCompile Include="UnmanagedDataObject.cpp" />
     <ClCompile Include="UnmanagedStream.cpp" />
@@ -283,11 +276,8 @@
     <ClCompile Include="WindowsVisualThemeSupport.cpp" />
     <ClCompile Include="Window.cpp" />
     <ClCompile Include="WxAlternet\wxAlternetColourProperty.cpp" />
-    <ClCompile Include="WxAlternet\wxAlternetRichToolTip.cpp" />
-    <ClCompile Include="WxControlFactory.cpp" />
     <ClCompile Include="WxOtherFactory.cpp" />
     <ClCompile Include="WxStatusBarFactory.cpp" />
-    <ClCompile Include="WxTreeViewFactory.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AnimationControl.h" />
@@ -301,9 +291,7 @@
     <ClInclude Include="Api\CheckBox.Api.h" />
     <ClInclude Include="Api\Clipboard.Api.h" />
     <ClInclude Include="Api\ColorDialog.Api.h" />
-    <ClInclude Include="Api\ColorPicker.Api.h" />
     <ClInclude Include="Api\ComboBox.Api.h" />
-    <ClInclude Include="Api\DateTimePicker.Api.h" />
     <ClInclude Include="Api\Exceptions.Api.h" />
     <ClInclude Include="Api\Control.Api.h" />
     <ClInclude Include="Api\DrawingContext.Api.h" />
@@ -325,7 +313,6 @@
     <ClInclude Include="Api\Keyboard.Api.h" />
     <ClInclude Include="Api\Label.Api.h" />
     <ClInclude Include="Api\LinearGradientBrush.Api.h" />
-    <ClInclude Include="Api\LinkLabel.Api.h" />
     <ClInclude Include="Api\ListView.Api.h" />
     <ClInclude Include="Api\MainMenu.Api.h" />
     <ClInclude Include="Api\MemoryFSHandler.Api.h" />
@@ -335,7 +322,6 @@
     <ClInclude Include="Api\Mouse.Api.h" />
     <ClInclude Include="Api\NativeEventDataTypes.h" />
     <ClInclude Include="Api\NotifyIcon.Api.h" />
-    <ClInclude Include="Api\NumericUpDown.Api.h" />
     <ClInclude Include="Api\Object.Api.h" />
     <ClInclude Include="Api\OutputStream.Api.h" />
     <ClInclude Include="Api\OutputStream.h" />
@@ -358,7 +344,6 @@
     <ClInclude Include="Api\RichTextBox.Api.h" />
     <ClInclude Include="Api\ScrollBar.Api.h" />
     <ClInclude Include="Api\SelectDirectoryDialog.Api.h" />
-    <ClInclude Include="Api\Slider.Api.h" />
     <ClInclude Include="Api\SolidBrush.Api.h" />
     <ClInclude Include="Api\StatusBar.Api.h" />
     <ClInclude Include="Api\TextBox.Api.h" />
@@ -369,19 +354,10 @@
     <ClInclude Include="Api\TreeView.Api.h" />
     <ClInclude Include="Api\UnmanagedDataObject.Api.h" />
     <ClInclude Include="Api\UnmanagedStream.Api.h" />
-    <ClInclude Include="Api\Validator.Api.h" />
-    <ClInclude Include="Api\ValidatorFloat.Api.h" />
-    <ClInclude Include="Api\ValidatorGeneric.Api.h" />
-    <ClInclude Include="Api\ValidatorInteger.Api.h" />
-    <ClInclude Include="Api\ValidatorNumeric.Api.h" />
-    <ClInclude Include="Api\ValidatorNumericProperty.Api.h" />
-    <ClInclude Include="Api\ValidatorText.Api.h" />
     <ClInclude Include="Api\WebBrowser.Api.h" />
     <ClInclude Include="Api\Window.Api.h" />
-    <ClInclude Include="Api\WxControlFactory.Api.h" />
     <ClInclude Include="Api\WxOtherFactory.Api.h" />
     <ClInclude Include="Api\WxStatusBarFactory.Api.h" />
-    <ClInclude Include="Api\WxTreeViewFactory.Api.h" />
     <ClInclude Include="Application.h" />
     <ClInclude Include="Brush.h" />
     <ClInclude Include="Button.h" />
@@ -389,13 +365,11 @@
     <ClInclude Include="CheckBox.h" />
     <ClInclude Include="Clipboard.h" />
     <ClInclude Include="ColorDialog.h" />
-    <ClInclude Include="ColorPicker.h" />
     <ClInclude Include="ComboBox.h" />
     <ClInclude Include="Common.h" />
     <ClInclude Include="Common.Strings.h" />
     <ClInclude Include="Common.Base.h" />
     <ClInclude Include="Control.h" />
-    <ClInclude Include="DateTimePicker.h" />
     <ClInclude Include="DelayedValue.h" />
     <ClInclude Include="DrawingContext.h" />
     <ClInclude Include="DropTarget.h" />
@@ -404,7 +378,6 @@
     <ClInclude Include="Exceptions.h" />
     <ClInclude Include="ExceptionsMarshal.h" />
     <ClInclude Include="FileDialog.h" />
-    <ClInclude Include="FloodFill.h" />
     <ClInclude Include="Font.h" />
     <ClInclude Include="FontDialog.h" />
     <ClInclude Include="GenericImage.h" />
@@ -419,7 +392,6 @@
     <ClInclude Include="Keyboard.h" />
     <ClInclude Include="Label.h" />
     <ClInclude Include="LinearGradientBrush.h" />
-    <ClInclude Include="LinkLabel.h" />
     <ClInclude Include="ListView.h" />
     <ClInclude Include="MacOSMenu.h" />
     <ClInclude Include="MainMenu.h" />
@@ -431,14 +403,12 @@
     <ClInclude Include="MessageBoxObj.h" />
     <ClInclude Include="Mouse.h" />
     <ClInclude Include="NotifyIcon.h" />
-    <ClInclude Include="NumericUpDown.h" />
     <ClInclude Include="Object.h" />
     <ClInclude Include="PageSettings.h" />
     <ClInclude Include="PageSetupDialog.h" />
     <ClInclude Include="Panel.h" />
     <ClInclude Include="PaperSizes.h" />
     <ClInclude Include="Pen.h" />
-    <ClInclude Include="Popup.h" />
     <ClInclude Include="PrintDialog.h" />
     <ClInclude Include="PrintDocument.h" />
     <ClInclude Include="PrinterSettings.h" />
@@ -455,7 +425,6 @@
     <ClInclude Include="Screenshot.h" />
     <ClInclude Include="ScrollBar.h" />
     <ClInclude Include="SelectDirectoryDialog.h" />
-    <ClInclude Include="Slider.h" />
     <ClInclude Include="SolidBrush.h" />
     <ClInclude Include="StatusBar.h" />
     <ClInclude Include="TextBox.h" />
@@ -463,7 +432,6 @@
     <ClInclude Include="TextPainter.h" />
     <ClInclude Include="TextureBrush.h" />
     <ClInclude Include="Timer.h" />
-    <ClInclude Include="TransformMatrix.h" />
     <ClInclude Include="TreeView.h" />
     <ClInclude Include="TypedEnumFlags.h" />
     <ClInclude Include="UnmanagedDataObject.h" />
@@ -475,11 +443,8 @@
     <ClInclude Include="WxAlternet\wxAlternetColourProperty.h" />
     <ClInclude Include="WxAlternet\wxAlternetLogFormatter.h" />
     <ClInclude Include="WxAlternet\wxAlternetRendererNative.h" />
-    <ClInclude Include="WxAlternet\wxAlternetRichToolTip.h" />
-    <ClInclude Include="WxControlFactory.h" />
     <ClInclude Include="WxOtherFactory.h" />
     <ClInclude Include="WxStatusBarFactory.h" />
-    <ClInclude Include="WxTreeViewFactory.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Api\AnimationControl.inc" />
@@ -490,10 +455,8 @@
     <None Include="Api\CheckBox.inc" />
     <None Include="Api\Clipboard.inc" />
     <None Include="Api\ColorDialog.inc" />
-    <None Include="Api\ColorPicker.inc" />
     <None Include="Api\ComboBox.inc" />
     <None Include="Api\Control.inc" />
-    <None Include="Api\DateTimePicker.inc" />
     <None Include="Api\DrawingContext.inc" />
     <None Include="Api\FileDialog.inc" />
     <None Include="Api\Font.inc" />
@@ -509,7 +472,6 @@
     <None Include="Api\Keyboard.inc" />
     <None Include="Api\Label.inc" />
     <None Include="Api\LinearGradientBrush.inc" />
-    <None Include="Api\LinkLabel.inc" />
     <None Include="Api\ListView.inc" />
     <None Include="Api\MainMenu.inc" />
     <None Include="Api\MemoryFSHandler.inc" />
@@ -518,7 +480,6 @@
     <None Include="Api\MessageBoxObj.inc" />
     <None Include="Api\Mouse.inc" />
     <None Include="Api\NotifyIcon.inc" />
-    <None Include="Api\NumericUpDown.inc" />
     <None Include="Api\PageSettings.inc" />
     <None Include="Api\PageSetupDialog.inc" />
     <None Include="Api\Panel.inc" />
@@ -538,30 +499,19 @@
     <None Include="Api\RichTextBox.inc" />
     <None Include="Api\ScrollBar.inc" />
     <None Include="Api\SelectDirectoryDialog.inc" />
-    <None Include="Api\Slider.inc" />
     <None Include="Api\SolidBrush.inc" />
     <None Include="Api\StatusBar.inc" />
     <None Include="Api\TextBox.inc" />
     <None Include="Api\TextBoxTextAttr.inc" />
     <None Include="Api\TextureBrush.inc" />
     <None Include="Api\Timer.inc" />
-    <None Include="Api\TransformMatrix.inc" />
     <None Include="Api\TreeView.inc" />
     <None Include="Api\UnmanagedDataObject.inc" />
     <None Include="Api\UnmanagedStream.inc" />
-    <None Include="Api\Validator.inc" />
-    <None Include="Api\ValidatorFloat.inc" />
-    <None Include="Api\ValidatorGeneric.inc" />
-    <None Include="Api\ValidatorInteger.inc" />
-    <None Include="Api\ValidatorNumeric.inc" />
-    <None Include="Api\ValidatorNumericProperty.inc" />
-    <None Include="Api\ValidatorText.inc" />
     <None Include="Api\WebBrowser.inc" />
     <None Include="Api\Window.inc" />
-    <None Include="Api\WxControlFactory.inc" />
     <None Include="Api\WxOtherFactory.inc" />
     <None Include="Api\WxStatusBarFactory.inc" />
-    <None Include="Api\WxTreeViewFactory.inc" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Alternet.UI.Pal.rc" />

@@ -1,7 +1,5 @@
 ﻿#include "DrawingContext.h"
 #include "SolidBrush.h"
-#include "FloodFill.h"
-#include "TextPainter.h"
 #include "GenericImage.h"
 #include <algorithm>
 

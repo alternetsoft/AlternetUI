@@ -23,87 +23,9 @@ namespace Alternet.UI.Native
         {
         }
         
-        public static bool RichToolTipUseGeneric
-        {
-            get
-            {
-                return NativeApi.WxOtherFactory_GetRichToolTipUseGeneric_();
-            }
-            
-            set
-            {
-                NativeApi.WxOtherFactory_SetRichToolTipUseGeneric_(value);
-            }
-        }
-        
         public static void TestPopupWindow(System.IntPtr parent, Alternet.Drawing.PointI pos, Alternet.Drawing.SizeI sz)
         {
             NativeApi.WxOtherFactory_TestPopupWindow_(parent, pos, sz);
-        }
-        
-        public static System.IntPtr CreateRichToolTip(string title, string message)
-        {
-            return NativeApi.WxOtherFactory_CreateRichToolTip_(title, message);
-        }
-        
-        public static void DeleteRichToolTip(System.IntPtr handle)
-        {
-            NativeApi.WxOtherFactory_DeleteRichToolTip_(handle);
-        }
-        
-        public static void RichToolTipSetBkColor(System.IntPtr handle, Alternet.Drawing.Color color, Alternet.Drawing.Color endColor)
-        {
-            NativeApi.WxOtherFactory_RichToolTipSetBkColor_(handle, color, endColor);
-        }
-        
-        public static void RichToolTipSetFgColor(System.IntPtr handle, Alternet.Drawing.Color color)
-        {
-            NativeApi.WxOtherFactory_RichToolTipSetFgColor_(handle, color);
-        }
-        
-        public static void RichToolTipSetTitleFgColor(System.IntPtr handle, Alternet.Drawing.Color color)
-        {
-            NativeApi.WxOtherFactory_RichToolTipSetTitleFgColor_(handle, color);
-        }
-        
-        public static void RichToolTipSetIcon(System.IntPtr handle, ImageSet? bitmapBundle)
-        {
-            NativeApi.WxOtherFactory_RichToolTipSetIcon_(handle, bitmapBundle?.NativePointer ?? IntPtr.Zero);
-        }
-        
-        public static void RichToolTipSetIcon2(System.IntPtr handle, int icon)
-        {
-            NativeApi.WxOtherFactory_RichToolTipSetIcon2_(handle, icon);
-        }
-        
-        public static void RichToolTipSetTimeout(System.IntPtr handle, uint milliseconds, uint millisecondsShowdelay)
-        {
-            NativeApi.WxOtherFactory_RichToolTipSetTimeout_(handle, milliseconds, millisecondsShowdelay);
-        }
-        
-        public static void RichToolTipSetTipKind(System.IntPtr handle, int tipKind)
-        {
-            NativeApi.WxOtherFactory_RichToolTipSetTipKind_(handle, tipKind);
-        }
-        
-        public static void RichToolTipSetTitleFont(System.IntPtr handle, Font? font)
-        {
-            NativeApi.WxOtherFactory_RichToolTipSetTitleFont_(handle, font?.NativePointer ?? IntPtr.Zero);
-        }
-        
-        public static void RichToolTipShowFor(System.IntPtr handle, System.IntPtr window, Alternet.Drawing.RectI rect, bool adjustPos)
-        {
-            NativeApi.WxOtherFactory_RichToolTipShowFor_(handle, window, rect, adjustPos);
-        }
-        
-        public static Alternet.Drawing.SizeI RichToolTipGetSize(System.IntPtr handle)
-        {
-            return NativeApi.WxOtherFactory_RichToolTipGetSize_(handle);
-        }
-        
-        public static void RichToolTipSetLocationDecrement(System.IntPtr handle, bool decrementX, bool decrementY)
-        {
-            NativeApi.WxOtherFactory_RichToolTipSetLocationDecrement_(handle, decrementX, decrementY);
         }
         
         public static System.IntPtr CreateToolTip(string tip)
@@ -744,52 +666,7 @@ namespace Alternet.UI.Native
             public static extern IntPtr WxOtherFactory_Create_();
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern bool WxOtherFactory_GetRichToolTipUseGeneric_();
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void WxOtherFactory_SetRichToolTipUseGeneric_(bool value);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void WxOtherFactory_TestPopupWindow_(System.IntPtr parent, Alternet.Drawing.PointI pos, Alternet.Drawing.SizeI sz);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern System.IntPtr WxOtherFactory_CreateRichToolTip_(string title, string message);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void WxOtherFactory_DeleteRichToolTip_(System.IntPtr handle);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void WxOtherFactory_RichToolTipSetBkColor_(System.IntPtr handle, NativeApiTypes.Color color, NativeApiTypes.Color endColor);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void WxOtherFactory_RichToolTipSetFgColor_(System.IntPtr handle, NativeApiTypes.Color color);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void WxOtherFactory_RichToolTipSetTitleFgColor_(System.IntPtr handle, NativeApiTypes.Color color);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void WxOtherFactory_RichToolTipSetIcon_(System.IntPtr handle, IntPtr bitmapBundle);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void WxOtherFactory_RichToolTipSetIcon2_(System.IntPtr handle, int icon);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void WxOtherFactory_RichToolTipSetTimeout_(System.IntPtr handle, uint milliseconds, uint millisecondsShowdelay);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void WxOtherFactory_RichToolTipSetTipKind_(System.IntPtr handle, int tipKind);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void WxOtherFactory_RichToolTipSetTitleFont_(System.IntPtr handle, IntPtr font);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void WxOtherFactory_RichToolTipShowFor_(System.IntPtr handle, System.IntPtr window, Alternet.Drawing.RectI rect, bool adjustPos);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern Alternet.Drawing.SizeI WxOtherFactory_RichToolTipGetSize_(System.IntPtr handle);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void WxOtherFactory_RichToolTipSetLocationDecrement_(System.IntPtr handle, bool decrementX, bool decrementY);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern System.IntPtr WxOtherFactory_CreateToolTip_(string tip);

@@ -416,6 +416,83 @@ ALTERNET_UI_API void TreeView_CloseSelectedItemsArray_(TreeView* obj, void* arra
     #endif
 }
 
+ALTERNET_UI_API void TreeView_SetItemBold_(void* handle, void* item, c_bool bold)
+{
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    MarshalExceptions<void>([&](){
+    #endif
+        TreeView::SetItemBold(handle, item, bold);
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    });
+    #endif
+}
+
+ALTERNET_UI_API Color_C TreeView_GetItemTextColor_(void* handle, void* item)
+{
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    return MarshalExceptions<Color_C>([&](){
+    #endif
+        return TreeView::GetItemTextColor(handle, item);
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    });
+    #endif
+}
+
+ALTERNET_UI_API Color_C TreeView_GetItemBackgroundColor_(void* handle, void* item)
+{
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    return MarshalExceptions<Color_C>([&](){
+    #endif
+        return TreeView::GetItemBackgroundColor(handle, item);
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    });
+    #endif
+}
+
+ALTERNET_UI_API void TreeView_SetItemTextColor_(void* handle, void* item, Color color)
+{
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    MarshalExceptions<void>([&](){
+    #endif
+        TreeView::SetItemTextColor(handle, item, color);
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    });
+    #endif
+}
+
+ALTERNET_UI_API void TreeView_SetItemBackgroundColor_(void* handle, void* item, Color color)
+{
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    MarshalExceptions<void>([&](){
+    #endif
+        TreeView::SetItemBackgroundColor(handle, item, color);
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    });
+    #endif
+}
+
+ALTERNET_UI_API void TreeView_ResetItemTextColor_(void* handle, void* item)
+{
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    MarshalExceptions<void>([&](){
+    #endif
+        TreeView::ResetItemTextColor(handle, item);
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    });
+    #endif
+}
+
+ALTERNET_UI_API void TreeView_ResetItemBackgroundColor_(void* handle, void* item)
+{
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    MarshalExceptions<void>([&](){
+    #endif
+        TreeView::ResetItemBackgroundColor(handle, item);
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    });
+    #endif
+}
+
 ALTERNET_UI_API void TreeView_SetNodeUniqueId_(TreeView* obj, void* node, int64_t uniqueId)
 {
     #if !defined(__WXMSW__) || defined(_DEBUG)

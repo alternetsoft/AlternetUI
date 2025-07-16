@@ -5,6 +5,49 @@
 
 namespace Alternet::UI
 {
+	void TreeView::SetItemBold(void* handle, void* item, bool bold)
+	{
+		wxTreeItemId itemId(item);
+
+		((wxTreeCtrl*)handle)->SetItemBold(itemId, bold);
+	}
+
+	Color TreeView::GetItemTextColor(void* handle, void* item)
+	{
+		wxTreeItemId itemId(item);
+		return ((wxTreeCtrl*)handle)->GetItemTextColour(itemId);
+	}
+
+	Color TreeView::GetItemBackgroundColor(void* handle, void* item)
+	{
+		wxTreeItemId itemId(item);
+		return ((wxTreeCtrl*)handle)->GetItemBackgroundColour(itemId);
+	}
+
+	void TreeView::SetItemTextColor(void* handle, void* item, const Color& color)
+	{
+		wxTreeItemId itemId(item);
+		((wxTreeCtrl*)handle)->SetItemTextColour(itemId, color);
+	}
+
+	void TreeView::SetItemBackgroundColor(void* handle, void* item, const Color& color)
+	{
+		wxTreeItemId itemId(item);
+		((wxTreeCtrl*)handle)->SetItemBackgroundColour(itemId, color);
+	}
+
+	void TreeView::ResetItemTextColor(void* handle, void* item)
+	{
+		wxTreeItemId itemId(item);
+		((wxTreeCtrl*)handle)->SetItemTextColour(itemId, wxColour());
+	}
+
+	void TreeView::ResetItemBackgroundColor(void* handle, void* item)
+	{
+		wxTreeItemId itemId(item);
+		((wxTreeCtrl*)handle)->SetItemBackgroundColour(itemId, wxColour());
+	}
+
 	class TreeViewItemData : public wxTreeItemData
 	{
 	public:
