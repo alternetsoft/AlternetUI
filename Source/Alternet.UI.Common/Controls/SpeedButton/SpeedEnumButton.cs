@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections;
+using System.Collections.Generic;
 using System.ComponentModel;
 
 using Alternet.Drawing;
@@ -114,6 +115,9 @@ namespace Alternet.UI
         /// <inheritdoc/>
         protected override BaseCollection<ListControlItem> GetItems()
         {
+            if(enumType is null)
+                return new BaseCollection<ListControlItem>();
+
             var collection = EnumUtils.GetEnumItemsAsListItems(
                 enumType,
                 GetValueAsString,
@@ -128,8 +132,6 @@ namespace Alternet.UI
 
                     if (ExcludeValues is null)
                         return true;
-                    if (ExcludeValues is IList list)
-                        return !list.Contains(item);
                     foreach (var excludeValue in ExcludeValues)
                     {
                         if (excludeValue?.Equals(item) == true)

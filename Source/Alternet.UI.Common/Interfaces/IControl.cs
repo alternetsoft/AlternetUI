@@ -20,7 +20,7 @@ namespace Alternet.UI
         /// while focus is on this control.
         /// </summary>
         [Category("Key")]
-        public event PreviewKeyDownEventHandler? PreviewKeyDown;
+        event PreviewKeyDownEventHandler? PreviewKeyDown;
 
         /// <summary>
         /// Occurs when the user scrolls through the control contents using scrollbars.
@@ -401,6 +401,11 @@ namespace Alternet.UI
         /// inside the <see cref="LayoutPanel"/>.
         /// </remarks>
         DockStyle Dock { get; set; }
+
+        /// <summary>
+        /// Gets or sets context menu for this control.
+        /// </summary>
+        ContextMenuStrip ContextMenuStrip { get; set; }
 
         /// <summary>
         /// Gets or sets whether controls is scrollable.
