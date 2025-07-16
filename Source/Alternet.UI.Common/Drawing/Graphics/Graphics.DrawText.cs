@@ -506,7 +506,7 @@ namespace Alternet.Drawing
                 }
                 else
                 {
-                    measure = MeasureText(s, font).Ceiling();
+                    measure = MeasureText(s!, font).Ceiling();
                 }
 
                 if (!isEmpty && foreColor is not null)

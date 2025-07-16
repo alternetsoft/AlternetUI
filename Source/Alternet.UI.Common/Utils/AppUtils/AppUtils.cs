@@ -154,7 +154,8 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="waitResult">Whether to wait until command finishes its execution.</param>
         /// <param name="command">Terminal command.</param>
-        /// <param name="logStdOut">Specifies whether to hook and log stdout and stderr.</param>
+        /// <param name="logStdOut">Specifies whether to hook and log
+        /// standard output and standard error streams.</param>
         /// <param name="folder">Value of <see cref="ProcessStartInfo.WorkingDirectory"/>.</param>
         /// <returns>
         /// Result of the command execution in case when <paramref name="waitResult"/> is <c>true</c>;
@@ -343,7 +344,7 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="url">Url to open.</param>
         /// <returns><c>true</c> if operation is successful; <c> false</c> otherwise.</returns>
-        public static bool OpenUrl(string url)
+        public static bool OpenUrl(string? url)
         {
             var result = ShellExecute(url);
             return result;
@@ -353,8 +354,15 @@ namespace Alternet.UI
         /// <remarks>
         /// Uses shell execute to start the process.
         /// </remarks>
-        public static bool ShellExecute(string filePath, string? args = null, string? folder = null)
+        /// <param name="filePath">Path to the application.</param>
+        /// <param name="args">Set of command-line arguments to use
+        /// when starting the application.</param>
+        /// <param name="folder">Initial directory.</param>
+        public static bool ShellExecute(string? filePath, string? args = null, string? folder = null)
         {
+            if(filePath == null)
+                return false;
+
             using Process process = new();
             process.StartInfo.Verb = "open";
             process.StartInfo.FileName = filePath;

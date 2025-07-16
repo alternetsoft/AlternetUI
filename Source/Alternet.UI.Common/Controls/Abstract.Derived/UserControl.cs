@@ -48,7 +48,9 @@ namespace Alternet.UI
         public override ControlTypeId ControlKind => ControlTypeId.UserPaintControl;
 
         /// <summary>
-        /// Gets or sets <see cref="ContextMenu"/> which is shown when control is clicked.
+        /// Gets or sets <see cref="ContextMenu"/> which is shown when control is clicked
+        /// with left mouse button. Do not mix this with <see cref="ContextMenu"/> which is
+        /// shown when right mouse button is clicked.
         /// </summary>
         [Browsable(false)]
         public virtual ContextMenu? DropDownMenu { get; set; }
