@@ -928,6 +928,141 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Removes mnemonic markers from a string, such as a specified character used
+        /// to indicate shortcut keys.
+        /// </summary>
+        /// <param name="input">The input string potentially containing mnemonic markers.</param>
+        /// <param name="mnemonicMarker">
+        /// The character used to mark mnemonic access keys.
+        /// Single instances indicate a mnemonic; double instances represent a literal marker.
+        /// </param>
+        /// <returns>
+        /// A cleaned string with mnemonic markers removed and escaped markers collapsed
+        /// into a single literal.
+        /// Returns the original string if <paramref name="input"/> is null or empty.
+        /// </returns>
+        /// <remarks>
+        /// Commonly used for stripping mnemonic markup from UI labels,
+        /// preserving readability while removing access key symbols.
+        /// </remarks>
+        public static string RemoveMnemonicMarkers(string input, char mnemonicMarker = '&')
+        {
+            if (string.IsNullOrEmpty(input))
+                return input;
+
+            var builder = new System.Text.StringBuilder(input.Length);
+
+            for (int i = 0; i < input.Length; i++)
+            {
+                if (input[i] == mnemonicMarker)
+                {
+                    if (i + 1 < input.Length && input[i + 1] == mnemonicMarker)
+                    {
+                        builder.Append(mnemonicMarker);
+                        i++;
+                    }
+                    else
+                    {
+                        continue;
+                    }
+                }
+                else
+                {
+                    builder.Append(input[i]);
+                }
+            }
+
+            return builder.ToString();
+        }
+
+        /// <summary>
+        /// Removes mnemonic markers from a string and returns the index of the
+        /// mnemonic character, if present.
+        /// </summary>
+        /// <param name="s">The input string containing mnemonic markers.</param>
+        /// <param name="mnemonicCharIndex">
+        /// The output index of the mnemonic character in the returned string.
+        /// Returns -1 if no mnemonic marker is found.
+        /// </param>
+        /// <param name="mnemonicMarker">The character used to mark mnemonics.</param>
+        /// <returns>
+        /// The input string with mnemonic markers removed.
+        /// Double markers are converted to a single literal character.
+        /// </returns>
+        public static string GetWithoutMnemonicMarkers(
+            string s,
+            out int mnemonicCharIndex,
+            char mnemonicMarker)
+        {
+            mnemonicCharIndex = -1;
+
+            if (string.IsNullOrEmpty(s))
+                return s;
+
+            var builder = new System.Text.StringBuilder(s.Length);
+            int logicalIndex = 0;
+
+            for (int i = 0; i < s.Length; i++)
+            {
+                if (s[i] == mnemonicMarker)
+                {
+                    if (i + 1 < s.Length)
+                    {
+                        if (s[i + 1] == mnemonicMarker)
+                        {
+                            builder.Append(mnemonicMarker);
+                            i++;
+                            logicalIndex++;
+                        }
+                        else
+                        {
+                            mnemonicCharIndex = logicalIndex;
+                            builder.Append(s[i + 1]);
+                            i++;
+                            logicalIndex++;
+                        }
+                    }
+                }
+                else
+                {
+                    builder.Append(s[i]);
+                    logicalIndex++;
+                }
+            }
+
+            return builder.ToString();
+        }
+
+        /// <summary>
+        /// Gets the index of the mnemonic character in the specified string.
+        /// </summary>
+        /// <param name="input">The string to search for the mnemonic character.</param>
+        /// <param name="mnemonicMark">The mnemonic character used to
+        /// identify the intended character.</param>
+        /// <returns>The index of the mnemonic character, or -1 if not found.</returns>
+        public static int GetMnemonicCharIndex(string input, char mnemonicMark = '&')
+        {
+            if (string.IsNullOrEmpty(input))
+                return -1;
+
+            for (int i = 0; i < input.Length - 1; i++)
+            {
+                if (input[i] == mnemonicMark)
+                {
+                    if (input[i + 1] == mnemonicMark)
+                    {
+                        i++;
+                        continue;
+                    }
+
+                    return i + 1;
+                }
+            }
+
+            return -1;
+        }
+
+        /// <summary>
         /// Trims the string using the specified text trimming rules.
         /// </summary>
         /// <param name="s">String to trim.</param>

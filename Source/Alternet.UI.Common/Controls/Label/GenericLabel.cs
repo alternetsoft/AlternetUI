@@ -36,6 +36,16 @@ namespace Alternet.UI
     public partial class GenericLabel : GenericControl
     {
         /// <summary>
+        /// Gets or sets the mnemonic marker character. Default is '&amp;'. 
+        /// </summary>
+        public static char DefaultMnemonicMarker = '&';
+
+        /// <summary>
+        /// Gets or sets whether to show mnemonic markers in the text.
+        /// </summary> 
+        public static bool DefaultMnemonicMarkerEnabled = false;
+
+        /// <summary>
         /// Gets or sets whether to show debug corners when control is painted.
         /// </summary>
         public static bool ShowDebugCorners = false;
@@ -48,6 +58,7 @@ namespace Alternet.UI
         private string? textFormat;
         private Graphics.DrawLabelParams prm;
         private bool isVerticalText;
+        private bool? mnemonicMarkerEnabled;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="GenericLabel"/> class.
@@ -97,7 +108,27 @@ namespace Alternet.UI
         /// <summary>
         /// Gets parameters for drawing label.
         /// </summary>
+        [Browsable(false)]
         public Graphics.DrawLabelParams DrawLabelParams => prm;
+
+        /// <summary>
+        /// Gets or sets whether to process mnemonic markers in the text.
+        /// If this property is not specified (default),
+        /// <see cref="DefaultMnemonicMarkerEnabled"/> is used
+        /// to determine whether mnemonic markers are processed.
+        /// </summary>
+        public virtual bool? MnemonicMarkerEnabled
+        {
+            get => mnemonicMarkerEnabled;
+
+            set
+            {
+                if (mnemonicMarkerEnabled == value)
+                    return;
+                mnemonicMarkerEnabled = value;
+                PerformLayoutAndInvalidate();
+            }
+        }
 
         /// <summary>
         /// Gets or sets text prefix.
@@ -417,7 +448,8 @@ namespace Alternet.UI
             var labelFont = font ?? GetLabelFont(state);
             var labelForeColor = foreColor ?? GetLabelForeColor(state);
             var labelBackColor = backColor ?? GetLabelBackColor(state);
-            var mnemonicCharIndex = GetMnemonicCharIndex();
+
+            labelText = GetWithoutMnemonicMarkers(labelText, out var mnemonicCharIndex);
 
             prm = new(
                 labelText,
@@ -534,16 +566,45 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Gets mnemonic char index from <see cref="MnemonicCharIndex"/> or -1.
+        /// Removes mnemonic markers from a string and returns the index of the
+        /// mnemonic character, if present.
         /// </summary>
-        /// <returns></returns>
+        /// <param name="s">The input string containing mnemonic markers.</param>
+        /// <param name="mnemonicCharIndex">
+        /// The output index of the mnemonic character in the returned string.
+        /// Returns -1 if no mnemonic marker is found.
+        /// </param>
+        /// <returns>
+        /// The input string with mnemonic markers removed.
+        /// Double markers are converted to a single literal character.
+        /// </returns>
         /// <remarks>
-        /// You can override this method in order to provide additional functionality.
+        /// If <see cref="MnemonicCharIndex"/> is not null, it is assigned to
+        /// <paramref name="mnemonicCharIndex"/>.
+        /// In this case text is not processed and is used as is.
         /// </remarks>
-        protected virtual int GetMnemonicCharIndex()
+        protected virtual string GetWithoutMnemonicMarkers(string s, out int mnemonicCharIndex)
         {
-            var result = MnemonicCharIndex ?? -1;
-            return result;
+            if (MnemonicCharIndex.HasValue)
+            {
+                mnemonicCharIndex = MnemonicCharIndex.Value;
+                return s;
+            }
+
+            var checkMnemonic = MnemonicMarkerEnabled ?? DefaultMnemonicMarkerEnabled;
+            if (checkMnemonic)
+            {
+                var result = StringUtils.GetWithoutMnemonicMarkers(
+                            s,
+                            out mnemonicCharIndex,
+                            DefaultMnemonicMarker);
+                return result;
+            }
+            else
+            {
+                mnemonicCharIndex = -1;
+                return s;
+            }
         }
 
         [Conditional("DEBUG")]
