@@ -1130,7 +1130,17 @@ namespace Alternet.UI
             var item = SafeItem(itemIndex);
             if (item is null)
                 return false;
+
             var checkState = item.GetCheckState(this);
+
+            if (item.IsRadioButton)
+            {
+                if(checkState == CheckState.Checked)
+                {
+                    return false;
+                }
+            }
+
             var allowThreeState = item.GetAllowThreeState(this);
             var allowAllStatesForUser = GetItemCheckBoxAllowAllStatesForUser(item);
 

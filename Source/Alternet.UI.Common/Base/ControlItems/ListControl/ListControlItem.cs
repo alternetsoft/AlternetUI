@@ -61,12 +61,16 @@ namespace Alternet.UI
         private CheckState checkState;
         private FontStyle? fontStyle;
         private Font? font;
+
         private bool? checkBoxThreeState;
         private bool? checkBoxAllowAllStatesForUser;
         private bool? checkBoxVisible;
+
         private bool canRemove = true;
         private bool hideSelection;
         private bool hideFocusRect;
+        private bool isRadioButton;
+
         private Color? foregroundColor;
         private Color? backgroundColor;
         private BorderSettings? border;
@@ -130,6 +134,11 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets or sets group id of the item.
+        /// </summary>
+        public virtual ObjectUniqueId? Group { get; set; }
+
+        /// <summary>
         /// Gets or sets distance between lines of the text.
         /// </summary>
         public virtual Coord? TextLineDistance
@@ -187,7 +196,10 @@ namespace Alternet.UI
         public virtual CheckState CheckState
         {
             get => checkState;
-            set => checkState = value;
+            set
+            {
+                checkState = value;
+            }
         }
 
         /// <summary>
@@ -298,6 +310,22 @@ namespace Alternet.UI
         {
             get => checkBoxVisible;
             set => checkBoxVisible = value;
+        }
+
+        /// <summary>
+        /// Gets or sets whether to paint check box as radio button.
+        /// </summary>
+        public virtual bool IsRadioButton
+        {
+            get
+            {
+                return isRadioButton;
+            }
+
+            set
+            {
+                isRadioButton = value;
+            }
         }
 
         /// <summary>
@@ -1262,11 +1290,22 @@ namespace Alternet.UI
                 }
             }
 
-            canvas.DrawCheckBox(
-                control,
-                info.CheckRect,
-                info.CheckState,
-                info.SvgState);
+            if (info.IsRadioButton)
+            {
+                canvas.DrawRadioButton(
+                    control,
+                    info.CheckRect,
+                    info.CheckState == CheckState.Checked,
+                    info.SvgState);
+            }
+            else
+            {
+                canvas.DrawCheckBox(
+                    control,
+                    info.CheckRect,
+                    info.CheckState,
+                    info.SvgState);
+            }
         }
 
         /// <summary>
@@ -1290,6 +1329,66 @@ namespace Alternet.UI
             }
 
             return null;
+        }
+
+        /// <summary>
+        /// Gets the members of a specific group within the collection.
+        /// Uses the <see cref="ListControlItem.Group"/> property to filter items.
+        /// </summary>
+        /// <param name="collection">The collection of <see cref="ListControlItem"/>.</param>
+        /// <param name="group">The unique identifier for the group.</param>
+        /// <returns>Enumerable collection of <see cref="ListControlItem"/> belonging
+        /// to the specified group.</returns>
+        /// <remarks>
+        /// If <paramref name="group"/> is <c>null</c>, an empty collection is returned.
+        /// </remarks>
+        public static IEnumerable<ListControlItem> GetMembersOfGroup(
+            IEnumerable<ListControlItem> collection,
+            ObjectUniqueId? group)
+        {
+            if (group is null)
+                return Enumerable.Empty<ListControlItem>();
+            return collection.Where(item => item.Group == group);
+        }
+
+        /// <summary>
+        /// Gets the members of a specific group within the collection except the specified item.
+        /// Uses the <see cref="ListControlItem.Group"/> property to filter items.
+        /// </summary>
+        /// <param name="collection">The collection of <see cref="ListControlItem"/>.</param>
+        /// <param name="group">The unique identifier for the group.</param>
+        /// <param name="excludeItem">The item to exclude from the results.</param>
+        /// <returns>Enumerable collection of <see cref="ListControlItem"/> belonging
+        /// to the specified group except for the excluded item.</returns>
+        /// <remarks>
+        /// If <paramref name="group"/> is <c>null</c>, an empty collection is returned.
+        /// </remarks>
+        public static IEnumerable<ListControlItem> GetOtherMembersOfGroup(
+            IEnumerable<ListControlItem> collection,
+            ObjectUniqueId? group,
+            ListControlItem excludeItem)
+        {
+            if (group is null)
+                return Enumerable.Empty<ListControlItem>();
+            return collection.Where(item => item.Group == group && item != excludeItem);
+        }
+
+        /// <summary>
+        /// Unchecks all items in the specified collection that belong to the same group
+        /// which is defined by the <see cref="ListControlItem.Group"/> property. 
+        /// <paramref name="item"/> is used to determine the group and is not unchecked.
+        /// </summary>
+        /// <param name="collection">The collection of <see cref="ListControlItem"/>.</param>
+        /// <param name="item">The item to exclude from being unchecked.</param>
+        public static void UncheckOtherItemsInGroup(
+            IEnumerable<ListControlItem> collection,
+            ListControlItem item)
+        {
+            var members = ListControlItem.GetOtherMembersOfGroup(collection, item.Group, item);
+            foreach (var member in members)
+            {
+                member.IsChecked = false;
+            }
         }
 
         /// <summary>
@@ -1329,6 +1428,7 @@ namespace Alternet.UI
                         : VisualControlState.Disabled;
                     if(info.SvgState == VisualControlState.Selected)
                         info.SvgImageColor = ListControlItem.GetSelectedTextColor(item, container);
+                    info.IsRadioButton = item.IsRadioButton;
                     DefaultDrawCheckBox(e.Graphics, ControlUtils.SafeControl(container), info);
                     paintRectangle = info.TextRect;
                 }
@@ -1886,7 +1986,7 @@ namespace Alternet.UI
         /// <summary>
         /// Contains information about the checkbox associated with a <see cref="ListControlItem"/>.
         /// </summary>
-        public class ItemCheckBoxInfo
+        public class ItemCheckBoxInfo : BaseObject
         {
             /// <summary>
             /// Gets or sets the rectangle that defines the bounds of the item.
@@ -1947,6 +2047,11 @@ namespace Alternet.UI
             /// Gets or sets a value indicating whether the checkbox is visible.
             /// </summary>
             public bool IsCheckBoxVisible;
+
+            /// <summary>
+            /// Gets or sets whether to draw the checkbox as a radio button.
+            /// </summary>
+            public bool IsRadioButton;
 
             /// <summary>
             /// Gets or sets a value indicating whether to keep text padding

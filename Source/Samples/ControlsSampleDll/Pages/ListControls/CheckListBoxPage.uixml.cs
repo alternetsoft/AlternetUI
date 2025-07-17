@@ -31,13 +31,48 @@ namespace ControlsSample
 
             AddSection("Section 1");
             AddItems();
+
             AddSection("Section 2");
+
+            var item1 = new ListControlItemWithNotify("Radio Button 1");
+            item1.IsChecked = true;
+            var item2 = new ListControlItemWithNotify("Radio Button 2");
+
+            item1.IsRadioButton = true;
+            item2.IsRadioButton = true;
+
+            item1.Group = new();
+            item2.Group = item1.Group;
+
+            item1.PropertyChanged += RadioButtonItemChanged;
+            item2.PropertyChanged += RadioButtonItemChanged;
+
+            checkListBox.Add(item1);
+            checkListBox.Add(item2);
+
+            AddSection("Section 3");
             AddItems();
 
             checkListBox.SelectionChanged += CheckListBox_SelectionChanged;
             allowMultipleSelectionCheckBox.IsChecked =
                 checkListBox.SelectionMode == ListBoxSelectionMode.Multiple;
             App.LogIf($"CheckListBoxDemo: Constructor done", false);
+        }
+
+        private void RadioButtonItemChanged(
+            object? sender, 
+            PropertyChangedEventArgs e)
+        {
+            if (e.PropertyName == "CheckState")
+            {
+                var item = (ListControlItemWithNotify)sender!;
+
+                if (item.IsChecked)
+                {
+                    ListControlItem.UncheckOtherItemsInGroup(checkListBox.BaseItems, item);
+                    checkListBox.Refresh();
+                }
+            }
         }
 
         private void EditorButton_Click(object? sender, System.EventArgs e)

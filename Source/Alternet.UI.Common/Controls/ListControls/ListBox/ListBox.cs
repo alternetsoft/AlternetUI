@@ -289,11 +289,18 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="index">Index of the item.</param>
         /// <param name="value">New item value.</param>
-        public void SetItem(int index, object value)
+        public virtual void SetItem(int index, object value)
         {
-            ListControlItem item = new();
-            SetItemData(item, value);
-            base.SetItem(index, item);
+            if (value is ListControlItem listItem)
+            {
+                base.SetItem(index, listItem);
+            }
+            else
+            {
+                ListControlItem item = new();
+                SetItemData(item, value);
+                base.SetItem(index, item);
+            }
         }
 
         /// <summary>
@@ -301,11 +308,18 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="value">The object to be added to the end of the
         /// <see cref="Items"/> collection.</param>
-        public int Add(object value)
+        public virtual int Add(object value)
         {
-            ListControlItem item = new();
-            SetItemData(item, value);
-            return base.Add(item);
+            if(value is ListControlItem listItem)
+            {
+                return base.Add(listItem);
+            }
+            else
+            {
+                ListControlItem item = new();
+                SetItemData(item, value);
+                return base.Add(item);
+            }
         }
 
         /// <summary>

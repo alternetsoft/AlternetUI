@@ -14,7 +14,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "01. Components", "01. Compo
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "02. Native API", "02. Native API", "{5E9B13E1-8AC3-4BB4-8BAB-EED296EBD253}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "03. Samples", "03. Samples", "{B3B7BFD7-CEFB-46C2-BAF5-710D858DE73B}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "05. Samples", "05. Samples", "{B3B7BFD7-CEFB-46C2-BAF5-710D858DE73B}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NativeApi", "NativeApi\NativeApi\NativeApi.csproj", "{4D0B4DDF-9CCB-4BA2-A4D6-D12A2686737A}"
 EndProject
@@ -36,7 +36,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Alternet.UI.Versioning", "T
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Alternet.UI.VersionTool.Cli", "Tools\Versioning\Alternet.UI.VersionTool.Cli\Alternet.UI.VersionTool.Cli.csproj", "{F85FA19A-FC05-4337-B592-841637A83C4E}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{96B74777-AF68-438D-90CC-B80FA6A214B9}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "03. Solution Items", "03. Solution Items", "{96B74777-AF68-438D-90CC-B80FA6A214B9}"
 	ProjectSection(SolutionItems) = preProject
 		.editorconfig = .editorconfig
 		Directory.Build.targets = Directory.Build.targets
