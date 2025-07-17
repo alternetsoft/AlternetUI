@@ -10,8 +10,29 @@ using Alternet.Drawing;
 namespace Alternet.UI
 {
     /// <summary>
-    /// Implements generic label control.
+    /// Represents a text label control.
     /// </summary>
+    /// <remarks>
+    /// <see cref="GenericLabel" /> controls are typically used to provide descriptive text
+    /// for a control.
+    /// For example, you can use a <see cref="GenericLabel" /> to add descriptive text for
+    /// a <see cref="TextBox"/> control to inform the
+    /// user about the type of data expected in the control.
+    /// <see cref="Label" /> controls can also be used
+    /// to add descriptive text to a <see cref="Window"/> to provide the user
+    /// with helpful information.
+    /// For example, you can add a <see cref="GenericLabel" /> to the top of a
+    /// <see cref="Window"/> that provides instructions
+    /// to the user on how to input data in the controls on the form.
+    /// <see cref="GenericLabel" /> controls can be
+    /// also used to display run time information on the status of an application.
+    /// For example,
+    /// you can add a <see cref="GenericLabel" /> control to a form to display the status
+    /// of each file as a list of files is processed.
+    /// </remarks>
+    [DefaultProperty("Text")]
+    [DefaultBindingProperty("Text")]
+    [ControlCategory("Common")]
     public partial class GenericLabel : GenericControl
     {
         /// <summary>

@@ -161,7 +161,7 @@ namespace Alternet.UI
         {
             if (Parent is null)
                 return;
-            App.AddBackgroundInvokeAction(() =>
+            Post(() =>
             {
                 if (DisposingOrDisposed)
                     return;
