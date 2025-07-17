@@ -59,6 +59,8 @@ namespace Alternet.UI
         private Graphics.DrawLabelParams prm;
         private bool isVerticalText;
         private bool? mnemonicMarkerEnabled;
+        private Coord? maxTextWidth;
+        private bool wordWrap;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="GenericLabel"/> class.
@@ -88,11 +90,13 @@ namespace Alternet.UI
             HorizontalAlignment = HorizontalAlignment.Left;
             ParentBackColor = true;
             ParentForeColor = true;
+            CanSelect = false;
+            TabStop = false;
             RefreshOptions = ControlRefreshOptions.RefreshOnBorder
                 | ControlRefreshOptions.RefreshOnColor
                 | ControlRefreshOptions.RefreshOnBackground
                 | ControlRefreshOptions.RefreshOnImage
-                | ControlRefreshOptions.RefreshOnState;
+                | ControlRefreshOptions.RefreshOnState;            
         }
 
         /// <summary>
@@ -110,6 +114,73 @@ namespace Alternet.UI
         /// </summary>
         [Browsable(false)]
         public Graphics.DrawLabelParams DrawLabelParams => prm;
+
+        /// <summary>
+        /// Gets or sets whether text is word wrapped in order to fit label in the parent's
+        /// client area. Default is False.
+        /// </summary>
+        public virtual bool WordWrap
+        {
+            get => wordWrap;
+            set
+            {
+                if (wordWrap == value)
+                    return;
+                wordWrap = value;
+                PerformLayoutAndInvalidate();
+            }
+        }
+
+        /// <inheritdoc/>
+        public override bool ParentBackColor
+        {
+            get => base.ParentBackColor;
+            set
+            {
+                base.ParentBackColor = value;
+            }
+        }
+
+        /// <inheritdoc/>
+        public override Color? BackgroundColor
+        {
+            get => base.BackgroundColor;
+            set
+            {
+                base.BackgroundColor = value;
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets maximal width of text in the control.
+        /// </summary>
+        /// <remarks>
+        /// Wraps <see cref="AbstractControl.Text"/> so that each of its lines becomes at most width
+        /// dips wide if possible (the lines are broken at words boundaries so it
+        /// might not be the case if words are too long).
+        /// </remarks>
+        /// <remarks>
+        /// If width is negative or null, no wrapping is done. Note that this width is not
+        /// necessarily the total width of the control, since a padding for the
+        /// border (depending on the controls border style) may be added.
+        /// </remarks>
+        public virtual Coord? MaxTextWidth
+        {
+            get
+            {
+                return maxTextWidth;
+            }
+
+            set
+            {
+                if (value <= 0)
+                    value = null;
+                if (maxTextWidth == value)
+                    return;
+                maxTextWidth = value;
+                PerformLayoutAndInvalidate();
+            }
+        }
 
         /// <summary>
         /// Gets or sets whether to process mnemonic markers in the text.
@@ -311,21 +382,7 @@ namespace Alternet.UI
                 Invalidate();
             }
         }
-
-        /// <inheritdoc/>
-        public override string Text
-        {
-            get => base.Text;
-
-            set
-            {
-                if (base.Text == value)
-                    return;
-                base.Text = value;
-                PerformLayoutAndInvalidate();
-            }
-        }
-
+        
         /// <summary>
         /// Gets or sets the image that is displayed near the text.
         /// </summary>
@@ -450,6 +507,7 @@ namespace Alternet.UI
             var labelBackColor = backColor ?? GetLabelBackColor(state);
 
             labelText = GetWithoutMnemonicMarkers(labelText, out var mnemonicCharIndex);
+            labelText = GetWrappedText(labelText);
 
             prm = new(
                 labelText,
@@ -464,8 +522,29 @@ namespace Alternet.UI
             prm.IsVerticalText = isVerticalText;
             prm.Visible = foreColor != Color.Empty;
 
+            if (WordWrap)
+                prm.Flags |= DrawLabelFlags.TextHasNewLineChars;
+
             var result = DrawDefaultText(dc);
             return result;
+
+            string GetWrappedText(string s)
+            {
+                if(!WordWrap)
+                    return s;
+
+                var mw = paddedRect.Width;
+
+                if (maxTextWidth is not null)
+                    mw = Math.Min(maxTextWidth.Value, mw);
+
+                var result = DrawingUtils.WrapTextToMultipleLines(
+                    s,
+                    mw,
+                    labelFont,
+                    dc);
+                return result;
+            }
         }
 
         /// <summary>
@@ -496,6 +575,7 @@ namespace Alternet.UI
         /// <inheritdoc/>
         public override void DefaultPaint(PaintEventArgs e)
         {
+            e.ClipRectangle = ClientRectangle;
             DrawDefaultBackground(e);
 
             var state = VisualState;
@@ -514,21 +594,73 @@ namespace Alternet.UI
         /// <inheritdoc/>
         public override SizeD GetPreferredSize(SizeD availableSize)
         {
-            var specifiedWidth = SuggestedWidth;
-            var specifiedHeight = SuggestedHeight;
+            if (availableSize.AnyIsEmptyOrNegative)
+                return SizeD.Empty;
 
-            SizeD result = DrawDefaultText(
-                        MeasureCanvas,
-                        RectD.Empty,
-                        Color.Empty).Size;
+            var result = GetDefaultPreferredSize(
+                        availableSize,
+                        withPadding: true,
+                        (size) =>
+                        {
+                            var measured = DrawDefaultText(
+                                MeasureCanvas,
+                                (PointD.Empty, size), Color.Empty);
+                            return measured.Size;
+                        });
 
-            if (!Coord.IsNaN(specifiedWidth))
-                result.Width = Math.Max(result.Width, specifiedWidth);
+            result = result.Ceiling();
 
-            if (!Coord.IsNaN(specifiedHeight))
-                result.Height = Math.Max(result.Height, specifiedHeight);
+            /*
+            if(Name is not null && Parent is not null)
+                App.Log($"{Name} / {Parent.ClientSize - Margin.Size} / {availableSize} / {result}");
+            */
 
-            return result + Padding.Size;
+            return result;
+        }
+
+        /// <summary>
+        /// Default method for calculating preferred size.
+        /// </summary>
+        public virtual SizeD GetDefaultPreferredSize(
+            SizeD availableSize,
+            bool withPadding,
+            Func<SizeD, SizeD> func)
+        {
+            var suggested = SuggestedSize;
+
+            var isNanSuggestedWidth = suggested.IsNanWidth;
+            var isNanSuggestedHeight = suggested.IsNanHeight;
+
+            var containerSize = suggested;
+
+            if (!isNanSuggestedWidth && !isNanSuggestedHeight)
+            {
+                return containerSize;
+            }
+
+            if (isNanSuggestedWidth)
+                containerSize.Width = availableSize.Width;
+
+            if (isNanSuggestedHeight)
+                containerSize.Height = availableSize.Height;
+
+            var paddingSize = Padding.Size;
+
+            containerSize -= paddingSize;
+
+            var measured = func(containerSize);
+
+            if (!isNanSuggestedWidth)
+                measured.Width = suggested.Width;
+            else
+                measured.Width += paddingSize.Width;
+
+            if (!isNanSuggestedHeight)
+                measured.Height = suggested.Height;
+            else
+                measured.Height += paddingSize.Height;
+
+            return measured;
         }
 
         /// <summary>
@@ -556,6 +688,24 @@ namespace Alternet.UI
             if (textFormat is not null)
                 result = string.Format(textFormat, result);
             return result;
+        }
+
+        /// <inheritdoc/>
+        protected override void OnAfterParentSizeChanged(object? sender, HandledEventArgs e)
+        {
+            base.OnAfterParentSizeChanged(sender, e);
+        }
+
+        /// <inheritdoc/>
+        protected override void OnParentChanged(EventArgs e)
+        {
+            base.OnParentChanged(e);
+        }
+
+        /// <inheritdoc/>
+        protected override void OnVisibleChanged(EventArgs e)
+        {
+            base.OnVisibleChanged(e);
         }
 
         /// <inheritdoc/>

@@ -393,7 +393,7 @@ namespace Alternet.UI
             if (HasBorder)
             {
                 var width = NormalBorder.Width;
-                return base.GetPreferredSize(availableSize) + (width.Horizontal, width.Vertical);
+                return base.GetPreferredSize(availableSize) + width.Size;
             }
             else
             {

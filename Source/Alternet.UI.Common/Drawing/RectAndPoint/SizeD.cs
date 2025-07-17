@@ -803,6 +803,18 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
+        /// Gets the specified value instead of width or height
+        /// if their value less than or equal to 0.
+        /// </summary>
+        [Browsable(false)]
+        public readonly SizeD ValueIfEmpty(Coord value)
+        {
+            var w = width <= 0 ? value : width;
+            var h = height <= 0 ? value : height;
+            return (w, h);
+        }
+
+        /// <summary>
         /// Creates a new <see cref="System.Numerics.Vector2"/> from this object.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]

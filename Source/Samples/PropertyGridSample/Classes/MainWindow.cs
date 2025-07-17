@@ -273,7 +273,7 @@ namespace PropertyGridSample
 
         private void Designer_PropertyChanged(object? sender, ObjectPropertyChangedEventArgs e)
         {
-            RunWhenIdle(() =>
+            Post(() =>
             {
                 if (DisposingOrDisposed)
                     return;
@@ -283,6 +283,7 @@ namespace PropertyGridSample
                     return;
                 if (item?.PropInstance == e.Instance || e.Instance is null)
                     Invoke(UpdatePropertyGrid);
+                Post(ControlParent.Refresh);
             });
         }
 

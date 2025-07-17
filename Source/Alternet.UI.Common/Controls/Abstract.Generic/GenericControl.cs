@@ -132,13 +132,6 @@ namespace Alternet.UI
             }
         }
 
-        /// <inheritdoc/>
-        public override bool ReportBoundsChanged()
-        {
-            var result = base.ReportBoundsChanged();
-            return result;
-        }
-
         /// <summary>
         /// Invalidates the control and causes a paint message to be sent to
         /// the control.

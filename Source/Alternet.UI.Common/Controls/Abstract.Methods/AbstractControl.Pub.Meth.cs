@@ -1434,13 +1434,13 @@ namespace Alternet.UI
             if (mode == WindowSizeToContentMode.None)
                 return;
 
-            var newSize = GetChildrenMaxPreferredSizePadded(MaximumSize.InfinityIfEmpty);
+            var sz = MaximumSize.ValueIfEmpty(Graphics.HalfOfMaxValue).ToSize();
 
-            var newSize2 = GetPaddedPreferredSize(GetPreferredSize(MaximumSize.InfinityIfEmpty));
+            var newSize = GetPaddedPreferredSize(GetPreferredSize(sz)).Ceiling();
 
             additionalSpace ??= SizeD.Empty;
 
-            newSize = SizeD.Max(newSize, newSize2) + additionalSpace.Value;
+            newSize += additionalSpace.Value;
 
             if (newSize != SizeD.Empty)
             {
@@ -2398,7 +2398,7 @@ namespace Alternet.UI
         /// if <see cref="Bounds"/> property was changed.
         /// </summary>
         [Browsable(false)]
-        public virtual bool ReportBoundsChanged()
+        public virtual bool ReportBoundsChanged(bool layoutOnLocation = true)
         {
             var newBounds = Bounds;
 
@@ -2413,7 +2413,11 @@ namespace Alternet.UI
             if (sizeChanged)
                 RaiseSizeChanged(EventArgs.Empty);
 
-            PerformLayout();
+            if(sizeChanged || (layoutOnLocation && locationChanged))
+            {
+                var layoutParent = !IgnoreLayout;
+                PerformLayout(layoutParent);
+            }
 
             return locationChanged || sizeChanged;
         }
@@ -2608,7 +2612,9 @@ namespace Alternet.UI
         /// </summary>
         public virtual SizeD GetChildrenMaxPreferredSizePadded(SizeD availableSize)
         {
-            return GetPaddedPreferredSize(GetChildrenMaxPreferredSize(availableSize));
+            var preferredSize = GetChildrenMaxPreferredSize(availableSize);
+            var padded = GetPaddedPreferredSize(preferredSize);
+            return padded;
         }
 
         /// <summary>

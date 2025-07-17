@@ -99,7 +99,8 @@ namespace Alternet.UI
                 if (control.Dock != DockStyle.None || control.IgnoreLayout)
                     continue;
 
-                var preferredSize = control.GetPreferredSizeLimited(childrenLayoutBounds.Size);
+                var preferredSize = control.GetPreferredSizeLimited(
+                    childrenLayoutBounds.Size - control.Margin.Size);
 
                 var horizontalPosition =
                     AlignHorizontal(

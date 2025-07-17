@@ -72,7 +72,6 @@ Environment.NewLine + Environment.NewLine +
             Actions.Add(typeof(GenericLabel), InitGenericLabel);
             Actions.Add(typeof(LabelAndButton), InitLabelAndButton);
             Actions.Add(typeof(Label), InitLabel);
-            Actions.Add(typeof(GenericTextControl), InitGenericTextControl);
             Actions.Add(typeof(GenericWrappedTextControl), InitGenericWrappedTextControl);
             Actions.Add(typeof(LinkLabel), InitLinkLabel);
             Actions.Add(typeof(Button), InitButton);

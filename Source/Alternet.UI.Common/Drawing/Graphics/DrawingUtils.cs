@@ -787,7 +787,7 @@ namespace Alternet.UI
 
             foreach (var word in words)
             {
-                var lineAndWord = line + (line.Length > 0 ? " " : string.Empty) + word;
+                var lineAndWord = line + (line.Length > 0 ? '\u00A0' : string.Empty) + word;
 
                 var measureResult = GetWidth(lineAndWord);
 

@@ -159,9 +159,15 @@ namespace ControlsSample
             MouseEventArgs e)
         {
             var result = listBox.HitTest(Mouse.GetPosition(listBox));
+            
             var item = (result == null ? "<none>" : listBox.GetItem(result.Value)?.ToString());
 
-            item ??= result?.ToString();
+            item ??= result?.ToString() ?? string.Empty;
+
+            var splitted = StringUtils.Split(item);
+
+            if(splitted.Length > 1)
+                item = $"{splitted[0]}...";
 
             App.Log($"HitTest result: Item: '{item}'");
         }

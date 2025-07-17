@@ -81,11 +81,7 @@ namespace PropertyGridSample
                 AddControlAction<GenericLabel>("Set LoremIpsum", (c) =>
                 {
                     c.Text = ObjectInit.LoremIpsum;
-                });
-
-                AddControlAction<GenericTextControl>("Set LoremIpsum", (c) =>
-                {
-                    c.Text = ObjectInit.LoremIpsum;
+                    c.WordWrap = true;
                 });
 
                 AddControlAction<GenericWrappedTextControl>("Set LoremIpsum", (c) =>

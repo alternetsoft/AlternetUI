@@ -425,7 +425,10 @@ namespace Alternet.UI
             if (DisposingOrDisposed)
                 return;
             OnHandlerLocationChanged(e);
-            ReportBoundsChanged();
+
+            var layoutOnLocation = Parent is not null || this is not Window;
+
+            ReportBoundsChanged(layoutOnLocation);
 
             RaiseNotifications((n) => n.AfterContainerLocationChanged(this, e));
         }

@@ -78,8 +78,10 @@ namespace Alternet.UI
 
             foreach (var control in AllChildrenInLayout)
             {
+                var margin = control.Margin.Size;
+
                 var preferredSize =
-                    control.GetPreferredSize(availableSize) + control.Margin.Size;
+                    control.GetPreferredSize(availableSize - margin) + margin;
                 maxWidth = Math.Max(preferredSize.Width, maxWidth);
                 maxHeight = Math.Max(preferredSize.Height, maxHeight);
             }

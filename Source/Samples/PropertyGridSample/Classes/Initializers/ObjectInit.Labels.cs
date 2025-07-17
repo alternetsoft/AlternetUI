@@ -49,6 +49,7 @@ namespace PropertyGridSample
         {
             if (control is not GenericLabel label)
                 return;
+            label.Name = "GenericLabel18";
             label.Text = "GenericLabel";
             label.HorizontalAlignment = HorizontalAlignment.Left;
         }
@@ -89,14 +90,6 @@ namespace PropertyGridSample
         public static void InitLabelAndButton(object control)
         {
             if (control is not LabelAndButton label)
-                return;
-            label.Text = "This is text";
-            label.HorizontalAlignment = HorizontalAlignment.Left;
-        }
-
-        public static void InitGenericTextControl(object control)
-        {
-            if (control is not GenericTextControl label)
                 return;
             label.Text = "This is text";
             label.HorizontalAlignment = HorizontalAlignment.Left;

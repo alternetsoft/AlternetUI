@@ -425,11 +425,24 @@ namespace Alternet.UI
             TemplateControls.RichToolTipTemplate template,
             RichToolTipParams data)
         {
+            var rect = template.Bounds;
+
+            if (rect.HasEmptyWidth)
+                rect.Width = Graphics.HalfOfMaxValue;
+
+            if (rect.HasEmptyHeight)
+                rect.Height = Graphics.HalfOfMaxValue;
+
+            template.Bounds = rect;
+
             template.DoInsideLayout(
             () =>
             {
                 if (data.MaxWidth is not null)
-                    template.MaxWidth = data.MaxWidth;
+                {
+                    template.TitleLabel.MaxTextWidth = data.MaxWidth;
+                    template.MessageLabel.MaxTextWidth = data.MaxWidth;
+                }
 
                 template.Font = data.Font ?? Control.DefaultFont;
                 template.NormalBorder = RealDefaultToolTipBorder;

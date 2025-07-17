@@ -330,25 +330,6 @@ namespace Alternet.UI
         [Browsable(false)]
         public new IWindowHandler Handler => (IWindowHandler)base.Handler;
 
-        /*
-        /// <inheritdoc/>
-        [Browsable(false)]
-        public override bool ProcessIdle
-        {
-            get
-            {
-                return base.ProcessIdle;
-            }
-
-            set
-            {
-                if (base.ProcessIdle == true)
-                    return;
-                base.ProcessIdle = true;
-            }
-        }
-        */
-
         /// <summary>
         /// Gets or sets a value indicating whether the form will receive key events
         /// before the event is passed to the control that has focus.</summary>
@@ -1932,7 +1913,7 @@ namespace Alternet.UI
             if (DisposingOrDisposed)
                 return;
             base.OnHandlerSizeChanged(e);
-            App.Invoke(() => PerformLayout());
+            Post(() => PerformLayout());
         }
 
         /// <summary>
@@ -2060,7 +2041,7 @@ namespace Alternet.UI
         {
             base.OnActivated(e);
 
-            RunWhenIdle(() =>
+            Post(() =>
             {
                 var dialog = App.TopModalDialog;
                 if (dialog != this)

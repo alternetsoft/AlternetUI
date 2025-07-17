@@ -16,8 +16,8 @@ namespace Alternet.UI
         {
             private readonly VerticalStackPanel labels = new();
 
-            private readonly GenericWrappedTextControl titleLabel = new();
-            private readonly GenericWrappedTextControl messageLabel = new();
+            private readonly GenericLabel titleLabel = new();
+            private readonly GenericLabel messageLabel = new();
             private readonly PictureBox pictureBox = new();
 
             /// <summary>
@@ -40,11 +40,15 @@ namespace Alternet.UI
                     labels.VerticalAlignment = VerticalAlignment.Fill;
                     labels.Parent = this;
 
+                    titleLabel.WordWrap = true;
                     titleLabel.Margin = RichToolTip.DefaultTitleMargin;
                     titleLabel.Parent = labels;
+                    titleLabel.MaxTextWidth = 500;
 
                     messageLabel.Margin = RichToolTip.DefaultMessageMargin;
+                    messageLabel.WordWrap = true;
                     messageLabel.Parent = labels;
+                    messageLabel.MaxTextWidth = 500;
 
                     SetChildrenUseParentBackColor(true, true);
                     SetChildrenUseParentForeColor(true, true);
@@ -55,12 +59,12 @@ namespace Alternet.UI
             /// <summary>
             /// Gets control which contains title.
             /// </summary>
-            public AbstractControl TitleLabel => titleLabel;
+            public GenericLabel TitleLabel => titleLabel;
 
             /// <summary>
             /// Gets control which contains message.
             /// </summary>
-            public AbstractControl MessageLabel => messageLabel;
+            public GenericLabel MessageLabel => messageLabel;
 
             /// <summary>
             /// Gets control which contains image.
