@@ -17,6 +17,8 @@ namespace Alternet.UI
         /// </summary>
         public static bool ShowDebugCorners = false;
 
+        private Thickness borderMargin;
+
         /// <summary>
         /// Initializes a new instance of the <see cref="Border"/> class.
         /// </summary>
@@ -53,6 +55,27 @@ namespace Alternet.UI
         {
             get => BorderSettings.Default.Width;
             set => BorderSettings.Default.Width = value;
+        }
+
+        /// <summary>
+        /// Gets or sets the margin around the border.
+        /// </summary>
+        public virtual Thickness BorderMargin
+        {
+            get
+            {
+                return borderMargin;
+            }
+
+            set
+            {
+                if(borderMargin == value)
+                    return;
+                borderMargin = value;
+                UpdatePadding();
+                PerformLayout();
+                Refresh();
+            }
         }
 
         /// <summary>
@@ -381,7 +404,19 @@ namespace Alternet.UI
         /// <inheritdoc/>
         public override void DefaultPaint(PaintEventArgs e)
         {
-            DrawDefaultBackground(e);
+            if (BorderMargin.IsAnyPositive)
+            {
+                DrawDefaultBackground(e, DrawDefaultBackgroundFlags.DrawBackground);
+                var saved = e.ClipRectangle;
+                e.ClipRectangle = saved.DeflatedWithPadding(BorderMargin);
+                DrawDefaultBackground(e, DrawDefaultBackgroundFlags.DrawBorder);
+                e.ClipRectangle = saved;
+            }
+            else
+            {
+                DrawDefaultBackground(e);
+            }
+
             DefaultPaintDebug(e);
         }
 
@@ -479,7 +514,7 @@ namespace Alternet.UI
 
             if (HasBorder)
             {
-                Thickness borderPadding = NormalBorder.Width;
+                Thickness borderPadding = NormalBorder.Width + BorderMargin;
                 var padding = Padding;
                 padding.ApplyMin(borderPadding);
                 Padding = padding;
