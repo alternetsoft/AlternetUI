@@ -1445,7 +1445,7 @@ namespace Alternet.UI
         /// </summary>
         public virtual void SendDispose()
         {
-            App.AddBackgroundInvokeAction(() =>
+            Post(() =>
             {
                 Dispose();
             });

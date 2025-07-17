@@ -1265,7 +1265,7 @@ namespace Alternet.UI
 
                 if (HasApplication)
                 {
-                    Invoke(ProcessIdleTasks);
+                    Post(ProcessIdleTasks);
                 }
             }
         }

@@ -123,41 +123,49 @@ namespace Alternet.UI
         /// <summary>
         /// Gets the minimum allowed value for the left thickness edge.
         /// </summary>
+        [Browsable(false)]
         public readonly Coord? MinLeft => minLeft;
 
         /// <summary>
         /// Gets the minimum allowed value for the top thickness edge.
         /// </summary>
+        [Browsable(false)]
         public readonly Coord? MinTop => minTop;
 
         /// <summary>
         /// Gets the minimum allowed value for the right thickness edge.
         /// </summary>
+        [Browsable(false)]
         public readonly Coord? MinRight => minRight;
 
         /// <summary>
         /// Gets the minimum allowed value for the bottom thickness edge.
         /// </summary>
+        [Browsable(false)]
         public readonly Coord? MinBottom => minBottom;
 
         /// <summary>
         /// Gets the maximum allowed value for the left thickness edge.
         /// </summary>
+        [Browsable(false)]
         public readonly Coord? MaxLeft => maxLeft;
 
         /// <summary>
         /// Gets the maximum allowed value for the top thickness edge.
         /// </summary>
+        [Browsable(false)]
         public readonly Coord? MaxTop => maxTop;
 
         /// <summary>
         /// Gets the maximum allowed value for the right thickness edge.
         /// </summary>
+        [Browsable(false)]
         public readonly Coord? MaxRight => maxRight;
 
         /// <summary>
         /// Gets the maximum allowed value for the bottom thickness edge.
         /// </summary>
+        [Browsable(false)]
         public readonly Coord? MaxBottom => maxBottom;
 
         /// <summary>
@@ -310,10 +318,25 @@ namespace Alternet.UI
             new(d.Left, d.Top, d.Right, d.Bottom);
 
         /// <summary>
+        /// Overloaded operator to add two <see cref="Thickness"/> values.
+        /// </summary>
+        /// <param name="t1">The first Thickness.</param>
+        /// <param name="t2">The second Thickness.</param>
+        /// <returns>The resulting Thickness after addition.</returns>
+        public static Thickness operator +(Thickness t1, Thickness t2)
+        {
+            return new Thickness(
+                t1.Left + t2.Left,
+                t1.Top + t2.Top,
+                t1.Right + t2.Right,
+                t1.Bottom + t2.Bottom);
+        }
+
+        /// <summary>
         /// Overloaded operator to compare two Thicknesses for equality.
         /// </summary>
-        /// <param name="t1">first Thickness to compare</param>
-        /// <param name="t2">second Thickness to compare</param>
+        /// <param name="t1">The first <see cref="Thickness"/> to compare.</param>
+        /// <param name="t2">The second <see cref="Thickness"/> to compare.</param>
         /// <returns>True if all sides of the Thickness are equal, false
         /// otherwise</returns>
         public static bool operator ==(Thickness t1, Thickness t2)
