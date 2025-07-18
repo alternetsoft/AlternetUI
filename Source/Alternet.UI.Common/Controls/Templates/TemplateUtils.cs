@@ -302,14 +302,14 @@ namespace Alternet.UI
         /// After template is created any part of it's text can be changed including
         /// it's font and color attributes using template properties.
         /// </remarks>
-        public static TemplateControls.BoldText<GenericLabel> CreateTemplateWithBoldText(
+        public static TemplateControls.BoldText<Label> CreateTemplateWithBoldText(
             string prefix,
             string boldText,
             string suffix,
             IReadOnlyFontAndColor? fontAndColor = null,
             bool hasBorder = false)
         {
-            return CreateTemplateWithBoldText<GenericLabel>(
+            return CreateTemplateWithBoldText<Label>(
                         prefix,
                         boldText,
                         suffix,

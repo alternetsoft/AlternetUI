@@ -9,7 +9,7 @@ namespace PropertyGridSample
 {
     public partial class ObjectInit
     {
-        public static void MakeComplexLabel(GenericLabel label)
+        public static void MakeComplexLabel(Label label)
         {
             label.ParentBackColor = false;
             label.ParentForeColor = false;
@@ -47,10 +47,10 @@ namespace PropertyGridSample
 
         public static void InitGenericLabel(object control)
         {
-            if (control is not GenericLabel label)
+            if (control is not Label label)
                 return;
-            label.Name = "GenericLabel18";
-            label.Text = "GenericLabel";
+            label.Name = "Label18";
+            label.Text = "This is a label";
             label.HorizontalAlignment = HorizontalAlignment.Left;
         }
 

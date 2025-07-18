@@ -16,8 +16,8 @@ namespace Alternet.UI
         {
             private readonly VerticalStackPanel labels = new();
 
-            private readonly GenericLabel titleLabel = new();
-            private readonly GenericLabel messageLabel = new();
+            private readonly Label titleLabel = new();
+            private readonly Label messageLabel = new();
             private readonly PictureBox pictureBox = new();
 
             /// <summary>
@@ -59,12 +59,12 @@ namespace Alternet.UI
             /// <summary>
             /// Gets control which contains title.
             /// </summary>
-            public GenericLabel TitleLabel => titleLabel;
+            public Label TitleLabel => titleLabel;
 
             /// <summary>
             /// Gets control which contains message.
             /// </summary>
-            public GenericLabel MessageLabel => messageLabel;
+            public Label MessageLabel => messageLabel;
 
             /// <summary>
             /// Gets control which contains image.

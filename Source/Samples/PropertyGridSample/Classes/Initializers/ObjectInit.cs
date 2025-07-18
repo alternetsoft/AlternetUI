@@ -69,9 +69,8 @@ Environment.NewLine + Environment.NewLine +
             Actions.Add(typeof(RichTextBox), InitRichTextBox);
             Actions.Add(typeof(ComboBoxAndLabel), InitComboBoxAndLabel);
             Actions.Add(typeof(MultilineTextBox), InitMultilineTextBox);
-            Actions.Add(typeof(GenericLabel), InitGenericLabel);
+            Actions.Add(typeof(Label), InitGenericLabel);
             Actions.Add(typeof(LabelAndButton), InitLabelAndButton);
-            Actions.Add(typeof(Label), InitLabel);
             Actions.Add(typeof(GenericWrappedTextControl), InitGenericWrappedTextControl);
             Actions.Add(typeof(LinkLabel), InitLinkLabel);
             Actions.Add(typeof(Button), InitButton);

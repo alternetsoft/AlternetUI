@@ -73,7 +73,7 @@
 
   <Border Margin="0,10,0,0" Name="tooltipPreview" MinHeight="200" HasBorder="true">
     <Border BorderWidth="0,0,0,1">
-      <GenericLabel Margin="5" Text="ToolTip will be shown below"
+      <Label Margin="5" Text="ToolTip will be shown below"
                     HorizontalAlignment="Center"
              Name="toolTipLabel" IsTextLocalized="true"/>
     </Border>

@@ -108,7 +108,6 @@ namespace PropertyGridSample
                 LimitedTypes.Add(typeof(TextBoxWithListPopup));
                 LimitedTypes.Add(typeof(CardPanelHeader));
 
-                LimitedTypes.Add(typeof(GenericLabel));
                 LimitedTypes.Add(typeof(Label));
 
                 if (DebugUtils.IsDebugDefined)

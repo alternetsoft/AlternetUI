@@ -808,12 +808,12 @@ namespace Alternet.UI
 
         /// <summary>
         /// Creates substitute control which can be optionally used instead of the main child control.
-        /// By default, it is <see cref="GenericLabel"/>.
+        /// By default, it is <see cref="Label"/>.
         /// </summary>
         /// <returns></returns>
         protected virtual AbstractControl CreateSubstituteControl()
         {
-            return new GenericLabel();
+            return new Label();
         }
 
         /// <summary>

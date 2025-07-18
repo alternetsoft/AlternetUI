@@ -2042,7 +2042,7 @@ namespace Alternet.UI
         /// <returns></returns>
         protected virtual AbstractControl CreateToolLabel()
         {
-            return new GenericLabel();
+            return new Label();
         }
 
         /// <summary>
@@ -2102,7 +2102,7 @@ namespace Alternet.UI
             Type[] types =
             {
                 typeof(SpeedButton),
-                typeof(GenericLabel),
+                typeof(Label),
                 typeof(PictureBox),
                 typeof(StackPanel),
                 typeof(Panel),

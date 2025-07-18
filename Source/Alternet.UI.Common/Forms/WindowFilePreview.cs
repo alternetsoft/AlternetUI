@@ -94,15 +94,11 @@ namespace Alternet.UI
             preview.RegisterDefaultPreviewControls();
             preview.Visible = true;
 
-            SizeChanged += (s, e) =>
-            {
-                pathLabel.WrapToParent();
-            };
+            pathLabel.WordWrap = true;
 
             fileListBox.SelectedFolderChanged += (s, e) =>
             {
                 pathLabel.Text = fileListBox.SelectedFolder ?? string.Empty;
-                pathLabel.WrapToParent();
             };
         }
 

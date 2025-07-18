@@ -24,7 +24,7 @@ namespace ControlsSample
         private readonly ValueEditorDouble doubleEdit = new("Double", -15.3);
 
         [IsTextLocalized(true)]
-        private readonly ValueEditorUDouble udoubleEdit = new("UDouble", 1002);
+        private readonly ValueEditorUDouble unsignedDoubleEdit = new("UDouble", 1002);
 
         [IsTextLocalized(true)]
         private readonly HexEditorUInt32 uint32HexEdit = new("UInt32 Hex", 0x25E6);
@@ -46,7 +46,7 @@ namespace ControlsSample
             twoDigitsEdit.TextBox.MaxLength = 2;
             twoDigitsEdit.TextBox.ErrorsChanged += TextInputPage.TextBox_ErrorsChanged;
 
-            Group(shortEdit, byteEdit, doubleEdit, udoubleEdit, uint32HexEdit, twoDigitsEdit)
+            Group(shortEdit, byteEdit, doubleEdit, unsignedDoubleEdit, uint32HexEdit, twoDigitsEdit)
                 .Margin(0, 5, 5, 5).Parent(this).InnerSuggestedWidth(200)
                 .ParentForeColor(true).ParentBackColor(true)
                 .Action<ValueEditorCustom>(BindTextChanged).LabelSuggestedWidthToMax();

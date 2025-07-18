@@ -16,13 +16,13 @@ using Microsoft.Maui.Dispatching;
 namespace Alternet.Maui
 {
     /// <summary>
-    /// Implements label view on the MAUI platform using <see cref="GenericLabel"/> control.
+    /// Implements label view on the MAUI platform using <see cref="Label"/> control.
     /// </summary>
     /// <remarks>
     /// This controls is implemented for testing purposes. It is better to use native MAUI control
     /// instead of <see cref="LabelView"/>.
     /// </remarks>
-    internal partial class LabelView : ControlView<GenericLabel>
+    internal partial class LabelView : ControlView<Label>
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="LabelView"/> class.

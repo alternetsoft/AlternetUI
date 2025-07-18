@@ -73,12 +73,12 @@ namespace PropertyGridSample
 
             void InitTestsLabel()
             {
-                AddControlAction<GenericLabel>("MakeComplexLabel", (c) =>
+                AddControlAction<Label>("MakeComplexLabel", (c) =>
                 {
                     ObjectInit.MakeComplexLabel(c);
                 });
 
-                AddControlAction<GenericLabel>("Set LoremIpsum", (c) =>
+                AddControlAction<Label>("Set LoremIpsum", (c) =>
                 {
                     c.Text = ObjectInit.LoremIpsum;
                     c.WordWrap = true;

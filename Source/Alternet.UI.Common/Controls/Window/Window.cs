@@ -1913,7 +1913,7 @@ namespace Alternet.UI
             if (DisposingOrDisposed)
                 return;
             base.OnHandlerSizeChanged(e);
-            Post(() => PerformLayout());
+            Post(() => PerformLayoutAndInvalidate());
         }
 
         /// <summary>

@@ -10,13 +10,18 @@ namespace LayoutSample
     public partial class ScrollingWindow : Window
     {
         private readonly ImageControl imageControl = new();
-        private double zoomFactor = 0.0;
+        private double zoomFactor = 30;
 
         public ScrollingWindow()
         {
+            if (HasScaleFactor)
+                zoomFactor = 30;
+            else
+                zoomFactor = 20;
+
             InitializeComponent();
 
-            imageControl.Image = Image.FromAssemblyUrl(GetType().Assembly,"Resources.logo128x128.png");
+            imageControl.Image = Image.FromAssemblyUrl(GetType().Assembly, "Resources.logo128x128.png");
             imageScrollViewer.Children.Add(imageControl);
 
             InitializeComboBoxes();
@@ -161,7 +166,7 @@ namespace LayoutSample
 
         private void GridHorizontalAlignmentComboBox_SelectedItemChanged(object sender, EventArgs e)
         {
-            if(gridHorizontalAlignmentComboBox.Value != null)
+            if (gridHorizontalAlignmentComboBox.Value != null)
                 grid.HorizontalAlignment = (HorizontalAlignment)gridHorizontalAlignmentComboBox.Value;
         }
 
@@ -171,7 +176,7 @@ namespace LayoutSample
             {
                 grid.VerticalAlignment
                     = (VerticalAlignment)gridVerticalAlignmentComboBox.Value;
-            }                
+            }
         }
 
         private void ZoomMinusButtonClick(object? sender, EventArgs e)
@@ -183,14 +188,14 @@ namespace LayoutSample
 
         private void ZoomPlusButtonClick(object? sender, EventArgs e)
         {
-            if (zoomFactor < 20)
+            if (zoomFactor < 70)
                 zoomFactor++;
             UpdateImageZoom();
         }
 
         private void UpdateImageZoom()
         {
-            if(imageControl != null)
+            if (imageControl != null)
                 imageControl.Zoom = 1 + 0.1 * zoomFactor;
         }
     }

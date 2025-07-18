@@ -8,9 +8,9 @@ using Alternet.UI.Localization;
 namespace Alternet.UI
 {
     /// <summary>
-    /// Implements <see cref="GenericLabel"/> with side buttons.
+    /// Implements <see cref="Label"/> with side buttons.
     /// </summary>
-    public partial class LabelAndButton : ControlAndButton<GenericLabel>
+    public partial class LabelAndButton : ControlAndButton<Label>
     {
         /// <summary>
         /// Default margin for the label in <see cref="LabelAndButton"/>.
@@ -30,6 +30,6 @@ namespace Alternet.UI
         /// Gets main child control, same as <see cref="ControlAndButton{T}.MainControl"/>.
         /// </summary>
         [Browsable(false)]
-        public GenericLabel Label => (GenericLabel)MainControl;
+        public Label Label => (Label)MainControl;
     }
 }

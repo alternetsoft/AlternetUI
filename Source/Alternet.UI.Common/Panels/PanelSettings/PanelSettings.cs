@@ -184,7 +184,7 @@ namespace Alternet.UI
         /// <returns>The control used to represent <see cref="PanelSettingsItem"/>.</returns>
         public static object? DefaultItemToLabelControl(PanelSettingsItem item, object? control)
         {
-            var result = CreateOrUpdateControl<GenericLabel>(item, control);
+            var result = CreateOrUpdateControl<Label>(item, control);
             result.HorizontalAlignment = HorizontalAlignment.Left;
             UpdateText(item, result);
             return result;

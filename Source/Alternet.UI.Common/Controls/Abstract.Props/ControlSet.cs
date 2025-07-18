@@ -93,7 +93,10 @@ namespace Alternet.UI
                 foreach (var item in items)
                 {
                     if (item is IControlAndLabel control)
-                        result = Math.Max(result, control.Label.Width);
+                    {
+                        var preferredWidth = control.Label.GetPreferredSize().Width;
+                        result = Math.Max(result, preferredWidth);
+                    }
                 }
 
                 return result;

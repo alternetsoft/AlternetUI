@@ -536,6 +536,13 @@ namespace Alternet.UI
             return true;
         }
 
+        /// <inheritdoc/>
+        protected override void OnSizeChanged(EventArgs e)
+        {
+            base.OnSizeChanged(e);
+            Invalidate();
+        }
+
         /// <summary>
         /// Gets default value for <see cref="AbstractControl.ParentForeColor"/> property.
         /// </summary>

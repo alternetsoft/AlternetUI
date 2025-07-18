@@ -10,7 +10,7 @@ namespace Alternet.UI
     [DefaultProperty("Text")]
     [DefaultBindingProperty("Text")]
     [ControlCategory("Other")]
-    public partial class LinkLabel : GenericLabel
+    public partial class LinkLabel : Label
     {
         /// <summary>
         /// Gets or sets default visited hyperlink color which is used in the control.

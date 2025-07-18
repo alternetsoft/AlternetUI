@@ -118,12 +118,6 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        public IControlHandler CreateLabelHandler(Label control)
-        {
-            return new LabelHandler();
-        }
-
-        /// <inheritdoc/>
         public IControlHandler CreateScrollBarHandler(ScrollBar control)
         {
             return new WxScrollBarHandler();

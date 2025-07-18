@@ -134,7 +134,7 @@ namespace Alternet.UI
             Alignment = HVAlignment.Center,
         };
 
-        private readonly GenericLabel label = new()
+        private readonly Label label = new()
         {
             Visible = false,
             Alignment = HVAlignment.Center,
@@ -1173,10 +1173,10 @@ namespace Alternet.UI
         internal Spacer PictureBox => pictureSpacer;
 
         /// <summary>
-        /// Gets inner <see cref="GenericLabel"/> control.
+        /// Gets inner <see cref="Label"/> control.
         /// </summary>
         [Browsable(false)]
-        internal GenericLabel Label => label;
+        internal Label Label => label;
 
         /// <summary>
         /// Initializes default colors and styles for the <see cref="SpeedButton"/>

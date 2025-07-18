@@ -28,13 +28,6 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets whether exception logger (registered with
         /// <see cref="RegisterExceptionsLogger"/>)
-        /// outputs messages to <see cref="Debug.WriteLine(string)"/>.
-        /// </summary>
-        public static bool ExceptionsLoggerDebugWriteLine = false;
-
-        /// <summary>
-        /// Gets or sets whether exception logger (registered with
-        /// <see cref="RegisterExceptionsLogger"/>)
         /// outputs messages to <see cref="App.Log"/>.
         /// </summary>
         public static bool ExceptionsLoggerAppLog = false;
@@ -49,6 +42,7 @@ namespace Alternet.UI
         private static bool insideUnhandledException;
         private static bool hookedExceptionEvents;
         private static bool? ignoreSomeExceptionsInLogger;
+        private static bool exceptionsLoggerDebugWriteLine = false;
 
         static DebugUtils()
         {
@@ -84,6 +78,20 @@ namespace Alternet.UI
                 }
 
                 ignoreSomeExceptionsInLogger = value;
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets whether exception logger (registered with
+        /// <see cref="RegisterExceptionsLogger"/>)
+        /// outputs messages to <see cref="Debug.WriteLine(string)"/>.
+        /// </summary>
+        public static bool ExceptionsLoggerDebugWriteLine
+        {
+            get => exceptionsLoggerDebugWriteLine;
+            set
+            {
+                exceptionsLoggerDebugWriteLine = value;
             }
         }
 

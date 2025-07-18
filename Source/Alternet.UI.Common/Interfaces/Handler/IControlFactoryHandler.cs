@@ -102,13 +102,6 @@ namespace Alternet.UI
         IControlHandler CreateComboBoxHandler(ComboBox control);
 
         /// <summary>
-        /// Creates <see cref="IControlHandler"/> interface provider.
-        /// </summary>
-        /// <param name="control">Owner.</param>
-        /// <returns></returns>
-        IControlHandler CreateLabelHandler(Label control);
-
-        /// <summary>
         /// Creates <see cref="IScrollBarHandler"/> interface provider.
         /// </summary>
         /// <param name="control">Owner.</param>
