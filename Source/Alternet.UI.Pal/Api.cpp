@@ -16,7 +16,6 @@
 #include "Api/GroupBox.Api.h"
 #include "Api/Panel.Api.h"
 #include "Api/Control.Api.h"
-#include "Api/Label.Api.h"
 #include "Api/ComboBox.Api.h"
 #include "Api/ListView.Api.h"
 #include "Api/AnimationControl.Api.h"
