@@ -31,12 +31,12 @@ namespace Alternet.UI
         public virtual Font? Font { get; set; }
 
         /// <summary>
-        /// Represents the maximum width as a coordinate value.
+        /// Represents the maximum text width as a coordinate value. If text exceeds this width,
+        /// it may be wrapped into multiple lines.
         /// </summary>
         /// <remarks>This field is nullable, meaning it can hold a value
         /// of type <see cref="Coord"/> or be
-        /// null. Use this field to specify or retrieve the maximum width
-        /// in a coordinate system.</remarks>
+        /// null. Use this field to specify or retrieve the maximum title and message width.</remarks>
         public virtual Coord? MaxWidth { get; set; }
 
         /// <summary>

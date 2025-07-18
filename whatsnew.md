@@ -1,3 +1,45 @@
+# 0.9.744 (2025 July 18)
+
+- **GenericLabel and Label joined into single label control implemented inside the library.** Replaces the GenericLabel class with an 
+enhanced Label class, moving and consolidating label functionality. Updates all usages and references from GenericLabel to Label, removes 
+the GenericLabel implementation, and adjusts related classes and documentation accordingly. This refactor simplifies the label control 
+hierarchy and unifies label-related features.
+- **Add radio button support to ListControlItem.** Introduces the IsRadioButton property to ListControlItem, enabling items to be rendered 
+and behave as radio buttons. Adds group management methods for mutually exclusive selection within groups. Updates ListBox and VirtualListBox 
+to handle ListControlItem instances directly and enforces radio button selection logic. Sample updated to demonstrate 
+radio button usage in CheckListBox.
+- **Refactor LinkLabel to implement inside the library.** Reworked LinkLabel to inherit from GenericLabel and manage its own state, removing 
+the ILinkLabelHandler interface and related handler factory methods. Updated color and event handling logic to be internal to LinkLabel. 
+Adjusted PanelSettings and control factory implementations to reflect these changes.
+- ScrollViewer: Fix layout related issues.
+- PopupWindow: do not focus owner if clicked outside popup.
+- **BaseObject.Post** - allows to post action to the message queue.
+- PopupWindow: Linux related fixes.
+- App.ForceX11OnLinux - forces X11 for the application on Linux.
+- Disable scrollbar overlay scrolling on linux.
+- **Implement gtk css styling onm Linux.** Added support for automatic loading of GTK CSS styles from a file named {ApplicationFileName}.gtk.css located 
+in the application folder. New properties in WxGlobalSettings.Linux class (InjectGtkCss, GtkCss, and LoadGtkCss) allow dynamic theming and 
+manual stylesheet injection at startup. Developers can now customize visual appearance - like scrollbars and widget margins - without modifying 
+application code. CSS must be configured before application creation to take effect.
+- Menu: HasItems, FindItemWithTag, CheckSingleItemWithTag, CheckSingleItem, UncheckItems.
+- SpeedButtonWithListPopup: Check selected item if popup kind is menu.
+- TabControl and CardPanelHeader: Fixed size of tabs aligned to left or right.
+- Fix dpi determination on macOs.
+- Graphics.DrawTextWithAngle.
+- **Label.IsVerticalText, SpeedButton.IsVerticalText.**
+- CardPanelHeader: IsVerticalText, ImageToText.
+- TabControl: IsVerticalText, ImageToText, ResetTabImage, SetTabSvg.
+- Graphics.DrawLabel now understand vertical text.
+- Fix word wrapping related code.
+- GenericControl: Add drop down menu support. Introduced the ShowDropDownMenuWhenClicked property and DropDownMenu to GenericControl,
+ allowing a context menu to be shown when the control is clicked with the left mouse button. Added ShowDropDownMenu method and updated 
+OnMouseLeftButtonDown to handle this behavior.
+- Border: Add BorderMargin property. Introduces a BorderMargin property to allow specifying margin around the border. Updates painting and 
+layout logic to account for the new margin, ensuring correct rendering and spacing.
+- Label: Add mnemonic marker support. Introduces properties and logic to handle mnemonic markers in Label, allowing configuration of 
+marker character and enabling/disabling marker processing. Adds utility methods in StringUtils for removing mnemonic markers and 
+determining mnemonic character index.
+
 # 0.9.743 (2025 July 13)
 
 - Slider: Bug fixes and new members, improve behavior and default look.
