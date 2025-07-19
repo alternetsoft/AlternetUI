@@ -30,7 +30,7 @@ namespace Alternet.UI
         /// <inheritdoc cref="WebBrowser.SetDefaultUserAgent"/>
         void SetDefaultUserAgent(string value);
 
-        /// <inheritdoc cref="WebBrowser.SetDefaultScriptMesageName"/>
+        /// <inheritdoc cref="WebBrowser.SetDefaultScriptMessageName"/>
         void SetDefaultScriptMesageName(string value);
 
         /// <inheritdoc cref="WebBrowser.SetDefaultFSNameMemory"/>

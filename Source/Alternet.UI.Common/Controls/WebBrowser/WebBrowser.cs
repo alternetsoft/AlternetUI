@@ -655,7 +655,7 @@ namespace Alternet.UI
         /// </summary>
         /// <remarks>
         /// This property allows the user to edit the page even
-        /// if the contenteditable attribute is not set in HTML.
+        /// if the 'contenteditable' attribute is not set in HTML.
         /// The exact capabilities vary with the backend being used.
         /// This feature is not implemented for macOS and the Edge backend.
         /// </remarks>
@@ -1129,9 +1129,9 @@ namespace Alternet.UI
         /// </param>
         /// <remarks>
         /// If you specify non empty value here, script messaging will be registered
-        /// for use in Javascript code of the loaded web pages.
+        /// for use in JavaScript code of the loaded web pages.
         /// </remarks>
-        public static void SetDefaultScriptMesageName(string value)
+        public static void SetDefaultScriptMessageName(string value)
         {
             Factory.SetDefaultScriptMesageName(value);
         }
@@ -1694,7 +1694,7 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Redos the last edit operation in the control.
+        /// Redo the last edit operation in the control.
         /// </summary>
         /// <seealso cref="CanRedo"/>
         public virtual void Redo()
@@ -1850,11 +1850,11 @@ namespace Alternet.UI
         /// <see langword="false"/> if it could not be added.
         /// </returns>
         /// <param name="name">
-        /// Name of the message handler that can be used from Javascript.
+        /// Name of the message handler that can be used from JavaScript.
         /// </param>
         /// <remarks>
         /// <para>
-        /// To use the script message handler from Javascript
+        /// To use the script message handler from JavaScript
         /// use window._name_.postMessage(_messageBody_)
         /// where _name_ corresponds the value of the name parameter.
         /// The _messageBody_ will be available to the application via
@@ -1890,8 +1890,8 @@ namespace Alternet.UI
         /// <summary>
         /// Injects the specified script into the webpage's content.
         /// </summary>
-        /// <param name="javascript">
-        /// The javascript code to add.
+        /// <param name="javaScript">
+        /// The JavaScript code to add.
         /// </param>
         /// <param name="injectDocStart">
         /// Specifies when the script will be executed.
@@ -1904,12 +1904,12 @@ namespace Alternet.UI
         /// The Edge backend does only support injecting at document start.
         /// </remarks>
         public virtual bool AddUserScript(
-            string javascript,
+            string javaScript,
             bool injectDocStart = true)
         {
             if (DisposingOrDisposed)
                 return default;
-            return Handler.AddUserScript(javascript, injectDocStart);
+            return Handler.AddUserScript(javaScript, injectDocStart);
         }
 
         /// <summary>
@@ -1956,7 +1956,7 @@ namespace Alternet.UI
         /// String and DateTime values are returned enclosed in single quotes.
         /// </remarks>
         /// <param name="args">
-        /// An array of object values for convertion to JSON format.
+        /// An array of object values for conversion to JSON format.
         /// </param>
         /// <returns>
         /// A <see cref="string"/> representing the array of object values in JSON format.
@@ -2012,7 +2012,7 @@ namespace Alternet.UI
         /// The parameters to pass to the script function.
         /// </param>
         /// <param name="clientData">
-        /// Arbirary pointer to data that can be retrieved from the result event.
+        /// Arbitrary pointer to data that can be retrieved from the result event.
         /// You can use IntPtr.Zero, new IntPtr(SomeInt) or some useful data in
         /// this parameter.
         /// </param>
@@ -2042,7 +2042,7 @@ namespace Alternet.UI
         /// String and DateTime values are returned enclosed in single quotes.
         /// </remarks>
         /// <param name="arg">
-        /// Value for convertion to JSON format.
+        /// Value for conversion to JSON format.
         /// </param>
         /// <returns>
         ///     A <see cref="string"/> representing value in JSON format.
@@ -2173,7 +2173,7 @@ namespace Alternet.UI
         /// <example>
         /// <code language="C#">
         /// WebControl1.SetVirtualHostNameToFolderMapping(
-        /// "appassets.example", "assets", WebBrowserHostResourceAccessKind.DenyCors);
+        /// "appAsset.example", "assets", WebBrowserHostResourceAccessKind.DenyCors);
         /// WebControl1.Source = new Uri("https://appassets.example/index.html");
         /// </code>
         /// </example>
@@ -2190,10 +2190,35 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Ensures that the current URL starts with the specified prefix.
+        /// </summary>
+        /// <remarks>If the current URL is null, empty, or does not start with the specified prefix,
+        /// it is set to the provided <paramref name="url"/>. The method does nothing
+        /// if the object is in a disposing or disposed state.</remarks>
+        /// <param name="url">The URL prefix to ensure. Cannot be null or empty.</param>
+        public virtual bool EnsureUrlStartsWith(string url)
+        {
+            if (DisposingOrDisposed)
+                return false;
+            if (string.IsNullOrEmpty(url))
+                return false;
+
+            var s = Url;
+
+            if (string.IsNullOrEmpty(s) || !s.StartsWith(url))
+            {
+                Url = url;
+                return true;
+            }
+
+            return false;
+        }
+
+        /// <summary>
         /// Returns pointer to the native backend interface.
         /// </summary>
         /// <remarks>
-        /// For the IE backens it is a <c>IWebBrowser2</c> interface.
+        /// For the IE backends it is a <c>IWebBrowser2</c> interface.
         /// For the Edge backend it is a <c>ICoreWebView2</c> interface.
         /// Under macOS it is a <c>WebView</c> pointer and under GTK
         /// it is a <c>WebKitWebView</c>.
@@ -2214,11 +2239,11 @@ namespace Alternet.UI
         /// result via a <see cref="WebBrowser.ScriptResult"/> event.
         /// </para>
         /// </summary>
-        /// <param name="javascript">
+        /// <param name="javaScript">
         /// JavaScript code to execute.
         /// </param>
         /// <param name="clientData">
-        /// Arbirary pointer to data that can be used in the result event.
+        /// Arbitrary pointer to data that can be used in the result event.
         /// You can use IntPtr.Zero, new IntPtr(SomeInt) or pointer to some useful data in
         /// this parameter.
         /// </param>
@@ -2261,12 +2286,12 @@ namespace Alternet.UI
         /// </para>
         /// </remarks>
         public virtual void RunScriptAsync(
-            string javascript,
+            string javaScript,
             IntPtr? clientData = null)
         {
             if (DisposingOrDisposed)
                 return;
-            Handler.RunScriptAsync(javascript, clientData);
+            Handler.RunScriptAsync(javaScript, clientData);
         }
 
         /// <summary>
@@ -2275,7 +2300,7 @@ namespace Alternet.UI
         /// </summary>
         /// <remarks>
         /// Default page is automatically opened in WebBrowser after it is created.
-        /// Devault value is about:blank.
+        /// Default value is 'about:blank'.
         /// </remarks>
         /// <param name="url">
         /// New default web page URL.
@@ -2488,16 +2513,6 @@ namespace Alternet.UI
         protected override void OnResize(EventArgs e)
         {
             base.OnResize(e);
-
-            /*
-            if (!HasChildren && IsEdgeBackend)
-            {
-                var control = new HiddenBorder();
-                control.ParentBackColor = true;
-                control.ParentForeColor = true;
-                control.Parent = this;
-            }
-            */
         }
 
         private void ZoomInOut(int delta)
