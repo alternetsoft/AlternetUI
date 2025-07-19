@@ -82,14 +82,7 @@ namespace Alternet.UI
 
             fileListBox.SelectionChanged += FileListBox_SelectionChanged;
 
-            try
-            {
-                fileListBox.SelectedFolder = null;
-            }
-            catch
-            {
-                fileListBox.AddSpecialFolders();
-            }
+            fileListBox.SelectInitialFolder();
 
             preview.RegisterDefaultPreviewControls();
             preview.Visible = true;
