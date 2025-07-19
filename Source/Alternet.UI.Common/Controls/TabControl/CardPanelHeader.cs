@@ -799,14 +799,14 @@ namespace Alternet.UI
         /// <returns>
         /// Created item index.
         /// </returns>
-        public virtual int Insert(int? index, string text, AbstractControl? cardControl = null)
+        public virtual int Insert(int? index, string? text, AbstractControl? cardControl = null)
         {
             var button = CreateHeaderButton();
 
             if (button.MinimumSize.IsEmpty)
                 button.MinimumSize = TabControl.DefaultMinTabSize;
 
-            button.Text = text;
+            button.Text = text ?? cardControl?.Title ?? string.Empty;
             button.SizeChanged += OnButtonSizeChanged;
             button.Margin = TabMargin ?? DefaultTabMargin;
             button.Padding = TabPadding ?? DefaultTabPadding;
@@ -843,7 +843,7 @@ namespace Alternet.UI
         /// <returns>
         /// Created item index.
         /// </returns>
-        public virtual int Add(string text, ObjectUniqueId cardId)
+        public virtual int Add(string? text, ObjectUniqueId cardId)
         {
             return Insert(null, text, cardId);
         }
@@ -857,7 +857,7 @@ namespace Alternet.UI
         /// <returns>
         /// Created item index.
         /// </returns>
-        public virtual int Insert(int? index, string text, ObjectUniqueId cardId)
+        public virtual int Insert(int? index, string? text, ObjectUniqueId cardId)
         {
             var realIndex = Insert(index, text);
             var item = tabs[realIndex];
@@ -873,7 +873,7 @@ namespace Alternet.UI
         /// <returns>
         /// Created item index.
         /// </returns>
-        public virtual int Add(string text, AbstractControl? cardControl = null)
+        public virtual int Add(string? text, AbstractControl? cardControl = null)
         {
             return Insert(null, text, cardControl);
         }
