@@ -1144,6 +1144,73 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Removes the specified prefix from the beginning of the input string, if present.
+        /// Supports case-sensitive or case-insensitive comparisons
+        /// using <see cref="StringComparison"/>.
+        /// </summary>
+        /// <param name="input">The input string to evaluate.</param>
+        /// <param name="prefix">The prefix to remove from <paramref name="input"/>.</param>
+        /// <param name="comparison">The string comparison mode used for prefix matching.</param>
+        /// <returns>
+        /// The input string without the prefix if it matched; otherwise, the original input.
+        /// Returns <c>null</c> if <paramref name="input"/> is <c>null</c>.
+        /// </returns>
+        public static string? RemovePrefix(
+            string? input,
+            string? prefix,
+            StringComparison comparison = StringComparison.CurrentCulture)
+        {
+            if (input == null || string.IsNullOrEmpty(prefix))
+                return input;
+
+            return input.StartsWith(prefix, comparison)
+                ? input.Substring(prefix!.Length)
+                : input;
+        }
+
+        /// <summary>
+        /// Removes the "http://", "https://" and "www." prefixes
+        /// </summary>
+        /// <param name="input">The input string to process.</param>
+        /// <returns>The input string without the prefixes if any matched;
+        /// otherwise, the original input.</returns>
+        public static string? RemoveHttpAndWwwPrefixes(string? input)
+        {
+            if (input == null)
+                return null;
+            var prefixes = new[] { @"http://", @"https://", @"www." };
+            return RemovePrefixes(input, prefixes, StringComparison.OrdinalIgnoreCase);
+        }
+
+        /// <summary>
+        /// Removes the specified prefixes from the beginning of the input string, if present.
+        /// </summary>
+        /// <param name="input">The input string to process.</param>
+        /// <param name="prefixes">The prefixes to remove from <paramref name="input"/>.</param>
+        /// <param name="comparison">The string comparison mode used for prefix matching.</param>
+        /// <returns>The input string without the prefixes if any matched;
+        /// otherwise, the original input.
+        /// Returns <c>null</c> if <paramref name="input"/> is <c>null</c>.
+        /// </returns>
+        public static string? RemovePrefixes(
+            string? input,
+            IEnumerable<string> prefixes,
+            StringComparison comparison = StringComparison.CurrentCulture)
+        {
+            if (input == null || prefixes is null)
+                return input;
+            foreach (var prefix in prefixes)
+            {
+                if (string.IsNullOrEmpty(prefix))
+                    continue;
+                if (input.StartsWith(prefix, comparison))
+                    input = input.Substring(prefix.Length);
+            }
+
+            return input;
+        }
+
+        /// <summary>
         /// Gets whether the specified string equals CR, LF or their combinations.
         /// </summary>
         /// <param name="str"></param>
