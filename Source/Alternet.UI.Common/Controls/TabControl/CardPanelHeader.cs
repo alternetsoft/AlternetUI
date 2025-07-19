@@ -64,6 +64,7 @@ namespace Alternet.UI
         private TabAlignment tabAlignment = TabAlignment.Top;
         private bool isVerticalText;
         private ImageToText imageToText;
+        private SpeedButton? closeButton;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="CardPanelHeader"/> class.
@@ -104,6 +105,14 @@ namespace Alternet.UI
         /// Occurs when the tab is clicked.
         /// </summary>
         public event EventHandler? TabClick;
+
+        /// <summary>
+        /// Occurs when the close button is clicked.
+        /// </summary>
+        /// <remarks>
+        /// This event allows subscribers to handle the close button click action.
+        /// </remarks>
+        public event EventHandler? CloseButtonClick;
 
         /// <summary>
         /// Gets or sets default value of the <see cref="TabHasBorder"/>.
@@ -162,6 +171,65 @@ namespace Alternet.UI
                         tab.HeaderButton.HorizontalAlignment = GetRealTabHorizontalAlignment();
                     }
                 });
+            }
+        }
+
+        /// <summary>
+        /// Gets the "Close" button.
+        /// </summary>
+        /// <remarks>The <see cref="CloseButton"/> is automatically created and configured with default
+        /// alignment settings. It raises the <see cref="CloseButtonClick"/> event when clicked.</remarks>
+        [Browsable(false)]
+        public virtual SpeedButton CloseButton
+        {
+            get
+            {
+                if (closeButton is null)
+                {
+                    closeButton = CreateCloseButton();
+                    closeButton.HorizontalAlignment = HorizontalAlignment.Right;
+                    closeButton.VerticalAlignment = VerticalAlignment.Center;
+
+                    closeButton.Click += (s, e) =>
+                    {
+                        CloseButtonClick?.Invoke(this, EventArgs.Empty);
+                    };
+
+                    closeButton.Parent = this;
+                }
+
+                return closeButton;
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether the close button is visible.
+        /// Default value is <c>false</c>.
+        /// </summary>
+        public virtual bool HasCloseButton
+        {
+            get
+            {
+                if(closeButton is null || !closeButton.Visible)
+                    return false;
+                return closeButton.Visible;
+            }
+
+            set
+            {
+                if (HasCloseButton == value)
+                    return;
+                if (value)
+                {
+                    CloseButton.Visible = true;
+                }
+                else
+                {
+                    if (closeButton is not null)
+                    {
+                        closeButton.Visible = false;
+                    }
+                }
             }
         }
 
@@ -1102,6 +1170,19 @@ namespace Alternet.UI
         /// <param name="item">The tab which is inserted.</param>
         protected virtual void OnTabsItemInserted(object? sender, int index, CardPanelHeaderItem item)
         {
+        }
+
+        /// <summary>
+        /// Creates a new instance of a close button with default settings.
+        /// </summary>
+        /// <remarks>This method initializes a <see cref="SpeedButton"/> configured as a close button.
+        /// Subclasses can override this method to customize the creation of the close button.</remarks>
+        /// <returns>A <see cref="SpeedButton"/> instance representing a close button.</returns>
+        protected virtual SpeedButton CreateCloseButton()
+        {
+            SpeedButton result = new();
+            result.SetSvgImage(null, KnownButton.Close);
+            return result;
         }
 
         /// <summary>

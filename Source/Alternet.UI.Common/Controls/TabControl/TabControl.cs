@@ -102,6 +102,18 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Occurs when the close button is clicked.
+        /// </summary>
+        /// <remarks>This event is triggered when the user clicks the close button in the header.
+        /// </remarks>
+        public event EventHandler? CloseButtonClick
+        {
+            add => Header.CloseButtonClick += value;
+
+            remove => Header.CloseButtonClick -= value;
+        }
+
+        /// <summary>
         /// Occurs when the size of the tab has changed.
         /// </summary>
         public event EventHandler<BaseEventArgs<AbstractControl>>? TabSizeChanged;
@@ -117,6 +129,29 @@ namespace Alternet.UI
         /// </summary>
         [Category("Behavior")]
         public event EventHandler? SelectedPageChanged;
+
+        /// <summary>
+        /// Specifies flags that control the behavior of ensuring a sidebar child element.
+        /// </summary>
+        /// <remarks>This enumeration supports a bitwise combination of its member values.</remarks>
+        [Flags]
+        public enum EnsureSideBarChildFlags
+        {
+            /// <summary>
+            /// Represents a state where no specific option or value is selected.
+            /// </summary>
+            None = 0,
+
+            /// <summary>
+            /// Represents an option to make an element visible.
+            /// </summary>
+            MakeVisible = 1 << 0,
+
+            /// <summary>
+            /// Represents an option to check the title of the element.
+            /// </summary>
+            CheckTitle = 1 << 1,
+        }
 
         /// <inheritdoc/>
         public override ControlTypeId ControlKind => ControlTypeId.TabControl;
@@ -491,6 +526,34 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets the button with X image that is shown in the header and can be configured
+        /// to close (or hide) tab page (or tab control itself).
+        /// </summary>
+        public SpeedButton CloseButton
+        {
+            get
+            {
+                return Header.CloseButton;
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether the header includes a close button.
+        /// </summary>
+        public virtual bool HasCloseButton
+        {
+            get
+            {
+                return Header.HasCloseButton;
+            }
+
+            set
+            {
+                Header.HasCloseButton = value;
+            }
+        }
+
+        /// <summary>
         /// Gets or sets the area of the control (for example, along the top) where
         /// the tabs are aligned.
         /// </summary>
@@ -726,7 +789,7 @@ namespace Alternet.UI
         /// if a new instance is created.</param>
         /// <param name="onCreate">The action to execute when creating the child control.</param>
         /// <param name="onUpdate">The action to execute when updating the child control.</param>
-        /// <param name="makeVisible"></param>
+        /// <param name="flags">The flags for additional options.</param>
         /// <returns>An instance of the specified type <typeparamref name="T"/>.
         /// If a child of this type already exists, it is
         /// returned; otherwise, a new instance is created, added
@@ -735,18 +798,24 @@ namespace Alternet.UI
             string? title = null,
             Action<T>? onCreate = null,
             Action<T>? onUpdate = null,
-            bool makeVisible = false)
+            EnsureSideBarChildFlags flags = EnsureSideBarChildFlags.None)
             where T : AbstractControl, new()
         {
-            foreach(var child in Pages)
+            var makeVisible = flags.HasFlag(EnsureSideBarChildFlags.MakeVisible);
+
+            foreach (var child in Pages)
             {
-                if (child is T typedChild)
-                {
-                    onUpdate?.Invoke(typedChild);
-                    if (makeVisible)
-                        SelectedControl = typedChild;
-                    return typedChild;
-                }
+                if (child is not T typedChild)
+                    continue;
+
+                if (flags.HasFlag(EnsureSideBarChildFlags.CheckTitle)
+                    && title is not null && child.Title != title)
+                    continue;
+
+                onUpdate?.Invoke(typedChild);
+                if (makeVisible)
+                    SelectedControl = typedChild;
+                return typedChild;
             }
 
             var result = new T();
