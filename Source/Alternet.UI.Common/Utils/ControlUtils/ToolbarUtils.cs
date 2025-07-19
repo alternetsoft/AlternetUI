@@ -146,13 +146,18 @@ namespace Alternet.UI
         /// <returns>A tuple containing normal and disabled image sets.</returns>
         public static (ImageSet? Normal, ImageSet? Disabled) GetNormalAndDisabledSvg(
             SvgImage? svg,
-            KnownButton btn,
+            KnownButton? btn,
             AbstractControl control,
             int? size = null)
         {
             if (svg is null)
             {
-                var info = KnownButtons.GetInfo(btn);
+                if (btn is null)
+                {
+                    return (null, null);
+                }
+
+                var info = KnownButtons.GetInfo(btn.Value);
                 svg = info?.SvgImage;
             }
 

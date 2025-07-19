@@ -1348,12 +1348,13 @@ namespace Alternet.UI
         /// <summary>
         /// Sets the SVG image for the control.
         /// </summary>
-        /// <param name="svg">SVG image to be set. If null, known button image will be used.</param>
-        /// <param name="btn">Known button type.</param>
-        /// <param name="size">Optional size for the image.</param>
+        /// <param name="svg">The SVG image to be set. If null, known button image will be used.</param>
+        /// <param name="btn">The known button type. If null, svg image should be specified.</param>
+        /// <param name="size">The optional size for the image.
+        /// If not specified, the default size for the SVG image would be used.</param>
         public virtual void SetSvgImage(
             SvgImage? svg,
-            KnownButton btn,
+            KnownButton? btn,
             int? size = null)
         {
             var (normalImage, disabledImage)

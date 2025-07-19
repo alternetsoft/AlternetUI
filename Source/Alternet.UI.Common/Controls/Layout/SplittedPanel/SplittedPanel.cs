@@ -574,8 +574,7 @@ namespace Alternet.UI
         /// <param name="title">The title of the child control.</param>
         /// <param name="onCreate">The action to execute when creating the child control.</param>
         /// <param name="onUpdate">The action to execute when updating the child control.</param>
-        /// <param name="makeVisible">If <see langword="true"/>, makes the sidebar panel visible;
-        /// otherwise, the visibility remains unchanged.</param>
+        /// <param name="flags"></param>
         /// <returns>The ensured child control of type <typeparamref name="T"/> within the specified
         /// sidebar panel.</returns>
         public virtual T EnsureSideBarChild<T>(
@@ -583,11 +582,12 @@ namespace Alternet.UI
             string? title,
             Action<T>? onCreate = null,
             Action<T>? onUpdate = null,
-            bool makeVisible = false)
+            TabControl.EnsureSideBarChildFlags flags = TabControl.EnsureSideBarChildFlags.None)
             where T : AbstractControl, new()
         {
             var sideBar = EnsureChild<SideBarPanel>(position);
-            var child = sideBar.EnsureChild<T>(title, onCreate, onUpdate, makeVisible);
+            var makeVisible = flags.HasFlag(TabControl.EnsureSideBarChildFlags.MakeVisible);
+            var child = sideBar.EnsureChild<T>(title, onCreate, onUpdate, flags);
             if (makeVisible)
             {
                 SetPanelVisible(position, makeVisible);
