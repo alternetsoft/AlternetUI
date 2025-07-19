@@ -241,6 +241,23 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Executes the specified action while displaying a busy cursor.
+        /// </summary>
+        /// <remarks>This method posts the action to be executed and ensures
+        /// that a busy cursor is displayed during its execution.</remarks>
+        /// <param name="action">The action to execute. If <see langword="null"/>,
+        /// the method returns immediately without performing any action.</param>
+        public static void PostAndBusyCursor(Action? action)
+        {
+            if (action is null)
+                return;
+            Post(() =>
+            {
+                App.DoInsideBusyCursor(action);
+            });
+        }
+
+        /// <summary>
         /// Adds specified action to the message queue and executes it on the UI thread.
         /// </summary>
         public static void Post(Action? action)
