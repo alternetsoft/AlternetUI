@@ -29,6 +29,7 @@ namespace Alternet.UI
         private static SvgImage? imgMoreActionsHorz;
         private static SvgImage? imgRemove;
         private static SvgImage? imgCancel;
+        private static SvgImage? imgClose;
         private static SvgImage? imgAddChild;
         private static SvgImage? imgRemoveAll;
         private static SvgImage? imgMessageBoxError;
@@ -653,6 +654,15 @@ namespace Alternet.UI
         {
             get => imgCancel ??= new MonoSvgImage(KnownSvgUrls.UrlImageCancel);
             set => imgCancel = value;
+        }
+
+        /// <summary>
+        /// Gets or sets image that can be used in "Close" buttons.
+        /// </summary>
+        public static SvgImage ImgClose
+        {
+            get => imgClose ??= new MonoSvgImage(KnownSvgUrls.UrlImageClose);
+            set => imgClose = value;
         }
 
         /// <summary>
