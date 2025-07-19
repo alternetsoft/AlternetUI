@@ -711,6 +711,55 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Ensures that a child control of the specified type exists within one of the tabs.
+        /// </summary>
+        /// <remarks>This method checks the existing collection of child controls and
+        /// returns the first
+        /// instance of the specified type <typeparamref name="T"/> if found.
+        /// If no such instance exists, a new instance
+        /// is created, optionally associated with the provided title, and added
+        /// to the collection.</remarks>
+        /// <typeparam name="T">The type of the child control to ensure, which must derive
+        /// from <see cref="AbstractControl"/> and have a
+        /// parameterless constructor.</typeparam>
+        /// <param name="title">An optional title to associate with the child control
+        /// if a new instance is created.</param>
+        /// <param name="onCreate">The action to execute when creating the child control.</param>
+        /// <param name="onUpdate">The action to execute when updating the child control.</param>
+        /// <param name="makeVisible"></param>
+        /// <returns>An instance of the specified type <typeparamref name="T"/>.
+        /// If a child of this type already exists, it is
+        /// returned; otherwise, a new instance is created, added
+        /// to the collection, and returned.</returns>
+        public virtual T EnsureChild<T>(
+            string? title = null,
+            Action<T>? onCreate = null,
+            Action<T>? onUpdate = null,
+            bool makeVisible = false)
+            where T : AbstractControl, new()
+        {
+            foreach(var child in Pages)
+            {
+                if (child is T typedChild)
+                {
+                    onUpdate?.Invoke(typedChild);
+                    if (makeVisible)
+                        SelectedControl = typedChild;
+                    return typedChild;
+                }
+            }
+
+            var result = new T();
+            onCreate?.Invoke(result);
+            Add(title, result);
+            if(title is not null)
+                result.Title = title;
+            if (makeVisible)
+                SelectedControl = result;
+            return result;
+        }
+
+        /// <summary>
         /// Adds new page.
         /// </summary>
         /// <param name="page">Page title and control.</param>
@@ -814,7 +863,7 @@ namespace Alternet.UI
         /// <returns>
         /// Created page index.
         /// </returns>
-        public virtual int Insert(int? index, string title, AbstractControl? control = null)
+        public virtual int Insert(int? index, string? title, AbstractControl? control = null)
         {
             addSuspended++;
 
@@ -875,7 +924,7 @@ namespace Alternet.UI
         /// <returns>
         /// Created page index.
         /// </returns>
-        public virtual int Add(string title, AbstractControl? control = null)
+        public virtual int Add(string? title, AbstractControl? control = null)
         {
             return Insert(Header.Tabs.Count, title, control);
         }
