@@ -17,6 +17,13 @@ namespace Alternet.UI
     /// </summary>
     public static class AppUtils
     {
+        /// <summary>
+        /// Gets or sets a function that opens a URL in the default browser.
+        /// This function can be used to override the default behavior
+        /// and is called when <see cref="OpenUrl(string?)"/> is invoked.
+        /// </summary>
+        public static Func<string?, bool>? OpenUrlOverride;
+
         private static NetFrameworkIdentifier? frameworkIdentifier;
 
         /// <summary>
@@ -346,6 +353,11 @@ namespace Alternet.UI
         /// <returns><c>true</c> if operation is successful; <c> false</c> otherwise.</returns>
         public static bool OpenUrl(string? url)
         {
+            if(OpenUrlOverride is not null)
+            {
+                return OpenUrlOverride(url);
+            }
+
             var result = ShellExecute(url);
             return result;
         }
