@@ -134,7 +134,7 @@ namespace Alternet.UI
         public event EventHandler? SelectedFolderChanged;
 
         /// <summary>
-        /// Gets or sets whether folder and file names are sorted.
+        /// Gets or sets whether folder and file names are sorted. Default value is <c>true</c>.
         /// </summary>
         public virtual bool Sorted
         {
@@ -162,6 +162,18 @@ namespace Alternet.UI
         /// Gets or sets whether double click on folder opens its content in the control.
         /// </summary>
         public virtual bool AllowGoToSubFolder { get; set; } = true;
+
+        /// <summary>
+        /// Gets or sets the predicate used to filter file names.
+        /// </summary>
+        [Browsable(false)]
+        public virtual Predicate<string>? FileFilterPredicate { get;set; }
+
+        /// <summary>
+        /// Gets or sets the predicate used to filter folder names.
+        /// </summary>
+        [Browsable(false)]
+        public virtual Predicate<string>? FolderFilterPredicate { get; set; }
 
         /// <summary>
         /// Gets or sets search pattern which allows to limit files shown in the control.
@@ -277,6 +289,70 @@ namespace Alternet.UI
         public bool IsReloading { get => reloading > 0; }
 
         /// <summary>
+        /// Selects the specified folder if it exists, or selects the folder containing
+        /// the specified file if
+        /// applicable.
+        /// </summary>
+        /// <remarks>If neither the specified folder nor the containing folder
+        /// of the specified file
+        /// exists, an initial folder is selected.</remarks>
+        /// <param name="folder">The path to the folder or file. If the path is null
+        /// or empty, the selected folder is set to null. If the
+        /// path is a valid directory, it becomes the selected folder. If the path
+        /// is a valid file, the directory
+        /// containing the file becomes the selected folder.</param>
+        public virtual void SelectFolderIfExists(string? folder)
+        {
+            if (string.IsNullOrEmpty(folder))
+            {
+                SelectedFolder = null;
+                return;
+            }
+
+            if (Directory.Exists(folder))
+            {
+                SelectedFolder = folder;
+                return;
+            }
+
+            if (File.Exists(folder))
+            {
+                folder = Path.GetDirectoryName(folder);
+
+                if (Directory.Exists(folder))
+                {
+                    SelectedFolder = folder;
+                    return;
+                }
+            }
+
+            SelectInitialFolder();
+        }
+
+        /// <summary>
+        /// Selects the initial folder for the operation, resetting any previously selected folder.
+        /// </summary>
+        /// <remarks>If an error occurs during the selection process,
+        /// special folders are added as a fallback.</remarks>
+        public virtual void SelectInitialFolder(bool checkSelected = false)
+        {
+            try
+            {
+                if (checkSelected)
+                {
+                    if (SelectedFolder is not null && Directory.Exists(SelectedFolder))
+                        return;
+                }
+
+                SelectedFolder = null;
+            }
+            catch
+            {
+                AddSpecialFolders();
+            }
+        }
+
+        /// <summary>
         /// Gets whether item is folder.
         /// </summary>
         public virtual bool ItemIsFolder(FileListBoxItem? item)
@@ -352,7 +428,13 @@ namespace Alternet.UI
                 }
 
                 var dirs = GetFileSystem().GetDirectories(selectedFolder);
-                if(Sorted)
+
+                if (FolderFilterPredicate is not null)
+                {
+                    dirs = dirs.Where(f => FolderFilterPredicate(f)).ToArray();
+                }
+
+                if (Sorted)
                     Array.Sort(dirs, PathUtils.CompareByFileName);
 
                 foreach (var dir in dirs)
@@ -361,6 +443,12 @@ namespace Alternet.UI
                 }
 
                 var files = GetFileSystem().GetFiles(selectedFolder, searchPattern);
+
+                if(FileFilterPredicate is not null)
+                {
+                    files = files.Where(f => FileFilterPredicate(f)).ToArray();
+                }
+
                 if (Sorted)
                     Array.Sort(files, PathUtils.CompareByFileName);
 
@@ -648,7 +736,7 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Impements item of the <see cref="FileListBox"/> control.
+        /// Implements item of the <see cref="FileListBox"/> control.
         /// </summary>
         public class FileListBoxItem : TreeControlItem
         {
