@@ -185,5 +185,10 @@ namespace Alternet.UI
         /// 'Hide password' button.
         /// </summary>
         TextBoxHidePassword,
+
+        /// <summary>
+        /// 'Close' button that can be used to close a dialog or a window.
+        /// </summary>
+        Close,
     }
 }

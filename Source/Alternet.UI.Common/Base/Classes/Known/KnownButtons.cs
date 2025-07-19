@@ -49,6 +49,7 @@ namespace Alternet.UI
 
             var strings = CommonStrings.Default;
 
+            data[KnownButton.Close] = () => new(strings.ButtonClose, KnownSvgImages.ImgClose);
             data[KnownButton.OK] = () => new(strings.ButtonOk, KnownSvgImages.ImgOk);
             data[KnownButton.Cancel] = () => new(strings.ButtonCancel, KnownSvgImages.ImgCancel);
             data[KnownButton.Yes] = () => new(strings.ButtonYes, KnownSvgImages.ImgYes);
