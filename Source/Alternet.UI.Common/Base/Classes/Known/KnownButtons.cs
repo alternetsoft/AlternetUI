@@ -41,6 +41,22 @@ namespace Alternet.UI
             return info;
         }
 
+        /// <summary>
+        /// Retrieves the text associated with the specified button index.
+        /// </summary>
+        /// <remarks>Ensure that the button index provided is valid and corresponds
+        /// to a known button. The
+        /// method initializes necessary data before retrieving the text.</remarks>
+        /// <param name="index">The index of the button whose text is to be retrieved.</param>
+        /// <returns>A string containing the text of the specified button,
+        /// or <see langword="null"/> if the text is not available.</returns>
+        public static string? GetText(KnownButton index)
+        {
+            Initialize();
+            var info = data[index]?.Invoke();
+            return info?.Text?.ToString();
+        }
+
         private static void Initialize()
         {
             if (loaded)
@@ -48,6 +64,9 @@ namespace Alternet.UI
             loaded = true;
 
             var strings = CommonStrings.Default;
+
+            data[KnownButton.Apply] = () => new(strings.ButtonApply);
+            data[KnownButton.All] = () => new(strings.ButtonAll);
 
             data[KnownButton.Close] = () => new(strings.ButtonClose, KnownSvgImages.ImgClose);
             data[KnownButton.OK] = () => new(strings.ButtonOk, KnownSvgImages.ImgOk);
@@ -102,16 +121,35 @@ namespace Alternet.UI
             /// <summary>
             /// Initializes a new instance of the <see cref="Info"/> class.
             /// </summary>
+            public Info()
+            {
+            }
+
+            /// <summary>
+            /// Initializes a new instance of the <see cref="Info"/> class
+            /// with the specified text.
+            /// </summary>
+            /// <param name="text">Button text.</param>
+            public Info(object? text)
+            {
+                Text = text;
+            }
+
+            /// <summary>
+            /// Initializes a new instance of the <see cref="Info"/> class
+            /// with the specified text and image.
+            /// </summary>
             /// <param name="text">Button text.</param>
             /// <param name="svg">Button image.</param>
-            public Info(object? text, SvgImage svg)
+            public Info(object? text, SvgImage? svg)
             {
                 Text = text;
                 SvgImage = svg;
             }
 
             /// <summary>
-            /// Initializes a new instance of the <see cref="Info"/> class.
+            /// Initializes a new instance of the <see cref="Info"/> class
+            /// with the specified image.
             /// </summary>
             /// <param name="svg">Button image.</param>
             public Info(SvgImage svg)

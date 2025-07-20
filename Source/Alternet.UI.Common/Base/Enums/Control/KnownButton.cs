@@ -190,5 +190,15 @@ namespace Alternet.UI
         /// 'Close' button that can be used to close a dialog or a window.
         /// </summary>
         Close,
+
+        /// <summary>
+        /// 'Apply' button.
+        /// </summary>
+        Apply,
+
+        /// <summary>
+        /// 'All' button.
+        /// </summary>
+        All,
     }
 }
