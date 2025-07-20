@@ -512,15 +512,30 @@ namespace Alternet.UI
 
             var space = bounds;
 
-            // Deal with docking; go through in reverse, MS docs say that
-            // lowest Z-order is closest to edge
-            for (int i = children.Count - 1; i >= 0; i--)
+            if (container.LayoutFlags.HasFlag(LayoutFlags.IterateBackward))
             {
-                AbstractControl child = children[i];
+                for (int i = 0; i < children.Count; i++)
+                {
+                    LayoutControl(i);
+                }
+            }
+            else
+            {
+                // Deal with docking; go through in reverse, MS docs say that
+                // lowest Z-order is closest to edge
+                for (int i = children.Count - 1; i >= 0; i--)
+                {
+                    LayoutControl(i);
+                }
+            }
+
+            void LayoutControl(int index)
+            {
+                AbstractControl child = children[index];
                 DockStyle dock = child.Dock;
 
                 if (dock == DockStyle.None || container.ChildIgnoresLayout(child))
-                    continue;
+                    return;
 
                 result++;
 

@@ -132,6 +132,7 @@ namespace Alternet.UI
         private string? toolTip;
         private string? text;
         private AnchorStyles anchor = AnchorStyles.LeftTop;
+        private LayoutFlags layoutFlags;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="AbstractControl"/> class.
@@ -322,6 +323,21 @@ namespace Alternet.UI
                 }
 
                 return result;
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets layout flags which are used to control how layout is performed.
+        /// </summary>
+        public virtual LayoutFlags LayoutFlags
+        {
+            get => layoutFlags;
+            set
+            {
+                if (layoutFlags == value)
+                    return;
+                layoutFlags = value;
+                PerformLayout();
             }
         }
 
@@ -1203,7 +1219,7 @@ namespace Alternet.UI
         /// Gets next visible sibling control.
         /// </summary>
         [Browsable(false)]
-        public virtual AbstractControl? NextSibling
+        public virtual AbstractControl? NextVisibleSibling
         {
             get
             {
@@ -1215,6 +1231,32 @@ namespace Alternet.UI
                 var count = chi.Count;
 
                 for (int i = index.Value + 1; i < count; i++)
+                {
+                    var child = chi[i];
+                    if (child.Visible)
+                        return child;
+                }
+
+                return null;
+            }
+        }
+
+        /// <summary>
+        /// Gets previous visible sibling control.
+        /// </summary>
+        [Browsable(false)]
+        public virtual AbstractControl? PreviousVisibleSibling
+        {
+            get
+            {
+                var index = IndexInParent;
+                if (index is null)
+                    return null;
+
+                var chi = Parent!.Children;
+                var count = chi.Count;
+
+                for (int i = index.Value - 1; i >= 0; i--)
                 {
                     var child = chi[i];
                     if (child.Visible)
@@ -3459,7 +3501,7 @@ namespace Alternet.UI
             }
         }
 
-        IControl? IControl.NextSibling => NextSibling;
+        IControl? IControl.NextSibling => NextVisibleSibling;
 
         IControl? IControl.Parent
         {

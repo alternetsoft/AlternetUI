@@ -554,7 +554,11 @@ namespace Alternet.UI
         /// </summary>
         protected virtual AbstractControl? FindTarget()
         {
-            return NextSibling;
+            if(Parent is null)
+                return null;
+            if(Parent.LayoutFlags.HasFlag(LayoutFlags.IterateBackward))
+                return PreviousVisibleSibling;
+            return NextVisibleSibling;
         }
 
         /// <summary>
