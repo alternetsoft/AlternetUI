@@ -169,7 +169,7 @@ namespace Alternet.UI
             {
                 MaxValue = maxValue,
                 MinValue = minValue,
-                Title = title /*?? CommonStrings.Default.WindowTitleInput*/,
+                Title = title,
                 Message = $"{title} (0..{maxValue})",
                 DefaultValue = defaultValue,
                 OnApply = (v) =>
@@ -333,5 +333,63 @@ namespace Alternet.UI
         public static void EditItemsWithListEditor<T>(ListControl<T> control)
             where T : class, new()
             => EditPropertyWithListEditor(control, "Items");
+
+        /// <summary>
+        /// Converts a <see cref="MessageBoxButtons"/> enumeration value
+        /// to an array of <see cref="KnownButton"/>
+        /// values.
+        /// </summary>
+        /// <param name="buttons">The <see cref="MessageBoxButtons"/> value to convert.</param>
+        /// <returns>An array of <see cref="KnownButton"/> values that correspond
+        /// to the specified <paramref name="buttons"/>
+        /// value.</returns>
+        /// <exception cref="ArgumentOutOfRangeException">Thrown if
+        /// <paramref name="buttons"/> is not a valid
+        /// <see cref="MessageBoxButtons"/> value.</exception>
+        public static KnownButton[] ConvertButtons(MessageBoxButtons buttons)
+        {
+            switch (buttons)
+            {
+                case MessageBoxButtons.OK:
+                    return new[] { KnownButton.OK };
+                case MessageBoxButtons.OKCancel:
+                    return new[] { KnownButton.OK, KnownButton.Cancel };
+                case MessageBoxButtons.YesNoCancel:
+                    return new[] { KnownButton.Yes, KnownButton.No, KnownButton.Cancel };
+                case MessageBoxButtons.YesNo:
+                    return new[] { KnownButton.Yes, KnownButton.No };
+                case MessageBoxButtons.AbortRetryIgnore:
+                    return new[] { KnownButton.Abort, KnownButton.Retry, KnownButton.Ignore };
+                case MessageBoxButtons.RetryCancel:
+                    return new[] { KnownButton.Retry, KnownButton.Cancel };
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(buttons), buttons, null);
+            }
+        }
+
+        /// <summary>
+        /// Converts a <see cref="KnownButton"/> value to its corresponding <see cref="DialogResult"/>.
+        /// </summary>
+        /// <param name="button">The <see cref="KnownButton"/> value to convert.</param>
+        /// <returns>A <see cref="DialogResult"/> that corresponds to the
+        /// specified <paramref name="button"/>. If the button is
+        /// not recognized, returns <see cref="DialogResult.None"/>.</returns>
+        public static DialogResult ToDialogResult(KnownButton? button)
+        {
+            if (button == null)
+                return DialogResult.None;
+
+            return button.Value switch
+            {
+                KnownButton.OK => DialogResult.OK,
+                KnownButton.Cancel => DialogResult.Cancel,
+                KnownButton.Yes => DialogResult.Yes,
+                KnownButton.No => DialogResult.No,
+                KnownButton.Abort => DialogResult.Abort,
+                KnownButton.Retry => DialogResult.Retry,
+                KnownButton.Ignore => DialogResult.Ignore,
+                _ => DialogResult.None,
+            };
+        }
     }
 }
