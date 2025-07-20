@@ -1032,7 +1032,9 @@ namespace Alternet.UI
                 {
                     ApplyStartLocationOnce(null);
                     RaiseLoadedOnce();
-                    Refresh();
+
+                    if(App.IsLinuxOS)
+                        Refresh();
                 }
 
                 base.Visible = value;
