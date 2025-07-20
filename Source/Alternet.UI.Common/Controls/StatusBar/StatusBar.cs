@@ -186,7 +186,7 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Appllies <paramref name="panels"/> to the native control.
+        /// Applies <paramref name="panels"/> to the native control.
         /// </summary>
         /// <param name="panels">Collection of the panels.</param>
         public virtual void ApplyPanels(BaseCollection<StatusBarPanel> panels)
@@ -252,7 +252,7 @@ namespace Alternet.UI
         /// by the call to this function.
         /// </remarks>
         /// <remarks>
-        /// This method doesn't affect <see cref="Panels"/>, it wortks with the native control.
+        /// This method doesn't affect <see cref="Panels"/>, it works with the native control.
         /// </remarks>
         public virtual bool SetStatusText(string? text = null, int index = 0)
         {
@@ -271,7 +271,7 @@ namespace Alternet.UI
         /// <see cref="string"/> with the status text if success; <c>null</c> otherwise.
         /// </returns>
         /// <remarks>
-        /// This method doesn't affect <see cref="Panels"/>, it wortks with the native control.
+        /// This method doesn't affect <see cref="Panels"/>, it works with the native control.
         /// </remarks>
         public virtual string? GetStatusText(int index = 0)
         {
