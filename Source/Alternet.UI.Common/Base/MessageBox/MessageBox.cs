@@ -19,6 +19,11 @@ namespace Alternet.UI
     /// </remarks>
     public static class MessageBox
     {
+        /// <summary>
+        /// Gets or sets a value indicating whether the internal dialog should be used.
+        /// </summary>
+        public static bool UseInternalDialog = true && DebugUtils.IsDebuggerAttached;
+
         private static Stack<HelpInfo>? helpInfo;
 
         /// <summary>
@@ -761,12 +766,12 @@ namespace Alternet.UI
         {
             info.Icon = ValidateIcon(info.Icon);
 
+            var useInternalDialog = UseInternalDialog;
+
             if (info.Buttons == MessageBoxButtons.AbortRetryIgnore
                 || info.Buttons == MessageBoxButtons.RetryCancel)
             {
-                App.Alert("AbortRetryIgnore and RetryCancel are not implemented");
-                info.Result = DialogResult.None;
-                return;
+                useInternalDialog = true;
             }
 
             switch (info.DefaultButton)
@@ -819,7 +824,14 @@ namespace Alternet.UI
 
             ValidateButtons(info.Buttons, info.DefaultButton);
 
-            DialogFactory.Handler.ShowMessageBox(info);
+            if (useInternalDialog && !App.IsMaui)
+            {
+                WindowMessageBox.ShowMessageBox(info);
+            }
+            else
+            {
+                DialogFactory.Handler.ShowMessageBox(info);
+            }
         }
 
         internal static MessageBoxIcon ValidateIcon(MessageBoxIcon icon)
@@ -920,23 +932,6 @@ namespace Alternet.UI
             MessageBoxButtons buttons,
             MessageBoxDefaultButton defaultButton)
         {
-            var valid = defaultButton switch
-            {
-                MessageBoxDefaultButton.OK =>
-                    buttons == MessageBoxButtons.OK || buttons == MessageBoxButtons.OKCancel,
-                MessageBoxDefaultButton.Cancel => buttons == MessageBoxButtons.YesNoCancel ||
-                                        buttons == MessageBoxButtons.OKCancel,
-                MessageBoxDefaultButton.Yes => buttons == MessageBoxButtons.YesNoCancel ||
-                                        buttons == MessageBoxButtons.YesNo,
-                MessageBoxDefaultButton.No => buttons == MessageBoxButtons.YesNoCancel ||
-                                        buttons == MessageBoxButtons.YesNo,
-                _ => throw new InvalidOperationException(),
-            };
-            if (!valid)
-            {
-                throw new ArgumentException(
-                    $"'{defaultButton}' cannot be used together with '{buttons}'");
-            }
         }
     }
 }
