@@ -131,6 +131,7 @@ namespace Alternet.UI
 
         private string? toolTip;
         private string? text;
+        private AnchorStyles anchor = AnchorStyles.LeftTop;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="AbstractControl"/> class.
@@ -3563,6 +3564,27 @@ namespace Alternet.UI
             get
             {
                 return GetDPI().Width <= 96;
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets the anchor styles for the control, determining how the control
+        /// is resized with its parent.
+        /// </summary>
+        /// <remarks>
+        /// Anchoring is mutually exclusive with Dock.You can’t use both on the same control.
+        /// Controls are anchored to Top and Left by default.
+        /// </remarks>
+        internal virtual AnchorStyles Anchor
+        {
+            get => anchor;
+
+            set
+            {
+                if (anchor == value)
+                    return;
+                anchor = value;
+                PerformLayout();
             }
         }
     }
