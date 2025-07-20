@@ -22,17 +22,20 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets url used to load "Square Check Filled" svg image.
         /// </summary>
-        public static string UrlImageSquareCheckFilled { get; set; } = GetImageUrl("alternet-square-check-filled");
+        public static string UrlImageSquareCheckFilled { get; set; }
+            = GetImageUrl("alternet-square-check-filled");
 
         /// <summary>
         /// Gets or sets url used to load "Square Minus Filled" svg image.
         /// </summary>
-        public static string UrlImageSquareMinusFilled { get; set; } = GetImageUrl("alternet-square-minus-filled");
+        public static string UrlImageSquareMinusFilled { get; set; }
+            = GetImageUrl("alternet-square-minus-filled");
 
         /// <summary>
         /// Gets or sets url used to load "Square Plus Filled" svg image.
         /// </summary>
-        public static string UrlImageSquarePlusFilled { get; set; } = GetImageUrl("alternet-square-plus-filled");
+        public static string UrlImageSquarePlusFilled { get; set; }
+            = GetImageUrl("alternet-square-plus-filled");
 
         /// <summary>
         /// Gets or sets url used to load "Square" svg image.
@@ -42,7 +45,8 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets url used to load "Circle Dot Filled" svg image.
         /// </summary>
-        public static string UrlImageCircleDotFilled { get; set; } = GetImageUrl("alternet-circle-dot-filled");
+        public static string UrlImageCircleDotFilled { get; set; }
+            = GetImageUrl("alternet-circle-dot-filled");
 
         /// <summary>
         /// Gets or sets url used to load "Circle Dot" svg image.
@@ -434,6 +438,18 @@ namespace Alternet.UI
         /// Gets or sets url used to load solid folder icon.
         /// </summary>
         public static string UrlIconFolderSolid { get; set; } = GetImageUrl("alternet-folder-solid");
+
+        /// <summary>
+        /// Gets or sets the URL of the image used for the left sizing grip.
+        /// </summary>
+        public static string UrlImageSizingGripLeft { get; set; }
+            = GetImageUrl("alternet-sizinggrip-left.svg");
+
+        /// <summary>
+        /// Gets or sets the URL of the image used for the right sizing grip.
+        /// </summary>
+        public static string UrlImageSizingGripRight { get; set; }
+            = GetImageUrl("alternet-sizinggrip-right.svg");
 
         private static string GetImageUrl(string name) => string.Format(ResTemplate, name);
     }

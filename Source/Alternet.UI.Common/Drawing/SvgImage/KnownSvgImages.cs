@@ -95,6 +95,27 @@ namespace Alternet.UI
         private static SvgImage? imgCircleDotFilled;
         private static SvgImage? imgCircleDot;
 
+        private static SvgImage? imgSizingGripLeft;
+        private static SvgImage? imgSizingGripRight;
+
+        /// <summary>
+        /// Gets or sets the SVG image used for the left sizing grip.
+        /// </summary>
+        public static SvgImage ImgSizingGripLeft
+        {
+            get => imgSizingGripLeft ??= new MonoSvgImage(KnownSvgUrls.UrlImageSizingGripLeft);
+            set => imgSizingGripLeft = value;
+        }
+
+        /// <summary>
+        /// Gets or sets the SVG image used for the right sizing grip.
+        /// </summary>
+        public static SvgImage ImgSizingGripRight
+        {
+            get => imgSizingGripRight ??= new MonoSvgImage(KnownSvgUrls.UrlImageSizingGripRight);
+            set => imgSizingGripRight = value;
+        }
+
         /// <summary>
         /// Gets or sets image for the regular file icon.
         /// </summary>
