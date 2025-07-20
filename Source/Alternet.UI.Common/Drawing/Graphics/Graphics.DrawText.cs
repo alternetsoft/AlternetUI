@@ -283,6 +283,8 @@ namespace Alternet.Drawing
             var isVertical = prm.IsVertical;
             var isVerticalText = prm.IsVerticalText;
             var drawDebugCorners = prm.DrawDebugCorners || DrawDebugCorners;
+            var imageVerticalAlignment = prm.ImageVerticalAlignment;
+            var imageHorizontalAlignment = prm.ImageHorizontalAlignment;
 
             var textHorizontalAlignment = prm.TextHorizontalAlignment;
             var lineDistance = prm.LineDistance;
@@ -320,11 +322,27 @@ namespace Alternet.Drawing
                             BorderSettings.DrawDesignCorners(dc, rect, BorderSettings.DebugBorderBlue);
 #endif
                     },
-                    Alignment = GetElementAlignment(),
+                    Alignment = GetImageAlignment(),
                 };
             }
 
-            HVAlignment GetElementAlignment()
+            HVAlignment GetImageAlignment()
+            {
+                if (isVertical)
+                {
+                    return (
+                        HorizontalAlignment.Center,
+                        imageVerticalAlignment ?? VerticalAlignment.Top);
+                }
+                else
+                {
+                    return (
+                        HorizontalAlignment.Left,
+                        imageVerticalAlignment ?? VerticalAlignment.Center);
+                }
+            }
+
+            HVAlignment GetTextAlignment()
             {
                 if (isVertical)
                     return (HorizontalAlignment.Center, VerticalAlignment.Top);
@@ -430,7 +448,7 @@ namespace Alternet.Drawing
                         BorderSettings.DrawDesignCorners(dc, rect, BorderSettings.DebugBorderBlue);
 #endif
                 },
-                Alignment = GetElementAlignment(),
+                Alignment = GetTextAlignment(),
             };
 
             DrawElementsParams drawParams = new();
@@ -819,6 +837,16 @@ namespace Alternet.Drawing
         /// </summary>
         public struct DrawLabelParams
         {
+            /// <summary>
+            /// Gets or sets vertical alignment of the image.
+            /// </summary>
+            public VerticalAlignment? ImageVerticalAlignment;
+
+            /// <summary>
+            /// Gets or sets horizontal alignment of the image.
+            /// </summary>
+            public HorizontalAlignment? ImageHorizontalAlignment;
+
             /// <summary>
             /// Gets or sets distance between lines of text.
             /// </summary>
