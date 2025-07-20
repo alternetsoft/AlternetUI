@@ -90,10 +90,27 @@ namespace Alternet.UI
         [Category("Behavior")]
         public event SplitterEventHandler? SplitterMoved;
 
-        private enum DrawSplitBarKind
+        /// <summary>
+        /// Specifies the possible options for the <see cref="DrawSplitBar"/> method.
+        /// </summary>
+        /// <remarks>This enumeration is used to indicate the stage of the split
+        /// bar drawing process, such
+        /// as starting, moving, or ending the drawing operation.</remarks>
+        protected enum DrawSplitBarKind
         {
+            /// <summary>
+            /// Splitter is starting to move.
+            /// </summary>
             Start = 1,
+
+            /// <summary>
+            /// Splitter is moving.
+            /// </summary>
             Move = 2,
+
+            /// <summary>
+            /// Splitter is ending the move operation.
+            /// </summary>
             End = 3,
         }
 
@@ -314,6 +331,7 @@ namespace Alternet.UI
                 {
                     spd.Target.Bounds = bounds;
                 });
+
                 Parent?.Refresh();
                 var args = new SplitterEventArgs(
                     Left,
@@ -530,10 +548,42 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Finds the target of the splitter. For example, if the splitter
+        /// is docked right, the target is the control that is just to the right
+        /// of the splitter.
+        /// </summary>
+        protected virtual AbstractControl? FindTarget()
+        {
+            return NextSibling;
+        }
+
+        /// <summary>
+        /// Calculates the current size of the splitter-target.
+        /// </summary>
+        /// <returns></returns>
+        protected virtual Coord CalcSplitSize()
+        {
+            var target = FindTarget();
+            if (target is null) return -1;
+            var r = target.Bounds;
+            switch (Dock)
+            {
+                case DockStyle.Top:
+                case DockStyle.Bottom:
+                    return r.Height;
+                case DockStyle.Left:
+                case DockStyle.Right:
+                    return r.Width;
+                default:
+                    return -1;
+            }
+        }
+
+        /// <summary>
         /// Draws the splitter bar at the current location. Will automatically
         /// cleanup anyplace the splitter was drawn previously.
         /// </summary>
-        private void DrawSplitBar(DrawSplitBarKind mode)
+        protected virtual void DrawSplitBar(DrawSplitBarKind mode)
         {
             if (mode != DrawSplitBarKind.Start && lastDrawSplit != -1)
             {
@@ -564,7 +614,7 @@ namespace Alternet.UI
         /// Calculates the bounding rect of the split line. minWeight refers
         /// to the minimum height or width of the split line.
         /// </summary>
-        private RectD CalcSplitLine(Coord splitSize, Coord minWeight)
+        protected virtual RectD CalcSplitLine(Coord splitSize, Coord minWeight)
         {
             if (splitTarget is null)
                 return RectD.Empty;
@@ -595,31 +645,9 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Calculates the current size of the splitter-target.
-        /// </summary>
-        /// <returns></returns>
-        private Coord CalcSplitSize()
-        {
-            var target = FindTarget();
-            if (target is null) return -1;
-            var r = target.Bounds;
-            switch (Dock)
-            {
-                case DockStyle.Top:
-                case DockStyle.Bottom:
-                    return r.Height;
-                case DockStyle.Left:
-                case DockStyle.Right:
-                    return r.Width;
-                default:
-                    return -1;
-            }
-        }
-
-        /// <summary>
         /// Gets the bounding criteria for the splitter.
         /// </summary>
-        private SplitData CalcSplitBounds()
+        protected virtual SplitData CalcSplitBounds()
         {
             SplitData spd = new();
             var parent = Parent;
@@ -676,24 +704,14 @@ namespace Alternet.UI
         /// Draws the splitter line at the requested location.
         /// </summary>
         /// <param name="splitSize"></param>
-        private void DrawSplitHelper(Coord splitSize)
+        protected virtual void DrawSplitHelper(Coord splitSize)
         {
-        }
-
-        /// <summary>
-        /// Finds the target of the splitter. For example, if the splitter
-        /// is docked right, the target is the control that is just to the right
-        /// of the splitter.
-        /// </summary>
-        private AbstractControl? FindTarget()
-        {
-            return NextSibling;
         }
 
         /// <summary>
         /// Calculates the split size based on the mouse position (x, y).
         /// </summary>
-        private Coord GetSplitSize(Coord x, Coord y)
+        protected virtual Coord GetSplitSize(Coord x, Coord y)
         {
             if (splitTarget is null)
                 return 0;
@@ -726,7 +744,7 @@ namespace Alternet.UI
         /// <summary>
         /// Begins the splitter moving.
         /// </summary>
-        private void SplitBegin(Coord x, Coord y)
+        protected virtual void SplitBegin(Coord x, Coord y)
         {
             var spd = CalcSplitBounds();
             if (spd.Target != null && (minTargetSize < maxSize))
@@ -745,7 +763,7 @@ namespace Alternet.UI
         /// <summary>
         /// Finishes the split movement.
         /// </summary>
-        private void SplitEnd(bool accept)
+        protected virtual void SplitEnd(bool accept)
         {
             DrawSplitBar(DrawSplitBarKind.End);
             splitTarget = null;
@@ -769,7 +787,7 @@ namespace Alternet.UI
         /// <summary>
         /// Sets the split position to be the current split size.
         /// </summary>
-        private void ApplySplitPosition()
+        protected virtual void ApplySplitPosition()
         {
             SplitPosition = splitSize;
         }
@@ -777,7 +795,7 @@ namespace Alternet.UI
         /// <summary>
         /// Moves the splitter line to the splitSize for the mouse position (x, y).
         /// </summary>
-        private bool SplitMove(Coord x, Coord y)
+        protected virtual bool SplitMove(Coord x, Coord y)
         {
             var size = GetSplitSize(x - Left + anchor.X, y - Top + anchor.Y);
             if (Math.Abs(splitSize - size) >= SizeDelta)
@@ -790,12 +808,28 @@ namespace Alternet.UI
                 return false;
         }
 
-        private class SplitData
+        /// <summary>
+        /// Represents the dimensions and target control for a docking operation.
+        /// </summary>
+        /// <remarks>This class is used to store the width and height of a docking area,
+        /// as well as the target control involved in the docking process.
+        /// The dimensions are represented by the <see cref="Coord"/>
+        /// type, and the target control is an instance of <see cref="AbstractControl"/>.</remarks>
+        protected class SplitData
         {
+            /// <summary>
+            /// Gets or sets the width of the splitter area in coordinate units.
+            /// </summary>
             public Coord DockWidth = -1;
 
+            /// <summary>
+            /// Gets or sets the height of the splitter area.
+            /// </summary>
             public Coord DockHeight = -1;
 
+            /// <summary>
+            /// Gets or sets the target control that this instance is associated with.
+            /// </summary>
             public AbstractControl? Target;
         }
     }
