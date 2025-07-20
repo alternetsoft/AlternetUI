@@ -11,6 +11,13 @@ using Alternet.UI.Extensions;
 namespace Alternet.UI
 {
     /// <summary>
+    /// Represents the method that will handle the event when the splitter colors are resolved.
+    /// </summary>
+    /// <param name="backColor">The background color for the splitter.</param>
+    /// <param name="foreColor">The foreground color for the splitter.</param>
+    public delegate void ResolveSplitterColorsDelegate(out Color? backColor, out Color? foreColor);
+
+    /// <summary>
     /// Provides resizing of docked elements. You can dock some control to an edge of a
     /// container using <see cref="AbstractControl.Dock"/> property,
     /// and then dock the splitter to the same edge.
@@ -113,6 +120,12 @@ namespace Alternet.UI
             /// </summary>
             End = 3,
         }
+
+        /// <summary>
+        /// Gets or sets a delegate that resolves the splitter colors.
+        /// Use this property to override the default splitter colors resolve method.
+        /// </summary>
+        public ResolveSplitterColorsDelegate? ResolveSplitterColorsOverride { get; set; }
 
         /// <summary>
         /// Gets or sets splitter background and line color when control state
@@ -375,6 +388,12 @@ namespace Alternet.UI
         /// <param name="foreColor">The foreground color to be set.</param>
         public virtual void ResolveSplitterColors(out Color? backColor, out Color? foreColor)
         {
+            if(ResolveSplitterColorsOverride is not null)
+            {
+                ResolveSplitterColorsOverride(out backColor, out foreColor);
+                return;
+            }
+
             var colors = NormalColors;
 
             Color defaultColor;
