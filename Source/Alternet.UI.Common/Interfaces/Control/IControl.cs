@@ -13,7 +13,7 @@ namespace Alternet.UI
     /// <summary>
     /// Provides access to the methods and properties of the control.
     /// </summary>
-    public interface IControl : IDisposable, IWin32Window
+    public interface IControl : IDisposable, IWin32Window, ILayoutItem
     {
         /// <summary>
         /// Occurs before the <see cref="AbstractControl.KeyDown" /> event when a key is pressed
@@ -189,17 +189,17 @@ namespace Alternet.UI
         event EventHandler<PaintEventArgs>? Paint;
 
         /// <summary>
-        /// Occurs when the value of the <see cref="Margin"/> property changes.
+        /// Occurs when the value of the <c>Margin</c> property changes.
         /// </summary>
         event EventHandler? MarginChanged;
 
         /// <summary>
-        /// Occurs when the value of the <see cref="Padding"/> property changes.
+        /// Occurs when the value of the <c>Padding</c> property changes.
         /// </summary>
         event EventHandler? PaddingChanged;
 
         /// <summary>
-        /// Occurs when the value of the <see cref="Visible"/> property changes.
+        /// Occurs when the value of the <c>Visible</c> property changes.
         /// </summary>
         event EventHandler? VisibleChanged;
 
@@ -365,19 +365,9 @@ namespace Alternet.UI
         ControlStateBorders? Borders { get; set; }
 
         /// <summary>
-        /// Gets or sets layout style of the child controls.
-        /// </summary>
-        LayoutStyle? Layout { get; set; }
-
-        /// <summary>
         /// Gets or sets whether mouse events are bubbled to parent control.
         /// </summary>
         bool InputTransparent { get; set; }
-
-        /// <summary>
-        /// Gets or sets whether layout rules are ignored for this control.
-        /// </summary>
-        bool IgnoreLayout { get; set; }
 
         /// <summary>
         /// Gets or sets the title of the control.
@@ -389,18 +379,6 @@ namespace Alternet.UI
         /// is displayed as a tab text.
         /// </remarks>
         string Title { get; set; }
-
-        /// <summary>
-        /// Gets or sets which control borders are docked to its parent control and determines
-        /// how a control is resized with its parent.
-        /// </summary>
-        /// <returns>One of the <see cref="DockStyle" /> values.
-        /// The default is <see cref="DockStyle.None" />.</returns>
-        /// <remarks>
-        /// Currently this property is used only when control is placed
-        /// inside the <see cref="LayoutPanel"/>.
-        /// </remarks>
-        DockStyle Dock { get; set; }
 
         /// <summary>
         /// Gets or sets context menu for this control.
@@ -475,26 +453,10 @@ namespace Alternet.UI
         ICustomFlags<string> CustomFlags { get; }
 
         /// <summary>
-        /// Gets or sets cached data for the layout engine.
-        /// </summary>
-        object? LayoutData { get; set; }
-
-        /// <summary>
-        /// Gets or sets additional properties which are layout specific.
-        /// </summary>
-        object? LayoutProps { get; set; }
-
-        /// <summary>
         /// Gets custom attributes provider associated with the control.
         /// You can store any custom data here.
         /// </summary>
         ICustomAttributes<string, object> CustomAttr { get; }
-
-        /// <summary>
-        /// Gets or sets size of the <see cref="AbstractControl"/>'s client area, in
-        /// device-independent units.
-        /// </summary>
-        SizeD ClientSize { get; }
 
         /// <summary>
         /// Gets control flags.
@@ -506,16 +468,6 @@ namespace Alternet.UI
 
         /// <inheritdoc cref="AbstractControl.HorzScrollBarInfo"/>
         ScrollBarInfo HorzScrollBarInfo { get; set; }
-
-        /// <summary>
-        /// Gets whether layout is suspended.
-        /// </summary>
-        bool IsLayoutSuspended { get; }
-
-        /// <summary>
-        /// Gets whether layout is currently performed.
-        /// </summary>
-        bool IsLayoutPerform { get; }
 
         /// <summary>
         /// Gets a value indicating whether the mouse pointer is over the
@@ -551,22 +503,6 @@ namespace Alternet.UI
         ControlStateBrushes? Foregrounds { get; set; }
 
         /// <summary>
-        /// Gets the distance, in dips, between the right edge of the control and the left
-        /// edge of its container's client area.
-        /// </summary>
-        /// <returns>A value representing the distance, in dips, between the right edge of the
-        /// control and the left edge of its container's client area.</returns>
-        Coord Right { get; set; }
-
-        /// <summary>
-        /// Gets the distance, in dips, between the bottom edge of the control and the top edge
-        /// of its container's client area.
-        /// </summary>
-        /// <returns>A value representing the distance, in dips, between the bottom edge of
-        /// the control and the top edge of its container's client area.</returns>
-        Coord Bottom { get; set; }
-
-        /// <summary>
         /// Gets control index in the children collection of the container control.
         /// </summary>
         int? IndexInParent { get; }
@@ -594,39 +530,6 @@ namespace Alternet.UI
         /// in the user interface.
         /// </summary>
         string? ToolTip { get; set; }
-
-        /// <summary>
-        /// Gets or sets the <see cref="AbstractControl"/> bounds relative to the parent,
-        /// in device-independent units.
-        /// </summary>
-        RectD Bounds { get; set; }
-
-        /// <summary>
-        /// Gets or sets the distance between the left edge of the control
-        /// and the left edge of its container's client area.
-        /// </summary>
-        Coord Left { get; set; }
-
-        /// <summary>
-        /// Gets or sets the distance between the top edge of the control
-        /// and the top edge of its container's client area.
-        /// </summary>
-        Coord Top { get; set; }
-
-        /// <summary>
-        /// Gets or sets the location of upper-left corner of the control, in
-        /// device-independent units.
-        /// </summary>
-        /// <value>The position of the control's upper-left corner, in device-independent units.</value>
-        PointD Location { get; set; }
-
-        /// <summary>
-        /// Gets or sets a value indicating whether the control and all its
-        /// child controls are displayed.
-        /// </summary>
-        /// <value><c>true</c> if the control and all its child controls are
-        /// displayed; otherwise, <c>false</c>. The default is <c>true</c>.</value>
-        bool Visible { get; set; }
 
         /// <summary>
         /// Gets or sets a value indicating whether the control can respond
@@ -669,11 +572,6 @@ namespace Alternet.UI
         long? LastDoubleClickTimestamp { get; set; }
 
         /// <summary>
-        /// Gets whether there are any children in the control.
-        /// </summary>
-        bool HasChildren { get; }
-
-        /// <summary>
         /// Gets or sets the parent container of the control.
         /// </summary>
         IControl? Parent { get; set; }
@@ -684,97 +582,6 @@ namespace Alternet.UI
         IWindow? ParentWindow { get; }
 
         /// <summary>
-        /// Gets or sets the size of the control.
-        /// </summary>
-        /// <value>The size of the control, in device-independent units.
-        /// The default value is <see cref="SizeD"/>(<see cref="Coord.NaN"/>,
-        /// <see cref="Coord.NaN"/>)/>.
-        /// </value>
-        /// <remarks>
-        /// This property specifies the size of the control.
-        /// Set this property to <see cref="SizeD"/>(<see cref="Coord.NaN"/>,
-        /// <see cref="Coord.NaN"/>) to specify system-default sizing
-        /// behavior when the control is first shown.
-        /// </remarks>
-        SizeD Size { get; set; }
-
-        /// <summary>
-        /// Gets or sets the width of the control.
-        /// </summary>
-        /// <value>The width of the control, in device-independent units.
-        /// The default value is <see cref="Coord.NaN"/>.
-        /// </value>
-        /// <remarks>
-        /// This property specifies the width of the control.
-        /// Set this property to <see cref="Coord.NaN"/> to specify system-default sizing
-        /// behavior before the control is first shown.
-        /// </remarks>
-        Coord Width { get; set; }
-
-        /// <summary>
-        /// Gets or sets the height of the control.
-        /// </summary>
-        /// <value>The height of the control, in device-independent units.
-        /// The default value is <see cref="Coord.NaN"/>.
-        /// </value>
-        /// <remarks>
-        /// This property specifies the height of the control.
-        /// Set this property to <see cref="Coord.NaN"/> to specify system-default sizing
-        /// behavior before the control is first shown.
-        /// </remarks>
-        Coord Height { get; set; }
-
-        /// <summary>
-        /// Gets or sets the suggested size of the control.
-        /// </summary>
-        /// <value>The suggested size of the control, in device-independent units.
-        /// The default value is <see cref="SizeD"/>
-        /// (<see cref="Coord.NaN"/>, <see cref="Coord.NaN"/>)/>.
-        /// </value>
-        /// <remarks>
-        /// This property specifies the suggested size of the control. An actual
-        /// size is calculated by the layout system.
-        /// Set this property to <see cref="SizeD"/>
-        /// (<see cref="Coord.NaN"/>, <see cref="Coord.NaN"/>) to specify auto
-        /// sizing behavior.
-        /// The value of this property is always the same as the value that was
-        /// set to it and is not changed by the layout system.
-        /// </remarks>
-        SizeD SuggestedSize { get; set; }
-
-        /// <summary>
-        /// Gets or sets the suggested width of the control.
-        /// </summary>
-        /// <value>The suggested width of the control, in device-independent units.
-        /// The default value is <see cref="Coord.NaN"/>.
-        /// </value>
-        /// <remarks>
-        /// This property specifies the suggested width of the control. An
-        /// actual width is calculated by the layout system.
-        /// Set this property to <see cref="Coord.NaN"/> to specify auto
-        /// sizing behavior.
-        /// The value of this property is always the same as the value that was
-        /// set to it and is not changed by the layout system.
-        /// </remarks>
-        Coord SuggestedWidth { get; set; }
-
-        /// <summary>
-        /// Gets or sets the suggested height of the control.
-        /// </summary>
-        /// <value>The suggested height of the control, in device-independent units.
-        /// The default value is <see cref="Coord.NaN"/>.
-        /// </value>
-        /// <remarks>
-        /// This property specifies the suggested height of the control. An
-        /// actual height is calculated by the layout system.
-        /// Set this property to <see cref="Coord.NaN"/> to specify auto
-        /// sizing behavior.
-        /// The value of this property is always the same as the value that was
-        /// set to it and is not changed by the layout system.
-        /// </remarks>
-        Coord SuggestedHeight { get; set; }
-
-        /// <summary>
         /// Gets or set a value indicating whether the control paints itself
         /// rather than the operating system doing so.
         /// </summary>
@@ -782,11 +589,6 @@ namespace Alternet.UI
         /// operating system doing so.
         /// If <c>false</c>, the <see cref="Paint"/> event is not raised.</value>
         bool UserPaint { get; set; }
-
-        /// <summary>
-        /// Gets number of children items.
-        /// </summary>
-        int ChildCount { get; }
 
         /// <summary>
         /// Gets whether left mouse button is over control and is down.
@@ -815,42 +617,6 @@ namespace Alternet.UI
         bool CanUserPaint { get; }
 
         /// <summary>
-        /// Gets or sets minimal value of the child's <see cref="Margin"/> property.
-        /// </summary>
-        Thickness? MinChildMargin { get; set; }
-
-        /// <summary>
-        /// Gets or sets the outer margin of a control.
-        /// </summary>
-        /// <value>Provides margin values for the control. The default value is a
-        /// <see cref="Thickness"/> with all properties equal to 0 (zero).</value>
-        /// <remarks>
-        /// The margin is the space between this control and the adjacent control.
-        /// Margin is set as a <see cref="Thickness"/> structure rather than as
-        /// a number so that the margin can be set asymmetrically.
-        /// The <see cref="Thickness"/> structure itself supports string
-        /// type conversion so that you can specify an asymmetric <see cref="Margin"/>
-        /// in UIXML attribute syntax also.
-        /// </remarks>
-        Thickness Margin { get; set; }
-
-        /// <summary>
-        /// Gets or sets the padding inside a control.
-        /// </summary>
-        /// <value>Provides padding values for the control. The default value is
-        /// a <see cref="Thickness"/> with all properties equal to 0 (zero).</value>
-        /// <remarks>
-        /// The padding is the amount of space between the content of a
-        /// <see cref="AbstractControl"/> and its border.
-        /// Padding is set as a <see cref="Thickness"/> structure rather than as
-        /// a number so that the padding can be set asymmetrically.
-        /// The <see cref="Thickness"/> structure itself supports string
-        /// type conversion so that you can specify an asymmetric <see cref="Padding"/>
-        /// in UIXML attribute syntax also.
-        /// </remarks>
-        Thickness Padding { get; set; }
-
-        /// <summary>
         /// Gets whether control is performing updates.
         /// </summary>
         /// <remarks>
@@ -858,36 +624,6 @@ namespace Alternet.UI
         /// and before call to <see cref="EndUpdate"/>.
         /// </remarks>
         bool InUpdates { get; }
-
-        /// <summary>
-        /// Gets or sets the minimum size the window can be resized to.
-        /// </summary>
-        SizeD MinimumSize { get; set; }
-
-        /// <summary>
-        /// Gets or sets the maximum size the window can be resized to.
-        /// </summary>
-        SizeD MaximumSize { get; set; }
-
-        /// <summary>
-        /// Gets or sets the minimum width the window can be resized to.
-        /// </summary>
-        Coord? MinWidth { get; set; }
-
-        /// <summary>
-        /// Gets or sets the minimum height the window can be resized to.
-        /// </summary>
-        Coord? MinHeight { get; set; }
-
-        /// <summary>
-        /// Gets or sets the maximum width the window can be resized to.
-        /// </summary>
-        Coord? MaxWidth { get; set; }
-
-        /// <summary>
-        /// Gets or sets the maximum height the window can be resized to.
-        /// </summary>
-        Coord? MaxHeight { get; set; }
 
         /// <summary>
         /// Gets or sets the background color for the control.
@@ -964,40 +700,6 @@ namespace Alternet.UI
         object NativeControl { get; }
 
         /// <summary>
-        /// Gets or sets column index which is used by the <see cref="Grid"/> control.
-        /// </summary>
-        /// <remarks>
-        /// Currently this property works only in <see cref="Grid"/> container.
-        /// </remarks>
-        int ColumnIndex { get; set; }
-
-        /// <summary>
-        /// Gets or sets row index which is used by the <see cref="Grid"/> control.
-        /// </summary>
-        /// <remarks>
-        /// Currently this property works only in <see cref="Grid"/> container.
-        /// </remarks>
-        int RowIndex { get; set; }
-
-        /// <summary>
-        /// Gets or sets a value that indicates the total number of columns
-        /// this control's content spans within a container.
-        /// </summary>
-        /// <remarks>
-        /// Currently this property works only in <see cref="Grid"/> container.
-        /// </remarks>
-        int ColumnSpan { get; set; }
-
-        /// <summary>
-        /// Gets or sets a value that indicates the total number of rows
-        /// this control's content spans within a container.
-        /// </summary>
-        /// <remarks>
-        /// Currently this property works only in <see cref="Grid"/> container.
-        /// </remarks>
-        int RowSpan { get; set; }
-
-        /// <summary>
         /// Gets or sets the background brush for the control.
         /// </summary>
         Brush? Background { get; set; }
@@ -1040,22 +742,6 @@ namespace Alternet.UI
         bool IsDarkBackground { get; }
 
         /// <summary>
-        /// Gets or sets the vertical alignment applied to this control when it
-        /// is positioned within a parent control.
-        /// </summary>
-        /// <value>A vertical alignment setting. The default is
-        /// <c>null</c>.</value>
-        VerticalAlignment VerticalAlignment { get; set; }
-
-        /// <summary>
-        /// Gets or sets the horizontal alignment applied to this control when
-        /// it is positioned within a parent control.
-        /// </summary>
-        /// <value>A horizontal alignment setting. The default is
-        /// <c>null</c>.</value>
-        HorizontalAlignment HorizontalAlignment { get; set; }
-
-        /// <summary>
         /// Gets or sets a value indicating whether the user can give the focus to this control
         /// using the TAB key.
         /// </summary>
@@ -1074,13 +760,6 @@ namespace Alternet.UI
         /// <value><c>true</c> if drag-and-drop operations are allowed in the
         /// control; otherwise, <c>false</c>. The default is <c>false</c>.</value>
         bool AllowDrop { get; set; }
-
-        /// <summary>
-        /// Gets a rectangle which describes the client area inside of the
-        /// <see cref="AbstractControl"/>,
-        /// in device-independent units.
-        /// </summary>
-        RectD ClientRectangle { get; }
 
         /// <summary>
         /// Gets or sets the site of the control.
@@ -1171,7 +850,7 @@ namespace Alternet.UI
         /// such as Microsoft Windows.
         /// </remarks>
         /// <returns>
-        /// A <see cref="Size"/> value that represents DPI of the display
+        /// A <see cref="SizeD"/> value that represents DPI of the display
         /// used by this control. If the DPI is not available,
         /// returns Size(0,0) object.
         /// </returns>
@@ -1310,9 +989,9 @@ namespace Alternet.UI
         /// Displays the control to the user.
         /// </summary>
         /// <remarks>Showing the control is equivalent to setting the
-        /// <see cref="Visible"/> property to <c>true</c>.
+        /// <c>Visible</c> property to <c>true</c>.
         /// After the <see cref="Show"/> method is called, the
-        /// <see cref="Visible"/> property
+        /// <c>Visible</c> property
         /// returns a value of <c>true</c> until the <see cref="Hide"/> method
         /// is called.</remarks>
         void Show();
@@ -1343,9 +1022,9 @@ namespace Alternet.UI
         /// </summary>
         /// <remarks>
         /// Hiding the control is equivalent to setting the
-        /// <see cref="Visible"/> property to <c>false</c>.
+        /// <c>Visible</c> property to <c>false</c>.
         /// After the <see cref="Hide"/> method is called, the
-        /// <see cref="Visible"/> property
+        /// <c>Visible</c> property
         /// returns a value of <c>false</c> until the <see cref="Show"/> method
         /// is called.
         /// </remarks>
@@ -1376,26 +1055,6 @@ namespace Alternet.UI
         /// </summary>
         /// <returns></returns>
         Graphics CreateGraphics();
-
-        /// <summary>
-        /// Sets the specified bounds of the control to new location and size.
-        /// </summary>
-        /// <param name="x">The new <see cref="Left"/> property value of
-        /// the control.</param>
-        /// <param name="y">The new <see cref="Top"/> property value
-        /// of the control.</param>
-        /// <param name="width">The new <see cref="Width"/> property value
-        /// of the control.</param>
-        /// <param name="height">The new <see cref="Height"/> property value
-        /// of the control.</param>
-        /// <param name="specified">Specifies which bounds to use when applying new
-        /// location and size.</param>
-        void SetBounds(
-            Coord x,
-            Coord y,
-            Coord width,
-            Coord height,
-            BoundsSpecified specified);
 
         /// <summary>
         /// Forces the control to invalidate itself and immediately redraw itself
@@ -1590,21 +1249,6 @@ namespace Alternet.UI
         bool SetFocusIfPossible();
 
         /// <summary>
-        /// Resets <see cref="SuggestedHeight"/> property.
-        /// </summary>
-        void ResetSuggestedHeight();
-
-        /// <summary>
-        /// Resets <see cref="SuggestedWidth"/> property.
-        /// </summary>
-        void ResetSuggestedWidth();
-
-        /// <summary>
-        /// Resets <see cref="SuggestedSize"/> property.
-        /// </summary>
-        void ResetSuggestedSize();
-
-        /// <summary>
         /// Gets <see cref="ToolTip"/> value for use in the native control.
         /// </summary>
         /// <returns></returns>
@@ -1702,23 +1346,6 @@ namespace Alternet.UI
         /// Called when the control should reposition its child controls.
         /// </summary>
         void OnLayout();
-
-        /// <summary>
-        /// Retrieves the size of a rectangular area into which a control can
-        /// be fitted, in device-independent units.
-        /// </summary>
-        /// <param name="availableSize">The available space that a parent element
-        /// can allocate a child control.</param>
-        /// <returns>A <see cref="SuggestedSize"/> representing the width and height of
-        /// a rectangle, in device-independent units.</returns>
-        SizeD GetPreferredSize(SizeD availableSize);
-
-        /// <summary>
-        /// Calls <see cref="GetPreferredSize(SizeD)"/> with <see cref="SizeD.PositiveInfinity"/>
-        /// as a parameter value.
-        /// </summary>
-        /// <returns></returns>
-        SizeD GetPreferredSize();
 
         /// <summary>
         /// Performs some action for the each child of the control.
