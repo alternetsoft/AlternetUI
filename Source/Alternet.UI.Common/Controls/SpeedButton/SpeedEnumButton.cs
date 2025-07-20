@@ -112,6 +112,20 @@ namespace Alternet.UI
             return false;
         }
 
+        /// <summary>
+        /// Sets the value and optionally updates the enumeration type.
+        /// </summary>
+        /// <param name="value">The new value to be assigned.</param>
+        /// <param name="setEnumType">A boolean indicating whether to update the enumeration
+        /// type based on the provided value. <see langword="true"/> to update
+        /// the enumeration type; otherwise, <see langword="false"/>.</param>
+        public virtual void SetValue(object value, bool setEnumType = true)
+        {
+            if (setEnumType)
+                EnumType = value?.GetType();
+            Value = value;
+        }
+
         /// <inheritdoc/>
         protected override BaseCollection<ListControlItem> GetItems()
         {
