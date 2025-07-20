@@ -19,9 +19,12 @@ namespace ControlsSample
             BackColor = Color.WhiteSmoke;
 
             var c1 = header.AddColumn("Column 1", 100);
-            var c2 = header.AddColumn("Column 2", 100);
+            
+            header.AddColumn("Column 2", 100);
+            
             var c3 = header.AddColumn("Column 3", 100);
-            var c4 = header.AddColumn("Column 4", 100);
+            
+            header.AddColumn("Column 4", 100);
 
             header.DeleteColumn(c3);
 
