@@ -104,7 +104,6 @@ namespace Alternet.UI
         private ControlStateSettings? stateObjects;
         private VerticalAlignment verticalAlignment = VerticalAlignment.Stretch;
         private HorizontalAlignment horizontalAlignment = HorizontalAlignment.Stretch;
-        private ControlExtendedProps? extendedProps = null;
         private AbstractControl? parent;
         private ControlFlags stateFlags;
         private Cursor? cursor;

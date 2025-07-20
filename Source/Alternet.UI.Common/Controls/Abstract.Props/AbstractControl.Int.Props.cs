@@ -15,16 +15,5 @@ namespace Alternet.UI
             get => Parent;
             set => Parent = value as AbstractControl;
         }
-
-        internal bool HasExtendedProps => extendedProps != null;
-
-        internal ControlExtendedProps ExtendedProps
-        {
-            get
-            {
-                extendedProps ??= new();
-                return extendedProps;
-            }
-        }
     }
 }
