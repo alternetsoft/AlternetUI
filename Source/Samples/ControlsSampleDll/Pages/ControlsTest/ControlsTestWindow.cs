@@ -41,6 +41,10 @@ namespace ControlsSample
                 return MathUtils.Max(result1, result2, result3);
             }
 
+#if DEBUG
+            AddPage<ListBoxHeaderTestPage>("ListBoxHeader");
+#endif
+
             CreateWebBrowserPages();
 
             mainPanel.LeftListBox.SelectFirstItem();
