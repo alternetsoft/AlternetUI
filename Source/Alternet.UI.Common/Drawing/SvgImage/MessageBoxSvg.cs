@@ -176,6 +176,8 @@ namespace Alternet.Drawing
         /// <returns></returns>
         public static SvgImage? GetImage(MessageBoxIcon messageBoxIcon)
         {
+            if (messageBoxIcon == MessageBoxIcon.None)
+                return null;
             var result = svg[messageBoxIcon] ?? svgActions[messageBoxIcon]?.Invoke();
             return result;
         }
@@ -194,6 +196,8 @@ namespace Alternet.Drawing
             int? size = null,
             AbstractControl? control = null)
         {
+            if(messageBoxIcon == MessageBoxIcon.None)
+                return null;
             size ??= ToolBarUtils.GetDefaultImageSize(control).Width;
             var imageSet = GetImage(messageBoxIcon)?.AsImageSet(size.Value);
             return imageSet;
@@ -213,6 +217,9 @@ namespace Alternet.Drawing
             int? size = null,
             AbstractControl? control = null)
         {
+            if(messageBoxIcon == MessageBoxIcon.None)
+                return null;
+
             size ??= ToolBarUtils.GetDefaultImageSize(control).Width;
             var imageSet = GetAsImageSet(messageBoxIcon, size, control);
             var image = imageSet?.AsImage(size.Value);
