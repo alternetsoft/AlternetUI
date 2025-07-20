@@ -13,60 +13,27 @@ namespace ControlsSample
             Padding = 20;
             Layout = LayoutStyle.Vertical;
             var header = new ListBoxHeader();
-            header.Parent = this;
             header.ParentBackColor = false;
             header.BackColor = DefaultColors.ControlBackColor;
 
             BackColor = Color.WhiteSmoke;
 
-            SpeedTextButton label1 = new()
-            {
-                Text = "Column 1",
-                Width = 100,
-                Dock = DockStyle.Left,
-            };
-            label1.SetContentHorizontalAlignment(HorizontalAlignment.Left);
+            var c1 = header.AddColumn("Column 1", 100);
+            var c2 = header.AddColumn("Column 2", 100);
+            var c3 = header.AddColumn("Column 3", 100);
+            var c4 = header.AddColumn("Column 4", 100);
 
-            SpeedTextButton label2 = new()
-            {
-                Text = "Column 2",
-                Width = 100,
-                Dock = DockStyle.Left,
-            };
-            label2.SetContentHorizontalAlignment(HorizontalAlignment.Left);
+            header.DeleteColumn(c3);
 
-            SpeedTextButton label3 = new()
-            {
-                Text = "Column 3",
-                Width = 100,
-                Dock = DockStyle.Left,
-            };
-            label3.SetContentHorizontalAlignment(HorizontalAlignment.Left);
+            var control1 = header.GetColumnControl(c1);
 
-            Splitter splitter1 = new()
+            if(control1 is not null)
             {
-                Dock = DockStyle.Left,
-                ParentBackColor = true,
-            };
+                control1.SetText("First Column");
+                control1.SetSvgImage(MessageBoxSvg.Information, null);
+            }
 
-            Splitter splitter2 = new()
-            {
-                Dock = DockStyle.Left,
-                ParentBackColor = true,
-            };
-
-            Splitter splitter3 = new()
-            {
-                Dock = DockStyle.Left,
-                ParentBackColor = true,
-            };
-
-            label1.Parent = header;
-            splitter1.Parent = header;
-            label2.Parent = header;
-            splitter2.Parent = header;
-            label3.Parent = header;
-            splitter3.Parent = header;
+            header.Parent = this;
         }
     }
 }
