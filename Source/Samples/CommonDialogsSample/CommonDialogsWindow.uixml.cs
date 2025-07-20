@@ -8,8 +8,23 @@ namespace ControlsSample
 {
     public partial class CommonDialogsWindow : Window
     {
+        public static string LoremIpsum =
+"Beneath a sky stitched with teacup clouds, the girl tiptoed across checkerboard moss. " +
+"Each step made a peculiar sound—like libraries whispering to mushrooms. " +
+"Trees bent inward to eavesdrop, their leaves rustling riddles only crickets could decipher." +
+Environment.NewLine + Environment.NewLine +
+"The map she carried was drawn entirely in nonsense, but somehow it felt correct. " +
+"It pulsed faintly in her hands, humming with ink made from stolen dreams and marmalade." +
+Environment.NewLine + Environment.NewLine +
+"“Left is usually right,” said the rabbit-shaped shadow, bowing courteously. " +
+"“Unless, of course, you're upside-down.”" +
+Environment.NewLine + Environment.NewLine +
+"And so, with a smile too wide for logic, she stepped forward—into a world where clocks " +
+"melted politely and hats outgrew heads.";
+
         private const string CustomTitle = @"Custom Title";
         private FontInfo fontInfo = AbstractControl.DefaultFont;
+        private string messageBoxText = "Message Box Text";
 
         public CommonDialogsWindow(WindowKind kind)
             : base(kind)
@@ -36,11 +51,20 @@ namespace ControlsSample
                     MessageBoxButtons.YesNo,
                 ];
 
-            messageBoxButtonsComboBox.AddRange(messageBoxButtons);
+            messageBoxButtonsComboBox.UseContextMenuAsPopup = true;
+
+            if (MessageBox.UseInternalDialog)
+            {
+                messageBoxButtonsComboBox.AddEnumValues(typeof(MessageBoxButtons));
+            }
+            else
+            {
+                messageBoxButtonsComboBox.AddRange(messageBoxButtons);
+            }
+
             messageBoxButtonsComboBox.Value = MessageBoxButtons.OKCancel;
 
-            messageBoxIconComboBox.EnumType = typeof(MessageBoxIcon);
-            messageBoxIconComboBox.Value = MessageBoxIcon.None;
+            messageBoxIconComboBox.SetValue(MessageBoxIcon.None);
 
             exceptionTypeComboBox.EnumType = typeof(TestExceptionType);
             exceptionTypeComboBox.Value = TestExceptionType.FileNotFoundException;
@@ -53,11 +77,23 @@ namespace ControlsSample
                 ];
 
             messageBoxDefaultButtonComboBox.AddRange(messageBoxDefaultButtons);
+            messageBoxDefaultButtonComboBox.UseContextMenuAsPopup = true;
             messageBoxDefaultButtonComboBox.Value = MessageBoxDefaultButton.Button1;
 
             tabControl.MinSizeGrowMode = WindowSizeToContentMode.Height;
 
             this.ResumeLayout();
+
+            showMessageBoxButton.ContextMenuStrip.Add("Toggle message box text",
+                () => ToggleText(ref messageBoxText, "Message Box Text"));
+        }
+
+        private void ToggleText(ref string toggledText, string text)
+        {
+            if (toggledText == text)
+                toggledText = LoremIpsum;
+            else
+                toggledText = text;
         }
 
         enum TestExceptionType
@@ -164,7 +200,7 @@ namespace ControlsSample
             try
             {
                 MessageBox.Show(
-                    "Message Box Text",
+                    messageBoxText,
                     "Message Box Caption",
                     (MessageBoxButtons?)messageBoxButtonsComboBox.Value ?? MessageBoxButtons.OK,
                     (MessageBoxIcon?)messageBoxIconComboBox.Value ?? MessageBoxIcon.None,
