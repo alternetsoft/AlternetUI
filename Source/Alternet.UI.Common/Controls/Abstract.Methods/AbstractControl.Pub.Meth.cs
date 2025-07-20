@@ -1436,9 +1436,13 @@ namespace Alternet.UI
 
             var sz = MaximumSize.ValueIfEmpty(Graphics.HalfOfMaxValue).ToSize();
 
-            var newSize = GetPaddedPreferredSize(GetPreferredSize(sz)).Ceiling();
+            var newSize1 = GetChildrenMaxPreferredSizePadded(sz).Ceiling();
+
+            var newSize2 = GetPaddedPreferredSize(GetPreferredSize(sz)).Ceiling();
 
             additionalSpace ??= SizeD.Empty;
+
+            var newSize = SizeD.Max(newSize1, newSize2);
 
             newSize += additionalSpace.Value;
 

@@ -237,7 +237,7 @@ namespace Alternet.UI
 
                 foreach (var line in lines)
                 {
-                    var label = new Label
+                    new Label
                     {
                         Text = line,
                         Parent = stackPanel,
