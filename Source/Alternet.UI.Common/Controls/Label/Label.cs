@@ -61,6 +61,8 @@ namespace Alternet.UI
         private bool? mnemonicMarkerEnabled;
         private Coord? maxTextWidth;
         private bool wordWrap;
+        private VerticalAlignment? imageVerticalAlignment;
+        private HorizontalAlignment? imageHorizontalAlignment;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Label"/> class.
@@ -397,6 +399,38 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets or sets the vertical alignment of the image.
+        /// </summary>
+        public virtual VerticalAlignment? ImageVerticalAlignment
+        {
+            get => imageVerticalAlignment;
+
+            set
+            {
+                if (imageVerticalAlignment == value)
+                    return;
+                imageVerticalAlignment = value;
+                Invalidate();
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets the horizontal alignment of the image.
+        /// </summary>
+        public virtual HorizontalAlignment? ImageHorizontalAlignment
+        {
+            get => imageHorizontalAlignment;
+
+            set
+            {
+                if (imageHorizontalAlignment == value)
+                    return;
+                imageHorizontalAlignment = value;
+                Invalidate();
+            }
+        }
+
+        /// <summary>
         /// Gets or sets the image that is displayed near the text.
         /// </summary>
         [DefaultValue(null)]
@@ -537,6 +571,8 @@ namespace Alternet.UI
 
             if (WordWrap)
                 prm.Flags |= DrawLabelFlags.TextHasNewLineChars;
+
+            prm.ImageVerticalAlignment = imageVerticalAlignment;
 
             var result = DrawDefaultText(dc);
             return result;
