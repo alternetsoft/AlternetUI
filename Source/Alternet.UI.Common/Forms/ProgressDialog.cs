@@ -21,7 +21,8 @@ namespace Alternet.UI
         private readonly ProgressBar progressBar;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="ProgressDialog"/> class with default title and message.
+        /// Initializes a new instance of the <see cref="ProgressDialog"/> class
+        /// with default title and message.
         /// </summary>
         public ProgressDialog()
             : this(null, null)

@@ -41,6 +41,10 @@ namespace Alternet.UI
             ButtonsVisible = false,
         };
 
+        private readonly Panel panel = new()
+        {
+        };
+
         /// <summary>
         /// Initializes a new instance of the <see cref="WindowTextInput"/> class.
         /// </summary>
@@ -54,16 +58,17 @@ namespace Alternet.UI
             MaximizeEnabled = false;
             Resizable = false;
             Title = CommonStrings.Default.WindowTitleInput;
-            Layout = LayoutStyle.Vertical;
+            panel.Layout = LayoutStyle.Vertical;
 
             DoInsideLayout(() =>
             {
-                label.Parent = this;
+                label.Parent = panel;
                 edit.HorizontalAlignment = HorizontalAlignment.Stretch;
                 edit.InnerOuterBorder = InnerOuterSelector.Outer;
-                edit.Parent = this;
+                edit.Parent = panel;
                 buttons.Margin = (0, DefaultMargin, 0, 0);
-                buttons.Parent = this;
+                buttons.Parent = panel;
+                panel.Parent = this;
             });
 
             SetSizeToContent();

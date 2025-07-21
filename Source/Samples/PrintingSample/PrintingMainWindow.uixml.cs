@@ -17,15 +17,18 @@ namespace PrintingSample
         public PrintingMainWindow()
         {
             toolBar.Parent = this;
-            toolBar.SetBorderAndMargin(AnchorStyles.Bottom, AnchorStyles.Bottom);
+            toolBar.SetVisibleBorders(false, false, false, true);
+            toolBar.Padding = 10;
 
             toolBar.AddTextBtn("Print Immediately", null, PrintImmediatelyMenuItem_Click);
-            toolBar.AddSeparator();
+            toolBar.AddSpacer();
             toolBar.AddTextBtn("Print...", null, PrintMenuItem_Click);
-            toolBar.AddSeparator();
+            toolBar.AddSpacer();
             toolBar.AddTextBtn("Page Setup...", null, PageSetupMenuItem_Click);
-            toolBar.AddSeparator();
+            toolBar.AddSpacer();
             toolBar.AddTextBtn("Print Preview...", null, PrintPreviewMenuItem_Click);
+
+            toolBar.SpeedButtons.SetUseTheme(SpeedButton.KnownTheme.RoundBorder);
 
             Icon = App.DefaultIcon;
             InitializeComponent();
