@@ -213,15 +213,15 @@ namespace Alternet.Drawing
         /// Used to get scale factor. Optional. If not specified,
         /// default scale factor is used.</param>
         public static Image? GetAsBitmap(
-            MessageBoxIcon messageBoxIcon,
+            MessageBoxIcon? messageBoxIcon,
             int? size = null,
             AbstractControl? control = null)
         {
-            if(messageBoxIcon == MessageBoxIcon.None)
+            if(messageBoxIcon is null || messageBoxIcon == MessageBoxIcon.None)
                 return null;
 
             size ??= ToolBarUtils.GetDefaultImageSize(control).Width;
-            var imageSet = GetAsImageSet(messageBoxIcon, size, control);
+            var imageSet = GetAsImageSet(messageBoxIcon.Value, size, control);
             var image = imageSet?.AsImage(size.Value);
             return image;
         }
