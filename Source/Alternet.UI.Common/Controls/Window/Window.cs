@@ -2,6 +2,7 @@ using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Linq;
 
 using Alternet.Base.Collections;
@@ -1465,6 +1466,19 @@ namespace Alternet.UI
             }
         }
 
+        /// <inheritdoc/>
+        public override void RaiseChildInserted(int index, AbstractControl childControl)
+        {
+            if(childControl is GenericControl)
+            {
+                throw new ArgumentException(
+                    $"Generic control '{childControl.GetType()}' cannot be added to Window. Use Panel or other container as it's parent.",
+                    nameof(childControl));
+            }
+
+            base.RaiseChildInserted(index, childControl);
+        }
+
         /// <summary>
         /// Aligns control location inside the specified rectangle using given
         /// horizontal and vertical alignment.
@@ -1858,7 +1872,8 @@ namespace Alternet.UI
         {
             base.OnPaint(e);
 
-            DrawDefaultBackground(e);
+            if(GetWindowKind() == WindowKind.Control)
+                DrawDefaultBackground(e);
         }
 
         /// <summary>
@@ -2079,6 +2094,8 @@ namespace Alternet.UI
         /// </summary>
         private void Initialize()
         {
+            var windowKind = GetWindowKind();
+
             UserPaint = true;
 
             owner.Changed = () =>
@@ -2092,7 +2109,7 @@ namespace Alternet.UI
             BackColor = DefaultColors.WindowBackColor;
             ForeColor = DefaultColors.WindowForeColor;
 
-            if (GetWindowKind() != WindowKind.Control)
+            if (windowKind != WindowKind.Control)
                 App.Current.RegisterWindow(this);
 
             Bounds = GetDefaultBounds();
