@@ -38,6 +38,15 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Initializes a new instance of the <see cref="ControlSet"/> class.
+        /// </summary>
+        /// <param name="controls">Controls.</param>
+        public ControlSet(IEnumerable<AbstractControl> controls)
+        {
+            items = controls.ToArray();
+        }
+
+        /// <summary>
         /// Gets whether <see cref="Items"/> collection is empty.
         /// </summary>
         public bool IsEmpty
@@ -817,6 +826,21 @@ namespace Alternet.UI
                 if (item.Visible)
                     action(item);
             }
+        }
+
+        /// <summary>
+        /// Sets the theme for all <see cref="SpeedButton"/> controls
+        /// </summary>
+        /// <param name="theme">The theme to apply to the <see cref="SpeedButton"/>.</param>
+        public virtual ControlSet SetUseTheme(SpeedButton.KnownTheme theme)
+        {
+            foreach (var item in items)
+            {
+                if (item is SpeedButton button)
+                    button.UseTheme = theme;
+            }
+
+            return this;
         }
 
         /// <summary>
