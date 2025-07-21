@@ -944,7 +944,7 @@ namespace Alternet.UI
         public virtual ControlFlags StateFlags
         {
             get => stateFlags;
-            internal set => stateFlags = value;
+            protected set => stateFlags = value;
         }
 
         /// <summary>
