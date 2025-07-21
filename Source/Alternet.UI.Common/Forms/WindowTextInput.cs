@@ -97,6 +97,17 @@ namespace Alternet.UI
             set => Label.Text = value;
         }
 
+        /// <inheritdoc/>
+        public override ControlFlags StateFlags
+        {
+            get => base.StateFlags;
+            protected set
+            {
+                value &= ~ControlFlags.StartLocationApplied;
+                base.StateFlags = value;
+            }
+        }
+
         /// <summary>
         /// Gets panel with buttons.
         /// </summary>
