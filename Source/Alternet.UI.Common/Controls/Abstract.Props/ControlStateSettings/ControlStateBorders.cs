@@ -41,6 +41,36 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Sets the corner radius for all border states of the control.
+        /// </summary>
+        /// <remarks>This method updates the corner radius for multiple visual
+        /// states of the control,
+        /// including normal, hovered, pressed, disabled, focused, and selected states.
+        /// If radius is null, no specific corner radius is applied.</remarks>
+        /// <param name="radius">The corner radius to apply. Can be null to indicate
+        /// no specific radius.</param>
+        /// <param name="radiusIsPercent">A boolean value indicating whether the
+        /// specified radius is a percentage of the control's size. <c>true</c> if the
+        /// radius is a percentage; otherwise, <c>false</c>.</param>
+        public virtual void SetCornerRadius(Coord? radius, bool radiusIsPercent)
+        {
+            Internal(Normal);
+            Internal(Hovered);
+            Internal(Pressed);
+            Internal(Disabled);
+            Internal(Focused);
+            Internal(Selected);
+
+            void Internal(BorderSettings? settings)
+            {
+                if(settings == null)
+                    return;
+                settings.UniformCornerRadius = radius;
+                settings.UniformRadiusIsPercent = radiusIsPercent;
+            }
+        }
+
+        /// <summary>
         /// Sets color to all initialized borders.
         /// </summary>
         /// <param name="color">New color value.</param>
