@@ -847,7 +847,9 @@ namespace Alternet.UI
                     }
                 }
 
-                if(e.InnerException is not null)
+                var containsInnerText = e.Message?.Contains(e.InnerException.Message) ?? false;
+
+                if (e.InnerException is not null && !containsInnerText)
                 {
                     text += "\n" + LogUtils.SectionSeparator + "\n";
                     text += "Inner exception: \n";
