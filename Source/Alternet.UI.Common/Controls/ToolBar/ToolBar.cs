@@ -325,6 +325,20 @@ namespace Alternet.UI
             }
         }
 
+        /// <summary>
+        /// Retrieves a set of speed buttons contained within the toolbar.
+        /// </summary>
+        /// <returns>A <see cref="ControlSet"/> containing all <see cref="SpeedButton"/>
+        /// instances that are children of the current control.</returns>
+        [Browsable(false)]
+        public virtual ControlSet SpeedButtons
+        {
+            get
+            {
+                return new ControlSet(Children.OfType<SpeedButton>());
+            }
+        }
+
         /// <inheritdoc/>
         public override bool IsBold
         {
