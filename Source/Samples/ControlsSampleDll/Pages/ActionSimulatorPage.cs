@@ -20,26 +20,32 @@ namespace ControlsSample
         private readonly TextBox editor2;
         private int counter;
 
+        private readonly Panel panel = new()
+        {
+            Layout = LayoutStyle.Vertical,
+        };
+
         public ActionSimulatorPage()
         {
-            Layout = LayoutStyle.Vertical;
             MinChildMargin = 5;
             Size = (800, 600);
 
-            new Label(this, "This demo send mouse clicks and key presses to operating system");
-            new Label(this, "in order to control user interface of the application.");
-            new Label(this, "Press F5 to start.");
+            new Label(panel, "This demo send mouse clicks and key presses to operating system");
+            new Label(panel, "in order to control user interface of the application.");
+            new Label(panel, "Press F5 to start.");
 
-            button1 = new(this, "Button 1", () => App.Log("Button 1 clicked"));
-            button2 = new(this, "Button 2", () => App.Log("Button 2 clicked"));
+            button1 = new(panel, "Button 1", () => App.Log("Button 1 clicked"));
+            button2 = new(panel, "Button 2", () => App.Log("Button 2 clicked"));
 
-            editor = new TextBox(this);
-            editor2 = new TextBox(this);
+            editor = new TextBox(panel);
+            editor2 = new TextBox(panel);
 
-            new Label(this, "Simulator moves mouse to 'Button1' and clicks it.");
-            new Label(this, "After that, it moves mouse to the editor, clicks it");
-            new Label(this, "and enters 'Hello' text.");
-            new Label(this, "Simulator currently doesn't work when using Wayland on Linux.");
+            new Label(panel, "Simulator moves mouse to 'Button1' and clicks it.");
+            new Label(panel, "After that, it moves mouse to the editor, clicks it");
+            new Label(panel, "and enters 'Hello' text.");
+            new Label(panel, "Simulator currently doesn't work when using Wayland on Linux.");
+
+            panel.Parent = this;
         }
 
         protected override void OnKeyDown(KeyEventArgs e)

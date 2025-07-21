@@ -42,15 +42,19 @@ namespace Alternet.UI
             MarginBottom = 10,
         };
 
+        private readonly Panel rootPanel = new()
+        {
+            Layout = LayoutStyle.Vertical,
+        };
+
         /// <summary>
         /// Initializes a new instance of the <see cref="WindowFilePreview"/> class.
         /// </summary>
         public WindowFilePreview()
         {
-            Layout = LayoutStyle.Vertical;
             Padding = 10;
 
-            pathLabel.Parent = this;
+            pathLabel.Parent = rootPanel;
 
             /*
                 PreviewUixml.ShowExceptionDialog = true;
@@ -70,7 +74,7 @@ namespace Alternet.UI
             panel.LeftPanel.Width = 400;
             panel.BottomPanel.Height = 200;
             panel.VerticalAlignment = VerticalAlignment.Fill;
-            panel.Parent = this;
+            panel.Parent = rootPanel;
 
             fileListBox.Parent = panel.LeftPanel;
 
@@ -93,6 +97,8 @@ namespace Alternet.UI
             {
                 pathLabel.Text = fileListBox.SelectedFolder ?? string.Empty;
             };
+
+            rootPanel.Parent = this;
         }
 
         internal static new WindowFilePreview Default
