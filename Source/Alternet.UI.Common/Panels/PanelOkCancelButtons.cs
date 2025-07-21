@@ -291,6 +291,12 @@ namespace Alternet.UI
         [Browsable(false)]
         public KnownButton? LastButtonClicked { get; private set; }
 
+        /// <summary>
+        /// Gets the <see cref="DialogResult"/> corresponding to the last button clicked.
+        /// </summary>
+        public virtual DialogResult LastClickedAsDialogResult =>
+            DialogFactory.ToDialogResult(LastButtonClicked);
+
         [Browsable(false)]
         internal new string Text
         {
@@ -531,6 +537,66 @@ namespace Alternet.UI
                     return KnownButton.Close;
                 return null;
             }
+        }
+
+        /// <summary>
+        /// Resets the text of all button controls within the panel to their default values.
+        /// </summary>
+        /// <remarks>This method iterates over all child elements and updates the text of
+        /// each button based on its associated known button type.
+        /// </remarks>
+        public virtual void ResetButtonsText()
+        {
+            DoInsideLayout(() =>
+            {
+                for (int i = Children.Count - 1; i >= 0; i--)
+                {
+                    var child = Children[i];
+                    if (child is not Button btn)
+                        continue;
+                    var value = btn.CustomAttr.GetAttribute("KnownButton");
+
+                    if (value is not KnownButton knownButton)
+                        continue;
+                    btn.Text = KnownButtons.GetText(knownButton) ?? knownButton.ToString();
+                }
+            });
+        }
+
+        /// <summary>
+        /// Sets the text of a specified button.
+        /// </summary>
+        /// <remarks>
+        /// This method attempts to set the text of the specified button, identified by
+        /// the <paramref name="button"/> parameter.
+        /// If the button is not found in the panel, the method returns <see langword="false"/>
+        /// and no changes are made.
+        /// If the <paramref name="text"/> parameter is <see langword="null"/> or empty,
+        /// the button's text is set to the default text
+        /// associated with the <see cref="KnownButton"/> value, as provided
+        /// by <c>KnownButtons.GetText</c>.
+        /// Otherwise, the button's text is set to the specified <paramref name="text"/> value.
+        /// </remarks>
+        /// <param name="button">The button whose text is to be set.</param>
+        /// <param name="text">The new text to display on the button.</param>
+        /// <returns><see langword="true"/> if the button text was successfully set;
+        /// otherwise, <see langword="false"/>.</returns>
+        public virtual bool SetButtonText(KnownButton button, string? text)
+        {
+            var btn = GetButton(button);
+            if (btn is null)
+                return false;
+
+            string? s;
+
+            if (string.IsNullOrEmpty(text))
+                s = KnownButtons.GetText(button) ?? string.Empty;
+            else
+                s = text;
+
+            btn.Text = s ?? button.ToString();
+
+            return true;
         }
 
         /// <summary>
