@@ -9,12 +9,16 @@ namespace Alternet::UI
     {
         assert(_dc);
 
+        _graphicsContext = wxGraphicsContext::CreateFromUnknownDC(*_dc);
+
+/*
 #ifdef  __WXMSW__
         wxGraphicsRenderer* renderer = wxGraphicsRenderer::GetDirect2DRenderer();
         _graphicsContext = renderer->CreateContextFromUnknownDC(*_dc);
 #else
         _graphicsContext = wxGraphicsContext::CreateFromUnknownDC(*_dc);
 #endif
+*/
     }
 
     DrawingContext::~DrawingContext()
