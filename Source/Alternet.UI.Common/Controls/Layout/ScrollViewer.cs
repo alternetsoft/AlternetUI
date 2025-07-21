@@ -113,6 +113,8 @@ namespace Alternet.UI
         /// <inheritdoc/>
         protected override void OnBeforeChildMouseWheel(object? sender, MouseEventArgs e)
         {
+            /*
+
             if (e.Handled || IgnoreChildMouseWheel(sender as AbstractControl)
                 || !IsScrolledWithMouseWheel)
                 return;
@@ -131,6 +133,7 @@ namespace Alternet.UI
             }
 
             e.Handled = true;
+            */
         }
 
         /// <inheritdoc/>
