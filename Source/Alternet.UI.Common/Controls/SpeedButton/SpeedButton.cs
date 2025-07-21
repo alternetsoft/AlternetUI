@@ -16,6 +16,18 @@ namespace Alternet.UI
     public partial class SpeedButton : GraphicControl, ICommandSource
     {
         /// <summary>
+        /// Represents the default border radius used for rounding corners.
+        /// This value is used in the <see cref="KnownTheme.RoundBorder"/> theme.
+        /// </summary>
+        public static Coord DefaultRoundBorderRadius = 25;
+
+        /// <summary>
+        /// Indicates whether the default round border radius is expressed as a percentage.
+        /// This value is used in the <see cref="KnownTheme.RoundBorder"/> theme.
+        /// </summary>
+        public static bool DefaultRoundBorderRadiusIsPercent = true;
+
+        /// <summary>
         /// Gets or sets default click repeat delay used when
         /// <see cref="SpeedButton.IsClickRepeated"/> is True.
         /// </summary>
@@ -64,6 +76,13 @@ namespace Alternet.UI
         /// which have <see cref="UseTheme"/> equal to <see cref="KnownTheme.StaticBorder"/>.
         /// </summary>
         public static ControlColorAndStyle StaticBorderTheme;
+
+        /// <summary>
+        /// Gets or sets default color and style settings
+        /// for all <see cref="SpeedButton"/> controls
+        /// which have <see cref="UseTheme"/> equal to <see cref="KnownTheme.RoundBorder"/>.
+        /// </summary>
+        public static ControlColorAndStyle RoundBorderTheme;
 
         /// <summary>
         /// Gets or sets default color and style settings
@@ -164,7 +183,7 @@ namespace Alternet.UI
 
         static SpeedButton()
         {
-            var tabControlBorderColor = DefaultColors.BorderColor;
+            var borderColor = DefaultColors.BorderColor;
 
             InitThemeLight(DefaultTheme.Light);
             InitThemeDark(DefaultTheme.Dark);
@@ -172,9 +191,12 @@ namespace Alternet.UI
             StaticBorderTheme = DefaultTheme.Clone();
             StaticBorderTheme.NormalBorderAsHovered();
             StaticBorderTheme.DisabledBorderAsHovered();
-            StaticBorderTheme.SetBorderColor(tabControlBorderColor);
+            StaticBorderTheme.SetBorderColor(borderColor);
 
-            StickyBorderTheme = CreateBordered(tabControlBorderColor);
+            RoundBorderTheme = StaticBorderTheme.Clone();
+            RoundBorderTheme.SetCornerRadius(DefaultRoundBorderRadius, DefaultRoundBorderRadiusIsPercent);
+
+            StickyBorderTheme = CreateBordered(borderColor);
             CheckBorderTheme = CreateBordered(DefaultColors.DefaultCheckBoxColor);
 
             ControlColorAndStyle CreateBordered(LightDarkColor? color)
@@ -304,6 +326,11 @@ namespace Alternet.UI
             /// Theme <see cref="PushButtonPressedTheme"/> is used.
             /// </summary>
             PushButtonPressed,
+
+            /// <summary>
+            /// Theme <see cref="RoundBorderTheme"/> is used.
+            /// </summary>
+            RoundBorder,
         }
 
         /// <summary>
@@ -1531,6 +1558,8 @@ namespace Alternet.UI
                     return PushButtonHoveredTheme;
                 case KnownTheme.PushButtonPressed:
                     return PushButtonPressedTheme;
+                case KnownTheme.RoundBorder:
+                    return RoundBorderTheme;
                 case KnownTheme.Default:
                 default:
                     return DefaultTheme;
