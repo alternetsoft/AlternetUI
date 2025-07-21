@@ -105,6 +105,17 @@ namespace Alternet.UI
             set => Label.Text = value;
         }
 
+        /// <inheritdoc/>
+        public override ControlFlags StateFlags
+        {
+            get => base.StateFlags;
+            protected set
+            {
+                value &= ~ControlFlags.StartLocationApplied;
+                base.StateFlags = value;
+            }
+        }
+
         /// <summary>
         /// Gets panel with buttons.
         /// </summary>
@@ -126,6 +137,64 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Configures the message box with "Yes", "No", "Cancel", and "All" buttons,
+        /// and sets the specified title and message.
+        /// </summary>
+        /// <param name="title">The title to display on the message box.</param>
+        /// <param name="message">The message content to display within the message box.</param>
+        /// <param name="buttonLabels">An optional array of custom labels for the buttons.
+        /// The array should contain four elements corresponding to
+        /// the "Yes", "No", "Cancel", and "All" buttons, respectively.
+        /// If <paramref name="buttonLabels"/> is null or an
+        /// element is null, the default label for that button is used.</param>
+        /// <returns>The current instance of <see cref="WindowMessageBox"/> configured
+        /// with the specified settings.</returns>
+        public virtual WindowMessageBox WithYesNoCancelAll(
+            string title,
+            string message,
+            string[]? buttonLabels = null)
+        {
+            DoInsideLayout(() =>
+            {
+                Title = title;
+                Message = message;
+                SetMessageIcon(MessageBoxIcon.Question);
+
+                Buttons.SetButtons(
+                    KnownButton.Yes,
+                    KnownButton.No,
+                    KnownButton.Cancel,
+                    KnownButton.All);
+                Buttons.SetButtonText(KnownButton.Yes, buttonLabels?[0]);
+                Buttons.SetButtonText(KnownButton.No, buttonLabels?[1]);
+                Buttons.SetButtonText(KnownButton.Cancel, buttonLabels?[2]);
+                Buttons.SetButtonText(KnownButton.All, buttonLabels?[3]);
+                Label.ImageVerticalAlignment = VerticalAlignment.Center;
+            });
+
+            SetSizeToContent();
+
+            Buttons.SetDefaultButtonExclusive(KnownButton.Yes);
+            Buttons.SetCancelButtonExclusive(KnownButton.Cancel);
+            ActiveControl = Buttons.GetDefaultButton();
+            Buttons.SetDefaultButtonExclusive(null);
+
+            return this;
+        }
+
+        /// <summary>
+        /// Sets the icon displayed in the message box.
+        /// </summary>
+        /// <remarks>The method updates the image of the label to reflect
+        /// the specified icon.</remarks>
+        /// <param name="icon">The <see cref="MessageBoxIcon"/> to display,
+        /// or <see langword="null"/> to display no icon.</param>
+        public virtual void SetMessageIcon(MessageBoxIcon? icon)
+        {
+            Label.Image = MessageBoxSvg.GetAsBitmap(icon);
+        }
+
+        /// <summary>
         /// Displays a message box with the specified information.
         /// </summary>
         /// <remarks>This method sets up the message box with the provided information
@@ -141,10 +210,11 @@ namespace Alternet.UI
             DoInsideLayout(() =>
             {
                 Label.Text = value.Text?.ToString() ?? string.Empty;
-                Label.Image = MessageBoxSvg.GetAsBitmap(value.Icon);
+                SetMessageIcon(value.Icon);
                 Label.ImageVerticalAlignment = VerticalAlignment.Top;
                 Title = value.Caption ?? string.Empty;
                 Buttons.SetButtons(value.Buttons);
+                Buttons.ResetButtonsText();
             });
 
             Buttons.ButtonClickedAction = () =>
@@ -158,8 +228,6 @@ namespace Alternet.UI
             ActiveControl = Buttons.GetDefaultButton();
             if(Buttons.VisibleButtonCount != 1)
                 Buttons.SetDefaultButtonExclusive(null);
-
-            StateFlags &= ~ControlFlags.StartLocationApplied;
 
             ShowDialogAsync(value.Owner, (result) =>
             {
