@@ -618,9 +618,12 @@ namespace Alternet.UI
 
             DoInsideLayout(() =>
             {
+                var applyButtonIndex = Array.IndexOf(buttons, KnownButton.Apply);
+                var cancelButtonIndex = Array.IndexOf(buttons, KnownButton.Cancel);
+
                 ShowOkButton = buttons.Contains(KnownButton.OK);
-                ShowApplyButton = buttons.Contains(KnownButton.Apply);
-                ShowCancelButton = buttons.Contains(KnownButton.Cancel);
+                ShowApplyButton = applyButtonIndex >= 0;
+                ShowCancelButton = cancelButtonIndex >= 0;
 
                 foreach (var button in buttons)
                 {
@@ -649,6 +652,24 @@ namespace Alternet.UI
                     {
                         child.Visible = false;
                     }
+                }
+
+                SortChildren(Comparison);
+
+                int Comparison(AbstractControl x, AbstractControl y)
+                {
+                    if (x is Button btnX && y is Button btnY)
+                    {
+                        var knownButtonX = btnX.CustomAttr.GetAttribute<KnownButton>("KnownButton");
+                        var knownButtonY = btnY.CustomAttr.GetAttribute<KnownButton>("KnownButton");
+
+                        var indexX = Array.IndexOf(buttons, knownButtonX);
+                        var indexY = Array.IndexOf(buttons, knownButtonY);
+
+                        return indexX.CompareTo(indexY);
+                    }
+
+                    return 0;
                 }
             });
         }
