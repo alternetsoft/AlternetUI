@@ -10,13 +10,24 @@ namespace Alternet.UI
     public enum PickerPopupKind
     {
         /// <summary>
-        /// Popup window inherited from <see cref="PopupListBox"/>.
+        /// Show context menu as a popup window if there are a few items,
+        /// otherwise use a popup window with list box.
+        /// </summary>
+        Auto,
+
+        /// <summary>
+        /// Show popup window with list box.
         /// </summary>
         ListBox,
 
         /// <summary>
-        /// Use context menu as a popup window.
+        /// Show context menu as a popup window.
         /// </summary>
         ContextMenu,
+
+        /// <summary>
+        /// No popup window is shown.
+        /// </summary>
+        None,
     }
 }
