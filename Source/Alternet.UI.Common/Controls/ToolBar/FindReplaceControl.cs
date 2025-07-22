@@ -18,6 +18,11 @@ namespace Alternet.UI
     public partial class FindReplaceControl : ToolBarSet, IFindReplaceControlHandler
     {
         /// <summary>
+        /// Indicates whether the gear button is enabled by default.
+        /// </summary>
+        public static bool DefaultShowGearButton = false;
+
+        /// <summary>
         /// Gets or sets the default minimum width of the edit controls in the
         /// Find and Replace dialogs.
         /// </summary>
@@ -80,6 +85,8 @@ namespace Alternet.UI
         {
             Text = CommonStrings.Default.FindScopeSelectionOnly,
         };
+
+        private readonly ContextMenu moreActionsMenu = new();
 
         private IFindReplaceConnect? manager;
         private bool canFindInCurrentDocument = true;
@@ -214,7 +221,17 @@ namespace Alternet.UI
                 replaceAllButton.HorizontalAlignment = HorizontalAlignment.Right;
                 IdReplaceAll = replaceAllButton.UniqueId;
 
-                IdReplaceEmptyButton2 = ReplaceToolBar.AddRightSpeedBtn();
+                if (DefaultShowGearButton)
+                {
+                    IdReplaceMoreActions = ReplaceToolBar.AddRightSpeedBtn(
+                        CommonStrings.Default.ButtonOptions,
+                        KnownSvgImages.ImgGear);
+                    ReplaceToolBar.SetToolDropDownMenu(IdReplaceMoreActions, moreActionsMenu);
+                }
+                else
+                {
+                    IdReplaceMoreActions = ReplaceToolBar.AddRightSpeedBtn();
+                }
 
                 ReplaceToolBar.Visible = false;
 
@@ -229,6 +246,35 @@ namespace Alternet.UI
                 ReplaceToolBar.AddToolAction(IdReplaceAll, OnClickReplaceAll);
 
                 ItemSize = 32;
+
+                var itemToggleMatchCase = moreActionsMenu.Add(
+                    CommonStrings.Default.FindOptionMatchCase,
+                    ToggleMatchCase);
+
+                var itemToggleWholeWord = moreActionsMenu.Add(
+                    CommonStrings.Default.FindOptionMatchWholeWord,
+                    ToggleWholeWord);
+
+                var itemToggleHiddenText = moreActionsMenu.Add(
+                    CommonStrings.Default.FindOptionHiddenText,
+                    ToggleHiddenText);
+
+                var itemToggleRegularExpressions = moreActionsMenu.Add(
+                    CommonStrings.Default.FindOptionUseRegularExpressions,
+                    ToggleRegularExpressions);
+
+                var itemTogglePromptOnReplace = moreActionsMenu.Add(
+                    CommonStrings.Default.FindOptionPromptOnReplace,
+                    TogglePromptOnReplace);
+
+                moreActionsMenu.Opening += (sender, e) =>
+                {
+                    itemToggleMatchCase.Checked = OptionMatchCase;
+                    itemToggleWholeWord.Checked = OptionMatchWholeWord;
+                    itemToggleHiddenText.Checked = OptionHiddenText;
+                    itemToggleRegularExpressions.Checked = OptionUseRegularExpressions;
+                    itemTogglePromptOnReplace.Checked = OptionPromptOnReplace;
+                };
             }
         }
 
@@ -430,6 +476,19 @@ namespace Alternet.UI
             get
             {
                 return ReplaceEdit;
+            }
+        }
+
+        /// <summary>
+        /// Gets drop down menu for gear button. Use <see cref="DefaultShowGearButton"/>
+        /// in order to show the gear button.
+        /// </summary>
+        [Browsable(false)]
+        public ContextMenu MoreActionsMenu
+        {
+            get
+            {
+                return moreActionsMenu;
             }
         }
 
@@ -1128,7 +1187,7 @@ namespace Alternet.UI
         /// Gets id of the last empty button on the replace toolbar.
         /// </summary>
         [Browsable(false)]
-        public ObjectUniqueId IdReplaceEmptyButton2 { get; internal set; }
+        public ObjectUniqueId IdReplaceMoreActions { get; internal set; }
 
         /// <summary>
         /// Gets id of the 'Replace' button.
@@ -1424,6 +1483,16 @@ namespace Alternet.UI
         public void SelectAllTextInFindEditor()
         {
             FindEdit.MainControl.SelectAll();
+        }
+
+        /// <summary>
+        /// Toggles the state of the prompt option for replace operations.
+        /// </summary>
+        /// <remarks>This method inverts the current setting of the <see cref="OptionPromptOnReplace"/>
+        /// property, enabling or disabling the prompt for replace operations.</remarks>
+        public void TogglePromptOnReplace()
+        {
+            OptionPromptOnReplace = !OptionPromptOnReplace;
         }
 
         /// <summary>

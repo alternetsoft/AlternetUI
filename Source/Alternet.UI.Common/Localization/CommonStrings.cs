@@ -243,6 +243,12 @@ namespace Alternet.UI.Localization
         public string FindOptionWrap { get; set; } = "Wrap around";
 
         /// <inheritdoc cref="ButtonOk"/>
+        public string FindOptionHiddenText { get; set; } = "Search hidden text";
+
+        /// <inheritdoc cref="ButtonOk"/>
+        public string FindOptionPromptOnReplace { get; set; } = "Prompt on replace";
+
+        /// <inheritdoc cref="ButtonOk"/>
         public string FindOptionMatchCase { get; set; } = "Match case";
 
         /// <inheritdoc cref="ButtonOk"/>
