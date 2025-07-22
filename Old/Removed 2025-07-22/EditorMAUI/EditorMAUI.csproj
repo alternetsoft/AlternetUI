@@ -102,7 +102,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="$(StudioPath)\Demo\Editor.AlternetUI\AllDemos\EditorUI\EditorUI.Dll.csproj" />
     <ProjectReference Include="$(StudioPath)\Source\Parsers\Roslyn\Alternet.Syntax.Parsers.Roslyn.csproj" />
     <ProjectReference Include="..\..\Alternet.UI.Maui\Alternet.UI.Maui.csproj" />
 

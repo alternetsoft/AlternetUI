@@ -3,8 +3,6 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.11.35303.130
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EditorMAUI", "EditorMAUI.csproj", "{225CD8CE-0C50-46BB-8A0D-2890A3DAAD7D}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Alternet.UI.Maui", "..\..\Alternet.UI.Maui\Alternet.UI.Maui.csproj", "{1C9ED836-6338-4373-9A83-28F49B631565}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Alternet.Common.AlternetUI", "..\..\..\..\AlternetStudio\Source\Common.AlternetUI\Alternet.Common.AlternetUI.csproj", "{80B26765-8E99-4BA0-805C-E8D707C593B5}"
@@ -222,24 +220,6 @@ Global
 		Release|x86 = Release|x86
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{225CD8CE-0C50-46BB-8A0D-2890A3DAAD7D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{225CD8CE-0C50-46BB-8A0D-2890A3DAAD7D}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{225CD8CE-0C50-46BB-8A0D-2890A3DAAD7D}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
-		{225CD8CE-0C50-46BB-8A0D-2890A3DAAD7D}.Debug|x64.ActiveCfg = Debug|Any CPU
-		{225CD8CE-0C50-46BB-8A0D-2890A3DAAD7D}.Debug|x64.Build.0 = Debug|Any CPU
-		{225CD8CE-0C50-46BB-8A0D-2890A3DAAD7D}.Debug|x64.Deploy.0 = Debug|Any CPU
-		{225CD8CE-0C50-46BB-8A0D-2890A3DAAD7D}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{225CD8CE-0C50-46BB-8A0D-2890A3DAAD7D}.Debug|x86.Build.0 = Debug|Any CPU
-		{225CD8CE-0C50-46BB-8A0D-2890A3DAAD7D}.Debug|x86.Deploy.0 = Debug|Any CPU
-		{225CD8CE-0C50-46BB-8A0D-2890A3DAAD7D}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{225CD8CE-0C50-46BB-8A0D-2890A3DAAD7D}.Release|Any CPU.Build.0 = Release|Any CPU
-		{225CD8CE-0C50-46BB-8A0D-2890A3DAAD7D}.Release|Any CPU.Deploy.0 = Release|Any CPU
-		{225CD8CE-0C50-46BB-8A0D-2890A3DAAD7D}.Release|x64.ActiveCfg = Release|Any CPU
-		{225CD8CE-0C50-46BB-8A0D-2890A3DAAD7D}.Release|x64.Build.0 = Release|Any CPU
-		{225CD8CE-0C50-46BB-8A0D-2890A3DAAD7D}.Release|x64.Deploy.0 = Release|Any CPU
-		{225CD8CE-0C50-46BB-8A0D-2890A3DAAD7D}.Release|x86.ActiveCfg = Release|Any CPU
-		{225CD8CE-0C50-46BB-8A0D-2890A3DAAD7D}.Release|x86.Build.0 = Release|Any CPU
-		{225CD8CE-0C50-46BB-8A0D-2890A3DAAD7D}.Release|x86.Deploy.0 = Release|Any CPU
 		{1C9ED836-6338-4373-9A83-28F49B631565}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{1C9ED836-6338-4373-9A83-28F49B631565}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1C9ED836-6338-4373-9A83-28F49B631565}.Debug|x64.ActiveCfg = Debug|Any CPU
@@ -1313,7 +1293,6 @@ Global
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
-		{225CD8CE-0C50-46BB-8A0D-2890A3DAAD7D} = {D84C4058-F85B-415C-9396-CB5DF82909C5}
 		{1C9ED836-6338-4373-9A83-28F49B631565} = {D84C4058-F85B-415C-9396-CB5DF82909C5}
 		{80B26765-8E99-4BA0-805C-E8D707C593B5} = {244F8BFE-0438-4B3D-BB0D-C37B91C9BE04}
 		{61ABF843-B82F-4426-902F-CB6EA9FB57B8} = {B2A9BC6A-3E80-4D51-A37B-9DA316EABDC0}
