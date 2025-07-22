@@ -20,6 +20,11 @@ namespace Alternet.UI
     public partial class LogListBox : VirtualTreeControl
     {
         /// <summary>
+        /// Indicates whether message identifiers should be displayed in the log.
+        /// </summary>
+        public static bool ShowMessageIdentifier = true;
+
+        /// <summary>
         /// Gets or sets image used for error messages.
         /// </summary>
         public static SvgImage? ErrorImage = null;
@@ -180,7 +185,6 @@ namespace Alternet.UI
             boundToApplicationLog = true;
             ContextMenu.Required();
             App.LogMessage += Application_LogMessage;
-            App.LogRefresh += Application_LogRefresh;
             LogUtils.DebugLogVersion(ShowDebugWelcomeMessage);
         }
 
@@ -194,7 +198,6 @@ namespace Alternet.UI
             boundToApplicationLog = false;
 
             App.LogMessage -= Application_LogMessage;
-            App.LogRefresh -= Application_LogRefresh;
         }
 
         /// <summary>
@@ -243,7 +246,10 @@ namespace Alternet.UI
         {
             if (string.IsNullOrWhiteSpace(msg))
                 return string.Empty;
-            return $" [{id}] {msg}";
+
+            if(ShowMessageIdentifier)
+                return $" [{id}] {msg}";
+            return msg?.ToString() ?? string.Empty;
         }
 
         /// <inheritdoc/>

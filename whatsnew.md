@@ -1,3 +1,60 @@
+# 0.9.745 (2025 July 22)
+
+- **SpeedButtonWithListPopup**: Auto popup kind with threshold.
+  Introduces `PickerPopupKind.Auto` and `MaxItemsUsingContextMenu` to select between context menu and list box based on item count. Default popup kind is now Auto, improving usability for varying list sizes.
+
+- **PanelOkCancelButtons**: Add button text management. 
+  Introduced `ResetButtonsText` to reset all button texts to their defaults and `SetButtonText` to set or reset the text of a specific button. 
+  Also added `LastClickedAsDialogResult` property to retrieve the dialog result of the last clicked button.
+
+- **Window / wxWidgets**: Restrict adding `GenericControl`. 
+  Added a check in `RaiseChildInserted` to prevent adding `GenericControl` instances directly to `Window`, enforcing use of a `Panel` or other container.
+
+- **Control State Settings**: Add `SetCornerRadius` method. 
+  Introduced `SetCornerRadius` methods in `ControlColorAndStyle` and `ControlStateBorders` to allow setting the corner radius for all border states of a control.
+
+- **ToolBar**: Add `SpeedButtons` property. 
+  Introduces a new `SpeedButtons` property to the `ToolBar` class, providing access to all `SpeedButton` child controls as a `ControlSet`.
+
+- **SpeedButton**: Add `RoundBorder` theme. 
+  Introduces the `RoundBorder` theme for `SpeedButton`, including default border radius settings and a new static `RoundBorderTheme` property.
+
+- **MessageBox**: Add `UseInternalDialog` option. 
+  Introduces a static `UseInternalDialog` property to control whether the internal dialog is used for `MessageBox` display.
+
+- **WindowMessageBox**: Add dialog implementation. 
+  Introduces the `WindowMessageBox` class for displaying MessageBox-like dialogs with customizable text, icon, caption, and buttons. 
+  Provides static and instance methods to show message boxes asynchronously and handle user interaction results.
+
+- **Graphics / DrawLabel**: Add image alignment options. 
+  Introduced `ImageVerticalAlignment` and `ImageHorizontalAlignment` properties to `DrawLabelParams`, allowing customization of image alignment in label drawing.
+
+- **Label**: Add image alignment properties. 
+  Introduced `ImageVerticalAlignment` and `ImageHorizontalAlignment` properties to the `Label` class, allowing customization of image alignment.
+
+- **PanelOkCancelButtons**: Add flexible button management. 
+  Refactored `PanelOkCancelButtons` to support dynamic creation, visibility, and event handling for Ok, Cancel, Apply, and custom buttons. 
+  Added new constructors, visibility properties, click events, and button management helpers for configuration and exclusivity.
+
+- **AbstractControl / Layout**: Introduce `LayoutFlags` enum. 
+  Adds `LayoutFlags` property to `AbstractControl` to customize layout iteration direction. 
+  `Splitter` now selects the correct sibling based on layout direction.
+
+- **TabControl / CardPanelHeader**: Add close button. 
+  Introduced an optional close button to `CardPanelHeader` with related events and properties. 
+  Exposed close button and its visibility through `TabControl`, and added an event for close button clicks.
+
+- **SplittedPanel**: Add panel management helpers. 
+  Introduced utility methods for managing child controls, visibility, and dimensions of panels by position: 
+  `EnsureChild`, `GetPanel`, `GetPanelVisible`, `GetPanelWidth`, `GetPanelHeight`, 
+  `SetPanelWidth`, `SetPanelHeight`, `SetPanelWidthAtLeast`, `SetPanelHeightAtLeast`, 
+  `EnsureSideBarChild`, `SetPanelVisible`.
+
+- **FileListBox**: Add file and folder filter predicates.  
+  Introduced `FileFilterPredicate` and `FolderFilterPredicate` properties for custom filtering. 
+  Added `SelectFolderIfExists` and `SelectInitialFolder` methods to improve folder selection logic. 
+  Internal logic updated to apply predicates when listing contents.
+
 # 0.9.744 (2025 July 18)
 
 - **GenericLabel and Label joined into single label control implemented inside the library.** Replaces the GenericLabel class with an 

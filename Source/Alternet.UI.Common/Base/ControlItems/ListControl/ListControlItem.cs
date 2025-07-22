@@ -1375,7 +1375,7 @@ namespace Alternet.UI
 
         /// <summary>
         /// Unchecks all items in the specified collection that belong to the same group
-        /// which is defined by the <see cref="ListControlItem.Group"/> property. 
+        /// which is defined by the <see cref="ListControlItem.Group"/> property.
         /// <paramref name="item"/> is used to determine the group and is not unchecked.
         /// </summary>
         /// <param name="collection">The collection of <see cref="ListControlItem"/>.</param>

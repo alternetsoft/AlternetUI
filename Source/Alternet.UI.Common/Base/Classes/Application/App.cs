@@ -160,11 +160,6 @@ namespace Alternet.UI
         private static string? logFilePath;
         private static Window? mainWindow;
 
-        /*
-        private static bool wakeUpIdleWithTimer = true;
-        private static Timer? wakeUpIdleTimer;
-        */
-
         private static bool? isNetOrCoreApp;
         private static string? previousNativeMessage;
 
@@ -302,22 +297,9 @@ namespace Alternet.UI
         public static event BaseThreadExceptionEventHandler? ThreadException;
 
         /// <summary>
-        /// Occurs when controls which display log messages need to be refreshed.
-        /// </summary>
-        public static event EventHandler? LogRefresh;
-
-        /// <summary>
         /// Occurs when debug message needs to be displayed.
         /// </summary>
         public static event EventHandler<LogMessageEventArgs>? LogMessage;
-
-        /*
-        /// <summary>
-        /// Occurs when the application finishes processing events and is
-        /// about to enter the idle state.
-        /// </summary>
-        public static event EventHandler? Idle;
-        */
 
         /// <summary>
         /// Gets whether application is running on the desktop operating system.
@@ -2448,11 +2430,6 @@ namespace Alternet.UI
             }
         }
 
-        private static void OnLogRefresh()
-        {
-            LogRefresh?.Invoke(null, EventArgs.Empty);
-        }
-
         private static void LogToEvent(LogUtils.LogItem item)
         {
             if (LogMessage is null)
@@ -2465,27 +2442,6 @@ namespace Alternet.UI
 
             LogMessage(null, args);
         }
-
-        /*
-        private static void UpdateWakeUpIdleTimer()
-        {
-            if (wakeUpIdleWithTimer)
-            {
-                wakeUpIdleTimer ??= new();
-                wakeUpIdleTimer.Stop();
-                wakeUpIdleTimer.Interval = TimerUtils.DefaultWakeUpIdleTimeout;
-                wakeUpIdleTimer.TickAction = () =>
-                {
-                    WakeUpIdle();
-                };
-                wakeUpIdleTimer.Start();
-            }
-            else
-            {
-                SafeDispose(ref wakeUpIdleTimer);
-            }
-        }
-        */
 
         internal sealed class Destructor
         {

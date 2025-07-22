@@ -167,7 +167,7 @@ namespace Alternet.UI
         /// Gets or sets the predicate used to filter file names.
         /// </summary>
         [Browsable(false)]
-        public virtual Predicate<string>? FileFilterPredicate { get;set; }
+        public virtual Predicate<string>? FileFilterPredicate { get; set; }
 
         /// <summary>
         /// Gets or sets the predicate used to filter folder names.
