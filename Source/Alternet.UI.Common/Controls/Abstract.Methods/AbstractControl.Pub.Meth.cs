@@ -267,6 +267,24 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Sorts the child controls of this instance using the specified comparison.
+        /// </summary>
+        /// <remarks>This method performs the sorting operation only if the instance has child controls.
+        /// The sorting is executed within a layout operation to ensure consistency.</remarks>
+        /// <param name="comparison">The comparison delegate used to determine the
+        /// order of the child controls.</param>
+        public virtual void SortChildren(Comparison<AbstractControl> comparison)
+        {
+            if(!HasChildren)
+                return;
+
+            DoInsideLayout(() =>
+            {
+                Children.Sort(comparison);
+            });
+        }
+
+        /// <summary>
         /// Gets whether the specified character is valid for the input.
         /// This function allows to ignore unwanted characters in the input.
         /// </summary>
