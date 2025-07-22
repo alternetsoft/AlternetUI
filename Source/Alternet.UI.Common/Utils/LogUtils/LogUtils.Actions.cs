@@ -210,6 +210,7 @@ namespace Alternet.UI
             Fn("Log useful defines", LogUtils.LogUsefulDefines);
             Fn("Log system information", LogUtils.LogOSInformation);
             Fn("Log system colors", LogUtils.LogSystemColors);
+            Fn("Log commits", GitHubUtils.LogCommitsForAlternetUI);
             Fn("Log constraint checks", LogUtils.LogCheckConstraints);
             Fn("Log used Alternet assemblies", LogUtils.LogUsedAlternetAssemblies);
             Fn("Log public members of the assembly", LogAssemblyPublicMembers);
