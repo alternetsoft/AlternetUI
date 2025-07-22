@@ -25,9 +25,17 @@ namespace Alternet.UI
         where T : VirtualListBox, new()
     {
         /// <summary>
+        /// Gets or sets the maximum number of items that can be displayed
+        /// in the context menu when popup kind is <see cref="PickerPopupKind.Auto"/>.
+        /// If the number of items exceeds this value, the control will use a popup window
+        /// with a list box instead of a context menu.
+        /// </summary>
+        public static int MaxItemsUsingContextMenu = 15;
+
+        /// <summary>
         /// Gets or sets the default kind of popup window used by the control.
         /// </summary>
-        public static PickerPopupKind DefaultPopupKind = PickerPopupKind.ListBox;
+        public static PickerPopupKind DefaultPopupKind = PickerPopupKind.Auto;
 
         private BaseCollection<ListControlItem>? items;
         private ObjectUniqueId? createdMenuId;
@@ -372,14 +380,23 @@ namespace Alternet.UI
             if (!Enabled)
                 return;
 
-            RaiseBeforeShowPopup(EventArgs.Empty);
-
             var kind = PopupKind ?? DefaultPopupKind;
+
+            if (kind == PickerPopupKind.None)
+                return;
+
+            RaiseBeforeShowPopup(EventArgs.Empty);
 
             switch (kind)
             {
-                case PickerPopupKind.ListBox:
+                case PickerPopupKind.Auto:
                 default:
+                    if (Items.Count <= MaxItemsUsingContextMenu)
+                        ShowPopupMenu();
+                    else
+                        ShowListBox();
+                    break;
+                case PickerPopupKind.ListBox:
                     ShowListBox();
                     break;
                 case PickerPopupKind.ContextMenu:
