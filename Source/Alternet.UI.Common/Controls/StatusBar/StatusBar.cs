@@ -13,6 +13,8 @@ namespace Alternet.UI
     [ControlCategory("MenusAndToolbars")]
     public partial class StatusBar : FrameworkElement
     {
+        internal const int VisualStudioStatusBarHeight = 28;
+
         private IStatusBarHandler? handler;
         private int updateCount = 0;
 
