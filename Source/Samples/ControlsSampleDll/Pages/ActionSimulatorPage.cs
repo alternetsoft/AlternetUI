@@ -27,12 +27,16 @@ namespace ControlsSample
 
         public ActionSimulatorPage()
         {
-            MinChildMargin = 5;
+            panel.MinChildMargin = 5;
             Size = (800, 600);
 
-            new Label(panel, "This demo send mouse clicks and key presses to operating system");
-            new Label(panel, "in order to control user interface of the application.");
-            new Label(panel, "Press F5 to start.");
+            new Label(
+                panel,
+                [
+                    "This demo send mouse clicks and key presses to operating system",
+                    "in order to control user interface of the application.",
+                    "Press F5 to start.",
+                ]);
 
             button1 = new(panel, "Button 1", () => App.Log("Button 1 clicked"));
             button2 = new(panel, "Button 2", () => App.Log("Button 2 clicked"));
@@ -40,10 +44,13 @@ namespace ControlsSample
             editor = new TextBox(panel);
             editor2 = new TextBox(panel);
 
-            new Label(panel, "Simulator moves mouse to 'Button1' and clicks it.");
-            new Label(panel, "After that, it moves mouse to the editor, clicks it");
-            new Label(panel, "and enters 'Hello' text.");
-            new Label(panel, "Simulator currently doesn't work when using Wayland on Linux.");
+            new Label(
+                panel,
+                [
+                    "Simulator moves mouse to 'Button1' and clicks it.",
+                    "After that, it moves mouse to the editor, clicks it and enters 'Hello' text.",
+                    "Simulator currently doesn't work when using Wayland on Linux.",
+                ]);
 
             panel.Parent = this;
         }

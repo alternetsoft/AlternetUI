@@ -65,7 +65,8 @@ namespace Alternet.UI
         private HorizontalAlignment? imageHorizontalAlignment;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="Label"/> class.
+        /// Initializes a new instance of the <see cref="Label"/> class
+        /// with the specified parent control.
         /// </summary>
         /// <param name="parent">Parent of the control.</param>
         public Label(Control parent)
@@ -75,7 +76,8 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="Label"/> class.
+        /// Initializes a new instance of the <see cref="Label"/> class
+        /// with the specified text.
         /// </summary>
         /// <param name="text">Value of the text property.</param>
         public Label(string? text)
@@ -85,7 +87,7 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="Label"/> class.
+        /// Initializes a new instance of the <see cref="Label"/> class
         /// with the specified text and parent control.
         /// </summary>
         /// <param name="text">Text displayed on this label.</param>
@@ -94,6 +96,36 @@ namespace Alternet.UI
             : this()
         {
             Text = text ?? string.Empty;
+            Parent = parent;
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Label"/> class with the specified text lines.
+        /// This constructor allows you to create a label with multiple lines of text,
+        /// which will be separated by new line characters. Also this constructor
+        /// turns on word wrapping by default.
+        /// </summary>
+        /// <param name="text">A collection of strings representing the lines of text
+        /// to be displayed in the label. Each element in the collection
+        /// represents a separate line.</param>
+        public Label(IEnumerable<string> text)
+            : this()
+        {
+            WordWrap = true;
+            Text = string.Join(Environment.NewLine, text);
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Label"/> class with
+        /// the specified parent control and text content.
+        /// </summary>
+        /// <param name="parent">The parent control that will contain this label.
+        /// Cannot be <see langword="null"/>.</param>
+        /// <param name="text">A collection of strings representing the text content of the label.
+        /// Each string in the collection will be displayed as a separate line.</param>
+        public Label(Control parent, IEnumerable<string> text)
+            : this(text)
+        {
             Parent = parent;
         }
 
