@@ -2,8 +2,18 @@
 using System.Collections.Generic;
 using System.Text;
 
+using Alternet.Drawing;
+
 namespace Alternet.UI
 {
+    /// <summary>
+    /// Represents a header for a list box, providing functionality to manage
+    /// columns and their visual appearance.
+    /// </summary>
+    /// <remarks>The <see cref="ListBoxHeader"/> class allows for the addition, deletion,
+    /// and management of columns within a list box header.
+    /// It provides properties to customize the appearance of column splitters and
+    /// methods to manipulate columns.</remarks>
     public partial class ListBoxHeader : Panel
     {
         /// <summary>
@@ -39,7 +49,7 @@ namespace Alternet.UI
         {
             backColor = SplitterBackColor ?? RealBackgroundColor;
 
-            if(SplitterForegroundVisible)
+            if (SplitterForegroundVisible)
                 foreColor = SplitterForeColor ?? DefaultColors.BorderColor;
             else
                 foreColor = null;
@@ -55,7 +65,7 @@ namespace Alternet.UI
         /// disposing of the column itself.</remarks>
         /// <param name="columnId">The unique identifier of the column to be deleted.</param>
         /// <returns><see langword="true"/> if the column and its associated splitter
-        /// were successfully deleted; otherwise, <see langword="false"/> 
+        /// were successfully deleted; otherwise, <see langword="false"/>
         /// if the column was not found.</returns>
         public virtual bool DeleteColumn(ObjectUniqueId columnId)
         {
@@ -64,10 +74,10 @@ namespace Alternet.UI
                 return false;
 
             var splitterId = column.CustomAttr.GetAttribute<ObjectUniqueId>("AttachedSplitter");
-            
+
             var splitter = FindChild(splitterId);
 
-            if(splitter is not null)
+            if (splitter is not null)
             {
                 splitter.Parent = null;
                 splitter.Dispose();
@@ -101,6 +111,18 @@ namespace Alternet.UI
             return null;
         }
 
+        /// <summary>
+        /// Adds a new column with the specified title and width to the control.
+        /// </summary>
+        /// <remarks>The method creates a new column with a label and an attached splitter.
+        /// The label is configured to display both text and an image, and is docked
+        /// to the left of the layout. The splitter is also docked to the left and is
+        /// used to separate columns visually.</remarks>
+        /// <param name="title">The text to display as the title of the column.
+        /// This value cannot be null or empty.</param>
+        /// <param name="width">The width of the column, specified as a <see cref="Coord"/> value.</param>
+        /// <returns>The unique identifier of the newly added column, represented
+        /// as an <see cref="ObjectUniqueId"/>.</returns>
         public virtual ObjectUniqueId AddColumn(string title, Coord width)
         {
             SpeedButton label = new()
@@ -112,7 +134,7 @@ namespace Alternet.UI
                 Width = width,
                 Dock = DockStyle.Left,
             };
-            
+
             label.SetContentHorizontalAlignment(HorizontalAlignment.Left);
 
             Splitter splitter = new()
