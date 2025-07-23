@@ -40,7 +40,7 @@ namespace PropertyGridSample
             label.StateObjects ??= new();
             label.StateObjects.Colors ??= new();
             label.StateObjects.Colors.SetObject(colors, VisualControlState.Hovered);
-            LogMouseEvents(label);
+            LogMouseEventsIf(false, label);
 
             label.PerformLayoutAndInvalidate();
         }
@@ -52,10 +52,18 @@ namespace PropertyGridSample
             label.Name = "Label18";
             label.Text = "This is a label";
             label.HorizontalAlignment = HorizontalAlignment.Left;
+
+            label.Paint += (s, e) =>
+            {
+                App.LogNameValueReplace("Label.VisualState", label.VisualState);
+            };
         }
 
-        public static void LogMouseEvents(AbstractControl control)
+        public static void LogMouseEventsIf(bool condition, AbstractControl control)
         {
+            if(!condition)
+                return;
+
             var s = control.GetType();
 
             control.VisualStateChanged += (s, e) =>
@@ -102,16 +110,6 @@ namespace PropertyGridSample
             label.TextWrapping = TextWrapping.Word;
             label.Text = "This is text";
             label.HorizontalAlignment = HorizontalAlignment.Left;
-        }
-
-        public static void InitLabel(object control)
-        {
-            if (control is not Label label)
-                return;
-            label.Text = LoremIpsum.Replace("\n",StringUtils.OneSpace).Trim();
-            label.HorizontalAlignment = HorizontalAlignment.Left;
-            label.WordWrap = true;
-            LogMouseEvents(label);
         }
 
         public static void InitLinkLabel(object control)

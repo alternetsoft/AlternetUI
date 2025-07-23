@@ -124,7 +124,6 @@ namespace Alternet.UI
             }
             finally
             {
-                AbstractControl.HoveredControl = newHoveredControl;
             }
         }
 
