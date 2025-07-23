@@ -75,6 +75,12 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
+        public override void AfterVisibleChanged(AbstractControl sender, EventArgs e)
+        {
+            UnsubscribeClickRepeated();
+        }
+
+        /// <inheritdoc/>
         public override void AfterLostFocus(AbstractControl sender, LostFocusEventArgs e)
         {
             UnsubscribeClickRepeated();
@@ -83,8 +89,12 @@ namespace Alternet.UI
         /// <inheritdoc/>
         public override void AfterMouseLeftButtonDown(AbstractControl sender, MouseEventArgs e)
         {
-            OnClickElement(sender);
-            SubscribeClickRepeated(sender);
+            var hitTests = OnClickElement(sender);
+
+            if (hitTests.NeedRepeatedClick)
+            {
+                SubscribeClickRepeated(sender);
+            }
         }
 
         /// <inheritdoc/>
@@ -117,23 +127,23 @@ namespace Alternet.UI
             base.DisposeManaged();
         }
 
-        private void OnClickElement(AbstractControl sender)
+        private InteriorDrawable.HitTestsResult OnClickElement(AbstractControl sender)
         {
             var mouseLocation = Mouse.GetPosition(sender);
 
             var hitTests = interior.HitTests(sender, mouseLocation);
 
             if (!hitTests.IsScrollBar)
-                return;
+                return hitTests;
 
             ScrollEventType evType;
 
             switch (hitTests.ScrollBar)
             {
                 case ScrollBarDrawable.HitTestResult.None:
-                    return;
+                    return hitTests;
                 case ScrollBarDrawable.HitTestResult.Thumb:
-                    return;
+                    return hitTests;
                 case ScrollBarDrawable.HitTestResult.StartButton:
                     evType = ScrollEventType.SmallDecrement;
                     break;
@@ -147,7 +157,7 @@ namespace Alternet.UI
                     evType = ScrollEventType.LargeIncrement;
                     break;
                 default:
-                    return;
+                    return hitTests;
             }
 
             ScrollEventArgs scrollArgs = new();
@@ -159,6 +169,8 @@ namespace Alternet.UI
 
             if (SendScrollToControl)
                 sender.RaiseScroll(scrollArgs);
+
+            return hitTests;
         }
 
         private void OnClickRepeatTimerEvent(object sender, EventArgs e)

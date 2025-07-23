@@ -132,9 +132,24 @@ namespace Alternet.UI
         /// <returns></returns>
         public static PointD ClientToScreen(PointD position, AbstractControl? control)
         {
-            PointD absolutePos;
+            PointD absolutePos = PointD.Empty;
 
-            var container = ControlView.GetContainer(control);
+            ControlView? container = null;
+
+            while (control is not null)
+            {
+                container = ControlView.GetContainer(control);
+
+                if(container is null)
+                {
+                    absolutePos += control.Location;
+                    control = control.Parent;
+                }
+                else
+                {
+                    break;
+                }
+            }
 
             if (container is null)
             {

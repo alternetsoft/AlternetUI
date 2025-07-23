@@ -630,6 +630,26 @@ namespace Alternet.Drawing
             }
 
             /// <summary>
+            /// Gets a value indicating whether repeated clicks are needed for the current element.
+            /// </summary>
+            public bool NeedRepeatedClick
+                => IsScrollBar && (IsScrollBarButton || IsAfterOrBeforeScrollBarThumb);
+
+            /// <summary>
+            /// Gets a value indicating whether the current scroll bar hit test result is a button.
+            /// </summary>
+            public bool IsScrollBarButton => ScrollBar == ScrollBarDrawable.HitTestResult.StartButton
+                || ScrollBar == ScrollBarDrawable.HitTestResult.EndButton;
+
+            /// <summary>
+            /// Gets a value indicating whether the current scroll bar hit test result is either after or
+            /// before the scrollbar thumb.
+            /// </summary>
+            public bool IsAfterOrBeforeScrollBarThumb
+                => ScrollBar == ScrollBarDrawable.HitTestResult.AfterThumb
+                || ScrollBar == ScrollBarDrawable.HitTestResult.BeforeThumb;
+
+            /// <summary>
             /// Gets whether hit test is on vertical scrollbar.
             /// </summary>
             public bool IsVertScrollBar => Interior == InteriorDrawable.HitTestResult.VertScrollBar;
