@@ -65,7 +65,7 @@ namespace ControlsSample
             var baseFontSize = (int)AbstractControl.DefaultFont.SizeInPoints;
 
             var taTextColorRed = richEdit.CreateTextAttr();
-            taTextColorRed.SetTextColor(Color.Red);
+            taTextColorRed.SetTextColor(LightDarkColor.Red);
 
             var taBackColorYellow = richEdit.CreateTextAttr();
             taBackColorYellow.SetBackgroundColor(Color.Yellow);

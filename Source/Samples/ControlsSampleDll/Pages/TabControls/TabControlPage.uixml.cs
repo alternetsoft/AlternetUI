@@ -92,6 +92,12 @@ namespace ControlsSample
                         tabControl.IsVerticalText = true;
                     }
                 });
+
+                tabControl.HasCloseButton = true;
+                tabControl.CloseButtonClick += (s, e) =>
+                {
+                    App.Log("Close button clicked");
+                };
             }
         }
 

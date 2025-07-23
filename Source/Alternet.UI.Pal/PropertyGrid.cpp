@@ -1400,7 +1400,7 @@ namespace Alternet::UI
 	{
 		wxPGProperty* pg = (wxPGProperty*)prop;
 		
-		pg->ChangeFlag((wxPGPropertyFlags)flag, value);
+		pg->ChangeFlag((wxPGFlags)flag, value);
 	}
 
 	void PropertyGrid::SetPropertyValidator(void* prop, void* validator)

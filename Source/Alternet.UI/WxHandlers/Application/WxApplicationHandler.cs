@@ -27,7 +27,7 @@ namespace Alternet.UI
         /// </remarks>  
         public static bool UseInternalControlPainter = true;
 
-        private const string RequireVersion = "3.3";
+        private const string RequireVersion = "3.3.1";
 
         private static readonly int[] eventIdentifiers = new int[(int)WxEventIdentifiers.Max + 1];
         private static readonly int minEventIdentifier;

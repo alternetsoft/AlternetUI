@@ -29,6 +29,10 @@
 #endif // wxUSE_METAFILE
 #endif // wxPG_USE_GC_FOR_ALPHA
 
+#define _PG_PROP_HIDE_CUSTOM_COLOUR        wxPGFlags::Reserved_2
+#define _PG_PROP_COLOUR_HAS_ALPHA          wxPGFlags::Reserved_3
+
+
 template<> inline wxVariant WXVARIANT(const wxColourPropertyValue& value)
 {
     wxVariant variant;
@@ -81,7 +85,7 @@ namespace Alternet::UI
 
 		Init(value);
 
-		m_flags |= wxPGPropertyFlags::Reserved_1 /*wxPG_PROP_TRANSLATE_CUSTOM*/;
+		m_flags |= wxPGFlags::Reserved_1 /*wxPG_PROP_TRANSLATE_CUSTOM*/;
 	}
 
 	wxAlternetColourProperty::~wxAlternetColourProperty()
@@ -203,8 +207,8 @@ namespace Alternet::UI
         else
             cpv.Init(type, colour);
 
-        // Colour selection cannot be changed.
-        m_flags |= wxPGPropertyFlags::Reserved_1 /*wxPG_PROP_STATIC_CHOICES*/;
+        // Color selection cannot be changed.
+        m_flags |= wxPGFlags::Reserved_1 /*wxPG_PROP_STATIC_CHOICES*/;
 
         m_value = WXVARIANT(cpv);
 
@@ -389,7 +393,7 @@ namespace Alternet::UI
             }
 
             if (cpv.m_type < wxPG_COLOUR_WEB_BASE ||
-                (((int)m_flags & (int)wxPGPropertyFlags::Reserved_2) /*wxPG_PROP_HIDE_CUSTOM_COLOUR*/))
+                (((int)m_flags & (int)wxPGFlags::Reserved_2) /*wxPG_PROP_HIDE_CUSTOM_COLOUR*/))
             {
                 ind = GetIndexForValue(cpv.m_type);
             }
@@ -414,7 +418,7 @@ namespace Alternet::UI
             ind = ColToInd(col);
 
             if (ind == wxNOT_FOUND &&
-                !(m_flags & wxPG_PROP_HIDE_CUSTOM_COLOUR))
+                !(m_flags & _PG_PROP_HIDE_CUSTOM_COLOUR))
                 ind = GetCustomColourIndex();
         }
 
@@ -436,7 +440,8 @@ namespace Alternet::UI
             if (!col.IsOk())
                 return wxEmptyString;
 
-            if (((int)argFlags & (int)wxPGPropValFormatFlags::FullValue) || ((int)m_flags & (int)wxPG_PROP_COLOUR_HAS_ALPHA))
+            if (((int)argFlags & (int)wxPGPropValFormatFlags::FullValue)
+                || ((int)m_flags & (int)_PG_PROP_COLOUR_HAS_ALPHA))
             {
                 return wxString::Format(wxS("(%i,%i,%i,%i)"),
                     (int)col.Red(),
@@ -471,10 +476,10 @@ namespace Alternet::UI
             // but we should use it whenever possible.
             index = GetIndex();
 
-            // If custom colour was selected, use invalid index, so that
-            // ColourToString() will return properly formatted colour text.
+            // If custom color was selected, use invalid index, so that
+            // ColorToString() will return properly formatted color text.
             if (index == GetCustomColourIndex() &&
-                !(m_flags & wxPG_PROP_HIDE_CUSTOM_COLOUR))
+                !(m_flags & _PG_PROP_HIDE_CUSTOM_COLOUR))
                 index = wxNOT_FOUND;
         }
         else
@@ -519,7 +524,7 @@ namespace Alternet::UI
 
         wxColourData data;
         data.SetChooseFull(true);
-        data.SetChooseAlpha(((int)m_flags & (int)wxPG_PROP_COLOUR_HAS_ALPHA) != 0);
+        data.SetChooseAlpha(((int)m_flags & (int)_PG_PROP_COLOUR_HAS_ALPHA) != 0);
         data.SetColour(val.m_colour);
         for (int i = 0; i < wxColourData::NUM_CUSTOM; i++)
         {
@@ -592,7 +597,7 @@ namespace Alternet::UI
                 int index = cb->GetSelection();
 
                 if (index == GetCustomColourIndex() &&
-                    !(m_flags & wxPG_PROP_HIDE_CUSTOM_COLOUR))
+                    !(m_flags & _PG_PROP_HIDE_CUSTOM_COLOUR))
                     askColour = true;
             }
         }
@@ -620,7 +625,7 @@ namespace Alternet::UI
         if (paintdata.m_choiceItem >= 0 &&
             paintdata.m_choiceItem < (int)m_choices.GetCount() &&
             (paintdata.m_choiceItem != GetCustomColourIndex() ||
-                (int)m_flags & (int)wxPG_PROP_HIDE_CUSTOM_COLOUR))
+                (int)m_flags & (int)_PG_PROP_HIDE_CUSTOM_COLOUR))
         {
             int colInd = m_choices[paintdata.m_choiceItem].GetValue();
             col = GetColour(colInd);
@@ -720,7 +725,7 @@ namespace Alternet::UI
         }
 
         if (!conversionSuccess && m_choices.GetCount() &&
-            !(m_flags & wxPG_PROP_HIDE_CUSTOM_COLOUR) &&
+            !(m_flags & _PG_PROP_HIDE_CUSTOM_COLOUR) &&
             isCustomColour)
         {
             if (!(argFlags & wxPGPropValFormatFlags::EditableValue))
@@ -787,24 +792,24 @@ namespace Alternet::UI
         {
             bool allow = value.GetBool();
 
-            if (allow && ((int)m_flags & (int)wxPG_PROP_HIDE_CUSTOM_COLOUR))
+            if (allow && ((int)m_flags & (int)_PG_PROP_HIDE_CUSTOM_COLOUR))
             {
                 // Show custom choice
-                /* TRANSLATORS: Custom colour choice entry */
+                /* TRANSLATORS: Custom color choice entry */
                 m_choices.Add(_("Custom"), wxPG_COLOUR_CUSTOM);
-                m_flags &= ~(wxPG_PROP_HIDE_CUSTOM_COLOUR);
+                m_flags &= ~(_PG_PROP_HIDE_CUSTOM_COLOUR);
             }
-            else if (!allow && !(m_flags & wxPG_PROP_HIDE_CUSTOM_COLOUR))
+            else if (!allow && !(m_flags & _PG_PROP_HIDE_CUSTOM_COLOUR))
             {
                 // Hide custom choice
                 m_choices.RemoveAt(GetCustomColourIndex());
-                m_flags |= wxPG_PROP_HIDE_CUSTOM_COLOUR;
+                m_flags |= _PG_PROP_HIDE_CUSTOM_COLOUR;
             }
             return true;
         }
         else if (name == wxPG_COLOUR_HAS_ALPHA)
         {
-            ChangeFlag(wxPG_PROP_COLOUR_HAS_ALPHA, value.GetBool());
+            ChangeFlag(_PG_PROP_COLOUR_HAS_ALPHA, value.GetBool());
             return true;
         }
         return wxEnumProperty::DoSetAttribute(name, value);

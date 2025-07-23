@@ -166,6 +166,17 @@ namespace Alternet.UI
                 {
                     tabAlignment = value;
 
+                    if(tabAlignment == TabAlignment.Top || tabAlignment == TabAlignment.Bottom)
+                    {
+                    }
+                    else
+                    {
+                        if(closeButton is not null && closeButton.Visible)
+                        {
+                            closeButton.Visible = false;
+                        }
+                    }
+
                     foreach (var tab in Tabs)
                     {
                         tab.HeaderButton.HorizontalAlignment = GetRealTabHorizontalAlignment();

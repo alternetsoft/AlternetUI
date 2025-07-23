@@ -48,10 +48,6 @@ namespace Alternet.UI
     /// to the selected object.
     /// </para>
     /// </remarks>
-    /// <remarks>
-    /// Currently this control doesn't look good on MSW with dark theme.
-    /// It is recommended to use <see cref="GenericComboBox"/> control.
-    /// </remarks>
     [ControlCategory("Common")]
     public partial class ComboBox : ListControl<object>, IListControl, IListControlItemContainer
     {

@@ -65,7 +65,7 @@
     <!-- ========================================== -->
     <WebViewDirectory>$(ExternalComponentsDirectory)\WxWidgets\3rdparty\webview2</WebViewDirectory>
 
-    <WebViewDownloadUrl>http://localhost/microsoft.web.webview2.1.0.3296.44.zip</WebViewDownloadUrl>
+    <WebViewDownloadUrl>http://localhost/microsoft.web.webview2.1.0.3351.48.zip</WebViewDownloadUrl>
 
     <WebViewDownloadDirectory>$(ExternalComponentsDirectory)</WebViewDownloadDirectory>
     <WebViewDownloadFileName>WebView.zip</WebViewDownloadFileName>
@@ -73,16 +73,15 @@
     <!-- ========================================== -->
     <WxWidgetsDirectory>$(ExternalComponentsDirectory)\WxWidgets</WxWidgetsDirectory>
 
-    <WxWidgetsDownloadUrl>http://localhost/wxWidgets-3.3.0.zip</WxWidgetsDownloadUrl>
+    <WxWidgetsDownloadUrl>http://localhost/wxWidgets-3.3.1.zip</WxWidgetsDownloadUrl>
     <WxWidgetsDownloadDirectory>$(ExternalComponentsDirectory)</WxWidgetsDownloadDirectory>
     <WxWidgetsDownloadFileName>WxWidgets.zip</WxWidgetsDownloadFileName>
     <WxWidgetsDownloadTargetPath>$(WxWidgetsDownloadDirectory)\$(WxWidgetsDownloadFileName)</WxWidgetsDownloadTargetPath>
     <VCVarsAllPath>C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Auxiliary\Build\vcvarsall.bat</VCVarsAllPath>
     <!-- ========================================== -->
 
-    <WxWidgetsBinDownloadUrlWindows7z>https://alternetsoftware.blob.core.windows.net/alternet-ui/wxWidgets-bin-noobjpch-3.3.0.7z</WxWidgetsBinDownloadUrlWindows7z>
-    <WxWidgetsBinDownloadUrlWindowsOld>https://alternetsoftware.blob.core.windows.net/alternet-ui/wxWidgets-bin-noobjpch-3.2.7.7z</WxWidgetsBinDownloadUrlWindowsOld>
-    <WxWidgetsBinDownloadUrlWindowsLocalHost7z>http://localhost/wxWidgets-bin-noobjpch-3.3.0.7z</WxWidgetsBinDownloadUrlWindowsLocalHost7z>
+    <WxWidgetsBinDownloadUrlWindows7z>https://alternetsoftware.blob.core.windows.net/alternet-ui/wxWidgets-bin-noobjpch-3.3.1.7z</WxWidgetsBinDownloadUrlWindows7z>
+    <WxWidgetsBinDownloadUrlWindowsLocalHost7z>http://localhost/wxWidgets-bin-noobjpch-3.3.1.7z</WxWidgetsBinDownloadUrlWindowsLocalHost7z>
 
     <WxWidgetsBinDownloadUrlWindows>$(WxWidgetsBinDownloadUrlWindows7z)</WxWidgetsBinDownloadUrlWindows>
     <!-- ========================================== -->
