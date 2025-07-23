@@ -112,6 +112,26 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Sets the width of the specified column.
+        /// </summary>
+        /// <remarks>This method attempts to find the column associated with the given
+        /// <paramref name="columnId"/> and set its width to the specified
+        /// <paramref name="width"/>. If the column cannot be
+        /// found, the method returns <see langword="false"/>.</remarks>
+        /// <param name="columnId">The unique identifier of the column whose width is to be set.</param>
+        /// <param name="width">The new width to apply to the column.</param>
+        /// <returns><see langword="true"/> if the column width was successfully set;
+        /// otherwise, <see langword="false"/>.</returns>
+        public virtual bool SetColumnWidth(ObjectUniqueId columnId, Coord width)
+        {
+            var column = GetColumnControl(columnId);
+            if (column == null)
+                return false;
+            column.Width = width;
+            return true;
+        }
+
+        /// <summary>
         /// Adds a new column with the specified title and width to the control.
         /// </summary>
         /// <remarks>The method creates a new column with a label and an attached splitter.
@@ -121,9 +141,10 @@ namespace Alternet.UI
         /// <param name="title">The text to display as the title of the column.
         /// This value cannot be null or empty.</param>
         /// <param name="width">The width of the column, specified as a <see cref="Coord"/> value.</param>
+        /// <param name="onClick">The action to be executed when the column is clicked.</param>
         /// <returns>The unique identifier of the newly added column, represented
         /// as an <see cref="ObjectUniqueId"/>.</returns>
-        public virtual ObjectUniqueId AddColumn(string title, Coord width)
+        public virtual ObjectUniqueId AddColumn(string title, Coord width, Action? onClick = null)
         {
             SpeedButton label = new()
             {
@@ -133,6 +154,7 @@ namespace Alternet.UI
                 ImageToText = ImageToText.Horizontal,
                 Width = width,
                 Dock = DockStyle.Left,
+                ClickAction = onClick,
             };
 
             label.SetContentHorizontalAlignment(HorizontalAlignment.Left);
