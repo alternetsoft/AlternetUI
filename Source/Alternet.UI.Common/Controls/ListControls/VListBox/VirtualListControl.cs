@@ -90,6 +90,7 @@ namespace Alternet.UI
         private BorderSettings? selectionBorder;
         private WeakReferenceValue<ImageList> imageList = new();
         private BaseCollection<ListControlColumn>? columns;
+        private WeakReferenceValue<IListBoxHeader> headerReference = new();
 
         private bool selectedIsBold;
         private bool textVisible = true;
@@ -175,6 +176,22 @@ namespace Alternet.UI
         public virtual bool CheckOnClick { get; set; } = true;
 
         /// <summary>
+        /// Gets or sets the header control for the list box.
+        /// </summary>
+        public virtual IListBoxHeader? HeaderControl
+        {
+            get
+            {
+                return headerReference.Value;
+            }
+
+            set
+            {
+                headerReference.Value = value;
+            }
+        }
+
+        /// <summary>
         /// Gets or sets current item border. If it is <c>null</c> (default value),
         /// <see cref="DefaultCurrentItemBorder"/> is used.
         /// </summary>
@@ -224,11 +241,10 @@ namespace Alternet.UI
             {
                 if(columns is null)
                 {
-                    columns = new NotNullCollection<ListControlColumn>();
-                    columns.CollectionChanged += OnColumnsChanged;
+                    Columns = new NotNullCollection<ListControlColumn>();
                 }
 
-                return columns;
+                return columns!;
             }
 
             set
@@ -236,10 +252,20 @@ namespace Alternet.UI
                 if (columns == value)
                     return;
                 if(columns is not null)
+                {
+                    columns.ItemInserted -= OnColumnsItemInserted;
+                    columns.ItemRemoved -= OnColumnsItemRemoved;
                     columns.CollectionChanged -= OnColumnsChanged;
+                }
+
                 columns = value;
+
                 if (columns is not null)
+                {
+                    columns.ItemInserted += OnColumnsItemInserted;
+                    columns.ItemRemoved += OnColumnsItemRemoved;
                     columns.CollectionChanged += OnColumnsChanged;
+                }
             }
         }
 
@@ -1319,6 +1345,77 @@ namespace Alternet.UI
         /// <remarks>See <see cref="CheckedChanged"/> for details.</remarks>
         protected virtual void OnCheckedChanged(EventArgs e)
         {
+        }
+
+        /// <summary>
+        /// Handles the event when a new column is inserted into the columns collection.
+        /// </summary>
+        /// <remarks>This method is called whenever a column is added to the columns collection.
+        /// Override this method in a derived class to perform custom actions when
+        /// a column is inserted.</remarks>
+        /// <param name="sender">The source of the event, typically
+        /// the collection where the column was inserted.</param>
+        /// <param name="index">The zero-based index at which the column was inserted.</param>
+        /// <param name="item">The <see cref="ListControlColumn"/> that was inserted.</param>
+        protected virtual void OnColumnsItemInserted(object? sender, int index, ListControlColumn item)
+        {
+            if (HeaderControl is not null)
+            {
+                var id = HeaderControl.AddColumn(item.Title, item.SuggestedWidth);
+                item.ColumnKey = id;
+                item.PropertyChanged += OnColumnsItemPropertyChanged;
+            }
+        }
+
+        /// <summary>
+        /// Handles the <see cref="BaseObjectWithNotify.PropertyChanged"/> event for items
+        /// within the columns collection.
+        /// </summary>
+        /// <param name="sender">The source of the event, typically the column
+        /// whose property has changed.</param>
+        /// <param name="e">An object that contains the event data, including the name
+        /// of the property that changed.</param>
+        protected virtual void OnColumnsItemPropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            if (HeaderControl is null)
+                return;
+
+            if (sender is not ListControlColumn item)
+                return;
+
+            var button = HeaderControl.GetColumnControl(item.ColumnKey);
+
+            if(button is null)
+                return;
+
+            if (e.PropertyName == nameof(ListControlColumn.Title))
+            {
+                button.Text = item.Title ?? string.Empty;
+            }
+            else
+            if (e.PropertyName == nameof(ListControlColumn.SuggestedWidth))
+            {
+                button.Width = item.SuggestedWidth;
+            }
+        }
+
+        /// <summary>
+        /// Handles the event when a column is removed from the columns collection.
+        /// </summary>
+        /// <param name="sender">The source of the event, typically the collection
+        /// from which the column was removed.</param>
+        /// <param name="index">The zero-based index at which the column was removed.</param>
+        /// <param name="item">The <see cref="ListControlColumn"/> instance that
+        /// was removed from the collection.</param>
+        protected virtual void OnColumnsItemRemoved(object? sender, int index, ListControlColumn item)
+        {
+            item.PropertyChanged -= OnColumnsItemPropertyChanged;
+
+            if (HeaderControl is not null)
+            {
+                HeaderControl.DeleteColumn(item.ColumnKey);
+                item.ColumnKey = null;
+            }
         }
 
         /// <summary>

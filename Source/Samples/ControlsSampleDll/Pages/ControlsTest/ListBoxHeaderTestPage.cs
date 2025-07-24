@@ -36,6 +36,16 @@ namespace ControlsSample
                 control1.SetSvgImage(MessageBoxSvg.Information, null);
             }
 
+            var c4 = header.InsertColumn(0, "Column A", 100, () =>
+            {
+                App.Log("Column A clicked");
+            });
+
+            var c5 = header.InsertColumn(header.ColumnCount - 1, "Column B", 100, () =>
+            {
+                App.Log("Column B clicked");
+            });
+
             header.Parent = this;
         }
     }

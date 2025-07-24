@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 using Alternet.Drawing;
@@ -14,7 +15,7 @@ namespace Alternet.UI
     /// and management of columns within a list box header.
     /// It provides properties to customize the appearance of column splitters and
     /// methods to manipulate columns.</remarks>
-    public partial class ListBoxHeader : Panel
+    public partial class ListBoxHeader : Panel, IListBoxHeader
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="ListBoxHeader"/> class.
@@ -41,6 +42,81 @@ namespace Alternet.UI
         public virtual bool SplitterForegroundVisible { get; set; } = true;
 
         /// <summary>
+        /// Gets the number of columns represented by the child elements
+        /// that are of type <see cref="SpeedButton"/>.
+        /// </summary>
+        public virtual int ColumnCount
+        {
+            get
+            {
+                int count = 0;
+                foreach (var child in Children)
+                {
+                    if (IsColumnControl(child))
+                        count++;
+                }
+
+                return count;
+            }
+        }
+
+        /// <summary>
+        /// Gets the index of the last child element that is a column control.
+        /// </summary>
+        public virtual int? LastColumnControlIndex
+        {
+            get
+            {
+                for (int i = Children.Count - 1; i >= 0; i--)
+                {
+                    if (IsColumnControl(Children[i]))
+                        return i;
+                }
+
+                return null;
+            }
+        }
+
+        /// <summary>
+        /// Gets an enumerable collection of <see cref="SpeedButton"/> controls
+        /// that are identified as column controls.
+        /// </summary>
+        /// <remarks>This property iterates over the child elements and returns
+        /// those that are recognized
+        /// as column controls. The determination of whether a child is a column control
+        /// is made by the <c>IsColumnControl</c> method.</remarks>
+        public virtual IEnumerable<SpeedButton> ColumnControls
+        {
+            get
+            {
+                foreach (var child in Children)
+                {
+                    if (IsColumnControl(child))
+                        yield return (SpeedButton)child;
+                }
+            }
+        }
+
+        /// <summary>
+        /// Retrieves the <see cref="SpeedButton"/> control at the specified index
+        /// within the column controls.
+        /// </summary>
+        /// <param name="index">The zero-based index of the column control to retrieve.</param>
+        /// <returns>The <see cref="SpeedButton"/> at the specified index,
+        /// or <see langword="null"/> if the index is out of range.</returns>
+        /// <remarks>
+        /// This method uses <see cref="ColumnControls"/> in order to get the column control.
+        /// </remarks>
+        public virtual SpeedButton? GetColumnControlAt(int index)
+        {
+            var columnControls = ColumnControls.ToArray();
+
+            if (index < 0 || index >= columnControls.Length)
+                return null;
+            return columnControls[index];
+        }
+
+        /// <summary>
         /// Resolves the splitter colors based on the current settings.
         /// </summary>
         /// <param name="backColor">The background color for splitters.</param>
@@ -55,19 +131,8 @@ namespace Alternet.UI
                 foreColor = null;
         }
 
-        /// <summary>
-        /// Deletes the specified column and its associated splitter from the control.
-        /// </summary>
-        /// <remarks>This method attempts to find and remove the column identified by
-        /// <paramref
-        /// name="columnId"/>. If the column is found, it also disposes of the associated
-        /// splitter, if any, before
-        /// disposing of the column itself.</remarks>
-        /// <param name="columnId">The unique identifier of the column to be deleted.</param>
-        /// <returns><see langword="true"/> if the column and its associated splitter
-        /// were successfully deleted; otherwise, <see langword="false"/>
-        /// if the column was not found.</returns>
-        public virtual bool DeleteColumn(ObjectUniqueId columnId)
+        /// <inheritdoc/>
+        public virtual bool DeleteColumn(ObjectUniqueId? columnId)
         {
             AbstractControl? column = FindChild(columnId);
             if (column == null)
@@ -77,31 +142,23 @@ namespace Alternet.UI
 
             var splitter = FindChild(splitterId);
 
-            if (splitter is not null)
+            DoInsideLayout(() =>
             {
-                splitter.Parent = null;
-                splitter.Dispose();
-            }
+                if (splitter is not null)
+                {
+                    splitter.Parent = null;
+                    splitter.Dispose();
+                }
 
-            column.Parent = null;
-            column.Dispose();
+                column.Parent = null;
+                column.Dispose();
+            });
+
             return true;
         }
 
-        /// <summary>
-        /// Retrieves a <see cref="SpeedButton"/> associated with the specified column identifier.
-        /// </summary>
-        /// <remarks>This method searches for a child control matching the specified
-        /// <paramref name="columnId"/> and returns it if it is
-        /// of type <see cref="SpeedButton"/>. If no matching control is
-        /// found, or if the control is not a <see cref="SpeedButton"/>,
-        /// the method returns <see langword="null"/>.</remarks>
-        /// <param name="columnId">The unique identifier of the column for which to retrieve
-        /// the control.</param>
-        /// <returns>A <see cref="SpeedButton"/> if the column is associated with
-        /// a <see cref="SpeedButton"/>; otherwise,
-        /// <see langword="null"/>.</returns>
-        public virtual SpeedButton? GetColumnControl(ObjectUniqueId columnId)
+        /// <inheritdoc/>
+        public virtual SpeedButton? GetColumnControl(ObjectUniqueId? columnId)
         {
             AbstractControl? column = FindChild(columnId);
             if (column == null)
@@ -111,17 +168,17 @@ namespace Alternet.UI
             return null;
         }
 
-        /// <summary>
-        /// Sets the width of the specified column.
-        /// </summary>
-        /// <remarks>This method attempts to find the column associated with the given
-        /// <paramref name="columnId"/> and set its width to the specified
-        /// <paramref name="width"/>. If the column cannot be
-        /// found, the method returns <see langword="false"/>.</remarks>
-        /// <param name="columnId">The unique identifier of the column whose width is to be set.</param>
-        /// <param name="width">The new width to apply to the column.</param>
-        /// <returns><see langword="true"/> if the column width was successfully set;
-        /// otherwise, <see langword="false"/>.</returns>
+        /// <inheritdoc/>
+        public virtual bool SetColumnTitle(ObjectUniqueId columnId, string? title)
+        {
+            var column = GetColumnControl(columnId);
+            if (column == null)
+                return false;
+            column.Text = title ?? string.Empty;
+            return true;
+        }
+
+        /// <inheritdoc/>
         public virtual bool SetColumnWidth(ObjectUniqueId columnId, Coord width)
         {
             var column = GetColumnControl(columnId);
@@ -131,24 +188,22 @@ namespace Alternet.UI
             return true;
         }
 
-        /// <summary>
-        /// Adds a new column with the specified title and width to the control.
-        /// </summary>
-        /// <remarks>The method creates a new column with a label and an attached splitter.
-        /// The label is configured to display both text and an image, and is docked
-        /// to the left of the layout. The splitter is also docked to the left and is
-        /// used to separate columns visually.</remarks>
-        /// <param name="title">The text to display as the title of the column.
-        /// This value cannot be null or empty.</param>
-        /// <param name="width">The width of the column, specified as a <see cref="Coord"/> value.</param>
-        /// <param name="onClick">The action to be executed when the column is clicked.</param>
-        /// <returns>The unique identifier of the newly added column, represented
-        /// as an <see cref="ObjectUniqueId"/>.</returns>
-        public virtual ObjectUniqueId AddColumn(string title, Coord width, Action? onClick = null)
+        /// <inheritdoc/>
+        public virtual ObjectUniqueId AddColumn(string? title, Coord width, Action? onClick = null)
+        {
+            return InsertColumn(int.MaxValue, title, width, onClick);
+        }
+
+        /// <inheritdoc/>
+        public virtual ObjectUniqueId InsertColumn(
+            int index,
+            string? title,
+            Coord width,
+            Action? onClick = null)
         {
             SpeedButton label = new()
             {
-                Text = title,
+                Text = title ?? string.Empty,
                 ImageVisible = true,
                 TextVisible = true,
                 ImageToText = ImageToText.Horizontal,
@@ -156,6 +211,8 @@ namespace Alternet.UI
                 Dock = DockStyle.Left,
                 ClickAction = onClick,
             };
+
+            SetIsColumnControl(label, true);
 
             label.SetContentHorizontalAlignment(HorizontalAlignment.Left);
 
@@ -170,10 +227,57 @@ namespace Alternet.UI
 
             label.CustomAttr.SetAttribute("AttachedSplitter", splitter.UniqueId);
 
-            label.Parent = this;
-            splitter.Parent = this;
+            DoInsideLayout(() =>
+            {
+                if (index < 0 || index >= ColumnCount)
+                {
+                    label.Parent = this;
+                    splitter.Parent = this;
+                }
+                else
+                {
+                    var columnControl = GetColumnControlAt(index);
+
+                    if (columnControl == null)
+                    {
+                        label.Parent = this;
+                        splitter.Parent = this;
+                    }
+                    else
+                    {
+                        var indexInChildren = Children.IndexOf(columnControl);
+                        Children.Insert(indexInChildren, label);
+                        Children.Insert(indexInChildren + 1, splitter);
+                    }
+                }
+            });
 
             return label.UniqueId;
+        }
+
+        /// <summary>
+        /// Determines whether the specified control is a column control.
+        /// </summary>
+        /// <param name="control">The control to evaluate. Can be <see langword="null"/>.</param>
+        /// <returns><see langword="true"/> if the control is a <see cref="SpeedButton"/>
+        /// and has the "IsColumn" attribute set to
+        /// <see langword="true"/>; otherwise, <see langword="false"/>.</returns>
+        protected virtual bool IsColumnControl(AbstractControl? control)
+        {
+            return control is SpeedButton && control.CustomAttr.GetAttribute<bool>("IsColumn");
+        }
+
+        /// <summary>
+        /// Sets a custom attribute on the specified control to indicate whether it is a column control.
+        /// </summary>
+        /// <param name="control">The <see cref="SpeedButton"/> control
+        /// on which to set the attribute.</param>
+        /// <param name="isColumn">A <see langword="bool"/> value indicating
+        /// whether the control is a column control. <see langword="true"/> if
+        /// the control is a column; otherwise, <see langword="false"/>.</param>
+        protected virtual void SetIsColumnControl(SpeedButton control, bool isColumn)
+        {
+            control.CustomAttr.SetAttribute("IsColumn", isColumn);
         }
     }
 }

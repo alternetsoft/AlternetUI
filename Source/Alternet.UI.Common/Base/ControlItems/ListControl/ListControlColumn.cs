@@ -13,6 +13,9 @@ namespace Alternet.UI
     /// </remarks>
     public class ListControlColumn : BaseControlItem
     {
+        private double suggestedWidth;
+        private string? title;
+
         /// <summary>
         /// Initializes a new instance of the <see cref="ListControlColumn"/> class.
         /// </summary>
@@ -21,11 +24,41 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets or sets the unique identifier for the column in the header control.
+        /// </summary>
+        public virtual ObjectUniqueId? ColumnKey { get; set; }
+
+        /// <summary>
+        /// Gets or sets the title of the column.
+        /// </summary>
+        public virtual string? Title
+        {
+            get => title;
+
+            set
+            {
+                SetProperty(ref title, value, nameof(Title), () =>
+                {
+                });
+            }
+        }
+
+        /// <summary>
         /// Gets or sets the suggested width for the list control column.
         /// </summary>
         /// <remarks>
         /// The width recommendation is based on layout constraints and user preferences.
         /// </remarks>
-        public virtual Coord SuggestedWidth { get; set; }
+        public virtual Coord SuggestedWidth
+        {
+            get => suggestedWidth;
+
+            set
+            {
+                SetProperty(ref suggestedWidth, value, nameof(SuggestedWidth), () =>
+                {
+                });
+            }
+        }
     }
 }
