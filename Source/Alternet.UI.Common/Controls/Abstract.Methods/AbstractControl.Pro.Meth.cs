@@ -292,25 +292,26 @@ namespace Alternet.UI
         /// is not available.
         /// </summary>
         /// <param name="e">Paint arguments.</param>
-        protected virtual void PaintCaret(PaintEventArgs e)
+        protected virtual bool PaintCaret(PaintEventArgs e)
         {
             if (!UserPaint)
-                return;
+                return false;
             if (!Focused)
-                return;
+                return false;
             if (caretInfo is null)
-                return;
+                return false;
 
             if (caretInfo.IsDisposed)
             {
                 CaretInfo = null;
-                return;
+                return false;
             }
 
             if (!caretInfo.Visible)
-                return;
+                return false;
 
             caretInfo.Paint(this, e);
+            return true;
         }
 
         /// <summary>

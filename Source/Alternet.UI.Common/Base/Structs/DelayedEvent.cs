@@ -10,19 +10,19 @@ namespace Alternet.UI
     /// <typeparam name="TArgs">Type of the event argument.</typeparam>
     public struct DelayedEvent<TArgs>
     {
-        /// <summary>
-        /// Gets or sets default timeout interval (in msec) for timer that calls
-        /// <see cref="Delayed"/> event. If not specified,
-        /// <see cref="TimerUtils.DefaultDelayedTextChangedTimeout"/> is used.
-        /// </summary>
-        public int? Interval;
-
         private Timer? timer;
 
         /// <summary>
         /// Occurs when delayed event handlers are notified.
         /// </summary>
         public event EventHandler<TArgs>? Delayed;
+
+        /// <summary>
+        /// Gets or sets default timeout interval (in msec) for timer that calls
+        /// <see cref="Delayed"/> event. If not specified,
+        /// <see cref="TimerUtils.DefaultDelayedTextChangedTimeout"/> is used.
+        /// </summary>
+        public int? Interval { get; set; }
 
         /// <summary>
         /// Adds event handler.

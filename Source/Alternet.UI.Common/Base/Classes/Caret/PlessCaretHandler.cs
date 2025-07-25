@@ -70,7 +70,7 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Gets or sets caret blonk time. This is a dummy property and is not currently used.
+        /// Gets or sets caret blink time. This is a dummy property and is not currently used.
         /// </summary>
         public static int CaretBlinkTime
         {
