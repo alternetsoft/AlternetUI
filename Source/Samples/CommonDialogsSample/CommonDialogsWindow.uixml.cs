@@ -64,7 +64,15 @@ Environment.NewLine + Environment.NewLine +
 
             messageBoxButtonsComboBox.Value = MessageBoxButtons.OKCancel;
 
-            messageBoxIconComboBox.SetValue(MessageBoxIcon.None);
+            MessageBoxIcon[] messageBoxIcons =
+                [
+                    MessageBoxIcon.None,
+                    MessageBoxIcon.Information,
+                    MessageBoxIcon.Warning,
+                    MessageBoxIcon.Error,
+                ];
+            messageBoxIconComboBox.AddRange(messageBoxIcons);
+            messageBoxIconComboBox.Value = MessageBoxIcon.None;
 
             exceptionTypeComboBox.EnumType = typeof(TestExceptionType);
             exceptionTypeComboBox.Value = TestExceptionType.FileNotFoundException;
