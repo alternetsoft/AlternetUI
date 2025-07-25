@@ -1460,12 +1460,14 @@ namespace Alternet.UI
 
             void Report(IValidatorReporter? reporter)
             {
-                if (AutoShowError && reporter is Control reporterControl)
+                if (AutoShowError && reporter is AbstractControl reporterControl)
                 {
                     if(reporterControl != this)
                     {
-                        this.RunWhenIdle(() =>
+                        Post(() =>
                         {
+                            if(DisposingOrDisposed || reporterControl.DisposingOrDisposed)
+                                return;
                             reporterControl.Visible = showError;
                         });
                     }

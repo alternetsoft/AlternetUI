@@ -42,7 +42,13 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        protected override bool IsValidText => IsValidMail;
+        protected override bool IsValidText
+        {
+            get
+            {
+                return IsValidMail;
+            }
+        }
 
         /// <inheritdoc/>
         protected override void Init()

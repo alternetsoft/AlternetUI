@@ -53,7 +53,13 @@ namespace Alternet.UI
         public virtual bool IsValidUrl => ValidationUtils.IsValidUrl(Text, UrlKind);
 
         /// <inheritdoc/>
-        protected override bool IsValidText => IsValidUrl;
+        protected override bool IsValidText
+        {
+            get
+            {
+                return IsValidUrl;
+            }
+        }
 
         /// <inheritdoc/>
         protected override void Init()

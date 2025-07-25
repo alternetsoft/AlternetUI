@@ -152,6 +152,17 @@ namespace Alternet.UI
             }
         }
 
+        /// <inheritdoc/>
+        public override bool Visible
+        {
+            get => base.Visible;
+
+            set
+            {
+                base.Visible = value;
+            }
+        }
+
         /// <inheritdoc cref="AbstractControl.Background"/>
         [Browsable(true)]
         public override Brush? Background
