@@ -1546,79 +1546,199 @@ namespace Alternet.UI
                 HandleKeys(e);
         }
 
-        private void OnClickUseRegularExpressions()
+        /// <summary>
+        /// Invokes the event handler for the "Use Regular Expressions" button click event.
+        /// </summary>
+        /// <remarks>This method raises the event associated with clicking the
+        /// "Use Regular Expressions"
+        /// button. Derived classes can override this method to provide custom
+        /// handling for the event.</remarks>
+        protected virtual void OnClickUseRegularExpressions()
             => OnClickUseRegularExpressions(this, EventArgs.Empty);
 
-        private void OnClickMatchWholeWord() => OnClickMatchWholeWord(this, EventArgs.Empty);
+        /// <summary>
+        /// Handles the event when the "Match Whole Word" option is clicked.
+        /// </summary>
+        /// <remarks>This method raises the event associated with clicking the "Match Whole Word" option.
+        /// Override this method in a derived class to provide custom handling for the event.</remarks>
+        protected virtual void OnClickMatchWholeWord() => OnClickMatchWholeWord(this, EventArgs.Empty);
 
-        private void OnClickMatchCase() => OnClickMatchCase(this, EventArgs.Empty);
+        /// <summary>
+        /// Handles the event when the "Match Case" option is clicked.
+        /// </summary>
+        /// <remarks>This method raises the event associated with the "Match Case" option being clicked.
+        /// Override this method in a derived class to provide custom handling for the event.</remarks>
+        protected virtual void OnClickMatchCase() => OnClickMatchCase(this, EventArgs.Empty);
 
-        private void OnClickFindNext() => OnClickFindNext(this, EventArgs.Empty);
+        /// <summary>
+        /// Invokes the Find Next operation when the associated event is triggered.
+        /// </summary>
+        /// <remarks>This method raises the event by calling the
+        /// <see cref="OnClickFindNext(object, EventArgs)"/> method.
+        /// Override this method in a derived class to provide
+        /// custom handling for the Find Next
+        /// operation.</remarks>
+        protected virtual void OnClickFindNext() => OnClickFindNext(this, EventArgs.Empty);
 
-        private void OnClickFindPrevious() => OnClickFindPrevious(this, EventArgs.Empty);
+        /// <summary>
+        /// Handles the event when the "Find Previous" button is clicked.
+        /// </summary>
+        /// <remarks>This method raises the event associated with finding the previous occurrence in a
+        /// search operation. Override this method in a derived class to provide custom
+        /// handling for the "Find Previous"
+        /// action.</remarks>
+        protected virtual void OnClickFindPrevious() => OnClickFindPrevious(this, EventArgs.Empty);
 
-        private void OnClickReplace() => OnClickReplace(this, EventArgs.Empty);
+        /// <summary>
+        /// Raises the click event for the replace action.
+        /// </summary>
+        /// <remarks>This method is called to trigger the replace action when a click event occurs.
+        /// It can be overridden in a derived class to provide custom
+        /// handling for the replace action.</remarks>
+        protected virtual void OnClickReplace() => OnClickReplace(this, EventArgs.Empty);
 
-        private void OnClickReplaceAll() => OnClickReplaceAll(this, EventArgs.Empty);
+        /// <summary>
+        /// Handles the event when the "Replace All" button is clicked.
+        /// </summary>
+        /// <remarks>This method is invoked to trigger the "Replace All" functionality. It raises the
+        /// event associated with replacing all occurrences of a specified item.
+        /// Override this method in a derived class to provide custom handling for the "Replace All" action.</remarks>
+        protected virtual void OnClickReplaceAll() => OnClickReplaceAll(this, EventArgs.Empty);
 
-        private void OnClickUseRegularExpressions(object? sender, EventArgs e)
+        /// <summary>
+        /// Handles the event when the "Use Regular Expressions" button is clicked.
+        /// Toggles the state of the option to use regular expressions.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">An <see cref="EventArgs"/> that contains the event data.</param>
+        protected virtual void OnClickUseRegularExpressions(object? sender, EventArgs e)
         {
             OptionUseRegularExpressions = !OptionUseRegularExpressions;
         }
 
-        private void OnClickMatchWholeWord(object? sender, EventArgs e)
+        /// <summary>
+        /// Handles the event when the "Match Whole Word" button is clicked.
+        /// Toggles the state of the <see cref="OptionMatchWholeWord"/> option.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The event data.</param>
+        protected virtual void OnClickMatchWholeWord(object? sender, EventArgs e)
         {
             OptionMatchWholeWord = !OptionMatchWholeWord;
         }
 
-        private void OnClickMatchCase(object? sender, EventArgs e)
+        /// <summary>
+        /// Handles the event when the "Match Case" button is clicked.
+        /// Toggles the state of the match case option.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The event data.</param>
+        protected virtual void OnClickMatchCase(object? sender, EventArgs e)
         {
             OptionMatchCase = !OptionMatchCase;
         }
 
-        private void OnClickFindNext(object? sender, EventArgs e)
+        /// <summary>
+        /// Handles the event when the "Find Next" button is clicked.
+        /// Invokes the <see cref="ClickFindNext"/> event and calls the
+        /// <see cref="IFindReplaceConnect.FindNext"/> method on the <see cref="Manager"/>.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">An <see cref="EventArgs"/> that contains the event data.</param>
+        protected virtual void OnClickFindNext(object? sender, EventArgs e)
         {
             ClickFindNext?.Invoke(this, e);
             Manager?.FindNext();
         }
 
-        private void OnClickToggleReplace(object? sender, EventArgs e)
+        /// <summary>
+        /// Handles the event when the "Toggle Replace" button is clicked.
+        /// Toggles the visibility of the replace toolbar.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">An <see cref="EventArgs"/> that contains the event data.</param>
+        protected virtual void OnClickToggleReplace(object? sender, EventArgs e)
         {
             ReplaceVisible = !ReplaceVisible;
         }
 
-        private void OnClickFindPrevious(object? sender, EventArgs e)
+        /// <summary>
+        /// Handles the event when the "Find Previous" button is clicked.
+        /// Invokes the <see cref="ClickFindPrevious"/> event and calls the
+        /// <see cref="IFindReplaceConnect.FindPrevious"/> method on the <see cref="Manager"/>.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">An <see cref="EventArgs"/> that contains the event data.</param>
+        protected virtual void OnClickFindPrevious(object? sender, EventArgs e)
         {
             ClickFindPrevious?.Invoke(this, e);
             Manager?.FindPrevious();
         }
 
-        private void OnClickReplace(object? sender, EventArgs e)
+        /// <summary>
+        /// Handles the event when the "Replace" button is clicked.
+        /// Invokes the <see cref="ClickReplace"/> event and calls the
+        /// <see cref="IFindReplaceConnect.Replace"/> method on the <see cref="Manager"/>.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">An <see cref="EventArgs"/> that contains the event data.</param>
+        protected virtual void OnClickReplace(object? sender, EventArgs e)
         {
             ClickReplace?.Invoke(this, e);
             Manager?.Replace();
         }
 
-        private void OnClickReplaceAll(object? sender, EventArgs e)
+        /// <summary>
+        /// Handles the event when the "Replace All" button is clicked.
+        /// Invokes the <see cref="ClickReplaceAll"/> event and
+        /// calls the <see cref="IFindReplaceConnect.ReplaceAll"/> method on the <see cref="Manager"/>.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">An <see cref="EventArgs"/> that contains the event data.</param>
+        protected virtual void OnClickReplaceAll(object? sender, EventArgs e)
         {
             ClickReplaceAll?.Invoke(this, e);
             Manager?.ReplaceAll();
         }
 
-        private void OnClickClose(object? sender, EventArgs e)
+        /// <summary>
+        /// Handles the event when the "Close" button is clicked.
+        /// Invokes the <see cref="ClickClose"/> event.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">An <see cref="EventArgs"/> that contains the event data.</param>
+        protected virtual void OnClickClose(object? sender, EventArgs e)
         {
             ClickClose?.Invoke(this, e);
         }
 
-        private void OnFindEditTextChanged(object? sender, EventArgs e)
+        /// <summary>
+        /// Handles the event when the text in the find editor is changed.
+        /// Updates the find text in the <see cref="Manager"/>.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">An <see cref="EventArgs"/> that contains the event data.</param>
+        protected virtual void OnFindEditTextChanged(object? sender, EventArgs e)
         {
-            var s = findEdit.Text;
-            Manager?.SetFindText(s);
+            Post(() =>
+            {
+                var s = findEdit.Text;
+                Manager?.SetFindText(s);
+            });
         }
 
-        private void OnReplaceEditTextChanged(object? sender, EventArgs e)
+        /// <summary>
+        /// Handles the event when the text in the replace editor is changed.
+        /// Updates the replace text in the <see cref="Manager"/>.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">An <see cref="EventArgs"/> that contains the event data.</param>
+        protected virtual void OnReplaceEditTextChanged(object? sender, EventArgs e)
         {
-            Manager?.SetReplaceText(replaceEdit.Text);
+            Post(() =>
+            {
+                Manager?.SetReplaceText(replaceEdit.Text);
+            });
         }
 
         private void UpdateFindScope()
