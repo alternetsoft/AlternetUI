@@ -220,12 +220,23 @@ namespace Alternet.UI
                 if (Visible == value)
                     return;
 
-                if(control?.Value?.ContainsFocus ?? false)
+                if (!Handler.IsOk)
+                    return;
+
+                try
                 {
-                    Handler.Visible = value;
+                    if (control?.Value?.ContainsFocus ?? false)
+                    {
+                        Handler.Visible = value;
+                    }
+                    else
+                    {
+                        Handler.Visible = false;
+                    }
                 }
-                else
+                catch (Exception ex)
                 {
+                    Nop(ex);
                 }
             }
         }
