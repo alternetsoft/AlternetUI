@@ -1410,6 +1410,18 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets or sets default timeout interval (in msec) for timer that calls
+        /// <see cref="DelayedTextChanged"/> event. If not specified,
+        /// <see cref="TimerUtils.DefaultDelayedTextChangedTimeout"/> is used.
+        /// </summary>
+        [Browsable(false)]
+        public int? DelayedTextChangedInterval
+        {
+            get => delayedTextChanged.Interval;
+            set => delayedTextChanged.Interval = value;
+        }
+
+        /// <summary>
         /// Gets or sets a value indicating whether the control and all its
         /// child controls are displayed.
         /// </summary>
