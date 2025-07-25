@@ -34,6 +34,7 @@ namespace Alternet.UI
         /// </summary>
         public UserControl()
         {
+            SuspendHandlerTextChange();
             hasBorder = GetDefaultHasBorder();
             UserPaint = true;
         }
