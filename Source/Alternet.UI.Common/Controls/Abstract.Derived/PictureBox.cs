@@ -16,7 +16,7 @@ namespace Alternet.UI
     [DefaultProperty("Image")]
     [DefaultBindingProperty("Image")]
     [ControlCategory("Common")]
-    public partial class PictureBox : GraphicControl, IValidatorReporter
+    public partial class PictureBox : GenericControl, IValidatorReporter
     {
         /// <summary>
         /// Gets or sets default value of the <see cref="AbstractControl.ParentBackColor"/>
