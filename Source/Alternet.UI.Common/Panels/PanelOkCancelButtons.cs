@@ -529,6 +529,11 @@ namespace Alternet.UI
 
             KnownButton? Internal()
             {
+                if(buttons.Length == 1)
+                {
+                    return buttons[0];
+                }
+
                 if (buttons.Contains(KnownButton.Cancel))
                     return KnownButton.Cancel;
                 if (buttons.Contains(KnownButton.No))

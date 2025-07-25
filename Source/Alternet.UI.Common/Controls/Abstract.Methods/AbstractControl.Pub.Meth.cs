@@ -1452,7 +1452,7 @@ namespace Alternet.UI
             if (mode == WindowSizeToContentMode.None)
                 return;
 
-            var sz = MaximumSize.ValueIfEmpty(Graphics.HalfOfMaxValue).ToSize();
+            var sz = MaximumSize.ValueIfEmpty(Graphics.HalfOfMaxValue).Ceiling();
 
             var newSize1 = GetChildrenMaxPreferredSizePadded(sz).Ceiling();
 

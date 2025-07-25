@@ -17,7 +17,7 @@ namespace Alternet.Drawing
         /// <summary>
         /// Gets half of the maximum value of <see cref="Coord"/>.
         /// </summary>
-        internal const Coord HalfOfMaxValue = Coord.MaxValue / 2;
+        internal const Coord HalfOfMaxValue = int.MaxValue / 2;
 
         private Stack<TransformMatrix>? stack;
         private Stack<Region?>? clipStack;
