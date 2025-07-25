@@ -8,6 +8,7 @@ namespace Alternet.UI
 {
     public partial class Window
     {
+        private WeakReferenceValue<AbstractControl> weakLastFocusedControl = new();
         private ModalResult modalResult = ModalResult.None;
         private bool isModal = false;
         private Action<bool>? onCloseModal;
@@ -48,14 +49,17 @@ namespace Alternet.UI
                 {
                     if (DisposingOrDisposed)
                         return;
+                    var cl = onCloseModal;
+                    onCloseModal = null;
                     modalResult = value;
                     PropInstanceAndValue.PopPropertiesMultiple(disabledControls);
                     disabledControls = null;
                     LastShownAsDialogTime = null;
                     Hide();
                     isModal = false;
-                    onCloseModal?.Invoke(modalResult == ModalResult.Accepted);
-                    onCloseModal = null;
+                    weakLastFocusedControl.Value?.SetFocusIfPossible();
+                    weakLastFocusedControl.Value = null;
+                    cl?.Invoke(modalResult == ModalResult.Accepted);
                 });
             }
         }
@@ -74,6 +78,7 @@ namespace Alternet.UI
             if (DisposingOrDisposed || Modal)
                 return;
 
+            weakLastFocusedControl.Value = AbstractControl.FocusedControl;
             modalResult = ModalResult.None;
             isModal = true;
             disabledControls = PropInstanceAndValue.DisableAllFormsChildrenExcept(this);
@@ -85,7 +90,7 @@ namespace Alternet.UI
                 ApplyStartLocationOnce(owner);
                 ShowAndFocus();
 
-                App.AddIdleTask(() =>
+                Post(() =>
                 {
                     ActiveControl?.SetFocusIfPossible();
                 });
