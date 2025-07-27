@@ -73,6 +73,11 @@ namespace PropertyGridSample
 
             void InitTestsLabel()
             {
+                AddControlAction<Label>("Log mouse events", (c) =>
+                {
+                    ObjectInit.LogMouseEventsIf(true, c);
+                });
+
                 AddControlAction<Label>("MakeComplexLabel", (c) =>
                 {
                     ObjectInit.MakeComplexLabel(c);

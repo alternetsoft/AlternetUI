@@ -44,6 +44,11 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Remove="Resources\Ico\Sample.ico" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\Ico\Sample.ico" />
     <EmbeddedResource Include="Resources\Svg\CodeCompletionSymbols\Event.svg" />
     <EmbeddedResource Include="Resources\Svg\CodeCompletionSymbols\Field.svg" />
     <EmbeddedResource Include="Resources\Svg\CodeCompletionSymbols\Method1.svg" />

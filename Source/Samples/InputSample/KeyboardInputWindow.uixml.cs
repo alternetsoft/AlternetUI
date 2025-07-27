@@ -10,6 +10,8 @@ namespace InputSample
         {
             InitializeComponent();
 
+            Icon = KnownIcons.Default;
+
             lb.BindApplicationLog();
 
             checkBoxKeyPreview.BindBoolProp(this, nameof(KeyPreview));

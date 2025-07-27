@@ -3,11 +3,6 @@
         x:Class="ControlsSample.CommonDialogsWindow"
         Title="Alternet.UI Common Dialogs Sample"
         Width="850" Height="550" StartLocation="CenterScreen" Margin="10">
-  <Window.StatusBar>
-    <StatusBar Name="statusBar">
-      <StatusBarPanel/>
-    </StatusBar>
-  </Window.StatusBar>
 
   <VerticalStackPanel>
 

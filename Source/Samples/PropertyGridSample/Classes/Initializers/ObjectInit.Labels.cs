@@ -40,7 +40,6 @@ namespace PropertyGridSample
             label.StateObjects ??= new();
             label.StateObjects.Colors ??= new();
             label.StateObjects.Colors.SetObject(colors, VisualControlState.Hovered);
-            LogMouseEventsIf(false, label);
 
             label.PerformLayoutAndInvalidate();
         }
@@ -52,11 +51,6 @@ namespace PropertyGridSample
             label.Name = "Label18";
             label.Text = "This is a label";
             label.HorizontalAlignment = HorizontalAlignment.Left;
-
-            label.Paint += (s, e) =>
-            {
-                App.LogNameValueReplace("Label.VisualState", label.VisualState);
-            };
         }
 
         public static void LogMouseEventsIf(bool condition, AbstractControl control)
@@ -92,6 +86,10 @@ namespace PropertyGridSample
             control.MouseUp += (s, e) =>
             {
                 App.Log($"{s}.MouseUp");
+            };
+            control.MouseHover += (s, e) =>
+            {
+                App.Log($"{s}.MouseHover");
             };
         }
 
