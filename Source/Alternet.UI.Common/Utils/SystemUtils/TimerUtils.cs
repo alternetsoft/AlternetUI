@@ -22,7 +22,9 @@ namespace Alternet.UI
         // constant value by default.
         public static int DefaultToolTipTimeout = 5000;
 
-        private static int clickRepeatInterval = 50;
+        // When interval is 50, in VirtualListBox scroll bar is not working properly.
+        private static int clickRepeatInterval = 30;
+
         private static Timer? clickRepeatTimer;
         private static Timer? hoverTimer;
 
