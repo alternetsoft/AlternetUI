@@ -333,23 +333,32 @@ namespace Alternet.Drawing
 
             ScrollBarDrawable.HitTestResult scrollHitTest;
 
+            EnumArray<ScrollBarDrawable.HitTestResult, RectD> scrollRectangles;
+            ScrollBarInfo scrollPosition;
+
             if (hitTest == InteriorDrawable.HitTestResult.HorzScrollBar && HorzScrollBar is not null
                 && HorzScrollBar.Visible)
             {
-                var horzRectangles = HorzScrollBar.GetLayoutRectangles(scaleFactor);
-                scrollHitTest = HorzScrollBar.HitTest(horzRectangles, point);
+                scrollRectangles = HorzScrollBar.GetLayoutRectangles(scaleFactor);
+                scrollHitTest = HorzScrollBar.HitTest(scrollRectangles, point);
+                scrollPosition = HorzScrollBar.Position;
             }
             else
             if (hitTest == InteriorDrawable.HitTestResult.VertScrollBar && VertScrollBar is not null
                 && VertScrollBar.Visible)
             {
-                var vertRectangles = VertScrollBar.GetLayoutRectangles(scaleFactor);
-                scrollHitTest = VertScrollBar.HitTest(vertRectangles, point);
+                scrollRectangles = VertScrollBar.GetLayoutRectangles(scaleFactor);
+                scrollHitTest = VertScrollBar.HitTest(scrollRectangles, point);
+                scrollPosition = VertScrollBar.Position;
             }
             else
+            {
                 scrollHitTest = ScrollBarDrawable.HitTestResult.None;
+                scrollRectangles = new();
+                scrollPosition = new();
+            }
 
-            return new(hitTest, scrollHitTest);
+            return new(hitTest, scrollHitTest, rectangles, scrollRectangles, scrollPosition);
         }
 
         /// <summary>
@@ -608,25 +617,59 @@ namespace Alternet.Drawing
         public readonly struct HitTestsResult
         {
             /// <summary>
-            /// Gets or sets interior hit test result.
+            /// Gets interior hit test result.
             /// </summary>
             public readonly InteriorDrawable.HitTestResult Interior;
 
             /// <summary>
-            /// Gets or sets interior scrollbar test result.
+            /// Gets interior scrollbar test result.
             /// Valid if <see cref="Interior"/> hit test contains scrollbars.
             /// </summary>
             public readonly ScrollBarDrawable.HitTestResult ScrollBar;
+
+            /// <summary>
+            /// Gets the collection of interior rectangles associated with hit test results.
+            /// </summary>
+            public readonly EnumArray<HitTestResult, RectD> InteriorRectangles;
+
+            /// <summary>
+            /// Gets the position of the scroll bar.
+            /// </summary>
+            public readonly ScrollBarInfo ScrollPosition;
+
+            /// <summary>
+            /// Represents a collection of rectangles associated with different
+            /// hit test results for a scroll bar.
+            /// </summary>
+            /// <remarks>This field provides a mapping between
+            /// <see cref="ScrollBarDrawable.HitTestResult"/> values and
+            /// their corresponding rectangular areas, which can be
+            /// used to determine the specific region of a scroll bar
+            /// that is being interacted with.</remarks>
+            public readonly EnumArray<ScrollBarDrawable.HitTestResult, RectD> ScrollRectangles;
 
             /// <summary>
             /// Initializes a new instance of the <see cref="HitTestsResult"/> struct.
             /// </summary>
             /// <param name="interior"><see cref="Interior"/> property value.</param>
             /// <param name="scrollBar"><see cref="ScrollBar"/> property value.</param>
-            public HitTestsResult(HitTestResult interior, ScrollBarDrawable.HitTestResult scrollBar)
+            /// <param name="interiorRectangles">
+            /// The <see cref="InteriorRectangles"/> property value.
+            /// </param>
+            /// <param name="scrollRectangles">The <see cref="ScrollRectangles"/> property value. </param>
+            /// <param name="scrollPosition">The <see cref="ScrollPosition"/> property value.</param>
+            public HitTestsResult(
+                HitTestResult interior,
+                ScrollBarDrawable.HitTestResult scrollBar,
+                EnumArray<HitTestResult, RectD> interiorRectangles,
+                EnumArray<ScrollBarDrawable.HitTestResult, RectD> scrollRectangles,
+                ScrollBarInfo scrollPosition)
             {
                 Interior = interior;
                 ScrollBar = scrollBar;
+                InteriorRectangles = interiorRectangles;
+                ScrollRectangles = scrollRectangles;
+                ScrollPosition = scrollPosition;
             }
 
             /// <summary>
@@ -663,6 +706,12 @@ namespace Alternet.Drawing
             /// Gets whether hit test is on horizontal or vertical scrollbar.
             /// </summary>
             public bool IsScrollBar => IsHorzScrollBar || IsVertScrollBar;
+
+            /// <summary>
+            /// Gets a value indicating whether hit test is on scroll bar thumb.
+            /// </summary>
+            public bool IsThumb =>
+                IsScrollBar && ScrollBar == ScrollBarDrawable.HitTestResult.Thumb;
 
             /// <summary>
             /// Gets whether hit test is on the corner which is below vertical scrollbar.
