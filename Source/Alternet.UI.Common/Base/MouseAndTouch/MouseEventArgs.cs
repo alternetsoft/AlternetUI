@@ -139,6 +139,7 @@ namespace Alternet.UI
 
         /// <summary>
         /// Gets the x-coordinate of the mouse during the generating mouse event.
+        /// Value is relative to the left corner of the control.
         /// </summary>
         /// <returns>The x-coordinate of the mouse, in dips.</returns>
         public Coord X
@@ -151,9 +152,10 @@ namespace Alternet.UI
 
         /// <summary>
         /// Gets the y-coordinate of the mouse during the generating mouse event.
+        /// Value is relative to the upper corner of the control.
         /// </summary>
         /// <returns>
-        /// The y-coordinate of the mouse, in pixels.
+        /// The y-coordinate of the mouse, in dips.
         /// </returns>
         public Coord Y
         {
