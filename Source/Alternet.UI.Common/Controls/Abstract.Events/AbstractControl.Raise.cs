@@ -306,6 +306,13 @@ namespace Alternet.UI
                 lastMouseDownPos = Mouse.GetPosition(this);
             }
 
+            RaiseNotifications((n) => n.BeforeMouseDown(this, e));
+
+            if (e.Handled)
+            {
+                return;
+            }
+
             MouseDown?.Invoke(this, e);
 
             OnMouseDown(e);

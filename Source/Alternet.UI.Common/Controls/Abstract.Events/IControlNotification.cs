@@ -364,6 +364,13 @@ namespace Alternet.UI
         void AfterMouseDown(AbstractControl sender, MouseEventArgs e);
 
         /// <summary>
+        /// Called before the mouse button was pressed.
+        /// </summary>
+        /// <param name="e">An <see cref="MouseEventArgs" /> that contains the event data.</param>
+        /// <param name="sender">Control which sends the notification.</param>
+        void BeforeMouseDown(AbstractControl sender, MouseEventArgs e);
+
+        /// <summary>
         /// Called after the control is redrawn. See <see cref="AbstractControl.Paint"/> for details.
         /// </summary>
         /// <param name="e">An <see cref="PaintEventArgs"/> that contains the
