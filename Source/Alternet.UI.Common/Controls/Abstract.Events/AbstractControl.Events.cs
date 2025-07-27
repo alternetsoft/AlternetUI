@@ -52,6 +52,12 @@ namespace Alternet.UI
         public event EventHandler? ContextMenuCreated;
 
         /// <summary>
+        /// Occurs when the mouse pointer rests on the control.
+        /// </summary>
+        [Category("Mouse")]
+        public event EventHandler? MouseHover;
+
+        /// <summary>
         /// Occurs when cell settings are changed.
         /// </summary>
         /// <remarks>
@@ -229,6 +235,7 @@ namespace Alternet.UI
         /// This is a delayed event. If multiple events are occurred during the delay,
         /// they are ignored.
         /// </remarks>
+        [Category("Property Changed")]
         public event EventHandler<EventArgs>? DelayedTextChanged
         {
             add => delayedTextChanged.Delayed += value;
@@ -269,6 +276,7 @@ namespace Alternet.UI
         /// <summary>
         /// Occurs when long tap gesture is recognized.
         /// </summary>
+        [Category("Mouse")]
         public event EventHandler<LongTapEventArgs>? LongTap;
 
         /// <summary>
@@ -315,11 +323,13 @@ namespace Alternet.UI
         /// <summary>
         /// Occurs after control was shown.
         /// </summary>
+        [Category("Appearance")]
         public event EventHandler? AfterShow;
 
         /// <summary>
         /// Occurs after control was hidden.
         /// </summary>
+        [Category("Appearance")]
         public event EventHandler? AfterHide;
 
         /// <summary>
@@ -504,6 +514,7 @@ namespace Alternet.UI
         /// Occurs when the DPI setting changes on the display device
         /// where the form is currently displayed.
         /// </summary>
+        [Category("Property Changed")]
         public event DpiChangedEventHandler? DpiChanged;
 
         /// <summary>

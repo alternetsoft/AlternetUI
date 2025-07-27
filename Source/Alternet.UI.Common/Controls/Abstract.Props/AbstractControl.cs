@@ -192,6 +192,15 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets mouse position when hovered control was changed.
+        /// </summary>
+        public static PointD? MouseHoverOrigin
+        {
+            get;
+            internal set;
+        }
+
+        /// <summary>
         /// Gets hovered control.
         /// </summary>
         /// <remarks>
@@ -209,15 +218,30 @@ namespace Alternet.UI
 
                 oldHoveredControl?.RaiseVisualStateChanged(EventArgs.Empty);
 
+                /*
+                App.Log(value?.Name ?? value?.GetType().ToString());
+
                 if (value is not null)
                 {
                     if (!value.IsMouseOver)
                         value = null;
                 }
+                */
 
                 weakHoveredControl.Value = value;
                 HoveredControlChanged?.Invoke(value, EventArgs.Empty);
                 value?.RaiseVisualStateChanged(EventArgs.Empty);
+
+                if (value is null)
+                {
+                    MouseHoverOrigin = null;
+                    TimerUtils.MouseHoverTimer.Stop();
+                }
+                else
+                {
+                    MouseHoverOrigin = Mouse.GetPosition(value);
+                    TimerUtils.MouseHoverTimer.RestartOnce();
+                }
             }
         }
 

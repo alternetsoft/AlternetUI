@@ -82,19 +82,49 @@ namespace Alternet.UI
             out bool handled)
         {
             handled = false;
-            var currentTarget = AbstractControl.GetMouseTargetControl(
-                ref originalTarget,
-                ref position);
-            if (currentTarget is null || position is null)
-                return;
 
-            var eventArgs = new MouseEventArgs(
-                currentTarget,
-                originalTarget!,
-                timestamp,
-                position.Value);
-            currentTarget.RaiseMouseMove(eventArgs);
-            UpdateCursor(originalTarget, currentTarget);
+            try
+            {
+                var currentTarget = AbstractControl.GetMouseTargetControl(
+                    ref originalTarget,
+                    ref position);
+                if (currentTarget is null || position is null)
+                    return;
+
+                var eventArgs = new MouseEventArgs(
+                    currentTarget,
+                    originalTarget!,
+                    timestamp,
+                    position.Value);
+                currentTarget.RaiseMouseMove(eventArgs);
+                UpdateCursor(originalTarget, currentTarget);
+            }
+            finally
+            {
+                if (AbstractControl.HoveredControl is not null)
+                {
+                    if (AbstractControl.MouseHoverOrigin is null)
+                    {
+                        TimerUtils.MouseHoverTimer.Stop();
+                    }
+                    else
+                    {
+                        var relativeToHovered = Mouse.GetPosition(AbstractControl.HoveredControl);
+                        var distanceIsLess = DrawingUtils.DistanceIsLess(
+                            relativeToHovered,
+                            AbstractControl.MouseHoverOrigin.Value,
+                            SystemSettings.MouseHoverSize);
+                        if (!distanceIsLess)
+                        {
+                            TimerUtils.MouseHoverTimer.RestartOnce();
+                        }
+                    }
+                }
+                else
+                {
+                    TimerUtils.MouseHoverTimer.Stop();
+                }
+            }
         }
 
         /// <summary>

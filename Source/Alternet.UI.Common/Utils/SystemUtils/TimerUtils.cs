@@ -16,12 +16,6 @@ namespace Alternet.UI
         public static int DefaultDelayedTextChangedTimeout = 150;
 
         /// <summary>
-        /// Gets or sets default timeout interval (in msec) for timer that calls
-        /// <see cref="App.WakeUpIdle"/>.
-        /// </summary>
-        public static int DefaultWakeUpIdleTimeout = 100;
-
-        /// <summary>
         /// Gets or sets default tooltip timeout interval (in msec).
         /// </summary>
         // On Windows some multiple of double-click time is used but we currently have constant
@@ -30,6 +24,7 @@ namespace Alternet.UI
 
         private static int clickRepeatInterval = 50;
         private static Timer? clickRepeatTimer;
+        private static Timer? hoverTimer;
 
         /// <summary>
         /// Occurs when the click repeat timer interval has elapsed.
@@ -54,6 +49,34 @@ namespace Alternet.UI
         }
 
         private static event EventHandler? ClickRepeatedEvent;
+
+        /// <summary>
+        /// Gets a value indicating whether the hover timer has been created.
+        /// </summary>
+        public static bool IsMouseHoverTimerCreated => hoverTimer is not null;
+
+        /// <summary>
+        /// Gets the static timer used to track mouse hover events.
+        /// </summary>
+        public static Timer MouseHoverTimer
+        {
+            get
+            {
+                hoverTimer ??= new Timer(SystemSettings.MouseHoverTime, HoverTimerTick);
+                return hoverTimer;
+
+                void HoverTimerTick()
+                {
+                    if (AbstractControl.HoveredControl is not null)
+                    {
+                        if(AbstractControl.HoveredControl.DisposingOrDisposed)
+                            return;
+
+                        AbstractControl.HoveredControl.RaiseMouseHover(EventArgs.Empty);
+                    }
+                }
+            }
+        }
 
         /// <summary>
         /// Gets or sets <see cref="Timer.Interval"/> for the click repeat timer.

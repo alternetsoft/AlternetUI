@@ -13,6 +13,8 @@ namespace Alternet.UI
         /// Called when the <see cref="CellChanged" /> event is raised.
         /// </summary>
         /// <param name="e">An <see cref="EventArgs" /> that contains the event data.</param>
+        /// <remarks>Derived classes can override this method to handle the event without
+        /// attaching a delegate.</remarks>
         [EditorBrowsable(EditorBrowsableState.Advanced)]
         protected virtual void OnCellChanged(EventArgs e)
         {
@@ -21,6 +23,8 @@ namespace Alternet.UI
         /// <summary>
         /// Called when the <see cref="ContextMenuCreated" /> event is raised.
         /// </summary>
+        /// <remarks>Derived classes can override this method to handle the event without
+        /// attaching a delegate.</remarks>
         /// <param name="e">An <see cref="EventArgs" /> that contains the event data.</param>
         [EditorBrowsable(EditorBrowsableState.Advanced)]
         protected virtual void OnContextMenuCreated(EventArgs e)
@@ -30,6 +34,8 @@ namespace Alternet.UI
         /// <summary>
         /// Called when the <see cref="AbstractControl.PreviewKeyDown" /> event is raised.
         /// </summary>
+        /// <remarks>Derived classes can override this method to handle the event without
+        /// attaching a delegate.</remarks>
         [EditorBrowsable(EditorBrowsableState.Advanced)]
         protected virtual void OnPreviewKeyDown(
             Key key,
@@ -42,6 +48,8 @@ namespace Alternet.UI
         /// Called when the <see cref="LongTap" /> event is raised.
         /// </summary>
         /// <param name="e">An <see cref="EventArgs" /> that contains the event data.</param>
+        /// <remarks>Derived classes can override this method to handle the event without
+        /// attaching a delegate.</remarks>
         [EditorBrowsable(EditorBrowsableState.Advanced)]
         protected virtual void OnLongTap(LongTapEventArgs e)
         {
@@ -51,6 +59,8 @@ namespace Alternet.UI
         /// Called when the <see cref="SystemColorsChanged" /> event is raised.
         /// </summary>
         /// <param name="e">An <see cref="EventArgs" /> that contains the event data.</param>
+        /// <remarks>Derived classes can override this method to handle the event without
+        /// attaching a delegate.</remarks>
         [EditorBrowsable(EditorBrowsableState.Advanced)]
         protected virtual void OnSystemColorsChanged(EventArgs e)
         {
@@ -60,6 +70,8 @@ namespace Alternet.UI
         /// Called when the <see cref="SizeChanged" /> event.
         /// </summary>
         /// <param name="e">An <see cref="EventArgs" /> that contains the event data.</param>
+        /// <remarks>Derived classes can override this method to handle the event without
+        /// attaching a delegate.</remarks>
         [EditorBrowsable(EditorBrowsableState.Advanced)]
         protected virtual void OnSizeChanged(EventArgs e)
         {
@@ -69,6 +81,8 @@ namespace Alternet.UI
         /// Called when the <see cref="Resize" /> event is raised.
         /// </summary>
         /// <param name="e">An <see cref="EventArgs" /> that contains the event data.</param>
+        /// <remarks>Derived classes can override this method to handle the event without
+        /// attaching a delegate.</remarks>
         [EditorBrowsable(EditorBrowsableState.Advanced)]
         protected virtual void OnResize(EventArgs e)
         {
@@ -78,6 +92,8 @@ namespace Alternet.UI
         /// Called when the <see cref="LocationChanged" /> event is raised.
         /// </summary>
         /// <param name="e">An <see cref="EventArgs" /> that contains the event data.</param>
+        /// <remarks>Derived classes can override this method to handle the event without
+        /// attaching a delegate.</remarks>
         [EditorBrowsable(EditorBrowsableState.Advanced)]
         protected virtual void OnLocationChanged(EventArgs e)
         {
@@ -87,6 +103,8 @@ namespace Alternet.UI
         /// Called when a <see cref="AbstractControl"/> is inserted into
         /// the <see cref="AbstractControl.Children"/>.
         /// </summary>
+        /// <remarks>Derived classes can override this method to handle the event without
+        /// attaching a delegate.</remarks>
         [EditorBrowsable(EditorBrowsableState.Advanced)]
         protected virtual void OnChildInserted(int index, AbstractControl childControl)
         {
@@ -96,6 +114,8 @@ namespace Alternet.UI
         /// Called when a <see cref="AbstractControl"/> is removed from the
         /// <see cref="AbstractControl.Children"/> collections.
         /// </summary>
+        /// <remarks>Derived classes can override this method to handle the event without
+        /// attaching a delegate.</remarks>
         [EditorBrowsable(EditorBrowsableState.Advanced)]
         protected virtual void OnChildRemoved(AbstractControl childControl)
         {
@@ -106,6 +126,8 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="e">An <see cref="EventArgs"/> that contains the
         /// event data.</param>
+        /// <remarks>Derived classes can override this method to handle the event without
+        /// attaching a delegate.</remarks>
         [EditorBrowsable(EditorBrowsableState.Advanced)]
         protected virtual void OnHandleCreated(EventArgs e)
         {
@@ -116,6 +138,8 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="e">An <see cref="EventArgs"/> that contains the
         /// event data.</param>
+        /// <remarks>Derived classes can override this method to handle the event without
+        /// attaching a delegate.</remarks>
         [EditorBrowsable(EditorBrowsableState.Advanced)]
         protected virtual void OnHandlerSizeChanged(EventArgs e)
         {
@@ -125,6 +149,8 @@ namespace Alternet.UI
         /// Called when the <see cref="Activated" /> event is raised.
         /// </summary>
         /// <param name="e">An <see cref="EventArgs" /> that contains the event data.</param>
+        /// <remarks>Derived classes can override this method to handle the event without
+        /// attaching a delegate.</remarks>
         [EditorBrowsable(EditorBrowsableState.Advanced)]
         protected virtual void OnActivated(EventArgs e)
         {
@@ -134,6 +160,8 @@ namespace Alternet.UI
         /// Called when the <see cref="Deactivated" /> event is raised.
         /// </summary>
         /// <param name="e">An <see cref="EventArgs" /> that contains the event data.</param>
+        /// <remarks>Derived classes can override this method to handle the event without
+        /// attaching a delegate.</remarks>
         [EditorBrowsable(EditorBrowsableState.Advanced)]
         protected virtual void OnDeactivated(EventArgs e)
         {
@@ -144,6 +172,8 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="e">An <see cref="EventArgs"/> that contains the
         /// event data.</param>
+        /// <remarks>Derived classes can override this method to handle the event without
+        /// attaching a delegate.</remarks>
         [EditorBrowsable(EditorBrowsableState.Advanced)]
         protected virtual void OnHandlerLocationChanged(EventArgs e)
         {
@@ -154,6 +184,8 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="e">An <see cref="EventArgs"/> that contains the
         /// event data.</param>
+        /// <remarks>Derived classes can override this method to handle the event without
+        /// attaching a delegate.</remarks>
         [EditorBrowsable(EditorBrowsableState.Advanced)]
         protected virtual void OnHandleDestroyed(EventArgs e)
         {
@@ -163,6 +195,8 @@ namespace Alternet.UI
         /// Called when the <see cref="KeyPress" /> event is raised.
         /// </summary>
         /// <param name="e">A <see cref="KeyPressEventArgs" /> that contains the event data.</param>
+        /// <remarks>Derived classes can override this method to handle the event without
+        /// attaching a delegate.</remarks>
         [EditorBrowsable(EditorBrowsableState.Advanced)]
         protected virtual void OnKeyPress(KeyPressEventArgs e)
         {
@@ -172,6 +206,8 @@ namespace Alternet.UI
         /// Called when the <see cref="MouseCaptureChanged" /> event is raised.
         /// </summary>
         /// <param name="e">An <see cref="EventArgs" /> that contains the event data.</param>
+        /// <remarks>Derived classes can override this method to handle the event without
+        /// attaching a delegate.</remarks>
         [EditorBrowsable(EditorBrowsableState.Advanced)]
         protected virtual void OnMouseCaptureChanged(EventArgs e)
         {
@@ -182,6 +218,8 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="e">A <see cref="InvalidateEventArgs" /> that contains
         /// the event data.</param>
+        /// <remarks>Derived classes can override this method to handle the event without
+        /// attaching a delegate.</remarks>
         protected virtual void OnInvalidated(InvalidateEventArgs e)
         {
         }
@@ -190,6 +228,8 @@ namespace Alternet.UI
         /// Called from the constructor. This method is added for the compatibility
         /// with legacy code.
         /// </summary>
+        /// <remarks>Derived classes can override this method to handle the event without
+        /// attaching a delegate.</remarks>
         [EditorBrowsable(EditorBrowsableState.Advanced)]
         protected virtual void OnCreateControl()
         {
@@ -199,6 +239,8 @@ namespace Alternet.UI
         /// Called when the <see cref="TextChanged" /> event is raised.
         /// </summary>
         /// <param name="e">An <see cref="EventArgs" /> that contains the event data.</param>
+        /// <remarks>Derived classes can override this method to handle the event without
+        /// attaching a delegate.</remarks>
         [EditorBrowsable(EditorBrowsableState.Advanced)]
         protected virtual void OnTextChanged(EventArgs e)
         {
@@ -207,8 +249,9 @@ namespace Alternet.UI
         /// <summary>
         /// Called when the control is clicked.
         /// </summary>
-        /// <param name="e">An <see cref="EventArgs"/> that contains the event
-        /// data.</param>
+        /// <param name="e">An <see cref="EventArgs"/> that contains the event data.</param>
+        /// <remarks>Derived classes can override this method to handle the event without
+        /// attaching a delegate.</remarks>
         [EditorBrowsable(EditorBrowsableState.Advanced)]
         protected virtual void OnClick(EventArgs e)
         {
@@ -217,8 +260,9 @@ namespace Alternet.UI
         /// <summary>
         /// Called when the value of the <see cref="Visible"/> property changes.
         /// </summary>
-        /// <param name="e">An <see cref="EventArgs"/> that contains the event
-        /// data.</param>
+        /// <param name="e">An <see cref="EventArgs"/> that contains the event data.</param>
+        /// <remarks>Derived classes can override this method to handle the event without
+        /// attaching a delegate.</remarks>
         [EditorBrowsable(EditorBrowsableState.Advanced)]
         protected virtual void OnVisibleChanged(EventArgs e)
         {
@@ -227,6 +271,8 @@ namespace Alternet.UI
         /// <summary>
         /// Called when the control loses mouse capture.
         /// </summary>
+        /// <remarks>Derived classes can override this method to handle the event without
+        /// attaching a delegate.</remarks>
         [EditorBrowsable(EditorBrowsableState.Advanced)]
         protected virtual void OnMouseCaptureLost(EventArgs e)
         {
@@ -235,6 +281,8 @@ namespace Alternet.UI
         /// <summary>
         /// Called when the mouse pointer enters the control.
         /// </summary>
+        /// <remarks>Derived classes can override this method to handle the event without
+        /// attaching a delegate.</remarks>
         [EditorBrowsable(EditorBrowsableState.Advanced)]
         protected virtual void OnMouseEnter(EventArgs e)
         {
@@ -243,6 +291,8 @@ namespace Alternet.UI
         /// <summary>
         /// Called when the left mouse button was pressed.
         /// </summary>
+        /// <remarks>Derived classes can override this method to handle the event without
+        /// attaching a delegate.</remarks>
         [EditorBrowsable(EditorBrowsableState.Advanced)]
         protected virtual void OnMouseLeftButtonDown(MouseEventArgs e)
         {
@@ -251,6 +301,8 @@ namespace Alternet.UI
         /// <summary>
         /// Called when the left mouse button was released.
         /// </summary>
+        /// <remarks>Derived classes can override this method to handle the event without
+        /// attaching a delegate.</remarks>
         [EditorBrowsable(EditorBrowsableState.Advanced)]
         protected virtual void OnMouseLeftButtonUp(MouseEventArgs e)
         {
@@ -259,6 +311,8 @@ namespace Alternet.UI
         /// <summary>
         /// Called when <see cref="IsMouseOver"/> property is changed.
         /// </summary>
+        /// <remarks>Derived classes can override this method to handle the event without
+        /// attaching a delegate.</remarks>
         [EditorBrowsable(EditorBrowsableState.Advanced)]
         protected virtual void OnIsMouseOverChanged(EventArgs e)
         {
@@ -268,6 +322,8 @@ namespace Alternet.UI
         /// Called when the value of the <see cref="Title"/> property changes.
         /// </summary>
         /// <param name="e">An <see cref="EventArgs"/> that contains the event data.</param>
+        /// <remarks>Derived classes can override this method to handle the event without
+        /// attaching a delegate.</remarks>
         [EditorBrowsable(EditorBrowsableState.Advanced)]
         protected virtual void OnTitleChanged(EventArgs e)
         {
@@ -276,6 +332,8 @@ namespace Alternet.UI
         /// <summary>
         /// Called when <see cref="VisualStateChanged"/> property is changed.
         /// </summary>
+        /// <remarks>Derived classes can override this method to handle the event without
+        /// attaching a delegate.</remarks>
         [EditorBrowsable(EditorBrowsableState.Advanced)]
         protected virtual void OnVisualStateChanged(EventArgs e)
         {
@@ -284,6 +342,8 @@ namespace Alternet.UI
         /// <summary>
         /// Called when the mouse pointer leaves the control.
         /// </summary>
+        /// <remarks>Derived classes can override this method to handle the event without
+        /// attaching a delegate.</remarks>
         [EditorBrowsable(EditorBrowsableState.Advanced)]
         protected virtual void OnMouseLeave(EventArgs e)
         {
@@ -294,6 +354,8 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="e">An <see cref="EventArgs"/> that contains the
         /// event data.</param>
+        /// <remarks>Derived classes can override this method to handle the event without
+        /// attaching a delegate.</remarks>
         [EditorBrowsable(EditorBrowsableState.Advanced)]
         protected virtual void OnHandlerDetaching(EventArgs e)
         {
@@ -306,6 +368,8 @@ namespace Alternet.UI
         /// A <see cref="PaintEventArgs" /> that contains information about
         /// the control to paint.
         /// </param>
+        /// <remarks>Derived classes can override this method to handle the event without
+        /// attaching a delegate.</remarks>
         /// <remarks>
         /// This method is not called for all the controls.
         /// It is up to the control to decide whether and how to call this method.
@@ -318,6 +382,8 @@ namespace Alternet.UI
         /// <summary>
         /// Called when the right mouse button was pressed.
         /// </summary>
+        /// <remarks>Derived classes can override this method to handle the event without
+        /// attaching a delegate.</remarks>
         [EditorBrowsable(EditorBrowsableState.Advanced)]
         protected virtual void OnMouseRightButtonDown(MouseEventArgs e)
         {
@@ -327,6 +393,8 @@ namespace Alternet.UI
         /// Called when the <see cref="KeyDown" /> event is raised.
         /// </summary>
         /// <param name="e">An <see cref="KeyEventArgs" /> that contains the event data.</param>
+        /// <remarks>Derived classes can override this method to handle the event without
+        /// attaching a delegate.</remarks>
         [EditorBrowsable(EditorBrowsableState.Advanced)]
         protected virtual void OnKeyDown(KeyEventArgs e)
         {
@@ -337,6 +405,8 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="e">An <see cref="EventArgs"/> that contains the
         /// event data.</param>
+        /// <remarks>Derived classes can override this method to handle the event without
+        /// attaching a delegate.</remarks>
         [EditorBrowsable(EditorBrowsableState.Advanced)]
         protected virtual void OnMarginChanged(EventArgs e)
         {
@@ -346,6 +416,8 @@ namespace Alternet.UI
         /// Called when the value of the <see cref="Font"/> property changes.
         /// </summary>
         /// <param name="e">An <see cref="EventArgs"/> that contains the event data.</param>
+        /// <remarks>Derived classes can override this method to handle the event without
+        /// attaching a delegate.</remarks>
         [EditorBrowsable(EditorBrowsableState.Advanced)]
         protected virtual void OnFontChanged(EventArgs e)
         {
@@ -356,6 +428,8 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="e">An <see cref="EventArgs"/> that contains the event
         /// data.</param>
+        /// <remarks>Derived classes can override this method to handle the event without
+        /// attaching a delegate.</remarks>
         [EditorBrowsable(EditorBrowsableState.Advanced)]
         protected virtual void OnPaddingChanged(EventArgs e)
         {
@@ -366,6 +440,8 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="e">An <see cref="EventArgs"/> that contains the event
         /// data.</param>
+        /// <remarks>Derived classes can override this method to handle the event without
+        /// attaching a delegate.</remarks>
         [EditorBrowsable(EditorBrowsableState.Advanced)]
         protected virtual void OnHandlerAttached(EventArgs e)
         {
@@ -375,6 +451,8 @@ namespace Alternet.UI
         /// Called when the <see cref="DragDrop" /> event is raised.
         /// </summary>
         /// <param name="e">An <see cref="DragEventArgs" /> that contains the event data.</param>
+        /// <remarks>Derived classes can override this method to handle the event without
+        /// attaching a delegate.</remarks>
         [EditorBrowsable(EditorBrowsableState.Advanced)]
         protected virtual void OnDragDrop(DragEventArgs e)
         {
@@ -384,6 +462,8 @@ namespace Alternet.UI
         /// Called when the <see cref="DragStart" /> event is raised.
         /// </summary>
         /// <param name="e">An <see cref="DragStartEventArgs" /> that contains the event data.</param>
+        /// <remarks>Derived classes can override this method to handle the event without
+        /// attaching a delegate.</remarks>
         [EditorBrowsable(EditorBrowsableState.Advanced)]
         protected virtual void OnDragStart(DragStartEventArgs e)
         {
@@ -393,6 +473,8 @@ namespace Alternet.UI
         /// Called when the <see cref="DpiChanged" /> event is raised.
         /// </summary>
         /// <param name="e">An <see cref="DpiChangedEventArgs" /> that contains the event data.</param>
+        /// <remarks>Derived classes can override this method to handle the event without
+        /// attaching a delegate.</remarks>
         [EditorBrowsable(EditorBrowsableState.Advanced)]
         protected virtual void OnDpiChanged(DpiChangedEventArgs e)
         {
@@ -402,6 +484,8 @@ namespace Alternet.UI
         /// Called when the <see cref="DragOver" /> event is raised.
         /// </summary>
         /// <param name="e">An <see cref="DragEventArgs" /> that contains the event data.</param>
+        /// <remarks>Derived classes can override this method to handle the event without
+        /// attaching a delegate.</remarks>
         [EditorBrowsable(EditorBrowsableState.Advanced)]
         protected virtual void OnDragOver(DragEventArgs e)
         {
@@ -411,6 +495,8 @@ namespace Alternet.UI
         /// Called when the <see cref="DragEnter" /> event is raised.
         /// </summary>
         /// <param name="e">An <see cref="DragEventArgs" /> that contains the event data.</param>
+        /// <remarks>Derived classes can override this method to handle the event without
+        /// attaching a delegate.</remarks>
         [EditorBrowsable(EditorBrowsableState.Advanced)]
         protected virtual void OnDragEnter(DragEventArgs e)
         {
@@ -420,6 +506,8 @@ namespace Alternet.UI
         /// Called when the <see cref="DragLeave" /> event is raised.
         /// </summary>
         /// <param name="e">An <see cref="EventArgs" /> that contains the event data.</param>
+        /// <remarks>Derived classes can override this method to handle the event without
+        /// attaching a delegate.</remarks>
         [EditorBrowsable(EditorBrowsableState.Advanced)]
         protected virtual void OnDragLeave(EventArgs e)
         {
@@ -430,6 +518,8 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="e">The <see cref="EventArgs"/> that
         /// contains the event data.</param>
+        /// <remarks>Derived classes can override this method to handle the event without
+        /// attaching a delegate.</remarks>
         [EditorBrowsable(EditorBrowsableState.Advanced)]
         protected virtual void OnGotFocus(EventArgs e)
         {
@@ -440,6 +530,8 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="e">The <see cref="EventArgs"/> that
         /// contains the event data.</param>
+        /// <remarks>Derived classes can override this method to handle the event without
+        /// attaching a delegate.</remarks>
         [EditorBrowsable(EditorBrowsableState.Advanced)]
         protected virtual void OnLostFocus(EventArgs e)
         {
@@ -449,6 +541,8 @@ namespace Alternet.UI
         /// Called when the mouse button was double-clicked.
         /// </summary>
         /// <param name="e">An <see cref="MouseEventArgs" /> that contains the event data.</param>
+        /// <remarks>Derived classes can override this method to handle the event without
+        /// attaching a delegate.</remarks>
         [EditorBrowsable(EditorBrowsableState.Advanced)]
         protected virtual void OnMouseDoubleClick(MouseEventArgs e)
         {
@@ -458,6 +552,8 @@ namespace Alternet.UI
         /// Called when the <see cref="MouseWheel" /> event is raised.
         /// </summary>
         /// <param name="e">An <see cref="MouseEventArgs" /> that contains the event data.</param>
+        /// <remarks>Derived classes can override this method to handle the event without
+        /// attaching a delegate.</remarks>
         [EditorBrowsable(EditorBrowsableState.Advanced)]
         protected virtual void OnMouseWheel(MouseEventArgs e)
         {
@@ -468,6 +564,8 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="e">An <see cref="ThrowExceptionEventArgs"/> that contains
         /// the event data.</param>
+        /// <remarks>Derived classes can override this method to handle the event without
+        /// attaching a delegate.</remarks>
         [EditorBrowsable(EditorBrowsableState.Advanced)]
         protected virtual void OnProcessException(ThrowExceptionEventArgs e)
         {
@@ -477,6 +575,8 @@ namespace Alternet.UI
         /// Called when the mouse is moved.
         /// </summary>
         /// <param name="e">An <see cref="MouseEventArgs" /> that contains the event data.</param>
+        /// <remarks>Derived classes can override this method to handle the event without
+        /// attaching a delegate.</remarks>
         [EditorBrowsable(EditorBrowsableState.Advanced)]
         protected virtual void OnMouseMove(MouseEventArgs e)
         {
@@ -486,6 +586,8 @@ namespace Alternet.UI
         /// Called when the mouse button was released.
         /// </summary>
         /// <param name="e">An <see cref="MouseEventArgs" /> that contains the event data.</param>
+        /// <remarks>Derived classes can override this method to handle the event without
+        /// attaching a delegate.</remarks>
         [EditorBrowsable(EditorBrowsableState.Advanced)]
         protected virtual void OnMouseUp(MouseEventArgs e)
         {
@@ -495,6 +597,8 @@ namespace Alternet.UI
         /// Raises the <see cref="ToolTipChanged"/> event.
         /// </summary>
         /// <param name="e">Event arguments.</param>
+        /// <remarks>Derived classes can override this method to handle the event without
+        /// attaching a delegate.</remarks>
         [EditorBrowsable(EditorBrowsableState.Advanced)]
         protected virtual void OnToolTipChanged(EventArgs e)
         {
@@ -504,6 +608,8 @@ namespace Alternet.UI
         /// Called when <see cref="Parent"/> property is changed.
         /// </summary>
         /// <param name="e">An <see cref="EventArgs" /> that contains the event data.</param>
+        /// <remarks>Derived classes can override this method to handle the event without
+        /// attaching a delegate.</remarks>
         [EditorBrowsable(EditorBrowsableState.Advanced)]
         protected virtual void OnParentChanged(EventArgs e)
         {
@@ -514,6 +620,8 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="e">An <see cref="EventArgs"/> that contains the
         /// event data.</param>
+        /// <remarks>Derived classes can override this method to handle the event without
+        /// attaching a delegate.</remarks>
         [EditorBrowsable(EditorBrowsableState.Advanced)]
         protected virtual void OnEnabledChanged(EventArgs e)
         {
@@ -523,6 +631,8 @@ namespace Alternet.UI
         /// Called when the <see cref="HelpRequested" /> event is raised.</summary>
         /// <param name="e">A <see cref="HelpEventArgs" /> that
         /// contains the event data.</param>
+        /// <remarks>Derived classes can override this method to handle the event without
+        /// attaching a delegate.</remarks>
         [EditorBrowsable(EditorBrowsableState.Advanced)]
         protected virtual void OnHelpRequested(HelpEventArgs e)
         {
@@ -532,6 +642,8 @@ namespace Alternet.UI
         /// Called when <see cref="Touch"/> event is raised.</summary>
         /// <param name="e">A <see cref="TouchEventArgs" /> that
         /// contains the event data.</param>
+        /// <remarks>Derived classes can override this method to handle the event without
+        /// attaching a delegate.</remarks>
         [EditorBrowsable(EditorBrowsableState.Advanced)]
         protected virtual void OnTouch(TouchEventArgs e)
         {
@@ -540,15 +652,31 @@ namespace Alternet.UI
         /// <summary>
         /// Called when the right mouse button was released.
         /// </summary>
+        /// <remarks>Derived classes can override this method to handle the event without
+        /// attaching a delegate.</remarks>
         /// <param name="e">An <see cref="MouseEventArgs" /> that contains the event data.</param>
+        /// <remarks>Derived classes can override this method to handle the event without
+        /// attaching a delegate.</remarks>
         [EditorBrowsable(EditorBrowsableState.Advanced)]
         protected virtual void OnMouseRightButtonUp(MouseEventArgs e)
         {
         }
 
         /// <summary>
+        /// Called when the mouse pointer hovers over the control.
+        /// </summary>
+        /// <remarks>Derived classes can override this method to handle the event without
+        /// attaching a delegate.</remarks>
+        /// <param name="e">An <see cref="EventArgs"/> that contains the event data.</param>
+        protected virtual void OnMouseHover(EventArgs e)
+        {
+        }
+
+        /// <summary>
         /// Called when the mouse button was pressed.
         /// </summary>
+        /// <remarks>Derived classes can override this method to handle the event without
+        /// attaching a delegate.</remarks>
         /// <param name="e">An <see cref="MouseEventArgs" /> that contains the event data.</param>
         [EditorBrowsable(EditorBrowsableState.Advanced)]
         protected virtual void OnMouseDown(MouseEventArgs e)
@@ -560,6 +688,8 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="e">An <see cref="PaintEventArgs"/> that contains the
         /// event data.</param>
+        /// <remarks>Derived classes can override this method to handle the event without
+        /// attaching a delegate.</remarks>
         [EditorBrowsable(EditorBrowsableState.Advanced)]
         protected virtual void OnPaint(PaintEventArgs e)
         {
@@ -570,6 +700,8 @@ namespace Alternet.UI
         /// to determine whether the drag-and-drop operation should be canceled.
         /// </summary>
         /// <param name="e">Event arguments.</param>
+        /// <remarks>Derived classes can override this method to handle the event without
+        /// attaching a delegate.</remarks>
         [EditorBrowsable(EditorBrowsableState.Advanced)]
         protected virtual void OnQueryContinueDrag(QueryContinueDragEventArgs e)
         {
@@ -579,6 +711,8 @@ namespace Alternet.UI
         /// Called when <see cref="KeyUp"/> event is raised.
         /// </summary>
         /// <param name="e">Event arguments.</param>
+        /// <remarks>Derived classes can override this method to handle the event without
+        /// attaching a delegate.</remarks>
         [EditorBrowsable(EditorBrowsableState.Advanced)]
         protected virtual void OnKeyUp(KeyEventArgs e)
         {

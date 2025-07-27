@@ -266,6 +266,27 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Raises the <see cref="MouseHover"/> event and calls <see cref="OnMouseHover"/> method.
+        /// </summary>
+        /// <param name="e">An <see cref="EventArgs"/> that contains the event data.</param>
+        /*
+        The system starts tracking when the mouse enters a control.
+
+        If the pointer remains stationary within a small rectangle (default: 4×4 pixels)
+        for a set time (default: 400 ms), the MouseHover event fires.
+
+        The event is raised only once per hover session. If the mouse leaves
+        and re-enters the control, tracking restarts.        
+        */
+        public void RaiseMouseHover(EventArgs e)
+        {
+            if (DisposingOrDisposed)
+                return;
+            OnMouseHover(e);
+            MouseHover?.Invoke(this, e);
+        }
+
+        /// <summary>
         /// Raises the <see cref="MouseDown" /> event and <see cref="OnMouseDown"/> method.
         /// </summary>
         public void RaiseMouseDown(MouseEventArgs e)
@@ -502,8 +523,6 @@ namespace Alternet.UI
         {
             if (DisposingOrDisposed)
                 return;
-            if (HoveredControl == this)
-                HoveredControl = null;
             IsMouseLeftButtonDown = false;
             OnMouseCaptureLost(e);
             OnMouseCaptureChanged(e);
