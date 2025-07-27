@@ -65,7 +65,6 @@ namespace Alternet.UI
         private ScrollBarSettings? horizontalScrollBarSettings;
         private ScrollBarSettings? verticalScrollBarSettings;
         private InteriorDrawable? interior;
-        private RectD paintRectangle;
         private ScrollBarInfo vertScrollBarInfo = new ();
         private ScrollBarInfo horzScrollBarInfo = new ();
 
@@ -343,6 +342,7 @@ namespace Alternet.UI
                 else
                 {
                     interior.HasBorder = value;
+                    Invalidate();
                 }
             }
         }
@@ -1779,13 +1779,10 @@ namespace Alternet.UI
             if (interior is null)
                 return clientR;
 
-            if (interior.Bounds == clientR)
-                return paintRectangle;
-
             interior.Bounds = clientR;
 
             var rectangles = interior.GetLayoutRectangles(this);
-            paintRectangle = rectangles[InteriorDrawable.HitTestResult.ClientRect];
+            var paintRectangle = rectangles[InteriorDrawable.HitTestResult.ClientRect];
 
             return paintRectangle;
         }
