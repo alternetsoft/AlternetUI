@@ -88,6 +88,20 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Initializes a new instance of the <see cref="Timer"/> class
+        /// with a specified interval (in milliseconds) and action to execute on each tick.
+        /// </summary>
+        /// <param name="interval">The time interval, in milliseconds, between each tick of the timer.
+        /// Must be a positive integer.</param>
+        /// <param name="tickAction">The action to execute on each tick of the timer.
+        /// Cannot be <see langword="null"/>.</param>
+        public Timer(int interval, Action tickAction)
+        {
+            Interval = interval;
+            TickAction = tickAction;
+        }
+
+        /// <summary>
         /// Occurs when the specified timer interval has elapsed.
         /// </summary>
         [Category("Behavior")]
@@ -239,6 +253,24 @@ namespace Alternet.UI
         {
             AutoReset = false;
             Enabled = true;
+        }
+
+        /// <summary>
+        /// Restarts the timer by stopping it and then starting it using <see cref="StartOnce"/>.
+        /// </summary>
+        public void RestartOnce()
+        {
+            Stop();
+            StartOnce();
+        }
+
+        /// <summary>
+        /// Restarts the timer by stopping it and then starting it using <see cref="StartRepeated"/>.
+        /// </summary>
+        public void RestartRepeated()
+        {
+            Stop();
+            StartRepeated();
         }
 
         /// <summary>
