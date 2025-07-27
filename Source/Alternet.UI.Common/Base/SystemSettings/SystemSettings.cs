@@ -13,11 +13,18 @@ namespace Alternet.UI
     /// </summary>
     public static class SystemSettings
     {
+        /// <summary>
+        /// Represents the size of the area around the mouse cursor, in device independent units,
+        /// that triggers a mouse hover event. Default value is 4 dips.
+        /// </summary>
+        public static Coord MouseHoverSize = 4;
+
         private static ISystemSettingsHandler? handler;
         private static bool validColors;
         private static bool? appearanceIsDarkOverride;
         private static bool? isUsingDarkBackgroundOverride;
         private static bool insideResetColors;
+        private static int mouseHoverTime = 400;
 
         static SystemSettings()
         {
@@ -28,6 +35,28 @@ namespace Alternet.UI
         /// Occurs when the system colors change.
         /// </summary>
         public static event Action? SystemColorsChanged;
+
+        /// <summary>
+        /// Gets or sets the duration, in milliseconds, that the mouse pointer must
+        /// remain stationary within a control and hover rectangle for a hover event to be raised.
+        /// Default value is 400 milliseconds.
+        /// </summary>
+        public static int MouseHoverTime
+        {
+            get => mouseHoverTime;
+
+            set
+            {
+                if (mouseHoverTime == value)
+                    return;
+                mouseHoverTime = value;
+                if (TimerUtils.IsMouseHoverTimerCreated)
+                {
+                    TimerUtils.MouseHoverTimer.Stop();
+                    TimerUtils.MouseHoverTimer.Interval = mouseHoverTime;
+                }
+            }
+        }
 
         /// <summary>
         /// Gets whether <see cref="SystemSettings"/> is initialized and
@@ -103,7 +132,7 @@ namespace Alternet.UI
         /// being a dark theme or if the default window background is dark.
         /// </summary>
         /// <remarks>
-        /// This method should be used to check whether custom colours more appropriate
+        /// This method should be used to check whether custom colors more appropriate
         /// for the default (light) or dark appearance should be used.
         /// </remarks>
         public static bool AppearanceIsDark
