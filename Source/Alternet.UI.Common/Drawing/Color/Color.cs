@@ -1614,6 +1614,29 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
+        /// Adjusts the brightness of the color by a specified percentage.
+        /// </summary>
+        /// <param name="percOfLight">A percentage value indicating the amount
+        /// of brightness adjustment. Positive values make the color lighter,
+        /// while negative values make it darker.</param>
+        /// <returns>A new <see cref="Color"/> instance that is lighter
+        /// or darker based on the specified percentage.
+        /// If <paramref name="percOfLight"/> is zero, the original color is returned.</returns>
+        public Color LighterOrDarker(float percOfLight)
+        {
+            if (percOfLight < 0)
+            {
+                return Darker(-percOfLight);
+            }
+            else if (percOfLight > 0)
+            {
+                return Lighter(percOfLight);
+            }
+
+            return this;
+        }
+
+        /// <summary>
         /// Creates a new lighter color from this color.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
