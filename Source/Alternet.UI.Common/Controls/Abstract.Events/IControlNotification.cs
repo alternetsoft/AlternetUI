@@ -308,6 +308,13 @@ namespace Alternet.UI
         void AfterMouseUp(AbstractControl sender, MouseEventArgs e);
 
         /// <summary>
+        /// Called before the mouse button was released.
+        /// </summary>
+        /// <param name="sender">Control which sends the notification.</param>
+        /// <param name="e">An <see cref="MouseEventArgs" /> that contains the event data.</param>
+        void BeforeMouseUp(AbstractControl sender, MouseEventArgs e);
+
+        /// <summary>
         /// Raises the <see cref="AbstractControl.ToolTipChanged"/> event.
         /// </summary>
         /// <param name="sender">Control which sends the notification.</param>
@@ -369,6 +376,13 @@ namespace Alternet.UI
         /// <param name="e">An <see cref="MouseEventArgs" /> that contains the event data.</param>
         /// <param name="sender">Control which sends the notification.</param>
         void BeforeMouseDown(AbstractControl sender, MouseEventArgs e);
+
+        /// <summary>
+        /// Called before the mouse pointer was moved.
+        /// </summary>
+        /// <param name="e">An <see cref="MouseEventArgs" /> that contains the event data.</param>
+        /// <param name="sender">Control which sends the notification.</param>
+        void BeforeMouseMove(AbstractControl sender, MouseEventArgs e);
 
         /// <summary>
         /// Called after the control is redrawn. See <see cref="AbstractControl.Paint"/> for details.

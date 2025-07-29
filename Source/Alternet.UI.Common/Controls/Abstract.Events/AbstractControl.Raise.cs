@@ -145,10 +145,18 @@ namespace Alternet.UI
             if (DisposingOrDisposed)
                 return;
             HoveredControl = this;
+            Mouse.RaiseMoved(this, e);
+
+            RaiseNotifications((n) => n.BeforeMouseMove(this, e));
+
+            if (e.Handled)
+            {
+                return;
+            }
+
             MouseMove?.Invoke(this, e);
             OnMouseMove(e);
 
-            Mouse.RaiseMoved(this, e);
             RaiseNotifications((n) => n.AfterMouseMove(this, e));
 
             if (dragEventArgs is not null)
@@ -203,6 +211,13 @@ namespace Alternet.UI
 
             HoveredControl = this;
             PlessMouse.CancelLongTapTimer();
+
+            RaiseNotifications((n) => n.BeforeMouseUp(this, e));
+
+            if (e.Handled)
+            {
+                return;
+            }
 
             MouseUp?.Invoke(this, e);
             dragEventArgs = null;

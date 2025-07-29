@@ -196,6 +196,11 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
+        public virtual void BeforeMouseUp(AbstractControl sender, MouseEventArgs e)
+        {
+        }
+
+        /// <inheritdoc/>
         public virtual void BeforeMouseDown(AbstractControl sender, MouseEventArgs e)
         {
         }
@@ -227,6 +232,11 @@ namespace Alternet.UI
 
         /// <inheritdoc/>
         public virtual void AfterMouseMove(AbstractControl sender, MouseEventArgs e)
+        {
+        }
+
+        /// <inheritdoc/>
+        public virtual void BeforeMouseMove(AbstractControl sender, MouseEventArgs e)
         {
         }
 

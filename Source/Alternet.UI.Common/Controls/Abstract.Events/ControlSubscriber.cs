@@ -120,6 +120,11 @@ namespace Alternet.UI
         /// <summary>
         /// Occurs when the corresponding control's event is raised.
         /// </summary>
+        public event EventHandler<MouseEventArgs>? BeforeControlMouseMove;
+
+        /// <summary>
+        /// Occurs when the corresponding control's event is raised.
+        /// </summary>
         public event EventHandler<MouseEventArgs>? AfterControlMouseRightButtonDown;
 
         /// <summary>
@@ -131,6 +136,11 @@ namespace Alternet.UI
         /// Occurs when the corresponding control's event is raised.
         /// </summary>
         public event EventHandler<MouseEventArgs>? AfterControlMouseUp;
+
+        /// <summary>
+        /// Occurs when the corresponding control's event is raised.
+        /// </summary>
+        public event EventHandler<MouseEventArgs>? BeforeControlMouseUp;
 
         /// <summary>
         /// Occurs when the corresponding control's event is raised.
@@ -567,6 +577,12 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
+        public void BeforeMouseMove(AbstractControl sender, MouseEventArgs e)
+        {
+            BeforeControlMouseMove?.Invoke(sender, e);
+        }
+
+        /// <inheritdoc/>
         public void AfterMouseRightButtonDown(AbstractControl sender, MouseEventArgs e)
         {
             AfterControlMouseRightButtonDown?.Invoke(sender, e);
@@ -582,6 +598,12 @@ namespace Alternet.UI
         public void AfterMouseUp(AbstractControl sender, MouseEventArgs e)
         {
             AfterControlMouseUp?.Invoke(sender, e);
+        }
+
+        /// <inheritdoc/>
+        public void BeforeMouseUp(AbstractControl sender, MouseEventArgs e)
+        {
+            BeforeControlMouseUp?.Invoke(sender, e);
         }
 
         /// <inheritdoc/>
