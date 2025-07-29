@@ -322,14 +322,18 @@ namespace Alternet.Drawing
         /// interior hit test and scrollbar hit test.
         /// </summary>
         /// <param name="point">Point to check.</param>
+        /// <param name="suggested">The suggested hit test value.</param>
         /// <param name="control">Control which scale factor
         /// is used to convert pixels to/from dips.</param>
         /// <returns></returns>
-        public virtual HitTestsResult HitTests(AbstractControl control, PointD point)
+        public virtual HitTestsResult HitTests(
+            AbstractControl control,
+            PointD point,
+            HitTestResult? suggested = null)
         {
             Coord scaleFactor = control.ScaleFactor;
             var rectangles = GetLayoutRectangles(control);
-            var hitTest = HitTest(rectangles, point);
+            var hitTest = suggested ?? HitTest(rectangles, point);
 
             ScrollBarDrawable.HitTestResult scrollHitTest;
 
@@ -609,6 +613,61 @@ namespace Alternet.Drawing
             themeObj.AssignTo(this);
 
             HasBorder = savedHasBorder;
+        }
+
+        /// <summary>
+        /// Sets the visual state of the scrollbar thumb based on the specified orientation.
+        /// </summary>
+        /// <remarks>This method updates the thumb state of either the vertical
+        /// or horizontal scrollbar,  depending on the value of the
+        /// <paramref name="vert"/> parameter.  If the specified scrollbar is not
+        /// initialized, the method performs no action.</remarks>
+        /// <param name="vert">A boolean value indicating the orientation
+        /// of the scrollbar.  <see langword="true"/> for vertical
+        /// orientation; <see langword="false"/> for horizontal orientation.</param>
+        /// <param name="value">The <see cref="VisualControlState"/> to
+        /// set for the scrollbar thumb.</param>
+        public void SetThumbState(bool vert, VisualControlState value)
+        {
+            if (vert)
+            {
+                if (VertScrollBar is not null)
+                    VertScrollBar.ThumbState = value;
+            }
+            else
+            {
+                if (HorzScrollBar is not null)
+                    HorzScrollBar.ThumbState = value;
+            }
+        }
+
+        /// <summary>
+        /// Sets the thumb state for both vertical and horizontal scroll bars.
+        /// </summary>
+        /// <remarks>This method updates the thumb state of both the vertical
+        /// and horizontal scroll bars, if they are present.</remarks>
+        /// <param name="value">The state to set for the thumb of the scroll bars.</param>
+        public bool SetThumbState(VisualControlState value)
+        {
+            if (VertScrollBar is not null)
+            {
+                if(VertScrollBar.ThumbState != value)
+                {
+                    VertScrollBar.ThumbState = value;
+                    return true;
+                }
+            }
+
+            if (HorzScrollBar is not null)
+            {
+                if (HorzScrollBar.ThumbState != value)
+                {
+                    HorzScrollBar.ThumbState = value;
+                    return true;
+                }
+            }
+
+            return false;
         }
 
         /// <summary>

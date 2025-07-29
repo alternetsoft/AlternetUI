@@ -83,6 +83,11 @@ namespace Alternet.Drawing
         public ControlStateObjects<RectangleDrawable>? RightArrow;
 
         private ScrollBar.MetricsInfo? metrics;
+        private VisualControlState startButtonState;
+        private VisualControlState endButtonState;
+        private VisualControlState startArrowState;
+        private VisualControlState endArrowState;
+        private VisualControlState thumbState;
 
         /// <summary>
         /// Enumerates possible hit test return values.
@@ -160,6 +165,86 @@ namespace Alternet.Drawing
             {
                 metrics = value;
             }
+        }
+
+        /// <summary>
+        /// Gets or sets the visual state of the start button.
+        /// This property doesn't invalidate the control.
+        /// </summary>
+        public virtual VisualControlState StartButtonState
+        {
+            get
+            {
+                if (!Enabled)
+                    return VisualControlState.Disabled;
+                return startButtonState;
+            }
+
+            set => startButtonState = value;
+        }
+
+        /// <summary>
+        /// Gets or sets the visual state of the end button.
+        /// This property doesn't invalidate the control.
+        /// </summary>
+        public virtual VisualControlState EndButtonState
+        {
+            get
+            {
+                if (!Enabled)
+                    return VisualControlState.Disabled;
+                return endButtonState;
+            }
+
+            set => endButtonState = value;
+        }
+
+        /// <summary>
+        /// Gets or sets the visual state of the start arrow in a control.
+        /// This property doesn't invalidate the control.
+        /// </summary>
+        public virtual VisualControlState StartArrowState
+        {
+            get
+            {
+                if (!Enabled)
+                    return VisualControlState.Disabled;
+                return startArrowState;
+            }
+
+            set => startArrowState = value;
+        }
+
+        /// <summary>
+        /// Gets or sets the visual state of the end arrow in a control.
+        /// This property doesn't invalidate the control.
+        /// </summary>
+        public virtual VisualControlState EndArrowState
+        {
+            get
+            {
+                if (!Enabled)
+                    return VisualControlState.Disabled;
+                return endArrowState;
+            }
+
+            set => endArrowState = value;
+        }
+
+        /// <summary>
+        /// Gets or sets the visual state of the thumb.
+        /// This property doesn't invalidate the control.
+        /// </summary>
+        public virtual VisualControlState ThumbState
+        {
+            get
+            {
+                if(!Enabled)
+                    return VisualControlState.Disabled;
+                return thumbState;
+            }
+
+            set => thumbState = value;
         }
 
         /// <summary>
@@ -355,11 +440,11 @@ namespace Alternet.Drawing
 
             var metrics = GetRealMetrics(control);
 
-            var startButtonState = VisualState;
-            var endButtonState = VisualState;
-            var startArrowState = VisualState;
-            var endArrowState = VisualState;
-            var thumbState = VisualState;
+            var startButtonState = StartButtonState;
+            var endButtonState = EndButtonState;
+            var startArrowState = StartArrowState;
+            var endArrowState = EndArrowState;
+            var thumbState = ThumbState;
 
             var startButton = GetVisibleStartButton(startButtonState);
             var endButton = GetVisibleEndButton(endButtonState);

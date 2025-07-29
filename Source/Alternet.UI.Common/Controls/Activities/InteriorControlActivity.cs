@@ -17,6 +17,7 @@ namespace Alternet.UI
         private bool subscribedClickRepeated;
         private bool isDragging = false;
         private PointD clickOffset;
+        private InteriorDrawable.HitTestsResult? hitTestsMouseDown;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="InteriorControlActivity"/> class.
@@ -33,18 +34,22 @@ namespace Alternet.UI
         public virtual bool SendScrollToControl { get; set; } = true;
 
         /// <inheritdoc/>
-        public override void AfterMouseMove(AbstractControl sender, MouseEventArgs e)
+        public override void BeforeMouseMove(AbstractControl sender, MouseEventArgs e)
         {
+            /*
             DebugUtils.DebugCallIf(false, () =>
             {
                 var hitTests = interior.HitTests(sender, e.Location);
 
                 App.LogIf(hitTests.ToString(), false);
             });
+            */
 
-            if (isDragging)
+            if (isDragging && hitTestsMouseDown is not null)
             {
-                var hitTests = interior.HitTests(sender, e.Location);
+                e.Handled = true;
+
+                var hitTests = interior.HitTests(sender, e.Location, hitTestsMouseDown.Value.Interior);
 
                 var beforeThumb = hitTests.ScrollRectangles[ScrollBarDrawable.HitTestResult.BeforeThumb];
                 var afterThumb = hitTests.ScrollRectangles[ScrollBarDrawable.HitTestResult.AfterThumb];
@@ -55,23 +60,33 @@ namespace Alternet.UI
 
                 ScrollEventType evType = ScrollEventType.ThumbTrack;
 
-                if (hitTests.IsHorzScrollBar)
+                if (hitTestsMouseDown.Value.IsHorzScrollBar)
                 {
                     var maxX = afterThumb.Right - beforeThumb.X;
                     var newX = Math.Max(e.X - beforeThumb.X - clickOffset.X, 0);
                     var newValue = (int)((maxValue * newX) / maxX);
                     if (newValue != oldValue)
-                        RaiseScroll(sender, ScrollBarOrientation.Horizontal, evType, oldValue, newValue);
+                    {
+                        RaiseScroll(
+                            sender,
+                            ScrollBarOrientation.Horizontal,
+                            evType,
+                            oldValue,
+                            newValue);
+                    }
                 }
                 else
-                if (hitTests.IsVertScrollBar)
+                if (hitTestsMouseDown.Value.IsVertScrollBar)
                 {
                     var maxY = afterThumb.Bottom - beforeThumb.Y;
                     var newY = Math.Max(e.Y - beforeThumb.Y - clickOffset.Y, 0);
                     var newValue = (int)((maxValue * newY) / maxY);
-                    if(newValue != oldValue)
+                    if (newValue != oldValue)
                         RaiseScroll(sender, ScrollBarOrientation.Vertical, evType, oldValue, newValue);
                 }
+            }
+            else
+            {
             }
         }
 
@@ -81,6 +96,7 @@ namespace Alternet.UI
             bool isVertical,
             ScrollBarInfo value)
         {
+            /*
             DebugUtils.DebugCallIf(false, () =>
             {
                 if (isVertical)
@@ -89,6 +105,7 @@ namespace Alternet.UI
                 var s = $"{prefix}{value}";
                 LogUtils.LogAndToFile(s);
             });
+            */
         }
 
         /// <inheritdoc/>
@@ -100,49 +117,72 @@ namespace Alternet.UI
         public override void AfterMouseLeave(AbstractControl sender, EventArgs e)
         {
             UnsubscribeClickRepeated();
+            ResetDragging(sender);
+        }
+
+        /// <summary>
+        /// Resets the dragging state to its default value.
+        /// </summary>
+        public void ResetDragging(AbstractControl sender)
+        {
             isDragging = false;
+            hitTestsMouseDown = null;
+
+            if (interior.SetThumbState(VisualControlState.Normal))
+            {
+                sender.Invalidate();
+            }
         }
 
         /// <inheritdoc/>
         public override void AfterVisualStateChanged(AbstractControl sender, EventArgs e)
         {
-            if (sender.VisualState != VisualControlState.Pressed)
+            var visualState = sender.VisualState;
+
+            if (visualState != VisualControlState.Pressed)
+            {
                 UnsubscribeClickRepeated();
-            isDragging = false;
+            }
         }
 
         /// <inheritdoc/>
         public override void AfterVisibleChanged(AbstractControl sender, EventArgs e)
         {
-            isDragging = false;
+            ResetDragging(sender);
             UnsubscribeClickRepeated();
         }
 
         /// <inheritdoc/>
         public override void AfterLostFocus(AbstractControl sender, LostFocusEventArgs e)
         {
-            isDragging = false;
+            ResetDragging(sender);
             UnsubscribeClickRepeated();
         }
 
         /// <inheritdoc/>
         public override void BeforeMouseDown(AbstractControl sender, MouseEventArgs e)
         {
-            if(e.Button != MouseButtons.Left)
+            if (e.Button != MouseButtons.Left)
                 return;
 
-            var hitTests = OnClickElement(sender);
+            var hitTests = OnClickElement(sender, e.Location);
+
+            hitTestsMouseDown = hitTests;
 
             if (hitTests.NeedRepeatedClick)
             {
                 SubscribeClickRepeated(sender);
             }
 
-            if(hitTests.IsThumb)
+            if (hitTests.IsThumb)
             {
                 isDragging = true;
+
+                interior.SetThumbState(hitTests.IsVertScrollBar, VisualControlState.Hovered);
+
                 var thumb = hitTests.ScrollRectangles[ScrollBarDrawable.HitTestResult.Thumb];
                 clickOffset = e.Location - thumb.Location;
+                sender.Invalidate();
             }
 
             if (hitTests.IsScrollBar)
@@ -152,9 +192,17 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        public override void AfterMouseLeftButtonUp(AbstractControl sender, MouseEventArgs e)
+        public override void BeforeMouseUp(AbstractControl sender, MouseEventArgs e)
         {
-            isDragging = false;
+            if (e.Button != MouseButtons.Left)
+                return;
+
+            if (isDragging)
+            {
+                ResetDragging(sender);
+                e.Handled = true;
+            }
+
             UnsubscribeClickRepeated();
         }
 
@@ -202,9 +250,11 @@ namespace Alternet.UI
                 sender.RaiseScroll(scrollArgs);
         }
 
-        private InteriorDrawable.HitTestsResult OnClickElement(AbstractControl sender)
+        private InteriorDrawable.HitTestsResult OnClickElement(
+            AbstractControl sender,
+            PointD? clickLocation)
         {
-            var mouseLocation = Mouse.GetPosition(sender);
+            var mouseLocation = clickLocation ?? Mouse.GetPosition(sender);
 
             var hitTests = interior.HitTests(sender, mouseLocation);
 
@@ -247,7 +297,7 @@ namespace Alternet.UI
 
             if (TimerUtils.LastClickLessThanRepeatInterval(control))
                 return;
-            OnClickElement(control);
+            OnClickElement(control, null);
         }
 
         private void UnsubscribeClickRepeated()
