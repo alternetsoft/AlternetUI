@@ -240,6 +240,7 @@ namespace Alternet.UI
             private static ThemeMetrics? windowsDark;
             private static ThemeMetrics? mauiLight;
             private static ThemeMetrics? mauiDark;
+            private static LightDarkColor? defaultHoveredColor;
 
             /// <summary>
             /// Initializes a new instance of the <see cref="ThemeMetrics"/> class.
@@ -265,6 +266,35 @@ namespace Alternet.UI
             /// Occurs when this theme is assigned to the drawable objects.
             /// </summary>
             public event EventHandler<ThemeInitializeArgs>? ThemeInitialize;
+
+            /// <summary>
+            /// Gets or sets the factor by which the color is adjusted
+            /// when a dark theme element is hovered.
+            /// </summary>
+            /// <remarks>
+            /// If this property is set to <c>null</c>, the hovered color will not be adjusted.
+            /// Positive value makes the color lighter, negative value makes it darker.
+            /// </remarks>
+            public static float? DarkThemeHoveredFactor { get; set; } = 0.5f;
+
+            /// <summary>
+            /// Gets or sets the factor by which the color is adjusted
+            /// when a light theme element is hovered.
+            /// </summary>
+            /// <remarks>
+            /// If this property is set to <c>null</c>, the hovered color will not be adjusted.
+            /// Positive value makes the color lighter, negative value makes it darker.
+            /// </remarks>
+            public static float? LightThemeHoveredFactor { get; set; } = -0.01f;
+
+            /// <summary>
+            /// Gets or sets the default color used when an element is hovered over.
+            /// </summary>
+            public static LightDarkColor? DefaultHoveredColor
+            {
+                get => defaultHoveredColor;
+                set => defaultHoveredColor = value;
+            }
 
             /// <summary>
             /// Gets or sets 'Maui Dark' theme colors as <see cref="ThemeMetrics"/>.
@@ -351,12 +381,14 @@ namespace Alternet.UI
                 {
                     if (visualStudioDark is null)
                     {
+                        Color hoveredColor = (28, 151, 234);
+
                         visualStudioDark = new();
                         var states = visualStudioDark.AllStates;
                         visualStudioDark.Background[VisualControlState.Normal] = (62, 62, 66);
                         visualStudioDark.CornerBackground[VisualControlState.Normal] = (62, 62, 66);
                         visualStudioDark.Arrow[VisualControlState.Normal] = (153, 153, 153);
-                        visualStudioDark.Arrow[VisualControlState.Hovered] = (28, 151, 234);
+                        visualStudioDark.Arrow[VisualControlState.Hovered] = hoveredColor;
                         visualStudioDark.ThumbBackground[VisualControlState.Normal] = (0, 0, 0);
                         visualStudioDark.ThumbBorder[VisualControlState.Normal] = (104, 104, 104);
                         visualStudioDark.ArrowMargin[states] = 1;
@@ -422,14 +454,57 @@ namespace Alternet.UI
             public static ThemeMetrics CreateWindowsDarkTheme()
             {
                 ThemeMetrics windowsDark = new();
+
                 Color background = (47, 47, 47);
                 Color foreground = (160, 160, 160);
+
                 windowsDark.SetThemeColors(background, foreground);
                 var states = windowsDark.AllStates;
                 windowsDark.ArrowMargin[states] = 1;
                 windowsDark.UseArrowSizeForThumb[states] = true;
                 windowsDark.ThumbMargin[states] = 1;
+
+                windowsDark.SetHoveredColors(true, foreground);
+
                 return windowsDark;
+            }
+
+            /// <summary>
+            /// Determines the default hovered color based on the specified theme and base color.
+            /// </summary>
+            /// <param name="isDark">A boolean value indicating whether the dark
+            /// theme is applied. <see langword="true"/> for dark theme;
+            /// otherwise, <see langword="false"/>.</param>
+            /// <param name="baseColor">The base <see cref="Color"/> from which the
+            /// hovered color is derived.</param>
+            /// <returns>The calculated hovered <see cref="Color"/> based on the
+            /// theme and base color. If no specific factor is
+            /// available, returns the base color.</returns>
+            public static Color GetDefaultHoveredColor(bool isDark, Color baseColor)
+            {
+                if (DefaultHoveredColor is not null)
+                {
+                    return DefaultHoveredColor.LightOrDark(isDark);
+                }
+
+                float? factor;
+
+                if (isDark)
+                {
+                    factor = DarkThemeHoveredFactor;
+                }
+                else
+                {
+                    factor = LightThemeHoveredFactor;
+                }
+
+                if (factor is not null)
+                {
+                    var hoveredColor = baseColor.LighterOrDarker(factor.Value);
+                    return hoveredColor;
+                }
+
+                return baseColor;
             }
 
             /// <summary>
@@ -450,16 +525,8 @@ namespace Alternet.UI
                 windowsLight.UseArrowSizeForThumb[states] = true;
                 windowsLight.ThumbMargin[states] = 3;
 
-                /*
-                windowsLight.Background[VisualControlState.Normal] = (226, 226, 226);
-                windowsLight.CornerBackground[VisualControlState.Normal] = (238, 238, 242);
-                windowsLight.Arrow[VisualControlState.Normal] = (194, 195, 201);
-                windowsLight.Arrow[VisualControlState.Hovered] = (104, 104, 104);
-                windowsLight.ThumbBackground[VisualControlState.Normal] = (194, 195, 201);
-                windowsLight.ThumbBorder[VisualControlState.Normal] = (194, 195, 201);
-                windowsLight.ThumbBackground[VisualControlState.Hovered] = (104, 104, 104);
-                windowsLight.ThumbBorder[VisualControlState.Hovered] = (104, 104, 104);
-                */
+                windowsLight.SetHoveredColors(false, foreground);
+
                 return windowsLight;
             }
 
@@ -564,6 +631,25 @@ namespace Alternet.UI
                     e.Interior = interior;
                     ThemeInitialize.Invoke(this, e);
                 }
+            }
+
+            /// <summary>
+            /// Sets the colors for the hovered state of the visual elements
+            /// based on the specified theme and base color.
+            /// </summary>
+            /// <remarks>This method updates the hovered state colors for the thumb background, arrow,
+            /// and thumb border using a color derived from the specified base color and theme.</remarks>
+            /// <param name="isDark">A <see langword="true"/> if the dark theme is applied;
+            /// otherwise, <see langword="false"/>.</param>
+            /// <param name="baseColor">The base <see cref="Color"/> used to determine
+            /// the hovered state color.</param>
+            public void SetHoveredColors(bool isDark, Color baseColor)
+            {
+                var hoveredColor = GetDefaultHoveredColor(isDark, baseColor);
+
+                ThumbBackground[VisualControlState.Hovered] = hoveredColor;
+                Arrow[VisualControlState.Hovered] = hoveredColor;
+                ThumbBorder[VisualControlState.Hovered] = hoveredColor;
             }
 
             /// <summary>
