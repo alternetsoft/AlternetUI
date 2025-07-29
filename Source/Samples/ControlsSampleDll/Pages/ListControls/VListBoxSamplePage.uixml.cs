@@ -98,6 +98,8 @@ namespace ControlsSample
                 App.LogNameValueReplace("VListBox.Items[0].Alignment", item.Alignment);
                 listBox.Invalidate();
             });
+
+            listBox.HasBorder = VirtualListBox.DefaultUseInternalScrollBars;
         }
 
         private void ListBox_CheckedChanged(object? sender, EventArgs e)

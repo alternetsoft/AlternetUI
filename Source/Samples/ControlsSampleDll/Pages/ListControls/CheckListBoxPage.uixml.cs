@@ -57,6 +57,8 @@ namespace ControlsSample
             allowMultipleSelectionCheckBox.IsChecked =
                 checkListBox.SelectionMode == ListBoxSelectionMode.Multiple;
             App.LogIf($"CheckListBoxDemo: Constructor done", false);
+
+            checkListBox.HasBorder = VirtualListBox.DefaultUseInternalScrollBars;
         }
 
         private void RadioButtonItemChanged(

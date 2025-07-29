@@ -19,6 +19,7 @@ namespace ControlsSample
             findText.TextChanged += FindText_TextChanged;
             AddDefaultItems(listBox);
             listBox.Search.UseContains = true;
+            listBox.HasBorder = VirtualListBox.DefaultUseInternalScrollBars;
         }
 
         private void FindText_TextChanged(object? sender, EventArgs e)
