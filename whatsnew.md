@@ -1,3 +1,27 @@
+# 0.9.746 (2025 July 30)
+
+- Add customizable hovered color logic for ScrollBar themes.
+- Add LighterOrDarker method to Color.
+- InteriorDrawable: Improve scrollbar thumb state management.
+- BeforeMouseMove, BeforeMouseDown and BeforeMouseUp notifications.
+- Add scroll bar thumb dragging support in InteriorControlActivity.
+- Adjust click repeat interval to 30ms to resolve issues with VirtualListBox scroll bar functionality.
+- AbstractControl: Add MouseHover event.
+- SystemSettings: Add mouse hover size and time settings. 
+- Timer: Add new constructors, RestartOnce and RestartRepeated methods.
+- Restore focus to last control after modal closes.
+- Add DelayedTextChangedInterval property to AbstractControl.
+- UserControl: Disable handling of native text changed events.
+- Fixed Caret behavior when control is unfocused.
+- TextBox: Fixed error notification to PictureBox.
+- Change PictureBox base class to GenericControl.
+- Fixed InteriorDrawable behavior on Maui.
+- Fixed HoverControl determination.
+- Update to WxWidgets 3.3.1.
+- Add ListBoxHeader control.
+- AbstractControl: Add SortChildren method.
+- FindReplaceControl: Add gear button and actions menu.
+
 # 0.9.745 (2025 July 22)
 
 - **SpeedButtonWithListPopup**: Auto popup kind with threshold.
