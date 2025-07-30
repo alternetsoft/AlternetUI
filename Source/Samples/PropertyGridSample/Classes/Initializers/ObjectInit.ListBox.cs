@@ -48,7 +48,7 @@ namespace PropertyGridSample
             item.Text = "Bold item (right, vert center)";
             item.Alignment = (HorizontalAlignment.Right, VerticalAlignment.Center);
             item.FontStyle = FontStyle.Bold;
-            item.MinHeight = control.PixelToDip(svgImageSize);
+            item.MinHeight = control.PixelToDip(svgImageSize) * 3;
             item.SvgImage = KnownSvgImages.ImgBold;
             item.SvgImageSize = svgImageSize;
             addAction(item);
@@ -58,14 +58,14 @@ namespace PropertyGridSample
             item.Image = Image.FromUrlCached(CalendarUrl);
             item.CheckState = CheckState.Indeterminate;
             item.DisabledImage = item.Image?.ToGrayScale();
-            item.ForegroundColor = Color.Green;
-            item.BackgroundColor = Color.Lavender;
+            item.ForegroundColor = Color.White;
+            item.BackgroundColor = Color.ForestGreen;
             item.Text = "Green <b>item</b> at center";
             item.LabelFlags = DrawLabelFlags.TextHasBold;
             addAction(item);
 
             item = new();
-            item.Text = "H = 60 (bottom, vert center)";
+            item.Text = "H = 60 (bottom, center)";
             item.CheckBoxVisible = false;
             item.MinHeight = 60;
             item.Alignment = (HorizontalAlignment.Center, VerticalAlignment.Bottom);
@@ -91,7 +91,7 @@ namespace PropertyGridSample
             item.Alignment = HVAlignment.Center;
             item.CheckBoxVisible = false;
             item.Border = new();
-            item.Border.Color = Color.Red;
+            item.Border.Color = LightDarkColors.Red;
             item.Border.UniformCornerRadius = 25;
             item.Border.UniformRadiusIsPercent = true;
             addAction(item);
@@ -99,7 +99,7 @@ namespace PropertyGridSample
             if (addLong)
             {
                 item = new();
-                item.Text = LoremIpsum.Replace(StringUtils.OneNewLine, StringUtils.OneSpace);
+                item.Text = LoremIpsumSmall;
                 addAction(item);
             }
 

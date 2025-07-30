@@ -943,7 +943,12 @@ namespace Alternet.UI
 
             var itemMinHeight = item.MinHeight;
 
-            return Math.Max(itemMinHeight, containerMinHeight);
+            if (itemMinHeight > 0)
+            {
+                return Math.Max(itemMinHeight, containerMinHeight);
+            }
+
+            return containerMinHeight;
         }
 
         /// <summary>

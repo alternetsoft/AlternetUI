@@ -17,10 +17,12 @@ namespace PropertyGridSample
     {
         private const int defaultListHeight = 250;
 
-        public static string LoremIpsum =
+        public static string LoremIpsumSmall =
 "Beneath a sky stitched with teacup clouds, the girl tiptoed across checkerboard moss. " +
 "Each step made a peculiar sound—like libraries whispering to mushrooms. " +
-"Trees bent inward to eavesdrop, their leaves rustling riddles only crickets could decipher." +
+"Trees bent inward to eavesdrop, their leaves rustling riddles only crickets could decipher.";
+
+        public static string LoremIpsum = LoremIpsumSmall +
 Environment.NewLine + Environment.NewLine +
 "The map she carried was drawn entirely in nonsense, but somehow it felt correct. " +
 "It pulsed faintly in her hands, humming with ink made from stolen dreams and marmalade." +

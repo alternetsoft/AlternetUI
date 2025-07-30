@@ -38,7 +38,7 @@ namespace Alternet.UI
         /// Indicates whether the list box controls use internal scrollbars.
         /// </summary>
         public static bool DefaultUseInternalScrollBars
-            = false && DebugUtils.IsDebugDefinedAndAttached;
+            = true && DebugUtils.IsDebugDefinedAndAttached;
 
         /// <summary>
         /// Specifies the default border style for controls.
@@ -1246,8 +1246,7 @@ namespace Alternet.UI
             var r = GetPaintRectangle();
             r.Width += scrollOffset;
 
-            RectD rectRow = RectD.Empty;
-            rectRow.Width = r.Width;
+            var rectRow = r;
 
             int lineMax = GetVisibleEnd();
 
@@ -1783,6 +1782,10 @@ namespace Alternet.UI
 
             var rectangles = interior.GetLayoutRectangles(this);
             var paintRectangle = rectangles[InteriorDrawable.HitTestResult.ClientRect];
+
+            if (HasBorder)
+            {
+            }
 
             return paintRectangle;
         }
