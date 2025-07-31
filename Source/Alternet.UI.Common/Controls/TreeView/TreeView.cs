@@ -9,7 +9,9 @@ namespace Alternet.UI
 {
     /// <summary>
     /// Displays a hierarchical collection of labeled items with optional images,
-    /// each represented by a <see cref="TreeViewItem"/>.
+    /// each represented by a <see cref="TreeViewItem"/>. We suggest to use
+    /// <see cref="VirtualTreeControl"/> instead of this control. <see cref="VirtualTreeControl"/>
+    /// works faster, especially with large number of items, and has much more features.
     /// </summary>
     /// <remarks>
     /// <para>

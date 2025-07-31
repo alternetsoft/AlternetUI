@@ -14,23 +14,32 @@ namespace PropertyGridSample
 {
     public partial class MainWindow
     {
-        void InitTestsTreeView()
+        void InitTestsVirtualTreeControl()
         {
-            AddControlAction<TreeView>("Load png from resources", TestTreeViewLoadPngFromResource);
+            AddControlAction<VirtualTreeControl>("Toggle selection of 2 and 4", (c) =>
+            {
+                c.SelectionMode = ListBoxSelectionMode.Multiple;
+                var item2 = c.RootItem.Items[2];
+                var item4 = c.RootItem.Items[4];
+                item2.IsSelected = !item2.IsSelected;
+                item4.IsSelected = !item4.IsSelected;
+            });
+
+            AddControlAction<VirtualTreeControl>("Load png from resources", TestTreeViewLoadPngFromResource);
             
-            AddControlAction<TreeView>(
+            AddControlAction<VirtualTreeControl>(
                 "Load all small *.png in folder...",
                 TestTreeViewLoadAllPngInFolder);
 
-            AddControlAction<TreeView>("Load all *.svg in folder...", TestTreeViewLoadAllSvgInFolder);
-            AddControlAction<TreeView>("Load known svg", TestTreeViewLoadKnownSvg);
+            AddControlAction<VirtualTreeControl>("Load all *.svg in folder...", TestTreeViewLoadAllSvgInFolder);
+            AddControlAction<VirtualTreeControl>("Load known svg", TestTreeViewLoadKnownSvg);
 
-            AddControlAction<TreeView>("BackColor = Black", (c) =>
+            AddControlAction<VirtualTreeControl>("BackColor = Black", (c) =>
             {
                 c.BackColor = Color.Black;
             });
 
-            AddControlAction<TreeView>("Lighten images", (c) =>
+            AddControlAction<VirtualTreeControl>("Lighten images", (c) =>
             {
                 var images = c.ImageList;
                 var converted = images?.WithConvertedColors(ControlPaint.LightLight);
@@ -38,7 +47,7 @@ namespace PropertyGridSample
             });
         }
 
-        void TestTreeViewLoadPngFromResource(TreeView control)
+        void TestTreeViewLoadPngFromResource(VirtualTreeControl control)
         {
             const string highDpiSuffix = "_HighDpi";
 
@@ -59,7 +68,7 @@ namespace PropertyGridSample
                 "StructAlpha",
             ];
 
-            string pathPrefix = "Resources.CodeComletionSymbols.";
+            string pathPrefix = "Resources.CodeCompletionSymbols.";
 
             int size = control.HasScaleFactor ? 32 : 16;
 
@@ -79,13 +88,13 @@ namespace PropertyGridSample
                 if (!imgList.AddFromAssemblyUrl(typeof(ObjectInit).Assembly, selectedName))
                     continue;
 
-                TreeViewItem item = new(Path.GetFileName(selectedName), index);
+                TreeControlItem item = new(Path.GetFileName(selectedName), index);
                 control.Add(item);
                 index++;
             }
         }
 
-        void TestTreeViewLoadAllPngInFolder(TreeView control)
+        void TestTreeViewLoadAllPngInFolder(VirtualTreeControl control)
         {
             var dialog = SelectDirectoryDialog.Default;
 
@@ -118,14 +127,14 @@ namespace PropertyGridSample
                     if (!imgList.Add(image))
                         continue;
 
-                    TreeViewItem item = new(Path.GetFileName(file), index);
+                    TreeControlItem item = new(Path.GetFileName(file), index);
                     control.Add(item);
                     index++;
                 }
             });
         }
 
-        void TestTreeViewLoadKnownSvg(TreeView control)
+        void TestTreeViewLoadKnownSvg(VirtualTreeControl control)
         {
             int size = 32;
             ImageList imgList = new();
@@ -147,14 +156,14 @@ namespace PropertyGridSample
                 {
                     imgList.AddSvg(svg, control.IsDarkBackground);
 
-                    TreeViewItem item = new(svg.Url ?? "<empty url>", index);
+                    TreeControlItem item = new(svg.Url ?? "<empty url>", index);
                     control.Add(item);
                     index++;
                 }
             }
         }
 
-        void TestTreeViewLoadAllSvgInFolder(TreeView control)
+        void TestTreeViewLoadAllSvgInFolder(VirtualTreeControl control)
         {
             var dialog = SelectDirectoryDialog.Default;
 
@@ -170,8 +179,9 @@ namespace PropertyGridSample
 
                 var folder = dialog.DirectoryName;
 
-		if (folder is null)
-			return;
+		        if (folder is null)
+			        return;
+
                 var files = Directory.GetFiles(folder, "*.svg");
 
                 Array.Sort(files);
@@ -181,7 +191,7 @@ namespace PropertyGridSample
                     var svg = new MonoSvgImage(file);
                     imgList.AddSvg(svg, control.IsDarkBackground);
 
-                    TreeViewItem item = new(Path.GetFileName(file), index);
+                    TreeControlItem item = new(Path.GetFileName(file), index);
                     control.Add(item);
                     index++;
                 }
