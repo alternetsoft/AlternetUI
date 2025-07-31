@@ -1130,6 +1130,50 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Resets the borders for the current item and the selection to their default states.
+        /// </summary>
+        public virtual void ResetSelectionAndCurrentItemBorders()
+        {
+            CurrentItemBorder = null;
+            SelectionBorder = null;
+        }
+
+        /// <summary>
+        /// Configures the selection and current item borders to be rounded or not,
+        /// with optional customization of the corner radius.
+        /// </summary>
+        /// <remarks>When <paramref name="isRound"/> is <see langword="true"/>, the method
+        /// applies the specified corner radius and percentage mode to both the selection and
+        /// current item borders. If <paramref name="isRound"/> is <see langword="false"/>,
+        /// default borders are restored.</remarks>
+        /// <param name="isRound"><see langword="true"/> to apply rounded borders to the
+        /// selection and current item; otherwise, <see langword="false"/> to reset borders.</param>
+        /// <param name="radiusIsPercent"><see langword="true"/> if the corner radius
+        /// is specified as a percentage of the item's dimensions;
+        /// otherwise, <see langword="false"/>. The default value is <see langword="true"/>.</param>
+        /// <param name="cornerRadius">The corner radius to apply to the rounded borders.
+        /// The default value is 25.</param>
+        public virtual void SetSelectionAndCurrentItemRoundBorders(
+            bool isRound,
+            bool radiusIsPercent = true,
+            Coord cornerRadius = 25)
+        {
+            if (isRound)
+            {
+                BorderSettings border = VirtualListControl.DefaultCurrentItemBorder.Clone();
+                border.UniformRadiusIsPercent = radiusIsPercent;
+                border.UniformCornerRadius = cornerRadius;
+
+                CurrentItemBorder = border;
+                SelectionBorder = border;
+            }
+            else
+            {
+                ResetSelectionAndCurrentItemBorders();
+            }
+        }
+
+        /// <summary>
         /// Gets selected item text color. Default is <see cref="SelectedItemTextColor"/>
         /// (if it is not <c>null</c>) or <see cref="DefaultSelectedItemTextColor"/>.
         /// </summary>

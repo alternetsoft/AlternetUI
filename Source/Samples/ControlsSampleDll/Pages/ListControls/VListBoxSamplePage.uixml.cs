@@ -116,20 +116,7 @@ namespace ControlsSample
 
         private void RoundSelectionCheckBox_CheckedChanged(object? sender, EventArgs e)
         {
-            if (roundSelectionCheckBox.IsChecked)
-            {
-                BorderSettings border = new();
-                border.UniformRadiusIsPercent = false;
-                border.UniformCornerRadius = 10;
-
-                listBox.CurrentItemBorder = border;
-                listBox.SelectionBorder = border;
-            }
-            else
-            {
-                listBox.CurrentItemBorder = null;
-                listBox.SelectionBorder = null;
-            }
+            listBox.SetSelectionAndCurrentItemRoundBorders(roundSelectionCheckBox.IsChecked);
         }
 
         private void ListBox_HandleCreated(object? sender, EventArgs e)
