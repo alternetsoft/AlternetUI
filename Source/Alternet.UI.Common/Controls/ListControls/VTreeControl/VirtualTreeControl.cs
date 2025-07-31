@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Linq;
 using System.Text;
 
 using Alternet.Drawing;
@@ -72,7 +73,7 @@ namespace Alternet.UI
 
             void ToggleExpanded(TreeControlItem? item)
             {
-                Invoke(() =>
+                Post(() =>
                 {
                     var visibleBegin = ListBox.TopIndex;
 
@@ -81,10 +82,10 @@ namespace Alternet.UI
                         DoInsideUpdate(() =>
                         {
                             ToggleExpandedAndCollapseSiblings(item, item?.AutoCollapseSiblings ?? false);
-                            ListBox.SelectedItem = item;
                         });
 
                         ListBox.ScrollToRow(visibleBegin, false);
+                        ListBox.SelectedItem = item;
                     });
                 });
             }
@@ -172,6 +173,195 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets or sets a value indicating whether lines are drawn between the
+        /// tree items that are at the root of the tree view. Default is <see langword="false"/>.
+        /// Currently, setter of this property does nothing.
+        /// </summary>
+        /// <value><see langword="true"/> if lines are drawn between the tree
+        /// items that are at the root of the tree
+        /// view; otherwise, <see langword="false"/>. The default is
+        /// <see langword="true"/>.</value>
+        [Browsable(false)]
+        public virtual bool ShowRootLines
+        {
+            get
+            {
+                return false;
+            }
+
+            set
+            {
+            }
+        }
+
+        /// <summary>
+        /// Gets first root item in the control or <c>null</c> if there are no items.
+        /// </summary>
+        /// <remarks>
+        /// This property returns the first item even if it is not visible.
+        /// </remarks>
+        [Browsable(false)]
+        public virtual TreeControlItem? FirstItem
+        {
+            get
+            {
+                if (RootItem.ItemCount == 0)
+                    return null;
+                return RootItem.Items[0];
+            }
+        }
+
+        /// <summary>
+        /// Gets last item in the control or <c>null</c> if there are no items.
+        /// </summary>
+        [Browsable(false)]
+        public virtual TreeControlItem? LastItem
+        {
+            get
+            {
+                static TreeControlItem? GetLastItem(TreeControlItem? item)
+                {
+                    if (item is null)
+                        return null;
+                    if (!item.HasItems)
+                        return item;
+                    var child = item.LastChild;
+                    return GetLastItem(child);
+                }
+
+                return GetLastItem(LastRootItem);
+            }
+        }
+
+        /// <summary>
+        /// Gets last root item in the control or <c>null</c> if there are no items.
+        /// </summary>
+        /// <remarks>
+        /// This property returns the last root item even if it is not visible.
+        /// </remarks>
+        [Browsable(false)]
+        public virtual TreeControlItem? LastRootItem
+        {
+            get
+            {
+                var count = RootItem.ItemCount;
+                if (count == 0)
+                    return null;
+                return RootItem.Items[count - 1];
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether to draw a contrasting
+        /// border between displayed rows.
+        /// Default is <see langword="false"/>.
+        /// Currently, setter of this property does nothing.
+        /// </summary>
+        /// <returns>
+        /// <see langword="true" /> if row lines are shown;
+        /// <see langword="false" />, if row lines are hidden.
+        /// The default is <see langword="false" />.
+        /// </returns>
+        public virtual bool RowLines
+        {
+            get
+            {
+                return false;
+            }
+
+            set
+            {
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether lines are drawn between tree
+        /// items in the tree view control.
+        /// Default is <see langword="false"/>.
+        /// Currently, setter of this property does nothing.
+        /// </summary>
+        /// <value><see langword="true"/> if lines are drawn between tree items in
+        /// the tree view control; otherwise,
+        /// <see langword="false"/>. The default is <see langword="true"/>.</value>
+        public virtual bool ShowLines
+        {
+            get
+            {
+                return false;
+            }
+
+            set
+            {
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether expand buttons are displayed
+        /// next to tree items that contain child tree items.
+        /// </summary>
+        /// <value>
+        /// <see langword="true"/> if expand buttons are displayed next to tree
+        /// items that contain
+        /// child tree items; otherwise, <see langword="false"/>. The default is
+        /// <see langword="true"/>.
+        /// </value>
+        public virtual bool ShowExpandButtons
+        {
+            get
+            {
+                return ListBox.CheckBoxVisible;
+            }
+
+            set
+            {
+                ListBox.CheckBoxVisible = value;
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets the first fully-visible tree item in the control.
+        /// </summary>
+        /// <value>A <see cref="TreeControlItem"/> that represents the first
+        /// fully-visible tree item in the control.</value>
+        [Browsable(false)]
+        public virtual TreeControlItem? TopItem
+        {
+            get
+            {
+                var index = ListBox.TopIndex;
+
+                return ListBox.GetItem(index) as TreeControlItem;
+            }
+        }
+
+        /// <summary>
+        /// Gets a collection containing the currently selected items in the control.
+        /// </summary>
+        /// <value>A <see cref="IReadOnlyList{TreeControlItem}"/> containing the
+        /// currently selected items in the control.</value>
+        /// <remarks>
+        /// For a multiple-selection <see cref="VirtualTreeControl"/>, this property returns
+        /// a collection containing all the items that are selected
+        /// in the <see cref="VirtualTreeControl"/>. For a single-selection
+        /// <see cref="VirtualTreeControl"/>, this property returns a collection containing a
+        /// single element containing the only selected item in the
+        /// <see cref="VirtualTreeControl"/>.
+        /// </remarks>
+        [Browsable(false)]
+        public virtual IReadOnlyList<TreeControlItem> SelectedItems
+        {
+            get
+            {
+                return ListBox.SelectedItems.Cast<TreeControlItem>().ToArray();
+            }
+
+            set
+            {
+                ListBox.SelectedItems = value;
+            }
+        }
+
+        /// <summary>
         /// Gets the underlying <see cref="VirtualListBox"/> used by this tree control.
         /// </summary>
         [Browsable(false)]
@@ -254,6 +444,40 @@ namespace Alternet.UI
             {
                 base.ForegroundColor = value;
                 ListBox.ForegroundColor = value;
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether to select alternative style
+        /// of +/- buttons and to show rotating ("twisting") arrows instead.
+        /// </summary>
+        /// <returns>
+        /// <see langword="true" /> if twisted buttons are used;
+        /// <see langword="false" />, if +/- buttons are used.
+        /// The default is <see langword="true" />.
+        /// </returns>
+        /// <remarks>
+        /// This property is an alias for <see cref="TreeButtons"/> property and
+        /// was added for the compatibility with the original TreeView control.
+        /// </remarks>
+        [Browsable(false)]
+        public virtual bool TwistButtons
+        {
+            get
+            {
+                return TreeButtons == TreeViewButtonsKind.Angle;
+            }
+
+            set
+            {
+                if(value)
+                {
+                    TreeButtons = TreeViewButtonsKind.Angle;
+                }
+                else
+                {
+                    TreeButtons = TreeViewButtonsKind.PlusMinusSquare;
+                }
             }
         }
 
@@ -359,27 +583,83 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets or sets a value indicating whether the selection highlight spans
+        /// the width of the tree control. Default is <see langword="true"/>.
+        /// Currently, setter of this property does nothing.
+        /// </summary>
+        /// <value>
+        /// <see langword="true"/> if the selection highlight spans the width of
+        /// the tree view control; otherwise, <see langword="false"/>.
+        /// The default is <see langword="false"/>.
+        /// </value>
+        [Browsable(false)]
+        public virtual bool FullRowSelect
+        {
+            get
+            {
+                return true;
+            }
+
+            set
+            {
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether the label text of the tree
+        /// items can be edited. Default is <see langword="false"/>.
+        /// Currently, setter of this property does nothing.
+        /// </summary>
+        /// <value>
+        /// <see langword="true"/> if the label text of the tree items can be
+        /// edited; otherwise, <see
+        /// langword="false"/>. The default is <see langword="false"/>.
+        /// </value>
+        [Browsable(false)]
+        public virtual bool AllowLabelEdit
+        {
+            get
+            {
+                return false;
+            }
+
+            set
+            {
+            }
+        }
+
+        /// <summary>
         /// Gets the collection of visible items contained in the tree view.
         /// </summary>
         [Browsable(false)]
         public IReadOnlyList<ListControlItem> VisibleItems => ListBox.Items;
 
+        [Browsable(false)]
         internal new LayoutStyle? Layout
         {
             get => base.Layout;
             set => base.Layout = value;
         }
 
+        [Browsable(false)]
         internal new Thickness Padding
         {
             get => base.Padding;
             set => base.Padding = value;
         }
 
+        [Browsable(false)]
         internal new Thickness? MinChildMargin
         {
             get => base.MinChildMargin;
             set => base.MinChildMargin = value;
+        }
+
+        [Browsable(false)]
+        internal new string Text
+        {
+            get => base.Text;
+            set => base.Text = value;
         }
 
         /// <inheritdoc/>
@@ -409,6 +689,23 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Ensures that the tree item is visible, expanding tree items and
+        /// scrolling the tree view control as necessary.
+        /// </summary>
+        /// <remarks>
+        /// When this method is cis called, the tree is
+        /// expanded and scrolled to ensure that the current tree
+        /// item is visible in the control. This method is useful
+        /// if you are selecting a tree item in code based on
+        /// certain criteria. By calling this method after you select the item,
+        /// the user can see and interact with the selected item.
+        /// </remarks>
+        public virtual void EnsureVisible(TreeControlItem? item)
+        {
+            ScrollIntoView(item);
+        }
+
+        /// <summary>
         /// Scrolls control so the specified item will be fully visible.
         /// </summary>
         /// <param name="item">Item to show into the view.</param>
@@ -421,11 +718,9 @@ namespace Alternet.UI
             {
                 ExpandAllParents(item);
             }
-            else
-            {
-                var index = ListBox.Items.IndexOf(item);
-                ListBox.EnsureVisible(index);
-            }
+
+            var index = ListBox.Items.IndexOf(item);
+            ListBox.EnsureVisible(index);
         }
 
         /// <summary>
@@ -434,7 +729,7 @@ namespace Alternet.UI
         public virtual void SelectItem(TreeControlItem? item)
         {
             item?.ExpandAllParents();
-            ScrollIntoView(item);
+            EnsureVisible(item);
             SelectedItem = item;
         }
 
@@ -503,6 +798,23 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Selects or clears the selection for the specified item.
+        /// </summary>
+        /// <param name="item">The item to select or clear the selection for.</param>
+        /// <param name="value"><c>true</c> to select the specified item;
+        /// otherwise, <c>false</c>.</param>
+        /// <remarks>
+        /// You can use this method to set the selection of items in a
+        /// multiple-selection tree control.
+        /// To select an item in a single-selection tree control,
+        /// use the <see cref="SelectedItem"/> property.
+        /// </remarks>
+        public void SetSelected(TreeControlItem item, bool value)
+        {
+            item.IsSelected = value;
+        }
+
+        /// <summary>
         /// Adds a new item with the specified title to the tree view on the root level.
         /// </summary>
         /// <param name="title">The title of the item to add.</param>
@@ -543,6 +855,40 @@ namespace Alternet.UI
             item.Parent.Remove(item);
 
             return true;
+        }
+
+        /// <summary>
+        /// Unselects all items in the control.
+        /// </summary>
+        /// <remarks>
+        /// Calling this method is equivalent to setting the
+        /// <see cref="SelectedItem"/> property to <c>null</c> in single-selection mode.
+        /// You can use this method to quickly unselect all items in the tree.
+        /// </remarks>
+        public virtual void ClearSelected()
+        {
+            ListBox.ClearSelected();
+        }
+
+        /// <summary>
+        /// Removes selected items from the control.
+        /// </summary>
+        public virtual void RemoveSelected()
+        {
+            BeginUpdate();
+            try
+            {
+                var items = ListBox.SelectedItems;
+                ListBox.ClearSelected();
+                foreach (var item in items)
+                {
+                    (item as TreeControlItem)?.Remove();
+                }
+            }
+            finally
+            {
+                EndUpdate();
+            }
         }
 
         /// <summary>
@@ -722,11 +1068,48 @@ namespace Alternet.UI
         /// or <c>null</c> if no item is found.</returns>
         public virtual TreeControlItem? GetNodeAtMouseCursor()
         {
-            var index = ListBox.HitTest(Mouse.GetPosition(ListBox));
+            return GetNodeAt(Mouse.GetPosition(ListBox));
+        }
+
+        /// <summary>
+        /// Retrieves the tree view item that is at the specified point.
+        /// </summary>
+        /// <param name="point">
+        /// The <see cref="PointD" /> to evaluate and retrieve the node from.
+        /// </param>
+        /// <returns>
+        /// The <see cref="TreeControlItem" /> at the specified point, in client coordinates,
+        /// or <see langword="null" /> if there is no item at that location.
+        /// </returns>
+        public virtual TreeControlItem? GetNodeAt(PointD point)
+        {
+            var index = ListBox.HitTest(point);
             if (index is null)
                 return null;
             var item = ListBox.GetItem(index.Value);
             return item as TreeControlItem;
+        }
+
+        /// <summary>
+        /// Collapses all child tree items.
+        /// </summary>
+        public virtual void CollapseAll()
+        {
+            Invoke(() =>
+            {
+                RootItem.CollapseAll();
+            });
+        }
+
+        /// <summary>
+        /// Expands all child tree items.
+        /// </summary>
+        public virtual void ExpandAll()
+        {
+            Invoke(() =>
+            {
+                RootItem.ExpandAll();
+            });
         }
 
         /// <summary>
@@ -891,6 +1274,28 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Selects the first item in the tree view control.
+        /// </summary>
+        /// <remarks>
+        /// This method ensures that the first item
+        /// is selected. If no items are present, no action is taken.
+        /// </remarks>
+        public virtual void SelectFirstItem()
+        {
+            ListBox.SelectFirstItem();
+        }
+
+        /// <summary>
+        /// Changes visual style of the control to look like <see cref="ListBox"/>.
+        /// Currently does nothing.
+        /// </summary>
+        public virtual void MakeAsListBox()
+        {
+            if (DisposingOrDisposed)
+                return;
+        }
+
+        /// <summary>
         /// Selects the first item in the tree view control and scrolls to it.
         /// </summary>
         /// <remarks>
@@ -912,18 +1317,6 @@ namespace Alternet.UI
         public virtual void SelectLastItemAndScroll()
         {
             ListBox.SelectLastItemAndScroll();
-        }
-
-        /// <summary>
-        /// Selects the first item in the tree view control.
-        /// </summary>
-        /// <remarks>
-        /// This method ensures that the first item
-        /// is selected. If no items are present, no action is taken.
-        /// </remarks>
-        public virtual void SelectFirstItem()
-        {
-            ListBox.SelectFirstItem();
         }
 
         /// <summary>
