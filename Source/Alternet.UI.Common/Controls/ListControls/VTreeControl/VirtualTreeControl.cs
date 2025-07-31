@@ -148,6 +148,27 @@ namespace Alternet.UI
         public event EventHandler<UI.TreeControlEventArgs>? ExpandedChanged;
 
         /// <summary>
+        /// Gets or sets the selection mode (single or multiple).
+        /// </summary>
+        /// <remarks>The selection mode determines whether multiple items can be selected
+        /// at once and how the selection behaves.
+        /// For example, <see cref="ListBoxSelectionMode.Single"/> allows only one item to be
+        /// selected, while  <see cref="ListBoxSelectionMode.Multiple"/> allows multiple
+        /// items to be selected.</remarks>
+        public ListBoxSelectionMode SelectionMode
+        {
+            get
+            {
+                return ListBox.SelectionMode;
+            }
+
+            set
+            {
+                ListBox.SelectionMode = value;
+            }
+        }
+
+        /// <summary>
         /// Gets the underlying <see cref="VirtualListBox"/> used by this tree control.
         /// </summary>
         [Browsable(false)]
@@ -306,6 +327,8 @@ namespace Alternet.UI
                 ListBox.ContextMenuStrip = value;
             }
         }
+
+        IListControlItemContainer ITreeControlItemContainer.ListContainer => ListBox;
 
         /// <summary>
         /// Gets or sets the root item of the tree view.
