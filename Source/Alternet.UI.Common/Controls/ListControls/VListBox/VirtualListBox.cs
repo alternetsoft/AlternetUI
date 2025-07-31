@@ -37,8 +37,7 @@ namespace Alternet.UI
         /// <summary>
         /// Indicates whether the list box controls use internal scrollbars.
         /// </summary>
-        public static bool DefaultUseInternalScrollBars
-            = true && DebugUtils.IsDebugDefinedAndAttached;
+        public static bool DefaultUseInternalScrollBars = true;
 
         /// <summary>
         /// Specifies the default border style for controls.

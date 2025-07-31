@@ -34,6 +34,13 @@ namespace Alternet.UI
         public virtual bool SendScrollToControl { get; set; } = true;
 
         /// <inheritdoc/>
+        public override void AfterMouseCaptureLost(AbstractControl sender, EventArgs e)
+        {
+            ResetDragging(sender);
+            sender.ReleaseMouseCapture();
+        }
+
+        /// <inheritdoc/>
         public override void BeforeMouseMove(AbstractControl sender, MouseEventArgs e)
         {
             /*
@@ -117,7 +124,6 @@ namespace Alternet.UI
         public override void AfterMouseLeave(AbstractControl sender, EventArgs e)
         {
             UnsubscribeClickRepeated();
-            ResetDragging(sender);
         }
 
         /// <summary>
@@ -157,11 +163,14 @@ namespace Alternet.UI
         {
             ResetDragging(sender);
             UnsubscribeClickRepeated();
+            sender.ReleaseMouseCapture();
         }
 
         /// <inheritdoc/>
         public override void BeforeMouseDown(AbstractControl sender, MouseEventArgs e)
         {
+            ResetDragging(sender);
+
             if (e.Button != MouseButtons.Left)
                 return;
 
@@ -183,6 +192,7 @@ namespace Alternet.UI
                 var thumb = hitTests.ScrollRectangles[ScrollBarDrawable.HitTestResult.Thumb];
                 clickOffset = e.Location - thumb.Location;
                 sender.Invalidate();
+                sender.CaptureMouse();
             }
 
             if (hitTests.IsScrollBar)
@@ -194,6 +204,7 @@ namespace Alternet.UI
         /// <inheritdoc/>
         public override void BeforeMouseUp(AbstractControl sender, MouseEventArgs e)
         {
+            sender.ReleaseMouseCapture();
             if (e.Button != MouseButtons.Left)
                 return;
 
