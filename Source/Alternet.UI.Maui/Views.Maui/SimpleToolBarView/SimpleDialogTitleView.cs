@@ -124,7 +124,7 @@ namespace Alternet.Maui
         /// <remarks>The gear button is inserted at the appropriate index in the button collection,
         /// ensuring it appears in the correct order relative to other buttons.
         /// If a close button is present, the gear button is positioned before it.</remarks>
-        public virtual void AddGearButton()
+        public virtual void AddGearButton(Alternet.Drawing.SvgImage? image = null)
         {
             int index = this.Buttons.Count;
 
@@ -135,7 +135,7 @@ namespace Alternet.Maui
                 index,
                 null,
                 Alternet.UI.Localization.CommonStrings.Default.ButtonOptions,
-                Alternet.UI.KnownSvgImages.ImgGear,
+                image ?? Alternet.UI.KnownSvgImages.ImgGear,
                 () =>
                 {
                     GearButtonClicked?.Invoke(Owner ?? this, EventArgs.Empty);

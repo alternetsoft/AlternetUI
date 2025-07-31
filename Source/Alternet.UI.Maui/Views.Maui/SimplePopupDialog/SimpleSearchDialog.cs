@@ -56,7 +56,7 @@ namespace Alternet.Maui
 
             AddCancelButton();
 
-            DialogTitle.AddGearButton();
+            DialogTitle.AddGearButton(Alternet.UI.KnownSvgImages.ImgMoreActions);
             DialogTitle.GearButtonClicked += (s, e) =>
             {
                 if (settingsLayout is null)
