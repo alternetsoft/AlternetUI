@@ -236,10 +236,10 @@ namespace Alternet.UI
             (SelectedItem as ListControlItem)?.UniqueId;
 
         /// <summary>
-        /// Gets the number of elements contained in the control.
+        /// Gets the number of items contained in the control.
         /// </summary>
         /// <returns>
-        /// The number of elements contained in the control.
+        /// The number of items contained in the control.
         /// </returns>
         [Browsable(false)]
         public virtual int Count
@@ -503,6 +503,9 @@ namespace Alternet.UI
         /// </summary>
         public virtual void SelectFirstItem()
         {
+            if (Count == 0)
+                return;
+
             DoInsideUpdate(() =>
             {
                 SelectedIndex = 0;

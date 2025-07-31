@@ -58,7 +58,7 @@ namespace Alternet.UI
         /// </summary>
         /// <remarks>Changing this property updates the selection state
         /// of the item within its associated container, if any.</remarks>
-        public new bool IsSelected
+        public new virtual bool IsSelected
         {
             get
             {
