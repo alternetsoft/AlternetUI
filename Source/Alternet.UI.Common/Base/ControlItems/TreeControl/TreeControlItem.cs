@@ -380,6 +380,27 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets the zero-based index of the current item within its parent,
+        /// or <see langword="null"/> if the item has no parent.
+        /// </summary>
+        public virtual int? Index
+        {
+            get
+            {
+                var items = ParentItems;
+                if (items is null)
+                    return null;
+                for (int i = 0; i < items.Count; i++)
+                {
+                    if (items[i] == this)
+                        return i;
+                }
+
+                return null;
+            }
+        }
+
+        /// <summary>
         /// Gets next sibling if item is not the last one, otherwise gets previous sibling.
         /// If item has no siblings, <see cref="Parent"/> is returned.
         /// </summary>
@@ -767,6 +788,58 @@ namespace Alternet.UI
                         continue;
                     item.IsExpanded = expanded;
                 }
+            });
+        }
+
+        /// <summary>
+        /// Sets <see cref="IsExpanded"/> property of child items recursively.
+        /// </summary>
+        /// <param name="expanded">New value of <see cref="IsExpanded"/> property.</param>
+        /// <param name="onlyVisible">Whether to update only visible items.</param>
+        public virtual void SetItemsExpandedRecursive(bool expanded, bool onlyVisible = true)
+        {
+            if (!HasItems)
+                return;
+
+            DoInsideUpdate(() =>
+            {
+                foreach (var item in Items)
+                {
+                    if (onlyVisible && !item.IsVisible)
+                        continue;
+                    if (!item.HasItems)
+                        continue;
+                    item.IsExpanded = expanded;
+                    item.SetItemsExpandedRecursive(expanded, onlyVisible);
+                }
+            });
+        }
+
+        /// <summary>
+        /// Expands this item and all the child items recursively.
+        /// After calling this method, value of <see cref="IsExpanded"/> property
+        /// will be <see langword="true"/> for this item and all its child items.
+        /// </summary>
+        public virtual void ExpandAll()
+        {
+            DoInsideUpdate(() =>
+            {
+                IsExpanded = true;
+                SetItemsExpandedRecursive(expanded: true, onlyVisible: false);
+            });
+        }
+
+        /// <summary>
+        /// Collapses this item and all the child items recursively.
+        /// After calling this method, value of <see cref="IsExpanded"/> property
+        /// will be <see langword="false"/> for this item and all its child items.
+        /// </summary>
+        public virtual void CollapseAll()
+        {
+            DoInsideUpdate(() =>
+            {
+                IsExpanded = false;
+                SetItemsExpandedRecursive(expanded: false, onlyVisible: false);
             });
         }
 
