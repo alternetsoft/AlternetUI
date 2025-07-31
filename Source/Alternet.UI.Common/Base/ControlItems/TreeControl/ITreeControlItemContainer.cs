@@ -10,6 +10,11 @@ namespace Alternet.UI
     public interface ITreeControlItemContainer
     {
         /// <summary>
+        /// Gets the container that manages the list control items.
+        /// </summary>
+        IListControlItemContainer ListContainer { get; }
+
+        /// <summary>
         /// Gets the type of buttons used in the tree view.
         /// </summary>
         TreeViewButtonsKind TreeButtons { get; }
@@ -18,6 +23,16 @@ namespace Alternet.UI
         /// Gets margin for each level in the tree.
         /// </summary>
         Coord GetLevelMargin();
+
+        /// <summary>
+        /// Repaints the tree view control. Uses message queue.
+        /// </summary>
+        void Invalidate();
+
+        /// <summary>
+        /// Repaints the tree view control immediately.
+        /// </summary>
+        void Refresh();
 
         /// <summary>
         /// Begins an update of the tree view. Call this method before making
