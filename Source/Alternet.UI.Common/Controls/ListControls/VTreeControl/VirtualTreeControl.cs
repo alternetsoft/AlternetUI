@@ -9,7 +9,10 @@ using Alternet.UI.Extensions;
 namespace Alternet.UI
 {
     /// <summary>
-    /// Represents a tree control that inherits from <see cref="VirtualListBox"/>.
+    /// Displays a hierarchical collection of labeled items with optional images,
+    /// each represented by a <see cref="TreeControlItem"/>. This control uses
+    /// internal <see cref="VirtualListControl"/> for displaying items, it can be accessed via
+    /// <see cref="ListBox"/> property.
     /// </summary>
     public partial class VirtualTreeControl : Border, ITreeControlItemContainer
     {

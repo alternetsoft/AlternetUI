@@ -265,8 +265,6 @@ namespace Alternet.UI
         /// A zero-based index value that represents the position of the tree item in
         /// a <see cref="BaseCollection{TreeViewItem}"/>, or <c>null</c> if the item
         /// is not contained in any collection.
-        /// An item can be contained in either <see cref="Items"/> or
-        /// <see cref="TreeView.Items"/> collection.
         /// </value>
         [Browsable(false)]
         public int? Index { get; private set; }

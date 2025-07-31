@@ -16,6 +16,16 @@ namespace PropertyGridSample
     {
         void InitTestsVirtualTreeControl()
         {
+            AddControlAction<VirtualTreeControl>("SelectedItem: ExpandAll", (c) =>
+            {
+                c.SelectedItem?.ExpandAll();
+            });
+
+            AddControlAction<VirtualTreeControl>("SelectedItem: CollapseAll", (c) =>
+            {
+                c.SelectedItem?.CollapseAll();
+            });
+
             AddControlAction<VirtualTreeControl>("Toggle selection of 2 and 4", (c) =>
             {
                 c.SelectionMode = ListBoxSelectionMode.Multiple;
