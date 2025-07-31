@@ -54,6 +54,27 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets or sets a value indicating whether the current item is selected.
+        /// </summary>
+        /// <remarks>Changing this property updates the selection state
+        /// of the item within its associated container, if any.</remarks>
+        public new bool IsSelected
+        {
+            get
+            {
+                return IsSelected(Owner?.ListContainer);
+            }
+
+            set
+            {
+                if(IsSelected == value)
+                    return;
+                SetSelected(Owner?.ListContainer, value);
+                Owner?.Invalidate();
+            }
+        }
+
+        /// <summary>
         /// Gets or sets whether item is expanded when it is clicked.
         /// </summary>
         public virtual bool ExpandOnClick { get; set; }
