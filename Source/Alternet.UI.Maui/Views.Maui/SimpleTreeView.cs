@@ -17,7 +17,8 @@ namespace Alternet.Maui
     /// <summary>
     /// Represents a simple tree view.
     /// </summary>
-    public partial class SimpleTreeView : BaseContentView, UI.ITreeControlItemContainer
+    public partial class SimpleTreeView : BaseContentView,
+        UI.ITreeControlItemContainer, UI.IListControlItemContainer
     {
         /// <summary>
         /// Default margin for the item label.
@@ -52,14 +53,15 @@ namespace Alternet.Maui
         private readonly Grid grid = new();
         private readonly CollectionView collectionView = new();
         private readonly TapGestureRecognizer imageGestureRecognizer = new();
+        private readonly UI.IListControlItemDefaults itemDefaults = new UI.ListControlItemDefaults();
 
-        private readonly TapGestureRecognizer doubleClickGesture = new ()
+        private readonly TapGestureRecognizer doubleClickGesture = new()
         {
             Buttons = ButtonsMask.Primary,
             NumberOfTapsRequired = 2,
         };
 
-        private readonly TapGestureRecognizer tapGesture = new ()
+        private readonly TapGestureRecognizer tapGesture = new()
         {
             Buttons = ButtonsMask.Secondary,
         };
@@ -286,6 +288,22 @@ namespace Alternet.Maui
             }
         }
 
+        UI.IListControlItemContainer UI.ITreeControlItemContainer.ListContainer => this;
+
+        Drawing.SvgImage? UI.IListControlItemContainer.CheckImageUnchecked => null;
+
+        Drawing.SvgImage? UI.IListControlItemContainer.CheckImageChecked => null;
+
+        Drawing.SvgImage? UI.IListControlItemContainer.CheckImageIndeterminate => null;
+
+        Drawing.ImageList? UI.IListControlItemContainer.ImageList => null;
+
+        UI.AbstractControl? UI.IListControlItemContainer.Control => null;
+
+        UI.IListControlItemDefaults UI.IListControlItemContainer.Defaults => itemDefaults;
+
+        bool UI.IListControlItemContainer.Focused => IsFocused;
+
         /// <summary>
         /// Updates the tree view buttons when the TreeButtons property changes.
         /// </summary>
@@ -453,10 +471,10 @@ namespace Alternet.Maui
                 var result = Remove(item);
                 if (result)
                 {
-                    if(index > 0)
+                    if (index > 0)
                         index--;
                     index = Math.Min(visibleItems.Count - 1, index);
-                    if(index >= 0)
+                    if (index >= 0)
                     {
                         item = visibleItems[index];
                         SelectItem(item);
@@ -482,7 +500,7 @@ namespace Alternet.Maui
                 return false;
             if (item.Owner != this)
                 return false;
-            if(item.Parent is null)
+            if (item.Parent is null)
                 return false;
             item.Parent.Remove(item);
 
@@ -509,7 +527,7 @@ namespace Alternet.Maui
             if (updateCount <= 0)
                 throw new Exception("Call BeginUpdate before calling EndUpdate");
             updateCount--;
-            if(updateCount == 0)
+            if (updateCount == 0)
             {
                 TreeChanged();
             }
@@ -601,7 +619,7 @@ namespace Alternet.Maui
         /// </summary>
         public virtual void RaiseBeforeCollapse(UI.TreeControlItem item, ref bool cancel)
         {
-            if(BeforeCollapse is not null)
+            if (BeforeCollapse is not null)
             {
                 UI.TreeControlCancelEventArgs e = new(item);
                 BeforeCollapse(this, e);
@@ -636,6 +654,59 @@ namespace Alternet.Maui
             if (updateCount > 0)
                 return;
             RefreshTree();
+        }
+
+        void UI.ITreeControlItemContainer.Invalidate()
+        {
+            BeginUpdate();
+            EndUpdate();
+        }
+
+        void UI.ITreeControlItemContainer.EnsureVisible(UI.TreeControlItem? item)
+        {
+            if (item is null)
+                return;
+            SelectedItem = item;
+        }
+
+        void UI.ITreeControlItemContainer.Refresh()
+        {
+            (this as UI.ITreeControlItemContainer).Invalidate();
+        }
+
+        void UI.ITreeControlItemContainer.ScrollIntoView(UI.TreeControlItem? item)
+        {
+            (this as UI.ITreeControlItemContainer).EnsureVisible(item);
+        }
+
+        UI.ListControlItem? UI.IListControlItemContainer.SafeItem(int index)
+        {
+            if (visibleItems is null)
+                return null;
+
+            if (index < 0 || index >= visibleItems.Count)
+                return null;
+
+            return visibleItems[index];
+        }
+
+        string UI.IListControlItemContainer.GetItemText(int index, bool forDisplay)
+        {
+            var item = (this as UI.IListControlItemContainer).SafeItem(index);
+            if (item is null)
+                return string.Empty;
+
+            if (forDisplay)
+                return item.DisplayText ?? item.Text;
+            return item.Text;
+        }
+
+        int UI.IListControlItemContainer.GetItemCount()
+        {
+            if (visibleItems is null)
+                return 0;
+
+            return visibleItems.Count;
         }
 
         /// <summary>
@@ -712,7 +783,7 @@ namespace Alternet.Maui
             {
                 base.OnBindingContextChanged();
 
-                if(item is not null)
+                if (item is not null)
                 {
                     item.PropertyChanged -= ItemPropertyChanged;
                 }
@@ -722,7 +793,7 @@ namespace Alternet.Maui
 
                 item = newItem;
 
-                if(item is not null)
+                if (item is not null)
                 {
                     Text = item.Text;
                     item.PropertyChanged += ItemPropertyChanged;
