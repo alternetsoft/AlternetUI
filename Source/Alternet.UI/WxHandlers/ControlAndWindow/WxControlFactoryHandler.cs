@@ -142,12 +142,6 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        public IControlHandler CreateTreeViewHandler(TreeView control)
-        {
-            return new TreeViewHandler();
-        }
-
-        /// <inheritdoc/>
         public IStatusBarHandler CreateStatusBarHandler(StatusBar control)
         {
             return new StatusBarHandler(control);

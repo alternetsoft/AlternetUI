@@ -25,7 +25,6 @@ namespace Alternet.UI
         IRichTextBox,
         IScrollBarHandler,
         ITextBoxHandler,
-        ITreeViewHandler,
         IWebBrowserLite,
         IWindowHandler
     {
@@ -311,8 +310,6 @@ namespace Alternet.UI
         bool IWebBrowserLite.CanUndo { get; }
 
         TextHorizontalAlignment ITextBoxHandler.TextAlign { get; set; }
-
-        TreeViewItem? ITreeViewHandler.TopItem { get; }
 
         Window? IWindowHandler.Control { get; }
 

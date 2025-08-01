@@ -6,11 +6,8 @@
     <HorizontalStackPanel>
       <TreeView SuggestedWidth="240" Name="treeView"
                 ExpandedChanged="TreeView_ExpandedChanged"
-                BeforeLabelEdit="TreeView_BeforeLabelEdit"
-                AfterLabelEdit="TreeView_AfterLabelEdit"
                 BeforeExpand="TreeView_BeforeExpand"
                 BeforeCollapse="TreeView_BeforeCollapse"
-                MouseLeftButtonDown="TreeView_MouseLeftButtonDown"
                 />
 
       <TabControl Name="pageControl" Margin="10,0,10,0" HorizontalAlignment="Fill">
@@ -51,7 +48,7 @@
                     Name="beginSelectedLabelEditingButton" Margin="0,3,0,0"
                     Click="BeginSelectedLabelEditingButton_Click" Enabled="False" />
             <Button RowIndex="4" ColumnIndex="1" IsTextLocalized="true"
-                    Text="Edit..." Margin="0,3,0,0" Name="editorButton"
+                    Text="Edit..." Margin="0,3,0,0" Name="editorButton" IsEnabled="False"
                     Click="EditorButton_Click"/>
           </Grid>
 
@@ -80,7 +77,7 @@
         <VerticalStackPanel Name="stackPanel2" Visible="false" Title="Settings" IsTitleLocalized="true"
                             Padding="10">
           <CheckBox Text="Allow Edit Label" Name="allowLabelEditingCheckBox"
-                    Margin="0,5,0,0" IsTextLocalized="true"
+                    Margin="0,5,0,0" IsTextLocalized="true" IsEnabled="false"
                     CheckedChanged="AllowLabelEditingCheckBox_CheckedChanged"
                     IsChecked="False" />
           <CheckBox Text="Multiple Selection" IsTextLocalized="true"
@@ -91,10 +88,10 @@
           <CheckBox Text="Show Root Lines" Name="showRootLinesCheckBox" IsTextLocalized="true"
                     Margin="0,5,0,0"
                     CheckedChanged="ShowRootLinesCheckBox_CheckedChanged"
-                    IsChecked="True" />
+                    IsChecked="True" IsEnabled="false"/>
           <CheckBox Text="Show Lines" Name="showLinesCheckBox" Margin="0,5,0,0" IsTextLocalized="true"
                     CheckedChanged="ShowLinesCheckBox_CheckedChanged"
-                    IsChecked="False" />
+                    IsChecked="False" IsEnabled="false"/>
           <CheckBox Text="Show Expand Button" Name="showExpandButtonsCheckBox" IsTextLocalized="true"
                     Margin="0,5,0,0" CheckedChanged="ShowExpandButtons_CheckedChanged"
                     IsChecked="True" />

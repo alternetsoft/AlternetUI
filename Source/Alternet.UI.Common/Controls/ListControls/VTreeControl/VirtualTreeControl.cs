@@ -156,19 +156,19 @@ namespace Alternet.UI
         /// </summary>
         /// <remarks>The selection mode determines whether multiple items can be selected
         /// at once and how the selection behaves.
-        /// For example, <see cref="ListBoxSelectionMode.Single"/> allows only one item to be
-        /// selected, while  <see cref="ListBoxSelectionMode.Multiple"/> allows multiple
+        /// For example, <see cref="TreeViewSelectionMode.Single"/> allows only one item to be
+        /// selected, while  <see cref="TreeViewSelectionMode.Multiple"/> allows multiple
         /// items to be selected.</remarks>
-        public ListBoxSelectionMode SelectionMode
+        public TreeViewSelectionMode SelectionMode
         {
             get
             {
-                return ListBox.SelectionMode;
+                return (TreeViewSelectionMode)ListBox.SelectionMode;
             }
 
             set
             {
-                ListBox.SelectionMode = value;
+                ListBox.SelectionMode = (ListBoxSelectionMode)value;
             }
         }
 
@@ -227,6 +227,14 @@ namespace Alternet.UI
                     return null;
                 return RootItem.Items[count - 1];
             }
+        }
+
+        /// <summary>
+        /// Gets the collection of root items contained within the tree control.
+        /// </summary>
+        public IReadOnlyList<TreeControlItem> Items
+        {
+            get => RootItem.Items;
         }
 
         /// <summary>
@@ -1230,6 +1238,19 @@ namespace Alternet.UI
         {
             if (DisposingOrDisposed)
                 return;
+        }
+
+        /// <summary>
+        /// Adds a separator item to the tree control.
+        /// </summary>
+        /// <remarks>The separator item is used to visually divide groups of items within the tree
+        /// control.</remarks>
+        /// <returns>A <see cref="TreeControlItem"/> representing the added separator.</returns>
+        public virtual TreeControlItem AddSeparator()
+        {
+            TreeControlSeparatorItem item = new();
+            Add(item);
+            return item;
         }
 
         /// <summary>

@@ -648,45 +648,6 @@ Environment.NewLine + Environment.NewLine +
             return newItemIndex;
         }
 
-        public static void AddItems(TreeView treeView, int count)
-        {
-            treeView.BeginUpdate();
-            try
-            {
-                for (int i = 0; i < count; i++)
-                {
-                    int imageIndex = i % 4;
-                    var item = new TreeViewItem(
-                        "Item " + GenItemIndex(),
-                        imageIndex);
-                    for (int j = 0; j < 3; j++)
-                    {
-                        var childItem = new TreeViewItem(
-                            item.Text + "." + j,
-                            imageIndex);
-                        item.Items.Add(childItem);
-
-                        if (i < 5)
-                        {
-                            for (int k = 0; k < 2; k++)
-                            {
-                                childItem.Items.Add(
-                                    new TreeViewItem(
-                                        item.Text + "." + k,
-                                        imageIndex));
-                            }
-                        }
-                    }
-
-                    treeView.Items.Add(item);
-                }
-            }
-            finally
-            {
-                treeView.EndUpdate();
-            }
-        }
-
         public static void AddItems(VirtualTreeControl treeView, int count)
         {
             treeView.BeginUpdate();

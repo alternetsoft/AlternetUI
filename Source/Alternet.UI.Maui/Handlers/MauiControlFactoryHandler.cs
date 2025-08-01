@@ -108,11 +108,6 @@ namespace Alternet.UI
             return new HandlerForDisposed();
         }
 
-        IControlHandler IControlFactoryHandler.CreateTreeViewHandler(TreeView control)
-        {
-            return new HandlerForDisposed();
-        }
-
         IPropertyGridVariant IControlFactoryHandler.CreateVariant()
         {
             throw new NotImplementedException();

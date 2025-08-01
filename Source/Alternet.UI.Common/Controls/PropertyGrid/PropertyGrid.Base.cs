@@ -128,11 +128,6 @@ namespace Alternet.UI
                 null);*/
 
             RegisterCollectionEditor(
-                typeof(TreeView),
-                nameof(TreeView.Items),
-                typeof(ListEditSourceTreeViewItem));
-
-            RegisterCollectionEditor(
                 typeof(ListView),
                 nameof(ListView.Items),
                 typeof(ListEditSourceListViewItem));

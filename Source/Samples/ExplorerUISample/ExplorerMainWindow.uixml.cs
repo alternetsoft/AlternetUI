@@ -50,21 +50,33 @@ namespace ExplorerUISample
             listView.Items.Add(new ListViewItem(new[] { 
                 "3rd quarter results - Mary", "1M", date }, 3));
 
-            const int FolderImageIndex = 1;
-            var maryM = new TreeViewItem("MaryM", FolderImageIndex);
-            maryM.Items.Add(new TreeViewItem("Docs", FolderImageIndex));
-            maryM.Items.Add(new TreeViewItem("New Reports", FolderImageIndex));
-            maryM.Items.Add(new TreeViewItem("Misc", FolderImageIndex));
+            var folderImage = FileListBox.GetDefaultFolderImage();
+
+            int FolderImageIndex = -1;
+
+            ImageList treeImageList = new(HasScaleFactor ? 32 : 16);
+
+            if (folderImage is not null)
+            {
+                FolderImageIndex = 0;
+                treeImageList.AddSvg(folderImage, IsDarkBackground);
+                treeView.ImageList = treeImageList;
+            }
+
+            var firstItem = new TreeViewItem("MaryM", FolderImageIndex);
+            firstItem.Add(new TreeViewItem("Docs", FolderImageIndex));
+            firstItem.Add(new TreeViewItem("New Reports", FolderImageIndex));
+            firstItem.Add(new TreeViewItem("Misc", FolderImageIndex));
             var meetings = new TreeViewItem("Meetings", FolderImageIndex);
-            meetings.Items.Add(new TreeViewItem("May", FolderImageIndex));
-            meetings.Items.Add(new TreeViewItem("June", FolderImageIndex));
-            meetings.Items.Add(new TreeViewItem("July", FolderImageIndex));
-            maryM.Items.Add(meetings);
-            treeView.Items.Add(maryM);
+            meetings.Add(new TreeViewItem("May", FolderImageIndex));
+            meetings.Add(new TreeViewItem("June", FolderImageIndex));
+            meetings.Add(new TreeViewItem("July", FolderImageIndex));
+            firstItem.Add(meetings);
+            treeView.Add(firstItem);
             treeView.ExpandAll();            
 
             var imageList = LoadImageList();
-            treeView.ImageList = imageList;
+
             listView.SmallImageList = imageList;
             listView.Columns[0].WidthMode = ListViewColumnWidthMode.AutoSize;
             listView.Columns[1].WidthMode = ListViewColumnWidthMode.AutoSize;

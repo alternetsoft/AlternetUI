@@ -11,10 +11,14 @@ namespace ApiDoc
             InitializeComponent();
 
             var imageLists = SampleResourceLoader.LoadImageLists();
-            treeView.ImageList = imageLists.Small;
+
+            if(HasScaleFactor)
+                treeView.ImageList = imageLists.Large;
+            else
+                treeView.ImageList = imageLists.Small;
 
             AddItems(treeView, 10);
-            treeView.Items.First?.ExpandAll();
+            treeView.FirstItem?.ExpandAll();
         }
 
         #region TreeViewCSharpCreation
@@ -35,8 +39,8 @@ namespace ApiDoc
                         ImageIndex = imageIndex,
                     };
                     for (int j = 0; j < 3; j++)
-                        item.Items.Add(new TreeViewItem(item.Text + "." + j, r.Next(4)));
-                    treeView.Items.Add(item);
+                        item.Add(new TreeViewItem(item.Text + "." + j, r.Next(4)));
+                    treeView.Add(item);
                 }
             }
             finally
@@ -59,7 +63,7 @@ namespace ApiDoc
             App.Log($"TreeView: SelectionChanged. SelectedItem: {treeView.SelectedItem?.Text}");
         }
 
-        private void TreeView_ExpandedChanged(object? sender, TreeViewEventArgs e)
+        private void TreeView_ExpandedChanged(object? sender, TreeControlEventArgs e)
         {
             App.Log($"TreeView: ExpandedChanged. Item: {e.Item.Text} {e.Item.IsExpanded}");
         }

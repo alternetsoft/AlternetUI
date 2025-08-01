@@ -289,6 +289,34 @@ namespace Alternet.UI
         public bool IsReloading { get => reloading > 0; }
 
         /// <summary>
+        /// Gets the default SVG image used for file items.
+        /// If <see cref="DefaultFileImage"/> is not set, a known default file icon is returned.
+        /// </summary>
+        /// <returns>The SVG image representing a file icon.</returns>
+        public static SvgImage? GetDefaultFileImage()
+        {
+            var result = DefaultFileImage
+                ?? (UseSolidFileDefaultImages
+                ? KnownSvgImages.ImgIconFileSolid : KnownSvgImages.ImgIconFile);
+            result.SetColorOverride(KnownSvgColor.Normal, FileImageColorOverride?.Invoke());
+            return result;
+        }
+
+        /// <summary>
+        /// Gets the default SVG image used for folder items.
+        /// If <see cref="DefaultFolderImage"/> is not set, a known default folder icon is returned.
+        /// </summary>
+        /// <returns>The SVG image representing a folder icon.</returns>
+        public static SvgImage? GetDefaultFolderImage()
+        {
+            var result = DefaultFolderImage
+                ?? (UseSolidFolderDefaultImages
+                ? KnownSvgImages.ImgIconFolderSolid : KnownSvgImages.ImgIconFolder);
+            result.SetColorOverride(KnownSvgColor.Normal, FolderImageColorOverride?.Invoke());
+            return result;
+        }
+
+        /// <summary>
         /// Selects the specified folder if it exists, or selects the folder containing
         /// the specified file if
         /// applicable.
@@ -486,31 +514,23 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Gets the default SVG image used for file items.
+        /// Gets the SVG image used for file items.
         /// If <see cref="DefaultFileImage"/> is not set, a known default file icon is returned.
         /// </summary>
         /// <returns>The SVG image representing a file icon.</returns>
         public virtual SvgImage? GetFileImage()
         {
-            var result = DefaultFileImage
-                ?? (UseSolidFileDefaultImages
-                ? KnownSvgImages.ImgIconFileSolid : KnownSvgImages.ImgIconFile);
-            result.SetColorOverride(KnownSvgColor.Normal, FileImageColorOverride?.Invoke());
-            return result;
+            return GetDefaultFileImage();
         }
 
         /// <summary>
-        /// Gets the default SVG image used for folder items.
+        /// Gets the SVG image used for folder items.
         /// If <see cref="DefaultFolderImage"/> is not set, a known default folder icon is returned.
         /// </summary>
         /// <returns>The SVG image representing a folder icon.</returns>
         public virtual SvgImage? GetFolderImage()
         {
-            var result = DefaultFolderImage
-                ?? (UseSolidFolderDefaultImages
-                ? KnownSvgImages.ImgIconFolderSolid : KnownSvgImages.ImgIconFolder);
-            result.SetColorOverride(KnownSvgColor.Normal, FolderImageColorOverride?.Invoke());
-            return result;
+            return GetDefaultFolderImage();
         }
 
         /// <summary>

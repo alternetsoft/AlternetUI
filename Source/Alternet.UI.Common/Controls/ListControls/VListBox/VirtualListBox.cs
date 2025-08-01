@@ -638,6 +638,20 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Adds a separator item to the control.
+        /// </summary>
+        /// <remarks>
+        /// The separator item is used to visually divide groups of items within the control.
+        /// </remarks>
+        /// <returns>A <see cref="ListControlItem"/> representing the added separator.</returns>
+        public virtual ListControlItem AddSeparator()
+        {
+            ListControlSeparatorItem item = new();
+            Add(item);
+            return item;
+        }
+
+        /// <summary>
         /// Finds first visible item from the specified last visible item.
         /// </summary>
         /// <param name="unitLast">Index of the last visible item.</param>

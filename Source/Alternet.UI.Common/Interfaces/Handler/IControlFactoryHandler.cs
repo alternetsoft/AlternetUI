@@ -137,13 +137,6 @@ namespace Alternet.UI
         IControlHandler CreateWindowHandler(Window window);
 
         /// <summary>
-        /// Creates <see cref="ITreeViewHandler"/> interface provider.
-        /// </summary>
-        /// <param name="control">Owner.</param>
-        /// <returns></returns>
-        IControlHandler CreateTreeViewHandler(TreeView control);
-
-        /// <summary>
         /// Creates <see cref="IStatusBarHandler"/> interface provider.
         /// </summary>
         /// <param name="control">Owner.</param>

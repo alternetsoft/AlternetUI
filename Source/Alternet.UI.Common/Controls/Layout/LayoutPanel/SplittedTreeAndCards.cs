@@ -142,7 +142,7 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Calls <see cref="TreeView.MakeAsListBox"/> for the left control if
+        /// Calls <see cref="VirtualTreeControl.MakeAsListBox"/> for the left control if
         /// it is tree view.
         /// </summary>
         public virtual void MakeAsListBox()

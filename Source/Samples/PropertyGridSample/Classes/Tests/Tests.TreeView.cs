@@ -28,7 +28,7 @@ namespace PropertyGridSample
 
             AddControlAction<VirtualTreeControl>("Toggle selection of 2 and 4", (c) =>
             {
-                c.SelectionMode = ListBoxSelectionMode.Multiple;
+                c.SelectionMode = TreeViewSelectionMode.Multiple;
                 var item2 = c.RootItem.Items[2];
                 var item4 = c.RootItem.Items[4];
                 item2.IsSelected = !item2.IsSelected;
