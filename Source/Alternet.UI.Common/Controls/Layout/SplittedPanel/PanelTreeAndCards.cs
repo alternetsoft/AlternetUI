@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace Alternet.UI
 {
     /// <summary>
-    /// Implements panel with <see cref="TreeView"/> on the left and
+    /// Implements panel with tree control on the left and
     /// <see cref="CardPanel"/> on the right separated with splitter.
     /// </summary>
     [ControlCategory("Panels")]
@@ -33,7 +33,7 @@ namespace Alternet.UI
             RightVisible = false;
             LeftListBox.Required();
             cardPanel.Parent = FillPanel;
-            LeftListBox.SelectionChanged += LeftTreeView_SelectionChanged;
+            LeftListBox.SelectionChanged += OnLeftTreeViewSelectionChanged;
         }
 
         /// <summary>
@@ -73,7 +73,17 @@ namespace Alternet.UI
             return index;
         }
 
-        private void LeftTreeView_SelectionChanged(object? sender, System.EventArgs e)
+        /// <summary>
+        /// Handles the selection change event for the left tree view.
+        /// </summary>
+        /// <remarks>This method is invoked when the selection in the left tree view changes.
+        /// It updates the card panel based on the selected item's tag, if applicable.
+        /// Derived classes can override this method to
+        /// provide custom behavior.</remarks>
+        /// <param name="sender">The source of the event, typically the control that
+        /// triggered the selection change.</param>
+        /// <param name="e">An <see cref="System.EventArgs"/> instance containing the event data.</param>
+        protected virtual void OnLeftTreeViewSelectionChanged(object? sender, System.EventArgs e)
         {
             var tag = LeftListBox.SelectedItem?.Tag;
             cardPanel.SelectCard(tag as int?);

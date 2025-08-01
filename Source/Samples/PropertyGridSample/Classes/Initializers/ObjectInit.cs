@@ -642,13 +642,13 @@ Environment.NewLine + Environment.NewLine +
             AddItems(control, 10);
         }
 
-        private static int GenItemIndex()
+        public static int GenItemIndex()
         {
             newItemIndex++;
             return newItemIndex;
         }
 
-        private static void AddItems(TreeView treeView, int count)
+        public static void AddItems(TreeView treeView, int count)
         {
             treeView.BeginUpdate();
             try
@@ -687,7 +687,7 @@ Environment.NewLine + Environment.NewLine +
             }
         }
 
-        private static void AddItems(VirtualTreeControl treeView, int count)
+        public static void AddItems(VirtualTreeControl treeView, int count)
         {
             treeView.BeginUpdate();
             try

@@ -10,9 +10,9 @@ using Alternet.UI.Localization;
 namespace Alternet.UI
 {
     /// <summary>
-    /// Popup window with <see cref="TreeView"/> control.
+    /// Popup window with <see cref="VirtualTreeControl"/>.
     /// </summary>
-    public partial class PopupTreeView : PopupWindow<TreeView>
+    public partial class PopupTreeView : PopupWindow<VirtualTreeControl>
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="PopupTreeView"/> class.
@@ -24,9 +24,9 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        protected override TreeView CreateMainControl()
+        protected override VirtualTreeControl CreateMainControl()
         {
-            return new TreeView()
+            return new VirtualTreeControl()
             {
                 HasBorder = false,
             };
