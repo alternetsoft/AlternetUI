@@ -12,6 +12,21 @@ namespace Alternet.Drawing
     public class ScrollBarDrawable : BaseDrawable
     {
         /// <summary>
+        /// Indicates whether arrows are visible by default in the scroll bar.
+        /// </summary>
+        /// <remarks>This field determines the default visibility state of arrows.
+        /// It can be set to <see langword="true"/> to make arrows visible by default,
+        /// or <see langword="false"/> to hide them.</remarks>
+        public static bool DefaultArrowsVisible = true;
+
+        /// <summary>
+        /// Represents the default margin for an invisible arrow in coordinate units.
+        /// </summary>
+        /// <remarks>This value is used as a default margin setting for scenarios involving invisible
+        /// arrows. The margin is measured in coordinate units.</remarks>
+        public static Coord DefaultInvisibleArrowMargin = 1;
+
+        /// <summary>
         /// Gets or sets minimal scrollbar thumb size in dips.
         /// </summary>
         public static Coord MinThumbSize = 10;
@@ -168,6 +183,13 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
+        /// Gets or sets a value indicating whether arrows are visible in the scroll bar.
+        /// If this property is not set, <see cref="DefaultArrowsVisible"/> is used in order
+        /// to determine whether arrows are visible.
+        /// </summary>
+        public virtual bool? ArrowsVisible { get; set; }
+
+        /// <summary>
         /// Gets or sets the visual state of the start button.
         /// This property doesn't invalidate the control.
         /// </summary>
@@ -313,21 +335,30 @@ namespace Alternet.Drawing
             var startArrow = GetVisibleStartArrow(VisualControlState.Normal);
             var endArrow = GetVisibleEndArrow(VisualControlState.Normal);
 
-            var hasStartButton = startButton is not null || startArrow is not null;
-            var hasEndButton = endButton is not null || endArrow is not null;
+            var arrowsVisible = ArrowsVisible ?? DefaultArrowsVisible;
+
+            var hasStartButton = (startButton is not null || startArrow is not null) && arrowsVisible;
+            var hasEndButton = (endButton is not null || endArrow is not null) && arrowsVisible;
             var hasButtons = hasStartButton || hasEndButton;
 
             var btnSize = IsVertical ? Bounds.Width : Bounds.Height;
+            var btnWidth = btnSize;
+            var btnHeight = btnSize;
 
-            var startButtonBounds = RectD.Empty;
-            var endButtonBounds = RectD.Empty;
+            RectD startButtonBounds;
+            RectD endButtonBounds;
 
             if (hasButtons)
             {
-                startButtonBounds = (Bounds.Left, Bounds.Top, btnSize, btnSize);
+                startButtonBounds = (Bounds.Left, Bounds.Top, btnWidth, btnHeight);
+                endButtonBounds = (Bounds.Right - btnWidth, Bounds.Bottom - btnHeight, btnWidth, btnHeight);
                 result[HitTestResult.StartButton] = startButtonBounds;
-                endButtonBounds = (Bounds.Right - btnSize, Bounds.Bottom - btnSize, btnSize, btnSize);
                 result[HitTestResult.EndButton] = endButtonBounds;
+            }
+            else
+            {
+                startButtonBounds = RectD.Empty;
+                endButtonBounds = RectD.Empty;
             }
 
             if (Position.Range <= 0 || Position.Range <= Position.PageSize || Position.PageSize <= 0)
@@ -340,11 +371,25 @@ namespace Alternet.Drawing
 
             if (IsVertical)
             {
+                Coord startButtonBoundsHeight;
+                Coord endButtonBoundsHeight;
+
+                if (hasButtons)
+                {
+                    startButtonBoundsHeight = startButtonBounds.Height;
+                    endButtonBoundsHeight = endButtonBounds.Height;
+                }
+                else
+                {
+                    startButtonBoundsHeight = DefaultInvisibleArrowMargin;
+                    endButtonBoundsHeight = DefaultInvisibleArrowMargin;
+                }
+
                 thumbMaximalBounds = (
                     Bounds.Left,
-                    Bounds.Top + startButtonBounds.Height,
+                    Bounds.Top + startButtonBoundsHeight,
                     Bounds.Width,
-                    Bounds.Height - endButtonBounds.Height - startButtonBounds.Height);
+                    Bounds.Height - endButtonBoundsHeight - startButtonBoundsHeight);
                 var thumbHeight = (Position.PageSize * thumbMaximalBounds.Height) / Position.Range;
                 thumbHeight = Math.Max(thumbHeight, MinThumbSize);
 
@@ -377,10 +422,24 @@ namespace Alternet.Drawing
             }
             else
             {
+                Coord startButtonBoundsWidth;
+                Coord endButtonBoundsWidth;
+
+                if (hasButtons)
+                {
+                    startButtonBoundsWidth = startButtonBounds.Width;
+                    endButtonBoundsWidth = endButtonBounds.Width;
+                }
+                else
+                {
+                    startButtonBoundsWidth = DefaultInvisibleArrowMargin;
+                    endButtonBoundsWidth = DefaultInvisibleArrowMargin;
+                }
+
                 thumbMaximalBounds = (
-                    Bounds.Left + startButtonBounds.Width,
+                    Bounds.Left + startButtonBoundsWidth,
                     Bounds.Top,
-                    Bounds.Width - endButtonBounds.Width - startButtonBounds.Width,
+                    Bounds.Width - endButtonBoundsWidth - startButtonBoundsWidth,
                     Bounds.Height);
                 var thumbWidth = (Position.PageSize * thumbMaximalBounds.Width) / Position.Range;
                 thumbWidth = Math.Max(thumbWidth, MinThumbSize);
@@ -421,6 +480,46 @@ namespace Alternet.Drawing
             return result;
         }
 
+        /// <summary>
+        /// Calculates the actual size of the arrow button for the scrollbar,
+        /// considering the control's scale factor, margins, and bounds.
+        /// </summary>
+        /// <remarks>The calculated size ensures that the arrow button fits within the
+        /// available bounds while respecting the specified margins. If the computed size
+        /// does not align with the button's dimensions, it
+        /// is adjusted to maintain consistency.</remarks>
+        /// <param name="scaleFactor">The scaling factors.</param>
+        /// <param name="metrics">The metrics information for the scrollbar,
+        /// providing details such as arrow bitmap size.</param>
+        /// <returns>A <see cref="Coord"/> representing the computed size of
+        /// the arrow button, adjusted for margins and bounds.</returns>
+        public virtual Coord GetRealArrowSize(
+            Coord scaleFactor,
+            ScrollBar.MetricsInfo metrics)
+        {
+            var arrowSize = metrics.GetArrowBitmapSize(IsVertical, scaleFactor) - 6;
+            arrowSize = SizeD.Max(9, arrowSize);
+
+            var arrowMargin = ArrowMargin?[this.VisualState] ?? 1;
+            arrowMargin *= 2;
+
+            var arrowButtonSize = IsVertical ? Bounds.Width : Bounds.Height;
+
+            var realArrowSize =
+                MathUtils.Min(
+                    arrowSize.Width,
+                    arrowSize.Height,
+                    Bounds.Width - arrowMargin,
+                    Bounds.Height - arrowMargin);
+
+            if (!IntUtils.IsEqualEven((int)arrowButtonSize, (int)realArrowSize))
+            {
+                realArrowSize--;
+            }
+
+            return realArrowSize;
+        }
+
         /// <inheritdoc/>
         public override void Draw(AbstractControl control, Graphics dc)
         {
@@ -451,26 +550,7 @@ namespace Alternet.Drawing
             var startArrow = GetVisibleStartArrow(startArrowState);
             var endArrow = GetVisibleEndArrow(endArrowState);
 
-            var arrowSize = metrics.GetArrowBitmapSize(IsVertical, scaleFactor) - 6;
-            arrowSize = SizeD.Max(9, arrowSize);
-
-            var arrowMargin = ArrowMargin?[this.VisualState] ?? 1;
-            arrowMargin *= 2;
-
-            var arrowButtonSize = IsVertical ? Bounds.Width : Bounds.Height;
-
-            var realArrowSize =
-                MathUtils.Min(
-                    arrowSize.Width,
-                    arrowSize.Height,
-                    Bounds.Width - arrowMargin,
-                    Bounds.Height - arrowMargin);
-
-            if (!IntUtils.IsEqualEven((int)arrowButtonSize, (int)realArrowSize))
-            {
-                realArrowSize--;
-            }
-
+            var realArrowSize = GetRealArrowSize(scaleFactor, metrics);
             var realArrowSizeI = GraphicsFactory.PixelFromDip(realArrowSize, scaleFactor);
 
             var thumb = Thumb?.GetObjectOrNormal(thumbState)?.OnlyVisible;
