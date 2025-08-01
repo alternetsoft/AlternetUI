@@ -643,7 +643,7 @@ namespace Alternet.UI
             /// otherwise, <see langword="false"/>.</param>
             /// <param name="baseColor">The base <see cref="Color"/> used to determine
             /// the hovered state color.</param>
-            public void SetHoveredColors(bool isDark, Color baseColor)
+            public virtual void SetHoveredColors(bool isDark, Color baseColor)
             {
                 var hoveredColor = GetDefaultHoveredColor(isDark, baseColor);
 
@@ -657,7 +657,7 @@ namespace Alternet.UI
             /// </summary>
             /// <param name="background">The background color to apply.</param>
             /// <param name="foreground">The foreground color to apply.</param>
-            public void SetThemeColors(Color background, Color foreground)
+            public virtual void SetThemeColors(Color background, Color foreground)
             {
                 Background[VisualControlState.Normal] = background;
                 CornerBackground[VisualControlState.Normal] = background;
