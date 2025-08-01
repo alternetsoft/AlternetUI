@@ -27,6 +27,20 @@ namespace Alternet.Drawing
         public static Coord DefaultInvisibleArrowMargin = 1;
 
         /// <summary>
+        /// Gets or sets a value indicating whether scroll bar thumb
+        /// should use rounded corners by default.
+        /// </summary>
+        public static bool DefaultUseThumbRoundCorners = true;
+
+        /// <summary>
+        /// Gets or sets the default corner radius for a scroll bar thumb.
+        /// This value is used when <see cref="DefaultUseThumbRoundCorners"/>
+        /// is set to <see langword="true"/>.
+        /// </summary>
+        /// <remarks>The default value is 4.</remarks>
+        public static Coord DefaultThumbCornerRadius = 4;
+
+        /// <summary>
         /// Gets or sets minimal scrollbar thumb size in dips.
         /// </summary>
         public static Coord MinThumbSize = 10;
@@ -181,6 +195,21 @@ namespace Alternet.Drawing
                 metrics = value;
             }
         }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether scroll bar thumb
+        /// should use rounded corners. If this property is not set,
+        /// <see cref="DefaultUseThumbRoundCorners"/> is used.
+        /// </summary>
+        public virtual bool? UseThumbRoundCorners { get; set; }
+
+        /// <summary>
+        /// Gets or sets the corner radius for a scroll bar thumb.
+        /// If this property is not set, <see cref="DefaultThumbCornerRadius"/> is used.
+        /// This value is used when <see cref="UseThumbRoundCorners"/>
+        /// is set to <see langword="true"/>.
+        /// </summary>
+        public virtual Coord? ThumbCornerRadius { get; set; }
 
         /// <summary>
         /// Gets or sets a value indicating whether arrows are visible in the scroll bar.
@@ -569,6 +598,11 @@ namespace Alternet.Drawing
 
                     thumb.Bounds = fillBounds.CenterIn(thumbBounds, IsVertical, !IsVertical);
                 }
+
+                thumb.UseRoundCorners = UseThumbRoundCorners ?? DefaultUseThumbRoundCorners;
+                thumb.CornerRadius = ThumbCornerRadius ?? DefaultThumbCornerRadius;
+                thumb.CornerRadiusIsPercent = false;
+                thumb.OverrideBorderCornerSettings = true;
 
                 thumb.Draw(control, dc);
             }
