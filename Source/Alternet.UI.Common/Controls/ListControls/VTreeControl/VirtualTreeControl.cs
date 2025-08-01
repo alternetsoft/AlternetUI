@@ -173,28 +173,6 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Gets or sets a value indicating whether lines are drawn between the
-        /// tree items that are at the root of the tree view. Default is <see langword="false"/>.
-        /// Currently, setter of this property does nothing.
-        /// </summary>
-        /// <value><see langword="true"/> if lines are drawn between the tree
-        /// items that are at the root of the tree
-        /// view; otherwise, <see langword="false"/>. The default is
-        /// <see langword="true"/>.</value>
-        [Browsable(false)]
-        public virtual bool ShowRootLines
-        {
-            get
-            {
-                return false;
-            }
-
-            set
-            {
-            }
-        }
-
-        /// <summary>
         /// Gets first root item in the control or <c>null</c> if there are no items.
         /// </summary>
         /// <remarks>
@@ -252,50 +230,6 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Gets or sets a value indicating whether to draw a contrasting
-        /// border between displayed rows.
-        /// Default is <see langword="false"/>.
-        /// Currently, setter of this property does nothing.
-        /// </summary>
-        /// <returns>
-        /// <see langword="true" /> if row lines are shown;
-        /// <see langword="false" />, if row lines are hidden.
-        /// The default is <see langword="false" />.
-        /// </returns>
-        public virtual bool RowLines
-        {
-            get
-            {
-                return false;
-            }
-
-            set
-            {
-            }
-        }
-
-        /// <summary>
-        /// Gets or sets a value indicating whether lines are drawn between tree
-        /// items in the tree view control.
-        /// Default is <see langword="false"/>.
-        /// Currently, setter of this property does nothing.
-        /// </summary>
-        /// <value><see langword="true"/> if lines are drawn between tree items in
-        /// the tree view control; otherwise,
-        /// <see langword="false"/>. The default is <see langword="true"/>.</value>
-        public virtual bool ShowLines
-        {
-            get
-            {
-                return false;
-            }
-
-            set
-            {
-            }
-        }
-
-        /// <summary>
         /// Gets or sets a value indicating whether expand buttons are displayed
         /// next to tree items that contain child tree items.
         /// </summary>
@@ -319,7 +253,19 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets or sets the index of the first visible item in the control.
+        /// Returned value is the index in <see cref="VisibleItems"/> collection.</summary>
+        /// <returns>The zero-based index of the first visible item in the control.</returns>
+        [Browsable(false)]
+        public virtual int TopIndex
+        {
+            get => ListBox.TopIndex;
+            set => ListBox.TopIndex = value;
+        }
+
+        /// <summary>
         /// Gets or sets the first fully-visible tree item in the control.
+        /// This is slower than <see cref="TopIndex"/>, so if you have item index, use that instead.
         /// </summary>
         /// <value>A <see cref="TreeControlItem"/> that represents the first
         /// fully-visible tree item in the control.</value>
@@ -332,10 +278,47 @@ namespace Alternet.UI
 
                 return ListBox.GetItem(index) as TreeControlItem;
             }
+
+            set
+            {
+                if (value is null || TopItem == value)
+                    return;
+                var index = ListBox.Items.IndexOf(value);
+                if (index < 0)
+                    return;
+                ListBox.TopIndex = index;
+            }
         }
 
         /// <summary>
         /// Gets a collection containing the currently selected items in the control.
+        /// </summary>
+        /// <value>A <see cref="IReadOnlyList{ListControlItem}"/> containing the
+        /// currently selected items in the control.</value>
+        /// <remarks>
+        /// For a multiple-selection <see cref="VirtualTreeControl"/>, this property returns
+        /// a collection containing all the items that are selected
+        /// in the control. For a single-selection
+        /// <see cref="VirtualTreeControl"/>, this property returns a collection containing a
+        /// single element containing the only selected item in the control.
+        /// </remarks>
+        [Browsable(false)]
+        public virtual IReadOnlyList<ListControlItem> SelectedListItems
+        {
+            get
+            {
+                return ListBox.SelectedItems;
+            }
+
+            set
+            {
+                ListBox.SelectedItems = value;
+            }
+        }
+
+        /// <summary>
+        /// Gets a collection containing the currently selected items in the control.
+        /// This is slower than <see cref="SelectedListItems"/>.
         /// </summary>
         /// <value>A <see cref="IReadOnlyList{TreeControlItem}"/> containing the
         /// currently selected items in the control.</value>
@@ -579,52 +562,6 @@ namespace Alternet.UI
                 rootItem?.SetOwner(null);
                 rootItem = value;
                 RefreshTree();
-            }
-        }
-
-        /// <summary>
-        /// Gets or sets a value indicating whether the selection highlight spans
-        /// the width of the tree control. Default is <see langword="true"/>.
-        /// Currently, setter of this property does nothing.
-        /// </summary>
-        /// <value>
-        /// <see langword="true"/> if the selection highlight spans the width of
-        /// the tree view control; otherwise, <see langword="false"/>.
-        /// The default is <see langword="false"/>.
-        /// </value>
-        [Browsable(false)]
-        public virtual bool FullRowSelect
-        {
-            get
-            {
-                return true;
-            }
-
-            set
-            {
-            }
-        }
-
-        /// <summary>
-        /// Gets or sets a value indicating whether the label text of the tree
-        /// items can be edited. Default is <see langword="false"/>.
-        /// Currently, setter of this property does nothing.
-        /// </summary>
-        /// <value>
-        /// <see langword="true"/> if the label text of the tree items can be
-        /// edited; otherwise, <see
-        /// langword="false"/>. The default is <see langword="false"/>.
-        /// </value>
-        [Browsable(false)]
-        public virtual bool AllowLabelEdit
-        {
-            get
-            {
-                return false;
-            }
-
-            set
-            {
             }
         }
 

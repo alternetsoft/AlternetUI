@@ -65,6 +65,27 @@ namespace Alternet.UI
         void RaiseItemAdded(UI.TreeControlItem item);
 
         /// <summary>
+        /// Ensures that the tree item is visible, expanding tree items and
+        /// scrolling the tree view control as necessary.
+        /// </summary>
+        /// <remarks>
+        /// When this method is cis called, the tree is
+        /// expanded and scrolled to ensure that the current tree
+        /// item is visible in the control. This method is useful
+        /// if you are selecting a tree item in code based on
+        /// certain criteria. By calling this method after you select the item,
+        /// the user can see and interact with the selected item.
+        /// </remarks>
+        void EnsureVisible(TreeControlItem? item);
+
+        /// <summary>
+        /// Scrolls control so the specified item will be fully visible.
+        /// </summary>
+        /// <param name="item">Item to show into the view.</param>
+        void ScrollIntoView(TreeControlItem? item);
+
+
+        /// <summary>
         /// Called when an item is removed from this tree view control,
         /// at any nesting level.
         /// </summary>
