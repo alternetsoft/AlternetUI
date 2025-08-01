@@ -10,7 +10,7 @@ namespace ControlsSample
     internal partial class TreeViewPage : Panel
     {
         private readonly PopupTreeView popupTreeView = new();
-        private int supressExpandEvents = 0;
+        private int suppressExpandEvents = 0;
         private bool? slowSettingsEnabled;
         private int newItemIndex = 0;
 
@@ -34,16 +34,23 @@ namespace ControlsSample
                 treeView.MouseLeftButtonUp += TreeView_MouseLeftButtonUp;
                 treeView.MouseMove += TreeView_MouseMove;
 
-                if(App.SafeWindow.UseSmallImages)
-                    treeView.ImageList = DemoResourceLoader.LoadImageLists().Small;
+                var imageLists = DemoResourceLoader.LoadImageLists();
+
+                if (App.SafeWindow.UseSmallImages)
+                {
+                    treeView.ImageList = imageLists.Small;
+                    popupTreeView.MainControl.ImageList = imageLists.Small;
+                }
                 else
-                    treeView.ImageList = DemoResourceLoader.LoadImageLists().Large;
+                {
+                    treeView.ImageList = imageLists.Large;
+                    popupTreeView.MainControl.ImageList = imageLists.Large;
+                }
 
                 AddDefaultItems();
                 SetCustomColors();
 
-                popupTreeView.MainControl.ImageList = DemoResourceLoader.LoadImageLists().Small;
-                AddItems(popupTreeView.MainControl, 10);
+                PropertyGridSample.ObjectInit.AddItems(popupTreeView.MainControl, 10);
                 popupTreeView.AfterHide += PopupTreeView_AfterHide;
             }
         }
@@ -154,7 +161,7 @@ namespace ControlsSample
 
         private void TreeView_ExpandedChanged(object? sender, TreeViewEventArgs e)
         {
-            if (supressExpandEvents > 0)
+            if (suppressExpandEvents > 0)
                 return;
             var exp = e.Item.IsExpanded;
             var prefix = "TreeView: ExpandedChanged. Item:";
@@ -183,7 +190,7 @@ namespace ControlsSample
             object? sender,
             TreeViewCancelEventArgs e)
         {
-            if (supressExpandEvents > 0)
+            if (suppressExpandEvents > 0)
                 return;
             e.Cancel = cancelBeforeExpandEventsCheckBox.IsChecked;
             var prefix = "TreeView: BeforeExpand. Item:";
@@ -194,7 +201,7 @@ namespace ControlsSample
             object? sender,
             TreeViewCancelEventArgs e)
         {
-            if (supressExpandEvents > 0)
+            if (suppressExpandEvents > 0)
                 return;
             e.Cancel = cancelBeforeCollapseEventsCheckBox.IsChecked;
             var prefix = "TreeView: BeforeCollapse. Item:";
@@ -272,16 +279,16 @@ namespace ControlsSample
 
         private void ExpandAllButton_Click(object? sender, EventArgs e)
         {
-            supressExpandEvents++;
+            suppressExpandEvents++;
             treeView.ExpandAll();
-            supressExpandEvents--;
+            suppressExpandEvents--;
         }
 
         private void CollapseAllButton_Click(object? sender, EventArgs e)
         {
-            supressExpandEvents++;
+            suppressExpandEvents++;
             treeView.CollapseAll();
-            supressExpandEvents--;
+            suppressExpandEvents--;
         }
 
         private void ExpandAllChildrenButton_Click(object? sender, EventArgs e) =>
