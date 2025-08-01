@@ -508,6 +508,27 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Ensures that the tree item is visible, expanding tree items and
+        /// scrolling the tree view control as
+        /// necessary.
+        /// </summary>
+        /// <remarks>
+        /// When the <see cref="EnsureVisible"/> method is called, the tree
+        /// is expanded and scrolled to ensure that the current tree
+        /// item is visible in the <see cref="TreeView"/>. This method is useful
+        /// if you are selecting a tree item in code based on
+        /// certain criteria. By calling this method after you select the item,
+        /// the user can see and interact with the
+        /// selected item.
+        /// </remarks>
+        public virtual void EnsureVisible() => Owner?.EnsureVisible(this);
+
+        /// <summary>
+        /// Scrolls the item into view.
+        /// </summary>
+        public virtual void ScrollIntoView() => Owner?.ScrollIntoView(this);
+
+        /// <summary>
         /// Removes the specified child item from this tree control item.
         /// </summary>
         /// <param name="item">The item to remove.</param>
