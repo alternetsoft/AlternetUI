@@ -16,6 +16,7 @@ namespace Alternet.Maui
     public partial class BaseContentView : ContentView, UI.IRaiseSystemColorsChanged
     {
         private bool currentIsDark;
+        private Alternet.UI.ObjectUniqueId uniqueId = new();
 
         /// <summary>
         /// Initializes a new instance of the <see cref="BaseContentView"/> class.
@@ -35,6 +36,13 @@ namespace Alternet.Maui
                 return Alternet.UI.SystemSettings.AppearanceIsDark;
             }
         }
+
+        /// <summary>
+        /// Gets the unique identifier associated with this object.
+        /// </summary>
+        /// <remarks>The unique identifier is lazily initialized upon first access.
+        /// Once initialized, it remains associated with the object for its lifetime.</remarks>
+        public Alternet.UI.ObjectUniqueId UniqueId => uniqueId;
 
         /// <summary>
         /// Gets the parent page of the current view.
