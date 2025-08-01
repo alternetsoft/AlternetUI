@@ -286,6 +286,98 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Calculates the uniform corner radius for a given border configuration.
+        /// </summary>
+        /// <remarks>If <paramref name="prm"/> specifies an override for border corner
+        /// settings, the
+        /// corner radius is calculated based on the rectangle dimensions and
+        /// the provided corner radius values.
+        /// Otherwise, the corner radius is determined by the associated border's settings.</remarks>
+        /// <param name="prm">A reference to a <see cref="DrawBorderParams"/> structure
+        /// that specifies the border settings, rectangle
+        /// dimensions, and corner radius parameters.</param>
+        /// <returns>A <see cref="Coord"/> representing the uniform corner radius,
+        /// or <see langword="null"/> if no corner radius
+        /// is applicable.</returns>
+        public static Coord? GetCornerRadius(ref DrawBorderParams prm)
+        {
+            Coord? radius;
+
+            if (prm.Border is null || prm.OverrideBorderCornerSettings)
+            {
+                radius = BorderSettings.GetUniformCornerRadius(
+                                prm.Rect,
+                                prm.CornerRadius,
+                                prm.CornerRadiusIsPercent);
+            }
+            else
+            {
+                radius = prm.Border?.GetUniformCornerRadius(prm.Rect);
+            }
+
+            if(radius <= 0)
+                return null;
+
+            return radius;
+        }
+
+        /// <summary>
+        /// Fills a rectangle with a specified brush and optionally draws a border around it.
+        /// </summary>
+        /// <remarks>This method performs the following actions based on the provided parameters:
+        /// <list type="bullet">
+        /// <item>If a brush is specified, the rectangle is filled using the brush.</item>
+        /// <item>If a border is specified and <see cref="DrawBorderParams.HasBorder"/>
+        /// is <see langword="true"/>,  the border is drawn around the rectangle.</item>
+        /// <item>If both a brush and a border are specified, the method
+        /// ensures the border and fill are rendered appropriately, including support
+        /// for rounded corners if the border specifies a corner radius.</item>
+        /// </list>
+        /// If neither a brush nor a valid border is provided, the method
+        /// performs no action.</remarks>
+        /// <param name="canvas">The <see cref="Graphics"/> where to draw.</param>
+        /// <param name="prm">A reference to a <see cref="DrawBorderParams"/> structure
+        /// that contains the parameters for the
+        /// operation, including the rectangle to fill, the brush to use,
+        /// the border settings, and the canvas.</param>
+        public static void FillBorderRectangle(Graphics canvas, ref DrawBorderParams prm)
+        {
+            if (prm.Brush is null && (prm.Border is null || !prm.HasBorder))
+                return;
+
+            var radius = GetCornerRadius(ref prm);
+
+            if (radius is not null && prm.Brush is not null)
+            {
+                var color = prm.Border?.Color;
+                if (prm.Border is null || color is null || !prm.HasBorder)
+                {
+                    canvas.FillRoundedRectangle(prm.Brush, prm.Rect.InflatedBy(-1, -1), radius.Value);
+                }
+                else
+                {
+                    canvas.RoundedRectangle(
+                        color.AsPen,
+                        prm.Brush,
+                        prm.Rect.InflatedBy(-1, -1),
+                        radius.Value);
+                }
+
+                return;
+            }
+
+            if (prm.Brush != null)
+            {
+                canvas.FillRectangle(prm.Brush, prm.Rect);
+            }
+
+            if (prm.HasBorder && prm.Border is not null)
+            {
+                DrawBorder(canvas, ref prm);
+            }
+        }
+
+        /// <summary>
         /// Fills rectangle background and draws its border using the specified border settings.
         /// </summary>
         /// <param name="dc"><see cref="Graphics"/> where to draw.</param>
@@ -302,38 +394,74 @@ namespace Alternet.UI
             bool hasBorder = true,
             AbstractControl? control = null)
         {
-            if (brush is null && (border is null || !hasBorder))
+            var prm = new DrawBorderParams(rect, brush, border, hasBorder, control);
+            FillBorderRectangle(dc, ref prm);
+        }
+
+        /// <summary>
+        /// Draws a border around the specified rectangular area using the provided parameters.
+        /// </summary>
+        /// <remarks>This method first invokes any custom border painting logic
+        /// defined in the <see cref="DrawBorderParams.Border"/> object. If the border's
+        /// <see
+        /// cref="BorderSettings.DrawDefaultBorder"/> property is set to <see langword="true"/>,
+        /// the method proceeds to draw a default border using the specified colors and dimensions.
+        /// <para> The method supports both rounded and non-rounded borders, depending on the
+        /// corner radius determined by the <see cref="DrawBorderParams"/>. If a corner radius
+        /// is specified, a rounded rectangle is drawn; otherwise,
+        /// individual border sides are rendered based on their respective colors and widths.</para>
+        /// </remarks>
+        /// <param name="dc">The <see cref="Graphics"/> object used to render the border.</param>
+        /// <param name="prm">A reference to a <see cref="DrawBorderParams"/> structure
+        /// that specifies the border properties, the
+        /// rectangle to draw around, and other rendering details.</param>
+        public static void DrawBorder(Graphics dc, ref DrawBorderParams prm)
+        {
+            var border = prm.Border;
+
+            if (border is null)
                 return;
 
-            var radius = border?.GetUniformCornerRadius(rect);
+            border.InvokePaint(dc, prm.Rect);
 
-            if (radius is not null && brush is not null)
+            if (!border.DrawDefaultBorder)
+                return;
+
+            var radius = GetCornerRadius(ref prm);
+            var defaultColor = ColorUtils.GetDefaultBorderColor(prm.Control);
+
+            if (radius != null)
             {
-                var color = border?.Color;
-                if (border is null || color is null || !hasBorder)
-                {
-                    dc.FillRoundedRectangle(brush, rect.InflatedBy(-1, -1), radius.Value);
-                }
-                else
-                {
-                    dc.RoundedRectangle(
-                        color.AsPen,
-                        brush,
-                        rect.InflatedBy(-1, -1),
-                        radius.Value);
-                }
-
+                dc.DrawRoundedRectangle(
+                    border.Top.GetPen(defaultColor),
+                    prm.Rect.InflatedBy(-1, -1),
+                    radius.Value);
                 return;
             }
 
-            if (brush != null)
+            var topColor = border.Top.Color ?? defaultColor;
+            var bottomColor = border.Bottom.Color ?? defaultColor;
+            var leftColor = border.Left.Color ?? defaultColor;
+            var rightColor = border.Right.Color ?? defaultColor;
+
+            if (border.Top.Width > 0 && border.ColorIsOk(topColor))
             {
-                dc.FillRectangle(brush, rect);
+                dc.FillRectangle(topColor.AsBrush, border.GetTopRectangle(prm.Rect));
             }
 
-            if (hasBorder && border is not null)
+            if (border.Bottom.Width > 0 && border.ColorIsOk(bottomColor))
             {
-                DrawBorder(control, dc, rect, border);
+                dc.FillRectangle(bottomColor.AsBrush, border.GetBottomRectangle(prm.Rect));
+            }
+
+            if (border.Left.Width > 0 && border.ColorIsOk(leftColor))
+            {
+                dc.FillRectangle(leftColor.AsBrush, border.GetLeftRectangle(prm.Rect));
+            }
+
+            if (border.Right.Width > 0 && border.ColorIsOk(rightColor))
+            {
+                dc.FillRectangle(rightColor.AsBrush, border.GetRightRectangle(prm.Rect));
             }
         }
 
@@ -350,50 +478,8 @@ namespace Alternet.UI
             RectD rect,
             BorderSettings? border)
         {
-            if (border is null)
-                return;
-
-            border.InvokePaint(dc, rect);
-
-            if (!border.DrawDefaultBorder)
-                return;
-
-            var radius = border.GetUniformCornerRadius(rect);
-            var defaultColor = ColorUtils.GetDefaultBorderColor(control);
-
-            if (radius != null)
-            {
-                dc.DrawRoundedRectangle(
-                    border.Top.GetPen(defaultColor),
-                    rect.InflatedBy(-1, -1),
-                    radius.Value);
-                return;
-            }
-
-            var topColor = border.Top.Color ?? defaultColor;
-            var bottomColor = border.Bottom.Color ?? defaultColor;
-            var leftColor = border.Left.Color ?? defaultColor;
-            var rightColor = border.Right.Color ?? defaultColor;
-
-            if (border.Top.Width > 0 && border.ColorIsOk(topColor))
-            {
-                dc.FillRectangle(topColor.AsBrush, border.GetTopRectangle(rect));
-            }
-
-            if (border.Bottom.Width > 0 && border.ColorIsOk(bottomColor))
-            {
-                dc.FillRectangle(bottomColor.AsBrush, border.GetBottomRectangle(rect));
-            }
-
-            if (border.Left.Width > 0 && border.ColorIsOk(leftColor))
-            {
-                dc.FillRectangle(leftColor.AsBrush, border.GetLeftRectangle(rect));
-            }
-
-            if (border.Right.Width > 0 && border.ColorIsOk(rightColor))
-            {
-                dc.FillRectangle(rightColor.AsBrush, border.GetRightRectangle(rect));
-            }
+            var prm = new DrawBorderParams(rect, null, border, true, control);
+            DrawBorder(dc, ref prm);
         }
 
         /// <summary>
@@ -807,6 +893,84 @@ namespace Alternet.UI
             Coord GetWidth(string s)
             {
                 return canvas.MeasureText(s, font).Ceiling().Width;
+            }
+        }
+
+        /// <summary>
+        /// Represents the parameters required to fill a rectangle and optionally draw its border.
+        /// This structure is used in
+        /// <see cref="FillBorderRectangle(Graphics, ref DrawBorderParams)"/> and other methods.
+        /// </summary>
+        /// <remarks>This structure encapsulates all the necessary information for rendering
+        /// a filled rectangle with an optional border. It includes the target graphics context,
+        /// the rectangle dimensions, the fill brush, border settings, and an optional
+        /// control that influences the border rendering.</remarks>
+        public struct DrawBorderParams
+        {
+            /// <summary>
+            /// Gets or sets the rectangle to fill and draw border.
+            /// </summary>
+            public RectD Rect;
+
+            /// <summary>
+            /// Gets or sets the brush to fill the rectangle.
+            /// </summary>
+            public Brush? Brush;
+
+            /// <summary>
+            /// Gets or sets the border settings.
+            /// </summary>
+            public BorderSettings? Border;
+
+            /// <summary>
+            /// gets or sets Whether border is painted.
+            /// </summary>
+            public bool HasBorder = true;
+
+            /// <summary>
+            /// Control in which border is painted. Optional.
+            /// </summary>
+            public AbstractControl? Control;
+
+            /// <summary>
+            /// Gets or sets a value indicating whether border and/or background should be painted
+            /// using rounded corners.
+            /// </summary>
+            public bool UseRoundCorners;
+
+            /// <summary>
+            /// Gets or sets the corner radius.
+            /// This value is used when <see cref="UseRoundCorners"/>
+            /// is set to <see langword="true"/>.
+            /// </summary>
+            public Coord CornerRadius;
+
+            /// <summary>
+            /// Indicates whether the corner radius is specified as a percentage of the element's size.
+            /// </summary>
+            public bool CornerRadiusIsPercent;
+
+            /// <summary>
+            /// Gets or sets a value indicating whether the corner settings specified in
+            /// <see cref="Border"/> should be overridden.
+            /// </summary>
+            public bool OverrideBorderCornerSettings;
+
+            /// <summary>
+            /// Initializes a new instance of the <see cref="DrawBorderParams"/> struct.
+            /// </summary>
+            public DrawBorderParams(
+                RectD rect,
+                Brush? brush,
+                BorderSettings? border,
+                bool hasBorder = true,
+                AbstractControl? control = null)
+            {
+                Rect = rect;
+                Brush = brush;
+                Border = border;
+                HasBorder = hasBorder;
+                Control = control;
             }
         }
     }
