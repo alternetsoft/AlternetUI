@@ -33,6 +33,30 @@ namespace Alternet.Drawing
         public bool HasImage = false;
 
         /// <summary>
+        /// Gets or sets a value indicating whether border and/or background should be painted
+        /// using rounded corners.
+        /// </summary>
+        public bool UseRoundCorners;
+
+        /// <summary>
+        /// Gets or sets the corner radius.
+        /// This value is used when <see cref="UseRoundCorners"/>
+        /// is set to <see langword="true"/>.
+        /// </summary>
+        public Coord CornerRadius;
+
+        /// <summary>
+        /// Indicates whether the corner radius is specified as a percentage of the element's size.
+        /// </summary>
+        public bool CornerRadiusIsPercent;
+
+        /// <summary>
+        /// Gets or sets a value indicating whether the corner settings specified in
+        /// <see cref="Border"/> should be overridden.
+        /// </summary>
+        public bool OverrideBorderCornerSettings;
+
+        /// <summary>
         /// Returns this object if it is visible; otherwise returns <c>null</c>.
         /// </summary>
         public RectangleDrawable? OnlyVisible
@@ -54,12 +78,20 @@ namespace Alternet.Drawing
         {
             if (!Visible)
                 return;
-            dc.FillBorderRectangle(
+
+            var prm = new DrawingUtils.DrawBorderParams(
                 Bounds,
                 Brush,
                 Border,
                 HasBorder,
                 control);
+
+            prm.UseRoundCorners = UseRoundCorners;
+            prm.CornerRadius = CornerRadius;
+            prm.CornerRadiusIsPercent = CornerRadiusIsPercent;
+            prm.OverrideBorderCornerSettings = OverrideBorderCornerSettings;
+
+            DrawingUtils.FillBorderRectangle(dc, ref prm);
         }
 
         /// <inheritdoc/>

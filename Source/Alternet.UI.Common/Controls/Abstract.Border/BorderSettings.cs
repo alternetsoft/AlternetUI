@@ -349,6 +349,43 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Calculates a uniform corner radius for a rectangle, optionally
+        /// treating the radius as a percentage of the rectangle's minimum dimension.
+        /// </summary>
+        /// <param name="rect">The rectangle for which the corner radius is being calculated.</param>
+        /// <param name="cornerRadius">The uniform corner radius to apply.
+        /// If <see langword="null"/>, the method returns <see langword="null"/>.</param>
+        /// <param name="radiusIsPercent">A value indicating whether
+        /// the <paramref name="cornerRadius"/> is expressed as a percentage of the
+        /// rectangle's minimum dimension. If <see langword="null"/>, the method returns
+        /// <see langword="null"/>.</param>
+        /// <returns>The calculated corner radius as a <see cref="Coord"/> value.
+        /// If <paramref name="cornerRadius"/> or
+        /// <paramref name="radiusIsPercent"/> is <see langword="null"/>, the method
+        /// returns <see langword="null"/>. If <paramref name="radiusIsPercent"/>
+        /// is <see langword="true"/>, the radius is
+        /// calculated as a percentage of the rectangle's minimum dimension.
+        /// Otherwise, the method returns the value of <paramref name="cornerRadius"/>.</returns>
+        public static Coord? GetUniformCornerRadius(
+            RectD rect,
+            Coord? cornerRadius,
+            bool? radiusIsPercent)
+        {
+            var radius = cornerRadius;
+            if (radius is null)
+                return null;
+            var isPercent = radiusIsPercent;
+            if (isPercent is null)
+                return null;
+            if (isPercent.Value)
+            {
+                return rect.PercentOfMinSize(radius.Value);
+            }
+            else
+                return radius.Value;
+        }
+
+        /// <summary>
         /// Draws design corners used to indicate element bounds.
         /// </summary>
         public static void DrawDesignCorners(Graphics dc, RectD rect, BorderSettings? border = null)
@@ -456,18 +493,10 @@ namespace Alternet.UI
         /// <returns></returns>
         public virtual Coord? GetUniformCornerRadius(RectD rect)
         {
-            var radius = UniformCornerRadius;
-            if (radius is null)
-                return null;
-            var isPercent = UniformRadiusIsPercent;
-            if (isPercent is null)
-                return null;
-            if (isPercent.Value)
-            {
-                return rect.PercentOfMinSize(radius.Value);
-            }
-            else
-                return radius.Value;
+            return GetUniformCornerRadius(
+                        rect,
+                        UniformCornerRadius,
+                        UniformRadiusIsPercent);
         }
 
         /// <summary>
