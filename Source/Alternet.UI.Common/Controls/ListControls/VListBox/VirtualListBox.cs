@@ -37,7 +37,7 @@ namespace Alternet.UI
         /// <summary>
         /// Indicates whether the list box controls use internal scrollbars.
         /// </summary>
-        public static bool DefaultUseInternalScrollBars = true;
+        public static bool DefaultUseInternalScrollBars;
 
         /// <summary>
         /// Specifies the default border style for controls.
@@ -67,6 +67,11 @@ namespace Alternet.UI
         private ScrollBarInfo vertScrollBarInfo = new ();
         private ScrollBarInfo horzScrollBarInfo = new ();
 
+        static VirtualListBox()
+        {
+            DefaultUseInternalScrollBars = App.IsMaui || App.IsLinuxOS;
+        }
+
         /// <summary>
         /// Initializes a new instance of the <see cref="VirtualListBox"/> class.
         /// </summary>
@@ -82,7 +87,7 @@ namespace Alternet.UI
         /// </summary>
         public VirtualListBox()
         {
-            hasInternalScrollBars = App.IsMaui || DefaultUseInternalScrollBars;
+            hasInternalScrollBars = DefaultUseInternalScrollBars;
 
             if (!hasInternalScrollBars)
             {
