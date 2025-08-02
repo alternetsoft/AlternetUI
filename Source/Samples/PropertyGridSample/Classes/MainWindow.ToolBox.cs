@@ -49,12 +49,6 @@ namespace PropertyGridSample
 
                 bool logAddedControls = false;
 
-                ControlListBoxItem item = new(typeof(WelcomePage))
-                {
-                    Text = "Welcome Page",
-                };
-                ToolBox.Add(item);
-
                 LimitedTypes.Add(typeof(Border));
                 LimitedTypes.Add(typeof(PictureBox));
                 LimitedTypes.Add(typeof(Button));
@@ -118,7 +112,9 @@ namespace PropertyGridSample
                 LimitedTypes.AddRange(LimitedTypesStatic);
 
                 List<ControlListBoxItem> items = new();
-                
+
+                ControlListBoxItem item;
+
                 foreach (Type type in LimitedTypes)
                 {
                     item = new(type)
@@ -144,19 +140,54 @@ namespace PropertyGridSample
 
                 items.Sort();
 
+                BaseDictionary<string, TreeViewItem> categories = new();
+
+                var otherCat = new ControlCategoryAttribute("Other");
+
                 foreach (var elem in items)
-                    ToolBox.Add(elem);
+                {
+                    var type = elem.InstanceType;
+                    var categoryAttr = AssemblyUtils.GetControlCategory(type) ?? otherCat;
+
+                    if(categoryAttr.IsHidden || categoryAttr.IsInternal)
+                        continue;
+
+                    var categoryTitle = categoryAttr.CategoryTitle;
+
+                    if (!categories.TryGetValue(categoryTitle, out var categoryItem))
+                    {
+                        categoryItem = new TreeViewItem(categoryTitle);
+                        categoryItem.HideSelection = true;
+                        categoryItem.AutoCollapseSiblings = true;
+                        categories[categoryTitle] = categoryItem;
+                        ToolBox.Add(categoryItem);
+                    }
+
+                    categoryItem.Add(elem);
+
+                }
+            }
+
+            ToolBox.DoInsideUpdate(() =>
+            {
+                Fn();
+
+                ToolBox.RootItem.Sort();
+
+                ControlListBoxItem item = new(typeof(WelcomePage))
+                {
+                    Text = "Welcome Page",
+                };
+                ToolBox.RootItem.Insert(0, item);
 
                 item = new(typeof(SettingsControl))
                 {
                     PropInstance = PropertyGridSettings.Default,
                     EventInstance = new object(),
-                    Text = "Demo Options",
+                    Text = "Options",
                 };
                 ToolBox.Add(item);
-            }
-
-            ToolBox.DoInsideUpdate(() => { Fn(); });
+            });
         }
 
         internal void AddMainWindow()
