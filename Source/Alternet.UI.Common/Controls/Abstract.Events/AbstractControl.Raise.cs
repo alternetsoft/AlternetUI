@@ -291,7 +291,7 @@ namespace Alternet.UI
         for a set time (default: 400 ms), the MouseHover event fires.
 
         The event is raised only once per hover session. If the mouse leaves
-        and re-enters the control, tracking restarts.        
+        and re-enters the control, tracking restarts.
         */
         public void RaiseMouseHover(EventArgs e)
         {
