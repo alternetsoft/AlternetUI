@@ -5,9 +5,9 @@ using System.Text;
 namespace Alternet.UI
 {
     /// <summary>
-    /// Interface for a container that holds tree control items.
+    /// Interface for a container that holds tree view items.
     /// </summary>
-    public interface ITreeControlItemContainer
+    public interface ITreeViewItemContainer
     {
         /// <summary>
         /// Gets the container that manages the list control items.
@@ -83,7 +83,6 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="item">Item to show into the view.</param>
         void ScrollIntoView(TreeViewItem? item);
-
 
         /// <summary>
         /// Called when an item is removed from this tree view control,

@@ -63,7 +63,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets collection of the items.
         /// </summary>
-        public TreeControlRootItem RootItem => View.RootItem;
+        public TreeViewRootItem RootItem => View.RootItem;
 
         /// <summary>
         /// Gets "Open" button.

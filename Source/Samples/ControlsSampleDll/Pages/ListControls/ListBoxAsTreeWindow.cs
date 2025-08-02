@@ -103,7 +103,7 @@ namespace ControlsSample
 
             treeView.ContextMenu.Add("Change RootItem", () =>
             {
-                TreeControlRootItem item = new();
+                TreeViewRootItem item = new();
                 ListControlUtils.AddTestItems(item, 10, ItemInitialize);
 
                 void ItemInitialize(TreeViewItem item)

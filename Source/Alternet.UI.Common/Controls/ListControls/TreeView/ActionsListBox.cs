@@ -74,11 +74,11 @@ namespace Alternet.UI
 
             if (drawLine)
             {
-                result = new TreeControlSeparatorItem();
+                result = new TreeViewSeparatorItem();
             }
             else
             {
-                result = new TreeControlEmptyItem();
+                result = new TreeViewEmptyItem();
             }
 
             Add(result);

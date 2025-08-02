@@ -175,7 +175,7 @@ namespace ControlsSample
             App.LogReplace($"{prefix} ({s})", prefix);
         }
 
-        private void TreeView_ExpandedChanged(object? sender, TreeControlEventArgs e)
+        private void TreeView_ExpandedChanged(object? sender, TreeViewEventArgs e)
         {
             if (suppressExpandEvents > 0)
                 return;
@@ -186,7 +186,7 @@ namespace ControlsSample
 
         private void TreeView_BeforeExpand(
             object? sender,
-            TreeControlCancelEventArgs e)
+            TreeViewCancelEventArgs e)
         {
             if (suppressExpandEvents > 0)
                 return;
@@ -197,7 +197,7 @@ namespace ControlsSample
 
         private void TreeView_BeforeCollapse(
             object? sender,
-            TreeControlCancelEventArgs e)
+            TreeViewCancelEventArgs e)
         {
             if (suppressExpandEvents > 0)
                 return;

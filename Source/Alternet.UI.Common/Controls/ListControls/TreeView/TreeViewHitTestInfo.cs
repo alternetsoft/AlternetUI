@@ -3,7 +3,7 @@ using System;
 namespace Alternet.UI
 {
     /// <summary>
-    /// Contains information about <see cref="TreeView.HitTest(Alternet.Drawing.PointD)"/>
+    /// Contains information about the hit test
     /// result for a <see cref="TreeView"/> control.
     /// </summary>
     public class TreeViewHitTestInfo : BaseObject

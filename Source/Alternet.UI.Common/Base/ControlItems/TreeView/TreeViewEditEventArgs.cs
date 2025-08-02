@@ -4,8 +4,7 @@ using System.ComponentModel;
 namespace Alternet.UI
 {
     /// <summary>
-    /// Provides data for the <see cref="TreeView.BeforeLabelEdit"/> and
-    /// <see cref="TreeView.AfterLabelEdit"/> events.
+    /// Provides data for the "BeforeLabelEdit" and "AfterLabelEdit" events.
     /// </summary>
     public class TreeViewEditEventArgs : BaseCancelEventArgs
     {

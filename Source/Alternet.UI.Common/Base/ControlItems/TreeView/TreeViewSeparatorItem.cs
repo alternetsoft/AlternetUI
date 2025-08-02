@@ -9,12 +9,12 @@ namespace Alternet.UI
     /// <summary>
     /// Extends <see cref="TreeViewItem"/> with horizontal separator painting.
     /// </summary>
-    public class TreeControlSeparatorItem : TreeViewItem
+    public class TreeViewSeparatorItem : TreeViewItem
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="ListControlSeparatorItem"/> class.
+        /// Initializes a new instance of the <see cref="TreeViewSeparatorItem"/> class.
         /// </summary>
-        public TreeControlSeparatorItem()
+        public TreeViewSeparatorItem()
         {
             this.HideSelection = true;
             ForegroundColor = ListControlSeparatorItem.DefaultSeparatorColor ?? DefaultColors.BorderColor;

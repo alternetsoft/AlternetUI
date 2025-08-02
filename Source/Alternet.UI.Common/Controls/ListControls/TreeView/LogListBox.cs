@@ -361,7 +361,7 @@ namespace Alternet.UI
 
             if(message == LogUtils.SectionSeparator || message == "-")
             {
-                item = new TreeControlSeparatorItem();
+                item = new TreeViewSeparatorItem();
             }
             else
             {

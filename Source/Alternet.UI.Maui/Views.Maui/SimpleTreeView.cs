@@ -18,7 +18,7 @@ namespace Alternet.Maui
     /// Represents a simple tree view.
     /// </summary>
     public partial class SimpleTreeView : BaseContentView,
-        UI.ITreeControlItemContainer, UI.IListControlItemContainer
+        UI.ITreeViewItemContainer, UI.IListControlItemContainer
     {
         /// <summary>
         /// Default margin for the item label.
@@ -66,7 +66,7 @@ namespace Alternet.Maui
             Buttons = ButtonsMask.Secondary,
         };
 
-        private Alternet.UI.TreeControlRootItem rootItem;
+        private Alternet.UI.TreeViewRootItem rootItem;
         private int updateCount;
         private SKBitmapImageSource? openedImage;
         private SKBitmapImageSource? closedImage;
@@ -148,39 +148,39 @@ namespace Alternet.Maui
         /// Occurs when an item is added to this tree view control, at
         /// any nesting level.
         /// </summary>
-        public event EventHandler<UI.TreeControlEventArgs>? ItemAdded;
+        public event EventHandler<UI.TreeViewEventArgs>? ItemAdded;
 
         /// <summary>
         /// Occurs when an item is removed from this tree view control,
         /// at any nesting level.
         /// </summary>
-        public event EventHandler<UI.TreeControlEventArgs>? ItemRemoved;
+        public event EventHandler<UI.TreeViewEventArgs>? ItemRemoved;
 
         /// <summary>
         /// Occurs after the tree item is expanded.
         /// </summary>
-        public event EventHandler<UI.TreeControlEventArgs>? AfterExpand;
+        public event EventHandler<UI.TreeViewEventArgs>? AfterExpand;
 
         /// <summary>
         /// Occurs after the tree item is collapsed.
         /// </summary>
-        public event EventHandler<UI.TreeControlEventArgs>? AfterCollapse;
+        public event EventHandler<UI.TreeViewEventArgs>? AfterCollapse;
 
         /// <summary>
         /// Occurs before the tree item is expanded. This event can be canceled.
         /// </summary>
-        public event EventHandler<UI.TreeControlCancelEventArgs>? BeforeExpand;
+        public event EventHandler<UI.TreeViewCancelEventArgs>? BeforeExpand;
 
         /// <summary>
         /// Occurs before the tree item is collapsed. This event can be canceled.
         /// </summary>
-        public event EventHandler<UI.TreeControlCancelEventArgs>? BeforeCollapse;
+        public event EventHandler<UI.TreeViewCancelEventArgs>? BeforeCollapse;
 
         /// <summary>
         /// Occurs after 'IsExpanded' property
         /// value of a tree item belonging to this tree view changes.
         /// </summary>
-        public event EventHandler<UI.TreeControlEventArgs>? ExpandedChanged;
+        public event EventHandler<UI.TreeViewEventArgs>? ExpandedChanged;
 
         /// <summary>
         /// Gets or sets the selection mode of the tree view.
@@ -254,7 +254,7 @@ namespace Alternet.Maui
         /// <summary>
         /// Gets or sets the root item of the tree view.
         /// </summary>
-        public virtual Alternet.UI.TreeControlRootItem RootItem
+        public virtual Alternet.UI.TreeViewRootItem RootItem
         {
             get
             {
@@ -288,7 +288,7 @@ namespace Alternet.Maui
             }
         }
 
-        UI.IListControlItemContainer UI.ITreeControlItemContainer.ListContainer => this;
+        UI.IListControlItemContainer UI.ITreeViewItemContainer.ListContainer => this;
 
         Drawing.SvgImage? UI.IListControlItemContainer.CheckImageUnchecked => null;
 
@@ -608,7 +608,7 @@ namespace Alternet.Maui
         {
             if (BeforeExpand is not null)
             {
-                UI.TreeControlCancelEventArgs e = new(item);
+                UI.TreeViewCancelEventArgs e = new(item);
                 BeforeExpand(this, e);
                 cancel = e.Cancel;
             }
@@ -621,7 +621,7 @@ namespace Alternet.Maui
         {
             if (BeforeCollapse is not null)
             {
-                UI.TreeControlCancelEventArgs e = new(item);
+                UI.TreeViewCancelEventArgs e = new(item);
                 BeforeCollapse(this, e);
                 cancel = e.Cancel;
             }
@@ -656,27 +656,27 @@ namespace Alternet.Maui
             RefreshTree();
         }
 
-        void UI.ITreeControlItemContainer.Invalidate()
+        void UI.ITreeViewItemContainer.Invalidate()
         {
             BeginUpdate();
             EndUpdate();
         }
 
-        void UI.ITreeControlItemContainer.EnsureVisible(UI.TreeViewItem? item)
+        void UI.ITreeViewItemContainer.EnsureVisible(UI.TreeViewItem? item)
         {
             if (item is null)
                 return;
             SelectedItem = item;
         }
 
-        void UI.ITreeControlItemContainer.Refresh()
+        void UI.ITreeViewItemContainer.Refresh()
         {
-            (this as UI.ITreeControlItemContainer).Invalidate();
+            (this as UI.ITreeViewItemContainer).Invalidate();
         }
 
-        void UI.ITreeControlItemContainer.ScrollIntoView(UI.TreeViewItem? item)
+        void UI.ITreeViewItemContainer.ScrollIntoView(UI.TreeViewItem? item)
         {
-            (this as UI.ITreeControlItemContainer).EnsureVisible(item);
+            (this as UI.ITreeViewItemContainer).EnsureVisible(item);
         }
 
         UI.ListControlItem? UI.IListControlItemContainer.SafeItem(int index)

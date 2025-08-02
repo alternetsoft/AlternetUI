@@ -63,7 +63,7 @@ namespace ApiDoc
             App.Log($"TreeView: SelectionChanged. SelectedItem: {treeView.SelectedItem?.Text}");
         }
 
-        private void TreeView_ExpandedChanged(object? sender, TreeControlEventArgs e)
+        private void TreeView_ExpandedChanged(object? sender, TreeViewEventArgs e)
         {
             App.Log($"TreeView: ExpandedChanged. Item: {e.Item.Text} {e.Item.IsExpanded}");
         }

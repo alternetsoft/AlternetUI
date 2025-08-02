@@ -15,7 +15,7 @@ namespace Alternet.UI
     /// internal <see cref="VirtualListControl"/> for displaying items, it can be accessed via
     /// <see cref="ListBox"/> property.
     /// </summary>
-    public partial class TreeView : Border, ITreeControlItemContainer
+    public partial class TreeView : Border, ITreeViewItemContainer
     {
         /// <summary>
         /// Specifies the default type of buttons used in the tree view control to expand
@@ -34,7 +34,7 @@ namespace Alternet.UI
         public static int DefaultLevelMargin = 16;
 
         private VirtualListBox? listBox;
-        private TreeControlRootItem rootItem;
+        private TreeViewRootItem rootItem;
         private TreeViewButtonsKind treeButtons = TreeViewButtonsKind.Null;
         private bool needTreeChanged;
 
@@ -117,39 +117,39 @@ namespace Alternet.UI
         /// Occurs when an item is added to this tree view control, at
         /// any nesting level.
         /// </summary>
-        public event EventHandler<UI.TreeControlEventArgs>? ItemAdded;
+        public event EventHandler<UI.TreeViewEventArgs>? ItemAdded;
 
         /// <summary>
         /// Occurs when an item is removed from this tree view control,
         /// at any nesting level.
         /// </summary>
-        public event EventHandler<UI.TreeControlEventArgs>? ItemRemoved;
+        public event EventHandler<UI.TreeViewEventArgs>? ItemRemoved;
 
         /// <summary>
         /// Occurs after the tree item is expanded.
         /// </summary>
-        public event EventHandler<UI.TreeControlEventArgs>? AfterExpand;
+        public event EventHandler<UI.TreeViewEventArgs>? AfterExpand;
 
         /// <summary>
         /// Occurs after the tree item is collapsed.
         /// </summary>
-        public event EventHandler<UI.TreeControlEventArgs>? AfterCollapse;
+        public event EventHandler<UI.TreeViewEventArgs>? AfterCollapse;
 
         /// <summary>
         /// Occurs before the tree item is expanded. This event can be canceled.
         /// </summary>
-        public event EventHandler<UI.TreeControlCancelEventArgs>? BeforeExpand;
+        public event EventHandler<UI.TreeViewCancelEventArgs>? BeforeExpand;
 
         /// <summary>
         /// Occurs before the tree item is collapsed. This event can be canceled.
         /// </summary>
-        public event EventHandler<UI.TreeControlCancelEventArgs>? BeforeCollapse;
+        public event EventHandler<UI.TreeViewCancelEventArgs>? BeforeCollapse;
 
         /// <summary>
         /// Occurs after 'IsExpanded' property
         /// value of a tree item belonging to this tree view changes.
         /// </summary>
-        public event EventHandler<UI.TreeControlEventArgs>? ExpandedChanged;
+        public event EventHandler<UI.TreeViewEventArgs>? ExpandedChanged;
 
         /// <summary>
         /// Gets or sets the selection mode (single or multiple).
@@ -546,13 +546,13 @@ namespace Alternet.UI
             }
         }
 
-        IListControlItemContainer ITreeControlItemContainer.ListContainer => ListBox;
+        IListControlItemContainer ITreeViewItemContainer.ListContainer => ListBox;
 
         /// <summary>
         /// Gets or sets the root item of the tree view.
         /// </summary>
         [Browsable(false)]
-        public virtual TreeControlRootItem RootItem
+        public virtual TreeViewRootItem RootItem
         {
             get
             {
@@ -998,7 +998,7 @@ namespace Alternet.UI
 
             void Internal()
             {
-                UI.TreeControlCancelEventArgs e = new(item);
+                UI.TreeViewCancelEventArgs e = new(item);
                 BeforeExpand(this, e);
                 localCancel = e.Cancel;
             }
@@ -1071,7 +1071,7 @@ namespace Alternet.UI
 
             void Internal()
             {
-                UI.TreeControlCancelEventArgs e = new(item);
+                UI.TreeViewCancelEventArgs e = new(item);
                 BeforeCollapse(this, e);
                 localCancel = e.Cancel;
             }
@@ -1100,12 +1100,12 @@ namespace Alternet.UI
             }
         }
 
-        void ITreeControlItemContainer.BeginUpdate()
+        void ITreeViewItemContainer.BeginUpdate()
         {
             Invoke(() => BeginUpdate());
         }
 
-        void ITreeControlItemContainer.EndUpdate()
+        void ITreeViewItemContainer.EndUpdate()
         {
             Invoke(() => EndUpdate());
         }
@@ -1248,7 +1248,7 @@ namespace Alternet.UI
         /// <returns>A <see cref="TreeViewItem"/> representing the added separator.</returns>
         public virtual TreeViewItem AddSeparator()
         {
-            TreeControlSeparatorItem item = new();
+            TreeViewSeparatorItem item = new();
             Add(item);
             return item;
         }

@@ -208,7 +208,7 @@ namespace Alternet.UI
         /// If this item is the root item, the owner is the object passed to the constructor.
         /// Otherwise, the owner is the owner of the root item.
         /// </remarks>
-        public virtual ITreeControlItemContainer? Owner
+        public virtual ITreeViewItemContainer? Owner
         {
             get
             {

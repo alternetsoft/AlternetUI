@@ -7,22 +7,22 @@ namespace Alternet.UI
     /// <summary>
     /// Represents the root item in a tree control.
     /// </summary>
-    public partial class TreeControlRootItem : TreeViewItem
+    public partial class TreeViewRootItem : TreeViewItem
     {
-        private ITreeControlItemContainer? owner;
+        private ITreeViewItemContainer? owner;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="TreeViewItem"/> class
         /// with the specified owner. Use this constructor only for the root items.
         /// </summary>
         /// <param name="owner">The owner of the item.</param>
-        public TreeControlRootItem(ITreeControlItemContainer? owner = null)
+        public TreeViewRootItem(ITreeViewItemContainer? owner = null)
         {
             this.owner = owner;
         }
 
         /// <inheritdoc/>
-        public override ITreeControlItemContainer? Owner
+        public override ITreeViewItemContainer? Owner
         {
             get
             {
@@ -34,7 +34,7 @@ namespace Alternet.UI
         /// Sets the owner of the tree control root item. You should not call this method directly.
         /// </summary>
         /// <param name="owner">The owner to set for the tree control root item.</param>
-        public virtual void SetOwner(ITreeControlItemContainer? owner)
+        public virtual void SetOwner(ITreeViewItemContainer? owner)
         {
             this.owner = owner;
         }

@@ -6,13 +6,13 @@ namespace Alternet.UI
     /// Provides data for 'ItemAdded', 'ItemRemoved'
     /// and other events.
     /// </summary>
-    public class TreeControlEventArgs : BaseEventArgs
+    public class TreeViewEventArgs : BaseEventArgs
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="TreeControlEventArgs"/> class.
+        /// Initializes a new instance of the <see cref="TreeViewEventArgs"/> class.
         /// </summary>
         /// <param name="item">The item being affected.</param>
-        public TreeControlEventArgs(TreeViewItem item)
+        public TreeViewEventArgs(TreeViewItem item)
         {
             Item = item;
         }

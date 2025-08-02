@@ -103,7 +103,7 @@ namespace PropertyGridSample
                 addAction(item);
             }
 
-            addAction(new TreeControlSeparatorItem());
+            addAction(new TreeViewSeparatorItem());
 
             for (int i = 0; i < 150; i++)
             {
