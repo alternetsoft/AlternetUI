@@ -8,13 +8,13 @@ namespace Alternet.UI
 {
     /// <summary>
     /// Represents a control to display a list of items.
-    /// Please consider using <see cref="VirtualListBox"/>
-    /// instead of this control as it is faster.
+    /// This control is derived from <see cref="VirtualListBox"/>. It is implemented
+    /// inside the library and doesn't use native list box control.
     /// </summary>
     /// <remarks>
-    /// The <see cref="ListBox"/> control enables you to display a list of items to
+    /// The <see cref="StdListBox"/> control enables you to display a list of items to
     /// the user that the user can select by clicking.
-    /// A <see cref="ListBox"/> control can provide single or multiple selections
+    /// A <see cref="StdListBox"/> control can provide single or multiple selections
     /// using the <see cref="SelectionMode"/> property.
     /// The <see cref="AbstractControl.BeginUpdate"/> and <see cref="AbstractControl.EndUpdate"/>
     /// methods enable
@@ -25,25 +25,25 @@ namespace Alternet.UI
     /// collections that are used by the control.
     /// </remarks>
     [ControlCategory("Common")]
-    public partial class ListBox : VirtualListBox, ICustomListBox<object>
+    public partial class StdListBox : VirtualListBox, ICustomListBox<object>
     {
         private readonly ListBoxItems adapter;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="ListBox"/> class
+        /// Initializes a new instance of the <see cref="StdListBox"/> class
         /// with the specified parent control.
         /// </summary>
         /// <param name="parent">Parent of the control.</param>
-        public ListBox(Control parent)
+        public StdListBox(Control parent)
             : this()
         {
             Parent = parent;
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="ListBox"/> class.
+        /// Initializes a new instance of the <see cref="StdListBox"/> class.
         /// </summary>
-        public ListBox()
+        public StdListBox()
         {
             adapter = new ListBoxItems(base.Items);
         }

@@ -22,7 +22,7 @@ namespace ApiDoc
         }
 
         #region TreeViewCSharpCreation
-        static void AddItems(TreeView treeView, int count)
+        static void AddItems(StdTreeView treeView, int count)
         {
             var r = new Random();
 
@@ -49,9 +49,9 @@ namespace ApiDoc
             }
         }
 
-        public Alternet.UI.TreeView CreateTreeView()
+        public Alternet.UI.StdTreeView CreateTreeView()
         {
-            var result = new Alternet.UI.TreeView();
+            var result = new Alternet.UI.StdTreeView();
             AddItems(result, 10);
             return result;
         }

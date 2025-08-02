@@ -93,7 +93,7 @@ namespace ControlsSample
 
         private void Slider_ValueChanged(object? sender, EventArgs e)
         {
-            App.LogNameValueReplace("Slider.Value",((Slider)sender!).Value);
+            App.LogNameValueReplace("Slider.Value",((StdSlider)sender!).Value);
         }
 
         private void ProgressBarControlSlider_ValueChanged(object? sender, EventArgs e)
@@ -133,9 +133,9 @@ namespace ControlsSample
             return parents.SelectMany(x => x.Children.OfType<T>());
         }
 
-        private IEnumerable<Slider> GetAllSliders()
+        private IEnumerable<StdSlider> GetAllSliders()
         {
-            return GetAllChildrenOfType<Slider>(horizontalSlidersPanel, verticalSlidersGrid);
+            return GetAllChildrenOfType<StdSlider>(horizontalSlidersPanel, verticalSlidersGrid);
         }
     }
 }

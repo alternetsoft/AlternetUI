@@ -70,7 +70,7 @@ namespace CustomControlsSample
 
         private void Slider_ValueChanged(object? sender, EventArgs e)
         {
-            if (sender is not Slider slider)
+            if (sender is not StdSlider slider)
                 return;
 
             var v = slider.Value;

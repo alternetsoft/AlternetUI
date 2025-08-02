@@ -214,7 +214,7 @@ namespace PropertyGridSample
         {
         };
 
-        public TreeView ToolBox => panel.LeftListBox;
+        public StdTreeView ToolBox => panel.LeftListBox;
 
         private void PropGrid_PropertyCustomCreate(object? sender, CreatePropertyEventArgs e)
         {

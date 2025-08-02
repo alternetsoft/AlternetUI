@@ -6,13 +6,12 @@ namespace Alternet.UI
 {
     /// <summary>
     /// Represents a control to display a list of items with checkboxes.
-    /// Please consider using <see cref="VirtualCheckListBox"/>
-    /// instead of this control as it is faster.
+    /// This control is implemented inside the library and doesn't use native check list box control.
     /// </summary>
     /// <remarks>
-    /// The <see cref="CheckListBox"/> control enables you to display a list of
+    /// The <see cref="StdCheckListBox"/> control enables you to display a list of
     /// items to the user that the user can check by clicking.
-    /// A <see cref="CheckListBox"/> control can provide single or
+    /// A <see cref="StdCheckListBox"/> control can provide single or
     /// multiple selections using the <see cref="VirtualListControl.SelectionMode"/> property.
     /// The <see cref="AbstractControl.BeginUpdate"/> and <see cref="AbstractControl.EndUpdate"/>
     /// methods enable
@@ -25,23 +24,23 @@ namespace Alternet.UI
     /// collections that are used by the control.
     /// </remarks>
     [ControlCategory("Common")]
-    public partial class CheckListBox : ListBox
+    public partial class StdCheckListBox : StdListBox
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="CheckListBox"/> class
+        /// Initializes a new instance of the <see cref="StdCheckListBox"/> class
         /// with the specified parent control.
         /// </summary>
         /// <param name="parent">Parent of the control.</param>
-        public CheckListBox(Control parent)
+        public StdCheckListBox(Control parent)
             : this()
         {
             Parent = parent;
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="CheckListBox"/> class.
+        /// Initializes a new instance of the <see cref="StdCheckListBox"/> class.
         /// </summary>
-        public CheckListBox()
+        public StdCheckListBox()
         {
             CheckBoxVisible = true;
         }

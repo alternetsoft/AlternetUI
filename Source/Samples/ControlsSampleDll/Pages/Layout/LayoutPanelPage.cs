@@ -33,7 +33,7 @@ namespace ControlsSample
 
             static AbstractControl Create(params string[] items)
             {
-                ListBox listBox = new()
+                StdListBox listBox = new()
                 {
                 };
 

@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace Alternet.UI
 {
     /// <summary>
-    /// Defines visual style of the <see cref="TreeView"/> controls.
+    /// Defines visual style of the <see cref="StdTreeView"/> controls.
     /// </summary>
     [Flags]
     public enum TreeViewCreateStyle

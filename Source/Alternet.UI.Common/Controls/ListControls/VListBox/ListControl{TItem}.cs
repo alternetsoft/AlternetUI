@@ -13,7 +13,7 @@ using Alternet.Drawing;
 namespace Alternet.UI
 {
     /// <summary>
-    /// Provides a common implementation of members for the <see cref="ListBox"/>,
+    /// Provides a common implementation of members for the <see cref="StdListBox"/>,
     /// <see cref="ComboBox"/> and other controls.
     /// </summary>
     /// <typeparam name="TItem">Type of the item. Can be <see cref="object"/>,

@@ -18,7 +18,7 @@ namespace ApiDoc
             #region CSharpCreation
             LayoutPanel panel = new();
 
-            ListBox listBox1 = new()
+            StdListBox listBox1 = new()
             {
                 Dock = DockStyle.Fill,
                 Parent = panel,
@@ -31,7 +31,7 @@ namespace ApiDoc
                 Parent = panel,
             };
 
-            ListBox listBox2 = new()
+            StdListBox listBox2 = new()
             {
                 Dock = DockStyle.Right,
                 Parent = panel,

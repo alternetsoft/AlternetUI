@@ -4,9 +4,9 @@ using Alternet.Drawing;
 namespace Alternet.UI
 {
     /// <summary>
-    /// <see cref="Slider"/> with custom painted fancy look.
+    /// <see cref="StdSlider"/> with custom painted fancy look.
     /// </summary>
-    public partial class FancySlider : Slider
+    public partial class FancySlider : StdSlider
     {
         private readonly SolidBrush gaugeBackgroundBrush = new((Color)"#484854");
         private readonly Pen knobBorderPen = new(Color.Black, 2);

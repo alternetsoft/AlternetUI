@@ -97,12 +97,12 @@ namespace PropertyGridSample
 
             void InitTestsSlider()
             {
-                AddControlAction<Slider>("SetSpacerColor", (c) =>
+                AddControlAction<StdSlider>("SetSpacerColor", (c) =>
                 {
                     c.SetSpacerColor(LightDarkColors.Red);
                 });
 
-                AddControlAction<Slider>("SetSliderRange(50,120)", (s) =>
+                AddControlAction<StdSlider>("SetSliderRange(50,120)", (s) =>
                 {
                     s.Minimum = 50;
                     s.Maximum = 120;

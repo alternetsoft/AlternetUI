@@ -18,14 +18,14 @@ namespace ApiDoc
         {
             SplittedPanel panel = new();
 
-            ListBox LeftLabel = new()
+            StdListBox LeftLabel = new()
             {
                 Parent = panel.LeftPanel,
                 HasBorder = false,
             };
             LeftLabel.Add("Left");
 
-            ListBox RightLabel = new()
+            StdListBox RightLabel = new()
             {
                 Parent = panel.RightPanel,
                 HasBorder = false,
@@ -40,7 +40,7 @@ namespace ApiDoc
             panel.TopSplitter.Visible = false;
             panel.TopPanel.Height = toolbar.ItemSize + 6;
 
-            ListBox BottomLabel = new()
+            StdListBox BottomLabel = new()
             {
                 Parent = panel.BottomPanel,
                 HasBorder = false,

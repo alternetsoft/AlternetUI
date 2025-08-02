@@ -11,7 +11,7 @@ using Alternet.Base.Collections;
 namespace Alternet.UI
 {
     /// <summary>
-    /// Common interface for the <see cref="ListBox"/>, <see cref="ComboBox"/>
+    /// Common interface for the <see cref="StdListBox"/>, <see cref="ComboBox"/>
     /// and other controls with items.
     /// </summary>
     /// <typeparam name="TItem">Type of the item. Can be <see cref="object"/>,

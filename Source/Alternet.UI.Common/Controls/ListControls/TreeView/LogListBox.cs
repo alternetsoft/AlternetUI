@@ -14,10 +14,10 @@ using Alternet.UI.Localization;
 namespace Alternet.UI
 {
     /// <summary>
-    /// <see cref="ListBox"/> descendant with log and debug related functionality.
+    /// <see cref="StdListBox"/> descendant with log and debug related functionality.
     /// </summary>
     [ControlCategory("Other")]
-    public partial class LogListBox : TreeView
+    public partial class LogListBox : StdTreeView
     {
         /// <summary>
         /// Indicates whether message identifiers should be displayed in the log.

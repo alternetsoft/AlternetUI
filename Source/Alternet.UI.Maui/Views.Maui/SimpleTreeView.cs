@@ -368,7 +368,7 @@ namespace Alternet.Maui
         {
             int GetWidth(SKBitmapImageSource? source)
             {
-                return source?.Bitmap.Width ?? UI.TreeView.DefaultLevelMargin;
+                return source?.Bitmap.Width ?? UI.StdTreeView.DefaultLevelMargin;
             }
 
             var openedImageWidth = GetWidth(openedImage);

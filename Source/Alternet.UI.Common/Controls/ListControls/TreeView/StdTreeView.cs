@@ -15,7 +15,7 @@ namespace Alternet.UI
     /// internal <see cref="VirtualListControl"/> for displaying items, it can be accessed via
     /// <see cref="ListBox"/> property.
     /// </summary>
-    public partial class TreeView : Border, ITreeViewItemContainer
+    public partial class StdTreeView : Border, ITreeViewItemContainer
     {
         /// <summary>
         /// Specifies the default type of buttons used in the tree view control to expand
@@ -23,7 +23,7 @@ namespace Alternet.UI
         /// </summary>
         /// <remarks>
         /// This field determines the initial value of the <see cref="TreeButtons"/> property
-        /// for instances of <see cref="TreeView"/>.
+        /// for instances of <see cref="StdTreeView"/>.
         /// The default value is <see cref="TreeViewButtonsKind.Angle"/>.
         /// </remarks>
         public static TreeViewButtonsKind DefaultTreeButtons = TreeViewButtonsKind.Angle;
@@ -39,9 +39,9 @@ namespace Alternet.UI
         private bool needTreeChanged;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="TreeView"/> class.
+        /// Initializes a new instance of the <see cref="StdTreeView"/> class.
         /// </summary>
-        public TreeView()
+        public StdTreeView()
         {
             rootItem = new(this);
 
@@ -304,10 +304,10 @@ namespace Alternet.UI
         /// <value>A <see cref="IReadOnlyList{ListControlItem}"/> containing the
         /// currently selected items in the control.</value>
         /// <remarks>
-        /// For a multiple-selection <see cref="TreeView"/>, this property returns
+        /// For a multiple-selection <see cref="StdTreeView"/>, this property returns
         /// a collection containing all the items that are selected
         /// in the control. For a single-selection
-        /// <see cref="TreeView"/>, this property returns a collection containing a
+        /// <see cref="StdTreeView"/>, this property returns a collection containing a
         /// single element containing the only selected item in the control.
         /// </remarks>
         [Browsable(false)]
@@ -331,12 +331,12 @@ namespace Alternet.UI
         /// <value>A <see cref="IReadOnlyList{TreeControlItem}"/> containing the
         /// currently selected items in the control.</value>
         /// <remarks>
-        /// For a multiple-selection <see cref="TreeView"/>, this property returns
+        /// For a multiple-selection <see cref="StdTreeView"/>, this property returns
         /// a collection containing all the items that are selected
-        /// in the <see cref="TreeView"/>. For a single-selection
-        /// <see cref="TreeView"/>, this property returns a collection containing a
+        /// in the <see cref="StdTreeView"/>. For a single-selection
+        /// <see cref="StdTreeView"/>, this property returns a collection containing a
         /// single element containing the only selected item in the
-        /// <see cref="TreeView"/>.
+        /// <see cref="StdTreeView"/>.
         /// </remarks>
         [Browsable(false)]
         public virtual IReadOnlyList<TreeViewItem> SelectedItems

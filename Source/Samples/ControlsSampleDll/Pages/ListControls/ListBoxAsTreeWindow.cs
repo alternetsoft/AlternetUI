@@ -18,7 +18,7 @@ namespace ControlsSample
         private readonly int counter;
         private readonly AbstractControl? statusPanel;
 
-        private readonly TreeView treeView = new()
+        private readonly StdTreeView treeView = new()
         {
         };
 

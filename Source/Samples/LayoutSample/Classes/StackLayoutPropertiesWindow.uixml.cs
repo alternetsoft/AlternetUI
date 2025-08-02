@@ -8,7 +8,7 @@ namespace LayoutSample
     {
         private readonly AlignmentControl containerAlignmentControl;
         private readonly VerticalStackPanel dockedSettings = new();
-        private readonly ListBox dockedControl = new()
+        private readonly StdListBox dockedControl = new()
         {
             Dock = DockStyle.Left,
             MinWidth = 150,

@@ -9,7 +9,7 @@ using Alternet.Drawing;
 namespace Alternet.UI
 {
     /// <summary>
-    /// <see cref="ListBox"/> descendant for selecting <see cref="Color"/> values.
+    /// <see cref="StdListBox"/> descendant for selecting <see cref="Color"/> values.
     /// </summary>
     /// <remarks>
     /// Items in this control have <see cref="ListControlItem"/> type where

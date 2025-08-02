@@ -10,7 +10,7 @@ using Alternet.UI.Localization;
 namespace Alternet.UI
 {
     /// <summary>
-    /// Popup window with <see cref="ListBox"/> control.
+    /// Popup window with <see cref="StdListBox"/> control.
     /// </summary>
     /// <typeparam name="T">Type of the list box control</typeparam>
     public partial class PopupListBox<T> : PopupWindow<T>

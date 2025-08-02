@@ -9,7 +9,7 @@ namespace Alternet.UI
 {
     /// <summary>
     /// Contains static methods related to list controls
-    /// including <see cref="ListBox"/> and <see cref="ComboBox"/>.
+    /// including <see cref="StdListBox"/> and <see cref="ComboBox"/>.
     /// </summary>
     public static class ListControlUtils
     {

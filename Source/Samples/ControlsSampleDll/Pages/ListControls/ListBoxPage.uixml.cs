@@ -31,7 +31,7 @@ namespace ControlsSample
 
         public bool FindIgnoreCase { get; set; } = true;
 
-        private void AddDefaultItems(ListBox control)
+        private void AddDefaultItems(StdListBox control)
         {
             GenericStrings.AddTenRows(ActionUtils.ToAction<string>(control.Add));
         }
@@ -67,7 +67,7 @@ namespace ControlsSample
             return $"{GenericStrings.Item} id({GenItemIndex()})";
         }
 
-        public static void AddManyItems(ListBox listBox)
+        public static void AddManyItems(StdListBox listBox)
         {
             listBox.BeginUpdate();
             try

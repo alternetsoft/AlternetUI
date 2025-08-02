@@ -303,7 +303,7 @@ namespace Alternet.UI
 
         /// <summary>
         /// Gets or sets the zero-based index of the currently checked item
-        /// in a <see cref="ListBox"/>.
+        /// in a <see cref="StdListBox"/>.
         /// </summary>
         /// <value>A zero-based index of the currently checked item. A value
         /// of <c>null</c> is returned if no item is checked.</value>

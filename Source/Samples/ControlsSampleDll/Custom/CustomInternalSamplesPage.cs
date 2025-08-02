@@ -7,7 +7,7 @@ namespace Alternet.UI
 {
     public class CustomInternalSamplesPage : Panel
     {
-        private readonly TreeView view = new()
+        private readonly StdTreeView view = new()
         {
             SuggestedWidth = 350,
             SuggestedHeight = 400,

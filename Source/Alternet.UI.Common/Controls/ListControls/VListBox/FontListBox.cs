@@ -8,7 +8,7 @@ using Alternet.Drawing;
 namespace Alternet.UI
 {
     /// <summary>
-    /// <see cref="ListBox"/> descendant for selecting font names.
+    /// <see cref="StdListBox"/> descendant for selecting font names.
     /// </summary>
     public partial class FontListBox : VirtualListBox
     {

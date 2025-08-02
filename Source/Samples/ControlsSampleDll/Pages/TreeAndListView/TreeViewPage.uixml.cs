@@ -126,7 +126,7 @@ namespace ControlsSample
             return newItemIndex;
         }
 
-        private void AddItems(TreeView tree, int count)
+        private void AddItems(StdTreeView tree, int count)
         {
             treeView.BeginUpdate();
             try

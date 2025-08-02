@@ -67,7 +67,7 @@ namespace PropertyGridSample
                 LimitedTypes.Add(typeof(HorizontalStackPanel));
                 LimitedTypes.Add(typeof(TabControl));
                 LimitedTypes.Add(typeof(LinkLabel));
-                LimitedTypes.Add(typeof(ListBox));
+                LimitedTypes.Add(typeof(StdListBox));
                 LimitedTypes.Add(typeof(ListView));
                 LimitedTypes.Add(typeof(MultilineTextBox));
                 LimitedTypes.Add(typeof(NumericUpDown));
@@ -77,11 +77,11 @@ namespace PropertyGridSample
                 LimitedTypes.Add(typeof(RadioButton));
                 LimitedTypes.Add(typeof(RichTextBox));
                 LimitedTypes.Add(typeof(FindReplaceControl));
-                LimitedTypes.Add(typeof(Slider));
+                LimitedTypes.Add(typeof(StdSlider));
                 LimitedTypes.Add(typeof(ScrollBar));
                 LimitedTypes.Add(typeof(StackPanel));
                 LimitedTypes.Add(typeof(TextBox));
-                LimitedTypes.Add(typeof(TreeView));
+                LimitedTypes.Add(typeof(StdTreeView));
                 LimitedTypes.Add(typeof(VerticalStackPanel));
                 LimitedTypes.Add(typeof(CardPanel));
                 LimitedTypes.Add(typeof(SpeedButton));

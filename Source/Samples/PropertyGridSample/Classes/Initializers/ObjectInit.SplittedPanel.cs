@@ -16,13 +16,13 @@ namespace PropertyGridSample
                 return;
             panel.SuggestedSize = 300;
 
-            ListBox LeftLabel = new()
+            StdListBox LeftLabel = new()
             {
                 Parent = panel.LeftPanel,
             };
             LeftLabel.Add("Left");
 
-            ListBox RightLabel = new()
+            StdListBox RightLabel = new()
             {
                 Parent = panel.RightPanel,
             };
@@ -34,13 +34,13 @@ namespace PropertyGridSample
             panel.TopSplitter.Visible = false;
             panel.TopPanel.MinHeight = toolbar.ItemSize + 6;
 
-            ListBox BottomLabel = new()
+            StdListBox BottomLabel = new()
             {
                 Parent = panel.BottomPanel,
             };
             BottomLabel.Add("Bottom");
 
-            ListBox FillLabel = new()
+            StdListBox FillLabel = new()
             {
                 Parent = panel.FillPanel,
             };

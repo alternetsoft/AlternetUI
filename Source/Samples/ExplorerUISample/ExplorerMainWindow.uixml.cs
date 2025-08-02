@@ -15,7 +15,7 @@ namespace ExplorerUISample
             TopVisible = false,
             BottomVisible = false,
         };
-        private readonly TreeView treeView = new()
+        private readonly StdTreeView treeView = new()
         {
             HasBorder = false,
         };

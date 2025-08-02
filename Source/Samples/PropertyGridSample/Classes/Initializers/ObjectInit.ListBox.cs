@@ -152,7 +152,7 @@ namespace PropertyGridSample
 
         public static void InitListBox(object control)
         {
-            if (control is not ListBox listBox)
+            if (control is not StdListBox listBox)
                 return;
             listBox.SuggestedSize = defaultListSize;
             listBox.Items.AddRange(GetTenItems());
@@ -160,7 +160,7 @@ namespace PropertyGridSample
 
         public static void InitCheckListBox(object control)
         {
-            if (control is not CheckListBox listBox)
+            if (control is not StdCheckListBox listBox)
                 return;
             listBox.SuggestedSize = defaultListHeight;
             listBox.Items.AddRange(GetTenItems());

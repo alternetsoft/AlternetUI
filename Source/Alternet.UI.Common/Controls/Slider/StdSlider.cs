@@ -8,6 +8,7 @@ namespace Alternet.UI
 {
     /// <summary>
     /// Represents a generic slider control (also known as track bar).
+    /// This control is implemented inside the library and doesn't use native slider control.
     /// </summary>
     /// <remarks>
     /// <para>
@@ -29,7 +30,7 @@ namespace Alternet.UI
     [DefaultEvent("ValueChanged")]
     [DefaultBindingProperty("Value")]
     [ControlCategory("Common")]
-    public partial class Slider : Border, ISliderScaleContainer
+    public partial class StdSlider : Border, ISliderScaleContainer
     {
         /// <summary>
         /// Specifies the default corner radius to apply to the slider thumb.
@@ -144,19 +145,19 @@ namespace Alternet.UI
         private bool useSpacerColor;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="Slider"/> class.
+        /// Initializes a new instance of the <see cref="StdSlider"/> class.
         /// </summary>
         /// <param name="parent">Parent of the control.</param>
-        public Slider(Control parent)
+        public StdSlider(Control parent)
             : this()
         {
             Parent = parent;
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="Slider"/> class.
+        /// Initializes a new instance of the <see cref="StdSlider"/> class.
         /// </summary>
-        public Slider()
+        public StdSlider()
         {
             AutoPadding = false;
             useSpacerColor = DefaultUseSpacerColor;

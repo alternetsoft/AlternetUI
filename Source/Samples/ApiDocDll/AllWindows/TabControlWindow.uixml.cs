@@ -25,7 +25,7 @@ namespace ApiDoc
                 Title = "Page 1",
             };
 
-            var content1 = new ListBox
+            var content1 = new StdListBox
             {
                 HasBorder = false,
                 Items = new string[] { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" },

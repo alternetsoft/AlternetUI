@@ -47,7 +47,7 @@ Environment.NewLine + Environment.NewLine +
             AddAction<ColorPicker>(InitColorPicker);
             AddAction<FontNamePicker>(InitFontNamePicker);
             AddAction<TextBoxWithListPopup>(InitTextBoxWithListPopup);
-            AddAction<Slider>(InitGenericSlider);
+            AddAction<StdSlider>(InitGenericSlider);
 
             Actions.Add(typeof(PageSetupDialog), InitPageSetupDialog);
             Actions.Add(typeof(PrintPreviewDialog), InitPrintPreviewDialog);
@@ -81,9 +81,9 @@ Environment.NewLine + Environment.NewLine +
             Actions.Add(typeof(SideBarPanel), InitSideBarPanel);
             Actions.Add(typeof(TabControl), InitGenericTabControl);
             Actions.Add(typeof(VirtualListBox), InitVListBox);
-            Actions.Add(typeof(ListBox), InitListBox);
+            Actions.Add(typeof(StdListBox), InitListBox);
             Actions.Add(typeof(ComboBox), InitComboBox);
-            Actions.Add(typeof(CheckListBox), InitCheckListBox);
+            Actions.Add(typeof(StdCheckListBox), InitCheckListBox);
 
             Actions.Add(typeof(UserControl), (c) =>
             {
@@ -159,9 +159,9 @@ Environment.NewLine + Environment.NewLine +
                 (c as RadioButton)!.Text = "RadioButton";
             });
 
-            Actions.Add(typeof(TreeView), (c) =>
+            Actions.Add(typeof(StdTreeView), (c) =>
             {
-                TreeView treeView = (c as TreeView)!;
+                StdTreeView treeView = (c as StdTreeView)!;
                 treeView.SuggestedSize = defaultListSize;
                 InitVirtualTreeControl(treeView);
             });
@@ -366,7 +366,7 @@ Environment.NewLine + Environment.NewLine +
             control.Value = FontStyle.Regular;
         }
 
-        public static void InitGenericSlider(Slider control)
+        public static void InitGenericSlider(StdSlider control)
         {
             control.ValueChanged += (s,e) =>
             {
@@ -620,7 +620,7 @@ Environment.NewLine + Environment.NewLine +
 
         }
 
-        public static void InitVirtualTreeControl(TreeView control)
+        public static void InitVirtualTreeControl(StdTreeView control)
         {
             if (App.SafeWindow.UseSmallImages)
                 control.ImageList = LoadImageLists().Small;
@@ -631,7 +631,7 @@ Environment.NewLine + Environment.NewLine +
             AddItems(control, 10);
         }
 
-        public static void InitTreeView(TreeView control)
+        public static void InitTreeView(StdTreeView control)
         {
             if (App.SafeWindow.UseSmallImages)
                 control.ImageList = LoadImageLists().Small;
@@ -648,7 +648,7 @@ Environment.NewLine + Environment.NewLine +
             return newItemIndex;
         }
 
-        public static void AddItems(TreeView treeView, int count)
+        public static void AddItems(StdTreeView treeView, int count)
         {
             treeView.BeginUpdate();
             try

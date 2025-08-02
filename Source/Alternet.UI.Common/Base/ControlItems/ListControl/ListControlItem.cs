@@ -14,7 +14,7 @@ namespace Alternet.UI
         = IndexedValues<ObjectUniqueId, ListControlItem.ContainerRelatedData>.ILockedItem;
 
     /// <summary>
-    /// Custom item for <see cref="ListBox"/>, <see cref="ComboBox"/> and other
+    /// Custom item for <see cref="StdListBox"/>, <see cref="ComboBox"/> and other
     /// list controls. This class has <see cref="Text"/>,
     /// <see cref="Value"/> and other properties which allow to customize look of the item.
     /// </summary>

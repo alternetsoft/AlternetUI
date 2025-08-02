@@ -194,7 +194,7 @@ namespace DrawingSample
                     ?? Control.DefaultFont.Name;
             };
 
-            GetChildrenRecursive().Action<Slider>((c) => c.ClearTicks());
+            GetChildrenRecursive().Action<StdSlider>((c) => c.ClearTicks());
         }
     }
 }

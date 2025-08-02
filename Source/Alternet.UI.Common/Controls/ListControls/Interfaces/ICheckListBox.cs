@@ -71,10 +71,10 @@ namespace Alternet.UI
 
         /// <summary>
         /// Checks or clears the check state for the specified item in
-        /// a <see cref="CheckListBox"/>.
+        /// a <see cref="StdCheckListBox"/>.
         /// </summary>
         /// <param name="index">The zero-based index of the item in a
-        /// <see cref="CheckListBox"/> to set or clear the check state.</param>
+        /// <see cref="StdCheckListBox"/> to set or clear the check state.</param>
         /// <param name="value"><c>true</c> to check the specified item;
         /// otherwise, false.</param>
         /// <exception cref="ArgumentOutOfRangeException">The specified

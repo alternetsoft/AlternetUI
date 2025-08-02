@@ -110,7 +110,7 @@ namespace Alternet.UI
         /// item selection or if the item with the given text was not found in it.</returns>
         /// <remarks>
         /// This method selects an item in the currently focused
-        /// <see cref="ComboBox"/>, <see cref="ListBox"/> and similar controls.
+        /// <see cref="ComboBox"/>, <see cref="StdListBox"/> and similar controls.
         /// It does it by simulating keyboard events, so the behaviour
         /// should be the same as if the item was really selected by the user.
         /// </remarks>
