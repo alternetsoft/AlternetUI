@@ -15,6 +15,7 @@ namespace Alternet.UI
     /// internal <see cref="VirtualListControl"/> for displaying items, it can be accessed via
     /// <see cref="ListBox"/> property.
     /// </summary>
+    [ControlCategory("Common")]
     public partial class StdTreeView : Border, ITreeViewItemContainer
     {
         /// <summary>

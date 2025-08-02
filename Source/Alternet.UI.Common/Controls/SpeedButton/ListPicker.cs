@@ -10,7 +10,7 @@ namespace Alternet.UI
     /// Represents control that displays a selected item and allows to change it
     /// with the popup window with virtual list box.
     /// </summary>
-    [ControlCategory("Other")]
+    [ControlCategory("Editors")]
     public partial class ListPicker : SpeedButtonWithListPopup
     {
         /// <summary>

@@ -12,6 +12,7 @@ namespace Alternet.UI
     /// Implements simple text control which can draw text with new line
     /// characters and wrapping.
     /// </summary>
+    [ControlCategory("Tests")]
     public partial class GenericWrappedTextControl : GenericControl
     {
         /// <summary>

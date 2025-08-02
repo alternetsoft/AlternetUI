@@ -8,7 +8,7 @@ namespace Alternet.UI
     /// <summary>
     /// Represents control that displays a selected color and allows to change it.
     /// </summary>
-    [ControlCategory("Other")]
+    [ControlCategory("Editors")]
     public partial class ColorPicker : SpeedColorButton
     {
         /// <summary>

@@ -22,6 +22,7 @@ namespace Alternet.UI
     /// <summary>
     /// Calculator control with buttons and display.
     /// </summary>
+    [ControlCategory("Other")]
     public partial class Calculator : HiddenBorder
     {
         /// <summary>

@@ -9,6 +9,7 @@ namespace Alternet.UI
     /// Parent class for <see cref="ControlAndButton"/> and
     /// <see cref="ControlAndLabel{TControl,TLabel}"/> controls.
     /// </summary>
+    [ControlCategory("Editors")]
     public abstract partial class ControlAndControl : HiddenBorder
     {
         private ErrorPictureBox? errorPicture;

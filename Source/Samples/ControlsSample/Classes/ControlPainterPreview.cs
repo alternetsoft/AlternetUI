@@ -9,6 +9,7 @@ using Alternet.Drawing;
 
 namespace PropertyGridSample
 {
+    [ControlCategory("Tests")]
     public class ControlPainterPreview : Panel
     {
         private static readonly WxControlPainterHandler Painter = new();

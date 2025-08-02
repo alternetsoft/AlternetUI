@@ -12,7 +12,7 @@ namespace Alternet.UI
     /// <summary>
     /// Implements speed button control.
     /// </summary>
-    [ControlCategory("Other")]
+    [ControlCategory("MenusAndToolbars")]
     public partial class SpeedButton : GraphicControl, ICommandSource
     {
         /// <summary>

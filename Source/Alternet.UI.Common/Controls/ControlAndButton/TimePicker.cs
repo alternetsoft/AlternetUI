@@ -13,7 +13,7 @@ namespace Alternet.UI
     [DefaultProperty("Value")]
     [DefaultEvent("ValueChanged")]
     [DefaultBindingProperty("Value")]
-    [ControlCategory("Common")]
+    [ControlCategory("Date")]
     public partial class TimePicker : ControlAndButton<ToolBar>
     {
         /// <summary>
