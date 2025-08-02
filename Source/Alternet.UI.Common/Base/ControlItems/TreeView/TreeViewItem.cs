@@ -692,6 +692,91 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Sorts child items in ascending order.
+        /// </summary>
+        /// <remarks>This method sorts child items using the default comparer.
+        /// If there are no child items, the method performs no operation.</remarks>
+        public virtual void Sort()
+        {
+            if (!HasItems)
+                return;
+
+            DoInsideUpdate(
+            () =>
+            {
+                items?.Sort();
+            },
+            true);
+        }
+
+        /// <summary>
+        /// Sorts the child items of the current <see cref="TreeViewItem"/>
+        /// using the specified comparer.
+        /// </summary>
+        /// <remarks>This method has no effect if the current <see cref="TreeViewItem"/>
+        /// has no child items. </remarks>
+        /// <param name="comparer">An <see cref="IComparer{TreeViewItem}"/> implementation
+        /// used to compare and sort the child items.
+        /// If <paramref name="comparer"/> is <see langword="null"/>,
+        /// the default comparer for <see cref="TreeViewItem"/> is used.</param>
+        public virtual void Sort(IComparer<TreeViewItem>? comparer)
+        {
+            if (!HasItems)
+                return;
+
+            DoInsideUpdate(
+            () =>
+            {
+                items?.Sort(comparer);
+            },
+            true);
+        }
+
+        /// <summary>
+        /// Sorts a range of child items using the specified comparer.
+        /// </summary>
+        /// <remarks>This method sorts the specified range of child items. If there are
+        /// no items, the method returns without performing any operation.</remarks>
+        /// <param name="index">The zero-based starting index of the range to sort.</param>
+        /// <param name="count">The number of items in the range to sort.</param>
+        /// <param name="comparer">The <see cref="IComparer{TreeViewItem}"/> implementation
+        /// to use when comparing items, or <see langword="null"/> to use
+        /// the default comparer.</param>
+        public virtual void Sort(int index, int count, IComparer<TreeViewItem>? comparer)
+        {
+            if (!HasItems)
+                return;
+
+            DoInsideUpdate(
+            () =>
+            {
+                items?.Sort(index, count, comparer);
+            },
+            true);
+        }
+
+        /// <summary>
+        /// Sorts child items using the specified comparison.
+        /// </summary>
+        /// <remarks>This method has no effect if the current <see cref="TreeViewItem"/>
+        /// The comparison delegate is applied to the items to determine their relative order.
+        /// has no child items. </remarks>
+        /// <param name="comparison">A delegate that defines the comparison logic
+        /// to determine the order of the items.</param>
+        public virtual void Sort(Comparison<TreeViewItem> comparison)
+        {
+            if (!HasItems)
+                return;
+
+            DoInsideUpdate(
+            () =>
+            {
+                items?.Sort(comparison);
+            },
+            true);
+        }
+
+        /// <summary>
         /// Calls the specified action inside an update block,
         /// ensuring that the owner of this tree control item is updated correctly.
         /// </summary>

@@ -106,7 +106,7 @@ namespace Alternet.UI
         /// <summary>
         /// Sorts the elements in this collection. Uses the provided comparer.
         /// </summary>
-        public virtual void Sort(IComparer<T> comparer)
+        public virtual void Sort(IComparer<T>? comparer)
         {
             CheckReentrancy();
 
