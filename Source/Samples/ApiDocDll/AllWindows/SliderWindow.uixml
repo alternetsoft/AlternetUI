@@ -4,7 +4,7 @@
         Title="Examples.Slider">
   <StackPanel Orientation="Vertical">
     <!-- <CreateUixmlDeclaration> -->
-    <Slider Name="slider" Minimum="50" Maximum="250" Value="125" Margin="8"
+    <StdSlider Name="slider" Minimum="50" Maximum="250" Value="125" Margin="8"
             TickFrequency="15" ValueChanged="Slider_ValueChanged" />
     <!-- </CreateUixmlDeclaration> -->
 
