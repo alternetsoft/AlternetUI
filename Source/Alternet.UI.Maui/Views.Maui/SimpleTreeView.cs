@@ -70,7 +70,7 @@ namespace Alternet.Maui
         private int updateCount;
         private SKBitmapImageSource? openedImage;
         private SKBitmapImageSource? closedImage;
-        private ObservableCollection<Alternet.UI.TreeControlItem>? visibleItems;
+        private ObservableCollection<Alternet.UI.TreeViewItem>? visibleItems;
         private Alternet.UI.TreeViewButtonsKind treeButtons = Alternet.UI.TreeViewButtonsKind.Null;
 
         /// <summary>
@@ -86,7 +86,7 @@ namespace Alternet.Maui
             void ItemTapHandler(object? sender, TappedEventArgs e)
             {
                 if (sender is View tappedFrame
-                && tappedFrame.BindingContext is Alternet.UI.TreeControlItem item)
+                && tappedFrame.BindingContext is Alternet.UI.TreeViewItem item)
                 {
                     if (!item.HasItems)
                         return;
@@ -101,7 +101,7 @@ namespace Alternet.Maui
             tapGesture.Tapped += (sender, e) =>
             {
                 if (sender is View tappedFrame
-                && tappedFrame.BindingContext is Alternet.UI.TreeControlItem item)
+                && tappedFrame.BindingContext is Alternet.UI.TreeViewItem item)
                 {
                     collectionView.SelectedItem = item;
                 }
@@ -205,24 +205,24 @@ namespace Alternet.Maui
         /// <summary>
         /// Gets the selected items in the tree view.
         /// </summary>
-        /// <value>The selected <see cref="Alternet.UI.TreeControlItem"/> items in the tree view.</value>
-        public virtual IEnumerable<Alternet.UI.TreeControlItem> SelectedItems
+        /// <value>The selected <see cref="Alternet.UI.TreeViewItem"/> items in the tree view.</value>
+        public virtual IEnumerable<Alternet.UI.TreeViewItem> SelectedItems
         {
             get
             {
-                return collectionView.SelectedItems.Cast<Alternet.UI.TreeControlItem>();
+                return collectionView.SelectedItems.Cast<Alternet.UI.TreeViewItem>();
             }
         }
 
         /// <summary>
         /// Gets or sets the selected item in the tree view.
         /// </summary>
-        /// <value>The selected <see cref="Alternet.UI.TreeControlItem"/> in the tree view.</value>
-        public virtual Alternet.UI.TreeControlItem? SelectedItem
+        /// <value>The selected <see cref="Alternet.UI.TreeViewItem"/> in the tree view.</value>
+        public virtual Alternet.UI.TreeViewItem? SelectedItem
         {
             get
             {
-                return collectionView.SelectedItem as Alternet.UI.TreeControlItem;
+                return collectionView.SelectedItem as Alternet.UI.TreeViewItem;
             }
 
             set
@@ -278,7 +278,7 @@ namespace Alternet.Maui
         /// <summary>
         /// Gets the collection of expanded items in the tree view.
         /// </summary>
-        public IEnumerable<Alternet.UI.TreeControlItem> VisibleItems
+        public IEnumerable<Alternet.UI.TreeViewItem> VisibleItems
         {
             get
             {
@@ -328,7 +328,7 @@ namespace Alternet.Maui
         /// <summary>
         /// Selects the specified item in the tree view and scrolls to it.
         /// </summary>
-        public virtual void SelectItem(UI.TreeControlItem item)
+        public virtual void SelectItem(UI.TreeViewItem item)
         {
             bool InternalSelect()
             {
@@ -368,7 +368,7 @@ namespace Alternet.Maui
         {
             int GetWidth(SKBitmapImageSource? source)
             {
-                return source?.Bitmap.Width ?? UI.VirtualTreeControl.DefaultLevelMargin;
+                return source?.Bitmap.Width ?? UI.TreeView.DefaultLevelMargin;
             }
 
             var openedImageWidth = GetWidth(openedImage);
@@ -409,8 +409,8 @@ namespace Alternet.Maui
         /// <param name="selectItem">If true, the child item will be selected after being added.</param>
         /// <returns>true if the child item was successfully added; otherwise, false.</returns>
         public virtual bool AddChild(
-            UI.TreeControlItem? parentItem,
-            UI.TreeControlItem childItem,
+            UI.TreeViewItem? parentItem,
+            UI.TreeViewItem childItem,
             bool selectItem = false)
         {
             if (childItem.Parent is not null || childItem.Owner is not null)
@@ -433,7 +433,7 @@ namespace Alternet.Maui
         /// </summary>
         /// <param name="item">The item to add.</param>
         /// <param name="selectItem">If true, the item will be selected after being added.</param>
-        public bool Add(UI.TreeControlItem item, bool selectItem = false)
+        public bool Add(UI.TreeViewItem item, bool selectItem = false)
         {
             return AddChild(null, item, selectItem);
         }
@@ -494,7 +494,7 @@ namespace Alternet.Maui
         /// </summary>
         /// <param name="item">The item to remove.</param>
         /// <returns>true if the item was successfully removed; otherwise, false.</returns>
-        public virtual bool Remove(UI.TreeControlItem? item)
+        public virtual bool Remove(UI.TreeViewItem? item)
         {
             if (item is null)
                 return false;
@@ -537,7 +537,7 @@ namespace Alternet.Maui
         /// Called when an item is added to this tree view control, at
         /// any nesting level.
         /// </summary>
-        public virtual void RaiseItemAdded(UI.TreeControlItem item)
+        public virtual void RaiseItemAdded(UI.TreeViewItem item)
         {
             if (item.Parent == rootItem && visibleItems is not null)
             {
@@ -558,7 +558,7 @@ namespace Alternet.Maui
         /// Called when an item is removed from this tree view control,
         /// at any nesting level.
         /// </summary>
-        public virtual void RaiseItemRemoved(UI.TreeControlItem item)
+        public virtual void RaiseItemRemoved(UI.TreeViewItem item)
         {
             if (item.HasItems && item.IsExpanded)
             {
@@ -578,7 +578,7 @@ namespace Alternet.Maui
         /// <summary>
         /// Called after the tree item is expanded.
         /// </summary>
-        public virtual void RaiseAfterExpand(UI.TreeControlItem item)
+        public virtual void RaiseAfterExpand(UI.TreeViewItem item)
         {
             TreeChanged();
 
@@ -591,7 +591,7 @@ namespace Alternet.Maui
         /// <summary>
         /// Called after the tree item is collapsed.
         /// </summary>
-        public virtual void RaiseAfterCollapse(UI.TreeControlItem item)
+        public virtual void RaiseAfterCollapse(UI.TreeViewItem item)
         {
             TreeChanged();
 
@@ -604,7 +604,7 @@ namespace Alternet.Maui
         /// <summary>
         /// Called before the tree item is expanded.
         /// </summary>
-        public virtual void RaiseBeforeExpand(UI.TreeControlItem item, ref bool cancel)
+        public virtual void RaiseBeforeExpand(UI.TreeViewItem item, ref bool cancel)
         {
             if (BeforeExpand is not null)
             {
@@ -617,7 +617,7 @@ namespace Alternet.Maui
         /// <summary>
         /// Called before the tree item is collapsed.
         /// </summary>
-        public virtual void RaiseBeforeCollapse(UI.TreeControlItem item, ref bool cancel)
+        public virtual void RaiseBeforeCollapse(UI.TreeViewItem item, ref bool cancel)
         {
             if (BeforeCollapse is not null)
             {
@@ -631,7 +631,7 @@ namespace Alternet.Maui
         /// Called after 'IsExpanded' property
         /// value of a tree item belonging to this tree view changes.
         /// </summary>
-        public virtual void RaiseExpandedChanged(UI.TreeControlItem item)
+        public virtual void RaiseExpandedChanged(UI.TreeViewItem item)
         {
             if (ExpandedChanged is not null)
             {
@@ -662,7 +662,7 @@ namespace Alternet.Maui
             EndUpdate();
         }
 
-        void UI.ITreeControlItemContainer.EnsureVisible(UI.TreeControlItem? item)
+        void UI.ITreeControlItemContainer.EnsureVisible(UI.TreeViewItem? item)
         {
             if (item is null)
                 return;
@@ -674,7 +674,7 @@ namespace Alternet.Maui
             (this as UI.ITreeControlItemContainer).Invalidate();
         }
 
-        void UI.ITreeControlItemContainer.ScrollIntoView(UI.TreeControlItem? item)
+        void UI.ITreeControlItemContainer.ScrollIntoView(UI.TreeViewItem? item)
         {
             (this as UI.ITreeControlItemContainer).EnsureVisible(item);
         }
@@ -769,7 +769,7 @@ namespace Alternet.Maui
 
         private void RefreshTree()
         {
-            ObservableCollection<Alternet.UI.TreeControlItem> collection
+            ObservableCollection<Alternet.UI.TreeViewItem> collection
                 = new(rootItem.EnumExpandedItems());
             visibleItems = collection;
             collectionView.ItemsSource = visibleItems;
@@ -777,7 +777,7 @@ namespace Alternet.Maui
 
         private partial class ItemLabel : Label
         {
-            private Alternet.UI.TreeControlItem? item;
+            private Alternet.UI.TreeViewItem? item;
 
             protected override void OnBindingContextChanged()
             {
@@ -788,7 +788,7 @@ namespace Alternet.Maui
                     item.PropertyChanged -= ItemPropertyChanged;
                 }
 
-                if (BindingContext is not Alternet.UI.TreeControlItem newItem)
+                if (BindingContext is not Alternet.UI.TreeViewItem newItem)
                     return;
 
                 item = newItem;
@@ -811,7 +811,7 @@ namespace Alternet.Maui
             protected override void OnBindingContextChanged()
             {
                 base.OnBindingContextChanged();
-                if (BindingContext is not Alternet.UI.TreeControlItem item)
+                if (BindingContext is not Alternet.UI.TreeViewItem item)
                     return;
                 WidthRequest = item.ForegroundMarginLeft;
             }
@@ -831,7 +831,7 @@ namespace Alternet.Maui
             protected override void OnBindingContextChanged()
             {
                 base.OnBindingContextChanged();
-                if (BindingContext is not Alternet.UI.TreeControlItem item)
+                if (BindingContext is not Alternet.UI.TreeViewItem item)
                     return;
 
                 var isVisible = item.SvgImage is not null;
@@ -882,7 +882,7 @@ namespace Alternet.Maui
             protected override void OnBindingContextChanged()
             {
                 base.OnBindingContextChanged();
-                if (BindingContext is not Alternet.UI.TreeControlItem item)
+                if (BindingContext is not Alternet.UI.TreeViewItem item)
                     return;
                 IsVisible = item.HasItems;
                 IsExpanded = item.IsExpanded;

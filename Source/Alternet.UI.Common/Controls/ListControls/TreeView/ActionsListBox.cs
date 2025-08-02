@@ -12,7 +12,7 @@ namespace Alternet.UI
     /// Implements list box control with list of actions. When item is double clicked,
     /// associated action is executed.
     /// </summary>
-    public partial class ActionsListBox : VirtualTreeControl
+    public partial class ActionsListBox : TreeView
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="ActionsListBox"/> class.
@@ -70,7 +70,7 @@ namespace Alternet.UI
         /// </remarks>
         public virtual ListControlItem AddActionSpacer(bool drawLine = false)
         {
-            TreeControlItem result;
+            TreeViewItem result;
 
             if (drawLine)
             {
@@ -92,7 +92,7 @@ namespace Alternet.UI
         /// <param name="action">Action method.</param>
         public virtual ListControlItem AddAction(string title, Action? action)
         {
-            TreeControlItem item = new(title)
+            TreeViewItem item = new(title)
             {
                 DoubleClickAction = action,
             };

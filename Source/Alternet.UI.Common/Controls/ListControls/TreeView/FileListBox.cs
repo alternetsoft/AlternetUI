@@ -13,7 +13,7 @@ namespace Alternet.UI
     /// <summary>
     /// <see cref="VirtualListBox"/> descendant which allows to browse folder contents.
     /// </summary>
-    public partial class FileListBox : VirtualTreeControl
+    public partial class FileListBox : TreeView
     {
         /// <summary>
         /// Gets or sets global <see cref="FolderInfoItem"/> for the file or folder.
@@ -758,7 +758,7 @@ namespace Alternet.UI
         /// <summary>
         /// Implements item of the <see cref="FileListBox"/> control.
         /// </summary>
-        public class FileListBoxItem : TreeControlItem
+        public class FileListBoxItem : TreeViewItem
         {
             /// <summary>
             /// Initializes a new instance of the <see cref="FileListBoxItem"/> class.

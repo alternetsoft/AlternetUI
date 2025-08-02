@@ -17,7 +17,7 @@ namespace Alternet.UI
     /// <see cref="ListBox"/> descendant with log and debug related functionality.
     /// </summary>
     [ControlCategory("Other")]
-    public partial class LogListBox : VirtualTreeControl
+    public partial class LogListBox : TreeView
     {
         /// <summary>
         /// Indicates whether message identifiers should be displayed in the log.
@@ -206,7 +206,7 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="obj">Message text.</param>
         /// <param name="kind">Message kind.</param>
-        public virtual TreeControlItem Log(object? obj, LogItemKind kind = LogItemKind.Information)
+        public virtual TreeViewItem Log(object? obj, LogItemKind kind = LogItemKind.Information)
         {
             var result = LogInternal(LogUtils.GenNewId(), obj, kind);
             LogRefresh();
@@ -229,7 +229,7 @@ namespace Alternet.UI
         /// Creates new empty item.
         /// </summary>
         /// <returns></returns>
-        protected virtual TreeControlItem CreateItem()
+        protected virtual TreeViewItem CreateItem()
         {
             return new();
         }
@@ -331,7 +331,7 @@ namespace Alternet.UI
             LogRefresh();
         }
 
-        private TreeControlItem LogItemInternal(int id, TreeControlItem item, LogItemKind kind)
+        private TreeViewItem LogItemInternal(int id, TreeViewItem item, LogItemKind kind)
         {
             if (IsDisposed)
                 return item;
@@ -348,7 +348,7 @@ namespace Alternet.UI
             return item;
         }
 
-        private TreeControlItem LogInternal(int id, object? obj, LogItemKind kind)
+        private TreeViewItem LogInternal(int id, object? obj, LogItemKind kind)
         {
             if (DisposingOrDisposed)
                 return new();
@@ -357,7 +357,7 @@ namespace Alternet.UI
 
             lastLogMessage = message;
 
-            TreeControlItem item;
+            TreeViewItem item;
 
             if(message == LogUtils.SectionSeparator || message == "-")
             {
@@ -376,7 +376,7 @@ namespace Alternet.UI
             return item;
         }
 
-        private TreeControlItem LogReplaceInternal(
+        private TreeViewItem LogReplaceInternal(
             int id,
             string? message,
             string? prefix,

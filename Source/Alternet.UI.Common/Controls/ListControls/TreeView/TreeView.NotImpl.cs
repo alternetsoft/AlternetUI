@@ -5,10 +5,10 @@ using System.Text;
 
 namespace Alternet.UI
 {
-    public partial class VirtualTreeControl
+    public partial class TreeView
     {
         /// <summary>
-        /// Gets or sets a value indicating whether lines are drawn between the
+        /// Gets a value indicating whether lines are drawn between the
         /// tree items that are at the root of the tree view. Default is <see langword="false"/>.
         /// Currently, setter of this property does nothing.
         /// </summary>
@@ -30,7 +30,7 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Gets or sets a value indicating whether to draw a contrasting
+        /// Gets a value indicating whether to draw a contrasting
         /// border between displayed rows.
         /// Default is <see langword="false"/>.
         /// Currently, setter of this property does nothing.
@@ -54,7 +54,7 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Gets or sets a value indicating whether the selection highlight spans
+        /// Gets a value indicating whether the selection highlight spans
         /// the width of the tree control. Default is <see langword="true"/>.
         /// Currently, setter of this property does nothing.
         /// </summary>
@@ -77,7 +77,7 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Gets or sets a value indicating whether the label text of the tree
+        /// Gets a value indicating whether the label text of the tree
         /// items can be edited. Default is <see langword="false"/>.
         /// Currently, setter of this property does nothing.
         /// </summary>
@@ -100,7 +100,7 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Gets or sets a value indicating whether lines are drawn between tree
+        /// Gets a value indicating whether lines are drawn between tree
         /// items in the tree view control.
         /// Default is <see langword="false"/>.
         /// Currently, setter of this property does nothing.

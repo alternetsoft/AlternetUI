@@ -7,9 +7,9 @@ using Alternet.Drawing;
 namespace Alternet.UI
 {
     /// <summary>
-    /// Extends <see cref="TreeControlItem"/> with horizontal separator painting.
+    /// Extends <see cref="TreeViewItem"/> with horizontal separator painting.
     /// </summary>
-    public class TreeControlSeparatorItem : TreeControlItem
+    public class TreeControlSeparatorItem : TreeViewItem
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="ListControlSeparatorItem"/> class.

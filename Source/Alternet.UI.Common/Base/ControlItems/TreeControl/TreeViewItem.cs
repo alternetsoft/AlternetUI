@@ -10,33 +10,33 @@ namespace Alternet.UI
     /// <summary>
     /// Represents an item in a tree control.
     /// </summary>
-    public partial class TreeControlItem : ListControlItemWithNotify, IComparable<TreeControlItem>
+    public partial class TreeViewItem : ListControlItemWithNotify, IComparable<TreeViewItem>
     {
         private bool isVisible = true;
-        private BaseCollection<TreeControlItem>? items;
+        private BaseCollection<TreeViewItem>? items;
         private bool isExpanded;
-        private TreeControlItem? parent;
+        private TreeViewItem? parent;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="TreeControlItem"/> class.
+        /// Initializes a new instance of the <see cref="TreeViewItem"/> class.
         /// </summary>
-        public TreeControlItem()
+        public TreeViewItem()
         {
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="TreeControlItem"/> class
+        /// Initializes a new instance of the <see cref="TreeViewItem"/> class
         /// with the specified text.
         /// </summary>
         /// <param name="text">The text of the tree control item.</param>
-        public TreeControlItem(string text)
+        public TreeViewItem(string text)
             : this()
         {
             Text = text;
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="TreeControlItem"/>
+        /// Initializes a new instance of the <see cref="TreeViewItem"/>
         /// class with the specified item text and
         /// the image index position of the item's icon.
         /// </summary>
@@ -44,9 +44,9 @@ namespace Alternet.UI
         /// <param name="imageIndex">
         /// The zero-based index of the image within the
         /// <see cref="ImageList"/>
-        /// associated with the <see cref="VirtualTreeControl"/> that contains the item.
+        /// associated with the <see cref="TreeView"/> that contains the item.
         /// </param>
-        public TreeControlItem(string text, int? imageIndex)
+        public TreeViewItem(string text, int? imageIndex)
             : this()
         {
             Text = text;
@@ -102,7 +102,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets the parent item of this tree control item.
         /// </summary>
-        public virtual TreeControlItem? Parent
+        public virtual TreeViewItem? Parent
         {
             get => parent;
 
@@ -140,7 +140,7 @@ namespace Alternet.UI
             get
             {
                 var indentLevel = IndentLevel - 1;
-                var indentPx = Owner?.GetLevelMargin() ?? VirtualTreeControl.DefaultLevelMargin;
+                var indentPx = Owner?.GetLevelMargin() ?? TreeView.DefaultLevelMargin;
                 Thickness result = (indentPx * indentLevel, 0, 0, 0);
                 return result;
             }
@@ -189,7 +189,7 @@ namespace Alternet.UI
         /// If parent control is null, returns this control.
         /// </summary>
         [Browsable(false)]
-        public virtual TreeControlItem Root
+        public virtual TreeViewItem Root
         {
             get
             {
@@ -299,7 +299,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets the first child item of this tree control item.
         /// </summary>
-        public TreeControlItem? FirstChild
+        public TreeViewItem? FirstChild
         {
             get
             {
@@ -312,7 +312,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets the last child item of this tree control item.
         /// </summary>
-        public TreeControlItem? LastChild
+        public TreeViewItem? LastChild
         {
             get
             {
@@ -325,7 +325,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets the child items of this tree control item.
         /// </summary>
-        public virtual IReadOnlyList<TreeControlItem> Items
+        public virtual IReadOnlyList<TreeViewItem> Items
         {
             get
             {
@@ -366,11 +366,11 @@ namespace Alternet.UI
         /// property returns <c>null</c>.
         /// </remarks>
         [Browsable(false)]
-        public IReadOnlyList<TreeControlItem>? ParentItems
+        public IReadOnlyList<TreeViewItem>? ParentItems
         {
             get
             {
-                IReadOnlyList<TreeControlItem>? items;
+                IReadOnlyList<TreeViewItem>? items;
                 if (Parent == null)
                     items = Root?.Items;
                 else
@@ -405,7 +405,7 @@ namespace Alternet.UI
         /// If item has no siblings, <see cref="Parent"/> is returned.
         /// </summary>
         [Browsable(false)]
-        public virtual TreeControlItem? NextOrPrevSibling
+        public virtual TreeViewItem? NextOrPrevSibling
         {
             get
             {
@@ -455,7 +455,7 @@ namespace Alternet.UI
         /// <remarks>
         /// When the <see cref="Remove()"/> method is called, the tree item, and
         /// any child tree items that are
-        /// assigned to the <see cref="TreeControlItem"/>, are removed from the
+        /// assigned to the <see cref="TreeViewItem"/>, are removed from the
         /// tree view control.
         /// </remarks>
         public virtual void Remove()
@@ -464,7 +464,7 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        public virtual int CompareTo(TreeControlItem other)
+        public virtual int CompareTo(TreeViewItem other)
         {
             return base.CompareTo(other);
         }
@@ -474,7 +474,7 @@ namespace Alternet.UI
         /// </summary>
         /// <remarks>
         /// The <see cref="Expand"/> method expands the
-        /// <see cref="TreeControlItem"/>, while leaving the child items expanded
+        /// <see cref="TreeViewItem"/>, while leaving the child items expanded
         /// state unchanged.
         /// </remarks>
         public virtual void Expand()
@@ -487,7 +487,7 @@ namespace Alternet.UI
         /// </summary>
         /// <remarks>
         /// The <see cref="Collapse"/> method collapses the
-        /// <see cref="TreeControlItem"/>, while leaving the child items
+        /// <see cref="TreeViewItem"/>, while leaving the child items
         /// expanded state unchanged.
         /// </remarks>
         public virtual void Collapse()
@@ -533,7 +533,7 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="item">The item to remove.</param>
         /// <returns>true if the item was successfully removed; otherwise, false.</returns>
-        public virtual bool Remove(TreeControlItem item)
+        public virtual bool Remove(TreeViewItem item)
         {
             bool hasItems = HasItems;
 
@@ -576,10 +576,10 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="index">The zero-based index of the child item to retrieve.</param>
         /// <returns>
-        /// The <see cref="TreeControlItem"/> at the specified index, or <c>null</c>
+        /// The <see cref="TreeViewItem"/> at the specified index, or <c>null</c>
         /// if the index is out of range or there are no child items.
         /// </returns>
-        public virtual TreeControlItem? GetItem(int index)
+        public virtual TreeViewItem? GetItem(int index)
         {
             if (items is null || index >= items.Count || index < 0)
                 return null;
@@ -587,39 +587,39 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Creates a new instance of <see cref="TreeControlItem"/>.
+        /// Creates a new instance of <see cref="TreeViewItem"/>.
         /// </summary>
-        /// <returns>A new <see cref="TreeControlItem"/> instance.</returns>
-        public virtual TreeControlItem CreateItem()
+        /// <returns>A new <see cref="TreeViewItem"/> instance.</returns>
+        public virtual TreeViewItem CreateItem()
         {
-            return new TreeControlItem();
+            return new TreeViewItem();
         }
 
         /// <summary>
-        /// Creates a new <see cref="TreeControlItem"/>, assigns text to it,
+        /// Creates a new <see cref="TreeViewItem"/>, assigns text to it,
         /// adds it as the last child of this item in the tree, and returns it.
         /// </summary>
         /// <param name="text">The text to assign to the item.</param>
-        /// <returns>The newly created <see cref="TreeControlItem"/> with
+        /// <returns>The newly created <see cref="TreeViewItem"/> with
         /// the specified text, added as the last child of this item in the tree.</returns>
-        public virtual TreeControlItem AddWithText(string text)
+        public virtual TreeViewItem AddWithText(string text)
         {
-            TreeControlItem result = CreateItem();
+            TreeViewItem result = CreateItem();
             result.Text = text;
             Add(result);
             return result;
         }
 
         /// <summary>
-        /// Creates a new <see cref="TreeControlItem"/>, assigns text to it,
+        /// Creates a new <see cref="TreeViewItem"/>, assigns text to it,
         /// adds it as the first child of this item in the tree, and returns it.
         /// </summary>
         /// <param name="text">The text to assign to the item.</param>
-        /// <returns>The newly created <see cref="TreeControlItem"/> with
+        /// <returns>The newly created <see cref="TreeViewItem"/> with
         /// the specified text, added as the first child of this item in the tree.</returns>
-        public virtual TreeControlItem PrependWithText(string text)
+        public virtual TreeViewItem PrependWithText(string text)
         {
-            TreeControlItem result = CreateItem();
+            TreeViewItem result = CreateItem();
             result.Text = text;
             Prepend(result);
             return result;
@@ -629,28 +629,28 @@ namespace Alternet.UI
         /// Adds the specified child item to this tree control item.
         /// </summary>
         /// <param name="item">The item to add.</param>
-        public void Add(TreeControlItem item)
+        public void Add(TreeViewItem item)
         {
             int index = items?.Count ?? 0;
             Insert(index, item);
         }
 
         /// <summary>
-        /// Inserts the specified <see cref="TreeControlItem"/> at the beginning of the item list.
+        /// Inserts the specified <see cref="TreeViewItem"/> at the beginning of the item list.
         /// </summary>
         /// <param name="item">The item to prepend.</param>
-        public void Prepend(TreeControlItem item)
+        public void Prepend(TreeViewItem item)
         {
             Insert(0, item);
         }
 
         /// <summary>
-        /// Inserts the specified <see cref="TreeControlItem"/> at the given
+        /// Inserts the specified <see cref="TreeViewItem"/> at the given
         /// index within the item list.
         /// </summary>
         /// <param name="index">The position at which to insert the item.</param>
         /// <param name="item">The item to insert.</param>
-        public virtual void Insert(int index, TreeControlItem item)
+        public virtual void Insert(int index, TreeViewItem item)
         {
             SmartInvoke(Internal);
 
@@ -673,7 +673,7 @@ namespace Alternet.UI
         /// Sets child items of this tree control item to the specified collection.
         /// </summary>
         /// <param name="items">The items to set.</param>
-        public virtual void SetItems(IEnumerable<TreeControlItem> items)
+        public virtual void SetItems(IEnumerable<TreeViewItem> items)
         {
             SmartInvoke(Internal);
             void Internal()
@@ -718,10 +718,10 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Adds a range of <see cref="TreeControlItem"/> child items to this tree control item.
+        /// Adds a range of <see cref="TreeViewItem"/> child items to this tree control item.
         /// </summary>
         /// <param name="items">The items to add.</param>
-        public virtual void AddRange(IEnumerable<TreeControlItem> items)
+        public virtual void AddRange(IEnumerable<TreeViewItem> items)
         {
             SmartInvoke(Internal);
             void Internal()
@@ -888,7 +888,7 @@ namespace Alternet.UI
         /// <returns>An enumerable collection containing all child items.</returns>
         /// <param name="prm">The parameters that define which items should be
         /// included in the result.</param>
-        public virtual IEnumerable<TreeControlItem> EnumExpandedItems(
+        public virtual IEnumerable<TreeViewItem> EnumExpandedItems(
             EnumExpandedItemsParams? prm = null)
         {
             if (items is null || items.Count == 0)
@@ -917,7 +917,7 @@ namespace Alternet.UI
                 }
             }
 
-            bool Condition(TreeControlItem itm)
+            bool Condition(TreeViewItem itm)
             {
                 if (prm.OnlyVisible)
                 {
@@ -943,7 +943,7 @@ namespace Alternet.UI
             Invoke(action);
         }
 
-        private void InternalSetParent(TreeControlItem? newParent)
+        private void InternalSetParent(TreeViewItem? newParent)
         {
             parent = newParent;
             RaisePropertyChanged(nameof(Parent));
@@ -980,10 +980,10 @@ namespace Alternet.UI
             /// <summary>
             /// A function that determines whether an item should be included
             /// in the enumeration.
-            /// This function takes a <see cref="TreeControlItem"/> as input and
+            /// This function takes a <see cref="TreeViewItem"/> as input and
             /// returns <c>true</c> if the item meets the condition; otherwise, <c>false</c>.
             /// </summary>
-            public Func<TreeControlItem, bool>? Condition;
+            public Func<TreeViewItem, bool>? Condition;
         }
     }
 }

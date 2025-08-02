@@ -14,7 +14,7 @@ namespace Alternet.UI
         /// class.
         /// </summary>
         /// <param name="item">The item being affected.</param>
-        public TreeControlCancelEventArgs(TreeControlItem item)
+        public TreeControlCancelEventArgs(TreeViewItem item)
         {
             Item = item;
         }
@@ -26,6 +26,6 @@ namespace Alternet.UI
         /// <remarks>
         /// Use the <see cref="Item"/> property to access the properties of the item.
         /// </remarks>
-        public TreeControlItem Item { get; }
+        public TreeViewItem Item { get; }
     }
 }

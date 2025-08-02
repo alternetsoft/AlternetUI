@@ -2141,7 +2141,7 @@ namespace Alternet.UI
             {
                 var result = method.Invoke(instance, null);
 
-                TreeControlItem item = new();
+                TreeViewItem item = new();
                 item.TextHasBold = true;
 
                 var itemText = $"Called <b>{declaringType.Name}.{methodName}</b>";

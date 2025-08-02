@@ -261,7 +261,7 @@ namespace Alternet.UI.Tests
         [Browsable(true)]
         public static void TestLogListBoxItemWithChilds()
         {
-            TreeControlItem item = new("This is log item with children");
+            TreeViewItem item = new("This is log item with children");
             item.Add(new("Child 1"));
             item.Add(new("Child 2"));
             item.Add(new("Child 3"));

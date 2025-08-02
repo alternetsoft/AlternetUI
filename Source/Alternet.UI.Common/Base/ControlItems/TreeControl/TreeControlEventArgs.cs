@@ -12,7 +12,7 @@ namespace Alternet.UI
         /// Initializes a new instance of the <see cref="TreeControlEventArgs"/> class.
         /// </summary>
         /// <param name="item">The item being affected.</param>
-        public TreeControlEventArgs(TreeControlItem item)
+        public TreeControlEventArgs(TreeViewItem item)
         {
             Item = item;
         }
@@ -24,6 +24,6 @@ namespace Alternet.UI
         /// <remarks>
         /// Use the <see cref="Item"/> property to access the properties of the item.
         /// </remarks>
-        public TreeControlItem Item { get; }
+        public TreeViewItem Item { get; }
     }
 }

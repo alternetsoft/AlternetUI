@@ -1350,7 +1350,7 @@ namespace Alternet.UI
         /// <param name="kind">Item kind.</param>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static void AddLogItem(
-            TreeControlItem item,
+            TreeViewItem item,
             LogItemKind kind = LogItemKind.Information)
         {
             AddLogItem(new(item, kind), false);
@@ -1367,7 +1367,7 @@ namespace Alternet.UI
             Action action,
             LogItemKind kind = LogItemKind.Information)
         {
-            TreeControlItem item = new(s);
+            TreeViewItem item = new(s);
             item.DoubleClickAction = action;
             AddLogItem(item, kind);
         }

@@ -18,7 +18,7 @@ namespace ControlsSample
         private readonly int counter;
         private readonly AbstractControl? statusPanel;
 
-        private readonly VirtualTreeControl treeView = new()
+        private readonly TreeView treeView = new()
         {
         };
 
@@ -106,7 +106,7 @@ namespace ControlsSample
                 TreeControlRootItem item = new();
                 ListControlUtils.AddTestItems(item, 10, ItemInitialize);
 
-                void ItemInitialize(TreeControlItem item)
+                void ItemInitialize(TreeViewItem item)
                 {
                     item.Text += "a";
                 }
@@ -164,9 +164,9 @@ namespace ControlsSample
             }
         }
 
-        public void AddItem(TreeControlItem? root)
+        public void AddItem(TreeViewItem? root)
         {
-            var item = new Alternet.UI.TreeControlItem();
+            var item = new Alternet.UI.TreeViewItem();
             item.Text = "Item " + Alternet.UI.LogUtils.GenNewId();
             item.SvgImage = Alternet.UI.KnownColorSvgImages.ImgLogo;
             treeView.AddChild(root, item, true);

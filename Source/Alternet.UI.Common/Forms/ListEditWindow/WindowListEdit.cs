@@ -232,7 +232,7 @@ namespace Alternet.UI
             AddItem(treeView.SelectedItem?.Parent);
         }
 
-        private void AddItem(TreeControlItem? parentItem)
+        private void AddItem(TreeViewItem? parentItem)
         {
             parentItem ??= treeView.RootItem;
 
@@ -252,7 +252,7 @@ namespace Alternet.UI
 
             AssemblyUtils.TrySetMemberValue(item, "Text", newTitle);
 
-            var treeItem = new TreeControlItem(newTitle, imageIndex)
+            var treeItem = new TreeViewItem(newTitle, imageIndex)
             {
                 Tag = item,
             };
@@ -353,14 +353,14 @@ namespace Alternet.UI
             return (s, imageIndex);
         }
 
-        private void AddItems(TreeControlItem parentItem, IEnumerable? data)
+        private void AddItems(TreeViewItem parentItem, IEnumerable? data)
         {
             if (data == null)
                 return;
             foreach (var item in data)
             {
                 var itemInfo = GetItemInfo(item);
-                var treeItem = new TreeControlItem(itemInfo!.Value.Title!, itemInfo!.Value.ImageIndex)
+                var treeItem = new TreeViewItem(itemInfo!.Value.Title!, itemInfo!.Value.ImageIndex)
                 {
                     Tag = dataSource?.CloneItem(item),
                 };
@@ -383,7 +383,7 @@ namespace Alternet.UI
             treeView.ImageList = null;
         }
 
-        private class TreeViewPlus : VirtualTreeControl, IEnumerableTree<TreeControlItem>
+        private class TreeViewPlus : TreeView, IEnumerableTree<TreeViewItem>
         {
             public TreeViewPlus()
             {
@@ -400,7 +400,7 @@ namespace Alternet.UI
                 // MouseLeftButtonUp += TreeViewPlus_MouseLeftButtonUp;
             }
 
-            IEnumerable<TreeControlItem>? IEnumerableTree<TreeControlItem>.GetChildren(TreeControlItem item)
+            IEnumerable<TreeViewItem>? IEnumerableTree<TreeViewItem>.GetChildren(TreeViewItem item)
             {
                 if (item == null || !item.HasItems)
                     return [];
@@ -409,19 +409,19 @@ namespace Alternet.UI
 
             IEnumerable? IEnumerableTree.GetChildren(object item)
             {
-                if (item is not TreeControlItem treeItem || !treeItem.HasItems)
-                    return Array.Empty<TreeControlItem>();
+                if (item is not TreeViewItem treeItem || !treeItem.HasItems)
+                    return Array.Empty<TreeViewItem>();
                 return treeItem.Items;
             }
 
             object? IEnumerableTree.GetData(object item)
             {
-                if (item is not TreeControlItem treeItem)
+                if (item is not TreeViewItem treeItem)
                     return null;
                 return treeItem.Tag;
             }
 
-            IEnumerator<TreeControlItem> IEnumerable<TreeControlItem>.GetEnumerator()
+            IEnumerator<TreeViewItem> IEnumerable<TreeViewItem>.GetEnumerator()
             {
                 return RootItem.Items.GetEnumerator();
             }

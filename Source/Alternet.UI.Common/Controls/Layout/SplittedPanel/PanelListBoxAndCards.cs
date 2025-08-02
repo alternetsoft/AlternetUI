@@ -53,7 +53,7 @@ namespace Alternet.UI
         {
             var index = cardPanel.Add(title, fnCreate);
             var id = cardPanel.Cards[index].UniqueId;
-            TreeControlItem item = new(title);
+            TreeViewItem item = new(title);
             item.Tag = id;
             LeftListBox.Add(item);
             return index;
@@ -71,7 +71,7 @@ namespace Alternet.UI
         {
             var index = cardPanel.Add(title, control);
             var id = cardPanel.Cards[index].UniqueId;
-            TreeControlItem item = new(title);
+            TreeViewItem item = new(title);
             item.Tag = id;
             LeftListBox.Add(item);
             return index;

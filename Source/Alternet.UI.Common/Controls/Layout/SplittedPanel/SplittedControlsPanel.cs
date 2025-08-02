@@ -14,10 +14,10 @@ namespace Alternet.UI
     /// </summary>
     public partial class SplittedControlsPanel : SplittedPanel
     {
-        private VirtualTreeControl? leftListBox;
+        private TreeView? leftListBox;
         private PropertyGrid? propertyGrid;
         private LogListBox? logControl;
-        private VirtualTreeControl? actionsControl;
+        private TreeView? actionsControl;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="SplittedControlsPanel"/> class.
@@ -49,7 +49,7 @@ namespace Alternet.UI
         /// Gets the control with actions list.
         /// </summary>
         [Browsable(false)]
-        public VirtualTreeControl ActionsControl
+        public TreeView ActionsControl
         {
             get
             {
@@ -101,10 +101,10 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Gets <see cref="VirtualTreeControl"/> control on the left pane.
+        /// Gets <see cref="TreeView"/> control on the left pane.
         /// </summary>
         [Browsable(false)]
-        public VirtualTreeControl LeftTreeView
+        public TreeView LeftTreeView
         {
             get
             {
@@ -116,7 +116,7 @@ namespace Alternet.UI
         /// Gets the control on the left pane.
         /// </summary>
         [Browsable(false)]
-        public VirtualTreeControl LeftListBox
+        public TreeView LeftListBox
         {
             get
             {
@@ -183,7 +183,7 @@ namespace Alternet.UI
         /// <param name="action">Action method.</param>
         public virtual ListControlItem AddAction(string title, Action? action)
         {
-            TreeControlItem item = new(title)
+            TreeViewItem item = new(title)
             {
                 DoubleClickAction = () =>
                 {

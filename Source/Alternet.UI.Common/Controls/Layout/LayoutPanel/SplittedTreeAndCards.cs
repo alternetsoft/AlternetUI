@@ -103,7 +103,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets left control as <see cref="TreeView"/>.
         /// </summary>
-        public VirtualTreeControl? TreeView => leftControl as VirtualTreeControl;
+        public TreeView? TreeView => leftControl as TreeView;
 
         /// <summary>
         /// Gets left control as <see cref="VirtualListBox"/>.
@@ -142,7 +142,7 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Calls <see cref="VirtualTreeControl.MakeAsListBox"/> for the left control if
+        /// Calls <see cref="TreeView.MakeAsListBox"/> for the left control if
         /// it is tree view.
         /// </summary>
         public virtual void MakeAsListBox()
@@ -179,7 +179,7 @@ namespace Alternet.UI
 
             if(LeftControlKind is TreeKind.TreeView)
             {
-                var item = new TreeControlItem(title)
+                var item = new TreeViewItem(title)
                 {
                     Tag = index,
                 };

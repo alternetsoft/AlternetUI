@@ -28,7 +28,7 @@ namespace PropertyGridSample
 
         public static void AddDefaultOwnerDrawItems(
             Control control,
-            Action<TreeControlItem> addAction,
+            Action<TreeViewItem> addAction,
             bool addLong = true)
         {
             string ResPrefix2 = $"{UrlResPrefix}ToolBarPng.Large.";
@@ -38,7 +38,7 @@ namespace PropertyGridSample
 
             var svgImageSize = 24; /* image sizes are always in pixels */
 
-            TreeControlItem item = new();
+            TreeViewItem item = new();
             item.DisplayText = "This is display text";
             item.Text = "This is some text";
             item.Image = Image.FromUrlCached(PhotoUrl);
@@ -107,7 +107,7 @@ namespace PropertyGridSample
 
             for (int i = 0; i < 150; i++)
             {
-                TreeControlItem newItem = new($"Item {i}");
+                TreeViewItem newItem = new($"Item {i}");
 
                 if (i == 128)
                     newItem.DisplayText = newItem.Text + ": dd";

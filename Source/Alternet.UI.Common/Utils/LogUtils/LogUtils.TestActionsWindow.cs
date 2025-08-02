@@ -89,7 +89,7 @@ namespace Alternet.UI
                     var item = ActionAndTitleFromTestMethod(member);
                     if (item is null)
                         return null;
-                    var result = new TreeControlItem(item.Value.Title);
+                    var result = new TreeViewItem(item.Value.Title);
                     result.DoubleClickAction = item.Value.Action;
                     return result;
                 }

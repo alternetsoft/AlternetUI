@@ -307,7 +307,7 @@ namespace Alternet.UI
             return controller;
         }
 
-        private class MemberInfoItem : TreeControlItem
+        private class MemberInfoItem : TreeViewItem
         {
             public MemberInfoItem()
             {

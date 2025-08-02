@@ -62,7 +62,7 @@ namespace Alternet.UI
         /// Called when an item is added to this tree view control, at
         /// any nesting level.
         /// </summary>
-        void RaiseItemAdded(UI.TreeControlItem item);
+        void RaiseItemAdded(UI.TreeViewItem item);
 
         /// <summary>
         /// Ensures that the tree item is visible, expanding tree items and
@@ -76,45 +76,45 @@ namespace Alternet.UI
         /// certain criteria. By calling this method after you select the item,
         /// the user can see and interact with the selected item.
         /// </remarks>
-        void EnsureVisible(TreeControlItem? item);
+        void EnsureVisible(TreeViewItem? item);
 
         /// <summary>
         /// Scrolls control so the specified item will be fully visible.
         /// </summary>
         /// <param name="item">Item to show into the view.</param>
-        void ScrollIntoView(TreeControlItem? item);
+        void ScrollIntoView(TreeViewItem? item);
 
 
         /// <summary>
         /// Called when an item is removed from this tree view control,
         /// at any nesting level.
         /// </summary>
-        void RaiseItemRemoved(UI.TreeControlItem item);
+        void RaiseItemRemoved(UI.TreeViewItem item);
 
         /// <summary>
         /// Called after the tree item is expanded.
         /// </summary>
-        void RaiseAfterExpand(UI.TreeControlItem item);
+        void RaiseAfterExpand(UI.TreeViewItem item);
 
         /// <summary>
         /// Called after the tree item is collapsed.
         /// </summary>
-        void RaiseAfterCollapse(UI.TreeControlItem item);
+        void RaiseAfterCollapse(UI.TreeViewItem item);
 
         /// <summary>
         /// Called before the tree item is expanded.
         /// </summary>
-        void RaiseBeforeExpand(UI.TreeControlItem item, ref bool cancel);
+        void RaiseBeforeExpand(UI.TreeViewItem item, ref bool cancel);
 
         /// <summary>
         /// Called before the tree item is collapsed.
         /// </summary>
-        void RaiseBeforeCollapse(UI.TreeControlItem item, ref bool cancel);
+        void RaiseBeforeCollapse(UI.TreeViewItem item, ref bool cancel);
 
         /// <summary>
         /// Called after 'IsExpanded' property
         /// value of a tree item belonging to this tree view changes.
         /// </summary>
-        void RaiseExpandedChanged(UI.TreeControlItem item);
+        void RaiseExpandedChanged(UI.TreeViewItem item);
     }
 }

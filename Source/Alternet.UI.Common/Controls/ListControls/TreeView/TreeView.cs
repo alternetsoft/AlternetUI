@@ -11,11 +11,11 @@ namespace Alternet.UI
 {
     /// <summary>
     /// Displays a hierarchical collection of labeled items with optional images,
-    /// each represented by a <see cref="TreeControlItem"/>. This control uses
+    /// each represented by a <see cref="TreeViewItem"/>. This control uses
     /// internal <see cref="VirtualListControl"/> for displaying items, it can be accessed via
     /// <see cref="ListBox"/> property.
     /// </summary>
-    public partial class VirtualTreeControl : Border, ITreeControlItemContainer
+    public partial class TreeView : Border, ITreeControlItemContainer
     {
         /// <summary>
         /// Specifies the default type of buttons used in the tree view control to expand
@@ -23,7 +23,7 @@ namespace Alternet.UI
         /// </summary>
         /// <remarks>
         /// This field determines the initial value of the <see cref="TreeButtons"/> property
-        /// for instances of <see cref="VirtualTreeControl"/>.
+        /// for instances of <see cref="TreeView"/>.
         /// The default value is <see cref="TreeViewButtonsKind.Angle"/>.
         /// </remarks>
         public static TreeViewButtonsKind DefaultTreeButtons = TreeViewButtonsKind.Angle;
@@ -39,9 +39,9 @@ namespace Alternet.UI
         private bool needTreeChanged;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="VirtualTreeControl"/> class.
+        /// Initializes a new instance of the <see cref="TreeView"/> class.
         /// </summary>
-        public VirtualTreeControl()
+        public TreeView()
         {
             rootItem = new(this);
 
@@ -56,7 +56,7 @@ namespace Alternet.UI
                 if (ListBox.HitTestCheckBox(e.Location) is not null)
                     isOnCheckBox = true;
 
-                var item = ListBox.Items[itemIndex] as TreeControlItem;
+                var item = ListBox.Items[itemIndex] as TreeViewItem;
 
                 if (item is not null && (isOnCheckBox || item.ExpandOnClick))
                 {
@@ -71,7 +71,7 @@ namespace Alternet.UI
 
             TreeButtons = DefaultTreeButtons;
 
-            void ToggleExpanded(TreeControlItem? item)
+            void ToggleExpanded(TreeViewItem? item)
             {
                 Post(() =>
                 {
@@ -179,7 +179,7 @@ namespace Alternet.UI
         /// This property returns the first item even if it is not visible.
         /// </remarks>
         [Browsable(false)]
-        public virtual TreeControlItem? FirstItem
+        public virtual TreeViewItem? FirstItem
         {
             get
             {
@@ -193,11 +193,11 @@ namespace Alternet.UI
         /// Gets last item in the control or <c>null</c> if there are no items.
         /// </summary>
         [Browsable(false)]
-        public virtual TreeControlItem? LastItem
+        public virtual TreeViewItem? LastItem
         {
             get
             {
-                static TreeControlItem? GetLastItem(TreeControlItem? item)
+                static TreeViewItem? GetLastItem(TreeViewItem? item)
                 {
                     if (item is null)
                         return null;
@@ -218,7 +218,7 @@ namespace Alternet.UI
         /// This property returns the last root item even if it is not visible.
         /// </remarks>
         [Browsable(false)]
-        public virtual TreeControlItem? LastRootItem
+        public virtual TreeViewItem? LastRootItem
         {
             get
             {
@@ -232,7 +232,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets the collection of root items contained within the tree control.
         /// </summary>
-        public IReadOnlyList<TreeControlItem> Items
+        public IReadOnlyList<TreeViewItem> Items
         {
             get => RootItem.Items;
         }
@@ -275,16 +275,16 @@ namespace Alternet.UI
         /// Gets or sets the first fully-visible tree item in the control.
         /// This is slower than <see cref="TopIndex"/>, so if you have item index, use that instead.
         /// </summary>
-        /// <value>A <see cref="TreeControlItem"/> that represents the first
+        /// <value>A <see cref="TreeViewItem"/> that represents the first
         /// fully-visible tree item in the control.</value>
         [Browsable(false)]
-        public virtual TreeControlItem? TopItem
+        public virtual TreeViewItem? TopItem
         {
             get
             {
                 var index = ListBox.TopIndex;
 
-                return ListBox.GetItem(index) as TreeControlItem;
+                return ListBox.GetItem(index) as TreeViewItem;
             }
 
             set
@@ -304,10 +304,10 @@ namespace Alternet.UI
         /// <value>A <see cref="IReadOnlyList{ListControlItem}"/> containing the
         /// currently selected items in the control.</value>
         /// <remarks>
-        /// For a multiple-selection <see cref="VirtualTreeControl"/>, this property returns
+        /// For a multiple-selection <see cref="TreeView"/>, this property returns
         /// a collection containing all the items that are selected
         /// in the control. For a single-selection
-        /// <see cref="VirtualTreeControl"/>, this property returns a collection containing a
+        /// <see cref="TreeView"/>, this property returns a collection containing a
         /// single element containing the only selected item in the control.
         /// </remarks>
         [Browsable(false)]
@@ -331,19 +331,19 @@ namespace Alternet.UI
         /// <value>A <see cref="IReadOnlyList{TreeControlItem}"/> containing the
         /// currently selected items in the control.</value>
         /// <remarks>
-        /// For a multiple-selection <see cref="VirtualTreeControl"/>, this property returns
+        /// For a multiple-selection <see cref="TreeView"/>, this property returns
         /// a collection containing all the items that are selected
-        /// in the <see cref="VirtualTreeControl"/>. For a single-selection
-        /// <see cref="VirtualTreeControl"/>, this property returns a collection containing a
+        /// in the <see cref="TreeView"/>. For a single-selection
+        /// <see cref="TreeView"/>, this property returns a collection containing a
         /// single element containing the only selected item in the
-        /// <see cref="VirtualTreeControl"/>.
+        /// <see cref="TreeView"/>.
         /// </remarks>
         [Browsable(false)]
-        public virtual IReadOnlyList<TreeControlItem> SelectedItems
+        public virtual IReadOnlyList<TreeViewItem> SelectedItems
         {
             get
             {
-                return ListBox.SelectedItems.Cast<TreeControlItem>().ToArray();
+                return ListBox.SelectedItems.Cast<TreeViewItem>().ToArray();
             }
 
             set
@@ -497,13 +497,13 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets the selected item in the tree view.
         /// </summary>
-        /// <value>The selected <see cref="TreeControlItem"/>.</value>
+        /// <value>The selected <see cref="TreeViewItem"/>.</value>
         [Browsable(false)]
-        public virtual TreeControlItem? SelectedItem
+        public virtual TreeViewItem? SelectedItem
         {
             get
             {
-                return ListBox.SelectedItem as TreeControlItem;
+                return ListBox.SelectedItem as TreeViewItem;
             }
 
             set
@@ -617,7 +617,7 @@ namespace Alternet.UI
         /// <summary>
         /// Expands all parent items of the specified item.
         /// </summary>
-        public virtual void ExpandAllParents(TreeControlItem? item)
+        public virtual void ExpandAllParents(TreeViewItem? item)
         {
             if (item is null)
                 return;
@@ -645,7 +645,7 @@ namespace Alternet.UI
         /// certain criteria. By calling this method after you select the item,
         /// the user can see and interact with the selected item.
         /// </remarks>
-        public virtual void EnsureVisible(TreeControlItem? item)
+        public virtual void EnsureVisible(TreeViewItem? item)
         {
             ScrollIntoView(item);
         }
@@ -654,7 +654,7 @@ namespace Alternet.UI
         /// Scrolls control so the specified item will be fully visible.
         /// </summary>
         /// <param name="item">Item to show into the view.</param>
-        public virtual void ScrollIntoView(TreeControlItem? item)
+        public virtual void ScrollIntoView(TreeViewItem? item)
         {
             if (item is null)
                 return;
@@ -671,7 +671,7 @@ namespace Alternet.UI
         /// <summary>
         /// Selects the specified item in the tree view and scrolls to it.
         /// </summary>
-        public virtual void SelectItem(TreeControlItem? item)
+        public virtual void SelectItem(TreeViewItem? item)
         {
             item?.ExpandAllParents();
             EnsureVisible(item);
@@ -687,8 +687,8 @@ namespace Alternet.UI
         /// <param name="selectItem">If true, the child item will be selected after being added.</param>
         /// <returns>true if the child item was successfully added; otherwise, false.</returns>
         public virtual bool AddChild(
-            UI.TreeControlItem? parentItem,
-            UI.TreeControlItem childItem,
+            UI.TreeViewItem? parentItem,
+            UI.TreeViewItem childItem,
             bool selectItem = false)
         {
             if (childItem.Parent is not null || childItem.Owner is not null)
@@ -754,7 +754,7 @@ namespace Alternet.UI
         /// To select an item in a single-selection tree control,
         /// use the <see cref="SelectedItem"/> property.
         /// </remarks>
-        public void SetSelected(TreeControlItem item, bool value)
+        public void SetSelected(TreeViewItem item, bool value)
         {
             item.IsSelected = value;
         }
@@ -764,12 +764,12 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="title">The title of the item to add.</param>
         /// <remarks>
-        /// This method creates a new <see cref="TreeControlItem"/> with the specified title
+        /// This method creates a new <see cref="TreeViewItem"/> with the specified title
         /// and adds it to the root level of the tree view.
         /// </remarks>
-        public virtual TreeControlItem Add(string title)
+        public virtual TreeViewItem Add(string title)
         {
-            TreeControlItem item = new(title);
+            TreeViewItem item = new(title);
             Add(item);
             return item;
         }
@@ -779,7 +779,7 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="item">The item to add.</param>
         /// <param name="selectItem">If true, the item will be selected after being added.</param>
-        public virtual bool Add(UI.TreeControlItem item, bool selectItem = false)
+        public virtual bool Add(UI.TreeViewItem item, bool selectItem = false)
         {
             return AddChild(null, item, selectItem);
         }
@@ -789,7 +789,7 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="item">The item to remove.</param>
         /// <returns>true if the item was successfully removed; otherwise, false.</returns>
-        public virtual bool Remove(UI.TreeControlItem? item)
+        public virtual bool Remove(UI.TreeViewItem? item)
         {
             if (item is null)
                 return false;
@@ -827,7 +827,7 @@ namespace Alternet.UI
                 ListBox.ClearSelected();
                 foreach (var item in items)
                 {
-                    (item as TreeControlItem)?.Remove();
+                    (item as TreeViewItem)?.Remove();
                 }
             }
             finally
@@ -848,7 +848,7 @@ namespace Alternet.UI
         /// Removes item and selects its sibling (next or previous on the same level).
         /// </summary>
         /// <param name="item">Item to remove.</param>
-        public virtual void RemoveItemAndSelectSibling(TreeControlItem? item)
+        public virtual void RemoveItemAndSelectSibling(TreeViewItem? item)
         {
             if (DisposingOrDisposed)
                 return;
@@ -890,7 +890,7 @@ namespace Alternet.UI
         /// Called when an item is added to this tree view control, at
         /// any nesting level.
         /// </summary>
-        public virtual void RaiseItemAdded(UI.TreeControlItem item)
+        public virtual void RaiseItemAdded(UI.TreeViewItem item)
         {
             Invoke(Internal);
 
@@ -919,7 +919,7 @@ namespace Alternet.UI
         /// Called when an item is removed from this tree view control,
         /// at any nesting level.
         /// </summary>
-        public virtual void RaiseItemRemoved(UI.TreeControlItem item)
+        public virtual void RaiseItemRemoved(UI.TreeViewItem item)
         {
             Invoke(Internal);
 
@@ -947,7 +947,7 @@ namespace Alternet.UI
         /// <summary>
         /// Called after the tree item is expanded.
         /// </summary>
-        public virtual void RaiseAfterExpand(UI.TreeControlItem item)
+        public virtual void RaiseAfterExpand(UI.TreeViewItem item)
         {
             Invoke(Internal);
 
@@ -967,7 +967,7 @@ namespace Alternet.UI
         /// <summary>
         /// Called after the tree item is collapsed.
         /// </summary>
-        public virtual void RaiseAfterCollapse(UI.TreeControlItem item)
+        public virtual void RaiseAfterCollapse(UI.TreeViewItem item)
         {
             Invoke(Internal);
 
@@ -987,7 +987,7 @@ namespace Alternet.UI
         /// <summary>
         /// Called before the tree item is expanded.
         /// </summary>
-        public virtual void RaiseBeforeExpand(UI.TreeControlItem item, ref bool cancel)
+        public virtual void RaiseBeforeExpand(UI.TreeViewItem item, ref bool cancel)
         {
             if (BeforeExpand is null)
                 return;
@@ -1009,9 +1009,9 @@ namespace Alternet.UI
         /// <summary>
         /// Retrieves the tree control item located at the current mouse cursor position.
         /// </summary>
-        /// <returns>The <see cref="TreeControlItem"/> at the mouse cursor position,
+        /// <returns>The <see cref="TreeViewItem"/> at the mouse cursor position,
         /// or <c>null</c> if no item is found.</returns>
-        public virtual TreeControlItem? GetNodeAtMouseCursor()
+        public virtual TreeViewItem? GetNodeAtMouseCursor()
         {
             return GetNodeAt(Mouse.GetPosition(ListBox));
         }
@@ -1023,16 +1023,16 @@ namespace Alternet.UI
         /// The <see cref="PointD" /> to evaluate and retrieve the node from.
         /// </param>
         /// <returns>
-        /// The <see cref="TreeControlItem" /> at the specified point, in client coordinates,
+        /// The <see cref="TreeViewItem" /> at the specified point, in client coordinates,
         /// or <see langword="null" /> if there is no item at that location.
         /// </returns>
-        public virtual TreeControlItem? GetNodeAt(PointD point)
+        public virtual TreeViewItem? GetNodeAt(PointD point)
         {
             var index = ListBox.HitTest(point);
             if (index is null)
                 return null;
             var item = ListBox.GetItem(index.Value);
-            return item as TreeControlItem;
+            return item as TreeViewItem;
         }
 
         /// <summary>
@@ -1060,7 +1060,7 @@ namespace Alternet.UI
         /// <summary>
         /// Called before the tree item is collapsed.
         /// </summary>
-        public virtual void RaiseBeforeCollapse(UI.TreeControlItem item, ref bool cancel)
+        public virtual void RaiseBeforeCollapse(UI.TreeViewItem item, ref bool cancel)
         {
             if (BeforeCollapse is null)
                 return;
@@ -1089,7 +1089,7 @@ namespace Alternet.UI
         /// Called after 'IsExpanded' property
         /// value of a tree item belonging to this tree view changes.
         /// </summary>
-        public virtual void RaiseExpandedChanged(UI.TreeControlItem item)
+        public virtual void RaiseExpandedChanged(UI.TreeViewItem item)
         {
             if (ExpandedChanged is not null)
             {
@@ -1113,14 +1113,14 @@ namespace Alternet.UI
         /// <summary>
         /// Toggles the expanded or collapsed state of the specified tree control item.
         /// </summary>
-        /// <param name="item">The <see cref="TreeControlItem"/> to toggle. If null or not
+        /// <param name="item">The <see cref="TreeViewItem"/> to toggle. If null or not
         /// a valid tree item, no action is taken.</param>
         /// <remarks>
         /// If the specified item has child items, this method switches its state
         /// between expanded and collapsed.
         /// It does not affect the state of child items.
         /// </remarks>
-        public virtual bool ToggleExpanded(TreeControlItem? item)
+        public virtual bool ToggleExpanded(TreeViewItem? item)
         {
             if (item is null)
                 return false;
@@ -1153,7 +1153,7 @@ namespace Alternet.UI
         /// if <paramref name="collapseSiblings"/> is <c>false</c>.
         /// </remarks>
         public virtual bool ToggleExpandedAndCollapseSiblings(
-            TreeControlItem? item,
+            TreeViewItem? item,
             bool collapseSiblings)
         {
             if (item is null)
@@ -1245,8 +1245,8 @@ namespace Alternet.UI
         /// </summary>
         /// <remarks>The separator item is used to visually divide groups of items within the tree
         /// control.</remarks>
-        /// <returns>A <see cref="TreeControlItem"/> representing the added separator.</returns>
-        public virtual TreeControlItem AddSeparator()
+        /// <returns>A <see cref="TreeViewItem"/> representing the added separator.</returns>
+        public virtual TreeViewItem AddSeparator()
         {
             TreeControlSeparatorItem item = new();
             Add(item);
@@ -1318,14 +1318,14 @@ namespace Alternet.UI
         /// This method enumerates all items (including those not currently visible),
         /// extracts their textual representation
         /// and sets each item's <c>IsVisible</c> flag accordingly.
-        /// The update is wrapped in <see cref="TreeControlItem.DoInsideUpdate"/>
+        /// The update is wrapped in <see cref="TreeViewItem.DoInsideUpdate"/>
         /// to optimize rendering and batch changes.
         /// </remarks>
         public virtual void ApplyVisibilityFilter(
             string? filter,
             StringComparison comparison = StringComparison.CurrentCultureIgnoreCase)
         {
-            TreeControlItem.EnumExpandedItemsParams prm = new();
+            TreeViewItem.EnumExpandedItemsParams prm = new();
             prm.OnlyVisible = false;
             prm.OnlyExpanded = false;
 

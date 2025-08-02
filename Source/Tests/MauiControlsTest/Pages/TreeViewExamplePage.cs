@@ -15,7 +15,7 @@ namespace AllQuickStarts
         {
             Alternet.UI.ListControlUtils.AddTestItems(treeView.RootItem, 10, ItemInitialize);
 
-            void ItemInitialize(Alternet.UI.TreeControlItem item)
+            void ItemInitialize(Alternet.UI.TreeViewItem item)
             {
             }
 
@@ -142,7 +142,7 @@ namespace AllQuickStarts
 
         public void AddNewChildItem()
         {
-            var item = new Alternet.UI.TreeControlItem();
+            var item = new Alternet.UI.TreeViewItem();
             item.Text = "item " + Alternet.UI.LogUtils.GenNewId();
             item.SvgImage = Alternet.UI.KnownColorSvgImages.ImgLogo;
             treeView.AddChild(treeView.SelectedItem, item, true);
@@ -150,7 +150,7 @@ namespace AllQuickStarts
 
         public void AddNewItem()
         {
-            var item = new Alternet.UI.TreeControlItem();
+            var item = new Alternet.UI.TreeViewItem();
             item.Text = "item " + Alternet.UI.LogUtils.GenNewId();
             item.SvgImage = Alternet.UI.KnownColorSvgImages.ImgLogo;
             treeView.Add(item, true);

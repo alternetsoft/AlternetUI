@@ -14,7 +14,7 @@ namespace Alternet.UI
     /// </summary>
     public class PanelFormSelector : Panel
     {
-        private readonly VirtualTreeControl view = new()
+        private readonly TreeView view = new()
         {
             MinimumSize = (350, 400),
         };
@@ -73,7 +73,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets control with the list of forms.
         /// </summary>
-        public VirtualTreeControl View => view;
+        public TreeView View => view;
 
         /// <summary>
         /// Gets button panel which contains "Open" button.
@@ -107,7 +107,7 @@ namespace Alternet.UI
         {
             HasGroups = true;
 
-            TreeControlItem item = new(title)
+            TreeViewItem item = new(title)
             {
                 Font = GroupFont ??= Control.DefaultFont.Larger().AsBold,
                 HideSelection = true,
@@ -127,9 +127,9 @@ namespace Alternet.UI
         /// </summary>
         public virtual void Add(string text, Func<Window> createForm)
         {
-            TreeControlItem item = new(text);
+            TreeViewItem item = new(text);
 
-            TreeControlItem root = RootItem;
+            TreeViewItem root = RootItem;
 
             if (RootItem.LastChild?.CustomAttr["IsGroupItem"] is true)
             {

@@ -85,7 +85,7 @@ namespace ControlsSample
                 sample.Init();
                 sample.RefreshRequested += OnRefreshRequested;
 
-                var newItem = new TreeControlItem(sample.Title);
+                var newItem = new TreeViewItem(sample.Title);
                 newItem.Action = () =>
                 {
                     App.AddBackgroundInvokeAction(() =>

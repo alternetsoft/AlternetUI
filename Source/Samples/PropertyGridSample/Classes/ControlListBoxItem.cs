@@ -8,7 +8,7 @@ using Alternet.UI;
 namespace PropertyGridSample
 {
     internal class ControlListBoxItem
-        : TreeControlItem, IEquatable<ControlListBoxItem>, IComparable<ControlListBoxItem>
+        : TreeViewItem, IEquatable<ControlListBoxItem>, IComparable<ControlListBoxItem>
     {
         private object? instance;
         private object? propInstance;

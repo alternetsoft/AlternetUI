@@ -261,14 +261,14 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Creates a <see cref="TreeControlItem"/> for logging an exception.
+        /// Creates a <see cref="TreeViewItem"/> for logging an exception.
         /// </summary>
         /// <param name="e">The exception to log.</param>
         /// <param name="kind">The kind of log item. Default is <see cref="LogItemKind.Error"/>.</param>
         /// <param name="allowReplace">Indicates whether replacing the last log item with the
         /// same text is allowed. Currently not implemented.</param>
-        /// <returns>A <see cref="TreeControlItem"/> representing the logged exception.</returns>
-        public static TreeControlItem CreateLogItemForException(
+        /// <returns>A <see cref="TreeViewItem"/> representing the logged exception.</returns>
+        public static TreeViewItem CreateLogItemForException(
             Exception e,
             LogItemKind kind = LogItemKind.Error,
             bool allowReplace = false)
@@ -292,7 +292,7 @@ namespace Alternet.UI
 
             var s = $"{prefix} '{e.GetType().Name}': <b>{e.Message}</b>. [Double click...]";
 
-            TreeControlItem item = new(s);
+            TreeViewItem item = new(s);
             item.TextHasBold = true;
             item.Tag = asString;
             item.DoubleClickAction = () =>
@@ -934,13 +934,13 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Logs the contents of an object as child items of a <see cref="TreeControlItem"/>.
+        /// Logs the contents of an object as child items of a <see cref="TreeViewItem"/>.
         /// If the object is an array or an enumerable collection, it logs each item up to a maximum of 100.
         /// Also records the total item count.
         /// </summary>
         /// <param name="parent">The parent tree item to which the logged elements will be added.</param>
         /// <param name="result">The object to log, which may be an array or an enumerable collection.</param>
-        public static void LogAsTreeItemChilds(TreeControlItem parent, object? result)
+        public static void LogAsTreeItemChilds(TreeViewItem parent, object? result)
         {
             if (result is Array array)
             {
@@ -996,7 +996,7 @@ namespace Alternet.UI
             /// <summary>
             /// Gets or sets <see cref="ListControlItem"/> used to show log item.
             /// </summary>
-            public TreeControlItem? Item;
+            public TreeViewItem? Item;
 
             private int? id;
 
@@ -1014,7 +1014,7 @@ namespace Alternet.UI
             /// Initializes a new instance of the <see cref="LogItem"/> class
             /// with the specified parameters.
             /// </summary>
-            public LogItem(TreeControlItem? item, LogItemKind kind = LogItemKind.Information)
+            public LogItem(TreeViewItem? item, LogItemKind kind = LogItemKind.Information)
             {
                 Msg = string.Empty;
                 Kind = kind;

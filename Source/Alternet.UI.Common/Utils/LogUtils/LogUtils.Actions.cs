@@ -103,7 +103,7 @@ namespace Alternet.UI
         /// <param name="image">Image to log.</param>
         public static void LogImage(Image image)
         {
-            TreeControlItem logItem = new();
+            TreeViewItem logItem = new();
             logItem.Image = image;
             logItem.HideSelection = true;
 
