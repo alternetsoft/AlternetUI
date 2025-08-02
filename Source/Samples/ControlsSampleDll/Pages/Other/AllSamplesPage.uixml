@@ -7,7 +7,7 @@
 
   <HorizontalStackPanel>
 
-    <ListBox SuggestedWidth="350" SuggestedHeight="400" Name="view" />
+    <StdListBox SuggestedWidth="350" SuggestedHeight="400" Name="view" />
 
     <VerticalStackPanel Margin="10,0,0,0" Padding="5"
                 Grid.Column="1" Grid.Row="0" >

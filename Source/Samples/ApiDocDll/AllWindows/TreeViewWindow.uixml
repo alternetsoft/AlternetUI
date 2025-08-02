@@ -3,7 +3,7 @@
         x:Class="ApiDoc.TreeViewWindow"
         Title="TreeView">
     <!-- <CreateUixmlDeclaration> -->
-        <TreeView SuggestedWidth="300" SuggestedHeight="240" Name="treeView"
+        <StdTreeView SuggestedWidth="300" SuggestedHeight="240" Name="treeView"
                   SelectionChanged="TreeView_SelectionChanged"
                   ExpandedChanged="TreeView_ExpandedChanged" />
     <!-- </CreateUixmlDeclaration> -->

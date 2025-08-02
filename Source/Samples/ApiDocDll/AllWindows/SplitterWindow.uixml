@@ -6,7 +6,7 @@
   <LayoutPanel>
     <Panel Dock="Fill" Name="fillPanel"/>
     <Splitter Dock="Top"/>
-    <ListBox Dock="Top" MinHeight="200" Name="topListBox"/>
+    <StdListBox Dock="Top" MinHeight="200" Name="topListBox"/>
   </LayoutPanel>
   <!-- </CreateUixmlDeclaration> -->
 </Window>

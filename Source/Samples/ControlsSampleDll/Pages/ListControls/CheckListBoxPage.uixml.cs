@@ -109,12 +109,6 @@ namespace ControlsSample
             return result;
         }
 
-        private void CheckListBox_SizeChanged(object? sender, EventArgs e)
-        {
-            App.LogIf(
-                $"CheckListBox: SizeChanged. InUpdates: {checkListBox.InUpdates}, ClientSize: ({checkListBox.ClientSize}), Size: ({checkListBox.Size})", false);
-        }
-
         private void CheckListBox_CheckedChanged(object? sender, EventArgs e)
         {
             string checkedIndicesString = IndicesToStr(checkListBox.CheckedIndices);

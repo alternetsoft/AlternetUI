@@ -4,7 +4,7 @@
         xmlns:local="clr-namespace:ControlsSample;assembly=ControlsSample" Padding="10,0,10,0">
   <Panel >
     <HorizontalStackPanel>
-      <TreeView SuggestedWidth="240" Name="treeView"
+      <StdTreeView SuggestedWidth="240" Name="treeView"
                 ExpandedChanged="TreeView_ExpandedChanged"
                 BeforeExpand="TreeView_BeforeExpand"
                 BeforeCollapse="TreeView_BeforeCollapse"

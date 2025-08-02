@@ -14,7 +14,7 @@
     <StackPanel Orientation="Horizontal" Margin="0,0,0,10" Padding="10"
                 MinChildMargin="5" HasBorder="true">
       <Label Text="Default Slider and Progress:" VerticalAlignment="Center"/>
-      <Slider Minimum="0" Maximum="100" Value="25"
+      <StdSlider Minimum="0" Maximum="100" Value="25"
               TickFrequency="25" Name="slider1"
           VerticalAlignment="Center" Margin="0,0,10,0" SuggestedWidth="200"/>
       <ProgressBar Name="progressBar1"

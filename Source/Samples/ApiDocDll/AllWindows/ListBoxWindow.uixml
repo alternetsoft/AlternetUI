@@ -4,7 +4,7 @@
         Title="Examples.ListBox">
   <StackPanel Orientation="Vertical">
     <!-- <CreateUixmlDeclaration> -->
-    <ListBox Margin="8" Name="listBox" SelectionChanged="ListBox_SelectionChanged"/>
+    <StdListBox Margin="8" Name="listBox" SelectionChanged="ListBox_SelectionChanged"/>
     <!-- </CreateUixmlDeclaration> -->
 
   </StackPanel>

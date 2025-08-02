@@ -6,7 +6,7 @@
 
     <StackPanel Orientation="Horizontal" Name="tab1" Margin="5" VerticalAlignment="Fill">
       
-      <ListBox
+      <StdListBox
         SuggestedWidth="200" Name="listBox" SelectionChanged="ListBox_SelectionChanged"
         MouseLeftButtonDown="ListBox_MouseLeftButtonDown" Margin="0,0,0,5"/>
       

@@ -6,7 +6,7 @@
     <Border HorizontalAlignment="Stretch" Padding="5" Layout="Vertical">
       <StackPanel Orientation="Horizontal" Margin="5">
         <Label Text="Linked:" Margin="0,0,10,0"/>
-        <Slider Name="progressBarControlSlider"
+        <StdSlider Name="progressBarControlSlider"
                 VerticalAlignment="Center"
             SuggestedWidth="200"/>
         <ProgressBar Maximum="10" Margin="10,0,0,0" Name="progressBar"
@@ -20,28 +20,28 @@
 
           <Label Text="H1 [0..10]" Grid.Column="0" Grid.Row="0"
                  VerticalAlignment="Center" MarginRight="10"/>
-          <Slider Value="7" Name="sliderh1"
+          <StdSlider Value="7" Name="sliderh1"
                   Grid.Column="1" Grid.Row="0" SuggestedWidth ="200" VerticalAlignment="Center"/>
           <Label Margin="5" Grid.Column="3" Grid.Row="0" Name="displayH1"
                  VerticalAlignment="Center"/>
 
           <Label Text="H2 [0..20]" Grid.Column="0" Grid.Row="1"
                  VerticalAlignment="Center" MarginRight="10"/>
-          <Slider Maximum="20" Value="5" Name="sliderh2"
+          <StdSlider Maximum="20" Value="5" Name="sliderh2"
                   Grid.Column="1" Grid.Row="1" SuggestedWidth ="200" VerticalAlignment="Center"/>
           <Label Margin="5" Grid.Column="3" Grid.Row="1" Name="displayH2"
                  VerticalAlignment="Center"/>
 
           <Label Text="H3 [0..100]" Grid.Column="0" Grid.Row="2"
                  VerticalAlignment="Center" MarginRight="10"/>
-          <Slider Maximum="100" Value="70" Name="sliderh3"
+          <StdSlider Maximum="100" Value="70" Name="sliderh3"
                   Grid.Column="1" Grid.Row="2" SuggestedWidth ="200" VerticalAlignment="Center"/>
           <Label Margin="5" Grid.Column="3" Grid.Row="2" Name="displayH3"
                  VerticalAlignment="Center"/>
 
           <Label Text="H4 [50..200]" Grid.Column="0" Grid.Row="3"
                  VerticalAlignment="Center" MarginRight="10"/>
-          <Slider Minimum="50" Maximum="200" Value="125"
+          <StdSlider Minimum="50" Maximum="200" Value="125"
               Grid.Column="1" Grid.Row="3" Name="sliderh4"
                   VerticalAlignment="Center" SuggestedWidth ="200"/>
           <Label Margin="5" Grid.Column="3" Grid.Row="3" Name="displayH4"
@@ -53,27 +53,27 @@
         <Grid Name="verticalSlidersGrid" ColumnCount="4" RowCount="2" MinChildMargin="5">
           <Label Text="V1 [0..10]" Margin="0,0,10,5"
                   Grid.Column="0" Grid.Row="0" HorizontalAlignment="Center"/>
-          <Slider Value="4" Margin="0,0,0,5" Name="sliderv1"
+          <StdSlider Value="4" Margin="0,0,0,5" Name="sliderv1"
                   Orientation="Vertical" HorizontalAlignment="Center"
                   Grid.Column="0" Grid.Row="1" SuggestedHeight="150"/>
 
           <Label Text="V2 [0..100]" Margin="0,0,10,5"
               Grid.Column="1" Grid.Row="0" HorizontalAlignment="Center"/>
-          <Slider Maximum="100" Value="70" Margin="0,0,0,5" Name="sliderv2"
+          <StdSlider Maximum="100" Value="70" Margin="0,0,0,5" Name="sliderv2"
                   HorizontalAlignment="Center"
               Orientation="Vertical" SuggestedHeight="150"
               Grid.Column="1" Grid.Row="1"/>
 
           <Label Text="V3 [50..200]" Margin="0,0,5,5"
               Grid.Column="2" Grid.Row="0" HorizontalAlignment="Center"/>
-          <Slider Minimum="50" Maximum="200" Value="125" Margin="0,0,5,5"
+          <StdSlider Minimum="50" Maximum="200" Value="125" Margin="0,0,5,5"
               Orientation="Vertical" Name="sliderv3"
                   HorizontalAlignment="Center" SuggestedHeight="150"
               Grid.Column="2" Grid.Row="1"/>
 
           <Label Text="V4 [-15..25]" Margin="0,0,5,5"
               Grid.Column="3" Grid.Row="0" HorizontalAlignment="Center"/>
-          <Slider Minimum="-15" Maximum="25" Value="5" Margin="0,0,5,5"
+          <StdSlider Minimum="-15" Maximum="25" Value="5" Margin="0,0,5,5"
               Orientation="Vertical" Name="sliderv4"
                   HorizontalAlignment="Center" SuggestedHeight="150"
               Grid.Column="3" Grid.Row="1"/>
