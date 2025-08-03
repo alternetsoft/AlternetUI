@@ -168,6 +168,28 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Sorts the items in descending order based on the specified comparison logic.
+        /// </summary>
+        /// <remarks>This method performs the sorting operation only if the collection contains items.
+        /// The sorting is executed in descending order by reversing the result of the provided
+        /// comparison logic.</remarks>
+        /// <param name="comparison">A delegate that defines the comparison logic
+        /// to apply to the items. The delegate
+        /// should return a value less than zero if the first item is less than the second,
+        /// zero if they are equal, or
+        /// greater than zero if the first item is greater than the second.</param>
+        public virtual void SortDescending(Comparison<T> comparison)
+        {
+            Sort(DescendingComparison);
+
+            int DescendingComparison(T x, T y)
+            {
+                var result = comparison(x, y);
+                return result < 0 ? 1 : result > 0 ? -1 : 0;
+            }
+        }
+
+        /// <summary>
         /// Moves item from oldIndex to newIndex within the list.
         /// Raises a <see cref="CollectionChanged"/> event to any listeners.
         /// </summary>
