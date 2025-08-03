@@ -385,6 +385,9 @@ namespace Alternet.UI
             if (kind == PickerPopupKind.None)
                 return;
 
+            if(App.IsLinuxOS)
+                kind = PickerPopupKind.ListBox;
+
             RaiseBeforeShowPopup(EventArgs.Empty);
 
             switch (kind)
