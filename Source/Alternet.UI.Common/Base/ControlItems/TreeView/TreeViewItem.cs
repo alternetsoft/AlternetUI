@@ -16,6 +16,7 @@ namespace Alternet.UI
         private BaseCollection<TreeViewItem>? items;
         private bool isExpanded;
         private TreeViewItem? parent;
+        private object? handle;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="TreeViewItem"/> class.
@@ -71,6 +72,23 @@ namespace Alternet.UI
                     return;
                 SetSelected(Owner?.ListContainer, value);
                 Owner?.Invalidate();
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets item handle. This is used only when item is connected to native control.
+        /// </summary>
+        [Browsable(false)]
+        public virtual object? Handle
+        {
+            get
+            {
+                return handle;
+            }
+
+            set
+            {
+                handle = value;
             }
         }
 

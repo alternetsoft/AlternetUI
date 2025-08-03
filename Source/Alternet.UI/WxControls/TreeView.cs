@@ -10,7 +10,7 @@ namespace Alternet.UI
     /// <summary>
     /// Displays a hierarchical collection of labeled items with optional images,
     /// each represented by a <see cref="TreeViewItem"/>. We suggest to use
-    /// <see cref="VirtualTreeControl"/> instead of this control. <see cref="VirtualTreeControl"/>
+    /// <see cref="StdTreeView"/> instead of this control. <see cref="StdTreeView"/>
     /// works faster, especially with large number of items, and has much more features.
     /// </summary>
     /// <remarks>
@@ -31,7 +31,7 @@ namespace Alternet.UI
     /// Set the <see cref="ImageIndex"/> property to the index value of
     /// the <see cref="Alternet.Drawing.Image"/> that you want to display for all items by default.
     /// Individual items can override the default images by setting the
-    /// <see cref="TreeViewItem.ImageIndex"/> property.
+    /// <see cref="ListControlItem.ImageIndex"/> property.
     /// </para>
     /// <para>
     /// <see cref="TreeView"/> items can be expanded to display the next level of
@@ -54,7 +54,7 @@ namespace Alternet.UI
     [DefaultProperty("Items")]
     [DefaultEvent("SelectionChanged")]
     [ControlCategory("Common")]
-    public partial class TreeView : Control
+    internal partial class TreeView : Control
     {
         /// <summary>
         /// The set of flags that are closest to the defaults for the native control under Linux.
@@ -648,7 +648,7 @@ namespace Alternet.UI
         /// You can specify which images from the list are displayed for items
         /// by default by setting the <see cref="ImageIndex"/> property.
         /// Individual <see cref="TreeViewItem"/> objects can specify which image
-        /// is displayed by setting the <see cref="TreeViewItem.ImageIndex"/> property.
+        /// is displayed by setting the <see cref="ListControlItem.ImageIndex"/> property.
         /// These individual <see cref="TreeViewItem"/> settings will override
         /// the settings in the corresponding <see cref="TreeView"/> properties.
         /// </remarks>
@@ -691,7 +691,7 @@ namespace Alternet.UI
         /// by default by setting the <see cref="ImageIndex"/> property.
         /// Individual <see cref="TreeViewItem"/> objects can specify which image
         /// is displayed by setting the
-        /// <see cref="TreeViewItem.ImageIndex"/> property.
+        /// <see cref="ListControlItem.ImageIndex"/> property.
         /// These individual <see cref="TreeViewItem"/> settings will override
         /// the settings in the corresponding <see cref="TreeView"/> properties.
         /// </remarks>
@@ -1148,7 +1148,7 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Changes visual style of the control to look like <see cref="ListBox"/>.
+        /// Changes visual style of the control to look like <see cref="StdListBox"/>.
         /// </summary>
         public virtual void MakeAsListBox()
         {
@@ -1210,7 +1210,8 @@ namespace Alternet.UI
         /// <inheritdoc/>
         protected override IControlHandler CreateHandler()
         {
-            return ControlFactory.Handler.CreateTreeViewHandler(this);
+            return (ControlFactory.Handler as IWxControlFactoryHandler)?.CreateTreeViewHandler(this)
+                ?? throw new Exception("Failed to create TreeView handler.");
         }
 
         /// <summary>
@@ -1316,12 +1317,16 @@ namespace Alternet.UI
 
         private void Items_ItemRemoved(object? sender, int index, TreeViewItem item)
         {
+            /* !!!!
             TreeViewItem.OnChildItemRemoved(item);
+            */
         }
 
         private void Items_ItemInserted(object? sender, int index, TreeViewItem item)
         {
+            /* !!!!
             TreeViewItem.OnChildItemAdded(item, null, this, index);
+            */
         }
 
         private void ClearSelectedCore()
