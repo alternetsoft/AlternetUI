@@ -38,12 +38,15 @@ namespace Alternet.UI
         private TreeViewRootItem rootItem;
         private TreeViewButtonsKind treeButtons = TreeViewButtonsKind.Null;
         private bool needTreeChanged;
+        private ListBoxHeader? header;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="StdTreeView"/> class.
         /// </summary>
         public StdTreeView()
         {
+            base.Layout = LayoutStyle.Vertical;
+
             rootItem = new(this);
 
             ListBox.MouseDown += (s, e) =>
@@ -170,6 +173,31 @@ namespace Alternet.UI
             set
             {
                 ListBox.SelectionMode = (ListBoxSelectionMode)value;
+            }
+        }
+
+        /// <summary>
+        /// Gets the header with columns associated with the control.
+        /// </summary>
+        /// <remarks>The header is automatically created when accessed for the first time.
+        /// It is not visible by default.</remarks>
+        [Browsable(false)]
+        public virtual ListBoxHeader Header
+        {
+            get
+            {
+                if(header is null)
+                {
+                    header = CreateHeader();
+                    header.ParentForeColor = true;
+                    header.ParentBackColor = true;
+                    header.OnlyBottomBorder();
+                    header.VerticalAlignment = VerticalAlignment.Top;
+                    header.Visible = false;
+                    this.Children.Prepend(header);
+                }
+
+                return header;
             }
         }
 
@@ -364,6 +392,7 @@ namespace Alternet.UI
                 if(listBox is null)
                 {
                     listBox = CreateListBox();
+                    listBox.VerticalAlignment = VerticalAlignment.Fill;
                     listBox.ParentFont = true;
                     listBox.HasBorder = false;
                     listBox.SelectionUnderImage = true;
@@ -1233,7 +1262,6 @@ namespace Alternet.UI
 
         /// <summary>
         /// Changes visual style of the control to look like <see cref="ListBox"/>.
-        /// Currently does nothing.
         /// </summary>
         public virtual void MakeAsListBox()
         {
@@ -1381,6 +1409,18 @@ namespace Alternet.UI
         protected override void OnContextMenuCreated(EventArgs e)
         {
             ListBox.ContextMenuStrip = ContextMenu;
+        }
+
+        /// <summary>
+        /// Creates and returns a new instance of a <see cref="ListBoxHeader"/>.
+        /// </summary>
+        /// <remarks>This method is intended to be overridden in derived classes to provide a custom
+        /// implementation of the <see cref="ListBoxHeader"/>. By default, it returns
+        /// a new instance of <see cref="ListBoxHeader"/>.</remarks>
+        /// <returns>A new instance of <see cref="ListBoxHeader"/>.</returns>
+        protected virtual ListBoxHeader CreateHeader()
+        {
+            return new ListBoxHeader();
         }
 
         /// <summary>
