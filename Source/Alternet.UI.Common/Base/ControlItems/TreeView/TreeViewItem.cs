@@ -710,6 +710,30 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Sorts the items in descending order based on their comparison logic.
+        /// </summary>
+        /// <remarks>This method sorts the collection of items in descending order using a default
+        /// comparison logic. If the collection is empty, the method performs no operation.</remarks>
+        public virtual void SortDescending()
+        {
+            if (!HasItems)
+                return;
+
+            DoInsideUpdate(
+            () =>
+            {
+                items?.Sort(Comparison);
+
+                int Comparison(TreeViewItem x, TreeViewItem y)
+                {
+                    var result = x.CompareTo(y);
+                    return result < 0 ? 1 : result > 0 ? -1 : 0;
+                }
+            },
+            true);
+        }
+
+        /// <summary>
         /// Sorts child items in ascending order.
         /// </summary>
         /// <remarks>This method sorts child items using the default comparer.
@@ -781,7 +805,8 @@ namespace Alternet.UI
         /// has no child items. </remarks>
         /// <param name="comparison">A delegate that defines the comparison logic
         /// to determine the order of the items.</param>
-        public virtual void Sort(Comparison<TreeViewItem> comparison)
+        public virtual void Sort<T2>(Comparison<T2> comparison)
+            where T2 : TreeViewItem
         {
             if (!HasItems)
                 return;
@@ -789,7 +814,69 @@ namespace Alternet.UI
             DoInsideUpdate(
             () =>
             {
-                items?.Sort(comparison);
+                items?.Sort(Comparison);
+
+                int Comparison(TreeViewItem x, TreeViewItem y)
+                {
+                    return comparison((T2)x, (T2)y);
+                }
+            },
+            true);
+        }
+
+        /// <summary>
+        /// Sorts the items in descending order based on the specified comparison logic.
+        /// </summary>
+        /// <remarks>This method performs the sorting operation only if the collection contains items.
+        /// The sorting is done in descending order by reversing the result of the provided
+        /// comparison logic.</remarks>
+        /// <typeparam name="T2">The type of the items to be sorted.
+        /// Must derive from <see cref="TreeViewItem"/>.</typeparam>
+        /// <param name="comparison">A delegate that defines the comparison
+        /// logic to determine the order of the items. The delegate should return
+        /// a negative value if the first item is less than the second,
+        /// zero if they are equal, and a positive value if
+        /// the first item is greater than the second.</param>
+        public virtual void SortDescending<T2>(Comparison<T2> comparison)
+            where T2 : TreeViewItem
+        {
+            if (!HasItems)
+                return;
+
+            DoInsideUpdate(
+            () =>
+            {
+                items?.Sort(Comparison);
+
+                int Comparison(TreeViewItem x, TreeViewItem y)
+                {
+                    var result = comparison((T2)x, (T2)y);
+                    return result < 0 ? 1 : result > 0 ? -1 : 0;
+                }
+            },
+            true);
+        }
+
+        /// <summary>
+        /// Sorts the items in descending order based on the specified comparison logic.
+        /// </summary>
+        /// <remarks>This method performs the sorting operation only if the child collection contains items.
+        /// The sorting is executed in descending order by reversing the result of the provided
+        /// comparison logic.</remarks>
+        /// <param name="comparison">A delegate that defines the comparison logic
+        /// to apply to the items. The delegate
+        /// should return a value less than zero if the first item is less than the second,
+        /// zero if they are equal, or
+        /// greater than zero if the first item is greater than the second.</param>
+        public virtual void SortDescending(Comparison<TreeViewItem> comparison)
+        {
+            if (!HasItems)
+                return;
+
+            DoInsideUpdate(
+            () =>
+            {
+                items?.SortDescending(comparison);
             },
             true);
         }
