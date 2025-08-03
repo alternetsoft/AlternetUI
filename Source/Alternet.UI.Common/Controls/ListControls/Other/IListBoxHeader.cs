@@ -24,15 +24,21 @@ namespace Alternet.UI
         /// <param name="index">The zero-based index at which the column should be inserted.
         /// If the index is out of range, the column is added at the end.</param>
         /// <param name="title">The title text to display on the column header.</param>
-        /// <param name="width">The width of the column.</param>
+        /// <param name="width">The width of the column. If not specified will be calculated using
+        /// width of the title.</param>
         /// <param name="onClick">An optional action to execute when the column header is clicked.
         /// Can be <see langword="null"/>.</param>
         /// <returns>The unique identifier of the newly inserted column.</returns>
         ObjectUniqueId InsertColumn(
             int index,
             string? title,
-            Coord width,
+            Coord? width = null,
             Action? onClick = null);
+
+        /// <summary>
+        /// Deletes all columns from the control.
+        /// </summary>
+        void DeleteColumns();
 
         /// <summary>
         /// Deletes the specified column and its associated splitter from the control.
@@ -82,10 +88,12 @@ namespace Alternet.UI
         /// <paramref name="width"/>. If the column cannot be
         /// found, the method returns <see langword="false"/>.</remarks>
         /// <param name="columnId">The unique identifier of the column whose width is to be set.</param>
-        /// <param name="width">The new width to apply to the column.</param>
+        /// <param name="width">The new width to apply to the column.
+        /// If not specified will be calculated using width of the title.
+        /// </param>
         /// <returns><see langword="true"/> if the column width was successfully set;
         /// otherwise, <see langword="false"/>.</returns>
-        bool SetColumnWidth(ObjectUniqueId columnId, Coord width);
+        bool SetColumnWidth(ObjectUniqueId columnId, Coord? width);
 
         /// <summary>
         /// Adds a new column with the specified title and width to the control.
@@ -100,6 +108,6 @@ namespace Alternet.UI
         /// <param name="onClick">The action to be executed when the column is clicked.</param>
         /// <returns>The unique identifier of the newly added column, represented
         /// as an <see cref="ObjectUniqueId"/>.</returns>
-        ObjectUniqueId AddColumn(string? title, Coord width, Action? onClick = null);
+        ObjectUniqueId AddColumn(string? title, Coord? width = null, Action? onClick = null);
     }
 }

@@ -132,6 +132,19 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
+        public virtual void DeleteColumns()
+        {
+            DoInsideLayout(() =>
+            {
+                foreach (var column in ColumnControls.Reverse().ToArray())
+                {
+                    var id = column.UniqueId;
+                    DeleteColumn(id);
+                }
+            });
+        }
+
+        /// <inheritdoc/>
         public virtual bool DeleteColumn(ObjectUniqueId? columnId)
         {
             AbstractControl? column = FindChild(columnId);
@@ -179,17 +192,30 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        public virtual bool SetColumnWidth(ObjectUniqueId columnId, Coord width)
+        public virtual bool SetColumnWidth(ObjectUniqueId columnId, Coord? width)
         {
             var column = GetColumnControl(columnId);
             if (column == null)
                 return false;
-            column.Width = width;
+
+            if (width is null)
+            {
+                var preferredSize = column.GetPreferredSize();
+                column.Width = preferredSize.Width;
+            }
+            else
+            {
+                column.Width = width.Value;
+            }
+
             return true;
         }
 
         /// <inheritdoc/>
-        public virtual ObjectUniqueId AddColumn(string? title, Coord width, Action? onClick = null)
+        public virtual ObjectUniqueId AddColumn(
+            string? title,
+            Coord? width = null,
+            Action? onClick = null)
         {
             return InsertColumn(int.MaxValue, title, width, onClick);
         }
@@ -198,7 +224,7 @@ namespace Alternet.UI
         public virtual ObjectUniqueId InsertColumn(
             int index,
             string? title,
-            Coord width,
+            Coord? width = null,
             Action? onClick = null)
         {
             SpeedButton label = new()
@@ -207,10 +233,19 @@ namespace Alternet.UI
                 ImageVisible = true,
                 TextVisible = true,
                 ImageToText = ImageToText.Horizontal,
-                Width = width,
                 Dock = DockStyle.Left,
                 ClickAction = onClick,
             };
+
+            if (width is null)
+            {
+                var preferredSize = label.GetPreferredSize();
+                label.Width = preferredSize.Width;
+            }
+            else
+            {
+                label.Width = width.Value;
+            }
 
             SetIsColumnControl(label, true);
 
