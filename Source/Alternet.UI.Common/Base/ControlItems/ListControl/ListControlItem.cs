@@ -1397,6 +1397,44 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Compares two <see cref="ListControlItem"/> objects and returns a value
+        /// indicating their relative order.
+        /// </summary>
+        /// <remarks>This method uses the <see cref="ListControlItem.CompareTo"/>
+        /// method to determine the
+        /// relative order of non-<see langword="null"/> items.</remarks>
+        /// <param name="x">The first <see cref="ListControlItem"/> to compare.
+        /// Can be <see langword="null"/>.</param>
+        /// <param name="y">The second <see cref="ListControlItem"/> to compare.
+        /// Can be <see langword="null"/>.</param>
+        /// <returns>A signed integer that indicates the relative order of the
+        /// objects being compared:
+        /// <list type="bullet">
+        /// <item><description>
+        /// 0 if both <paramref name="x"/> and <paramref name="y"/>
+        /// are <see langword="null"/> or equal.
+        /// </description></item>
+        /// <item><description>
+        /// -1 if <paramref name="x"/> is <see langword="null"/> or
+        /// precedes <paramref name="y"/> in the sort order.
+        /// </description></item>
+        /// <item><description>
+        /// 1 if <paramref name="y"/> is <see langword="null"/> or precedes
+        /// <paramref name="x"/> in the sort order.
+        /// </description></item>
+        /// </list></returns>
+        public static int Compare(ListControlItem? x, ListControlItem? y)
+        {
+            if (x is null && y is null)
+                return 0;
+            if (x is null)
+                return -1;
+            if (y is null)
+                return 1;
+            return x.CompareTo(y);
+        }
+
+        /// <summary>
         /// Default method which draws item foreground.
         /// </summary>
         public static void DefaultDrawForeground(

@@ -93,12 +93,21 @@ namespace Alternet.UI
 
             pathLabel.WordWrap = true;
 
+            void UpdatePathLabel()
+            {
+                pathLabel.Text = fileListBox.SelectedFolder ?? "Home";
+            }
+
+            UpdatePathLabel();
+
             fileListBox.SelectedFolderChanged += (s, e) =>
             {
-                pathLabel.Text = fileListBox.SelectedFolder ?? string.Empty;
+                UpdatePathLabel();
             };
 
             rootPanel.Parent = this;
+
+            fileListBox.RequireDefaultHeader();
         }
 
         internal static new WindowFilePreview Default

@@ -13,46 +13,69 @@ namespace Alternet.UI
     /// </summary>
     public interface ITreeViewHandler
     {
-        /// <inheritdoc cref="TreeView.HideRoot"/>
+        /// <summary>
+        /// Gets or sets a value indicating whether the root element should be hidden.
+        /// </summary>
         bool HideRoot { get; set; }
 
-        /// <inheritdoc cref="TreeView.VariableRowHeight"/>
+        /// <summary>
+        /// Gets or sets a value indicating whether rows in the control can have variable heights.
+        /// </summary>
         bool VariableRowHeight { get; set; }
 
-        /// <inheritdoc cref="TreeView.TwistButtons"/>
+        /// <summary>
+        /// Gets or sets a value indicating whether the twist buttons are enabled.
+        /// </summary>
         bool TwistButtons { get; set; }
 
-        /// <inheritdoc cref="TreeView.StateImageSpacing"/>
+        /// <summary>
+        /// Gets or sets the spacing between state images and other item parts.
+        /// </summary>
         uint StateImageSpacing { get; set; }
 
-        /// <inheritdoc cref="TreeView.Indentation"/>
+        /// <summary>
+        /// Gets or sets the indentation of the item.
+        /// </summary>
         public uint Indentation { get; set; }
 
-        /// <inheritdoc cref="TreeView.RowLines"/>
+        /// <summary>
+        /// Gets or sets a value indicating whether horizontal lines are displayed between rows.
+        /// </summary>
         bool RowLines { get; set; }
 
-        /// <inheritdoc cref="TreeView.ShowLines"/>
+        /// <summary>
+        /// Gets or sets a value indicating whether horizontal lines are displayed in the control.
+        /// </summary>
         bool ShowLines { get; set; }
 
-        /// <inheritdoc cref="TreeView.ShowRootLines"/>
+        /// <summary>
+        /// Gets or sets a value indicating whether lines are displayed between the root nodes
+        /// of a tree structure.
+        /// </summary>
         bool ShowRootLines { get; set; }
 
-        /// <inheritdoc cref="TreeView.ShowExpandButtons"/>
+        /// <summary>
+        /// Gets or sets a value indicating whether expand buttons are displayed.
+        /// </summary>
         bool ShowExpandButtons { get; set; }
 
-        /// <inheritdoc cref="TreeView.TopItem"/>
+        /// <inheritdoc cref="StdTreeView.TopItem"/>
         TreeViewItem? TopItem { get; }
 
-        /// <inheritdoc cref="TreeView.FullRowSelect"/>
+        /// <summary>
+        /// Gets or sets a value indicating whether selecting a row highlights the entire row.
+        /// </summary>
         bool FullRowSelect { get; set; }
 
-        /// <inheritdoc cref="TreeView.AllowLabelEdit"/>
+        /// <summary>
+        /// Gets or sets a value indicating whether label editing is allowed.
+        /// </summary>
         bool AllowLabelEdit { get; set; }
 
-        /// <inheritdoc cref="TreeView.ExpandAll"/>
+        /// <inheritdoc cref="StdTreeView.ExpandAll"/>
         void ExpandAll();
 
-        /// <inheritdoc cref="TreeView.CollapseAll"/>
+        /// <inheritdoc cref="StdTreeView.CollapseAll"/>
         void CollapseAll();
 
         /// <summary>
@@ -85,10 +108,27 @@ namespace Alternet.UI
         /// <returns></returns>
         bool IsItemSelected(TreeViewItem item);
 
-        /// <inheritdoc cref="TreeViewItem.BeginLabelEdit"/>
+        /// <summary>
+        /// Initiates the label editing mode for the specified <see cref="TreeViewItem"/>.
+        /// </summary>
+        /// <remarks>This method allows the user to edit the label of the specified tree view item.
+        /// Ensure that the item supports label editing before calling this method.</remarks>
+        /// <param name="item">The <see cref="TreeViewItem"/> whose label is to be edited.
+        /// Must not be <see langword="null"/>.</param>
         void BeginLabelEdit(TreeViewItem item);
 
-        /// <inheritdoc cref="TreeViewItem.EndLabelEdit"/>
+        /// <summary>
+        /// Ends the label editing process for the specified <see cref="TreeViewItem"/>.
+        /// </summary>
+        /// <remarks>If <paramref name="cancel"/> is <see langword="true"/>, any modifications to the
+        /// label are discarded. If <paramref name="cancel"/> is <see langword="false"/>,
+        /// the changes are applied to the
+        /// <paramref name="item"/>.</remarks>
+        /// <param name="item">The <see cref="TreeViewItem"/> whose label editing
+        /// is being finalized. Cannot be <see langword="null"/>.</param>
+        /// <param name="cancel"><see langword="true"/> to cancel the label editing
+        /// and discard changes; otherwise, <see langword="false"/>
+        /// to apply the changes made during editing.</param>
         void EndLabelEdit(TreeViewItem item, bool cancel);
 
         /// <summary>
@@ -103,13 +143,20 @@ namespace Alternet.UI
         /// <param name="item">Item.</param>
         void CollapseAllChildren(TreeViewItem item);
 
-        /// <inheritdoc cref="TreeView.MakeAsListBox"/>
+        /// <inheritdoc cref="StdTreeView.MakeAsListBox"/>
         void MakeAsListBox();
 
-        /// <inheritdoc cref="TreeView.EnsureVisible"/>
+        /// <summary>
+        /// Ensures that the specified <see cref="TreeViewItem"/> is visible within the tree view.
+        /// </summary>
+        /// <remarks>If the specified item is not currently visible, this method scrolls
+        /// the tree view as
+        /// needed to bring the item into view.</remarks>
+        /// <param name="item">The <see cref="TreeViewItem"/> to make visible.
+        /// Must not be <see langword="null"/>.</param>
         void EnsureVisible(TreeViewItem item);
 
-        /// <inheritdoc cref="TreeView.ScrollIntoView"/>
+        /// <inheritdoc cref="StdTreeView.ScrollIntoView"/>
         void ScrollIntoView(TreeViewItem item);
 
         /// <summary>
