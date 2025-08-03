@@ -18,7 +18,7 @@ namespace ControlsSample
 
             BackColor = Color.WhiteSmoke;
 
-            var c1 = header.AddColumn("Column 1", 100);
+            var c1 = header.AddColumn("Column 1");
             
             header.AddColumn("Column 2", 100);
             
@@ -34,6 +34,7 @@ namespace ControlsSample
             {
                 control1.SetText("First Column");
                 control1.SetSvgImage(MessageBoxSvg.Information, null);
+                header.SetColumnWidth(c1, null);
             }
 
             var c4 = header.InsertColumn(0, "Column A", 100, () =>
