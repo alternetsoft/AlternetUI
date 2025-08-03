@@ -11,9 +11,18 @@ using Microsoft.Maui.Controls;
 
 namespace Alternet.UI
 {
-    internal partial class MauiSystemSettingsHandler
+    /// <summary>
+    /// Provides platform-specific implementations for handling system settings
+    /// in a .NET MAUI application.
+    /// </summary>
+    /// <remarks>This class extends <see cref="PlessSystemSettingsHandler"/> and implements
+    /// <see cref="ISystemSettingsHandler"/>  to provide functionality specific to the MAUI platform,
+    /// such as retrieving metrics, determining appearance settings,
+    /// and creating display factory handlers.</remarks>
+    public partial class MauiSystemSettingsHandler
         : PlessSystemSettingsHandler, ISystemSettingsHandler
     {
+        /// <inheritdoc/>
         public override int GetMetric(SystemSettingsMetric index)
         {
             var result = base.GetMetric(index);
@@ -28,6 +37,13 @@ namespace Alternet.UI
             return result;
         }
 
+        /// <inheritdoc/>
+        public override bool IsUsingDarkBackground()
+        {
+            return GetAppearanceIsDark();
+        }
+
+        /// <inheritdoc/>
         public override bool GetAppearanceIsDark()
         {
             var currentTheme = Microsoft.Maui.Controls.Application.Current?.RequestedTheme;
@@ -37,11 +53,13 @@ namespace Alternet.UI
             return false;
         }
 
+        /// <inheritdoc/>
         public override IDisplayFactoryHandler CreateDisplayFactoryHandler()
         {
             return new MauiDisplayFactoryHandler();
         }
 
+        /// <inheritdoc/>
         public override UIPlatformKind GetPlatformKind()
         {
             return UIPlatformKind.Maui;

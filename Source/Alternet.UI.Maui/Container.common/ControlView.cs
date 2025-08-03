@@ -36,7 +36,6 @@ namespace Alternet.UI
 
         static ControlView()
         {
-            App.Current.Required();
             InitMauiHandler();
         }
 
@@ -187,6 +186,7 @@ namespace Alternet.UI
         public static void InitMauiHandler()
         {
             App.Handler ??= new MauiApplicationHandler();
+            App.Current.Required();
         }
 
         /// <summary>

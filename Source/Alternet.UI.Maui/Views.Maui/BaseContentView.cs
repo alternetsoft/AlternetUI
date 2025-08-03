@@ -18,6 +18,11 @@ namespace Alternet.Maui
         private bool currentIsDark;
         private Alternet.UI.ObjectUniqueId uniqueId = new();
 
+        static BaseContentView()
+        {
+            Alternet.UI.ControlView.InitMauiHandler();
+        }
+
         /// <summary>
         /// Initializes a new instance of the <see cref="BaseContentView"/> class.
         /// </summary>

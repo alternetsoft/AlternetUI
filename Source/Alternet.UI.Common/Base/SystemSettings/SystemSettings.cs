@@ -150,7 +150,10 @@ namespace Alternet.UI
         /// </summary>
         public static bool IsUsingDarkBackground
         {
-            get => isUsingDarkBackgroundOverride ?? Handler.IsUsingDarkBackground();
+            get
+            {
+                return isUsingDarkBackgroundOverride ?? Handler.IsUsingDarkBackground();
+            }
         }
 
         /// <summary>
