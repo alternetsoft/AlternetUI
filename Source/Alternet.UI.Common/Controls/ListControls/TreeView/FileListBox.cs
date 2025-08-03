@@ -98,6 +98,7 @@ namespace Alternet.UI
         private string searchPattern = "*";
         private int reloading;
         private bool sorted = true;
+        private EnumArray<FileListBoxColumn, ColumnSortDirection?> sortDirections = new();
 
         static FileListBox()
         {
@@ -118,6 +119,7 @@ namespace Alternet.UI
         /// </summary>
         public FileListBox()
         {
+            sortDirections[FileListBoxColumn.Name] = ColumnSortDirection.Ascending;
         }
 
         /// <summary>
@@ -206,6 +208,7 @@ namespace Alternet.UI
             {
                 if (selectedFolder == value && value is not null)
                     return;
+                ResetSortDirections();
                 App.LogIf($"FileListBox.SelectedFolder = {value}", false);
                 var oldSelectedFolder = selectedFolder;
                 selectedFolder = value;
@@ -358,6 +361,83 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Retrieves a comparison delegate for sorting <see cref="FileListBoxItem"/>
+        /// objects based on the specified column.
+        /// </summary>
+        /// <param name="column">The column to use for determining the comparison logic.
+        /// Must be a value of <see cref="FileListBoxColumn"/>.</param>
+        /// <param name="isAscending">The direction in which to sort the items.</param>
+        /// <returns>A <see cref="Comparison{T}"/> delegate for comparing
+        /// <see cref="FileListBoxItem"/> objects based on the
+        /// specified column. Returns <see langword="null"/> if the specified column
+        /// does not have an associated
+        /// comparison logic.</returns>
+        public virtual Comparison<FileListBoxItem>? GetComparison(
+            FileListBoxColumn column,
+            bool isAscending)
+        {
+            switch (column)
+            {
+                case FileListBoxColumn.Name:
+                    if(isAscending)
+                        return FileListBoxItem.ComparisonByText;
+                    else
+                        return FileListBoxItem.ComparisonByTextDescending;
+                case FileListBoxColumn.Size:
+                    if (isAscending)
+                        return FileListBoxItem.ComparisonBySize;
+                    else
+                        return FileListBoxItem.ComparisonBySizeDescending;
+                case FileListBoxColumn.DateModified:
+                    if (isAscending)
+                        return FileListBoxItem.ComparisonByDateModified;
+                    else
+                        return FileListBoxItem.ComparisonByDateModifiedDescending;
+                default:
+                    return null;
+            }
+        }
+
+        /// <summary>
+        /// Sorts the items in the file list based on the specified column and sort direction.
+        /// </summary>
+        /// <remarks>If the specified column does not support sorting,
+        /// the method will return without
+        /// performing any operation. The sort direction for the column is updated based
+        /// on the provided <paramref name="direction" />.</remarks>
+        /// <param name="column">The column to sort by. This determines the criteria
+        /// used for sorting.</param>
+        /// <param name="direction">The direction in which to sort the items.
+        /// The default is <see cref="ColumnSortDirection.Ascending" />.
+        /// If <see cref="ColumnSortDirection.Flip" /> is specified, the current sort
+        /// direction for the column is toggled.</param>
+        public virtual void Sort(
+            FileListBoxColumn column,
+            ColumnSortDirection direction = ColumnSortDirection.Ascending)
+        {
+            if (direction == ColumnSortDirection.Flip)
+            {
+                if (sortDirections[column] == ColumnSortDirection.Ascending)
+                    sortDirections[column] = ColumnSortDirection.Descending;
+                else
+                    sortDirections[column] = ColumnSortDirection.Ascending;
+            }
+            else
+            {
+                sortDirections[column] = direction;
+            }
+
+            var isAscending = sortDirections[column] == ColumnSortDirection.Ascending;
+
+            var comparison = GetComparison(column, isAscending);
+
+            if (comparison is null)
+                return;
+
+            RootItem.Sort<FileListBoxItem>(comparison);
+        }
+
+        /// <summary>
         /// Selects the initial folder for the operation, resetting any previously selected folder.
         /// </summary>
         /// <remarks>If an error occurs during the selection process,
@@ -378,6 +458,42 @@ namespace Alternet.UI
             {
                 AddSpecialFolders();
             }
+        }
+
+        /// <summary>
+        /// Configures the default header layout for the file list, ensuring required columns
+        /// are added and enabling sorting functionality for each column.
+        /// </summary>
+        /// <remarks>This method sets up the header with predefined columns:
+        /// "Name", "Date modified", and "Size".  Each column is configured with a sorting action
+        /// that toggles the sort direction when the column is clicked. The header is made visible
+        /// after the configuration is complete.</remarks>
+        public virtual void RequireDefaultHeader()
+        {
+            Header.Required();
+
+            DoInsideLayout(() =>
+            {
+                Header.DeleteColumns();
+
+                Header.AddColumn("Name", null, () =>
+                {
+                    Sort(FileListBoxColumn.Name, ColumnSortDirection.Flip);
+                });
+
+                Header.AddColumn("Date modified", null, () =>
+                {
+                    Sort(FileListBoxColumn.DateModified, ColumnSortDirection.Flip);
+                });
+
+                Header.AddColumn("Size", null, () =>
+                {
+                    Sort(FileListBoxColumn.Size, ColumnSortDirection.Flip);
+                });
+
+                Header.Visible = true;
+            },
+            false);
         }
 
         /// <summary>
@@ -720,6 +836,19 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Resets the sort directions for all columns to their default values.
+        /// </summary>
+        /// <remarks>This method initializes the sort directions and sets the default sort direction
+        /// for the <see cref="FileListBoxColumn.Name"/> column to
+        /// <see cref="ColumnSortDirection.Ascending"/>. Override
+        /// this method in a derived class to customize the default sort directions.</remarks>
+        protected virtual void ResetSortDirections()
+        {
+            sortDirections = new();
+            sortDirections[FileListBoxColumn.Name] = ColumnSortDirection.Ascending;
+        }
+
+        /// <summary>
         /// Navigates to the parent folder.
         /// If the parent folder is the same as the current folder, it navigates to the root folder.
         /// If an exception occurs, it logs the exception and resets the selected folder to null.
@@ -753,36 +882,6 @@ namespace Alternet.UI
             }
 
             base.OnKeyDown(e);
-        }
-
-        /// <summary>
-        /// Implements item of the <see cref="FileListBox"/> control.
-        /// </summary>
-        public class FileListBoxItem : TreeViewItem
-        {
-            /// <summary>
-            /// Initializes a new instance of the <see cref="FileListBoxItem"/> class.
-            /// </summary>
-            /// <param name="title">Title of the item.</param>
-            /// <param name="path">Path to file or folder.</param>
-            /// <param name="doubleClick">Double click action.</param>
-            public FileListBoxItem(string? title, string? path, Action? doubleClick = null)
-            {
-                Text = title ?? System.IO.Path.GetFileName(path) ?? string.Empty;
-                Path = path;
-                DoubleClickAction = doubleClick;
-            }
-
-            /// <summary>
-            /// Gets or sets path to the file.
-            /// </summary>
-            public string? Path { get; set; }
-
-            /// <summary>
-            /// Gets extension in the lower case and without "." character.
-            /// </summary>
-            [Browsable(false)]
-            public string ExtensionLower => PathUtils.GetExtensionLower(Path);
         }
 
         /// <summary>
