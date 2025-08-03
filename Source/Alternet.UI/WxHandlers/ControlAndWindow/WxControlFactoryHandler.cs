@@ -6,7 +6,8 @@ using System.Threading.Tasks;
 
 namespace Alternet.UI
 {
-    internal class WxControlFactoryHandler : DisposableObject, IControlFactoryHandler
+    internal class WxControlFactoryHandler : DisposableObject
+        , IControlFactoryHandler, IWxControlFactoryHandler
     {
         public IControlHandler CreatePanelHandler(ContainerControl control)
         {
@@ -151,6 +152,11 @@ namespace Alternet.UI
         public IControlHandler CreateControlHandler(AbstractControl control)
         {
             return new WxControlHandler();
+        }
+
+        public IControlHandler CreateTreeViewHandler(Control control)
+        {
+            return new TreeViewHandler();
         }
     }
 }

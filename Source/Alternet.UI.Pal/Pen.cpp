@@ -17,7 +17,14 @@ namespace Alternet::UI
         LineCap lineCap,
         LineJoin lineJoin)
     {
-        _pen = wxPen(color, fromDip(width, nullptr), GetWxStyle(style));
+        wxColour wxColor = color;
+
+        if (!wxColor.IsOk())
+        {
+            wxColor = *wxBLACK;
+        }
+
+        _pen = wxPen(wxColor, fromDip(width, nullptr), GetWxStyle(style));
         _pen.SetCap(GetWxPenCap(lineCap));
         _pen.SetJoin(GetWxPenJoin(lineJoin));
     }

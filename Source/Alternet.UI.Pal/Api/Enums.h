@@ -956,6 +956,11 @@ namespace Alternet::UI
         Vertical = 1,
     };
     
+    enum class LayoutFlags
+    {
+        IterateBackward = 1,
+    };
+    
     enum class LayoutStyle
     {
         None = 0,
@@ -1219,6 +1224,9 @@ namespace Alternet::UI
         TextBoxMinus = 32,
         TextBoxShowPassword = 33,
         TextBoxHidePassword = 34,
+        Close = 35,
+        Apply = 36,
+        All = 37,
     };
     
     enum class SetBoundsFlags
@@ -3029,8 +3037,10 @@ namespace Alternet::UI
     
     enum class PickerPopupKind
     {
-        ListBox = 0,
-        ContextMenu = 1,
+        Auto = 0,
+        ListBox = 1,
+        ContextMenu = 2,
+        None = 3,
     };
     
     enum class RichTextFileType

@@ -64,14 +64,29 @@ namespace Alternet.Drawing
             else
                 angle = Transform.GetRotationAngleInRadians();
 
+            UI.Native.Brush brush;
+            bool useBrush;
+
+            if (backColor.IsOk && !backColor.IsEmpty)
+            {
+                brush = (UI.Native.Brush)backColor.AsBrush.Handler;
+                useBrush = true;
+            }
+            else
+            {
+                brush = (UI.Native.Brush)Brush.Transparent.Handler;
+                useBrush = false;
+            }
+
             font = TransformFontSizeToNative(font);
             dc.DrawText(
                 text,
                 TransformPointToNative(location),
                 (UI.Native.Font)font.Handler,
                 foreColor,
-                (UI.Native.Brush)backColor.AsBrush.Handler,
-                angle);
+                brush,
+                angle,
+                useBrush);
         }
 
         public override void DrawTextWithAngle(
@@ -94,14 +109,29 @@ namespace Alternet.Drawing
             else
                 angle2 = Transform.GetRotationAngleInRadians();
 
+            UI.Native.Brush brush;
+            bool useBrush;
+
+            if (backColor.IsOk && !backColor.IsEmpty)
+            {
+                brush = (UI.Native.Brush)backColor.AsBrush.Handler;
+                useBrush = true;
+            }
+            else
+            {
+                brush = (UI.Native.Brush)Brush.Transparent.Handler;
+                useBrush = false;
+            }
+
             font = TransformFontSizeToNative(font);
             dc.DrawText(
                 text,
                 TransformPointToNative(location),
                 (UI.Native.Font)font.Handler,
                 foreColor,
-                (UI.Native.Brush)backColor.AsBrush.Handler,
-                MathUtils.ToRadians(angle) + angle2);
+                brush,
+                MathUtils.ToRadians(angle) + angle2,
+                useBrush);
         }
 
         protected virtual bool GetNoTransformToNative()

@@ -115,10 +115,10 @@ namespace Alternet.UI.Native
             return NativeApi.DrawingContext_GetClippingBox_(NativePointer);
         }
         
-        public void DrawText(string text, Alternet.Drawing.PointD location, Font font, Alternet.Drawing.Color foreColor, Brush backColor, double angle)
+        public void DrawText(string text, Alternet.Drawing.PointD location, Font font, Alternet.Drawing.Color foreColor, Brush backColor, double angle, bool useBrush)
         {
             CheckDisposed();
-            NativeApi.DrawingContext_DrawText_(NativePointer, text, location, font.NativePointer, foreColor, backColor.NativePointer, angle);
+            NativeApi.DrawingContext_DrawText_(NativePointer, text, location, font.NativePointer, foreColor, backColor.NativePointer, angle, useBrush);
         }
         
         public Alternet.Drawing.SizeI GetDpi()
@@ -388,7 +388,7 @@ namespace Alternet.UI.Native
             public static extern Alternet.Drawing.RectD DrawingContext_GetClippingBox_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void DrawingContext_DrawText_(IntPtr obj, string text, Alternet.Drawing.PointD location, IntPtr font, NativeApiTypes.Color foreColor, IntPtr backColor, double angle);
+            public static extern void DrawingContext_DrawText_(IntPtr obj, string text, Alternet.Drawing.PointD location, IntPtr font, NativeApiTypes.Color foreColor, IntPtr backColor, double angle, bool useBrush);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern Alternet.Drawing.SizeI DrawingContext_GetDpi_(IntPtr obj);

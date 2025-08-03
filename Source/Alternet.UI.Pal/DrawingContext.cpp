@@ -519,7 +519,7 @@ namespace Alternet::UI
     }
 
     void DrawingContext::DrawText(const string& text, const PointD& location,
-        Font* font, const Color& foreColor, Brush* backColor, double angle)
+        Font* font, const Color& foreColor, Brush* backColor, double angle, bool useBrush)
     {
         auto window = DrawingContext::GetWindow(_dc);
 
@@ -528,14 +528,19 @@ namespace Alternet::UI
         auto x = static_cast<double>(point.x);
         auto y = static_cast<double>(point.y);
 
-        bool useBackColor = backColor != nullptr;
+        wxColour wxForeColor = foreColor;
 
-        wxGraphicsFont gFont = _graphicsContext->CreateFont(font->GetWxFont(), foreColor);
+        if (!wxForeColor.IsOk())
+        {
+            return;
+        }
+
+        wxGraphicsFont gFont = _graphicsContext->CreateFont(font->GetWxFont(), wxForeColor);
         _graphicsContext->SetFont(gFont);
 
         wxString wxText = wxStr(text);
 
-        if (useBackColor)
+        if (useBrush)
         {
             wxGraphicsBrush gBrush = _graphicsContext->CreateBrush(backColor->GetWxBrush());
             if (angle == 0)

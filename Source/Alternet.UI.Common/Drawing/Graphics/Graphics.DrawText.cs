@@ -279,6 +279,7 @@ namespace Alternet.Drawing
             string[]? splitText = null;
             var font = prm.Font;
             var foreColor = prm.ForegroundColor;
+
             var backColor = prm.BackgroundColor;
             var isVertical = prm.IsVertical;
             var isVerticalText = prm.IsVerticalText;

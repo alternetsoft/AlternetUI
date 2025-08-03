@@ -12,7 +12,14 @@ namespace Alternet::UI
 
     void SolidBrush::Initialize(const Color& color)
     {
-        _brush = wxBrush(color);
+        wxColour wxColor = color;
+
+        if (!wxColor.IsOk())
+        {
+            wxColor.Set(0, 0, 0, 0);
+        }
+
+        _brush = wxBrush(wxColor);
     }
 
     wxGraphicsBrush SolidBrush::GetGraphicsBrush(wxGraphicsRenderer* renderer, const wxPoint2DDouble& offset)

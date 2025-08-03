@@ -30,7 +30,7 @@ namespace NativeApi.Api
         backgroundBrush Brush to fill the text with.
         */
         public void DrawText(string text, PointD location, Font font,
-            Color foreColor, Brush backColor, double angle)
+            Color foreColor, Brush backColor, double angle, bool useBrush)
         {
         }        
 
