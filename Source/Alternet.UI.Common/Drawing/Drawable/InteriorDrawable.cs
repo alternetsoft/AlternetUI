@@ -13,6 +13,13 @@ namespace Alternet.Drawing
     public partial class InteriorDrawable : BaseDrawable
     {
         /// <summary>
+        /// Gets or sets the minimum size, in device-independent units, for a scroll bar.
+        /// </summary>
+        /// <remarks>This value is used to ensure that scroll bars are not rendered smaller than the
+        /// specified size, providing a consistent and usable interface.</remarks>
+        public static Coord MinScrollBarSize = 17;
+
+        /// <summary>
         /// Gets or sets the default theme for the interior elements, such as scrollbars.
         /// </summary>
         public static ScrollBar.KnownTheme DefaultInteriorTheme = ScrollBar.KnownTheme.WindowsAuto;
@@ -452,12 +459,16 @@ namespace Alternet.Drawing
             var metrics = GetRealMetrics(control);
 
             var vertWidth = metrics.GetPreferredSize(true, scaleFactor).Width;
+            var horzHeight = metrics.GetPreferredSize(false, scaleFactor).Height;
+
+            vertWidth = Math.Max(vertWidth, MinScrollBarSize);
+            horzHeight = Math.Max(horzHeight, MinScrollBarSize);
+
             var vertHeight = boundsInsideBorder.Height;
             var vertLeft = boundsInsideBorder.Right - vertWidth;
             var vertTop = boundsInsideBorder.Top;
             var vertBounds = new RectD(vertLeft, vertTop, vertWidth, vertHeight);
 
-            var horzHeight = metrics.GetPreferredSize(false, scaleFactor).Height;
             var horzWidth = boundsInsideBorder.Width;
             var horzLeft = boundsInsideBorder.Left;
             var horzTop = boundsInsideBorder.Bottom - horzHeight;
