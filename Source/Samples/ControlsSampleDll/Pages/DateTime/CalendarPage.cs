@@ -37,27 +37,31 @@ namespace ControlsSample
                 checkboxPanel.Title = GenericStrings.Options;
                 tabControl.Add(checkboxPanel);
 
-                var showHolidaysCheckBox = checkboxPanel.AddCheckBox(GenericStrings.ShowHolidays)
-                    .BindBoolProp(calendar, nameof(Calendar.ShowHolidays));
+                var showHolidaysCheckBox = new CheckBox(GenericStrings.ShowHolidays);
+                showHolidaysCheckBox.Parent = checkboxPanel;
+                showHolidaysCheckBox.BindBoolProp(calendar, nameof(Calendar.ShowHolidays));
 
-                var noMonthChangeCheckBox = checkboxPanel.AddCheckBox(GenericStrings.NoMonthChange)
-                    .BindBoolProp(calendar, nameof(Calendar.NoMonthChange));
+                var noMonthChangeCheckBox = new CheckBox(GenericStrings.NoMonthChange);
+                noMonthChangeCheckBox.Parent = checkboxPanel;
+                noMonthChangeCheckBox.BindBoolProp(calendar, nameof(Calendar.NoMonthChange));
 
-                var useGenericCheckBox = checkboxPanel.AddCheckBox(GenericStrings.UseGeneric)
-                    .BindBoolProp(calendar, nameof(Calendar.UseGeneric));
+                var useGenericCheckBox = new CheckBox(GenericStrings.UseGeneric);
+                useGenericCheckBox.Parent = checkboxPanel;
+                useGenericCheckBox.BindBoolProp(calendar, nameof(Calendar.UseGeneric));
 
-                var sequentalMonthSelectCheckBox
-                    = checkboxPanel.AddCheckBox(GenericStrings.SequentalMonthSelect)
-                    .BindBoolProp(calendar, nameof(Calendar.SequentialMonthSelect));
-                sequentalMonthSelectCheckBox.Enabled = useGenericCheckBox.IsChecked;
+                var sequentialMonthSelectCheckBox = new CheckBox(GenericStrings.SequentalMonthSelect);
+                sequentialMonthSelectCheckBox.Parent = checkboxPanel;
+                sequentialMonthSelectCheckBox.BindBoolProp(calendar, nameof(Calendar.SequentialMonthSelect));
+                sequentialMonthSelectCheckBox.Enabled = useGenericCheckBox.IsChecked;
 
-                var showSurroundWeeksCheckBox
-                    = checkboxPanel.AddCheckBox(GenericStrings.ShowSurroundWeeks)
-                    .BindBoolProp(calendar, nameof(Calendar.ShowSurroundWeeks));
+                var showSurroundWeeksCheckBox = new CheckBox(GenericStrings.ShowSurroundWeeks);
+                showSurroundWeeksCheckBox.Parent = checkboxPanel;
+                showSurroundWeeksCheckBox.BindBoolProp(calendar, nameof(Calendar.ShowSurroundWeeks));
                 showSurroundWeeksCheckBox.Enabled = useGenericCheckBox.IsChecked;
 
-                var weekNumbersCheckBox = checkboxPanel.AddCheckBox(GenericStrings.WeekNumbers)
-                    .BindBoolProp(calendar, nameof(Calendar.ShowWeekNumbers));
+                var weekNumbersCheckBox = new CheckBox(GenericStrings.WeekNumbers);
+                weekNumbersCheckBox.Parent = checkboxPanel;
+                weekNumbersCheckBox.BindBoolProp(calendar, nameof(Calendar.ShowWeekNumbers));
                 checkboxPanel.ChildrenSet.Margin(3);
 
                 // Buttons panel
@@ -67,20 +71,21 @@ namespace ControlsSample
                 buttonPanel.Margin = 5;
                 tabControl.Add(buttonPanel);
 
-                var setDayColorsButton
-                    = buttonPanel.AddButton($"{GenericStrings.DaysStyle} (5, 7)", SetDayColors);
+                var setDayColorsButton = new Button($"{GenericStrings.DaysStyle} (5, 7)", SetDayColors);
                 setDayColorsButton.Enabled = useGenericCheckBox.IsChecked;
                 setDayColorsButton.Margin = 5;
+                buttonPanel.Children.Add(setDayColorsButton);
 
-                (string, Action?)[] buttons = [
-                    ($"{GenericStrings.MarkDays} (2, 3)", MarkDays),
-                    (GenericStrings.Today, calendar.SelectToday),
-                    ("Clear marks", () => calendar.MarkAll(false)),
-                    ("Clear styles", calendar.ResetAttrAll),
-                    ("Light theme", calendar.SetColorThemeToLight)
-                ];
+                var markDaysButton = new Button($"{GenericStrings.MarkDays} (2, 3)", MarkDays);
+                var selectTodayButton = new Button(GenericStrings.Today, calendar.SelectToday);
+                var clearMarksButton = new Button("Clear marks", ()=>calendar.MarkAll(false));
+                var clearStylesButton = new Button("Clear styles", calendar.ResetAttrAll);
 
-                buttonPanel.AddButtons(buttons).Margin(5);
+                new ControlSet(
+                    markDaysButton,
+                    selectTodayButton,
+                    clearMarksButton,
+                    clearStylesButton).Margin(5).Parent(buttonPanel);
 
                 // Allow date range panel
 
@@ -88,18 +93,30 @@ namespace ControlsSample
                 rangePanel.Margin = 5;
                 rangePanel.Title = "Range";
                 tabControl.Add(rangePanel);
-                rangePanel.AddButtons(
-                    ($"{GenericStrings.Allow} {GenericStrings.AnyDate}", RangeAnyDate_Click),
-                    ($"{GenericStrings.Allow} <= {GenericStrings.Tomorrow}", RangeTomorrow_Click),
-                    ($"{GenericStrings.Allow} >= {GenericStrings.Yesterday}", RangeYesterday_Click),
-                    ($"{GenericStrings.Allow} {GenericStrings.Yesterday}..{GenericStrings.Tomorrow}", 
-                        RangeYesterdayTomorrow_Click))
-                    .Margin(5);
+                
+                var rangeAnyDateButton = new Button(
+                    $"{GenericStrings.Allow} {GenericStrings.AnyDate}",
+                    RangeAnyDate_Click);
+                var rangeTomorrowButton = new Button(
+                    $"{GenericStrings.Allow} <= {GenericStrings.Tomorrow}",
+                    RangeTomorrow_Click);
+                var rangeYesterdayButton = new Button(
+                    $"{GenericStrings.Allow} >= {GenericStrings.Yesterday}",
+                    RangeYesterday_Click);
+                var rangeYesterdayTomorrowButton = new Button(
+                    $"{GenericStrings.Allow} {GenericStrings.Yesterday}..{GenericStrings.Tomorrow}",
+                    RangeYesterdayTomorrow_Click);
+
+                new ControlSet(
+                    rangeAnyDateButton,
+                    rangeTomorrowButton,
+                    rangeYesterdayButton,
+                    rangeYesterdayTomorrowButton).Margin(5).Parent(rangePanel);
 
                 // Other initializations
 
                 useGenericCheckBox.BindBoolProp(setDayColorsButton, nameof(Button.Enabled));
-                useGenericCheckBox.BindBoolProp(sequentalMonthSelectCheckBox, nameof(Button.Enabled));
+                useGenericCheckBox.BindBoolProp(sequentialMonthSelectCheckBox, nameof(Button.Enabled));
                 useGenericCheckBox.BindBoolProp(showSurroundWeeksCheckBox, nameof(Button.Enabled));
 
                 useGenericCheckBox.CheckedChanged += Generic_CheckedChanged;
@@ -108,7 +125,7 @@ namespace ControlsSample
                 {
                     showHolidaysCheckBox.IsChecked = calendar.ShowHolidays;
                     noMonthChangeCheckBox.IsChecked = calendar.NoMonthChange;
-                    sequentalMonthSelectCheckBox.IsChecked = calendar.SequentialMonthSelect;
+                    sequentialMonthSelectCheckBox.IsChecked = calendar.SequentialMonthSelect;
                     showSurroundWeeksCheckBox.IsChecked = calendar.ShowSurroundWeeks;
                     weekNumbersCheckBox.IsChecked = calendar.ShowWeekNumbers;
 

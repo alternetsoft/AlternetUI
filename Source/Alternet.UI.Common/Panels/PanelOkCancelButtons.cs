@@ -736,7 +736,7 @@ namespace Alternet.UI
         /// <returns>A <see cref="Button"/> instance representing the newly added button.</returns>
         /// <exception cref="ArgumentException">Thrown if <paramref name="text"/>
         /// is null or empty.</exception>
-        public new virtual Button AddButton(string text, Action? clickAction = null)
+        public virtual Button AddButton(string text, Action? clickAction = null)
         {
             if (string.IsNullOrEmpty(text))
                 throw new ArgumentException("Button text cannot be null or empty.", nameof(text));

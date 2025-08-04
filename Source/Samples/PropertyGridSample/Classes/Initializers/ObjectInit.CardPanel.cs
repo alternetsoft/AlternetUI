@@ -52,8 +52,21 @@ namespace PropertyGridSample
             control.HasBorder = true;
             control.SuggestedSize = defaultListSize;
             var panel = CreatePanelWithButtons("Card 1");
-            panel.AddLabel("Use SelectedCardIndex").Margin = 5;
-            panel.AddLabel("to change active card").Margin = 5;
+
+            new Label()
+            {
+                Text = "Use SelectedCardIndex",
+                Margin = 5,
+                Parent = panel,
+            };
+
+            new Label()
+            {
+                Text = "to change active card",
+                Margin = 5,
+                Parent = panel,
+            };
+
             control.Add("card 1", panel);
             control.Add("card 2", CreatePanelWithButtons("Card 2"));
             control.SelectCard(0);
