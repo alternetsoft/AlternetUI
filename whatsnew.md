@@ -1,3 +1,21 @@
+# 0.9.747 (2025 August 4)
+
+- FileListBox: Add optional column header with column sorting support.
+- VirtualTreeControl renamed to StdTreeView. Introduced several new properties such as FirstItem, LastItem, LastRootItem, TopItem, SelectedItems, 
+TwistButtons to enhance tree control customization and state access. Added methods for item selection and manipulation, including EnsureVisible, 
+SetSelected, ClearSelected, RemoveSelected, GetNodeAt, CollapseAll, ExpandAll, SelectFirstItem.
+- StdTreeView: Added Header property, allowing the control to have an optional header with columns. 
+- TreeViewItem: Add sorting methods for child items.
+- InteriorControlActivity: use MouseCapture for scroll bars.
+- Maui: Fix IsDark determination.
+- Fix Graphics.DrawText regression (not worked properly on macOs).
+- Demo: Refactor ToolBox and add categories.
+- ScrollBarDrawable: Add support for rounded corners on thumb. Add arrow visibility and margin options.
+- RectangleDrawable: Add support for rounded corners.
+- VirtualListControl: Add selection and current item round borders. Add ResetSelectionAndCurrentItemBorders and SetSelectionAndCurrentItemRoundBorders methods.
+- SimpleDialogTitleView: Allow custom image for gear button in title.
+- VirtualListBox: Fix paint when HasBorder is set and internal scrollbars.
+
 # 0.9.746 (2025 July 30)
 
 - Add customizable hovered color logic for ScrollBar themes.
