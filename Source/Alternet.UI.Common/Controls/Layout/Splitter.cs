@@ -58,6 +58,7 @@ namespace Alternet.UI
         private Coord lastDrawSplit = -1;
         private Coord maxSize;
         private Cursor? defaultCursor;
+        private SplitterTargetMode targetMode = SplitterTargetMode.Auto;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Splitter"/> class.
@@ -238,6 +239,19 @@ namespace Alternet.UI
             {
                 if (value < 0) value = 0;
                 minTargetSize = value;
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets the mode that determines how the splitter targets its associated elements.
+        /// </summary>
+        public virtual SplitterTargetMode TargetMode
+        {
+            get => targetMode;
+
+            set
+            {
+                targetMode = value;
             }
         }
 
@@ -575,9 +589,19 @@ namespace Alternet.UI
         {
             if(Parent is null)
                 return null;
-            if(Parent.LayoutFlags.HasFlag(LayoutFlags.IterateBackward))
-                return PreviousVisibleSibling;
-            return NextVisibleSibling;
+
+            switch (TargetMode)
+            {
+                case SplitterTargetMode.Auto:
+                default:
+                    if (Parent.LayoutFlags.HasFlag(LayoutFlags.IterateBackward))
+                        return PreviousVisibleSibling;
+                    return NextVisibleSibling;
+                case SplitterTargetMode.NextVisibleSibling:
+                    return NextVisibleSibling;
+                case SplitterTargetMode.PreviousVisibleSibling:
+                    return PreviousVisibleSibling;
+            }
         }
 
         /// <summary>
