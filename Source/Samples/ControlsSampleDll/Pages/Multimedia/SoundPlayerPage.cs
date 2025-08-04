@@ -33,26 +33,30 @@ namespace ControlsSample
             {
                 Margin = 5,
                 HorizontalAlignment = HorizontalAlignment.Left,
-            }.Parent = this;
+                Parent = this,
+            };
 
             List<string> audioFiles = new()
             {
                 audioNotification2,
                 audioButton,
-                audioCustom,
                 audioDogGrowl,
                 audioTinkALink,
+                audioCustom,
             };
 
-            selectComboBox.ListBox.AddRange(audioFiles);
+            selectComboBox.AddRange(audioFiles);
             selectComboBox.Value = audioNotification2;
             selectComboBox.Parent = this;
             selectComboBox.ValueChanged += SelectComboBox_SelectedItemChanged;
 
-            AddVerticalStackPanel().AddButtons(
-                ("Play", Play),
-                ("Stop", Stop))
-            .Margin(5).HorizontalAlignment(HorizontalAlignment.Left).SuggestedWidthToMax();
+            var stackPanel = new VerticalStackPanel(this);
+
+            var playButton = new Button("Play", Play);
+            var stopButton = new Button("Stop", Stop);
+
+            new ControlSet(playButton, stopButton)
+            .Margin(5).HorizontalAlignment(HorizontalAlignment.Left).Parent(this).SuggestedWidthToMax();
         }
 
         private void CreatePlayer(string? url = null)

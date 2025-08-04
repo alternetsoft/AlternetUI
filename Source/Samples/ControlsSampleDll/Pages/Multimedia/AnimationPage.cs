@@ -67,17 +67,21 @@ namespace ControlsSample
                 AnimationCustom
             };
 
-            selectComboBox.ListBox.AddRange(animationUrls);
+            selectComboBox.AddRange(animationUrls);
             selectComboBox.Value = defaultAnimationUrl;
             selectComboBox.Parent = this;
             selectComboBox.ValueChanged += SelectComboBox_SelectedItemChanged;
 
-            AddVerticalStackPanel().AddButtons(
-                ("Play", () => { animation.Play(); }),
-                ("Stop", animation.Stop),
-                ("Info", ShowInfo),
-                ("Show frame 0", ShowFrame))
-            .Margin(5).HorizontalAlignment(HorizontalAlignment.Left).SuggestedWidthToMax();
+            var stackPanel = new VerticalStackPanel(this);
+
+            var playButton = new Button("Play", () => { animation.Play(); });
+            var stopButton = new Button("Stop", animation.Stop);
+            var infoButton = new Button("Info", ShowInfo);
+            var showFrameButton = new Button("Show frame 0", ShowFrame);
+
+            new ControlSet(playButton, stopButton, infoButton, showFrameButton)
+            .Margin(5).HorizontalAlignment(HorizontalAlignment.Left)
+            .Parent(stackPanel).SuggestedWidthToMax();
         }
 
         private void ShowFrame()
