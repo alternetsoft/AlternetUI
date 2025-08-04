@@ -921,7 +921,7 @@ namespace Alternet.Drawing
         public abstract void DrawImage(Image image, RectD destinationRect);
 
         /// <summary>
-        /// Creates translation matrix and calls <see cref="PushTransform"/> with it.
+        /// Creates translation matrix and calls <see cref="PushTransform(TransformMatrix)"/> with it.
         /// </summary>
         /// <param name="offsetX">The X value of the translation matrix.</param>
         /// <param name="offsetY">The Y value of the translation matrix.</param>
@@ -930,7 +930,7 @@ namespace Alternet.Drawing
         {
             if(offsetX == 0 && offsetY == 0)
             {
-                Push();
+                PushTransform();
             }
             else
             {
@@ -1021,7 +1021,7 @@ namespace Alternet.Drawing
         /// Pops a stored transformation matrix from the stack and sets
         /// it to the <see cref="Transform"/> property.
         /// </summary>
-        public void Pop()
+        public void PopTransform()
         {
             stack ??= new();
             Transform = stack.Pop();
@@ -1035,7 +1035,7 @@ namespace Alternet.Drawing
         /// <param name="transform">A transform to concatenate with the current transform.</param>
         public virtual void PushTransform(TransformMatrix transform)
         {
-            Push();
+            PushTransform();
             var currentTransform = Transform;
             currentTransform.Multiply(transform);
             Transform = currentTransform;
@@ -1044,7 +1044,7 @@ namespace Alternet.Drawing
         /// <summary>
         /// Pushes the current state of the transformation matrix on a stack.
         /// </summary>
-        public void Push()
+        public void PushTransform()
         {
             stack ??= new();
             stack.Push(Transform);

@@ -89,7 +89,7 @@ namespace DrawingSample
             DrawScene(dc);
             DrawSubTransformedPart(dc);
 
-            dc.Pop();
+            dc.PopTransform();
         }
 
         protected override AbstractControl CreateSettingsControl()
@@ -206,9 +206,9 @@ namespace DrawingSample
             //    r.InflatedBy(-10, -10),
             //    new TextFormat { Wrapping = TextWrapping.Word });
 
-            dc.Pop();
-            dc.Pop();
-            dc.Pop();
+            dc.PopTransform();
+            dc.PopTransform();
+            dc.PopTransform();
         }
 
         private TransformMatrix GetTransform()

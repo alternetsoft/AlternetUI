@@ -23,9 +23,6 @@ namespace Alternet.Drawing
         /// <inheritdoc cref="Graphics.Transform"/>
         TransformMatrix Transform { get; set; }
 
-        /// <inheritdoc cref="Graphics.Clip"/>
-        Region? Clip { get; set; }
-
         /// <inheritdoc cref="Graphics.InterpolationMode"/>
         InterpolationMode InterpolationMode { get; set; }
 
@@ -176,14 +173,14 @@ namespace Alternet.Drawing
         /// <inheritdoc cref="Graphics.MeasureText(string, Font)"/>
         SizeD MeasureText(string text, Font font);
 
-        /// <inheritdoc cref="Graphics.Pop"/>
-        void Pop();
+        /// <inheritdoc cref="Graphics.PopTransform"/>
+        void PopTransform();
 
-        /// <inheritdoc cref="Graphics.PushTransform"/>
+        /// <inheritdoc cref="Graphics.PushTransform(TransformMatrix)"/>
         void PushTransform(TransformMatrix transform);
 
-        /// <inheritdoc cref="Graphics.Push"/>
-        void Push();
+        /// <inheritdoc cref="Graphics.PushTransform()"/>
+        void PushTransform();
 
         /// <inheritdoc cref="Graphics. DrawText(string,PointD,Font,Color,Color)"/>
         void DrawText(
@@ -206,14 +203,5 @@ namespace Alternet.Drawing
 
         /// <inheritdoc cref="Graphics.GetDPI"/>
         SizeI GetDPI();
-
-        /// <inheritdoc cref="Graphics.DestroyClippingRegion"/>
-        void DestroyClippingRegion();
-
-        /// <inheritdoc cref="Graphics.SetClippingRegion"/>
-        void SetClippingRegion(RectD rect);
-
-        /// <inheritdoc cref="Graphics.GetClippingBox"/>
-        RectD GetClippingBox();
     }
 }

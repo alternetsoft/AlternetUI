@@ -88,7 +88,7 @@ namespace Alternet.UI
             finally
             {
                 if (origin != PointD.Empty)
-                    dc.Pop();
+                    dc.PopTransform();
             }
         }
 

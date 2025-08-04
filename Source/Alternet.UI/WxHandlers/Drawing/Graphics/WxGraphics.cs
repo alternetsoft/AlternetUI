@@ -410,24 +410,6 @@ namespace Alternet.Drawing
         }
 
         /// <inheritdoc/>
-        public override void DestroyClippingRegion()
-        {
-            dc.DestroyClippingRegion();
-        }
-
-        /// <inheritdoc/>
-        public override void SetClippingRegion(RectD rect)
-        {
-            dc.SetClippingRegion(TransformRectToNative(rect));
-        }
-
-        /// <inheritdoc/>
-        public override RectD GetClippingBox()
-        {
-            return dc.GetClippingBox();
-        }
-
-        /// <inheritdoc/>
         protected override void DisposeManaged()
         {
             base.DisposeManaged();

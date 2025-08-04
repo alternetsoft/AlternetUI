@@ -1278,7 +1278,7 @@ namespace Alternet.UI
             }
             finally
             {
-                dc.Pop();
+                dc.PopTransform();
             }
 
 #pragma warning disable

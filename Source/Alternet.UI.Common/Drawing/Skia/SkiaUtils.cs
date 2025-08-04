@@ -501,20 +501,6 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
-        /// Resets the clipping rectangle of the specified <see cref="SKCanvas"/> to its default bounds.
-        /// </summary>
-        /// <remarks>This method sets the clipping rectangle to match the full device
-        /// bounds of the canvas. It ensures that subsequent drawing operations are
-        /// not restricted by a previously applied clipping region.</remarks>
-        /// <param name="canvas">The <see cref="SKCanvas"/> instance whose clipping
-        /// rectangle will be reset. Cannot be <see langword="null"/>.</param>
-        public static void ResetClipRect(SKCanvas canvas)
-        {
-            canvas.ClipRect(
-                new SKRect(0, 0, canvas.LocalClipBounds.Width, canvas.LocalClipBounds.Height));
-        }
-
-        /// <summary>
         /// Gets bounds of all the rectangles in the collection.
         /// </summary>
         /// <param name="rects">Collection of the rectangles</param>

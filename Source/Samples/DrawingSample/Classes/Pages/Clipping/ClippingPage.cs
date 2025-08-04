@@ -79,7 +79,7 @@ namespace DrawingSample
 
             dc.Clip = null;
 
-            dc.Pop();
+            dc.PopTransform();
 
             dc.DrawText(
                 "Click and drag the mouse to add or subtract rectangles to/from the clip region.",

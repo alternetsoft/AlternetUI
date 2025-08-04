@@ -70,12 +70,6 @@ namespace Alternet.Drawing
         }
 
         /// <inheritdoc/>
-        public override void DestroyClippingRegion()
-        {
-            throw new NotImplementedException();
-        }
-
-        /// <inheritdoc/>
         public override void DrawArc(Pen pen, PointD center, Coord radius, Coord startAngle, Coord sweepAngle)
         {
             throw new NotImplementedException();
@@ -238,12 +232,6 @@ namespace Alternet.Drawing
         }
 
         /// <inheritdoc/>
-        public override RectD GetClippingBox()
-        {
-            throw new NotImplementedException();
-        }
-
-        /// <inheritdoc/>
         public override SizeI GetDPI()
         {
             throw new NotImplementedException();
@@ -281,12 +269,6 @@ namespace Alternet.Drawing
 
         /// <inheritdoc/>
         public override void RoundedRectangle(Pen pen, Brush brush, RectD rectangle, Coord cornerRadius)
-        {
-            throw new NotImplementedException();
-        }
-
-        /// <inheritdoc/>
-        public override void SetClippingRegion(RectD rect)
         {
             throw new NotImplementedException();
         }

@@ -563,24 +563,6 @@ namespace Alternet.Drawing
         }
 
         /// <inheritdoc/>
-        public override void DestroyClippingRegion()
-        {
-            SkiaUtils.ResetClipRect(canvas);
-        }
-
-        /// <inheritdoc/>
-        public override void SetClippingRegion(RectD rect)
-        {
-            canvas.ClipRect(rect);
-        }
-
-        /// <inheritdoc/>
-        public override RectD GetClippingBox()
-        {
-            return canvas.LocalClipBounds;
-        }
-
-        /// <inheritdoc/>
         public override void FillRectangle(Brush brush, RectD rectangle, GraphicsUnit unit)
         {
             ToDip(ref rectangle, unit);

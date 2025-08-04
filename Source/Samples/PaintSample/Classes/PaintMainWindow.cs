@@ -100,8 +100,10 @@ namespace PaintSample
             testMenu.Add("Convert To Disabled", DoConvertToDisabled);
             testMenu.Add("Convert To Disabled (Skia)", DoConvertToDisabledSkia);
 
+            /*
             if (!App.IsLinuxOS)
                 testMenu.Add("Sample draw", DoDrawOnBitmap);
+            */
 
             testMenu.Add("Rotate", DoRotate);
 
@@ -651,6 +653,7 @@ namespace PaintSample
             Document.Bitmap = background;
         }
 
+        /*
         public void DoDrawOnBitmap()
         {
             CreateNewDocument();
@@ -662,7 +665,9 @@ namespace PaintSample
 
             Document.Bitmap = bitmap;
         }
+        */
 
+        /*
         public void DrawSample(Graphics dc, PointD location, RectD rect)
         {
             dc.FillRectangle(Color.WhiteSmoke.AsBrush, rect);
@@ -697,5 +702,6 @@ namespace PaintSample
             dc.DrawText(s, location, font, Color.Green, Color.Empty);
             dc.DestroyClippingRegion();
         }
+        */
     }
 }

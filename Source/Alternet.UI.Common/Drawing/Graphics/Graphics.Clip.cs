@@ -19,43 +19,6 @@ namespace Alternet.Drawing
         public abstract bool HasClip { get; }
 
         /// <summary>
-        /// Destroys the current clipping region so that none of the DC is clipped.
-        /// </summary>
-        public abstract void DestroyClippingRegion();
-
-        /// <summary>
-        /// Sets the clipping region for this device context to the intersection of the
-        /// given region described by the parameters of this method and the previously
-        /// set clipping region.
-        /// </summary>
-        /// <param name="rect">Clipping rectangle.</param>
-        /// <remarks>
-        /// The clipping region is an area to which drawing is restricted. Possible uses
-        /// for the clipping region are for clipping text or for speeding up
-        /// window redraws when only a known area of the screen is damaged.
-        /// </remarks>
-        /// <remarks>
-        /// Calling this function can only make the clipping region
-        /// smaller, never larger.
-        /// You need to call <see cref="DestroyClippingRegion"/> first if you want
-        /// to set the clipping
-        /// region exactly to the region specified.
-        /// If resulting clipping region is empty, then all drawing on the DC is
-        /// clipped out (all changes made by drawing operations are masked out).
-        /// </remarks>
-        public abstract void SetClippingRegion(RectD rect);
-
-        /// <summary>
-        /// Gets the rectangle surrounding the current clipping region.
-        /// If no clipping region is set this function returns the extent of the device context.
-        /// </summary>
-        /// <returns>
-        /// <see cref="RectD"/> filled in with the logical coordinates of the clipping region
-        /// on success, or <see cref="RectD.Empty"/> otherwise.
-        /// </returns>
-        public abstract RectD GetClippingBox();
-
-        /// <summary>
         /// Calls the specified action inside temporary clipped rectangle, so painting outside
         /// this rectangle is ignored.
         /// </summary>
@@ -70,33 +33,15 @@ namespace Alternet.Drawing
                 return;
             }
 
-            var useSimpleClipping = false;
-
-            if (useSimpleClipping)
+            try
             {
-                try
-                {
-                    DestroyClippingRegion();
-                    SetClippingRegion(rect);
-                    action();
-                }
-                finally
-                {
-                    DestroyClippingRegion();
-                }
+                PushClip();
+                Clip = new Region(rect);
+                action();
             }
-            else
+            finally
             {
-                try
-                {
-                    PushClip();
-                    Clip = new Region(rect);
-                    action();
-                }
-                finally
-                {
-                    PopClip();
-                }
+                PopClip();
             }
         }
 
