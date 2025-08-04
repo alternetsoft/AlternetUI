@@ -12,6 +12,13 @@ namespace Alternet.Drawing
     public class ScrollBarDrawable : BaseDrawable
     {
         /// <summary>
+        /// Represents the minimum size, in dips, for an arrow.
+        /// </summary>
+        /// <remarks>This value is used to ensure that arrows are rendered with a minimum visible size.
+        /// Adjust this value to control the smallest allowable arrow size in the rendering logic.</remarks>
+        public static Coord MinArrowSize = 11;
+
+        /// <summary>
         /// Indicates whether arrows are visible by default in the scroll bar.
         /// </summary>
         /// <remarks>This field determines the default visibility state of arrows.
@@ -527,7 +534,7 @@ namespace Alternet.Drawing
             ScrollBar.MetricsInfo metrics)
         {
             var arrowSize = metrics.GetArrowBitmapSize(IsVertical, scaleFactor) - 6;
-            arrowSize = SizeD.Max(9, arrowSize);
+            arrowSize = SizeD.Max(MinArrowSize, arrowSize);
 
             var arrowMargin = ArrowMargin?[this.VisualState] ?? 1;
             arrowMargin *= 2;
