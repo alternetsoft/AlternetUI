@@ -33,9 +33,24 @@ namespace Alternet.UI
         public static int MaxItemsUsingContextMenu = 15;
 
         /// <summary>
+        /// The default decrement value, in chars, used to adjust the size of an expanded drop-down menu.
+        /// </summary>
+        /// <remarks>This value is typically used to reduce the width of a drop-down menu when
+        /// it is expanded if <see cref="DefaultExpandDropDownMenuToWidth"/> is <c>true</c>.
+        /// This value allows to take into account menu item margins
+        /// when calculating the final width.</remarks>
+        public static int DefaultExpandedDropDownMenuDecrement = 20;
+
+        /// <summary>
         /// Gets or sets the default kind of popup window used by the control.
         /// </summary>
         public static PickerPopupKind DefaultPopupKind = PickerPopupKind.Auto;
+
+        /// <summary>
+        /// Gets or sets whether the default behavior is to expand drop-down menu width
+        /// to match the width of their parent control.
+        /// </summary>
+        public static bool DefaultExpandDropDownMenuToWidth = true;
 
         private BaseCollection<ListControlItem>? items;
         private ObjectUniqueId? createdMenuId;
@@ -417,27 +432,39 @@ namespace Alternet.UI
 
                 DropDownMenu.Items.SetCount(Items.Count, () => new MenuItem());
 
+                var popupOwner = PopupOwner ?? this;
+
+                var spaceWidth = popupOwner.MeasureCanvas.MeasureText(" ", RealFont).Width;
+
                 for (int i = 0; i < Items.Count; i++)
                 {
                     var item = Items[i];
                     var menuItem = DropDownMenu.Items[i];
-                    menuItem.Text
-                        = item.DisplayText ?? item.Text ?? item.Value?.ToString() ?? string.Empty;
-                    menuItem.Tag = item.Value ?? item;
-                    menuItem.Click -= MenuItemClickHandler;
-                    menuItem.Click += MenuItemClickHandler;
 
-                    void MenuItemClickHandler(object? sender, EventArgs e)
+                    var s = item.DisplayText ?? item.Text ?? item.Value?.ToString() ?? string.Empty;
+
+                    if(i == 0 && DefaultExpandDropDownMenuToWidth)
                     {
-                        if (sender is MenuItem menuItemSender)
-                        {
-                            Value = menuItemSender.Tag;
-                        }
+                        var itemWidth = popupOwner.MeasureCanvas.MeasureText(s, RealFont).Width;
+                        var numOfSpaces = (int)((popupOwner.Width - itemWidth) / spaceWidth);
+                        numOfSpaces -= DefaultExpandedDropDownMenuDecrement;
+
+                        if (numOfSpaces > 0)
+                            s += new string(' ', numOfSpaces);
+                    }
+
+                    menuItem.Text = s;
+                    menuItem.Tag = item.Value ?? item;
+                    menuItem.ClickAction = MenuItemClickHandler;
+
+                    void MenuItemClickHandler()
+                    {
+                        Value = menuItem.Tag;
                     }
                 }
 
                 DropDownMenu.CheckSingleItemWithTag(Value);
-                ShowDropDownMenu();
+                DropDownMenu.ShowAsDropDown(popupOwner);
             }
 
             void ShowListBox()
