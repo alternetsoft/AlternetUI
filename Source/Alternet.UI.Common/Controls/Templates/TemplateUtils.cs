@@ -111,7 +111,7 @@ namespace Alternet.UI
             {
                 if (!child.Visible)
                     continue;
-                RaisePaintRecursive(child, dc, child.Location);
+                RaisePaintClipped(child, dc, child.Location);
             }
         }
 

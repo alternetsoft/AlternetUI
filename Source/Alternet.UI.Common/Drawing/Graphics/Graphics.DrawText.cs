@@ -272,6 +272,39 @@ namespace Alternet.Drawing
         /// <returns></returns>
         public virtual RectD DrawLabel(ref DrawLabelParams prm)
         {
+            RectD result = RectD.Empty;
+
+            if (prm.Rect.SizeIsEmpty)
+            {
+                result = DrawLabelUnclipped(ref prm);
+            }
+            else
+            {
+                try
+                {
+                    Save();
+                    ClipRect(prm.Rect);
+                    result = DrawLabelUnclipped(ref prm);
+                }
+                finally
+                {
+                    Restore();
+                }
+            }
+
+            return result;
+        }
+
+        /// <summary>
+        /// Draws text with the specified font, background and foreground colors,
+        /// optional image, alignment and underlined mnemonic character.
+        /// This is unclipped version of <see cref="DrawLabel(ref DrawLabelParams)"/>.
+        /// </summary>
+        /// <param name="prm">Parameters specified using
+        /// <see cref="DrawLabelParams"/> structure.</param>
+        /// <returns></returns>
+        public virtual RectD DrawLabelUnclipped(ref DrawLabelParams prm)
+        {
             DrawElementsParams.ElementParams imageElement = DrawElementsParams.ElementParams.Default;
             var image = prm.Image;
             var indexAccel = prm.IndexAccel;
