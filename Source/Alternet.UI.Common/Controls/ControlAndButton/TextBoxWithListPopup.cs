@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Text;
@@ -216,6 +217,21 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Adds a collection of items to the control.
+        /// </summary>
+        /// <remarks>If an item in the collection is already a <see cref="ListControlItem"/>,
+        /// it is added directly. Otherwise, a new <see cref="ListControlItem"/> is created
+        /// for the item, with its <c>Value</c>
+        /// property set to the item, and then added to the list.</remarks>
+        /// <param name="items">The collection of items to add.
+        /// Each item can either be a <see cref="ListControlItem"/> or an object that
+        /// will be wrapped in a new <see cref="ListControlItem"/>.</param>
+        public virtual void AddRange(IEnumerable items)
+        {
+            ButtonCombo.AddRange(items);
+        }
+
+        /// <summary>
         /// Shows the popup window associated with the control.
         /// </summary>
         public virtual void ShowPopup()
@@ -331,6 +347,16 @@ namespace Alternet.UI
         protected override void OnSubstituteControlMouseLeftButtonDown(object sender, MouseEventArgs e)
         {
             base.OnSubstituteControlMouseLeftButtonDown(sender, e);
+            if (e.Handled)
+                return;
+            DroppedDown = !DroppedDown;
+            e.Handled = true;
+        }
+
+        /// <inheritdoc/>
+        protected override void OnMouseLeftButtonDown(MouseEventArgs e)
+        {
+            base.OnMouseLeftButtonDown(e);
             if (e.Handled)
                 return;
             DroppedDown = !DroppedDown;
