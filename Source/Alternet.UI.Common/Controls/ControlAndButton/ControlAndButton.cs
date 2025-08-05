@@ -14,6 +14,11 @@ namespace Alternet.UI
     public abstract partial class ControlAndButton : ControlAndControl, INotifyDataErrorInfo
     {
         /// <summary>
+        /// Represents the default margin applied to <see cref="SubstituteControl"/>.
+        /// </summary>
+        public static Thickness DefaultSubstituteControlMargin = (3, 0, 3, 0);
+
+        /// <summary>
         /// Gets or sets default image for the 'ComboBox' button.
         /// </summary>
         public static KnownButton DefaultBtnComboBoxImage = UI.KnownButton.TextBoxCombo;
@@ -184,12 +189,23 @@ namespace Alternet.UI
 
             set
             {
+                if (substituteControl == value)
+                    return;
+
+                if (substituteControl is not null)
+                {
+                    substituteControl.MouseLeftButtonDown -= OnSubstituteControlMouseLeftButtonDown;
+                    substituteControl.Parent = null;
+                }
+
                 substituteControl = value;
+
                 if (substituteControl != null)
                 {
                     substituteControl.Visible = false;
                     substituteControl.HasBorder = MainControl.HasBorder;
                     substituteControl.Alignment = MainControl.Alignment;
+                    substituteControl.Margin = DefaultSubstituteControlMargin;
                     substituteControl.Parent = this;
                     substituteControl.MouseLeftButtonDown -= OnSubstituteControlMouseLeftButtonDown;
                     substituteControl.MouseLeftButtonDown += OnSubstituteControlMouseLeftButtonDown;
