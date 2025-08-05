@@ -166,6 +166,17 @@ namespace PropertyGridSample
             listBox.Items.AddRange(GetTenItems());
         }
 
+        public static void InitStdComboBox(object control)
+        {
+            if (control is not StdComboBox comboBox)
+                return;
+            var items = GetTenItems();
+            comboBox.AddRange(items);
+            comboBox.HorizontalAlignment = HorizontalAlignment.Left;
+            comboBox.IsEditable = false;
+            comboBox.SuggestedWidth = 200;
+        }
+
         public static void InitComboBox(object control)
         {
             if (control is not ComboBox comboBox)

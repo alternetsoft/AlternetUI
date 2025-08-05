@@ -83,6 +83,7 @@ Environment.NewLine + Environment.NewLine +
             Actions.Add(typeof(VirtualListBox), InitVListBox);
             Actions.Add(typeof(StdListBox), InitListBox);
             Actions.Add(typeof(ComboBox), InitComboBox);
+            Actions.Add(typeof(StdComboBox), InitStdComboBox);
             Actions.Add(typeof(StdCheckListBox), InitCheckListBox);
 
             Actions.Add(typeof(UserControl), (c) =>

@@ -57,6 +57,7 @@ namespace PropertyGridSample
                 LimitedTypes.Add(typeof(Calendar));
                 LimitedTypes.Add(typeof(CheckBox));
                 LimitedTypes.Add(typeof(ComboBox));
+                LimitedTypes.Add(typeof(StdComboBox));
                 LimitedTypes.Add(typeof(GroupBox));
                 LimitedTypes.Add(typeof(HorizontalStackPanel));
                 LimitedTypes.Add(typeof(TabControl));
