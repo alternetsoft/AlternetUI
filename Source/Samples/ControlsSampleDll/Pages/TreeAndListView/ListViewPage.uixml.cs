@@ -47,19 +47,19 @@ namespace ControlsSample
             listView.SmallImageList = imageLists.Small;
             listView.LargeImageList = imageLists.Large;
 
-            AddDefaultItems();
-
             viewComboBox.EnumType = typeof(ListViewView);
             viewComboBox.Value = ListViewView.Details;
 
             gridLinesComboBox.EnumType = typeof(ListViewGridLinesDisplayMode);
             gridLinesComboBox.Value = ListViewGridLinesDisplayMode.Vertical;
 
-            columnWidthModeComboBox.EnumType = typeof(ListViewColumnWidthMode);
-            columnWidthModeComboBox.Value = ListViewColumnWidthMode.Fixed;
-
             listView.Items.ItemInserted += Items_ItemInserted;
             listView.Items.ItemRemoved += Items_ItemRemoved;
+
+            AddDefaultItems();
+
+            columnWidthModeComboBox.EnumType = typeof(ListViewColumnWidthMode);
+            columnWidthModeComboBox.Value = listView.Columns[0].WidthMode;
         }
 
         private void EditItemsButton_Click(object? sender, System.EventArgs e)
@@ -74,8 +74,8 @@ namespace ControlsSample
 
         private void InitializeColumns()
         {
-            listView?.Columns.Add(new ListViewColumn("Column 1"));
-            listView?.Columns.Add(new ListViewColumn("Column 2"));
+            listView?.Columns.Add(new ListViewColumn("Column One"));
+            listView?.Columns.Add(new ListViewColumn("Column Two"));
         }
 
         private void AddDefaultItems()
@@ -83,6 +83,14 @@ namespace ControlsSample
             listView!.View = ListViewView.Details;
 
             PropertyGridSample.ObjectInit.InitListView(listView);
+
+            listView.Columns[0].WidthMode = ListViewColumnWidthMode.FixedInPercent;
+            listView.Columns[0].Width = 40;
+            listView.Columns[0].MinAutoWidth = 100;
+
+            listView.Columns[1].WidthMode = ListViewColumnWidthMode.FixedInPercent;
+            listView.Columns[1].Width = 40;
+            listView.Columns[1].MinAutoWidth = 100;
         }
 
         private bool SlowRecreate

@@ -151,7 +151,7 @@ namespace Alternet.UI
 
         /// <summary>
         /// Gets or sets the minimal auto-width of the column, in device-independent units.
-        /// This property is used when column width is specified in percents of the container's width.
+        /// This property is used when column width is specified in percent of the container's width.
         /// If it is negative, minimal width is calculated from title's width plus the absolute
         /// of the specified value.
         /// </summary>
@@ -170,7 +170,7 @@ namespace Alternet.UI
 
         /// <summary>
         /// Gets or sets the maximal auto-width of the column, in device-independent units.
-        /// This property is used when column width is specified in percents of the
+        /// This property is used when column width is specified in percent of the
         /// container's width.
         /// If it equals 0, it is not used.
         /// </summary>
@@ -234,11 +234,11 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Converts column width in percents (0..100) of the owner control's width to
+        /// Converts column width in percent (0..100) of the owner control's width to
         /// real width in device-independent units.
         /// If <see cref="ListView"/> is not assigned returns null.
         /// </summary>
-        /// <param name="widthInPercent">The column width in percents of the
+        /// <param name="widthInPercent">The column width in percent of the
         /// owner control's width.</param>
         /// <param name="minWidth">Minimal possible width of the column. If negative value
         /// is specified, minimal possible width is calculated from the width of the

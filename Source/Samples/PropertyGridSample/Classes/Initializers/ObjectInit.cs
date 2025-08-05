@@ -580,8 +580,8 @@ Environment.NewLine + Environment.NewLine +
 
             void InitializeColumns()
             {
-                listView?.Columns.Add(new ListViewColumn("Column 1"));
-                listView?.Columns.Add(new ListViewColumn("Column 2"));
+                listView?.Columns.Add(new ListViewColumn("Column One"));
+                listView?.Columns.Add(new ListViewColumn("Column Two"));
             }
 
             void AddDefaultItems()
