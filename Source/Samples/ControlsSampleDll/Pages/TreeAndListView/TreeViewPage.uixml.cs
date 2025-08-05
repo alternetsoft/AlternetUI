@@ -51,6 +51,9 @@ namespace ControlsSample
                 PropertyGridSample.ObjectInit.AddItems(popupTreeView.MainControl, 10);
                 popupTreeView.AfterHide += PopupTreeView_AfterHide;
             }
+
+            treeView.RootItem.FirstChild?.Expand();
+            treeView.SelectFirstItemAndScroll();
         }
 
         private void TreeView_MouseMove(object sender, MouseEventArgs e)
