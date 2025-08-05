@@ -115,10 +115,16 @@ namespace Alternet.UI.Native
             NativeApi.DrawingContext_Restore_(NativePointer);
         }
         
-        public void SetClippingRegion(Alternet.Drawing.RectD rect)
+        public void SetClippingRect(Alternet.Drawing.RectD rect)
         {
             CheckDisposed();
-            NativeApi.DrawingContext_SetClippingRegion_(NativePointer, rect);
+            NativeApi.DrawingContext_SetClippingRect_(NativePointer, rect);
+        }
+        
+        public void SetClippingRegion(Region region)
+        {
+            CheckDisposed();
+            NativeApi.DrawingContext_SetClippingRegion_(NativePointer, region.NativePointer);
         }
         
         public Alternet.Drawing.RectD GetClippingBox()
@@ -400,7 +406,10 @@ namespace Alternet.UI.Native
             public static extern void DrawingContext_Restore_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void DrawingContext_SetClippingRegion_(IntPtr obj, Alternet.Drawing.RectD rect);
+            public static extern void DrawingContext_SetClippingRect_(IntPtr obj, Alternet.Drawing.RectD rect);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void DrawingContext_SetClippingRegion_(IntPtr obj, IntPtr region);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern Alternet.Drawing.RectD DrawingContext_GetClippingBox_(IntPtr obj);

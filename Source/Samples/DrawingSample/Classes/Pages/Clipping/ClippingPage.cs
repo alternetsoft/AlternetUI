@@ -66,18 +66,17 @@ namespace DrawingSample
             using var region = new Region(GetPolygonPoints());
             ApplyRegionParts(region);
 
-            dc.Clip = region;
+            dc.DoInsideClipped(region, () =>
+            {
+                if (x >= bounds.Width)
+                    x = 0;
 
-            if (x >= bounds.Width)
-                x = 0;
+                dc.FillRectangle(Brushes.SkyBlue, bounds);
 
-            dc.FillRectangle(Brushes.SkyBlue, bounds);
+                dc.PushTransform(TransformMatrix.CreateTranslation(x, 0));
 
-            dc.PushTransform(TransformMatrix.CreateTranslation(x, 0));
-
-            DrawScene(dc, bounds);
-
-            dc.Clip = null;
+                DrawScene(dc, bounds);
+            });
 
             dc.PopTransform();
 

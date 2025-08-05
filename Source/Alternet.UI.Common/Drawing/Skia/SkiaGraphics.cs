@@ -139,6 +139,20 @@ namespace Alternet.Drawing
                 Color.Empty);
         }
 
+        /// <inheritdoc/>
+        public override void DrawText(string text, Font font, Brush brush, RectD bounds)
+        {
+            DoInsideClipped(bounds, () =>
+            {
+                canvas.DrawText(
+                    text,
+                    bounds.Location,
+                    font,
+                    brush.AsColor,
+                    Color.Empty);
+            });
+        }
+
         /// <summary>
         /// Sets pixel at the specified coordinates to the specified color.
         /// </summary>
@@ -250,6 +264,15 @@ namespace Alternet.Drawing
         {
             DebugPenAssert(pen);
             canvas.DrawBeziers(pen, points);
+        }
+
+        /// <inheritdoc/>
+        public override void ClipRect(RectD rect, bool antialiasing = true)
+        {
+            canvas.ClipRect(
+                rect,
+                SKClipOperation.Intersect,
+                antialiasing);
         }
 
         /// <summary>

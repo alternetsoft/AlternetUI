@@ -128,10 +128,10 @@ namespace Alternet::UI
         _graphicsContext->ResetClip();
     }
 
-    void DrawingContext::SetClippingRegion(const Rect& rect)
+    void DrawingContext::SetClippingRect(const Rect& rect)
     {
         auto bounds = fromDip(rect, _dc->GetWindow());
-        _dc->SetClippingRegion(bounds);
+        _graphicsContext->Clip(bounds.x, bounds.y, bounds.width, bounds.height);
     }
 
     Rect DrawingContext::GetClippingBox()
@@ -142,6 +142,11 @@ namespace Alternet::UI
             return rect;
         else
             return Rect();
+    }
+
+    void DrawingContext::SetClippingRegion(Region* region)
+    {
+        _graphicsContext->Clip(region->GetRegion());
     }
 
     void DrawingContext::SetClip(Region* value)

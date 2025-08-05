@@ -102,95 +102,95 @@ namespace DrawingSample
 
         private void DrawShapesGrid(Graphics dc, RectD bounds, Cell[] cells)
         {
-            using var clip = new Region(bounds);
-            dc.Clip = clip;
+            dc.DoInsideClipped(bounds, Internal);
 
-            var textFormat = new TextFormat
+            void Internal()
             {
-                HorizontalAlignment = TextHorizontalAlignment.Center,
-                VerticalAlignment = TextVerticalAlignment.Bottom,
-                Wrapping = TextWrapping.Word,
-                Trimming = TextTrimming.Character,
-            };
-
-            const int ColumnCount = 5;
-            const double CellMargin = 0;
-            var cellSize =
-                (Math.Max(bounds.Width, bounds.Height) / (ColumnCount)) - CellMargin
-                - (CellMargin / (ColumnCount));
-
-            double x = CellMargin, y = CellMargin;
-
-            var cellBackgroundBrush = Brushes.White;
-            var cellBorderPen = Pens.White;
-
-            for (int i = 0; i < cells.Length; i++)
-            {
-                var cell = cells[i];
-
-                var cellRect = new RectD(x, y, cellSize, cellSize);
-                if (cellRect.Width <= 0 || cellRect.Height <= 0)
-                    continue;
-
-                var cellNameRect = cellRect.InflatedBy(-2, -2);
-                cellNameRect.Height -= 4;
-
-                var cw = cellNameRect.Width;
-
-                var cellName = DrawingUtils.WrapTextToMultipleLines(
-                    cell.Name,
-                    cw,
-                    AbstractControl.DefaultFont,
-                    dc);
-
-                var nameTextSize = dc.MeasureText(cellName, AbstractControl.DefaultFont);
-                bool nameVisible = nameTextSize.Width <= cellNameRect.Width;
-
-                var cellContentFrameRect = cellNameRect.InflatedBy(-5, -5);
-                if (nameVisible)
+                var textFormat = new TextFormat
                 {
-                    cellContentFrameRect.Top += nameTextSize.Height;
-                    cellContentFrameRect.Height -= nameTextSize.Height;
-                }
+                    HorizontalAlignment = TextHorizontalAlignment.Center,
+                    VerticalAlignment = TextVerticalAlignment.Bottom,
+                    Wrapping = TextWrapping.Word,
+                    Trimming = TextTrimming.Character,
+                };
 
-                if (cellContentFrameRect.Width <= 0 || cellContentFrameRect.Height <= 0)
-                    continue;
+                const int ColumnCount = 5;
+                const double CellMargin = 0;
+                var cellSize =
+                    (Math.Max(bounds.Width, bounds.Height) / (ColumnCount)) - CellMargin
+                    - (CellMargin / (ColumnCount));
 
-                var cellContentRect = cellContentFrameRect.InflatedBy(-10, -10);
-                if (cellContentRect.Width <= 0 || cellContentRect.Height <= 0)
-                    continue;
+                double x = CellMargin, y = CellMargin;
 
-                dc.FillRectangle(cellBackgroundBrush, cellRect);
-                dc.DrawRectangle(cellBorderPen, cellRect);
+                var cellBackgroundBrush = Brushes.White;
+                var cellBorderPen = Pens.White;
 
-                dc.FillRectangle(BackgroundBrush, cellContentFrameRect);
-                dc.DrawRectangle(cellBorderPen, cellContentFrameRect);
-
-                cell.DrawAction(dc, cellContentRect);
-
-                if (nameVisible)
+                for (int i = 0; i < cells.Length; i++)
                 {
-                    dc.DrawLabel(
-                        cellName,
+                    var cell = cells[i];
+
+                    var cellRect = new RectD(x, y, cellSize, cellSize);
+                    if (cellRect.Width <= 0 || cellRect.Height <= 0)
+                        continue;
+
+                    var cellNameRect = cellRect.InflatedBy(-2, -2);
+                    cellNameRect.Height -= 4;
+
+                    var cw = cellNameRect.Width;
+
+                    var cellName = DrawingUtils.WrapTextToMultipleLines(
+                        cell.Name,
+                        cw,
                         AbstractControl.DefaultFont,
-                        Color.Black,
-                        Color.Empty,
-                        null,
-                        cellNameRect);
-                }
+                        dc);
 
-                if ((i + 1) % ColumnCount == 0)
-                {
-                    x = CellMargin;
-                    y += cellSize + CellMargin;
-                }
-                else
-                {
-                    x += cellSize + CellMargin;
+                    var nameTextSize = dc.MeasureText(cellName, AbstractControl.DefaultFont);
+                    bool nameVisible = nameTextSize.Width <= cellNameRect.Width;
+
+                    var cellContentFrameRect = cellNameRect.InflatedBy(-5, -5);
+                    if (nameVisible)
+                    {
+                        cellContentFrameRect.Top += nameTextSize.Height;
+                        cellContentFrameRect.Height -= nameTextSize.Height;
+                    }
+
+                    if (cellContentFrameRect.Width <= 0 || cellContentFrameRect.Height <= 0)
+                        continue;
+
+                    var cellContentRect = cellContentFrameRect.InflatedBy(-10, -10);
+                    if (cellContentRect.Width <= 0 || cellContentRect.Height <= 0)
+                        continue;
+
+                    dc.FillRectangle(cellBackgroundBrush, cellRect);
+                    dc.DrawRectangle(cellBorderPen, cellRect);
+
+                    dc.FillRectangle(BackgroundBrush, cellContentFrameRect);
+                    dc.DrawRectangle(cellBorderPen, cellContentFrameRect);
+
+                    cell.DrawAction(dc, cellContentRect);
+
+                    if (nameVisible)
+                    {
+                        dc.DrawLabel(
+                            cellName,
+                            AbstractControl.DefaultFont,
+                            Color.Black,
+                            Color.Empty,
+                            null,
+                            cellNameRect);
+                    }
+
+                    if ((i + 1) % ColumnCount == 0)
+                    {
+                        x = CellMargin;
+                        y += cellSize + CellMargin;
+                    }
+                    else
+                    {
+                        x += cellSize + CellMargin;
+                    }
                 }
             }
-            
-            dc.Clip = null;
         }
 
         private class Cell

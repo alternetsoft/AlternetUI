@@ -28,7 +28,7 @@ namespace Alternet.Drawing
         public override bool IsOk => dc.IsOk;
 
         /// <inheritdoc/>
-        public override Region? Clip
+        public virtual Region? Clip
         {
             get
             {
@@ -434,6 +434,19 @@ namespace Alternet.Drawing
 
             ToDip(ref rectangle, unit);
             FillRectangle(brush, rectangle);
+        }
+
+        /// <inheritdoc/>
+        public override void ClipRect(RectD rect, bool antialiasing = true)
+        {
+            dc.SetClippingRect(TransformRectToNative(rect));
+        }
+
+        /// <inheritdoc/>
+        public override void ClipRegion(Region region)
+        {
+            var nativeRegion = (UI.Native.Region)region.Handler;
+            dc.SetClippingRegion(nativeRegion);
         }
 
         protected override void SetHandlerTransform(TransformMatrix matrix)

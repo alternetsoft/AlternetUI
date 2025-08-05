@@ -12,17 +12,9 @@ namespace Alternet.Drawing
     public partial class SkiaGraphics
     {
         /// <inheritdoc/>
-        public override Region? Clip
+        public override void ClipRegion(Region region)
         {
-            get
-            {
-                return null;
-            }
-
-            set
-            {
-                throw new NotImplementedException();
-            }
+            throw new NotImplementedException();
         }
 
         /// <inheritdoc/>
@@ -43,14 +35,6 @@ namespace Alternet.Drawing
             /*
             var paint = GetFillPaint(brush);
             */
-        }
-
-        /// <inheritdoc/>
-        public override void DrawText(string text, Font font, Brush brush, RectD bounds)
-        {
-            DebugFontAssert(font);
-            DebugBrushAssert(brush);
-            throw new NotImplementedException();
         }
     }
 }

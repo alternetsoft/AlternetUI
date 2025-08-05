@@ -567,6 +567,12 @@ namespace Alternet::UI
         Format64bppArgb = 3424269,
     };
     
+    enum class ClipOperation
+    {
+        Difference = 0,
+        Intersect = 1,
+    };
+    
     enum class CombineMode
     {
         Replace = 0,

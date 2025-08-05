@@ -66,11 +66,22 @@ namespace Alternet.UI
 
             dc.DrawBorderWithBrush(DefaultColors.GetControlBorderBrush(this), bounds);
 
-            dc.Clip = new Region(scaleBounds);
-
             var fontMaxSize = dc.MeasureText(
                 new string('M', Maximum.ToString().Length),
                 font);
+
+            dc.DoInsideClipped(
+                scaleBounds,
+                () =>
+                {
+                    DrawTicks(scaleBounds.Left + (scaleBounds.Width * 0.45), 0);
+                    DrawTicks(scaleBounds.Left + (scaleBounds.Width * 0.7), 0.5);
+
+                    var pointerLineStartPoint = new PointD(scaleBounds.Left, bounds.Center.Y);
+                    var pointerLineEndPoint = new PointD(scaleBounds.Right, bounds.Center.Y);
+                    dc.DrawLine(pointerPen1, pointerLineStartPoint, pointerLineEndPoint);
+                    dc.DrawLine(pointerPen2, pointerLineStartPoint, pointerLineEndPoint);
+                });
 
             void DrawTicks(double ticksStartX, double offsetInSteps)
             {
@@ -111,14 +122,6 @@ namespace Alternet.UI
                     y += yStep;
                 }
             }
-
-            DrawTicks(scaleBounds.Left + (scaleBounds.Width * 0.45), 0);
-            DrawTicks(scaleBounds.Left + (scaleBounds.Width * 0.7), 0.5);
-
-            var pointerLineStartPoint = new PointD(scaleBounds.Left, bounds.Center.Y);
-            var pointerLineEndPoint = new PointD(scaleBounds.Right, bounds.Center.Y);
-            dc.DrawLine(pointerPen1, pointerLineStartPoint, pointerLineEndPoint);
-            dc.DrawLine(pointerPen2, pointerLineStartPoint, pointerLineEndPoint);
         }
 
         internal static double MapRanges(

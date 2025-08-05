@@ -22,7 +22,9 @@ namespace NativeApi.Api
 
         public void Restore() { }
 
-        public void SetClippingRegion(RectD rect) { }
+        public void SetClippingRect(RectD rect) { }
+
+        public void SetClippingRegion(Region region) { }
 
         public RectD GetClippingBox() => default;
 

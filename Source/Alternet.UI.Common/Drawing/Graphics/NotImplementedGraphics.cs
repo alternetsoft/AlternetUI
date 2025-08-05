@@ -24,20 +24,6 @@ namespace Alternet.Drawing
         }
 
         /// <inheritdoc/>
-        public override Region? Clip
-        {
-            get
-            {
-                throw new NotImplementedException();
-            }
-
-            set
-            {
-                throw new NotImplementedException();
-            }
-        }
-
-        /// <inheritdoc/>
         public override InterpolationMode InterpolationMode
         {
             get
@@ -62,6 +48,18 @@ namespace Alternet.Drawing
 
         /// <inheritdoc/>
         public override void Circle(Pen pen, Brush brush, PointD center, Coord radius)
+        {
+            throw new NotImplementedException();
+        }
+
+        /// <inheritdoc/>
+        public override void ClipRect(RectD rect, bool antialiasing = false)
+        {
+            throw new NotImplementedException();
+        }
+
+        /// <inheritdoc/>
+        public override void ClipRegion(Region region)
         {
             throw new NotImplementedException();
         }
