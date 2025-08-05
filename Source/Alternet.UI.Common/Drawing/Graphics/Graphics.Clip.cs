@@ -14,11 +14,6 @@ namespace Alternet.Drawing
         public abstract Region? Clip { get; set; }
 
         /// <summary>
-        /// Gets whether <see cref="Clip"/> property is assigned.
-        /// </summary>
-        public abstract bool HasClip { get; }
-
-        /// <summary>
         /// Calls the specified action inside temporary clipped rectangle, so painting outside
         /// this rectangle is ignored.
         /// </summary>
@@ -35,37 +30,14 @@ namespace Alternet.Drawing
 
             try
             {
-                PushClip();
+                Save();
                 Clip = new Region(rect);
                 action();
             }
             finally
             {
-                PopClip();
+                Restore();
             }
-        }
-
-        /// <summary>
-        /// Pops a stored clip region state from the stack and sets the current clip region
-        /// to that state.
-        /// </summary>
-        public virtual void PopClip()
-        {
-            clipStack ??= new();
-            Clip = clipStack.Pop();
-        }
-
-        /// <summary>
-        /// Pushes the current state of the clip region on a stack.
-        /// </summary>
-        public virtual void PushClip()
-        {
-            clipStack ??= new();
-
-            if (HasClip)
-                clipStack.Push(Clip);
-            else
-                clipStack.Push(null);
         }
     }
 }

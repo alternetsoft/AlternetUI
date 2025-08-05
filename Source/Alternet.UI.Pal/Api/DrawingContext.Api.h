@@ -124,6 +124,28 @@ ALTERNET_UI_API void DrawingContext_DestroyClippingRegion_(DrawingContext* obj)
     #endif
 }
 
+ALTERNET_UI_API void DrawingContext_Save_(DrawingContext* obj)
+{
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    MarshalExceptions<void>([&](){
+    #endif
+        obj->Save();
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    });
+    #endif
+}
+
+ALTERNET_UI_API void DrawingContext_Restore_(DrawingContext* obj)
+{
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    MarshalExceptions<void>([&](){
+    #endif
+        obj->Restore();
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    });
+    #endif
+}
+
 ALTERNET_UI_API void DrawingContext_SetClippingRegion_(DrawingContext* obj, RectD rect)
 {
     #if !defined(__WXMSW__) || defined(_DEBUG)

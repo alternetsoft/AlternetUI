@@ -40,15 +40,6 @@ namespace Alternet.Drawing
             this.canvas = canvas;
         }
 
-        /// <inheritdoc/>
-        public override bool HasClip
-        {
-            get
-            {
-                return !canvas.IsClipEmpty;
-            }
-        }
-
         /// <summary>
         /// Gets or sets whether 'DrawImage' methods draw unscaled image.
         /// </summary>
@@ -464,6 +455,20 @@ namespace Alternet.Drawing
             DebugPenAssert(pen);
             var path = CreatePiePath(center, radius, startAngle, sweepAngle);
             canvas.DrawPath(path, pen);
+        }
+
+        /// <inheritdoc/>
+        public override void Save()
+        {
+            base.Save();
+            canvas.Save();
+        }
+
+        /// <inheritdoc/>
+        public override void Restore()
+        {
+            canvas.Restore();
+            PopTransform();
         }
 
         /// <inheritdoc/>

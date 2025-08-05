@@ -24,9 +24,6 @@ namespace Alternet.Drawing
         }
 
         /// <inheritdoc/>
-        public override bool HasClip => throw new NotImplementedException();
-
-        /// <inheritdoc/>
         public override Region? Clip
         {
             get

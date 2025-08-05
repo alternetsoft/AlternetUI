@@ -18,6 +18,10 @@ namespace NativeApi.Api
 
         public void DestroyClippingRegion() { }
 
+        public void Save() { }
+
+        public void Restore() { }
+
         public void SetClippingRegion(RectD rect) { }
 
         public RectD GetClippingBox() => default;

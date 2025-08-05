@@ -28,17 +28,6 @@ namespace Alternet.Drawing
         public override bool IsOk => dc.IsOk;
 
         /// <inheritdoc/>
-        public override bool HasClip
-        {
-            get
-            {
-                if (dc.Clip == null)
-                    return false;
-                return true;
-            }
-        }
-
-        /// <inheritdoc/>
         public override Region? Clip
         {
             get
@@ -400,6 +389,21 @@ namespace Alternet.Drawing
                 (UI.Native.Image)image.Handler,
                 TransformRectToNative(destinationRect),
                 false);
+        }
+
+
+        /// <inheritdoc/>
+        public override void Save()
+        {
+            base.Save();
+            dc.Save();
+        }
+
+        /// <inheritdoc/>
+        public override void Restore()
+        {
+            dc.Restore();
+            PopTransform();
         }
 
         /// <inheritdoc/>

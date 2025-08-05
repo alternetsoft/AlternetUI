@@ -25,9 +25,6 @@ namespace Alternet.Drawing
         }
 
         /// <inheritdoc/>
-        public override bool HasClip => Clip is not null;
-
-        /// <inheritdoc/>
         public override Region? Clip
         {
             get;

@@ -986,6 +986,13 @@ namespace Alternet::UI
         Unsplitted = 3,
     };
     
+    enum class SplitterTargetMode
+    {
+        Auto = 0,
+        NextVisibleSibling = 1,
+        PreviousVisibleSibling = 2,
+    };
+    
     enum class StackPanelOrientation
     {
         Vertical = 0,
@@ -1159,6 +1166,13 @@ namespace Alternet::UI
         DoubleBuffer = 65536,
         OptimizedDoubleBuffer = 131072,
         UseTextForAccessibility = 262144,
+    };
+    
+    enum class FileListBoxColumn
+    {
+        Name = 0,
+        DateModified = 1,
+        Size = 2,
     };
     
     enum class FocusState
@@ -2427,6 +2441,13 @@ namespace Alternet::UI
     {
         Horizontal = 0,
         Vertical = 1,
+    };
+    
+    enum class ColumnSortDirection
+    {
+        Ascending = 0,
+        Descending = 1,
+        Flip = 2,
     };
     
     enum class CursorType

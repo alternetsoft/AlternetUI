@@ -267,6 +267,16 @@ namespace Alternet::UI
         _graphicsContext->DrawRoundedRectangle(r.X, r.Y, r.Width, r.Height, cornerRadius);
     }
 
+    void DrawingContext::Save()
+    {
+        _graphicsContext->PushState();
+    }
+
+    void DrawingContext::Restore()
+    {
+        _graphicsContext->PopState();
+    }
+
     void DrawingContext::FillRoundedRectangle(Brush* brush, const Rect& rect, double cornerRadius)
     {
         _graphicsContext->SetPen(*wxTRANSPARENT_PEN);

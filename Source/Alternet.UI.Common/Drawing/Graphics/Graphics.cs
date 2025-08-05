@@ -20,7 +20,6 @@ namespace Alternet.Drawing
         internal const Coord HalfOfMaxValue = int.MaxValue / 2;
 
         private Stack<TransformMatrix>? stack;
-        private Stack<Region?>? clipStack;
         private TransformMatrix transform = new();
         private GraphicsDocument? document;
 
@@ -1138,6 +1137,36 @@ namespace Alternet.Drawing
                     rect,
                     graphicsType);
             }
+        }
+
+        /// <summary>
+        /// Saves the current state of the canvas.
+        /// </summary>
+        /// <remarks>
+        /// This call saves the current state (matrix, clip, and draw filter), and pushes a copy onto
+        /// a private stack. Subsequent calls to translate, scale, rotate, skew, concatenate
+        /// or clipping path or drawing filter all operate on this copy. When the call
+        /// to <see cref="Restore()"/> is made, the previous settings are restored.
+        /// This method should be overridden in a derived
+        /// class to implement the specific save logic.
+        /// </remarks>
+        public virtual void Save()
+        {
+            PushTransform();
+        }
+
+        /// <summary>
+        /// Restore the saved canvas state.
+        /// </summary>
+        /// <remarks>
+        /// This call balances a previous call to <see cref="Save()"/>, and is used to remove
+        /// all modifications to the matrix, clip and draw filter state since the last save call.
+        /// It is an error to restore more times than was previously saved.
+        /// This method should be overridden in a derived class to implement the specific restore logic.
+        /// </remarks>
+        public virtual void Restore()
+        {
+            PopTransform();
         }
 
         /// <summary>

@@ -15,6 +15,8 @@ static DrawingContext* CreateMemoryDC(double scaleFactor);
 static DrawingContext* CreateMemoryDCFromImage(Image* image);
 void* GetHandle();
 void DestroyClippingRegion();
+void Save();
+void Restore();
 void SetClippingRegion(const RectD& rect);
 RectD GetClippingBox();
 void DrawText(const string& text, const PointD& location, Font* font, const Color& foreColor, Brush* backColor, double angle, bool useBrush);

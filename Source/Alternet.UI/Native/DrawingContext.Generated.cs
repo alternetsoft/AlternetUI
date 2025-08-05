@@ -103,6 +103,18 @@ namespace Alternet.UI.Native
             NativeApi.DrawingContext_DestroyClippingRegion_(NativePointer);
         }
         
+        public void Save()
+        {
+            CheckDisposed();
+            NativeApi.DrawingContext_Save_(NativePointer);
+        }
+        
+        public void Restore()
+        {
+            CheckDisposed();
+            NativeApi.DrawingContext_Restore_(NativePointer);
+        }
+        
         public void SetClippingRegion(Alternet.Drawing.RectD rect)
         {
             CheckDisposed();
@@ -380,6 +392,12 @@ namespace Alternet.UI.Native
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void DrawingContext_DestroyClippingRegion_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void DrawingContext_Save_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void DrawingContext_Restore_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void DrawingContext_SetClippingRegion_(IntPtr obj, Alternet.Drawing.RectD rect);
