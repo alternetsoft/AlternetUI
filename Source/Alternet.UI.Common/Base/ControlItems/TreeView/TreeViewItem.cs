@@ -452,7 +452,28 @@ namespace Alternet.UI
         /// <summary>
         /// Gets a value indicating whether this item has child items.
         /// </summary>
+        [Browsable(false)]
         public virtual bool HasItems => items is not null && items.Count > 0;
+
+        /// <summary>
+        /// Gets a value indicating whether this item has any visible child items.
+        /// </summary>
+        [Browsable(false)]
+        public virtual bool HasVisibleItems
+        {
+            get
+            {
+                if (items is null)
+                    return false;
+                foreach (var item in items)
+                {
+                    if (item.IsVisible)
+                        return true;
+                }
+
+                return false;
+            }
+        }
 
         /// <summary>
         /// Gets the indent level of this item.
