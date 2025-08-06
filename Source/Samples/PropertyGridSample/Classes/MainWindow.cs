@@ -205,7 +205,35 @@ namespace PropertyGridSample
                 if (DisposingOrDisposed)
                     return;
                 var filter = toolBoxFilterEdit.TextBox.Text;
-                ToolBox.ApplyVisibilityFilter(filter);
+
+                if(string.IsNullOrEmpty(filter))
+                {
+                    ToolBox.RootItem.DoInsideUpdate(() =>
+                    {
+                        ToolBox.RootItem.CollapseAll();
+                        ToolBox.ApplyVisibility(true);
+                    });
+                    return;
+                }
+
+                bool Fn(TreeViewItem item)
+                {
+                    var result = item.Parent == item.Root || ToolBox.ItemContainsText(item, filter);
+                    return result;
+                }
+
+                ToolBox.RootItem.DoInsideUpdate(() =>
+                {
+                    ToolBox.RootItem.ExpandAll();
+                    ToolBox.ApplyVisibilityFilter(Fn);
+
+                    ToolBox.ApplyVisibilityFilter((item) =>
+                    {
+                        if(!item.IsVisible)
+                            return false;
+                        return !item.HasItems || item.HasVisibleItems;
+                    });
+                });
             };
         }
 
