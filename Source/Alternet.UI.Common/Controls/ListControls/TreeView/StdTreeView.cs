@@ -1350,25 +1350,109 @@ namespace Alternet.UI
         /// The update is wrapped in <see cref="TreeViewItem.DoInsideUpdate"/>
         /// to optimize rendering and batch changes.
         /// </remarks>
+        /// <param name="prm">The parameters used to control item enumeration.
+        /// Optional. If not specified, default parameters will be used (all items
+        /// are processed regardless of visibility or expansion state).</param>
         public virtual void ApplyVisibilityFilter(
             string? filter,
-            StringComparison comparison = StringComparison.CurrentCultureIgnoreCase)
+            StringComparison comparison = StringComparison.CurrentCultureIgnoreCase,
+            TreeViewItem.EnumExpandedItemsParams? prm = null)
         {
-            TreeViewItem.EnumExpandedItemsParams prm = new();
-            prm.OnlyVisible = false;
-            prm.OnlyExpanded = false;
+            if (prm is null)
+            {
+                prm = new();
+                prm.OnlyVisible = false;
+                prm.OnlyExpanded = false;
+            }
 
             var items = RootItem.EnumExpandedItems(prm);
-
-            var noFilter = string.IsNullOrEmpty(filter);
-            filter ??= string.Empty;
 
             RootItem.DoInsideUpdate(() =>
             {
                 foreach (var item in items)
                 {
-                    var txt = ListBox.GetItemText(item, true);
-                    item.IsVisible = noFilter || txt.Contains(filter, comparison);
+                    item.IsVisible = ItemContainsText(item, filter, comparison);
+                }
+            });
+        }
+
+        /// <summary>
+        /// Gets a value indicating whether the specified item contains the specified substring.
+        /// </summary>
+        /// <param name="item">The tree view item to check.</param>
+        /// <param name="subString">The substring to search for.</param>
+        /// <param name="comparison">The string comparison options.</param>
+        /// <returns></returns>
+        public virtual bool ItemContainsText(
+            TreeViewItem? item,
+            string? subString,
+            StringComparison comparison = StringComparison.CurrentCultureIgnoreCase)
+        {
+            if (item is null)
+                return false;
+            if(string.IsNullOrEmpty(subString))
+                return true;
+            var txt = ListBox.GetItemText(item, true);
+            return txt.Contains(subString!, comparison);
+        }
+
+        /// <summary>
+        /// Applies a visibility to all items in the tree control,
+        /// updating their <c>IsVisible</c> property.
+        /// </summary>
+        /// <param name="value">The visibility value to apply.</param>
+        /// <param name="prm">The parameters used to control item enumeration.
+        /// Optional. If not specified, default parameters will be used (all items
+        /// are processed regardless of visibility or expansion state).</param>
+        public virtual void ApplyVisibility(
+            bool value,
+            TreeViewItem.EnumExpandedItemsParams? prm = null)
+        {
+            if (prm is null)
+            {
+                prm = new();
+                prm.OnlyVisible = false;
+                prm.OnlyExpanded = false;
+            }
+
+            var items = RootItem.EnumExpandedItems(prm);
+
+            RootItem.DoInsideUpdate(() =>
+            {
+                foreach (var item in items)
+                {
+                    item.IsVisible = value;
+                }
+            });
+        }
+
+        /// <summary>
+        /// Applies a visibility filter to items within the tree control,
+        /// updating their <c>IsVisible</c> property
+        /// based on a predicate condition.
+        /// </summary>
+        /// <param name="filter">The predicate used to determine item visibility.</param>
+        /// <param name="prm">The parameters used to control item enumeration.
+        /// Optional. If not specified, default parameters will be used (all items
+        /// are processed regardless of visibility or expansion state).</param>
+        public virtual void ApplyVisibilityFilter(
+            Predicate<TreeViewItem> filter,
+            TreeViewItem.EnumExpandedItemsParams? prm = null)
+        {
+            if(prm is null)
+            {
+                prm = new();
+                prm.OnlyVisible = false;
+                prm.OnlyExpanded = false;
+            }
+
+            var items = RootItem.EnumExpandedItems(prm);
+
+            RootItem.DoInsideUpdate(() =>
+            {
+                foreach (var item in items)
+                {
+                    item.IsVisible = filter(item);
                 }
             });
         }
