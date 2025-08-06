@@ -1219,15 +1219,13 @@ namespace Alternet.UI
 
                 Show();
                 Raise();
-                App.DoEvents();
                 if (ActiveControl is not null)
                 {
-                    ActiveControl?.SetFocusIfPossible();
+                    ActiveControl?.SetFocusIdle();
                 }
                 else
                 {
-                    if (CanFocus)
-                        SetFocus();
+                    SetFocusIdle();
                 }
             }
         }
