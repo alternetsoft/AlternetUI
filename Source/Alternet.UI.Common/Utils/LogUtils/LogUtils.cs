@@ -847,7 +847,9 @@ namespace Alternet.UI
                     }
                 }
 
-                var containsInnerText = e.Message?.Contains(e.InnerException.Message) ?? false;
+                var innerExceptionMessage = e.InnerException?.Message ?? string.Empty;
+
+                var containsInnerText = e.Message?.Contains(innerExceptionMessage) ?? false;
 
                 if (e.InnerException is not null && !containsInnerText)
                 {
