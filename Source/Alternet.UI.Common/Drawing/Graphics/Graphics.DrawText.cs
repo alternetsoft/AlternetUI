@@ -274,7 +274,7 @@ namespace Alternet.Drawing
         {
             RectD result = RectD.Empty;
 
-            if (prm.Rect.SizeIsEmpty)
+            if (prm.Rect.SizeIsEmpty || prm.Rect.SizeIsPositiveInfinity)
             {
                 result = DrawLabelUnclipped(ref prm);
             }
