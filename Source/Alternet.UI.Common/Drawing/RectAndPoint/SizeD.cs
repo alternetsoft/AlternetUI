@@ -222,6 +222,41 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
+        /// Gets a value indicating whether the size has a width or height that is positive infinity.
+        /// </summary>
+        [Browsable(false)]
+        public readonly bool IsPositiveInfinity
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => (width == Coord.PositiveInfinity) || (height == Coord.PositiveInfinity);
+        }
+
+        /// <summary>
+        /// Gets a value indicating whether the size has a width or height that is negative infinity.
+        /// </summary>
+        [Browsable(false)]
+        public readonly bool IsNegativeInfinity
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => (width == Coord.NegativeInfinity) || (height == Coord.NegativeInfinity);
+        }
+
+        /// <summary>
+        /// Gets a value indicating whether the size has a width or height that is
+        /// positive or negative infinity.
+        /// </summary>
+        [Browsable(false)]
+        public readonly bool IsInfinity
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get
+            {
+                return (width == Coord.NegativeInfinity) || (height == Coord.NegativeInfinity)
+                    || (width == Coord.PositiveInfinity) || (height == Coord.PositiveInfinity);
+            }
+        }
+
+        /// <summary>
         /// Gets <see cref="Coord.PositiveInfinity"/> instead of width or height
         /// if their value is 0.
         /// </summary>
