@@ -260,7 +260,7 @@ namespace Alternet.UI
         {
             if (!Visible)
                 return;
-            Invoke(() =>
+            Post(() =>
             {
                 SetFocusIfPossible();
             });
