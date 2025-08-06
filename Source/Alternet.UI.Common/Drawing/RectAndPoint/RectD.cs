@@ -287,6 +287,7 @@ namespace Alternet.Drawing
         /// <summary>
         /// Gets a value indicating whether the rectangle is not empty.
         /// </summary>
+        [Browsable(false)]
         public readonly bool NotEmpty
         {
             get
@@ -304,6 +305,41 @@ namespace Alternet.Drawing
         {
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
             get => (width <= CoordD.Empty) || (height <= CoordD.Empty);
+        }
+
+        /// <summary>
+        /// Gets a value indicating whether the size has a width or height that is positive infinity.
+        /// </summary>
+        [Browsable(false)]
+        public readonly bool SizeIsPositiveInfinity
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => (width == Coord.PositiveInfinity) || (height == Coord.PositiveInfinity);
+        }
+
+        /// <summary>
+        /// Gets a value indicating whether the size has a width or height that is negative infinity.
+        /// </summary>
+        [Browsable(false)]
+        public readonly bool SizeIsNegativeInfinity
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => (width == Coord.NegativeInfinity) || (height == Coord.NegativeInfinity);
+        }
+
+        /// <summary>
+        /// Gets a value indicating whether the size has a width or height that is
+        /// positive or negative infinity.
+        /// </summary>
+        [Browsable(false)]
+        public readonly bool SizeIsInfinity
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get
+            {
+                return (width == Coord.NegativeInfinity) || (height == Coord.NegativeInfinity)
+                    || (width == Coord.PositiveInfinity) || (height == Coord.PositiveInfinity);
+            }
         }
 
         /// <summary>
@@ -387,11 +423,13 @@ namespace Alternet.Drawing
         /// <summary>
         /// Gets minimum of <see cref="Width"/> and <see cref="Height"/>.
         /// </summary>
+        [Browsable(false)]
         public readonly Coord MinWidthHeight => Math.Min(width, height);
 
         /// <summary>
         /// Gets maximum of <see cref="Width"/> and <see cref="Height"/>.
         /// </summary>
+        [Browsable(false)]
         public readonly Coord MaxWidthHeight => Math.Max(width, height);
 
         /// <summary>
