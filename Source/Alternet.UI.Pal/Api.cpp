@@ -22,6 +22,7 @@
 #include "Api/Calendar.Api.h"
 #include "Api/ProgressBar.Api.h"
 #include "Api/ScrollBar.Api.h"
+#include "Api/Slider.Api.h"
 #include "Api/PropertyGrid.Api.h"
 #include "Api/PropertyGridChoices.Api.h"
 #include "Api/PropertyGridVariant.Api.h"

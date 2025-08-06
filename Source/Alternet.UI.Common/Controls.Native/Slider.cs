@@ -8,6 +8,11 @@ namespace Alternet.UI
 {
     /// <summary>
     /// Represents a slider control (also known as track bar).
+    /// <see cref="Slider"/> uses the native slider control of the platform it is running on.
+    /// Currently, it doesn't work properly on Windows when dark mode is enabled.
+    /// We suggest to use <see cref="StdSlider"/> instead of this control as it is
+    /// implemented inside the library, has more customization options
+    /// and is supported on all platforms.
     /// </summary>
     /// <remarks>
     /// <para>
@@ -536,7 +541,8 @@ namespace Alternet.UI
         /// <inheritdoc/>
         protected override IControlHandler CreateHandler()
         {
-            return ControlFactory.Handler.CreateSliderHandler(this);
+            return (ControlFactory.Handler as IWxControlFactoryHandler)?.CreateSliderHandler(this)
+                ?? throw new Exception("Failed to create Slider handler.");
         }
 
         /// <inheritdoc/>

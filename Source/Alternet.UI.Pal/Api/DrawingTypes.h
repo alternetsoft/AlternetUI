@@ -652,6 +652,14 @@ namespace Alternet::UI
 #endif
 	}
 
+	inline int wxRound2(double x)
+	{
+		wxASSERT_MSG(x > double(INT_MIN) - 0.5 && x < double(INT_MAX) + 0.5,
+			"argument out of supported range");
+
+		return int(std::lround(x));
+	}
+
 	inline int fromDip(Coord value, wxWindow* window)
 	{
 		return wxRound(value * GetDPIScaleFactor(window));

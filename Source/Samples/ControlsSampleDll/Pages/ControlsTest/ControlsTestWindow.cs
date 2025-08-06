@@ -8,7 +8,6 @@ namespace ControlsSample
     {
         public static bool TestEdgeBackend = true;
 
-        private readonly StatusBar statusBar = new();
 #pragma warning disable
         private readonly PanelListBoxAndCards mainPanel;
 #pragma warning restore
@@ -28,7 +27,6 @@ namespace ControlsSample
 
             Icon = new("embres:ControlsSampleDll.Sample.ico");
 
-            this.StatusBar = statusBar;
             mainPanel.Parent = this;
             mainPanel.BindApplicationLog();
 
@@ -41,11 +39,11 @@ namespace ControlsSample
                 return MathUtils.Max(result1, result2, result3);
             }
 
-#if DEBUG
             AddPage<ListBoxHeaderTestPage>("ListBoxHeader");
-#endif
 
             CreateWebBrowserPages();
+
+            AddPage<NativeSliderPage>("Native Slider");
 
             mainPanel.LeftListBox.SelectFirstItem();
 

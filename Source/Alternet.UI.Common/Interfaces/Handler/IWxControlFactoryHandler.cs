@@ -21,5 +21,14 @@ namespace Alternet.UI
         /// <returns>An <see cref="IControlHandler"/> instance that provides
         /// platform-specific functionality for the TreeView control.</returns>
         IControlHandler CreateTreeViewHandler(Control control);
+
+        /// <summary>
+        /// Creates a handler for the specified <see cref="Slider"/> control.
+        /// </summary>
+        /// <param name="control">The <see cref="Slider"/> control for which the handler
+        /// is to be created. Cannot be <see langword="null"/>.</param>
+        /// <returns>An <see cref="IControlHandler"/> instance that manages
+        /// the behavior and rendering of the specified <see cref="Slider"/> control.</returns>
+        IControlHandler CreateSliderHandler(Slider control);
     }
 }

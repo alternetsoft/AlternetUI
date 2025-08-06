@@ -158,5 +158,10 @@ namespace Alternet.UI
         {
             return new TreeViewHandler();
         }
+
+        public IControlHandler CreateSliderHandler(Slider control)
+        {
+            return new SliderHandler();
+        }
     }
 }

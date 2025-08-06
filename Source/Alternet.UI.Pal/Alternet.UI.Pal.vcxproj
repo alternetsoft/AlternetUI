@@ -261,6 +261,7 @@
     <ClCompile Include="RichTextBox.cpp" />
     <ClCompile Include="ScrollBar.cpp" />
     <ClCompile Include="SelectDirectoryDialog.cpp" />
+    <ClCompile Include="Slider.cpp" />
     <ClCompile Include="SolidBrush.cpp" />
     <ClCompile Include="StatusBar.cpp" />
     <ClCompile Include="TextBox.cpp" />
@@ -422,6 +423,7 @@
     <ClInclude Include="Screenshot.h" />
     <ClInclude Include="ScrollBar.h" />
     <ClInclude Include="SelectDirectoryDialog.h" />
+    <ClInclude Include="Slider.h" />
     <ClInclude Include="SolidBrush.h" />
     <ClInclude Include="StatusBar.h" />
     <ClInclude Include="TextBox.h" />

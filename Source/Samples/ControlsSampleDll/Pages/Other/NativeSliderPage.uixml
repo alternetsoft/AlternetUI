@@ -1,0 +1,105 @@
+﻿<Panel x:Class="ControlsSample.NativeSliderPage"
+        xmlns="http://schemas.alternetsoft.com/ui/2021"
+        xmlns:x="http://schemas.alternetsoft.com/ui/2021/uixml"
+        xmlns:local="clr-namespace:ControlsSample;assembly=ControlsSample" Padding="5">
+  <StackPanel Orientation="Vertical" Padding="5">
+    <Border HorizontalAlignment="Stretch" Padding="5" Layout="Vertical">
+      <StackPanel Orientation="Horizontal" Margin="5">
+        <Label Text="Linked:" Margin="0,0,10,0"/>
+        <Slider Name="progressBarControlSlider"
+                VerticalAlignment="Center"
+            SuggestedWidth="200"/>
+        <ProgressBar Maximum="10" Margin="10,0,0,0" Name="progressBar"
+                     SuggestedWidth="200"  VerticalAlignment="Center"/>
+      </StackPanel>
+    </Border>
+
+    <TabControl Margin="0,10,0,0" Name="mainTabControl">
+      <Panel Grid.Column="0" Padding="5" Title="Horizontal">
+        <Grid Margin="5" Name="horizontalSlidersPanel" ColumnCount="3" RowCount="4" MinChildMargin="5">
+
+          <Label Text="H1 [0..10]" Grid.Column="0" Grid.Row="0"
+                 VerticalAlignment="Center" MarginRight="10"/>
+          <Slider Value="7" Name="sliderh1"
+                  Grid.Column="1" Grid.Row="0" SuggestedWidth ="200" VerticalAlignment="Center"/>
+          <Label Margin="5" Grid.Column="3" Grid.Row="0" Name="displayH1"
+                 VerticalAlignment="Center"/>
+
+          <Label Text="H2 [0..20]" Grid.Column="0" Grid.Row="1"
+                 VerticalAlignment="Center" MarginRight="10"/>
+          <Slider Maximum="20" Value="5" Name="sliderh2"
+                  Grid.Column="1" Grid.Row="1" SuggestedWidth ="200" VerticalAlignment="Center"/>
+          <Label Margin="5" Grid.Column="3" Grid.Row="1" Name="displayH2"
+                 VerticalAlignment="Center"/>
+
+          <Label Text="H3 [0..100]" Grid.Column="0" Grid.Row="2"
+                 VerticalAlignment="Center" MarginRight="10"/>
+          <Slider Maximum="100" Value="70" Name="sliderh3"
+                  Grid.Column="1" Grid.Row="2" SuggestedWidth ="200" VerticalAlignment="Center"/>
+          <Label Margin="5" Grid.Column="3" Grid.Row="2" Name="displayH3"
+                 VerticalAlignment="Center"/>
+
+          <Label Text="H4 [50..200]" Grid.Column="0" Grid.Row="3"
+                 VerticalAlignment="Center" MarginRight="10"/>
+          <Slider Minimum="50" Maximum="200" Value="125"
+              Grid.Column="1" Grid.Row="3" Name="sliderh4"
+                  VerticalAlignment="Center" SuggestedWidth ="200"/>
+          <Label Margin="5" Grid.Column="3" Grid.Row="3" Name="displayH4"
+                 VerticalAlignment="Center"/>
+        </Grid>
+      </Panel>
+
+      <Panel Grid.Column="1" Padding="5" Title="Vertical">
+        <Grid Name="verticalSlidersGrid" ColumnCount="4" RowCount="2" MinChildMargin="5">
+          <Label Text="V1 [0..10]" Margin="0,0,10,5"
+                  Grid.Column="0" Grid.Row="0" HorizontalAlignment="Center"/>
+          <Slider Value="4" Margin="0,0,0,5" Name="sliderv1"
+                  Orientation="Vertical" HorizontalAlignment="Center"
+                  Grid.Column="0" Grid.Row="1" SuggestedHeight="150"/>
+
+          <Label Text="V2 [0..100]" Margin="0,0,10,5"
+              Grid.Column="1" Grid.Row="0" HorizontalAlignment="Center"/>
+          <Slider Maximum="100" Value="70" Margin="0,0,0,5" Name="sliderv2"
+                  HorizontalAlignment="Center"
+              Orientation="Vertical" SuggestedHeight="150"
+              Grid.Column="1" Grid.Row="1"/>
+
+          <Label Text="V3 [50..200]" Margin="0,0,5,5"
+              Grid.Column="2" Grid.Row="0" HorizontalAlignment="Center"/>
+          <Slider Minimum="50" Maximum="200" Value="125" Margin="0,0,5,5"
+              Orientation="Vertical" Name="sliderv3"
+                  HorizontalAlignment="Center" SuggestedHeight="150"
+              Grid.Column="2" Grid.Row="1"/>
+
+          <Label Text="V4 [-15..25]" Margin="0,0,5,5"
+              Grid.Column="3" Grid.Row="0" HorizontalAlignment="Center"/>
+          <Slider Minimum="-15" Maximum="25" Value="5" Margin="0,0,5,5"
+              Orientation="Vertical" Name="sliderv4"
+                  HorizontalAlignment="Center" SuggestedHeight="150"
+              Grid.Column="3" Grid.Row="1"/>
+        </Grid>
+      </Panel>
+    </TabControl>
+
+    <StackPanel Orientation="Horizontal" Margin="0,10,0,0" MinChildMargin="5">
+
+      <Button Text="Increase All" Name="increaseAllButton"
+      Click="IncreaseAllButton_Click" IsTextLocalized="true" />
+
+      <Button Text="Decrease All" Name="decreaseAllButton"
+      Click="DecreaseAllButton_Click" IsTextLocalized="true" />
+
+      <Label Text="Tick Style:" VerticalAlignment="Center" IsTextLocalized="true"/>
+      <EnumPicker Name="tickStyleComboBox"
+                VerticalAlignment="Center" IsEnabled="True"/>
+    </StackPanel>
+
+    <StackPanel Orientation="Horizontal" Margin="0,5,0,0" MinChildMargin="5">
+      <Button Text="Has Border" Name="hasBorderButton"
+        Click="HasBorderButton_Click" IsTextLocalized="true" />
+      <Button Text="Toggle Colors" Name="toggleColorsButton"
+        Click="ToggleColorsButton_Click" IsTextLocalized="true" />
+    </StackPanel>
+
+  </StackPanel>
+</Panel>
