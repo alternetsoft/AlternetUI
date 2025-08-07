@@ -533,8 +533,6 @@ namespace Alternet.UI
         {
             var item = e.Item;
 
-            /*Application.DebugLog($"Native TreeViewItem Removed: {item.Text}");*/
-
             var p = GetHandleFromItem(item);
             RemoveItemAndChildrenFromDictionaries(item);
             if (p != IntPtr.Zero)

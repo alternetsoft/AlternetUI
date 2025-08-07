@@ -1,0 +1,140 @@
+﻿<Panel x:Class="ControlsSample.NativeTreeViewPage"
+        xmlns="http://schemas.alternetsoft.com/ui/2021"
+        xmlns:x="http://schemas.alternetsoft.com/ui/2021/uixml"
+        xmlns:local="clr-namespace:ControlsSample;assembly=ControlsSample" Padding="10,0,10,0">
+  <Panel >
+    <HorizontalStackPanel>
+      <TreeView SuggestedWidth="240" Name="treeView"
+                ExpandedChanged="TreeView_ExpandedChanged"
+                BeforeExpand="TreeView_BeforeExpand"
+                BeforeCollapse="TreeView_BeforeCollapse"
+                />
+
+      <TabControl Name="pageControl" Margin="10,0,10,0" HorizontalAlignment="Fill">
+
+        <!-- ========================= -->
+        <VerticalStackPanel Name="stackPanel1" Padding="10" Title="Actions" IsTitleLocalized="true">
+
+          <Grid RowCount="5" ColumnCount="2">
+            <Button RowIndex="0" ColumnIndex="0" IsTextLocalized="true"
+                    Text="Add" Name="addItemButton" Click="AddItemButton_Click" />
+            <Button RowIndex="0" ColumnIndex="1" IsTextLocalized="true"
+                    Text="Remove" Name="removeItemButton"
+                    Click="RemoveItemButton_Click" />
+
+            <Button RowIndex="1" ColumnIndex="0"
+                    Text="Add 1000" Name="addManyItemsButton" Margin="0,3,0,0"
+                    Click="AddManyItemsButton_Click" IsTextLocalized="true" />
+            <Button RowIndex="1" ColumnIndex="1"
+                    Text="Clear" Margin="0,3,0,0" IsTextLocalized="true"
+                  Name="clearButton" Click="ClearItemsButton_Click"/>
+
+            <Button RowIndex="2" ColumnIndex="0" IsTextLocalized="true"
+                    Text="Expand All" Name="expandAllButton" Margin="0,3,0,0"
+                    Click="ExpandAllButton_Click" />
+            <Button RowIndex="2" ColumnIndex="1" IsTextLocalized="true"
+                    Text="Collapse All" Name="collapseAllButton" Margin="0,3,0,0"
+                    Click="CollapseAllButton_Click" />
+
+            <Button RowIndex="3" ColumnIndex="0" IsTextLocalized="true"
+                    Text="Expand" Name="expandAllChildrenButton" Margin="0,3,0,0"
+                    Click="ExpandAllChildrenButton_Click" />
+            <Button RowIndex="3" ColumnIndex="1" IsTextLocalized="true"
+                    Text="Collapse" Name="collapseAllChildrenButton" Margin="0,3,0,0"
+                    Click="CollapseAllChildrenButton_Click" />
+
+            <Button RowIndex="4" ColumnIndex="0"
+                    Text="Edit Label" IsTextLocalized="true"
+                    Name="beginSelectedLabelEditingButton" Margin="0,3,0,0"
+                    Click="BeginSelectedLabelEditingButton_Click" Enabled="False" />
+            <Button RowIndex="4" ColumnIndex="1" IsTextLocalized="true"
+                    Text="Edit..." Margin="0,3,0,0" Name="editorButton" IsEnabled="False"
+                    Click="EditorButton_Click"/>
+          </Grid>
+
+          <Panel  Padding="5" Margin="0,10,0,0" Layout="Vertical">
+            <Label Text="Last Item:" Margin="0,0,0,10" IsTextLocalized="true"/>
+
+            <Panel Layout="Horizontal" Margin="5,0,0,0">
+              <Button Text="Make Visible" Name="ensureLastItemVisibleButton" IsTextLocalized="true"
+                      Margin="0,0,0,0" Click="EnsureLastItemVisibleButton_Click" />
+              <Button Text="To View" Name="scrollLastItemIntoViewButton" IsTextLocalized="true"
+                      Margin="0,0,0,0" Click="ScrollLastItemIntoViewButton_Click" />
+            </Panel>
+
+            <Panel Layout="Horizontal" Margin="5,3,0,0">
+              <Button Text="Focus" Name="focusLastItemButton" IsTextLocalized="true" 
+                        Click="FocusLastItemButton_Click" />
+              <Button Text="Modify" Name="modifyLastItemButton" IsTextLocalized="true"
+                      Click="ModifyLastItemButton_Click" />
+            </Panel>
+          </Panel>
+
+        </VerticalStackPanel>
+
+        <!-- ========================= -->
+
+        <VerticalStackPanel Name="stackPanel2" Visible="false" Title="Settings" IsTitleLocalized="true"
+                            Padding="10">
+          <CheckBox Text="Allow Edit Label" Name="allowLabelEditingCheckBox"
+                    Margin="0,5,0,0" IsTextLocalized="true" IsEnabled="false"
+                    CheckedChanged="AllowLabelEditingCheckBox_CheckedChanged"
+                    IsChecked="False" />
+          <CheckBox Text="Multiple Selection" IsTextLocalized="true"
+                    Name="allowMultipleSelectionCheckBox" Margin="0,5,0,0"
+                    CheckedChanged="AllowMultipleSelectionCheckBox_CheckedChanged" />
+          <CheckBox Text="Enabled" Name="enabledCheckBox" Margin="0,5,0,0" IsTextLocalized="true"
+                    CheckedChanged="EnabledCheckBox_CheckedChanged" IsChecked="True" />
+          <CheckBox Text="Show Root Lines" Name="showRootLinesCheckBox" IsTextLocalized="true"
+                    Margin="0,5,0,0"
+                    CheckedChanged="ShowRootLinesCheckBox_CheckedChanged"
+                    IsChecked="True" IsEnabled="false"/>
+          <CheckBox Text="Show Lines" Name="showLinesCheckBox" Margin="0,5,0,0" IsTextLocalized="true"
+                    CheckedChanged="ShowLinesCheckBox_CheckedChanged"
+                    IsChecked="False" IsEnabled="false"/>
+          <CheckBox Text="Show Expand Button" Name="showExpandButtonsCheckBox" IsTextLocalized="true"
+                    Margin="0,5,0,0" CheckedChanged="ShowExpandButtons_CheckedChanged"
+                    IsChecked="True" />
+          <CheckBox Text="Full Row Select" Name="fullRowSelectCheckBox"
+                    Margin="0,5,0,0" IsTextLocalized="true"
+                    CheckedChanged="FullRowSelectCheckBox_CheckedChanged"
+                    IsChecked="False" />
+          <Button Text="Has Border" Margin="0,5,0,5" Name="hasBorderButton" IsTextLocalized="true"
+                  HorizontalAlignment="Left" Click="HasBorderButton_Click"/>
+        </VerticalStackPanel>
+
+        <!-- ========================= -->
+
+        <VerticalStackPanel Name="stackPanel3" Visible="false" Title="Events"
+                            Padding="10" IsTitleLocalized="true">
+          <Button Text="Log Selected" Margin="0,3,0,0" IsTextLocalized="true"
+                  Name="viewSelectedButton" Click="TreeView_SelectionChanged"/>
+          <TabControl Margin="0,3,0,3" >
+            <VerticalStackPanel Title="Cancel Events" Padding="3"  IsTitleLocalized="true">
+              <CheckBox Text="Before Expand" Name="cancelBeforeExpandEventsCheckBox"
+                        IsChecked="False"  IsTextLocalized="true"/>
+              <CheckBox Text="Before Collapse" Name="cancelBeforeCollapseEventsCheckBox"
+                        Margin="0,5,0,0" IsTextLocalized="true"
+                        IsChecked="False" />
+              <CheckBox Text="Before Label Edit" Name="cancelBeforeLabelEditEventsCheckBox"
+                        Margin="0,5,0,0" IsTextLocalized="true"
+                        IsChecked="False" />
+              <CheckBox Text="After Label Edit" Name="cancelAfterLabelEditEventsCheckBox"
+                        Margin="0,5,0,0"
+                        IsChecked="False" />
+            </VerticalStackPanel>
+          </TabControl>
+        </VerticalStackPanel>
+        <!-- ========================= -->
+
+        <VerticalStackPanel Name="stackPanel4" Visible="false" Padding="10"
+                            Title="Popup"  IsTitleLocalized="true">
+          <Button Text="Show TreeView Popup" Margin="10" IsTextLocalized="true"
+                  Name="showPopupButton" Click="ShowPopupButton_Click"/>
+        </VerticalStackPanel>
+        <!-- ========================= -->
+      </TabControl>
+    </HorizontalStackPanel>
+  </Panel>
+
+</Panel>

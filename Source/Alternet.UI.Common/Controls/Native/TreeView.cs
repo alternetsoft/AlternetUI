@@ -54,7 +54,7 @@ namespace Alternet.UI
     [DefaultProperty("Items")]
     [DefaultEvent("SelectionChanged")]
     [ControlCategory("Common")]
-    internal partial class TreeView : Control
+    public partial class TreeView : Control, ITreeViewItemContainer, IListControlItemContainer
     {
         /// <summary>
         /// The set of flags that are closest to the defaults for the native control under Linux.
@@ -76,6 +76,8 @@ namespace Alternet.UI
             TreeViewCreateStyle.HasButtons | TreeViewCreateStyle.LinesAtRoot;
 
         private readonly HashSet<TreeViewItem> selectedItems = new();
+        private readonly ListControlItemDefaults itemDefaults = new();
+        private readonly TreeViewRootItem rootItem;
 
         private ImageList? imageList = null;
         private TreeViewSelectionMode selectionMode = TreeViewSelectionMode.Single;
@@ -95,8 +97,7 @@ namespace Alternet.UI
         /// </summary>
         public TreeView()
         {
-            Items.ItemInserted += Items_ItemInserted;
-            Items.ItemRemoved += Items_ItemRemoved;
+            rootItem = new(this);
         }
 
         /// <summary>
@@ -299,7 +300,7 @@ namespace Alternet.UI
 
         /// <summary>
         /// Gets or sets a value indicating whether the display of the root node
-        /// is supressed. This effectively causing the first-level nodes to
+        /// is suppressed. This effectively causing the first-level nodes to
         /// appear as a series of root nodes.
         /// </summary>
         /// <returns>
@@ -620,20 +621,27 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets the root item of the tree view.
+        /// </summary>
+        [Browsable(false)]
+        public TreeViewItem RootItem
+        {
+            get
+            {
+                return rootItem;
+            }
+        }
+
+        /// <summary>
         /// Gets a collection containing all the root items in the control.
         /// </summary>
-        /// <value>A <see cref="BaseCollection{TreeViewItem}"/> that contains all
-        /// the root items in the <see cref="TreeView"/> control.</value>
-        /// <remarks>
-        /// Using the <see cref="BaseCollection{TreeViewItem}"/> returned by this
-        /// property, you can add items, remove items, and obtain a count of items.
-        /// The <see cref="Items"/> property holds a collection of
-        /// <see cref="TreeViewItem"/> objects, each of which has a
-        /// <see cref="Items"/> property
-        /// that can contain its own child items collection.
-        /// </remarks>
-        public virtual BaseCollection<TreeViewItem> Items { get; } =
-            new BaseCollection<TreeViewItem> { ThrowOnNullAdd = true };
+        public IReadOnlyList<TreeViewItem> Items
+        {
+            get
+            {
+                return rootItem.Items;
+            }
+        }
 
         /// <summary>
         /// Gets or sets the <see cref="ImageList"/> to use when displaying item
@@ -775,6 +783,20 @@ namespace Alternet.UI
             }
         }
 
+        IListControlItemContainer ITreeViewItemContainer.ListContainer => this;
+
+        TreeViewButtonsKind ITreeViewItemContainer.TreeButtons { get; }
+
+        SvgImage? IListControlItemContainer.CheckImageUnchecked { get; }
+
+        SvgImage? IListControlItemContainer.CheckImageChecked { get; }
+
+        SvgImage? IListControlItemContainer.CheckImageIndeterminate { get; }
+
+        AbstractControl? IListControlItemContainer.Control => this;
+
+        IListControlItemDefaults IListControlItemContainer.Defaults => itemDefaults;
+
         /// <summary>
         /// Expands all child tree items.
         /// </summary>
@@ -794,7 +816,7 @@ namespace Alternet.UI
             if (index is null)
                 SelectedItem = null;
             else
-                SelectedItem = Items[index];
+                SelectedItem = Items[index.Value];
         }
 
         /// <summary>
@@ -971,7 +993,7 @@ namespace Alternet.UI
         /// <see cref="Items"/> collection.</param>
         public virtual void Add(TreeViewItem item)
         {
-            Items.Add(item);
+            rootItem.Add(item);
         }
 
         /// <summary>
@@ -1001,7 +1023,7 @@ namespace Alternet.UI
         public virtual TreeViewItem Add(string s)
         {
             var item = new TreeViewItem(s);
-            Items.Add(item);
+            rootItem.Add(item);
             return item;
         }
 
@@ -1107,7 +1129,7 @@ namespace Alternet.UI
             try
             {
                 ClearSelected();
-                Items.Clear();
+                rootItem.Clear();
             }
             finally
             {
@@ -1314,21 +1336,7 @@ namespace Alternet.UI
         protected virtual void OnSelectionChanged(EventArgs e)
         {
         }
-
-        private void Items_ItemRemoved(object? sender, int index, TreeViewItem item)
-        {
-            /* !!!!
-            TreeViewItem.OnChildItemRemoved(item);
-            */
-        }
-
-        private void Items_ItemInserted(object? sender, int index, TreeViewItem item)
-        {
-            /* !!!!
-            TreeViewItem.OnChildItemAdded(item, null, this, index);
-            */
-        }
-
+         
         private void ClearSelectedCore()
         {
             selectedItems.Clear();
@@ -1343,6 +1351,70 @@ namespace Alternet.UI
                 changed = selectedItems.Remove(item);
 
             return changed;
+        }
+
+        double ITreeViewItemContainer.GetLevelMargin()
+        {
+            return StdTreeView.DefaultLevelMargin;
+        }
+
+        void ITreeViewItemContainer.BeginUpdate()
+        {
+        }
+
+        void ITreeViewItemContainer.EndUpdate()
+        {
+        }
+
+        void ITreeViewItemContainer.TreeChanged()
+        {
+        }
+
+        void ITreeViewItemContainer.RaiseItemAdded(TreeViewItem item)
+        {
+            var e = new TreeViewEventArgs(item);
+            RaiseItemAdded(e);
+        }
+
+        void ITreeViewItemContainer.RaiseItemRemoved(TreeViewItem item)
+        {
+            var e = new TreeViewEventArgs(item);
+            RaiseItemRemoved(e);
+        }
+
+        void ITreeViewItemContainer.RaiseAfterExpand(TreeViewItem item)
+        {
+        }
+
+        void ITreeViewItemContainer.RaiseAfterCollapse(TreeViewItem item)
+        {
+        }
+
+        void ITreeViewItemContainer.RaiseBeforeExpand(TreeViewItem item, ref bool cancel)
+        {
+        }
+
+        void ITreeViewItemContainer.RaiseBeforeCollapse(TreeViewItem item, ref bool cancel)
+        {
+        }
+
+        void ITreeViewItemContainer.RaiseExpandedChanged(TreeViewItem item)
+        {
+        }
+
+        ListControlItem? IListControlItemContainer.SafeItem(int index)
+        {
+            return Items[index] as ListControlItem;
+        }
+
+        string IListControlItemContainer.GetItemText(int index, bool forDisplay)
+        {
+            return Items[index].Text;
+        }
+
+        int IListControlItemContainer.GetItemCount()
+        {
+            return Items.Count;
         }
     }
 }
