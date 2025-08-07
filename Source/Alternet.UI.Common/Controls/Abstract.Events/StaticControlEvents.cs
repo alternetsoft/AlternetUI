@@ -12,6 +12,13 @@ namespace Alternet.UI
     public static class StaticControlEvents
     {
         /// <summary>
+        /// Occurs when the control has been disposed and its resources have been released.
+        /// </summary>
+        /// <remarks>Subscribe to this event to be notified when the control is disposed. After disposal,
+        /// further operations on the control may result in exceptions or undefined behavior.</remarks>
+        public static event EventHandler? Disposed;
+
+        /// <summary>
         /// Occurs when control's caret is changed.
         /// </summary>
         public static event EventHandler? CaretChanged;
@@ -126,6 +133,18 @@ namespace Alternet.UI
         public static void RaiseFocusedChanged(object? sender, EventArgs e)
         {
             FocusedChanged?.Invoke(sender, e);
+        }
+
+        /// <summary>
+        /// Raises the <see cref="Disposed"/> event to notify subscribers
+        /// that a control has been disposed.
+        /// </summary>
+        /// <param name="sender">The source of the event, typically the control being disposed.</param>
+        /// <param name="e">An <see cref="EventArgs"/> instance containing event data.
+        /// Typically, this is <see cref="EventArgs.Empty"/>.</param>
+        public static void RaiseDisposed(object? sender, EventArgs e)
+        {
+            Disposed?.Invoke(sender, e);
         }
 
         /// <summary>
