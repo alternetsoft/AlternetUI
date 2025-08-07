@@ -24,6 +24,11 @@ namespace Alternet.UI
         private bool visible = true;
         private RectD bounds;
 
+        static MauiControlHandler()
+        {
+            PlessMouse.InitMouseTargetTracking();
+        }
+
         public MauiControlHandler()
         {
         }
@@ -139,7 +144,25 @@ namespace Alternet.UI
 
         public virtual bool ProcessUIUpdates { get; set; }
 
-        public virtual bool IsMouseCaptured { get; set; }
+        public virtual bool IsMouseCaptured
+        {
+            get => PlessMouse.MouseTargetControlOverride == Control;
+
+            set
+            {
+                if(value == IsMouseCaptured)
+                    return;
+
+                if (value)
+                {
+                    CaptureMouse();
+                }
+                else
+                {
+                    ReleaseMouseCapture();
+                }
+            }
+        }
 
         public virtual RectI BoundsI
         {
@@ -172,6 +195,13 @@ namespace Alternet.UI
 
         public virtual void CaptureMouse()
         {
+            PlessMouse.MouseTargetControlOverride = Control;
+        }
+
+        public virtual void ReleaseMouseCapture()
+        {
+            if (PlessMouse.MouseTargetControlOverride == Control)
+                PlessMouse.MouseTargetControlOverride = null;
         }
 
         public virtual PointD ScreenToClient(PointD point)
@@ -290,10 +320,6 @@ namespace Alternet.UI
         }
 
         public virtual void RecreateWindow()
-        {
-        }
-
-        public virtual void ReleaseMouseCapture()
         {
         }
 

@@ -67,6 +67,11 @@ namespace Alternet.UI
 
             set
             {
+                var oldValue = mouseTargetControlOverride.Value;
+
+                if (oldValue == value)
+                    return;
+
                 mouseTargetControlOverride.Value = value;
             }
         }
@@ -259,20 +264,33 @@ namespace Alternet.UI
         {
             StaticControlEvents.ParentChanged -= HandleEvent;
             StaticControlEvents.VisibleChanged -= HandleEvent;
-            StaticControlEvents.Disposed -= HandleEvent;
+            StaticControlEvents.Disposed -= HandleEventNoCaptureLost;
 
             StaticControlEvents.ParentChanged += HandleEvent;
             StaticControlEvents.VisibleChanged += HandleEvent;
-            StaticControlEvents.Disposed += HandleEvent;
+            StaticControlEvents.Disposed += HandleEventNoCaptureLost;
 
             void HandleEvent(object? s, EventArgs e)
+            {
+                HandleEventEx(s, e, true);
+            }
+
+            void HandleEventNoCaptureLost(object? s, EventArgs e)
+            {
+                HandleEventEx(s, e, false);
+            }
+
+            void HandleEventEx(object? s, EventArgs e, bool raiseCaptureLost)
             {
                 var c = MouseTargetControlOverride;
                 if (c is null)
                     return;
                 var sender = s as AbstractControl;
                 if (c == sender || c.HasIndirectParent(sender))
+                {
                     MouseTargetControlOverride = null;
+                    c?.RaiseMouseCaptureLost(EventArgs.Empty);
+                }
             }
         }
     }
