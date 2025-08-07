@@ -218,6 +218,7 @@ namespace Alternet.UI
             delayedTextChanged.Reset();
 
             Designer?.RaiseDisposed(this, EventArgs.Empty);
+            StaticControlEvents.RaiseDisposed(this, EventArgs.Empty);
 
             DetachHandler();
 

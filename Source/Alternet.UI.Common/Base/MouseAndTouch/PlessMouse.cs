@@ -44,11 +44,32 @@ namespace Alternet.UI
 
         private static Timer? longTapTimer;
         private static WeakReference<AbstractControl>? longTapControl;
+        private static WeakReferenceValue<AbstractControl> mouseTargetControlOverride = new();
 
         /// <summary>
         /// Occurs when <see cref="LastMousePosition"/> property is changed.
         /// </summary>
         public static event EventHandler? LastMousePositionChanged;
+
+        /// <summary>
+        /// Gets or sets the control that overrides the default mouse target for input handling.
+        /// </summary>
+        /// <remarks>When set, mouse input will be directed to the specified control
+        /// instead of the default target. This property is typically used
+        /// to redirect mouse events in scenarios such as custom
+        /// drag-and-drop operations or modal overlays.</remarks>
+        public static AbstractControl? MouseTargetControlOverride
+        {
+            get
+            {
+                return mouseTargetControlOverride.Value;
+            }
+
+            set
+            {
+                mouseTargetControlOverride.Value = value;
+            }
+        }
 
         /// <summary>
         /// Gets last mouse position passed to mouse event handlers.
@@ -223,6 +244,36 @@ namespace Alternet.UI
         public static void SetButtonPressed(MouseButton button, bool value = true)
         {
             Buttons[(int)button] = value;
+        }
+
+        /// <summary>
+        /// Initializes mouse target tracking by subscribing to control
+        /// parent change, visibility change and other events. You should not call this method,
+        /// this is reserved for internal use.
+        /// </summary>
+        /// <remarks>This method enables automatic tracking of mouse target controls
+        /// by handling changes in control hierarchy and visibility.
+        /// It should be called once during application startup or when mouse
+        /// target tracking needs to be activated. Subsequent calls have no additional effect.</remarks>
+        public static void InitMouseTargetTracking()
+        {
+            StaticControlEvents.ParentChanged -= HandleEvent;
+            StaticControlEvents.VisibleChanged -= HandleEvent;
+            StaticControlEvents.Disposed -= HandleEvent;
+
+            StaticControlEvents.ParentChanged += HandleEvent;
+            StaticControlEvents.VisibleChanged += HandleEvent;
+            StaticControlEvents.Disposed += HandleEvent;
+
+            void HandleEvent(object? s, EventArgs e)
+            {
+                var c = MouseTargetControlOverride;
+                if (c is null)
+                    return;
+                var sender = s as AbstractControl;
+                if (c == sender || c.HasIndirectParent(sender))
+                    MouseTargetControlOverride = null;
+            }
         }
     }
 }
