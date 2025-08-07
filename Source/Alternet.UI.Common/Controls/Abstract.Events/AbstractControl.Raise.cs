@@ -194,6 +194,7 @@ namespace Alternet.UI
             ResetScaleFactor();
             Designer?.RaiseParentChanged(this, e);
             ParentChanged?.Invoke(this, e);
+            StaticControlEvents.RaiseParentChanged(this, e);
             OnParentChanged(e);
 
             RaiseNotifications((n) => n.AfterParentChanged(this, e));
@@ -1015,6 +1016,7 @@ namespace Alternet.UI
 
             OnVisibleChanged(e);
             VisibleChanged?.Invoke(this, e);
+            StaticControlEvents.RaiseVisibleChanged(this, e);
             Parent?.ChildVisibleChanged?.Invoke(Parent, new BaseEventArgs<AbstractControl>(this));
             Parent?.PerformLayout();
             if (visible)
