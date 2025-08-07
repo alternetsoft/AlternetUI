@@ -8,14 +8,14 @@ using Alternet.Drawing;
 namespace Alternet.UI
 {
     /// <summary>
-    /// Provides data for the <see cref="AbstractControl.GlobalOnLayout"/> event.
+    /// Provides data for the <see cref="StaticControlEvents.Layout"/> event.
     /// </summary>
     public class DefaultLayoutEventArgs : HandledEventArgs
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="DefaultLayoutEventArgs"/> class.
         /// </summary>
-        /// <param name="container">Container control which childs need to be processed.</param>
+        /// <param name="container">Container control which children need to be processed.</param>
         /// <param name="layout">Layout style to use.</param>
         /// <param name="bounds">Rectangle in which layout is performed.</param>
         /// <param name="children">List of controls to layout.</param>
@@ -32,7 +32,7 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Container control which childs need to be processed.
+        /// Container control which children need to be processed.
         /// </summary>
         public AbstractControl Container { get; }
 

@@ -80,10 +80,10 @@ namespace Alternet.UI
 
             var items = AllChildrenInLayout;
 
-            if (GlobalOnLayout is not null)
+            if (StaticControlEvents.HasLayoutHandlers)
             {
                 var e = new DefaultLayoutEventArgs(this, layoutType, GetSpace(), items);
-                GlobalOnLayout(this, e);
+                StaticControlEvents.RaiseLayout(this, e);
                 if (e.Handled)
                     return;
                 else
@@ -112,9 +112,10 @@ namespace Alternet.UI
         {
             var layoutType = Layout ?? GetDefaultLayout();
 
-            if (GlobalGetPreferredSize is not null)
+            if (StaticControlEvents.HasRequestPreferredSizeHandlers)
             {
                 var e = new DefaultPreferredSizeEventArgs(layoutType, availableSize);
+                StaticControlEvents.RaiseRequestPreferredSize(this, e);
                 if (e.Handled && e.Result != SizeD.MinusOne)
                     return e.Result;
             }

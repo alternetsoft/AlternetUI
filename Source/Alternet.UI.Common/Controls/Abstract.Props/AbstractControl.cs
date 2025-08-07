@@ -218,18 +218,8 @@ namespace Alternet.UI
 
                 oldHoveredControl?.RaiseVisualStateChanged(EventArgs.Empty);
 
-                /*
-                App.Log(value?.Name ?? value?.GetType().ToString());
-
-                if (value is not null)
-                {
-                    if (!value.IsMouseOver)
-                        value = null;
-                }
-                */
-
                 weakHoveredControl.Value = value;
-                HoveredControlChanged?.Invoke(value, EventArgs.Empty);
+                StaticControlEvents.RaiseHoveredChanged(value, EventArgs.Empty);
                 value?.RaiseVisualStateChanged(EventArgs.Empty);
 
                 if (value is null)
@@ -1051,7 +1041,7 @@ namespace Alternet.UI
                 if (caret == value)
                     return;
                 caret = value;
-                CaretControlChanged?.Invoke(this, EventArgs.Empty);
+                StaticControlEvents.RaiseCaretChanged(this, EventArgs.Empty);
             }
         }
 

@@ -34,8 +34,8 @@ namespace Alternet.UI.Tests
         [Conditional("DEBUG")]
         public static void TestLogHoveredControl()
         {
-            AbstractControl.HoveredControlChanged -= LogHoveredControl;
-            AbstractControl.HoveredControlChanged += LogHoveredControl;
+            StaticControlEvents.HoveredChanged -= LogHoveredControl;
+            StaticControlEvents.HoveredChanged += LogHoveredControl;
 
             void LogHoveredControl(object? sender, EventArgs e)
             {

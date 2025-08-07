@@ -11,40 +11,9 @@ namespace Alternet.UI
 {
     public partial class AbstractControl
     {
-        /// <summary>
-        /// Occurs when control's caret is changed.
-        /// </summary>
-        public static event EventHandler? CaretControlChanged;
+        /* Static events */
 
-        /// <summary>
-        /// Occurs when hovered control is changed. Control is
-        /// hovered when mouse pointer is over it.
-        /// </summary>
-        public static event EventHandler? HoveredControlChanged;
-
-        /// <summary>
-        /// Occurs when focused control is changed.
-        /// </summary>
-        public static event EventHandler? FocusedControlChanged;
-
-        /// <summary>
-        /// Occurs inside <see cref="GetPreferredSize(SizeD)"/> method.
-        /// </summary>
-        /// <remarks>
-        /// If default <see cref="AbstractControl.GetPreferredSize(SizeD)"/> call is not needed,
-        /// set <see cref="HandledEventArgs.Handled"/>
-        /// property to <c>true</c>.
-        /// </remarks>
-        public static event EventHandler<DefaultPreferredSizeEventArgs>? GlobalGetPreferredSize;
-
-        /// <summary>
-        /// Occurs when the the control should reposition its child controls.
-        /// </summary>
-        /// <remarks>
-        /// If default layout is not needed, set <see cref="HandledEventArgs.Handled"/>
-        /// property to <c>true</c>.
-        /// </remarks>
-        public static event EventHandler<DefaultLayoutEventArgs>? GlobalOnLayout;
+        /* Instance events */
 
         /// <summary>
         /// Occurs when the context menu for the control is created.

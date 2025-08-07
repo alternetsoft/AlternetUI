@@ -8,7 +8,7 @@ using Alternet.Drawing;
 namespace Alternet.UI
 {
     /// <summary>
-    /// Provides data for the <see cref="AbstractControl.GlobalGetPreferredSize"/> event.
+    /// Provides data for the <see cref="StaticControlEvents.RequestPreferredSize"/> event.
     /// </summary>
     public class DefaultPreferredSizeEventArgs : HandledEventArgs
     {

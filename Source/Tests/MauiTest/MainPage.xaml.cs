@@ -65,7 +65,7 @@ public partial class MainPage : ContentPage
 
         skiaContainer.HandlerChanged += SkiaContainer_HandlerChanged;
 
-        Alternet.UI.AbstractControl.FocusedControlChanged += Control_FocusedControlChanged;
+        Alternet.UI.StaticControlEvents.FocusedChanged += Control_FocusedControlChanged;
 
         colorPicker.SelectedColor = Alternet.Drawing.Color.LightBlue;
         colorPicker.SelectedIndexChanged += (s, e) =>
@@ -178,9 +178,9 @@ public partial class MainPage : ContentPage
 
     private void App_LogMessage(object? sender, string e)
     {
-        SimpleItem OneNewitem = new();
-        OneNewitem.Text = e;
-        MyItems.Add(OneNewitem);
+        SimpleItem OneNewItem = new();
+        OneNewItem.Text = e;
+        MyItems.Add(OneNewItem);
         logControl.SelectedItem = MyItems[MyItems.Count - 1];
 
         this.Title = e;

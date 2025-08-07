@@ -477,7 +477,7 @@ namespace Alternet.UI
 
             focusedControl.Value = newFocused;
 
-            FocusedControlChanged?.Invoke(newFocused, EventArgs.Empty);
+            StaticControlEvents.RaiseFocusedChanged(newFocused, EventArgs.Empty);
 
             PlessKeyboard.ResetKeysStatesInMemory();
 
