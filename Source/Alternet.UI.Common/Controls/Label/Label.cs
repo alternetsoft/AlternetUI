@@ -692,11 +692,6 @@ namespace Alternet.UI
 
             result = result.Ceiling();
 
-            /*
-            if(Name is not null && Parent is not null)
-                App.Log($"{Name} / {Parent.ClientSize - Margin.Size} / {availableSize} / {result}");
-            */
-
             return result;
         }
 
