@@ -54,6 +54,7 @@ namespace Alternet.UI
         private static SetItemsKind defaultSetItemsKind = SetItemsKind.ChangeField;
 
         private readonly bool hasInternalScrollBars;
+        private readonly List<ListControlItem> itemsLastPainted = new();
 
         private bool isPartialRowVisible = true;
         private Coord scrollOffset;
@@ -200,6 +201,12 @@ namespace Alternet.UI
         /// </summary>
         [Browsable(false)]
         public bool HasVerticalScrollBarSettings => verticalScrollBarSettings is not null;
+
+        /// <summary>
+        /// Gets the items that were last painted in the control.
+        /// </summary>
+        [Browsable(false)]
+        public IReadOnlyList<ListControlItem> ItemsLastPainted => itemsLastPainted;
 
         /// <summary>
         /// Indicates whether horizontal scrollbar settings are defined.
@@ -1290,6 +1297,8 @@ namespace Alternet.UI
 
             void PaintRows()
             {
+                itemsLastPainted.Clear();
+
                 for (int line = GetVisibleBegin(); line < lineMax; line++)
                 {
                     measureItemArgs.Index = line;
@@ -1307,10 +1316,13 @@ namespace Alternet.UI
 
                     var isCurrentItem = IsCurrent(line);
                     var isSelectedItem = IsSelected(line);
+                    var item = SafeItem(line);
+
+                    if (item is not null)
+                        itemsLastPainted.Add(item);
 
                     if (drawMode != DrawMode.Normal)
                     {
-                        var item = SafeItem(line);
                         drawItemArgs.Bounds = rectRow;
                         drawItemArgs.Index = line;
 
@@ -1357,8 +1369,8 @@ namespace Alternet.UI
                         }
 
                         itemPaintArgs.LabelMetrics = new();
-                        itemPaintArgs.IsCurrent = IsCurrent(line);
-                        itemPaintArgs.IsSelected = IsSelected(line);
+                        itemPaintArgs.IsCurrent = isCurrentItem;
+                        itemPaintArgs.IsSelected = isSelectedItem;
                         itemPaintArgs.Visible = true;
 
                         DrawItemBackground(itemPaintArgs);
