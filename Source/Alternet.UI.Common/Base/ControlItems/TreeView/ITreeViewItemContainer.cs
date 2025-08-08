@@ -115,5 +115,12 @@ namespace Alternet.UI
         /// value of a tree item belonging to this tree view changes.
         /// </summary>
         void RaiseExpandedChanged(UI.TreeViewItem item);
+
+        /// <summary>
+        /// Called when a property of a tree item changes.
+        /// </summary>
+        /// <param name="item">The tree item whose property changed.</param>
+        /// <param name="propertyName">The name of the property that changed.</param>
+        void RaiseItemPropertyChanged(UI.TreeViewItem item, string? propertyName);
     }
 }

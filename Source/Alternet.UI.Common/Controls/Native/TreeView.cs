@@ -757,6 +757,20 @@ namespace Alternet.UI
             }
         }
 
+        IListControlItemContainer ITreeViewItemContainer.ListContainer => this;
+
+        TreeViewButtonsKind ITreeViewItemContainer.TreeButtons { get; }
+
+        SvgImage? IListControlItemContainer.CheckImageUnchecked { get; }
+
+        SvgImage? IListControlItemContainer.CheckImageChecked { get; }
+
+        SvgImage? IListControlItemContainer.CheckImageIndeterminate { get; }
+
+        AbstractControl? IListControlItemContainer.Control => this;
+
+        IListControlItemDefaults IListControlItemContainer.Defaults => itemDefaults;
+
         [Browsable(false)]
         internal new LayoutStyle? Layout
         {
@@ -782,20 +796,6 @@ namespace Alternet.UI
                 return (ITreeViewHandler)base.Handler;
             }
         }
-
-        IListControlItemContainer ITreeViewItemContainer.ListContainer => this;
-
-        TreeViewButtonsKind ITreeViewItemContainer.TreeButtons { get; }
-
-        SvgImage? IListControlItemContainer.CheckImageUnchecked { get; }
-
-        SvgImage? IListControlItemContainer.CheckImageChecked { get; }
-
-        SvgImage? IListControlItemContainer.CheckImageIndeterminate { get; }
-
-        AbstractControl? IListControlItemContainer.Control => this;
-
-        IListControlItemDefaults IListControlItemContainer.Defaults => itemDefaults;
 
         /// <summary>
         /// Expands all child tree items.
@@ -920,7 +920,7 @@ namespace Alternet.UI
             if (item is null)
                 return;
 
-            item.EnsureVisible();
+            Handler.EnsureVisible(item);
         }
 
         /// <summary>
@@ -931,7 +931,7 @@ namespace Alternet.UI
             if (item is null)
                 return;
 
-            item.ScrollIntoView();
+            Handler.ScrollIntoView(item);
         }
 
         /// <summary>
@@ -994,6 +994,109 @@ namespace Alternet.UI
         public virtual void Add(TreeViewItem item)
         {
             rootItem.Add(item);
+        }
+
+        double ITreeViewItemContainer.GetLevelMargin()
+        {
+            return StdTreeView.DefaultLevelMargin;
+        }
+
+        void ITreeViewItemContainer.BeginUpdate()
+        {
+        }
+
+        void ITreeViewItemContainer.EndUpdate()
+        {
+        }
+
+        void ITreeViewItemContainer.TreeChanged()
+        {
+        }
+
+        void ITreeViewItemContainer.RaiseItemAdded(TreeViewItem item)
+        {
+            var e = new TreeViewEventArgs(item);
+            RaiseItemAdded(e);
+        }
+
+        void ITreeViewItemContainer.RaiseItemRemoved(TreeViewItem item)
+        {
+            var e = new TreeViewEventArgs(item);
+            RaiseItemRemoved(e);
+        }
+
+        void ITreeViewItemContainer.RaiseAfterExpand(TreeViewItem item)
+        {
+        }
+
+        void ITreeViewItemContainer.RaiseAfterCollapse(TreeViewItem item)
+        {
+        }
+
+        void ITreeViewItemContainer.RaiseBeforeExpand(TreeViewItem item, ref bool cancel)
+        {
+        }
+
+        void ITreeViewItemContainer.RaiseBeforeCollapse(TreeViewItem item, ref bool cancel)
+        {
+        }
+
+        void ITreeViewItemContainer.RaiseExpandedChanged(TreeViewItem item)
+        {
+        }
+
+        ListControlItem? IListControlItemContainer.SafeItem(int index)
+        {
+            return Items[index] as ListControlItem;
+        }
+
+        string IListControlItemContainer.GetItemText(int index, bool forDisplay)
+        {
+            return Items[index].Text;
+        }
+
+        int IListControlItemContainer.GetItemCount()
+        {
+            return Items.Count;
+        }
+
+        void ITreeViewItemContainer.RaiseItemPropertyChanged(TreeViewItem item, string? propertyName)
+        {
+            if (DisposingOrDisposed)
+                return;
+
+            if(propertyName == nameof(ListControlItem.ImageIndex))
+            {
+                Handler.SetItemImageIndex(item, item.ImageIndex);
+                return;
+            }
+
+            if (propertyName == nameof(ListControlItem.Text)
+                || propertyName == nameof(ListControlItem.DisplayText)
+                || propertyName == nameof(ListControlItem.Value))
+            {
+                var s = item.DisplayText ?? item.Text;
+
+                if(s == null || s.Length == 0)
+                {
+                    s = item.Value?.ToString() ?? string.Empty;
+                }
+
+                Handler.SetItemText(item, s);
+                return;
+            }
+
+            if (propertyName == nameof(ListControlItem.BackgroundColor))
+            {
+                Handler.SetItemBackgroundColor(item, item.BackgroundColor);
+                return;
+            }
+
+            if (propertyName == nameof(ListControlItem.ForegroundColor))
+            {
+                Handler.SetItemTextColor(item, item.ForegroundColor);
+                return;
+            }
         }
 
         /// <summary>
@@ -1336,7 +1439,7 @@ namespace Alternet.UI
         protected virtual void OnSelectionChanged(EventArgs e)
         {
         }
-         
+
         private void ClearSelectedCore()
         {
             selectedItems.Clear();
@@ -1351,70 +1454,6 @@ namespace Alternet.UI
                 changed = selectedItems.Remove(item);
 
             return changed;
-        }
-
-        double ITreeViewItemContainer.GetLevelMargin()
-        {
-            return StdTreeView.DefaultLevelMargin;
-        }
-
-        void ITreeViewItemContainer.BeginUpdate()
-        {
-        }
-
-        void ITreeViewItemContainer.EndUpdate()
-        {
-        }
-
-        void ITreeViewItemContainer.TreeChanged()
-        {
-        }
-
-        void ITreeViewItemContainer.RaiseItemAdded(TreeViewItem item)
-        {
-            var e = new TreeViewEventArgs(item);
-            RaiseItemAdded(e);
-        }
-
-        void ITreeViewItemContainer.RaiseItemRemoved(TreeViewItem item)
-        {
-            var e = new TreeViewEventArgs(item);
-            RaiseItemRemoved(e);
-        }
-
-        void ITreeViewItemContainer.RaiseAfterExpand(TreeViewItem item)
-        {
-        }
-
-        void ITreeViewItemContainer.RaiseAfterCollapse(TreeViewItem item)
-        {
-        }
-
-        void ITreeViewItemContainer.RaiseBeforeExpand(TreeViewItem item, ref bool cancel)
-        {
-        }
-
-        void ITreeViewItemContainer.RaiseBeforeCollapse(TreeViewItem item, ref bool cancel)
-        {
-        }
-
-        void ITreeViewItemContainer.RaiseExpandedChanged(TreeViewItem item)
-        {
-        }
-
-        ListControlItem? IListControlItemContainer.SafeItem(int index)
-        {
-            return Items[index] as ListControlItem;
-        }
-
-        string IListControlItemContainer.GetItemText(int index, bool forDisplay)
-        {
-            return Items[index].Text;
-        }
-
-        int IListControlItemContainer.GetItemCount()
-        {
-            return Items.Count;
         }
     }
 }

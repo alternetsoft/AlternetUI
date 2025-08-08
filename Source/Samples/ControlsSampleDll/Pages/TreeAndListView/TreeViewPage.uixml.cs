@@ -365,16 +365,7 @@ namespace ControlsSample
                 newItem.EnsureVisible();
             }
         }
-
-        private bool SlowRecreate
-        {
-            get
-            {
-                bool result = treeView.Items.Count > 1000;
-                return result;
-            }
-        }
-
+ 
         private void EditorButton_Click(object? sender, System.EventArgs e)
         {
             /*

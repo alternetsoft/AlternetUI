@@ -701,6 +701,10 @@ namespace Alternet.Maui
             return item.Text;
         }
 
+        void UI.ITreeViewItemContainer.RaiseItemPropertyChanged(UI.TreeViewItem item, string? propertyName)
+        {
+        }
+
         int UI.IListControlItemContainer.GetItemCount()
         {
             if (visibleItems is null)

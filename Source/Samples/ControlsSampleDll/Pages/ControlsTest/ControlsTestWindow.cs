@@ -44,6 +44,7 @@ namespace ControlsSample
             CreateWebBrowserPages();
 
             AddPage<NativeSliderPage>("Native Slider");
+            AddPage<NativeTreeViewPage>("Native TreeView");
 
             mainPanel.LeftListBox.SelectFirstItem();
 

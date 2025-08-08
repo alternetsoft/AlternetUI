@@ -480,20 +480,23 @@ namespace Alternet.UI
 
         private void InsertItem(TreeViewItem item)
         {
-            if (Control is null)
+            if (Control is null || item.Parent is null)
                 return;
             var parentCollection = item.Parent == null ?
                 Control.Items : item.Parent.Items;
             IntPtr insertAfter = IntPtr.Zero;
-            if (item.Index > 0)
+
+            var itemIndex = item.Index;
+
+            if (itemIndex > 0)
             {
                 insertAfter = GetHandleFromItem(
-                    parentCollection[item.Index.Value - 1]);
+                    parentCollection[itemIndex.Value - 1]);
             }
 
             var handle = NativeControl.InsertItem(
-                            item.Parent == null ?
-                            NativeControl.RootItem : GetHandleFromItem(item.Parent),
+                            item.IsRootChild ?
+                            NativeControl.RootItem : GetHandleFromItem(item.Parent!),
                             insertAfter,
                             item.Text,
                             item.ImageIndex ?? Control.ImageIndex ?? -1,
