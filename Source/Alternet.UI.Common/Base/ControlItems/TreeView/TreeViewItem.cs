@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Runtime.CompilerServices;
 using System.Text;
 
 using Alternet.Drawing;
@@ -151,6 +152,12 @@ namespace Alternet.UI
         /// </summary>
         [Browsable(false)]
         public bool IsRoot => Parent == null;
+
+        /// <summary>
+        /// Gets whether this item is a child of the root item.
+        /// </summary>
+        [Browsable(false)]
+        public bool IsRootChild => Parent is not null && Parent.IsRoot;
 
         /// <inheritdoc/>
         public override Thickness ForegroundMargin
@@ -1143,6 +1150,13 @@ namespace Alternet.UI
 
                 return true;
             }
+        }
+
+        /// <inheritdoc/>
+        protected override void OnPropertyChanged([CallerMemberName] string? propertyName = null)
+        {
+            base.OnPropertyChanged(propertyName);
+            Owner?.RaiseItemPropertyChanged(this, propertyName);
         }
 
         /// <summary>
