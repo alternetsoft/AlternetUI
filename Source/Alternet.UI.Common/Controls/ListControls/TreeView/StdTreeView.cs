@@ -19,6 +19,18 @@ namespace Alternet.UI
     public partial class StdTreeView : Border, ITreeViewItemContainer
     {
         /// <summary>
+        /// Gets or sets the names of properties of <see cref="TreeViewItem"/>
+        /// that should raise an invalidation of the container when changed.
+        /// </summary>
+        public static string[] ItemPropertyNamesToRaiseInvalidate = new[]
+        {
+            nameof(TreeViewItem.Text),
+            nameof(TreeViewItem.ImageIndex),
+            nameof(TreeViewItem.Value),
+            nameof(TreeViewItem.DisplayText),
+        };
+
+        /// <summary>
         /// Specifies the default type of buttons used in the tree view control to expand
         /// or collapse nodes.
         /// </summary>
@@ -1294,6 +1306,11 @@ namespace Alternet.UI
             ListBox.SelectFirstItemAndScroll();
         }
 
+        void ITreeViewItemContainer.RaiseItemPropertyChanged(TreeViewItem item, string? propertyName)
+        {
+            OnItemPropertyChanged(item, propertyName);
+        }
+
         /// <summary>
         /// Selects the last item in the tree view control and scrolls to it.
         /// </summary>
@@ -1475,6 +1492,37 @@ namespace Alternet.UI
                 NotNullCollection<ListControlItem> collection = new(list);
                 ListBox.SetItemsFast(collection, VirtualListBox.SetItemsKind.ChangeField);
             });
+        }
+
+        /// <summary>
+        /// Determines whether the tree view should be invalidated
+        /// when a property of an item changes.
+        /// </summary>
+        /// <param name="item">The tree item whose property changed.</param>
+        /// <param name="propertyName">The name of the property that changed.</param>
+        /// <returns></returns>
+        protected virtual bool InvalidateWhenItemPropertyChanged(
+            TreeViewItem item,
+            string? propertyName)
+        {
+            return ItemPropertyNamesToRaiseInvalidate.Contains(propertyName);
+        }
+
+        /// <summary>
+        /// Called when a property of a tree item changes.
+        /// </summary>
+        /// <param name="item">The tree item whose property changed.</param>
+        /// <param name="propertyName">The name of the property that changed.</param>
+        protected virtual void OnItemPropertyChanged(TreeViewItem item, string? propertyName)
+        {
+            if (string.IsNullOrEmpty(propertyName))
+                return;
+            if (!ListBox.ItemsLastPainted.Contains(item))
+                return;
+            if(InvalidateWhenItemPropertyChanged(item, propertyName))
+            {
+                ListBox.Invalidate();
+            }
         }
 
         /// <inheritdoc/>
