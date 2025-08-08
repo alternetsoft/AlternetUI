@@ -237,5 +237,14 @@ namespace Alternet.UI
                 },
                 IsClipped);
         }
+
+        /// <inheritdoc/>
+        protected override void OnBoundsChanged(EventArgs e)
+        {
+            base.OnBoundsChanged(e);
+            if(!VisibleOnScreen)
+                return;
+            Parent?.Invalidate();
+        }
     }
 }
