@@ -580,27 +580,6 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Raises the <see cref="SizeChanged"/>, <see cref="Resize"/> events and
-        /// <see cref="OnSizeChanged"/>, <see cref="OnResize"/> methods.
-        /// </summary>
-        [Browsable(false)]
-        public void RaiseSizeChanged(EventArgs e)
-        {
-            if (DisposingOrDisposed)
-                return;
-            OnSizeChanged(e);
-            SizeChanged?.Invoke(this, e);
-            Resize?.Invoke(this, e);
-            OnResize(e);
-
-            RaiseNotifications((n) => n.AfterSizeChanged(this, e));
-
-            ForEachVisibleChild(
-                HandledEventArgs.NotHandled,
-                (control, e) => control.OnAfterParentSizeChanged(this, e));
-        }
-
-        /// <summary>
         /// Calls <see cref="OnChildMouseLeave"/> method of the parent control.
         /// </summary>
         [Browsable(false)]
@@ -842,6 +821,27 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Raises the <see cref="SizeChanged"/>, <see cref="Resize"/> events and
+        /// <see cref="OnSizeChanged"/>, <see cref="OnResize"/> methods.
+        /// </summary>
+        [Browsable(false)]
+        public void RaiseSizeChanged(EventArgs e)
+        {
+            if (DisposingOrDisposed)
+                return;
+            OnSizeChanged(e);
+            SizeChanged?.Invoke(this, e);
+            Resize?.Invoke(this, e);
+            OnResize(e);
+
+            RaiseNotifications((n) => n.AfterSizeChanged(this, e));
+
+            ForEachVisibleChild(
+                HandledEventArgs.NotHandled,
+                (control, e) => control.OnAfterParentSizeChanged(this, e));
+        }
+
+        /// <summary>
         /// Raises the <see cref="LocationChanged"/> event.
         /// </summary>
         [Browsable(false)]
@@ -853,6 +853,20 @@ namespace Alternet.UI
             LocationChanged?.Invoke(this, e);
 
             RaiseNotifications((n) => n.AfterLocationChanged(this, e));
+        }
+
+        /// <summary>
+        /// Raises the <see cref="LocationChanged"/> event.
+        /// </summary>
+        [Browsable(false)]
+        public void RaiseBoundsChanged(EventArgs e)
+        {
+            if (DisposingOrDisposed)
+                return;
+            OnBoundsChanged(e);
+            BoundsChanged?.Invoke(this, e);
+
+            RaiseNotifications((n) => n.AfterBoundsChanged(this, e));
         }
 
         /// <summary>

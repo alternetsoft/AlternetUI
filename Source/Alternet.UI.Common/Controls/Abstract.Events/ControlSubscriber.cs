@@ -315,6 +315,11 @@ namespace Alternet.UI
         /// <summary>
         /// Occurs when the corresponding control's event is raised.
         /// </summary>
+        public event EventHandler? AfterControlBoundsChanged;
+
+        /// <summary>
+        /// Occurs when the corresponding control's event is raised.
+        /// </summary>
         public event EventHandler? AfterControlLocationChanged;
 
         /// <summary>
@@ -745,6 +750,12 @@ namespace Alternet.UI
             {
                 AfterControlSetHorizontalScrollBarInfo?.Invoke(sender, value);
             }
+        }
+
+        /// <inheritdoc/>
+        public void AfterBoundsChanged(AbstractControl sender, EventArgs e)
+        {
+            AfterControlBoundsChanged?.Invoke(sender, e);
         }
     }
 }

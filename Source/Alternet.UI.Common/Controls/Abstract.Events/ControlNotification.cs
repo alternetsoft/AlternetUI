@@ -343,5 +343,10 @@ namespace Alternet.UI
             ref bool isInputKey)
         {
         }
+
+        /// <inheritdoc/>
+        public virtual void AfterBoundsChanged(AbstractControl sender, EventArgs e)
+        {
+        }
     }
 }

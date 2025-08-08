@@ -2443,7 +2443,12 @@ namespace Alternet.UI
             if (sizeChanged)
                 RaiseSizeChanged(EventArgs.Empty);
 
-            if(sizeChanged || (layoutOnLocation && locationChanged))
+            if(sizeChanged || locationChanged)
+            {
+                RaiseBoundsChanged(EventArgs.Empty);
+            }
+
+            if (sizeChanged || (layoutOnLocation && locationChanged))
             {
                 var layoutParent = !IgnoreLayout;
                 PerformLayout(layoutParent);

@@ -431,6 +431,12 @@ namespace Alternet.UI
         public event EventHandler? LocationChanged;
 
         /// <summary>
+        /// Occurs when the control's bounds are changed.
+        /// </summary>
+        [Category("Layout")]
+        public event EventHandler? BoundsChanged;
+
+        /// <summary>
         /// Occurs when a drag-and-drop operation needs to be started.
         /// </summary>
         /// <example>

@@ -70,6 +70,11 @@ namespace Alternet.UI
         void AfterLocationChanged(AbstractControl sender, EventArgs e);
 
         /// <summary>
+        /// Called after the <see cref="AbstractControl.BoundsChanged" /> event is raised.
+        /// </summary>
+        void AfterBoundsChanged(AbstractControl sender, EventArgs e);
+
+        /// <summary>
         /// Called after a child control is inserted into
         /// the <see cref="AbstractControl.Children"/> of the <paramref name="sender"/>.
         /// </summary>
