@@ -226,6 +226,12 @@ namespace Alternet::UI
 		return item;
 	}
 
+	void TreeView::DeleteAllItems()
+	{
+		auto control = GetTreeCtrl();
+		control->DeleteAllItems();
+	}
+
 	void TreeView::RemoveItem(void* item)
 	{
 		wxTreeItemId itemId(item);
@@ -627,6 +633,16 @@ namespace Alternet::UI
 	void TreeView::CollapseAllChildren(void* item)
 	{
 		GetTreeCtrl()->CollapseAllChildren(item);
+	}
+
+	void TreeView::ExpandItem(void* item)
+	{
+		GetTreeCtrl()->Expand(item);
+	}
+
+	void TreeView::CollapseItem(void* item)
+	{
+		GetTreeCtrl()->Collapse(item);
 	}
 
 	void TreeView::EnsureVisible(void* item)

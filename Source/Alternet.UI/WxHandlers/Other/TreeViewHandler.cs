@@ -557,6 +557,28 @@ namespace Alternet.UI
             }
         }
 
+        public void DeleteAllItems()
+        {
+            if (Control is null)
+                return;
+            NativeControl.DeleteAllItems();
+            NativeControl.itemsByHandles = new();
+        }
+
+        public void Expand(TreeViewItem item)
+        {
+            if (Control is null)
+                return;
+            NativeControl.ExpandItem(GetHandleFromItem(item));
+        }
+
+        public void Collapse(TreeViewItem item)
+        {
+            if (Control is null)
+                return;
+            NativeControl.CollapseItem(GetHandleFromItem(item));
+        }
+
         public class NativeTreeView : Native.TreeView
         {
             public NativeTreeView()

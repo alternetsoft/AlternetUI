@@ -138,6 +138,23 @@ namespace Alternet.UI
         void ExpandAllChildren(TreeViewItem item);
 
         /// <summary>
+        /// Expands the specified item in the tree view.
+        /// </summary>
+        /// <param name="item"></param>
+        void Expand(TreeViewItem item);
+
+        /// <summary>
+        /// Collapses the specified item in the tree view.
+        /// </summary>
+        /// <param name="item"></param>
+        void Collapse(TreeViewItem item);
+
+        /// <summary>
+        /// Deletes all items in the tree view.
+        /// </summary>
+        void DeleteAllItems();
+
+        /// <summary>
         /// Collapses all children of the specified item.
         /// </summary>
         /// <param name="item">Item.</param>

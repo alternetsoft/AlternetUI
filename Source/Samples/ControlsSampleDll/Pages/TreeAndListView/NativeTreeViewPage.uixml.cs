@@ -119,45 +119,6 @@ namespace ControlsSample
             return newItemIndex;
         }
 
-        private void AddItems(StdTreeView tree, int count)
-        {
-            treeView.BeginUpdate();
-            try
-            {
-                for (int i = 0; i < count; i++)
-                {
-                    int imageIndex = i % 4;
-                    var item = new TreeViewItem(
-                        "Item " + GenItemIndex(),
-                        imageIndex);
-                    for (int j = 0; j < 3; j++)
-                    {
-                        var childItem = new TreeViewItem(
-                            item.Text + "." + j,
-                            imageIndex);
-                        item.Add(childItem);
-
-                        if (i < 5)
-                        {
-                            for (int k = 0; k < 2; k++)
-                            {
-                                childItem.Add(
-                                    new TreeViewItem(
-                                        item.Text + "." + k,
-                                        imageIndex));
-                            }
-                        }
-                    }
-
-                    tree.Add(item);
-                }
-            }
-            finally
-            {
-                treeView.EndUpdate();
-            }
-        }
-
         private void AddItems(TreeView tree, int count)
         {
             treeView.BeginUpdate();
@@ -256,18 +217,14 @@ namespace ControlsSample
             object? sender,
             EventArgs e)
         {
-            /*
             if (treeView != null)
                 treeView.ShowRootLines = showRootLinesCheckBox.IsChecked;
-            */
         }
 
         private void ShowLinesCheckBox_CheckedChanged(object? sender, EventArgs e)
         {
-            /*
             if (treeView != null)
                 treeView.ShowLines = showLinesCheckBox.IsChecked;
-            */
         }
 
         private void ShowExpandButtons_CheckedChanged(object? sender, EventArgs e)
@@ -278,10 +235,8 @@ namespace ControlsSample
 
         private void FullRowSelectCheckBox_CheckedChanged(object? sender, EventArgs e)
         {
-            /*
             if (treeView != null)
                 treeView.FullRowSelect = fullRowSelectCheckBox.IsChecked;
-            */
         }
 
         private void AllowMultipleSelectionCheckBox_CheckedChanged(object? sender, EventArgs e)
@@ -292,12 +247,10 @@ namespace ControlsSample
 
         private void AllowLabelEditingCheckBox_CheckedChanged(object? sender, EventArgs e)
         {
-            /*
             if (treeView != null)
                 treeView.AllowLabelEdit = allowLabelEditingCheckBox.IsChecked;
 
             beginSelectedLabelEditingButton.Enabled = allowLabelEditingCheckBox.IsChecked;
-            */
         }
 
         private void RemoveItemButton_Click(object? sender, EventArgs e)
@@ -312,9 +265,7 @@ namespace ControlsSample
 
         private void BeginSelectedLabelEditingButton_Click(object? sender, EventArgs e)
         {
-            /*
-            treeView.SelectedItem?.BeginLabelEdit();
-            */
+            treeView.BeginLabelEdit(treeView.SelectedItem);
         }
 
         private void ExpandAllButton_Click(object? sender, EventArgs e)
@@ -331,11 +282,15 @@ namespace ControlsSample
             suppressExpandEvents--;
         }
 
-        private void ExpandAllChildrenButton_Click(object? sender, EventArgs e) =>
+        private void ExpandAllChildrenButton_Click(object? sender, EventArgs e)
+        {
             treeView.SelectedItem?.ExpandAll();
+        }
 
-        private void CollapseAllChildrenButton_Click(object? sender, EventArgs e) =>
+        private void CollapseAllChildrenButton_Click(object? sender, EventArgs e)
+        {
             treeView.SelectedItem?.CollapseAll();
+        }
 
         private void EnsureLastItemVisibleButton_Click(object? sender, System.EventArgs e)
             => treeView.LastItem?.EnsureVisible();
@@ -350,12 +305,10 @@ namespace ControlsSample
 
         private void TreeView_MouseLeftButtonDown(object? sender, MouseEventArgs e)
         {
-            /*
-            var result = treeView.ListBox.HitTest(Mouse.GetPosition(treeView));
+            var result = treeView.HitTest(Mouse.GetPosition(treeView));
             var s = result.Item?.Text ?? "<none>";
             var prefix = "HitTest result: Item:";
             App.LogReplace($"{prefix} '{s}', Location: {result.Location}", prefix);
-            */
         }
 
         private void ModifyLastItemButton_Click(object? sender, System.EventArgs e)

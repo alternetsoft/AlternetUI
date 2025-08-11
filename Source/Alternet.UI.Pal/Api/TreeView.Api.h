@@ -592,6 +592,17 @@ ALTERNET_UI_API void TreeView_SetSelected_(TreeView* obj, void* item, c_bool val
     #endif
 }
 
+ALTERNET_UI_API void TreeView_DeleteAllItems_(TreeView* obj)
+{
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    MarshalExceptions<void>([&](){
+    #endif
+        obj->DeleteAllItems();
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    });
+    #endif
+}
+
 ALTERNET_UI_API void TreeView_ExpandAll_(TreeView* obj)
 {
     #if !defined(__WXMSW__) || defined(_DEBUG)
@@ -752,6 +763,28 @@ ALTERNET_UI_API void TreeView_EndLabelEdit_(TreeView* obj, void* item, c_bool ca
     MarshalExceptions<void>([&](){
     #endif
         obj->EndLabelEdit(item, cancel);
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    });
+    #endif
+}
+
+ALTERNET_UI_API void TreeView_ExpandItem_(TreeView* obj, void* item)
+{
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    MarshalExceptions<void>([&](){
+    #endif
+        obj->ExpandItem(item);
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    });
+    #endif
+}
+
+ALTERNET_UI_API void TreeView_CollapseItem_(TreeView* obj, void* item)
+{
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    MarshalExceptions<void>([&](){
+    #endif
+        obj->CollapseItem(item);
     #if !defined(__WXMSW__) || defined(_DEBUG)
     });
     #endif

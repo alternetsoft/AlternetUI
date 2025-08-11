@@ -8,7 +8,7 @@ namespace Alternet.UI.Native
 {
     internal partial class TreeView
     {
-        internal readonly Dictionary<IntPtr, TreeViewItem> itemsByHandles = new();
+        internal Dictionary<IntPtr, TreeViewItem> itemsByHandles = new();
         internal bool skipSetItemText;
         internal bool receivingSelection;
         internal bool applyingSelection;

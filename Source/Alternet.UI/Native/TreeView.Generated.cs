@@ -387,6 +387,12 @@ namespace Alternet.UI.Native
             NativeApi.TreeView_SetSelected_(NativePointer, item, value);
         }
         
+        public void DeleteAllItems()
+        {
+            CheckDisposed();
+            NativeApi.TreeView_DeleteAllItems_(NativePointer);
+        }
+        
         public void ExpandAll()
         {
             CheckDisposed();
@@ -475,6 +481,18 @@ namespace Alternet.UI.Native
         {
             CheckDisposed();
             NativeApi.TreeView_EndLabelEdit_(NativePointer, item, cancel);
+        }
+        
+        public void ExpandItem(System.IntPtr item)
+        {
+            CheckDisposed();
+            NativeApi.TreeView_ExpandItem_(NativePointer, item);
+        }
+        
+        public void CollapseItem(System.IntPtr item)
+        {
+            CheckDisposed();
+            NativeApi.TreeView_CollapseItem_(NativePointer, item);
         }
         
         public void ExpandAllChildren(System.IntPtr item)
@@ -753,6 +771,9 @@ namespace Alternet.UI.Native
             public static extern void TreeView_SetSelected_(IntPtr obj, System.IntPtr item, bool value);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void TreeView_DeleteAllItems_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void TreeView_ExpandAll_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
@@ -796,6 +817,12 @@ namespace Alternet.UI.Native
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void TreeView_EndLabelEdit_(IntPtr obj, System.IntPtr item, bool cancel);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void TreeView_ExpandItem_(IntPtr obj, System.IntPtr item);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void TreeView_CollapseItem_(IntPtr obj, System.IntPtr item);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void TreeView_ExpandAllChildren_(IntPtr obj, System.IntPtr item);

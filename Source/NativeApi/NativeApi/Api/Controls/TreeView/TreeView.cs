@@ -86,6 +86,8 @@ namespace NativeApi.Api
 
         public bool AllowLabelEdit { get; set; }
 
+        public void DeleteAllItems() { }
+
         public void ExpandAll() => throw new Exception();
 
         public void CollapseAll() => throw new Exception();
@@ -111,6 +113,11 @@ namespace NativeApi.Api
 
         public void BeginLabelEdit(IntPtr item) => throw new Exception();
         public void EndLabelEdit(IntPtr item, bool cancel) => throw new Exception();
+
+        public void ExpandItem(IntPtr item) => throw new Exception();
+        
+        public void CollapseItem(IntPtr item) => throw new Exception();
+
         public void ExpandAllChildren(IntPtr item) => throw new Exception();
         public void CollapseAllChildren(IntPtr item) => throw new Exception();
         public void EnsureVisible(IntPtr item) => throw new Exception();

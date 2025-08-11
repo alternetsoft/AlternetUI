@@ -1027,18 +1027,28 @@ namespace Alternet.UI
 
         void ITreeViewItemContainer.RaiseAfterExpand(TreeViewItem item)
         {
+            RaiseAfterExpand(new(item));
+            Handler.Expand(item);
         }
 
         void ITreeViewItemContainer.RaiseAfterCollapse(TreeViewItem item)
         {
+            RaiseAfterCollapse(new(item));
+            Handler.Collapse(item);
         }
 
         void ITreeViewItemContainer.RaiseBeforeExpand(TreeViewItem item, ref bool cancel)
         {
+            TreeViewCancelEventArgs e = new(item);
+            RaiseBeforeExpand(e);
+            cancel = e.Cancel;
         }
 
         void ITreeViewItemContainer.RaiseBeforeCollapse(TreeViewItem item, ref bool cancel)
         {
+            TreeViewCancelEventArgs e = new(item);
+            RaiseBeforeCollapse(e);
+            cancel = e.Cancel;
         }
 
         void ITreeViewItemContainer.RaiseExpandedChanged(TreeViewItem item)
@@ -1233,6 +1243,7 @@ namespace Alternet.UI
             {
                 ClearSelected();
                 rootItem.Clear();
+                Handler.DeleteAllItems();
             }
             finally
             {
@@ -1294,6 +1305,32 @@ namespace Alternet.UI
                 return;
             OnBeforeExpand(e);
             BeforeExpand?.Invoke(this, e);
+        }
+
+        /// <summary>
+        /// Begins editing the label text of the specified tree view item.
+        /// </summary>
+        /// <param name="item">The <see cref="TreeViewItem"/> whose label text will be edited.</param>
+        public virtual void BeginLabelEdit(TreeViewItem? item)
+        {
+            if (item is null)
+                return;
+            Handler.BeginLabelEdit(item);
+        }
+
+        /// <summary>
+        /// Ends the label editing process for the specified <see cref="TreeViewItem"/>.
+        /// </summary>
+        /// <param name="item">The <see cref="TreeViewItem"/> whose label editing
+        /// is being finalized. Cannot be <see langword="null"/>.</param>
+        /// <param name="cancel"><see langword="true"/> to cancel the label editing
+        /// and discard changes; otherwise, <see langword="false"/> to apply
+        /// the changes made during editing.</param>
+        public virtual void EndLabelEdit(TreeViewItem? item, bool cancel)
+        {
+            if (item is null)
+                return;
+            Handler.EndLabelEdit(item, cancel);
         }
 
         /// <summary>
