@@ -209,11 +209,20 @@ namespace Alternet::UI
 	void* TreeView::InsertItem(void* parentItem, void* insertAfter,
 		const string& text, int imageIndex, bool parentIsExpanded)
 	{
+		wxTreeItemId item;
+
 		wxTreeItemId parentItemId(parentItem);
-		wxTreeItemId insertAfterId(insertAfter);
 		auto control = GetTreeCtrl();
-		auto item = control->InsertItem(parentItem, insertAfterId,
-			wxStr(text), imageIndex);
+		if (insertAfter == nullptr)
+		{
+			item = control->AppendItem(parentItem, wxStr(text), imageIndex);
+		}
+		else
+		{
+			wxTreeItemId insertAfterId(insertAfter);
+			item = control->InsertItem(parentItem, insertAfterId,
+				wxStr(text), imageIndex);
+		}
 
 		if (parentItemId != control->GetRootItem())
 		{
@@ -230,6 +239,7 @@ namespace Alternet::UI
 	{
 		auto control = GetTreeCtrl();
 		control->DeleteAllItems();
+		control->AddRoot("");
 	}
 
 	void TreeView::RemoveItem(void* item)

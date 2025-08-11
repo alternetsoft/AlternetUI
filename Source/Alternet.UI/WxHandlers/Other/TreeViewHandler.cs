@@ -482,25 +482,32 @@ namespace Alternet.UI
         {
             if (Control is null || item.Parent is null)
                 return;
-            var parentCollection = item.Parent == null ?
-                Control.Items : item.Parent.Items;
+            var parentCollection = item.Parent.Items;
             IntPtr insertAfter = IntPtr.Zero;
 
-            var itemIndex = item.Index;
-
-            if (itemIndex > 0)
+            if (item.IsLast)
             {
-                insertAfter = GetHandleFromItem(
-                    parentCollection[itemIndex.Value - 1]);
+            }
+            else
+            {
+                var itemIndex = item.Index;
+
+                if (itemIndex > 0)
+                {
+                    insertAfter = GetHandleFromItem(
+                        parentCollection[itemIndex.Value - 1]);
+                }
             }
 
+            var isRootChild = item.IsRootChild;
+
             var handle = NativeControl.InsertItem(
-                            item.IsRootChild ?
+                            isRootChild ?
                             NativeControl.RootItem : GetHandleFromItem(item.Parent!),
                             insertAfter,
                             item.Text,
                             item.ImageIndex ?? Control.ImageIndex ?? -1,
-                            item.Parent?.IsExpanded ?? false);
+                            isRootChild ? false : item.Parent?.IsExpanded ?? false);
 
             NativeControl.itemsByHandles.Add(handle, item);
             item.Handle = handle;

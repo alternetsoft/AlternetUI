@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Text;
 
+using Alternet.Drawing;
+
 namespace Alternet.UI
 {
     /// <summary>
@@ -67,6 +69,19 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
+        public override FontStyle? FontStyle
+        {
+            get => base.FontStyle;
+            set
+            {
+                if (base.FontStyle == value)
+                    return;
+                base.FontStyle = value;
+                RaisePropertyChanged(nameof(FontStyle));
+            }
+        }
+
+        /// <inheritdoc/>
         public override CheckState CheckState
         {
             get => base.CheckState;
@@ -76,6 +91,34 @@ namespace Alternet.UI
                     return;
                 base.CheckState = value;
                 RaisePropertyChanged(nameof(CheckState));
+            }
+        }
+
+        /// <inheritdoc/>
+        public override Color? BackgroundColor
+        {
+            get => base.BackgroundColor;
+
+            set
+            {
+                if (base.BackgroundColor == value)
+                    return;
+                base.BackgroundColor = value;
+                RaisePropertyChanged(nameof(BackgroundColor));
+            }
+        }
+
+        /// <inheritdoc/>
+        public override Color? ForegroundColor
+        {
+            get => base.ForegroundColor;
+
+            set
+            {
+                if (base.ForegroundColor == value)
+                    return;
+                base.ForegroundColor = value;
+                RaisePropertyChanged(nameof(ForegroundColor));
             }
         }
 

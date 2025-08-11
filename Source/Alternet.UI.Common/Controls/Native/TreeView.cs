@@ -1107,6 +1107,12 @@ namespace Alternet.UI
                 Handler.SetItemTextColor(item, item.ForegroundColor);
                 return;
             }
+
+            if (propertyName == nameof(ListControlItem.FontStyle))
+            {
+                Handler.SetItemIsBold(item, item.IsBold);
+                return;
+            }
         }
 
         /// <summary>
