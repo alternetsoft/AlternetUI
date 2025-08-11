@@ -9,7 +9,7 @@ namespace Alternet.UI
         /// <summary>
         /// Scrolls the control horizontally by one char to the left.
         /// </summary>
-        public virtual void DoActionScrollCharLeft()
+        public override void DoActionScrollCharLeft()
         {
             IncHorizontalOffsetChars(-1);
         }
@@ -17,7 +17,7 @@ namespace Alternet.UI
         /// <summary>
         /// Scrolls the control horizontally by one char to the right.
         /// </summary>
-        public virtual void DoActionScrollCharRight()
+        public override void DoActionScrollCharRight()
         {
             IncHorizontalOffsetChars(1);
         }
@@ -25,7 +25,7 @@ namespace Alternet.UI
         /// <summary>
         /// Scrolls the control horizontally to the first char.
         /// </summary>
-        public virtual void DoActionScrollToFirstChar()
+        public override void DoActionScrollToFirstChar()
         {
             SetHorizontalOffset(0);
         }
@@ -33,7 +33,7 @@ namespace Alternet.UI
         /// <summary>
         /// Scrolls the control horizontally by one page to the left.
         /// </summary>
-        public virtual void DoActionScrollPageLeft()
+        public override void DoActionScrollPageLeft()
         {
             IncHorizontalOffsetChars(-DefaultHorizontalScrollBarLargeIncrement);
         }
@@ -41,7 +41,7 @@ namespace Alternet.UI
         /// <summary>
         /// Scrolls the control horizontally by one page to the right.
         /// </summary>
-        public virtual void DoActionScrollPageRight()
+        public override void DoActionScrollPageRight()
         {
             IncHorizontalOffsetChars(DefaultHorizontalScrollBarLargeIncrement);
         }
@@ -49,7 +49,7 @@ namespace Alternet.UI
         /// <summary>
         /// Scrolls the control up by one page.
         /// </summary>
-        public virtual void DoActionScrollPageUp()
+        public override void DoActionScrollPageUp()
         {
             var idx = GetIndexOnPreviousPage(TopIndex);
             if (idx is not null)
@@ -61,7 +61,7 @@ namespace Alternet.UI
         /// <summary>
         /// Scrolls the control down by one page.
         /// </summary>
-        public virtual void DoActionScrollPageDown()
+        public override void DoActionScrollPageDown()
         {
             var idx = GetIndexOnNextPage(TopIndex);
             if (idx is not null)
@@ -73,7 +73,7 @@ namespace Alternet.UI
         /// <summary>
         /// Scrolls the control up by one line.
         /// </summary>
-        public virtual void DoActionScrollLineUp()
+        public override void DoActionScrollLineUp()
         {
             ScrollToRow(TopIndex - 1);
         }
@@ -81,7 +81,7 @@ namespace Alternet.UI
         /// <summary>
         /// Scrolls the control down by one line.
         /// </summary>
-        public virtual void DoActionScrollLineDown()
+        public override void DoActionScrollLineDown()
         {
             ScrollToRow(TopIndex + 1);
         }
@@ -89,7 +89,7 @@ namespace Alternet.UI
         /// <summary>
         /// Scrolls to the first line in the control.
         /// </summary>
-        public virtual void DoActionScrollToFirstLine()
+        public override void DoActionScrollToFirstLine()
         {
             ScrollToRow(0);
         }
@@ -97,7 +97,7 @@ namespace Alternet.UI
         /// <summary>
         /// Scrolls to the last line in the control.
         /// </summary>
-        public virtual void DoActionScrollToLastLine()
+        public override void DoActionScrollToLastLine()
         {
             ScrollToRow(Count - 1);
         }

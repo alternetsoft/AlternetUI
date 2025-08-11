@@ -34,43 +34,19 @@ namespace Alternet.UI
     /// </remarks>
     public partial class VirtualListBox : VirtualListControl, IListControl
     {
-        /// <summary>
-        /// Indicates whether the list box controls use internal scrollbars.
-        /// </summary>
-        public static bool DefaultUseInternalScrollBars;
-
-        /// <summary>
-        /// Specifies the default border style for controls.
-        /// By default, it equals <see cref="ControlBorderStyle.Theme"/>.
-        /// </summary>
-        public static ControlBorderStyle DefaultBorderStyle = ControlBorderStyle.Theme;
-
-        /// <summary>
-        /// Defines the default increment for horizontal scrollbar position.
-        /// Value is specified in characters. Default is 4.
-        /// </summary>
-        public static int DefaultHorizontalScrollBarLargeIncrement = 4;
-
         private static SetItemsKind defaultSetItemsKind = SetItemsKind.ChangeField;
 
-        private readonly bool hasInternalScrollBars;
         private readonly List<ListControlItem> itemsLastPainted = new();
 
         private bool isPartialRowVisible = true;
-        private Coord scrollOffset;
+        private Coord scrollOffsetX;
         private ListBoxItemPaintEventArgs? itemPaintArgs;
         private Coord horizontalExtent;
         private DrawMode drawMode = DrawMode.Normal;
         private int firstVisibleItem;
-        private ScrollBarSettings? horizontalScrollBarSettings;
-        private ScrollBarSettings? verticalScrollBarSettings;
-        private InteriorDrawable? interior;
-        private ScrollBarInfo vertScrollBarInfo = new ();
-        private ScrollBarInfo horzScrollBarInfo = new ();
 
         static VirtualListBox()
         {
-            DefaultUseInternalScrollBars = App.IsMaui || App.IsLinuxOS;
         }
 
         /// <summary>
@@ -88,20 +64,12 @@ namespace Alternet.UI
         /// </summary>
         public VirtualListBox()
         {
-            hasInternalScrollBars = DefaultUseInternalScrollBars;
-
-            if (!hasInternalScrollBars)
-            {
-                BorderStyle = DefaultBorderStyle;
-                IsScrollable = true;
-            }
-
             UserPaint = true;
             SuggestedSize = 200;
 
             UseControlColors(true);
 
-            if (hasInternalScrollBars)
+            if (HasInternalScrollBars)
             {
                 Interior?.Required();
             }
@@ -194,46 +162,13 @@ namespace Alternet.UI
         /// <value>
         /// A <see cref="Coord"/> representing the current horizontal scroll position.
         /// </value>
-        public Coord ScrollOffsetX => scrollOffset;
-
-        /// <summary>
-        /// Indicates whether vertical scrollbar settings are defined.
-        /// </summary>
-        [Browsable(false)]
-        public bool HasVerticalScrollBarSettings => verticalScrollBarSettings is not null;
+        public Coord ScrollOffsetX => scrollOffsetX;
 
         /// <summary>
         /// Gets the items that were last painted in the control.
         /// </summary>
         [Browsable(false)]
         public IReadOnlyList<ListControlItem> ItemsLastPainted => itemsLastPainted;
-
-        /// <summary>
-        /// Indicates whether horizontal scrollbar settings are defined.
-        /// </summary>
-        [Browsable(false)]
-        public bool HasHorizontalScrollBarSettings => horizontalScrollBarSettings is not null;
-
-        /// <summary>
-        /// Gets the horizontal scrollbar settings. Initializes them if required.
-        /// </summary>
-        [Browsable(false)]
-        public virtual ScrollBarSettings HorizontalScrollBarSettings
-        {
-            get
-            {
-                if (horizontalScrollBarSettings is null)
-                {
-                    horizontalScrollBarSettings = new();
-                    horizontalScrollBarSettings.PropertyChangedAction = (e) =>
-                    {
-                        UpdateScrollBars(true);
-                    };
-                }
-
-                return horizontalScrollBarSettings;
-            }
-        }
 
         /// <summary>
         /// Gets or sets a value indicating whether partially visible rows are painted.
@@ -254,36 +189,6 @@ namespace Alternet.UI
                     return;
                 isPartialRowVisible = value;
                 Invalidate();
-            }
-        }
-
-        /// <inheritdoc/>
-        public override bool HasOwnInterior
-        {
-            get
-            {
-                return hasInternalScrollBars;
-            }
-        }
-
-        /// <summary>
-        /// Gets the vertical scrollbar settings. Initializes them if required.
-        /// </summary>
-        [Browsable(false)]
-        public virtual ScrollBarSettings VerticalScrollBarSettings
-        {
-            get
-            {
-                if (verticalScrollBarSettings is null)
-                {
-                    verticalScrollBarSettings = new();
-                    verticalScrollBarSettings.PropertyChangedAction = (e) =>
-                    {
-                        UpdateScrollBars(true);
-                    };
-                }
-
-                return verticalScrollBarSettings;
             }
         }
 
@@ -310,51 +215,6 @@ namespace Alternet.UI
                 if (value == horizontalExtent)
                     return;
                 horizontalExtent = value;
-            }
-        }
-
-        /// <inheritdoc/>
-        public override ControlBorderStyle BorderStyle
-        {
-            get => base.BorderStyle;
-            set
-            {
-                if (BorderStyle == value)
-                    return;
-                base.BorderStyle = value;
-                UpdateScrollBars(true);
-            }
-        }
-
-        /// <inheritdoc/>
-        [Browsable(true)]
-        public override bool HasBorder
-        {
-            get
-            {
-                if(interior is null)
-                    return BorderStyle != ControlBorderStyle.None;
-                return interior.HasBorder;
-            }
-
-            set
-            {
-                if (HasBorder == value)
-                    return;
-
-                if(interior is null)
-                {
-                    base.HasBorder = value;
-                    if (value)
-                        BorderStyle = DefaultBorderStyle;
-                    else
-                        BorderStyle = ControlBorderStyle.None;
-                }
-                else
-                {
-                    interior.HasBorder = value;
-                    Invalidate();
-                }
             }
         }
 
@@ -456,24 +316,6 @@ namespace Alternet.UI
         {
             get => ContextMenuStrip;
             set => ContextMenuStrip = value;
-        }
-
-        /// <summary>
-        /// Gets control interior element (border and scrollbars).
-        /// </summary>
-        internal virtual InteriorDrawable Interior
-        {
-            get
-            {
-                if (interior is null)
-                {
-                    interior = new(IsDarkBackground);
-                    AddNotification(interior.Notification);
-                    Invalidate();
-                }
-
-                return interior;
-            }
         }
 
         /// <inheritdoc cref="StringSearch.FindStringEx(string?, int?, bool, bool)"/>
@@ -1261,15 +1103,10 @@ namespace Alternet.UI
 
             dc.FillRectangle(RealBackgroundColor.AsBrush, ClientRectangle);
 
-            if (interior is not null)
-            {
-                interior.UpdateThemeMetrics(IsDarkBackground);
-                interior.VertPosition = VertScrollBarInfo;
-                interior.HorzPosition = HorzScrollBarInfo;
-            }
+            UpdateInteriorProperties();
 
             var r = GetPaintRectangle();
-            r.Width += scrollOffset;
+            r.Width += scrollOffsetX;
 
             var rectRow = r;
 
@@ -1278,7 +1115,7 @@ namespace Alternet.UI
             MeasureItemEventArgs measureItemArgs = new(dc, 0);
             DrawItemEventArgs drawItemArgs = new(dc);
 
-            dc.PushAndTranslate(-scrollOffset, 0);
+            dc.PushAndTranslate(-scrollOffsetX, 0);
             try
             {
                 PaintRows();
@@ -1288,12 +1125,7 @@ namespace Alternet.UI
                 dc.PopTransform();
             }
 
-#pragma warning disable
-            if (interior is not null)
-            {
-                interior.Draw(this, dc);
-            }
-#pragma warning restore
+            DrawInterior(dc);
 
             void PaintRows()
             {
@@ -1505,12 +1337,8 @@ namespace Alternet.UI
             }
         }
 
-        /// <summary>
-        /// Calculates the position information for the scrollbars based on the number
-        /// of visible items
-        /// and their total height and maximal width.
-        /// </summary>
-        public virtual void CalcScrollBarInfo(
+        /// <inheritdoc/>
+        public override void CalcScrollBarInfo(
             out ScrollBarInfo horzScrollbar,
             out ScrollBarInfo vertScrollbar)
         {
@@ -1544,23 +1372,25 @@ namespace Alternet.UI
                 --pageHeightInUnits;
             }
 
-            horzScrollbar = new((int)scrollOffset, (int)maxWidth, (int)ClientSize.Width);
+            horzScrollbar = new((int)scrollOffsetX, (int)maxWidth, (int)ClientSize.Width);
             vertScrollbar = new(firstVisibleItem, Count, pageHeightInUnits);
             horzScrollbar.Visibility = horzVisibility;
             vertScrollbar.Visibility = vertVisibility;
         }
 
-        /// <summary>
-        /// Sets horizontal scroll offset.
-        /// </summary>
-        /// <param name="value">Value of the horizontal scroll offset in
-        /// device-independent units.</param>
-        public virtual void SetHorizontalOffset(Coord value)
+        /// <inheritdoc/>
+        public override void SetVerticalScrollOffset(double value)
+        {
+            ScrollToRow((int)value);
+        }
+
+        /// <inheritdoc/>
+        public override void SetHorizontalOffset(Coord value)
         {
             var newOffset = Math.Max(value, 0);
-            if (newOffset != scrollOffset)
+            if (newOffset != scrollOffsetX)
             {
-                scrollOffset = newOffset;
+                scrollOffsetX = newOffset;
                 UpdateScrollBars(true);
             }
         }
@@ -1571,7 +1401,7 @@ namespace Alternet.UI
         /// <param name="delta">Increment value in device-independent units.</param>
         public virtual void IncHorizontalOffset(Coord delta)
         {
-            SetHorizontalOffset(scrollOffset + delta);
+            SetHorizontalOffset(scrollOffsetX + delta);
         }
 
         /// <summary>
@@ -1677,19 +1507,6 @@ namespace Alternet.UI
             return null;
         }
 
-        /// <inheritdoc/>
-        public override void UpdateScrollBars(bool refresh)
-        {
-            if (DisposingOrDisposed)
-                return;
-
-            CalcScrollBarInfo(out var horzScrollbar, out var vertScrollbar);
-            VertScrollBarInfo = vertScrollbar;
-            HorzScrollBarInfo = horzScrollbar;
-            if (refresh)
-                Refresh();
-        }
-
         /// <summary>
         /// Adds a collection of items to the list control.
         /// </summary>
@@ -1716,42 +1533,6 @@ namespace Alternet.UI
                     }
                 }
             });
-        }
-
-        /// <inheritdoc/>
-        public override ScrollBarInfo GetScrollBarInfo(bool isVertical)
-        {
-            if(interior is null)
-                return base.GetScrollBarInfo(isVertical);
-            if (isVertical)
-            {
-                return vertScrollBarInfo;
-            }
-            else
-            {
-                return horzScrollBarInfo;
-            }
-        }
-
-        /// <inheritdoc/>
-        public override void SetScrollBarInfo(bool isVertical, ScrollBarInfo value)
-        {
-            if (interior is null)
-            {
-                base.SetScrollBarInfo(isVertical, value);
-                return;
-            }
-
-            if (isVertical)
-            {
-                vertScrollBarInfo = value;
-            }
-            else
-            {
-                horzScrollBarInfo = value;
-            }
-
-            RaiseNotifications((n) => n.AfterSetScrollBarInfo(this, isVertical, value));
         }
 
         /// <summary>
@@ -1793,41 +1574,6 @@ namespace Alternet.UI
             }
 
             base.OnMouseDoubleClick(e);
-        }
-
-        /// <summary>
-        /// Gets the rectangle that represents the paintable area of the control.
-        /// </summary>
-        /// <returns>
-        /// A <see cref="RectD"/> representing the bounds of the paintable area within the control.
-        /// </returns>
-        protected virtual RectD GetPaintRectangle()
-        {
-            var clientR = ClientRectangle;
-
-            if (interior is null)
-                return clientR;
-
-            interior.Bounds = clientR;
-
-            var rectangles = interior.GetLayoutRectangles(this);
-            var paintRectangle = rectangles[InteriorDrawable.HitTestResult.ClientRect];
-
-            if (HasBorder)
-            {
-            }
-
-            return paintRectangle;
-        }
-
-        /// <inheritdoc/>
-        protected override void OnSizeChanged(EventArgs e)
-        {
-            base.OnSizeChanged(e);
-
-            GetPaintRectangle();
-
-            UpdateScrollBars(false);
         }
 
         /// <inheritdoc/>
@@ -1890,13 +1636,6 @@ namespace Alternet.UI
             NotifyCollectionChangedEventArgs e)
         {
             CountChanged();
-        }
-
-        /// <inheritdoc/>
-        protected override void OnHandleCreated(EventArgs e)
-        {
-            base.OnHandleCreated(e);
-            UpdateScrollBars(false);
         }
 
         /// <summary>
@@ -2154,40 +1893,6 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        protected override void OnMouseWheel(MouseEventArgs e)
-        {
-            base.OnMouseWheel(e);
-
-            var delta = e.Delta;
-            if (delta > 0)
-            {
-                delta = 1;
-            }
-            else
-            if (delta < 0)
-            {
-                delta = -1;
-            }
-            else
-                return;
-
-            if (Keyboard.IsShiftPressed)
-            {
-                if (delta < 0)
-                    DoActionScrollCharRight();
-                else
-                    DoActionScrollCharLeft();
-            }
-            else
-            {
-                if (delta < 0)
-                    DoActionScrollLineDown();
-                else
-                    DoActionScrollLineUp();
-            }
-        }
-
-        /// <inheritdoc/>
         protected override void OnGotFocus(EventArgs e)
         {
             base.OnGotFocus(e);
@@ -2222,79 +1927,6 @@ namespace Alternet.UI
                     SetColorThemeToDark();
                 else
                     SetColorThemeToDefault();
-            }
-
-            interior?.UpdateThemeMetrics();
-        }
-
-        /// <inheritdoc/>
-        protected override void OnScroll(ScrollEventArgs e)
-        {
-            if (DisposingOrDisposed)
-                return;
-
-            base.OnScroll(e);
-
-            if (e.IsVertical)
-            {
-                switch (e.Type)
-                {
-                    case ScrollEventType.SmallDecrement:
-                        DoActionScrollLineUp();
-                        break;
-                    case ScrollEventType.SmallIncrement:
-                        DoActionScrollLineDown();
-                        break;
-                    case ScrollEventType.LargeDecrement:
-                        DoActionScrollPageUp();
-                        break;
-                    case ScrollEventType.LargeIncrement:
-                        DoActionScrollPageDown();
-                        break;
-                    case ScrollEventType.ThumbTrack:
-                        ScrollToRow(e.NewValue);
-                        break;
-                    case ScrollEventType.First:
-                        DoActionScrollToFirstLine();
-                        break;
-                    case ScrollEventType.Last:
-                        DoActionScrollToLastLine();
-                        break;
-                    case ScrollEventType.ThumbPosition:
-                    case ScrollEventType.EndScroll:
-                    default:
-                        break;
-                }
-            }
-            else
-            {
-                switch (e.Type)
-                {
-                    case ScrollEventType.SmallDecrement:
-                        DoActionScrollCharLeft();
-                        break;
-                    case ScrollEventType.SmallIncrement:
-                        DoActionScrollCharRight();
-                        break;
-                    case ScrollEventType.LargeDecrement:
-                        DoActionScrollPageLeft();
-                        break;
-                    case ScrollEventType.LargeIncrement:
-                        DoActionScrollPageRight();
-                        break;
-                    case ScrollEventType.ThumbTrack:
-                        SetHorizontalOffset(e.NewValue);
-                        break;
-                    case ScrollEventType.First:
-                        SetHorizontalOffset(0);
-                        break;
-                    case ScrollEventType.Last:
-                        break;
-                    case ScrollEventType.ThumbPosition:
-                    case ScrollEventType.EndScroll:
-                    default:
-                        break;
-                }
             }
         }
     }

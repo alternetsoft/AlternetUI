@@ -16,7 +16,7 @@ namespace Alternet.UI
     /// Advanced list control with ability to customize item painting.
     /// </summary>
     public abstract partial class VirtualListControl
-        : ListControl<ListControlItem>, ICustomListBox<ListControlItem>,
+        : ScrollableListControl, ICustomListBox<ListControlItem>,
         IListControlItemContainer, IListControlItemDefaults,
         ICheckListBox<ListControlItem>
     {
@@ -1375,11 +1375,6 @@ namespace Alternet.UI
             rect.ApplyMargin(item.ForegroundMargin);
             return item.GetCheckBoxInfo(this, rect);
         }
-
-        /// <summary>
-        /// Updates the vertical and horizontal scrollbars.
-        /// </summary>
-        public abstract void UpdateScrollBars(bool refresh);
 
         /// <summary>
         /// Called when when the checkbox state of the item has changed.

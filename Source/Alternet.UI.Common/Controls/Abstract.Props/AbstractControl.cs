@@ -1268,7 +1268,6 @@ namespace Alternet.UI
                     return null;
 
                 var chi = Parent!.Children;
-                var count = chi.Count;
 
                 for (int i = index.Value - 1; i >= 0; i--)
                 {
