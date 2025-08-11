@@ -426,6 +426,36 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets a value indicating whether this item is the last item in its parent items collection.
+        /// </summary>
+        [Browsable(false)]
+        public bool IsLast
+        {
+            get
+            {
+                var items = ParentItems;
+                if (items is null || items.Count == 0)
+                    return false;
+                return items[items.Count - 1] == this;
+            }
+        }
+
+        /// <summary>
+        /// Gets a value indicating whether this item is the first item in its parent items collection.
+        /// </summary>
+        [Browsable(false)]
+        public bool IsFirst
+        {
+            get
+            {
+                var items = ParentItems;
+                if (items is null || items.Count == 0)
+                    return false;
+                return items[0] == this;
+            }
+        }
+
+        /// <summary>
         /// Gets next sibling if item is not the last one, otherwise gets previous sibling.
         /// If item has no siblings, <see cref="Parent"/> is returned.
         /// </summary>
