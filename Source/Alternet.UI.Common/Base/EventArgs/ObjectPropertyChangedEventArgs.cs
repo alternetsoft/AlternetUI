@@ -10,7 +10,9 @@ namespace Alternet.UI
     /// Provides data for the property change events.
     /// </summary>
     /// <typeparam name="T">The type of the object whose property changed.</typeparam>
+#pragma warning disable
     public class ObjectPropertyChangedEventArgs<T> : BaseEventArgs
+#pragma warning restore
     {
         private T instance;
         private string? propName;
