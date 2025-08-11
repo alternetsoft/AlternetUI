@@ -130,6 +130,17 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Occurs when a property of a <see cref="TreeViewItem"/> changes.
+        /// This is not fired for all properties of the item.
+        /// </summary>
+        public event EventHandler<TreeViewItemPropChangedEventArgs>? ItemPropertyChanged;
+
+        /// <summary>
+        /// Occurs when the selection state of an item changes.
+        /// </summary>
+        public event EventHandler<UI.TreeViewEventArgs>? ItemSelectedChanged;
+
+        /// <summary>
         /// Occurs when an item is added to this tree view control, at
         /// any nesting level.
         /// </summary>
@@ -187,6 +198,20 @@ namespace Alternet.UI
                 ListBox.SelectionMode = (ListBoxSelectionMode)value;
             }
         }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether to track changes of
+        /// <see cref="TreeViewItem"/> properties. Default is <c>true</c>.
+        /// </summary>
+        [Browsable(false)]
+        public virtual bool TrackItemPropertyChanges { get; set; } = true;
+
+        /// <summary>
+        /// Gets or sets a value indicating whether to track changes of
+        /// <see cref="TreeViewItem"/> selection state. Default is <c>true</c>.
+        /// </summary>
+        [Browsable(false)]
+        public virtual bool TrackItemSelectedChanges { get; set; } = true;
 
         /// <summary>
         /// Gets the header with columns associated with the control.
@@ -1309,6 +1334,13 @@ namespace Alternet.UI
         void ITreeViewItemContainer.RaiseItemPropertyChanged(TreeViewItem item, string? propertyName)
         {
             OnItemPropertyChanged(item, propertyName);
+            ItemPropertyChanged?.Invoke(this, new TreeViewItemPropChangedEventArgs(item, propertyName));
+        }
+
+        void ITreeViewItemContainer.RaiseItemSelectedChanged(TreeViewItem item, bool selected)
+        {
+            OnItemSelectedChanged(item, selected);
+            ItemSelectedChanged?.Invoke(this, new TreeViewEventArgs(item));
         }
 
         /// <summary>
@@ -1509,12 +1541,28 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Called when the selection state of a tree item changes.
+        /// </summary>
+        /// <param name="item">The <see cref="TreeViewItem"/> whose selection state changed.</param>
+        /// <param name="selected">Indicates whether the item is selected.</param>
+        protected virtual void OnItemSelectedChanged(TreeViewItem item, bool selected)
+        {
+            if (!TrackItemSelectedChanges)
+                return;
+            if (!ListBox.ItemsLastPainted.Contains(item))
+                return;
+            ListBox.Invalidate();
+        }
+
+        /// <summary>
         /// Called when a property of a tree item changes.
         /// </summary>
         /// <param name="item">The tree item whose property changed.</param>
         /// <param name="propertyName">The name of the property that changed.</param>
         protected virtual void OnItemPropertyChanged(TreeViewItem item, string? propertyName)
         {
+            if(!TrackItemPropertyChanges)
+                return;
             if (string.IsNullOrEmpty(propertyName))
                 return;
             if (!ListBox.ItemsLastPainted.Contains(item))
