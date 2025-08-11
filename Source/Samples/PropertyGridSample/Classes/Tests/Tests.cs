@@ -49,7 +49,8 @@ namespace PropertyGridSample
             InitTestsTextBox();
             InitTestsPictureBox();
             InitTestsListBox();
-            InitTestsVirtualTreeControl();
+            InitTestsStdTreeView();
+            InitTestsTreeView();
             InitTestsListView();
             InitTestsButton();
             InitTestsSpeedButton();

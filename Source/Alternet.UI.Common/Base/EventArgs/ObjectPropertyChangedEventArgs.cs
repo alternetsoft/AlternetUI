@@ -9,10 +9,11 @@ namespace Alternet.UI
     /// <summary>
     /// Provides data for the property change events.
     /// </summary>
-    public class ObjectPropertyChangedEventArgs : BaseEventArgs
+    /// <typeparam name="T">The type of the object whose property changed.</typeparam>
+    public class ObjectPropertyChangedEventArgs<T> : BaseEventArgs
     {
-        private readonly object? instance;
-        private readonly string? propName;
+        private T instance;
+        private string? propName;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ObjectPropertyChangedEventArgs"/> class.
@@ -20,7 +21,7 @@ namespace Alternet.UI
         /// <param name="instance">Object instance which property was changed.</param>
         /// <param name="propName">Property name. Optional. If <c>null</c>, more than one
         /// property were changed.</param>
-        public ObjectPropertyChangedEventArgs(object? instance, string? propName)
+        public ObjectPropertyChangedEventArgs(T instance, string? propName)
         {
             this.instance = instance;
             this.propName = propName;
@@ -29,11 +30,50 @@ namespace Alternet.UI
         /// <summary>
         /// Object instance which property was changed.
         /// </summary>
-        public object? Instance => instance;
+        public virtual T Instance
+        {
+            get
+            {
+                return instance;
+            }
+
+            set
+            {
+                instance = value;
+            }
+        }
 
         /// <summary>
         /// Property name. If <c>null</c>, more than one property were changed.
         /// </summary>
-        public string? PropName => propName;
+        public virtual string? PropName
+        {
+            get
+            {
+                return propName;
+            }
+
+            set
+            {
+                propName = value;
+            }
+        }
+    }
+
+    /// <summary>
+    /// Provides data for the property change events.
+    /// </summary>
+    public class ObjectPropertyChangedEventArgs : ObjectPropertyChangedEventArgs<object?>
+    {
+        /// <summary>
+        /// Creates a new instance of the <see cref="ObjectPropertyChangedEventArgs"/> class
+        /// with the specified instance and property name.
+        /// </summary>
+        /// <param name="instance">The object instance which property was changed.</param>
+        /// <param name="propName">The name of the property that was changed.</param>
+        public ObjectPropertyChangedEventArgs(object? instance, string? propName)
+            : base(instance, propName)
+        {
+        }
     }
 }

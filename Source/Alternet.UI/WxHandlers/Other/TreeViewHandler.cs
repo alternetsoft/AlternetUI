@@ -586,6 +586,16 @@ namespace Alternet.UI
             NativeControl.CollapseItem(GetHandleFromItem(item));
         }
 
+        public void SetSelected(TreeViewItem item, bool value)
+        {
+            if (Control is null)
+                return;
+            var p = GetHandleFromItem(item);
+            if (p == IntPtr.Zero)
+                return;
+            NativeControl.SetSelected(p, value);
+        }
+
         public class NativeTreeView : Native.TreeView
         {
             public NativeTreeView()

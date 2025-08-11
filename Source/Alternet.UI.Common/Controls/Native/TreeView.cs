@@ -1019,6 +1019,11 @@ namespace Alternet.UI
             RaiseItemAdded(e);
         }
 
+        void ITreeViewItemContainer.RaiseItemSelectedChanged(TreeViewItem item, bool selected)
+        {
+            Handler.SetSelected(item, selected);
+        }
+
         void ITreeViewItemContainer.RaiseItemRemoved(TreeViewItem item)
         {
             var e = new TreeViewEventArgs(item);

@@ -167,6 +167,13 @@ Environment.NewLine + Environment.NewLine +
                 InitVirtualTreeControl(treeView);
             });
 
+            Actions.Add(typeof(TreeView), (c) =>
+            {
+                TreeView treeView = (c as TreeView)!;
+                treeView.SuggestedSize = defaultListSize;
+                InitVirtualTreeControl(treeView);
+            });
+
             Actions.Add(typeof(ListView), (c) =>
             {
                 ListView listView = (c as ListView)!;
@@ -621,6 +628,17 @@ Environment.NewLine + Environment.NewLine +
 
         }
 
+        public static void InitVirtualTreeControl(TreeView control)
+        {
+            if (App.SafeWindow.UseSmallImages)
+                control.ImageList = LoadImageLists().Small;
+            else
+                control.ImageList = LoadImageLists().Large;
+
+            control.HorizontalAlignment = HorizontalAlignment.Stretch;
+            AddItems(control, 10);
+        }
+
         public static void InitVirtualTreeControl(StdTreeView control)
         {
             if (App.SafeWindow.UseSmallImages)
@@ -650,6 +668,45 @@ Environment.NewLine + Environment.NewLine +
         }
 
         public static void AddItems(StdTreeView treeView, int count)
+        {
+            treeView.BeginUpdate();
+            try
+            {
+                for (int i = 0; i < count; i++)
+                {
+                    int imageIndex = i % 4;
+                    var item = new TreeViewItem(
+                        "Item " + GenItemIndex(),
+                        imageIndex);
+                    for (int j = 0; j < 3; j++)
+                    {
+                        var childItem = new TreeViewItem(
+                            item.Text + "." + j,
+                            imageIndex);
+                        item.Add(childItem);
+
+                        if (i < 5)
+                        {
+                            for (int k = 0; k < 2; k++)
+                            {
+                                childItem.Add(
+                                    new TreeViewItem(
+                                        item.Text + "." + k,
+                                        imageIndex));
+                            }
+                        }
+                    }
+
+                    treeView.Add(item);
+                }
+            }
+            finally
+            {
+                treeView.EndUpdate();
+            }
+        }
+
+        public static void AddItems(TreeView treeView, int count)
         {
             treeView.BeginUpdate();
             try

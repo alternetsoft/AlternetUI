@@ -212,6 +212,13 @@ namespace Alternet.UI
         void SetItemTextColor(TreeViewItem item, Color? color);
 
         /// <summary>
+        /// Sets whether the item is selected or not.
+        /// </summary>
+        /// <param name="item">The <see cref="TreeViewItem"/> to modify.</param>
+        /// <param name="value">Indicates whether the item is selected.</param>
+        void SetSelected(TreeViewItem item, bool value);
+
+        /// <summary>
         /// Sets item text.
         /// </summary>
         /// <param name="item">Item.</param>

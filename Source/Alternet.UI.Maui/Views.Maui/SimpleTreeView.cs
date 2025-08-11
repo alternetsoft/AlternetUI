@@ -662,6 +662,10 @@ namespace Alternet.Maui
             EndUpdate();
         }
 
+        void UI.ITreeViewItemContainer.RaiseItemSelectedChanged(UI.TreeViewItem item, bool selected)
+        {
+        }
+
         void UI.ITreeViewItemContainer.EnsureVisible(UI.TreeViewItem? item)
         {
             if (item is null)

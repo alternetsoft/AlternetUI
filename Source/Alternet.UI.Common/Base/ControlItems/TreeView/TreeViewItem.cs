@@ -1128,6 +1128,14 @@ namespace Alternet.UI
             SetItemsExpanded(expanded: false, onlyVisible);
         }
 
+        /// <inheritdoc/>
+        public override bool SetSelected(IListControlItemContainer? container, bool value)
+        {
+            var result = base.SetSelected(container, value);
+            Owner?.RaiseItemSelectedChanged(this, value);
+            return result;
+        }
+
         /// <summary>
         /// Retrieves all child items of this tree control item.
         /// If a child item is expanded, its children are also included in the result.

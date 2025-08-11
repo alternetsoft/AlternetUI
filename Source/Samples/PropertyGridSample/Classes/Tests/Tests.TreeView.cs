@@ -14,7 +14,7 @@ namespace PropertyGridSample
 {
     public partial class MainWindow
     {
-        void InitTestsVirtualTreeControl()
+        void InitTestsStdTreeView()
         {
             AddControlAction<StdTreeView>("SelectedItem: ExpandAll", (c) =>
             {
@@ -54,6 +54,28 @@ namespace PropertyGridSample
                 var images = c.ImageList;
                 var converted = images?.WithConvertedColors(ControlPaint.LightLight);
                 c.ImageList = converted;
+            });
+        }
+
+        void InitTestsTreeView()
+        {
+            AddControlAction<TreeView>("SelectedItem: ExpandAll", (c) =>
+            {
+                c.SelectedItem?.ExpandAll();
+            });
+
+            AddControlAction<TreeView>("SelectedItem: CollapseAll", (c) =>
+            {
+                c.SelectedItem?.CollapseAll();
+            });
+
+            AddControlAction<TreeView>("Toggle selection of 2 and 4", (c) =>
+            {
+                c.SelectionMode = TreeViewSelectionMode.Multiple;
+                var item2 = c.RootItem.Items[2];
+                var item4 = c.RootItem.Items[4];
+                item2.IsSelected = !item2.IsSelected;
+                item4.IsSelected = !item4.IsSelected;
             });
         }
 
