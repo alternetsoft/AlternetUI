@@ -36,7 +36,7 @@ namespace Alternet.UI
             {
                 if (Visible && HideOnMouseLeave && !IsMouseOver)
                 {
-                    CloseWhenIdle(ModalResult.Canceled);
+                    CloseWhenIdle(ModalResult.Canceled, UI.PopupCloseReason.MouseOverChanged);
                 }
             };
         }
@@ -60,6 +60,21 @@ namespace Alternet.UI
             /// Focus was lost.
             /// </summary>
             FocusLost,
+
+            /// <summary>
+            /// Key was pressed.
+            /// </summary>
+            Key,
+
+            /// <summary>
+            /// Character was pressed.
+            /// </summary>
+            Char,
+
+            /// <summary>
+            /// Mouse moved outside the popup control.
+            /// </summary>
+            MouseOverChanged,
 
             /// <summary>
             /// Other reason.
@@ -108,6 +123,11 @@ namespace Alternet.UI
                 popupResult = value;
             }
         }
+
+        /// <summary>
+        /// Gets or sets the reason why popup was closed.
+        /// </summary>
+        public virtual PopupCloseReason? PopupCloseReason { get; set; }
 
         /// <summary>
         /// Gets or sets a value indicating whether a popup window disappears automatically
@@ -287,10 +307,26 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets or sets the reason why popup was closed.
+        /// </summary>
+        public PopupCloseReason? Reason { get; set; }
+
+        /// <summary>
+        /// Closes popup window and raises <see cref="Closed"/> event.
+        /// This is equivalent to calling <see cref="Close(PopupCloseReason?)"/> with null reason.
+        /// </summary>
+        public void Close()
+        {
+            Close(null);
+        }
+
+        /// <summary>
         /// Closes popup window and raises <see cref="Closed"/> event.
         /// </summary>
-        public virtual void Close()
+        public virtual void Close(PopupCloseReason? reason)
         {
+            Reason = reason;
+
             if (!Visible)
             {
                 return;
@@ -311,9 +347,9 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Sets <see cref="PopupResult"/> and calls <see cref="Close()"/>.
+        /// Sets <see cref="PopupResult"/> and calls <see cref="Close(PopupCloseReason?)"/>.
         /// </summary>
-        public void Close(ModalResult result)
+        public virtual void Close(ModalResult result, PopupCloseReason? reason = null)
         {
             PopupResult = result;
             Close();
@@ -322,7 +358,7 @@ namespace Alternet.UI
         /// <summary>
         /// Closes popup control when application goes to the idle state.
         /// </summary>
-        public virtual void CloseWhenIdle(ModalResult result)
+        public virtual void CloseWhenIdle(ModalResult result, PopupCloseReason? reason = null)
         {
             if (!Visible)
                 return;
@@ -330,7 +366,7 @@ namespace Alternet.UI
             {
                 if (IsDisposed)
                     return;
-                Close(result);
+                Close(result, reason);
             });
         }
 
@@ -356,7 +392,9 @@ namespace Alternet.UI
             base.OnBeforeParentMouseDown(sender, e);
             if (HideOnClickParent && Visible)
             {
-                CloseWhenIdle(GetPopupResult(CloseReason.ClickContainer));
+                CloseWhenIdle(
+                    GetPopupResult(UI.PopupCloseReason.ClickContainer),
+                    UI.PopupCloseReason.ClickContainer);
                 e.Handled = true;
             }
         }
@@ -365,10 +403,19 @@ namespace Alternet.UI
         protected override void OnBeforeParentKeyDown(object? sender, KeyEventArgs e)
         {
             base.OnBeforeParentKeyDown(sender, e);
+
             if (HideOnEscape && e.IsEscape)
             {
-                Close(ModalResult.Canceled);
+                Close(ModalResult.Canceled, new(Key.Escape));
                 e.Suppressed();
+                return;
+            }
+
+            if (AcceptOnTab && e.IsSimpleKey(Key.Tab))
+            {
+                Close(ModalResult.Accepted, new(Key.Tab));
+                e.Suppressed();
+                return;
             }
         }
 
@@ -380,7 +427,9 @@ namespace Alternet.UI
                 return;
             if (CancelOnLostFocus || AcceptOnLostFocus)
             {
-                CloseWhenIdle(GetPopupResult(CloseReason.FocusLost));
+                CloseWhenIdle(
+                    GetPopupResult(UI.PopupCloseReason.FocusLost),
+                    UI.PopupCloseReason.FocusLost);
             }
         }
 
@@ -392,7 +441,9 @@ namespace Alternet.UI
                 return;
             if(CancelOnLostFocus || AcceptOnLostFocus)
             {
-                CloseWhenIdle(GetPopupResult(CloseReason.FocusLost));
+                CloseWhenIdle(
+                    GetPopupResult(UI.PopupCloseReason.FocusLost),
+                    UI.PopupCloseReason.FocusLost);
             }
         }
 
@@ -400,7 +451,7 @@ namespace Alternet.UI
         /// Gets popup result using the specified <see cref="CloseReason"/>.
         /// </summary>
         /// <returns></returns>
-        protected virtual ModalResult GetPopupResult(CloseReason reason)
+        protected virtual ModalResult GetPopupResult(PopupCloseReason reason)
         {
             if (AcceptOnLostFocus)
                 return ModalResult.Accepted;
