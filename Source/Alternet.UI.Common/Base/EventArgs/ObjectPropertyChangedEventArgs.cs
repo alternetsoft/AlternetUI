@@ -60,6 +60,7 @@ namespace Alternet.UI
         }
     }
 
+#pragma warning disable
     /// <summary>
     /// Provides data for the property change events.
     /// </summary>
@@ -76,4 +77,5 @@ namespace Alternet.UI
         {
         }
     }
+#pragma warning restore
 }

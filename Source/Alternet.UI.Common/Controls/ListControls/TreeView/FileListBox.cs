@@ -472,7 +472,8 @@ namespace Alternet.UI
         {
             Header.Required();
 
-            DoInsideLayout(() =>
+            DoInsideLayout(
+            () =>
             {
                 Header.DeleteColumns();
 
