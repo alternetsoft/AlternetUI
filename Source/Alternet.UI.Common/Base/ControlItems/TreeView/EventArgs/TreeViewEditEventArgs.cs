@@ -4,7 +4,7 @@ using System.ComponentModel;
 namespace Alternet.UI
 {
     /// <summary>
-    /// Provides data for the "BeforeLabelEdit" and "AfterLabelEdit" events.
+    /// Provides data for the events which are related to editing a tree view item's label.
     /// </summary>
     public class TreeViewEditEventArgs : BaseCancelEventArgs
     {

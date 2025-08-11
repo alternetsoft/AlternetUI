@@ -3,8 +3,7 @@ using System;
 namespace Alternet.UI
 {
     /// <summary>
-    /// Provides data for 'ItemAdded', 'ItemRemoved'
-    /// and other events.
+    /// Provides data for the events related to tree view items.
     /// </summary>
     public class TreeViewEventArgs : BaseEventArgs
     {

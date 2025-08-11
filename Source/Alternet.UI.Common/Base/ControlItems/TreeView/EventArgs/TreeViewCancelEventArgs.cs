@@ -4,8 +4,7 @@ using System.ComponentModel;
 namespace Alternet.UI
 {
     /// <summary>
-    /// Provides data for 'BeforeExpand', 'BeforeCollapse', 'ExpandedChanged'
-    /// and other cancelable events.
+    /// Provides data for cancelable events related to tree view items.
     /// </summary>
     public class TreeViewCancelEventArgs : BaseCancelEventArgs
     {
