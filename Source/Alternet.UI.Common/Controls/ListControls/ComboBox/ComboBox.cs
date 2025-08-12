@@ -625,6 +625,12 @@ namespace Alternet.UI
             }
         }
 
+        SvgImage? IListControlItemContainer.CheckImageUnchecked { get; }
+
+        SvgImage? IListControlItemContainer.CheckImageChecked { get; }
+
+        SvgImage? IListControlItemContainer.CheckImageIndeterminate { get; }
+
         AbstractControl? IListControlItemContainer.Control => this;
 
         internal OwnerDrawFlags OwnerDrawStyle
