@@ -8,10 +8,9 @@ using Alternet.Drawing;
 namespace Alternet.UI
 {
     /// <summary>
-    /// Extends <see cref="ListControl{T}"/> to provide a scrollable list control
-    /// with ability to use system or internal scrollbars.
+    /// Extends <see cref="UserControl"/> to provide scrollable functionality.
     /// </summary>
-    public abstract class ScrollableListControl : ListControl<ListControlItem>
+    public abstract class ScrollableUserControl : UserControl
     {
         /// <summary>
         /// Indicates whether the list box controls use internal scrollbars.
@@ -38,15 +37,15 @@ namespace Alternet.UI
         private ScrollBarInfo vertScrollBarInfo = new();
         private ScrollBarInfo horzScrollBarInfo = new();
 
-        static ScrollableListControl()
+        static ScrollableUserControl()
         {
             DefaultUseInternalScrollBars = App.IsMaui || App.IsLinuxOS;
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="ScrollableListControl"/> class.
+        /// Initializes a new instance of the <see cref="ScrollableUserControl"/> class.
         /// </summary>
-        public ScrollableListControl()
+        public ScrollableUserControl()
         {
             hasInternalScrollBars = DefaultUseInternalScrollBars;
 

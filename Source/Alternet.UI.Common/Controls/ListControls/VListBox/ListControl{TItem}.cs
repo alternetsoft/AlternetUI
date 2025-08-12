@@ -13,13 +13,12 @@ using Alternet.Drawing;
 namespace Alternet.UI
 {
     /// <summary>
-    /// Provides a common implementation of members for the <see cref="StdListBox"/>,
-    /// <see cref="ComboBox"/> and other controls.
+    /// Provides a common implementation of members for the list controls.
     /// </summary>
     /// <typeparam name="TItem">Type of the item. Can be <see cref="object"/>,
     /// <see cref="ListControlItem"/> or any other type.</typeparam>
     public abstract partial class ListControl<TItem>
-        : UserControl, IReadOnlyStrings, IListControl<TItem>
+        : ScrollableUserControl, IReadOnlyStrings, IListControl<TItem>
         where TItem : class, new()
     {
         private StringSearch? search;

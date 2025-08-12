@@ -16,7 +16,7 @@ namespace Alternet.UI
     /// Advanced list control with ability to customize item painting.
     /// </summary>
     public abstract partial class VirtualListControl
-        : ScrollableListControl, ICustomListBox<ListControlItem>,
+        : ListControl<ListControlItem>, ICustomListBox<ListControlItem>,
         IListControlItemContainer, IListControlItemDefaults,
         ICheckListBox<ListControlItem>
     {
@@ -1364,7 +1364,8 @@ namespace Alternet.UI
         /// <param name="itemIndex">The zero-based index of the item in the control.</param>
         /// <param name="rect">The bounding rectangle of the item.</param>
         /// <returns>
-        /// An <see cref="ListControlItem.ItemCheckBoxInfo"/> object containing details about the checkbox,
+        /// An <see cref="ListControlItem.ItemCheckBoxInfo"/> object containing
+        /// details about the checkbox,
         /// or <c>null</c> if the item does not have a checkbox.
         /// </returns>
         public ListControlItem.ItemCheckBoxInfo? GetCheckBoxInfo(int itemIndex, RectD rect)
