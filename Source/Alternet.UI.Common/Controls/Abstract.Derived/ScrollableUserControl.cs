@@ -49,7 +49,7 @@ namespace Alternet.UI
         {
             hasInternalScrollBars = DefaultUseInternalScrollBars;
 
-            if (!hasInternalScrollBars)
+            if (!HasInternalScrollBars)
             {
                 BorderStyle = DefaultBorderStyle;
                 IsScrollable = true;
@@ -95,7 +95,7 @@ namespace Alternet.UI
         {
             get
             {
-                return hasInternalScrollBars;
+                return HasInternalScrollBars;
             }
         }
 
@@ -103,7 +103,7 @@ namespace Alternet.UI
         /// Gets whether the control uses internal scrollbars.
         /// </summary>
         [Browsable(false)]
-        public bool HasInternalScrollBars
+        public virtual bool HasInternalScrollBars
         {
             get
             {
@@ -416,6 +416,18 @@ namespace Alternet.UI
                 return;
 
             interior.Draw(this, dc);
+        }
+
+        /// <summary>
+        /// Removes the interior which draws and manages the scrollbars.
+        /// </summary>
+        protected virtual void RemoveInterior()
+        {
+            if (interior is not null)
+            {
+                RemoveNotification(interior.Notification);
+                interior = null;
+            }
         }
 
         /// <summary>
