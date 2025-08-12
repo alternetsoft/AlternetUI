@@ -103,7 +103,13 @@ namespace Alternet.UI
         /// Gets whether the control uses internal scrollbars.
         /// </summary>
         [Browsable(false)]
-        public bool HasInternalScrollBars => hasInternalScrollBars;
+        public bool HasInternalScrollBars
+        {
+            get
+            {
+                return hasInternalScrollBars;
+            }
+        }
 
         /// <inheritdoc/>
         [Browsable(true)]
