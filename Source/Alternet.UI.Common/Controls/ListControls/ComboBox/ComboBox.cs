@@ -49,7 +49,7 @@ namespace Alternet.UI
     /// </para>
     /// </remarks>
     [ControlCategory("Common")]
-    public partial class ComboBox : ListControl<object>, IListControl, IListControlItemContainer
+    public partial class ComboBox : Control, IListControl, IListControlItemContainer
     {
         /// <summary>
         /// Gets or sets default vertical offset of the item's image for the items with images.
@@ -330,7 +330,7 @@ namespace Alternet.UI
         /// the currently selected item in the combo box list.
         /// Setting a new index raises the <see cref="SelectedItemChanged"/>
         /// event.</remarks>
-        public override int? SelectedIndex
+        public virtual int? SelectedIndex
         {
             get
             {
@@ -367,7 +367,7 @@ namespace Alternet.UI
         /// If the object does not exist in the list, the
         /// <see cref="SelectedIndex"/> property is left at its current value.
         /// </remarks>
-        public override object? SelectedItem
+        public virtual object? SelectedItem
         {
             get
             {
