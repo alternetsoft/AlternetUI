@@ -69,7 +69,7 @@ namespace Alternet.UI
 
             UseControlColors(true);
 
-            if (HasInternalScrollBars)
+            if (UseInternalScrollBars)
             {
                 Interior?.Required();
             }

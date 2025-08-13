@@ -124,6 +124,13 @@ namespace ControlsSample
                 $"CheckListBox: SelectionChanged. Selected: ({selectedIndicesStr})");
         }
 
+        private void UseInternalScrollBars_CheckedChanged(
+            object? sender,
+            EventArgs e)
+        {
+            checkListBox.UseInternalScrollBars = useInternalScrollBars.IsChecked;
+        }
+
         private void AllowMultipleSelectionCheckBox_CheckedChanged(
             object? sender, 
             EventArgs e)

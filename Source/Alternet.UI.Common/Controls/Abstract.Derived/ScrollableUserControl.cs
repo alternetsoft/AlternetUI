@@ -29,8 +29,7 @@ namespace Alternet.UI
         /// </summary>
         public static int DefaultHorizontalScrollBarLargeIncrement = 4;
 
-        private readonly bool hasInternalScrollBars;
-
+        private bool hasInternalScrollBars;
         private ScrollBarSettings? horizontalScrollBarSettings;
         private ScrollBarSettings? verticalScrollBarSettings;
         private InteriorDrawable? interior;
@@ -49,11 +48,7 @@ namespace Alternet.UI
         {
             hasInternalScrollBars = DefaultUseInternalScrollBars;
 
-            if (!HasInternalScrollBars)
-            {
-                BorderStyle = DefaultBorderStyle;
-                IsScrollable = true;
-            }
+            OnHasInternalScrollBarsChanged();
         }
 
         /// <inheritdoc/>
@@ -95,19 +90,27 @@ namespace Alternet.UI
         {
             get
             {
-                return HasInternalScrollBars;
+                return UseInternalScrollBars;
             }
         }
 
         /// <summary>
-        /// Gets whether the control uses internal scrollbars.
+        /// Gets or sets whether the control uses internal scrollbars.
         /// </summary>
-        [Browsable(false)]
-        public virtual bool HasInternalScrollBars
+        public virtual bool UseInternalScrollBars
         {
             get
             {
                 return hasInternalScrollBars;
+            }
+
+            set
+            {
+                if (hasInternalScrollBars == value)
+                    return;
+                hasInternalScrollBars = value;
+                OnHasInternalScrollBarsChanged();
+                UpdateScrollBars(true);
             }
         }
 
@@ -474,6 +477,28 @@ namespace Alternet.UI
                     DoActionScrollLineDown();
                 else
                     DoActionScrollLineUp();
+            }
+        }
+
+        /// <summary>
+        /// Called when the <see cref="UseInternalScrollBars"/> property changes.
+        /// </summary>
+        protected virtual void OnHasInternalScrollBarsChanged()
+        {
+            var oldHasBorder = HasBorder;
+
+            if (UseInternalScrollBars)
+            {
+                Interior.Required();
+                BorderStyle = ControlBorderStyle.None;
+                IsScrollable = false;
+                Interior.HasBorder = oldHasBorder;
+            }
+            else
+            {
+                RemoveInterior();
+                HasBorder = oldHasBorder;
+                IsScrollable = true;
             }
         }
 

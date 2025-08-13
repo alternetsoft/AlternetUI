@@ -36,8 +36,11 @@
           <Button Text="Edit Items..." Name="buttonEditItems" IsTextLocalized="true"
                   Margin="0,3,0,3" Click="EditorButton_Click" />
           <CheckBox Text="Multiple Selection" Name="allowMultipleSelectionCheckBox"
-                    Margin="0,3,0,0" IsChecked="true" IsTextLocalized="true"
+                    Margin="0,3,0,3" IsChecked="true" IsTextLocalized="true"
                     CheckedChanged="AllowMultipleSelectionCheckBox_CheckedChanged"/>
+          <CheckBox Text="Internal scrolbars" Name="useInternalScrollBars"
+                    Margin="0,3,0,3" IsChecked="false" IsTextLocalized="true"
+                    CheckedChanged="UseInternalScrollBars_CheckedChanged"/>
         </StackPanel>
 
       </StackPanel>
