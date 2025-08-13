@@ -18,6 +18,7 @@ namespace Alternet.UI
         private bool hasBorder;
         private RichTextBoxScrollBars scrollBars = RichTextBoxScrollBars.None;
         private bool showDropDownMenuWhenClicked = true;
+        private List<IControlOverlay>? overlays;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="UserControl"/> class.
@@ -161,6 +162,68 @@ namespace Alternet.UI
             StateObjects.Backgrounds.SetObject(fontAndColor?.BackgroundColor?.AsBrush, state);
         }
 
+        /// <summary>
+        /// Gets whether this control has overlays.
+        /// </summary>
+        /// <returns></returns>
+        public virtual bool HasOverlays()
+        {
+            return overlays?.Count > 0;
+        }
+
+        /// <summary>
+        /// Gets overlays attached to this control.
+        /// </summary>
+        /// <returns></returns>
+        public virtual IReadOnlyList<IControlOverlay>? GetOverlays()
+        {
+            return overlays;
+        }
+
+        /// <summary>
+        /// Removes overlay with the specified <paramref name="overlayId"/>.
+        /// </summary>
+        /// <param name="overlayId">The unique identifier of the overlay to remove.</param>
+        public virtual void RemoveOverlay(ObjectUniqueId overlayId)
+        {
+            if (overlays is null)
+                return;
+
+            for (int i = 0; i < overlays.Count; i++)
+            {
+                if (overlays[i].UniqueId == overlayId)
+                {
+                    overlays.RemoveAt(i);
+                    if (overlays.Count == 0)
+                        overlays = null;
+                    return;
+                }
+            }
+        }
+
+        /// <summary>
+        /// Removes the specified overlay from the control.
+        /// </summary>
+        /// <param name="overlay">The overlay to remove.</param>
+        public virtual void RemoveOverlay(IControlOverlay overlay)
+        {
+            if (overlays is null)
+                return;
+            overlays.Remove(overlay);
+            if (overlays.Count == 0)
+                overlays = null;
+        }
+
+        /// <summary>
+        /// Adds the specified overlay to the control.
+        /// </summary>
+        /// <param name="overlay">The overlay to add.</param>
+        public virtual void AddOverlay(IControlOverlay overlay)
+        {
+            overlays ??= new();
+            overlays.Add(overlay);
+        }
+
         /// <inheritdoc/>
         public override Brush? GetBackground(VisualControlState state)
         {
@@ -281,6 +344,15 @@ namespace Alternet.UI
         protected override void OnPaint(PaintEventArgs e)
         {
             DefaultPaint(e);
+
+            if(overlays is not null)
+            {
+                foreach (var overlay in overlays)
+                {
+                    overlay.OnPaint(this, e);
+                }
+            }
+
             DefaultPaintDebug(e);
         }
 
