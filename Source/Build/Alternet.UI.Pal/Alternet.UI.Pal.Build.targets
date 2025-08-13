@@ -80,7 +80,7 @@
 	<Target Name="RunVSWhere">
 		<Exec 
 			WorkingDirectory="$(RootDirectoryPath)" 
-			Command="&quot;%ProgramFiles(x86)%\Microsoft Visual Studio\Installer\vswhere.exe&quot; -latest -prerelease -requires Microsoft.Component.MSBuild -find &quot;MSBuild\**\Bin\MSBuild.exe&quot;" 
+			Command="&quot;%ProgramFiles(x86)%\Microsoft Visual Studio\Installer\vswhere.exe&quot; -products Microsoft.VisualStudio.Product.Community Microsoft.VisualStudio.Product.Professional Microsoft.VisualStudio.Product.Enterprise -latest -prerelease -requires Microsoft.Component.MSBuild -find &quot;MSBuild\**\Bin\MSBuild.exe&quot;" 
 			ConsoleToMSBuild="true">
 			<Output TaskParameter="ConsoleOutput" ItemName="OutputOfRunVSWhere" />
 		</Exec>
