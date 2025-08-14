@@ -11,14 +11,14 @@ namespace Alternet.UI
     public class ControlOverlayWithEvent : ControlOverlay
     {
         /// <summary>
-        /// Gets or sets the action to be executed during the paint event.
-        /// </summary>
-        public Action<AbstractControl, PaintEventArgs>? PaintAction { get; set; }
-
-        /// <summary>
         /// Occurs when the overlay is painted.
         /// </summary>
         public event EventHandler<PaintEventArgs>? Paint;
+
+        /// <summary>
+        /// Gets or sets the action to be executed during the paint event.
+        /// </summary>
+        public Action<AbstractControl, PaintEventArgs>? PaintAction { get; set; }
 
         /// <inheritdoc/>
         public override void OnPaint(AbstractControl control, PaintEventArgs e)
