@@ -181,13 +181,18 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Removes overlay with the specified <paramref name="overlayId"/>.
+        /// Removes an overlay with the specified unique identifier from the overlays collection.
         /// </summary>
         /// <param name="overlayId">The unique identifier of the overlay to remove.</param>
-        public virtual void RemoveOverlay(ObjectUniqueId overlayId)
+        /// <param name="invalidate">A value indicating whether to invalidate the control
+        /// after removing the overlay. If <see langword="true"/>,
+        /// the control is invalidated; otherwise, it is not.</param>
+        /// <returns><see langword="true"/> if the overlay was successfully removed;
+        /// otherwise, <see langword="false"/>.</returns>
+        public virtual bool RemoveOverlay(ObjectUniqueId overlayId, bool invalidate = true)
         {
             if (overlays is null)
-                return;
+                return false;
 
             for (int i = 0; i < overlays.Count; i++)
             {
@@ -196,22 +201,35 @@ namespace Alternet.UI
                     overlays.RemoveAt(i);
                     if (overlays.Count == 0)
                         overlays = null;
-                    return;
+                    if (invalidate)
+                        Invalidate();
+                    return true;
                 }
             }
+
+            return false;
         }
 
         /// <summary>
         /// Removes the specified overlay from the control.
         /// </summary>
         /// <param name="overlay">The overlay to remove.</param>
-        public virtual void RemoveOverlay(IControlOverlay overlay)
+        /// <param name="invalidate">The <see langword="bool"/> indicating whether
+        /// to invalidate the control.</param>
+        /// <returns><see langword="true"/> if the overlay was successfully removed;
+        /// otherwise, <see langword="false"/>.</returns>
+        public virtual bool RemoveOverlay(IControlOverlay overlay, bool invalidate = true)
         {
             if (overlays is null)
-                return;
-            overlays.Remove(overlay);
+                return false;
+            var removed = overlays.Remove(overlay);
+            if (!removed)
+                return false;
             if (overlays.Count == 0)
                 overlays = null;
+            if (invalidate)
+                Invalidate();
+            return true;
         }
 
         /// <summary>
@@ -222,6 +240,7 @@ namespace Alternet.UI
         {
             overlays ??= new();
             overlays.Add(overlay);
+            Invalidate();
         }
 
         /// <inheritdoc/>

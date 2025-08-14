@@ -161,6 +161,57 @@ namespace PropertyGridSample
 
             void InitTestsListBox()
             {
+                ObjectUniqueId? overlayId = null;
+
+
+                AddControlAction<VirtualListBox>("Add tooltip overlay", (c) =>
+                {
+                    var overlay = new ControlOverlayWithToolTip()
+                    {
+                        Location = (10, 10),
+                    };
+
+                    var data = overlay.ToolTip;
+                    data.Icon = MessageBoxIcon.Information;
+                    data.Text = "This is tooltip text";
+                    data.Title = "This is title";
+                    overlay.UpdateImage();
+
+                    overlayId = overlay.UniqueId;
+
+                    c.AddOverlay(overlay);
+
+                    overlay.StartRemovalTimer(1500, c);
+                });
+
+
+                AddControlAction<VirtualListBox>("Add overlay", (c) =>
+                {
+                    var overlay = new ControlOverlayWithText()
+                    {
+                        Text = "Overlay text",
+                        Location = (10, 10),
+                        TextColor = Color.Red,
+                        BackColor = Color.FromArgb(128, Color.Yellow),
+                        Font = c.Font,
+                    };
+
+                    overlayId = overlay.UniqueId;
+
+                    c.AddOverlay(overlay);
+
+                    overlay.StartRemovalTimer(1500, c);
+                });
+
+                AddControlAction<VirtualListBox>("Remove overlay", (c) =>
+                {
+                    if (overlayId is not null)
+                    {
+                        c.RemoveOverlay(overlayId.Value);
+                        overlayId = null;
+                    }
+                });                
+
                 AddControlAction<VirtualListBox>("Add 5000 items", (c) =>
                 {
                     ObjectInit.AddManyItems(c);
