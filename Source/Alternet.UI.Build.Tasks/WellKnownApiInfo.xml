@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ApiInfo>
-  <Assembly Name="Alternet.UI.Common, Version=0.9.747.0, Culture=neutral, PublicKeyToken=7fb0fe57212b4b74">
+  <Assembly Name="Alternet.UI.Common, Version=0.9.748.0, Culture=neutral, PublicKeyToken=7fb0fe57212b4b74">
     <Type Name="XamlX.Runtime.IXamlParentStackProviderV1" />
     <Type Name="XamlX.Runtime.IXamlXmlNamespaceInfoProviderV1" />
     <Type Name="XamlX.Runtime.XamlXmlNamespaceInfoV1" />
@@ -30,6 +30,7 @@
     <Type Name="Alternet.Drawing.ImageLockMode" />
     <Type Name="Alternet.Drawing.InterpolationMode" />
     <Type Name="Alternet.Drawing.PixelFormat" />
+    <Type Name="Alternet.Drawing.ClipOperation" />
     <Type Name="Alternet.Drawing.CombineMode" />
     <Type Name="Alternet.Drawing.FillMode" />
     <Type Name="Alternet.Drawing.GraphicsUnit" />
@@ -599,13 +600,14 @@
     <Type Name="Alternet.UI.ListViewItemCell">
       <Event Name="PropertyChanged" />
     </Type>
-    <Type Name="Alternet.UI.ITreeViewItemContainer" />
     <Type Name="Alternet.UI.TreeViewCancelEventArgs" />
     <Type Name="Alternet.UI.TreeViewEditEventArgs" />
+    <Type Name="Alternet.UI.TreeViewEventArgs" />
+    <Type Name="Alternet.UI.TreeViewItemPropChangedEventArgs" />
+    <Type Name="Alternet.UI.ITreeViewItemContainer" />
     <Type Name="Alternet.UI.TreeViewEmptyItem">
       <Event Name="PropertyChanged" />
     </Type>
-    <Type Name="Alternet.UI.TreeViewEventArgs" />
     <Type Name="Alternet.UI.TreeViewItem">
       <Event Name="PropertyChanged" />
     </Type>
@@ -644,6 +646,7 @@
     <Type Name="Alternet.UI.LayoutStyle" />
     <Type Name="Alternet.UI.RightToLeft" />
     <Type Name="Alternet.UI.SplitterPanelSplitMethod" />
+    <Type Name="Alternet.UI.SplitterTargetMode" />
     <Type Name="Alternet.UI.StackPanelOrientation" />
     <Type Name="Alternet.UI.VerticalAlignment" />
     <Type Name="Alternet.UI.Border3DSide" />
@@ -862,6 +865,7 @@
     <Type Name="Alternet.UI.SerializeDataObjectEventArgs" />
     <Type Name="Alternet.UI.StreamFromUrlEventArgs" />
     <Type Name="Alternet.UI.ValueConvertEventArgs`2" />
+    <Type Name="Alternet.UI.ObjectPropertyChangedEventArgs`1" />
     <Type Name="Alternet.UI.ObjectPropertyChangedEventArgs" />
     <Type Name="Alternet.UI.CollectionChangeEventArgs`1" />
     <Type Name="Alternet.UI.ElapsedEventHandler" />
@@ -1047,6 +1051,7 @@
       <Event Name="SizeChanged" />
       <Event Name="Resize" />
       <Event Name="LocationChanged" />
+      <Event Name="BoundsChanged" />
       <Event Name="DragStart" />
       <Event Name="DragDrop" />
       <Event Name="DragOver" />
@@ -1130,6 +1135,7 @@
       <Event Name="SizeChanged" />
       <Event Name="Resize" />
       <Event Name="LocationChanged" />
+      <Event Name="BoundsChanged" />
       <Event Name="DragStart" />
       <Event Name="DragDrop" />
       <Event Name="DragOver" />
@@ -1204,6 +1210,7 @@
       <Event Name="SizeChanged" />
       <Event Name="Resize" />
       <Event Name="LocationChanged" />
+      <Event Name="BoundsChanged" />
       <Event Name="DragStart" />
       <Event Name="DragDrop" />
       <Event Name="DragOver" />
@@ -1278,6 +1285,7 @@
       <Event Name="SizeChanged" />
       <Event Name="Resize" />
       <Event Name="LocationChanged" />
+      <Event Name="BoundsChanged" />
       <Event Name="DragStart" />
       <Event Name="DragDrop" />
       <Event Name="DragOver" />
@@ -1352,6 +1360,7 @@
       <Event Name="SizeChanged" />
       <Event Name="Resize" />
       <Event Name="LocationChanged" />
+      <Event Name="BoundsChanged" />
       <Event Name="DragStart" />
       <Event Name="DragDrop" />
       <Event Name="DragOver" />
@@ -1427,6 +1436,7 @@
       <Event Name="SizeChanged" />
       <Event Name="Resize" />
       <Event Name="LocationChanged" />
+      <Event Name="BoundsChanged" />
       <Event Name="DragStart" />
       <Event Name="DragDrop" />
       <Event Name="DragOver" />
@@ -1501,6 +1511,7 @@
       <Event Name="SizeChanged" />
       <Event Name="Resize" />
       <Event Name="LocationChanged" />
+      <Event Name="BoundsChanged" />
       <Event Name="DragStart" />
       <Event Name="DragDrop" />
       <Event Name="DragOver" />
@@ -1575,6 +1586,7 @@
       <Event Name="SizeChanged" />
       <Event Name="Resize" />
       <Event Name="LocationChanged" />
+      <Event Name="BoundsChanged" />
       <Event Name="DragStart" />
       <Event Name="DragDrop" />
       <Event Name="DragOver" />
@@ -1649,6 +1661,7 @@
       <Event Name="SizeChanged" />
       <Event Name="Resize" />
       <Event Name="LocationChanged" />
+      <Event Name="BoundsChanged" />
       <Event Name="DragStart" />
       <Event Name="DragDrop" />
       <Event Name="DragOver" />
@@ -1723,6 +1736,7 @@
       <Event Name="SizeChanged" />
       <Event Name="Resize" />
       <Event Name="LocationChanged" />
+      <Event Name="BoundsChanged" />
       <Event Name="DragStart" />
       <Event Name="DragDrop" />
       <Event Name="DragOver" />
@@ -1798,6 +1812,82 @@
       <Event Name="SizeChanged" />
       <Event Name="Resize" />
       <Event Name="LocationChanged" />
+      <Event Name="BoundsChanged" />
+      <Event Name="DragStart" />
+      <Event Name="DragDrop" />
+      <Event Name="DragOver" />
+      <Event Name="DragEnter" />
+      <Event Name="DragLeave" />
+      <Event Name="DpiChanged" />
+      <Event Name="SystemColorsChanged" />
+      <Event Name="ErrorsChanged" />
+      <Event Name="Invalidated" />
+      <Event Name="LayoutUpdated" />
+      <Event Name="Scroll" />
+      <Event Name="Disposed" />
+      <Event Name="PropertyChanged" />
+    </Type>
+    <Type Name="Alternet.UI.ScrollableUserControl">
+      <Event Name="ContextMenuCreated" />
+      <Event Name="MouseHover" />
+      <Event Name="CellChanged" />
+      <Event Name="Activated" />
+      <Event Name="TitleChanged" />
+      <Event Name="MouseMove" />
+      <Event Name="Touch" />
+      <Event Name="MouseDown" />
+      <Event Name="MouseUp" />
+      <Event Name="MouseWheel" />
+      <Event Name="MouseLeftButtonDown" />
+      <Event Name="MouseRightButtonDown" />
+      <Event Name="MouseRightButtonUp" />
+      <Event Name="CustomLayout" />
+      <Event Name="MouseDoubleClick" />
+      <Event Name="DoubleClick" />
+      <Event Name="MouseLeftButtonUp" />
+      <Event Name="HandleCreated" />
+      <Event Name="HandleDestroyed" />
+      <Event Name="Deactivated" />
+      <Event Name="GotFocus" />
+      <Event Name="QueryContinueDrag" />
+      <Event Name="KeyDown" />
+      <Event Name="KeyUp" />
+      <Event Name="LostFocus" />
+      <Event Name="TextChanged" />
+      <Event Name="DelayedTextChanged" />
+      <Event Name="KeyPress" />
+      <Event Name="PreviewKeyDown" />
+      <Event Name="VisualStateChanged" />
+      <Event Name="ToolTipChanged" />
+      <Event Name="IsMouseOverChanged" />
+      <Event Name="LongTap" />
+      <Event Name="Click" />
+      <Event Name="ParentChanged" />
+      <Event Name="Paint" />
+      <Event Name="MarginChanged" />
+      <Event Name="PaddingChanged" />
+      <Event Name="VisibleChanged" />
+      <Event Name="AfterShow" />
+      <Event Name="AfterHide" />
+      <Event Name="MouseCaptureLost" />
+      <Event Name="MouseCaptureChanged" />
+      <Event Name="HelpRequested" />
+      <Event Name="ProcessException" />
+      <Event Name="MouseEnter" />
+      <Event Name="MouseLeave" />
+      <Event Name="ChildRemoved" />
+      <Event Name="ChildVisibleChanged" />
+      <Event Name="ChildInserted" />
+      <Event Name="EnabledChanged" />
+      <Event Name="BackgroundChanged" />
+      <Event Name="ForegroundChanged" />
+      <Event Name="FontChanged" />
+      <Event Name="VerticalAlignmentChanged" />
+      <Event Name="HorizontalAlignmentChanged" />
+      <Event Name="SizeChanged" />
+      <Event Name="Resize" />
+      <Event Name="LocationChanged" />
+      <Event Name="BoundsChanged" />
       <Event Name="DragStart" />
       <Event Name="DragDrop" />
       <Event Name="DragOver" />
@@ -1872,6 +1962,7 @@
       <Event Name="SizeChanged" />
       <Event Name="Resize" />
       <Event Name="LocationChanged" />
+      <Event Name="BoundsChanged" />
       <Event Name="DragStart" />
       <Event Name="DragDrop" />
       <Event Name="DragOver" />
@@ -1946,6 +2037,7 @@
       <Event Name="SizeChanged" />
       <Event Name="Resize" />
       <Event Name="LocationChanged" />
+      <Event Name="BoundsChanged" />
       <Event Name="DragStart" />
       <Event Name="DragDrop" />
       <Event Name="DragOver" />
@@ -2025,6 +2117,7 @@
       <Event Name="AfterControlHandlerSizeChanged" />
       <Event Name="AfterControlIdle" />
       <Event Name="AfterControlIsMouseOverChanged" />
+      <Event Name="AfterControlBoundsChanged" />
       <Event Name="AfterControlLocationChanged" />
       <Event Name="AfterControlLostFocus" />
       <Event Name="AfterControlMarginChanged" />
@@ -2035,6 +2128,7 @@
       <Event Name="PropertyChanged" />
     </Type>
     <Type Name="Alternet.UI.IControlNotification" />
+    <Type Name="Alternet.UI.StaticControlEvents" />
     <Type Name="Alternet.UI.GenericControl">
       <Event Name="ContextMenuCreated" />
       <Event Name="MouseHover" />
@@ -2095,6 +2189,7 @@
       <Event Name="SizeChanged" />
       <Event Name="Resize" />
       <Event Name="LocationChanged" />
+      <Event Name="BoundsChanged" />
       <Event Name="DragStart" />
       <Event Name="DragDrop" />
       <Event Name="DragOver" />
@@ -2169,6 +2264,7 @@
       <Event Name="SizeChanged" />
       <Event Name="Resize" />
       <Event Name="LocationChanged" />
+      <Event Name="BoundsChanged" />
       <Event Name="DragStart" />
       <Event Name="DragDrop" />
       <Event Name="DragOver" />
@@ -2243,6 +2339,7 @@
       <Event Name="SizeChanged" />
       <Event Name="Resize" />
       <Event Name="LocationChanged" />
+      <Event Name="BoundsChanged" />
       <Event Name="DragStart" />
       <Event Name="DragDrop" />
       <Event Name="DragOver" />
@@ -2331,6 +2428,7 @@
       <Event Name="SizeChanged" />
       <Event Name="Resize" />
       <Event Name="LocationChanged" />
+      <Event Name="BoundsChanged" />
       <Event Name="DragStart" />
       <Event Name="DragDrop" />
       <Event Name="DragOver" />
@@ -2512,6 +2610,7 @@
       <Event Name="SizeChanged" />
       <Event Name="Resize" />
       <Event Name="LocationChanged" />
+      <Event Name="BoundsChanged" />
       <Event Name="DragStart" />
       <Event Name="DragDrop" />
       <Event Name="DragOver" />
@@ -2586,6 +2685,7 @@
       <Event Name="SizeChanged" />
       <Event Name="Resize" />
       <Event Name="LocationChanged" />
+      <Event Name="BoundsChanged" />
       <Event Name="DragStart" />
       <Event Name="DragDrop" />
       <Event Name="DragOver" />
@@ -2661,6 +2761,7 @@
       <Event Name="SizeChanged" />
       <Event Name="Resize" />
       <Event Name="LocationChanged" />
+      <Event Name="BoundsChanged" />
       <Event Name="DragStart" />
       <Event Name="DragDrop" />
       <Event Name="DragOver" />
@@ -2736,6 +2837,7 @@
       <Event Name="SizeChanged" />
       <Event Name="Resize" />
       <Event Name="LocationChanged" />
+      <Event Name="BoundsChanged" />
       <Event Name="DragStart" />
       <Event Name="DragDrop" />
       <Event Name="DragOver" />
@@ -2811,6 +2913,7 @@
       <Event Name="SizeChanged" />
       <Event Name="Resize" />
       <Event Name="LocationChanged" />
+      <Event Name="BoundsChanged" />
       <Event Name="DragStart" />
       <Event Name="DragDrop" />
       <Event Name="DragOver" />
@@ -2887,6 +2990,7 @@
       <Event Name="SizeChanged" />
       <Event Name="Resize" />
       <Event Name="LocationChanged" />
+      <Event Name="BoundsChanged" />
       <Event Name="DragStart" />
       <Event Name="DragDrop" />
       <Event Name="DragOver" />
@@ -2962,6 +3066,7 @@
       <Event Name="SizeChanged" />
       <Event Name="Resize" />
       <Event Name="LocationChanged" />
+      <Event Name="BoundsChanged" />
       <Event Name="DragStart" />
       <Event Name="DragDrop" />
       <Event Name="DragOver" />
@@ -3037,6 +3142,7 @@
       <Event Name="SizeChanged" />
       <Event Name="Resize" />
       <Event Name="LocationChanged" />
+      <Event Name="BoundsChanged" />
       <Event Name="DragStart" />
       <Event Name="DragDrop" />
       <Event Name="DragOver" />
@@ -3111,6 +3217,7 @@
       <Event Name="SizeChanged" />
       <Event Name="Resize" />
       <Event Name="LocationChanged" />
+      <Event Name="BoundsChanged" />
       <Event Name="DragStart" />
       <Event Name="DragDrop" />
       <Event Name="DragOver" />
@@ -3186,6 +3293,7 @@
       <Event Name="SizeChanged" />
       <Event Name="Resize" />
       <Event Name="LocationChanged" />
+      <Event Name="BoundsChanged" />
       <Event Name="DragStart" />
       <Event Name="DragDrop" />
       <Event Name="DragOver" />
@@ -3267,6 +3375,7 @@
       <Event Name="SizeChanged" />
       <Event Name="Resize" />
       <Event Name="LocationChanged" />
+      <Event Name="BoundsChanged" />
       <Event Name="DragStart" />
       <Event Name="DragDrop" />
       <Event Name="DragOver" />
@@ -3342,6 +3451,7 @@
       <Event Name="SizeChanged" />
       <Event Name="Resize" />
       <Event Name="LocationChanged" />
+      <Event Name="BoundsChanged" />
       <Event Name="DragStart" />
       <Event Name="DragDrop" />
       <Event Name="DragOver" />
@@ -3418,6 +3528,7 @@
       <Event Name="SizeChanged" />
       <Event Name="Resize" />
       <Event Name="LocationChanged" />
+      <Event Name="BoundsChanged" />
       <Event Name="DragStart" />
       <Event Name="DragDrop" />
       <Event Name="DragOver" />
@@ -3496,6 +3607,7 @@
       <Event Name="SizeChanged" />
       <Event Name="Resize" />
       <Event Name="LocationChanged" />
+      <Event Name="BoundsChanged" />
       <Event Name="DragStart" />
       <Event Name="DragDrop" />
       <Event Name="DragOver" />
@@ -3572,6 +3684,7 @@
       <Event Name="SizeChanged" />
       <Event Name="Resize" />
       <Event Name="LocationChanged" />
+      <Event Name="BoundsChanged" />
       <Event Name="DragStart" />
       <Event Name="DragDrop" />
       <Event Name="DragOver" />
@@ -3647,6 +3760,7 @@
       <Event Name="SizeChanged" />
       <Event Name="Resize" />
       <Event Name="LocationChanged" />
+      <Event Name="BoundsChanged" />
       <Event Name="DragStart" />
       <Event Name="DragDrop" />
       <Event Name="DragOver" />
@@ -3721,6 +3835,7 @@
       <Event Name="SizeChanged" />
       <Event Name="Resize" />
       <Event Name="LocationChanged" />
+      <Event Name="BoundsChanged" />
       <Event Name="DragStart" />
       <Event Name="DragDrop" />
       <Event Name="DragOver" />
@@ -3795,6 +3910,7 @@
       <Event Name="SizeChanged" />
       <Event Name="Resize" />
       <Event Name="LocationChanged" />
+      <Event Name="BoundsChanged" />
       <Event Name="DragStart" />
       <Event Name="DragDrop" />
       <Event Name="DragOver" />
@@ -3869,6 +3985,7 @@
       <Event Name="SizeChanged" />
       <Event Name="Resize" />
       <Event Name="LocationChanged" />
+      <Event Name="BoundsChanged" />
       <Event Name="DragStart" />
       <Event Name="DragDrop" />
       <Event Name="DragOver" />
@@ -3943,6 +4060,7 @@
       <Event Name="SizeChanged" />
       <Event Name="Resize" />
       <Event Name="LocationChanged" />
+      <Event Name="BoundsChanged" />
       <Event Name="DragStart" />
       <Event Name="DragDrop" />
       <Event Name="DragOver" />
@@ -4017,6 +4135,7 @@
       <Event Name="SizeChanged" />
       <Event Name="Resize" />
       <Event Name="LocationChanged" />
+      <Event Name="BoundsChanged" />
       <Event Name="DragStart" />
       <Event Name="DragDrop" />
       <Event Name="DragOver" />
@@ -4091,6 +4210,7 @@
       <Event Name="SizeChanged" />
       <Event Name="Resize" />
       <Event Name="LocationChanged" />
+      <Event Name="BoundsChanged" />
       <Event Name="DragStart" />
       <Event Name="DragDrop" />
       <Event Name="DragOver" />
@@ -4165,6 +4285,7 @@
       <Event Name="SizeChanged" />
       <Event Name="Resize" />
       <Event Name="LocationChanged" />
+      <Event Name="BoundsChanged" />
       <Event Name="DragStart" />
       <Event Name="DragDrop" />
       <Event Name="DragOver" />
@@ -4239,6 +4360,7 @@
       <Event Name="SizeChanged" />
       <Event Name="Resize" />
       <Event Name="LocationChanged" />
+      <Event Name="BoundsChanged" />
       <Event Name="DragStart" />
       <Event Name="DragDrop" />
       <Event Name="DragOver" />
@@ -4313,6 +4435,7 @@
       <Event Name="SizeChanged" />
       <Event Name="Resize" />
       <Event Name="LocationChanged" />
+      <Event Name="BoundsChanged" />
       <Event Name="DragStart" />
       <Event Name="DragDrop" />
       <Event Name="DragOver" />
@@ -4388,6 +4511,7 @@
       <Event Name="SizeChanged" />
       <Event Name="Resize" />
       <Event Name="LocationChanged" />
+      <Event Name="BoundsChanged" />
       <Event Name="DragStart" />
       <Event Name="DragDrop" />
       <Event Name="DragOver" />
@@ -4463,6 +4587,7 @@
       <Event Name="SizeChanged" />
       <Event Name="Resize" />
       <Event Name="LocationChanged" />
+      <Event Name="BoundsChanged" />
       <Event Name="DragStart" />
       <Event Name="DragDrop" />
       <Event Name="DragOver" />
@@ -4538,6 +4663,7 @@
       <Event Name="SizeChanged" />
       <Event Name="Resize" />
       <Event Name="LocationChanged" />
+      <Event Name="BoundsChanged" />
       <Event Name="DragStart" />
       <Event Name="DragDrop" />
       <Event Name="DragOver" />
@@ -4612,6 +4738,7 @@
       <Event Name="SizeChanged" />
       <Event Name="Resize" />
       <Event Name="LocationChanged" />
+      <Event Name="BoundsChanged" />
       <Event Name="DragStart" />
       <Event Name="DragDrop" />
       <Event Name="DragOver" />
@@ -4686,6 +4813,7 @@
       <Event Name="SizeChanged" />
       <Event Name="Resize" />
       <Event Name="LocationChanged" />
+      <Event Name="BoundsChanged" />
       <Event Name="DragStart" />
       <Event Name="DragDrop" />
       <Event Name="DragOver" />
@@ -4760,6 +4888,7 @@
       <Event Name="SizeChanged" />
       <Event Name="Resize" />
       <Event Name="LocationChanged" />
+      <Event Name="BoundsChanged" />
       <Event Name="DragStart" />
       <Event Name="DragDrop" />
       <Event Name="DragOver" />
@@ -4834,6 +4963,7 @@
       <Event Name="SizeChanged" />
       <Event Name="Resize" />
       <Event Name="LocationChanged" />
+      <Event Name="BoundsChanged" />
       <Event Name="DragStart" />
       <Event Name="DragDrop" />
       <Event Name="DragOver" />
@@ -4908,6 +5038,7 @@
       <Event Name="SizeChanged" />
       <Event Name="Resize" />
       <Event Name="LocationChanged" />
+      <Event Name="BoundsChanged" />
       <Event Name="DragStart" />
       <Event Name="DragDrop" />
       <Event Name="DragOver" />
@@ -4982,6 +5113,7 @@
       <Event Name="SizeChanged" />
       <Event Name="Resize" />
       <Event Name="LocationChanged" />
+      <Event Name="BoundsChanged" />
       <Event Name="DragStart" />
       <Event Name="DragDrop" />
       <Event Name="DragOver" />
@@ -5056,6 +5188,7 @@
       <Event Name="SizeChanged" />
       <Event Name="Resize" />
       <Event Name="LocationChanged" />
+      <Event Name="BoundsChanged" />
       <Event Name="DragStart" />
       <Event Name="DragDrop" />
       <Event Name="DragOver" />
@@ -5070,6 +5203,14 @@
       <Event Name="Disposed" />
       <Event Name="PropertyChanged" />
     </Type>
+    <Type Name="Alternet.UI.ControlOverlay" />
+    <Type Name="Alternet.UI.ControlOverlayWithEvent">
+      <Event Name="Paint" />
+    </Type>
+    <Type Name="Alternet.UI.ControlOverlayWithImage" />
+    <Type Name="Alternet.UI.ControlOverlayWithText" />
+    <Type Name="Alternet.UI.ControlOverlayWithToolTip" />
+    <Type Name="Alternet.UI.OverlayToolTipParams" />
     <Type Name="Alternet.UI.Calendar">
       <Event Name="SelectionChanged" />
       <Event Name="PageChanged" />
@@ -5135,6 +5276,7 @@
       <Event Name="SizeChanged" />
       <Event Name="Resize" />
       <Event Name="LocationChanged" />
+      <Event Name="BoundsChanged" />
       <Event Name="DragStart" />
       <Event Name="DragDrop" />
       <Event Name="DragOver" />
@@ -5209,6 +5351,7 @@
       <Event Name="SizeChanged" />
       <Event Name="Resize" />
       <Event Name="LocationChanged" />
+      <Event Name="BoundsChanged" />
       <Event Name="DragStart" />
       <Event Name="DragDrop" />
       <Event Name="DragOver" />
@@ -5284,6 +5427,7 @@
       <Event Name="SizeChanged" />
       <Event Name="Resize" />
       <Event Name="LocationChanged" />
+      <Event Name="BoundsChanged" />
       <Event Name="DragStart" />
       <Event Name="DragDrop" />
       <Event Name="DragOver" />
@@ -5363,6 +5507,7 @@
       <Event Name="SizeChanged" />
       <Event Name="Resize" />
       <Event Name="LocationChanged" />
+      <Event Name="BoundsChanged" />
       <Event Name="DragStart" />
       <Event Name="DragDrop" />
       <Event Name="DragOver" />
@@ -5439,6 +5584,7 @@
       <Event Name="SizeChanged" />
       <Event Name="Resize" />
       <Event Name="LocationChanged" />
+      <Event Name="BoundsChanged" />
       <Event Name="DragStart" />
       <Event Name="DragDrop" />
       <Event Name="DragOver" />
@@ -5516,6 +5662,7 @@
       <Event Name="SizeChanged" />
       <Event Name="Resize" />
       <Event Name="LocationChanged" />
+      <Event Name="BoundsChanged" />
       <Event Name="DragStart" />
       <Event Name="DragDrop" />
       <Event Name="DragOver" />
@@ -5594,6 +5741,7 @@
       <Event Name="SizeChanged" />
       <Event Name="Resize" />
       <Event Name="LocationChanged" />
+      <Event Name="BoundsChanged" />
       <Event Name="DragStart" />
       <Event Name="DragDrop" />
       <Event Name="DragOver" />
@@ -5679,6 +5827,7 @@
       <Event Name="SizeChanged" />
       <Event Name="Resize" />
       <Event Name="LocationChanged" />
+      <Event Name="BoundsChanged" />
       <Event Name="DragStart" />
       <Event Name="DragDrop" />
       <Event Name="DragOver" />
@@ -5753,6 +5902,7 @@
       <Event Name="SizeChanged" />
       <Event Name="Resize" />
       <Event Name="LocationChanged" />
+      <Event Name="BoundsChanged" />
       <Event Name="DragStart" />
       <Event Name="DragDrop" />
       <Event Name="DragOver" />
@@ -5827,6 +5977,7 @@
       <Event Name="SizeChanged" />
       <Event Name="Resize" />
       <Event Name="LocationChanged" />
+      <Event Name="BoundsChanged" />
       <Event Name="DragStart" />
       <Event Name="DragDrop" />
       <Event Name="DragOver" />
@@ -5902,6 +6053,7 @@
       <Event Name="SizeChanged" />
       <Event Name="Resize" />
       <Event Name="LocationChanged" />
+      <Event Name="BoundsChanged" />
       <Event Name="DragStart" />
       <Event Name="DragDrop" />
       <Event Name="DragOver" />
@@ -5977,6 +6129,7 @@
       <Event Name="SizeChanged" />
       <Event Name="Resize" />
       <Event Name="LocationChanged" />
+      <Event Name="BoundsChanged" />
       <Event Name="DragStart" />
       <Event Name="DragDrop" />
       <Event Name="DragOver" />
@@ -6053,6 +6206,7 @@
       <Event Name="SizeChanged" />
       <Event Name="Resize" />
       <Event Name="LocationChanged" />
+      <Event Name="BoundsChanged" />
       <Event Name="DragStart" />
       <Event Name="DragDrop" />
       <Event Name="DragOver" />
@@ -6127,6 +6281,7 @@
       <Event Name="SizeChanged" />
       <Event Name="Resize" />
       <Event Name="LocationChanged" />
+      <Event Name="BoundsChanged" />
       <Event Name="DragStart" />
       <Event Name="DragDrop" />
       <Event Name="DragOver" />
@@ -6204,6 +6359,7 @@
       <Event Name="SizeChanged" />
       <Event Name="Resize" />
       <Event Name="LocationChanged" />
+      <Event Name="BoundsChanged" />
       <Event Name="DragStart" />
       <Event Name="DragDrop" />
       <Event Name="DragOver" />
@@ -6279,6 +6435,7 @@
       <Event Name="SizeChanged" />
       <Event Name="Resize" />
       <Event Name="LocationChanged" />
+      <Event Name="BoundsChanged" />
       <Event Name="DragStart" />
       <Event Name="DragDrop" />
       <Event Name="DragOver" />
@@ -6354,6 +6511,7 @@
       <Event Name="SizeChanged" />
       <Event Name="Resize" />
       <Event Name="LocationChanged" />
+      <Event Name="BoundsChanged" />
       <Event Name="DragStart" />
       <Event Name="DragDrop" />
       <Event Name="DragOver" />
@@ -6429,6 +6587,7 @@
       <Event Name="SizeChanged" />
       <Event Name="Resize" />
       <Event Name="LocationChanged" />
+      <Event Name="BoundsChanged" />
       <Event Name="DragStart" />
       <Event Name="DragDrop" />
       <Event Name="DragOver" />
@@ -6509,6 +6668,7 @@
       <Event Name="SizeChanged" />
       <Event Name="Resize" />
       <Event Name="LocationChanged" />
+      <Event Name="BoundsChanged" />
       <Event Name="DragStart" />
       <Event Name="DragDrop" />
       <Event Name="DragOver" />
@@ -6589,6 +6749,7 @@
       <Event Name="SizeChanged" />
       <Event Name="Resize" />
       <Event Name="LocationChanged" />
+      <Event Name="BoundsChanged" />
       <Event Name="DragStart" />
       <Event Name="DragDrop" />
       <Event Name="DragOver" />
@@ -6669,6 +6830,7 @@
       <Event Name="SizeChanged" />
       <Event Name="Resize" />
       <Event Name="LocationChanged" />
+      <Event Name="BoundsChanged" />
       <Event Name="DragStart" />
       <Event Name="DragDrop" />
       <Event Name="DragOver" />
@@ -6747,6 +6909,7 @@
       <Event Name="SizeChanged" />
       <Event Name="Resize" />
       <Event Name="LocationChanged" />
+      <Event Name="BoundsChanged" />
       <Event Name="DragStart" />
       <Event Name="DragDrop" />
       <Event Name="DragOver" />
@@ -6850,6 +7013,7 @@
       <Event Name="SizeChanged" />
       <Event Name="Resize" />
       <Event Name="LocationChanged" />
+      <Event Name="BoundsChanged" />
       <Event Name="DragStart" />
       <Event Name="DragDrop" />
       <Event Name="DragOver" />
@@ -6932,6 +7096,7 @@
       <Event Name="SizeChanged" />
       <Event Name="Resize" />
       <Event Name="LocationChanged" />
+      <Event Name="BoundsChanged" />
       <Event Name="DragStart" />
       <Event Name="DragDrop" />
       <Event Name="DragOver" />
@@ -7007,6 +7172,7 @@
       <Event Name="SizeChanged" />
       <Event Name="Resize" />
       <Event Name="LocationChanged" />
+      <Event Name="BoundsChanged" />
       <Event Name="DragStart" />
       <Event Name="DragDrop" />
       <Event Name="DragOver" />
@@ -7023,6 +7189,8 @@
     </Type>
     <Type Name="Alternet.UI.ActionsListBox">
       <Event Name="SelectionChanged" />
+      <Event Name="ItemPropertyChanged" />
+      <Event Name="ItemSelectedChanged" />
       <Event Name="ItemAdded" />
       <Event Name="ItemRemoved" />
       <Event Name="AfterExpand" />
@@ -7089,6 +7257,7 @@
       <Event Name="SizeChanged" />
       <Event Name="Resize" />
       <Event Name="LocationChanged" />
+      <Event Name="BoundsChanged" />
       <Event Name="DragStart" />
       <Event Name="DragDrop" />
       <Event Name="DragOver" />
@@ -7107,6 +7276,8 @@
       <Event Name="AddRootFolder" />
       <Event Name="SelectedFolderChanged" />
       <Event Name="SelectionChanged" />
+      <Event Name="ItemPropertyChanged" />
+      <Event Name="ItemSelectedChanged" />
       <Event Name="ItemAdded" />
       <Event Name="ItemRemoved" />
       <Event Name="AfterExpand" />
@@ -7173,6 +7344,7 @@
       <Event Name="SizeChanged" />
       <Event Name="Resize" />
       <Event Name="LocationChanged" />
+      <Event Name="BoundsChanged" />
       <Event Name="DragStart" />
       <Event Name="DragDrop" />
       <Event Name="DragOver" />
@@ -7192,6 +7364,8 @@
     </Type>
     <Type Name="Alternet.UI.LogListBox">
       <Event Name="SelectionChanged" />
+      <Event Name="ItemPropertyChanged" />
+      <Event Name="ItemSelectedChanged" />
       <Event Name="ItemAdded" />
       <Event Name="ItemRemoved" />
       <Event Name="AfterExpand" />
@@ -7258,6 +7432,7 @@
       <Event Name="SizeChanged" />
       <Event Name="Resize" />
       <Event Name="LocationChanged" />
+      <Event Name="BoundsChanged" />
       <Event Name="DragStart" />
       <Event Name="DragDrop" />
       <Event Name="DragOver" />
@@ -7274,6 +7449,8 @@
     </Type>
     <Type Name="Alternet.UI.StdTreeView">
       <Event Name="SelectionChanged" />
+      <Event Name="ItemPropertyChanged" />
+      <Event Name="ItemSelectedChanged" />
       <Event Name="ItemAdded" />
       <Event Name="ItemRemoved" />
       <Event Name="AfterExpand" />
@@ -7340,6 +7517,7 @@
       <Event Name="SizeChanged" />
       <Event Name="Resize" />
       <Event Name="LocationChanged" />
+      <Event Name="BoundsChanged" />
       <Event Name="DragStart" />
       <Event Name="DragDrop" />
       <Event Name="DragOver" />
@@ -7423,6 +7601,7 @@
       <Event Name="SizeChanged" />
       <Event Name="Resize" />
       <Event Name="LocationChanged" />
+      <Event Name="BoundsChanged" />
       <Event Name="DragStart" />
       <Event Name="DragDrop" />
       <Event Name="DragOver" />
@@ -7505,6 +7684,7 @@
       <Event Name="SizeChanged" />
       <Event Name="Resize" />
       <Event Name="LocationChanged" />
+      <Event Name="BoundsChanged" />
       <Event Name="DragStart" />
       <Event Name="DragDrop" />
       <Event Name="DragOver" />
@@ -7580,6 +7760,7 @@
       <Event Name="SizeChanged" />
       <Event Name="Resize" />
       <Event Name="LocationChanged" />
+      <Event Name="BoundsChanged" />
       <Event Name="DragStart" />
       <Event Name="DragDrop" />
       <Event Name="DragOver" />
@@ -7662,6 +7843,7 @@
       <Event Name="SizeChanged" />
       <Event Name="Resize" />
       <Event Name="LocationChanged" />
+      <Event Name="BoundsChanged" />
       <Event Name="DragStart" />
       <Event Name="DragDrop" />
       <Event Name="DragOver" />
@@ -7744,6 +7926,7 @@
       <Event Name="SizeChanged" />
       <Event Name="Resize" />
       <Event Name="LocationChanged" />
+      <Event Name="BoundsChanged" />
       <Event Name="DragStart" />
       <Event Name="DragDrop" />
       <Event Name="DragOver" />
@@ -7824,6 +8007,7 @@
       <Event Name="SizeChanged" />
       <Event Name="Resize" />
       <Event Name="LocationChanged" />
+      <Event Name="BoundsChanged" />
       <Event Name="DragStart" />
       <Event Name="DragDrop" />
       <Event Name="DragOver" />
@@ -7906,6 +8090,7 @@
       <Event Name="SizeChanged" />
       <Event Name="Resize" />
       <Event Name="LocationChanged" />
+      <Event Name="BoundsChanged" />
       <Event Name="DragStart" />
       <Event Name="DragDrop" />
       <Event Name="DragOver" />
@@ -7986,6 +8171,7 @@
       <Event Name="SizeChanged" />
       <Event Name="Resize" />
       <Event Name="LocationChanged" />
+      <Event Name="BoundsChanged" />
       <Event Name="DragStart" />
       <Event Name="DragDrop" />
       <Event Name="DragOver" />
@@ -8060,6 +8246,7 @@
       <Event Name="SizeChanged" />
       <Event Name="Resize" />
       <Event Name="LocationChanged" />
+      <Event Name="BoundsChanged" />
       <Event Name="DragStart" />
       <Event Name="DragDrop" />
       <Event Name="DragOver" />
@@ -8134,6 +8321,7 @@
       <Event Name="SizeChanged" />
       <Event Name="Resize" />
       <Event Name="LocationChanged" />
+      <Event Name="BoundsChanged" />
       <Event Name="DragStart" />
       <Event Name="DragDrop" />
       <Event Name="DragOver" />
@@ -8216,6 +8404,7 @@
       <Event Name="SizeChanged" />
       <Event Name="Resize" />
       <Event Name="LocationChanged" />
+      <Event Name="BoundsChanged" />
       <Event Name="DragStart" />
       <Event Name="DragDrop" />
       <Event Name="DragOver" />
@@ -8307,6 +8496,7 @@
       <Event Name="SizeChanged" />
       <Event Name="Resize" />
       <Event Name="LocationChanged" />
+      <Event Name="BoundsChanged" />
       <Event Name="DragStart" />
       <Event Name="DragDrop" />
       <Event Name="DragOver" />
@@ -8389,6 +8579,7 @@
       <Event Name="SizeChanged" />
       <Event Name="Resize" />
       <Event Name="LocationChanged" />
+      <Event Name="BoundsChanged" />
       <Event Name="DragStart" />
       <Event Name="DragDrop" />
       <Event Name="DragOver" />
@@ -8471,6 +8662,94 @@
       <Event Name="SizeChanged" />
       <Event Name="Resize" />
       <Event Name="LocationChanged" />
+      <Event Name="BoundsChanged" />
+      <Event Name="DragStart" />
+      <Event Name="DragDrop" />
+      <Event Name="DragOver" />
+      <Event Name="DragEnter" />
+      <Event Name="DragLeave" />
+      <Event Name="DpiChanged" />
+      <Event Name="SystemColorsChanged" />
+      <Event Name="ErrorsChanged" />
+      <Event Name="Invalidated" />
+      <Event Name="LayoutUpdated" />
+      <Event Name="Scroll" />
+      <Event Name="Disposed" />
+      <Event Name="PropertyChanged" />
+    </Type>
+    <Type Name="Alternet.UI.TreeView">
+      <Event Name="SelectionChanged" />
+      <Event Name="SelectionModeChanged" />
+      <Event Name="ItemAdded" />
+      <Event Name="ItemRemoved" />
+      <Event Name="AfterExpand" />
+      <Event Name="AfterCollapse" />
+      <Event Name="BeforeExpand" />
+      <Event Name="BeforeCollapse" />
+      <Event Name="BeforeLabelEdit" />
+      <Event Name="AfterLabelEdit" />
+      <Event Name="ExpandedChanged" />
+      <Event Name="ImageListChanged" />
+      <Event Name="ContextMenuCreated" />
+      <Event Name="MouseHover" />
+      <Event Name="CellChanged" />
+      <Event Name="Activated" />
+      <Event Name="TitleChanged" />
+      <Event Name="MouseMove" />
+      <Event Name="Touch" />
+      <Event Name="MouseDown" />
+      <Event Name="MouseUp" />
+      <Event Name="MouseWheel" />
+      <Event Name="MouseLeftButtonDown" />
+      <Event Name="MouseRightButtonDown" />
+      <Event Name="MouseRightButtonUp" />
+      <Event Name="CustomLayout" />
+      <Event Name="MouseDoubleClick" />
+      <Event Name="DoubleClick" />
+      <Event Name="MouseLeftButtonUp" />
+      <Event Name="HandleCreated" />
+      <Event Name="HandleDestroyed" />
+      <Event Name="Deactivated" />
+      <Event Name="GotFocus" />
+      <Event Name="QueryContinueDrag" />
+      <Event Name="KeyDown" />
+      <Event Name="KeyUp" />
+      <Event Name="LostFocus" />
+      <Event Name="TextChanged" />
+      <Event Name="DelayedTextChanged" />
+      <Event Name="KeyPress" />
+      <Event Name="PreviewKeyDown" />
+      <Event Name="VisualStateChanged" />
+      <Event Name="ToolTipChanged" />
+      <Event Name="IsMouseOverChanged" />
+      <Event Name="LongTap" />
+      <Event Name="Click" />
+      <Event Name="ParentChanged" />
+      <Event Name="Paint" />
+      <Event Name="MarginChanged" />
+      <Event Name="PaddingChanged" />
+      <Event Name="VisibleChanged" />
+      <Event Name="AfterShow" />
+      <Event Name="AfterHide" />
+      <Event Name="MouseCaptureLost" />
+      <Event Name="MouseCaptureChanged" />
+      <Event Name="HelpRequested" />
+      <Event Name="ProcessException" />
+      <Event Name="MouseEnter" />
+      <Event Name="MouseLeave" />
+      <Event Name="ChildRemoved" />
+      <Event Name="ChildVisibleChanged" />
+      <Event Name="ChildInserted" />
+      <Event Name="EnabledChanged" />
+      <Event Name="BackgroundChanged" />
+      <Event Name="ForegroundChanged" />
+      <Event Name="FontChanged" />
+      <Event Name="VerticalAlignmentChanged" />
+      <Event Name="HorizontalAlignmentChanged" />
+      <Event Name="SizeChanged" />
+      <Event Name="Resize" />
+      <Event Name="LocationChanged" />
+      <Event Name="BoundsChanged" />
       <Event Name="DragStart" />
       <Event Name="DragDrop" />
       <Event Name="DragOver" />
@@ -8545,6 +8824,7 @@
       <Event Name="SizeChanged" />
       <Event Name="Resize" />
       <Event Name="LocationChanged" />
+      <Event Name="BoundsChanged" />
       <Event Name="DragStart" />
       <Event Name="DragDrop" />
       <Event Name="DragOver" />
@@ -8619,6 +8899,7 @@
       <Event Name="SizeChanged" />
       <Event Name="Resize" />
       <Event Name="LocationChanged" />
+      <Event Name="BoundsChanged" />
       <Event Name="DragStart" />
       <Event Name="DragDrop" />
       <Event Name="DragOver" />
@@ -8697,6 +8978,7 @@
       <Event Name="SizeChanged" />
       <Event Name="Resize" />
       <Event Name="LocationChanged" />
+      <Event Name="BoundsChanged" />
       <Event Name="DragStart" />
       <Event Name="DragDrop" />
       <Event Name="DragOver" />
@@ -8782,6 +9064,7 @@
       <Event Name="SizeChanged" />
       <Event Name="Resize" />
       <Event Name="LocationChanged" />
+      <Event Name="BoundsChanged" />
       <Event Name="DragStart" />
       <Event Name="DragDrop" />
       <Event Name="DragOver" />
@@ -8863,81 +9146,7 @@
       <Event Name="SizeChanged" />
       <Event Name="Resize" />
       <Event Name="LocationChanged" />
-      <Event Name="DragStart" />
-      <Event Name="DragDrop" />
-      <Event Name="DragOver" />
-      <Event Name="DragEnter" />
-      <Event Name="DragLeave" />
-      <Event Name="DpiChanged" />
-      <Event Name="SystemColorsChanged" />
-      <Event Name="ErrorsChanged" />
-      <Event Name="Invalidated" />
-      <Event Name="LayoutUpdated" />
-      <Event Name="Scroll" />
-      <Event Name="Disposed" />
-      <Event Name="PropertyChanged" />
-    </Type>
-    <Type Name="Alternet.UI.PopupControl">
-      <Event Name="Closed" />
-      <Event Name="ContextMenuCreated" />
-      <Event Name="MouseHover" />
-      <Event Name="CellChanged" />
-      <Event Name="Activated" />
-      <Event Name="TitleChanged" />
-      <Event Name="MouseMove" />
-      <Event Name="Touch" />
-      <Event Name="MouseDown" />
-      <Event Name="MouseUp" />
-      <Event Name="MouseWheel" />
-      <Event Name="MouseLeftButtonDown" />
-      <Event Name="MouseRightButtonDown" />
-      <Event Name="MouseRightButtonUp" />
-      <Event Name="CustomLayout" />
-      <Event Name="MouseDoubleClick" />
-      <Event Name="DoubleClick" />
-      <Event Name="MouseLeftButtonUp" />
-      <Event Name="HandleCreated" />
-      <Event Name="HandleDestroyed" />
-      <Event Name="Deactivated" />
-      <Event Name="GotFocus" />
-      <Event Name="QueryContinueDrag" />
-      <Event Name="KeyDown" />
-      <Event Name="KeyUp" />
-      <Event Name="LostFocus" />
-      <Event Name="TextChanged" />
-      <Event Name="DelayedTextChanged" />
-      <Event Name="KeyPress" />
-      <Event Name="PreviewKeyDown" />
-      <Event Name="VisualStateChanged" />
-      <Event Name="ToolTipChanged" />
-      <Event Name="IsMouseOverChanged" />
-      <Event Name="LongTap" />
-      <Event Name="Click" />
-      <Event Name="ParentChanged" />
-      <Event Name="Paint" />
-      <Event Name="MarginChanged" />
-      <Event Name="PaddingChanged" />
-      <Event Name="VisibleChanged" />
-      <Event Name="AfterShow" />
-      <Event Name="AfterHide" />
-      <Event Name="MouseCaptureLost" />
-      <Event Name="MouseCaptureChanged" />
-      <Event Name="HelpRequested" />
-      <Event Name="ProcessException" />
-      <Event Name="MouseEnter" />
-      <Event Name="MouseLeave" />
-      <Event Name="ChildRemoved" />
-      <Event Name="ChildVisibleChanged" />
-      <Event Name="ChildInserted" />
-      <Event Name="EnabledChanged" />
-      <Event Name="BackgroundChanged" />
-      <Event Name="ForegroundChanged" />
-      <Event Name="FontChanged" />
-      <Event Name="VerticalAlignmentChanged" />
-      <Event Name="HorizontalAlignmentChanged" />
-      <Event Name="SizeChanged" />
-      <Event Name="Resize" />
-      <Event Name="LocationChanged" />
+      <Event Name="BoundsChanged" />
       <Event Name="DragStart" />
       <Event Name="DragDrop" />
       <Event Name="DragOver" />
@@ -9017,6 +9226,84 @@
       <Event Name="SizeChanged" />
       <Event Name="Resize" />
       <Event Name="LocationChanged" />
+      <Event Name="BoundsChanged" />
+      <Event Name="DragStart" />
+      <Event Name="DragDrop" />
+      <Event Name="DragOver" />
+      <Event Name="DragEnter" />
+      <Event Name="DragLeave" />
+      <Event Name="DpiChanged" />
+      <Event Name="SystemColorsChanged" />
+      <Event Name="ErrorsChanged" />
+      <Event Name="Invalidated" />
+      <Event Name="LayoutUpdated" />
+      <Event Name="Scroll" />
+      <Event Name="Disposed" />
+      <Event Name="PropertyChanged" />
+    </Type>
+    <Type Name="Alternet.UI.PopupCloseReason" />
+    <Type Name="Alternet.UI.PopupControl">
+      <Event Name="Closed" />
+      <Event Name="ContextMenuCreated" />
+      <Event Name="MouseHover" />
+      <Event Name="CellChanged" />
+      <Event Name="Activated" />
+      <Event Name="TitleChanged" />
+      <Event Name="MouseMove" />
+      <Event Name="Touch" />
+      <Event Name="MouseDown" />
+      <Event Name="MouseUp" />
+      <Event Name="MouseWheel" />
+      <Event Name="MouseLeftButtonDown" />
+      <Event Name="MouseRightButtonDown" />
+      <Event Name="MouseRightButtonUp" />
+      <Event Name="CustomLayout" />
+      <Event Name="MouseDoubleClick" />
+      <Event Name="DoubleClick" />
+      <Event Name="MouseLeftButtonUp" />
+      <Event Name="HandleCreated" />
+      <Event Name="HandleDestroyed" />
+      <Event Name="Deactivated" />
+      <Event Name="GotFocus" />
+      <Event Name="QueryContinueDrag" />
+      <Event Name="KeyDown" />
+      <Event Name="KeyUp" />
+      <Event Name="LostFocus" />
+      <Event Name="TextChanged" />
+      <Event Name="DelayedTextChanged" />
+      <Event Name="KeyPress" />
+      <Event Name="PreviewKeyDown" />
+      <Event Name="VisualStateChanged" />
+      <Event Name="ToolTipChanged" />
+      <Event Name="IsMouseOverChanged" />
+      <Event Name="LongTap" />
+      <Event Name="Click" />
+      <Event Name="ParentChanged" />
+      <Event Name="Paint" />
+      <Event Name="MarginChanged" />
+      <Event Name="PaddingChanged" />
+      <Event Name="VisibleChanged" />
+      <Event Name="AfterShow" />
+      <Event Name="AfterHide" />
+      <Event Name="MouseCaptureLost" />
+      <Event Name="MouseCaptureChanged" />
+      <Event Name="HelpRequested" />
+      <Event Name="ProcessException" />
+      <Event Name="MouseEnter" />
+      <Event Name="MouseLeave" />
+      <Event Name="ChildRemoved" />
+      <Event Name="ChildVisibleChanged" />
+      <Event Name="ChildInserted" />
+      <Event Name="EnabledChanged" />
+      <Event Name="BackgroundChanged" />
+      <Event Name="ForegroundChanged" />
+      <Event Name="FontChanged" />
+      <Event Name="VerticalAlignmentChanged" />
+      <Event Name="HorizontalAlignmentChanged" />
+      <Event Name="SizeChanged" />
+      <Event Name="Resize" />
+      <Event Name="LocationChanged" />
+      <Event Name="BoundsChanged" />
       <Event Name="DragStart" />
       <Event Name="DragDrop" />
       <Event Name="DragOver" />
@@ -9110,6 +9397,7 @@
       <Event Name="SizeChanged" />
       <Event Name="Resize" />
       <Event Name="LocationChanged" />
+      <Event Name="BoundsChanged" />
       <Event Name="DragStart" />
       <Event Name="DragDrop" />
       <Event Name="DragOver" />
@@ -9203,6 +9491,7 @@
       <Event Name="SizeChanged" />
       <Event Name="Resize" />
       <Event Name="LocationChanged" />
+      <Event Name="BoundsChanged" />
       <Event Name="DragStart" />
       <Event Name="DragDrop" />
       <Event Name="DragOver" />
@@ -9296,6 +9585,7 @@
       <Event Name="SizeChanged" />
       <Event Name="Resize" />
       <Event Name="LocationChanged" />
+      <Event Name="BoundsChanged" />
       <Event Name="DragStart" />
       <Event Name="DragDrop" />
       <Event Name="DragOver" />
@@ -9389,6 +9679,7 @@
       <Event Name="SizeChanged" />
       <Event Name="Resize" />
       <Event Name="LocationChanged" />
+      <Event Name="BoundsChanged" />
       <Event Name="DragStart" />
       <Event Name="DragDrop" />
       <Event Name="DragOver" />
@@ -9482,6 +9773,7 @@
       <Event Name="SizeChanged" />
       <Event Name="Resize" />
       <Event Name="LocationChanged" />
+      <Event Name="BoundsChanged" />
       <Event Name="DragStart" />
       <Event Name="DragDrop" />
       <Event Name="DragOver" />
@@ -9575,6 +9867,7 @@
       <Event Name="SizeChanged" />
       <Event Name="Resize" />
       <Event Name="LocationChanged" />
+      <Event Name="BoundsChanged" />
       <Event Name="DragStart" />
       <Event Name="DragDrop" />
       <Event Name="DragOver" />
@@ -9668,6 +9961,7 @@
       <Event Name="SizeChanged" />
       <Event Name="Resize" />
       <Event Name="LocationChanged" />
+      <Event Name="BoundsChanged" />
       <Event Name="DragStart" />
       <Event Name="DragDrop" />
       <Event Name="DragOver" />
@@ -9761,6 +10055,7 @@
       <Event Name="SizeChanged" />
       <Event Name="Resize" />
       <Event Name="LocationChanged" />
+      <Event Name="BoundsChanged" />
       <Event Name="DragStart" />
       <Event Name="DragDrop" />
       <Event Name="DragOver" />
@@ -9854,6 +10149,7 @@
       <Event Name="SizeChanged" />
       <Event Name="Resize" />
       <Event Name="LocationChanged" />
+      <Event Name="BoundsChanged" />
       <Event Name="DragStart" />
       <Event Name="DragDrop" />
       <Event Name="DragOver" />
@@ -9947,6 +10243,7 @@
       <Event Name="SizeChanged" />
       <Event Name="Resize" />
       <Event Name="LocationChanged" />
+      <Event Name="BoundsChanged" />
       <Event Name="DragStart" />
       <Event Name="DragDrop" />
       <Event Name="DragOver" />
@@ -10022,6 +10319,7 @@
       <Event Name="SizeChanged" />
       <Event Name="Resize" />
       <Event Name="LocationChanged" />
+      <Event Name="BoundsChanged" />
       <Event Name="DragStart" />
       <Event Name="DragDrop" />
       <Event Name="DragOver" />
@@ -10096,6 +10394,7 @@
       <Event Name="SizeChanged" />
       <Event Name="Resize" />
       <Event Name="LocationChanged" />
+      <Event Name="BoundsChanged" />
       <Event Name="DragStart" />
       <Event Name="DragDrop" />
       <Event Name="DragOver" />
@@ -10170,6 +10469,7 @@
       <Event Name="SizeChanged" />
       <Event Name="Resize" />
       <Event Name="LocationChanged" />
+      <Event Name="BoundsChanged" />
       <Event Name="DragStart" />
       <Event Name="DragDrop" />
       <Event Name="DragOver" />
@@ -10244,6 +10544,7 @@
       <Event Name="SizeChanged" />
       <Event Name="Resize" />
       <Event Name="LocationChanged" />
+      <Event Name="BoundsChanged" />
       <Event Name="DragStart" />
       <Event Name="DragDrop" />
       <Event Name="DragOver" />
@@ -10318,6 +10619,7 @@
       <Event Name="SizeChanged" />
       <Event Name="Resize" />
       <Event Name="LocationChanged" />
+      <Event Name="BoundsChanged" />
       <Event Name="DragStart" />
       <Event Name="DragDrop" />
       <Event Name="DragOver" />
@@ -10392,6 +10694,7 @@
       <Event Name="SizeChanged" />
       <Event Name="Resize" />
       <Event Name="LocationChanged" />
+      <Event Name="BoundsChanged" />
       <Event Name="DragStart" />
       <Event Name="DragDrop" />
       <Event Name="DragOver" />
@@ -10487,6 +10790,7 @@
       <Event Name="SizeChanged" />
       <Event Name="Resize" />
       <Event Name="LocationChanged" />
+      <Event Name="BoundsChanged" />
       <Event Name="DragStart" />
       <Event Name="DragDrop" />
       <Event Name="DragOver" />
@@ -10569,6 +10873,7 @@
       <Event Name="SizeChanged" />
       <Event Name="Resize" />
       <Event Name="LocationChanged" />
+      <Event Name="BoundsChanged" />
       <Event Name="DragStart" />
       <Event Name="DragDrop" />
       <Event Name="DragOver" />
@@ -10645,6 +10950,7 @@
       <Event Name="SizeChanged" />
       <Event Name="Resize" />
       <Event Name="LocationChanged" />
+      <Event Name="BoundsChanged" />
       <Event Name="DragStart" />
       <Event Name="DragDrop" />
       <Event Name="DragOver" />
@@ -10725,6 +11031,7 @@
       <Event Name="SizeChanged" />
       <Event Name="Resize" />
       <Event Name="LocationChanged" />
+      <Event Name="BoundsChanged" />
       <Event Name="DragStart" />
       <Event Name="DragDrop" />
       <Event Name="DragOver" />
@@ -10806,6 +11113,7 @@
       <Event Name="SizeChanged" />
       <Event Name="Resize" />
       <Event Name="LocationChanged" />
+      <Event Name="BoundsChanged" />
       <Event Name="DragStart" />
       <Event Name="DragDrop" />
       <Event Name="DragOver" />
@@ -10821,6 +11129,89 @@
       <Event Name="PropertyChanged" />
     </Type>
     <Type Name="Alternet.UI.ISliderScaleContainer" />
+    <Type Name="Alternet.UI.Slider">
+      <Event Name="ValueChanged" />
+      <Event Name="MinimumChanged" />
+      <Event Name="OrientationChanged" />
+      <Event Name="TickStyleChanged" />
+      <Event Name="MaximumChanged" />
+      <Event Name="SmallChangeChanged" />
+      <Event Name="LargeChangeChanged" />
+      <Event Name="TickFrequencyChanged" />
+      <Event Name="ContextMenuCreated" />
+      <Event Name="MouseHover" />
+      <Event Name="CellChanged" />
+      <Event Name="Activated" />
+      <Event Name="TitleChanged" />
+      <Event Name="MouseMove" />
+      <Event Name="Touch" />
+      <Event Name="MouseDown" />
+      <Event Name="MouseUp" />
+      <Event Name="MouseWheel" />
+      <Event Name="MouseLeftButtonDown" />
+      <Event Name="MouseRightButtonDown" />
+      <Event Name="MouseRightButtonUp" />
+      <Event Name="CustomLayout" />
+      <Event Name="MouseDoubleClick" />
+      <Event Name="DoubleClick" />
+      <Event Name="MouseLeftButtonUp" />
+      <Event Name="HandleCreated" />
+      <Event Name="HandleDestroyed" />
+      <Event Name="Deactivated" />
+      <Event Name="GotFocus" />
+      <Event Name="QueryContinueDrag" />
+      <Event Name="KeyDown" />
+      <Event Name="KeyUp" />
+      <Event Name="LostFocus" />
+      <Event Name="TextChanged" />
+      <Event Name="DelayedTextChanged" />
+      <Event Name="KeyPress" />
+      <Event Name="PreviewKeyDown" />
+      <Event Name="VisualStateChanged" />
+      <Event Name="ToolTipChanged" />
+      <Event Name="IsMouseOverChanged" />
+      <Event Name="LongTap" />
+      <Event Name="Click" />
+      <Event Name="ParentChanged" />
+      <Event Name="Paint" />
+      <Event Name="MarginChanged" />
+      <Event Name="PaddingChanged" />
+      <Event Name="VisibleChanged" />
+      <Event Name="AfterShow" />
+      <Event Name="AfterHide" />
+      <Event Name="MouseCaptureLost" />
+      <Event Name="MouseCaptureChanged" />
+      <Event Name="HelpRequested" />
+      <Event Name="ProcessException" />
+      <Event Name="MouseEnter" />
+      <Event Name="MouseLeave" />
+      <Event Name="ChildRemoved" />
+      <Event Name="ChildVisibleChanged" />
+      <Event Name="ChildInserted" />
+      <Event Name="EnabledChanged" />
+      <Event Name="BackgroundChanged" />
+      <Event Name="ForegroundChanged" />
+      <Event Name="FontChanged" />
+      <Event Name="VerticalAlignmentChanged" />
+      <Event Name="HorizontalAlignmentChanged" />
+      <Event Name="SizeChanged" />
+      <Event Name="Resize" />
+      <Event Name="LocationChanged" />
+      <Event Name="BoundsChanged" />
+      <Event Name="DragStart" />
+      <Event Name="DragDrop" />
+      <Event Name="DragOver" />
+      <Event Name="DragEnter" />
+      <Event Name="DragLeave" />
+      <Event Name="DpiChanged" />
+      <Event Name="SystemColorsChanged" />
+      <Event Name="ErrorsChanged" />
+      <Event Name="Invalidated" />
+      <Event Name="LayoutUpdated" />
+      <Event Name="Scroll" />
+      <Event Name="Disposed" />
+      <Event Name="PropertyChanged" />
+    </Type>
     <Type Name="Alternet.UI.SliderScale">
       <Event Name="ContextMenuCreated" />
       <Event Name="MouseHover" />
@@ -10881,6 +11272,7 @@
       <Event Name="SizeChanged" />
       <Event Name="Resize" />
       <Event Name="LocationChanged" />
+      <Event Name="BoundsChanged" />
       <Event Name="DragStart" />
       <Event Name="DragDrop" />
       <Event Name="DragOver" />
@@ -10964,6 +11356,7 @@
       <Event Name="SizeChanged" />
       <Event Name="Resize" />
       <Event Name="LocationChanged" />
+      <Event Name="BoundsChanged" />
       <Event Name="DragStart" />
       <Event Name="DragDrop" />
       <Event Name="DragOver" />
@@ -11042,6 +11435,7 @@
       <Event Name="SizeChanged" />
       <Event Name="Resize" />
       <Event Name="LocationChanged" />
+      <Event Name="BoundsChanged" />
       <Event Name="DragStart" />
       <Event Name="DragDrop" />
       <Event Name="DragOver" />
@@ -11121,6 +11515,7 @@
       <Event Name="SizeChanged" />
       <Event Name="Resize" />
       <Event Name="LocationChanged" />
+      <Event Name="BoundsChanged" />
       <Event Name="DragStart" />
       <Event Name="DragDrop" />
       <Event Name="DragOver" />
@@ -11200,6 +11595,7 @@
       <Event Name="SizeChanged" />
       <Event Name="Resize" />
       <Event Name="LocationChanged" />
+      <Event Name="BoundsChanged" />
       <Event Name="DragStart" />
       <Event Name="DragDrop" />
       <Event Name="DragOver" />
@@ -11279,6 +11675,7 @@
       <Event Name="SizeChanged" />
       <Event Name="Resize" />
       <Event Name="LocationChanged" />
+      <Event Name="BoundsChanged" />
       <Event Name="DragStart" />
       <Event Name="DragDrop" />
       <Event Name="DragOver" />
@@ -11358,6 +11755,7 @@
       <Event Name="SizeChanged" />
       <Event Name="Resize" />
       <Event Name="LocationChanged" />
+      <Event Name="BoundsChanged" />
       <Event Name="DragStart" />
       <Event Name="DragDrop" />
       <Event Name="DragOver" />
@@ -11433,6 +11831,7 @@
       <Event Name="SizeChanged" />
       <Event Name="Resize" />
       <Event Name="LocationChanged" />
+      <Event Name="BoundsChanged" />
       <Event Name="DragStart" />
       <Event Name="DragDrop" />
       <Event Name="DragOver" />
@@ -11512,6 +11911,7 @@
       <Event Name="SizeChanged" />
       <Event Name="Resize" />
       <Event Name="LocationChanged" />
+      <Event Name="BoundsChanged" />
       <Event Name="DragStart" />
       <Event Name="DragDrop" />
       <Event Name="DragOver" />
@@ -11591,6 +11991,7 @@
       <Event Name="SizeChanged" />
       <Event Name="Resize" />
       <Event Name="LocationChanged" />
+      <Event Name="BoundsChanged" />
       <Event Name="DragStart" />
       <Event Name="DragDrop" />
       <Event Name="DragOver" />
@@ -11669,6 +12070,7 @@
       <Event Name="SizeChanged" />
       <Event Name="Resize" />
       <Event Name="LocationChanged" />
+      <Event Name="BoundsChanged" />
       <Event Name="DragStart" />
       <Event Name="DragDrop" />
       <Event Name="DragOver" />
@@ -11747,6 +12149,7 @@
       <Event Name="SizeChanged" />
       <Event Name="Resize" />
       <Event Name="LocationChanged" />
+      <Event Name="BoundsChanged" />
       <Event Name="DragStart" />
       <Event Name="DragDrop" />
       <Event Name="DragOver" />
@@ -11825,6 +12228,7 @@
       <Event Name="SizeChanged" />
       <Event Name="Resize" />
       <Event Name="LocationChanged" />
+      <Event Name="BoundsChanged" />
       <Event Name="DragStart" />
       <Event Name="DragDrop" />
       <Event Name="DragOver" />
@@ -11904,6 +12308,7 @@
       <Event Name="SizeChanged" />
       <Event Name="Resize" />
       <Event Name="LocationChanged" />
+      <Event Name="BoundsChanged" />
       <Event Name="DragStart" />
       <Event Name="DragDrop" />
       <Event Name="DragOver" />
@@ -11979,6 +12384,7 @@
       <Event Name="SizeChanged" />
       <Event Name="Resize" />
       <Event Name="LocationChanged" />
+      <Event Name="BoundsChanged" />
       <Event Name="DragStart" />
       <Event Name="DragDrop" />
       <Event Name="DragOver" />
@@ -12068,6 +12474,7 @@
       <Event Name="SizeChanged" />
       <Event Name="Resize" />
       <Event Name="LocationChanged" />
+      <Event Name="BoundsChanged" />
       <Event Name="DragStart" />
       <Event Name="DragDrop" />
       <Event Name="DragOver" />
@@ -12146,6 +12553,7 @@
       <Event Name="SizeChanged" />
       <Event Name="Resize" />
       <Event Name="LocationChanged" />
+      <Event Name="BoundsChanged" />
       <Event Name="DragStart" />
       <Event Name="DragDrop" />
       <Event Name="DragOver" />
@@ -12236,6 +12644,7 @@
       <Event Name="SizeChanged" />
       <Event Name="Resize" />
       <Event Name="LocationChanged" />
+      <Event Name="BoundsChanged" />
       <Event Name="DragStart" />
       <Event Name="DragDrop" />
       <Event Name="DragOver" />
@@ -12314,6 +12723,7 @@
       <Event Name="SizeChanged" />
       <Event Name="Resize" />
       <Event Name="LocationChanged" />
+      <Event Name="BoundsChanged" />
       <Event Name="DragStart" />
       <Event Name="DragDrop" />
       <Event Name="DragOver" />
@@ -12388,6 +12798,7 @@
       <Event Name="SizeChanged" />
       <Event Name="Resize" />
       <Event Name="LocationChanged" />
+      <Event Name="BoundsChanged" />
       <Event Name="DragStart" />
       <Event Name="DragDrop" />
       <Event Name="DragOver" />
@@ -12462,6 +12873,7 @@
       <Event Name="SizeChanged" />
       <Event Name="Resize" />
       <Event Name="LocationChanged" />
+      <Event Name="BoundsChanged" />
       <Event Name="DragStart" />
       <Event Name="DragDrop" />
       <Event Name="DragOver" />
@@ -12539,6 +12951,7 @@
       <Event Name="SizeChanged" />
       <Event Name="Resize" />
       <Event Name="LocationChanged" />
+      <Event Name="BoundsChanged" />
       <Event Name="DragStart" />
       <Event Name="DragDrop" />
       <Event Name="DragOver" />
@@ -12621,6 +13034,7 @@
       <Event Name="SizeChanged" />
       <Event Name="Resize" />
       <Event Name="LocationChanged" />
+      <Event Name="BoundsChanged" />
       <Event Name="DragStart" />
       <Event Name="DragDrop" />
       <Event Name="DragOver" />
@@ -12704,6 +13118,7 @@
       <Event Name="SizeChanged" />
       <Event Name="Resize" />
       <Event Name="LocationChanged" />
+      <Event Name="BoundsChanged" />
       <Event Name="DragStart" />
       <Event Name="DragDrop" />
       <Event Name="DragOver" />
@@ -12787,6 +13202,7 @@
       <Event Name="SizeChanged" />
       <Event Name="Resize" />
       <Event Name="LocationChanged" />
+      <Event Name="BoundsChanged" />
       <Event Name="DragStart" />
       <Event Name="DragDrop" />
       <Event Name="DragOver" />
@@ -12871,6 +13287,7 @@
       <Event Name="SizeChanged" />
       <Event Name="Resize" />
       <Event Name="LocationChanged" />
+      <Event Name="BoundsChanged" />
       <Event Name="DragStart" />
       <Event Name="DragDrop" />
       <Event Name="DragOver" />
@@ -12945,6 +13362,7 @@
       <Event Name="SizeChanged" />
       <Event Name="Resize" />
       <Event Name="LocationChanged" />
+      <Event Name="BoundsChanged" />
       <Event Name="DragStart" />
       <Event Name="DragDrop" />
       <Event Name="DragOver" />
@@ -13024,6 +13442,7 @@
       <Event Name="SizeChanged" />
       <Event Name="Resize" />
       <Event Name="LocationChanged" />
+      <Event Name="BoundsChanged" />
       <Event Name="DragStart" />
       <Event Name="DragDrop" />
       <Event Name="DragOver" />
@@ -13123,6 +13542,7 @@
       <Event Name="SizeChanged" />
       <Event Name="Resize" />
       <Event Name="LocationChanged" />
+      <Event Name="BoundsChanged" />
       <Event Name="DragStart" />
       <Event Name="DragDrop" />
       <Event Name="DragOver" />
@@ -13218,6 +13638,7 @@
       <Event Name="SizeChanged" />
       <Event Name="Resize" />
       <Event Name="LocationChanged" />
+      <Event Name="BoundsChanged" />
       <Event Name="DragStart" />
       <Event Name="DragDrop" />
       <Event Name="DragOver" />
@@ -13311,6 +13732,7 @@
       <Event Name="SizeChanged" />
       <Event Name="Resize" />
       <Event Name="LocationChanged" />
+      <Event Name="BoundsChanged" />
       <Event Name="DragStart" />
       <Event Name="DragDrop" />
       <Event Name="DragOver" />
@@ -13404,6 +13826,7 @@
       <Event Name="SizeChanged" />
       <Event Name="Resize" />
       <Event Name="LocationChanged" />
+      <Event Name="BoundsChanged" />
       <Event Name="DragStart" />
       <Event Name="DragDrop" />
       <Event Name="DragOver" />
@@ -13497,6 +13920,7 @@
       <Event Name="SizeChanged" />
       <Event Name="Resize" />
       <Event Name="LocationChanged" />
+      <Event Name="BoundsChanged" />
       <Event Name="DragStart" />
       <Event Name="DragDrop" />
       <Event Name="DragOver" />
@@ -13594,6 +14018,7 @@
       <Event Name="SizeChanged" />
       <Event Name="Resize" />
       <Event Name="LocationChanged" />
+      <Event Name="BoundsChanged" />
       <Event Name="DragStart" />
       <Event Name="DragDrop" />
       <Event Name="DragOver" />
@@ -13754,6 +14179,7 @@
       <Event Name="SizeChanged" />
       <Event Name="Resize" />
       <Event Name="LocationChanged" />
+      <Event Name="BoundsChanged" />
       <Event Name="DragStart" />
       <Event Name="DragDrop" />
       <Event Name="DragOver" />
@@ -13847,6 +14273,7 @@
       <Event Name="SizeChanged" />
       <Event Name="Resize" />
       <Event Name="LocationChanged" />
+      <Event Name="BoundsChanged" />
       <Event Name="DragStart" />
       <Event Name="DragDrop" />
       <Event Name="DragOver" />
@@ -13940,6 +14367,7 @@
       <Event Name="SizeChanged" />
       <Event Name="Resize" />
       <Event Name="LocationChanged" />
+      <Event Name="BoundsChanged" />
       <Event Name="DragStart" />
       <Event Name="DragDrop" />
       <Event Name="DragOver" />
@@ -14033,6 +14461,7 @@
       <Event Name="SizeChanged" />
       <Event Name="Resize" />
       <Event Name="LocationChanged" />
+      <Event Name="BoundsChanged" />
       <Event Name="DragStart" />
       <Event Name="DragDrop" />
       <Event Name="DragOver" />
@@ -14126,6 +14555,7 @@
       <Event Name="SizeChanged" />
       <Event Name="Resize" />
       <Event Name="LocationChanged" />
+      <Event Name="BoundsChanged" />
       <Event Name="DragStart" />
       <Event Name="DragDrop" />
       <Event Name="DragOver" />
@@ -14219,6 +14649,7 @@
       <Event Name="SizeChanged" />
       <Event Name="Resize" />
       <Event Name="LocationChanged" />
+      <Event Name="BoundsChanged" />
       <Event Name="DragStart" />
       <Event Name="DragDrop" />
       <Event Name="DragOver" />
@@ -14312,6 +14743,7 @@
       <Event Name="SizeChanged" />
       <Event Name="Resize" />
       <Event Name="LocationChanged" />
+      <Event Name="BoundsChanged" />
       <Event Name="DragStart" />
       <Event Name="DragDrop" />
       <Event Name="DragOver" />
@@ -14405,6 +14837,7 @@
       <Event Name="SizeChanged" />
       <Event Name="Resize" />
       <Event Name="LocationChanged" />
+      <Event Name="BoundsChanged" />
       <Event Name="DragStart" />
       <Event Name="DragDrop" />
       <Event Name="DragOver" />
@@ -14498,6 +14931,7 @@
       <Event Name="SizeChanged" />
       <Event Name="Resize" />
       <Event Name="LocationChanged" />
+      <Event Name="BoundsChanged" />
       <Event Name="DragStart" />
       <Event Name="DragDrop" />
       <Event Name="DragOver" />
@@ -14532,6 +14966,7 @@
     <Type Name="Alternet.UI.IMenuItemHandler" />
     <Type Name="Alternet.UI.IRadioButtonHandler" />
     <Type Name="Alternet.UI.IScrollBarHandler" />
+    <Type Name="Alternet.UI.ISliderHandler" />
     <Type Name="Alternet.UI.ITextBoxHandler" />
     <Type Name="Alternet.UI.ITreeViewHandler" />
     <Type Name="Alternet.UI.IWindowHandler" />
@@ -14600,6 +15035,7 @@
       <Event Name="DragLeave" />
     </Type>
     <Type Name="Alternet.UI.IControlAndLabel" />
+    <Type Name="Alternet.UI.IControlOverlay" />
     <Type Name="Alternet.UI.IFocusable" />
     <Type Name="Alternet.UI.ILayoutItem" />
     <Type Name="Alternet.UI.IWin32Window" />
@@ -14756,6 +15192,7 @@
       <Event Name="SizeChanged" />
       <Event Name="Resize" />
       <Event Name="LocationChanged" />
+      <Event Name="BoundsChanged" />
       <Event Name="DragStart" />
       <Event Name="DragDrop" />
       <Event Name="DragOver" />
@@ -14833,6 +15270,7 @@
       <Event Name="SizeChanged" />
       <Event Name="Resize" />
       <Event Name="LocationChanged" />
+      <Event Name="BoundsChanged" />
       <Event Name="DragStart" />
       <Event Name="DragDrop" />
       <Event Name="DragOver" />
@@ -14912,6 +15350,7 @@
       <Event Name="SizeChanged" />
       <Event Name="Resize" />
       <Event Name="LocationChanged" />
+      <Event Name="BoundsChanged" />
       <Event Name="DragStart" />
       <Event Name="DragDrop" />
       <Event Name="DragOver" />
@@ -14989,6 +15428,7 @@
       <Event Name="SizeChanged" />
       <Event Name="Resize" />
       <Event Name="LocationChanged" />
+      <Event Name="BoundsChanged" />
       <Event Name="DragStart" />
       <Event Name="DragDrop" />
       <Event Name="DragOver" />
@@ -15063,6 +15503,7 @@
       <Event Name="SizeChanged" />
       <Event Name="Resize" />
       <Event Name="LocationChanged" />
+      <Event Name="BoundsChanged" />
       <Event Name="DragStart" />
       <Event Name="DragDrop" />
       <Event Name="DragOver" />
@@ -15142,6 +15583,7 @@
       <Event Name="SizeChanged" />
       <Event Name="Resize" />
       <Event Name="LocationChanged" />
+      <Event Name="BoundsChanged" />
       <Event Name="DragStart" />
       <Event Name="DragDrop" />
       <Event Name="DragOver" />
@@ -15216,6 +15658,7 @@
       <Event Name="SizeChanged" />
       <Event Name="Resize" />
       <Event Name="LocationChanged" />
+      <Event Name="BoundsChanged" />
       <Event Name="DragStart" />
       <Event Name="DragDrop" />
       <Event Name="DragOver" />
@@ -15398,6 +15841,7 @@
       <Event Name="SizeChanged" />
       <Event Name="Resize" />
       <Event Name="LocationChanged" />
+      <Event Name="BoundsChanged" />
       <Event Name="DragStart" />
       <Event Name="DragDrop" />
       <Event Name="DragOver" />
@@ -15446,6 +15890,8 @@
     <Type Name="Alternet.UI.FontAndColor+ControlDefaultFontAndColor" />
     <Type Name="Alternet.UI.FontAndColor+ControlStaticDefaultFontAndColor" />
     <Type Name="Alternet.UI.TextBoxAndButton+InitAsNumericEditParams" />
+    <Type Name="Alternet.UI.ControlOverlay+TimerTickAction" />
+    <Type Name="Alternet.UI.OverlayToolTipParams+Flags" />
     <Type Name="Alternet.UI.Calendar+HitTestResult" />
     <Type Name="Alternet.UI.SplittedTreeAndCards+TreeKind" />
     <Type Name="Alternet.UI.ColorComboBox+DefaultColorItemPainter" />
@@ -15538,6 +15984,7 @@
       <Event Name="SizeChanged" />
       <Event Name="Resize" />
       <Event Name="LocationChanged" />
+      <Event Name="BoundsChanged" />
       <Event Name="DragStart" />
       <Event Name="DragDrop" />
       <Event Name="DragOver" />
@@ -15615,6 +16062,7 @@
       <Event Name="SizeChanged" />
       <Event Name="Resize" />
       <Event Name="LocationChanged" />
+      <Event Name="BoundsChanged" />
       <Event Name="DragStart" />
       <Event Name="DragDrop" />
       <Event Name="DragOver" />
@@ -15689,6 +16137,7 @@
       <Event Name="SizeChanged" />
       <Event Name="Resize" />
       <Event Name="LocationChanged" />
+      <Event Name="BoundsChanged" />
       <Event Name="DragStart" />
       <Event Name="DragDrop" />
       <Event Name="DragOver" />

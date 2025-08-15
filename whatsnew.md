@@ -1,3 +1,36 @@
+# 0.9.748 (2025 August 15)
+
+- Add ScrollableUserControl.
+- UserControl: Add overlay support. Add several ShowOverlayToolTip overloads for flexible tooltip display and management.
+- Enforce minimum scroll bar size in the internal scrollbars (InteriorDrawable.MinScrollBarSize, ScrollBarDrawable.MinArrowSize).
+- Graphics: Refactor clipping and transform API. Removed obsolete clipping region methods.
+- Graphics: Add Save and Restore methods replacing the previous PushClip/PopClip and HasClip logic.
+- Graphics: Refactor and extend clipping API. Introduces ClipRect and ClipRegion methods to the Graphics API, replacing the previous Clip property.
+- Graphics: Refactor label drawing to add clipping support.
+- Graphics: Add checks for positive infinity size in addition to empty size when drawing text labels.
+- ControlAndButton: improve SubstituteControl handling.
+- TextBoxWithListPopup: Add AddRange method and mouse click toggle.
+- SpeedButtonWithListPopup: Enhance drop-down menu width adjustment.
+- RectD, SizeD: Add infinity checks.
+- AbstractControl: Replace Invoke with Post when setting focus to ensure execution in message queue.
+- LogUtils: Fix null in exception message check.
+- Return native Slider control. Now StdSlider is implemented inside the library and Slider uses native control.
+- TreeViewItem: HasVisibleItems, IsRootChild, IsFirst, IsLast.
+- TreeViewitem: Override OnPropertyChanged to notify the Owner of property changes, improving item state tracking.
+- StdTreeView: Overloads for ApplyVisibilityFilter to support both string-based and predicate-based filtering of TreeView items.
+- Moved static events from AbstractControl to a new StaticControlEvents class for better organization and clarity.
+- Added calls to StaticControlEvents.RaiseParentChanged and StaticControlEvents.RaiseVisibleChanged events on parent and visibility changes.
+- Add Disposed event to StaticControlEvents.
+- Maui: Implement mouse capture.
+- Return native TreeView control temp removed in the previous build.
+- AbstractControl: Add BoundsChanged event.
+- GenericControl: Invalidate parent on bounds change.
+- VirtualListBox: Track last painted items (ItemsLastPainted property).
+- StdTreeView: Introduces logic to invalidate the tree view when specific properties of TreeViewItem change. Adds a list of property names to monitor.
+- Splitter.SplitterTargetMode.
+- Add PopupCloseReason struct and enhance popup close logic.
+- StdTreeView: Add TrackItemPropertyChanges and TrackItemSelectedChanges props, ItemPropertyChanged and ItemSelectedChanged events.
+
 # 0.9.747 (2025 August 4)
 
 - FileListBox: Add optional column header with column sorting support.
