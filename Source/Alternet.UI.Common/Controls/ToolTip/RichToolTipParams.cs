@@ -83,5 +83,21 @@ namespace Alternet.UI
         /// Gets or sets an image to display in the tooltip.
         /// </summary>
         public virtual ImageSet? Image { get; set; }
+
+        /// <summary>
+        /// Updates the current instance to use system-defined colors
+        /// for background and foreground elements.
+        /// </summary>
+        /// <remarks>This method retrieves system color information and
+        /// applies it to the instance's
+        /// background,  foreground, and title foreground colors.
+        /// It ensures consistency with the system's color scheme.</remarks>
+        public virtual void UsesSystemColors()
+        {
+            var colors = FontAndColor.SystemColorInfo;
+            BackgroundColor = colors.BackgroundColor;
+            ForegroundColor = colors.ForegroundColor;
+            TitleForegroundColor = colors.ForegroundColor;
+        }
     }
 }
