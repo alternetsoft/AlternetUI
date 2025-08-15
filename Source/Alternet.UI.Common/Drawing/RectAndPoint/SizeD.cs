@@ -213,6 +213,12 @@ namespace Alternet.Drawing
         public readonly bool AnyIsEmptyOrNegative => width <= CoordD.Empty || height <= CoordD.Empty;
 
         /// <summary>
+        /// Gets a value indicating whether both the width and height are greater than zero.
+        /// </summary>
+        [Browsable(false)]
+        public readonly bool IsPositive => width > CoordD.Empty && height > CoordD.Empty;
+
+        /// <summary>
         /// Represents the horizontal component of this <see cref='Drawing.SizeD'/>.
         /// </summary>
         public Coord Width
