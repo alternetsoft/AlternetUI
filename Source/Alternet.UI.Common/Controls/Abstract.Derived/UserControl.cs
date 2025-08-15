@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Alternet.Drawing;
+using Alternet.UI.Localization;
 
 namespace Alternet.UI
 {
@@ -141,6 +142,23 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets or sets the collection of overlays associated with the control.
+        /// </summary>
+        /// <remarks>Setting this property updates the internal overlay collection
+        /// and invalidates the control,
+        /// prompting a redraw to reflect the changes.</remarks>
+        [Browsable(false)]
+        public virtual IReadOnlyList<IControlOverlay>? Overlays
+        {
+            get => overlays;
+            set
+            {
+                overlays = value?.ToList();
+                Invalidate();
+            }
+        }
+
+        /// <summary>
         /// Sets <see cref="AbstractControl.StateObjects"/> colors and backgrounds
         /// for the state specified
         /// in the <paramref name="state"/> parameter to the
@@ -247,6 +265,165 @@ namespace Alternet.UI
         public override Brush? GetBackground(VisualControlState state)
         {
             return HandleGetBackground(this, state);
+        }
+
+        /// <summary>
+        /// Gets rectangle to which the overlay should be fitted.
+        /// </summary>
+        /// <returns>A <see cref="RectD"/> representing the overlay rectangle.
+        /// This typically corresponds to the client
+        /// rectangle of the object.</returns>
+        public virtual RectD GetOverlayRectangle()
+        {
+            return ClientRectangle;
+        }
+
+        /// <summary>
+        /// Displays an overlay tooltip with an error message based on the provided exception.
+        /// </summary>
+        /// <remarks>This method is a convenience wrapper for displaying error messages
+        /// in an overlay tooltip. It uses the exception's message as the tooltip content
+        /// and provides default values for optional
+        /// parameters when not specified.</remarks>
+        /// <param name="title">The title of the tooltip. If <see langword="null"/>,
+        /// a default error title is used.</param>
+        /// <param name="e">The exception message will be displayed in the tooltip.
+        /// This parameter cannot be <see langword="null"/>.</param>
+        /// <param name="alignment">The horizontal and vertical alignment of the tooltip
+        /// relative to its target. If <see langword="null"/>, a
+        /// default alignment is used.</param>
+        /// <param name="options">Flags that control the behavior of the tooltip,
+        /// such as whether it dismisses automatically after a set
+        /// interval. The default value is
+        /// <see cref="OverlayToolTipParams.Flags.DismissAfterInterval"/>.</param>
+        /// <param name="dismissIntervalMilliseconds">The time, in milliseconds, after
+        /// which the tooltip will automatically dismiss if the <paramref name="options"/> include
+        /// <see cref="OverlayToolTipParams.Flags.DismissAfterInterval"/>.
+        /// If <see langword="null"/>, a default interval is used.</param>
+        /// <returns>An <see cref="ObjectUniqueId"/> that uniquely identifies the
+        /// displayed tooltip.</returns>
+        public virtual ObjectUniqueId ShowOverlayToolTipWithError(
+            object? title,
+            object e,
+            HVAlignment? alignment = null,
+            OverlayToolTipParams.Flags options = OverlayToolTipParams.Flags.DismissAfterInterval,
+            int? dismissIntervalMilliseconds = null)
+        {
+            string msg;
+
+            if(e is Exception exception)
+            {
+                msg = exception.Message;
+            }
+            else
+            {
+                msg = e.ToString();
+            }
+
+            return ShowOverlayToolTip(
+                title ?? ErrorMessages.Default.ErrorTitle,
+                msg,
+                MessageBoxIcon.Error,
+                alignment,
+                options,
+                dismissIntervalMilliseconds);
+        }
+
+        /// <summary>
+        /// Displays an overlay tooltip with the specified title, message, and options.
+        /// </summary>
+        /// <remarks>This method provides a convenient way to display
+        /// an overlay tooltip with customizable
+        /// content, appearance, and behavior. If more advanced customization is required,
+        /// consider using the overload
+        /// that accepts an <see cref="OverlayToolTipParams"/> object.</remarks>
+        /// <param name="title">The title of the tooltip. If <see langword="null"/>,
+        /// an empty string is used.</param>
+        /// <param name="message">The message content of the tooltip.
+        /// If <see langword="null"/>, an empty string is used.</param>
+        /// <param name="icon">An optional icon to display in the tooltip.
+        /// If <see langword="null"/>, no icon is shown.</param>
+        /// <param name="alignment">An optional alignment specification for the tooltip.
+        /// If <see langword="null"/>, the tooltip is centered
+        /// horizontally and vertically.</param>
+        /// <param name="options">A set of flags that control the behavior of the tooltip.
+        /// The default is <see cref="OverlayToolTipParams.Flags.DismissAfterInterval"/>.</param>
+        /// <param name="dismissIntervalMilliseconds">An optional duration, in milliseconds,
+        /// after which the tooltip is automatically dismissed. If <see langword="null"/>,
+        /// the default interval is used.</param>
+        /// <returns>An <see cref="ObjectUniqueId"/> that uniquely identifies
+        /// the displayed tooltip. This can be used to manage
+        /// or dismiss the tooltip programmatically.</returns>
+        public virtual ObjectUniqueId ShowOverlayToolTip(
+            object? title,
+            object? message,
+            MessageBoxIcon? icon = null,
+            HVAlignment? alignment = null,
+            OverlayToolTipParams.Flags options = OverlayToolTipParams.Flags.DismissAfterInterval,
+            int? dismissIntervalMilliseconds = null)
+        {
+            OverlayToolTipParams data = new()
+            {
+                Title = title?.ToString() ?? string.Empty,
+                Text = message?.ToString() ?? string.Empty,
+                Icon = icon,
+                HorizontalAlignment = alignment?.Horizontal ?? HorizontalAlignment.Center,
+                VerticalAlignment = alignment?.Vertical ?? VerticalAlignment.Center,
+                Options = options,
+                DismissInterval = dismissIntervalMilliseconds,
+            };
+
+            return ShowOverlayToolTip(data);
+        }
+
+        /// <summary>
+        /// Displays an overlay tooltip at the specified location with the provided
+        /// content and removal interval.
+        /// </summary>
+        /// <param name="data">The content, styling and behavior parameters for the tooltip.</param>
+        /// <returns>A unique identifier for the created overlay tooltip, which
+        /// can be used to manage or remove it later.</returns>
+        public virtual ObjectUniqueId ShowOverlayToolTip(OverlayToolTipParams data)
+        {
+            data.Font ??= RealFont;
+            data.ContainerBounds ??= GetOverlayRectangle();
+            var container = data.ContainerBounds.Value;
+
+            data.MaxWidth ??= Math.Max(RichToolTip.DefaultMaxWidth ?? 0, container.Width);
+            data.ScaleFactor = ScaleFactor;
+
+            if (data.Options.HasFlag(OverlayToolTipParams.Flags.UseSystemColors))
+            {
+                data.UsesSystemColors();
+            }
+
+            var overlay = new ControlOverlayWithToolTip()
+            {
+                ToolTip = data,
+            };
+
+            overlay.UpdateImage();
+
+            var imageSize = overlay.Image?.SizeDip(this) ?? SizeD.Empty;
+
+            var alignedRect = new RectD(data.Location ?? PointD.Empty, imageSize);
+
+            if (imageSize.IsPositive && data.HasAlignment)
+            {
+                alignedRect = AlignUtils.AlignRectInRect(
+                    alignedRect,
+                    container,
+                    data.HorizontalAlignment,
+                    data.VerticalAlignment);
+            }
+
+            overlay.Location = alignedRect.Location;
+
+            AddOverlay(overlay);
+
+            if(data.DismissAfterInterval)
+                overlay.SetRemovalTimer(data.DismissInterval, this);
+            return overlay.UniqueId;
         }
 
         /// <inheritdoc/>
