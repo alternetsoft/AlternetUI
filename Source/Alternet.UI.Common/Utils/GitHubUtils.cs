@@ -26,7 +26,8 @@ namespace Alternet.UI
         /// <param name="repo">Repository name.</param>
         /// <param name="since">Start date (UTC).</param>
         /// <param name="until">End date (UTC). Defaults to current UTC time if null.</param>
-        /// <param name="token">GitHub token for authenticated access. Optional for public repos.</param>
+        /// <param name="token">GitHub token for authenticated access.
+        /// Optional for public repos.</param>
         /// <returns>A collection of <see cref="CommitInfo"/> containing commit metadata.</returns>
         public static async Task<IEnumerable<CommitInfo>> GetCommitsAsync(
             string owner,
@@ -43,7 +44,8 @@ namespace Alternet.UI
 
             if (!string.IsNullOrEmpty(token))
             {
-                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+                client.DefaultRequestHeaders.Authorization
+                    = new AuthenticationHeaderValue("Bearer", token);
             }
 
             var result = new List<CommitInfo>();
@@ -87,18 +89,26 @@ namespace Alternet.UI
                 "AlternetUI",
                 DateTime.UtcNow.AddDays(-7));
 
-            LogListBox.ShowMessageIdentifier = false;
+            var s = CommitsToString(commits);
 
-            App.LogBeginSection("AlternetUI Commits in the Last 7 Days");
+            WindowWithMemoAndButton.ShowDialog("AlternetUI Commits in the Last 7 Days", s);
+        }
 
-            foreach (var item in commits)
+        /// <summary>
+        /// Converts a collection of <see cref="CommitInfo"/> to a formatted string.
+        /// </summary>
+        /// <param name="commits">The collection of commits.</param>
+        /// <returns>A string representation of the commits.</returns>
+        public static string CommitsToString(IEnumerable<CommitInfo> commits)
+        {
+            var sb = new StringBuilder();
+            foreach (var commit in commits)
             {
-                App.Log($"{item.Message}\n \n");
+                sb.AppendLine($"{commit.Message}");
+                sb.AppendLine();
             }
 
-            App.LogEndSection();
-
-            LogListBox.ShowMessageIdentifier = true;
+            return sb.ToString();
         }
 
         /// <summary>
