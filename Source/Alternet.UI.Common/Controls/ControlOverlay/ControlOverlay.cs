@@ -10,7 +10,7 @@ namespace Alternet.UI
     public class ControlOverlay : BaseObjectWithId, IControlOverlay
     {
         private Timer? timer;
-        private TimerTickAction timerTickAction = TimerTickAction.None;
+        private TimerTickAction timerActionType = TimerTickAction.None;
         private WeakReferenceValue<UserControl> controlContainer = new();
 
         /// <summary>
@@ -27,6 +27,15 @@ namespace Alternet.UI
             /// Removes the overlay from the control.
             /// </summary>
             RemoveOverlay,
+        }
+
+        /// <summary>
+        /// Gets or sets the <see cref="UserControl"/> that serves as the container for overlay.
+        /// </summary>
+        public virtual UserControl? Container
+        {
+            get => controlContainer.Value;
+            set => controlContainer.Value = value;
         }
 
         /// <summary>
@@ -47,20 +56,32 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets or sets the action to be executed after each tick of the <see cref="Timer"/>.
+        /// </summary>
+        /// <remarks>This property allows you to define custom behavior that will
+        /// be executed after each tick. Ensure that the assigned action does not throw
+        /// exceptions or cause side effects that could disrupt the tick process.</remarks>
+        public virtual Action? AfterTickAction { get; set; }
+
+        /// <summary>
         /// Starts a one-time timer to trigger the removal of an overlay after the specified duration.
         /// </summary>
         /// <remarks>This method configures the timer to execute a single action for overlay removal.
         /// Ensure that the specified duration is a positive value
         /// to avoid unexpected behavior.</remarks>
         /// <param name="milliseconds">The duration, in milliseconds,
-        /// after which the overlay will be removed.</param>
+        /// after which the overlay will be removed. Can be null.
+        /// If not specified or not positive,
+        /// <see cref="TimerUtils.DefaultToolTipTimeout"/> is used as the interval.</param>
         /// <param name="container">The control container from
         /// which the overlay will be removed.</param>
-        public virtual void StartRemovalTimer(int milliseconds, UserControl container)
+        public virtual void SetRemovalTimer(int? milliseconds, UserControl container)
         {
+            if (milliseconds <= 0 || milliseconds is null)
+                milliseconds = TimerUtils.DefaultToolTipTimeout;
             controlContainer.Value = container;
-            timerTickAction = TimerTickAction.RemoveOverlay;
-            Timer.Interval = milliseconds;
+            timerActionType = TimerTickAction.RemoveOverlay;
+            Timer.Interval = milliseconds.Value;
             Timer.StartOnce();
         }
 
@@ -79,14 +100,15 @@ namespace Alternet.UI
         /// </remarks>
         protected virtual void OnTimerTick()
         {
-            if (timerTickAction == TimerTickAction.RemoveOverlay)
+            if (timerActionType == TimerTickAction.RemoveOverlay)
             {
                 var container = controlContainer.Value;
                 container?.RemoveOverlay(this);
             }
 
-            timerTickAction = TimerTickAction.None;
+            timerActionType = TimerTickAction.None;
             controlContainer.Value = null;
+            AfterTickAction?.Invoke();
         }
     }
 }

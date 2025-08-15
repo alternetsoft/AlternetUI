@@ -46,7 +46,7 @@ namespace Alternet.UI
         public static int ImageToTextDistance = 5;
 
         /// <summary>
-        /// Gets or sets default max width of the tooltip.
+        /// Gets or sets default max text width of the tooltip.
         /// </summary>
         public static Coord? DefaultMaxWidth = 500;
 

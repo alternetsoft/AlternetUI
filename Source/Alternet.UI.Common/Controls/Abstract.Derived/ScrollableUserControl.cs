@@ -384,6 +384,9 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
+        public override RectD GetOverlayRectangle() => GetPaintRectangle();
+
+        /// <inheritdoc/>
         protected override void OnHandleCreated(EventArgs e)
         {
             base.OnHandleCreated(e);

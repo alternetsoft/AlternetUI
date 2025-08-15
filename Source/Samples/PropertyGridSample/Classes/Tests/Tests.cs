@@ -163,27 +163,19 @@ namespace PropertyGridSample
             {
                 ObjectUniqueId? overlayId = null;
 
-
                 AddControlAction<VirtualListBox>("Add tooltip overlay", (c) =>
                 {
-                    var overlay = new ControlOverlayWithToolTip()
+                    OverlayToolTipParams data = new()
                     {
-                        Location = (10, 10),
+                        Title = "This is title",
+                        Text = "This is tooltip text",
+                        Icon = MessageBoxIcon.Information,
+                        VerticalAlignment = VerticalAlignment.Center,
+                        HorizontalAlignment = HorizontalAlignment.Center,
                     };
 
-                    var data = overlay.ToolTip;
-                    data.Icon = MessageBoxIcon.Information;
-                    data.Text = "This is tooltip text";
-                    data.Title = "This is title";
-                    overlay.UpdateImage();
-
-                    overlayId = overlay.UniqueId;
-
-                    c.AddOverlay(overlay);
-
-                    overlay.StartRemovalTimer(1500, c);
+                    overlayId = c.ShowOverlayToolTip(data);
                 });
-
 
                 AddControlAction<VirtualListBox>("Add overlay", (c) =>
                 {
@@ -200,7 +192,7 @@ namespace PropertyGridSample
 
                     c.AddOverlay(overlay);
 
-                    overlay.StartRemovalTimer(1500, c);
+                    overlay.SetRemovalTimer(1500, c);
                 });
 
                 AddControlAction<VirtualListBox>("Remove overlay", (c) =>
