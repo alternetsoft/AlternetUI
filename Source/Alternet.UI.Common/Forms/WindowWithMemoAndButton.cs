@@ -57,6 +57,25 @@ namespace Alternet.UI
         public Button CloseButton => closeButton;
 
         /// <summary>
+        /// Displays a dialog window with the specified title and details.
+        /// </summary>
+        /// <remarks>This method creates a dialog window and displays it asynchronously.
+        /// The dialog is disposed of automatically after it is closed.
+        /// Ensure that both <paramref name="title"/> and <paramref name="details"/>
+        /// are valid strings to avoid unexpected behavior.</remarks>
+        /// <param name="title">The title of the dialog window. Cannot be null or empty.</param>
+        /// <param name="details">The details or message to display in the dialog window.
+        /// Cannot be null or empty.</param>
+        public static void ShowDialog(string title, string details)
+        {
+            var window = new WindowWithMemoAndButton(title, details);
+            window.ShowDialogAsync(null, (result) =>
+            {
+                window.Dispose();
+            });
+        }
+
+        /// <summary>
         /// Initializes the controls and layout for the window, setting up its
         /// appearance and behavior.
         /// </summary>
