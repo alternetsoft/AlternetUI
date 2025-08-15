@@ -41,6 +41,9 @@ namespace Alternet.UI
             /// </summary>
             DismissAfterInterval = 1 << 0,
 
+            /// <summary>
+            /// Specifies that the system colors should be used for rendering the overlay.
+            /// </summary>
             UseSystemColors = 1 << 1,
         }
 
