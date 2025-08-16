@@ -295,10 +295,10 @@ namespace Alternet.UI
         /// <param name="options">Flags that control the behavior of the tooltip,
         /// such as whether it dismisses automatically after a set
         /// interval. The default value is
-        /// <see cref="OverlayToolTipParams.Flags.DismissAfterInterval"/>.</param>
+        /// <see cref="OverlayToolTipFlags.DismissAfterInterval"/>.</param>
         /// <param name="dismissIntervalMilliseconds">The time, in milliseconds, after
         /// which the tooltip will automatically dismiss if the <paramref name="options"/> include
-        /// <see cref="OverlayToolTipParams.Flags.DismissAfterInterval"/>.
+        /// <see cref="OverlayToolTipFlags.DismissAfterInterval"/>.
         /// If <see langword="null"/>, a default interval is used.</param>
         /// <returns>An <see cref="ObjectUniqueId"/> that uniquely identifies the
         /// displayed tooltip.</returns>
@@ -306,7 +306,7 @@ namespace Alternet.UI
             object? title,
             object e,
             HVAlignment? alignment = null,
-            OverlayToolTipParams.Flags options = OverlayToolTipParams.Flags.DismissAfterInterval,
+            OverlayToolTipFlags options = OverlayToolTipFlags.DismissAfterInterval,
             int? dismissIntervalMilliseconds = null)
         {
             string msg;
@@ -330,6 +330,60 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Displays a simple overlay tooltip with the specified
+        /// message and optional customization parameters.
+        /// </summary>
+        /// <remarks>If both <paramref name="location"/> and <paramref name="alignment"/>
+        /// are <see langword="null"/>, the tooltip defaults to being
+        /// centered on the screen.</remarks>
+        /// <param name="message">The content to display in the tooltip.
+        /// If <see langword="null"/>, an empty string is displayed.</param>
+        /// <param name="location">The optional screen location where the tooltip should appear.
+        /// If <see langword="null"/>, the tooltip is
+        /// aligned based on the specified <paramref name="alignment"/>.</param>
+        /// <param name="alignment">The optional alignment of the tooltip
+        /// when <paramref name="location"/> is <see langword="null"/>.
+        /// Defaults to centered alignment if not specified.</param>
+        /// <param name="options">Flags that control the behavior of the tooltip,
+        /// such as whether it dismisses automatically or requires
+        /// manual dismissal. The default value is
+        /// <see cref="OverlayToolTipFlags.DismissAfterInterval"/>.</param>
+        /// <param name="dismissIntervalMilliseconds">The optional time, in milliseconds,
+        /// after which the tooltip is automatically dismissed. This parameter is
+        /// only applicable if <paramref name="options"/> includes
+        /// <see cref="OverlayToolTipFlags.DismissAfterInterval"/>.
+        /// If <see langword="null"/>, a default interval is used.</param>
+        /// <returns>An <see cref="ObjectUniqueId"/> representing the unique
+        /// identifier of the displayed tooltip. This can be
+        /// used to manage or dismiss the tooltip programmatically.</returns>
+        public virtual ObjectUniqueId ShowOverlayToolTipSimple(
+            object? message,
+            PointD? location = null,
+            HVAlignment? alignment = null,
+            OverlayToolTipFlags options = OverlayToolTipFlags.DismissAfterInterval,
+            int? dismissIntervalMilliseconds = null)
+        {
+            OverlayToolTipParams data = new()
+            {
+                Text = message?.ToString() ?? string.Empty,
+                Options = options,
+                DismissInterval = dismissIntervalMilliseconds,
+            };
+
+            if (location is null)
+            {
+                data.HorizontalAlignment = alignment?.Horizontal ?? HorizontalAlignment.Center;
+                data.VerticalAlignment = alignment?.Vertical ?? VerticalAlignment.Center;
+            }
+            else
+            {
+                data.Location = location.Value;
+            }
+
+            return ShowOverlayToolTip(data);
+        }
+
+        /// <summary>
         /// Displays an overlay tooltip with the specified title, message, and options.
         /// </summary>
         /// <remarks>This method provides a convenient way to display
@@ -347,7 +401,7 @@ namespace Alternet.UI
         /// If <see langword="null"/>, the tooltip is centered
         /// horizontally and vertically.</param>
         /// <param name="options">A set of flags that control the behavior of the tooltip.
-        /// The default is <see cref="OverlayToolTipParams.Flags.DismissAfterInterval"/>.</param>
+        /// The default is <see cref="OverlayToolTipFlags.DismissAfterInterval"/>.</param>
         /// <param name="dismissIntervalMilliseconds">An optional duration, in milliseconds,
         /// after which the tooltip is automatically dismissed. If <see langword="null"/>,
         /// the default interval is used.</param>
@@ -359,7 +413,7 @@ namespace Alternet.UI
             object? message,
             MessageBoxIcon? icon = null,
             HVAlignment? alignment = null,
-            OverlayToolTipParams.Flags options = OverlayToolTipParams.Flags.DismissAfterInterval,
+            OverlayToolTipFlags options = OverlayToolTipFlags.DismissAfterInterval,
             int? dismissIntervalMilliseconds = null)
         {
             OverlayToolTipParams data = new()
@@ -392,7 +446,7 @@ namespace Alternet.UI
             data.MaxWidth ??= Math.Max(RichToolTip.DefaultMaxWidth ?? 0, container.Width);
             data.ScaleFactor = ScaleFactor;
 
-            if (data.Options.HasFlag(OverlayToolTipParams.Flags.UseSystemColors))
+            if (data.Options.HasFlag(OverlayToolTipFlags.UseSystemColors))
             {
                 data.UsesSystemColors();
             }

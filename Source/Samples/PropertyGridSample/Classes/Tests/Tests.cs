@@ -163,6 +163,15 @@ namespace PropertyGridSample
             {
                 ObjectUniqueId? overlayId = null;
 
+                AddControlAction<VirtualListBox>("Show simple tooltip", (c) =>
+                {
+                    overlayId = c.ShowOverlayToolTipSimple(
+                        "This is tooltip text",
+                        null,
+                        null,
+                        OverlayToolTipFlags.UseSystemColors | OverlayToolTipFlags.DismissAfterInterval);
+                });
+
                 AddControlAction<VirtualListBox>("Add tooltip overlay", (c) =>
                 {
                     OverlayToolTipParams data = new()
