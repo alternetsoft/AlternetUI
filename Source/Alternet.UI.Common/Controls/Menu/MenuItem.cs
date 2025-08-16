@@ -9,7 +9,7 @@ namespace Alternet.UI
     /// Represents an individual item that is displayed within a menu.
     /// </summary>
     [ControlCategory("Hidden")]
-    public partial class MenuItem : Menu, ICommandSource
+    public partial class MenuItem : Menu, ICommandSource, IReadOnlyMenuItemProperties
     {
         private KeyGesture? shortcut;
         private MenuItemRole? role;
@@ -30,10 +30,7 @@ namespace Alternet.UI
         public MenuItem()
         {
             commandSource = new(this);
-            commandSource.Changed = () =>
-            {
-                Enabled = commandSource.CanExecute;
-            };
+            commandSource.Changed = RaiseCommandSourceChanged;
         }
 
         /// <summary>
@@ -60,7 +57,7 @@ namespace Alternet.UI
             : this()
         {
             Text = text ?? string.Empty;
-            if(image is not null)
+            if (image is not null)
                 Image = new ImageSet(image);
             Click += onClick;
         }
@@ -110,7 +107,7 @@ namespace Alternet.UI
             : this()
         {
             Text = text ?? string.Empty;
-            if(onClick is not null)
+            if (onClick is not null)
                 ClickAction = () => onClick();
         }
 
@@ -126,6 +123,16 @@ namespace Alternet.UI
             this.shortcut = shortcut;
             ClickAction = onClick;
         }
+
+        /// <summary>
+        /// Occurs when a change is detected, providing details about the type of change.
+        /// </summary>
+        /// <remarks>This event is triggered whenever a change occurs, and
+        /// it provides information about
+        /// the change through the <see cref="BaseEventArgs{T}"/> parameter.
+        /// The <see cref="ChangeKind"/> value
+        /// indicates the specific type of change that occurred.</remarks>
+        public event EventHandler<BaseEventArgs<ChangeKind>>? Changed;
 
         /// <summary>
         /// Occurs when menu item is opened.
@@ -166,6 +173,75 @@ namespace Alternet.UI
         /// Occurs when the <see cref="DisabledImage"/> property changes.
         /// </summary>
         public event EventHandler? DisabledImageChanged;
+
+        /// <summary>
+        /// Occurs when the associated click action has changed.
+        /// </summary>
+        /// <remarks>This event is triggered whenever the click action is updated,
+        /// allowing subscribers to respond to the change.</remarks>
+        public event EventHandler? ClickActionChanged;
+
+        /// <summary>
+        /// Specifies the kind of change that can occur in a <see cref="MenuItem"/>.
+        /// </summary>
+        public enum ChangeKind
+        {
+            /// <summary>
+            /// No change.
+            /// </summary>
+            None,
+
+            /// <summary>
+            /// The <see cref="MenuItem.Text"/> property has changed.
+            /// </summary>
+            Text,
+
+            /// <summary>
+            /// The <see cref="MenuItem.Enabled"/> property has changed.
+            /// </summary>
+            Enabled,
+
+            /// <summary>
+            /// The <see cref="MenuItem.Image"/> property has changed.
+            /// </summary>
+            Image,
+
+            /// <summary>
+            /// The <see cref="MenuItem.DisabledImage"/> property has changed.
+            /// </summary>
+            DisabledImage,
+
+            /// <summary>
+            /// The <see cref="MenuItem.Shortcut"/>
+            /// or <see cref="MenuItem.ShortcutKeys"/> property has changed.
+            /// </summary>
+            Shortcut,
+
+            /// <summary>
+            /// The <see cref="MenuItem.Role"/> property has changed.
+            /// </summary>
+            Role,
+
+            /// <summary>
+            /// The <see cref="MenuItem.Checked"/> property has changed.
+            /// </summary>
+            Checked,
+
+            /// <summary>
+            /// The <see cref="MenuItem.ClickAction"/> property has changed.
+            /// </summary>
+            ClickAction,
+
+            /// <summary>
+            /// The command source or its state has changed.
+            /// </summary>
+            CommandSource,
+
+            /// <summary>
+            /// Some other property or state has changed.
+            /// </summary>
+            Other,
+        }
 
         /// <inheritdoc/>
         public override ControlTypeId ControlKind => ControlTypeId.MenuItem;
@@ -226,7 +302,7 @@ namespace Alternet.UI
                 if (SvgImageSize == value)
                     return;
                 svgImage.SvgSize = value;
-                if(SvgImage is not null)
+                if (SvgImage is not null)
                 {
                     RaiseImageChanged();
                 }
@@ -287,7 +363,14 @@ namespace Alternet.UI
         public virtual Func<bool>? EnabledFunc
         {
             get => enabledFunc;
-            set => enabledFunc = value;
+
+            set
+            {
+                if (enabledFunc == value)
+                    return;
+                enabledFunc = value;
+                RaiseEnabledChanged(EventArgs.Empty);
+            }
         }
 
         /// <summary>
@@ -298,9 +381,13 @@ namespace Alternet.UI
         public virtual Action? ClickAction
         {
             get => action;
+
             set
             {
+                if (action == value)
+                    return;
                 action = value;
+                RaiseClickActionChanged();
             }
         }
 
@@ -325,6 +412,22 @@ namespace Alternet.UI
                     return;
 
                 base.Text = value;
+
+                RaiseChanged(ChangeKind.Text);
+            }
+        }
+
+        /// <inheritdoc/>
+        public override bool Enabled
+        {
+            get => base.Enabled;
+
+            set
+            {
+                if (Enabled == value)
+                    return;
+                base.Enabled = value;
+                RaiseChanged(ChangeKind.Enabled);
             }
         }
 
@@ -399,7 +502,7 @@ namespace Alternet.UI
                     return;
 
                 role = value;
-                RoleChanged?.Invoke(this, EventArgs.Empty);
+                RaiseRoleChanged();
             }
         }
 
@@ -420,7 +523,7 @@ namespace Alternet.UI
                     return;
 
                 isChecked = value;
-                CheckedChanged?.Invoke(this, EventArgs.Empty);
+                RaiseCheckedChanged();
             }
         }
 
@@ -470,6 +573,8 @@ namespace Alternet.UI
         /// <inheritdoc/>
         protected override bool IsDummy => true;
 
+        ICommandSource IReadOnlyMenuItemProperties.CommandSource => this;
+
         /// <summary>
         /// Implicit conversion operator from <see cref="string"/> to
         /// <see cref="MenuItem"/>.
@@ -485,12 +590,42 @@ namespace Alternet.UI
         /// Same as <see cref="ShortcutKeys"/> but implemented as method.
         /// </summary>
         /// <param name="keys"></param>
-        public void SetShortcutKeys(Keys keys) => ShortcutKeys = keys;
+        public void SetShortcutKeys(Keys keys)
+        {
+            ShortcutKeys = keys;
+        }
+
+        /// <summary>
+        /// Notifies that the state of the command source has changed.
+        /// </summary>
+        /// <remarks>This method should be called when the conditions affecting
+        /// the command source's
+        /// ability to execute have changed. It updates the enabled state
+        /// to reflect the current state of the command source.</remarks>
+        public virtual void RaiseCommandSourceChanged()
+        {
+            Enabled = commandSource.CanExecute;
+            RaiseChanged(ChangeKind.CommandSource);
+        }
+
+        /// <summary>
+        /// Raises the <see cref="ClickActionChanged"/> event to notify
+        /// subscribers of a change in the click action.
+        /// </summary>
+        /// <remarks>This method invokes the <see cref="ClickActionChanged"/> event with the current
+        /// instance as the sender and an empty <see cref="EventArgs"/> object.
+        /// Ensure that any subscribers to the event
+        /// are properly registered to handle the notification.</remarks>
+        public virtual void RaiseClickActionChanged()
+        {
+            ClickActionChanged?.Invoke(this, EventArgs.Empty);
+            RaiseChanged(ChangeKind.ClickAction);
+        }
 
         /// <summary>
         /// Raises <see cref="Opened"/> event.
         /// </summary>
-        public void RaiseOpened()
+        public virtual void RaiseOpened()
         {
             Opened?.Invoke(this, EventArgs.Empty);
         }
@@ -498,7 +633,7 @@ namespace Alternet.UI
         /// <summary>
         /// Raises <see cref="Closed"/> event.
         /// </summary>
-        public void RaiseClosed()
+        public virtual void RaiseClosed()
         {
             Closed?.Invoke(this, EventArgs.Empty);
         }
@@ -506,7 +641,7 @@ namespace Alternet.UI
         /// <summary>
         /// Raises <see cref="Highlighted"/> event.
         /// </summary>
-        public void RaiseHighlighted()
+        public virtual void RaiseHighlighted()
         {
             Highlighted?.Invoke(this, EventArgs.Empty);
         }
@@ -526,25 +661,60 @@ namespace Alternet.UI
         /// <summary>
         /// Raises <see cref="ShortcutChanged"/> event.
         /// </summary>
-        public void RaiseShortcutChanged()
+        public virtual void RaiseShortcutChanged()
         {
             ShortcutChanged?.Invoke(this, EventArgs.Empty);
+            RaiseChanged(ChangeKind.Shortcut);
         }
 
         /// <summary>
         /// Raises <see cref="ImageChanged"/> event.
         /// </summary>
-        public void RaiseImageChanged()
+        public virtual void RaiseImageChanged()
         {
             ImageChanged?.Invoke(this, EventArgs.Empty);
+            RaiseChanged(ChangeKind.Image);
         }
 
         /// <summary>
         /// Raises <see cref="DisabledImageChanged"/> event.
         /// </summary>
-        public void RaiseDisabledImageChanged()
+        public virtual void RaiseDisabledImageChanged()
         {
             DisabledImageChanged?.Invoke(this, EventArgs.Empty);
+            RaiseChanged(ChangeKind.DisabledImage);
+        }
+
+        /// <summary>
+        /// Raises the <see cref="RoleChanged"/> event to notify subscribers of a role change.
+        /// </summary>
+        public virtual void RaiseRoleChanged()
+        {
+            RoleChanged?.Invoke(this, EventArgs.Empty);
+            RaiseChanged(ChangeKind.Role);
+        }
+
+        /// <summary>
+        /// Raises the <see cref="CheckedChanged"/> event to notify subscribers
+        /// of a checked state change.
+        /// </summary>
+        public virtual void RaiseCheckedChanged()
+        {
+            CheckedChanged?.Invoke(this, EventArgs.Empty);
+            RaiseChanged(ChangeKind.Checked);
+        }
+
+        /// <summary>
+        /// Raises an event or performs an action to indicate that a change
+        /// of the specified kind has occurred.
+        /// </summary>
+        /// <remarks>Derived classes can override this method to provide custom
+        /// behavior when a change is raised.</remarks>
+        /// <param name="kind">The type of change that occurred.
+        /// This value determines the nature of the change being reported.</param>
+        public virtual void RaiseChanged(ChangeKind kind)
+        {
+            Changed?.Invoke(this, new (kind));
         }
 
         /// <summary>
@@ -589,6 +759,11 @@ namespace Alternet.UI
         protected override IControlHandler CreateHandler()
         {
             return (IControlHandler)ControlFactory.Handler.CreateMenuItemHandler(this);
+        }
+
+        void IReadOnlyMenuItemProperties.DoClick()
+        {
+            RaiseClick();
         }
     }
 }
