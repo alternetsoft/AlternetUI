@@ -22,32 +22,6 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Defines a set of flags that specify options or behaviors for the overlay.
-        /// </summary>
-        /// <remarks>This enumeration supports bitwise combination of its member
-        /// values using the bitwise OR operator. Use the <see cref="None"/> value
-        /// to represent the absence of any options.</remarks>
-        [Flags]
-        public enum Flags
-        {
-            /// <summary>
-            /// Represents the absence of any specific value or option.
-            /// </summary>
-            None = 0,
-
-            /// <summary>
-            /// Specifies that the overlay should be automatically dismissed
-            /// after a predefined time interval.
-            /// </summary>
-            DismissAfterInterval = 1 << 0,
-
-            /// <summary>
-            /// Specifies that the system colors should be used for rendering the overlay.
-            /// </summary>
-            UseSystemColors = 1 << 1,
-        }
-
-        /// <summary>
         /// Gets or sets the bounds of the container for the tooltip.
         /// </summary>
         public virtual RectD? ContainerBounds { get; set; }
@@ -81,22 +55,23 @@ namespace Alternet.UI
         {
             get
             {
-                return (Options & Flags.DismissAfterInterval) != 0;
+                return (Options & OverlayToolTipFlags.DismissAfterInterval) != 0;
             }
 
             set
             {
                 if (value)
-                    Options |= Flags.DismissAfterInterval;
+                    Options |= OverlayToolTipFlags.DismissAfterInterval;
                 else
-                    Options &= ~Flags.DismissAfterInterval;
+                    Options &= ~OverlayToolTipFlags.DismissAfterInterval;
             }
         }
 
         /// <summary>
         /// Gets or sets the options that determine the behavior of the overlay.
         /// </summary>
-        public virtual Flags Options { get; set; } = Flags.DismissAfterInterval;
+        public virtual OverlayToolTipFlags Options { get; set; }
+            = OverlayToolTipFlags.DismissAfterInterval;
 
         /// <summary>
         /// Gets or sets the interval, in milliseconds, after which an overlay

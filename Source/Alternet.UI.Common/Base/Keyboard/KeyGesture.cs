@@ -13,11 +13,16 @@ namespace Alternet.UI
     [TypeConverter(typeof(KeyGestureConverter))]
     public class KeyGesture : InputGesture
     {
-        private const char MultipleGestureDelimiter = ';';
+        /// <summary>
+        /// Represents the delimiter character used to separate multiple gestures in a gesture string.
+        /// </summary>
+        /// <remarks>This constant is typically used when parsing or constructing strings that contain
+        /// multiple gestures.</remarks>
+        public const char MultipleGestureDelimiter = ';';
 
-        private readonly ModifierKeys fmodifiers = ModifierKeys.None;
-        private readonly Key fkey = Key.None;
-        private readonly string fdisplayString;
+        private readonly ModifierKeys modifiers = ModifierKeys.None;
+        private readonly Key key = Key.None;
+        private readonly string displayString;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="KeyGesture"/> class
@@ -80,51 +85,54 @@ namespace Alternet.UI
             string displayString,
             bool validateGesture)
         {
-            if (!ModifierKeysConverter.IsDefinedModifierKeys(modifiers))
+            if (DebugUtils.IsDebugDefined)
             {
-                App.LogError(new InvalidEnumArgumentException(
-                    "modifiers",
-                    (int)modifiers,
-                    typeof(ModifierKeys)));
+                if (!ModifierKeysConverter.IsDefinedModifierKeys(modifiers))
+                {
+                    App.LogError(new InvalidEnumArgumentException(
+                        "modifiers",
+                        (int)modifiers,
+                        typeof(ModifierKeys)));
+                }
+
+                if (!IsDefinedKey(key))
+                {
+                    App.LogError(new InvalidEnumArgumentException("key", (int)key, typeof(Key)));
+                }
+
+                if (validateGesture && !IsValid(key, modifiers))
+                {
+                    var exception = new NotSupportedException(
+                        string.Format(ErrorMessages.Default.KeyGestureInvalid, modifiers, key));
+                    App.LogError(exception);
+                }
             }
 
-            if (!IsDefinedKey(key))
-            {
-                App.LogError(new InvalidEnumArgumentException("key", (int)key, typeof(Key)));
-            }
-
-            if (validateGesture && !IsValid(key, modifiers))
-            {
-                var exception = new NotSupportedException(
-                    string.Format(ErrorMessages.Default.KeyGestureInvalid, modifiers, key));
-                App.LogError(exception);
-            }
-
-            fmodifiers = modifiers;
-            fkey = key;
-            fdisplayString = displayString ?? string.Empty;
+            this.modifiers = modifiers;
+            this.key = key;
+            this.displayString = displayString ?? string.Empty;
         }
 
         /// <summary>
-        /// Gets key modifiers asociated with this <see cref="KeyGesture"/>
+        /// Gets key modifiers associated with this <see cref="KeyGesture"/>
         /// (Alt, Control, Shift, etc.)
         /// </summary>
         public virtual ModifierKeys Modifiers
         {
             get
             {
-                return fmodifiers;
+                return modifiers;
             }
         }
 
         /// <summary>
-        /// Gets key asociated with this <see cref="KeyGesture"/>.
+        /// Gets key associated with this <see cref="KeyGesture"/>.
         /// </summary>
         public virtual Key Key
         {
             get
             {
-                return fkey;
+                return key;
             }
         }
 
@@ -135,12 +143,12 @@ namespace Alternet.UI
         {
             get
             {
-                return fdisplayString;
+                return displayString;
             }
         }
 
         /// <summary>
-        /// Implicit operator convertion from the <see cref="string"/> to
+        /// Implicit operator conversion from the <see cref="string"/> to
         /// the <see cref="KeyGesture"/>.
         /// </summary>
         /// <param name="s">String representation of the <see cref="KeyGesture"/>.
@@ -175,7 +183,7 @@ namespace Alternet.UI
                 // for shift at this time as Shift with any combination
                 // is already covered in above check.
                 // Shift alone as modifier case, we defer to the next
-                // condition to avoid conflicing with TextInput.
+                // condition to avoid conflicting with TextInput.
                 if ((modifiers & (ModifierKeys.Control | ModifierKeys.Alt |
                     ModifierKeys.Windows)) != 0)
                 {
@@ -239,9 +247,9 @@ namespace Alternet.UI
         public virtual string? GetDisplayStringForCulture(CultureInfo culture)
         {
             // return the DisplayString, if it was set by the ctor
-            if (!string.IsNullOrEmpty(fdisplayString))
+            if (!string.IsNullOrEmpty(displayString))
             {
-                return fdisplayString;
+                return displayString;
             }
 
             // otherwise use the type converter
