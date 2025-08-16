@@ -16,7 +16,7 @@ namespace Alternet.UI
         Readable = 1,
 
         /// <summary>
-        /// Targeted value's readability inherites from parent.
+        /// Targeted value's readability inherits from parent.
         /// </summary>
         Inherit = 2,
     }
