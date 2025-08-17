@@ -355,16 +355,16 @@ namespace MenuSample
                 "Separator item to normal" : "Normal item to separator";
         }
 
-        private void ContinousScrollingMenuItem_Click(object? sender, EventArgs e)
+        private void ContinuousScrollingMenuItem_Click(object? sender, EventArgs e)
         {
-            continousScrollingMenuItem.Checked = true;
+            continuousScrollingMenuItem.Checked = true;
             pageScrollingMenuItem.Checked = false;
-            LogEvent("Continous Scrolling Clicked");
+            LogEvent("Continuous Scrolling Clicked");
         }
 
         private void PageScrollingMenuItem_Click(object? sender, EventArgs e)
         {
-            continousScrollingMenuItem.Checked = false;
+            continuousScrollingMenuItem.Checked = false;
             pageScrollingMenuItem.Checked = true;
             LogEvent("Page Scrolling Clicked");
         }

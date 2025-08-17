@@ -133,6 +133,8 @@ namespace Alternet.UI
         private string? text;
         private AnchorStyles anchor = AnchorStyles.LeftTop;
         private LayoutFlags layoutFlags;
+        private VisualControlState? visualStateOverride;
+        private VisualControlStates? visualStatesOverride;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="AbstractControl"/> class.
@@ -2045,7 +2047,15 @@ namespace Alternet.UI
         /// returns its value.
         /// </remarks>
         [Browsable(false)]
-        public virtual VisualControlState? VisualStateOverride { get; set; }
+        public virtual VisualControlState? VisualStateOverride
+        {
+            get => visualStateOverride;
+
+            set
+            {
+                visualStateOverride = value;
+            }
+        }
 
         /// <summary>
         /// Gets or sets override value for the <see cref="VisualStates"/>
@@ -2057,7 +2067,15 @@ namespace Alternet.UI
         /// returns its value.
         /// </remarks>
         [Browsable(false)]
-        public virtual VisualControlStates? VisualStatesOverride { get; set; }
+        public virtual VisualControlStates? VisualStatesOverride
+        {
+            get => visualStatesOverride;
+
+            set
+            {
+                visualStatesOverride = value;
+            }
+        }
 
         /// <summary>
         /// Gets current <see cref="VisualControlState"/>.

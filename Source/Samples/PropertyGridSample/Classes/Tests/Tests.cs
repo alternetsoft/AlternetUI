@@ -136,6 +136,13 @@ namespace PropertyGridSample
 
             void InitTestsSpeedButton()
             {
+                AddControlAction<SpeedButton>("Set DropDown", (c) =>
+                {
+                    c.DropDownMenu = new ContextMenu();
+                    c.DropDownMenu.Add("Item 1", () => App.Log("Item 1 clicked"));
+                    c.DropDownMenu.Add("Item 2", () => App.Log("Item 2 clicked"));
+                });
+
                 AddControlAction<SpeedButton>("Set Command", (c) =>
                 {
                     c.Command = NamedCommands.CommandAppLog;

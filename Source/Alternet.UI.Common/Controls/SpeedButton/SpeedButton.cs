@@ -1567,6 +1567,31 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
+        protected override void ShowDropDownMenu(Action? afterShow = null)
+        {
+            if (!Enabled || DropDownMenu is null)
+                return;
+
+            if(VisualState == VisualControlState.Normal)
+            {
+                base.ShowDropDownMenu(afterShow);
+            }
+            else
+            {
+                VisualStateOverride = VisualControlState.Normal;
+                Refresh();
+
+                void AfterShow()
+                {
+                    VisualStateOverride = null;
+                    afterShow?.Invoke();
+                }
+
+                base.ShowDropDownMenu(AfterShow);
+            }
+        }
+
+        /// <inheritdoc/>
         protected override void OnMouseDown(MouseEventArgs e)
         {
             if (StickyToggleOnClick && e.ChangedButton == MouseButton.Left)

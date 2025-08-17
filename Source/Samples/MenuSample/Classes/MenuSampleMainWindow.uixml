@@ -31,8 +31,8 @@
       </MenuItem>
       <MenuItem Text="_View" IsTextLocalized="true">
         <MenuItem Text="_Scrolling" IsTextLocalized="true">
-          <MenuItem Text="Continous" Name="continousScrollingMenuItem" Checked="True"
-                    Click="ContinousScrollingMenuItem_Click" IsTextLocalized="true"/>
+          <MenuItem Text="Continuous" Name="continuousScrollingMenuItem" Checked="True"
+                    Click="ContinuousScrollingMenuItem_Click" IsTextLocalized="true"/>
           <MenuItem Text="Page" Name="pageScrollingMenuItem"
                     Click="PageScrollingMenuItem_Click" IsTextLocalized="true"/>
         </MenuItem>

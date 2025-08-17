@@ -585,9 +585,11 @@ namespace Alternet.UI
         /// <summary>
         /// Shows attached drop down menu.
         /// </summary>
-        protected virtual void ShowDropDownMenu()
+        protected virtual void ShowDropDownMenu(Action? afterShow = null)
         {
-            DropDownMenu?.ShowAsDropDown(this);
+            if (!Enabled)
+                return;
+            DropDownMenu?.ShowAsDropDown(this, afterShow);
         }
 
         /// <inheritdoc/>

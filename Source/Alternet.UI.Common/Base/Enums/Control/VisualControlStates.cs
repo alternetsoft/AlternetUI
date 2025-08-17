@@ -14,6 +14,11 @@ namespace Alternet.UI
     public enum VisualControlStates
     {
         /// <summary>
+        /// Represents the absence of any specific value or state.
+        /// </summary>
+        None = 0,
+
+        /// <summary>
         /// Mouse is over the element.
         /// </summary>
         Hovered = 1,

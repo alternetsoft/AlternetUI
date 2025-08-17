@@ -95,7 +95,10 @@ namespace Alternet.UI
         /// Shows the context menu as a drop-down menu under the specified control.
         /// </summary>
         /// <param name="control">The control with which this context menu is associated.</param>
-        public virtual void ShowAsDropDown(AbstractControl control)
+        /// <param name="afterShow">The action to be invoked after the menu is shown.</param>
+        public virtual void ShowAsDropDown(
+            AbstractControl control,
+            Action? afterShow = null)
         {
             if (control is null)
                 throw new ArgumentNullException(nameof(control));
@@ -104,6 +107,7 @@ namespace Alternet.UI
             {
                 PointD pt = (0, control.Bounds.Height);
                 Show(control, (pt.X, pt.Y));
+                afterShow?.Invoke();
             });
         }
 
