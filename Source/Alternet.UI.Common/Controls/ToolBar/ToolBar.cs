@@ -1331,12 +1331,28 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="id">Item id.</param>
         /// <param name="menu"><see cref="ContextMenu"/> to use as drop down menu.</param>
-        public virtual void SetToolDropDownMenu(ObjectUniqueId id, ContextMenu? menu)
+        /// <param name="showComboBoxImage">The flag indicating whether to show
+        /// the combo box image at the right side of the label or main image.
+        /// Optional. Default is <c>false</c>.</param>
+        public virtual void SetToolDropDownMenu(
+            ObjectUniqueId id,
+            ContextMenu? menu,
+            bool showComboBoxImage = false)
         {
             var item = FindTool(id);
             if (item is null)
                 return;
             item.DropDownMenu = menu;
+
+            if (showComboBoxImage)
+            {
+                item.DoInsideLayout(() =>
+                {
+                    item.Label.ImageHorizontalAlignment = HorizontalAlignment.Right;
+                    item.Label.ImageVerticalAlignment = VerticalAlignment.Center;
+                    item.Label.SetDefaultComboBoxImage();
+                });
+            }
         }
 
         /// <summary>
