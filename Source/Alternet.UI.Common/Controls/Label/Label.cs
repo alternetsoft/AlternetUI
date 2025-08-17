@@ -556,6 +556,20 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Sets the images for the control.
+        /// </summary>
+        /// <param name="image">The normal image to display.</param>
+        /// <param name="disabledImage">The image to display when disabled.</param>
+        public virtual void SetImages(Image? image, Image? disabledImage)
+        {
+            PerformLayoutAndInvalidate(() =>
+            {
+                Image = image;
+                DisabledImage = disabledImage;
+            });
+        }
+
+        /// <summary>
         /// Draws text in the default style.
         /// </summary>
         /// <param name="dc">Drawing context.</param>
@@ -605,6 +619,7 @@ namespace Alternet.UI
                 prm.Flags |= DrawLabelFlags.TextHasNewLineChars;
 
             prm.ImageVerticalAlignment = imageVerticalAlignment;
+            prm.ImageHorizontalAlignment = imageHorizontalAlignment;
 
             var result = DrawDefaultText(dc);
             return result;
@@ -626,6 +641,35 @@ namespace Alternet.UI
                     dc);
                 return result;
             }
+        }
+
+        /// <summary>
+        /// Sets the default combo box image for the control.
+        /// </summary>
+        public virtual void SetDefaultComboBoxImage(int? size = null)
+        {
+            SetSvgImage(
+                ControlAndButton.DefaultBtnComboBoxSvg,
+                KnownButton.TextBoxCombo,
+                size);
+        }
+
+        /// <summary>
+        /// Sets the SVG image for the control.
+        /// </summary>
+        /// <param name="svg">The SVG image to be set. If null, known button image will be used.</param>
+        /// <param name="btn">The known button type. If null, svg image should be specified.</param>
+        /// <param name="size">The optional size for the image.
+        /// If not specified, the default size for the SVG image would be used.</param>
+        public virtual void SetSvgImage(
+            SvgImage? svg,
+            KnownButton? btn,
+            int? size = null)
+        {
+            var (normalImage, disabledImage)
+                = ToolBarUtils.GetNormalAndDisabledSvgImages(svg, btn, this, size);
+
+            SetImages(normalImage, disabledImage);
         }
 
         /// <summary>
