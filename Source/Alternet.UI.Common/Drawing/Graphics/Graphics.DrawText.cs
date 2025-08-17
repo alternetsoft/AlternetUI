@@ -371,7 +371,7 @@ namespace Alternet.Drawing
                 else
                 {
                     return (
-                        HorizontalAlignment.Left,
+                        imageHorizontalAlignment ?? HorizontalAlignment.Left,
                         imageVerticalAlignment ?? VerticalAlignment.Center);
                 }
             }
@@ -711,12 +711,19 @@ namespace Alternet.Drawing
                     var elementAfterAlign = AlignUtils.AlignRectInRect(
                         elementBeforeAlign,
                         rect,
-                        HorizontalAlignment.Left,
+                        element.Alignment.Horizontal,
                         element.Alignment.Vertical,
                         shrinkSize: false);
                     bounds[i] = elementAfterAlign;
                     DrawElement(in element, elementAfterAlign);
-                    rect.X = elementAfterAlign.Right + elementDistance;
+                    if (element.Alignment.Horizontal == HorizontalAlignment.Left)
+                    {
+                        rect.X = elementAfterAlign.Right + elementDistance;
+                    }
+                    else
+                    {
+                    }
+
                     rect.Width = rect.Width - elementAfterAlign.Width - elementDistance;
                 }
             }
