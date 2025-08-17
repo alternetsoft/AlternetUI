@@ -1136,7 +1136,7 @@ namespace Alternet.UI
         /// when <see cref="Sticky"/> is True.
         /// </summary>
         [Browsable(false)]
-        public VisualControlState StickyVisualStateOverride
+        public virtual VisualControlState StickyVisualStateOverride
         {
             get => stickyVisualState;
             set
@@ -1180,6 +1180,12 @@ namespace Alternet.UI
             }
         }
 
+        /// <summary>
+        /// Gets inner <see cref="Label"/> control.
+        /// </summary>
+        [Browsable(false)]
+        public Label Label => label;
+
         internal new LayoutStyle? Layout
         {
             get => base.Layout;
@@ -1198,12 +1204,6 @@ namespace Alternet.UI
         /// </summary>
         [Browsable(false)]
         internal Spacer PictureBox => pictureSpacer;
-
-        /// <summary>
-        /// Gets inner <see cref="Label"/> control.
-        /// </summary>
-        [Browsable(false)]
-        internal Label Label => label;
 
         /// <summary>
         /// Initializes default colors and styles for the <see cref="SpeedButton"/>
@@ -1367,9 +1367,12 @@ namespace Alternet.UI
         /// <summary>
         /// Sets the default combo box image for the control.
         /// </summary>
-        public virtual void SetDefaultComboBoxImage()
+        public virtual void SetDefaultComboBoxImage(int? size = null)
         {
-            SetSvgImage(ControlAndButton.DefaultBtnComboBoxSvg, KnownButton.TextBoxCombo);
+            SetSvgImage(
+                ControlAndButton.DefaultBtnComboBoxSvg,
+                KnownButton.TextBoxCombo,
+                size);
         }
 
         /// <summary>
