@@ -133,6 +133,51 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets the normal and disabled images as <see cref="Image"/> from the specified
+        /// <see cref="SvgImage"/> and <see cref="KnownButton"/>.
+        /// </summary>
+        /// <param name="btn">The known button for which images are retrieved.</param>
+        /// <param name="control">The control which affects image rendering and is used
+        /// to get scale factor.</param>
+        /// <param name="svg">The SVG image to process. Optional. If not specified,
+        /// the SVG image is retrieved based on the known button image.</param>
+        /// <param name="size">The size of the image. If not specified, the default
+        /// size for the toolbar images is used.</param>
+        /// <returns>A tuple containing normal and disabled images.</returns>
+        public static (Image? Normal, Image? Disabled) GetNormalAndDisabledSvgImages(
+            SvgImage? svg,
+            KnownButton? btn,
+            AbstractControl control,
+            int? size = null)
+        {
+            if (svg is null)
+            {
+                if (btn is null)
+                {
+                    return (null, null);
+                }
+
+                var info = KnownButtons.GetInfo(btn.Value);
+                svg = info?.SvgImage;
+            }
+
+            if (svg is null)
+            {
+                return (null, null);
+            }
+
+            size ??= ToolBarUtils.GetDefaultImageSize(control).Width;
+
+            var normalColor = control.GetSvgColor(KnownSvgColor.Normal);
+            var disabledColor = control.GetSvgColor(KnownSvgColor.Disabled);
+
+            var normalImage = svg.ImageWithColor(size.Value, normalColor);
+            var disabledImage = svg.ImageWithColor(size.Value, disabledColor);
+
+            return (normalImage, disabledImage);
+        }
+
+        /// <summary>
         /// Gets the normal and disabled images as <see cref="ImageSet"/> from the specified
         /// <see cref="SvgImage"/> and <see cref="KnownButton"/>.
         /// </summary>
