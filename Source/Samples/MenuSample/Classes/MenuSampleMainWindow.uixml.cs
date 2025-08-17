@@ -264,7 +264,7 @@ namespace MenuSample
             contextMenu.Items.Add(saveToolbarMenuItem);
             contextMenu.Items.Add(exportToolbarMenuItem);
 
-            toolbar.SetToolDropDownMenu(graphDropDownToolbarItem, contextMenu);
+            toolbar.SetToolDropDownMenu(graphDropDownToolbarItem, contextMenu, true);
             
             dynamicToolbarItemsSeparator = toolbar.AddSeparator();
         }
