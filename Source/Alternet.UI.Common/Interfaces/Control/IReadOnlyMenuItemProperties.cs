@@ -72,6 +72,11 @@ namespace Alternet.UI
         ICommandSource CommandSource { get; }
 
         /// <summary>
+        /// Gets a value indicating whether the child items collection contains any elements.
+        /// </summary>
+        bool HasItems { get; }
+
+        /// <summary>
         /// Gets the total number of child items currently in the collection.
         /// </summary>
         int ItemCount { get; }
