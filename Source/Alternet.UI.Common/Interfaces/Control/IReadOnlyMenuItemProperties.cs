@@ -72,6 +72,20 @@ namespace Alternet.UI
         ICommandSource CommandSource { get; }
 
         /// <summary>
+        /// Gets the total number of child items currently in the collection.
+        /// </summary>
+        int ItemCount { get; }
+
+        /// <summary>
+        /// Retrieves the child menu item at the specified index.
+        /// </summary>
+        /// <param name="index">The zero-based index of the child menu item to retrieve.
+        /// Must be within the valid range of the child menu items collection.</param>
+        /// <returns>An object implementing <see cref="IReadOnlyMenuItemProperties"/>
+        /// that represents the menu item at the specified index.</returns>
+        IReadOnlyMenuItemProperties GetItem(int index);
+
+        /// <summary>
         /// Simulates a click action, triggering any associated event handlers or behaviors.
         /// </summary>
         /// <remarks>This method is typically used to programmatically invoke a click event.

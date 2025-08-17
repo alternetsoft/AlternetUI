@@ -717,6 +717,16 @@ namespace Alternet.UI
             Changed?.Invoke(this, new (kind));
         }
 
+        void IReadOnlyMenuItemProperties.DoClick()
+        {
+            RaiseClick();
+        }
+
+        IReadOnlyMenuItemProperties IReadOnlyMenuItemProperties.GetItem(int index)
+        {
+            return Items[index];
+        }
+
         /// <summary>
         /// Gets real menu image for the specified state constructed from the
         /// following properties: <see cref="Image"/>, <see cref="DisabledImage"/>,
@@ -759,11 +769,6 @@ namespace Alternet.UI
         protected override IControlHandler CreateHandler()
         {
             return (IControlHandler)ControlFactory.Handler.CreateMenuItemHandler(this);
-        }
-
-        void IReadOnlyMenuItemProperties.DoClick()
-        {
-            RaiseClick();
         }
     }
 }

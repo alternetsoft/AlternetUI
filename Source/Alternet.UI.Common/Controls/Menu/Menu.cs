@@ -55,6 +55,25 @@ namespace Alternet.UI
             }
         }
 
+        /// <summary>
+        /// Gets the total number of child items currently in the collection.
+        /// </summary>
+        [Browsable(false)]
+        public int ItemCount
+        {
+            get
+            {
+                if (HasItems)
+                {
+                    return Items.Count;
+                }
+                else
+                {
+                    return 0;
+                }
+            }
+        }
+
         /// <inheritdoc/>
         public override ControlTypeId ControlKind => ControlTypeId.Menu;
 
