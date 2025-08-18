@@ -52,20 +52,6 @@ namespace Alternet.UI
             return (-eps < delta) && (eps > delta);
         }
 
-        /*/// <summary>
-        /// Compares two Vector instances for fuzzy equality.  This function
-        /// helps compensate for the fact that double values can
-        /// acquire error when operated upon
-        /// </summary>
-        /// <param name='vector1'>The first Vector to compare</param>
-        /// <param name='vector2'>The second Vector to compare</param>
-        /// <returns>Whether or not the two Vector instances are equal</returns>
-        public static bool AreClose(Vector vector1, Vector vector2)
-        {
-            return DoubleUtils.AreClose(vector1.X, vector2.X) &&
-                   DoubleUtils.AreClose(vector1.Y, vector2.Y);
-        }*/
-
         /// <summary>
         /// Compares two rectangles for fuzzy equality.  This function
         /// helps compensate for the fact that double values can
@@ -96,6 +82,7 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="value">The double value to check.</param>
         /// <returns>True if the value is an even number; otherwise, false.</returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool IsEven(double value)
         {
             return value % 1 == 0 && value % 2 == 0;
@@ -183,6 +170,7 @@ namespace Alternet.UI
         /// </returns>
         /// <param name="value1"> The first double to compare. </param>
         /// <param name="value2"> The second double to compare. </param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool GreaterThanOrClose(double value1, double value2)
         {
             return (value1 > value2) || AreClose(value1, value2);
@@ -196,19 +184,21 @@ namespace Alternet.UI
         /// bool - the result of the AreClose comparison.
         /// </returns>
         /// <param name="value"> The double to compare to 1. </param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool IsOne(double value)
         {
             return Math.Abs(value - 1.0) < 10.0 * DoubleEpsilon;
         }
 
         /// <summary>
-        /// IsZero - Returns whether or not the double is "close" to 0.  Same as AreClose(double, 0),
+        /// IsZero - Returns whether or not the double is "close" to 0. Same as AreClose(double, 0),
         /// but this is faster.
         /// </summary>
         /// <returns>
         /// bool - the result of the AreClose comparison.
         /// </returns>
         /// <param name="value"> The double to compare to 0. </param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool IsZero(double value)
         {
             return Math.Abs(value) < 10.0 * DoubleEpsilon;
@@ -222,6 +212,7 @@ namespace Alternet.UI
         /// <param name='size1'>The first size to compare</param>
         /// <param name='size2'>The second size to compare</param>
         /// <returns>Whether or not the two Size instances are equal</returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool AreClose(SizeD size1, SizeD size2)
         {
             return DoubleUtils.AreClose(size1.Width, size2.Width) &&
@@ -233,6 +224,7 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="val">Value to convert.</param>
         /// <returns></returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static int DoubleToInt(double val)
         {
             return (val > 0) ? (int)(val + 0.5) : (int)(val - 0.5);
@@ -248,6 +240,7 @@ namespace Alternet.UI
         /// <see cref="double.PositiveInfinity"/>, or <see cref="double.NegativeInfinity"/>;
         /// otherwise, <c>false</c>.
         /// </returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool IsInfinityOrNan(double value)
         {
             return IsNaN(value) || double.IsInfinity(value);
@@ -264,10 +257,21 @@ namespace Alternet.UI
         /// <returns><see langword="true"/> if <paramref name="value"/> is NaN, infinite,
         /// or equal to <see
         /// cref="double.MaxValue"/>;  otherwise, <see langword="false"/>. </returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool IsInfinityOrNanOrMax(double value)
         {
             return value == double.MaxValue || IsNaN(value) || double.IsInfinity(value);
         }
+
+        /// <summary>
+        /// Clamps the specified value to zero if it is less than zero.
+        /// </summary>
+        /// <param name="value">The value to clamp. If the value is negative,
+        /// it will be clamped to zero; otherwise, the original value is
+        /// returned.</param>
+        /// <returns>The original value if it is zero or positive; otherwise, zero.</returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static double ClampToZero(double value) => value < 0 ? 0 : value;
 
         /// <summary>
         /// Fast implementation of the <see cref="double.IsNaN"/> method.
