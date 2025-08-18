@@ -44,6 +44,7 @@ namespace Alternet.UI
         private Coord horizontalExtent;
         private DrawMode drawMode = DrawMode.Normal;
         private int firstVisibleItem;
+        private string? emptyText;
 
         static VirtualListBox()
         {
@@ -223,6 +224,25 @@ namespace Alternet.UI
         {
             get => base.UserPaint;
             set => base.UserPaint = true;
+        }
+
+        /// <summary>
+        /// Gets or sets the text displayed when the collection of items is empty.
+        /// </summary>
+        /// <remarks>Setting this property triggers a visual update if the collection
+        /// of items is empty.</remarks>
+        public virtual string? EmptyText
+        {
+            get => emptyText;
+
+            set
+            {
+                if (emptyText == value)
+                    return;
+                emptyText = value;
+                if (Items.Count == 0)
+                    Invalidate();
+            }
         }
 
         /// <summary>
