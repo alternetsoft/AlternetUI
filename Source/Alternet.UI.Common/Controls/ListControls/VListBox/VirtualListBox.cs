@@ -1126,29 +1126,61 @@ namespace Alternet.UI
             UpdateInteriorProperties();
 
             var r = GetPaintRectangle();
-            r.Width += scrollOffsetX;
 
-            var rectRow = r;
-
-            int lineMax = GetVisibleEnd();
-
-            MeasureItemEventArgs measureItemArgs = new(dc, 0);
-            DrawItemEventArgs drawItemArgs = new(dc);
-
-            dc.PushAndTranslate(-scrollOffsetX, 0);
-            try
+            if(Count == 0)
             {
-                PaintRows();
+                PaintEmptyText();
             }
-            finally
+            else
             {
-                dc.PopTransform();
+                InternalPaint();
             }
 
             DrawInterior(dc);
 
+            void PaintEmptyText()
+            {
+                var s = EmptyText;
+
+                if(s is null || s.Length == 0)
+                    return;
+
+                var size = dc.MeasureText(s, RealFont);
+
+                var alignedRect = AlignUtils.AlignRectInRect(
+                    (PointD.Empty, size),
+                    r,
+                    HorizontalAlignment.Center,
+                    VerticalAlignment.Center,
+                    false);
+                var location = alignedRect.Location;
+                dc.DrawText(s, location.ClampToZero(), RealFont, Color.Gray, Color.Empty);
+            }
+
+            void InternalPaint()
+            {
+                dc.PushAndTranslate(-scrollOffsetX, 0);
+                try
+                {
+                    PaintRows();
+                }
+                finally
+                {
+                    dc.PopTransform();
+                }
+            }
+
             void PaintRows()
             {
+                r.Width += scrollOffsetX;
+
+                var rectRow = r;
+
+                int lineMax = GetVisibleEnd();
+
+                MeasureItemEventArgs measureItemArgs = new(dc, 0);
+                DrawItemEventArgs drawItemArgs = new(dc);
+
                 itemsLastPainted.Clear();
 
                 for (int line = GetVisibleBegin(); line < lineMax; line++)

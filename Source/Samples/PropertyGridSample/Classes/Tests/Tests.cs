@@ -170,6 +170,12 @@ namespace PropertyGridSample
             {
                 ObjectUniqueId? overlayId = null;
 
+                AddControlAction<VirtualListBox>("Set empty text", (c) =>
+                {
+                    c.EmptyText = "No items in the list";
+                });
+
+
                 AddControlAction<VirtualListBox>("Show simple tooltip", (c) =>
                 {
                     overlayId = c.ShowOverlayToolTipSimple(
