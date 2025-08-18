@@ -461,6 +461,50 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
+        /// Clamps the coordinates of the current <see cref="PointD"/> instance
+        /// to zero if they are less than zero.
+        /// </summary>
+        /// <remarks>This method ensures that the resulting coordinates are non-negative
+        /// by replacing any negative values with zero.</remarks>
+        /// <returns>A new <see cref="PointD"/> instance with the X and Y coordinates
+        /// clamped to zero if they are less than zero.</returns>
+        public readonly PointD ClampToZero()
+        {
+            return new PointD(
+                x < CoordD.Empty ? CoordD.Empty : x,
+                y < CoordD.Empty ? CoordD.Empty : y);
+        }
+
+        /// <summary>
+        /// Clamps the current point's coordinates to the specified point's coordinates.
+        /// </summary>
+        /// <param name="clampTo">The point whose coordinates define the
+        /// minimum values for clamping.</param>
+        /// <returns>A new <see cref="PointD"/> instance where the X and Y coordinates
+        /// are clamped to the corresponding X and Y
+        /// coordinates of the <paramref name="clampTo"/> point.</returns>
+        public readonly PointD ClampTo(PointD clampTo)
+        {
+            return new PointD(
+                x < clampTo.X ? clampTo.X : x,
+                y < clampTo.Y ? clampTo.Y : y);
+        }
+
+        /// <summary>
+        /// Clamps the current point's coordinates to the specified minimum values.
+        /// </summary>
+        /// <param name="clampX">The minimum allowable value for the X-coordinate.</param>
+        /// <param name="clampY">The minimum allowable value for the Y-coordinate.</param>
+        /// <returns>A new <see cref="PointD"/> instance with the X and Y
+        /// coordinates clamped to the specified minimum values.</returns>
+        public readonly PointD ClampTo(Coord clampX, Coord clampY)
+        {
+            return new PointD(
+                x < clampX ? clampX : x,
+                y < clampY ? clampY : y);
+        }
+
+        /// <summary>
         /// Returns a string that represents the current object.
         /// </summary>
         /// <returns>A string that represents the current object.</returns>
