@@ -17,6 +17,17 @@ namespace Alternet.UI
         private TemplateControls.RichToolTipTemplate? template;
 
         /// <summary>
+        /// Initializes a new instance of the <see cref="ControlOverlayWithToolTip"/> class.
+        /// </summary>
+        /// <remarks>This constructor sets up a new control overlay with tooltip functionality. 
+        /// Additional configuration may be required after initialization to fully
+        /// utilize the overlay.</remarks>
+        public ControlOverlayWithToolTip()
+        {
+            Flags = ControlOverlayFlags.RemoveOnEscape | ControlOverlayFlags.RemoveOnEnter;
+        }
+
+        /// <summary>
         /// Gets or sets the template used to define the content and layout of the rich tooltip.
         /// </summary>
         /// <remarks>Use this property to customize the visual presentation of the

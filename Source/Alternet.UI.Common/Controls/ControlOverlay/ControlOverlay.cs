@@ -12,6 +12,7 @@ namespace Alternet.UI
         private Timer? timer;
         private TimerTickAction timerActionType = TimerTickAction.None;
         private WeakReferenceValue<UserControl> controlContainer = new();
+        private ControlOverlayFlags flags;
 
         /// <summary>
         /// Represents the action to be performed on a timer tick event.
@@ -27,6 +28,13 @@ namespace Alternet.UI
             /// Removes the overlay from the control.
             /// </summary>
             RemoveOverlay,
+        }
+
+        /// <inheritdoc/>
+        public virtual ControlOverlayFlags Flags
+        {
+            get => flags;
+            set => flags = value;
         }
 
         /// <summary>
