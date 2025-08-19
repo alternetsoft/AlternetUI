@@ -23,6 +23,11 @@ namespace Alternet.UI
         /// <summary>
         /// Occurs when the mouse pointer rests on the control.
         /// </summary>
+        /// <remarks>
+        /// The system starts tracking when the mouse moves over a control.
+        /// If the pointer remains stationary within a small rectangle(default: 4×4 dips)
+        /// for a set time(default: 400 ms), the MouseHover event fires.
+        /// </remarks>
         [Category("Mouse")]
         public event EventHandler? MouseHover;
 
