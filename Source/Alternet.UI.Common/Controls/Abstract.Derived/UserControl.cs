@@ -207,9 +207,9 @@ namespace Alternet.UI
         /// the control is invalidated; otherwise, it is not.</param>
         /// <returns><see langword="true"/> if the overlay was successfully removed;
         /// otherwise, <see langword="false"/>.</returns>
-        public virtual bool RemoveOverlay(ObjectUniqueId overlayId, bool invalidate = true)
+        public virtual bool RemoveOverlay(ObjectUniqueId? overlayId, bool invalidate = true)
         {
-            if (overlays is null)
+            if (overlays is null || overlayId is null)
                 return false;
 
             for (int i = 0; i < overlays.Count; i++)
