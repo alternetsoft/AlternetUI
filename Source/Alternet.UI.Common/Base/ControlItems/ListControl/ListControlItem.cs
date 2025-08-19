@@ -381,6 +381,16 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets or sets array of elements to draw before the label text and image.
+        /// </summary>
+        public virtual Graphics.DrawElementParams[]? PrefixElements { get; set; }
+
+        /// <summary>
+        /// Gets or sets array of elements to draw after the label text and image.
+        /// </summary>
+        public virtual Graphics.DrawElementParams[]? SuffixElements { get; set; }
+
+        /// <summary>
         /// Gets or sets <see cref="Image"/> associated with the item when it is selected.
         /// </summary>
         /// <remarks>
@@ -1509,6 +1519,8 @@ namespace Alternet.UI
 
             if(item is not null)
             {
+                prm.SuffixElements = item.SuffixElements;
+                prm.PrefixElements = item.PrefixElements;
                 prm.Flags = item.LabelFlags;
                 prm.TextHorizontalAlignment = item.TextLineAlignment ?? TextHorizontalAlignment.Left;
                 prm.LineDistance = item.TextLineDistance ?? 0;
@@ -1523,9 +1535,13 @@ namespace Alternet.UI
 
             if (DrawDebugCornersOnElements)
             {
-                BorderSettings.DrawDesignCorners(e.Graphics, prm.Rect, BorderSettings.DebugBorderGreen);
+                BorderSettings.DrawDesignCorners(
+                    e.Graphics,
+                    prm.Rect,
+                    BorderSettings.DebugBorderGreen);
             }
 #endif
+
             e.Graphics.DrawLabel(ref prm);
             e.LabelMetrics = prm;
         }
