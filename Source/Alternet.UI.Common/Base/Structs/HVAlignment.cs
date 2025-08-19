@@ -227,6 +227,20 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Creates a new <see cref="HVAlignment"/> instance with a horizontal alignment
+        /// of <see cref="HorizontalAlignment.Left"/>  and the specified vertical alignment.
+        /// </summary>
+        /// <param name="vertAlignment">The vertical alignment to use for
+        /// the <see cref="HVAlignment"/> instance.</param>
+        /// <returns>An <see cref="HVAlignment"/> instance with a horizontal alignment
+        /// of <see cref="HorizontalAlignment.Left"/>
+        /// and the specified vertical alignment.</returns>
+        public static HVAlignment LeftWith(VerticalAlignment vertAlignment)
+        {
+            return new HVAlignment(HorizontalAlignment.Left, vertAlignment);
+        }
+
+        /// <summary>
         /// Gets vertical alignment or Null if <paramref name="direction"/> parameter
         /// doesn't contain <see cref="GenericOrientation.Vertical"/>.
         /// </summary>
