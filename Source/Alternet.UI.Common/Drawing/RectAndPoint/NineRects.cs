@@ -20,7 +20,8 @@ namespace Alternet.Drawing
         private RectI patch;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="NineRects"/> struct.
+        /// Initializes a new instance of the <see cref="NineRects"/> class with the
+        /// specified container and patch rectangles.
         /// </summary>
         /// <param name="container">Rectangle to slice.</param>
         /// <param name="patch">Rectangle which defines sliced parts.</param>
@@ -32,6 +33,21 @@ namespace Alternet.Drawing
         {
             this.container = container;
             this.patch = patch;
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="NineRects"/> class with the
+        /// specified container and patch rectangles.
+        /// </summary>
+        /// <param name="container">The outer rectangle that defines the container area.</param>
+        /// <param name="patch">The inner rectangle that defines the patch area
+        /// within the container.</param>
+        /// <param name="scaleFactor">The scale factor to convert from device-independent
+        /// pixels (DIPs) to pixels.</param>
+        public NineRects(RectD container, RectD patch, double scaleFactor)
+        {
+            this.container = container.PixelFromDip(scaleFactor);
+            this.patch = patch.PixelFromDip(scaleFactor);
         }
 
         /// <summary>
@@ -154,6 +170,44 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
+        /// Gets the top rectangular region defined by the container's position
+        /// and the patch's dimensions. This rectangle returns the area which is
+        /// above the patch.
+        /// </summary>
+        public readonly RectI TopRect
+        {
+            get
+            {
+                return TopLeft.WithWidth(container.Width);
+            }
+        }
+
+        /// <summary>
+        /// Gets the bottom rectangular region defined by the container's position
+        /// and the patch's dimensions. This rectangle returns the area which is
+        /// below the patch.
+        /// </summary>
+        public readonly RectI BottomRect
+        {
+            get
+            {
+                return BottomLeft.WithWidth(container.Width);
+            }
+        }
+
+        /// <summary>
+        /// Gets a value indicating whether the height of the top rectangle is greater
+        /// than the height of the bottom rectangle.
+        /// </summary>
+        public readonly bool IsTopRectLarger
+        {
+            get
+            {
+                return TopRect.Height > BottomRect.Height;
+            }
+        }
+
+        /// <summary>
         /// Gets all 9 rectangles.
         /// </summary>
         public readonly RectI[] Rects
@@ -167,6 +221,26 @@ namespace Alternet.Drawing
                         BottomLeft, BottomCenter, BottomRight,
                 };
             }
+        }
+
+        /// <summary>
+        /// Suggests the vertical alignment for a tooltip based on the relative sizes
+        /// and positions of a container rectangle and an item rectangle.
+        /// </summary>
+        /// <param name="containerRect">The rectangle representing the container area.</param>
+        /// <param name="itemRect">The rectangle representing the item for which
+        /// the tooltip is being positioned.</param>
+        /// <returns>A <see cref="VerticalAlignment"/> value indicating
+        /// the suggested vertical alignment. Returns <see cref="VerticalAlignment.Top"/>
+        /// if the top area is larger; otherwise, returns <see cref="VerticalAlignment.Bottom"/>.
+        /// </returns>
+        public static VerticalAlignment SuggestVertAlignmentForToolTip(
+            RectD containerRect,
+            RectD itemRect)
+        {
+            NineRects rects = new(containerRect, itemRect, 1);
+            var result = rects.IsTopRectLarger ? VerticalAlignment.Top : VerticalAlignment.Bottom;
+            return result;
         }
 
         /// <summary>
