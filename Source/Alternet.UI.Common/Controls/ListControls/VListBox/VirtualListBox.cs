@@ -1822,11 +1822,10 @@ namespace Alternet.UI
             if (DisposingOrDisposed)
                 return;
 
-            if (Count == 0)
-            {
-                base.OnKeyDown(e);
+            base.OnKeyDown(e);
+
+            if(e.IsHandledOrSupressed)
                 return;
-            }
 
             ItemClickFlags flags = ItemClickFlags.Keyboard;
 
