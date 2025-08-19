@@ -229,6 +229,38 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Removes overlays from the control that match the specified flags.
+        /// </summary>
+        /// <remarks>This method iterates through the collection of overlays and removes
+        /// those that match the specified flags. If <paramref name="invalidate"/> is
+        /// <see langword="true"/>, the control is invalidated
+        /// to reflect the changes.</remarks>
+        /// <param name="flags">The flags that determine which overlays to remove.</param>
+        /// <param name="invalidate">A value indicating whether the control should
+        /// be invalidated after removing the overlays. The default is
+        /// <see langword="true"/>.</param>
+        /// <returns><see langword="true"/> if any overlays were removed;
+        /// otherwise, <see langword="false"/>.</returns>
+        public virtual bool RemoveOverlays(ControlOverlayFlags flags, bool invalidate = true)
+        {
+            if (overlays is null)
+                return false;
+
+            for (int i = overlays.Count - 1; i >= 0; i--)
+            {
+                if ((overlays[i].Flags & flags) != 0)
+                {
+                    overlays.RemoveAt(i);
+                }
+            }
+
+            if (invalidate)
+                Invalidate();
+
+            return true;
+        }
+
+        /// <summary>
         /// Removes the specified overlay from the control.
         /// </summary>
         /// <param name="overlay">The overlay to remove.</param>
@@ -606,6 +638,22 @@ namespace Alternet.UI
             }
 
             DefaultPaintDebug(e);
+        }
+
+        /// <inheritdoc/>
+        protected override void OnKeyDown(KeyEventArgs e)
+        {
+            if(!HasOverlays())
+                return;
+            switch (e.Key)
+            {
+                case Key.Escape:
+                    RemoveOverlays(ControlOverlayFlags.RemoveOnEscape);
+                    break;
+                case Key.Enter:
+                    RemoveOverlays(ControlOverlayFlags.RemoveOnEnter);
+                    break;
+            }
         }
 
         /// <inheritdoc/>
