@@ -192,7 +192,8 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets url used to load "Circle Filled" svg image.
         /// </summary>
-        public static string UrlImageCircleFilled { get; set; } = GetImageUrl("alternet-circle-filled");
+        public static string UrlImageCircleFilled { get; set; }
+            = GetImageUrl("alternet-circle-filled");
 
         /// <summary>
         /// Gets or sets url used to load "Debug Run" svg image.
@@ -217,7 +218,8 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets url used to load "Diamond Filled" svg image.
         /// </summary>
-        public static string UrlImageDiamondFilled { get; set; } = GetImageUrl("alternet-diamond-filled");
+        public static string UrlImageDiamondFilled { get; set; }
+            = GetImageUrl("alternet-diamond-filled");
 
         /// <summary>
         /// Gets or sets url used to load "plus" svg image used in "Add" toolbar buttons.
@@ -298,7 +300,8 @@ namespace Alternet.UI
         /// Gets or sets url used to load svg image used in "Back" toolbar buttons
         /// for the <see cref="WebBrowser"/>.
         /// </summary>
-        public static string UrlImageWebBrowserBack { get; set; } = GetImageUrl("alternet-arrow-left");
+        public static string UrlImageWebBrowserBack { get; set; }
+            = GetImageUrl("alternet-arrow-left");
 
         /// <summary>
         /// Gets or sets url used to load svg image used in "Home" toolbar buttons
@@ -310,7 +313,8 @@ namespace Alternet.UI
         /// Gets or sets url used to load svg image used in "Forward" toolbar buttons
         /// for the <see cref="WebBrowser"/>.
         /// </summary>
-        public static string UrlImageWebBrowserForward { get; set; } = GetImageUrl("alternet-arrow-right");
+        public static string UrlImageWebBrowserForward { get; set; }
+            = GetImageUrl("alternet-arrow-right");
 
         /// <summary>
         /// Gets or sets url used to load svg image used in "Zoom In" toolbar buttons.

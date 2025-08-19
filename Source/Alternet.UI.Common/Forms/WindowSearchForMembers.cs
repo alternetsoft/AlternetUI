@@ -37,12 +37,19 @@ namespace Alternet.UI
         private EnumImages<SymbolKind>? images;
         private VirtualListBox.RangeAdditionController<MemberInfo>? controller;
         private bool closeRequested;
+        private Graphics.DrawElementParams runImageElement;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="WindowSearchForMembers"/> class.
         /// </summary>
         public WindowSearchForMembers()
         {
+            runImageElement = Graphics.DrawElementParams.CreateImageElement(
+                    this,
+                    KnownSvgImages.ImgDebugRun,
+                    null,
+                    LightDarkColors.Green);
+
             textBox.InitSearchEdit();
             textBox.TextBox.EmptyTextHint = "Type here to search for classes and members...";
 
@@ -277,8 +284,6 @@ namespace Alternet.UI
 
                     if (methodParameters.Length == 0 && method.IsStatic)
                     {
-                        replaced += " ->";
-
                         doubleClickAction = () =>
                         {
                             AssemblyUtils.InvokeMethodAndLogResult(null, method);
@@ -292,6 +297,11 @@ namespace Alternet.UI
                 item.Image = GetImage(member.MemberType);
                 item.MemberInfo = member;
                 item.DoubleClickAction = doubleClickAction;
+
+                if(doubleClickAction != null)
+                {
+                    item.SuffixElements = [runImageElement];
+                }
 
                 return item;
             }
