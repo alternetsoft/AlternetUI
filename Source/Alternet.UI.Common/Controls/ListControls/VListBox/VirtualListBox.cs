@@ -34,6 +34,21 @@ namespace Alternet.UI
     /// </remarks>
     public partial class VirtualListBox : VirtualListControl, IListControl
     {
+        /// <summary>
+        /// Gets or sets the default border color of the full item tooltip.
+        /// </summary>
+        public static LightDarkColor? DefaultFullItemToolTipBorderColor;
+
+        /// <summary>
+        /// Gets or sets the default foreground color of the full item tooltip text.
+        /// </summary>
+        public static LightDarkColor DefaultFullItemToolTipForeColor = new(Color.Black);
+
+        /// <summary>
+        /// Gets or sets the default background color of the full item tooltip.
+        /// </summary>
+        public static LightDarkColor DefaultFullItemToolTipBackColor = new(Color.LightYellow);
+
         private static SetItemsKind defaultSetItemsKind = SetItemsKind.ChangeField;
 
         private readonly List<ListControlItem> itemsLastPainted = new();
@@ -45,6 +60,7 @@ namespace Alternet.UI
         private DrawMode drawMode = DrawMode.Normal;
         private int firstVisibleItem;
         private string? emptyText;
+        private ObjectUniqueId? itemToolTipId;
 
         static VirtualListBox()
         {
@@ -307,6 +323,36 @@ namespace Alternet.UI
                 Invalidate();
             }
         }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether an item tooltip is shown
+        /// for items that don't fit in the control's view. Default is <c>true</c>.
+        /// </summary>
+        public virtual bool NeedsFullItemToolTip { get; set; } = true;
+
+        /// <summary>
+        /// Gets or sets the foreground color of the full item tooltip text.
+        /// Default is <c>null</c>, which means <see cref="DefaultFullItemToolTipForeColor"/>
+        /// will be used.
+        /// </summary>
+        [Browsable(false)]
+        public virtual LightDarkColor? FullItemToolTipForeColor { get; set; }
+
+        /// <summary>
+        /// Gets or sets the background color of the full item tooltip.
+        /// Default is <c>null</c>, which means <see cref="DefaultFullItemToolTipBackColor"/>
+        /// will be used.
+        /// </summary>
+        [Browsable(false)]
+        public virtual LightDarkColor? FullItemToolTipBackColor { get; set; }
+
+        /// <summary>
+        /// Gets or sets the border color of the full item tooltip.
+        /// Default is <c>null</c>, which means <see cref="DefaultFullItemToolTipBackColor"/>
+        /// will be used.
+        /// </summary>
+        [Browsable(false)]
+        public virtual LightDarkColor? FullItemToolTipBorderColor { get; set; }
 
         /// <summary>
         /// Gets or sets the index of the first visible item in the control.</summary>
@@ -1361,6 +1407,22 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Measures the size of an item at the specified index.
+        /// </summary>
+        /// <remarks>This method calculates the dimensions of an item based on its index
+        /// and returns the measured size. The returned size can be used for layout
+        /// or rendering purposes.</remarks>
+        /// <param name="index">The zero-based index of the item to measure.</param>
+        /// <returns>A <see cref="SizeD"/> structure representing the width and height
+        /// of the item.</returns>
+        public SizeD MeasureItemSize(int index)
+        {
+            MeasureItemEventArgs e = new(MeasureCanvas, index);
+            MeasureItemSize(e);
+            return new SizeD(e.ItemWidth, e.ItemHeight);
+        }
+
+        /// <summary>
         /// Measures item size. If <see cref="VirtualListControl.ItemPainter"/> is assigned,
         /// uses <see cref="IListBoxItemPainter.GetSize"/>, otherwise calls
         /// <see cref="ListControlItem.DefaultMeasureItemSize"/>. Additionally calls
@@ -1629,6 +1691,69 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
+        protected override void OnMouseHover(EventArgs e)
+        {
+            if(DisposingOrDisposed || !NeedsFullItemToolTip)
+                return;
+
+            var mousePos = Mouse.GetPosition(this);
+            var itemIndex = HitTest(mousePos);
+            if(itemIndex is null)
+                return;
+
+            var s = GetItemText(itemIndex.Value, true);
+
+            if (s is null || s.Length == 0)
+                return;
+
+            var rect = GetItemRect(itemIndex);
+            if (rect is null)
+                return;
+
+            var itemSize = MeasureItemSize(itemIndex.Value);
+
+            var container = GetPaintRectangle();
+            if (container.Width > itemSize.Width && scrollOffsetX == 0)
+                return;
+
+            var vertAlignment = NineRects.SuggestVertAlignmentForToolTip(container, rect.Value);
+
+            RemoveOverlay(itemToolTipId, false);
+            itemToolTipId = null;
+
+            var bColor = (FullItemToolTipBackColor ?? DefaultFullItemToolTipBackColor)
+                .LightOrDark(IsDarkBackground);
+            var fColor = (FullItemToolTipForeColor ?? DefaultFullItemToolTipForeColor)
+                .LightOrDark(IsDarkBackground);
+            var borderColor = (FullItemToolTipBorderColor ?? DefaultFullItemToolTipBorderColor
+                ?? DefaultColors.BorderColor)
+                .LightOrDark(IsDarkBackground);
+
+            OverlayToolTipParams data = new()
+            {
+                Text = s,
+                Options = OverlayToolTipFlags.DismissAfterInterval,
+                HorizontalAlignment = HorizontalAlignment.Left,
+                VerticalAlignment = vertAlignment,
+                BackgroundColor = bColor,
+                ForegroundColor = fColor,
+                MaxWidth = container.Width - 20,
+            };
+
+            data.SetBorder(borderColor);
+
+            itemToolTipId = ShowOverlayToolTip(data);
+        }
+
+        /// <inheritdoc/>
+        protected override void OnMouseMove(MouseEventArgs e)
+        {
+            base.OnMouseMove(e);
+            RemoveOverlay(itemToolTipId, true);
+            itemToolTipId = null;
+        }
+
+        /// <inheritdoc/>
         protected override void OnMouseLeftButtonDown(MouseEventArgs e)
         {
             if (DisposingOrDisposed)
@@ -1674,12 +1799,6 @@ namespace Alternet.UI
         /// contains the event data.</param>
         protected virtual void OnMeasureItem(MeasureItemEventArgs e)
         {
-        }
-
-        /// <inheritdoc/>
-        protected override void OnMouseMove(MouseEventArgs e)
-        {
-            base.OnMouseMove(e);
         }
 
         /// <inheritdoc/>
