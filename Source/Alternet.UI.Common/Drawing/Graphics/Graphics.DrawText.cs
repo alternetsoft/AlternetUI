@@ -305,194 +305,43 @@ namespace Alternet.Drawing
         /// <returns></returns>
         public virtual RectD DrawLabelUnclipped(ref DrawLabelParams prm)
         {
-            DrawElementsParams.ElementParams imageElement = DrawElementsParams.ElementParams.Default;
             var image = prm.Image;
-            var indexAccel = prm.IndexAccel;
-            var s = prm.Text;
-            string[]? splitText = null;
-            var font = prm.Font;
-            var foreColor = prm.ForegroundColor;
 
-            var backColor = prm.BackgroundColor;
-            var isVertical = prm.IsVertical;
-            var isVerticalText = prm.IsVerticalText;
-            var drawDebugCorners = prm.DrawDebugCorners || DrawDebugCorners;
-            var imageVerticalAlignment = prm.ImageVerticalAlignment;
-            var imageHorizontalAlignment = prm.ImageHorizontalAlignment;
-
-            var textHorizontalAlignment = prm.TextHorizontalAlignment;
-            var lineDistance = prm.LineDistance;
-
-            var hasNewLineChars = prm.Flags.HasFlag(DrawLabelFlags.TextHasNewLineChars);
-
-            if (hasNewLineChars)
-            {
-                if (StringUtils.ContainsNewLineChars(s))
-                {
-                    splitText = StringUtils.Split(s, false);
-                }
-                else
-                {
-                    hasNewLineChars = false;
-                }
-            }
-
-            if (image is not null)
-            {
-                imageElement = new()
-                {
-                    IsImage = true,
-                    GetSize = () =>
-                    {
-                        var result = image.SizeDip(ScaleFactor);
-                        return result;
-                    },
-                    Draw = (dc, rect) =>
-                    {
-                        dc.DrawImage(image, rect.Location);
-
-#if DEBUG
-                        if (drawDebugCorners)
-                            BorderSettings.DrawDesignCorners(dc, rect, BorderSettings.DebugBorderBlue);
-#endif
-                    },
-                    Alignment = GetImageAlignment(),
-                };
-            }
-
-            HVAlignment GetImageAlignment()
-            {
-                if (isVertical)
-                {
-                    return (
-                        HorizontalAlignment.Center,
-                        imageVerticalAlignment ?? VerticalAlignment.Top);
-                }
-                else
-                {
-                    return (
-                        imageHorizontalAlignment ?? HorizontalAlignment.Left,
-                        imageVerticalAlignment ?? VerticalAlignment.Center);
-                }
-            }
-
-            HVAlignment GetTextAlignment()
-            {
-                if (isVertical)
-                    return (HorizontalAlignment.Center, VerticalAlignment.Top);
-                else
-                    return (HorizontalAlignment.Left, VerticalAlignment.Center);
-            }
-
-            TextAndFontStyle[]? parsed = prm.TextAndFontStyle;
-
-            if(parsed is null)
-            {
-                if (prm.Flags.HasFlag(DrawLabelFlags.TextHasBold))
-                {
-                    parsed = RegexUtils.GetBoldTagSplitted(s);
-                }
-                else
-                if (indexAccel >= 0)
-                {
-                    parsed = StringUtils.ParseTextWithIndexAccel(
-                        s,
-                        indexAccel,
-                        FontStyle.Underline);
-                }
-            }
-
-            DrawElementsParams.ElementParams textElement = new()
-            {
-                GetSize = () =>
-                {
-                    if (parsed is null)
-                    {
-                        SizeD result;
-
-                        if(splitText is null)
-                        {
-                            result = MeasureText(s, font);
-
-                            if (isVerticalText)
-                            {
-                                result.SwapWidthAndHeight();
-                            }
-                        }
-                        else
-                        {
-                            result = DrawStrings(
-                                RectD.Empty,
-                                font,
-                                splitText,
-                                textHorizontalAlignment,
-                                lineDistance);
-                        }
-
-                        return result;
-                    }
-                    else
-                    {
-                        var result = DrawTextWithFontStyle(
-                                    parsed,
-                                    PointD.Empty,
-                                    font,
-                                    Color.Empty);
-                        return result;
-                    }
-                },
-                Draw = (dc, rect) =>
-                {
-                    if (parsed is null)
-                    {
-                        if (splitText is null)
-                        {
-                            if (isVerticalText)
-                            {
-                                DrawTextWithAngle(
-                                    s,
-                                    (rect.X + rect.Width, rect.Y),
-                                    font,
-                                    foreColor,
-                                    backColor,
-                                    270);
-                            }
-                            else
-                                DrawText(s, rect.Location, font, foreColor, backColor);
-                        }
-                        else
-                        {
-                            DrawStrings(
-                                (rect.Location, SizeD.Empty),
-                                font,
-                                splitText,
-                                textHorizontalAlignment,
-                                lineDistance,
-                                foreColor,
-                                backColor);
-                        }
-                    }
-                    else
-                    {
-                        DrawTextWithFontStyle(parsed, rect.Location, font, foreColor, backColor);
-                    }
-
-#if DEBUG
-                    if (drawDebugCorners)
-                        BorderSettings.DrawDesignCorners(dc, rect, BorderSettings.DebugBorderBlue);
-#endif
-                },
-                Alignment = GetTextAlignment(),
-            };
+            DrawElementParams imageElement = DrawElementParams.CreateImageElement(ref prm);
+            DrawElementParams textElement = DrawElementParams.CreateTextElement(ref prm);
 
             DrawElementsParams drawParams = new();
 
-            if (image is null)
-                drawParams.Elements = [textElement];
+            if(prm.PrefixElements is not null || prm.SuffixElements is not null)
+            {
+                if (image is null)
+                {
+                    drawParams.Elements = ArrayUtils.CombineArrays<DrawElementParams>(
+                        prm.PrefixElements,
+                        [textElement],
+                        prm.SuffixElements);
+                }
+                else
+                {
+                    drawParams.Elements = ArrayUtils.CombineArrays<DrawElementParams>(
+                        prm.PrefixElements,
+                        [imageElement, textElement],
+                        prm.SuffixElements);
+                }
+            }
             else
-                drawParams.Elements = [imageElement, textElement];
+            {
+                if (image is null)
+                {
+                    drawParams.Elements = [textElement];
+                }
+                else
+                {
+                    drawParams.Elements = [imageElement, textElement];
+                }
+            }
 
-            drawParams.IsVertical = isVertical;
+            drawParams.IsVertical = prm.IsVertical;
             drawParams.Distance = prm.ImageLabelDistance;
             drawParams.Rect = prm.Rect;
             drawParams.Alignment = prm.Alignment;
@@ -621,7 +470,7 @@ namespace Alternet.Drawing
 
             for (int i = 0; i < length; i++)
             {
-                elementSizes[i] = prm.Elements[i].GetSize();
+                elementSizes[i] = prm.Elements[i].GetSize(this);
             }
 
             prm.ResultSizes = elementSizes;
@@ -728,7 +577,7 @@ namespace Alternet.Drawing
                 }
             }
 
-            void DrawElement(in DrawElementsParams.ElementParams element, RectD rect)
+            void DrawElement(in DrawElementParams element, RectD rect)
             {
                 if (!visible)
                     return;
@@ -762,7 +611,7 @@ namespace Alternet.Drawing
             /// <summary>
             /// Gets or sets array of elements to draw.
             /// </summary>
-            public ElementParams[] Elements = [];
+            public DrawElementParams[] Elements = [];
 
             /// <summary>
             /// Gets elements bounding rectangle after drawing.
@@ -816,60 +665,322 @@ namespace Alternet.Drawing
             public DrawElementsParams()
             {
             }
+        }
+
+        /// <summary>
+        /// Contains draw element parameters.
+        /// </summary>
+        public struct DrawElementParams
+        {
+            /// <summary>
+            /// Gets default element.
+            /// </summary>
+            public static readonly DrawElementParams Default = new();
 
             /// <summary>
-            /// Contains element parameters
+            /// Gets or sets element size function.
             /// </summary>
-            public struct ElementParams
+            public Func<Graphics, SizeD> GetSize;
+
+            /// <summary>
+            /// Gets or sets element draw function.
+            /// </summary>
+            public Action<Graphics, RectD> Draw;
+
+            /// <summary>
+            /// Gets or sets element alignment.
+            /// </summary>
+            public HVAlignment Alignment;
+
+            /// <summary>
+            /// Gets or sets whether element is image.
+            /// </summary>
+            public bool IsImage;
+
+            /// <summary>
+            /// Initializes a new instance of the <see cref="DrawElementParams"/> struct.
+            /// </summary>
+            public DrawElementParams()
             {
-                /// <summary>
-                /// Gets default element.
-                /// </summary>
-                public static readonly ElementParams Default = new();
+                GetSize = (_) => SizeD.Empty;
+                Draw = (_, _) => { };
+                Alignment = (HorizontalAlignment.Left, VerticalAlignment.Center);
+            }
 
-                /// <summary>
-                /// Gets or sets element size function.
-                /// </summary>
-                public Func<SizeD> GetSize;
+            /// <summary>
+            /// Initializes a new instance of the <see cref="DrawElementParams"/> struct
+            /// with the specified parameters.
+            /// </summary>
+            public DrawElementParams(
+                Func<Graphics, SizeD> getSize,
+                Action<Graphics, RectD> draw,
+                HVAlignment alignment)
+            {
+                GetSize = getSize;
+                Draw = draw;
+                Alignment = alignment;
+            }
 
-                /// <summary>
-                /// Gets or sets element draw function.
-                /// </summary>
-                public Action<Graphics, RectD> Draw;
+            /// <summary>
+            /// Creates a <see cref="DrawElementParams"/> object for rendering an image
+            /// element based on the specified SVG image, size, and optional color.
+            /// </summary>
+            /// <remarks>If both <paramref name="size"/> and <paramref name="color"/>
+            /// are <see langword="null"/>, the method uses default values derived
+            /// from the provided <paramref name="control"/>.
+            /// The resulting image element is created with the specified or default
+            /// size and color.</remarks>
+            /// <param name="control">The control associated with the image element.
+            /// This is used to determine default size and color if not
+            /// explicitly provided. Can be <see langword="null"/>.</param>
+            /// <param name="svg">The <see cref="SvgImage"/> to be rendered
+            /// as the image element.</param>
+            /// <param name="size">The size of the image in pixels.
+            /// If <see langword="null"/>, a default size is determined based on the
+            /// <paramref name="control"/>.</param>
+            /// <param name="color">The color to apply to the SVG image.
+            /// If <see langword="null"/>, a default color is determined based on
+            /// the <paramref name="control"/>.</param>
+            /// <returns>A <see cref="DrawElementParams"/> object representing
+            /// the configured image element.</returns>
+            public static DrawElementParams CreateImageElement(
+                AbstractControl? control,
+                SvgImage svg,
+                int? size,
+                Color? color = null)
+            {
+                size ??= ToolBarUtils.GetDefaultImageSize(control).Width;
+                color ??= control?.GetSvgColor(KnownSvgColor.Normal);
+                var normalImage = svg.ImageWithColor(size.Value, color);
 
-                /// <summary>
-                /// Gets or sets element alignment.
-                /// </summary>
-                public HVAlignment Alignment;
+                return CreateImageElement(normalImage);
+            }
 
-                /// <summary>
-                /// Gets or sets whether element is image.
-                /// </summary>
-                public bool IsImage;
+            /// <summary>
+            /// Creates a new image element for rendering using the specified image.
+            /// </summary>
+            /// <param name="image">The image to be used for the element.
+            /// Cannot be <see langword="null"/>.</param>
+            /// <returns>A <see cref="DrawElementParams"/> object configured
+            /// to render the specified image.</returns>
+            public static DrawElementParams CreateImageElement(Image? image)
+            {
+                DrawLabelParams prm = new();
+                prm.Image = image;
+                return CreateImageElement(ref prm);
+            }
 
-                /// <summary>
-                /// Initializes a new instance of the <see cref="ElementParams"/> struct.
-                /// </summary>
-                public ElementParams()
+            /// <summary>
+            /// Creates an image element based on the specified drawing parameters.
+            /// </summary>
+            /// <remarks>The returned <see cref="DrawElementParams"/> object includes
+            /// the size calculation and drawing logic for the image, as well
+            /// as alignment settings derived from the
+            /// provided parameters.</remarks>
+            /// <param name="prm">A reference to the <see cref="DrawLabelParams"/>
+            /// structure containing the parameters for drawing
+            /// the image, including the image source and alignment settings.</param>
+            /// <returns>An <see cref="DrawElementParams"/> object representing
+            /// the image element to be drawn, or <see langword="null"/> if
+            /// the <see cref="DrawLabelParams.Image"/> property
+            /// is <see langword="null"/>.</returns>
+            public static DrawElementParams CreateImageElement(ref DrawLabelParams prm)
+            {
+                var image = prm.Image;
+
+                if (image is null)
+                    return DrawElementParams.Default;
+
+#if DEBUG
+                var drawDebugCorners = prm.DrawDebugCorners || Graphics.DrawDebugCorners;
+#endif
+
+                DrawElementParams imageElement = new()
                 {
-                    GetSize = () => SizeD.Empty;
-                    Draw = (_, _) => { };
-                    Alignment = (HorizontalAlignment.Left, VerticalAlignment.Center);
+                    IsImage = true,
+                    GetSize = (dc) =>
+                    {
+                        var result = image.SizeDip(dc.ScaleFactor);
+                        return result;
+                    },
+                    Draw = (dc, rect) =>
+                    {
+                        dc.DrawImage(image, rect.Location);
+
+#if DEBUG
+                        if (drawDebugCorners)
+                        {
+                            BorderSettings.DrawDesignCorners(
+                                dc,
+                                rect,
+                                BorderSettings.DebugBorderBlue);
+                        }
+#endif
+                    },
+                    Alignment = prm.GetImageAlignment(),
+                };
+
+                return imageElement;
+            }
+
+            /// <summary>
+            /// Creates a text element with specified parameters for rendering
+            /// text and associated styles.
+            /// </summary>
+            /// <remarks>This method processes the input parameters to handle
+            /// various text rendering scenarios, such as vertical text,
+            /// multi-line text, and text with special formatting
+            /// (e.g., bold or underlined).</remarks>
+            /// <param name="prm">A reference to the <see cref="DrawLabelParams"/>
+            /// structure containing the text, font, colors, alignment,
+            /// and other rendering options.</param>
+            /// <returns>An <see cref="DrawElementParams"/> object that encapsulates
+            /// the logic for measuring and drawing the text
+            /// element, including alignment and font styles.</returns>
+            public static DrawElementParams CreateTextElement(ref DrawLabelParams prm)
+            {
+                var image = prm.Image;
+                var indexAccel = prm.IndexAccel;
+                var s = prm.Text;
+                string[]? splitText = null;
+                var font = prm.Font;
+                var foreColor = prm.ForegroundColor;
+                var backColor = prm.BackgroundColor;
+                var isVertical = prm.IsVertical;
+                var isVerticalText = prm.IsVerticalText;
+                var drawDebugCorners = prm.DrawDebugCorners || Graphics.DrawDebugCorners;
+                var imageVerticalAlignment = prm.ImageVerticalAlignment;
+                var imageHorizontalAlignment = prm.ImageHorizontalAlignment;
+
+                var textHorizontalAlignment = prm.TextHorizontalAlignment;
+                var lineDistance = prm.LineDistance;
+
+                var hasNewLineChars = prm.Flags.HasFlag(DrawLabelFlags.TextHasNewLineChars);
+
+                if (hasNewLineChars)
+                {
+                    if (StringUtils.ContainsNewLineChars(s))
+                    {
+                        splitText = StringUtils.Split(s, false);
+                    }
+                    else
+                    {
+                        hasNewLineChars = false;
+                    }
                 }
 
-                /// <summary>
-                /// Initializes a new instance of the <see cref="ElementParams"/> struct
-                /// with the specified parameters.
-                /// </summary>
-                public ElementParams(
-                    Func<SizeD> getSize,
-                    Action<Graphics, RectD> draw,
-                    HVAlignment alignment)
+                TextAndFontStyle[]? parsed = prm.TextAndFontStyle;
+
+                if (parsed is null)
                 {
-                    GetSize = getSize;
-                    Draw = draw;
-                    Alignment = alignment;
+                    if (prm.Flags.HasFlag(DrawLabelFlags.TextHasBold))
+                    {
+                        parsed = RegexUtils.GetBoldTagSplitted(s);
+                    }
+                    else
+                    if (indexAccel >= 0)
+                    {
+                        parsed = StringUtils.ParseTextWithIndexAccel(
+                            s,
+                            indexAccel,
+                            FontStyle.Underline);
+                    }
                 }
+
+                DrawElementParams textElement = new()
+                {
+                    GetSize = (dc) =>
+                    {
+                        if (parsed is null)
+                        {
+                            SizeD result;
+
+                            if (splitText is null)
+                            {
+                                result = dc.MeasureText(s, font);
+
+                                if (isVerticalText)
+                                {
+                                    result.SwapWidthAndHeight();
+                                }
+                            }
+                            else
+                            {
+                                result = dc.DrawStrings(
+                                    RectD.Empty,
+                                    font,
+                                    splitText,
+                                    textHorizontalAlignment,
+                                    lineDistance);
+                            }
+
+                            return result;
+                        }
+                        else
+                        {
+                            var result = dc.DrawTextWithFontStyle(
+                                        parsed,
+                                        PointD.Empty,
+                                        font,
+                                        Color.Empty);
+                            return result;
+                        }
+                    },
+                    Draw = (dc, rect) =>
+                    {
+                        if (parsed is null)
+                        {
+                            if (splitText is null)
+                            {
+                                if (isVerticalText)
+                                {
+                                    dc.DrawTextWithAngle(
+                                        s,
+                                        (rect.X + rect.Width, rect.Y),
+                                        font,
+                                        foreColor,
+                                        backColor,
+                                        270);
+                                }
+                                else
+                                    dc.DrawText(s, rect.Location, font, foreColor, backColor);
+                            }
+                            else
+                            {
+                                dc.DrawStrings(
+                                    (rect.Location, SizeD.Empty),
+                                    font,
+                                    splitText,
+                                    textHorizontalAlignment,
+                                    lineDistance,
+                                    foreColor,
+                                    backColor);
+                            }
+                        }
+                        else
+                        {
+                            dc.DrawTextWithFontStyle(
+                                parsed,
+                                rect.Location,
+                                font,
+                                foreColor,
+                                backColor);
+                        }
+
+#if DEBUG
+                        if (drawDebugCorners)
+                        {
+                            BorderSettings.DrawDesignCorners(
+                                dc,
+                                rect,
+                                BorderSettings.DebugBorderBlue);
+                        }
+#endif
+                    },
+                    Alignment = prm.GetTextAlignment(),
+                };
+
+                return textElement;
             }
         }
 
@@ -878,6 +989,16 @@ namespace Alternet.Drawing
         /// </summary>
         public struct DrawLabelParams
         {
+            /// <summary>
+            /// Gets or sets array of elements to draw before the label text and image.
+            /// </summary>
+            public DrawElementParams[]? PrefixElements;
+
+            /// <summary>
+            /// Gets or sets array of elements to draw after the label text and image.
+            /// </summary>
+            public DrawElementParams[]? SuffixElements;
+
             /// <summary>
             /// Gets or sets vertical alignment of the image.
             /// </summary>
@@ -963,7 +1084,8 @@ namespace Alternet.Drawing
             public RectD Rect;
 
             /// <summary>
-            /// Gets or sets alignment of the text block. Default is <see cref="HVAlignment.TopLeft"/>.
+            /// Gets or sets alignment of the text block.
+            /// Default is <see cref="HVAlignment.TopLeft"/>.
             /// </summary>
             public HVAlignment Alignment = HVAlignment.TopLeft;
 
@@ -1044,6 +1166,38 @@ namespace Alternet.Drawing
                 Rect = rect;
                 IndexAccel = indexAccel;
                 Alignment = alignment ?? HVAlignment.TopLeft;
+            }
+
+            /// <summary>
+            /// Determines the image alignment based on the current orientation.
+            /// </summary>
+            /// <returns>A tuple containing the horizontal and vertical alignment.</returns>
+            public readonly HVAlignment GetImageAlignment()
+            {
+                if (IsVertical)
+                {
+                    return (
+                        HorizontalAlignment.Center,
+                        ImageVerticalAlignment ?? VerticalAlignment.Top);
+                }
+                else
+                {
+                    return (
+                        ImageHorizontalAlignment ?? HorizontalAlignment.Left,
+                        ImageVerticalAlignment ?? VerticalAlignment.Center);
+                }
+            }
+
+            /// <summary>
+            /// Determines the text alignment based on the current orientation.
+            /// </summary>
+            /// <returns>A tuple containing the horizontal and vertical alignment.</returns>
+            public readonly HVAlignment GetTextAlignment()
+            {
+                if (IsVertical)
+                    return (HorizontalAlignment.Center, VerticalAlignment.Top);
+                else
+                    return (HorizontalAlignment.Left, VerticalAlignment.Center);
             }
         }
     }
