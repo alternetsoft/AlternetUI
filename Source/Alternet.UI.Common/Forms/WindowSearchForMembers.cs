@@ -160,19 +160,26 @@ namespace Alternet.UI
 
         private void ResetListBox(Action? afterThreadStopped)
         {
-            if(controller is not null)
+            if (controller is not null)
             {
-                controller.ThreadActionFinished = () =>
+                if (!controller.IsStopped)
                 {
-                    listBox.RemoveAll();
-                    statusPanel?.SetText(0);
-                    afterThreadStopped?.Invoke();
-                };
-
-                StopThread();
+                    controller.ThreadActionFinished = MyAction;
+                    StopThread();
+                    return;
+                }
+                else
+                {
+                    MyAction();
+                }
             }
-            else
+
+            MyAction();
+
+            void MyAction()
             {
+                listBox.RemoveAll();
+                statusPanel?.SetText(0);
                 afterThreadStopped?.Invoke();
             }
         }
@@ -181,6 +188,7 @@ namespace Alternet.UI
         {
             if (DisposingOrDisposed)
                 return;
+            App.DebugLogIf("ComboBox_TextChanged", false);
             StartThread();
         }
 
