@@ -13,6 +13,73 @@ namespace Alternet.UI
     public static class ArrayUtils
     {
         /// <summary>
+        /// Combines up to three arrays of type <typeparamref name="T"/> into a single array.
+        /// </summary>
+        /// <typeparam name="T">The type of elements in the arrays.</typeparam>
+        /// <param name="first">The first array (required).</param>
+        /// <param name="second">The second array (optional, defaults to null).</param>
+        /// <param name="third">The third array (optional, defaults to null).</param>
+        /// <returns>A new array containing all elements from the provided arrays in order.</returns>
+        public static T[] CombineArrays<T>(T[]? first, T[]? second = null, T[]? third = null)
+        {
+            int totalLength = (first?.Length ?? 0) + (second?.Length ?? 0) + (third?.Length ?? 0);
+            T[] result = new T[totalLength];
+
+            int offset = 0;
+
+            if (first != null)
+            {
+                Array.Copy(first, 0, result, offset, first.Length);
+                offset += first.Length;
+            }
+
+            if (second != null)
+            {
+                Array.Copy(second, 0, result, offset, second.Length);
+                offset += second.Length;
+            }
+
+            if (third != null)
+            {
+                Array.Copy(third, 0, result, offset, third.Length);
+            }
+
+            return result;
+        }
+
+        /// <summary>
+        /// Combines multiple arrays of type <typeparamref name="T"/> into a single array.
+        /// </summary>
+        /// <typeparam name="T">The type of elements in the arrays.</typeparam>
+        /// <param name="arrays">A sequence of arrays to combine. Null arrays are skipped.</param>
+        /// <returns>A new array containing all elements from the provided arrays in order.</returns>
+        public static T[] CombineArrays<T>(IEnumerable<T[]?> arrays)
+        {
+            if (arrays == null)
+                return Array.Empty<T>();
+
+            int totalLength = 0;
+            foreach (var arr in arrays)
+            {
+                totalLength += arr?.Length ?? 0;
+            }
+
+            T[] result = new T[totalLength];
+            int offset = 0;
+
+            foreach (var arr in arrays)
+            {
+                if (arr != null)
+                {
+                    Array.Copy(arr, 0, result, offset, arr.Length);
+                    offset += arr.Length;
+                }
+            }
+
+            return result;
+        }
+
+        /// <summary>
         /// Checks whether two arrays are equal.
         /// </summary>
         /// <typeparam name="T">Type of the items.</typeparam>
