@@ -1824,7 +1824,7 @@ namespace Alternet.UI
 
             base.OnKeyDown(e);
 
-            if(e.IsHandledOrSupressed)
+            if(e.IsHandledOrSupressed || Count == 0)
                 return;
 
             ItemClickFlags flags = ItemClickFlags.Keyboard;
