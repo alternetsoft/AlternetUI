@@ -99,5 +99,30 @@ namespace Alternet.UI
             ForegroundColor = colors.ForegroundColor;
             TitleForegroundColor = colors.ForegroundColor;
         }
+
+        /// <summary>
+        /// Configures the border settings with the specified color, corner radius, and radius unit.
+        /// </summary>
+        /// <remarks>If the border settings are not already initialized,
+        /// this method will create a new
+        /// instance of the border configuration.</remarks>
+        /// <param name="color">The color to apply to the border.</param>
+        /// <param name="radiusIsPercent">A value indicating whether the corner radius
+        /// is specified as a percentage of the element's size.
+        /// <see langword="true"/> if the radius is a percentage;
+        /// otherwise, <see langword="false"/>.</param>
+        /// <param name="cornerRadius">The uniform corner radius to apply to the border.
+        /// Must be a non-negative value.</param>
+        public virtual void SetBorder(
+            Color color,
+            bool radiusIsPercent = true,
+            double cornerRadius = 0)
+        {
+            if (Border is null)
+                Border = new BorderSettings();
+            Border.Color = color;
+            Border.UniformCornerRadius = cornerRadius;
+            Border.UniformRadiusIsPercent = radiusIsPercent;
+        }
     }
 }
