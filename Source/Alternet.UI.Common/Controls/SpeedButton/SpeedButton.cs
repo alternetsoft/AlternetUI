@@ -181,6 +181,7 @@ namespace Alternet.UI
         private CommandSourceStruct commandSource;
         private ImageToText imageToText = ImageToText.Horizontal;
         private CheckedSpreadMode stickySpreadMode;
+        private RightSideElementKind rightSideElementKind;
 
         static SpeedButton()
         {
@@ -264,12 +265,35 @@ namespace Alternet.UI
             drawable.CenterHorz = true;
             drawable.CenterVert = true;
             drawable.Stretch = false;
+
+            label.BeforeDrawText += OnBeforeDrawLabel;
         }
 
         /// <summary>
         /// Occurs when <see cref="Sticky"/> property is changed.
         /// </summary>
         public event EventHandler? StickyChanged;
+
+        /// <summary>
+        /// Specifies the kind of text displayed on the right side of the control.
+        /// </summary>
+        public enum RightSideElementKind
+        {
+            /// <summary>
+            /// No right-side text is displayed.
+            /// </summary>
+            None,
+
+            /// <summary>
+            /// A key gesture (such as a keyboard shortcut) is displayed on the right side.
+            /// </summary>
+            KeyGesture,
+
+            /// <summary>
+            /// A value of <see cref="RightSideText"/> property is displayed on the right side.
+            /// </summary>
+            RightSideText,
+        }
 
         /// <summary>
         /// Enumerates known color and style themes for the <see cref="SpeedButton"/>.
@@ -383,6 +407,32 @@ namespace Alternet.UI
                 {
                     Label.IsVerticalText = value;
                 });
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets the text displayed on the right side of the control.
+        /// </summary>
+        public virtual object? RightSideText { get; set; }
+
+        /// <summary>
+        /// Gets or sets the type of element displayed on the right side of the control.
+        /// </summary>
+        /// <remarks>Changing this property triggers a layout update and invalidates the control for
+        /// redrawing.</remarks>
+        public virtual RightSideElementKind RightSideElement
+        {
+            get
+            {
+                return rightSideElementKind;
+            }
+
+            set
+            {
+                if (rightSideElementKind == value)
+                    return;
+                rightSideElementKind = value;
+                PerformLayoutAndInvalidate();
             }
         }
 
@@ -1611,6 +1661,64 @@ namespace Alternet.UI
                 case KnownTheme.Default:
                 default:
                     return DefaultTheme;
+            }
+        }
+
+        /// <summary>
+        /// Retrieves the element displayed on the right side based on the current configuration.
+        /// </summary>
+        /// <remarks>Override this method in a derived class to customize
+        /// the behavior for determining the right-side element.</remarks>
+        /// <returns>An object representing the right-side element.
+        /// Returns <see langword="null"/> if no element is configured
+        /// or if the configuration is unrecognized. Possible return values include:
+        /// <list type="bullet">
+        /// <item><description><see langword="null"/> if <see cref="RightSideElementKind"/>
+        /// is <see
+        /// cref="RightSideElementKind.None"/>.</description></item>
+        /// <item><description>A string representing the
+        /// shortcut text if <see cref="RightSideElementKind"/> is <see
+        /// cref="RightSideElementKind.KeyGesture"/>.</description></item>
+        /// <item><description>The value of <see
+        /// cref="RightSideText"/> if <see cref="RightSideElementKind"/> is <see
+        /// cref="RightSideElementKind.RightSideText"/>.</description></item>
+        /// </list></returns>
+        protected virtual object? GetRightSideElement()
+        {
+            return rightSideElementKind switch
+            {
+                RightSideElementKind.None => null,
+                RightSideElementKind.KeyGesture => GetShortcutText(useTemplate: false),
+                RightSideElementKind.RightSideText => RightSideText,
+                _ => null,
+            };
+        }
+
+        /// <summary>
+        /// Invoked before a label is drawn, allowing for custom handling or modifications.
+        /// </summary>
+        /// <remarks>This method is intended to be overridden in a derived class to provide custom
+        /// behavior before a label is drawn.</remarks>
+        /// <param name="sender">The source of the event, typically the object raising the event.</param>
+        /// <param name="e">An <see cref="EventArgs"/> instance containing the event data.</param>
+        protected virtual void OnBeforeDrawLabel(object? sender, EventArgs e)
+        {
+            if (ImageToText != ImageToText.Horizontal || !TextVisible)
+                return;
+
+            var rightSide = GetRightSideElement();
+
+            if (rightSide is not string s)
+                return;
+
+            label.UpdateDrawLabelParams(UpdateLabelParams);
+
+            void UpdateLabelParams(ref Graphics.DrawLabelParams prm)
+            {
+                var spacerElement = Graphics.DrawElementParams.CreateSpacerElement(spacer.Size);
+                var textElement = Graphics.DrawElementParams.CreateTextElement(ref prm, s);
+                textElement.Alignment = textElement.Alignment.WithHorizontal(HorizontalAlignment.Right);
+                prm.SuffixElements = [spacerElement, textElement];
             }
         }
 
