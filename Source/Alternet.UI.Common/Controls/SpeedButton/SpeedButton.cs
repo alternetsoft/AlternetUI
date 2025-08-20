@@ -1549,6 +1549,74 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Sets the label's image using the specified SVG image, button type, alignment, and size.
+        /// </summary>
+        /// <remarks>This method updates the label's image and alignment properties.
+        /// The image is aligned
+        /// to the right horizontally and centered vertically by default.</remarks>
+        /// <param name="svg">The SVG image to be displayed on the label.
+        /// Can be <see langword="null"/> to remove the current image.</param>
+        /// <param name="btn">The button type that determines the style or context of the image.
+        /// Can be <see langword="null"/> for default behavior.</param>
+        /// <param name="align">The horizontal and vertical alignment of the image
+        /// relative to the label. Defaults to <see langword="null"/>, which uses the
+        /// label's default alignment.</param>
+        /// <param name="size">The size of the image in pixels.
+        /// Can be <see langword="null"/> to use the default size.</param>
+        public virtual void SetLabelImage(
+            SvgImage? svg,
+            KnownButton? btn = null,
+            HVAlignment? align = null,
+            CoordValue? size = null)
+        {
+            DoInsideLayout(() =>
+            {
+                Label.ImageHorizontalAlignment = align?.Horizontal ?? HorizontalAlignment.Right;
+                Label.ImageVerticalAlignment = align?.Vertical ?? VerticalAlignment.Center;
+                Label.SetSvgImage(svg, btn, size);
+            });
+        }
+
+        /// <summary>
+        /// Sets the label image to a default arrow image, typically used to indicate
+        /// a submenu or navigation direction.
+        /// </summary>
+        /// <param name="align">The alignment of the label image.
+        /// If <see langword="null"/>, a default alignment is used.</param>
+        /// <param name="size">The size of the label image.
+        /// If <see langword="null"/>, a default size is used.</param>
+        public virtual void SetLabelImageAsMenuArrow(
+            HVAlignment? align = null,
+            CoordValue? size = null)
+        {
+            SetLabelImage(
+                MenuItem.DefaultMenuArrowImage ?? KnownSvgImages.ImgTriangleArrowRight,
+                null,
+                align,
+                size ?? MenuItem.DefaultMenuArrowImageSize);
+        }
+
+        /// <summary>
+        /// Configures the label image to represent a combo box control.
+        /// </summary>
+        /// <remarks>This method sets the label image to a predefined combo box representation,
+        /// using optional parameters to customize its alignment and size.</remarks>
+        /// <param name="align">The alignment of the label image.
+        /// If <see langword="null"/>, a default alignment is used.</param>
+        /// <param name="size">The size of the label image.
+        /// If <see langword="null"/>, a default size is used.</param>
+        public virtual void SetLabelImageAsComboBox(
+            HVAlignment? align = null,
+            CoordValue? size = null)
+        {
+            SetLabelImage(
+                ControlAndButton.DefaultBtnComboBoxSvg,
+                KnownButton.TextBoxCombo,
+                align,
+                size);
+        }
+
+        /// <summary>
         /// Sets the horizontal alignment of the content elements within the control.
         /// </summary>
         /// <remarks>This method updates the horizontal alignment of the content elements,
