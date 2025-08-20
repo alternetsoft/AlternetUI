@@ -15,7 +15,7 @@ namespace Alternet.UI
     /// <see cref="ImageSet"/> contains the same <see cref="Image"/> with different sizes.
     /// </summary>
     [TypeConverter(typeof(ImageSetConverter))]
-    public class ImageSet : ImageContainer<IImageSetHandler>
+    public class ImageSet : ImageContainer<IImageSetHandler>, IImageSource
     {
         /// <summary>
         /// Gets an empty <see cref="ImageSet"/>.
@@ -135,6 +135,20 @@ namespace Alternet.UI
         [Browsable(false)]
         public override bool IsReadOnly
             => Immutable || Handler.IsReadOnly;
+
+        Image? IImageSource.Image => null;
+
+        ImageList? IImageSource.ImageList => null;
+
+        int IImageSource.ImageIndex => 0;
+
+        ImageSet? IImageSource.ImageSet => this;
+
+        SvgImage? IImageSource.SvgImage => null;
+
+        int? IImageSource.SvgSize => null;
+
+        ImageSourceKind IImageSource.Kind => ImageSourceKind.ImageSet;
 
         /// <summary>
         /// Converts the specified <see cref='Image'/> to a <see cref='ImageSet'/>.
@@ -300,7 +314,7 @@ namespace Alternet.UI
                 var result = ImageSet.FromUrl(url);
                 return result;
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 LogUtils.LogExceptionIfDebug(e);
                 return null;

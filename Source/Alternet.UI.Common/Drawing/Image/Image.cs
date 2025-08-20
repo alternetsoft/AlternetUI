@@ -17,7 +17,7 @@ namespace Alternet.Drawing
     /// displayed in a UI control.
     /// </summary>
     [TypeConverter(typeof(ImageConverter))]
-    public partial class Image : HandledObject<IImageHandler>
+    public partial class Image : HandledObject<IImageHandler>, IImageSource
     {
         /// <summary>
         /// Gets or sets a value indicating whether to use SkiaSharp for loading images.
@@ -351,6 +351,20 @@ namespace Alternet.Drawing
         /// </summary>
         [Browsable(false)]
         public virtual Graphics Canvas => GetDrawingContext();
+
+        Image? IImageSource.Image => this;
+
+        ImageList? IImageSource.ImageList => null;
+
+        int IImageSource.ImageIndex => 0;
+
+        ImageSet? IImageSource.ImageSet => null;
+
+        SvgImage? IImageSource.SvgImage => null;
+
+        int? IImageSource.SvgSize => null;
+
+        ImageSourceKind IImageSource.Kind => ImageSourceKind.Image;
 
         /// <summary>
         /// Converts the specified <see cref='SKBitmap'/> to a <see cref='Image'/>.

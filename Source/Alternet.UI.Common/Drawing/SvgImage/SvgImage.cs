@@ -14,7 +14,7 @@ namespace Alternet.Drawing
     /// to speed up loading and getting of different states (and sizes) of the
     /// same image.
     /// </summary>
-    public class SvgImage : BaseObject
+    public class SvgImage : NullImageSource
     {
         /// <summary>
         /// Gets or sets the XML content for an SVG that was loaded with an error.
@@ -530,6 +530,18 @@ namespace Alternet.Drawing
 
             if (data.Length <= size)
                 Array.Resize(ref data, size + 1);
+        }
+
+        /// <inheritdoc/>
+        protected override ImageSourceKind GetImageSourceKind()
+        {
+            return ImageSourceKind.SvgImage;
+        }
+
+        /// <inheritdoc/>
+        protected override SvgImage? GetImageSourceSvgImage()
+        {
+            return this;
         }
 
         internal class Data
