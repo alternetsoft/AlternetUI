@@ -1121,7 +1121,7 @@ namespace Alternet.Drawing
             public RectD Rect;
 
             /// <summary>
-            /// Gets or sets alignment of the text block.
+            /// Gets or sets alignment of the image and text block.
             /// Default is <see cref="HVAlignment.TopLeft"/>.
             /// </summary>
             public HVAlignment Alignment = HVAlignment.TopLeft;
@@ -1183,7 +1183,7 @@ namespace Alternet.Drawing
             /// to <see cref="Color.Empty"/>, background will not be painted.</param>
             /// <param name="image">Optional image.</param>
             /// <param name="rect">Rectangle in which drawing is performed.</param>
-            /// <param name="alignment">Alignment of the text.</param>
+            /// <param name="alignment">Alignment of the image and text block.</param>
             /// <param name="indexAccel">Index of underlined mnemonic character.</param>
             public DrawLabelParams(
                 string text,
