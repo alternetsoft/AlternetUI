@@ -23,6 +23,7 @@ namespace PropertyGridSample
                     if (control is null)
                         return;
                     control.ConfigureAsContextMenu();
+                    (control.Children[0] as SpeedButton)?.SetLabelImageAsMenuArrow();
                 });
 
             PropertyGrid.AddSimpleAction<ToolBarSet>(
