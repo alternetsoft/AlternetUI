@@ -195,7 +195,7 @@ namespace Alternet.UI
             StaticBorderTheme.SetBorderColor(borderColor);
 
             RoundBorderTheme = StaticBorderTheme.Clone();
-            
+
             RoundBorderTheme.SetCornerRadius(
                 DefaultRoundBorderRadius,
                 DefaultRoundBorderRadiusIsPercent);
