@@ -161,17 +161,18 @@ namespace Alternet.UI
 
         private readonly ImageDrawable drawable = new();
 
-        private Action? clickAction;
         private bool sticky;
         private bool stickyToggleOnClick;
-        private ShortcutInfo? shortcut;
         private bool textVisible = false;
         private bool imageVisible = true;
+        private bool isClickRepeated;
+        private bool subscribedClickRepeated;
+
+        private Action? clickAction;
+        private ShortcutInfo? shortcut;
         private KnownTheme useTheme = DefaultUseTheme;
         private KnownTheme useThemeForSticky = DefaultUseThemeForSticky;
         private ControlColorAndStyle? customTheme;
-        private bool isClickRepeated;
-        private bool subscribedClickRepeated;
         private VisualControlState stickyVisualState = VisualControlState.Normal;
         private Color? borderColor;
         private Timer? repeatTimer;
@@ -194,7 +195,10 @@ namespace Alternet.UI
             StaticBorderTheme.SetBorderColor(borderColor);
 
             RoundBorderTheme = StaticBorderTheme.Clone();
-            RoundBorderTheme.SetCornerRadius(DefaultRoundBorderRadius, DefaultRoundBorderRadiusIsPercent);
+            
+            RoundBorderTheme.SetCornerRadius(
+                DefaultRoundBorderRadius,
+                DefaultRoundBorderRadiusIsPercent);
 
             StickyBorderTheme = CreateBordered(borderColor);
             CheckBorderTheme = CreateBordered(DefaultColors.DefaultCheckBoxColor);
@@ -365,7 +369,8 @@ namespace Alternet.UI
         /// Gets or sets a value indicating whether the text should be rendered vertically.
         /// </summary>
         /// <remarks>
-        /// When this property is set, the layout is refreshed to reflect the vertical text orientation.
+        /// When this property is set, the layout is refreshed to reflect
+        /// the vertical text orientation.
         /// </remarks>
         public virtual bool IsVerticalText
         {
@@ -1290,15 +1295,54 @@ namespace Alternet.UI
                 return null;
             }
 
-            var template = ShortcutToolTipTemplate ?? DefaultShortcutToolTipTemplate;
+            var shortcutText = GetShortcutText(true);
 
-            var filteredKeys = KeyInfo.FilterBackendOs(shortcut?.KeyInfo);
-            if (filteredKeys is not null && filteredKeys.Length > 0)
+            if (shortcutText is not null)
             {
-                s += " " + string.Format(template, filteredKeys[0]);
+                s += " " + shortcutText;
             }
 
             return s;
+        }
+
+        /// <summary>
+        /// Retrieves the text representation of the shortcut key,
+        /// optionally formatted using a template.
+        /// </summary>
+        /// <remarks>The method filters the shortcut key information based
+        /// on the backend operating system before generating the text representation.
+        /// If multiple keys are available, only the first key is used.</remarks>
+        /// <param name="useTemplate">A value indicating whether to format the shortcut key
+        /// using a predefined template. If <see langword="true"/>, the shortcut key is
+        /// formatted using the template specified by  <c>ShortcutToolTipTemplate</c>
+        /// or a default template. If <see langword="false"/>, the raw string
+        /// representation of the shortcut key is returned.</param>
+        /// <returns>A string representing the shortcut key. If no shortcut key
+        /// is available or the key is null, the method
+        /// returns <see langword="null"/>.</returns>
+        public virtual string? GetShortcutText(bool useTemplate)
+        {
+            var filteredKeys = KeyInfo.FilterBackendOs(shortcut?.KeyInfo);
+            if (filteredKeys is not null && filteredKeys.Length > 0)
+            {
+                var key = filteredKeys[0];
+
+                if (key is null)
+                    return null;
+
+                if (useTemplate)
+                {
+                    var template = ShortcutToolTipTemplate ?? DefaultShortcutToolTipTemplate;
+                    var result = string.Format(template, key);
+                    return result;
+                }
+                else
+                {
+                    return key.ToString();
+                }
+            }
+
+            return null;
         }
 
         /// <summary>
@@ -1378,7 +1422,8 @@ namespace Alternet.UI
         /// <summary>
         /// Sets the SVG image for the control.
         /// </summary>
-        /// <param name="svg">The SVG image to be set. If null, known button image will be used.</param>
+        /// <param name="svg">The SVG image to be set. If null, known
+        /// button image will be used.</param>
         /// <param name="btn">The known button type. If null, svg image should be specified.</param>
         /// <param name="size">The optional size for the image.
         /// If not specified, the default size for the SVG image would be used.</param>
