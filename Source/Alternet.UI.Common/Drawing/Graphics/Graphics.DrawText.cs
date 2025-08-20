@@ -824,6 +824,32 @@ namespace Alternet.Drawing
             }
 
             /// <summary>
+            /// Creates a spacer element with the specified size and alignment.
+            /// </summary>
+            /// <param name="size">The size of the spacer element,
+            /// defined as a <see cref="SizeD"/>.</param>
+            /// <param name="alignment">The alignment of the spacer element,
+            /// specified as a <see cref="HVAlignment"/>.</param>
+            /// <returns>A <see cref="DrawElementParams"/> object representing
+            /// the spacer element with the specified size and
+            /// alignment.</returns>
+            public static DrawElementParams CreateSpacerElement(
+                SizeD size,
+                HVAlignment? alignment = null)
+            {
+                SizeD GetSize(Graphics dc)
+                {
+                    return size;
+                }
+
+                void Draw(Graphics dc, RectD rect)
+                {
+                }
+
+                return new DrawElementParams(GetSize, Draw, alignment ?? HVAlignment.CenterLeft);
+            }
+
+            /// <summary>
             /// Creates a text element with specified parameters for rendering
             /// text and associated styles.
             /// </summary>
@@ -892,7 +918,6 @@ namespace Alternet.Drawing
                                 FontStyle.Underline);
                         }
                     }
-
                 }
                 else
                 {
