@@ -136,6 +136,13 @@ namespace PropertyGridSample
 
             void InitTestsSpeedButton()
             {
+                AddControlAction<SpeedButton>("Set Right Side", (c) =>
+                {
+                    c.SetContentHorizontalAlignment(HorizontalAlignment.Left);
+                    c.ShortcutKeys = Keys.Control | Keys.F;
+                    c.RightSideElement = SpeedButton.RightSideElementKind.KeyGesture;
+                });
+
                 AddControlAction<SpeedButton>("Set DropDown", (c) =>
                 {
                     c.DropDownMenu = new ContextMenu();
