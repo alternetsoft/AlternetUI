@@ -9,7 +9,7 @@ namespace Alternet.UI
     /// <summary>
     /// Represents the base functionality for all menus.
     /// </summary>
-    public abstract partial class Menu : NonVisualControl
+    public abstract partial class Menu : NonVisualControl, IMenuProperties
     {
         private BaseCollection<MenuItem>? items;
 
@@ -111,6 +111,11 @@ namespace Alternet.UI
                 if (recursive)
                     child.ForEachItem(action, true);
             }
+        }
+
+        IReadOnlyMenuItemProperties IMenuProperties.GetItem(int index)
+        {
+            return Items[index];
         }
 
         /// <summary>

@@ -11,6 +11,22 @@ namespace Alternet.UI
     [ControlCategory("Hidden")]
     public partial class MenuItem : Menu, ICommandSource, IReadOnlyMenuItemProperties
     {
+        /// <summary>
+        /// Gets or sets the default arrow image which is shown when menu item
+        /// has a submenu.
+        /// </summary>
+        public static SvgImage? DefaultMenuArrowImage;
+
+        /// <summary>
+        /// Represents the default size of the menu arrow image.
+        /// </summary>
+        /// <remarks>The size is specified as a <see cref="CoordValue"/> with a value
+        /// of 50 and a unit of <see cref="CoordUnit.Percent"/> (default toolbar image size is
+        /// used as a base value for the calculation).
+        /// This value is used as the default when no specific size is provided for
+        /// menu arrow images.</remarks>
+        public static CoordValue DefaultMenuArrowImageSize = new(75, CoordUnit.Percent);
+
         private KeyGesture? shortcut;
         private MenuItemRole? role;
         private bool isChecked;
@@ -720,11 +736,6 @@ namespace Alternet.UI
         void IReadOnlyMenuItemProperties.DoClick()
         {
             RaiseClick();
-        }
-
-        IReadOnlyMenuItemProperties IReadOnlyMenuItemProperties.GetItem(int index)
-        {
-            return Items[index];
         }
 
         /// <summary>

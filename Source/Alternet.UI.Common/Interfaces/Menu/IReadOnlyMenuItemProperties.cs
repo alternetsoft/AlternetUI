@@ -9,7 +9,7 @@ namespace Alternet.UI
     /// <summary>
     /// Defines read-only properties for a menu item.
     /// </summary>
-    public interface IReadOnlyMenuItemProperties
+    public interface IReadOnlyMenuItemProperties : IMenuProperties
     {
         /// <summary>
         /// Gets the shortcut key gesture associated with the menu item.
@@ -75,20 +75,6 @@ namespace Alternet.UI
         /// Gets a value indicating whether the child items collection contains any elements.
         /// </summary>
         bool HasItems { get; }
-
-        /// <summary>
-        /// Gets the total number of child items currently in the collection.
-        /// </summary>
-        int ItemCount { get; }
-
-        /// <summary>
-        /// Retrieves the child menu item at the specified index.
-        /// </summary>
-        /// <param name="index">The zero-based index of the child menu item to retrieve.
-        /// Must be within the valid range of the child menu items collection.</param>
-        /// <returns>An object implementing <see cref="IReadOnlyMenuItemProperties"/>
-        /// that represents the menu item at the specified index.</returns>
-        IReadOnlyMenuItemProperties GetItem(int index);
 
         /// <summary>
         /// Simulates a click action, triggering any associated event handlers or behaviors.
