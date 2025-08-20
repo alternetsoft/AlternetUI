@@ -48,7 +48,8 @@ namespace Alternet.UI
         /// <summary>
         /// Initializes a new instance of the <see cref="ImageSet"/> with <see cref="Image"/>.
         /// </summary>
-        /// <param name="image">This image will be added to <see cref="ImageContainer{T}.Images"/>.</param>
+        /// <param name="image">This image will be added
+        /// to <see cref="ImageContainer{T}.Images"/>.</param>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public ImageSet(Image image)
             : this()
@@ -143,6 +144,8 @@ namespace Alternet.UI
         int IImageSource.ImageIndex => 0;
 
         ImageSet? IImageSource.ImageSet => this;
+
+        bool IImageSource.IsEmpty => false;
 
         SvgImage? IImageSource.SvgImage => null;
 

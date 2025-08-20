@@ -12,6 +12,8 @@ namespace Alternet.Drawing
     /// </summary>
     public class NullImageSource : BaseObject, IImageSource
     {
+        bool IImageSource.IsEmpty => GetImageSourceIsEmpty();
+
         ImageSourceKind IImageSource.Kind => GetImageSourceKind();
 
         Image? IImageSource.Image => GetImageSourceImage();
@@ -80,6 +82,16 @@ namespace Alternet.Drawing
         protected virtual int? GetImageSourceSvgSize()
         {
             return null;
+        }
+
+        /// <summary>
+        /// Determines whether the image source is empty.
+        /// </summary>
+        /// <returns><see langword="true"/> if the image source is empty;
+        /// otherwise, <see langword="false"/>.</returns>
+        protected virtual bool GetImageSourceIsEmpty()
+        {
+            return true;
         }
     }
 }

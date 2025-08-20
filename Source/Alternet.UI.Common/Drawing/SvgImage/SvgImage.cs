@@ -539,6 +539,12 @@ namespace Alternet.Drawing
         }
 
         /// <inheritdoc/>
+        protected override bool GetImageSourceIsEmpty()
+        {
+            return false;
+        }
+
+        /// <inheritdoc/>
         protected override SvgImage? GetImageSourceSvgImage()
         {
             return this;

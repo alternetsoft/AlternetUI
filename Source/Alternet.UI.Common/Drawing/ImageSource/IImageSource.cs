@@ -18,6 +18,11 @@ namespace Alternet.Drawing
         ImageSourceKind Kind { get; }
 
         /// <summary>
+        /// Gets a value indicating whether the image data is empty.
+        /// </summary>
+        bool IsEmpty { get; }
+
+        /// <summary>
         /// Gets the <see cref="Image"/> instance.
         /// </summary>
         Image? Image { get; }
