@@ -10,6 +10,17 @@ using Alternet.Drawing;
 namespace Alternet.UI
 {
     /// <summary>
+    /// Represents a method that updates the parameters used for drawing a label.
+    /// </summary>
+    /// <remarks>This delegate is typically used to modify or configure
+    /// the drawing parameters for a label
+    /// before rendering. The changes made to the <paramref name="prm"/> parameter will
+    /// directly affect the label's appearance.</remarks>
+    /// <param name="prm">A reference to a <see cref="Graphics.DrawLabelParams"/>
+    /// structure containing the parameters to be updated.</param>
+    public delegate void UpdateDrawLabelParamsDelegate(ref Graphics.DrawLabelParams prm);
+
+    /// <summary>
     /// Represents a text label control.
     /// </summary>
     /// <remarks>
@@ -155,12 +166,6 @@ namespace Alternet.UI
         /// Occurs when the <see cref="Image"/> property changes.
         /// </summary>
         public event EventHandler? ImageChanged;
-
-        /// <summary>
-        /// Gets parameters for drawing label.
-        /// </summary>
-        [Browsable(false)]
-        public Graphics.DrawLabelParams DrawLabelParams => prm;
 
         /// <summary>
         /// Gets or sets whether text is word wrapped in order to fit label in the parent's
@@ -714,6 +719,17 @@ namespace Alternet.UI
 
             DrawDefaultText(dc, rect);
             DefaultPaintDebug(e);
+        }
+
+        /// <summary>
+        /// Updates the parameters used for drawing labels by invoking the specified delegate.
+        /// </summary>
+        /// <param name="updateParams">A delegate that modifies the label drawing parameters.
+        /// If <see langword="null"/>, no update is performed.</param>
+        /// <remarks>You can use it inside the <see cref="BeforeDrawText"/> event.</remarks>
+        public void UpdateDrawLabelParams(UpdateDrawLabelParamsDelegate? updateParams)
+        {
+            updateParams?.Invoke(ref prm);
         }
 
         /// <inheritdoc/>
