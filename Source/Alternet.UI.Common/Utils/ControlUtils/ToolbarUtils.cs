@@ -148,7 +148,7 @@ namespace Alternet.UI
             SvgImage? svg,
             KnownButton? btn,
             AbstractControl control,
-            int? size = null)
+            CoordValue? size = null)
         {
             if (svg is null)
             {
@@ -166,13 +166,17 @@ namespace Alternet.UI
                 return (null, null);
             }
 
-            size ??= ToolBarUtils.GetDefaultImageSize(control).Width;
+            var defaultSize = ToolBarUtils.GetDefaultImageSize(control).Width;
+
+            size ??= new(defaultSize, CoordUnit.Pixel);
+
+            var pixelSize = size.Value.ToPixels(control.ScaleFactor, defaultSize);
 
             var normalColor = control.GetSvgColor(KnownSvgColor.Normal);
             var disabledColor = control.GetSvgColor(KnownSvgColor.Disabled);
 
-            var normalImage = svg.ImageWithColor(size.Value, normalColor);
-            var disabledImage = svg.ImageWithColor(size.Value, disabledColor);
+            var normalImage = svg.ImageWithColor(pixelSize, normalColor);
+            var disabledImage = svg.ImageWithColor(pixelSize, disabledColor);
 
             return (normalImage, disabledImage);
         }
