@@ -16,6 +16,15 @@ namespace PropertyGridSample
     {
         void InitTestsToolBar()
         {
+            PropertyGrid.AddSimpleAction<ToolBar>(
+                "Configure as ContextMenu",
+                () => {
+                    var control = GetSelectedControl<ToolBar>();
+                    if (control is null)
+                        return;
+                    control.ConfigureAsContextMenu();
+                });
+
             PropertyGrid.AddSimpleAction<ToolBarSet>(
                 "Add Sticky Grouped Buttons",
                 TestStickyGroupedButtons);

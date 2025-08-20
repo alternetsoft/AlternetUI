@@ -1356,6 +1356,28 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Configures the toolbar to look and behave as a context menu.
+        /// </summary>
+        /// <remarks>This method sets the layout to vertical and adjusts child elements,
+        /// such as <see cref="SpeedButton"/> instances, to behave as menu items.
+        /// It should be called when the object is intended to function as a context menu.</remarks>
+        public virtual void ConfigureAsContextMenu()
+        {
+            DoInsideLayout(() =>
+            {
+                IsVertical = true;
+
+                foreach (var item in Children)
+                {
+                    if (item is SpeedButton speedButton)
+                    {
+                        speedButton.ConfigureAsMenuItem();
+                    }
+                }
+            });
+        }
+
+        /// <summary>
         /// Gets item 'Enabled' property value.
         /// </summary>
         /// <param name="id">Item id.</param>
