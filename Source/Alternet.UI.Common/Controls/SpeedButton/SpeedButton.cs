@@ -182,6 +182,7 @@ namespace Alternet.UI
         private ImageToText imageToText = ImageToText.Horizontal;
         private CheckedSpreadMode stickySpreadMode;
         private RightSideElementKind rightSideElementKind;
+        private bool isToolTipEnabled = true;
 
         static SpeedButton()
         {
@@ -290,6 +291,11 @@ namespace Alternet.UI
             KeyGesture,
 
             /// <summary>
+            /// A formatted key gesture (such as a keyboard shortcut) is displayed on the right side.
+            /// </summary>
+            KeyGestureFormatted,
+
+            /// <summary>
             /// A value of <see cref="RightSideText"/> property is displayed on the right side.
             /// </summary>
             RightSideText,
@@ -368,6 +374,23 @@ namespace Alternet.UI
         /// Default value is "({0})".
         /// </remarks>
         public static string DefaultShortcutToolTipTemplate { get; set; } = "({0})";
+
+        /// <summary>
+        /// Gets or sets a value indicating whether tooltip is shown
+        /// when mouse hovers over the control.
+        /// </summary>
+        public virtual bool IsToolTipEnabled
+        {
+            get => isToolTipEnabled;
+
+            set
+            {
+                if (isToolTipEnabled == value)
+                    return;
+                isToolTipEnabled = value;
+                UpdateToolTip();
+            }
+        }
 
         /// <summary>
         /// Gets or sets distance between image and label.
@@ -728,6 +751,8 @@ namespace Alternet.UI
 
             set
             {
+                if (ShortcutKeys == value)
+                    return;
                 shortcut = value;
                 UpdateToolTip();
             }
@@ -789,6 +814,8 @@ namespace Alternet.UI
 
             set
             {
+                if (Shortcut == value)
+                    return;
                 shortcut = value;
                 UpdateToolTip();
             }
@@ -813,6 +840,8 @@ namespace Alternet.UI
 
             set
             {
+                if (shortcut == value)
+                    return;
                 shortcut = value;
                 UpdateToolTip();
             }
@@ -1338,6 +1367,9 @@ namespace Alternet.UI
         /// <inheritdoc/>
         public override string? GetRealToolTip()
         {
+            if (!IsToolTipEnabled)
+                return null;
+
             var s = ToolTip;
 
             if (string.IsNullOrWhiteSpace(s))
@@ -1583,6 +1615,24 @@ namespace Alternet.UI
             PerformLayoutAndInvalidate(null, false);
         }
 
+        /// <summary>
+        /// Configures the content to match the appearance of a menu item.
+        /// </summary>
+        /// <remarks>This method adjusts content layout, alignment and other properties
+        /// to match the typical appearance and behavior of a menu item.</remarks>
+        public virtual void ConfigureAsMenuItem()
+        {
+            DoInsideLayout(() =>
+            {
+                TextVisible = true;
+                IsToolTipEnabled = false;
+                SetContentHorizontalAlignment(HorizontalAlignment.Left);
+                Label.TextAlignmentHorizontal = HorizontalAlignment.Fill;
+                Label.HorizontalAlignment = HorizontalAlignment.Fill;
+                RightSideElement = SpeedButton.RightSideElementKind.KeyGesture;
+            });
+        }
+
         /// <inheritdoc/>
         public override void DefaultPaint(PaintEventArgs e)
         {
@@ -1689,6 +1739,7 @@ namespace Alternet.UI
             {
                 RightSideElementKind.None => null,
                 RightSideElementKind.KeyGesture => GetShortcutText(useTemplate: false),
+                RightSideElementKind.KeyGestureFormatted => GetShortcutText(useTemplate: true),
                 RightSideElementKind.RightSideText => RightSideText,
                 _ => null,
             };
