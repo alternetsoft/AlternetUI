@@ -834,14 +834,18 @@ namespace Alternet.Drawing
             /// <param name="prm">A reference to the <see cref="DrawLabelParams"/>
             /// structure containing the text, font, colors, alignment,
             /// and other rendering options.</param>
+            /// <param name="textOverride">The <see langword="string"/> to use as the text
+            /// content for the element, overriding any text specified in <paramref name="prm"/>.</param>
             /// <returns>An <see cref="DrawElementParams"/> object that encapsulates
             /// the logic for measuring and drawing the text
             /// element, including alignment and font styles.</returns>
-            public static DrawElementParams CreateTextElement(ref DrawLabelParams prm)
+            public static DrawElementParams CreateTextElement(
+                ref DrawLabelParams prm,
+                string? textOverride = null)
             {
                 var image = prm.Image;
                 var indexAccel = prm.IndexAccel;
-                var s = prm.Text;
+                var s = textOverride ?? prm.Text;
                 string[]? splitText = null;
                 var font = prm.Font;
                 var foreColor = prm.ForegroundColor;
@@ -871,20 +875,28 @@ namespace Alternet.Drawing
 
                 TextAndFontStyle[]? parsed = prm.TextAndFontStyle;
 
-                if (parsed is null)
+                if(textOverride is null)
                 {
-                    if (prm.Flags.HasFlag(DrawLabelFlags.TextHasBold))
+                    if (parsed is null)
                     {
-                        parsed = RegexUtils.GetBoldTagSplitted(s);
+                        if (prm.Flags.HasFlag(DrawLabelFlags.TextHasBold))
+                        {
+                            parsed = RegexUtils.GetBoldTagSplitted(s);
+                        }
+                        else
+                        if (indexAccel >= 0)
+                        {
+                            parsed = StringUtils.ParseTextWithIndexAccel(
+                                s,
+                                indexAccel,
+                                FontStyle.Underline);
+                        }
                     }
-                    else
-                    if (indexAccel >= 0)
-                    {
-                        parsed = StringUtils.ParseTextWithIndexAccel(
-                            s,
-                            indexAccel,
-                            FontStyle.Underline);
-                    }
+
+                }
+                else
+                {
+                    parsed = null;
                 }
 
                 DrawElementParams textElement = new()
