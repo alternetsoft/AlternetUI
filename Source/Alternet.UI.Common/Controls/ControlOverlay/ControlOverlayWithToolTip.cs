@@ -19,7 +19,7 @@ namespace Alternet.UI
         /// <summary>
         /// Initializes a new instance of the <see cref="ControlOverlayWithToolTip"/> class.
         /// </summary>
-        /// <remarks>This constructor sets up a new control overlay with tooltip functionality. 
+        /// <remarks>This constructor sets up a new control overlay with tooltip functionality.
         /// Additional configuration may be required after initialization to fully
         /// utilize the overlay.</remarks>
         public ControlOverlayWithToolTip()

@@ -570,10 +570,10 @@ namespace Alternet.UI
             }
         }
 
+        ICommandSource IReadOnlyMenuItemProperties.CommandSource => this;
+
         /// <inheritdoc/>
         protected override bool IsDummy => true;
-
-        ICommandSource IReadOnlyMenuItemProperties.CommandSource => this;
 
         /// <summary>
         /// Implicit conversion operator from <see cref="string"/> to

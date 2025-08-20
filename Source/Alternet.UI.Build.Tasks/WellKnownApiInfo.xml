@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ApiInfo>
-  <Assembly Name="Alternet.UI.Common, Version=0.9.748.0, Culture=neutral, PublicKeyToken=7fb0fe57212b4b74">
+  <Assembly Name="Alternet.UI.Common, Version=0.9.749.0, Culture=neutral, PublicKeyToken=7fb0fe57212b4b74">
     <Type Name="XamlX.Runtime.IXamlParentStackProviderV1" />
     <Type Name="XamlX.Runtime.IXamlXmlNamespaceInfoProviderV1" />
     <Type Name="XamlX.Runtime.XamlXmlNamespaceInfoV1" />
@@ -236,6 +236,9 @@
       <Event Name="Disposed" />
       <Event Name="PropertyChanged" />
     </Type>
+    <Type Name="Alternet.Drawing.IImageSource" />
+    <Type Name="Alternet.Drawing.ImageSourceKind" />
+    <Type Name="Alternet.Drawing.NullImageSource" />
     <Type Name="Alternet.Drawing.Bitmap">
       <Event Name="Disposed" />
       <Event Name="PropertyChanged" />
@@ -557,6 +560,8 @@
       <Event Name="AfterExecute" />
       <Event Name="BeforeExecute" />
     </Type>
+    <Type Name="Alternet.UI.CanExecuteCommandSourceDelegate" />
+    <Type Name="Alternet.UI.ExecuteCommandSourceDelegate" />
     <Type Name="Alternet.UI.CommandSourceStruct" />
     <Type Name="Alternet.UI.ICommand">
       <Event Name="CanExecuteChanged" />
@@ -698,6 +703,9 @@
     <Type Name="Alternet.UI.KnownSvgColor" />
     <Type Name="Alternet.UI.TextEllipsizeType" />
     <Type Name="Alternet.UI.TrimTextRules" />
+    <Type Name="Alternet.UI.DragAction" />
+    <Type Name="Alternet.UI.DragDropEffects" />
+    <Type Name="Alternet.UI.RoutingStrategy" />
     <Type Name="Alternet.UI.DialogCloseAction" />
     <Type Name="Alternet.UI.ImeMode" />
     <Type Name="Alternet.UI.Key" />
@@ -730,18 +738,11 @@
     <Type Name="Alternet.UI.SliderOrientation" />
     <Type Name="Alternet.UI.ColumnSortDirection" />
     <Type Name="Alternet.UI.CursorType" />
-    <Type Name="Alternet.UI.DragAction" />
-    <Type Name="Alternet.UI.DragDropEffects" />
     <Type Name="Alternet.UI.FlagsOrEnum" />
     <Type Name="Alternet.UI.GridUnitType" />
     <Type Name="Alternet.UI.HelpNavigator" />
     <Type Name="Alternet.UI.HiddenOrVisible" />
     <Type Name="Alternet.UI.ListBoxSelectionMode" />
-    <Type Name="Alternet.UI.Modifiability" />
-    <Type Name="Alternet.UI.PropertyUpdateResult" />
-    <Type Name="Alternet.UI.Readability" />
-    <Type Name="Alternet.UI.RichToolTipKind" />
-    <Type Name="Alternet.UI.RoutingStrategy" />
     <Type Name="Alternet.UI.SelectionMode" />
     <Type Name="Alternet.UI.PropertyGridApplyFlags" />
     <Type Name="Alternet.UI.PropertyGridCreateStyle" />
@@ -762,6 +763,9 @@
     <Type Name="Alternet.UI.PropertyGridSplitterPosFlags" />
     <Type Name="Alternet.UI.PropertyGridValidationFailure" />
     <Type Name="Alternet.UI.PropertyGridValueFormatFlags" />
+    <Type Name="Alternet.UI.Modifiability" />
+    <Type Name="Alternet.UI.PropertyUpdateResult" />
+    <Type Name="Alternet.UI.Readability" />
     <Type Name="Alternet.UI.RichTextBoxScrollBars" />
     <Type Name="Alternet.UI.ScrollEventType" />
     <Type Name="Alternet.UI.ApplicationAppearance" />
@@ -796,6 +800,8 @@
     <Type Name="Alternet.UI.TextBoxTextAttrLineSpacing" />
     <Type Name="Alternet.UI.TextBoxTextAttrUnderlineType" />
     <Type Name="Alternet.UI.TextBoxTextWrap" />
+    <Type Name="Alternet.UI.OverlayToolTipFlags" />
+    <Type Name="Alternet.UI.RichToolTipKind" />
     <Type Name="Alternet.UI.TreeViewButtonsKind" />
     <Type Name="Alternet.UI.TreeViewCreateStyle" />
     <Type Name="Alternet.UI.TreeViewHitTestLocations" />
@@ -5204,6 +5210,7 @@
       <Event Name="PropertyChanged" />
     </Type>
     <Type Name="Alternet.UI.ControlOverlay" />
+    <Type Name="Alternet.UI.ControlOverlayFlags" />
     <Type Name="Alternet.UI.ControlOverlayWithEvent">
       <Event Name="Paint" />
     </Type>
@@ -5522,6 +5529,7 @@
       <Event Name="Disposed" />
       <Event Name="PropertyChanged" />
     </Type>
+    <Type Name="Alternet.UI.UpdateDrawLabelParamsDelegate" />
     <Type Name="Alternet.UI.Label">
       <Event Name="BeforeDrawText" />
       <Event Name="ImageChanged" />
@@ -8337,6 +8345,7 @@
       <Event Name="PropertyChanged" />
     </Type>
     <Type Name="Alternet.UI.MenuItem">
+      <Event Name="Changed" />
       <Event Name="Opened" />
       <Event Name="Closed" />
       <Event Name="Highlighted" />
@@ -8345,6 +8354,7 @@
       <Event Name="RoleChanged" />
       <Event Name="ImageChanged" />
       <Event Name="DisabledImageChanged" />
+      <Event Name="ClickActionChanged" />
       <Event Name="ContextMenuCreated" />
       <Event Name="MouseHover" />
       <Event Name="CellChanged" />
@@ -8512,6 +8522,7 @@
       <Event Name="PropertyChanged" />
     </Type>
     <Type Name="Alternet.UI.ToolStripMenuItem">
+      <Event Name="Changed" />
       <Event Name="Opened" />
       <Event Name="Closed" />
       <Event Name="Highlighted" />
@@ -8520,6 +8531,7 @@
       <Event Name="RoleChanged" />
       <Event Name="ImageChanged" />
       <Event Name="DisabledImageChanged" />
+      <Event Name="ClickActionChanged" />
       <Event Name="ContextMenuCreated" />
       <Event Name="MouseHover" />
       <Event Name="CellChanged" />
@@ -8595,6 +8607,7 @@
       <Event Name="PropertyChanged" />
     </Type>
     <Type Name="Alternet.UI.ToolStripSeparator">
+      <Event Name="Changed" />
       <Event Name="Opened" />
       <Event Name="Closed" />
       <Event Name="Highlighted" />
@@ -8603,6 +8616,7 @@
       <Event Name="RoleChanged" />
       <Event Name="ImageChanged" />
       <Event Name="DisabledImageChanged" />
+      <Event Name="ClickActionChanged" />
       <Event Name="ContextMenuCreated" />
       <Event Name="MouseHover" />
       <Event Name="CellChanged" />
@@ -14946,6 +14960,7 @@
       <Event Name="Disposed" />
       <Event Name="PropertyChanged" />
     </Type>
+    <Type Name="Alternet.UI.IAssignable`1" />
     <Type Name="Alternet.UI.IBaseObject" />
     <Type Name="Alternet.UI.IBaseObjectWithAttr" />
     <Type Name="Alternet.UI.IBaseObjectWithId" />
@@ -14953,7 +14968,6 @@
       <Event Name="Disposed" />
     </Type>
     <Type Name="Alternet.UI.IImmutableObject" />
-    <Type Name="Alternet.UI.ICustomTypeProvider" />
     <Type Name="Alternet.UI.IControlHandler" />
     <Type Name="Alternet.UI.IAnimationPlayerHandler" />
     <Type Name="Alternet.UI.IButtonHandler" />
@@ -15038,6 +15052,7 @@
     <Type Name="Alternet.UI.IControlOverlay" />
     <Type Name="Alternet.UI.IFocusable" />
     <Type Name="Alternet.UI.ILayoutItem" />
+    <Type Name="Alternet.UI.IReadOnlyMenuItemProperties" />
     <Type Name="Alternet.UI.IWin32Window" />
     <Type Name="Alternet.UI.IWindow">
       <Event Name="MenuChanged" />
@@ -15077,6 +15092,7 @@
     <Type Name="Alternet.UI.IToolTipFactoryHandler" />
     <Type Name="Alternet.UI.IWebBrowserFactoryHandler" />
     <Type Name="Alternet.UI.IWxControlFactoryHandler" />
+    <Type Name="Alternet.UI.ICustomTypeProvider" />
     <Type Name="Alternet.UI.IDoCommand" />
     <Type Name="Alternet.UI.IEnumerableTree" />
     <Type Name="Alternet.UI.IEnumerableTree`1" />
@@ -15779,6 +15795,7 @@
     <Type Name="Alternet.Drawing.IFontHandler+FontParams" />
     <Type Name="Alternet.Drawing.GenericImage+PixelStrategy" />
     <Type Name="Alternet.Drawing.Graphics+DrawElementsParams" />
+    <Type Name="Alternet.Drawing.Graphics+DrawElementParams" />
     <Type Name="Alternet.Drawing.Graphics+DrawLabelParams" />
     <Type Name="Alternet.Drawing.GraphicsUnitConverter+GraphicsType" />
     <Type Name="Alternet.Drawing.NineRects+PreviewControl">
@@ -15891,7 +15908,6 @@
     <Type Name="Alternet.UI.FontAndColor+ControlStaticDefaultFontAndColor" />
     <Type Name="Alternet.UI.TextBoxAndButton+InitAsNumericEditParams" />
     <Type Name="Alternet.UI.ControlOverlay+TimerTickAction" />
-    <Type Name="Alternet.UI.OverlayToolTipParams+Flags" />
     <Type Name="Alternet.UI.Calendar+HitTestResult" />
     <Type Name="Alternet.UI.SplittedTreeAndCards+TreeKind" />
     <Type Name="Alternet.UI.ColorComboBox+DefaultColorItemPainter" />
@@ -15906,6 +15922,7 @@
       <Event Name="Disposed" />
       <Event Name="PropertyChanged" />
     </Type>
+    <Type Name="Alternet.UI.MenuItem+ChangeKind" />
     <Type Name="Alternet.UI.AnimationPlayer+KnownHandler" />
     <Type Name="Alternet.UI.PopupControl+CloseReason" />
     <Type Name="Alternet.UI.PreviewFile+PreviewFileRegisterItem" />
@@ -15999,6 +16016,7 @@
       <Event Name="Disposed" />
       <Event Name="PropertyChanged" />
     </Type>
+    <Type Name="Alternet.UI.SpeedButton+RightSideElementKind" />
     <Type Name="Alternet.UI.SpeedButton+KnownTheme" />
     <Type Name="Alternet.UI.SpeedColorButton+ClickActionKind" />
     <Type Name="Alternet.UI.TabControl+EnsureSideBarChildFlags" />
@@ -16192,7 +16210,6 @@
     <Type Name="Alternet.UI.AsyncUtils+ValueWaiter`1" />
     <Type Name="Alternet.UI.FileDialogFilterItem+Kind" />
     <Type Name="Alternet.UI.XmlUtils+XmlStreamConvertParams" />
-    <Type Name="Alternet.Drawing.Graphics+DrawElementsParams+ElementParams" />
     <Type Name="Alternet.UI.ScrollBar+AltPositionInfo+Record" />
     <Type Name="Alternet.UI.MswUtils+NativeMethods+DwmWindowAttribute" />
     <Type Name="Alternet.UI.MswUtils+NativeMethods+SmallPoint" />

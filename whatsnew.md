@@ -1,3 +1,33 @@
+# 0.9.749 (2025 August 20)
+
+- ToolBar.ConfigureAsContextMenu(), SpeedButton.ConfigureAsMenuItem().
+- SpeedButton: Add IsToolTipEnabled property to control tooltip visibility. 
+- ListControlItem: Add PrefixElements and SuffixElements properties, allowing custom elements to be drawn before and after the label text and image.
+- WindowSearchForMembers: Fixed incorrect behavior in some situations.
+- VirtualListBox: Introduces properties and logic to display tooltips for items that do not fit within the view.
+- NineRects: Add tooltip alignment suggestion and new rect properties.
+- UserControl: Add overlay removal by flags and handle key events. Overlays with RemoveOnEscape or RemoveOnEnter flags are 
+now removed when Escape or Enter keys are pressed, respectively.
+- Add Flags property to ControlOverlay and related classes.
+- VirtualListBox: Implemented display of a centered empty text message when the VirtualListBox has no items.
+- Label: Add SetImages, SetDefaultComboBoxImage, and SetSvgImage methods for easier image management, including support for 
+SVG images and disabled state images.
+- ToolBar: Add an optional showComboBoxImage parameter to SetToolDropDownMenu, allowing the display of a combo box image 
+on the right side of the label or main image.
+- Graphics: Fix horizontal alignment handling in DrawLabel.
+- ToolbarUtils: Add GetNormalAndDisabledSvgImages to retrieve normal and disabled images from a SvgImage and KnownButton.
+- SpeedButton: Make Label property public.
+- SpeedButton: Enhance drop down menu handling.
+- MenuItem: Add theChangeKind enum and a Changed event for detailed change notifications. Adds event-raising methods for 
+property changes and implements the IReadOnlyMenuItemProperties interface.
+- CommandSourceStruct: Allow optional override of command execution and can-execute logic.
+- Create IMenuItemProperties, IAssignable{T}.
+- UserControl: ShowOverlayToolTipSimple
+- Added the IImageSource interface to standardize access to different image source types (Image, ImageSet, SvgImage, etc.).
+- Label: Add UpdateDrawLabelParamsDelegate and the UpdateDrawLabelParams method to allow external modification of label drawing parameters.
+ This provides a flexible way to customize label rendering, especially for use in the BeforeDrawText event.
+- SpeedButton: Add RightSideElementKind enum and related properties to allow displaying additional text or key gestures on the right side.
+
 # 0.9.748 (2025 August 15)
 
 - Add ScrollableUserControl.
