@@ -8,6 +8,7 @@ namespace Alternet.Drawing
 {
     /// <summary>
     /// Provides methods used to measure and render text.
+    /// This class is created for the compatibility with the WinForms.
     /// </summary>
     public static class TextRenderer
     {

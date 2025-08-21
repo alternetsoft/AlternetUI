@@ -58,7 +58,6 @@ namespace Alternet.UI
             bottomToolBar.ResumeLayout();
             bottomToolBar.Parent = mainPanel;
             Deactivated += OnPopupDeactivated;
-            KeyDown += PopupWindow_KeyDown;
             MainControl.Required();
             Disposed += OnPopupWindowDisposed;
             HideOnDeactivate = true;
@@ -146,7 +145,7 @@ namespace Alternet.UI
         /// Gets main panel (parent of the main control).
         /// </summary>
         [Browsable(false)]
-        public AbstractControl MainPanel => mainPanel;
+        public ContainerControl MainPanel => mainPanel;
 
         /// <summary>
         /// Gets bottom toolbar with 'Ok', 'Cancel' and other buttons.
@@ -622,19 +621,22 @@ namespace Alternet.UI
         /// <returns></returns>
         protected virtual bool HideOnClickPoint(PointD point) => true;
 
-        private void PopupWindow_KeyDown(object? sender, KeyEventArgs e)
+        /// <inheritdoc/>
+        protected override void OnKeyDown(KeyEventArgs e)
         {
             if (HideOnEscape && e.Key == Key.Escape && e.ModifierKeys == UI.ModifierKeys.None)
             {
-                e.Handled = true;
+                e.Suppressed();
                 HidePopup(ModalResult.Canceled);
             }
             else
             if (HideOnEnter && e.Key == Key.Enter && e.ModifierKeys == UI.ModifierKeys.None)
             {
-                e.Handled = true;
+                e.Suppressed();
                 HidePopup(ModalResult.Accepted);
             }
+
+            base.OnKeyDown(e);
         }
 
         private void OnOkButtonClick()
