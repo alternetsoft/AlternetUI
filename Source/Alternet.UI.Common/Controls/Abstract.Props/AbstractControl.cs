@@ -1177,6 +1177,23 @@ namespace Alternet.UI
         public AbstractControl? FirstChild => GetChildOrNull();
 
         /// <summary>
+        /// Gets the last child control in the collection of children,
+        /// or <see langword="null"/> if there are no children.
+        /// </summary>
+        public virtual AbstractControl? LastChild
+        {
+            get
+            {
+                if (!HasChildren)
+                    return null;
+                var children = Children;
+                if (children.Count == 0)
+                    return null;
+                return children[children.Count - 1];
+            }
+        }
+
+        /// <summary>
         /// Gets collection of all children recursively.
         /// </summary>
         [Browsable(false)]
@@ -1210,6 +1227,28 @@ namespace Alternet.UI
                     return null;
                 foreach(var child in Children)
                 {
+                    if (child.Visible)
+                        return child;
+                }
+
+                return null;
+            }
+        }
+
+        /// <summary>
+        /// Gets the last visible child control in the collection of children.
+        /// </summary>
+        /// <remarks>This property iterates through the collection of children
+        /// in reverse order to find the last visible child.</remarks>
+        public AbstractControl? LastVisibleChild
+        {
+            get
+            {
+                if (!HasChildren)
+                    return null;
+                for (int i = Children.Count - 1; i >= 0; i--)
+                {
+                    var child = Children[i];
                     if (child.Visible)
                         return child;
                 }
