@@ -1520,6 +1520,12 @@ namespace Alternet.UI
             SetImageSets(normalImage, disabledImage);
         }
 
+        /// <inheritdoc/>
+        public override SizeD GetPreferredSize(SizeD availableSize)
+        {
+            return base.GetPreferredSize(availableSize);
+        }
+
         /// <summary>
         /// Loads normal and disabled image from the specified file or resource url.
         /// Loaded images assigned to <see cref="ImageSet"/> and
@@ -1578,22 +1584,28 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Sets the label image for a button using the specified predefined image,
+        /// button type, alignment, and size.
+        /// </summary>
+        /// <remarks>This method simplifies the process of setting a label image by encapsulating the
+        /// required parameters in a single object.</remarks>
+        /// <param name="knownButtonAndImage">An object containing the image parameters.</param>
+        public void SetLabelImage(KnownButtonImage knownButtonAndImage)
+        {
+            SetLabelImage(
+                knownButtonAndImage.SvgImage,
+                knownButtonAndImage.KnownButton,
+                knownButtonAndImage.Alignment,
+                knownButtonAndImage.Size);
+        }
+
+        /// <summary>
         /// Sets the label image to a default arrow image, typically used to indicate
         /// a submenu or navigation direction.
         /// </summary>
-        /// <param name="align">The alignment of the label image.
-        /// If <see langword="null"/>, a default alignment is used.</param>
-        /// <param name="size">The size of the label image.
-        /// If <see langword="null"/>, a default size is used.</param>
-        public virtual void SetLabelImageAsMenuArrow(
-            HVAlignment? align = null,
-            CoordValue? size = null)
+        public virtual void SetLabelImageAsMenuArrow()
         {
-            SetLabelImage(
-                MenuItem.DefaultMenuArrowImage ?? KnownSvgImages.ImgTriangleArrowRight,
-                null,
-                align,
-                size ?? MenuItem.DefaultMenuArrowImageSize);
+            SetLabelImage(MenuItem.DefaultMenuArrowImage);
         }
 
         /// <summary>
@@ -1693,9 +1705,10 @@ namespace Alternet.UI
             DoInsideLayout(() =>
             {
                 TextVisible = true;
+                HorizontalAlignment = HorizontalAlignment.Fill;
                 IsToolTipEnabled = false;
+                SuggestedSize = (Coord.NaN, SuggestedHeight);
                 SetContentHorizontalAlignment(HorizontalAlignment.Left);
-                Label.TextAlignmentHorizontal = HorizontalAlignment.Fill;
                 Label.HorizontalAlignment = HorizontalAlignment.Fill;
                 RightSideElement = SpeedButton.RightSideElementKind.KeyGesture;
             });
