@@ -49,6 +49,13 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Occurs when a tool is clicked.
+        /// </summary>
+        /// <remarks>This event is triggered whenever a tool is clicked,
+        /// allowing subscribers to handle the click action.</remarks>
+        public event EventHandler? ToolClick;
+
+        /// <summary>
         /// Enumerates all toolbar item kinds.
         /// </summary>
         public enum ItemKind
@@ -499,6 +506,29 @@ namespace Alternet.UI
         {
             var result = AddSpeedBtnCore();
             result.HorizontalAlignment = HorizontalAlignment.Right;
+            return result.UniqueId;
+        }
+
+        /// <summary>
+        /// Adds a speed button with the specified text and click event handler.
+        /// </summary>
+        /// <remarks>This method creates a speed button with the specified text and
+        /// associates it with the
+        /// provided click event handler. If <paramref name="action"/> is null,
+        /// the button will not perform any action
+        /// when clicked.</remarks>
+        /// <param name="text">The text to display on the button. Cannot be null or empty.</param>
+        /// <param name="action">The event handler to invoke when the button is clicked.
+        /// Can be null if no action is required.</param>
+        /// <returns>The unique identifier of the created button,
+        /// which can be used to reference the button later.</returns>
+        public virtual ObjectUniqueId AddSpeedBtn(string text, EventHandler? action)
+        {
+            var result = AddSpeedBtnCore(
+                text,
+                (SvgImage?)null,
+                null,
+                action);
             return result.UniqueId;
         }
 
@@ -1054,11 +1084,7 @@ namespace Alternet.UI
             label.Text = text ?? string.Empty;
             label.Margin = DefaultTextMargin;
             label.Parent = this;
-
-            /*
-            label.ToolTip = string.Empty;
-            label.UseTheme = SpeedButton.KnownTheme.NoBorder;
-            */
+            label.Click += RaiseToolClick;
 
             return label;
         }
@@ -1331,31 +1357,24 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="id">Item id.</param>
         /// <param name="menu"><see cref="ContextMenu"/> to use as drop down menu.</param>
-        /// <param name="showComboBoxImage">The flag indicating whether to show
-        /// the combo box image at the right side of the label or main image.
-        /// Optional. Default is <c>null</c>. If <c>true</c>, the combo box image is shown.
-        /// If <c>false</c>, the combo box image is hidden.
-        /// If <c>null</c>, the combo box image state is not changed.</param>
+        /// <param name="image"></param>
         public virtual void SetToolDropDownMenu(
             ObjectUniqueId id,
             ContextMenu? menu,
-            bool? showComboBoxImage = null)
+            KnownButtonImage? image = null)
         {
             var item = FindTool(id);
             if (item is null)
                 return;
             item.DropDownMenu = menu;
 
-            if(showComboBoxImage is null)
-                return;
-
-            if (showComboBoxImage.Value)
+            if (image is null)
             {
-                item.SetLabelImageAsComboBox();
+                item.SetLabelImage(null);
             }
             else
             {
-                item.SetLabelImage(null);
+                item.SetLabelImage(image.Value);
             }
         }
 
@@ -1373,6 +1392,8 @@ namespace Alternet.UI
 
                 foreach (var item in Children)
                 {
+                    HorizontalAlignment = HorizontalAlignment.Fill;
+
                     if (item is SpeedButton speedButton)
                     {
                         speedButton.ConfigureAsMenuItem();
@@ -1903,6 +1924,7 @@ namespace Alternet.UI
             speedButton.Text = text;
             speedButton.VerticalAlignment = UI.VerticalAlignment.Center;
             speedButton.Margin = DefaultTextBtnMargin;
+            speedButton.Click += RaiseToolClick;
 
             UpdateItemProps(speedButton, ItemKind.ButtonText);
 
@@ -1931,7 +1953,7 @@ namespace Alternet.UI
         /// Sets the alignment for the content of all toolbar items.
         /// </summary>
         /// <param name="alignment">The alignment to set for the toolbar items.</param>
-        public void SetToolContentAlignment(HVAlignment alignment)
+        public virtual void SetToolContentAlignment(HVAlignment alignment)
         {
             DoInsideLayout(() =>
             {
@@ -1945,7 +1967,7 @@ namespace Alternet.UI
         /// Sets the alignment for the spacer of all toolbar items.
         /// </summary>
         /// <param name="alignment">The alignment to set for the toolbar items.</param>
-        public void SetToolSpacerAlignment(HVAlignment alignment)
+        public virtual void SetToolSpacerAlignment(HVAlignment alignment)
         {
             foreach (var control in Children)
             {
@@ -1961,7 +1983,7 @@ namespace Alternet.UI
         /// Sets the alignment for the image of all toolbar items.
         /// </summary>
         /// <param name="alignment">The alignment to set for the toolbar items.</param>
-        public void SetToolImageAlignment(HVAlignment alignment)
+        public virtual void SetToolImageAlignment(HVAlignment alignment)
         {
             foreach(var control in Children)
             {
@@ -1977,7 +1999,7 @@ namespace Alternet.UI
         /// Sets the alignment for the text of all toolbar items.
         /// </summary>
         /// <param name="alignment">The alignment to set for the toolbar items.</param>
-        public void SetToolTextAlignment(HVAlignment alignment)
+        public virtual void SetToolTextAlignment(HVAlignment alignment)
         {
             foreach (var control in Children)
             {
@@ -2009,6 +2031,11 @@ namespace Alternet.UI
             text ??= string.Empty;
 
             var speedButton = CreateToolSpeedButton();
+
+            speedButton.Click += (s, e) =>
+            {
+                RaiseToolClick(s, e);
+            };
 
             speedButton.Padding = DefaultItemPadding;
             speedButton.ImageVisible = imageVisible;
@@ -2089,6 +2116,19 @@ namespace Alternet.UI
             });
 
             return result!;
+        }
+
+        /// <summary>
+        /// Raises the <see cref="OnToolClick"/> method
+        /// and invokes the <see cref="ToolClick"/> event handlers.
+        /// </summary>
+        /// <param name="s">The source of the event, typically
+        /// the object that triggered the event. Can be <see langword="null"/>.</param>
+        /// <param name="e">An <see cref="EventArgs"/> instance containing the event data.</param>
+        public void RaiseToolClick(object? s, EventArgs e)
+        {
+            ToolClick?.Invoke(s, e);
+            OnToolClick(s, e);
         }
 
         /// <summary>
@@ -2190,6 +2230,17 @@ namespace Alternet.UI
                     }
                 }
             });
+        }
+
+        /// <summary>
+        /// Handles the event triggered when a tool is clicked.
+        /// </summary>
+        /// <remarks>This method is intended to be overridden in a derived class to provide custom
+        /// handling for tool click events. The base implementation does nothing.</remarks>
+        /// <param name="sender">The source of the event. This may be <see langword="null"/>.</param>
+        /// <param name="e">An <see cref="EventArgs"/> instance containing the event data.</param>
+        protected virtual void OnToolClick(object? sender, EventArgs e)
+        {
         }
 
         /// <summary>
