@@ -11,7 +11,7 @@ using Alternet.UI.Localization;
 namespace Alternet.UI
 {
     /// <summary>
-    /// Popup window with <see cref="Calendar"/> control.
+    /// Popup window with <see cref="ToolBar"/> control.
     /// </summary>
     public partial class PopupToolBar : PopupWindow<ToolBar>
     {
