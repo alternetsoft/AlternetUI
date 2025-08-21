@@ -11,11 +11,26 @@ namespace Alternet.UI
     [ControlCategory("Hidden")]
     public partial class MenuItem : Menu, ICommandSource, IReadOnlyMenuItemProperties
     {
+        private static KnownButtonImage? defaultMenuArrowImage;
+
         /// <summary>
         /// Gets or sets the default arrow image which is shown when menu item
         /// has a submenu.
         /// </summary>
-        public static SvgImage? DefaultMenuArrowImage;
+        public static KnownButtonImage DefaultMenuArrowImage
+        {
+            get
+            {
+                defaultMenuArrowImage ??=
+                    new(KnownSvgImages.ImgTriangleArrowRight, DefaultMenuArrowImageSize);
+                return defaultMenuArrowImage.Value;
+            }
+
+            set
+            {
+                defaultMenuArrowImage = value;
+            }
+        }
 
         /// <summary>
         /// Represents the default size of the menu arrow image.
