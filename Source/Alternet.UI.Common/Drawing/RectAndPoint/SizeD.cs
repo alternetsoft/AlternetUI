@@ -711,6 +711,37 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
+        /// Clamps the values of the current <see cref="SizeD"/> instance
+        /// to zero if they are less than zero.
+        /// </summary>
+        /// <remarks>This method ensures that the resulting values are non-negative
+        /// by replacing any negative values with zero.</remarks>
+        /// <returns>A new <see cref="PointD"/> instance with the width and height
+        /// clamped to zero if they are less than zero.</returns>
+        public readonly SizeD ClampToZero()
+        {
+            return new SizeD(
+                width < CoordD.Empty ? CoordD.Empty : width,
+                height < CoordD.Empty ? CoordD.Empty : height);
+        }
+
+        /// <summary>
+        /// Returns a new <see cref="SizeD"/> instance with its dimensions
+        /// clamped to the specified minimum values.
+        /// </summary>
+        /// <param name="clampTo">The <see cref="SizeD"/> instance specifying
+        /// the minimum width and height values to clamp to.</param>
+        /// <returns>A new <see cref="SizeD"/> instance where the width and
+        /// height are clamped to be at least the corresponding
+        /// values in <paramref name="clampTo"/>.</returns>
+        public readonly SizeD ClampTo(SizeD clampTo)
+        {
+            return new SizeD(
+                width < clampTo.width ? clampTo.width : width,
+                height < clampTo.height ? clampTo.height : height);
+        }
+
+        /// <summary>
         /// Returns this size (in inches) converted to device-independent units.
         /// </summary>
         /// <returns></returns>
