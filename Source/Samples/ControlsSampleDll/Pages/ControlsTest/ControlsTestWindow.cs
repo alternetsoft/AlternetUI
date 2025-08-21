@@ -45,6 +45,7 @@ namespace ControlsSample
 
             AddPage<NativeSliderPage>("Native Slider");
             AddPage<NativeTreeViewPage>("Native TreeView");
+            AddPage<PopupToolBarPage>("Popup ToolBar");
 
             mainPanel.LeftListBox.SelectFirstItem();
 

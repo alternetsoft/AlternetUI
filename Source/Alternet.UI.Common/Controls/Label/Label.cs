@@ -47,6 +47,11 @@ namespace Alternet.UI
     public partial class Label : GenericControl
     {
         /// <summary>
+        /// Gets or sets whether to show debug corners when control is painted.
+        /// </summary>
+        public static bool ShowDebugCorners = false;
+
+        /// <summary>
         /// Gets or sets the mnemonic marker character. Default is '&amp;'.
         /// </summary>
         public static char DefaultMnemonicMarker = '&';
@@ -55,11 +60,6 @@ namespace Alternet.UI
         /// Gets or sets whether to show mnemonic markers in the text.
         /// </summary>
         public static bool DefaultMnemonicMarkerEnabled = false;
-
-        /// <summary>
-        /// Gets or sets whether to show debug corners when control is painted.
-        /// </summary>
-        public static bool ShowDebugCorners = false;
 
         private bool imageVisible = true;
         private int? mnemonicCharIndex = null;
