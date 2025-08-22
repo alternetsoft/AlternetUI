@@ -9,7 +9,7 @@ namespace Alternet.UI
     /// Represents an individual item that is displayed within a menu.
     /// </summary>
     [ControlCategory("Hidden")]
-    public partial class MenuItem : Menu, ICommandSource, IReadOnlyMenuItemProperties
+    public partial class MenuItem : Menu, ICommandSource, IMenuItemProperties
     {
         private static KnownButtonImage? defaultMenuArrowImage;
 
@@ -552,7 +552,7 @@ namespace Alternet.UI
             }
         }
 
-        ICommandSource IReadOnlyMenuItemProperties.CommandSource => this;
+        ICommandSource IMenuItemProperties.CommandSource => this;
 
         /// <inheritdoc/>
         protected override bool IsDummy => true;
@@ -699,7 +699,7 @@ namespace Alternet.UI
             Changed?.Invoke(this, new (kind));
         }
 
-        void IReadOnlyMenuItemProperties.DoClick()
+        void IMenuItemProperties.DoClick()
         {
             RaiseClick();
         }

@@ -37,8 +37,8 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="index">The zero-based index of the child menu item to retrieve.
         /// Must be within the valid range of the child menu items collection.</param>
-        /// <returns>An object implementing <see cref="IReadOnlyMenuItemProperties"/>
+        /// <returns>An object implementing <see cref="IMenuItemProperties"/>
         /// that represents the menu item at the specified index.</returns>
-        IReadOnlyMenuItemProperties GetItem(int index);
+        IMenuItemProperties GetItem(int index);
     }
 }

@@ -119,7 +119,7 @@ namespace Alternet.UI
             }
         }
 
-        IReadOnlyMenuItemProperties IMenuProperties.GetItem(int index)
+        IMenuItemProperties IMenuProperties.GetItem(int index)
         {
             return Items[index];
         }

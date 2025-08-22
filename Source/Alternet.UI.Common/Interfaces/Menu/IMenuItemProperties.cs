@@ -9,7 +9,7 @@ namespace Alternet.UI
     /// <summary>
     /// Defines read-only properties for a menu item.
     /// </summary>
-    public interface IReadOnlyMenuItemProperties : IMenuProperties
+    public interface IMenuItemProperties : IMenuProperties
     {
         /// <summary>
         /// Occurs when the state of a menu item changes.

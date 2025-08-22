@@ -2068,12 +2068,12 @@ namespace Alternet.UI
         /// <inheritdoc/>
         protected override void OnDataContextChanged(object? oldValue, object? newValue)
         {
-            if (oldValue is IReadOnlyMenuItemProperties oldProperties)
+            if (oldValue is IMenuItemProperties oldProperties)
             {
                 oldProperties.Changed -= OnMenuItemChanged;
             }
 
-            if (newValue is IReadOnlyMenuItemProperties newProperties)
+            if (newValue is IMenuItemProperties newProperties)
             {
                 newProperties.Changed += OnMenuItemChanged;
             }
@@ -2089,7 +2089,7 @@ namespace Alternet.UI
         /// containing the details of the menu item change, including the kind of change.</param>
         protected virtual void OnMenuItemChanged(object? sender, BaseEventArgs<MenuItemChangeKind> e)
         {
-            if(sender is not IReadOnlyMenuItemProperties properties)
+            if(sender is not IMenuItemProperties properties)
                 return;
         }
 

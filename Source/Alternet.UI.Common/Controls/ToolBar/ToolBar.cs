@@ -2511,7 +2511,7 @@ namespace Alternet.UI
             if(sender is not IMenuProperties menuProperties)
                 return;
 
-            void InsertItem(int index, IReadOnlyMenuItemProperties menuItem)
+            void InsertItem(int index, IMenuItemProperties menuItem)
             {
                 if(menuItem.Text == "-")
                 {
@@ -2533,7 +2533,7 @@ namespace Alternet.UI
                     for (int i = 0; i < menuProperties.ItemCount; i++)
                     {
                         var menuItem = menuProperties.GetItem(i);
-                        if (menuItem is not IReadOnlyMenuItemProperties item)
+                        if (menuItem is not IMenuItemProperties item)
                             continue;
                         InsertItem(i, item);
                     }
@@ -2544,7 +2544,7 @@ namespace Alternet.UI
             {
                 foreach (var oldItem in items)
                 {
-                    if (oldItem is not IReadOnlyMenuItemProperties menuItem)
+                    if (oldItem is not IMenuItemProperties menuItem)
                         continue;
                     var child = FindChildWithDataContextId(menuItem.UniqueId);
                     if (child is null)
@@ -2566,7 +2566,7 @@ namespace Alternet.UI
             {
                 foreach (var newItem in items)
                 {
-                    if (newItem is not IReadOnlyMenuItemProperties menuItem)
+                    if (newItem is not IMenuItemProperties menuItem)
                         continue;
                     InsertItem(index, menuItem);
                     index++;
