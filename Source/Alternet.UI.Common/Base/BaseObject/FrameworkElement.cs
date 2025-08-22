@@ -14,15 +14,13 @@ namespace Alternet.UI
     {
         private FrameworkElement? logicalParent;
         private object? dataContext;
-        private object? dataContextProperty;
         private string? name;
         private ISite? site;
 
         /// <summary>
-        /// Occurs when the <see cref="DataContextProperty"/>, <see cref="DataContext"/>
-        /// or other properties related to data context change.
+        /// Occurs when the <see cref="DataContext"/> property changes.
         /// </summary>
-        public event EventHandler? DataContextChanged;
+        public event EventHandler<ValueChangedEventArgs>? DataContextChanged;
 
         /// <summary>
         /// Occurs when the <see cref="Name"/> property changes.
@@ -68,24 +66,6 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Gets or sets property of the <see cref="DataContext"/>
-        /// to use in the element. Only some elements use this property.
-        /// </summary>
-        [Browsable(false)]
-        public virtual object? DataContextProperty
-        {
-            get => dataContextProperty;
-
-            set
-            {
-                if (dataContextProperty == value)
-                    return;
-                dataContextProperty = value;
-                RaiseDataContextChanged();
-            }
-        }
-
-        /// <summary>
         /// Gets or sets data context to use in the element.
         /// Only some elements use this property.
         /// </summary>
@@ -99,8 +79,9 @@ namespace Alternet.UI
             {
                 if (dataContext == value)
                     return;
+                var oldValue = dataContext;
                 dataContext = value;
-                RaiseDataContextChanged();
+                RaiseDataContextChanged(oldValue, value);
             }
         }
 
@@ -145,40 +126,12 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Sets the data context and associated property for the current instance.
+        /// Same as setting <see cref="DataContext"/> property.
         /// </summary>
-        /// <remarks>If either the <paramref name="dataContext"/> or
-        /// <paramref name="dataContextProperty"/> is different from the current values,
-        /// the method updates the respective fields
-        /// and raises the <c>DataContextChanged</c> event.
-        /// This method ensures that changes to the data context or its
-        /// property are properly propagated.</remarks>
-        /// <param name="dataContext">The new data context to associate with the instance.
-        /// Can be <see langword="null"/>.</param>
-        /// <param name="dataContextProperty">The property of the data context to associate
-        /// with the instance. Can be <see langword="null"/>.</param>
-        /// <returns><see langword="true"/> if the data context or data context
-        /// property was changed; otherwise, <see langword="false"/>.</returns>
-        public virtual bool SetDataContext(object? dataContext, object? dataContextProperty)
+        /// <param name="value">The new data context value.</param>
+        public void SetDataContext(object? value)
         {
-            bool changed = false;
-
-            if (this.dataContext != dataContext)
-            {
-                this.dataContext = dataContext;
-                changed = true;
-            }
-
-            if (this.dataContextProperty != dataContextProperty)
-            {
-                this.dataContextProperty = dataContextProperty;
-                changed = true;
-            }
-
-            if (changed)
-                RaiseDataContextChanged();
-
-            return changed;
+            DataContext = value;
         }
 
         /// <summary>
@@ -233,6 +186,7 @@ namespace Alternet.UI
         {
             OnNameChanged();
             NameChanged?.Invoke(this, EventArgs.Empty);
+            RaisePropertyChanged(nameof(Name));
             StaticControlEvents.RaiseNameChanged(this, EventArgs.Empty);
         }
 
@@ -243,10 +197,11 @@ namespace Alternet.UI
         /// <remarks>This method is called to notify subscribers that the data context has changed.
         /// Derived classes can override this method to provide additional behavior
         /// when the event is raised.</remarks>
-        protected virtual void RaiseDataContextChanged()
+        protected virtual void RaiseDataContextChanged(object? oldValue, object? newValue)
         {
-            OnDataContextChanged();
-            DataContextChanged?.Invoke(this, EventArgs.Empty);
+            OnDataContextChanged(oldValue, newValue);
+            DataContextChanged?.Invoke(this, new ValueChangedEventArgs(oldValue, newValue));
+            RaisePropertyChanged(nameof(DataContext));
             StaticControlEvents.RaiseDataContextChanged(this, EventArgs.Empty);
         }
 
@@ -258,10 +213,9 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Called when the <see cref="DataContextProperty"/> or <see cref="DataContext"/>
-        /// property changes.
+        /// Called when the <see cref="DataContext"/> property changes.
         /// </summary>
-        protected virtual void OnDataContextChanged()
+        protected virtual void OnDataContextChanged(object? oldValue, object? newValue)
         {
         }
     }
