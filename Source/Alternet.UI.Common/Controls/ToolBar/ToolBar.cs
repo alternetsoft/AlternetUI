@@ -1403,6 +1403,119 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Determines whether any child item is a <see cref="SpeedButton"/> with an image.
+        /// </summary>
+        /// <remarks>This method iterates through the collection of child items and
+        /// checks if any of them
+        /// are of type <see cref="SpeedButton"/> and have an image.</remarks>
+        /// <returns><see langword="true"/> if at least one child item is
+        /// a <see cref="SpeedButton"/> with an image;
+        /// otherwise, <see langword="false"/>.</returns>
+        public virtual bool HasToolsWithImages()
+        {
+            foreach (var item in Children)
+            {
+                if (item is SpeedButton speedButton)
+                {
+                    if (speedButton.HasImage)
+                        return true;
+                }
+            }
+
+            return false;
+        }
+
+        /// <summary>
+        /// Determines whether any child item is a <see cref="SpeedButton"/> with a label image.
+        /// </summary>
+        /// <returns><see langword="true"/> if at least one child item is a <see cref="SpeedButton"/>
+        /// and its <see cref="SpeedButton.HasLabelImage"/> property is <see langword="true"/>;
+        /// otherwise, <see langword="false"/>.</returns>
+        public virtual bool HasToolsWithLabelImages()
+        {
+            foreach (var item in Children)
+            {
+                if (item is SpeedButton speedButton)
+                {
+                    if (speedButton.HasLabelImage)
+                        return true;
+                }
+            }
+
+            return false;
+        }
+
+        /// <summary>
+        /// Ensures that all child <see cref="SpeedButton"/> instances have a label image assigned.
+        /// </summary>
+        /// <remarks>This method iterates through the child elements and assigns
+        /// a custom or default transparent label image to any <see cref="SpeedButton"/>
+        /// that does not already have one. If no child elements require 
+        /// a label image, the method performs no action.</remarks>
+        /// <returns><see langword="true"/> if at least one <see cref="SpeedButton"/>
+        /// was updated with a label image; otherwise, <see langword="false"/>.</returns>
+        /// <param name="img">The custom label image to use;
+        /// if <see langword="null"/>, a default transparent image will be used.</param>
+        public virtual bool AddRemainingLabelImages(KnownButtonImage? img = null)
+        {
+            var hasLabelImages = HasToolsWithLabelImages();
+
+            if (!hasLabelImages)
+                return false;
+
+            bool result = false;
+            
+            foreach (var item in Children)
+            {
+                if (item is SpeedButton speedButton)
+                {
+                    if (speedButton.HasLabelImage)
+                        continue;
+                    speedButton.SetLabelImage(img ?? KnownButtonImage.Transparent);
+                    result = true;
+                }
+            }
+
+            return result;
+        }
+
+        /// <summary>
+        /// Adds a default transparent image to all child speed buttons that
+        /// do not already have an image.
+        /// </summary>
+        /// <remarks>This method iterates through the child elements and assigns
+        /// a custom or default transparent image to any <see cref="SpeedButton"/>
+        /// that does not already
+        /// have an image. If no child speed buttons require an image, the method returns
+        /// <see langword="false"/>.</remarks>
+        /// <returns><see langword="true"/> if at least one child speed button
+        /// was updated with a transparent image; otherwise, <see langword="false"/>.</returns>
+        /// <param name="img">The custom label image to use;
+        /// if <see langword="null"/>, a default transparent image will be used.</param>
+        public virtual bool AddRemainingImages(KnownButtonImage? img = null)
+        {
+            var hasImages = HasToolsWithImages();
+
+            if (!hasImages)
+                return false;
+
+            bool result = false;
+
+            foreach (var item in Children)
+            {
+                if (item is SpeedButton speedButton)
+                {
+                    if (speedButton.HasImage)
+                        continue;
+                    speedButton.SetImage(img ?? KnownButtonImage.Transparent);
+                    result = true;
+                }
+            }
+
+            return result;
+        }
+
+        /// <summary>
         /// Gets item 'Enabled' property value.
         /// </summary>
         /// <param name="id">Item id.</param>
