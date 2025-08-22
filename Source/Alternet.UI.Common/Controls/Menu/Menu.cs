@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Collections.Specialized;
 using System.ComponentModel;
 
 using Alternet.Base.Collections;
@@ -93,6 +94,11 @@ namespace Alternet.UI
 
         /// <inheritdoc />
         protected override bool IsDummy => true;
+
+        INotifyCollectionChanged IMenuProperties.CollectionNotifier
+        {
+            get => Items;
+        }
 
         /// <summary>
         /// Performs some action for the each element in <see cref="Items"/>.

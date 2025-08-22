@@ -14,25 +14,6 @@ namespace Alternet.UI
         private static KnownButtonImage? defaultMenuArrowImage;
 
         /// <summary>
-        /// Gets or sets the default arrow image which is shown when menu item
-        /// has a submenu.
-        /// </summary>
-        public static KnownButtonImage DefaultMenuArrowImage
-        {
-            get
-            {
-                defaultMenuArrowImage ??=
-                    new(KnownSvgImages.ImgTriangleArrowRight, DefaultMenuArrowImageSize);
-                return defaultMenuArrowImage.Value;
-            }
-
-            set
-            {
-                defaultMenuArrowImage = value;
-            }
-        }
-
-        /// <summary>
         /// Represents the default size of the menu arrow image.
         /// </summary>
         /// <remarks>The size is specified as a <see cref="CoordValue"/> with a value
@@ -161,9 +142,9 @@ namespace Alternet.UI
         /// <remarks>This event is triggered whenever a change occurs, and
         /// it provides information about
         /// the change through the <see cref="BaseEventArgs{T}"/> parameter.
-        /// The <see cref="ChangeKind"/> value
+        /// The <see cref="MenuItemChangeKind"/> value
         /// indicates the specific type of change that occurred.</remarks>
-        public event EventHandler<BaseEventArgs<ChangeKind>>? Changed;
+        public event EventHandler<BaseEventArgs<MenuItemChangeKind>>? Changed;
 
         /// <summary>
         /// Occurs when menu item is opened.
@@ -213,65 +194,22 @@ namespace Alternet.UI
         public event EventHandler? ClickActionChanged;
 
         /// <summary>
-        /// Specifies the kind of change that can occur in a <see cref="MenuItem"/>.
+        /// Gets or sets the default arrow image which is shown when menu item
+        /// has a submenu.
         /// </summary>
-        public enum ChangeKind
+        public static KnownButtonImage DefaultMenuArrowImage
         {
-            /// <summary>
-            /// No change.
-            /// </summary>
-            None,
+            get
+            {
+                defaultMenuArrowImage ??=
+                    new(KnownSvgImages.ImgAngleRight, DefaultMenuArrowImageSize);
+                return defaultMenuArrowImage.Value;
+            }
 
-            /// <summary>
-            /// The <see cref="MenuItem.Text"/> property has changed.
-            /// </summary>
-            Text,
-
-            /// <summary>
-            /// The <see cref="MenuItem.Enabled"/> property has changed.
-            /// </summary>
-            Enabled,
-
-            /// <summary>
-            /// The <see cref="MenuItem.Image"/> property has changed.
-            /// </summary>
-            Image,
-
-            /// <summary>
-            /// The <see cref="MenuItem.DisabledImage"/> property has changed.
-            /// </summary>
-            DisabledImage,
-
-            /// <summary>
-            /// The <see cref="MenuItem.Shortcut"/>
-            /// or <see cref="MenuItem.ShortcutKeys"/> property has changed.
-            /// </summary>
-            Shortcut,
-
-            /// <summary>
-            /// The <see cref="MenuItem.Role"/> property has changed.
-            /// </summary>
-            Role,
-
-            /// <summary>
-            /// The <see cref="MenuItem.Checked"/> property has changed.
-            /// </summary>
-            Checked,
-
-            /// <summary>
-            /// The <see cref="MenuItem.ClickAction"/> property has changed.
-            /// </summary>
-            ClickAction,
-
-            /// <summary>
-            /// The command source or its state has changed.
-            /// </summary>
-            CommandSource,
-
-            /// <summary>
-            /// Some other property or state has changed.
-            /// </summary>
-            Other,
+            set
+            {
+                defaultMenuArrowImage = value;
+            }
         }
 
         /// <inheritdoc/>
@@ -444,7 +382,20 @@ namespace Alternet.UI
 
                 base.Text = value;
 
-                RaiseChanged(ChangeKind.Text);
+                RaiseChanged(MenuItemChangeKind.Text);
+            }
+        }
+
+        /// <inheritdoc/>
+        public override bool Visible
+        {
+            get => base.Visible;
+            set
+            {
+                if (Visible == value)
+                    return;
+                base.Visible = value;
+                RaiseChanged(MenuItemChangeKind.Visible);
             }
         }
 
@@ -458,7 +409,7 @@ namespace Alternet.UI
                 if (Enabled == value)
                     return;
                 base.Enabled = value;
-                RaiseChanged(ChangeKind.Enabled);
+                RaiseChanged(MenuItemChangeKind.Enabled);
             }
         }
 
@@ -636,7 +587,7 @@ namespace Alternet.UI
         public virtual void RaiseCommandSourceChanged()
         {
             Enabled = commandSource.CanExecute;
-            RaiseChanged(ChangeKind.CommandSource);
+            RaiseChanged(MenuItemChangeKind.CommandSource);
         }
 
         /// <summary>
@@ -650,7 +601,7 @@ namespace Alternet.UI
         public virtual void RaiseClickActionChanged()
         {
             ClickActionChanged?.Invoke(this, EventArgs.Empty);
-            RaiseChanged(ChangeKind.ClickAction);
+            RaiseChanged(MenuItemChangeKind.ClickAction);
         }
 
         /// <summary>
@@ -695,7 +646,7 @@ namespace Alternet.UI
         public virtual void RaiseShortcutChanged()
         {
             ShortcutChanged?.Invoke(this, EventArgs.Empty);
-            RaiseChanged(ChangeKind.Shortcut);
+            RaiseChanged(MenuItemChangeKind.Shortcut);
         }
 
         /// <summary>
@@ -704,7 +655,7 @@ namespace Alternet.UI
         public virtual void RaiseImageChanged()
         {
             ImageChanged?.Invoke(this, EventArgs.Empty);
-            RaiseChanged(ChangeKind.Image);
+            RaiseChanged(MenuItemChangeKind.Image);
         }
 
         /// <summary>
@@ -713,7 +664,7 @@ namespace Alternet.UI
         public virtual void RaiseDisabledImageChanged()
         {
             DisabledImageChanged?.Invoke(this, EventArgs.Empty);
-            RaiseChanged(ChangeKind.DisabledImage);
+            RaiseChanged(MenuItemChangeKind.DisabledImage);
         }
 
         /// <summary>
@@ -722,7 +673,7 @@ namespace Alternet.UI
         public virtual void RaiseRoleChanged()
         {
             RoleChanged?.Invoke(this, EventArgs.Empty);
-            RaiseChanged(ChangeKind.Role);
+            RaiseChanged(MenuItemChangeKind.Role);
         }
 
         /// <summary>
@@ -732,7 +683,7 @@ namespace Alternet.UI
         public virtual void RaiseCheckedChanged()
         {
             CheckedChanged?.Invoke(this, EventArgs.Empty);
-            RaiseChanged(ChangeKind.Checked);
+            RaiseChanged(MenuItemChangeKind.Checked);
         }
 
         /// <summary>
@@ -743,7 +694,7 @@ namespace Alternet.UI
         /// behavior when a change is raised.</remarks>
         /// <param name="kind">The type of change that occurred.
         /// This value determines the nature of the change being reported.</param>
-        public virtual void RaiseChanged(ChangeKind kind)
+        public virtual void RaiseChanged(MenuItemChangeKind kind)
         {
             Changed?.Invoke(this, new (kind));
         }

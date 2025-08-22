@@ -12,6 +12,15 @@ namespace Alternet.UI
     public interface IReadOnlyMenuItemProperties : IMenuProperties
     {
         /// <summary>
+        /// Occurs when the state of a menu item changes.
+        /// </summary>
+        /// <remarks>This event is triggered whenever a menu item undergoes a change,
+        /// such as being added, removed, or updated.
+        /// The event provides information about the type of change through the
+        /// <see cref="MenuItemChangeKind"/> parameter.</remarks>
+        event EventHandler<BaseEventArgs<MenuItemChangeKind>>? Changed;
+
+        /// <summary>
         /// Gets the shortcut key gesture associated with the menu item.
         /// </summary>
         KeyGesture? Shortcut { get; }
@@ -59,7 +68,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets a value indicating whether the menu item is visible.
         /// </summary>
-        bool IsVisible { get; }
+        bool Visible { get; }
 
         /// <summary>
         /// Gets a value indicating whether the shortcut is enabled for the menu item.

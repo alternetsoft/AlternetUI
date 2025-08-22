@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.Specialized;
+using System.ComponentModel;
 using System.Text;
 
 namespace Alternet.UI
@@ -13,8 +15,18 @@ namespace Alternet.UI
     /// menu items, such as the total count of items and access to
     /// individual items by index. Implementations of this
     /// interface are expected to provide read-only access to the menu items.</remarks>
-    public interface IMenuProperties
+    public interface IMenuProperties : INotifyPropertyChanged
     {
+        /// <summary>
+        /// Gets the unique identifier associated with the object.
+        /// </summary>
+        ObjectUniqueId UniqueId { get; }
+
+        /// <summary>
+        /// Gets the object that provides notifications when the menu items collection changes.
+        /// </summary>
+        INotifyCollectionChanged CollectionNotifier { get; }
+
         /// <summary>
         /// Gets the total number of menu items currently in the collection.
         /// </summary>
