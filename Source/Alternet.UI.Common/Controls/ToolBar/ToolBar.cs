@@ -1379,6 +1379,26 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Sets the drop-down menu position for all child controls that are
+        /// of type <see cref="UserControl"/>.
+        /// </summary>
+        /// <remarks>This method iterates through the child controls and updates the
+        /// <c>DropDownMenuPosition</c> property  for each child that is
+        /// a <see cref="UserControl"/>. Controls that are
+        /// not of type <see cref="UserControl"/> are ignored.</remarks>
+        /// <param name="position">The horizontal and vertical alignment to apply to the drop-down menu.
+        /// A value of <see langword="null"/> clears the alignment setting.</param>
+        public virtual void SetDropDownMenuPosition(HVAlignment? position)
+        {
+            foreach (var item in Children)
+            {
+                if (item is not UserControl userControl)
+                    continue;
+                userControl.DropDownMenuPosition = position;
+            }
+        }
+
+        /// <summary>
         /// Configures the toolbar to look and behave as a context menu.
         /// </summary>
         /// <remarks>This method sets the layout to vertical and adjusts child elements,
@@ -1400,6 +1420,8 @@ namespace Alternet.UI
                     }
                 }
             });
+
+            SetDropDownMenuPosition(HVAlignment.TopRight);
         }
 
         /// <summary>
