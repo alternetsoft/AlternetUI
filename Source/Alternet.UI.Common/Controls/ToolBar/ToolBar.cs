@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.Collections.Specialized;
 using System.ComponentModel;
 using System.Linq;
 using System.Text;
@@ -1124,15 +1126,29 @@ namespace Alternet.UI
         /// <returns><see cref="ObjectUniqueId"/> of the added item.</returns>
         public virtual ObjectUniqueId AddSeparator()
         {
+            ToolBarSeparatorItem border = AddSeparatorCore();
+            return border.UniqueId;
+        }
+
+        /// <summary>
+        /// Creates and adds a new separator item to the toolbar.
+        /// </summary>
+        /// <remarks>The separator item is initialized with the default separator color,
+        /// if specified, and its properties are updated to match the toolbar's configuration.
+        /// The parent of the separator item is set to the current toolbar instance.</remarks>
+        /// <returns>A <see cref="ToolBarSeparatorItem"/> representing
+        /// the newly created separator.</returns>
+        public virtual ToolBarSeparatorItem AddSeparatorCore()
+        {
             ToolBarSeparatorItem border = new();
 
-            if(DefaultSeparatorColor is not null)
+            if (DefaultSeparatorColor is not null)
                 border.BorderColor = DefaultSeparatorColor;
 
             UpdateItemProps(border, ItemKind.Separator);
 
             border.Parent = this;
-            return border.UniqueId;
+            return border;
         }
 
         /// <summary>
@@ -1673,6 +1689,7 @@ namespace Alternet.UI
             {
                 foreach (var control in controls)
                 {
+                    control.DataContext = null;
                     control.Parent = null;
                     if (dispose)
                         control.Dispose();
@@ -2464,7 +2481,127 @@ namespace Alternet.UI
         /// <inheritdoc/>
         protected override void OnDataContextChanged(object? oldValue, object? newValue)
         {
-            base.OnDataContextChanged(oldValue, newValue);
+            if (oldValue is IMenuProperties oldProperties)
+            {
+                oldProperties.CollectionNotifier.CollectionChanged -= OnMenuItemsCollectionChanged;
+            }
+
+            if (newValue is IMenuProperties newProperties)
+            {
+                newProperties.CollectionNotifier.CollectionChanged += OnMenuItemsCollectionChanged;
+                OnMenuItemsCollectionChanged(
+                    newProperties,
+                    new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Reset));
+            }
+        }
+
+        /// <summary>
+        /// Handles changes to the attached menu items collection.
+        /// </summary>
+        /// <remarks>This method is called whenever the menu items collection is modified.
+        /// Subclasses can override this method to provide custom handling
+        /// for collection changes.</remarks>
+        /// <param name="sender">The source of the collection change event.
+        /// This may be <see langword="null"/>.</param>
+        /// <param name="e">The event data containing details about the collection change.</param>
+        protected virtual void OnMenuItemsCollectionChanged(
+            object? sender,
+            NotifyCollectionChangedEventArgs e)
+        {
+            if(sender is not IMenuProperties menuProperties)
+                return;
+
+            void InsertItem(int index, IReadOnlyMenuItemProperties menuItem)
+            {
+                if(menuItem.Text == "-")
+                {
+                    var separator = AddSeparatorCore();
+                    separator.DataContext = menuItem;
+                    return;
+                }
+                else
+                {
+                }
+            }
+
+            void ResetItems()
+            {
+                DeleteAll(true);
+
+                DoInsideLayout(() =>
+                {
+                    for (int i = 0; i < menuProperties.ItemCount; i++)
+                    {
+                        var menuItem = menuProperties.GetItem(i);
+                        if (menuItem is not IReadOnlyMenuItemProperties item)
+                            continue;
+                        InsertItem(i, item);
+                    }
+                });
+            }
+
+            void RemoveItems(IList items)
+            {
+                foreach (var oldItem in items)
+                {
+                    if (oldItem is not IReadOnlyMenuItemProperties menuItem)
+                        continue;
+                    var child = FindChildWithDataContextId(menuItem.UniqueId);
+                    if (child is null)
+                        continue;
+                    child.Parent = null;
+                    child.Dispose();
+                }
+            }
+
+            void MoveItems(IList items, int oldIndex, int newIndex)
+            {
+                if (oldIndex == newIndex)
+                    return;
+                RemoveItems(items);
+                InsertItems(items, newIndex);
+            }
+
+            void InsertItems(IList items, int index)
+            {
+                foreach (var newItem in items)
+                {
+                    if (newItem is not IReadOnlyMenuItemProperties menuItem)
+                        continue;
+                    InsertItem(index, menuItem);
+                    index++;
+                }
+            }
+
+            void ReplaceItems(IList fromItems, IList toItems, int index)
+            {
+                RemoveItems(fromItems);
+                InsertItems(toItems, index);
+            }
+
+            DoInsideLayout(Internal);
+
+            void Internal()
+            {
+                switch (e.Action)
+                {
+                    case NotifyCollectionChangedAction.Add:
+                        InsertItems(e.NewItems!, e.NewStartingIndex);
+                        break;
+                    case NotifyCollectionChangedAction.Remove:
+                        RemoveItems(e.OldItems!);
+                        break;
+                    case NotifyCollectionChangedAction.Replace:
+                        ReplaceItems(e.OldItems!, e.NewItems!, e.OldStartingIndex);
+                        break;
+                    case NotifyCollectionChangedAction.Move:
+                        MoveItems(e.OldItems!, e.OldStartingIndex, e.NewStartingIndex);
+                        break;
+                    case NotifyCollectionChangedAction.Reset:
+                        ResetItems();
+                        break;
+                }
+            }
         }
     }
 }
