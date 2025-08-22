@@ -11,8 +11,6 @@ namespace Alternet.UI
     [ControlCategory("Hidden")]
     public partial class MenuItem : Menu, ICommandSource, IMenuItemProperties
     {
-        private static KnownButtonImage? defaultMenuArrowImage;
-
         /// <summary>
         /// Represents the default size of the menu arrow image.
         /// </summary>
@@ -22,6 +20,8 @@ namespace Alternet.UI
         /// This value is used as the default when no specific size is provided for
         /// menu arrow images.</remarks>
         public static CoordAndUnit DefaultMenuArrowImageSize = new(75, CoordUnit.Percent);
+
+        private static KnownButtonImage? defaultMenuArrowImage;
 
         private KeyGesture? shortcut;
         private MenuItemRole? role;
@@ -201,8 +201,11 @@ namespace Alternet.UI
         {
             get
             {
-                defaultMenuArrowImage ??=
-                    new(KnownSvgImages.ImgAngleRight, DefaultMenuArrowImageSize);
+                if(defaultMenuArrowImage is null)
+                {
+                    defaultMenuArrowImage = new(KnownSvgImages.ImgAngleRight, DefaultMenuArrowImageSize);
+                }
+
                 return defaultMenuArrowImage.Value;
             }
 
@@ -697,6 +700,31 @@ namespace Alternet.UI
         public virtual void RaiseChanged(MenuItemChangeKind kind)
         {
             Changed?.Invoke(this, new (kind));
+        }
+
+        /// <summary>
+        /// Copies the properties from the specified source to the current instance.
+        /// </summary>
+        /// <param name="source">An object implementing <see cref="IMenuItemProperties"/>
+        /// whose properties will be copied. Cannot be <see langword="null"/>.</param>
+        public virtual void Assign(IMenuItemProperties source)
+        {
+            if (source is null)
+                throw new ArgumentNullException(nameof(source));
+            Text = source.Text;
+            Image = source.Image;
+            DisabledImage = source.DisabledImage;
+            SvgImage = source.SvgImage;
+            SvgImageSize = source.SvgImageSize;
+            Shortcut = source.Shortcut;
+            IsShortcutEnabled = source.IsShortcutEnabled;
+            Role = source.Role;
+            Checked = source.Checked;
+            ClickAction = source.DoClick;
+            Command = source.CommandSource.Command;
+            CommandParameter = source.CommandSource.CommandParameter;
+            Enabled = source.Enabled;
+            Visible = source.Visible;
         }
 
         void IMenuItemProperties.DoClick()
