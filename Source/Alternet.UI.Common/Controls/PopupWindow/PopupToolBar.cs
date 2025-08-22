@@ -75,6 +75,24 @@ namespace Alternet.UI
         /// <inheritdoc/>
         public override bool DefaultCloseEnabled => false;
 
+        /// <summary>
+        /// Gets or sets a value indicating whether the remaining label images are required
+        /// for the toolbar items.
+        /// When set to <c>true</c>, the control will ensure that all label images
+        /// are assigned. For items without a specific label image, a default transparent image
+        /// will be used.
+        /// </summary>
+        public virtual bool NeedsRemainingLabelImages { get; set; } = true;
+
+        /// <summary>
+        /// Gets or sets a value indicating whether the remaining images are
+        /// required for the toolbar items.
+        /// When set to <c>true</c>, the control will ensure that all images
+        /// are assigned. For items without a specific image, a default transparent image
+        /// will be used.
+        /// </summary>
+        public virtual bool NeedsRemainingImages { get; set; } = true;
+
         /// <inheritdoc/>
         public override SizeD GetPreferredSize(SizeD availableSize)
         {
@@ -113,6 +131,16 @@ namespace Alternet.UI
         /// <inheritdoc/>
         protected override void BeforeShowPopup()
         {
+            if (NeedsRemainingImages)
+            {
+                MainControl.AddRemainingImages();
+            }
+
+            if (NeedsRemainingLabelImages)
+            {
+                MainControl.AddRemainingLabelImages();
+            }
+
             var preferredSize = GetPreferredSize();
             ClientSize = preferredSize;
             MinimumSize = MinimumSize.ClampTo(Size);
