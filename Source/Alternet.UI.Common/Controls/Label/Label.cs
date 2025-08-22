@@ -74,6 +74,7 @@ namespace Alternet.UI
         private bool wordWrap;
         private VerticalAlignment? imageVerticalAlignment;
         private HorizontalAlignment? imageHorizontalAlignment;
+        private Coord? minTextWidth;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Label"/> class
@@ -413,6 +414,29 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets or sets the minimum width of the text, in dips.
+        /// </summary>
+        /// <remarks>Setting this property triggers a layout update
+        /// and invalidates the control.</remarks>
+        public virtual Coord? MinTextWidth
+        {
+            get
+            {
+                return minTextWidth;
+            }
+
+            set
+            {
+                if (value <= 0)
+                    value = null;
+                if (minTextWidth == value)
+                    return;
+                minTextWidth = value;
+                PerformLayoutAndInvalidate();
+            }
+        }
+
+        /// <summary>
         /// Gets or sets underlined character index.
         /// </summary>
         /// <remarks>
@@ -641,6 +665,7 @@ namespace Alternet.UI
                 alignment,
                 mnemonicCharIndex);
 
+            prm.MinTextWidth = minTextWidth;
             prm.IsVerticalText = isVerticalText;
             prm.Visible = foreColor != Color.Empty;
 
@@ -659,6 +684,9 @@ namespace Alternet.UI
                     return s;
 
                 var mw = paddedRect.Width;
+
+                if (minTextWidth is not null)
+                    mw = Math.Max(minTextWidth.Value, mw);
 
                 if (maxTextWidth is not null)
                     mw = Math.Min(maxTextWidth.Value, mw);
@@ -756,6 +784,43 @@ namespace Alternet.UI
             updateParams?.Invoke(ref prm);
         }
 
+        /// <summary>
+        /// Gets formatted text with <see cref="TextSuffix"/> and <see cref="TextPrefix"/>.
+        /// This method returns the text to be displayed on the label.
+        /// </summary>
+        /// <returns></returns>
+        public virtual string GetFormattedText()
+        {
+#pragma warning disable
+            var image = GetImage();
+#pragma warning restore
+            var prefix = TextPrefix;
+            var labelText = Text;
+
+            var result = $"{prefix}{labelText}{TextSuffix}" ?? string.Empty;
+            if (textFormat is not null)
+                result = string.Format(textFormat, result);
+            return result;
+        }
+
+        /// <summary>
+        /// Calculates the size of the formatted text based on the specified font.
+        /// </summary>
+        /// <remarks>This method measures the size of the text after applying any formatting.
+        /// If no font is provided, the default font for the normal visual state is used.</remarks>
+        /// <param name="font">The font to use for measuring the text. If null,
+        /// the default label font for the normal visual state is used.</param>
+        /// <returns>A <see cref="SizeD"/> representing the width and height
+        /// of the formatted text.</returns>
+        public virtual SizeD GetFormattedTextSize(Font? font = null)
+        {
+            var text = GetFormattedText();
+            var size = MeasureCanvas.MeasureText(
+                text,
+                font ?? GetLabelFont(VisualControlState.Normal));
+            return size;
+        }
+
         /// <inheritdoc/>
         public override SizeD GetPreferredSize(SizeD availableSize)
         {
@@ -831,24 +896,6 @@ namespace Alternet.UI
         /// data.</param>
         protected virtual void OnImageChanged(EventArgs e)
         {
-        }
-
-        /// <summary>
-        /// Gets formatted text with <see cref="TextSuffix"/> and <see cref="TextPrefix"/>.
-        /// </summary>
-        /// <returns></returns>
-        protected virtual string GetFormattedText()
-        {
-#pragma warning disable
-            var image = GetImage();
-#pragma warning restore
-            var prefix = TextPrefix;
-            var labelText = Text;
-
-            var result = $"{prefix}{labelText}{TextSuffix}" ?? string.Empty;
-            if (textFormat is not null)
-                result = string.Format(textFormat, result);
-            return result;
         }
 
         /// <inheritdoc/>
