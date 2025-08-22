@@ -12,6 +12,30 @@ namespace Alternet.UI
     public struct KnownButtonImage
     {
         /// <summary>
+        /// Represents a transparent button image with no visible content.
+        /// </summary>
+        /// <remarks>This static field provides a predefined instance of a button image
+        /// that is fully transparent. It can be used as a placeholder or default value
+        /// when no image is required.</remarks>
+        public static readonly KnownButtonImage Transparent = new(KnownSvgImages.ImgEmpty);
+
+        /// <summary>
+        /// Represents an empty or uninitialized button image.
+        /// </summary>
+        /// <remarks>This static readonly field provides a default instance
+        /// of the <see cref="KnownButtonImage"/> class that represents an empty
+        /// or uninitialized state. It can be used as a
+        /// placeholder or to indicate the absence of a specific button image.</remarks>
+        public static readonly KnownButtonImage Empty = new();
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="KnownButtonImage"/> class.
+        /// </summary>
+        public KnownButtonImage()
+        {
+        }
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="KnownButtonImage"/> struct
         /// with the specified known button and optional size.
         /// </summary>
