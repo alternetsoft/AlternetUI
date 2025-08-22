@@ -513,6 +513,30 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets a value indicating whether this control has an image that is visible.
+        /// </summary>
+        [Browsable(false)]
+        public virtual bool HasVisibleImage
+        {
+            get
+            {
+                return ImageVisible && HasImage;
+            }
+        }
+
+        /// <summary>
+        /// Gets a value indicating whether an image is associated with the current instance.
+        /// </summary>
+        [Browsable(false)]
+        public virtual bool HasImage
+        {
+            get
+            {
+                return Image is not null;
+            }
+        }
+
+        /// <summary>
         /// Gets or sets a value indicating whether to draw image.
         /// </summary>
         public virtual bool ImageVisible
