@@ -49,7 +49,8 @@ namespace ControlsSample
 
             button3.Click += (s, e) =>
             {
-                syncedPopupToolBar.DataContext = contextMenu;
+                syncedPopupToolBar.MainControl.DataContext = contextMenu;
+                syncedPopupToolBar.MainControl.ConfigureAsContextMenu();
                 syncedPopupToolBar.ShowPopup(button3);
             };
         }

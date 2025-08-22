@@ -51,11 +51,6 @@ namespace Alternet.UI
         MenuItemRole? Role { get; }
 
         /// <summary>
-        /// Gets the action to execute when the menu item is clicked.
-        /// </summary>
-        Action? ClickAction { get; }
-
-        /// <summary>
         /// Gets the text displayed for the menu item.
         /// </summary>
         string Text { get; }
@@ -97,5 +92,19 @@ namespace Alternet.UI
         /// Ensure that any required preconditions for the click action are met before calling this
         /// method.</remarks>
         void DoClick();
+
+        /// <summary>
+        /// Retrieves the real image associated with the specified visual control state.
+        /// </summary>
+        /// <param name="state">The visual control state for which the image is to be retrieved.</param>
+        /// <param name="isDark">An optional parameter indicating whether the dark mode
+        /// variant of the image should be retrieved. If <see
+        /// langword="null"/>, the default variant is used.</param>
+        /// <param name="control">An optional parameter specifying the control
+        /// context for which the image is being retrieved.
+        /// If <see langword="null"/>, the image is retrieved without a specific control context.</param>
+        /// <returns>The <see cref="ImageSet"/> associated with the specified state,
+        /// or <see langword="null"/> if no image is available for the given parameters.</returns>
+        ImageSet? GetRealImage(VisualControlState state, bool? isDark = null, Control? control = null);
     }
 }

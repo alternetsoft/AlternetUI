@@ -2302,14 +2302,20 @@ namespace Alternet.UI
             }
             else
             {
-                result = InsertSpeedBtnCore(
+                var speedButton = InsertSpeedBtnCore(
                     index,
                     ItemKind.Button,
                     menuItem.Text,
-                    menuItem.Image,
-                    menuItem.DisabledImage,
-                    null,
-                    null);
+                    imageSet: null,
+                    imageSetDisabled: null,
+                    toolTip: null,
+                    (s, e) =>
+                    {
+                        menuItem.DoClick();
+                    });
+                speedButton.Label.MnemonicMarker = '_';
+                speedButton.Label.MnemonicMarkerEnabled = true;
+                result = speedButton;
             }
 
             result.DataContext = menuItem;

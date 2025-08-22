@@ -10,6 +10,7 @@ namespace ControlsSample
             {
                 Text = "_Open...",
                 Shortcut = "Ctrl+Alt+1",
+                SvgImage = KnownSvgImages.ImgFileOpen,
             };
             openMenuItem.Click += OpenMenuItem_Click;
 
@@ -17,6 +18,7 @@ namespace ControlsSample
             {
                 Text = "_Save...",
                 Shortcut = "Ctrl+Alt+2",
+                SvgImage = KnownSvgImages.ImgFileSave,
             };
             saveMenuItem.Click += SaveMenuItem_Click;
 
