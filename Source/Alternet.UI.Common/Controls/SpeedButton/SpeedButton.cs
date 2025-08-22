@@ -2065,6 +2065,12 @@ namespace Alternet.UI
             }
         }
 
+        /// <inheritdoc/>
+        protected override void OnDataContextChanged(object? oldValue, object? newValue)
+        {
+            base.OnDataContextChanged(oldValue, newValue);
+        }
+
         private void OnClickRepeatTimerEvent()
         {
             if (VisualState != VisualControlState.Pressed)
