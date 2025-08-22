@@ -178,6 +178,13 @@ namespace Alternet.UI
                 $"Element with name '{name}' was not found.");
         }
 
+        /// <inheritdoc/>
+        protected override void DisposeManaged()
+        {
+            DataContext = null;
+            base.DisposeManaged();
+        }
+
         /// <summary>
         /// Raises the <see cref="OnNameChanged"/> method and
         /// <see cref="NameChanged"/> event.
