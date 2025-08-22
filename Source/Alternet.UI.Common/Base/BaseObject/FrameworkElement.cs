@@ -25,6 +25,11 @@ namespace Alternet.UI
         public event EventHandler? DataContextChanged;
 
         /// <summary>
+        /// Occurs when the <see cref="Name"/> property changes.
+        /// </summary>
+        public event EventHandler? NameChanged;
+
+        /// <summary>
         /// Gets or sets the identifying name of the object.
         /// The name provides a reference so that code-behind, such as event handler code,
         /// can refer to a markup object after it is constructed during processing by a
@@ -37,7 +42,10 @@ namespace Alternet.UI
 
             set
             {
+                if (name == value)
+                    return;
                 name = value;
+                RaiseNameChanged();
             }
         }
 
@@ -218,6 +226,17 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Raises the <see cref="OnNameChanged"/> method and
+        /// <see cref="NameChanged"/> event.
+        /// </summary>
+        protected virtual void RaiseNameChanged()
+        {
+            OnNameChanged();
+            NameChanged?.Invoke(this, EventArgs.Empty);
+            StaticControlEvents.RaiseNameChanged(this, EventArgs.Empty);
+        }
+
+        /// <summary>
         /// Raises the <see cref="OnDataContextChanged"/> method and
         /// <see cref="DataContextChanged"/> event.
         /// </summary>
@@ -228,6 +247,14 @@ namespace Alternet.UI
         {
             OnDataContextChanged();
             DataContextChanged?.Invoke(this, EventArgs.Empty);
+            StaticControlEvents.RaiseDataContextChanged(this, EventArgs.Empty);
+        }
+
+        /// <summary>
+        /// Called when the <see cref="Name"/> property changes.
+        /// </summary>
+        protected virtual void OnNameChanged()
+        {
         }
 
         /// <summary>

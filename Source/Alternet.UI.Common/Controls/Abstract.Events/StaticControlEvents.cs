@@ -12,6 +12,22 @@ namespace Alternet.UI
     public static class StaticControlEvents
     {
         /// <summary>
+        /// Occurs when the name is changed.
+        /// </summary>
+        /// <remarks>This event is raised whenever the name is updated. Subscribers can handle this event
+        /// to perform actions  in response to the name change.</remarks>
+        public static event EventHandler? NameChanged;
+
+        /// <summary>
+        /// Occurs when the data context of the associated object changes.
+        /// </summary>
+        /// <remarks>This event is raised whenever the data context is updated,
+        /// allowing subscribers to respond to changes in the context.
+        /// The event handler receives an <see cref="EventArgs"/> instance, which
+        /// does not contain additional information about the change.</remarks>
+        public static event EventHandler? DataContextChanged;
+
+        /// <summary>
         /// Occurs when the control has been disposed and its resources have been released.
         /// </summary>
         /// <remarks>Subscribe to this event to be notified when the control is disposed. After disposal,
@@ -155,6 +171,28 @@ namespace Alternet.UI
         public static void RaiseParentChanged(object? sender, EventArgs e)
         {
             ParentChanged?.Invoke(sender, e);
+        }
+
+        /// <summary>
+        /// Raises the <see cref="NameChanged"/> event with the specified sender and event data.
+        /// </summary>
+        /// <param name="sender">The source of the event. This can be <see langword="null"/>
+        /// if the event is not associated with a specific object.</param>
+        /// <param name="e">An <see cref="EventArgs"/> instance containing the event data.</param>
+        public static void RaiseNameChanged(object? sender, EventArgs e)
+        {
+            NameChanged?.Invoke(sender, e);
+        }
+
+        /// <summary>
+        /// Raises the <see cref="DataContextChanged"/> event with the specified sender and event data.
+        /// </summary>
+        /// <param name="sender">The source of the event, typically the object
+        /// whose data context has changed. This value can be <see langword="null"/>.</param>
+        /// <param name="e">An <see cref="EventArgs"/> instance containing the event data.</param>
+        public static void RaiseDataContextChanged(object? sender, EventArgs e)
+        {
+            DataContextChanged?.Invoke(sender, e);
         }
 
         /// <summary>
