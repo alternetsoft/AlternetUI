@@ -54,7 +54,7 @@ namespace ControlsSample
                 CommonStrings.Default.ButtonOpen,
                 KnownSvgImages.ImgFileOpen);
             toolbar.AddToolAction(buttonIdOpen, ButtonClick);
-            toolbar.SetToolShortcut(buttonIdOpen, Keys.Control | Keys.O);
+            toolbar.SetToolShortcut(buttonIdOpen, Keys.Control | Keys.O | Keys.Shift | Keys.Alt);
 
             ContextMenu? menu = new();
 
