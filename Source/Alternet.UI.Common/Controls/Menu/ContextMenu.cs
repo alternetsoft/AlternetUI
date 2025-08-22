@@ -96,17 +96,19 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="control">The control with which this context menu is associated.</param>
         /// <param name="afterShow">The action to be invoked after the menu is shown.</param>
+        /// <param name="position">The position of the drop-down menu.</param>
         public virtual void ShowAsDropDown(
             AbstractControl control,
-            Action? afterShow = null)
+            Action? afterShow = null,
+            HVAlignment? position = null)
         {
             if (control is null)
                 throw new ArgumentNullException(nameof(control));
 
-            App.AddIdleTask(() =>
+            Post(() =>
             {
-                PointD pt = (0, control.Bounds.Height);
-                Show(control, (pt.X, pt.Y));
+                var pt = AlignUtils.GetDropDownPosition(control.Size, position);
+                Show(control, pt);
                 afterShow?.Invoke();
             });
         }
