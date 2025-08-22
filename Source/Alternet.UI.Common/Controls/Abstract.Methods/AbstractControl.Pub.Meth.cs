@@ -1640,11 +1640,36 @@ namespace Alternet.UI
         /// <param name="id">Child control id.</param>
         public virtual AbstractControl? FindChild(ObjectUniqueId? id)
         {
-            if (id is null)
+            if (id is null || !HasChildren)
                 return null;
             foreach (var item in Children)
             {
                 if (item.UniqueId == id)
+                    return item;
+            }
+
+            return null;
+        }
+
+        /// <summary>
+        /// Searches for a child control whose data context has the specified unique identifier.
+        /// </summary>
+        /// <remarks>This method iterates through the child controls and checks if their data context
+        /// implements <see cref="IBaseObjectWithId"/> and
+        /// has a <see cref="IBaseObjectWithId.UniqueId"/> matching the
+        /// specified <paramref name="id"/>.</remarks>
+        /// <param name="id">The unique identifier to match against the data context
+        /// of child controls. Can be <see langword="null"/>.</param>
+        /// <returns>The first child control whose data context matches the specified
+        /// unique identifier, or <see langword="null"/> if no match is found
+        /// or if <paramref name="id"/> is <see langword="null"/>.</returns>
+        public virtual AbstractControl? FindChildWithDataContextId(ObjectUniqueId? id)
+        {
+            if (id is null || !HasChildren)
+                return null;
+            foreach (var item in Children)
+            {
+                if ((item.DataContext as IBaseObjectWithId)?.UniqueId == id)
                     return item;
             }
 
