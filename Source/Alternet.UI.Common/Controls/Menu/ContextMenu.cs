@@ -92,6 +92,20 @@ namespace Alternet.UI
         public new IContextMenuHandler Handler => (IContextMenuHandler)base.Handler;
 
         /// <summary>
+        /// Copies the properties from the specified <see cref="IMenuProperties"/>
+        /// source to the current instance.
+        /// </summary>
+        /// <param name="source">The source object containing the properties to copy.
+        /// Cannot be <see langword="null"/>.</param>
+        public virtual void Assign(IMenuProperties source)
+        {
+            Items.SetCount(source.ItemCount, () => new MenuItem());
+
+            for (var i = 0; i < source.ItemCount; i++)
+                Items[i].Assign(source.GetItem(i));
+        }
+
+        /// <summary>
         /// Shows the context menu as a drop-down menu under the specified control.
         /// </summary>
         /// <param name="control">The control with which this context menu is associated.</param>
