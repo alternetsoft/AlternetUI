@@ -407,7 +407,7 @@ namespace Alternet.UI
                 if (ImageLabelDistance == value)
                     return;
                 spacer.SuggestedSize = value;
-                if (HasImage && TextVisible)
+                if (HasVisibleImage && TextVisible)
                     PerformLayoutAndInvalidate();
             }
         }
@@ -503,6 +503,18 @@ namespace Alternet.UI
                     return;
                 drawable.Stretch = value;
                 Invalidate();
+            }
+        }
+
+        /// <summary>
+        /// Gets a value indicating whether the label has an associated image.
+        /// </summary>
+        [Browsable(false)]
+        public virtual bool HasLabelImage
+        {
+            get
+            {
+                return label.HasVisibleImage;
             }
         }
 
@@ -934,16 +946,27 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Gets whether control has image and it is visible.
+        /// Gets a value indicating whether <see cref="Image"/> or <see cref="ImageSet"/>
+        /// is associated with the current instance.
         /// </summary>
         [Browsable(false)]
         public virtual bool HasImage
         {
             get
             {
-                bool hasImage = (Image is not null) || (ImageSet is not null);
-                var img = ImageVisible && hasImage;
-                return img;
+                return (Image is not null) || (ImageSet is not null);
+            }
+        }
+
+        /// <summary>
+        /// Gets whether control has image and it is visible.
+        /// </summary>
+        [Browsable(false)]
+        public virtual bool HasVisibleImage
+        {
+            get
+            {
+                return ImageVisible && HasImage;
             }
         }
 
@@ -954,7 +977,7 @@ namespace Alternet.UI
             {
                 if (TextVisible)
                 {
-                    if (HasImage)
+                    if (HasVisibleImage)
                     {
                         if (ImageToText == ImageToText.Horizontal)
                         {
@@ -984,7 +1007,7 @@ namespace Alternet.UI
                 }
                 else
                 {
-                    if (HasImage)
+                    if (HasVisibleImage)
                         return new AbstractControl[] { PictureBox };
                     else
                         return Array.Empty<AbstractControl>();
@@ -1590,13 +1613,64 @@ namespace Alternet.UI
         /// <remarks>This method simplifies the process of setting a label image by encapsulating the
         /// required parameters in a single object.</remarks>
         /// <param name="knownButtonAndImage">An object containing the image parameters.</param>
-        public void SetLabelImage(KnownButtonImage knownButtonAndImage)
+        public virtual void SetLabelImage(KnownButtonImage knownButtonAndImage)
         {
             SetLabelImage(
                 knownButtonAndImage.SvgImage,
                 knownButtonAndImage.KnownButton,
                 knownButtonAndImage.Alignment,
                 knownButtonAndImage.Size);
+        }
+
+        /// <summary>
+        /// Sets the SVG image for a toolbar button, along with its corresponding disabled state image.
+        /// </summary>
+        /// <remarks>This method generates both the normal and disabled state images for
+        /// the specified toolbar button based on the provided SVG image.
+        /// If <paramref name="svg"/> is <see langword="null"/>, the
+        /// images for the button will be cleared.</remarks>
+        /// <param name="svg">The <see cref="SvgImage"/> to use as the base image.
+        /// Can be <see langword="null"/> to clear the current image.</param>
+        /// <param name="btn">The <see cref="KnownButton"/> representing the toolbar button
+        /// to associate with the image. Can be <see langword="null"/>
+        /// if no specific button is targeted.</param>
+        /// <param name="size">An optional <see cref="CoordValue"/> specifying
+        /// the desired size of the image. If <see langword="null"/>,
+        /// the default size is used.</param>
+        public virtual void SetSvg(
+            SvgImage? svg,
+            KnownButton? btn,
+            CoordValue? size)
+        {
+            var (normalImage, disabledImage)
+                = ToolBarUtils.GetNormalAndDisabledSvgImages(svg, btn, this, size);
+
+            SetImages(normalImage, disabledImage);
+        }
+
+        /// <summary>
+        /// Sets the image and alignment properties for a button based on the specified configuration.
+        /// </summary>
+        /// <remarks>This method updates the horizontal and vertical alignment of the image if alignment
+        /// values are provided in the <paramref name="knownButtonAndImage"/> parameter.
+        /// It then sets the SVG image, button type, and size using the specified configuration.</remarks>
+        /// <param name="knownButtonAndImage">An object containing the image, button, alignment,
+        /// and size configuration to apply.</param>
+        public virtual void SetImage(KnownButtonImage knownButtonAndImage)
+        {
+            DoInsideLayout(() =>
+            {
+                if(knownButtonAndImage.Alignment is not null)
+                {
+                    ImageHorizontalAlignment = knownButtonAndImage.Alignment.Value.Horizontal;
+                    ImageVerticalAlignment = knownButtonAndImage.Alignment.Value.Vertical;
+                }
+
+                SetSvg(
+                    knownButtonAndImage.SvgImage,
+                    knownButtonAndImage.KnownButton,
+                    knownButtonAndImage.Size);
+            });
         }
 
         /// <summary>
@@ -1734,7 +1808,7 @@ namespace Alternet.UI
                 TemplateUtils.RaisePaintRecursive(Label, e.Graphics, Label.Location);
             }
 
-            if (HasImage)
+            if (HasVisibleImage)
             {
                 if (ImageToText == ImageToText.Horizontal && TextVisible
                     && ImageHorizontalAlignment == HorizontalAlignment.Right)
