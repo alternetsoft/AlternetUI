@@ -780,13 +780,17 @@ namespace Alternet.Drawing
             /// <param name="prm">A reference to the <see cref="DrawLabelParams"/>
             /// structure containing the parameters for drawing
             /// the image, including the image source and alignment settings.</param>
+            /// <param name="imageOverride">The <see cref="Image"/> to use as the image
+            /// for the element, overriding any image specified in <paramref name="prm"/>.</param>
             /// <returns>An <see cref="DrawElementParams"/> object representing
             /// the image element to be drawn, or <see langword="null"/> if
             /// the <see cref="DrawLabelParams.Image"/> property
             /// is <see langword="null"/>.</returns>
-            public static DrawElementParams CreateImageElement(ref DrawLabelParams prm)
+            public static DrawElementParams CreateImageElement(
+                ref DrawLabelParams prm,
+                Image? imageOverride = null)
             {
-                var image = prm.Image;
+                var image = imageOverride ?? prm.Image;
 
                 if (image is null)
                     return DrawElementParams.Default;
