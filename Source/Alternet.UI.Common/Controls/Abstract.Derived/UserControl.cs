@@ -20,6 +20,7 @@ namespace Alternet.UI
         private RichTextBoxScrollBars scrollBars = RichTextBoxScrollBars.None;
         private bool showDropDownMenuWhenClicked = true;
         private List<IControlOverlay>? overlays;
+        private HVAlignment? dropDownMenuPosition;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="UserControl"/> class.
@@ -50,6 +51,19 @@ namespace Alternet.UI
         /// and set the <see cref="CancelEventArgs.Cancel"/>
         /// property to <see langword="true"/> to prevent the menu from being displayed.</remarks>
         public event EventHandler<BaseCancelEventArgs>? DropDownMenuShowing;
+
+        /// <summary>
+        /// Gets or sets the alignment position of the drop-down menu.
+        /// Based on this property, the menu will be aligned horizontally and vertically
+        /// relative to the control bounds. If not set, the menu will be aligned
+        /// to the control's bottom-left corner. Default is <see langword="null"/>.
+        /// </summary>
+        [Browsable(false)]
+        public virtual HVAlignment? DropDownMenuPosition
+        {
+            get => dropDownMenuPosition;
+            set => dropDownMenuPosition = value;
+        }
 
         /// <summary>
         /// Gets or sets different behavior and visualization options.
@@ -640,7 +654,7 @@ namespace Alternet.UI
                     return;
             }
 
-            DropDownMenu?.ShowAsDropDown(this, afterShow);
+            DropDownMenu?.ShowAsDropDown(this, afterShow, DropDownMenuPosition);
         }
 
         /// <inheritdoc/>
