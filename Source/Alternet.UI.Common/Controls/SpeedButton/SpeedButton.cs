@@ -2068,7 +2068,29 @@ namespace Alternet.UI
         /// <inheritdoc/>
         protected override void OnDataContextChanged(object? oldValue, object? newValue)
         {
-            base.OnDataContextChanged(oldValue, newValue);
+            if (oldValue is IReadOnlyMenuItemProperties oldProperties)
+            {
+                oldProperties.Changed -= OnMenuItemChanged;
+            }
+
+            if (newValue is IReadOnlyMenuItemProperties newProperties)
+            {
+                newProperties.Changed += OnMenuItemChanged;
+            }
+        }
+
+        /// <summary>
+        /// Invoked when attached menu item change event occurs.
+        /// </summary>
+        /// <remarks>This method is called to handle menu item change events
+        /// and can be overridden in a derived class to provide custom handling logic.</remarks>
+        /// <param name="sender">The source of the event, which may be <see langword="null"/>.</param>
+        /// <param name="e">An event argument of type <see cref="BaseEventArgs{T}"/>
+        /// containing the details of the menu item change, including the kind of change.</param>
+        protected virtual void OnMenuItemChanged(object? sender, BaseEventArgs<MenuItemChangeKind> e)
+        {
+            if(sender is not IReadOnlyMenuItemProperties properties)
+                return;
         }
 
         private void OnClickRepeatTimerEvent()
