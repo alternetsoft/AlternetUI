@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.Specialized;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -7,7 +8,7 @@ using System.Threading.Tasks;
 namespace Alternet.UI
 {
     /// <summary>
-    /// Contains static methods related to arrays and lists.
+    /// Contains static methods related to lists and collections.
     /// </summary>
     public static class ListUtils
     {
@@ -50,5 +51,163 @@ namespace Alternet.UI
             for (int i = list.Count; i < newCount; i++)
                 list.Add(createItem());
         }
+
+        /// <summary>
+        /// Routes a collection change event to the appropriate handler
+        /// based on the action type.
+        /// </summary>
+        /// <remarks>This method processes the collection change event by invoking
+        /// the corresponding method on the provided <paramref name="router"/> based on
+        /// the <see cref="NotifyCollectionChangedAction"/> specified in <paramref name="e"/>.
+        /// Supported actions include Add, Remove, Replace, Move, and Reset.</remarks>
+        /// <param name="sender">The source of the collection change event.
+        /// This may be <see langword="null"/>.</param>
+        /// <param name="e">The <see cref="NotifyCollectionChangedEventArgs"/> instance
+        /// containing details about the collection change.</param>
+        /// <param name="router">The <see cref="ICollectionChangeRouter"/> responsible
+        /// for handling the collection change actions.</param>
+        /// <returns>
+        /// <see langword="true"/> if the collection change action was successfully routed and handled;
+        /// <see langword="false"/> if the action type is not supported.
+        /// </returns>
+        public static bool RouteCollectionChange(
+                object? sender,
+                NotifyCollectionChangedEventArgs e,
+                ICollectionChangeRouter router)
+        {
+            switch (e.Action)
+            {
+                case NotifyCollectionChangedAction.Add:
+                    router.OnCollectionAdd(sender, e.NewItems!, e.NewStartingIndex);
+                    return true;
+
+                case NotifyCollectionChangedAction.Remove:
+                    router.OnCollectionRemove(sender, e.OldItems!, e.OldStartingIndex);
+                    return true;
+
+                case NotifyCollectionChangedAction.Replace:
+                    router.OnCollectionReplace(sender, e.OldItems!, e.NewItems!, e.OldStartingIndex);
+                    return true;
+
+                case NotifyCollectionChangedAction.Move:
+                    router.OnCollectionMove(
+                        sender,
+                        e.OldItems!,
+                        e.OldStartingIndex,
+                        e.NewStartingIndex);
+                    return true;
+
+                case NotifyCollectionChangedAction.Reset:
+                    router.OnCollectionReset(sender);
+                    return true;
+
+                default:
+                    return false;
+            }
+        }
     }
 }
+
+
+/*
+        protected virtual void OnMenuItemsCollectionChanged(
+            object? sender,
+            NotifyCollectionChangedEventArgs e)
+        {
+            if(sender is not IMenuProperties menuProperties)
+                return;
+
+            void InsertItem(int index, IMenuItemProperties menuItem)
+            {
+                if(menuItem.Text == "-")
+                {
+                    var separator = AddSeparatorCore();
+                    separator.DataContext = menuItem;
+                    return;
+                }
+                else
+                {
+                }
+            }
+
+            void ResetItems()
+            {
+                DeleteAll(true);
+
+                DoInsideLayout(() =>
+                {
+                    for (int i = 0; i < menuProperties.ItemCount; i++)
+                    {
+                        var menuItem = menuProperties.GetItem(i);
+                        if (menuItem is not IMenuItemProperties item)
+                            continue;
+                        InsertItem(i, item);
+                    }
+                });
+            }
+
+            void RemoveItems(IList items)
+            {
+                foreach (var oldItem in items)
+                {
+                    if (oldItem is not IMenuItemProperties menuItem)
+                        continue;
+                    var child = FindChildWithDataContextId(menuItem.UniqueId);
+                    if (child is null)
+                        continue;
+                    child.Parent = null;
+                    child.Dispose();
+                }
+            }
+
+            void MoveItems(IList items, int oldIndex, int newIndex)
+            {
+                if (oldIndex == newIndex)
+                    return;
+                RemoveItems(items);
+                InsertItems(items, newIndex);
+            }
+
+            void InsertItems(IList items, int index)
+            {
+                foreach (var newItem in items)
+                {
+                    if (newItem is not IMenuItemProperties menuItem)
+                        continue;
+                    InsertItem(index, menuItem);
+                    index++;
+                }
+            }
+
+            void ReplaceItems(IList fromItems, IList toItems, int index)
+            {
+                RemoveItems(fromItems);
+                InsertItems(toItems, index);
+            }
+
+            DoInsideLayout(Internal);
+
+            void Internal()
+            {
+                switch (e.Action)
+                {
+                    case NotifyCollectionChangedAction.Add:
+                        InsertItems(e.NewItems!, e.NewStartingIndex);
+                        break;
+                    case NotifyCollectionChangedAction.Remove:
+                        RemoveItems(e.OldItems!);
+                        break;
+                    case NotifyCollectionChangedAction.Replace:
+                        ReplaceItems(e.OldItems!, e.NewItems!, e.OldStartingIndex);
+                        break;
+                    case NotifyCollectionChangedAction.Move:
+                        MoveItems(e.OldItems!, e.OldStartingIndex, e.NewStartingIndex);
+                        break;
+                    case NotifyCollectionChangedAction.Reset:
+                        ResetItems();
+                        break;
+                }
+            }
+        }
+
+*/
