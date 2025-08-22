@@ -75,6 +75,7 @@ namespace Alternet.UI
         private VerticalAlignment? imageVerticalAlignment;
         private HorizontalAlignment? imageHorizontalAlignment;
         private Coord? minTextWidth;
+        private char? mnemonicMarker;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Label"/> class
@@ -232,6 +233,24 @@ namespace Alternet.UI
                     return;
                 maxTextWidth = value;
                 PerformLayoutAndInvalidate();
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets the character used as the mnemonic marker.
+        /// </summary>
+        /// <remarks>When <see cref="MnemonicMarkerEnabled"/> is <see langword="true"/>, setting this
+        /// property triggers a layout update and invalidates the control.</remarks>
+        public virtual char? MnemonicMarker
+        {
+            get => mnemonicMarker;
+            set
+            {
+                if(mnemonicMarker == value)
+                    return;
+                mnemonicMarker = value;
+                if (MnemonicMarkerEnabled is true)
+                    PerformLayoutAndInvalidate();
             }
         }
 
@@ -962,7 +981,7 @@ namespace Alternet.UI
                 var result = StringUtils.GetWithoutMnemonicMarkers(
                             s,
                             out mnemonicCharIndex,
-                            DefaultMnemonicMarker);
+                            MnemonicMarker ?? DefaultMnemonicMarker);
                 return result;
             }
             else
