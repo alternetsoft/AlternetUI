@@ -298,7 +298,12 @@ namespace Alternet.UI
             /// <summary>
             /// A value of <see cref="RightSideText"/> property is displayed on the right side.
             /// </summary>
-            RightSideText,
+            Text,
+
+            /// <summary>
+            /// A value of <see cref="RightSideImage"/> property is displayed on the right side.
+            /// </summary>
+            Image,
         }
 
         /// <summary>
@@ -437,6 +442,18 @@ namespace Alternet.UI
         /// Gets or sets the text displayed on the right side of the control.
         /// </summary>
         public virtual object? RightSideText { get; set; }
+
+        /// <summary>
+        /// Gets or sets the image displayed on the right side of the control.
+        /// </summary>
+        [Browsable(false)]
+        public virtual Image? RightSideImage { get; set; }
+
+        /// <summary>
+        /// Gets or sets the image displayed on the right side of the control when it is disabled.
+        /// </summary>
+        [Browsable(false)]
+        public virtual Image? RightSideDisabledImage { get; set; }
 
         /// <summary>
         /// Gets or sets the type of element displayed on the right side of the control.
@@ -1607,6 +1624,22 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Sets the right-side image for the toolbar button using
+        /// the specified SVG image and optional parameters.
+        /// </summary>
+        public virtual void SetRightSideImage(KnownButtonImage knownButtonAndImage)
+        {
+            var (normalImage, disabledImage) = ToolBarUtils.GetNormalAndDisabledSvgImages(
+                    knownButtonAndImage.SvgImage,
+                    knownButtonAndImage.KnownButton,
+                    this,
+                    knownButtonAndImage.Size);
+
+            RightSideImage = normalImage;
+            RightSideDisabledImage = disabledImage;
+        }
+
+        /// <summary>
         /// Sets the label image for a button using the specified predefined image,
         /// button type, alignment, and size.
         /// </summary>
@@ -1785,6 +1818,15 @@ namespace Alternet.UI
                 SetContentHorizontalAlignment(HorizontalAlignment.Left);
                 Label.HorizontalAlignment = HorizontalAlignment.Fill;
                 RightSideElement = SpeedButton.RightSideElementKind.KeyGesture;
+
+                if (DropDownMenu is null)
+                {
+                    SetLabelImage(null);
+                }
+                else
+                {
+                    SetLabelImage(MenuItem.DefaultMenuArrowImage);
+                }
             });
         }
 
@@ -1886,16 +1928,20 @@ namespace Alternet.UI
         /// cref="RightSideElementKind.KeyGesture"/>.</description></item>
         /// <item><description>The value of <see
         /// cref="RightSideText"/> if <see cref="RightSideElementKind"/> is <see
-        /// cref="RightSideElementKind.RightSideText"/>.</description></item>
+        /// cref="RightSideElementKind.Text"/>.</description></item>
         /// </list></returns>
         protected virtual object? GetRightSideElement()
         {
             return rightSideElementKind switch
             {
                 RightSideElementKind.None => null,
-                RightSideElementKind.KeyGesture => GetShortcutText(useTemplate: false),
-                RightSideElementKind.KeyGestureFormatted => GetShortcutText(useTemplate: true),
-                RightSideElementKind.RightSideText => RightSideText,
+                RightSideElementKind.KeyGesture
+                    => GetShortcutText(useTemplate: false) ?? string.Empty,
+                RightSideElementKind.KeyGestureFormatted
+                    => GetShortcutText(useTemplate: true) ?? string.Empty,
+                RightSideElementKind.Text => RightSideText ?? string.Empty,
+                RightSideElementKind.Image
+                    => IsEnabled ? RightSideImage : RightSideDisabledImage ?? RightSideImage,
                 _ => null,
             };
         }
@@ -1914,17 +1960,30 @@ namespace Alternet.UI
 
             var rightSide = GetRightSideElement();
 
-            if (rightSide is not string s)
+            if (rightSide is null)
                 return;
 
             label.UpdateDrawLabelParams(UpdateLabelParams);
 
             void UpdateLabelParams(ref Graphics.DrawLabelParams prm)
             {
+                Graphics.DrawElementParams element;
+
+                if (rightSide is string s)
+                {
+                    element = Graphics.DrawElementParams.CreateTextElement(ref prm, s);
+                }
+                else
+                if (rightSide is Image img)
+                {
+                    element = Graphics.DrawElementParams.CreateImageElement(ref prm, img);
+                }
+                else
+                    return;
+
                 var spacerElement = Graphics.DrawElementParams.CreateSpacerElement(spacer.Size);
-                var textElement = Graphics.DrawElementParams.CreateTextElement(ref prm, s);
-                textElement.Alignment = textElement.Alignment.WithHorizontal(HorizontalAlignment.Right);
-                prm.SuffixElements = [spacerElement, textElement];
+                element.Alignment = element.Alignment.WithHorizontal(HorizontalAlignment.Right);
+                prm.SuffixElements = [spacerElement, element];
             }
         }
 
@@ -2076,6 +2135,50 @@ namespace Alternet.UI
             if (newValue is IMenuItemProperties newProperties)
             {
                 newProperties.Changed += OnMenuItemChanged;
+                Assign(newProperties);
+            }
+        }
+
+        /// <summary>
+        /// Assigns the properties of the specified menu item to the current instance.
+        /// </summary>
+        /// <remarks>This method updates the current instance's properties, such as images,
+        /// visibility,  enabled state, and shortcut, based on the values provided
+        /// by the <paramref name="menuItem"/>. If the
+        /// <paramref name="menuItem"/> has an SVG image, it is set using
+        /// the <c>SetSvgImage</c> method;  otherwise, the
+        /// standard and disabled images are assigned directly.</remarks>
+        /// <param name="menuItem">The menu item whose properties are to be assigned.
+        /// Cannot be <see langword="null"/>.</param>
+        protected virtual void Assign(IMenuItemProperties menuItem)
+        {
+            Text = menuItem.Text;
+
+            if (menuItem.SvgImage is not null)
+            {
+                SetSvgImage(menuItem.SvgImage, null);
+            }
+            else
+            {
+                ImageSet = menuItem.Image;
+                DisabledImageSet = menuItem.DisabledImage;
+            }
+
+            Visible = menuItem.Visible;
+            Enabled = menuItem.Enabled;
+            Shortcut = menuItem.Shortcut;
+
+            if(menuItem.ItemCount == 0)
+            {
+                DropDownMenu = null;
+                RightSideElement = RightSideElementKind.KeyGesture;
+            }
+            else
+            {
+                RightSideElement = RightSideElementKind.Image;
+                DropDownMenu ??= new ContextMenu();
+                DropDownMenu.Assign(menuItem);
+                SetRightSideImage(MenuItem.DefaultMenuArrowImage);
             }
         }
 
@@ -2089,8 +2192,9 @@ namespace Alternet.UI
         /// containing the details of the menu item change, including the kind of change.</param>
         protected virtual void OnMenuItemChanged(object? sender, BaseEventArgs<MenuItemChangeKind> e)
         {
-            if(sender is not IMenuItemProperties properties)
+            if(sender is not IMenuItemProperties menuItem)
                 return;
+            Assign(menuItem);
         }
 
         private void OnClickRepeatTimerEvent()
