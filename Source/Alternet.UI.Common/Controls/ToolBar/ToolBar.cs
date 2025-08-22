@@ -1516,6 +1516,69 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Sets the minimum tool label width to the maximum width of all tool label texts.
+        /// </summary>
+        /// <remarks>This method calculates the maximum width of all tool label texts
+        /// and updates the minimum tool label width to match it.
+        /// It ensures consistent alignment or layout for tool labels based on
+        /// their text widths.</remarks>
+        public virtual void MaximizeLabelTextWidth()
+        {
+            var maxWidth = GetMaxToolLabelTextWidth();
+            SetMinToolLabelTextWidth(maxWidth);
+        }
+
+        /// <summary>
+        /// Sets the minimum text width for the labels of all child speed buttons.
+        /// </summary>
+        /// <remarks>This method iterates through the child elements and applies
+        /// the specified minimum
+        /// text width to the labels of all child elements that are
+        /// of type <see cref="SpeedButton"/>.</remarks>
+        /// <param name="width">The minimum width, in device-independent units,
+        /// to set for the labels' text.</param>
+        public virtual void SetMinToolLabelTextWidth(double width)
+        {
+            foreach (var item in Children)
+            {
+                if (item is SpeedButton speedButton)
+                {
+                    speedButton.Label.MinTextWidth = width;
+                }
+            }
+        }
+
+        /// <summary>
+        /// Calculates the maximum width of the labels for all child speed buttons.
+        /// </summary>
+        /// <remarks>This method iterates through the child elements and calculates
+        /// the width of the labels for any child that is a <see cref="SpeedButton"/>.
+        /// The width is determined based on the specified
+        /// font or the control's font if none is provided.</remarks>
+        /// <param name="font">An optional font to use when measuring the label widths.
+        /// If null, the control's font is used.</param>
+        /// <returns>The maximum width, in device-independent units,
+        /// of the labels for all child speed buttons. Returns 0 if
+        /// there are no child speed buttons.</returns>
+        public virtual double GetMaxToolLabelTextWidth(Font? font = null)
+        {
+            font ??= RealFont;
+
+            double maxWidth = 0;
+            foreach (var item in Children)
+            {
+                if (item is SpeedButton speedButton)
+                {
+                    var labelWidth = speedButton.Label.GetFormattedTextSize(font).Width;
+                    if (labelWidth > maxWidth)
+                        maxWidth = labelWidth;
+                }
+            }
+
+            return maxWidth;
+        }
+
+        /// <summary>
         /// Gets item 'Enabled' property value.
         /// </summary>
         /// <param name="id">Item id.</param>
