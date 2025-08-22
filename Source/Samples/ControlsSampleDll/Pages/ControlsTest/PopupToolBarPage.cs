@@ -11,9 +11,8 @@ namespace ControlsSample
         public PopupToolBarPage()
         {
             var contextMenu = new SampleContextMenu();
-            var popupToolBar = new PopupToolBar
-            {
-            };
+            var popupToolBar = new PopupToolBar();
+            var syncedPopupToolBar = new PopupToolBar();
 
             InitToolBar(popupToolBar.MainControl, true);
 
@@ -39,6 +38,19 @@ namespace ControlsSample
                 Margin = 10,
                 Parent = this,
                 DropDownMenu = contextMenu,
+            };
+
+            var button3 = new Button
+            {
+                Text = "Show Context Menu in Popup ToolBar",
+                Margin = 10,
+                Parent = this,
+            };
+
+            button3.Click += (s, e) =>
+            {
+                syncedPopupToolBar.DataContext = contextMenu;
+                syncedPopupToolBar.ShowPopup(button3);
             };
         }
 
