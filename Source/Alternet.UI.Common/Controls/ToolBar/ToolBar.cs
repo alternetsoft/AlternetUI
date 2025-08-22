@@ -23,6 +23,7 @@ namespace Alternet.UI
         private bool imageVisible = true;
         private ImageToText imageToText = ImageToText.Horizontal;
         private Type? customButtonType;
+        private MenuChangeRouter? menuChangeRouter;
 
         static ToolBar()
         {
@@ -493,6 +494,11 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets the <see cref="MenuChangeRouter"/> instance associated with this object.
+        /// </summary>
+        protected MenuChangeRouter MenuChangeHandler => menuChangeRouter ??= new MenuChangeRouter(this);
+
+        /// <summary>
         /// Adds an empty disabled <see cref="SpeedButton"/> to the control.
         /// </summary>
         public virtual ObjectUniqueId AddSpeedBtn()
@@ -703,7 +709,7 @@ namespace Alternet.UI
                 if (sender is not SpeedButton button)
                     return;
                 button.Borders ??= new();
-                if(button.Sticky)
+                if (button.Sticky)
                 {
                     button.Borders.Pressed?.SetWidth(2);
                     button.Borders.Hovered?.SetWidth(2);
@@ -922,7 +928,7 @@ namespace Alternet.UI
         public virtual ObjectUniqueId[] AddSpeedBtn(params KnownButton[] buttons)
         {
             ObjectUniqueId[] result = new ObjectUniqueId[buttons.Length];
-            for(int i = 0; i < buttons.Length; i++)
+            for (int i = 0; i < buttons.Length; i++)
                 result[i] = AddSpeedBtn(buttons[i]);
             return result;
         }
@@ -1140,15 +1146,29 @@ namespace Alternet.UI
         /// the newly created separator.</returns>
         public virtual ToolBarSeparatorItem AddSeparatorCore()
         {
-            ToolBarSeparatorItem border = new();
+            var result = InsertSeparatorCore(Children.Count);
+            return result;
+        }
 
+        /// <summary>
+        /// Inserts a separator item at the specified index within the toolbar.
+        /// </summary>
+        /// <remarks>The separator item is created using the <see cref="CreateToolSeparator"/> method.
+        /// If a default separator color is specified via <see cref="DefaultSeparatorColor"/>,
+        /// it is applied to the separator's border. The item properties are updated to reflect
+        /// its kind as a separator before being added to
+        /// the toolbar's children.</remarks>
+        /// <param name="index">The zero-based index at which the separator
+        /// item should be inserted.</param>
+        /// <returns>The <see cref="ToolBarSeparatorItem"/> that was inserted.</returns>
+        public virtual ToolBarSeparatorItem InsertSeparatorCore(int index)
+        {
+            ToolBarSeparatorItem result = CreateToolSeparator();
             if (DefaultSeparatorColor is not null)
-                border.BorderColor = DefaultSeparatorColor;
-
-            UpdateItemProps(border, ItemKind.Separator);
-
-            border.Parent = this;
-            return border;
+                result.BorderColor = DefaultSeparatorColor;
+            UpdateItemProps(result, ItemKind.Separator);
+            Children.Insert(index, result);
+            return result;
         }
 
         /// <summary>
@@ -1351,7 +1371,7 @@ namespace Alternet.UI
             {
                 if (item is not SpeedButton btn)
                     continue;
-                if(btn.Sticky == value)
+                if (btn.Sticky == value)
                     yield return btn;
             }
         }
@@ -1669,7 +1689,7 @@ namespace Alternet.UI
             if (item is null)
                 return;
             item.Parent = null;
-            if(dispose)
+            if (dispose)
                 item.Dispose();
         }
 
@@ -1784,7 +1804,7 @@ namespace Alternet.UI
         {
             List<ObjectUniqueId> result = new();
 
-            foreach(var item in Children)
+            foreach (var item in Children)
             {
                 var hasFlag = item.CustomFlags[name];
                 if (hasFlag)
@@ -1831,7 +1851,7 @@ namespace Alternet.UI
         /// <returns></returns>
         public virtual AbstractControl? GetToolControlAt(int index)
         {
-            if(index < GetToolCount())
+            if (index < GetToolCount())
                 return Children[index];
             return null;
         }
@@ -1869,9 +1889,9 @@ namespace Alternet.UI
         public virtual void MakeBottomAligned(bool onlyTopBorder = true, bool updateMargin = true)
         {
             VerticalAlignment = VerticalAlignment.Bottom;
-            if(onlyTopBorder)
+            if (onlyTopBorder)
                 OnlyTopBorder();
-            if(updateMargin)
+            if (updateMargin)
                 Margin = (0, ToolBar.DefaultDistanceToContent, 0, 0);
         }
 
@@ -2200,9 +2220,9 @@ namespace Alternet.UI
         /// <param name="alignment">The alignment to set for the toolbar items.</param>
         public virtual void SetToolImageAlignment(HVAlignment alignment)
         {
-            foreach(var control in Children)
+            foreach (var control in Children)
             {
-                if(control is SpeedButton button)
+                if (control is SpeedButton button)
                 {
                     button.ImageHorizontalAlignment = alignment.Horizontal;
                     button.ImageVerticalAlignment = alignment.Vertical;
@@ -2243,6 +2263,87 @@ namespace Alternet.UI
             string? toolTip = null,
             EventHandler? action = null)
         {
+            var speedButton = InsertSpeedBtnCore(
+                Children.Count,
+                itemKind,
+                text,
+                imageSet,
+                imageSetDisabled,
+                toolTip,
+                action);
+            return speedButton;
+        }
+
+        /// <summary>
+        /// Inserts a menu item at the specified index with the provided properties.
+        /// </summary>
+        /// <remarks>The <paramref name="menuItem"/> parameter defines the appearance
+        /// and behavior of the menu item, including its text, images, and the action
+        /// to perform when clicked.</remarks>
+        /// <param name="index">The zero-based index at which the menu item should be inserted.</param>
+        /// <param name="menuItem">An object containing the properties of the menu item,
+        /// such as text, images, and click behavior.</param>
+        /// <returns>A <see cref="SpeedButton"/> representing the inserted menu item.</returns>
+        public virtual AbstractControl InsertMenuItemCore(
+            int index,
+            IMenuItemProperties menuItem)
+        {
+            AbstractControl result;
+
+            if (menuItem.Text == "-")
+            {
+                result = InsertSeparatorCore(index);
+            }
+            else
+            {
+                result = InsertSpeedBtnCore(
+                    index,
+                    ItemKind.Button,
+                    menuItem.Text,
+                    menuItem.Image,
+                    menuItem.DisabledImage,
+                    null,
+                    null);
+            }
+
+            result.DataContext = menuItem;
+            return result;
+        }
+
+        /// <summary>
+        /// Inserts a new <see cref="SpeedButton"/> into the collection at the specified index.
+        /// </summary>
+        /// <remarks>The <see cref="SpeedButton"/> is configured with default padding,
+        /// alignment, and margins. If <paramref name="imageSetDisabled"/> is provided,
+        /// it is used as the image set for the disabled state.
+        /// If <paramref name="action"/> is provided, it is attached to both the click
+        /// and double-click events of the <see cref="SpeedButton"/>.</remarks>
+        /// <param name="index">The zero-based index at which the <see cref="SpeedButton"/>
+        /// should be inserted.</param>
+        /// <param name="itemKind">The kind of item represented by the <see cref="SpeedButton"/>.
+        /// This determines its behavior and appearance.</param>
+        /// <param name="text">The text to display on the <see cref="SpeedButton"/>.
+        /// If null, an empty string is used.</param>
+        /// <param name="imageSet">The image set to display on the <see cref="SpeedButton"/>.
+        /// Can be null if no image is required.</param>
+        /// <param name="imageSetDisabled">The image set to display when the <see cref="SpeedButton"/>
+        /// is disabled. Can be null.</param>
+        /// <param name="toolTip">The tooltip text to display when the user hovers
+        /// over the <see cref="SpeedButton"/>. If null, the value of
+        /// <paramref name="text"/> is used.</param>
+        /// <param name="action">An optional event handler to invoke when
+        /// the <see cref="SpeedButton"/> is clicked or double-clicked. Can be null.</param>
+        /// <returns>The newly created <see cref="SpeedButton"/> instance that
+        /// was inserted into the collection.</returns>
+        public virtual SpeedButton InsertSpeedBtnCore(
+            int index,
+            ItemKind itemKind,
+            string? text,
+            ImageSet? imageSet,
+            ImageSet? imageSetDisabled,
+            string? toolTip = null,
+            EventHandler? action = null)
+        {
             text ??= string.Empty;
 
             var speedButton = CreateToolSpeedButton();
@@ -2276,14 +2377,14 @@ namespace Alternet.UI
             {
                 speedButton.DoubleClick += (s, e) =>
                 {
-                    if(DoubleClickAsClick)
+                    if (DoubleClickAsClick)
                         action(s, e);
                 };
 
                 speedButton.Click += action;
             }
 
-            speedButton.Parent = this;
+            Children.Insert(index, speedButton);
 
             return speedButton;
         }
@@ -2375,7 +2476,7 @@ namespace Alternet.UI
         /// <returns></returns>
         protected virtual SpeedButton CreateToolSpeedTextButton()
         {
-            if(customButtonType is null)
+            if (customButtonType is null)
                 return new SpeedTextButton();
             return (SpeedButton)Activator.CreateInstance(customButtonType);
         }
@@ -2489,9 +2590,7 @@ namespace Alternet.UI
             if (newValue is IMenuProperties newProperties)
             {
                 newProperties.CollectionNotifier.CollectionChanged += OnMenuItemsCollectionChanged;
-                OnMenuItemsCollectionChanged(
-                    newProperties,
-                    new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Reset));
+                MenuChangeHandler.OnCollectionReset(newProperties);
             }
         }
 
@@ -2508,27 +2607,122 @@ namespace Alternet.UI
             object? sender,
             NotifyCollectionChangedEventArgs e)
         {
-            if(sender is not IMenuProperties menuProperties)
-                return;
-
-            void InsertItem(int index, IMenuItemProperties menuItem)
+            DoInsideLayout(() =>
             {
-                if(menuItem.Text == "-")
+                ListUtils.RouteCollectionChange(
+                    sender,
+                    e,
+                    MenuChangeHandler);
+            });
+        }
+
+        /// <summary>
+        /// Creates a new instance of a tool separator item for use in a toolbar.
+        /// </summary>
+        /// <remarks>This method is intended to be overridden in derived classes
+        /// to customize the creation of the tool separator item.
+        /// By default, it returns a new instance of <see cref="ToolBarSeparatorItem"/>.</remarks>
+        /// <returns>A new instance of <see cref="ToolBarSeparatorItem"/> representing
+        /// a separator in the toolbar.</returns>
+        protected virtual ToolBarSeparatorItem CreateToolSeparator()
+        {
+            ToolBarSeparatorItem border = new();
+            return border;
+        }
+
+        /// <summary>
+        /// Provides functionality to manage and route changes in a menu collection
+        /// to a <see cref="ToolBar"/>.
+        /// </summary>
+        /// <remarks>This class is responsible for handling collection change events,
+        /// such as adding, removing, or moving menu items, and updating the associated
+        /// <see cref="ToolBar"/> accordingly. It ensures
+        /// that the toolbar reflects the current state of the menu collection.</remarks>
+        protected class MenuChangeRouter : ICollectionChangeRouter
+        {
+            private readonly ToolBar owner;
+
+            /// <summary>
+            /// Initializes a new instance of the <see cref="MenuChangeRouter"/> class.
+            /// </summary>
+            /// <param name="owner">The <see cref="ToolBar"/> instance that owns this router.
+            /// Cannot be <see langword="null"/>.</param>
+            public MenuChangeRouter(ToolBar owner)
+            {
+                this.owner = owner;
+            }
+
+            /// <summary>
+            /// Inserts a menu item at the specified index to the toolbar.
+            /// </summary>
+            /// <param name="index">The zero-based index at which the menu item
+            /// should be inserted.</param>
+            /// <param name="menuItem">The menu item to insert.</param>
+            public void InsertItem(int index, IMenuItemProperties menuItem)
+            {
+                owner.InsertMenuItemCore(index, menuItem);
+            }
+
+            /// <inheritdoc/>
+            public virtual void OnCollectionAdd(object? sender, IList newItems, int newIndex)
+            {
+                foreach (var newItem in newItems)
                 {
-                    var separator = AddSeparatorCore();
-                    separator.DataContext = menuItem;
-                    return;
-                }
-                else
-                {
+                    if (newItem is not IMenuItemProperties menuItem)
+                        continue;
+                    InsertItem(newIndex, menuItem);
+                    newIndex++;
                 }
             }
 
-            void ResetItems()
+            /// <inheritdoc/>
+            public virtual void OnCollectionMove(
+                object? sender,
+                IList movedItems,
+                int oldIndex,
+                int newIndex)
             {
-                DeleteAll(true);
+                if (oldIndex == newIndex)
+                    return;
+                OnCollectionRemove(sender, movedItems, oldIndex);
+                OnCollectionAdd(sender, movedItems, newIndex);
+            }
 
-                DoInsideLayout(() =>
+            /// <inheritdoc/>
+            public virtual void OnCollectionRemove(object? sender, IList oldItems, int oldIndex)
+            {
+                foreach (var oldItem in oldItems)
+                {
+                    if (oldItem is not IMenuItemProperties menuItem)
+                        continue;
+                    var child = owner.FindChildWithDataContextId(menuItem.UniqueId);
+                    if (child is null)
+                        continue;
+                    child.Parent = null;
+                    child.Dispose();
+                }
+            }
+
+            /// <inheritdoc/>
+            public virtual void OnCollectionReplace(
+                object? sender,
+                IList oldItems,
+                IList newItems,
+                int index)
+            {
+                OnCollectionRemove(sender, oldItems, index);
+                OnCollectionAdd(sender, newItems, index);
+            }
+
+            /// <inheritdoc/>
+            public virtual void OnCollectionReset(object? sender)
+            {
+                owner.DeleteAll(true);
+
+                if (sender is not IMenuProperties menuProperties)
+                    return;
+
+                owner.DoInsideLayout(() =>
                 {
                     for (int i = 0; i < menuProperties.ItemCount; i++)
                     {
@@ -2538,69 +2732,6 @@ namespace Alternet.UI
                         InsertItem(i, item);
                     }
                 });
-            }
-
-            void RemoveItems(IList items)
-            {
-                foreach (var oldItem in items)
-                {
-                    if (oldItem is not IMenuItemProperties menuItem)
-                        continue;
-                    var child = FindChildWithDataContextId(menuItem.UniqueId);
-                    if (child is null)
-                        continue;
-                    child.Parent = null;
-                    child.Dispose();
-                }
-            }
-
-            void MoveItems(IList items, int oldIndex, int newIndex)
-            {
-                if (oldIndex == newIndex)
-                    return;
-                RemoveItems(items);
-                InsertItems(items, newIndex);
-            }
-
-            void InsertItems(IList items, int index)
-            {
-                foreach (var newItem in items)
-                {
-                    if (newItem is not IMenuItemProperties menuItem)
-                        continue;
-                    InsertItem(index, menuItem);
-                    index++;
-                }
-            }
-
-            void ReplaceItems(IList fromItems, IList toItems, int index)
-            {
-                RemoveItems(fromItems);
-                InsertItems(toItems, index);
-            }
-
-            DoInsideLayout(Internal);
-
-            void Internal()
-            {
-                switch (e.Action)
-                {
-                    case NotifyCollectionChangedAction.Add:
-                        InsertItems(e.NewItems!, e.NewStartingIndex);
-                        break;
-                    case NotifyCollectionChangedAction.Remove:
-                        RemoveItems(e.OldItems!);
-                        break;
-                    case NotifyCollectionChangedAction.Replace:
-                        ReplaceItems(e.OldItems!, e.NewItems!, e.OldStartingIndex);
-                        break;
-                    case NotifyCollectionChangedAction.Move:
-                        MoveItems(e.OldItems!, e.OldStartingIndex, e.NewStartingIndex);
-                        break;
-                    case NotifyCollectionChangedAction.Reset:
-                        ResetItems();
-                        break;
-                }
             }
         }
     }
