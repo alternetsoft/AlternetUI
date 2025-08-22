@@ -12,6 +12,63 @@ namespace Alternet.UI
     public static class AlignUtils
     {
         /// <summary>
+        /// Calculates the position of a dropdown relative to a specified <see cref="SizeD"/>.
+        /// </summary>
+        /// <remarks>The <paramref name="position"/> parameter allows fine-grained
+        /// control over the dropdown's alignment. For example, setting the horizontal alignment
+        /// to <see cref="HorizontalAlignment.Center"/> and the vertical alignment to
+        /// <see cref="VerticalAlignment.Top"/> will position the dropdown at the center of
+        /// the rectangle's top edge.</remarks>
+        /// <param name="size">The <see cref="SizeD"/> used as the reference for positioning
+        /// the dropdown.</param>
+        /// <param name="position">An optional alignment specifying the horizontal and vertical
+        /// position of the dropdown relative to the <see cref="SizeD"/>.
+        /// If <see langword="null"/>, the dropdown is positioned at the bottom-left corner.</param>
+        /// <returns>A <see cref="PointD"/> representing the calculated
+        /// position of the dropdown.</returns>
+        public static PointD GetDropDownPosition(
+            SizeD size,
+            HVAlignment? position = null)
+        {
+            if (position == null)
+            {
+                PointD pt = (0, size.Height);
+                return pt;
+            }
+
+            Coord x = 0;
+            Coord y = size.Height;
+
+            switch(position.Value.Horizontal)
+            {
+                case HorizontalAlignment.Left:
+                        x = 0;
+                        break;
+                case HorizontalAlignment.Center:
+                        x = size.Width / 2;
+                        break;
+                case HorizontalAlignment.Right:
+                        x = size.Width;
+                        break;
+            }
+
+            switch (position.Value.Vertical)
+            {
+                case VerticalAlignment.Top:
+                        y = 0;
+                        break;
+                case VerticalAlignment.Center:
+                        y = size.Height / 2;
+                        break;
+                case VerticalAlignment.Bottom:
+                        y = size.Height;
+                        break;
+            }
+
+            return (x, y);
+        }
+
+        /// <summary>
         /// Converts <see cref="GenericAlignment"/> to <see cref="VerticalAlignment"/>.
         /// </summary>
         /// <param name="value">Value to convert.</param>
