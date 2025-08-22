@@ -496,7 +496,13 @@ namespace Alternet.UI
         /// <summary>
         /// Gets the <see cref="MenuChangeRouter"/> instance associated with this object.
         /// </summary>
-        protected MenuChangeRouter MenuChangeHandler => menuChangeRouter ??= new MenuChangeRouter(this);
+        protected virtual MenuChangeRouter MenuChangeHandler
+        {
+            get
+            {
+                return menuChangeRouter ??= new MenuChangeRouter(this);
+            }
+        }
 
         /// <summary>
         /// Adds an empty disabled <see cref="SpeedButton"/> to the control.
