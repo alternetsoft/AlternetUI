@@ -115,5 +115,15 @@ namespace Alternet.UI
         {
             return new KnownButtonImage(svgImage);
         }
+
+        /// <summary>
+        /// Sets the alignment of the current object.
+        /// </summary>
+        /// <param name="alignment">The desired alignment, specified as a value of
+        /// the <see cref="HVAlignment"/> enumeration.</param>
+        public void SetAlignment(HVAlignment alignment)
+        {
+            Alignment = alignment;
+        }
     }
 }
