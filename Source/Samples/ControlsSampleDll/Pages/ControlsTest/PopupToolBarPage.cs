@@ -50,18 +50,18 @@ namespace ControlsSample
             toolbar.AddToolAction(buttonIdNew, ButtonClick);
             toolbar.SetToolShortcut(buttonIdNew, Keys.Control | Keys.N);
 
-            var buttonIdOpen = toolbar.AddSpeedBtn(
+            var buttonOpen = toolbar.AddSpeedBtnCore(
                 CommonStrings.Default.ButtonOpen,
                 KnownSvgImages.ImgFileOpen);
-            toolbar.AddToolAction(buttonIdOpen, ButtonClick);
-            toolbar.SetToolShortcut(buttonIdOpen, Keys.Control | Keys.O | Keys.Shift | Keys.Alt);
+            toolbar.AddToolAction(buttonOpen.UniqueId, ButtonClick);
+            toolbar.SetToolShortcut(buttonOpen.UniqueId, Keys.Control | Keys.O | Keys.Shift | Keys.Alt);
 
             ContextMenu? menu = new();
 
             menu.Add("Item 1").ClickAction = () => { App.Log("Item 1 clicked"); };
             menu.Add("Item 2").ClickAction = () => { App.Log("Item 2 clicked"); };
 
-            toolbar.SetToolDropDownMenu(buttonIdOpen, menu, MenuItem.DefaultMenuArrowImage);
+            toolbar.SetToolDropDownMenu(buttonOpen.UniqueId, menu, MenuItem.DefaultMenuArrowImage);
 
             var separatorId = toolbar.AddSeparator();
 
@@ -100,7 +100,6 @@ namespace ControlsSample
 
             toolbar.AddSpeedBtn("Some item 1", null);
             toolbar.AddSpeedBtn("Some item 2", KnownSvgImages.ImgBold);
-
         }
     }
 }
