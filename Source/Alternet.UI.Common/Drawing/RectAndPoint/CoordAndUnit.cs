@@ -9,7 +9,7 @@ namespace Alternet.Drawing
     /// <summary>
     /// Represents a coordinate value with an associated unit.
     /// </summary>
-    public readonly struct CoordValue
+    public readonly struct CoordAndUnit
     {
         /// <summary>
         /// Gets the coordinate value.
@@ -22,12 +22,12 @@ namespace Alternet.Drawing
         public readonly CoordUnit Unit;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="CoordValue"/>
+        /// Initializes a new instance of the <see cref="CoordAndUnit"/>
         /// struct with the specified value and unit.
         /// </summary>
         /// <param name="value">The coordinate value.</param>
         /// <param name="unit">The unit of the coordinate value.</param>
-        public CoordValue(int value, CoordUnit unit)
+        public CoordAndUnit(int value, CoordUnit unit)
         {
             Value = value;
             Unit = unit;

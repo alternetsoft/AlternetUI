@@ -16,12 +16,12 @@ namespace Alternet.UI
         /// <summary>
         /// Represents the default size of the menu arrow image.
         /// </summary>
-        /// <remarks>The size is specified as a <see cref="CoordValue"/> with a value
+        /// <remarks>The size is specified as a <see cref="CoordAndUnit"/> with a value
         /// of 50 and a unit of <see cref="CoordUnit.Percent"/> (default toolbar image size is
         /// used as a base value for the calculation).
         /// This value is used as the default when no specific size is provided for
         /// menu arrow images.</remarks>
-        public static CoordValue DefaultMenuArrowImageSize = new(75, CoordUnit.Percent);
+        public static CoordAndUnit DefaultMenuArrowImageSize = new(75, CoordUnit.Percent);
 
         private KeyGesture? shortcut;
         private MenuItemRole? role;

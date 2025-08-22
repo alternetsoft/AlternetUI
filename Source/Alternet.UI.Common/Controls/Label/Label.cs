@@ -703,7 +703,7 @@ namespace Alternet.UI
         /// <summary>
         /// Sets the default combo box image for the control.
         /// </summary>
-        public virtual void SetDefaultComboBoxImage(CoordValue? size = null)
+        public virtual void SetDefaultComboBoxImage(CoordAndUnit? size = null)
         {
             SetSvgImage(
                 ControlAndButton.DefaultBtnComboBoxSvg,
@@ -721,7 +721,7 @@ namespace Alternet.UI
         public virtual void SetSvgImage(
             SvgImage? svg,
             KnownButton? btn,
-            CoordValue? size = null)
+            CoordAndUnit? size = null)
         {
             var (normalImage, disabledImage)
                 = ToolBarUtils.GetNormalAndDisabledSvgImages(svg, btn, this, size);

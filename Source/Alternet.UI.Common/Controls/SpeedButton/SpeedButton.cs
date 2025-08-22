@@ -1596,7 +1596,7 @@ namespace Alternet.UI
             SvgImage? svg,
             KnownButton? btn = null,
             HVAlignment? align = null,
-            CoordValue? size = null)
+            CoordAndUnit? size = null)
         {
             DoInsideLayout(() =>
             {
@@ -1634,13 +1634,13 @@ namespace Alternet.UI
         /// <param name="btn">The <see cref="KnownButton"/> representing the toolbar button
         /// to associate with the image. Can be <see langword="null"/>
         /// if no specific button is targeted.</param>
-        /// <param name="size">An optional <see cref="CoordValue"/> specifying
+        /// <param name="size">An optional <see cref="CoordAndUnit"/> specifying
         /// the desired size of the image. If <see langword="null"/>,
         /// the default size is used.</param>
         public virtual void SetSvg(
             SvgImage? svg,
             KnownButton? btn,
-            CoordValue? size)
+            CoordAndUnit? size)
         {
             var (normalImage, disabledImage)
                 = ToolBarUtils.GetNormalAndDisabledSvgImages(svg, btn, this, size);
@@ -1693,7 +1693,7 @@ namespace Alternet.UI
         /// If <see langword="null"/>, a default size is used.</param>
         public virtual void SetLabelImageAsComboBox(
             HVAlignment? align = null,
-            CoordValue? size = null)
+            CoordAndUnit? size = null)
         {
             SetLabelImage(
                 ControlAndButton.DefaultBtnComboBoxSvg,

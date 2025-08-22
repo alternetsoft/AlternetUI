@@ -148,7 +148,7 @@ namespace Alternet.UI
             SvgImage? svg,
             KnownButton? btn,
             AbstractControl control,
-            CoordValue? size = null)
+            CoordAndUnit? size = null)
         {
             if (svg is null)
             {

@@ -41,7 +41,7 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="knownButton">The known button.</param>
         /// <param name="size">The optional size of the image.</param>
-        public KnownButtonImage(KnownButton knownButton, CoordValue? size = null)
+        public KnownButtonImage(KnownButton knownButton, CoordAndUnit? size = null)
         {
             KnownButton = knownButton;
             Size = size;
@@ -53,7 +53,7 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="svgImage">The SVG image.</param>
         /// <param name="size">The optional size of the image.</param>
-        public KnownButtonImage(SvgImage? svgImage, CoordValue? size = null)
+        public KnownButtonImage(SvgImage? svgImage, CoordAndUnit? size = null)
         {
             SvgImage = svgImage;
             Size = size;
@@ -69,7 +69,7 @@ namespace Alternet.UI
         public KnownButtonImage(
             KnownButton? knownButton,
             SvgImage? svgImage,
-            CoordValue? size)
+            CoordAndUnit? size)
         {
             KnownButton = knownButton;
             SvgImage = svgImage;
@@ -89,7 +89,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets the size of the image.
         /// </summary>
-        public CoordValue? Size { get; set; }
+        public CoordAndUnit? Size { get; set; }
 
         /// <summary>
         /// Gets or sets the alignment of the image.
