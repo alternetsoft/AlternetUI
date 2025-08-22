@@ -57,6 +57,11 @@ namespace Alternet.UI
         bool Enabled { get; }
 
         /// <summary>
+        /// Gets a value indicating whether the menu item is visible.
+        /// </summary>
+        bool IsVisible { get; }
+
+        /// <summary>
         /// Gets a value indicating whether the shortcut is enabled for the menu item.
         /// </summary>
         bool IsShortcutEnabled { get; }
