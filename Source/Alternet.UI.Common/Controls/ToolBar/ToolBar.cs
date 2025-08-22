@@ -248,7 +248,7 @@ namespace Alternet.UI
 
                     foreach (var item in Children)
                     {
-                        if (item is SeparatorItem separator)
+                        if (item is ToolBarSeparatorItem separator)
                             separator.IsVertical = value;
                     }
                 });
@@ -1124,7 +1124,7 @@ namespace Alternet.UI
         /// <returns><see cref="ObjectUniqueId"/> of the added item.</returns>
         public virtual ObjectUniqueId AddSeparator()
         {
-            SeparatorItem border = new();
+            ToolBarSeparatorItem border = new();
 
             if(DefaultSeparatorColor is not null)
                 border.BorderColor = DefaultSeparatorColor;
@@ -1472,7 +1472,7 @@ namespace Alternet.UI
         /// </summary>
         /// <remarks>This method iterates through the child elements and assigns
         /// a custom or default transparent label image to any <see cref="SpeedButton"/>
-        /// that does not already have one. If no child elements require 
+        /// that does not already have one. If no child elements require
         /// a label image, the method performs no action.</remarks>
         /// <returns><see langword="true"/> if at least one <see cref="SpeedButton"/>
         /// was updated with a label image; otherwise, <see langword="false"/>.</returns>
@@ -1486,7 +1486,7 @@ namespace Alternet.UI
                 return false;
 
             bool result = false;
-            
+
             foreach (var item in Children)
             {
                 if (item is SpeedButton speedButton)
@@ -2461,46 +2461,10 @@ namespace Alternet.UI
             return itemSize;
         }
 
-        private class SeparatorItem : Border
+        /// <inheritdoc/>
+        protected override void OnDataContextChanged(object? oldValue, object? newValue)
         {
-            private bool isVertical;
-
-            public SeparatorItem()
-            {
-                VerticalChanged();
-            }
-
-            public bool IsVertical
-            {
-                get
-                {
-                    return isVertical;
-                }
-
-                set
-                {
-                    if (isVertical == value)
-                        return;
-                    isVertical = value;
-                    VerticalChanged();
-                }
-            }
-
-            private void VerticalChanged()
-            {
-                if (isVertical)
-                {
-                    BorderWidth = (0, DefaultSeparatorWidth, 0, 0);
-                    SuggestedSize = (Coord.NaN, DefaultSeparatorWidth);
-                    Margin = DefaultSeparatorMargin;
-                }
-                else
-                {
-                    BorderWidth = (DefaultSeparatorWidth, 0, 0, 0);
-                    SuggestedSize = (DefaultSeparatorWidth, Coord.NaN);
-                    Margin = DefaultSeparatorMargin;
-                }
-            }
+            base.OnDataContextChanged(oldValue, newValue);
         }
     }
 }
