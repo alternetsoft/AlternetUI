@@ -42,6 +42,16 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Occurs when a drop-down menu is about to be displayed,
+        /// allowing the event handler to cancel the operation.
+        /// </summary>
+        /// <remarks>This event is raised before the drop-down menu is shown.
+        /// Handlers can inspect the event arguments to determine the context of the menu
+        /// and set the <see cref="CancelEventArgs.Cancel"/>
+        /// property to <see langword="true"/> to prevent the menu from being displayed.</remarks>
+        public event EventHandler<BaseCancelEventArgs>? DropDownMenuShowing;
+
+        /// <summary>
         /// Gets or sets different behavior and visualization options.
         /// </summary>
         [Browsable(false)]
@@ -621,6 +631,15 @@ namespace Alternet.UI
         {
             if (!Enabled)
                 return;
+
+            if(DropDownMenuShowing is not null)
+            {
+                var args = new BaseCancelEventArgs();
+                DropDownMenuShowing(this, args);
+                if (args.Cancel)
+                    return;
+            }
+
             DropDownMenu?.ShowAsDropDown(this, afterShow);
         }
 
