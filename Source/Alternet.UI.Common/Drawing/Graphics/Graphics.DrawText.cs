@@ -870,6 +870,7 @@ namespace Alternet.Drawing
                 string? textOverride = null)
             {
                 var image = prm.Image;
+                var minTextWidth = prm.MinTextWidth;
                 var indexAccel = prm.IndexAccel;
                 var s = textOverride ?? prm.Text;
                 string[]? splitText = null;
@@ -928,39 +929,51 @@ namespace Alternet.Drawing
                 {
                     GetSize = (dc) =>
                     {
-                        if (parsed is null)
+                        var result = Internal();
+
+                        if(minTextWidth is not null)
                         {
-                            SizeD result;
+                            result.Width = Math.Max(minTextWidth.Value, result.Width);
+                        }
 
-                            if (splitText is null)
+                        return result;
+
+                        SizeD Internal()
+                        {
+                            if (parsed is null)
                             {
-                                result = dc.MeasureText(s, font);
+                                SizeD result;
 
-                                if (isVerticalText)
+                                if (splitText is null)
                                 {
-                                    result.SwapWidthAndHeight();
+                                    result = dc.MeasureText(s, font);
+
+                                    if (isVerticalText)
+                                    {
+                                        result.SwapWidthAndHeight();
+                                    }
                                 }
+                                else
+                                {
+                                    result = dc.DrawStrings(
+                                        RectD.Empty,
+                                        font,
+                                        splitText,
+                                        textHorizontalAlignment,
+                                        lineDistance);
+                                }
+
+                                return result;
                             }
                             else
                             {
-                                result = dc.DrawStrings(
-                                    RectD.Empty,
-                                    font,
-                                    splitText,
-                                    textHorizontalAlignment,
-                                    lineDistance);
+                                var result = dc.DrawTextWithFontStyle(
+                                            parsed,
+                                            PointD.Empty,
+                                            font,
+                                            Color.Empty);
+                                return result;
                             }
-
-                            return result;
-                        }
-                        else
-                        {
-                            var result = dc.DrawTextWithFontStyle(
-                                        parsed,
-                                        PointD.Empty,
-                                        font,
-                                        Color.Empty);
-                            return result;
                         }
                     },
                     Draw = (dc, rect) =>
@@ -1026,6 +1039,13 @@ namespace Alternet.Drawing
         /// </summary>
         public struct DrawLabelParams
         {
+            /// <summary>
+            /// Represents the minimum text width as a coordinate value.
+            /// </summary>
+            /// <remarks>This field is nullable, meaning it can hold a value of <see langword="null"/>
+            /// to indicate that no minimum text width is specified.</remarks>
+            public Coord? MinTextWidth;
+
             /// <summary>
             /// Gets or sets array of elements to draw before the label text and image.
             /// </summary>
