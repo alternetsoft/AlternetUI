@@ -13,6 +13,16 @@ namespace Alternet.UI
     public partial class FrameworkElement : DisposableObject, IComponent
     {
         private FrameworkElement? logicalParent;
+        private object? dataContext;
+        private object? dataContextProperty;
+        private string? name;
+        private ISite? site;
+
+        /// <summary>
+        /// Occurs when the <see cref="DataContextProperty"/>, <see cref="DataContext"/>
+        /// or other properties related to data context change.
+        /// </summary>
+        public event EventHandler? DataContextChanged;
 
         /// <summary>
         /// Gets or sets the identifying name of the object.
@@ -21,7 +31,15 @@ namespace Alternet.UI
         /// UIXML processor.
         /// </summary>
         /// <value>The name of the object. The default is <c>null</c>.</value>
-        public virtual string? Name { get; set; }
+        public virtual string? Name
+        {
+            get => name;
+
+            set
+            {
+                name = value;
+            }
+        }
 
         /// <summary>
         /// Gets or sets the <see cref="ISite"/> associated with the object.
@@ -31,14 +49,33 @@ namespace Alternet.UI
         /// </returns>
         [EditorBrowsable(EditorBrowsableState.Advanced)]
         [Browsable(false)]
-        public virtual ISite? Site { get; set; }
+        public virtual ISite? Site
+        {
+            get => site;
+
+            set
+            {
+                site = value;
+            }
+        }
 
         /// <summary>
         /// Gets or sets property of the <see cref="DataContext"/>
         /// to use in the element. Only some elements use this property.
         /// </summary>
         [Browsable(false)]
-        public virtual object? DataContextProperty { get; set; }
+        public virtual object? DataContextProperty
+        {
+            get => dataContextProperty;
+
+            set
+            {
+                if (dataContextProperty == value)
+                    return;
+                dataContextProperty = value;
+                RaiseDataContextChanged();
+            }
+        }
 
         /// <summary>
         /// Gets or sets data context to use in the element.
@@ -48,8 +85,15 @@ namespace Alternet.UI
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         public virtual object? DataContext
         {
-            get;
-            set;
+            get => dataContext;
+
+            set
+            {
+                if (dataContext == value)
+                    return;
+                dataContext = value;
+                RaiseDataContextChanged();
+            }
         }
 
         /// <summary>
@@ -57,16 +101,26 @@ namespace Alternet.UI
         /// find content items by index.
         /// </summary>
         [Browsable(false)]
-        public virtual IReadOnlyList<FrameworkElement> ContentElements =>
-            LogicalChildrenCollection.ToArray();
+        public virtual IReadOnlyList<FrameworkElement> ContentElements
+        {
+            get
+            {
+                return LogicalChildrenCollection.ToArray();
+            }
+        }
 
         /// <summary>
         /// Returns a collection of elements which can be treated as "logical children" of
         /// this element.
         /// </summary>
         [Browsable(false)]
-        public virtual IEnumerable<FrameworkElement> LogicalChildrenCollection =>
-            Array.Empty<FrameworkElement>();
+        public virtual IEnumerable<FrameworkElement> LogicalChildrenCollection
+        {
+            get
+            {
+                return Array.Empty<FrameworkElement>();
+            }
+        }
 
         /// <summary>
         /// Gets logical parent.
@@ -80,6 +134,43 @@ namespace Alternet.UI
             {
                 logicalParent = value;
             }
+        }
+
+        /// <summary>
+        /// Sets the data context and associated property for the current instance.
+        /// </summary>
+        /// <remarks>If either the <paramref name="dataContext"/> or
+        /// <paramref name="dataContextProperty"/> is different from the current values,
+        /// the method updates the respective fields
+        /// and raises the <c>DataContextChanged</c> event.
+        /// This method ensures that changes to the data context or its
+        /// property are properly propagated.</remarks>
+        /// <param name="dataContext">The new data context to associate with the instance.
+        /// Can be <see langword="null"/>.</param>
+        /// <param name="dataContextProperty">The property of the data context to associate
+        /// with the instance. Can be <see langword="null"/>.</param>
+        /// <returns><see langword="true"/> if the data context or data context
+        /// property was changed; otherwise, <see langword="false"/>.</returns>
+        public virtual bool SetDataContext(object? dataContext, object? dataContextProperty)
+        {
+            bool changed = false;
+
+            if (this.dataContext != dataContext)
+            {
+                this.dataContext = dataContext;
+                changed = true;
+            }
+
+            if (this.dataContextProperty != dataContextProperty)
+            {
+                this.dataContextProperty = dataContextProperty;
+                changed = true;
+            }
+
+            if (changed)
+                RaiseDataContextChanged();
+
+            return changed;
         }
 
         /// <summary>
@@ -124,6 +215,27 @@ namespace Alternet.UI
 
             return TryFindElement(name) ?? throw new InvalidOperationException(
                 $"Element with name '{name}' was not found.");
+        }
+
+        /// <summary>
+        /// Raises the <see cref="OnDataContextChanged"/> method and
+        /// <see cref="DataContextChanged"/> event.
+        /// </summary>
+        /// <remarks>This method is called to notify subscribers that the data context has changed.
+        /// Derived classes can override this method to provide additional behavior
+        /// when the event is raised.</remarks>
+        protected virtual void RaiseDataContextChanged()
+        {
+            OnDataContextChanged();
+            DataContextChanged?.Invoke(this, EventArgs.Empty);
+        }
+
+        /// <summary>
+        /// Called when the <see cref="DataContextProperty"/> or <see cref="DataContext"/>
+        /// property changes.
+        /// </summary>
+        protected virtual void OnDataContextChanged()
+        {
         }
     }
 }
