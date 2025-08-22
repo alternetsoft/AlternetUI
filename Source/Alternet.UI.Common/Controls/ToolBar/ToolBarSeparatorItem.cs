@@ -69,7 +69,39 @@ namespace Alternet.UI
         /// <inheritdoc/>
         protected override void OnDataContextChanged(object? oldValue, object? newValue)
         {
-            base.OnDataContextChanged(oldValue, newValue);
+            if (oldValue is IReadOnlyMenuItemProperties oldProperties)
+            {
+                oldProperties.Changed -= OnMenuItemChanged;
+            }
+
+            if (newValue is IReadOnlyMenuItemProperties newProperties)
+            {
+                newProperties.Changed += OnMenuItemChanged;
+            }
+        }
+
+        /// <summary>
+        /// Handles changes to attached menu item's properties, such as visibility.
+        /// </summary>
+        /// <remarks>This method is called when attached menu item's state changes.
+        /// If the change is related to visibility (<see cref="MenuItemChangeKind.Visible"/>),
+        /// the <see cref="AbstractControl.Visible"/> property is updated based
+        /// on the <see cref="IReadOnlyMenuItemProperties.Visible"/> value of the sender.
+        /// Derived classes can override
+        /// this method to provide custom handling for menu item changes.
+        /// When overriding, ensure the base
+        /// implementation is called to preserve the default behavior.</remarks>
+        /// <param name="sender">The source of the event, typically an object
+        /// implementing <see cref="IReadOnlyMenuItemProperties"/>.</param>
+        /// <param name="e">An event argument containing the type of change,
+        /// represented by <see cref="MenuItemChangeKind"/>.</param>
+        protected virtual void OnMenuItemChanged(object? sender, BaseEventArgs<MenuItemChangeKind> e)
+        {
+            if (e.Value == MenuItemChangeKind.Visible)
+            {
+                if (sender is IReadOnlyMenuItemProperties properties)
+                    Visible = properties.Visible;
+            }
         }
     }
 }
