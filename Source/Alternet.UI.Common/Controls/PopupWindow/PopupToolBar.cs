@@ -85,6 +85,13 @@ namespace Alternet.UI
         public virtual bool NeedsRemainingLabelImages { get; set; } = true;
 
         /// <summary>
+        /// Gets or sets a value indicating whether the label text width is maximized.
+        /// When set to <c>true</c>, the control will adjust the width of the label text
+        /// to be the same for all toolbar items, based on the widest label text.
+        /// </summary>
+        public virtual bool IsLabelTextWidthMaximized { get; set; } = true;
+
+        /// <summary>
         /// Gets or sets a value indicating whether the remaining images are
         /// required for the toolbar items.
         /// When set to <c>true</c>, the control will ensure that all images
@@ -131,15 +138,21 @@ namespace Alternet.UI
         /// <inheritdoc/>
         protected override void BeforeShowPopup()
         {
-            if (NeedsRemainingImages)
+            MainControl.DoInsideLayout(() =>
             {
-                MainControl.AddRemainingImages();
-            }
+                if (NeedsRemainingImages)
+                {
+                    MainControl.AddRemainingImages();
+                }
 
-            if (NeedsRemainingLabelImages)
-            {
-                MainControl.AddRemainingLabelImages();
-            }
+                if (NeedsRemainingLabelImages)
+                {
+                    MainControl.AddRemainingLabelImages();
+                }
+
+                if (IsLabelTextWidthMaximized)
+                    MainControl.MaximizeLabelTextWidth();
+            });
 
             var preferredSize = GetPreferredSize();
             ClientSize = preferredSize;
