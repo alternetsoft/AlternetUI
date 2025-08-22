@@ -101,6 +101,14 @@ namespace Alternet.UI
         public virtual bool NeedsRemainingImages { get; set; } = true;
 
         /// <inheritdoc/>
+        public override void ShowPopup()
+        {
+            if(!MainControl.HasChildren)
+                return;
+            base.ShowPopup();
+        }
+
+        /// <inheritdoc/>
         public override SizeD GetPreferredSize(SizeD availableSize)
         {
             var preferredSize = MainControl.GetPreferredSize(
