@@ -29,6 +29,15 @@ namespace Alternet.Drawing
         public static readonly SizeD Empty;
 
         /// <summary>
+        /// Represents a <see cref="SizeD"/> instance with both width and height
+        /// set to half of the maximum allowable integer value.
+        /// </summary>
+        /// <remarks>This static readonly field provides a convenient predefined size where
+        /// both dimensions are set to <see cref="Graphics.HalfOfMaxValue"/>.</remarks>
+        public static readonly SizeD HalfOfMaxValueI
+            = new (Graphics.HalfOfMaxValue, Graphics.HalfOfMaxValue);
+
+        /// <summary>
         /// Gets <see cref="SizeD"/> with width and height equal to -1.
         /// </summary>
         public static readonly SizeD Default = new(CoordD.MinusOne, CoordD.MinusOne);
