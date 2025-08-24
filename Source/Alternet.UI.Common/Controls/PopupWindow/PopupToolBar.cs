@@ -116,19 +116,17 @@ namespace Alternet.UI
         /// <inheritdoc/>
         public override SizeD GetPreferredSize(SizeD availableSize)
         {
-            var preferredSize = MainControl.GetPreferredSize(
-                (Graphics.HalfOfMaxValue, Graphics.HalfOfMaxValue));
+            var preferredSize = MainControl.GetPreferredSize(SizeD.HalfOfMaxValueI);
 
-            var lastChild = MainControl.LastVisibleChild;
+            var lastChild = MainControl.GetVisibleChildWithMaxBottom();
             if (lastChild is not null)
             {
                 preferredSize.Height = Math.Max(
                     preferredSize.Height,
-                    lastChild.Bounds.Bottom + MainControl.Margin.Bottom + MainControl.Padding.Bottom);
+                    lastChild.Bounds.Bottom + lastChild.Margin.Bottom);
             }
 
-            preferredSize += MainControl.Margin.Size + MainPanel.Margin.Size + MainPanel.Padding.Size
-                + Padding.Size + 1;
+            preferredSize += GetInteriorSize() + 2;
             return preferredSize;
         }
 
