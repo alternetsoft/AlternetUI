@@ -64,6 +64,49 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Flags that specify which components (such as padding and margin) should be included
+        /// when calculating the interior size of the popup window and its main control.
+        /// </summary>
+        [Flags]
+        public enum InteriorSizeFlags
+        {
+            /// <summary>
+            /// Include the padding of the main control.
+            /// </summary>
+            ControlPadding = 1,
+
+            /// <summary>
+            /// Include the margin of the main control.
+            /// </summary>
+            ControlMargin = 2,
+
+            /// <summary>
+            /// Include the padding of the main panel.
+            /// </summary>
+            PanelPadding = 4,
+
+            /// <summary>
+            /// Include the margin of the main panel.
+            /// </summary>
+            PanelMargin = 8,
+
+            /// <summary>
+            /// Include the padding of the popup window itself.
+            /// </summary>
+            Padding = 16,
+
+            /// <summary>
+            /// Include difference between window size and client size (window border).
+            /// </summary>
+            WindowBorder = 32,
+
+            /// <summary>
+            /// Include all available components (control and panel padding/margin, and window padding).
+            /// </summary>
+            All = ControlPadding | ControlMargin | PanelPadding | PanelMargin | Padding | WindowBorder,
+        }
+
+        /// <summary>
         /// Gets or sets default bottom toolbar padding.
         /// </summary>
         public static Thickness DefaultBottomToolBarPadding { get; set; } = (5, 5, 0, 0);
@@ -291,6 +334,48 @@ namespace Alternet.UI
                 BindEvents(mainControl);
                 mainControl.Parent = mainPanel;
             }
+        }
+
+        /// <summary>
+        /// Calculates the interior size of the control based on the specified flags.
+        /// </summary>
+        /// <remarks>The method calculates the interior size by summing the sizes of the specified
+        /// components, such as padding and margin, for both the main control and its panel.
+        /// Use the  <paramref name="flags"/> parameter to customize which components are included
+        /// in the  calculation.</remarks>
+        /// <param name="flags">A combination of <see cref="InteriorSizeFlags"/> values
+        /// that specify which components  (e.g., padding,
+        /// margin) should be included in the calculation.
+        /// The default value is  <see cref="InteriorSizeFlags.All"/>,
+        /// which includes all components.</param>
+        /// <returns>A <see cref="SizeD"/> structure representing the total
+        /// interior size based on the  specified flags. Returns
+        /// <see cref="SizeD.Empty"/> if <paramref name="flags"/> is set to 0.</returns>
+        public virtual SizeD GetInteriorSize(InteriorSizeFlags flags = InteriorSizeFlags.All)
+        {
+            if (flags == 0)
+                return SizeD.Empty;
+            var result = SizeD.Empty;
+
+            if (flags.HasFlag(InteriorSizeFlags.ControlPadding))
+                result += MainControl.Padding.Size;
+
+            if (flags.HasFlag(InteriorSizeFlags.ControlMargin))
+                result += MainControl.Margin.Size;
+
+            if (flags.HasFlag(InteriorSizeFlags.PanelPadding))
+                result += MainPanel.Padding.Size;
+
+            if (flags.HasFlag(InteriorSizeFlags.PanelMargin))
+                result += MainPanel.Margin.Size;
+
+            if (flags.HasFlag(InteriorSizeFlags.Padding))
+                result += Padding.Size;
+
+            if (flags.HasFlag(InteriorSizeFlags.WindowBorder))
+                result += InteriorSize;
+
+            return result;
         }
 
         /// <summary>
