@@ -17,6 +17,7 @@ namespace Alternet.UI
         private PointD? minLocation;
         private bool allowNegativeLocation;
         private bool fitIntoParent = true;
+        private bool fitParentScrollbars = true;
         private Control? container;
         private ModalResult popupResult = ModalResult.None;
         private bool cancelOnLostFocus;
@@ -81,6 +82,11 @@ namespace Alternet.UI
             /// </summary>
             Other,
         }
+
+        /// <summary>
+        /// Gets or sets the area that should not be covered by the popup.
+        /// </summary>
+        public virtual RectD? ExcludedArea { get; set; }
 
         /// <summary>
         /// Gets or sets container where popup will be shown.
@@ -213,6 +219,26 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets or sets a value indicating whether the control should adjust its size
+        /// to fit within the scrollable area of its parent.
+        /// </summary>
+        /// <remarks>When set to <see langword="true"/>, the control will automatically resize to ensure
+        /// it does not exceed the scrollable bounds of its parent container.
+        /// Changing this property triggers an update to the maximum allowable
+        /// size of the popup.</remarks>
+        public virtual bool FitParentScrollbars
+        {
+            get => fitParentScrollbars;
+            set
+            {
+                if (fitParentScrollbars == value)
+                    return;
+                fitParentScrollbars = value;
+                UpdateMaxPopupSize();
+            }
+        }
+
+        /// <summary>
         /// Gets or sets whether to adjust size of the popup to fit into
         /// the parent's client area.
         /// </summary>
@@ -321,6 +347,20 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Retrieves the container associated with the current control.
+        /// </summary>
+        /// <remarks>This method returns the parent control if it is set;
+        /// otherwise, it returns the container control.
+        /// The returned value may be <see langword="null"/> if neither a parent nor a container
+        /// is defined.</remarks>
+        /// <returns>An <see cref="AbstractControl"/> representing the parent or container
+        /// of the current control, or <see langword="null"/> if no container is available.</returns>
+        public virtual AbstractControl? GetContainer()
+        {
+            return Parent ?? Container;
+        }
+
+        /// <summary>
         /// Closes popup window and raises <see cref="Closed"/> event.
         /// </summary>
         public virtual void Close(PopupCloseReason? reason)
@@ -368,6 +408,151 @@ namespace Alternet.UI
                     return;
                 Close(result, reason);
             });
+        }
+
+        /// <summary>
+        /// Adjusts the specified position to ensure that the associated rectangle
+        /// is fully visible within the given container bounds.
+        /// </summary>
+        /// <remarks>This method ensures that the rectangle, defined by the specified position and its
+        /// size, is fully contained within the provided container bounds.
+        /// If the rectangle extends beyond the container
+        /// bounds, the position is adjusted to bring it back into view.
+        /// Additionally, if the rectangle intersects with
+        /// an excluded area, alternative positions are suggested to avoid
+        /// the excluded area while maintaining visibility within the container bounds.</remarks>
+        /// <param name="position">A reference to the position of the top-left corner of the rectangle.
+        /// This value may be adjusted to ensure visibility.</param>
+        /// <param name="containerBounds">The bounds of the container within which
+        /// the rectangle must be visible.</param>
+        /// <param name="adjustLine">A boolean value indicating whether
+        /// to adjust the position vertically to account for additional spacing, such
+        /// as line height. Defaults to <see langword="true"/>.</param>
+        public virtual void EnsureVisible(
+            ref PointD position,
+            RectD containerBounds,
+            bool adjustLine = true)
+        {
+            RectD rect = new(position, Bounds.Size);
+
+            if (!containerBounds.Contains(rect))
+            {
+                if (rect.X < containerBounds.Left)
+                    position.X = containerBounds.Left + 1;
+                else
+                if (rect.Right > containerBounds.Right)
+                    position.X = containerBounds.Right - rect.Width - 1;
+
+                if (rect.Y < containerBounds.Top)
+                    position.Y = containerBounds.Top + 1;
+                else
+                    if (rect.Bottom > containerBounds.Bottom)
+                {
+                    var h = adjustLine ? GetContainerFontHeight() : 0;
+                    position.Y = Math.Min(
+                        position.Y - rect.Height - h,
+                        containerBounds.Bottom - rect.Height) - 1;
+                }
+            }
+
+            bool IntersectWithExcludedArea(PointD p)
+            {
+                if (ExcludedArea.HasValue)
+                {
+                    rect = new(p, Bounds.Size);
+                    RectD excluded = ExcludedArea.Value;
+                    if (excluded.IntersectsWith(rect))
+                    {
+                        return true;
+                    }
+                }
+
+                return false;
+            }
+
+            (HorizontalAlignment H, VerticalAlignment V)[] suggest =
+            [
+                (HorizontalAlignment.Right, VerticalAlignment.Top),
+                (HorizontalAlignment.Right, VerticalAlignment.Bottom),
+                (HorizontalAlignment.Left, VerticalAlignment.Top),
+                (HorizontalAlignment.Left, VerticalAlignment.Bottom),
+            ];
+
+            bool TrySuggestions(ref PointD position)
+            {
+                foreach (var (h, v) in suggest)
+                {
+                    rect = AlignUtils.AlignRectInRect(
+                        new(position, Bounds.Size),
+                        containerBounds,
+                        h,
+                        v,
+                        shrinkSize: false);
+
+                    if (!IntersectWithExcludedArea(rect.Location))
+                    {
+                        position = rect.Location;
+                        return true;
+                    }
+                }
+
+                return false;
+            }
+
+            if (position.IsAnyNegative || IntersectWithExcludedArea(position))
+            {
+                TrySuggestions(ref position);
+            }
+        }
+
+        /// <summary>
+        /// Calculates the height of the font used by the container.
+        /// </summary>
+        /// <remarks>If the container is not available, the current instance is used as the fallback.
+        /// The height is determined based on the font's metrics and the associated
+        /// measurement canvas.</remarks>
+        /// <returns>The height of the font as a <see cref="double"/> value.</returns>
+        public virtual double GetContainerFontHeight()
+        {
+            var c = GetContainer() ?? this;
+            var h = c.RealFont.GetHeight(MeasureCanvas);
+            return h;
+        }
+
+        /// <summary>
+        /// Calculates the size of the scrollbar corner for the container.
+        /// </summary>
+        /// <remarks>This method determines the size of the scrollbar corner for the container by
+        /// retrieving the associated container or defaulting to the current instance.
+        /// The size is calculated using the
+        /// container's scrollbar settings.</remarks>
+        /// <returns>A <see cref="SizeD"/> representing the dimensions of the scrollbar corner.</returns>
+        protected virtual SizeD GetContainerScrollbarSize()
+        {
+            var p = GetContainer() ?? this;
+            var cornerSize = ScrollBar.GetCornerSize(p);
+            return cornerSize;
+        }
+
+        /// <summary>
+        /// Gets maximal size of the popup.
+        /// Returns Null if size is not limited.
+        /// </summary>
+        /// <returns></returns>
+        protected virtual SizeD? GetMaxPopupSize()
+        {
+            if (!fitIntoParent)
+                return null;
+
+            var p = GetContainer();
+            if (p is null)
+                return null;
+
+            var cornerSize = FitParentScrollbars ? GetContainerScrollbarSize() : 0;
+            var result = p.ClientSize - cornerSize;
+            result.Width -= cornerSize.Width;
+
+            return result;
         }
 
         /// <inheritdoc/>
@@ -502,18 +687,6 @@ namespace Alternet.UI
         {
             RemoveGlobalNotification(subscriber);
             base.DisposeManaged();
-        }
-
-        /// <summary>
-        /// Gets maximal size of the popup.
-        /// Returns Null if size is not limited.
-        /// </summary>
-        /// <returns></returns>
-        protected virtual SizeD? GetMaxPopupSize()
-        {
-            if (!fitIntoParent || Parent is null)
-                return null;
-            return Parent.ClientSize;
         }
 
         /// <summary>
