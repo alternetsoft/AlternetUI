@@ -17,6 +17,11 @@ namespace Alternet.UI
     public interface IReadOnlyListSource<T>
     {
         /// <summary>
+        /// Gets the object that provides notifications when the collection changes.
+        /// </summary>
+        INotifyCollectionChanged Notification { get; }
+
+        /// <summary>
         /// Gets the total number of items currently in the collection.
         /// </summary>
         int Count { get; }
@@ -27,10 +32,5 @@ namespace Alternet.UI
         /// <param name="index">The zero-based index of the item to retrieve.</param>
         /// <returns>The item at the specified index.</returns>
         T GetItem(int index);
-
-        /// <summary>
-        /// Gets the object that provides notifications when the collection changes.
-        /// </summary>
-        INotifyCollectionChanged Notification { get; }
     }
 }

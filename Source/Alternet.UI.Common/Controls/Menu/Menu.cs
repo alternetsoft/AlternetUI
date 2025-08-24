@@ -92,7 +92,7 @@ namespace Alternet.UI
         /// <inheritdoc />
         public override IEnumerable<FrameworkElement> LogicalChildrenCollection => ContentElements;
 
-        INotifyCollectionChanged? IReadOnlyListSource<IMenuItemProperties>.Notification
+        INotifyCollectionChanged IReadOnlyListSource<IMenuItemProperties>.Notification
         {
             get => Items;
         }
