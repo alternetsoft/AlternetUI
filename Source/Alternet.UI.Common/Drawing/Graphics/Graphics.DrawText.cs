@@ -470,7 +470,7 @@ namespace Alternet.Drawing
 
             for (int i = 0; i < length; i++)
             {
-                elementSizes[i] = prm.Elements[i].GetSize(this);
+                elementSizes[i] = prm.Elements[i].GetRealSize(this);
             }
 
             prm.ResultSizes = elementSizes;
@@ -678,6 +678,17 @@ namespace Alternet.Drawing
             public static readonly DrawElementParams Default = new();
 
             /// <summary>
+            /// Gets or sets an object that provides additional data
+            /// or metadata about the current instance.
+            /// </summary>
+            public object? Tag;
+
+            /// <summary>
+            /// Gets or sets the name associated with the object.
+            /// </summary>
+            public string? Name;
+
+            /// <summary>
             /// Gets or sets element size function.
             /// </summary>
             public Func<Graphics, SizeD> GetSize;
@@ -696,6 +707,11 @@ namespace Alternet.Drawing
             /// Gets or sets whether element is image.
             /// </summary>
             public bool IsImage;
+
+            /// <summary>
+            /// Gets or sets minimal width of the element.
+            /// </summary>
+            public Coord MinWidth;
 
             /// <summary>
             /// Initializes a new instance of the <see cref="DrawElementParams"/> struct.
@@ -1035,6 +1051,25 @@ namespace Alternet.Drawing
                 };
 
                 return textElement;
+            }
+
+            /// <summary>
+            /// Calculates the actual size of the object, ensuring it meets the minimum width requirement.
+            /// </summary>
+            /// <remarks>The method uses the provided <see cref="Graphics"/> context to determine the
+            /// size of the object.  If the calculated width is smaller than the
+            /// minimum width, the width is adjusted to
+            /// meet the minimum requirement while the height remains unchanged.</remarks>
+            /// <param name="dc">The <see cref="Graphics"/> context used to measure the size.</param>
+            /// <returns>A <see cref="SizeD"/> structure representing the calculated size.
+            /// The width is adjusted to ensure it is
+            /// not less than the minimum width.</returns>
+            public readonly SizeD GetRealSize(Graphics dc)
+            {
+                var result = GetSize(dc);
+                if (result.Width < MinWidth)
+                    result.Width = MinWidth;
+                return result;
             }
         }
 
