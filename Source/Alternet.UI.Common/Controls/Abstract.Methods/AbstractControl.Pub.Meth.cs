@@ -1448,6 +1448,33 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Measures the bounds required to accommodate all child elements,
+        /// considering their preferred sizes, padding,
+        /// and margins. Result includes padding of the control itself.
+        /// </summary>
+        /// <remarks>The method calculates the maximum bounds required to fit all
+        /// visible child elements
+        /// based on their preferred sizes and padding.
+        /// If any child elements extend beyond the calculated bounds due to
+        /// their margins, the bounds are adjusted to include those margins.</remarks>
+        /// <param name="availableSize">The size available for measuring the child elements.
+        /// If <see langword="null"/> or zero, available size is not limited.</param>
+        /// <returns>A <see cref="SizeD"/> representing the total bounds required
+        /// to fit all child elements, including their padding and margins.</returns>
+        public virtual SizeD MeasureChildrenBounds(SizeD? availableSize = null)
+        {
+            availableSize ??= SizeD.Empty;
+            var sz = availableSize.Value.ValueIfEmpty(Graphics.HalfOfMaxValue).Ceiling();
+
+            var newSize1 = GetChildrenMaxPreferredSize(sz).Ceiling();
+            var newSize2 = GetPreferredSize(sz).Ceiling();
+
+            var newSize = SizeD.Max(newSize1, newSize2);
+
+            return GetPaddedPreferredSize(newSize);
+        }
+
+        /// <summary>
         /// Changes size of the control to fit the size of its content.
         /// </summary>
         /// <param name="mode">Specifies how a control will size itself to fit the size of
@@ -1460,16 +1487,8 @@ namespace Alternet.UI
             if (mode == WindowSizeToContentMode.None)
                 return;
 
-            var sz = MaximumSize.ValueIfEmpty(Graphics.HalfOfMaxValue).Ceiling();
-
-            var newSize1 = GetChildrenMaxPreferredSizePadded(sz).Ceiling();
-
-            var newSize2 = GetPaddedPreferredSize(GetPreferredSize(sz)).Ceiling();
-
+            var newSize = MeasureChildrenBounds(MaximumSize);
             additionalSpace ??= SizeD.Empty;
-
-            var newSize = SizeD.Max(newSize1, newSize2);
-
             newSize += additionalSpace.Value;
 
             if (newSize != SizeD.Empty)
@@ -1674,6 +1693,66 @@ namespace Alternet.UI
             }
 
             return null;
+        }
+
+        /// <summary>
+        /// Retrieves the visible child control with the maximum right boundary value.
+        /// </summary>
+        /// <remarks>This method iterates through the child controls and identifies the visible child
+        /// with the highest right boundary value, as determined by the <see cref="Bounds"/> property.
+        /// If no visible children are present, the method returns <see langword="null"/>.</remarks>
+        /// <returns>The visible child control with the maximum right boundary value,
+        /// or <see langword="null"/> if there are no visible children.</returns>
+        public virtual AbstractControl? GetVisibleChildWithMaxRight()
+        {
+            if (!HasChildren)
+                return null;
+            AbstractControl? result = null;
+            double maxRight = double.MinValue;
+            foreach (var child in Children)
+            {
+                if (!child.Visible)
+                    continue;
+                var right = child.Bounds.Right;
+                if (right > maxRight)
+                {
+                    maxRight = right;
+                    result = child;
+                }
+            }
+
+            return result;
+        }
+
+        /// <summary>
+        /// Retrieves the visible child control with the maximum bottom boundary value.
+        /// </summary>
+        /// <remarks>This method iterates through the child controls
+        /// and identifies the visible child
+        /// with the greatest bottom boundary value, as determined
+        /// by the <see cref="Bounds"/> property.  If no visible
+        /// children are present, the method returns <see langword="null"/>.</remarks>
+        /// <returns>The visible child control with the maximum bottom boundary value,
+        /// or <see langword="null"/> if there are no visible children.</returns>
+        public virtual AbstractControl? GetVisibleChildWithMaxBottom()
+        {
+            if (!HasChildren)
+                return null;
+            AbstractControl? result = null;
+            double maxBottom = double.MinValue;
+            foreach (var child in Children)
+            {
+                if (!child.Visible)
+                    continue;
+                var bottom = child.Bounds.Bottom;
+                if (bottom > maxBottom)
+                {
+                    maxBottom = bottom;
+                    result = child;
+                }
+            }
+
+            return result;
         }
 
         /// <summary>
