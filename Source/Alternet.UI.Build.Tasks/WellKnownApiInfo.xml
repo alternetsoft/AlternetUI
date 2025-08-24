@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ApiInfo>
-  <Assembly Name="Alternet.UI.Common, Version=0.9.749.0, Culture=neutral, PublicKeyToken=7fb0fe57212b4b74">
+  <Assembly Name="Alternet.UI.Common, Version=0.9.750.0, Culture=neutral, PublicKeyToken=7fb0fe57212b4b74">
     <Type Name="XamlX.Runtime.IXamlParentStackProviderV1" />
     <Type Name="XamlX.Runtime.IXamlXmlNamespaceInfoProviderV1" />
     <Type Name="XamlX.Runtime.XamlXmlNamespaceInfoV1" />
@@ -32,6 +32,7 @@
     <Type Name="Alternet.Drawing.PixelFormat" />
     <Type Name="Alternet.Drawing.ClipOperation" />
     <Type Name="Alternet.Drawing.CombineMode" />
+    <Type Name="Alternet.Drawing.CoordUnit" />
     <Type Name="Alternet.Drawing.FillMode" />
     <Type Name="Alternet.Drawing.GraphicsUnit" />
     <Type Name="Alternet.Drawing.RasterOperationMode" />
@@ -268,6 +269,7 @@
       <Event Name="Disposed" />
       <Event Name="PropertyChanged" />
     </Type>
+    <Type Name="Alternet.Drawing.CoordAndUnit" />
     <Type Name="Alternet.Drawing.CoordD" />
     <Type Name="Alternet.Drawing.NineRects" />
     <Type Name="Alternet.Drawing.PointD" />
@@ -382,6 +384,8 @@
       <Event Name="PropertyChanged" />
     </Type>
     <Type Name="Alternet.UI.FrameworkElement">
+      <Event Name="DataContextChanged" />
+      <Event Name="NameChanged" />
       <Event Name="Disposed" />
       <Event Name="PropertyChanged" />
     </Type>
@@ -422,6 +426,8 @@
     </Type>
     <Type Name="Alternet.UI.ApplicationContext">
       <Event Name="ThreadExit" />
+      <Event Name="DataContextChanged" />
+      <Event Name="NameChanged" />
       <Event Name="Disposed" />
       <Event Name="PropertyChanged" />
     </Type>
@@ -512,6 +518,8 @@
     <Type Name="Alternet.UI.Timer">
       <Event Name="Tick" />
       <Event Name="Elapsed" />
+      <Event Name="DataContextChanged" />
+      <Event Name="NameChanged" />
       <Event Name="Disposed" />
       <Event Name="PropertyChanged" />
     </Type>
@@ -879,6 +887,8 @@
     <Type Name="Alternet.UI.HelpEventHandler" />
     <Type Name="Alternet.UI.HelpEventArgs" />
     <Type Name="Alternet.UI.RangeAdditionFinishedEventArgs`1" />
+    <Type Name="Alternet.UI.ValueChangedEventArgs`1" />
+    <Type Name="Alternet.UI.ValueChangedEventArgs" />
     <Type Name="Alternet.UI.DrawItemEventHandler" />
     <Type Name="Alternet.UI.DrawItemEventArgs" />
     <Type Name="Alternet.UI.InvalidateEventHandler" />
@@ -935,18 +945,26 @@
     </Type>
     <Type Name="Alternet.UI.TouchEventArgs" />
     <Type Name="Alternet.UI.BasePrintDialog">
+      <Event Name="DataContextChanged" />
+      <Event Name="NameChanged" />
       <Event Name="Disposed" />
       <Event Name="PropertyChanged" />
     </Type>
     <Type Name="Alternet.UI.PageSetupDialog">
+      <Event Name="DataContextChanged" />
+      <Event Name="NameChanged" />
       <Event Name="Disposed" />
       <Event Name="PropertyChanged" />
     </Type>
     <Type Name="Alternet.UI.PrintDialog">
+      <Event Name="DataContextChanged" />
+      <Event Name="NameChanged" />
       <Event Name="Disposed" />
       <Event Name="PropertyChanged" />
     </Type>
     <Type Name="Alternet.UI.PrintPreviewDialog">
+      <Event Name="DataContextChanged" />
+      <Event Name="NameChanged" />
       <Event Name="Disposed" />
       <Event Name="PropertyChanged" />
     </Type>
@@ -973,6 +991,7 @@
     </Type>
     <Type Name="Alternet.UI.EnumArray`2" />
     <Type Name="Alternet.UI.HVAlignment" />
+    <Type Name="Alternet.UI.KnownButtonImage" />
     <Type Name="Alternet.UI.LazyStruct`1" />
     <Type Name="Alternet.UI.ObjectUniqueId" />
     <Type Name="Alternet.UI.PropInstanceAndValue" />
@@ -998,6 +1017,7 @@
       <Event Name="ValueChanged" />
     </Type>
     <Type Name="Alternet.UI.Border">
+      <Event Name="DropDownMenuShowing" />
       <Event Name="ContextMenuCreated" />
       <Event Name="MouseHover" />
       <Event Name="CellChanged" />
@@ -1069,6 +1089,8 @@
       <Event Name="Invalidated" />
       <Event Name="LayoutUpdated" />
       <Event Name="Scroll" />
+      <Event Name="DataContextChanged" />
+      <Event Name="NameChanged" />
       <Event Name="Disposed" />
       <Event Name="PropertyChanged" />
     </Type>
@@ -1082,6 +1104,7 @@
       <Event Name="PropertyChanged" />
     </Type>
     <Type Name="Alternet.UI.HiddenBorder">
+      <Event Name="DropDownMenuShowing" />
       <Event Name="ContextMenuCreated" />
       <Event Name="MouseHover" />
       <Event Name="CellChanged" />
@@ -1153,6 +1176,8 @@
       <Event Name="Invalidated" />
       <Event Name="LayoutUpdated" />
       <Event Name="Scroll" />
+      <Event Name="DataContextChanged" />
+      <Event Name="NameChanged" />
       <Event Name="Disposed" />
       <Event Name="PropertyChanged" />
     </Type>
@@ -1228,10 +1253,13 @@
       <Event Name="Invalidated" />
       <Event Name="LayoutUpdated" />
       <Event Name="Scroll" />
+      <Event Name="DataContextChanged" />
+      <Event Name="NameChanged" />
       <Event Name="Disposed" />
       <Event Name="PropertyChanged" />
     </Type>
     <Type Name="Alternet.UI.VerticalLine">
+      <Event Name="DropDownMenuShowing" />
       <Event Name="ContextMenuCreated" />
       <Event Name="MouseHover" />
       <Event Name="CellChanged" />
@@ -1303,10 +1331,13 @@
       <Event Name="Invalidated" />
       <Event Name="LayoutUpdated" />
       <Event Name="Scroll" />
+      <Event Name="DataContextChanged" />
+      <Event Name="NameChanged" />
       <Event Name="Disposed" />
       <Event Name="PropertyChanged" />
     </Type>
     <Type Name="Alternet.UI.ContainerControl">
+      <Event Name="DropDownMenuShowing" />
       <Event Name="ContextMenuCreated" />
       <Event Name="MouseHover" />
       <Event Name="CellChanged" />
@@ -1378,6 +1409,8 @@
       <Event Name="Invalidated" />
       <Event Name="LayoutUpdated" />
       <Event Name="Scroll" />
+      <Event Name="DataContextChanged" />
+      <Event Name="NameChanged" />
       <Event Name="Disposed" />
       <Event Name="PropertyChanged" />
     </Type>
@@ -1454,10 +1487,13 @@
       <Event Name="Invalidated" />
       <Event Name="LayoutUpdated" />
       <Event Name="Scroll" />
+      <Event Name="DataContextChanged" />
+      <Event Name="NameChanged" />
       <Event Name="Disposed" />
       <Event Name="PropertyChanged" />
     </Type>
     <Type Name="Alternet.UI.GraphicControl">
+      <Event Name="DropDownMenuShowing" />
       <Event Name="ContextMenuCreated" />
       <Event Name="MouseHover" />
       <Event Name="CellChanged" />
@@ -1529,6 +1565,8 @@
       <Event Name="Invalidated" />
       <Event Name="LayoutUpdated" />
       <Event Name="Scroll" />
+      <Event Name="DataContextChanged" />
+      <Event Name="NameChanged" />
       <Event Name="Disposed" />
       <Event Name="PropertyChanged" />
     </Type>
@@ -1604,10 +1642,13 @@
       <Event Name="Invalidated" />
       <Event Name="LayoutUpdated" />
       <Event Name="Scroll" />
+      <Event Name="DataContextChanged" />
+      <Event Name="NameChanged" />
       <Event Name="Disposed" />
       <Event Name="PropertyChanged" />
     </Type>
     <Type Name="Alternet.UI.PaintActionsControl">
+      <Event Name="DropDownMenuShowing" />
       <Event Name="ContextMenuCreated" />
       <Event Name="MouseHover" />
       <Event Name="CellChanged" />
@@ -1679,10 +1720,13 @@
       <Event Name="Invalidated" />
       <Event Name="LayoutUpdated" />
       <Event Name="Scroll" />
+      <Event Name="DataContextChanged" />
+      <Event Name="NameChanged" />
       <Event Name="Disposed" />
       <Event Name="PropertyChanged" />
     </Type>
     <Type Name="Alternet.UI.Panel">
+      <Event Name="DropDownMenuShowing" />
       <Event Name="ContextMenuCreated" />
       <Event Name="MouseHover" />
       <Event Name="CellChanged" />
@@ -1754,6 +1798,8 @@
       <Event Name="Invalidated" />
       <Event Name="LayoutUpdated" />
       <Event Name="Scroll" />
+      <Event Name="DataContextChanged" />
+      <Event Name="NameChanged" />
       <Event Name="Disposed" />
       <Event Name="PropertyChanged" />
     </Type>
@@ -1830,10 +1876,13 @@
       <Event Name="Invalidated" />
       <Event Name="LayoutUpdated" />
       <Event Name="Scroll" />
+      <Event Name="DataContextChanged" />
+      <Event Name="NameChanged" />
       <Event Name="Disposed" />
       <Event Name="PropertyChanged" />
     </Type>
     <Type Name="Alternet.UI.ScrollableUserControl">
+      <Event Name="DropDownMenuShowing" />
       <Event Name="ContextMenuCreated" />
       <Event Name="MouseHover" />
       <Event Name="CellChanged" />
@@ -1905,10 +1954,13 @@
       <Event Name="Invalidated" />
       <Event Name="LayoutUpdated" />
       <Event Name="Scroll" />
+      <Event Name="DataContextChanged" />
+      <Event Name="NameChanged" />
       <Event Name="Disposed" />
       <Event Name="PropertyChanged" />
     </Type>
     <Type Name="Alternet.UI.UserControl">
+      <Event Name="DropDownMenuShowing" />
       <Event Name="ContextMenuCreated" />
       <Event Name="MouseHover" />
       <Event Name="CellChanged" />
@@ -1980,6 +2032,8 @@
       <Event Name="Invalidated" />
       <Event Name="LayoutUpdated" />
       <Event Name="Scroll" />
+      <Event Name="DataContextChanged" />
+      <Event Name="NameChanged" />
       <Event Name="Disposed" />
       <Event Name="PropertyChanged" />
     </Type>
@@ -2055,6 +2109,8 @@
       <Event Name="Invalidated" />
       <Event Name="LayoutUpdated" />
       <Event Name="Scroll" />
+      <Event Name="DataContextChanged" />
+      <Event Name="NameChanged" />
       <Event Name="Disposed" />
       <Event Name="PropertyChanged" />
     </Type>
@@ -2207,6 +2263,8 @@
       <Event Name="Invalidated" />
       <Event Name="LayoutUpdated" />
       <Event Name="Scroll" />
+      <Event Name="DataContextChanged" />
+      <Event Name="NameChanged" />
       <Event Name="Disposed" />
       <Event Name="PropertyChanged" />
     </Type>
@@ -2282,6 +2340,8 @@
       <Event Name="Invalidated" />
       <Event Name="LayoutUpdated" />
       <Event Name="Scroll" />
+      <Event Name="DataContextChanged" />
+      <Event Name="NameChanged" />
       <Event Name="Disposed" />
       <Event Name="PropertyChanged" />
     </Type>
@@ -2357,6 +2417,8 @@
       <Event Name="Invalidated" />
       <Event Name="LayoutUpdated" />
       <Event Name="Scroll" />
+      <Event Name="DataContextChanged" />
+      <Event Name="NameChanged" />
       <Event Name="Disposed" />
       <Event Name="PropertyChanged" />
     </Type>
@@ -2446,6 +2508,8 @@
       <Event Name="Invalidated" />
       <Event Name="LayoutUpdated" />
       <Event Name="Scroll" />
+      <Event Name="DataContextChanged" />
+      <Event Name="NameChanged" />
       <Event Name="Disposed" />
       <Event Name="PropertyChanged" />
     </Type>
@@ -2628,6 +2692,8 @@
       <Event Name="Invalidated" />
       <Event Name="LayoutUpdated" />
       <Event Name="Scroll" />
+      <Event Name="DataContextChanged" />
+      <Event Name="NameChanged" />
       <Event Name="Disposed" />
       <Event Name="PropertyChanged" />
     </Type>
@@ -2703,6 +2769,8 @@
       <Event Name="Invalidated" />
       <Event Name="LayoutUpdated" />
       <Event Name="Scroll" />
+      <Event Name="DataContextChanged" />
+      <Event Name="NameChanged" />
       <Event Name="Disposed" />
       <Event Name="PropertyChanged" />
     </Type>
@@ -2779,6 +2847,8 @@
       <Event Name="Invalidated" />
       <Event Name="LayoutUpdated" />
       <Event Name="Scroll" />
+      <Event Name="DataContextChanged" />
+      <Event Name="NameChanged" />
       <Event Name="Disposed" />
       <Event Name="PropertyChanged" />
     </Type>
@@ -2855,6 +2925,8 @@
       <Event Name="Invalidated" />
       <Event Name="LayoutUpdated" />
       <Event Name="Scroll" />
+      <Event Name="DataContextChanged" />
+      <Event Name="NameChanged" />
       <Event Name="Disposed" />
       <Event Name="PropertyChanged" />
     </Type>
@@ -2862,6 +2934,7 @@
       <Event Name="TextChanged" />
       <Event Name="DelayedTextChanged" />
       <Event Name="ButtonClick" />
+      <Event Name="DropDownMenuShowing" />
       <Event Name="ContextMenuCreated" />
       <Event Name="MouseHover" />
       <Event Name="CellChanged" />
@@ -2931,6 +3004,8 @@
       <Event Name="Invalidated" />
       <Event Name="LayoutUpdated" />
       <Event Name="Scroll" />
+      <Event Name="DataContextChanged" />
+      <Event Name="NameChanged" />
       <Event Name="Disposed" />
       <Event Name="PropertyChanged" />
     </Type>
@@ -2939,6 +3014,7 @@
       <Event Name="TextChanged" />
       <Event Name="DelayedTextChanged" />
       <Event Name="ButtonClick" />
+      <Event Name="DropDownMenuShowing" />
       <Event Name="ContextMenuCreated" />
       <Event Name="MouseHover" />
       <Event Name="CellChanged" />
@@ -3008,6 +3084,8 @@
       <Event Name="Invalidated" />
       <Event Name="LayoutUpdated" />
       <Event Name="Scroll" />
+      <Event Name="DataContextChanged" />
+      <Event Name="NameChanged" />
       <Event Name="Disposed" />
       <Event Name="PropertyChanged" />
     </Type>
@@ -3015,6 +3093,7 @@
       <Event Name="TextChanged" />
       <Event Name="DelayedTextChanged" />
       <Event Name="ButtonClick" />
+      <Event Name="DropDownMenuShowing" />
       <Event Name="ContextMenuCreated" />
       <Event Name="MouseHover" />
       <Event Name="CellChanged" />
@@ -3084,6 +3163,8 @@
       <Event Name="Invalidated" />
       <Event Name="LayoutUpdated" />
       <Event Name="Scroll" />
+      <Event Name="DataContextChanged" />
+      <Event Name="NameChanged" />
       <Event Name="Disposed" />
       <Event Name="PropertyChanged" />
     </Type>
@@ -3091,6 +3172,7 @@
       <Event Name="TextChanged" />
       <Event Name="DelayedTextChanged" />
       <Event Name="ButtonClick" />
+      <Event Name="DropDownMenuShowing" />
       <Event Name="ContextMenuCreated" />
       <Event Name="MouseHover" />
       <Event Name="CellChanged" />
@@ -3160,10 +3242,13 @@
       <Event Name="Invalidated" />
       <Event Name="LayoutUpdated" />
       <Event Name="Scroll" />
+      <Event Name="DataContextChanged" />
+      <Event Name="NameChanged" />
       <Event Name="Disposed" />
       <Event Name="PropertyChanged" />
     </Type>
     <Type Name="Alternet.UI.ControlAndControl">
+      <Event Name="DropDownMenuShowing" />
       <Event Name="ContextMenuCreated" />
       <Event Name="MouseHover" />
       <Event Name="CellChanged" />
@@ -3235,6 +3320,8 @@
       <Event Name="Invalidated" />
       <Event Name="LayoutUpdated" />
       <Event Name="Scroll" />
+      <Event Name="DataContextChanged" />
+      <Event Name="NameChanged" />
       <Event Name="Disposed" />
       <Event Name="PropertyChanged" />
     </Type>
@@ -3242,6 +3329,7 @@
       <Event Name="TextChanged" />
       <Event Name="DelayedTextChanged" />
       <Event Name="ButtonClick" />
+      <Event Name="DropDownMenuShowing" />
       <Event Name="ContextMenuCreated" />
       <Event Name="MouseHover" />
       <Event Name="CellChanged" />
@@ -3311,6 +3399,8 @@
       <Event Name="Invalidated" />
       <Event Name="LayoutUpdated" />
       <Event Name="Scroll" />
+      <Event Name="DataContextChanged" />
+      <Event Name="NameChanged" />
       <Event Name="Disposed" />
       <Event Name="PropertyChanged" />
     </Type>
@@ -3324,6 +3414,7 @@
       <Event Name="TextChanged" />
       <Event Name="DelayedTextChanged" />
       <Event Name="ButtonClick" />
+      <Event Name="DropDownMenuShowing" />
       <Event Name="ContextMenuCreated" />
       <Event Name="MouseHover" />
       <Event Name="CellChanged" />
@@ -3393,6 +3484,8 @@
       <Event Name="Invalidated" />
       <Event Name="LayoutUpdated" />
       <Event Name="Scroll" />
+      <Event Name="DataContextChanged" />
+      <Event Name="NameChanged" />
       <Event Name="Disposed" />
       <Event Name="PropertyChanged" />
     </Type>
@@ -3400,6 +3493,7 @@
       <Event Name="TextChanged" />
       <Event Name="DelayedTextChanged" />
       <Event Name="ButtonClick" />
+      <Event Name="DropDownMenuShowing" />
       <Event Name="ContextMenuCreated" />
       <Event Name="MouseHover" />
       <Event Name="CellChanged" />
@@ -3469,6 +3563,8 @@
       <Event Name="Invalidated" />
       <Event Name="LayoutUpdated" />
       <Event Name="Scroll" />
+      <Event Name="DataContextChanged" />
+      <Event Name="NameChanged" />
       <Event Name="Disposed" />
       <Event Name="PropertyChanged" />
     </Type>
@@ -3477,6 +3573,7 @@
       <Event Name="TextChanged" />
       <Event Name="DelayedTextChanged" />
       <Event Name="ButtonClick" />
+      <Event Name="DropDownMenuShowing" />
       <Event Name="ContextMenuCreated" />
       <Event Name="MouseHover" />
       <Event Name="CellChanged" />
@@ -3546,6 +3643,8 @@
       <Event Name="Invalidated" />
       <Event Name="LayoutUpdated" />
       <Event Name="Scroll" />
+      <Event Name="DataContextChanged" />
+      <Event Name="NameChanged" />
       <Event Name="Disposed" />
       <Event Name="PropertyChanged" />
     </Type>
@@ -3556,6 +3655,7 @@
       <Event Name="TextChanged" />
       <Event Name="DelayedTextChanged" />
       <Event Name="ButtonClick" />
+      <Event Name="DropDownMenuShowing" />
       <Event Name="ContextMenuCreated" />
       <Event Name="MouseHover" />
       <Event Name="CellChanged" />
@@ -3625,6 +3725,8 @@
       <Event Name="Invalidated" />
       <Event Name="LayoutUpdated" />
       <Event Name="Scroll" />
+      <Event Name="DataContextChanged" />
+      <Event Name="NameChanged" />
       <Event Name="Disposed" />
       <Event Name="PropertyChanged" />
     </Type>
@@ -3633,6 +3735,7 @@
       <Event Name="TextChanged" />
       <Event Name="DelayedTextChanged" />
       <Event Name="ButtonClick" />
+      <Event Name="DropDownMenuShowing" />
       <Event Name="ContextMenuCreated" />
       <Event Name="MouseHover" />
       <Event Name="CellChanged" />
@@ -3702,6 +3805,8 @@
       <Event Name="Invalidated" />
       <Event Name="LayoutUpdated" />
       <Event Name="Scroll" />
+      <Event Name="DataContextChanged" />
+      <Event Name="NameChanged" />
       <Event Name="Disposed" />
       <Event Name="PropertyChanged" />
     </Type>
@@ -3709,6 +3814,7 @@
       <Event Name="SelectedIndexChanged" />
       <Event Name="TextChanged" />
       <Event Name="DelayedTextChanged" />
+      <Event Name="DropDownMenuShowing" />
       <Event Name="ContextMenuCreated" />
       <Event Name="MouseHover" />
       <Event Name="CellChanged" />
@@ -3778,12 +3884,15 @@
       <Event Name="Invalidated" />
       <Event Name="LayoutUpdated" />
       <Event Name="Scroll" />
+      <Event Name="DataContextChanged" />
+      <Event Name="NameChanged" />
       <Event Name="Disposed" />
       <Event Name="PropertyChanged" />
     </Type>
     <Type Name="Alternet.UI.ControlAndLabel`2">
       <Event Name="TextChanged" />
       <Event Name="DelayedTextChanged" />
+      <Event Name="DropDownMenuShowing" />
       <Event Name="ContextMenuCreated" />
       <Event Name="MouseHover" />
       <Event Name="CellChanged" />
@@ -3853,12 +3962,15 @@
       <Event Name="Invalidated" />
       <Event Name="LayoutUpdated" />
       <Event Name="Scroll" />
+      <Event Name="DataContextChanged" />
+      <Event Name="NameChanged" />
       <Event Name="Disposed" />
       <Event Name="PropertyChanged" />
     </Type>
     <Type Name="Alternet.UI.ValueEditorDouble">
       <Event Name="TextChanged" />
       <Event Name="DelayedTextChanged" />
+      <Event Name="DropDownMenuShowing" />
       <Event Name="ContextMenuCreated" />
       <Event Name="MouseHover" />
       <Event Name="CellChanged" />
@@ -3928,12 +4040,15 @@
       <Event Name="Invalidated" />
       <Event Name="LayoutUpdated" />
       <Event Name="Scroll" />
+      <Event Name="DataContextChanged" />
+      <Event Name="NameChanged" />
       <Event Name="Disposed" />
       <Event Name="PropertyChanged" />
     </Type>
     <Type Name="Alternet.UI.ValueEditorSingle">
       <Event Name="TextChanged" />
       <Event Name="DelayedTextChanged" />
+      <Event Name="DropDownMenuShowing" />
       <Event Name="ContextMenuCreated" />
       <Event Name="MouseHover" />
       <Event Name="CellChanged" />
@@ -4003,12 +4118,15 @@
       <Event Name="Invalidated" />
       <Event Name="LayoutUpdated" />
       <Event Name="Scroll" />
+      <Event Name="DataContextChanged" />
+      <Event Name="NameChanged" />
       <Event Name="Disposed" />
       <Event Name="PropertyChanged" />
     </Type>
     <Type Name="Alternet.UI.ValueEditorUDouble">
       <Event Name="TextChanged" />
       <Event Name="DelayedTextChanged" />
+      <Event Name="DropDownMenuShowing" />
       <Event Name="ContextMenuCreated" />
       <Event Name="MouseHover" />
       <Event Name="CellChanged" />
@@ -4078,12 +4196,15 @@
       <Event Name="Invalidated" />
       <Event Name="LayoutUpdated" />
       <Event Name="Scroll" />
+      <Event Name="DataContextChanged" />
+      <Event Name="NameChanged" />
       <Event Name="Disposed" />
       <Event Name="PropertyChanged" />
     </Type>
     <Type Name="Alternet.UI.ValueEditorUSingle">
       <Event Name="TextChanged" />
       <Event Name="DelayedTextChanged" />
+      <Event Name="DropDownMenuShowing" />
       <Event Name="ContextMenuCreated" />
       <Event Name="MouseHover" />
       <Event Name="CellChanged" />
@@ -4153,12 +4274,15 @@
       <Event Name="Invalidated" />
       <Event Name="LayoutUpdated" />
       <Event Name="Scroll" />
+      <Event Name="DataContextChanged" />
+      <Event Name="NameChanged" />
       <Event Name="Disposed" />
       <Event Name="PropertyChanged" />
     </Type>
     <Type Name="Alternet.UI.ValueEditorInt16">
       <Event Name="TextChanged" />
       <Event Name="DelayedTextChanged" />
+      <Event Name="DropDownMenuShowing" />
       <Event Name="ContextMenuCreated" />
       <Event Name="MouseHover" />
       <Event Name="CellChanged" />
@@ -4228,12 +4352,15 @@
       <Event Name="Invalidated" />
       <Event Name="LayoutUpdated" />
       <Event Name="Scroll" />
+      <Event Name="DataContextChanged" />
+      <Event Name="NameChanged" />
       <Event Name="Disposed" />
       <Event Name="PropertyChanged" />
     </Type>
     <Type Name="Alternet.UI.ValueEditorInt32">
       <Event Name="TextChanged" />
       <Event Name="DelayedTextChanged" />
+      <Event Name="DropDownMenuShowing" />
       <Event Name="ContextMenuCreated" />
       <Event Name="MouseHover" />
       <Event Name="CellChanged" />
@@ -4303,12 +4430,15 @@
       <Event Name="Invalidated" />
       <Event Name="LayoutUpdated" />
       <Event Name="Scroll" />
+      <Event Name="DataContextChanged" />
+      <Event Name="NameChanged" />
       <Event Name="Disposed" />
       <Event Name="PropertyChanged" />
     </Type>
     <Type Name="Alternet.UI.ValueEditorInt64">
       <Event Name="TextChanged" />
       <Event Name="DelayedTextChanged" />
+      <Event Name="DropDownMenuShowing" />
       <Event Name="ContextMenuCreated" />
       <Event Name="MouseHover" />
       <Event Name="CellChanged" />
@@ -4378,12 +4508,15 @@
       <Event Name="Invalidated" />
       <Event Name="LayoutUpdated" />
       <Event Name="Scroll" />
+      <Event Name="DataContextChanged" />
+      <Event Name="NameChanged" />
       <Event Name="Disposed" />
       <Event Name="PropertyChanged" />
     </Type>
     <Type Name="Alternet.UI.ValueEditorSByte">
       <Event Name="TextChanged" />
       <Event Name="DelayedTextChanged" />
+      <Event Name="DropDownMenuShowing" />
       <Event Name="ContextMenuCreated" />
       <Event Name="MouseHover" />
       <Event Name="CellChanged" />
@@ -4453,6 +4586,8 @@
       <Event Name="Invalidated" />
       <Event Name="LayoutUpdated" />
       <Event Name="Scroll" />
+      <Event Name="DataContextChanged" />
+      <Event Name="NameChanged" />
       <Event Name="Disposed" />
       <Event Name="PropertyChanged" />
     </Type>
@@ -4460,6 +4595,7 @@
       <Event Name="TextValidation" />
       <Event Name="TextChanged" />
       <Event Name="DelayedTextChanged" />
+      <Event Name="DropDownMenuShowing" />
       <Event Name="ContextMenuCreated" />
       <Event Name="MouseHover" />
       <Event Name="CellChanged" />
@@ -4529,6 +4665,8 @@
       <Event Name="Invalidated" />
       <Event Name="LayoutUpdated" />
       <Event Name="Scroll" />
+      <Event Name="DataContextChanged" />
+      <Event Name="NameChanged" />
       <Event Name="Disposed" />
       <Event Name="PropertyChanged" />
     </Type>
@@ -4536,6 +4674,7 @@
       <Event Name="TextValidation" />
       <Event Name="TextChanged" />
       <Event Name="DelayedTextChanged" />
+      <Event Name="DropDownMenuShowing" />
       <Event Name="ContextMenuCreated" />
       <Event Name="MouseHover" />
       <Event Name="CellChanged" />
@@ -4605,6 +4744,8 @@
       <Event Name="Invalidated" />
       <Event Name="LayoutUpdated" />
       <Event Name="Scroll" />
+      <Event Name="DataContextChanged" />
+      <Event Name="NameChanged" />
       <Event Name="Disposed" />
       <Event Name="PropertyChanged" />
     </Type>
@@ -4612,6 +4753,7 @@
       <Event Name="TextValidation" />
       <Event Name="TextChanged" />
       <Event Name="DelayedTextChanged" />
+      <Event Name="DropDownMenuShowing" />
       <Event Name="ContextMenuCreated" />
       <Event Name="MouseHover" />
       <Event Name="CellChanged" />
@@ -4681,12 +4823,15 @@
       <Event Name="Invalidated" />
       <Event Name="LayoutUpdated" />
       <Event Name="Scroll" />
+      <Event Name="DataContextChanged" />
+      <Event Name="NameChanged" />
       <Event Name="Disposed" />
       <Event Name="PropertyChanged" />
     </Type>
     <Type Name="Alternet.UI.TextBoxAndLabel">
       <Event Name="TextChanged" />
       <Event Name="DelayedTextChanged" />
+      <Event Name="DropDownMenuShowing" />
       <Event Name="ContextMenuCreated" />
       <Event Name="MouseHover" />
       <Event Name="CellChanged" />
@@ -4756,12 +4901,15 @@
       <Event Name="Invalidated" />
       <Event Name="LayoutUpdated" />
       <Event Name="Scroll" />
+      <Event Name="DataContextChanged" />
+      <Event Name="NameChanged" />
       <Event Name="Disposed" />
       <Event Name="PropertyChanged" />
     </Type>
     <Type Name="Alternet.UI.HexEditorUInt32">
       <Event Name="TextChanged" />
       <Event Name="DelayedTextChanged" />
+      <Event Name="DropDownMenuShowing" />
       <Event Name="ContextMenuCreated" />
       <Event Name="MouseHover" />
       <Event Name="CellChanged" />
@@ -4831,12 +4979,15 @@
       <Event Name="Invalidated" />
       <Event Name="LayoutUpdated" />
       <Event Name="Scroll" />
+      <Event Name="DataContextChanged" />
+      <Event Name="NameChanged" />
       <Event Name="Disposed" />
       <Event Name="PropertyChanged" />
     </Type>
     <Type Name="Alternet.UI.ValueEditorByte">
       <Event Name="TextChanged" />
       <Event Name="DelayedTextChanged" />
+      <Event Name="DropDownMenuShowing" />
       <Event Name="ContextMenuCreated" />
       <Event Name="MouseHover" />
       <Event Name="CellChanged" />
@@ -4906,12 +5057,15 @@
       <Event Name="Invalidated" />
       <Event Name="LayoutUpdated" />
       <Event Name="Scroll" />
+      <Event Name="DataContextChanged" />
+      <Event Name="NameChanged" />
       <Event Name="Disposed" />
       <Event Name="PropertyChanged" />
     </Type>
     <Type Name="Alternet.UI.ValueEditorUInt16">
       <Event Name="TextChanged" />
       <Event Name="DelayedTextChanged" />
+      <Event Name="DropDownMenuShowing" />
       <Event Name="ContextMenuCreated" />
       <Event Name="MouseHover" />
       <Event Name="CellChanged" />
@@ -4981,12 +5135,15 @@
       <Event Name="Invalidated" />
       <Event Name="LayoutUpdated" />
       <Event Name="Scroll" />
+      <Event Name="DataContextChanged" />
+      <Event Name="NameChanged" />
       <Event Name="Disposed" />
       <Event Name="PropertyChanged" />
     </Type>
     <Type Name="Alternet.UI.ValueEditorUInt32">
       <Event Name="TextChanged" />
       <Event Name="DelayedTextChanged" />
+      <Event Name="DropDownMenuShowing" />
       <Event Name="ContextMenuCreated" />
       <Event Name="MouseHover" />
       <Event Name="CellChanged" />
@@ -5056,12 +5213,15 @@
       <Event Name="Invalidated" />
       <Event Name="LayoutUpdated" />
       <Event Name="Scroll" />
+      <Event Name="DataContextChanged" />
+      <Event Name="NameChanged" />
       <Event Name="Disposed" />
       <Event Name="PropertyChanged" />
     </Type>
     <Type Name="Alternet.UI.ValueEditorUInt64">
       <Event Name="TextChanged" />
       <Event Name="DelayedTextChanged" />
+      <Event Name="DropDownMenuShowing" />
       <Event Name="ContextMenuCreated" />
       <Event Name="MouseHover" />
       <Event Name="CellChanged" />
@@ -5131,12 +5291,15 @@
       <Event Name="Invalidated" />
       <Event Name="LayoutUpdated" />
       <Event Name="Scroll" />
+      <Event Name="DataContextChanged" />
+      <Event Name="NameChanged" />
       <Event Name="Disposed" />
       <Event Name="PropertyChanged" />
     </Type>
     <Type Name="Alternet.UI.ValueEditorCustom">
       <Event Name="TextChanged" />
       <Event Name="DelayedTextChanged" />
+      <Event Name="DropDownMenuShowing" />
       <Event Name="ContextMenuCreated" />
       <Event Name="MouseHover" />
       <Event Name="CellChanged" />
@@ -5206,6 +5369,8 @@
       <Event Name="Invalidated" />
       <Event Name="LayoutUpdated" />
       <Event Name="Scroll" />
+      <Event Name="DataContextChanged" />
+      <Event Name="NameChanged" />
       <Event Name="Disposed" />
       <Event Name="PropertyChanged" />
     </Type>
@@ -5295,6 +5460,8 @@
       <Event Name="Invalidated" />
       <Event Name="LayoutUpdated" />
       <Event Name="Scroll" />
+      <Event Name="DataContextChanged" />
+      <Event Name="NameChanged" />
       <Event Name="Disposed" />
       <Event Name="PropertyChanged" />
     </Type>
@@ -5370,6 +5537,8 @@
       <Event Name="Invalidated" />
       <Event Name="LayoutUpdated" />
       <Event Name="Scroll" />
+      <Event Name="DataContextChanged" />
+      <Event Name="NameChanged" />
       <Event Name="Disposed" />
       <Event Name="PropertyChanged" />
     </Type>
@@ -5446,6 +5615,8 @@
       <Event Name="Invalidated" />
       <Event Name="LayoutUpdated" />
       <Event Name="Scroll" />
+      <Event Name="DataContextChanged" />
+      <Event Name="NameChanged" />
       <Event Name="Disposed" />
       <Event Name="PropertyChanged" />
     </Type>
@@ -5455,6 +5626,7 @@
       <Event Name="PropertyChanged" />
     </Type>
     <Type Name="Alternet.UI.HeaderLabel">
+      <Event Name="DropDownMenuShowing" />
       <Event Name="ContextMenuCreated" />
       <Event Name="MouseHover" />
       <Event Name="CellChanged" />
@@ -5526,6 +5698,8 @@
       <Event Name="Invalidated" />
       <Event Name="LayoutUpdated" />
       <Event Name="Scroll" />
+      <Event Name="DataContextChanged" />
+      <Event Name="NameChanged" />
       <Event Name="Disposed" />
       <Event Name="PropertyChanged" />
     </Type>
@@ -5604,6 +5778,8 @@
       <Event Name="Invalidated" />
       <Event Name="LayoutUpdated" />
       <Event Name="Scroll" />
+      <Event Name="DataContextChanged" />
+      <Event Name="NameChanged" />
       <Event Name="Disposed" />
       <Event Name="PropertyChanged" />
     </Type>
@@ -5682,14 +5858,19 @@
       <Event Name="Invalidated" />
       <Event Name="LayoutUpdated" />
       <Event Name="Scroll" />
+      <Event Name="DataContextChanged" />
+      <Event Name="NameChanged" />
       <Event Name="Disposed" />
       <Event Name="PropertyChanged" />
     </Type>
     <Type Name="Alternet.UI.ColumnDefinition">
+      <Event Name="DataContextChanged" />
+      <Event Name="NameChanged" />
       <Event Name="Disposed" />
       <Event Name="PropertyChanged" />
     </Type>
     <Type Name="Alternet.UI.Grid">
+      <Event Name="DropDownMenuShowing" />
       <Event Name="ContextMenuCreated" />
       <Event Name="MouseHover" />
       <Event Name="CellChanged" />
@@ -5761,21 +5942,28 @@
       <Event Name="Invalidated" />
       <Event Name="LayoutUpdated" />
       <Event Name="Scroll" />
+      <Event Name="DataContextChanged" />
+      <Event Name="NameChanged" />
       <Event Name="Disposed" />
       <Event Name="PropertyChanged" />
     </Type>
     <Type Name="Alternet.UI.GridColumnCollection" />
     <Type Name="Alternet.UI.GridDefinitionBase">
+      <Event Name="DataContextChanged" />
+      <Event Name="NameChanged" />
       <Event Name="Disposed" />
       <Event Name="PropertyChanged" />
     </Type>
     <Type Name="Alternet.UI.GridLength" />
     <Type Name="Alternet.UI.GridRowCollection" />
     <Type Name="Alternet.UI.RowDefinition">
+      <Event Name="DataContextChanged" />
+      <Event Name="NameChanged" />
       <Event Name="Disposed" />
       <Event Name="PropertyChanged" />
     </Type>
     <Type Name="Alternet.UI.LayoutPanel">
+      <Event Name="DropDownMenuShowing" />
       <Event Name="ContextMenuCreated" />
       <Event Name="MouseHover" />
       <Event Name="CellChanged" />
@@ -5847,10 +6035,13 @@
       <Event Name="Invalidated" />
       <Event Name="LayoutUpdated" />
       <Event Name="Scroll" />
+      <Event Name="DataContextChanged" />
+      <Event Name="NameChanged" />
       <Event Name="Disposed" />
       <Event Name="PropertyChanged" />
     </Type>
     <Type Name="Alternet.UI.SplittedTreeAndCards">
+      <Event Name="DropDownMenuShowing" />
       <Event Name="ContextMenuCreated" />
       <Event Name="MouseHover" />
       <Event Name="CellChanged" />
@@ -5922,10 +6113,13 @@
       <Event Name="Invalidated" />
       <Event Name="LayoutUpdated" />
       <Event Name="Scroll" />
+      <Event Name="DataContextChanged" />
+      <Event Name="NameChanged" />
       <Event Name="Disposed" />
       <Event Name="PropertyChanged" />
     </Type>
     <Type Name="Alternet.UI.ScrollViewer">
+      <Event Name="DropDownMenuShowing" />
       <Event Name="ContextMenuCreated" />
       <Event Name="MouseHover" />
       <Event Name="CellChanged" />
@@ -5997,11 +6191,14 @@
       <Event Name="Invalidated" />
       <Event Name="LayoutUpdated" />
       <Event Name="Scroll" />
+      <Event Name="DataContextChanged" />
+      <Event Name="NameChanged" />
       <Event Name="Disposed" />
       <Event Name="PropertyChanged" />
     </Type>
     <Type Name="Alternet.UI.PanelListBoxAndCards">
       <Event Name="AfterDoubleClickAction" />
+      <Event Name="DropDownMenuShowing" />
       <Event Name="ContextMenuCreated" />
       <Event Name="MouseHover" />
       <Event Name="CellChanged" />
@@ -6073,11 +6270,14 @@
       <Event Name="Invalidated" />
       <Event Name="LayoutUpdated" />
       <Event Name="Scroll" />
+      <Event Name="DataContextChanged" />
+      <Event Name="NameChanged" />
       <Event Name="Disposed" />
       <Event Name="PropertyChanged" />
     </Type>
     <Type Name="Alternet.UI.PanelTreeAndCards">
       <Event Name="AfterDoubleClickAction" />
+      <Event Name="DropDownMenuShowing" />
       <Event Name="ContextMenuCreated" />
       <Event Name="MouseHover" />
       <Event Name="CellChanged" />
@@ -6149,12 +6349,15 @@
       <Event Name="Invalidated" />
       <Event Name="LayoutUpdated" />
       <Event Name="Scroll" />
+      <Event Name="DataContextChanged" />
+      <Event Name="NameChanged" />
       <Event Name="Disposed" />
       <Event Name="PropertyChanged" />
     </Type>
     <Type Name="Alternet.UI.SplitPanelPosition" />
     <Type Name="Alternet.UI.SplittedControlsPanel">
       <Event Name="AfterDoubleClickAction" />
+      <Event Name="DropDownMenuShowing" />
       <Event Name="ContextMenuCreated" />
       <Event Name="MouseHover" />
       <Event Name="CellChanged" />
@@ -6226,10 +6429,13 @@
       <Event Name="Invalidated" />
       <Event Name="LayoutUpdated" />
       <Event Name="Scroll" />
+      <Event Name="DataContextChanged" />
+      <Event Name="NameChanged" />
       <Event Name="Disposed" />
       <Event Name="PropertyChanged" />
     </Type>
     <Type Name="Alternet.UI.SplittedPanel">
+      <Event Name="DropDownMenuShowing" />
       <Event Name="ContextMenuCreated" />
       <Event Name="MouseHover" />
       <Event Name="CellChanged" />
@@ -6301,6 +6507,8 @@
       <Event Name="Invalidated" />
       <Event Name="LayoutUpdated" />
       <Event Name="Scroll" />
+      <Event Name="DataContextChanged" />
+      <Event Name="NameChanged" />
       <Event Name="Disposed" />
       <Event Name="PropertyChanged" />
     </Type>
@@ -6308,6 +6516,7 @@
     <Type Name="Alternet.UI.Splitter">
       <Event Name="SplitterMoving" />
       <Event Name="SplitterMoved" />
+      <Event Name="DropDownMenuShowing" />
       <Event Name="ContextMenuCreated" />
       <Event Name="MouseHover" />
       <Event Name="CellChanged" />
@@ -6379,11 +6588,14 @@
       <Event Name="Invalidated" />
       <Event Name="LayoutUpdated" />
       <Event Name="Scroll" />
+      <Event Name="DataContextChanged" />
+      <Event Name="NameChanged" />
       <Event Name="Disposed" />
       <Event Name="PropertyChanged" />
     </Type>
     <Type Name="Alternet.UI.HorizontalStackPanel">
       <Event Name="OrientationChanged" />
+      <Event Name="DropDownMenuShowing" />
       <Event Name="ContextMenuCreated" />
       <Event Name="MouseHover" />
       <Event Name="CellChanged" />
@@ -6455,11 +6667,14 @@
       <Event Name="Invalidated" />
       <Event Name="LayoutUpdated" />
       <Event Name="Scroll" />
+      <Event Name="DataContextChanged" />
+      <Event Name="NameChanged" />
       <Event Name="Disposed" />
       <Event Name="PropertyChanged" />
     </Type>
     <Type Name="Alternet.UI.StackPanel">
       <Event Name="OrientationChanged" />
+      <Event Name="DropDownMenuShowing" />
       <Event Name="ContextMenuCreated" />
       <Event Name="MouseHover" />
       <Event Name="CellChanged" />
@@ -6531,11 +6746,14 @@
       <Event Name="Invalidated" />
       <Event Name="LayoutUpdated" />
       <Event Name="Scroll" />
+      <Event Name="DataContextChanged" />
+      <Event Name="NameChanged" />
       <Event Name="Disposed" />
       <Event Name="PropertyChanged" />
     </Type>
     <Type Name="Alternet.UI.VerticalStackPanel">
       <Event Name="OrientationChanged" />
+      <Event Name="DropDownMenuShowing" />
       <Event Name="ContextMenuCreated" />
       <Event Name="MouseHover" />
       <Event Name="CellChanged" />
@@ -6607,6 +6825,8 @@
       <Event Name="Invalidated" />
       <Event Name="LayoutUpdated" />
       <Event Name="Scroll" />
+      <Event Name="DataContextChanged" />
+      <Event Name="NameChanged" />
       <Event Name="Disposed" />
       <Event Name="PropertyChanged" />
     </Type>
@@ -6688,6 +6908,8 @@
       <Event Name="Invalidated" />
       <Event Name="LayoutUpdated" />
       <Event Name="Scroll" />
+      <Event Name="DataContextChanged" />
+      <Event Name="NameChanged" />
       <Event Name="Disposed" />
       <Event Name="PropertyChanged" />
     </Type>
@@ -6769,6 +6991,8 @@
       <Event Name="Invalidated" />
       <Event Name="LayoutUpdated" />
       <Event Name="Scroll" />
+      <Event Name="DataContextChanged" />
+      <Event Name="NameChanged" />
       <Event Name="Disposed" />
       <Event Name="PropertyChanged" />
     </Type>
@@ -6850,6 +7074,8 @@
       <Event Name="Invalidated" />
       <Event Name="LayoutUpdated" />
       <Event Name="Scroll" />
+      <Event Name="DataContextChanged" />
+      <Event Name="NameChanged" />
       <Event Name="Disposed" />
       <Event Name="PropertyChanged" />
     </Type>
@@ -6860,6 +7086,7 @@
       <Event Name="TextChanged" />
       <Event Name="DelayedTextChanged" />
       <Event Name="ButtonClick" />
+      <Event Name="DropDownMenuShowing" />
       <Event Name="ContextMenuCreated" />
       <Event Name="MouseHover" />
       <Event Name="CellChanged" />
@@ -6929,6 +7156,8 @@
       <Event Name="Invalidated" />
       <Event Name="LayoutUpdated" />
       <Event Name="Scroll" />
+      <Event Name="DataContextChanged" />
+      <Event Name="NameChanged" />
       <Event Name="Disposed" />
       <Event Name="PropertyChanged" />
     </Type>
@@ -6962,6 +7191,7 @@
       <Event Name="SelectedIndexChanged" />
       <Event Name="SelectionModeChanged" />
       <Event Name="CustomItemText" />
+      <Event Name="DropDownMenuShowing" />
       <Event Name="ContextMenuCreated" />
       <Event Name="MouseHover" />
       <Event Name="CellChanged" />
@@ -7033,6 +7263,8 @@
       <Event Name="Invalidated" />
       <Event Name="LayoutUpdated" />
       <Event Name="Scroll" />
+      <Event Name="DataContextChanged" />
+      <Event Name="NameChanged" />
       <Event Name="Disposed" />
       <Event Name="PropertyChanged" />
     </Type>
@@ -7045,6 +7277,7 @@
       <Event Name="SelectedIndexChanged" />
       <Event Name="SelectionModeChanged" />
       <Event Name="CustomItemText" />
+      <Event Name="DropDownMenuShowing" />
       <Event Name="ContextMenuCreated" />
       <Event Name="MouseHover" />
       <Event Name="CellChanged" />
@@ -7116,11 +7349,14 @@
       <Event Name="Invalidated" />
       <Event Name="LayoutUpdated" />
       <Event Name="Scroll" />
+      <Event Name="DataContextChanged" />
+      <Event Name="NameChanged" />
       <Event Name="Disposed" />
       <Event Name="PropertyChanged" />
     </Type>
     <Type Name="Alternet.UI.IListBoxHeader" />
     <Type Name="Alternet.UI.ListBoxHeader">
+      <Event Name="DropDownMenuShowing" />
       <Event Name="ContextMenuCreated" />
       <Event Name="MouseHover" />
       <Event Name="CellChanged" />
@@ -7192,6 +7428,8 @@
       <Event Name="Invalidated" />
       <Event Name="LayoutUpdated" />
       <Event Name="Scroll" />
+      <Event Name="DataContextChanged" />
+      <Event Name="NameChanged" />
       <Event Name="Disposed" />
       <Event Name="PropertyChanged" />
     </Type>
@@ -7206,6 +7444,7 @@
       <Event Name="BeforeExpand" />
       <Event Name="BeforeCollapse" />
       <Event Name="ExpandedChanged" />
+      <Event Name="DropDownMenuShowing" />
       <Event Name="ContextMenuCreated" />
       <Event Name="MouseHover" />
       <Event Name="CellChanged" />
@@ -7277,6 +7516,8 @@
       <Event Name="Invalidated" />
       <Event Name="LayoutUpdated" />
       <Event Name="Scroll" />
+      <Event Name="DataContextChanged" />
+      <Event Name="NameChanged" />
       <Event Name="Disposed" />
       <Event Name="PropertyChanged" />
     </Type>
@@ -7293,6 +7534,7 @@
       <Event Name="BeforeExpand" />
       <Event Name="BeforeCollapse" />
       <Event Name="ExpandedChanged" />
+      <Event Name="DropDownMenuShowing" />
       <Event Name="ContextMenuCreated" />
       <Event Name="MouseHover" />
       <Event Name="CellChanged" />
@@ -7364,6 +7606,8 @@
       <Event Name="Invalidated" />
       <Event Name="LayoutUpdated" />
       <Event Name="Scroll" />
+      <Event Name="DataContextChanged" />
+      <Event Name="NameChanged" />
       <Event Name="Disposed" />
       <Event Name="PropertyChanged" />
     </Type>
@@ -7381,6 +7625,7 @@
       <Event Name="BeforeExpand" />
       <Event Name="BeforeCollapse" />
       <Event Name="ExpandedChanged" />
+      <Event Name="DropDownMenuShowing" />
       <Event Name="ContextMenuCreated" />
       <Event Name="MouseHover" />
       <Event Name="CellChanged" />
@@ -7452,6 +7697,8 @@
       <Event Name="Invalidated" />
       <Event Name="LayoutUpdated" />
       <Event Name="Scroll" />
+      <Event Name="DataContextChanged" />
+      <Event Name="NameChanged" />
       <Event Name="Disposed" />
       <Event Name="PropertyChanged" />
     </Type>
@@ -7466,6 +7713,7 @@
       <Event Name="BeforeExpand" />
       <Event Name="BeforeCollapse" />
       <Event Name="ExpandedChanged" />
+      <Event Name="DropDownMenuShowing" />
       <Event Name="ContextMenuCreated" />
       <Event Name="MouseHover" />
       <Event Name="CellChanged" />
@@ -7537,6 +7785,8 @@
       <Event Name="Invalidated" />
       <Event Name="LayoutUpdated" />
       <Event Name="Scroll" />
+      <Event Name="DataContextChanged" />
+      <Event Name="NameChanged" />
       <Event Name="Disposed" />
       <Event Name="PropertyChanged" />
     </Type>
@@ -7550,6 +7800,7 @@
       <Event Name="SelectedIndexChanged" />
       <Event Name="SelectionModeChanged" />
       <Event Name="CustomItemText" />
+      <Event Name="DropDownMenuShowing" />
       <Event Name="ContextMenuCreated" />
       <Event Name="MouseHover" />
       <Event Name="CellChanged" />
@@ -7621,6 +7872,8 @@
       <Event Name="Invalidated" />
       <Event Name="LayoutUpdated" />
       <Event Name="Scroll" />
+      <Event Name="DataContextChanged" />
+      <Event Name="NameChanged" />
       <Event Name="Disposed" />
       <Event Name="PropertyChanged" />
     </Type>
@@ -7633,6 +7886,7 @@
       <Event Name="SelectedIndexChanged" />
       <Event Name="SelectionModeChanged" />
       <Event Name="CustomItemText" />
+      <Event Name="DropDownMenuShowing" />
       <Event Name="ContextMenuCreated" />
       <Event Name="MouseHover" />
       <Event Name="CellChanged" />
@@ -7704,11 +7958,14 @@
       <Event Name="Invalidated" />
       <Event Name="LayoutUpdated" />
       <Event Name="Scroll" />
+      <Event Name="DataContextChanged" />
+      <Event Name="NameChanged" />
       <Event Name="Disposed" />
       <Event Name="PropertyChanged" />
     </Type>
     <Type Name="Alternet.UI.ListControl`1">
       <Event Name="CustomItemText" />
+      <Event Name="DropDownMenuShowing" />
       <Event Name="ContextMenuCreated" />
       <Event Name="MouseHover" />
       <Event Name="CellChanged" />
@@ -7780,6 +8037,8 @@
       <Event Name="Invalidated" />
       <Event Name="LayoutUpdated" />
       <Event Name="Scroll" />
+      <Event Name="DataContextChanged" />
+      <Event Name="NameChanged" />
       <Event Name="Disposed" />
       <Event Name="PropertyChanged" />
     </Type>
@@ -7792,6 +8051,7 @@
       <Event Name="SelectedIndexChanged" />
       <Event Name="SelectionModeChanged" />
       <Event Name="CustomItemText" />
+      <Event Name="DropDownMenuShowing" />
       <Event Name="ContextMenuCreated" />
       <Event Name="MouseHover" />
       <Event Name="CellChanged" />
@@ -7863,6 +8123,8 @@
       <Event Name="Invalidated" />
       <Event Name="LayoutUpdated" />
       <Event Name="Scroll" />
+      <Event Name="DataContextChanged" />
+      <Event Name="NameChanged" />
       <Event Name="Disposed" />
       <Event Name="PropertyChanged" />
     </Type>
@@ -7875,6 +8137,7 @@
       <Event Name="SelectedIndexChanged" />
       <Event Name="SelectionModeChanged" />
       <Event Name="CustomItemText" />
+      <Event Name="DropDownMenuShowing" />
       <Event Name="ContextMenuCreated" />
       <Event Name="MouseHover" />
       <Event Name="CellChanged" />
@@ -7946,6 +8209,8 @@
       <Event Name="Invalidated" />
       <Event Name="LayoutUpdated" />
       <Event Name="Scroll" />
+      <Event Name="DataContextChanged" />
+      <Event Name="NameChanged" />
       <Event Name="Disposed" />
       <Event Name="PropertyChanged" />
     </Type>
@@ -7956,6 +8221,7 @@
       <Event Name="SelectedIndexChanged" />
       <Event Name="SelectionModeChanged" />
       <Event Name="CustomItemText" />
+      <Event Name="DropDownMenuShowing" />
       <Event Name="ContextMenuCreated" />
       <Event Name="MouseHover" />
       <Event Name="CellChanged" />
@@ -8027,6 +8293,8 @@
       <Event Name="Invalidated" />
       <Event Name="LayoutUpdated" />
       <Event Name="Scroll" />
+      <Event Name="DataContextChanged" />
+      <Event Name="NameChanged" />
       <Event Name="Disposed" />
       <Event Name="PropertyChanged" />
     </Type>
@@ -8110,6 +8378,8 @@
       <Event Name="Invalidated" />
       <Event Name="LayoutUpdated" />
       <Event Name="Scroll" />
+      <Event Name="DataContextChanged" />
+      <Event Name="NameChanged" />
       <Event Name="Disposed" />
       <Event Name="PropertyChanged" />
     </Type>
@@ -8191,6 +8461,8 @@
       <Event Name="Invalidated" />
       <Event Name="LayoutUpdated" />
       <Event Name="Scroll" />
+      <Event Name="DataContextChanged" />
+      <Event Name="NameChanged" />
       <Event Name="Disposed" />
       <Event Name="PropertyChanged" />
     </Type>
@@ -8266,6 +8538,8 @@
       <Event Name="Invalidated" />
       <Event Name="LayoutUpdated" />
       <Event Name="Scroll" />
+      <Event Name="DataContextChanged" />
+      <Event Name="NameChanged" />
       <Event Name="Disposed" />
       <Event Name="PropertyChanged" />
     </Type>
@@ -8341,6 +8615,8 @@
       <Event Name="Invalidated" />
       <Event Name="LayoutUpdated" />
       <Event Name="Scroll" />
+      <Event Name="DataContextChanged" />
+      <Event Name="NameChanged" />
       <Event Name="Disposed" />
       <Event Name="PropertyChanged" />
     </Type>
@@ -8426,9 +8702,12 @@
       <Event Name="Invalidated" />
       <Event Name="LayoutUpdated" />
       <Event Name="Scroll" />
+      <Event Name="DataContextChanged" />
+      <Event Name="NameChanged" />
       <Event Name="Disposed" />
       <Event Name="PropertyChanged" />
     </Type>
+    <Type Name="Alternet.UI.MenuItemChangeKind" />
     <Type Name="Alternet.UI.PlessContextMenuHandler">
       <Event Name="Disposed" />
       <Event Name="PropertyChanged" />
@@ -8518,6 +8797,8 @@
       <Event Name="Invalidated" />
       <Event Name="LayoutUpdated" />
       <Event Name="Scroll" />
+      <Event Name="DataContextChanged" />
+      <Event Name="NameChanged" />
       <Event Name="Disposed" />
       <Event Name="PropertyChanged" />
     </Type>
@@ -8603,6 +8884,8 @@
       <Event Name="Invalidated" />
       <Event Name="LayoutUpdated" />
       <Event Name="Scroll" />
+      <Event Name="DataContextChanged" />
+      <Event Name="NameChanged" />
       <Event Name="Disposed" />
       <Event Name="PropertyChanged" />
     </Type>
@@ -8688,6 +8971,8 @@
       <Event Name="Invalidated" />
       <Event Name="LayoutUpdated" />
       <Event Name="Scroll" />
+      <Event Name="DataContextChanged" />
+      <Event Name="NameChanged" />
       <Event Name="Disposed" />
       <Event Name="PropertyChanged" />
     </Type>
@@ -8775,6 +9060,8 @@
       <Event Name="Invalidated" />
       <Event Name="LayoutUpdated" />
       <Event Name="Scroll" />
+      <Event Name="DataContextChanged" />
+      <Event Name="NameChanged" />
       <Event Name="Disposed" />
       <Event Name="PropertyChanged" />
     </Type>
@@ -8850,10 +9137,13 @@
       <Event Name="Invalidated" />
       <Event Name="LayoutUpdated" />
       <Event Name="Scroll" />
+      <Event Name="DataContextChanged" />
+      <Event Name="NameChanged" />
       <Event Name="Disposed" />
       <Event Name="PropertyChanged" />
     </Type>
     <Type Name="Alternet.UI.Calculator">
+      <Event Name="DropDownMenuShowing" />
       <Event Name="ContextMenuCreated" />
       <Event Name="MouseHover" />
       <Event Name="CellChanged" />
@@ -8925,6 +9215,8 @@
       <Event Name="Invalidated" />
       <Event Name="LayoutUpdated" />
       <Event Name="Scroll" />
+      <Event Name="DataContextChanged" />
+      <Event Name="NameChanged" />
       <Event Name="Disposed" />
       <Event Name="PropertyChanged" />
     </Type>
@@ -8933,6 +9225,7 @@
       <Event Name="StringToColor" />
       <Event Name="ColorToString" />
       <Event Name="StickyChanged" />
+      <Event Name="DropDownMenuShowing" />
       <Event Name="ContextMenuCreated" />
       <Event Name="MouseHover" />
       <Event Name="CellChanged" />
@@ -9004,6 +9297,8 @@
       <Event Name="Invalidated" />
       <Event Name="LayoutUpdated" />
       <Event Name="Scroll" />
+      <Event Name="DataContextChanged" />
+      <Event Name="NameChanged" />
       <Event Name="Disposed" />
       <Event Name="PropertyChanged" />
     </Type>
@@ -9090,6 +9385,8 @@
       <Event Name="Invalidated" />
       <Event Name="LayoutUpdated" />
       <Event Name="Scroll" />
+      <Event Name="DataContextChanged" />
+      <Event Name="NameChanged" />
       <Event Name="Disposed" />
       <Event Name="PropertyChanged" />
     </Type>
@@ -9103,6 +9400,7 @@
       <Event Name="TextChanged" />
       <Event Name="DelayedTextChanged" />
       <Event Name="ButtonClick" />
+      <Event Name="DropDownMenuShowing" />
       <Event Name="ContextMenuCreated" />
       <Event Name="MouseHover" />
       <Event Name="CellChanged" />
@@ -9172,6 +9470,8 @@
       <Event Name="Invalidated" />
       <Event Name="LayoutUpdated" />
       <Event Name="Scroll" />
+      <Event Name="DataContextChanged" />
+      <Event Name="NameChanged" />
       <Event Name="Disposed" />
       <Event Name="PropertyChanged" />
     </Type>
@@ -9252,12 +9552,15 @@
       <Event Name="Invalidated" />
       <Event Name="LayoutUpdated" />
       <Event Name="Scroll" />
+      <Event Name="DataContextChanged" />
+      <Event Name="NameChanged" />
       <Event Name="Disposed" />
       <Event Name="PropertyChanged" />
     </Type>
     <Type Name="Alternet.UI.PopupCloseReason" />
     <Type Name="Alternet.UI.PopupControl">
       <Event Name="Closed" />
+      <Event Name="DropDownMenuShowing" />
       <Event Name="ContextMenuCreated" />
       <Event Name="MouseHover" />
       <Event Name="CellChanged" />
@@ -9329,6 +9632,8 @@
       <Event Name="Invalidated" />
       <Event Name="LayoutUpdated" />
       <Event Name="Scroll" />
+      <Event Name="DataContextChanged" />
+      <Event Name="NameChanged" />
       <Event Name="Disposed" />
       <Event Name="PropertyChanged" />
     </Type>
@@ -9423,6 +9728,8 @@
       <Event Name="Invalidated" />
       <Event Name="LayoutUpdated" />
       <Event Name="Scroll" />
+      <Event Name="DataContextChanged" />
+      <Event Name="NameChanged" />
       <Event Name="Disposed" />
       <Event Name="PropertyChanged" />
     </Type>
@@ -9517,6 +9824,8 @@
       <Event Name="Invalidated" />
       <Event Name="LayoutUpdated" />
       <Event Name="Scroll" />
+      <Event Name="DataContextChanged" />
+      <Event Name="NameChanged" />
       <Event Name="Disposed" />
       <Event Name="PropertyChanged" />
     </Type>
@@ -9611,6 +9920,8 @@
       <Event Name="Invalidated" />
       <Event Name="LayoutUpdated" />
       <Event Name="Scroll" />
+      <Event Name="DataContextChanged" />
+      <Event Name="NameChanged" />
       <Event Name="Disposed" />
       <Event Name="PropertyChanged" />
     </Type>
@@ -9705,6 +10016,8 @@
       <Event Name="Invalidated" />
       <Event Name="LayoutUpdated" />
       <Event Name="Scroll" />
+      <Event Name="DataContextChanged" />
+      <Event Name="NameChanged" />
       <Event Name="Disposed" />
       <Event Name="PropertyChanged" />
     </Type>
@@ -9799,6 +10112,8 @@
       <Event Name="Invalidated" />
       <Event Name="LayoutUpdated" />
       <Event Name="Scroll" />
+      <Event Name="DataContextChanged" />
+      <Event Name="NameChanged" />
       <Event Name="Disposed" />
       <Event Name="PropertyChanged" />
     </Type>
@@ -9893,6 +10208,8 @@
       <Event Name="Invalidated" />
       <Event Name="LayoutUpdated" />
       <Event Name="Scroll" />
+      <Event Name="DataContextChanged" />
+      <Event Name="NameChanged" />
       <Event Name="Disposed" />
       <Event Name="PropertyChanged" />
     </Type>
@@ -9987,6 +10304,104 @@
       <Event Name="Invalidated" />
       <Event Name="LayoutUpdated" />
       <Event Name="Scroll" />
+      <Event Name="DataContextChanged" />
+      <Event Name="NameChanged" />
+      <Event Name="Disposed" />
+      <Event Name="PropertyChanged" />
+    </Type>
+    <Type Name="Alternet.UI.PopupToolBar">
+      <Event Name="Load" />
+      <Event Name="DisplayChanged" />
+      <Event Name="MenuChanged" />
+      <Event Name="IconChanged" />
+      <Event Name="StatusBarChanged" />
+      <Event Name="OwnerChanged" />
+      <Event Name="ShowInTaskbarChanged" />
+      <Event Name="StateChanged" />
+      <Event Name="Closing" />
+      <Event Name="Closed" />
+      <Event Name="MaximizeEnabledChanged" />
+      <Event Name="MinimizeEnabledChanged" />
+      <Event Name="CloseEnabledChanged" />
+      <Event Name="AlwaysOnTopChanged" />
+      <Event Name="IsToolWindowChanged" />
+      <Event Name="HasSystemMenuChanged" />
+      <Event Name="ResizableChanged" />
+      <Event Name="HasBorderChanged" />
+      <Event Name="HasTitleBarChanged" />
+      <Event Name="ContextMenuCreated" />
+      <Event Name="MouseHover" />
+      <Event Name="CellChanged" />
+      <Event Name="Activated" />
+      <Event Name="TitleChanged" />
+      <Event Name="MouseMove" />
+      <Event Name="Touch" />
+      <Event Name="MouseDown" />
+      <Event Name="MouseUp" />
+      <Event Name="MouseWheel" />
+      <Event Name="MouseLeftButtonDown" />
+      <Event Name="MouseRightButtonDown" />
+      <Event Name="MouseRightButtonUp" />
+      <Event Name="CustomLayout" />
+      <Event Name="MouseDoubleClick" />
+      <Event Name="DoubleClick" />
+      <Event Name="MouseLeftButtonUp" />
+      <Event Name="HandleCreated" />
+      <Event Name="HandleDestroyed" />
+      <Event Name="Deactivated" />
+      <Event Name="GotFocus" />
+      <Event Name="QueryContinueDrag" />
+      <Event Name="KeyDown" />
+      <Event Name="KeyUp" />
+      <Event Name="LostFocus" />
+      <Event Name="TextChanged" />
+      <Event Name="DelayedTextChanged" />
+      <Event Name="KeyPress" />
+      <Event Name="PreviewKeyDown" />
+      <Event Name="VisualStateChanged" />
+      <Event Name="ToolTipChanged" />
+      <Event Name="IsMouseOverChanged" />
+      <Event Name="LongTap" />
+      <Event Name="Click" />
+      <Event Name="ParentChanged" />
+      <Event Name="Paint" />
+      <Event Name="MarginChanged" />
+      <Event Name="PaddingChanged" />
+      <Event Name="VisibleChanged" />
+      <Event Name="AfterShow" />
+      <Event Name="AfterHide" />
+      <Event Name="MouseCaptureLost" />
+      <Event Name="MouseCaptureChanged" />
+      <Event Name="HelpRequested" />
+      <Event Name="ProcessException" />
+      <Event Name="MouseEnter" />
+      <Event Name="MouseLeave" />
+      <Event Name="ChildRemoved" />
+      <Event Name="ChildVisibleChanged" />
+      <Event Name="ChildInserted" />
+      <Event Name="EnabledChanged" />
+      <Event Name="BackgroundChanged" />
+      <Event Name="ForegroundChanged" />
+      <Event Name="FontChanged" />
+      <Event Name="VerticalAlignmentChanged" />
+      <Event Name="HorizontalAlignmentChanged" />
+      <Event Name="SizeChanged" />
+      <Event Name="Resize" />
+      <Event Name="LocationChanged" />
+      <Event Name="BoundsChanged" />
+      <Event Name="DragStart" />
+      <Event Name="DragDrop" />
+      <Event Name="DragOver" />
+      <Event Name="DragEnter" />
+      <Event Name="DragLeave" />
+      <Event Name="DpiChanged" />
+      <Event Name="SystemColorsChanged" />
+      <Event Name="ErrorsChanged" />
+      <Event Name="Invalidated" />
+      <Event Name="LayoutUpdated" />
+      <Event Name="Scroll" />
+      <Event Name="DataContextChanged" />
+      <Event Name="NameChanged" />
       <Event Name="Disposed" />
       <Event Name="PropertyChanged" />
     </Type>
@@ -10081,6 +10496,8 @@
       <Event Name="Invalidated" />
       <Event Name="LayoutUpdated" />
       <Event Name="Scroll" />
+      <Event Name="DataContextChanged" />
+      <Event Name="NameChanged" />
       <Event Name="Disposed" />
       <Event Name="PropertyChanged" />
     </Type>
@@ -10175,6 +10592,8 @@
       <Event Name="Invalidated" />
       <Event Name="LayoutUpdated" />
       <Event Name="Scroll" />
+      <Event Name="DataContextChanged" />
+      <Event Name="NameChanged" />
       <Event Name="Disposed" />
       <Event Name="PropertyChanged" />
     </Type>
@@ -10269,11 +10688,14 @@
       <Event Name="Invalidated" />
       <Event Name="LayoutUpdated" />
       <Event Name="Scroll" />
+      <Event Name="DataContextChanged" />
+      <Event Name="NameChanged" />
       <Event Name="Disposed" />
       <Event Name="PropertyChanged" />
     </Type>
     <Type Name="Alternet.UI.IFilePreview" />
     <Type Name="Alternet.UI.PreviewFile">
+      <Event Name="DropDownMenuShowing" />
       <Event Name="ContextMenuCreated" />
       <Event Name="MouseHover" />
       <Event Name="CellChanged" />
@@ -10345,10 +10767,13 @@
       <Event Name="Invalidated" />
       <Event Name="LayoutUpdated" />
       <Event Name="Scroll" />
+      <Event Name="DataContextChanged" />
+      <Event Name="NameChanged" />
       <Event Name="Disposed" />
       <Event Name="PropertyChanged" />
     </Type>
     <Type Name="Alternet.UI.PreviewFileSplitted">
+      <Event Name="DropDownMenuShowing" />
       <Event Name="ContextMenuCreated" />
       <Event Name="MouseHover" />
       <Event Name="CellChanged" />
@@ -10420,10 +10845,13 @@
       <Event Name="Invalidated" />
       <Event Name="LayoutUpdated" />
       <Event Name="Scroll" />
+      <Event Name="DataContextChanged" />
+      <Event Name="NameChanged" />
       <Event Name="Disposed" />
       <Event Name="PropertyChanged" />
     </Type>
     <Type Name="Alternet.UI.PreviewInBrowser">
+      <Event Name="DropDownMenuShowing" />
       <Event Name="ContextMenuCreated" />
       <Event Name="MouseHover" />
       <Event Name="CellChanged" />
@@ -10495,10 +10923,13 @@
       <Event Name="Invalidated" />
       <Event Name="LayoutUpdated" />
       <Event Name="Scroll" />
+      <Event Name="DataContextChanged" />
+      <Event Name="NameChanged" />
       <Event Name="Disposed" />
       <Event Name="PropertyChanged" />
     </Type>
     <Type Name="Alternet.UI.PreviewTextFile">
+      <Event Name="DropDownMenuShowing" />
       <Event Name="ContextMenuCreated" />
       <Event Name="MouseHover" />
       <Event Name="CellChanged" />
@@ -10570,10 +11001,13 @@
       <Event Name="Invalidated" />
       <Event Name="LayoutUpdated" />
       <Event Name="Scroll" />
+      <Event Name="DataContextChanged" />
+      <Event Name="NameChanged" />
       <Event Name="Disposed" />
       <Event Name="PropertyChanged" />
     </Type>
     <Type Name="Alternet.UI.PreviewUixml">
+      <Event Name="DropDownMenuShowing" />
       <Event Name="ContextMenuCreated" />
       <Event Name="MouseHover" />
       <Event Name="CellChanged" />
@@ -10645,10 +11079,13 @@
       <Event Name="Invalidated" />
       <Event Name="LayoutUpdated" />
       <Event Name="Scroll" />
+      <Event Name="DataContextChanged" />
+      <Event Name="NameChanged" />
       <Event Name="Disposed" />
       <Event Name="PropertyChanged" />
     </Type>
     <Type Name="Alternet.UI.PreviewUixmlSplitted">
+      <Event Name="DropDownMenuShowing" />
       <Event Name="ContextMenuCreated" />
       <Event Name="MouseHover" />
       <Event Name="CellChanged" />
@@ -10720,6 +11157,8 @@
       <Event Name="Invalidated" />
       <Event Name="LayoutUpdated" />
       <Event Name="Scroll" />
+      <Event Name="DataContextChanged" />
+      <Event Name="NameChanged" />
       <Event Name="Disposed" />
       <Event Name="PropertyChanged" />
     </Type>
@@ -10816,6 +11255,8 @@
       <Event Name="Invalidated" />
       <Event Name="LayoutUpdated" />
       <Event Name="Scroll" />
+      <Event Name="DataContextChanged" />
+      <Event Name="NameChanged" />
       <Event Name="Disposed" />
     </Type>
     <Type Name="Alternet.UI.PropertyGridColors" />
@@ -10899,6 +11340,8 @@
       <Event Name="Invalidated" />
       <Event Name="LayoutUpdated" />
       <Event Name="Scroll" />
+      <Event Name="DataContextChanged" />
+      <Event Name="NameChanged" />
       <Event Name="Disposed" />
       <Event Name="PropertyChanged" />
     </Type>
@@ -10976,6 +11419,8 @@
       <Event Name="Invalidated" />
       <Event Name="LayoutUpdated" />
       <Event Name="Scroll" />
+      <Event Name="DataContextChanged" />
+      <Event Name="NameChanged" />
       <Event Name="Disposed" />
       <Event Name="PropertyChanged" />
     </Type>
@@ -11057,6 +11502,8 @@
       <Event Name="Invalidated" />
       <Event Name="LayoutUpdated" />
       <Event Name="Scroll" />
+      <Event Name="DataContextChanged" />
+      <Event Name="NameChanged" />
       <Event Name="Disposed" />
       <Event Name="PropertyChanged" />
     </Type>
@@ -11139,6 +11586,8 @@
       <Event Name="Invalidated" />
       <Event Name="LayoutUpdated" />
       <Event Name="Scroll" />
+      <Event Name="DataContextChanged" />
+      <Event Name="NameChanged" />
       <Event Name="Disposed" />
       <Event Name="PropertyChanged" />
     </Type>
@@ -11223,6 +11672,8 @@
       <Event Name="Invalidated" />
       <Event Name="LayoutUpdated" />
       <Event Name="Scroll" />
+      <Event Name="DataContextChanged" />
+      <Event Name="NameChanged" />
       <Event Name="Disposed" />
       <Event Name="PropertyChanged" />
     </Type>
@@ -11298,6 +11749,8 @@
       <Event Name="Invalidated" />
       <Event Name="LayoutUpdated" />
       <Event Name="Scroll" />
+      <Event Name="DataContextChanged" />
+      <Event Name="NameChanged" />
       <Event Name="Disposed" />
       <Event Name="PropertyChanged" />
     </Type>
@@ -11311,6 +11764,7 @@
       <Event Name="SmallChangeChanged" />
       <Event Name="LargeChangeChanged" />
       <Event Name="TickFrequencyChanged" />
+      <Event Name="DropDownMenuShowing" />
       <Event Name="ContextMenuCreated" />
       <Event Name="MouseHover" />
       <Event Name="CellChanged" />
@@ -11382,6 +11836,8 @@
       <Event Name="Invalidated" />
       <Event Name="LayoutUpdated" />
       <Event Name="Scroll" />
+      <Event Name="DataContextChanged" />
+      <Event Name="NameChanged" />
       <Event Name="Disposed" />
       <Event Name="PropertyChanged" />
     </Type>
@@ -11390,6 +11846,7 @@
       <Event Name="ValueChanged" />
       <Event Name="BeforeShowPopup" />
       <Event Name="StickyChanged" />
+      <Event Name="DropDownMenuShowing" />
       <Event Name="ContextMenuCreated" />
       <Event Name="MouseHover" />
       <Event Name="CellChanged" />
@@ -11461,6 +11918,8 @@
       <Event Name="Invalidated" />
       <Event Name="LayoutUpdated" />
       <Event Name="Scroll" />
+      <Event Name="DataContextChanged" />
+      <Event Name="NameChanged" />
       <Event Name="Disposed" />
       <Event Name="PropertyChanged" />
     </Type>
@@ -11470,6 +11929,7 @@
       <Event Name="ValueChanged" />
       <Event Name="BeforeShowPopup" />
       <Event Name="StickyChanged" />
+      <Event Name="DropDownMenuShowing" />
       <Event Name="ContextMenuCreated" />
       <Event Name="MouseHover" />
       <Event Name="CellChanged" />
@@ -11541,6 +12001,8 @@
       <Event Name="Invalidated" />
       <Event Name="LayoutUpdated" />
       <Event Name="Scroll" />
+      <Event Name="DataContextChanged" />
+      <Event Name="NameChanged" />
       <Event Name="Disposed" />
       <Event Name="PropertyChanged" />
     </Type>
@@ -11550,6 +12012,7 @@
       <Event Name="ValueChanged" />
       <Event Name="BeforeShowPopup" />
       <Event Name="StickyChanged" />
+      <Event Name="DropDownMenuShowing" />
       <Event Name="ContextMenuCreated" />
       <Event Name="MouseHover" />
       <Event Name="CellChanged" />
@@ -11621,6 +12084,8 @@
       <Event Name="Invalidated" />
       <Event Name="LayoutUpdated" />
       <Event Name="Scroll" />
+      <Event Name="DataContextChanged" />
+      <Event Name="NameChanged" />
       <Event Name="Disposed" />
       <Event Name="PropertyChanged" />
     </Type>
@@ -11630,6 +12095,7 @@
       <Event Name="ValueChanged" />
       <Event Name="BeforeShowPopup" />
       <Event Name="StickyChanged" />
+      <Event Name="DropDownMenuShowing" />
       <Event Name="ContextMenuCreated" />
       <Event Name="MouseHover" />
       <Event Name="CellChanged" />
@@ -11701,6 +12167,8 @@
       <Event Name="Invalidated" />
       <Event Name="LayoutUpdated" />
       <Event Name="Scroll" />
+      <Event Name="DataContextChanged" />
+      <Event Name="NameChanged" />
       <Event Name="Disposed" />
       <Event Name="PropertyChanged" />
     </Type>
@@ -11710,6 +12178,7 @@
       <Event Name="ValueChanged" />
       <Event Name="BeforeShowPopup" />
       <Event Name="StickyChanged" />
+      <Event Name="DropDownMenuShowing" />
       <Event Name="ContextMenuCreated" />
       <Event Name="MouseHover" />
       <Event Name="CellChanged" />
@@ -11781,11 +12250,14 @@
       <Event Name="Invalidated" />
       <Event Name="LayoutUpdated" />
       <Event Name="Scroll" />
+      <Event Name="DataContextChanged" />
+      <Event Name="NameChanged" />
       <Event Name="Disposed" />
       <Event Name="PropertyChanged" />
     </Type>
     <Type Name="Alternet.UI.SpeedButton">
       <Event Name="StickyChanged" />
+      <Event Name="DropDownMenuShowing" />
       <Event Name="ContextMenuCreated" />
       <Event Name="MouseHover" />
       <Event Name="CellChanged" />
@@ -11857,6 +12329,8 @@
       <Event Name="Invalidated" />
       <Event Name="LayoutUpdated" />
       <Event Name="Scroll" />
+      <Event Name="DataContextChanged" />
+      <Event Name="NameChanged" />
       <Event Name="Disposed" />
       <Event Name="PropertyChanged" />
     </Type>
@@ -11866,6 +12340,7 @@
       <Event Name="ValueChanged" />
       <Event Name="BeforeShowPopup" />
       <Event Name="StickyChanged" />
+      <Event Name="DropDownMenuShowing" />
       <Event Name="ContextMenuCreated" />
       <Event Name="MouseHover" />
       <Event Name="CellChanged" />
@@ -11937,6 +12412,8 @@
       <Event Name="Invalidated" />
       <Event Name="LayoutUpdated" />
       <Event Name="Scroll" />
+      <Event Name="DataContextChanged" />
+      <Event Name="NameChanged" />
       <Event Name="Disposed" />
       <Event Name="PropertyChanged" />
     </Type>
@@ -11946,6 +12423,7 @@
       <Event Name="ValueChanged" />
       <Event Name="BeforeShowPopup" />
       <Event Name="StickyChanged" />
+      <Event Name="DropDownMenuShowing" />
       <Event Name="ContextMenuCreated" />
       <Event Name="MouseHover" />
       <Event Name="CellChanged" />
@@ -12017,6 +12495,8 @@
       <Event Name="Invalidated" />
       <Event Name="LayoutUpdated" />
       <Event Name="Scroll" />
+      <Event Name="DataContextChanged" />
+      <Event Name="NameChanged" />
       <Event Name="Disposed" />
       <Event Name="PropertyChanged" />
     </Type>
@@ -12025,6 +12505,7 @@
       <Event Name="ValueChanged" />
       <Event Name="BeforeShowPopup" />
       <Event Name="StickyChanged" />
+      <Event Name="DropDownMenuShowing" />
       <Event Name="ContextMenuCreated" />
       <Event Name="MouseHover" />
       <Event Name="CellChanged" />
@@ -12096,6 +12577,8 @@
       <Event Name="Invalidated" />
       <Event Name="LayoutUpdated" />
       <Event Name="Scroll" />
+      <Event Name="DataContextChanged" />
+      <Event Name="NameChanged" />
       <Event Name="Disposed" />
       <Event Name="PropertyChanged" />
     </Type>
@@ -12104,6 +12587,7 @@
       <Event Name="StringToColor" />
       <Event Name="ColorToString" />
       <Event Name="StickyChanged" />
+      <Event Name="DropDownMenuShowing" />
       <Event Name="ContextMenuCreated" />
       <Event Name="MouseHover" />
       <Event Name="CellChanged" />
@@ -12175,6 +12659,8 @@
       <Event Name="Invalidated" />
       <Event Name="LayoutUpdated" />
       <Event Name="Scroll" />
+      <Event Name="DataContextChanged" />
+      <Event Name="NameChanged" />
       <Event Name="Disposed" />
       <Event Name="PropertyChanged" />
     </Type>
@@ -12183,6 +12669,7 @@
       <Event Name="ValueChanged" />
       <Event Name="BeforeShowPopup" />
       <Event Name="StickyChanged" />
+      <Event Name="DropDownMenuShowing" />
       <Event Name="ContextMenuCreated" />
       <Event Name="MouseHover" />
       <Event Name="CellChanged" />
@@ -12254,6 +12741,8 @@
       <Event Name="Invalidated" />
       <Event Name="LayoutUpdated" />
       <Event Name="Scroll" />
+      <Event Name="DataContextChanged" />
+      <Event Name="NameChanged" />
       <Event Name="Disposed" />
       <Event Name="PropertyChanged" />
     </Type>
@@ -12263,6 +12752,7 @@
       <Event Name="ValueChanged" />
       <Event Name="BeforeShowPopup" />
       <Event Name="StickyChanged" />
+      <Event Name="DropDownMenuShowing" />
       <Event Name="ContextMenuCreated" />
       <Event Name="MouseHover" />
       <Event Name="CellChanged" />
@@ -12334,11 +12824,14 @@
       <Event Name="Invalidated" />
       <Event Name="LayoutUpdated" />
       <Event Name="Scroll" />
+      <Event Name="DataContextChanged" />
+      <Event Name="NameChanged" />
       <Event Name="Disposed" />
       <Event Name="PropertyChanged" />
     </Type>
     <Type Name="Alternet.UI.SpeedTextButton">
       <Event Name="StickyChanged" />
+      <Event Name="DropDownMenuShowing" />
       <Event Name="ContextMenuCreated" />
       <Event Name="MouseHover" />
       <Event Name="CellChanged" />
@@ -12410,6 +12903,8 @@
       <Event Name="Invalidated" />
       <Event Name="LayoutUpdated" />
       <Event Name="Scroll" />
+      <Event Name="DataContextChanged" />
+      <Event Name="NameChanged" />
       <Event Name="Disposed" />
       <Event Name="PropertyChanged" />
     </Type>
@@ -12418,6 +12913,8 @@
       <Event Name="PropertyChanged" />
     </Type>
     <Type Name="Alternet.UI.StatusBar">
+      <Event Name="DataContextChanged" />
+      <Event Name="NameChanged" />
       <Event Name="Disposed" />
       <Event Name="PropertyChanged" />
     </Type>
@@ -12429,6 +12926,7 @@
     </Type>
     <Type Name="Alternet.UI.CardPanel">
       <Event Name="CardPropertyChanged" />
+      <Event Name="DropDownMenuShowing" />
       <Event Name="ContextMenuCreated" />
       <Event Name="MouseHover" />
       <Event Name="CellChanged" />
@@ -12500,6 +12998,8 @@
       <Event Name="Invalidated" />
       <Event Name="LayoutUpdated" />
       <Event Name="Scroll" />
+      <Event Name="DataContextChanged" />
+      <Event Name="NameChanged" />
       <Event Name="Disposed" />
       <Event Name="PropertyChanged" />
     </Type>
@@ -12508,6 +13008,7 @@
       <Event Name="BeforeTabClick" />
       <Event Name="TabClick" />
       <Event Name="CloseButtonClick" />
+      <Event Name="DropDownMenuShowing" />
       <Event Name="ContextMenuCreated" />
       <Event Name="MouseHover" />
       <Event Name="CellChanged" />
@@ -12579,6 +13080,8 @@
       <Event Name="Invalidated" />
       <Event Name="LayoutUpdated" />
       <Event Name="Scroll" />
+      <Event Name="DataContextChanged" />
+      <Event Name="NameChanged" />
       <Event Name="Disposed" />
       <Event Name="PropertyChanged" />
     </Type>
@@ -12599,6 +13102,7 @@
       <Event Name="TabSizeChanged" />
       <Event Name="SelectedIndexChanged" />
       <Event Name="SelectedPageChanged" />
+      <Event Name="DropDownMenuShowing" />
       <Event Name="ContextMenuCreated" />
       <Event Name="MouseHover" />
       <Event Name="CellChanged" />
@@ -12670,6 +13174,8 @@
       <Event Name="Invalidated" />
       <Event Name="LayoutUpdated" />
       <Event Name="Scroll" />
+      <Event Name="DataContextChanged" />
+      <Event Name="NameChanged" />
       <Event Name="Disposed" />
       <Event Name="PropertyChanged" />
     </Type>
@@ -12678,6 +13184,7 @@
       <Event Name="TabSizeChanged" />
       <Event Name="SelectedIndexChanged" />
       <Event Name="SelectedPageChanged" />
+      <Event Name="DropDownMenuShowing" />
       <Event Name="ContextMenuCreated" />
       <Event Name="MouseHover" />
       <Event Name="CellChanged" />
@@ -12749,10 +13256,13 @@
       <Event Name="Invalidated" />
       <Event Name="LayoutUpdated" />
       <Event Name="Scroll" />
+      <Event Name="DataContextChanged" />
+      <Event Name="NameChanged" />
       <Event Name="Disposed" />
       <Event Name="PropertyChanged" />
     </Type>
     <Type Name="Alternet.UI.TabPage">
+      <Event Name="DropDownMenuShowing" />
       <Event Name="ContextMenuCreated" />
       <Event Name="MouseHover" />
       <Event Name="CellChanged" />
@@ -12824,10 +13334,13 @@
       <Event Name="Invalidated" />
       <Event Name="LayoutUpdated" />
       <Event Name="Scroll" />
+      <Event Name="DataContextChanged" />
+      <Event Name="NameChanged" />
       <Event Name="Disposed" />
       <Event Name="PropertyChanged" />
     </Type>
     <Type Name="Alternet.UI.TemplateControl">
+      <Event Name="DropDownMenuShowing" />
       <Event Name="ContextMenuCreated" />
       <Event Name="MouseHover" />
       <Event Name="CellChanged" />
@@ -12899,6 +13412,8 @@
       <Event Name="Invalidated" />
       <Event Name="LayoutUpdated" />
       <Event Name="Scroll" />
+      <Event Name="DataContextChanged" />
+      <Event Name="NameChanged" />
       <Event Name="Disposed" />
       <Event Name="PropertyChanged" />
     </Type>
@@ -12977,6 +13492,8 @@
       <Event Name="Invalidated" />
       <Event Name="LayoutUpdated" />
       <Event Name="Scroll" />
+      <Event Name="DataContextChanged" />
+      <Event Name="NameChanged" />
       <Event Name="Disposed" />
       <Event Name="PropertyChanged" />
     </Type>
@@ -13060,6 +13577,8 @@
       <Event Name="Invalidated" />
       <Event Name="LayoutUpdated" />
       <Event Name="Scroll" />
+      <Event Name="DataContextChanged" />
+      <Event Name="NameChanged" />
       <Event Name="Disposed" />
       <Event Name="PropertyChanged" />
     </Type>
@@ -13144,6 +13663,8 @@
       <Event Name="Invalidated" />
       <Event Name="LayoutUpdated" />
       <Event Name="Scroll" />
+      <Event Name="DataContextChanged" />
+      <Event Name="NameChanged" />
       <Event Name="Disposed" />
       <Event Name="PropertyChanged" />
     </Type>
@@ -13157,6 +13678,7 @@
       <Event Name="OptionMatchCaseChanged" />
       <Event Name="OptionMatchWholeWordChanged" />
       <Event Name="OptionUseRegularExpressionsChanged" />
+      <Event Name="DropDownMenuShowing" />
       <Event Name="ContextMenuCreated" />
       <Event Name="MouseHover" />
       <Event Name="CellChanged" />
@@ -13228,6 +13750,8 @@
       <Event Name="Invalidated" />
       <Event Name="LayoutUpdated" />
       <Event Name="Scroll" />
+      <Event Name="DataContextChanged" />
+      <Event Name="NameChanged" />
       <Event Name="Disposed" />
       <Event Name="PropertyChanged" />
     </Type>
@@ -13242,6 +13766,8 @@
       <Event Name="OptionUseRegularExpressionsChanged" />
     </Type>
     <Type Name="Alternet.UI.ToolBar">
+      <Event Name="ToolClick" />
+      <Event Name="DropDownMenuShowing" />
       <Event Name="ContextMenuCreated" />
       <Event Name="MouseHover" />
       <Event Name="CellChanged" />
@@ -13313,10 +13839,91 @@
       <Event Name="Invalidated" />
       <Event Name="LayoutUpdated" />
       <Event Name="Scroll" />
+      <Event Name="DataContextChanged" />
+      <Event Name="NameChanged" />
+      <Event Name="Disposed" />
+      <Event Name="PropertyChanged" />
+    </Type>
+    <Type Name="Alternet.UI.ToolBarSeparatorItem">
+      <Event Name="DropDownMenuShowing" />
+      <Event Name="ContextMenuCreated" />
+      <Event Name="MouseHover" />
+      <Event Name="CellChanged" />
+      <Event Name="Activated" />
+      <Event Name="TitleChanged" />
+      <Event Name="MouseMove" />
+      <Event Name="Touch" />
+      <Event Name="MouseDown" />
+      <Event Name="MouseUp" />
+      <Event Name="MouseWheel" />
+      <Event Name="MouseLeftButtonDown" />
+      <Event Name="MouseRightButtonDown" />
+      <Event Name="MouseRightButtonUp" />
+      <Event Name="CustomLayout" />
+      <Event Name="MouseDoubleClick" />
+      <Event Name="DoubleClick" />
+      <Event Name="MouseLeftButtonUp" />
+      <Event Name="HandleCreated" />
+      <Event Name="HandleDestroyed" />
+      <Event Name="Deactivated" />
+      <Event Name="GotFocus" />
+      <Event Name="QueryContinueDrag" />
+      <Event Name="KeyDown" />
+      <Event Name="KeyUp" />
+      <Event Name="LostFocus" />
+      <Event Name="TextChanged" />
+      <Event Name="DelayedTextChanged" />
+      <Event Name="KeyPress" />
+      <Event Name="PreviewKeyDown" />
+      <Event Name="VisualStateChanged" />
+      <Event Name="ToolTipChanged" />
+      <Event Name="IsMouseOverChanged" />
+      <Event Name="LongTap" />
+      <Event Name="Click" />
+      <Event Name="ParentChanged" />
+      <Event Name="Paint" />
+      <Event Name="MarginChanged" />
+      <Event Name="PaddingChanged" />
+      <Event Name="VisibleChanged" />
+      <Event Name="AfterShow" />
+      <Event Name="AfterHide" />
+      <Event Name="MouseCaptureLost" />
+      <Event Name="MouseCaptureChanged" />
+      <Event Name="HelpRequested" />
+      <Event Name="ProcessException" />
+      <Event Name="MouseEnter" />
+      <Event Name="MouseLeave" />
+      <Event Name="ChildRemoved" />
+      <Event Name="ChildVisibleChanged" />
+      <Event Name="ChildInserted" />
+      <Event Name="EnabledChanged" />
+      <Event Name="BackgroundChanged" />
+      <Event Name="ForegroundChanged" />
+      <Event Name="FontChanged" />
+      <Event Name="VerticalAlignmentChanged" />
+      <Event Name="HorizontalAlignmentChanged" />
+      <Event Name="SizeChanged" />
+      <Event Name="Resize" />
+      <Event Name="LocationChanged" />
+      <Event Name="BoundsChanged" />
+      <Event Name="DragStart" />
+      <Event Name="DragDrop" />
+      <Event Name="DragOver" />
+      <Event Name="DragEnter" />
+      <Event Name="DragLeave" />
+      <Event Name="DpiChanged" />
+      <Event Name="SystemColorsChanged" />
+      <Event Name="ErrorsChanged" />
+      <Event Name="Invalidated" />
+      <Event Name="LayoutUpdated" />
+      <Event Name="Scroll" />
+      <Event Name="DataContextChanged" />
+      <Event Name="NameChanged" />
       <Event Name="Disposed" />
       <Event Name="PropertyChanged" />
     </Type>
     <Type Name="Alternet.UI.ToolBarSet">
+      <Event Name="DropDownMenuShowing" />
       <Event Name="ContextMenuCreated" />
       <Event Name="MouseHover" />
       <Event Name="CellChanged" />
@@ -13388,6 +13995,8 @@
       <Event Name="Invalidated" />
       <Event Name="LayoutUpdated" />
       <Event Name="Scroll" />
+      <Event Name="DataContextChanged" />
+      <Event Name="NameChanged" />
       <Event Name="Disposed" />
       <Event Name="PropertyChanged" />
     </Type>
@@ -13397,6 +14006,7 @@
     <Type Name="Alternet.UI.IToolTipProvider" />
     <Type Name="Alternet.UI.RichToolTip">
       <Event Name="ToolTipVisibleChanged" />
+      <Event Name="DropDownMenuShowing" />
       <Event Name="ContextMenuCreated" />
       <Event Name="MouseHover" />
       <Event Name="CellChanged" />
@@ -13468,6 +14078,8 @@
       <Event Name="Invalidated" />
       <Event Name="LayoutUpdated" />
       <Event Name="Scroll" />
+      <Event Name="DataContextChanged" />
+      <Event Name="NameChanged" />
       <Event Name="Disposed" />
       <Event Name="PropertyChanged" />
     </Type>
@@ -13568,6 +14180,8 @@
       <Event Name="Invalidated" />
       <Event Name="LayoutUpdated" />
       <Event Name="Scroll" />
+      <Event Name="DataContextChanged" />
+      <Event Name="NameChanged" />
       <Event Name="Disposed" />
       <Event Name="PropertyChanged" />
     </Type>
@@ -13664,6 +14278,8 @@
       <Event Name="Invalidated" />
       <Event Name="LayoutUpdated" />
       <Event Name="Scroll" />
+      <Event Name="DataContextChanged" />
+      <Event Name="NameChanged" />
       <Event Name="Disposed" />
       <Event Name="PropertyChanged" />
     </Type>
@@ -13758,6 +14374,8 @@
       <Event Name="Invalidated" />
       <Event Name="LayoutUpdated" />
       <Event Name="Scroll" />
+      <Event Name="DataContextChanged" />
+      <Event Name="NameChanged" />
       <Event Name="Disposed" />
       <Event Name="PropertyChanged" />
     </Type>
@@ -13852,6 +14470,8 @@
       <Event Name="Invalidated" />
       <Event Name="LayoutUpdated" />
       <Event Name="Scroll" />
+      <Event Name="DataContextChanged" />
+      <Event Name="NameChanged" />
       <Event Name="Disposed" />
       <Event Name="PropertyChanged" />
     </Type>
@@ -13946,6 +14566,8 @@
       <Event Name="Invalidated" />
       <Event Name="LayoutUpdated" />
       <Event Name="Scroll" />
+      <Event Name="DataContextChanged" />
+      <Event Name="NameChanged" />
       <Event Name="Disposed" />
       <Event Name="PropertyChanged" />
     </Type>
@@ -14044,22 +14666,30 @@
       <Event Name="Invalidated" />
       <Event Name="LayoutUpdated" />
       <Event Name="Scroll" />
+      <Event Name="DataContextChanged" />
+      <Event Name="NameChanged" />
       <Event Name="Disposed" />
       <Event Name="PropertyChanged" />
     </Type>
     <Type Name="Alternet.UI.WindowInfo" />
     <Type Name="Alternet.UI.ColorDialog">
+      <Event Name="DataContextChanged" />
+      <Event Name="NameChanged" />
       <Event Name="Disposed" />
       <Event Name="PropertyChanged" />
     </Type>
     <Type Name="Alternet.UI.IColorDialogHandler" />
     <Type Name="Alternet.UI.CommonDialog">
+      <Event Name="DataContextChanged" />
+      <Event Name="NameChanged" />
       <Event Name="Disposed" />
       <Event Name="PropertyChanged" />
     </Type>
     <Type Name="Alternet.UI.IDialogHandler" />
     <Type Name="Alternet.UI.DialogFactory" />
     <Type Name="Alternet.UI.FileDialog">
+      <Event Name="DataContextChanged" />
+      <Event Name="NameChanged" />
       <Event Name="Disposed" />
       <Event Name="PropertyChanged" />
     </Type>
@@ -14067,14 +14697,20 @@
     <Type Name="Alternet.UI.IOpenFileDialogHandler" />
     <Type Name="Alternet.UI.ISaveFileDialogHandler" />
     <Type Name="Alternet.UI.OpenFileDialog">
+      <Event Name="DataContextChanged" />
+      <Event Name="NameChanged" />
       <Event Name="Disposed" />
       <Event Name="PropertyChanged" />
     </Type>
     <Type Name="Alternet.UI.SaveFileDialog">
+      <Event Name="DataContextChanged" />
+      <Event Name="NameChanged" />
       <Event Name="Disposed" />
       <Event Name="PropertyChanged" />
     </Type>
     <Type Name="Alternet.UI.FontDialog">
+      <Event Name="DataContextChanged" />
+      <Event Name="NameChanged" />
       <Event Name="Disposed" />
       <Event Name="PropertyChanged" />
     </Type>
@@ -14087,6 +14723,8 @@
     <Type Name="Alternet.UI.ValueFromUserParams`1" />
     <Type Name="Alternet.UI.ISelectDirectoryDialogHandler" />
     <Type Name="Alternet.UI.SelectDirectoryDialog">
+      <Event Name="DataContextChanged" />
+      <Event Name="NameChanged" />
       <Event Name="Disposed" />
       <Event Name="PropertyChanged" />
     </Type>
@@ -14205,6 +14843,8 @@
       <Event Name="Invalidated" />
       <Event Name="LayoutUpdated" />
       <Event Name="Scroll" />
+      <Event Name="DataContextChanged" />
+      <Event Name="NameChanged" />
       <Event Name="Disposed" />
       <Event Name="PropertyChanged" />
     </Type>
@@ -14299,6 +14939,8 @@
       <Event Name="Invalidated" />
       <Event Name="LayoutUpdated" />
       <Event Name="Scroll" />
+      <Event Name="DataContextChanged" />
+      <Event Name="NameChanged" />
       <Event Name="Disposed" />
       <Event Name="PropertyChanged" />
     </Type>
@@ -14393,6 +15035,8 @@
       <Event Name="Invalidated" />
       <Event Name="LayoutUpdated" />
       <Event Name="Scroll" />
+      <Event Name="DataContextChanged" />
+      <Event Name="NameChanged" />
       <Event Name="Disposed" />
       <Event Name="PropertyChanged" />
     </Type>
@@ -14487,6 +15131,8 @@
       <Event Name="Invalidated" />
       <Event Name="LayoutUpdated" />
       <Event Name="Scroll" />
+      <Event Name="DataContextChanged" />
+      <Event Name="NameChanged" />
       <Event Name="Disposed" />
       <Event Name="PropertyChanged" />
     </Type>
@@ -14581,6 +15227,8 @@
       <Event Name="Invalidated" />
       <Event Name="LayoutUpdated" />
       <Event Name="Scroll" />
+      <Event Name="DataContextChanged" />
+      <Event Name="NameChanged" />
       <Event Name="Disposed" />
       <Event Name="PropertyChanged" />
     </Type>
@@ -14675,6 +15323,8 @@
       <Event Name="Invalidated" />
       <Event Name="LayoutUpdated" />
       <Event Name="Scroll" />
+      <Event Name="DataContextChanged" />
+      <Event Name="NameChanged" />
       <Event Name="Disposed" />
       <Event Name="PropertyChanged" />
     </Type>
@@ -14769,6 +15419,8 @@
       <Event Name="Invalidated" />
       <Event Name="LayoutUpdated" />
       <Event Name="Scroll" />
+      <Event Name="DataContextChanged" />
+      <Event Name="NameChanged" />
       <Event Name="Disposed" />
       <Event Name="PropertyChanged" />
     </Type>
@@ -14863,6 +15515,8 @@
       <Event Name="Invalidated" />
       <Event Name="LayoutUpdated" />
       <Event Name="Scroll" />
+      <Event Name="DataContextChanged" />
+      <Event Name="NameChanged" />
       <Event Name="Disposed" />
       <Event Name="PropertyChanged" />
     </Type>
@@ -14957,6 +15611,8 @@
       <Event Name="Invalidated" />
       <Event Name="LayoutUpdated" />
       <Event Name="Scroll" />
+      <Event Name="DataContextChanged" />
+      <Event Name="NameChanged" />
       <Event Name="Disposed" />
       <Event Name="PropertyChanged" />
     </Type>
@@ -14964,6 +15620,7 @@
     <Type Name="Alternet.UI.IBaseObject" />
     <Type Name="Alternet.UI.IBaseObjectWithAttr" />
     <Type Name="Alternet.UI.IBaseObjectWithId" />
+    <Type Name="Alternet.UI.ICollectionChangeRouter" />
     <Type Name="Alternet.UI.IDisposableObject">
       <Event Name="Disposed" />
     </Type>
@@ -15052,7 +15709,6 @@
     <Type Name="Alternet.UI.IControlOverlay" />
     <Type Name="Alternet.UI.IFocusable" />
     <Type Name="Alternet.UI.ILayoutItem" />
-    <Type Name="Alternet.UI.IReadOnlyMenuItemProperties" />
     <Type Name="Alternet.UI.IWin32Window" />
     <Type Name="Alternet.UI.IWindow">
       <Event Name="MenuChanged" />
@@ -15092,6 +15748,10 @@
     <Type Name="Alternet.UI.IToolTipFactoryHandler" />
     <Type Name="Alternet.UI.IWebBrowserFactoryHandler" />
     <Type Name="Alternet.UI.IWxControlFactoryHandler" />
+    <Type Name="Alternet.UI.IMenuItemProperties">
+      <Event Name="Changed" />
+    </Type>
+    <Type Name="Alternet.UI.IMenuProperties" />
     <Type Name="Alternet.UI.ICustomTypeProvider" />
     <Type Name="Alternet.UI.IDoCommand" />
     <Type Name="Alternet.UI.IEnumerableTree" />
@@ -15149,6 +15809,7 @@
     <Type Name="Alternet.UI.ITextBoxRichAttr" />
     <Type Name="Alternet.UI.ITextBoxTextAttr" />
     <Type Name="Alternet.UI.PanelFormSelector">
+      <Event Name="DropDownMenuShowing" />
       <Event Name="ContextMenuCreated" />
       <Event Name="MouseHover" />
       <Event Name="CellChanged" />
@@ -15220,6 +15881,8 @@
       <Event Name="Invalidated" />
       <Event Name="LayoutUpdated" />
       <Event Name="Scroll" />
+      <Event Name="DataContextChanged" />
+      <Event Name="NameChanged" />
       <Event Name="Disposed" />
       <Event Name="PropertyChanged" />
     </Type>
@@ -15227,6 +15890,7 @@
       <Event Name="FileNewClick" />
       <Event Name="FileOpenClick" />
       <Event Name="FileSaveClick" />
+      <Event Name="DropDownMenuShowing" />
       <Event Name="ContextMenuCreated" />
       <Event Name="MouseHover" />
       <Event Name="CellChanged" />
@@ -15298,6 +15962,8 @@
       <Event Name="Invalidated" />
       <Event Name="LayoutUpdated" />
       <Event Name="Scroll" />
+      <Event Name="DataContextChanged" />
+      <Event Name="NameChanged" />
       <Event Name="Disposed" />
       <Event Name="PropertyChanged" />
     </Type>
@@ -15307,6 +15973,7 @@
       <Event Name="ApplyButtonClick" />
       <Event Name="ButtonClicked" />
       <Event Name="OrientationChanged" />
+      <Event Name="DropDownMenuShowing" />
       <Event Name="ContextMenuCreated" />
       <Event Name="MouseHover" />
       <Event Name="CellChanged" />
@@ -15378,6 +16045,8 @@
       <Event Name="Invalidated" />
       <Event Name="LayoutUpdated" />
       <Event Name="Scroll" />
+      <Event Name="DataContextChanged" />
+      <Event Name="NameChanged" />
       <Event Name="Disposed" />
       <Event Name="PropertyChanged" />
     </Type>
@@ -15385,6 +16054,7 @@
       <Event Name="FileNewClick" />
       <Event Name="FileOpenClick" />
       <Event Name="FileSaveClick" />
+      <Event Name="DropDownMenuShowing" />
       <Event Name="ContextMenuCreated" />
       <Event Name="MouseHover" />
       <Event Name="CellChanged" />
@@ -15456,10 +16126,13 @@
       <Event Name="Invalidated" />
       <Event Name="LayoutUpdated" />
       <Event Name="Scroll" />
+      <Event Name="DataContextChanged" />
+      <Event Name="NameChanged" />
       <Event Name="Disposed" />
       <Event Name="PropertyChanged" />
     </Type>
     <Type Name="Alternet.UI.PanelSettings">
+      <Event Name="DropDownMenuShowing" />
       <Event Name="ContextMenuCreated" />
       <Event Name="MouseHover" />
       <Event Name="CellChanged" />
@@ -15531,6 +16204,8 @@
       <Event Name="Invalidated" />
       <Event Name="LayoutUpdated" />
       <Event Name="Scroll" />
+      <Event Name="DataContextChanged" />
+      <Event Name="NameChanged" />
       <Event Name="Disposed" />
       <Event Name="PropertyChanged" />
     </Type>
@@ -15540,6 +16215,7 @@
     </Type>
     <Type Name="Alternet.UI.PanelSettingsItemKind" />
     <Type Name="Alternet.UI.PanelWebBrowser">
+      <Event Name="DropDownMenuShowing" />
       <Event Name="ContextMenuCreated" />
       <Event Name="MouseHover" />
       <Event Name="CellChanged" />
@@ -15611,10 +16287,13 @@
       <Event Name="Invalidated" />
       <Event Name="LayoutUpdated" />
       <Event Name="Scroll" />
+      <Event Name="DataContextChanged" />
+      <Event Name="NameChanged" />
       <Event Name="Disposed" />
       <Event Name="PropertyChanged" />
     </Type>
     <Type Name="Alternet.UI.PanelWithToolBar">
+      <Event Name="DropDownMenuShowing" />
       <Event Name="ContextMenuCreated" />
       <Event Name="MouseHover" />
       <Event Name="CellChanged" />
@@ -15686,6 +16365,8 @@
       <Event Name="Invalidated" />
       <Event Name="LayoutUpdated" />
       <Event Name="Scroll" />
+      <Event Name="DataContextChanged" />
+      <Event Name="NameChanged" />
       <Event Name="Disposed" />
       <Event Name="PropertyChanged" />
     </Type>
@@ -15799,6 +16480,7 @@
     <Type Name="Alternet.Drawing.Graphics+DrawLabelParams" />
     <Type Name="Alternet.Drawing.GraphicsUnitConverter+GraphicsType" />
     <Type Name="Alternet.Drawing.NineRects+PreviewControl">
+      <Event Name="DropDownMenuShowing" />
       <Event Name="ContextMenuCreated" />
       <Event Name="MouseHover" />
       <Event Name="CellChanged" />
@@ -15870,6 +16552,8 @@
       <Event Name="Invalidated" />
       <Event Name="LayoutUpdated" />
       <Event Name="Scroll" />
+      <Event Name="DataContextChanged" />
+      <Event Name="NameChanged" />
       <Event Name="Disposed" />
       <Event Name="PropertyChanged" />
     </Type>
@@ -15922,7 +16606,6 @@
       <Event Name="Disposed" />
       <Event Name="PropertyChanged" />
     </Type>
-    <Type Name="Alternet.UI.MenuItem+ChangeKind" />
     <Type Name="Alternet.UI.AnimationPlayer+KnownHandler" />
     <Type Name="Alternet.UI.PopupControl+CloseReason" />
     <Type Name="Alternet.UI.PreviewFile+PreviewFileRegisterItem" />
@@ -15942,6 +16625,7 @@
     <Type Name="Alternet.UI.StdSlider+SliderThumb">
       <Event Name="SplitterMoving" />
       <Event Name="SplitterMoved" />
+      <Event Name="DropDownMenuShowing" />
       <Event Name="ContextMenuCreated" />
       <Event Name="MouseHover" />
       <Event Name="CellChanged" />
@@ -16013,6 +16697,8 @@
       <Event Name="Invalidated" />
       <Event Name="LayoutUpdated" />
       <Event Name="Scroll" />
+      <Event Name="DataContextChanged" />
+      <Event Name="NameChanged" />
       <Event Name="Disposed" />
       <Event Name="PropertyChanged" />
     </Type>
@@ -16021,6 +16707,7 @@
     <Type Name="Alternet.UI.SpeedColorButton+ClickActionKind" />
     <Type Name="Alternet.UI.TabControl+EnsureSideBarChildFlags" />
     <Type Name="Alternet.UI.TemplateControls+RichToolTipTemplate">
+      <Event Name="DropDownMenuShowing" />
       <Event Name="ContextMenuCreated" />
       <Event Name="MouseHover" />
       <Event Name="CellChanged" />
@@ -16092,10 +16779,13 @@
       <Event Name="Invalidated" />
       <Event Name="LayoutUpdated" />
       <Event Name="Scroll" />
+      <Event Name="DataContextChanged" />
+      <Event Name="NameChanged" />
       <Event Name="Disposed" />
       <Event Name="PropertyChanged" />
     </Type>
     <Type Name="Alternet.UI.TemplateControls+BoldText`1">
+      <Event Name="DropDownMenuShowing" />
       <Event Name="ContextMenuCreated" />
       <Event Name="MouseHover" />
       <Event Name="CellChanged" />
@@ -16167,6 +16857,8 @@
       <Event Name="Invalidated" />
       <Event Name="LayoutUpdated" />
       <Event Name="Scroll" />
+      <Event Name="DataContextChanged" />
+      <Event Name="NameChanged" />
       <Event Name="Disposed" />
       <Event Name="PropertyChanged" />
     </Type>

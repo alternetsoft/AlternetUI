@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <PackageManifest Version="2.0.0" xmlns="http://schemas.microsoft.com/developer/vsx-schema/2011" xmlns:d="http://schemas.microsoft.com/developer/vsx-schema-design/2011">
   <Metadata>
-    <Identity Id="AlternetUIForVS2022" Version="0.9.749.0" Language="en-US" Publisher="Alternet Software PTY LTD" />
+    <Identity Id="AlternetUIForVS2022" Version="0.9.750.0" Language="en-US" Publisher="Alternet Software PTY LTD" />
     <DisplayName>AlterNET UI for Visual Studio 2022</DisplayName>
     <Description xml:space="preserve">Visual Studio integration for the AlterNET UI - a cross-platform user interface framework. Provides templates, UIXML IntelliSense and more.</Description>
     <MoreInfo>https://www.alternet-ui.com</MoreInfo>

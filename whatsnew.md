@@ -1,3 +1,61 @@
+# 0.9.750 (2025 August 24)
+
+## ToolBar
+
+- ToolBar: MaximizeToolRightSideElementWidth, SetToolRightSideElementMinWidth, and GetMaxToolRightSideElementWidth.
+- ToolBar: Implemented synchronization with attached menu items collection by handling collection
+- ToolBar: Add SetDropDownMenuPosition method to set the drop-down menu alignment for all UserControl children in ToolBar.
+- ToolBar: MaximizeLabelTextWidth, SetMinToolLabelTextWidth, and GetMaxToolLabelTextWidth methods.
+- ToolBar: ToolClick event, RaiseToolClick, OnToolClick.
+- ToolBar: Add NeedsRemainingImages and NeedsRemainingLabelImages properties to control whether all toolbar items have images and label images.
+
+## SpeedButton
+
+- SpeedButton: Add right-side image support.
+- SpeedButton: Add an Assign method to synchronize properties from menu items.
+- SpeedButton: Handle attached menu item property changes.
+- SpeedButton: HasVisibleImage, HasLabelImage, SetSvg, SetImage, MinRightSideWidth.
+- SpeedButton: SetLabelImage, SetLabelImageAsMenuArrow, and SetLabelImageAsComboBox.
+
+## Label
+
+- Label: Add MinTextWidth property to set a minimum text width for the Label control, ensuring layout updates when changed.
+- Label: Add public GetFormattedText and GetFormattedTextSize methods for retrieving and measuring the formatted label text.
+- Label: Add MnemonicMarker property to allow specifying a custom character for mnemonic markers
+- Label: GetRightSideWidth, GetLastUsedDrawLabelParams.
+- Label: Add HasImage and HasVisibleImage properties.
+
+## UserControl
+
+- UserControl: Add DropDownMenuPosition property to allow specifying the horizontal and vertical alignment of the drop-down menu.
+- UserControl: Add DropDownMenuShowing event.
+
+## Menus
+
+- MenuItem: Assign(IMenuItemProperties).
+- ContextMenu: Assign(IMenuProperties).
+- ContextMenu: Add position parameter to ShowAsDropDown method.
+
+## Graphics:
+
+- Graphics.DrawElementParams: MinWidth, GetRealSize, Tag, Name.
+- Graphics: Add MinTextWidth support to DrawLabelParams.
+- Graphics: Add image override parameter to CreateImageElement.
+
+## FrameworkElement
+
+- FrameworkElement: Clear DataContext in DisposeManaged override.
+- FrameworkElement: Removed DataContextProperty and related logic, simplifying data context management.
+- FrameworkElement: Add NameChanged and DataContextChanged events
+
+## Other
+
+- AbstractControl: Add LastChild and LastVisibleChild properties.
+- Create PopupToolBar.cs.
+- ListUtils: Add RouteCollectionChange method, which routes NotifyCollectionChangedEventArgs to the appropriate handler in an ICollectionChangeRouter.
+
+---
+
 # 0.9.749 (2025 August 20)
 
 - ToolBar.ConfigureAsContextMenu(), SpeedButton.ConfigureAsMenuItem().
@@ -27,6 +85,8 @@ property changes and implements the IReadOnlyMenuItemProperties interface.
 - Label: Add UpdateDrawLabelParamsDelegate and the UpdateDrawLabelParams method to allow external modification of label drawing parameters.
  This provides a flexible way to customize label rendering, especially for use in the BeforeDrawText event.
 - SpeedButton: Add RightSideElementKind enum and related properties to allow displaying additional text or key gestures on the right side.
+
+---
 
 # 0.9.748 (2025 August 15)
 
@@ -61,6 +121,8 @@ property changes and implements the IReadOnlyMenuItemProperties interface.
 - Add PopupCloseReason struct and enhance popup close logic.
 - StdTreeView: Add TrackItemPropertyChanges and TrackItemSelectedChanges props, ItemPropertyChanged and ItemSelectedChanged events.
 
+---
+
 # 0.9.747 (2025 August 4)
 
 - FileListBox: Add optional column header with column sorting support.
@@ -78,6 +140,8 @@ SetSelected, ClearSelected, RemoveSelected, GetNodeAt, CollapseAll, ExpandAll, S
 - VirtualListControl: Add selection and current item round borders. Add ResetSelectionAndCurrentItemBorders and SetSelectionAndCurrentItemRoundBorders methods.
 - SimpleDialogTitleView: Allow custom image for gear button in title.
 - VirtualListBox: Fix paint when HasBorder is set and internal scrollbars.
+
+---
 
 # 0.9.746 (2025 July 30)
 
@@ -102,6 +166,8 @@ SetSelected, ClearSelected, RemoveSelected, GetNodeAt, CollapseAll, ExpandAll, S
 - Add ListBoxHeader control.
 - AbstractControl: Add SortChildren method.
 - FindReplaceControl: Add gear button and actions menu.
+
+---
 
 # 0.9.745 (2025 July 22)
 
@@ -160,6 +226,8 @@ SetSelected, ClearSelected, RemoveSelected, GetNodeAt, CollapseAll, ExpandAll, S
   Added `SelectFolderIfExists` and `SelectInitialFolder` methods to improve folder selection logic. 
   Internal logic updated to apply predicates when listing contents.
 
+---
+
 # 0.9.744 (2025 July 18)
 
 - **GenericLabel and Label joined into single label control implemented inside the library.** Replaces the GenericLabel class with an 
@@ -202,6 +270,8 @@ layout logic to account for the new margin, ensuring correct rendering and spaci
 marker character and enabling/disabling marker processing. Adds utility methods in StringUtils for removing mnemonic markers and 
 determining mnemonic character index.
 
+---
+
 # 0.9.743 (2025 July 13)
 
 - Slider: Bug fixes and new members, improve behavior and default look.
@@ -222,6 +292,8 @@ determining mnemonic character index.
 - Implement GetHashCode() using tuples (through the library).
 - AbstractControl: SupressInvalidate, EndInvalidateSuppression.
 - Slider: thumb corner radius settings.
+
+---
 
 # 0.9.742 (2025 July 9)
 
@@ -251,6 +323,8 @@ determining mnemonic character index.
 - ControlSet: ForEach, ForEachVisible.
 - ControlPainter: DrawRadioButton, DrawPushButton.
 - ControlStateSettings: Add background paint actions.
+
+---
 
 # 0.9.741 (2025 July 6)
 
@@ -289,6 +363,8 @@ using the X11 backend to bypass Wayland, including environment variable usage an
 to protected virtual methods, improving extensibility and enabling derived classes to override event handling. 
 - **Thickness**: GetNear, GetFar.
 
+---
+
 # 0.9.740 (2025 July 2)
 
 - **Create SpeedButtonWithPopup, SpeedDateButton, DatePicker, TimePicker, TextBoxWithListPopup.**
@@ -323,6 +399,8 @@ to protected virtual methods, improving extensibility and enabling derived class
 - TreeControlItem: Add support for IComparable.
 - Splitter: new members which allow to customize behavior and look.
 
+---
+
 # 0.9.739 (2025 June 27)
 
 - **WebBrowser: Fix background painting for Edge backend.**
@@ -353,6 +431,8 @@ PaintEventArgs.WithRect, ToolbarUtils.GetNormalAndDisabledSvg.
 - SpeedButton: Label is now GenericLabel (and has more features  than GenericTextControl used previously).
 - SpeedButton: ResetImages, SetImages, SetImageSets, SetDefaultComboBoxImage, SetSvgImage, SetContentHorizontalAlignment override.
 
+---
+
 # 0.9.738 (2025 June 24)
 
 - Add controls: ColorPickerAndButton, EnumPicker, SpeedEnumButton, EnumPickerAndButton, FontNamePicker, FontSizePicker, ListPicker, SpeedButtonWithListPopup.
@@ -377,6 +457,8 @@ PaintEventArgs.WithRect, ToolbarUtils.GetNormalAndDisabledSvg.
 - Demo: Use EnumPicker, ColorPicker and other picker controls instead of ComboBox.
 - App.IsWindows11AtLeast, PropertyGrid.IsFlagsOrEnum.
 - Add default localized titles to popup windows.
+
+---
 
 # 0.9.737 (2025 June 20)
 
