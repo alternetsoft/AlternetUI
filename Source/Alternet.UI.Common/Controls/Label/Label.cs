@@ -864,6 +864,44 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Calculates the width of the right side of the label, including any suffix elements.
+        /// </summary>
+        /// <remarks>The width is determined by the greater of the last suffix element's measured width 
+        /// and its minimum width.
+        /// If <paramref name="remeasure"/> is <see langword="true"/>, the label parameters will
+        /// be remeasured before the calculation.</remarks>
+        /// <param name="remeasure">A value indicating whether to remeasure the label parameters
+        /// before calculating the width.</param>
+        /// <returns>The width of the right side of the label, including the width
+        /// of the last suffix element. Returns 0 if there are no suffix elements.</returns>
+        public virtual Coord GetRightSideWidth(bool remeasure)
+        {
+            var prm = GetLastUsedDrawLabelParams(remeasure);
+            if(prm.SuffixElements is null)
+                return 0;
+            var last = prm.SuffixElements[prm.SuffixElements.Length - 1];
+            var lastWidth = last.GetSize(MeasureCanvas).Width;
+            lastWidth = Math.Max(lastWidth, last.MinWidth);
+            return lastWidth;
+        }
+
+        /// <summary>
+        /// Retrieves the most recently used parameters for drawing and measuring a label.
+        /// </summary>
+        /// <returns>The last used <see cref="Graphics.DrawLabelParams"/> instance.
+        /// This object contains the settings used for
+        /// the most recent label drawing operation.</returns>
+        public Graphics.DrawLabelParams GetLastUsedDrawLabelParams(bool remeasure)
+        {
+            if (remeasure)
+            {
+                GetPreferredSize(SizeD.HalfOfMaxValueI);
+            }
+
+            return prm;
+        }
+
+        /// <summary>
         /// Default method for calculating preferred size.
         /// </summary>
         public virtual SizeD GetDefaultPreferredSize(
