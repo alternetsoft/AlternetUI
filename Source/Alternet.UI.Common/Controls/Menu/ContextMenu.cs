@@ -99,9 +99,9 @@ namespace Alternet.UI
         /// Cannot be <see langword="null"/>.</param>
         public virtual void Assign(IMenuProperties source)
         {
-            Items.SetCount(source.ItemCount, () => new MenuItem());
+            Items.SetCount(source.Count, () => new MenuItem());
 
-            for (var i = 0; i < source.ItemCount; i++)
+            for (var i = 0; i < source.Count; i++)
                 Items[i].Assign(source.GetItem(i));
         }
 

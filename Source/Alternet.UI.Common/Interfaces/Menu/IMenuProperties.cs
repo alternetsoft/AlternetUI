@@ -15,30 +15,8 @@ namespace Alternet.UI
     /// menu items, such as the total count of items and access to
     /// individual items by index. Implementations of this
     /// interface are expected to provide read-only access to the menu items.</remarks>
-    public interface IMenuProperties : INotifyPropertyChanged
+    public interface IMenuProperties
+        : IReadOnlyListSource<IMenuItemProperties>, INotifyPropertyChanged, IBaseObjectWithId
     {
-        /// <summary>
-        /// Gets the unique identifier associated with the object.
-        /// </summary>
-        ObjectUniqueId UniqueId { get; }
-
-        /// <summary>
-        /// Gets the object that provides notifications when the menu items collection changes.
-        /// </summary>
-        INotifyCollectionChanged CollectionNotifier { get; }
-
-        /// <summary>
-        /// Gets the total number of menu items currently in the collection.
-        /// </summary>
-        int ItemCount { get; }
-
-        /// <summary>
-        /// Retrieves the child menu item at the specified index.
-        /// </summary>
-        /// <param name="index">The zero-based index of the child menu item to retrieve.
-        /// Must be within the valid range of the child menu items collection.</param>
-        /// <returns>An object implementing <see cref="IMenuItemProperties"/>
-        /// that represents the menu item at the specified index.</returns>
-        IMenuItemProperties GetItem(int index);
     }
 }

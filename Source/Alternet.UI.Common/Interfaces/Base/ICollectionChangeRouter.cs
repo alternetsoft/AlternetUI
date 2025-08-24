@@ -52,5 +52,4 @@ namespace Alternet.UI
         /// <param name="sender">The source of the event.</param>
         void OnCollectionReset(object? sender);
     }
-
 }

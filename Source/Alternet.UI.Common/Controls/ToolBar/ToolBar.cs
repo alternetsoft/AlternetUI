@@ -1684,7 +1684,7 @@ namespace Alternet.UI
         /// </summary>
         /// <remarks>This method iterates through the child elements and evaluates
         /// the right-side width of labels associated with any child that is
-        /// a <see cref="SpeedButton"/>. Only the maximum width encountered 
+        /// a <see cref="SpeedButton"/>. Only the maximum width encountered
         /// is returned. If no <see cref="SpeedButton"/> elements are present,
         /// the method returns 0.</remarks>
         /// <returns>The maximum right-side width of the labels for
@@ -1702,6 +1702,7 @@ namespace Alternet.UI
                         maxWidth = rightSideWidth;
                 }
             }
+
             return maxWidth;
         }
 
@@ -2659,12 +2660,12 @@ namespace Alternet.UI
         {
             if (oldValue is IMenuProperties oldProperties)
             {
-                oldProperties.CollectionNotifier.CollectionChanged -= OnMenuItemsCollectionChanged;
+                oldProperties.Notification.CollectionChanged -= OnMenuItemsCollectionChanged;
             }
 
             if (newValue is IMenuProperties newProperties)
             {
-                newProperties.CollectionNotifier.CollectionChanged += OnMenuItemsCollectionChanged;
+                newProperties.Notification.CollectionChanged += OnMenuItemsCollectionChanged;
                 MenuChangeHandler.OnCollectionReset(newProperties);
             }
         }
@@ -2799,7 +2800,7 @@ namespace Alternet.UI
 
                 owner.DoInsideLayout(() =>
                 {
-                    for (int i = 0; i < menuProperties.ItemCount; i++)
+                    for (int i = 0; i < menuProperties.Count; i++)
                     {
                         var menuItem = menuProperties.GetItem(i);
                         if (menuItem is not IMenuItemProperties item)

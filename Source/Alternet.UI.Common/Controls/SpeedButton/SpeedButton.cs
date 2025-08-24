@@ -2211,7 +2211,7 @@ namespace Alternet.UI
             Enabled = menuItem.Enabled;
             Shortcut = menuItem.Shortcut;
 
-            if(menuItem.ItemCount == 0)
+            if(menuItem.Count == 0)
             {
                 DropDownMenu = null;
                 RightSideElement = RightSideElementKind.KeyGesture;
