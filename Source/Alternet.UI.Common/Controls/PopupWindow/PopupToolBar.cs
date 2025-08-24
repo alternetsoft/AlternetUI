@@ -92,6 +92,11 @@ namespace Alternet.UI
         public virtual bool IsLabelTextWidthMaximized { get; set; } = true;
 
         /// <summary>
+        /// Gets or sets a value indicating whether the width of the right-side element is maximized.
+        /// </summary>
+        public virtual bool IsRightSideElementWidthMaximized { get; set; } = true;
+
+        /// <summary>
         /// Gets or sets a value indicating whether the remaining images are
         /// required for the toolbar items.
         /// When set to <c>true</c>, the control will ensure that all images
@@ -160,6 +165,9 @@ namespace Alternet.UI
 
                 if (IsLabelTextWidthMaximized)
                     MainControl.MaximizeLabelTextWidth();
+
+                if (IsRightSideElementWidthMaximized)
+                    MainControl.MaximizeToolRightSideElementWidth();
             });
 
             var preferredSize = GetPreferredSize();
