@@ -183,6 +183,7 @@ namespace Alternet.UI
         private CheckedSpreadMode stickySpreadMode;
         private RightSideElementKind rightSideElementKind;
         private bool isToolTipEnabled = true;
+        private double minRightSideWidth;
 
         static SpeedButton()
         {
@@ -532,6 +533,22 @@ namespace Alternet.UI
             get
             {
                 return label.HasVisibleImage;
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets the minimum width of the right side element in dips.
+        /// </summary>
+        public virtual Coord MinRightSideWidth
+        {
+            get => minRightSideWidth;
+            set
+            {
+                if (minRightSideWidth == value)
+                    return;
+                minRightSideWidth = value;
+                if (RightSideElement != RightSideElementKind.None)
+                    PerformLayoutAndInvalidate();
             }
         }
 
@@ -1958,33 +1975,59 @@ namespace Alternet.UI
             if (ImageToText != ImageToText.Horizontal || !TextVisible)
                 return;
 
-            var rightSide = GetRightSideElement();
-
-            if (rightSide is null)
-                return;
-
             label.UpdateDrawLabelParams(UpdateLabelParams);
 
             void UpdateLabelParams(ref Graphics.DrawLabelParams prm)
             {
-                Graphics.DrawElementParams element;
-
-                if (rightSide is string s)
-                {
-                    element = Graphics.DrawElementParams.CreateTextElement(ref prm, s);
-                }
-                else
-                if (rightSide is Image img)
-                {
-                    element = Graphics.DrawElementParams.CreateImageElement(ref prm, img);
-                }
-                else
+                var elements = GetRightSideElements(ref prm);
+                if (elements is null || elements.Length == 0)
                     return;
-
-                var spacerElement = Graphics.DrawElementParams.CreateSpacerElement(spacer.Size);
-                element.Alignment = element.Alignment.WithHorizontal(HorizontalAlignment.Right);
-                prm.SuffixElements = [spacerElement, element];
+                prm.SuffixElements = elements;
             }
+        }
+
+        /// <summary>
+        /// Generates an array of drawing parameters for the right-side elements of a label.
+        /// </summary>
+        /// <remarks>This method determines the right-side elements based on the result of
+        /// <c>GetRightSideElement</c>. If the right-side element is a string,
+        /// it creates a text element. If it is an image, it creates an image element.
+        /// A spacer element is also included to ensure proper alignment. The
+        /// elements are aligned to the right horizontally.</remarks>
+        /// <param name="prm">A reference to the <see cref="Graphics.DrawLabelParams"/> structure
+        /// that provides the context for drawing
+        /// the label, including layout and style information.</param>
+        /// <returns>An array of <see cref="Graphics.DrawElementParams"/> representing
+        /// the right-side elements to be drawn, or
+        /// <see langword="null"/> if no right-side elements are available.</returns>
+        protected virtual Graphics.DrawElementParams[]? GetRightSideElements(
+            ref Graphics.DrawLabelParams prm)
+        {
+            var rightSide = GetRightSideElement();
+
+            if (rightSide is null)
+                return null;
+
+            Graphics.DrawElementParams element;
+
+            if (rightSide is string s)
+            {
+                element = Graphics.DrawElementParams.CreateTextElement(ref prm, s);
+            }
+            else
+            if (rightSide is Image img)
+            {
+                element = Graphics.DrawElementParams.CreateImageElement(ref prm, img);
+            }
+            else
+                return null;
+
+            element.MinWidth = MinRightSideWidth;
+
+            var spacerElement = Graphics.DrawElementParams.CreateSpacerElement(spacer.Size);
+            element.Alignment = element.Alignment.WithHorizontal(HorizontalAlignment.Right);
+
+            return [spacerElement, element];
         }
 
         /// <inheritdoc/>
