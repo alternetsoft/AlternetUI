@@ -15,6 +15,14 @@ namespace Alternet.UI
     /// </summary>
     public partial class PopupToolBar : PopupWindow<ToolBar>
     {
+        /// <summary>
+        /// Represents the default margin applied to <see cref="ToolBar"/>,
+        /// measured in device-independent units.
+        /// </summary>
+        /// <remarks>This value is commonly used to provide consistent spacing around content in user
+        /// interface layouts.</remarks>
+        public static Thickness DefaultContentMargin = 4;
+
         private static PopupToolBar? defaultPopup;
 
         /// <summary>
@@ -24,7 +32,7 @@ namespace Alternet.UI
         {
             MainPanel.Padding = 0;
             MainPanel.Margin = 0;
-            MainControl.Margin = 4;
+            MainControl.Margin = DefaultContentMargin;
             Padding = 0;
             HasBorder = false;
             Resizable = false;
