@@ -1643,6 +1643,69 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Maximizes the width of the tool's right-side element to its maximum allowable value.
+        /// </summary>
+        /// <remarks>This method adjusts the minimum width of the tool's right-side element to match its
+        /// maximum width, ensuring the element occupies the largest possible space.
+        /// The specific maximum width is
+        /// determined by the implementation of <see cref="GetMaxToolRightSideElementWidth"/>.</remarks>
+        /// <param name="additionalInc">
+        /// An optional additional increment to add to the maximum width.
+        /// </param>
+        public virtual void MaximizeToolRightSideElementWidth(Coord additionalInc = 0)
+        {
+            var maxWidth = GetMaxToolRightSideElementWidth();
+            SetToolRightSideElementMinWidth(maxWidth + additionalInc);
+        }
+
+        /// <summary>
+        /// Sets the minimum width of the right side element for all child
+        /// elements that are speed buttons.
+        /// </summary>
+        /// <remarks>This method iterates through the child elements and applies the specified
+        /// width to the <see cref="SpeedButton.MinRightSideWidth"/> property of each child
+        /// that is a <see cref="SpeedButton"/>.</remarks>
+        /// <param name="width">The minimum width, in device-independent units,
+        /// to set for the right side of each speed button.</param>
+        public virtual void SetToolRightSideElementMinWidth(double width)
+        {
+            foreach (var item in Children)
+            {
+                if (item is SpeedButton speedButton)
+                {
+                    speedButton.MinRightSideWidth = width;
+                }
+            }
+        }
+
+        /// <summary>
+        /// Calculates the maximum width of the right side of all tool labels
+        /// within the collection of child elements.
+        /// </summary>
+        /// <remarks>This method iterates through the child elements and evaluates
+        /// the right-side width of labels associated with any child that is
+        /// a <see cref="SpeedButton"/>. Only the maximum width encountered 
+        /// is returned. If no <see cref="SpeedButton"/> elements are present,
+        /// the method returns 0.</remarks>
+        /// <returns>The maximum right-side width of the labels for
+        /// all <see cref="SpeedButton"/> elements in the collection.
+        /// Returns 0 if no such elements are found.</returns>
+        public virtual double GetMaxToolRightSideElementWidth()
+        {
+            double maxWidth = 0;
+            foreach (var item in Children)
+            {
+                if (item is SpeedButton speedButton)
+                {
+                    var rightSideWidth = speedButton.Label.GetRightSideWidth(true);
+                    if (rightSideWidth > maxWidth)
+                        maxWidth = rightSideWidth;
+                }
+            }
+            return maxWidth;
+        }
+
+        /// <summary>
         /// Gets item 'Enabled' property value.
         /// </summary>
         /// <param name="id">Item id.</param>
