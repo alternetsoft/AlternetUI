@@ -13,16 +13,6 @@ namespace Alternet.UI
 #pragma warning restore
     {
         /// <summary>
-        /// Gets the previous value before the change occurred.
-        /// </summary>
-        public T OldValue { get; }
-
-        /// <summary>
-        /// Gets the new value after the change occurred.
-        /// </summary>
-        public T NewValue { get; }
-
-        /// <summary>
         /// Initializes a new instance of the <see cref="ValueChangedEventArgs{T}"/> class.
         /// </summary>
         /// <param name="oldValue">The previous value.</param>
@@ -32,6 +22,16 @@ namespace Alternet.UI
             OldValue = oldValue;
             NewValue = newValue;
         }
+
+        /// <summary>
+        /// Gets the previous value before the change occurred.
+        /// </summary>
+        public T OldValue { get; }
+
+        /// <summary>
+        /// Gets the new value after the change occurred.
+        /// </summary>
+        public T NewValue { get; }
     }
 
     /// <summary>

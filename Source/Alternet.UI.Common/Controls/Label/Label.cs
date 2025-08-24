@@ -866,7 +866,7 @@ namespace Alternet.UI
         /// <summary>
         /// Calculates the width of the right side of the label, including any suffix elements.
         /// </summary>
-        /// <remarks>The width is determined by the greater of the last suffix element's measured width 
+        /// <remarks>The width is determined by the greater of the last suffix element's measured width
         /// and its minimum width.
         /// If <paramref name="remeasure"/> is <see langword="true"/>, the label parameters will
         /// be remeasured before the calculation.</remarks>
