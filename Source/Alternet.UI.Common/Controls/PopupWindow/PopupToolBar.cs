@@ -16,6 +16,12 @@ namespace Alternet.UI
     public partial class PopupToolBar : PopupWindow<ToolBar>
     {
         /// <summary>
+        /// Indicates whether the suppression of the "Hide on Deactivate" behavior is enabled.
+        /// Default is <c>false</c>.
+        /// </summary>
+        public static bool IsHideOnDeactivateSuppressed;
+
+        /// <summary>
         /// Represents the default margin applied to <see cref="ToolBar"/>,
         /// measured in device-independent units.
         /// </summary>
@@ -82,6 +88,23 @@ namespace Alternet.UI
 
         /// <inheritdoc/>
         public override bool DefaultCloseEnabled => false;
+
+        /// <inheritdoc/>
+        public override bool HideOnDeactivate
+        {
+            get
+            {
+                if(IsHideOnDeactivateSuppressed)
+                    return false;
+
+                return base.HideOnDeactivate;
+            }
+
+            set
+            {
+                base.HideOnDeactivate = value;
+            }
+        }
 
         /// <summary>
         /// Gets or sets a value indicating whether the remaining label images are required
@@ -152,6 +175,37 @@ namespace Alternet.UI
                 return;
             if(speedButton.DropDownMenu is null)
                 HidePopup(ModalResult.Accepted);
+        }
+
+        /// <inheritdoc/>
+        protected override void OnVisibleChanged(EventArgs e)
+        {
+            if (Visible)
+                return;
+            HideOtherPopups();
+        }
+
+        /// <summary>
+        /// Hides all other visible pop-up toolbars except the current one.
+        /// </summary>
+        /// <remarks>This method iterates through all visible windows in the
+        /// application and hides any
+        /// window that is a <see cref="PopupToolBar"/> instance,
+        /// excluding the current window. The pop-ups are hidden
+        /// with a modal result of <see cref="ModalResult.Canceled"/>.</remarks>
+        protected virtual void HideOtherPopups()
+        {
+            var windows = App.Current?.VisibleWindows.ToArray() ?? Array.Empty<Window>();
+            foreach (var window in windows)
+            {
+                if (window != this && window is PopupToolBar popup)
+                {
+                    Post(() =>
+                    {
+                        popup.HidePopup(ModalResult.Canceled);
+                    });
+                }
+            }
         }
 
         /// <inheritdoc/>
