@@ -63,6 +63,11 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets or sets the control that is hosting this context menu.
+        /// </summary>
+        public object? HostControl { get; set; }
+
+        /// <summary>
         /// This property has no meaning.
         /// </summary>
         [Browsable(false)]
@@ -70,6 +75,31 @@ namespace Alternet.UI
         {
             get => base.Enabled;
             set => base.Enabled = value;
+        }
+
+        /// <summary>
+        /// Gets a value indicating whether the current instance is currently
+        /// displayed within a host control.
+        /// </summary>
+        [Browsable(false)]
+        public virtual bool IsShownInHostControl
+        {
+            get
+            {
+                if (HostControl is null)
+                    return false;
+                if (HostControl is PopupToolBar popupToolBar)
+                {
+                    if (!popupToolBar.Visible)
+                        return false;
+
+                    var dataContext = popupToolBar.MainControl.DataContext as IMenuProperties;
+                    var result = dataContext?.UniqueId == UniqueId;
+                    return result;
+                }
+
+                return false;
+            }
         }
 
         /// <summary>
