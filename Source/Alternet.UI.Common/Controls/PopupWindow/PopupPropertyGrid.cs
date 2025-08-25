@@ -57,11 +57,6 @@ namespace Alternet.UI
         /// <summary>
         /// Creates properties popup window.
         /// </summary>
-        /// <remarks>
-        /// In order to use properties popup window you can call <see cref="PropertyGrid.SetProps"/>
-        /// for the <see cref="PopupWindow{T}.MainControl"/> and show the popup with call
-        /// to <see cref="PopupWindow{T}.ShowPopup(AbstractControl)"/>.
-        /// </remarks>
         /// <returns></returns>
         public static PopupPropertyGrid CreatePropertiesPopup()
         {

@@ -1842,6 +1842,7 @@ namespace Alternet.UI
                 Label.HorizontalAlignment = HorizontalAlignment.Fill;
                 RightSideElement = SpeedButton.RightSideElementKind.KeyGesture;
                 ShowDropDownMenuWhenHovered = true;
+                UseInternalDropDownMenu = true;
 
                 if (DropDownMenu is null)
                 {
@@ -2088,20 +2089,25 @@ namespace Alternet.UI
 
             if(VisualState == VisualControlState.Normal)
             {
-                base.ShowDropDownMenu(afterShow);
+                Internal(afterShow);
             }
             else
             {
                 VisualStateOverride = VisualControlState.Normal;
                 Refresh();
 
-                void AfterShow()
-                {
-                    VisualStateOverride = null;
-                    afterShow?.Invoke();
-                }
+                Internal(AfterShow);
+            }
 
-                base.ShowDropDownMenu(AfterShow);
+            void AfterShow()
+            {
+                VisualStateOverride = null;
+                afterShow?.Invoke();
+            }
+
+            void Internal(Action? afterShow = null)
+            {
+                base.ShowDropDownMenu(afterShow);
             }
         }
 
@@ -2237,8 +2243,13 @@ namespace Alternet.UI
         {
             if (DisposingOrDisposed)
                 return;
-            if (ShowDropDownMenuWhenHovered)
+            if (ShowDropDownMenuWhenHovered && DropDownMenu is not null)
+            {
+                if (DropDownMenu.IsShownInHostControl)
+                    return;
+
                 ShowDropDownMenu();
+            }
         }
 
         /// <summary>
