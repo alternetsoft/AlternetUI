@@ -273,10 +273,9 @@ namespace Alternet.UI
                 imageToText = value;
                 DoInsideLayout(() =>
                 {
-                    foreach (var item in Children)
+                    foreach (var speedButton in ToolsAsButton)
                     {
-                        if (item is SpeedButton speedButton)
-                            speedButton.ImageToText = value;
+                        speedButton.ImageToText = value;
                     }
 
                     OnItemSizeChanged();
@@ -336,6 +335,26 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets an enumerable collection of tools that are of type <see cref="SpeedButton"/>.
+        /// </summary>
+        [Browsable(false)]
+        public virtual IEnumerable<SpeedButton> ToolsAsButton
+        {
+            get
+            {
+                if(!HasChildren)
+                    yield break;
+                foreach (var item in Children)
+                {
+                    if (item is SpeedButton speedButton)
+                    {
+                        yield return speedButton;
+                    }
+                }
+            }
+        }
+
+        /// <summary>
         /// Retrieves a set of speed buttons contained within the toolbar.
         /// </summary>
         /// <returns>A <see cref="ControlSet"/> containing all <see cref="SpeedButton"/>
@@ -345,7 +364,7 @@ namespace Alternet.UI
         {
             get
             {
-                return new ControlSet(Children.OfType<SpeedButton>());
+                return new ControlSet(ToolsAsButton);
             }
         }
 
@@ -376,7 +395,7 @@ namespace Alternet.UI
             {
                 var hasTrue = false;
                 var hasFalse = false;
-                foreach (var btn in ChildrenOfType<SpeedButton>())
+                foreach (var btn in ToolsAsButton)
                 {
                     if (btn.IsClickRepeated)
                         hasTrue = true;
@@ -391,7 +410,7 @@ namespace Alternet.UI
 
             set
             {
-                foreach (var btn in ChildrenOfType<SpeedButton>())
+                foreach (var btn in ToolsAsButton)
                 {
                     btn.IsClickRepeated = value;
                 }
@@ -441,13 +460,10 @@ namespace Alternet.UI
                 textVisible = value;
                 DoInsideLayout(() =>
                 {
-                    foreach (var item in Children)
+                    foreach (var speedButton in ToolsAsButton)
                     {
-                        if (item is SpeedButton speedButton)
-                        {
-                            speedButton.TextVisible = value;
-                            item.SuggestedSize = GetItemSuggestedSize(item);
-                        }
+                        speedButton.TextVisible = value;
+                        speedButton.SuggestedSize = GetItemSuggestedSize(speedButton);
                     }
                 });
             }
@@ -470,10 +486,9 @@ namespace Alternet.UI
                 imageVisible = value;
                 DoInsideLayout(() =>
                 {
-                    foreach (var item in Children)
+                    foreach (var speedButton in ToolsAsButton)
                     {
-                        if (item is SpeedButton speedButton)
-                            speedButton.ImageVisible = value;
+                        speedButton.ImageVisible = value;
                     }
                 });
             }
@@ -1363,20 +1378,13 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Gets all tools which are derived from the <see cref="SpeedButton"/>.
-        /// </summary>
-        public IEnumerable<SpeedButton> GetTools() => GetToolsAs<SpeedButton>();
-
-        /// <summary>
         /// Gets collection of the tools with 'Sticky' property equal to the specified value.
         /// </summary>
         /// <returns></returns>
         public virtual IEnumerable<SpeedButton> GetStickyTools(bool value = true)
         {
-            foreach (var item in Children)
+            foreach (var btn in ToolsAsButton)
             {
-                if (item is not SpeedButton btn)
-                    continue;
                 if (btn.Sticky == value)
                     yield return btn;
             }
@@ -1477,13 +1485,10 @@ namespace Alternet.UI
         /// otherwise, <see langword="false"/>.</returns>
         public virtual bool HasToolsWithImages()
         {
-            foreach (var item in Children)
+            foreach (var speedButton in ToolsAsButton)
             {
-                if (item is SpeedButton speedButton)
-                {
-                    if (speedButton.HasImage)
-                        return true;
-                }
+                if (speedButton.HasImage)
+                    return true;
             }
 
             return false;
@@ -1497,13 +1502,10 @@ namespace Alternet.UI
         /// otherwise, <see langword="false"/>.</returns>
         public virtual bool HasToolsWithLabelImages()
         {
-            foreach (var item in Children)
+            foreach (var speedButton in ToolsAsButton)
             {
-                if (item is SpeedButton speedButton)
-                {
-                    if (speedButton.HasLabelImage)
-                        return true;
-                }
+                if (speedButton.HasLabelImage)
+                    return true;
             }
 
             return false;
@@ -1529,15 +1531,12 @@ namespace Alternet.UI
 
             bool result = false;
 
-            foreach (var item in Children)
+            foreach (var speedButton in ToolsAsButton)
             {
-                if (item is SpeedButton speedButton)
-                {
-                    if (speedButton.HasLabelImage)
-                        continue;
-                    speedButton.SetLabelImage(img ?? KnownButtonImage.Transparent);
-                    result = true;
-                }
+                if (speedButton.HasLabelImage)
+                    continue;
+                speedButton.SetLabelImage(img ?? KnownButtonImage.Transparent);
+                result = true;
             }
 
             return result;
@@ -1565,15 +1564,12 @@ namespace Alternet.UI
 
             bool result = false;
 
-            foreach (var item in Children)
+            foreach (var speedButton in ToolsAsButton)
             {
-                if (item is SpeedButton speedButton)
-                {
-                    if (speedButton.HasImage)
-                        continue;
-                    speedButton.SetImage(img ?? KnownButtonImage.Transparent);
-                    result = true;
-                }
+                if (speedButton.HasImage)
+                    continue;
+                speedButton.SetImage(img ?? KnownButtonImage.Transparent);
+                result = true;
             }
 
             return result;
@@ -1603,12 +1599,9 @@ namespace Alternet.UI
         /// to set for the labels' text.</param>
         public virtual void SetMinToolLabelTextWidth(double width)
         {
-            foreach (var item in Children)
+            foreach (var speedButton in ToolsAsButton)
             {
-                if (item is SpeedButton speedButton)
-                {
-                    speedButton.Label.MinTextWidth = width;
-                }
+                speedButton.Label.MinTextWidth = width;
             }
         }
 
@@ -1629,14 +1622,11 @@ namespace Alternet.UI
             font ??= RealFont;
 
             double maxWidth = 0;
-            foreach (var item in Children)
+            foreach (var speedButton in ToolsAsButton)
             {
-                if (item is SpeedButton speedButton)
-                {
-                    var labelWidth = speedButton.Label.GetFormattedTextSize(font).Width;
-                    if (labelWidth > maxWidth)
-                        maxWidth = labelWidth;
-                }
+                var labelWidth = speedButton.Label.GetFormattedTextSize(font).Width;
+                if (labelWidth > maxWidth)
+                    maxWidth = labelWidth;
             }
 
             return maxWidth;
@@ -1669,12 +1659,9 @@ namespace Alternet.UI
         /// to set for the right side of each speed button.</param>
         public virtual void SetToolRightSideElementMinWidth(double width)
         {
-            foreach (var item in Children)
+            foreach (var speedButton in ToolsAsButton)
             {
-                if (item is SpeedButton speedButton)
-                {
-                    speedButton.MinRightSideWidth = width;
-                }
+                speedButton.MinRightSideWidth = width;
             }
         }
 
@@ -1693,14 +1680,11 @@ namespace Alternet.UI
         public virtual double GetMaxToolRightSideElementWidth()
         {
             double maxWidth = 0;
-            foreach (var item in Children)
+            foreach (var speedButton in ToolsAsButton)
             {
-                if (item is SpeedButton speedButton)
-                {
-                    var rightSideWidth = speedButton.Label.GetRightSideWidth(true);
-                    if (rightSideWidth > maxWidth)
-                        maxWidth = rightSideWidth;
-                }
+                var rightSideWidth = speedButton.Label.GetRightSideWidth(true);
+                if (rightSideWidth > maxWidth)
+                    maxWidth = rightSideWidth;
             }
 
             return maxWidth;
@@ -2274,13 +2258,10 @@ namespace Alternet.UI
         /// <param name="alignment">The alignment to set for the toolbar items.</param>
         public virtual void SetToolSpacerAlignment(HVAlignment alignment)
         {
-            foreach (var control in Children)
+            foreach (var control in ToolsAsButton)
             {
-                if (control is SpeedButton button)
-                {
-                    button.SpacerHorizontalAlignment = alignment.Horizontal;
-                    button.SpacerVerticalAlignment = alignment.Vertical;
-                }
+                control.SpacerHorizontalAlignment = alignment.Horizontal;
+                control.SpacerVerticalAlignment = alignment.Vertical;
             }
         }
 
@@ -2290,13 +2271,10 @@ namespace Alternet.UI
         /// <param name="alignment">The alignment to set for the toolbar items.</param>
         public virtual void SetToolImageAlignment(HVAlignment alignment)
         {
-            foreach (var control in Children)
+            foreach (var control in ToolsAsButton)
             {
-                if (control is SpeedButton button)
-                {
-                    button.ImageHorizontalAlignment = alignment.Horizontal;
-                    button.ImageVerticalAlignment = alignment.Vertical;
-                }
+                control.ImageHorizontalAlignment = alignment.Horizontal;
+                control.ImageVerticalAlignment = alignment.Vertical;
             }
         }
 
@@ -2306,13 +2284,10 @@ namespace Alternet.UI
         /// <param name="alignment">The alignment to set for the toolbar items.</param>
         public virtual void SetToolTextAlignment(HVAlignment alignment)
         {
-            foreach (var control in Children)
+            foreach (var control in ToolsAsButton)
             {
-                if (control is SpeedButton button)
-                {
-                    button.LabelHorizontalAlignment = alignment.Horizontal;
-                    button.LabelVerticalAlignment = alignment.Vertical;
-                }
+                control.LabelHorizontalAlignment = alignment.Horizontal;
+                control.LabelVerticalAlignment = alignment.Vertical;
             }
         }
 
