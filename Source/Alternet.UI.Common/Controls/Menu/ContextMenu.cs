@@ -193,6 +193,66 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Displays the context menu inside the specified container at the given position.
+        /// Uses <see cref="PopupControlWithToolBar"/> as the host control.
+        /// </summary>
+        /// <remarks>If the context menu is not already hosted
+        /// within a <see cref="PopupControlWithToolBar"/>,
+        /// a new instance of <see cref="PopupControlWithToolBar"/> is created
+        /// and configured as the host. The control
+        /// is positioned within the container, ensuring it remains visible within
+        /// the container's bounds.</remarks>
+        /// <param name="container">The container in which the context menu will be displayed.
+        /// This parameter cannot be null.</param>
+        /// <param name="position">The position within the container where the context menu
+        /// should be displayed. If null, the current mouse position
+        /// relative to the container is used.</param>
+        public virtual void ShowInsideControl(AbstractControl container, PointD? position = null)
+        {
+            var hostControl = HostControl;
+
+            if (hostControl is not PopupControlWithToolBar)
+            {
+                var popupWindow = new PopupControlWithToolBar();
+                popupWindow.Content.DataContext = this;
+                popupWindow.Content.ConfigureAsContextMenu();
+                hostControl = popupWindow;
+            }
+
+            HostControl = hostControl;
+
+            var pos = position ?? Mouse.GetPosition(container);
+
+            if (hostControl is PopupControlWithToolBar popupToolBar)
+            {
+                popupToolBar.Container = container;
+                popupToolBar.UpdateMinimumSize();
+                popupToolBar.UpdateMaxPopupSize();
+
+                var containerRect = popupToolBar.GetContainerRect();
+
+                if (containerRect is not null)
+                {
+                    popupToolBar.EnsureVisible(
+                                ref pos,
+                                containerRect.Value,
+                                adjustLine: false);
+                }
+
+                popupToolBar.Location = pos;
+                popupToolBar.Parent = container;
+
+                popupToolBar.ClosedAction = () =>
+                {
+                    popupToolBar.Parent = null;
+                    popupToolBar.Container = null;
+                };
+
+                popupToolBar.Show();
+            }
+        }
+
+        /// <summary>
         /// Displays the menu at the specified position.
         /// </summary>
         /// <param name="control">A <see cref="AbstractControl"/> that specifies
