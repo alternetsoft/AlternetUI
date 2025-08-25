@@ -16,7 +16,7 @@ namespace Alternet.UI
     /// individual items by index. Implementations of this
     /// interface are expected to provide read-only access to the menu items.</remarks>
     public interface IMenuProperties
-        : IReadOnlyListSource<IMenuItemProperties>, INotifyPropertyChanged, IBaseObjectWithId
+        : ICollectionObserver<object>, INotifyPropertyChanged, IBaseObjectWithId
     {
     }
 }

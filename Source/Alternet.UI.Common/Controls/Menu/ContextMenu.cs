@@ -102,7 +102,11 @@ namespace Alternet.UI
             Items.SetCount(source.Count, () => new MenuItem());
 
             for (var i = 0; i < source.Count; i++)
-                Items[i].Assign(source.GetItem(i));
+            {
+                if (source.GetItem(i) is not IMenuItemProperties sourceItem)
+                    continue;
+                Items[i].Assign(sourceItem);
+            }
         }
 
         /// <summary>

@@ -6,15 +6,15 @@ using System.Text;
 namespace Alternet.UI
 {
     /// <summary>
-    /// Represents a read-only collection of items that can be accessed by index.
+    /// Represents a collection of items that can be accessed by index
+    /// and has change notification capabilities.
     /// </summary>
     /// <remarks>This interface provides a way to retrieve the total number of items
-    /// in the collection and
-    /// access individual items by their zero-based index.
-    /// It is intended for scenarios where read-only access to a
-    /// list-like structure is required.</remarks>
+    /// in the collection and access individual items by their zero-based index.
+    /// Changes to the collection can be observed through the <see cref="Notification"/> property.
+    /// </remarks>
     /// <typeparam name="T">The type of elements in the collection.</typeparam>
-    public interface IReadOnlyListSource<T>
+    public interface ICollectionObserver<T>
     {
         /// <summary>
         /// Gets the object that provides notifications when the collection changes.

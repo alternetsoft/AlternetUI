@@ -60,7 +60,7 @@ namespace Alternet.UI
         /// Gets the total number of child items currently in the collection.
         /// </summary>
         [Browsable(false)]
-        int IReadOnlyListSource<IMenuItemProperties>.Count
+        int ICollectionObserver<object>.Count
         {
             get
             {
@@ -92,7 +92,7 @@ namespace Alternet.UI
         /// <inheritdoc />
         public override IEnumerable<FrameworkElement> LogicalChildrenCollection => ContentElements;
 
-        INotifyCollectionChanged IReadOnlyListSource<IMenuItemProperties>.Notification
+        INotifyCollectionChanged ICollectionObserver<object>.Notification
         {
             get => Items;
         }
@@ -119,7 +119,7 @@ namespace Alternet.UI
             }
         }
 
-        IMenuItemProperties IReadOnlyListSource<IMenuItemProperties>.GetItem(int index)
+        object ICollectionObserver<object>.GetItem(int index)
         {
             return Items[index];
         }
