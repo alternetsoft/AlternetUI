@@ -8,6 +8,9 @@ namespace ControlsSample
 {
     internal class PopupToolBarPage : Panel
     {
+        public DropDownAlignment? DropDownVerticalAlignment = DropDownAlignment.AfterEnd;
+        public DropDownAlignment? DropDownHorizontalAlignment = DropDownAlignment.AfterStart;
+
         public PopupToolBarPage()
         {
             var contextMenu = new SampleContextMenu();
@@ -51,7 +54,54 @@ namespace ControlsSample
             {
                 syncedPopupToolBar.MainControl.DataContext = contextMenu;
                 syncedPopupToolBar.MainControl.ConfigureAsContextMenu();
-                syncedPopupToolBar.ShowPopup(button3);
+
+                var position = new HVDropDownAlignment(
+                    DropDownHorizontalAlignment ?? DropDownAlignment.BeforeStart,
+                    DropDownVerticalAlignment ?? DropDownAlignment.AfterEnd);
+
+                syncedPopupToolBar.ShowPopup(button3, position);
+            };
+
+            Label label1 = new()
+            {
+                Text = "Vertical Alignment:",
+                Margin = 10,
+                Parent = this,
+            };
+
+            EnumPicker pickerVerticalAlignment = new()
+            {
+                Margin = 10,
+                Parent = this,
+            };
+
+            pickerVerticalAlignment.EnumType = typeof(DropDownAlignment);
+            pickerVerticalAlignment.Value = DropDownVerticalAlignment
+                ?? DropDownAlignment.AfterEnd;
+            pickerVerticalAlignment.ValueChanged += (s, e) =>
+            {
+                DropDownVerticalAlignment = (DropDownAlignment?)pickerVerticalAlignment.Value;
+            };
+
+            Label label2 = new()
+            {
+                Text = "Horizontal Alignment:",
+                Margin = 10,
+                Parent = this,
+            };
+
+            EnumPicker pickerHorizontalAlignment = new()
+            {
+                Margin = 10,
+                Parent = this,
+            };
+
+            pickerHorizontalAlignment.EnumType = typeof(DropDownAlignment);
+            pickerHorizontalAlignment.Value = DropDownHorizontalAlignment
+                ?? DropDownAlignment.BeforeStart;
+            pickerHorizontalAlignment.ValueChanged += (s, e) =>
+            {
+                DropDownHorizontalAlignment = (DropDownAlignment?)pickerHorizontalAlignment.Value;
             };
         }
 

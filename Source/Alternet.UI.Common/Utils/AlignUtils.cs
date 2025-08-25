@@ -19,50 +19,62 @@ namespace Alternet.UI
         /// to <see cref="HorizontalAlignment.Center"/> and the vertical alignment to
         /// <see cref="VerticalAlignment.Top"/> will position the dropdown at the center of
         /// the rectangle's top edge.</remarks>
-        /// <param name="size">The <see cref="SizeD"/> used as the reference for positioning
+        /// <param name="ownerSize">The <see cref="SizeD"/> used as the reference for positioning
         /// the dropdown.</param>
+        /// <param name="popupSize">Size of the drop-down control.</param>
         /// <param name="position">An optional alignment specifying the horizontal and vertical
         /// position of the dropdown relative to the <see cref="SizeD"/>.
         /// If <see langword="null"/>, the dropdown is positioned at the bottom-left corner.</param>
         /// <returns>A <see cref="PointD"/> representing the calculated
         /// position of the dropdown.</returns>
         public static PointD GetDropDownPosition(
-            SizeD size,
-            HVAlignment? position = null)
+            SizeD ownerSize,
+            SizeD popupSize,
+            HVDropDownAlignment? position = null)
         {
-            if (position == null)
-            {
-                PointD pt = (0, size.Height);
-                return pt;
-            }
+            position ??= new HVDropDownAlignment(
+                DropDownAlignment.AfterStart,
+                DropDownAlignment.AfterEnd);
 
             Coord x = 0;
-            Coord y = size.Height;
+            Coord y = ownerSize.Height;
 
             switch(position.Value.Horizontal)
             {
-                case HorizontalAlignment.Left:
-                        x = 0;
-                        break;
-                case HorizontalAlignment.Center:
-                        x = size.Width / 2;
-                        break;
-                case HorizontalAlignment.Right:
-                        x = size.Width;
-                        break;
+                case DropDownAlignment.BeforeStart:
+                    x = -popupSize.Width;
+                    break;
+                case DropDownAlignment.AfterStart:
+                    x = 0;
+                    break;
+                case DropDownAlignment.BeforeEnd:
+                    x = ownerSize.Width - popupSize.Width;
+                    break;
+                case DropDownAlignment.AfterEnd:
+                    x = ownerSize.Width;
+                    break;
+                case DropDownAlignment.Center:
+                    x = (ownerSize.Width - popupSize.Width) / 2;
+                    break;
             }
 
             switch (position.Value.Vertical)
             {
-                case VerticalAlignment.Top:
-                        y = 0;
-                        break;
-                case VerticalAlignment.Center:
-                        y = size.Height / 2;
-                        break;
-                case VerticalAlignment.Bottom:
-                        y = size.Height;
-                        break;
+                case DropDownAlignment.BeforeStart:
+                    y = -popupSize.Height;
+                    break;
+                case DropDownAlignment.AfterStart:
+                    y = 0;
+                    break;
+                case DropDownAlignment.BeforeEnd:
+                    y = ownerSize.Height - popupSize.Height;
+                    break;
+                case DropDownAlignment.AfterEnd:
+                    y = ownerSize.Height;
+                    break;
+                case DropDownAlignment.Center:
+                    y = (ownerSize.Height - popupSize.Height) / 2;
+                    break;
             }
 
             return (x, y);

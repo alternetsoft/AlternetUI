@@ -148,14 +148,14 @@ namespace Alternet.UI
         public virtual void ShowAsDropDown(
             AbstractControl control,
             Action? afterShow = null,
-            HVAlignment? position = null)
+            HVDropDownAlignment? position = null)
         {
             if (control is null)
                 throw new ArgumentNullException(nameof(control));
 
             Post(() =>
             {
-                var pt = AlignUtils.GetDropDownPosition(control.Size, position);
+                var pt = AlignUtils.GetDropDownPosition(control.Size, 0, position);
                 Show(control, pt);
                 afterShow?.Invoke();
             });

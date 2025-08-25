@@ -1438,7 +1438,7 @@ namespace Alternet.UI
         /// not of type <see cref="UserControl"/> are ignored.</remarks>
         /// <param name="position">The horizontal and vertical alignment to apply to the drop-down menu.
         /// A value of <see langword="null"/> clears the alignment setting.</param>
-        public virtual void SetDropDownMenuPosition(HVAlignment? position)
+        public virtual void SetDropDownMenuPosition(HVDropDownAlignment? position)
         {
             foreach (var item in Children)
             {
@@ -1471,7 +1471,7 @@ namespace Alternet.UI
                 }
             });
 
-            SetDropDownMenuPosition(HVAlignment.TopRight);
+            SetDropDownMenuPosition(new (DropDownAlignment.AfterEnd, DropDownAlignment.AfterStart));
         }
 
         /// <summary>

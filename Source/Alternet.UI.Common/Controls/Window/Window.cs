@@ -2006,7 +2006,6 @@ namespace Alternet.UI
             {
                 case WindowStartLocation.Default:
                 case WindowStartLocation.Manual:
-                    SetLocationOnDisplay(null, null);
                     break;
                 case WindowStartLocation.ScreenTopRight:
                     SetLocationOnDisplay(HorizontalAlignment.Right, VerticalAlignment.Top);

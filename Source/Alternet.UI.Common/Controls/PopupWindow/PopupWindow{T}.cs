@@ -191,6 +191,17 @@ namespace Alternet.UI
         public ContainerControl MainPanel => mainPanel;
 
         /// <summary>
+        /// Gets a value indicating whether a popup can be displayed.
+        /// </summary>
+        public virtual bool CanShowPopup
+        {
+            get
+            {
+                return true;
+            }
+        }
+
+        /// <summary>
         /// Gets bottom toolbar with 'Ok', 'Cancel' and other buttons.
         /// </summary>
         [Browsable(false)]
@@ -445,19 +456,18 @@ namespace Alternet.UI
         /// This parameter cannot be <see langword="null"/>.</param>
         /// <param name="position">The optional horizontal and vertical alignment of the popup
         /// relative to the control. If <see langword="null"/>, the default alignment is used.</param>
-        public virtual void ShowPopup(AbstractControl control, HVAlignment? position = null)
+        public virtual void ShowPopup(AbstractControl control, HVDropDownAlignment? position = null)
         {
             PopupOwner = control;
 
             var posDip = control.ClientToScreen(PointD.Empty);
             posDip += PopupLocationIncrement;
             var szDip = control.Size;
-            var sz = (0, szDip.Height);
 
             RunWhenIdle(() =>
             {
                 if(!DisposingOrDisposed)
-                    ShowPopup(posDip, sz, position);
+                    ShowPopup(posDip, szDip, position);
             });
         }
 
@@ -476,24 +486,27 @@ namespace Alternet.UI
         /// <paramref name="ptOrigin"/> and <paramref name="sizePopup"/> are specified in
         /// device-independent units.
         /// </remarks>
-        public virtual void ShowPopup(PointD ptOrigin, SizeD sizePopup, HVAlignment? position = null)
+        public virtual void ShowPopup(
+            PointD? ptOrigin,
+            SizeD sizePopup,
+            HVDropDownAlignment? position = null)
         {
+            if(!CanShowPopup)
+                return;
+
             if (!WasShown)
             {
                 SetClientSizeTo(MainControl.Size);
             }
 
-            SetPositionInDips(ptOrigin, sizePopup, position);
-            ShowPopup();
-        }
-
-        /// <summary>
-        /// Shows popup window without changing its position and size.
-        /// </summary>
-        public virtual void ShowPopup()
-        {
-            PopupResult = ModalResult.None;
             BeforeShowPopup();
+
+            if(ptOrigin is not null)
+            {
+                SetPositionInDips(ptOrigin.Value, sizePopup, position);
+            }
+
+            PopupResult = ModalResult.None;
             ActiveControl = MainControl;
             ShowAndFocus();
             WasShown = true;
@@ -519,7 +532,7 @@ namespace Alternet.UI
             bool shrinkSize = true)
         {
             SetLocationOnDisplay(horz, vert, display, shrinkSize);
-            ShowPopup();
+            ShowPopup(null, SizeD.Empty);
         }
 
         /// <summary>
@@ -573,8 +586,12 @@ namespace Alternet.UI
         public virtual void SetPositionInDips(
             PointD ptOrigin,
             SizeD size,
-            HVAlignment? position = null)
+            HVDropDownAlignment? position = null)
         {
+            SizeD sizeSelf = Size;
+
+            ptOrigin += AlignUtils.GetDropDownPosition(size, sizeSelf, position) - size;
+
             // determine the position and size of the screen we clamp the popup to
             PointD posScreen;
             SizeD sizeScreen;
@@ -596,10 +613,8 @@ namespace Alternet.UI
                 sizeScreen = display.ClientAreaDip.Size;
             }
 
-            SizeD sizeSelf = display.PixelFromDip(Size);
-
-            // is there enough space to put the popup below the window (where we put it
-            // by default)?
+            // is there enough space to put the popup below the window
+            // (where we put it by default)?
             Coord y = ptOrigin.Y + size.Height;
             if (y + sizeSelf.Height > posScreen.Y + sizeScreen.Height)
             {
@@ -623,7 +638,9 @@ namespace Alternet.UI
                 x -= sizeSelf.Width;        // also shift it by window width.
             }
             else
+            {
                 x += size.Width;
+            }
 
             if (x + sizeSelf.Width > posScreen.X + sizeScreen.Width)
             {
@@ -636,6 +653,8 @@ namespace Alternet.UI
 
                 // else: not enough space there either, leave in default position
             }
+
+            x = Math.Max(x, posScreen.X);
 
             Location = (x, y);
         }

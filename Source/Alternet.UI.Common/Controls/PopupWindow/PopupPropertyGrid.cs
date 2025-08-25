@@ -44,7 +44,6 @@ namespace Alternet.UI
                 VerticalAlignment.Top,
                 null,
                 shrinkSize: true);
-            dialog.ShowPopup();
             dialog.AfterHide += (s, e) =>
             {
                 if (dialog.IsPopupAccepted)

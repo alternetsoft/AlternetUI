@@ -22,7 +22,7 @@ namespace Alternet.UI
         private RichTextBoxScrollBars scrollBars = RichTextBoxScrollBars.None;
         private bool showDropDownMenuWhenClicked = true;
         private List<IControlOverlay>? overlays;
-        private HVAlignment? dropDownMenuPosition;
+        private HVDropDownAlignment? dropDownMenuPosition;
 
         static UserControl()
         {
@@ -91,7 +91,7 @@ namespace Alternet.UI
         /// to the control's bottom-left corner. Default is <see langword="null"/>.
         /// </summary>
         [Browsable(false)]
-        public virtual HVAlignment? DropDownMenuPosition
+        public virtual HVDropDownAlignment? DropDownMenuPosition
         {
             get => dropDownMenuPosition;
             set => dropDownMenuPosition = value;
