@@ -45,7 +45,7 @@ namespace Alternet.UI
 
         IContextMenuHandler IControlFactoryHandler.CreateContextMenuHandler(ContextMenu control)
         {
-            return new PlessContextMenuHandler();
+            return new MauiContextMenuHandler();
         }
 
         IControlHandler IControlFactoryHandler.CreateControlHandler(AbstractControl control)

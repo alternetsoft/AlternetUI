@@ -18,6 +18,8 @@ namespace Alternet.UI
         /// </summary>
         public PopupControlWithToolBar()
         {
+            Content.HorizontalAlignment = HorizontalAlignment.Left;
+            Content.VerticalAlignment = VerticalAlignment.Top;
             Content.Margin = PopupToolBar.DefaultContentMargin;
             Content.ParentForeColor = true;
             Content.ParentBackColor = true;
@@ -106,7 +108,7 @@ namespace Alternet.UI
         /// layout state  and content adjustments. It ensures that the
         /// control's size constraints are updated to reflect
         /// any changes in its content or layout preferences.</remarks>
-        protected virtual void UpdateMinimumSize()
+        public virtual void UpdateMinimumSize()
         {
             Content.DoInsideLayout(() =>
             {
@@ -126,6 +128,8 @@ namespace Alternet.UI
                 if (IsRightSideElementWidthMaximized)
                     Content.MaximizeToolRightSideElementWidth();
             });
+
+            Content.SetSizeToContent();
 
             var preferredSize = GetPreferredSize();
             ClientSize = preferredSize;

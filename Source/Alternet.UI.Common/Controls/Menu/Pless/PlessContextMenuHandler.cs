@@ -13,8 +13,19 @@ namespace Alternet.UI
     /// </summary>
     public class PlessContextMenuHandler : PlessControlHandler, IContextMenuHandler
     {
+        /// <summary>
+        /// Gets the <see cref="ContextMenu"/> associated with this component, if any.
+        /// </summary>
+        public new ContextMenu? Control
+        {
+            get
+            {
+                return (ContextMenu?)base.Control;
+            }
+        }
+
         /// <inheritdoc/>
-        public virtual void Show(IControl control, PointD? position = null)
+        public virtual void Show(AbstractControl control, PointD? position = null)
         {
         }
     }

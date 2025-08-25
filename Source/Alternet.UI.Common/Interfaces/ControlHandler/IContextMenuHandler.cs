@@ -18,6 +18,6 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="control">Target control.</param>
         /// <param name="position">Position in local coordinates.</param>
-        void Show(IControl control, PointD? position = null);
+        void Show(AbstractControl control, PointD? position = null);
     }
 }

@@ -2340,6 +2340,9 @@ namespace Alternet.UI
         {
             AbstractControl result;
 
+            if(index < 0 || index > Children.Count)
+                index = Children.Count;
+
             if (menuItem.Text == "-")
             {
                 result = InsertSeparatorCore(index);
@@ -2355,7 +2358,7 @@ namespace Alternet.UI
                     toolTip: null,
                     (s, e) =>
                     {
-                        menuItem.DoClick();
+                        Post(menuItem.DoClick);
                     });
                 speedButton.Label.MnemonicMarker = '_';
                 speedButton.Label.MnemonicMarkerEnabled = true;
@@ -2785,7 +2788,7 @@ namespace Alternet.UI
                         var menuItem = menuProperties.GetItem(i);
                         if (menuItem is not IMenuItemProperties item)
                             continue;
-                        InsertItem(i, item);
+                        InsertItem(-1, item);
                     }
                 });
             }

@@ -10,7 +10,7 @@ namespace Alternet.UI
         {
         }
 
-        public void Show(IControl control, PointD? position = null)
+        public void Show(AbstractControl control, PointD? position = null)
         {
             if (Control is null)
                 return;
