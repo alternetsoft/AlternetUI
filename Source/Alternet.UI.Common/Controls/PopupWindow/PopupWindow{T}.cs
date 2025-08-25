@@ -451,13 +451,13 @@ namespace Alternet.UI
 
             var posDip = control.ClientToScreen(PointD.Empty);
             posDip += PopupLocationIncrement;
-            var pt = AlignUtils.GetDropDownPosition(control.Size, position);
-            var sz = (pt.X, pt.Y);
+            var szDip = control.Size;
+            var sz = (0, szDip.Height);
 
             RunWhenIdle(() =>
             {
                 if(!DisposingOrDisposed)
-                    ShowPopup(posDip, sz);
+                    ShowPopup(posDip, sz, position);
             });
         }
 
@@ -466,6 +466,8 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="ptOrigin">Popup window location.</param>
         /// <param name="sizePopup">The size of the popup window.</param>
+        /// <param name="position">The optional horizontal and vertical alignment of the popup
+        /// relative to the control. If <see langword="null"/>, the default alignment is used.</param>
         /// <remarks>
         /// The popup is positioned at (ptOrigin + size) if it opens below and to the right
         /// (default), at (ptOrigin - sizePopup) if it opens above and to the left.
@@ -474,14 +476,14 @@ namespace Alternet.UI
         /// <paramref name="ptOrigin"/> and <paramref name="sizePopup"/> are specified in
         /// device-independent units.
         /// </remarks>
-        public virtual void ShowPopup(PointD ptOrigin, SizeD sizePopup)
+        public virtual void ShowPopup(PointD ptOrigin, SizeD sizePopup, HVAlignment? position = null)
         {
             if (!WasShown)
             {
                 SetClientSizeTo(MainControl.Size);
             }
 
-            SetPositionInDips(ptOrigin, sizePopup);
+            SetPositionInDips(ptOrigin, sizePopup, position);
             ShowPopup();
         }
 
@@ -558,15 +560,20 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="ptOrigin">Must be given in screen coordinates.</param>
         /// <param name="size">The size of the popup window.</param>
+        /// <param name="position">The optional horizontal and vertical alignment of the popup
+        /// relative to the control. If <see langword="null"/>, the default alignment is used.</param>
         /// <remarks>
-        /// The popup is positioned at (ptOrigin + size) if it opens below and to the right
+        /// Default popup position is (ptOrigin + size) if it opens below and to the right
         /// (default), at (ptOrigin - size) if it opens above and to the left.
         /// </remarks>
         /// <remarks>
         /// <paramref name="ptOrigin"/> and <paramref name="size"/> are specified in
         /// device-independent units.
         /// </remarks>
-        internal virtual void SetPositionInDips(PointD ptOrigin, SizeD size)
+        public virtual void SetPositionInDips(
+            PointD ptOrigin,
+            SizeD size,
+            HVAlignment? position = null)
         {
             // determine the position and size of the screen we clamp the popup to
             PointD posScreen;
