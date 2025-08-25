@@ -16,11 +16,17 @@ namespace Alternet.UI
     [ControlCategory("Other")]
     public partial class UserControl : Control
     {
+        private static bool? defaultUseInternalDropDownMenu;
+
         private bool hasBorder;
         private RichTextBoxScrollBars scrollBars = RichTextBoxScrollBars.None;
         private bool showDropDownMenuWhenClicked = true;
         private List<IControlOverlay>? overlays;
         private HVAlignment? dropDownMenuPosition;
+
+        static UserControl()
+        {
+        }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="UserControl"/> class.
@@ -51,6 +57,32 @@ namespace Alternet.UI
         /// and set the <see cref="CancelEventArgs.Cancel"/>
         /// property to <see langword="true"/> to prevent the menu from being displayed.</remarks>
         public event EventHandler<BaseCancelEventArgs>? DropDownMenuShowing;
+
+        /// <summary>
+        /// Gets or sets a value indicating whether the application should
+        /// use the internal drop-down menu by default.
+        /// </summary>
+        public static bool DefaultUseInternalDropDownMenu
+        {
+            get
+            {
+                defaultUseInternalDropDownMenu ??= App.IsMaui;
+                return defaultUseInternalDropDownMenu.Value;
+            }
+
+            set
+            {
+                defaultUseInternalDropDownMenu = value;
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether an internal drop-down menu should be used.
+        /// Default is <see langword="null"/>.
+        /// If not set, the value of <see cref="DefaultUseInternalDropDownMenu"/> is used.
+        /// </summary>
+        [Browsable(false)]
+        public virtual bool? UseInternalDropDownMenu { get; set; }
 
         /// <summary>
         /// Gets or sets the alignment position of the drop-down menu.
@@ -643,7 +675,7 @@ namespace Alternet.UI
         /// </summary>
         protected virtual void ShowDropDownMenu(Action? afterShow = null)
         {
-            if (!Enabled)
+            if (!Enabled || DropDownMenu is null)
                 return;
 
             if(DropDownMenuShowing is not null)
@@ -654,7 +686,37 @@ namespace Alternet.UI
                     return;
             }
 
-            DropDownMenu?.ShowAsDropDown(this, afterShow, DropDownMenuPosition);
+            if (UseInternalDropDownMenu ?? DefaultUseInternalDropDownMenu)
+            {
+                var hostControl = DropDownMenu.HostControl;
+
+                if (hostControl is null)
+                {
+                    var popupWindow = new PopupToolBar();
+                    hostControl = popupWindow;
+                    DropDownMenu.HostControl = popupWindow;
+                    popupWindow.MainControl.DataContext = DropDownMenu;
+                    popupWindow.MainControl.ConfigureAsContextMenu();
+                    popupWindow.Activated += (s, e) =>
+                    {
+                        Post(() =>
+                        {
+                            PopupToolBar.IsHideOnDeactivateSuppressed = false;
+                            afterShow?.Invoke();
+                        });
+                    };
+                }
+
+                if (hostControl is PopupToolBar popupToolBar)
+                {
+                    PopupToolBar.IsHideOnDeactivateSuppressed = true;
+                    popupToolBar.ShowPopup(this, DropDownMenuPosition);
+                }
+            }
+            else
+            {
+                DropDownMenu.ShowAsDropDown(this, afterShow, DropDownMenuPosition);
+            }
         }
 
         /// <inheritdoc/>
