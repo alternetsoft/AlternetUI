@@ -241,8 +241,9 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets owner of the popup window.
         /// </summary>
-        /// <remarks>Usually owner of the popup window is a control under which popup is
-        /// shown using <see cref="ShowPopup(AbstractControl)"/> method.</remarks>
+        /// <remarks>
+        /// Usually owner of the popup window is a control under which popup is shown.
+        /// </remarks>
         [Browsable(false)]
         public AbstractControl? PopupOwner { get; set; }
 
@@ -437,17 +438,21 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Shows popup under bottom left corner of the specified control.
+        /// Displays a popup window near the specified control.
+        /// If position is not specified, the popup is shown below and to the left of the control.
         /// </summary>
-        /// <param name="control">Control.</param>
-        public virtual void ShowPopup(AbstractControl control)
+        /// <param name="control">The control which is used to calculate the popup position.
+        /// This parameter cannot be <see langword="null"/>.</param>
+        /// <param name="position">The optional horizontal and vertical alignment of the popup
+        /// relative to the control. If <see langword="null"/>, the default alignment is used.</param>
+        public virtual void ShowPopup(AbstractControl control, HVAlignment? position = null)
         {
             PopupOwner = control;
 
             var posDip = control.ClientToScreen(PointD.Empty);
             posDip += PopupLocationIncrement;
-            var szDip = control.Size;
-            var sz = (0, szDip.Height);
+            var pt = AlignUtils.GetDropDownPosition(control.Size, position);
+            var sz = (pt.X, pt.Y);
 
             RunWhenIdle(() =>
             {
