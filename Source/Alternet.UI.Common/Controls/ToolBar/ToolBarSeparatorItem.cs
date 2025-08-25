@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Text;
 
+using Alternet.Drawing;
+
 namespace Alternet.UI
 {
     /// <summary>
@@ -43,6 +45,12 @@ namespace Alternet.UI
             }
         }
 
+        /// <inheritdoc/>
+        public override SizeD GetPreferredSize(SizeD availableSize)
+        {
+            return SuggestedSize;
+        }
+
         /// <summary>
         /// Updates the layout and appearance of the separator based on its orientation.
         /// </summary>
@@ -55,13 +63,13 @@ namespace Alternet.UI
             if (isVertical)
             {
                 BorderWidth = (0, ToolBar.DefaultSeparatorWidth, 0, 0);
-                SuggestedSize = (Coord.NaN, ToolBar.DefaultSeparatorWidth);
+                SuggestedSize = (ToolBar.DefaultSeparatorWidth, ToolBar.DefaultSeparatorWidth);
                 Margin = ToolBar.DefaultSeparatorMargin;
             }
             else
             {
                 BorderWidth = (ToolBar.DefaultSeparatorWidth, 0, 0, 0);
-                SuggestedSize = (ToolBar.DefaultSeparatorWidth, Coord.NaN);
+                SuggestedSize = (ToolBar.DefaultSeparatorWidth, ToolBar.DefaultSeparatorWidth);
                 Margin = ToolBar.DefaultSeparatorMargin;
             }
         }
