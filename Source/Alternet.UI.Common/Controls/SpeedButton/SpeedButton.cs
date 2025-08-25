@@ -382,6 +382,12 @@ namespace Alternet.UI
         public static string DefaultShortcutToolTipTemplate { get; set; } = "({0})";
 
         /// <summary>
+        /// Gets or sets a value indicating whether the drop-down menu
+        /// is displayed when the user hovers over the associated control.
+        /// </summary>
+        public virtual bool ShowDropDownMenuWhenHovered { get; set; }
+
+        /// <summary>
         /// Gets or sets a value indicating whether tooltip is shown
         /// when mouse hovers over the control.
         /// </summary>
@@ -1835,6 +1841,7 @@ namespace Alternet.UI
                 SetContentHorizontalAlignment(HorizontalAlignment.Left);
                 Label.HorizontalAlignment = HorizontalAlignment.Fill;
                 RightSideElement = SpeedButton.RightSideElementKind.KeyGesture;
+                ShowDropDownMenuWhenHovered = true;
 
                 if (DropDownMenu is null)
                 {
@@ -1845,6 +1852,49 @@ namespace Alternet.UI
                     SetLabelImage(MenuItem.DefaultMenuArrowImage);
                 }
             });
+        }
+
+        /// <summary>
+        /// Assigns the properties of the specified menu item to the current instance.
+        /// </summary>
+        /// <remarks>This method updates the current instance's properties, such as images,
+        /// visibility,  enabled state, and shortcut, based on the values provided
+        /// by the <paramref name="menuItem"/>. If the
+        /// <paramref name="menuItem"/> has an SVG image, it is set using
+        /// the <c>SetSvgImage</c> method;  otherwise, the
+        /// standard and disabled images are assigned directly.</remarks>
+        /// <param name="menuItem">The menu item whose properties are to be assigned.
+        /// Cannot be <see langword="null"/>.</param>
+        public virtual void Assign(IMenuItemProperties menuItem)
+        {
+            Text = menuItem.Text;
+
+            if (menuItem.SvgImage is not null)
+            {
+                SetSvgImage(menuItem.SvgImage, null);
+            }
+            else
+            {
+                ImageSet = menuItem.Image;
+                DisabledImageSet = menuItem.DisabledImage;
+            }
+
+            Visible = menuItem.Visible;
+            Enabled = menuItem.Enabled;
+            Shortcut = menuItem.Shortcut;
+
+            if (menuItem.Count == 0)
+            {
+                DropDownMenu = null;
+                RightSideElement = RightSideElementKind.KeyGesture;
+            }
+            else
+            {
+                RightSideElement = RightSideElementKind.Image;
+                DropDownMenu ??= new ContextMenu();
+                DropDownMenu.Assign(menuItem);
+                SetRightSideImage(MenuItem.DefaultMenuArrowImage);
+            }
         }
 
         /// <inheritdoc/>
@@ -2182,47 +2232,13 @@ namespace Alternet.UI
             }
         }
 
-        /// <summary>
-        /// Assigns the properties of the specified menu item to the current instance.
-        /// </summary>
-        /// <remarks>This method updates the current instance's properties, such as images,
-        /// visibility,  enabled state, and shortcut, based on the values provided
-        /// by the <paramref name="menuItem"/>. If the
-        /// <paramref name="menuItem"/> has an SVG image, it is set using
-        /// the <c>SetSvgImage</c> method;  otherwise, the
-        /// standard and disabled images are assigned directly.</remarks>
-        /// <param name="menuItem">The menu item whose properties are to be assigned.
-        /// Cannot be <see langword="null"/>.</param>
-        protected virtual void Assign(IMenuItemProperties menuItem)
+        /// <inheritdoc/>
+        protected override void OnMouseHover(EventArgs e)
         {
-            Text = menuItem.Text;
-
-            if (menuItem.SvgImage is not null)
-            {
-                SetSvgImage(menuItem.SvgImage, null);
-            }
-            else
-            {
-                ImageSet = menuItem.Image;
-                DisabledImageSet = menuItem.DisabledImage;
-            }
-
-            Visible = menuItem.Visible;
-            Enabled = menuItem.Enabled;
-            Shortcut = menuItem.Shortcut;
-
-            if(menuItem.Count == 0)
-            {
-                DropDownMenu = null;
-                RightSideElement = RightSideElementKind.KeyGesture;
-            }
-            else
-            {
-                RightSideElement = RightSideElementKind.Image;
-                DropDownMenu ??= new ContextMenu();
-                DropDownMenu.Assign(menuItem);
-                SetRightSideImage(MenuItem.DefaultMenuArrowImage);
-            }
+            if (DisposingOrDisposed)
+                return;
+            if (ShowDropDownMenuWhenHovered)
+                ShowDropDownMenu();
         }
 
         /// <summary>
