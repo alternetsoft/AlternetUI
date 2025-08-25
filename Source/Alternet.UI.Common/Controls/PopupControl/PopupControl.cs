@@ -18,7 +18,7 @@ namespace Alternet.UI
         private bool allowNegativeLocation;
         private bool fitIntoParent = true;
         private bool fitParentScrollbars = true;
-        private Control? container;
+        private AbstractControl? container;
         private ModalResult popupResult = ModalResult.None;
         private bool cancelOnLostFocus;
         private bool acceptOnLostFocus;
@@ -84,6 +84,14 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets or sets the action to be executed when the popup is closed.
+        /// </summary>
+        /// <remarks>This property allows you to define a custom action to be invoked
+        /// when the popup is closed.
+        /// If set to <see langword="null"/>, no action will be performed.</remarks>
+        public Action? ClosedAction { get; set; }
+
+        /// <summary>
         /// Gets or sets the area that should not be covered by the popup.
         /// </summary>
         public virtual RectD? ExcludedArea { get; set; }
@@ -91,7 +99,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets container where popup will be shown.
         /// </summary>
-        public virtual Control? Container
+        public virtual AbstractControl? Container
         {
             get
             {
@@ -220,7 +228,7 @@ namespace Alternet.UI
 
         /// <summary>
         /// Gets or sets a value indicating whether the control should adjust its size
-        /// to fit within the scrollable area of its parent.
+        /// to fit within the scrollable area of its parent. Default is True.
         /// </summary>
         /// <remarks>When set to <see langword="true"/>, the control will automatically resize to ensure
         /// it does not exceed the scrollable bounds of its parent container.
@@ -240,7 +248,7 @@ namespace Alternet.UI
 
         /// <summary>
         /// Gets or sets whether to adjust size of the popup to fit into
-        /// the parent's client area.
+        /// the parent's client area. Default is True.
         /// </summary>
         public virtual bool FitIntoParent
         {
@@ -383,6 +391,7 @@ namespace Alternet.UI
                 if (IsDisposed)
                     return;
                 Closed?.Invoke(this, EventArgs.Empty);
+                ClosedAction?.Invoke();
             });
         }
 
@@ -506,6 +515,18 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Updates maximal popup size.
+        /// </summary>
+        public virtual void UpdateMaxPopupSize()
+        {
+            if (!fitIntoParent || Parent is null)
+                return;
+            var sz = GetMaxPopupSize();
+            if (sz is not null)
+                Size = SizeD.Min(sz.Value, Size);
+        }
+
+        /// <summary>
         /// Calculates the height of the font used by the container.
         /// </summary>
         /// <remarks>If the container is not available, the current instance is used as the fallback.
@@ -527,7 +548,7 @@ namespace Alternet.UI
         /// The size is calculated using the
         /// container's scrollbar settings.</remarks>
         /// <returns>A <see cref="SizeD"/> representing the dimensions of the scrollbar corner.</returns>
-        protected virtual SizeD GetContainerScrollbarSize()
+        public virtual SizeD GetContainerScrollbarSize()
         {
             var p = GetContainer() ?? this;
             var cornerSize = ScrollBar.GetCornerSize(p);
@@ -535,11 +556,28 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Calculates the bounding rectangle of the container in which popup can be displayed.
+        /// </summary>
+        /// <returns>A <see cref="RectD"/> representing the container's location and size,
+        /// or <see langword="null"/> if the
+        /// container or size is not available.</returns>
+        public virtual RectD? GetContainerRect()
+        {
+            var size = GetMaxPopupSize();
+            var container = GetContainer();
+
+            if (size is null || container is null)
+                return null;
+
+            return (container.Location, size.Value);
+        }
+
+        /// <summary>
         /// Gets maximal size of the popup.
         /// Returns Null if size is not limited.
         /// </summary>
         /// <returns></returns>
-        protected virtual SizeD? GetMaxPopupSize()
+        public virtual SizeD? GetMaxPopupSize()
         {
             if (!fitIntoParent)
                 return null;
@@ -687,18 +725,6 @@ namespace Alternet.UI
         {
             RemoveGlobalNotification(subscriber);
             base.DisposeManaged();
-        }
-
-        /// <summary>
-        /// Updates maximal popup size.
-        /// </summary>
-        protected virtual void UpdateMaxPopupSize()
-        {
-            if (!fitIntoParent || Parent is null)
-                return;
-            var sz = GetMaxPopupSize();
-            if (sz is not null)
-                Size = SizeD.Min(sz.Value, Size);
         }
     }
 }
