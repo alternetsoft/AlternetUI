@@ -2292,6 +2292,11 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Same as <see cref="ToolsAsButton"/>.
+        /// </summary>
+        public IEnumerable<SpeedButton> GetTools() => ToolsAsButton;
+
+        /// <summary>
         /// Adds <see cref="SpeedButton"/> to the control.
         /// </summary>
         /// <param name="text">Item text.</param>
