@@ -141,6 +141,26 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Determines the effective position based on the specified position and the relative control.
+        /// </summary>
+        /// <param name="position">The position to evaluate.
+        /// If <see langword="null"/> or equal to <see cref="PointD.MinusOne"/>, the current
+        /// mouse position relative to <paramref name="relativeTo"/> is returned.</param>
+        /// <param name="relativeTo">The control relative to which the mouse position
+        /// is calculated if <paramref name="position"/> is <see langword="null"/> or
+        /// <see cref="PointD.MinusOne"/>. Can be <see langword="null"/>.</param>
+        /// <returns>The coerced position. If <paramref name="position"/>
+        /// is not <see langword="null"/> and not <see cref="PointD.MinusOne"/>,
+        /// the value of <paramref name="position"/> is returned.</returns>
+        public static PointD CoercePosition(PointD? position, AbstractControl? relativeTo)
+        {
+            if(position is null || position == PointD.MinusOne)
+                return Mouse.GetPosition(relativeTo);
+
+            return position.Value;
+        }
+
+        /// <summary>
         ///     Calculates the position of the mouse relative to
         ///     a particular element.
         /// </summary>
