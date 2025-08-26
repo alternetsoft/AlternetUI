@@ -329,7 +329,7 @@ namespace Alternet.UI
                 AddHostControl(popupWindow);
             }
 
-            var pos = position ?? Mouse.GetPosition(container);
+            var pos = Mouse.CoercePosition(position, container);
 
             if (hostControl is PopupControlWithToolBar popupToolBar)
             {
