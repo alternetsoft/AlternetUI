@@ -11,13 +11,10 @@ namespace Alternet.UI
 {
     public partial class AbstractControl
     {
-        /* Static events */
-
-        /* Instance events */
-
         /// <summary>
         /// Occurs when the context menu for the control is created.
         /// </summary>
+        [Category("Behavior")]
         public event EventHandler? ContextMenuCreated;
 
         /// <summary>
