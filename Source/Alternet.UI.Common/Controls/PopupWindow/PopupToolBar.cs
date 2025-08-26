@@ -13,7 +13,7 @@ namespace Alternet.UI
     /// <summary>
     /// Popup window with <see cref="ToolBar"/> control.
     /// </summary>
-    public partial class PopupToolBar : PopupWindow<ToolBar>
+    public partial class PopupToolBar : PopupWindow<ToolBar>, IContextMenuHost
     {
         /// <summary>
         /// Indicates whether the suppression of the "Hide on Deactivate" behavior is enabled.
@@ -142,6 +142,14 @@ namespace Alternet.UI
             get
             {
                 return MainControl.HasChildren;
+            }
+        }
+
+        AbstractControl IContextMenuHost.ContextMenuHost
+        {
+            get
+            {
+                return MainControl;
             }
         }
 

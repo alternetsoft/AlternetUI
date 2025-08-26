@@ -88,12 +88,12 @@ namespace Alternet.UI
             {
                 if (HostControl is null)
                     return false;
-                if (HostControl is PopupToolBar popupToolBar)
+                if (HostControl is IContextMenuHost popup)
                 {
-                    if (!popupToolBar.Visible)
+                    if (!popup.IsVisible)
                         return false;
 
-                    var dataContext = popupToolBar.MainControl.DataContext as IMenuProperties;
+                    var dataContext = popup.ContextMenuHost.DataContext as IMenuProperties;
                     var result = dataContext?.UniqueId == UniqueId;
                     return result;
                 }
@@ -141,6 +141,7 @@ namespace Alternet.UI
 
         /// <summary>
         /// Shows the context menu as a drop-down menu under the specified control.
+        /// This method uses native menu via handler.
         /// </summary>
         /// <param name="control">The control with which this context menu is associated.</param>
         /// <param name="afterShow">The action to be invoked after the menu is shown.</param>
@@ -190,6 +191,51 @@ namespace Alternet.UI
             }
 
             OnOpening(e);
+        }
+
+        /// <summary>
+        /// Displays the context menu in a popup window.
+        /// </summary>
+        /// <remarks>This method creates and configures a popup window to display the context menu.
+        /// If the popup is already initialized, it reuses the existing instance.
+        /// The <paramref name="afterShow"/> callback
+        /// is executed after the popup is fully displayed, allowing additional actions
+        /// to be performed.</remarks>
+        /// <param name="control">The control that specifies the position origin.</param>
+        /// <param name="afterShow">An optional callback action to be invoked after the
+        /// popup is displayed.</param>
+        /// <param name="dropDownMenuPosition">An optional parameter specifying the alignment
+        /// of the popup relative to the control. If not provided,
+        /// a default alignment is used.</param>
+        public virtual void ShowInPopup(
+            AbstractControl control,
+            Action? afterShow = null,
+            HVDropDownAlignment? dropDownMenuPosition = null)
+        {
+            var hostControl = HostControl;
+
+            if (hostControl is null)
+            {
+                var popupWindow = new PopupToolBar();
+                hostControl = popupWindow;
+                HostControl = popupWindow;
+                popupWindow.MainControl.DataContext = this;
+                popupWindow.MainControl.ConfigureAsContextMenu();
+                popupWindow.Activated += (s, e) =>
+                {
+                    Post(() =>
+                    {
+                        PopupToolBar.IsHideOnDeactivateSuppressed = false;
+                        afterShow?.Invoke();
+                    });
+                };
+            }
+
+            if (hostControl is PopupToolBar popupToolBar)
+            {
+                PopupToolBar.IsHideOnDeactivateSuppressed = true;
+                popupToolBar.ShowPopup(control, dropDownMenuPosition);
+            }
         }
 
         /// <summary>

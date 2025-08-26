@@ -688,30 +688,7 @@ namespace Alternet.UI
 
             if (UseInternalDropDownMenu ?? DefaultUseInternalDropDownMenu)
             {
-                var hostControl = DropDownMenu.HostControl;
-
-                if (hostControl is null)
-                {
-                    var popupWindow = new PopupToolBar();
-                    hostControl = popupWindow;
-                    DropDownMenu.HostControl = popupWindow;
-                    popupWindow.MainControl.DataContext = DropDownMenu;
-                    popupWindow.MainControl.ConfigureAsContextMenu();
-                    popupWindow.Activated += (s, e) =>
-                    {
-                        Post(() =>
-                        {
-                            PopupToolBar.IsHideOnDeactivateSuppressed = false;
-                            afterShow?.Invoke();
-                        });
-                    };
-                }
-
-                if (hostControl is PopupToolBar popupToolBar)
-                {
-                    PopupToolBar.IsHideOnDeactivateSuppressed = true;
-                    popupToolBar.ShowPopup(this, DropDownMenuPosition);
-                }
+                DropDownMenu.ShowInPopup(this, afterShow, DropDownMenuPosition);
             }
             else
             {

@@ -9,7 +9,7 @@ namespace Alternet.UI
     /// <summary>
     /// Represents a popup control that contains a <see cref="ToolBar"/> as its content.
     /// </summary>
-    public class PopupControlWithToolBar : PopupControl<ToolBar>
+    public class PopupControlWithToolBar : PopupControl<ToolBar>, IContextMenuHost
     {
         private static PopupControlWithToolBar? defaultPopup;
 
@@ -82,6 +82,8 @@ namespace Alternet.UI
         /// will be used.
         /// </summary>
         public virtual bool NeedsRemainingImages { get; set; } = true;
+
+        AbstractControl IContextMenuHost.ContextMenuHost => Content;
 
         /// <inheritdoc/>
         public override SizeD GetPreferredSize(SizeD availableSize)
