@@ -627,6 +627,14 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Handles the event triggered when the visibility of a sibling control changes.
+        /// </summary>
+        [EditorBrowsable(EditorBrowsableState.Advanced)]
+        protected virtual void OnSiblingVisibleChanged(AbstractControl sibling)
+        {
+        }
+
+        /// <summary>
         /// Called when the enabled of the <see cref="Enabled"/> property changes.
         /// </summary>
         /// <param name="e">An <see cref="EventArgs"/> that contains the
