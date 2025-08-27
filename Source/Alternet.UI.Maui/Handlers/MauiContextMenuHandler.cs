@@ -20,7 +20,17 @@ namespace Alternet.UI
         /// <inheritdoc/>
         public override void Show(AbstractControl container, PointD? position = null)
         {
-            Control?.ShowInsideControl(container, position);
+            var pos = Mouse.CoercePosition(position, container);
+
+            while (!ControlView.HasContainer(container))
+            {
+                if (container.Parent == null)
+                    return;
+                pos += container.Location;
+                container = container.Parent;
+            }
+
+            Control?.ShowInsideControl(container, pos);
         }
     }
 }
