@@ -12,7 +12,8 @@ namespace PropertyGridSample
     {
         public static void LogClick(object? sender, EventArgs e)
         {
-            App.Log($"{sender?.GetType()} Click");
+            var s = $"{sender?.GetType()} Click";
+            App.LogReplace(s, s);
         }
 
         public static void InitButton(object control)

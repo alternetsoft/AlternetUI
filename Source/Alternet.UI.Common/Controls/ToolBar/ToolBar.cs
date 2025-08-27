@@ -2437,7 +2437,9 @@ namespace Alternet.UI
                 speedButton.DoubleClick += (s, e) =>
                 {
                     if (DoubleClickAsClick)
+                    {
                         action(s, e);
+                    }
                 };
 
                 speedButton.Click += action;

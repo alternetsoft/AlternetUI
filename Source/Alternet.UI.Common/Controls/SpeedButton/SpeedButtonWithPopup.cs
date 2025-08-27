@@ -33,6 +33,7 @@ namespace Alternet.UI
             TextVisible = true;
             ShowComboBoxImageAtRight();
             ShowDropDownMenuWhenClicked = false;
+            ClickTrigger = ClickTriggerKind.MouseDown;
         }
 
         /// <summary>

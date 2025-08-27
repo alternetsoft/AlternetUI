@@ -69,10 +69,11 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Subtracts <see cref="DateTime.Now"/>
+        /// Subtracts ticks of <see cref="DateTime.Now"/>
         /// with the specified timestamp and gets absolute value of the result.
         /// </summary>
-        /// <param name="timestamp">Value to subtract from the <see cref="DateTime.Now"/>.</param>
+        /// <param name="timestamp">Value to subtract from the <see cref="DateTime.Now"/>.
+        /// Specified in ticks.</param>
         /// <returns></returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static long GetAbsDistanceWithNow(long timestamp)

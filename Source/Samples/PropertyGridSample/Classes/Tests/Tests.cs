@@ -170,6 +170,12 @@ namespace PropertyGridSample
                     c.UseThemeForSticky = SpeedButton.KnownTheme.PushButtonHovered;
                     c.UseTheme = SpeedButton.KnownTheme.PushButton;
                 });
+
+                AddControlAction<SpeedButton>("Add mouse events logging", (c) =>
+                {
+                    c.MouseDown += (s, e) => App.Log("SpeedButton MouseDown");
+                    c.MouseUp += (s, e) => App.Log("SpeedButton MouseUp");
+                });
             }
 
             void InitTestsListBox()

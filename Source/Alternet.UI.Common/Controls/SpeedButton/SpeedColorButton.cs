@@ -46,6 +46,7 @@ namespace Alternet.UI
             TextVisible = true;
             OnColorImageChanged(false);
             ShowComboBoxImageAtRight();
+            ClickTrigger = ClickTriggerKind.MouseDown;
         }
 
         /// <summary>
