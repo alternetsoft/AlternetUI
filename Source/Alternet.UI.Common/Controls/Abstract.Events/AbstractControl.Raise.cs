@@ -265,14 +265,15 @@ namespace Alternet.UI
                 return;
             MouseRightButtonUp?.Invoke(this, e);
 
-            if (HasContextMenu)
+            if (HasContextMenu || ContextMenuShowing is not null)
             {
                 App.AddIdleTask(() =>
                 {
                     if (DisposingOrDisposed)
                         return;
 
-                    ShowPopupMenu(ContextMenuStrip);
+                    // We need here to use field as we no need to auto-create the context menu.
+                    ShowPopupMenu(contextMenuStrip);
                 });
             }
 
@@ -1022,8 +1023,22 @@ namespace Alternet.UI
             OnVisibleChanged(e);
             VisibleChanged?.Invoke(this, e);
             StaticControlEvents.RaiseVisibleChanged(this, e);
-            Parent?.ChildVisibleChanged?.Invoke(Parent, new BaseEventArgs<AbstractControl>(this));
-            Parent?.PerformLayout();
+
+            if(Parent is not null)
+            {
+                Parent.ChildVisibleChanged?.Invoke(Parent, new BaseEventArgs<AbstractControl>(this));
+                Parent.PerformLayout();
+
+                Parent.ForEachChild(
+                    (c) =>
+                    {
+                        if (c == this)
+                            return;
+                        c.OnSiblingVisibleChanged(this);
+                    },
+                    recursive: false);
+            }
+
             if (visible)
                 AfterShow?.Invoke(this, e);
             else
