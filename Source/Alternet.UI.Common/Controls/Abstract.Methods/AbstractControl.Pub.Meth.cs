@@ -2261,6 +2261,31 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Determines whether the current control has an indirect parent of the specified type.
+        /// </summary>
+        /// <remarks>An indirect parent is any ancestor in the parent hierarchy, excluding
+        /// the current control itself. The method traverses the hierarchy recursively until
+        /// it finds a parent of the specified type or reaches the root.</remarks>
+        /// <typeparam name="T">The type of the parent to search for.
+        /// Must derive from <see cref="AbstractControl"/>.</typeparam>
+        /// <returns><see langword="true"/> if an indirect parent
+        /// of type <typeparamref name="T"/> exists in the parent
+        /// hierarchy; otherwise, <see langword="false"/>.</returns>
+        public virtual bool HasIndirectParent<T>()
+            where T : AbstractControl
+        {
+            var p = Parent;
+            while (true)
+            {
+                if (p is T)
+                    return true;
+                if (p == null)
+                    return false;
+                p = p.Parent;
+            }
+        }
+
+        /// <summary>
         /// Retrieves a value indicating whether the specified control
         /// is a child of the control.</summary>
         /// <param name="control">The <see cref="AbstractControl" /> to evaluate.</param>
@@ -2581,6 +2606,15 @@ namespace Alternet.UI
         /// <remarks>Position is specified in device independent units.</remarks>
         public virtual void ShowPopupMenu(ContextMenu? menu, Coord x = -1, Coord y = -1)
         {
+            if(ContextMenuShowing is not null)
+            {
+                var e = new HandledEventArgs<ContextMenu?>(menu);
+                ContextMenuShowing(this, e);
+                if (e.Value is null || e.Handled)
+                    return;
+                menu = e.Value;
+            }
+
             menu?.Show(this, (x, y));
         }
 
