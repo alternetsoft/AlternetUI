@@ -683,7 +683,7 @@ namespace Alternet.Drawing
         /// </summary>
         /// <returns>A <see cref="PointD"/> structure.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public readonly PointD ToPointF() => (PointD)this;
+        public readonly PointD ToPointD() => (PointD)this;
 
         /// <summary>
         /// Get this object with applied min and max constraints.
