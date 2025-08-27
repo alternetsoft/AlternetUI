@@ -40,7 +40,7 @@ namespace Alternet.UI
             TextBox.MinValue = 0;
             TextBox.MaxValue = 100;
             TextBox.Text = "0";
-            Buttons.DoubleClickAsClick = true;
+            Buttons.DoubleClickAsClick = false;
             IsBtnClickRepeated = true;
             HasBtnPlusMinus = true;
             HasBtnComboBox = false;

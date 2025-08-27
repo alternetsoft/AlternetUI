@@ -126,7 +126,7 @@ namespace Alternet.UI
                 DefaultDecrementImage ?? KnownSvgImages.ImgAngleDown);
 
             HasBtnPlusMinus = true;
-            Buttons.DoubleClickAsClick = true;
+            Buttons.DoubleClickAsClick = false;
             IsBtnClickRepeated = true;
             ButtonPlus?.SetEnabled(false);
             ButtonMinus?.SetEnabled(false);
