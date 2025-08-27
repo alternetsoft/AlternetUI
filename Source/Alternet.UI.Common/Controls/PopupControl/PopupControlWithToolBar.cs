@@ -13,6 +13,8 @@ namespace Alternet.UI
     {
         private static PopupControlWithToolBar? defaultPopup;
 
+        private readonly ControlSubscriber notification = new ();
+
         /// <summary>
         /// Initializes a new instance of the <see cref="PopupControlWithToolBar"/> class.
         /// </summary>
@@ -24,12 +26,53 @@ namespace Alternet.UI
             Content.ParentForeColor = true;
             Content.ParentBackColor = true;
 
+            SuppressParentMouse = true;
+            SuppressParentKeyDown = true;
+            SuppressParentKeyPress = true;
+            HideOnSiblingHide = true;
+            HideOnSiblingShow = true;
             HideOnEscape = true;
             FocusContainerOnClose = true;
             HideOnEnter = true;
             HideOnClickParent = true;
+            HideOnClickOutside = true;
 
             Content.ToolClick += OnToolClick;
+
+            bool InsidePopup(object? c)
+            {
+                return (c as AbstractControl)?.HasIndirectParent<PopupControlWithToolBar>() ?? false;
+            }
+
+            notification.BeforeControlMouseDown += (s, e) =>
+            {
+                if (!Visible)
+                    return;
+
+                var insidePopup = InsidePopup(e.Source);
+
+                if (SuppressParentMouseDown)
+                {
+                    e.Handled = !insidePopup;
+                }
+
+                if (!insidePopup && HideOnClickOutside)
+                {
+                    CloseWhenIdle(ModalResult.Canceled);
+                }
+            };
+
+            notification.BeforeControlMouseUp += (s, e) =>
+            {
+                if (!Visible)
+                    return;
+
+                if (SuppressParentMouseUp)
+                {
+                    var insidePopup = InsidePopup(e.Source);
+                    e.Handled = !insidePopup;
+                }
+            };
         }
 
         /// <summary>
@@ -52,6 +95,45 @@ namespace Alternet.UI
                 defaultPopup = value;
             }
         }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether the popup
+        /// should be hidden when a click occurs outside of it.
+        /// </summary>
+        public virtual bool HideOnClickOutside
+        {
+            get; set;
+        }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether mouse events
+        /// should be suppressed for the parent control.
+        /// </summary>
+        public virtual bool SuppressParentMouse
+        {
+            get
+            {
+                return SuppressParentMouseUp && SuppressParentMouseDown;
+            }
+
+            set
+            {
+                SuppressParentMouseUp = value;
+                SuppressParentMouseDown = value;
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether the parent control's mouse up events
+        /// should be suppressed when this control is visible.
+        /// </summary>
+        public virtual bool SuppressParentMouseUp { get; set; }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether the parent control's mouse down events
+        /// should be suppressed when this control is visible.
+        /// </summary>
+        public virtual bool SuppressParentMouseDown { get; set; }
 
         /// <summary>
         /// Gets or sets a value indicating whether the remaining label images are required
@@ -136,6 +218,45 @@ namespace Alternet.UI
             var preferredSize = GetPreferredSize();
             ClientSize = preferredSize;
             MinimumSize = MinimumSize.ClampTo(Size);
+        }
+
+        /// <inheritdoc/>
+        protected override void OnVisibleChanged(EventArgs e)
+        {
+            base.OnVisibleChanged(e);
+        }
+
+        /// <inheritdoc/>
+        protected override void OnParentChanged(EventArgs e)
+        {
+            base.OnParentChanged(e);
+            if (Parent is null)
+            {
+                RemoveGlobalNotification(notification);
+            }
+            else
+            {
+                AddGlobalNotification(notification);
+            }
+        }
+
+        /// <inheritdoc/>
+        protected override void DisposeManaged()
+        {
+            RemoveGlobalNotification(notification);
+            base.DisposeManaged();
+        }
+
+        /// <inheritdoc/>
+        protected override void OnBeforeParentKeyDown(object? sender, KeyEventArgs e)
+        {
+            base.OnBeforeParentKeyDown(sender, e);
+        }
+
+        /// <inheritdoc/>
+        protected override void OnBeforeParentKeyPress(object? sender, KeyPressEventArgs e)
+        {
+            base.OnBeforeParentKeyPress(sender, e);
         }
 
         /// <summary>
