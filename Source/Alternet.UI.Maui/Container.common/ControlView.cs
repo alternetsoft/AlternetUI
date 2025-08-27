@@ -153,6 +153,19 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Determines whether the specified control has an associated container.
+        /// </summary>
+        /// <remarks>A container is considered to exist if the <see cref="GetContainer"/>
+        /// method returns a non-<see langword="null"/> value for the specified control.</remarks>
+        /// <param name="control">The control to check. Can be <see langword="null"/>.</param>
+        /// <returns><see langword="true"/> if the specified control has
+        /// an associated container; otherwise, <see langword="false"/>.</returns>
+        public static bool HasContainer(AbstractControl? control)
+        {
+            return GetContainer(control) is not null;
+        }
+
+        /// <summary>
         /// Gets <see cref="ControlView"/> for the specified <see cref="Control"/>.
         /// </summary>
         /// <param name="control">Control to get container from.</param>
