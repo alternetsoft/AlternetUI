@@ -139,6 +139,31 @@ namespace Alternet.UI
         public new IContextMenuHandler Handler => (IContextMenuHandler)base.Handler;
 
         /// <summary>
+        /// Determines whether any visible child of the specified control
+        /// implements the <see cref="IContextMenuHost"/>
+        /// interface.
+        /// </summary>
+        /// <param name="control">The control whose children are to be inspected.
+        /// Can be <see langword="null"/>.</param>
+        /// <returns><see langword="true"/> if any child of the specified control
+        /// implements the <see cref="IContextMenuHost"/>
+        /// interface;  otherwise, <see langword="false"/>. Returns <see langword="false"/>
+        /// if <paramref name="control"/> is <see langword="null"/> or has no children.</returns>
+        public static bool HostControlInChildren(AbstractControl? control)
+        {
+            if (control is null || !control.HasChildren)
+                return false;
+
+            foreach (var child in control.Children)
+            {
+                if (child.Visible && child is IContextMenuHost)
+                    return true;
+            }
+
+            return false;
+        }
+
+        /// <summary>
         /// Copies the properties from the specified <see cref="IMenuProperties"/>
         /// source to the current instance.
         /// </summary>
@@ -333,6 +358,12 @@ namespace Alternet.UI
 
             if (hostControl is PopupControlWithToolBar popupToolBar)
             {
+                if(popupToolBar.Parent is not null)
+                {
+                    popupToolBar.Parent = null;
+                    popupToolBar.Container = null;
+                }
+
                 popupToolBar.Container = container;
                 popupToolBar.UpdateMinimumSize();
                 popupToolBar.UpdateMaxPopupSize();
