@@ -39,6 +39,18 @@ namespace Alternet.UI
         public event EventHandler? CellChanged;
 
         /// <summary>
+        /// Occurs when a context menu is about to be displayed,
+        /// allowing the event handler to cancel the operation,
+        /// substitute context menu, or implement custom logic.
+        /// </summary>
+        /// <remarks>This event is raised before the context menu is shown.
+        /// Handlers can inspect the event arguments, change the context menu
+        /// stored in the <see cref="HandledEventArgs{T}.Value"/> property,
+        /// and set the <see cref="HandledEventArgs.Handled"/>
+        /// property to <see langword="true"/> to prevent the menu from being displayed.</remarks>
+        public event EventHandler<HandledEventArgs<ContextMenu?>>? ContextMenuShowing;
+
+        /// <summary>
         /// Occurs when the window is activated in code or by the user.
         /// </summary>
         /// <remarks>
