@@ -2445,6 +2445,13 @@ namespace Alternet.UI
                 speedButton.Click += action;
             }
 
+            speedButton.ContextMenuShowing += (s, e) =>
+            {
+                if (e.Value is not null)
+                    return;
+                e.Value = ContextMenuStrip;
+            };
+
             Children.Insert(index, speedButton);
 
             return speedButton;
