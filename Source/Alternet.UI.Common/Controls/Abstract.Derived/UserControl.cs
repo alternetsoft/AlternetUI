@@ -59,6 +59,27 @@ namespace Alternet.UI
         public event EventHandler<BaseCancelEventArgs>? DropDownMenuShowing;
 
         /// <summary>
+        /// Specifies the mouse event that triggers the click action of a control.
+        /// </summary>
+        public enum ClickTriggerKind
+        {
+            /// <summary>
+            /// The click method is called during the MouseUp event.
+            /// </summary>
+            MouseUp,
+
+            /// <summary>
+            /// The click method is called during the MouseDown event.
+            /// </summary>
+            MouseDown,
+
+            /// <summary>
+            /// The click method is not called automatically.
+            /// </summary>
+            None,
+        }
+
+        /// <summary>
         /// Gets or sets a value indicating whether the application should
         /// use the internal drop-down menu by default.
         /// </summary>
@@ -75,6 +96,16 @@ namespace Alternet.UI
                 defaultUseInternalDropDownMenu = value;
             }
         }
+
+        /// <summary>
+        /// Gets or sets the type of click trigger that determines when a click action is initiated.
+        /// </summary>
+        public virtual ClickTriggerKind ClickTrigger { get; set; } = ClickTriggerKind.MouseUp;
+
+        /// <summary>
+        /// Gets or sets the type of click trigger that determines when a drop-down menu is shown.
+        /// </summary>
+        public virtual ClickTriggerKind DropDownTrigger { get; set; } = ClickTriggerKind.MouseDown;
 
         /// <summary>
         /// Gets or sets a value indicating whether an internal drop-down menu should be used.
@@ -662,20 +693,39 @@ namespace Alternet.UI
         protected override void OnMouseLeftButtonDown(MouseEventArgs e)
         {
             base.OnMouseLeftButtonDown(e);
+            HandleClickTrigger(ClickTriggerKind.MouseDown, e);
             if (!Enabled)
                 return;
-            if(ShowDropDownMenuWhenClicked)
-                ShowDropDownMenu();
             Invalidate();
+        }
+
+        /// <summary>
+        /// Handles a click trigger event and performs the appropriate action based
+        /// on the specified trigger kind.
+        /// </summary>
+        /// <remarks>This method checks the current state of the control and performs
+        /// actions such as raising a click event or displaying a drop-down menu,
+        /// depending on the specified trigger kind and the
+        /// control's configuration. Override this method in a derived class to customize
+        /// the behavior for handling
+        /// click triggers.</remarks>
+        /// <param name="triggerKind">The type of click trigger that occurred.</param>
+        /// <param name="e">The mouse event arguments associated with the click event.</param>
+        protected virtual void HandleClickTrigger(ClickTriggerKind triggerKind, MouseEventArgs e)
+        {
+            if (!Enabled)
+                return;
+            if (ClickTrigger == triggerKind)
+                RaiseClick(e);
+            if (ShowDropDownMenuWhenClicked && DropDownTrigger == triggerKind)
+                ShowDropDownMenu();
         }
 
         /// <inheritdoc/>
         protected override void OnMouseLeftButtonUp(MouseEventArgs e)
         {
             base.OnMouseLeftButtonUp(e);
-            if (!Enabled)
-                return;
-            RaiseClick(e);
+            HandleClickTrigger(ClickTriggerKind.MouseUp, e);
         }
 
         /// <summary>
