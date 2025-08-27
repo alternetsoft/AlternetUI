@@ -22,6 +22,7 @@ namespace Alternet.UI
         private ModalResult popupResult = ModalResult.None;
         private bool cancelOnLostFocus;
         private bool acceptOnLostFocus;
+        private bool hideOnSiblingHide;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="PopupControl"/> class.
@@ -185,6 +186,16 @@ namespace Alternet.UI
         public virtual bool FocusContainerOnClose { get; set; } = true;
 
         /// <summary>
+        /// Gets or sets a value indicating whether parent key down event should be suppressed.
+        /// </summary>
+        public virtual bool SuppressParentKeyDown { get; set; }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether parent key press event should be suppressed.
+        /// </summary>
+        public virtual bool SuppressParentKeyPress { get; set; }
+
+        /// <summary>
         /// Gets or sets whether popup should be closed with
         /// <see cref="ModalResult.Canceled"/> result
         /// when it lost focus.
@@ -201,6 +212,29 @@ namespace Alternet.UI
                 cancelOnLostFocus = value;
                 if (cancelOnLostFocus)
                     acceptOnLostFocus = false;
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether the popup should be closed
+        /// when any sibling control is shown.
+        /// </summary>
+        public virtual bool HideOnSiblingShow { get; set; }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether the popup should be closed
+        /// when any sibling control is hidden.
+        /// </summary>
+        public virtual bool HideOnSiblingHide
+        {
+            get
+            {
+                return hideOnSiblingHide;
+            }
+
+            set
+            {
+                hideOnSiblingHide = value;
             }
         }
 
@@ -627,6 +661,9 @@ namespace Alternet.UI
         {
             base.OnBeforeParentKeyDown(sender, e);
 
+            if(!Visible)
+                return;
+
             if (HideOnEscape && e.IsEscape)
             {
                 Close(ModalResult.Canceled, new(Key.Escape));
@@ -640,6 +677,21 @@ namespace Alternet.UI
                 e.Suppressed();
                 return;
             }
+
+            if (SuppressParentKeyDown)
+                e.Handled = true;
+        }
+
+        /// <inheritdoc/>
+        protected override void OnBeforeParentKeyPress(object? sender, KeyPressEventArgs e)
+        {
+            base.OnBeforeParentKeyPress(sender, e);
+
+            if (!Visible)
+                return;
+
+            if (SuppressParentKeyPress)
+                e.Handled = true;
         }
 
         /// <inheritdoc/>
@@ -667,6 +719,34 @@ namespace Alternet.UI
                 CloseWhenIdle(
                     GetPopupResult(UI.PopupCloseReason.FocusLost),
                     UI.PopupCloseReason.FocusLost);
+            }
+        }
+
+        /// <inheritdoc/>
+        protected override void OnParentChanged(EventArgs e)
+        {
+            base.OnParentChanged(e);
+        }
+
+        /// <inheritdoc/>
+        protected override void OnSiblingVisibleChanged(AbstractControl sibling)
+        {
+            if(sibling.Visible)
+                return;
+            if (Visible)
+            {
+                if (HideOnSiblingShow)
+                    CloseMe();
+            }
+            else
+            {
+                if (HideOnSiblingHide)
+                    CloseMe();
+            }
+
+            void CloseMe()
+            {
+                CloseWhenIdle(ModalResult.Canceled, UI.PopupCloseReason.Other);
             }
         }
 
