@@ -51,6 +51,11 @@ namespace Alternet.UI
             OnHasInternalScrollBarsChanged();
         }
 
+        /// <summary>
+        /// Gets the router responsible for handling scroll events.
+        /// </summary>
+        public abstract IScrollEventRouter ScrollEventRouter { get; }
+
         /// <inheritdoc/>
         public override ControlBorderStyle BorderStyle
         {
@@ -213,21 +218,12 @@ namespace Alternet.UI
             if (DisposingOrDisposed)
                 return;
 
-            CalcScrollBarInfo(out var horzScrollbar, out var vertScrollbar);
+            ScrollEventRouter.CalcScrollBarInfo(out var horzScrollbar, out var vertScrollbar);
             VertScrollBarInfo = vertScrollbar;
             HorzScrollBarInfo = horzScrollbar;
             if (refresh)
                 Refresh();
         }
-
-        /// <summary>
-        /// Calculates the position information for the scrollbars based on the number
-        /// of visible items
-        /// and their total height and maximal width.
-        /// </summary>
-        public abstract void CalcScrollBarInfo(
-            out ScrollBarInfo horzScrollbar,
-            out ScrollBarInfo vertScrollbar);
 
         /// <inheritdoc/>
         public override ScrollBarInfo GetScrollBarInfo(bool isVertical)
@@ -264,73 +260,6 @@ namespace Alternet.UI
 
             RaiseNotifications((n) => n.AfterSetScrollBarInfo(this, isVertical, value));
         }
-
-        /// <summary>
-        /// Scrolls the control horizontally by one char to the left.
-        /// </summary>
-        public abstract void DoActionScrollCharLeft();
-
-        /// <summary>
-        /// Scrolls the control horizontally by one char to the right.
-        /// </summary>
-        public abstract void DoActionScrollCharRight();
-
-        /// <summary>
-        /// Scrolls the control horizontally to the first char.
-        /// </summary>
-        public abstract void DoActionScrollToFirstChar();
-
-        /// <summary>
-        /// Scrolls the control horizontally by one page to the left.
-        /// </summary>
-        public abstract void DoActionScrollPageLeft();
-
-        /// <summary>
-        /// Scrolls the control horizontally by one page to the right.
-        /// </summary>
-        public abstract void DoActionScrollPageRight();
-
-        /// <summary>
-        /// Scrolls the control up by one page.
-        /// </summary>
-        public abstract void DoActionScrollPageUp();
-
-        /// <summary>
-        /// Scrolls the control down by one page.
-        /// </summary>
-        public abstract void DoActionScrollPageDown();
-
-        /// <summary>
-        /// Scrolls the control up by one line.
-        /// </summary>
-        public abstract void DoActionScrollLineUp();
-
-        /// <summary>
-        /// Scrolls the control down by one line.
-        /// </summary>
-        public abstract void DoActionScrollLineDown();
-
-        /// <summary>
-        /// Scrolls to the first line in the control.
-        /// </summary>
-        public abstract void DoActionScrollToFirstLine();
-
-        /// <summary>
-        /// Scrolls to the last line in the control.
-        /// </summary>
-        public abstract void DoActionScrollToLastLine();
-
-        /// <summary>
-        /// Sets vertical scroll offset.
-        /// </summary>
-        /// <param name="value">Value of the vertical scroll offset.</param>
-        public abstract void DoActionScrollToVertPos(Coord value);
-
-        /// <summary>
-        /// Sets horizontal scroll offset.
-        /// </summary>
-        /// <param name="value">Value of the horizontal scroll offset.</param>
-        public abstract void DoActionScrollToHorzPos(Coord value);
 
         /// <inheritdoc/>
         public override RectD GetOverlayRectangle() => GetPaintRectangle();
@@ -444,16 +373,16 @@ namespace Alternet.UI
             if (Keyboard.IsShiftPressed)
             {
                 if (delta < 0)
-                    DoActionScrollCharRight();
+                    ScrollEventRouter.DoActionScrollCharRight();
                 else
-                    DoActionScrollCharLeft();
+                    ScrollEventRouter.DoActionScrollCharLeft();
             }
             else
             {
                 if (delta < 0)
-                    DoActionScrollLineDown();
+                    ScrollEventRouter.DoActionScrollLineDown();
                 else
-                    DoActionScrollLineUp();
+                    ScrollEventRouter.DoActionScrollLineUp();
             }
         }
 
@@ -492,25 +421,25 @@ namespace Alternet.UI
                 switch (e.Type)
                 {
                     case ScrollEventType.SmallDecrement:
-                        DoActionScrollLineUp();
+                        ScrollEventRouter.DoActionScrollLineUp();
                         break;
                     case ScrollEventType.SmallIncrement:
-                        DoActionScrollLineDown();
+                        ScrollEventRouter.DoActionScrollLineDown();
                         break;
                     case ScrollEventType.LargeDecrement:
-                        DoActionScrollPageUp();
+                        ScrollEventRouter.DoActionScrollPageUp();
                         break;
                     case ScrollEventType.LargeIncrement:
-                        DoActionScrollPageDown();
+                        ScrollEventRouter.DoActionScrollPageDown();
                         break;
                     case ScrollEventType.ThumbTrack:
-                        DoActionScrollToVertPos(e.NewValue);
+                        ScrollEventRouter.DoActionScrollToVertPos(e.NewValue);
                         break;
                     case ScrollEventType.First:
-                        DoActionScrollToFirstLine();
+                        ScrollEventRouter.DoActionScrollToFirstLine();
                         break;
                     case ScrollEventType.Last:
-                        DoActionScrollToLastLine();
+                        ScrollEventRouter.DoActionScrollToLastLine();
                         break;
                     case ScrollEventType.ThumbPosition:
                     case ScrollEventType.EndScroll:
@@ -523,22 +452,22 @@ namespace Alternet.UI
                 switch (e.Type)
                 {
                     case ScrollEventType.SmallDecrement:
-                        DoActionScrollCharLeft();
+                        ScrollEventRouter.DoActionScrollCharLeft();
                         break;
                     case ScrollEventType.SmallIncrement:
-                        DoActionScrollCharRight();
+                        ScrollEventRouter.DoActionScrollCharRight();
                         break;
                     case ScrollEventType.LargeDecrement:
-                        DoActionScrollPageLeft();
+                        ScrollEventRouter.DoActionScrollPageLeft();
                         break;
                     case ScrollEventType.LargeIncrement:
-                        DoActionScrollPageRight();
+                        ScrollEventRouter.DoActionScrollPageRight();
                         break;
                     case ScrollEventType.ThumbTrack:
-                        DoActionScrollToHorzPos(e.NewValue);
+                        ScrollEventRouter.DoActionScrollToHorzPos(e.NewValue);
                         break;
                     case ScrollEventType.First:
-                        DoActionScrollToHorzPos(0);
+                        ScrollEventRouter.DoActionScrollToHorzPos(0);
                         break;
                     case ScrollEventType.Last:
                         break;

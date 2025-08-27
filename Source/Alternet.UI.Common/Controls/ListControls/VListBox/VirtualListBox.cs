@@ -32,7 +32,7 @@ namespace Alternet.UI
     /// properties provide access to
     /// the three collections that are used by the control.
     /// </remarks>
-    public partial class VirtualListBox : VirtualListControl, IListControl
+    public partial class VirtualListBox : VirtualListControl, IListControl, IScrollEventRouter
     {
         /// <summary>
         /// Gets or sets the default border color of the full item tooltip.
@@ -54,7 +54,7 @@ namespace Alternet.UI
         private readonly List<ListControlItem> itemsLastPainted = new();
 
         private bool isPartialRowVisible = true;
-        private Coord scrollOffsetX;
+        private int scrollOffsetX;
         private ListBoxItemPaintEventArgs? itemPaintArgs;
         private Coord horizontalExtent;
         private DrawMode drawMode = DrawMode.Normal;
@@ -383,6 +383,9 @@ namespace Alternet.UI
             get => ContextMenuStrip;
             set => ContextMenuStrip = value;
         }
+
+        /// <inheritdoc/>
+        public override IScrollEventRouter ScrollEventRouter => this;
 
         /// <inheritdoc cref="StringSearch.FindStringEx(string?, int?, bool, bool)"/>
         /// <remarks>
@@ -1452,7 +1455,7 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        public override void CalcScrollBarInfo(
+        public virtual void CalcScrollBarInfo(
             out ScrollBarInfo horzScrollbar,
             out ScrollBarInfo vertScrollbar)
         {
@@ -1493,13 +1496,13 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        public override void DoActionScrollToVertPos(double value)
+        public virtual void DoActionScrollToVertPos(int value)
         {
             ScrollToRow((int)value);
         }
 
         /// <inheritdoc/>
-        public override void DoActionScrollToHorzPos(Coord value)
+        public virtual void DoActionScrollToHorzPos(int value)
         {
             var newOffset = Math.Max(value, 0);
             if (newOffset != scrollOffsetX)
@@ -1513,7 +1516,7 @@ namespace Alternet.UI
         /// Increments horizontal scroll offset.
         /// </summary>
         /// <param name="delta">Increment value in device-independent units.</param>
-        public virtual void IncHorizontalOffset(Coord delta)
+        public virtual void IncHorizontalOffset(int delta)
         {
             DoActionScrollToHorzPos(scrollOffsetX + delta);
         }
@@ -1539,7 +1542,7 @@ namespace Alternet.UI
         /// <param name="chars">Increment value in chars.</param>
         public virtual void IncHorizontalOffsetChars(int chars = 1)
         {
-            IncHorizontalOffset(chars * GetCharWidth());
+            IncHorizontalOffset((int)(chars * GetCharWidth()));
         }
 
         /// <summary>
@@ -1548,7 +1551,7 @@ namespace Alternet.UI
         /// <param name="offsetInChars">New horizontal scroll offset value in chars.</param>
         public virtual void SetHorizontalOffsetChars(int offsetInChars)
         {
-            DoActionScrollToHorzPos(offsetInChars * GetCharWidth());
+            DoActionScrollToHorzPos((int)(offsetInChars * GetCharWidth()));
         }
 
         /// <summary>
