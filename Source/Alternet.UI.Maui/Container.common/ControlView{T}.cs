@@ -26,6 +26,13 @@ namespace Alternet.UI
         public ControlView()
         {
             ownedControl = CreateControl();
+
+            if (ownedControl is ScrollableUserControl scrollable)
+            {
+                scrollable.UseInternalScrollBars = false;
+                scrollable.SetInternalScrollBarsImmutable();
+            }
+
             base.Control = ownedControl;
         }
 

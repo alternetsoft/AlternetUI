@@ -35,6 +35,7 @@ namespace Alternet.UI
         private InteriorDrawable? interior;
         private ScrollBarInfo vertScrollBarInfo = new();
         private ScrollBarInfo horzScrollBarInfo = new();
+        private bool internalScrollBarsImmutable;
 
         static ScrollableUserControl()
         {
@@ -112,6 +113,8 @@ namespace Alternet.UI
             set
             {
                 if (hasInternalScrollBars == value)
+                    return;
+                if (internalScrollBarsImmutable)
                     return;
                 hasInternalScrollBars = value;
                 OnHasInternalScrollBarsChanged();
@@ -238,6 +241,18 @@ namespace Alternet.UI
             {
                 return horzScrollBarInfo;
             }
+        }
+
+        /// <summary>
+        /// Marks the <see cref="UseInternalScrollBars"/> property as immutable,
+        /// preventing further modifications.
+        /// </summary>
+        /// <remarks>Once this method is called, the <see cref="UseInternalScrollBars"/> property
+        /// is set to an immutable state
+        /// and cannot be altered. This operation is irreversible.</remarks>
+        public virtual void SetInternalScrollBarsImmutable()
+        {
+            internalScrollBarsImmutable = true;
         }
 
         /// <inheritdoc/>
