@@ -341,13 +341,15 @@ namespace Alternet.UI
 
                 if (containerRect is not null)
                 {
-                    popupToolBar.EnsureVisible(
-                                ref pos,
-                                containerRect.Value,
-                                adjustLine: false);
+                    var popupRect = new RectD(pos, popupToolBar.Size);
+
+                    popupRect.Right = Math.Min(popupRect.Right, containerRect.Value.Right);
+                    popupRect.Bottom = Math.Min(popupRect.Bottom, containerRect.Value.Bottom);
+
+                    pos = popupRect.Location;
                 }
 
-                popupToolBar.Location = pos;
+                popupToolBar.Location = pos.ClampToZero();
                 popupToolBar.Parent = container;
 
                 popupToolBar.ClosedAction = () =>
