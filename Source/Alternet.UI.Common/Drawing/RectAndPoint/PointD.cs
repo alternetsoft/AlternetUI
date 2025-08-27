@@ -505,6 +505,26 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
+        /// Clamps the current point's coordinates to the specified minimum and maximum bounds.
+        /// </summary>
+        /// <remarks>If the current point's coordinates are already within the specified bounds,
+        /// the returned point will have the same coordinates as the current point.</remarks>
+        /// <param name="min">The point representing the minimum allowable values for the coordinates.
+        /// The <see cref="PointD.X"/> and <see cref="PointD.Y"/> values of this point define
+        /// the lower bounds.</param>
+        /// <param name="max">The point representing the maximum allowable values for the coordinates.
+        /// The <see cref="PointD.X"/> and <see cref="PointD.Y"/> values of this point define
+        /// the upper bounds.</param>
+        /// <returns>A new <see cref="PointD"/> instance with its coordinates clamped
+        /// to the specified bounds.</returns>
+        public readonly PointD ClampToMinMax(PointD min, PointD max)
+        {
+            Coord clampedX = Math.Min(Math.Max(x, min.x), max.y);
+            Coord clampedY = Math.Min(Math.Max(y, min.y), max.y);
+            return new PointD(clampedX, clampedY);
+        }
+
+        /// <summary>
         /// Returns a string that represents the current object.
         /// </summary>
         /// <returns>A string that represents the current object.</returns>
