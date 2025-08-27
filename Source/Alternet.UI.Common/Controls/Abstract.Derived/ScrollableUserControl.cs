@@ -268,98 +268,72 @@ namespace Alternet.UI
         /// <summary>
         /// Scrolls the control horizontally by one char to the left.
         /// </summary>
-        public virtual void DoActionScrollCharLeft()
-        {
-        }
+        public abstract void DoActionScrollCharLeft();
 
         /// <summary>
         /// Scrolls the control horizontally by one char to the right.
         /// </summary>
-        public virtual void DoActionScrollCharRight()
-        {
-        }
+        public abstract void DoActionScrollCharRight();
 
         /// <summary>
         /// Scrolls the control horizontally to the first char.
         /// </summary>
-        public virtual void DoActionScrollToFirstChar()
-        {
-        }
+        public abstract void DoActionScrollToFirstChar();
 
         /// <summary>
         /// Scrolls the control horizontally by one page to the left.
         /// </summary>
-        public virtual void DoActionScrollPageLeft()
-        {
-        }
+        public abstract void DoActionScrollPageLeft();
 
         /// <summary>
         /// Scrolls the control horizontally by one page to the right.
         /// </summary>
-        public virtual void DoActionScrollPageRight()
-        {
-        }
+        public abstract void DoActionScrollPageRight();
 
         /// <summary>
         /// Scrolls the control up by one page.
         /// </summary>
-        public virtual void DoActionScrollPageUp()
-        {
-        }
+        public abstract void DoActionScrollPageUp();
 
         /// <summary>
         /// Scrolls the control down by one page.
         /// </summary>
-        public virtual void DoActionScrollPageDown()
-        {
-        }
+        public abstract void DoActionScrollPageDown();
 
         /// <summary>
         /// Scrolls the control up by one line.
         /// </summary>
-        public virtual void DoActionScrollLineUp()
-        {
-        }
+        public abstract void DoActionScrollLineUp();
 
         /// <summary>
         /// Scrolls the control down by one line.
         /// </summary>
-        public virtual void DoActionScrollLineDown()
-        {
-        }
+        public abstract void DoActionScrollLineDown();
 
         /// <summary>
         /// Scrolls to the first line in the control.
         /// </summary>
-        public virtual void DoActionScrollToFirstLine()
-        {
-        }
+        public abstract void DoActionScrollToFirstLine();
 
         /// <summary>
         /// Scrolls to the last line in the control.
         /// </summary>
-        public virtual void DoActionScrollToLastLine()
-        {
-        }
-
-        /// <inheritdoc/>
-        public override RectD GetOverlayRectangle() => GetPaintRectangle();
+        public abstract void DoActionScrollToLastLine();
 
         /// <summary>
         /// Sets vertical scroll offset.
         /// </summary>
         /// <param name="value">Value of the vertical scroll offset.</param>
-        public virtual void SetVerticalScrollOffset(Coord value)
-        {
-        }
+        public abstract void DoActionScrollToVertPos(Coord value);
 
         /// <summary>
         /// Sets horizontal scroll offset.
         /// </summary>
         /// <param name="value">Value of the horizontal scroll offset.</param>
-        public virtual void SetHorizontalOffset(Coord value)
-        {
-        }
+        public abstract void DoActionScrollToHorzPos(Coord value);
+
+        /// <inheritdoc/>
+        public override RectD GetOverlayRectangle() => GetPaintRectangle();
 
         /// <summary>
         /// Gets the rectangle that represents the paintable area of the control.
@@ -530,7 +504,7 @@ namespace Alternet.UI
                         DoActionScrollPageDown();
                         break;
                     case ScrollEventType.ThumbTrack:
-                        SetVerticalScrollOffset(e.NewValue);
+                        DoActionScrollToVertPos(e.NewValue);
                         break;
                     case ScrollEventType.First:
                         DoActionScrollToFirstLine();
@@ -561,10 +535,10 @@ namespace Alternet.UI
                         DoActionScrollPageRight();
                         break;
                     case ScrollEventType.ThumbTrack:
-                        SetHorizontalOffset(e.NewValue);
+                        DoActionScrollToHorzPos(e.NewValue);
                         break;
                     case ScrollEventType.First:
-                        SetHorizontalOffset(0);
+                        DoActionScrollToHorzPos(0);
                         break;
                     case ScrollEventType.Last:
                         break;

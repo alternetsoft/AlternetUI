@@ -1493,13 +1493,13 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        public override void SetVerticalScrollOffset(double value)
+        public override void DoActionScrollToVertPos(double value)
         {
             ScrollToRow((int)value);
         }
 
         /// <inheritdoc/>
-        public override void SetHorizontalOffset(Coord value)
+        public override void DoActionScrollToHorzPos(Coord value)
         {
             var newOffset = Math.Max(value, 0);
             if (newOffset != scrollOffsetX)
@@ -1515,7 +1515,7 @@ namespace Alternet.UI
         /// <param name="delta">Increment value in device-independent units.</param>
         public virtual void IncHorizontalOffset(Coord delta)
         {
-            SetHorizontalOffset(scrollOffsetX + delta);
+            DoActionScrollToHorzPos(scrollOffsetX + delta);
         }
 
         /// <summary>
@@ -1548,7 +1548,7 @@ namespace Alternet.UI
         /// <param name="offsetInChars">New horizontal scroll offset value in chars.</param>
         public virtual void SetHorizontalOffsetChars(int offsetInChars)
         {
-            SetHorizontalOffset(offsetInChars * GetCharWidth());
+            DoActionScrollToHorzPos(offsetInChars * GetCharWidth());
         }
 
         /// <summary>
@@ -1968,7 +1968,7 @@ namespace Alternet.UI
                 case Key.Home:
                     if (e.Control)
                     {
-                        SetHorizontalOffset(0);
+                        DoActionScrollToHorzPos(0);
                         e.Suppressed();
                         return;
                     }

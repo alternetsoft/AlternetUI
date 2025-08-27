@@ -27,7 +27,7 @@ namespace Alternet.UI
         /// </summary>
         public override void DoActionScrollToFirstChar()
         {
-            SetHorizontalOffset(0);
+            DoActionScrollToHorzPos(0);
         }
 
         /// <summary>
