@@ -119,9 +119,12 @@ namespace Alternet.UI
         /// <returns></returns>
         public static bool LastClickLessThanRepeatInterval(AbstractControl control)
         {
-            var distance = DateUtils.GetAbsDistanceWithNow(
-                control.LastClickedTimestamp ?? DateTime.Now.Ticks);
-            if (distance < TimerUtils.ClickRepeatInterval)
+            if(control.LastClickedTimestamp is null)
+                return false;
+
+            var distance = DateUtils.GetAbsDistanceWithNow(control.LastClickedTimestamp.Value);
+            var msec = DateUtils.TicksToMilliseconds(distance);
+            if (msec < TimerUtils.ClickRepeatInterval)
                 return true;
             return false;
         }
