@@ -1855,6 +1855,18 @@ namespace Alternet.UI
             });
         }
 
+        /// <inheritdoc/>
+        public override void RaiseClick(EventArgs e)
+        {
+            if (TimerUtils.LastClickLessThanRepeatInterval(this))
+            {
+            }
+            else
+            {
+                base.RaiseClick(e);
+            }
+        }
+
         /// <summary>
         /// Assigns the properties of the specified menu item to the current instance.
         /// </summary>
@@ -2125,6 +2137,12 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
+        protected override void OnMouseUp(MouseEventArgs e)
+        {
+            base.OnMouseUp(e);
+        }
+
+        /// <inheritdoc/>
         protected override IReadOnlyList<ShortcutAndAction>? GetShortcuts()
         {
             if (shortcut is null)
@@ -2267,14 +2285,30 @@ namespace Alternet.UI
             Assign(menuItem);
         }
 
-        private void OnClickRepeatTimerEvent()
+        /// <summary>
+        /// Invoked periodically while the control remains in the pressed state.
+        /// This method is called only when <see cref="IsClickRepeated"/>
+        /// is set to <see langword="true"/>.
+        /// </summary>
+        /// <remarks>This method is called to handle repeated click events when
+        /// the control is in the <see cref="VisualControlState.Pressed"/> state.
+        /// If the control is no longer in the pressed state, the
+        /// method exits without raising the click event.</remarks>
+        protected virtual void OnClickRepeatTimerEvent()
         {
             if (VisualState != VisualControlState.Pressed)
                 return;
             RaiseClick(EventArgs.Empty);
         }
 
-        private void UnsubscribeClickRepeated()
+        /// <summary>
+        /// Unsubscribes from repeated click events and releases associated resources.
+        /// </summary>
+        /// <remarks>This method stops any active timers used for handling repeated click events
+        /// and ensures that resources are properly disposed.
+        /// After calling this method, repeated click events will no
+        /// longer be processed.</remarks>
+        protected virtual void UnsubscribeClickRepeated()
         {
             if (subscribedClickRepeated)
             {
@@ -2284,12 +2318,28 @@ namespace Alternet.UI
             }
         }
 
-        private void PictureSizeChanged()
+        /// <summary>
+        /// Handles changes to the picture size.
+        /// </summary>
+        /// <remarks>
+        /// Derived classes can override this method to provide custom behavior
+        /// when the picture size changes.</remarks>
+        protected virtual void PictureSizeChanged()
         {
             PictureBox.SuggestedSize = drawable.GetPreferredSize(this);
         }
 
-        private void SubscribeClickRepeated()
+        /// <summary>
+        /// Subscribes to the click repeated event, initializing and starting timers
+        /// to handle repeated click actions.
+        /// </summary>
+        /// <remarks>This method sets up timers to manage repeated click events. It ensures that the
+        /// timers are properly initialized  and started only if the click repeated
+        /// functionality is enabled and has not
+        /// already been subscribed. The first timer introduces a delay before repeated
+        /// actions begin, while the second timer handles the repeated actions
+        /// at regular intervals.</remarks>
+        protected virtual void SubscribeClickRepeated()
         {
             if (!subscribedClickRepeated && IsClickRepeated)
             {
