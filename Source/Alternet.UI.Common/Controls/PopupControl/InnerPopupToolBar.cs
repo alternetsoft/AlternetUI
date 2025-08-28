@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 using Alternet.Drawing;
@@ -9,16 +10,18 @@ namespace Alternet.UI
     /// <summary>
     /// Represents a popup control that contains a <see cref="ToolBar"/> as its content.
     /// </summary>
-    public class PopupControlWithToolBar : PopupControl<ToolBar>, IContextMenuHost
+    public class InnerPopupToolBar : PopupControl<ToolBar>, IContextMenuHost
     {
-        private static PopupControlWithToolBar? defaultPopup;
+        private static InnerPopupToolBar? defaultPopup;
 
         private readonly ControlSubscriber notification = new ();
 
+        private WeakReferenceValue<AbstractControl> relatedControl = new();
+
         /// <summary>
-        /// Initializes a new instance of the <see cref="PopupControlWithToolBar"/> class.
+        /// Initializes a new instance of the <see cref="InnerPopupToolBar"/> class.
         /// </summary>
-        public PopupControlWithToolBar()
+        public InnerPopupToolBar()
         {
             Content.HorizontalAlignment = HorizontalAlignment.Left;
             Content.VerticalAlignment = VerticalAlignment.Top;
@@ -29,20 +32,29 @@ namespace Alternet.UI
             SuppressParentMouse = true;
             SuppressParentKeyDown = true;
             SuppressParentKeyPress = true;
-            HideOnSiblingHide = true;
-            HideOnSiblingShow = true;
+            HideOnSiblingHide = false;
+            HideOnSiblingShow = false;
             HideOnEscape = true;
             FocusContainerOnClose = true;
             HideOnEnter = true;
             HideOnClickParent = true;
             HideOnClickOutside = true;
+            CloseOnSiblingClose = true;
 
             Content.ToolClick += OnToolClick;
 
             bool InsidePopup(object? c)
             {
-                return (c as AbstractControl)?.HasIndirectParent<PopupControlWithToolBar>() ?? false;
+                return (c as AbstractControl)?.HasIndirectParent<InnerPopupToolBar>() ?? false;
             }
+
+            notification.AfterControlMouseMove += (s, e) =>
+            {
+                if (!Visible)
+                    return;
+                if (RelatedControl?.IsSibling(e.Source as AbstractControl) ?? false)
+                    CloseWhenIdle(ModalResult.Canceled);
+            };
 
             notification.BeforeControlMouseDown += (s, e) =>
             {
@@ -76,9 +88,9 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Gets or sets default instance of the <see cref="PopupControlWithToolBar"/>.
+        /// Gets or sets default instance of the <see cref="InnerPopupToolBar"/>.
         /// </summary>
-        public static PopupControlWithToolBar Default
+        public static InnerPopupToolBar Default
         {
             get
             {
@@ -95,6 +107,21 @@ namespace Alternet.UI
                 defaultPopup = value;
             }
         }
+
+        /// <summary>
+        /// Gets or sets the source control that called the popup.
+        /// </summary>
+        public virtual AbstractControl? RelatedControl
+        {
+            get => relatedControl.Value;
+            set => relatedControl.Value = value;
+        }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether this popup should close
+        /// when a sibling popup is closed.
+        /// </summary>
+        public virtual bool CloseOnSiblingClose { get; set; }
 
         /// <summary>
         /// Gets or sets a value indicating whether the popup
@@ -185,6 +212,31 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Closes sibling toolbars that are configured to close when a sibling is closed.
+        /// </summary>
+        /// <remarks>This method iterates through the visible siblings of the current object
+        /// and closes any sibling that is an <see cref="InnerPopupToolBar"/> with the
+        /// <see cref="InnerPopupToolBar.CloseOnSiblingClose"/> property
+        /// set to <see langword="true"/>. The siblings are
+        /// closed with a modal result of  <see cref="ModalResult.Canceled"/>.</remarks>
+        public virtual void CloseSiblings()
+        {
+            foreach (var sibling in VisibleSiblings)
+            {
+                if (sibling is InnerPopupToolBar siblingPopup && siblingPopup.CloseOnSiblingClose)
+                {
+                    siblingPopup.CloseWhenIdle(ModalResult.Canceled);
+                }
+            }
+        }
+
+        /// <inheritdoc/>
+        public override void Close(PopupCloseReason? reason)
+        {
+            base.Close(reason);
+        }
+
+        /// <summary>
         /// Updates the minimum size of the control based on its content and layout requirements.
         /// </summary>
         /// <remarks>This method recalculates the minimum size of the control by
@@ -224,6 +276,12 @@ namespace Alternet.UI
         protected override void OnVisibleChanged(EventArgs e)
         {
             base.OnVisibleChanged(e);
+        }
+
+        /// <inheritdoc/>
+        protected override void OnSiblingVisibleChanged(AbstractControl sibling)
+        {
+            base.OnSiblingVisibleChanged(sibling);
         }
 
         /// <inheritdoc/>
@@ -272,7 +330,10 @@ namespace Alternet.UI
             if (sender is not SpeedButton speedButton)
                 return;
             if (speedButton.DropDownMenu is null)
+            {
+                CloseSiblings();
                 Close(UI.PopupCloseReason.Other);
+            }
         }
     }
 }
