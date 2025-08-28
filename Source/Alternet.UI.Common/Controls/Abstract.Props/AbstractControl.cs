@@ -684,6 +684,52 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets the collection of sibling controls that are visible.
+        /// </summary>
+        /// <remarks>A sibling is considered visible if it is a child of the same parent
+        /// as this control, is not the current control, and
+        /// its <see cref="AbstractControl.Visible"/> property is <see langword="true"/>.
+        /// If the current control has no parent or the parent has fewer than two children, the
+        /// collection will be empty.</remarks>
+        public virtual IEnumerable<AbstractControl> VisibleSiblings
+        {
+            get
+            {
+                if (Parent is null || Parent.ChildCount < 2)
+                    yield break;
+
+                foreach (var child in Parent.GetVisibleChildren())
+                {
+                    if (child != this && child.Visible)
+                        yield return child;
+                }
+            }
+        }
+
+        /// <summary>
+        /// Gets the sibling controls of the current control.
+        /// </summary>
+        /// <remarks>Sibling controls are the other children of the same parent control,
+        /// excluding the current control itself. If the current control has no parent
+        /// or the parent has fewer than two children, the collection will be empty.</remarks>
+        public virtual IEnumerable<AbstractControl> Siblings
+        {
+            get
+            {
+                if (Parent is null || Parent.ChildCount < 2)
+                    yield break;
+
+                var items = Parent.Children.ToArray();
+
+                foreach (var child in items)
+                {
+                    if (child != this)
+                        yield return child;
+                }
+            }
+        }
+
+        /// <summary>
         /// Gets or sets the <see cref="ContextMenuStrip" /> associated
         /// with this control. This property is auto-created and is always not null.
         /// Usage of this property depends on the control.
@@ -3558,7 +3604,15 @@ namespace Alternet.UI
         /// Gets number of child controls.
         /// </summary>
         [Browsable(false)]
-        public int ChildCount => Children.Count;
+        public int ChildCount
+        {
+            get
+            {
+                if (!HasChildren)
+                    return 0;
+                return Children.Count;
+            }
+        }
 
         /// <summary>
         /// Gets number of visible child controls.
