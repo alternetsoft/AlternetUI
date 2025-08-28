@@ -29,6 +29,7 @@ namespace Alternet.UI
     public partial class ContextMenu : Menu
     {
         private IList<IContextMenuHost>? hostControls;
+        private WeakReferenceValue<AbstractControl> relatedControl = new();
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ContextMenu"/> class.
@@ -67,7 +68,7 @@ namespace Alternet.UI
 
         /// <summary>
         /// Gets list of host controls. It can contain <see cref="IContextMenuHost"/> controls
-        /// such as <see cref="PopupToolBar"/> or <see cref="PopupControlWithToolBar"/>.
+        /// such as <see cref="PopupToolBar"/> or <see cref="InnerPopupToolBar"/>.
         /// </summary>
         [Browsable(false)]
         public IList<IContextMenuHost>? HostControls
@@ -86,6 +87,15 @@ namespace Alternet.UI
         {
             get => base.Enabled;
             set => base.Enabled = value;
+        }
+
+        /// <summary>
+        /// Gets or sets the control that was the last source of context menu invocation.
+        /// </summary>
+        public virtual AbstractControl? RelatedControl
+        {
+            get => relatedControl.Value;
+            set => relatedControl.Value = value;
         }
 
         /// <summary>
@@ -300,6 +310,10 @@ namespace Alternet.UI
             Action? afterShow = null,
             HVDropDownAlignment? dropDownMenuPosition = null)
         {
+            if (Items.Count == 0)
+                return;
+            relatedControl.Value = control;
+
             var hostControl = GetHostControl<PopupToolBar>();
 
             if (hostControl is null)
@@ -328,35 +342,49 @@ namespace Alternet.UI
 
         /// <summary>
         /// Displays the context menu inside the specified container at the given position.
-        /// Uses <see cref="PopupControlWithToolBar"/> as the host control.
+        /// Uses <see cref="InnerPopupToolBar"/> as the host control.
         /// </summary>
         /// <remarks>If the context menu is not already hosted
-        /// within a <see cref="PopupControlWithToolBar"/>,
-        /// a new instance of <see cref="PopupControlWithToolBar"/> is created
+        /// within a <see cref="InnerPopupToolBar"/>,
+        /// a new instance of <see cref="InnerPopupToolBar"/> is created
         /// and configured as the host. The control
         /// is positioned within the container, ensuring it remains visible within
         /// the container's bounds.</remarks>
+        /// <param name="source">The control that triggered the context menu.</param>
         /// <param name="container">The container in which the context menu will be displayed.
         /// This parameter cannot be null.</param>
         /// <param name="position">The position within the container where the context menu
         /// should be displayed. If null, the current mouse position
         /// relative to the container is used.</param>
-        public virtual void ShowInsideControl(AbstractControl container, PointD? position = null)
+        public virtual void ShowInsideControl(
+            AbstractControl container,
+            AbstractControl? source = null,
+            PointD? position = null)
         {
-            var hostControl = GetHostControl<PopupControlWithToolBar>();
+            var hostControl = GetHostControl<InnerPopupToolBar>();
+            relatedControl.Value = null;
+
+            if (hostControl is not null)
+            {
+                hostControl.RelatedControl = null;
+            }
+
+            if (Items.Count == 0)
+                return;
+            relatedControl.Value = source;
 
             if (hostControl is null)
             {
-                var popupWindow = new PopupControlWithToolBar();
-                popupWindow.Content.DataContext = this;
-                popupWindow.Content.ConfigureAsContextMenu();
-                hostControl = popupWindow;
-                AddHostControl(popupWindow);
+                hostControl = new InnerPopupToolBar();
+                hostControl.Content.DataContext = this;
+                hostControl.Content.ConfigureAsContextMenu();
+                AddHostControl(hostControl);
             }
 
+            hostControl.RelatedControl = source;
             var pos = Mouse.CoercePosition(position, container);
 
-            if (hostControl is PopupControlWithToolBar popupToolBar)
+            if (hostControl is InnerPopupToolBar popupToolBar)
             {
                 if(popupToolBar.Parent is not null)
                 {
@@ -417,6 +445,7 @@ namespace Alternet.UI
         /// </remarks>
         public virtual void Show(AbstractControl control, PointD? position = null)
         {
+            relatedControl.Value = null;
             if (Items.Count == 0)
                 return;
             if (control is null)
@@ -427,6 +456,7 @@ namespace Alternet.UI
                 RaiseOpening(e);
                 if (e.Cancel)
                     return;
+                relatedControl.Value = control;
                 Handler.Show(control, position);
                 RaiseClosing(EventArgs.Empty);
             }
