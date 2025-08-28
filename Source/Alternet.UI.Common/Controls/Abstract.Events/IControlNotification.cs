@@ -52,12 +52,6 @@ namespace Alternet.UI
         void AfterSizeChanged(AbstractControl sender, EventArgs e);
 
         /// <summary>
-        /// Called when when the application finishes processing events and is
-        /// about to enter the idle state.
-        /// </summary>
-        void AfterIdle(AbstractControl sender, EventArgs e);
-
-        /// <summary>
         /// Called after the <see cref="AbstractControl.Resize" /> event is raised.
         /// </summary>
         /// <param name="sender">Control which sends the notification.</param>

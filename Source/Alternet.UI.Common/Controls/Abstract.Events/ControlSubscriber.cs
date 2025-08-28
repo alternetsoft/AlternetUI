@@ -305,11 +305,6 @@ namespace Alternet.UI
         /// <summary>
         /// Occurs when the corresponding control's event is raised.
         /// </summary>
-        public event EventHandler? AfterControlIdle;
-
-        /// <summary>
-        /// Occurs when the corresponding control's event is raised.
-        /// </summary>
         public event EventHandler? AfterControlIsMouseOverChanged;
 
         /// <summary>
@@ -471,12 +466,6 @@ namespace Alternet.UI
         public void AfterHelpRequested(AbstractControl sender, HelpEventArgs e)
         {
             AfterControlHelpRequested?.Invoke(sender, e);
-        }
-
-        /// <inheritdoc/>
-        public void AfterIdle(AbstractControl sender, EventArgs e)
-        {
-            AfterControlIdle?.Invoke(sender, e);
         }
 
         /// <inheritdoc/>
