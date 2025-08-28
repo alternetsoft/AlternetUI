@@ -34,7 +34,7 @@ namespace Alternet.Drawing
         public virtual IListControlItemContainer? Container { get; set; }
 
         /// <inheritdoc/>
-        public override void Draw(AbstractControl control, Graphics dc)
+        protected override void OnDraw(AbstractControl control, Graphics dc)
         {
             if (item is null || Container is null || !Visible)
                 return;

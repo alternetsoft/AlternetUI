@@ -197,6 +197,16 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
+        /// Gets a value indicating whether a vertical scroll bar is present.
+        /// </summary>
+        public bool HasVertScrollBar => VertScrollBar is not null;
+
+        /// <summary>
+        /// Gets a value indicating whether the horizontal scroll bar is present.
+        /// </summary>
+        public bool HasHorzScrollBar => HorzScrollBar is not null;
+
+        /// <summary>
         /// Gets whether interior has border.
         /// </summary>
         public virtual bool HasBorder
@@ -536,45 +546,6 @@ namespace Alternet.Drawing
             CornerClick?.Invoke(sender, EventArgs.Empty);
         }
 
-        /// <inheritdoc/>
-        public override void Draw(AbstractControl control, Graphics dc)
-        {
-            if (!Visible)
-                return;
-
-            var rectangles = GetLayoutRectangles(control);
-
-            if (Background is not null && Background.Visible)
-            {
-                Background.Bounds = Bounds;
-                Background.Draw(control, dc);
-            }
-
-            if (HasCorner)
-            {
-                Corner!.Bounds = rectangles[HitTestResult.Corner];
-                Corner!.Draw(control, dc);
-            }
-
-            if (VertVisible)
-            {
-                VertScrollBar!.Bounds = rectangles[HitTestResult.VertScrollBar];
-                VertScrollBar!.Draw(control, dc);
-            }
-
-            if (HorzVisible)
-            {
-                HorzScrollBar!.Bounds = rectangles[HitTestResult.HorzScrollBar];
-                HorzScrollBar!.Draw(control, dc);
-            }
-
-            if (Border is not null && Border.Visible)
-            {
-                Border!.Bounds = Bounds;
-                Border.Draw(control, dc);
-            }
-        }
-
         /// <summary>
         /// Gets real scroll bar metrics. If <see cref="ScrollBarMetrics"/> is not specified, returns
         /// <see cref="ScrollBar.DefaultMetrics"/>.
@@ -679,6 +650,45 @@ namespace Alternet.Drawing
             }
 
             return false;
+        }
+
+        /// <inheritdoc/>
+        protected override void OnDraw(AbstractControl control, Graphics dc)
+        {
+            if (!Visible)
+                return;
+
+            var rectangles = GetLayoutRectangles(control);
+
+            if (Background is not null && Background.Visible)
+            {
+                Background.Bounds = Bounds;
+                Background.Draw(control, dc);
+            }
+
+            if (HasCorner)
+            {
+                Corner!.Bounds = rectangles[HitTestResult.Corner];
+                Corner!.Draw(control, dc);
+            }
+
+            if (VertVisible)
+            {
+                VertScrollBar!.Bounds = rectangles[HitTestResult.VertScrollBar];
+                VertScrollBar!.Draw(control, dc);
+            }
+
+            if (HorzVisible)
+            {
+                HorzScrollBar!.Bounds = rectangles[HitTestResult.HorzScrollBar];
+                HorzScrollBar!.Draw(control, dc);
+            }
+
+            if (Border is not null && Border.Visible)
+            {
+                Border!.Bounds = Bounds;
+                Border.Draw(control, dc);
+            }
         }
 
         /// <summary>

@@ -170,7 +170,7 @@ namespace Alternet.Drawing
         }
 
         /// <inheritdoc/>
-        public override void Draw(AbstractControl control, Graphics dc)
+        protected override void OnDraw(AbstractControl control, Graphics dc)
         {
             DefaultDrawImage(control, dc);
         }

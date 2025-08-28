@@ -15,7 +15,8 @@ namespace Alternet.Drawing
         /// Represents the minimum size, in dips, for an arrow.
         /// </summary>
         /// <remarks>This value is used to ensure that arrows are rendered with a minimum visible size.
-        /// Adjust this value to control the smallest allowable arrow size in the rendering logic.</remarks>
+        /// Adjust this value to control the smallest allowable arrow size
+        /// in the rendering logic.</remarks>
         public static Coord MinArrowSize = 11;
 
         /// <summary>
@@ -354,6 +355,28 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
+        /// Calculates the rectangle representing the scroll bar track,
+        /// based on the specified scale factor.
+        /// </summary>
+        /// <param name="rectangles">Bounds of the different parts of the drawable.</param>
+        public virtual RectD GetTrackRect(ref EnumArray<HitTestResult, RectD> rectangles)
+        {
+            var beforeThumb = rectangles[HitTestResult.BeforeThumb];
+            var afterThumb = rectangles[HitTestResult.AfterThumb];
+
+            if (IsVertical)
+            {
+                beforeThumb.Height = afterThumb.Bottom - beforeThumb.Top;
+            }
+            else
+            {
+                beforeThumb.Width = afterThumb.Right - beforeThumb.Left;
+            }
+
+            return beforeThumb;
+        }
+
+        /// <summary>
         /// Performs layout of the drawable children and returns calculated bound of the different
         /// parts of the drawable.
         /// </summary>
@@ -387,7 +410,13 @@ namespace Alternet.Drawing
             if (hasButtons)
             {
                 startButtonBounds = (Bounds.Left, Bounds.Top, btnWidth, btnHeight);
-                endButtonBounds = (Bounds.Right - btnWidth, Bounds.Bottom - btnHeight, btnWidth, btnHeight);
+
+                endButtonBounds = (
+                    Bounds.Right - btnWidth,
+                    Bounds.Bottom - btnHeight,
+                    btnWidth,
+                    btnHeight);
+
                 result[HitTestResult.StartButton] = startButtonBounds;
                 result[HitTestResult.EndButton] = endButtonBounds;
             }
@@ -557,7 +586,7 @@ namespace Alternet.Drawing
         }
 
         /// <inheritdoc/>
-        public override void Draw(AbstractControl control, Graphics dc)
+        protected override void OnDraw(AbstractControl control, Graphics dc)
         {
             if (!Visible || !Position.IsVisible || Bounds.SizeIsEmpty)
                 return;
@@ -617,8 +646,10 @@ namespace Alternet.Drawing
             if (startButton is not null)
             {
                 startButton.Bounds = rectangles[HitTestResult.StartButton];
-                if(startButton.Bounds.NotEmpty)
+                if (startButton.Bounds.NotEmpty)
+                {
                     startButton.Draw(control, dc);
+                }
             }
 
             if (startArrow is not null)
@@ -634,8 +665,10 @@ namespace Alternet.Drawing
             if (endButton is not null)
             {
                 endButton.Bounds = rectangles[HitTestResult.EndButton];
-                if(endButton.Bounds.NotEmpty)
+                if (endButton.Bounds.NotEmpty)
+                {
                     endButton.Draw(control, dc);
+                }
             }
 
             if (endArrow is not null)
