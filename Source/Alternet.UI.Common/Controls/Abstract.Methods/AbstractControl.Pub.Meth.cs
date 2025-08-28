@@ -1104,7 +1104,7 @@ namespace Alternet.UI
         {
             if (HasChildren)
             {
-                List<AbstractControl> result = new();
+                List<AbstractControl> result = new(ChildCount);
                 foreach (var item in Children)
                 {
                     if (item.Visible)
@@ -2241,6 +2241,25 @@ namespace Alternet.UI
                 if (recursive)
                     child.ForEachVisibleChild(action, true);
             }
+        }
+
+        /// <summary>
+        /// Determines whether the specified control shares the same parent as the current control.
+        /// </summary>
+        /// <remarks>A control is considered a sibling if it shares the same
+        /// parent and is not the same instance as the current control.
+        /// If <paramref name="testControl"/> is <see langword="null"/>, this method
+        /// returns <see langword="false"/>.</remarks>
+        /// <param name="testControl">The control to compare with the current control.
+        /// Can be <see langword="null"/>.</param>
+        /// <returns><see langword="true"/> if the specified control has the same parent
+        /// as the current control  and is not the
+        /// same instance; otherwise, <see langword="false"/>.</returns>
+        public virtual bool IsSibling(AbstractControl? testControl)
+        {
+            if (testControl is null)
+                return false;
+            return Parent != null && Parent == testControl.Parent && testControl != this;
         }
 
         /// <summary>
