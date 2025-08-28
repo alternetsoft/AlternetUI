@@ -1842,7 +1842,6 @@ namespace Alternet.UI
                 Label.HorizontalAlignment = HorizontalAlignment.Fill;
                 RightSideElement = SpeedButton.RightSideElementKind.KeyGesture;
                 ShowDropDownMenuWhenHovered = true;
-                UseInternalDropDownMenu = true;
 
                 if (DropDownMenu is null)
                 {

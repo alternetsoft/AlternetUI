@@ -30,7 +30,7 @@ namespace Alternet.UI
                 container = container.Parent;
             }
 
-            Control?.ShowInsideControl(container, pos);
+            Control?.ShowInsideControl(container, Control.RelatedControl, pos);
         }
     }
 }

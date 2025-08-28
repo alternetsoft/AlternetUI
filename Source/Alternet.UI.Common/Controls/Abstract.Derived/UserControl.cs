@@ -87,7 +87,7 @@ namespace Alternet.UI
         {
             get
             {
-                defaultUseInternalDropDownMenu ??= App.IsMaui;
+                defaultUseInternalDropDownMenu ??= false;
                 return defaultUseInternalDropDownMenu.Value;
             }
 
