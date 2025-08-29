@@ -4,7 +4,7 @@ using System;
 
 namespace NativeApi.Api
 {
-    public class Menu : Control
+    public class Menu
     {
         public event EventHandler? Opened;
 

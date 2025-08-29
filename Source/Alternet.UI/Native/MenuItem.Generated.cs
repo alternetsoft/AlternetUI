@@ -8,7 +8,7 @@ using System.ComponentModel;
 using System.Security;
 namespace Alternet.UI.Native
 {
-    internal partial class MenuItem : Control
+    internal partial class MenuItem : NativeObject
     {
         static MenuItem()
         {
@@ -22,6 +22,36 @@ namespace Alternet.UI.Native
         
         public MenuItem(IntPtr nativePointer) : base(nativePointer)
         {
+        }
+        
+        public string Text
+        {
+            get
+            {
+                CheckDisposed();
+                return NativeApi.MenuItem_GetText_(NativePointer);
+            }
+            
+            set
+            {
+                CheckDisposed();
+                NativeApi.MenuItem_SetText_(NativePointer, value);
+            }
+        }
+        
+        public bool Enabled
+        {
+            get
+            {
+                CheckDisposed();
+                return NativeApi.MenuItem_GetEnabled_(NativePointer);
+            }
+            
+            set
+            {
+                CheckDisposed();
+                NativeApi.MenuItem_SetEnabled_(NativePointer, value);
+            }
         }
         
         public string ManagedCommandId
@@ -157,24 +187,28 @@ namespace Alternet.UI.Native
             {
                 case NativeApi.MenuItemEvent.Click:
                 {
-                    OnPlatformEventClick(); return IntPtr.Zero;
+                    Click?.Invoke(); return IntPtr.Zero;
                 }
                 case NativeApi.MenuItemEvent.Highlight:
                 {
-                    OnPlatformEventHighlight(); return IntPtr.Zero;
+                    Highlight?.Invoke(); return IntPtr.Zero;
                 }
                 case NativeApi.MenuItemEvent.Opened:
                 {
-                    OnPlatformEventOpened(); return IntPtr.Zero;
+                    Opened?.Invoke(); return IntPtr.Zero;
                 }
                 case NativeApi.MenuItemEvent.Closed:
                 {
-                    OnPlatformEventClosed(); return IntPtr.Zero;
+                    Closed?.Invoke(); return IntPtr.Zero;
                 }
                 default: throw new Exception("Unexpected MenuItemEvent value: " + e);
             }
         }
         
+        public Action? Click;
+        public Action? Highlight;
+        public Action? Opened;
+        public Action? Closed;
         
         [SuppressUnmanagedCodeSecurity]
         public class NativeApi : NativeApiProvider
@@ -197,6 +231,18 @@ namespace Alternet.UI.Native
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern IntPtr MenuItem_Create_();
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern string MenuItem_GetText_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void MenuItem_SetText_(IntPtr obj, string value);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool MenuItem_GetEnabled_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void MenuItem_SetEnabled_(IntPtr obj, bool value);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern string MenuItem_GetManagedCommandId_(IntPtr obj);

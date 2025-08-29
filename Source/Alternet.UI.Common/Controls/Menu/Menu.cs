@@ -10,7 +10,7 @@ namespace Alternet.UI
     /// <summary>
     /// Represents the base functionality for all menus.
     /// </summary>
-    public abstract partial class Menu : NonVisualControl, IMenuProperties
+    public abstract partial class Menu : FrameworkElement, IMenuProperties
     {
         private BaseCollection<MenuItem>? items;
 
@@ -48,8 +48,6 @@ namespace Alternet.UI
                 if(items == null)
                 {
                     items = new() { ThrowOnNullAdd = true };
-                    items.ItemInserted += OnItemInserted;
-                    items.ItemRemoved += OnItemRemoved;
                 }
 
                 return items;
@@ -76,9 +74,6 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        public override ControlTypeId ControlKind => ControlTypeId.Menu;
-
-        /// <inheritdoc/>
         public override IReadOnlyList<FrameworkElement> ContentElements
         {
             get
@@ -96,9 +91,6 @@ namespace Alternet.UI
         {
             get => Items;
         }
-
-        /// <inheritdoc />
-        protected override bool IsDummy => true;
 
         /// <summary>
         /// Performs some action for the each element in <see cref="Items"/>.
@@ -240,17 +232,6 @@ namespace Alternet.UI
             MenuItem item = new(title, onClick);
             Items.Add(item);
             return item;
-        }
-
-        private void OnItemInserted(object? sender, int index, MenuItem item)
-        {
-            // This is required for data binding inheritance.
-            Children.Add(item);
-        }
-
-        private void OnItemRemoved(object? sender, int index, MenuItem item)
-        {
-            Children.Remove(item);
         }
     }
 }

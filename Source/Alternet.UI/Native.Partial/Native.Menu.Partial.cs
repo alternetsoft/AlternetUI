@@ -1,22 +1,14 @@
-﻿using System;
+using System;
 using System.Runtime.InteropServices;
 using System.ComponentModel;
 using System.Security;
 
 namespace Alternet.UI.Native
 {
-    internal partial class Menu
+    internal partial class Menu : IContextMenuHandler
     {
-        internal MenuItemHandler? OwnerHandler;
-
-        public void OnPlatformEventOpened()
+        void IContextMenuHandler.Show(AbstractControl control, Drawing.PointD? position, Action? onClose)
         {
-            (OwnerHandler?.Control as UI.MenuItem)?.RaiseOpened();
-        }
-
-        public void OnPlatformEventClosed()
-        {
-            (OwnerHandler?.Control as UI.MenuItem)?.RaiseClosed();
         }
     }
 }

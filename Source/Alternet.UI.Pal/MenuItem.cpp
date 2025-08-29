@@ -116,10 +116,6 @@ namespace Alternet::UI
 #endif
     }
 
-    void MenuItem::UpdateWxWindowParent()
-    {
-    }
-
     bool MenuItem::GetEnabled()
     {
         return _flags.IsSet(MenuItemFlags::Enabled);
@@ -287,11 +283,11 @@ namespace Alternet::UI
 
         _role = value;
 
-        if (IsInitInProgress())
-            return;
-
         auto mainMenu = FindParentMainMenu();
         if (mainMenu == nullptr)
+            return;
+
+        if (mainMenu->IsInitInProgress())
             return;
 
         mainMenu->OnItemRoleChanged(this);
@@ -385,16 +381,6 @@ namespace Alternet::UI
         _menuItem->SetSubMenu(value->GetWxMenu());
     }
 
-    wxWindow* MenuItem::CreateWxWindowUnparented()
-    {
-        return new wxDummyPanel("menu");
-    }
-
-    wxWindow* MenuItem::CreateWxWindowCore(wxWindow* parent)
-    {
-        return new wxDummyPanel("menuitem");
-    }
-    
     wxMenuItem* MenuItem::GetWxMenuItem()
     {
         return _menuItem;
@@ -431,9 +417,5 @@ namespace Alternet::UI
             _flags.Set(MenuItemFlags::Checked, !_flags.IsSet(MenuItemFlags::Checked));
 
         RaiseEvent(MenuItemEvent::Click);
-    }
-
-    void MenuItem::ShowCore()
-    {
     }
 }

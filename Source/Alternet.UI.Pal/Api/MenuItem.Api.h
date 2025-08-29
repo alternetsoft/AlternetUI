@@ -21,6 +21,50 @@ ALTERNET_UI_API MenuItem* MenuItem_Create_()
     #endif
 }
 
+ALTERNET_UI_API char16_t* MenuItem_GetText_(MenuItem* obj)
+{
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    return MarshalExceptions<char16_t*>([&](){
+    #endif
+        return AllocPInvokeReturnString(obj->GetText());
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    });
+    #endif
+}
+
+ALTERNET_UI_API void MenuItem_SetText_(MenuItem* obj, const char16_t* value)
+{
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    MarshalExceptions<void>([&](){
+    #endif
+        obj->SetText(value);
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    });
+    #endif
+}
+
+ALTERNET_UI_API c_bool MenuItem_GetEnabled_(MenuItem* obj)
+{
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    return MarshalExceptions<c_bool>([&](){
+    #endif
+        return obj->GetEnabled();
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    });
+    #endif
+}
+
+ALTERNET_UI_API void MenuItem_SetEnabled_(MenuItem* obj, c_bool value)
+{
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    MarshalExceptions<void>([&](){
+    #endif
+        obj->SetEnabled(value);
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    });
+    #endif
+}
+
 ALTERNET_UI_API char16_t* MenuItem_GetManagedCommandId_(MenuItem* obj)
 {
     #if !defined(__WXMSW__) || defined(_DEBUG)

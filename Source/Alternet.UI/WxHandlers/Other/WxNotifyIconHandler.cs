@@ -35,7 +35,7 @@ namespace Alternet.UI.Native
                 if (value == null)
                     Menu = null;
                 else
-                    Menu = ((ContextMenuHandler)value.Handler).NativeControl;
+                    Menu = value.Handler as Native.Menu;
             }
         }
     }

@@ -9,7 +9,7 @@ namespace Alternet.UI
     /// <summary>
     /// Contains methods and properties which allow to work with main menu.
     /// </summary>
-    public interface IMainMenuHandler : IControlHandler
+    public interface IMainMenuHandler : IDisposable
     {
     }
 }

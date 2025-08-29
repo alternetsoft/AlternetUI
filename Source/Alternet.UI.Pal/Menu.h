@@ -8,13 +8,10 @@ namespace Alternet::UI
     class MenuItem;
     class MainMenu;
 
-    class Menu : public Control
+    class Menu : public Object
     {
 #include "Api/Menu.inc"
     public:
-
-        wxWindow* CreateWxWindowCore(wxWindow* parent) override;
-        wxWindow* CreateWxWindowUnparented() override;
 
         wxMenu* GetWxMenu();
 
@@ -43,11 +40,6 @@ namespace Alternet::UI
         void CreateWxMenu();
         void UnregisterWxMenu();
     protected:
-
-        void ShowCore() override;
-
-        RectD GetBounds() override { return RectD(); }
-        void SetBounds(const RectD& value) override {}
 
     private:
 

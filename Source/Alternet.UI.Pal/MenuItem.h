@@ -8,7 +8,7 @@ namespace Alternet::UI
     class Menu;
     class MainMenu;
 
-    class MenuItem : public Control
+    class MenuItem : public Object
     {
 #include "Api/MenuItem.inc"
     public:
@@ -20,12 +20,6 @@ namespace Alternet::UI
             Key preservedKey;
             ModifierKeys preservedModifierKeys;
         };
-
-        string GetText() override;
-        void SetText(const string& value) override;
-
-        wxWindow* CreateWxWindowCore(wxWindow* parent) override;
-        wxWindow* CreateWxWindowUnparented() override;
 
         wxMenuItem* GetWxMenuItem();
 
@@ -44,9 +38,6 @@ namespace Alternet::UI
 
         static wxString CoerceWxItemText(string value, MenuItem* menuItem);
 
-        bool GetEnabled() override;
-        virtual void SetEnabled(bool value) override;
-
         MainMenu* FindParentMainMenu();
 
         Key GetShortcutKey();
@@ -54,13 +45,6 @@ namespace Alternet::UI
     protected:
         ImageSet* _normalImage = nullptr;
         ImageSet* _disabledImage = nullptr;
-
-        void ShowCore() override;
-
-        void UpdateWxWindowParent() override;
-
-        RectD GetBounds() override { return RectD(); }
-        void SetBounds(const RectD& value) override {}
 
     private:
 

@@ -17,8 +17,20 @@ namespace Alternet.UI
     /// for Maui applications.</remarks>
     public partial class MauiContextMenuHandler : PlessContextMenuHandler
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="MauiContextMenuHandler"/> class.
+        /// </summary>
+        /// <param name="menu"></param>
+        public MauiContextMenuHandler(ContextMenu menu)
+            : base(menu)
+        {
+        }
+
         /// <inheritdoc/>
-        public override void Show(AbstractControl container, PointD? position = null)
+        public override void Show(
+            AbstractControl container,
+            PointD? position = null,
+            Action? onClose = null)
         {
             var pos = Mouse.CoercePosition(position, container);
 
@@ -30,7 +42,7 @@ namespace Alternet.UI
                 container = container.Parent;
             }
 
-            Control?.ShowInsideControl(container, Control.RelatedControl, pos);
+            Control?.ShowInsideControl(container, Control.RelatedControl, pos, onClose);
         }
     }
 }

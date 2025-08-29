@@ -31,6 +31,9 @@ namespace Alternet.UI
         private bool shortcutEnabled = true;
         private CommandSourceStruct commandSource;
         private Func<bool>? enabledFunc;
+        private string text = string.Empty;
+        private bool visible = true;
+        private bool enabled = true;
 
         static MenuItem()
         {
@@ -137,6 +140,24 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Occurs when the value of the <see cref="Enabled"/> property changes.
+        /// </summary>
+        [Category("Property Changed")]
+        public event EventHandler? EnabledChanged;
+
+        /// <summary>
+        /// Occurs when the value of the <see cref="Visible"/> property changes.
+        /// </summary>
+        [Category("Property Changed")]
+        public event EventHandler? VisibleChanged;
+
+        /// <summary>
+        /// Occurs when the menu item is clicked.
+        /// </summary>
+        [Category("Action")]
+        public virtual event EventHandler? Click;
+
+        /// <summary>
         /// Occurs when a change is detected, providing details about the type of change.
         /// </summary>
         /// <remarks>This event is triggered whenever a change occurs, and
@@ -214,9 +235,6 @@ namespace Alternet.UI
                 defaultMenuArrowImage = value;
             }
         }
-
-        /// <inheritdoc/>
-        public override ControlTypeId ControlKind => ControlTypeId.MenuItem;
 
         /// <summary>
         /// Gets or sets <see cref="ImageSet"/> associated with the menu item.
@@ -371,11 +389,11 @@ namespace Alternet.UI
         /// Use underscore (<c>_</c>) symbol before a character to make it
         /// an access key.
         /// </remarks>
-        public override string Text
+        public virtual string Text
         {
             get
             {
-                return base.Text;
+                return text;
             }
 
             set
@@ -383,35 +401,56 @@ namespace Alternet.UI
                 if (value == Text)
                     return;
 
-                base.Text = value;
+                text = value;
 
                 RaiseChanged(MenuItemChangeKind.Text);
             }
         }
 
-        /// <inheritdoc/>
-        public override bool Visible
+        /// <summary>
+        /// Gets or sets a value indicating whether the menu item is visible.
+        /// </summary>
+        /// <remarks>Changing this property raises a change notification event to indicate that the
+        /// visibility state has been updated.</remarks>
+        public virtual bool Visible
         {
-            get => base.Visible;
+            get => visible;
             set
             {
-                if (Visible == value)
+                if (visible == value)
                     return;
-                base.Visible = value;
+                visible = value;
+                RaiseVisibleChanged(EventArgs.Empty);
                 RaiseChanged(MenuItemChangeKind.Visible);
             }
         }
 
-        /// <inheritdoc/>
-        public override bool Enabled
+        /// <summary>
+        /// Gets or sets a value indicating whether the menu item is enabled.
+        /// </summary>
+        /// <remarks>Changing this property raises the <c>EnabledChanged</c> event and notifies listeners
+        /// of the change.</remarks>
+        public bool IsEnabled
         {
-            get => base.Enabled;
+            get => Enabled;
+            set => Enabled = value;
+        }
 
+        /// <summary>
+        /// Gets or sets a value indicating whether the menu item is enabled.
+        /// </summary>
+        /// <remarks>Changing this property raises the <c>EnabledChanged</c> event and notifies listeners
+        /// of the change.</remarks>
+        [Browsable(false)]
+        public virtual bool Enabled
+        {
+            get => enabled;
             set
             {
-                if (Enabled == value)
+                if (enabled == value)
                     return;
-                base.Enabled = value;
+                enabled = value;
+                RaiseEnabledChanged(EventArgs.Empty);
                 RaiseChanged(MenuItemChangeKind.Enabled);
             }
         }
@@ -557,9 +596,6 @@ namespace Alternet.UI
 
         ICommandSource IMenuItemProperties.CommandSource => this;
 
-        /// <inheritdoc/>
-        protected override bool IsDummy => true;
-
         /// <summary>
         /// Implicit conversion operator from <see cref="string"/> to
         /// <see cref="MenuItem"/>.
@@ -578,6 +614,20 @@ namespace Alternet.UI
         public void SetShortcutKeys(Keys keys)
         {
             ShortcutKeys = keys;
+        }
+
+        /// <summary>
+        /// Raises the <see cref="EnabledChanged"/> event and calls
+        /// <see cref="OnEnabledChanged(EventArgs)"/>.
+        /// </summary>
+        /// <param name="e">An <see cref="EventArgs"/> that contains the
+        /// event data.</param>
+        public virtual void RaiseEnabledChanged(EventArgs e)
+        {
+            if (DisposingOrDisposed)
+                return;
+            OnEnabledChanged(e);
+            EnabledChanged?.Invoke(this, e);
         }
 
         /// <summary>
@@ -632,6 +682,12 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Same as <see cref="Enabled"/> but implemented as method.
+        /// </summary>
+        /// <param name="value">New <see cref="Enabled"/> property value.</param>
+        public void SetEnabled(bool value) => Enabled = value;
+
+        /// <summary>
         /// Returns a string that represents the current object.
         /// </summary>
         /// <returns>A string that represents the current object.</returns>
@@ -641,6 +697,28 @@ namespace Alternet.UI
                 return base.ToString() ?? nameof(MenuItem);
             else
                 return Text;
+        }
+
+        /// <summary>
+        /// Calls <see cref="RaiseClick(EventArgs)"/> with an empty arguments.
+        /// </summary>
+        public void RaiseClick() => RaiseClick(EventArgs.Empty);
+
+        /// <summary>
+        /// Raises the <see cref="Click"/> event and calls
+        /// <see cref="OnClick(EventArgs)"/>.
+        /// See <see cref="Click"/> event description for more details.
+        /// </summary>
+        [Browsable(false)]
+        public virtual void RaiseClick(EventArgs e)
+        {
+            if (DisposingOrDisposed)
+                return;
+
+            OnClick(e);
+            action?.Invoke();
+            commandSource.Execute();
+            Click?.Invoke(this, e);
         }
 
         /// <summary>
@@ -668,6 +746,20 @@ namespace Alternet.UI
         {
             DisabledImageChanged?.Invoke(this, EventArgs.Empty);
             RaiseChanged(MenuItemChangeKind.DisabledImage);
+        }
+
+        /// <summary>
+        /// Raises <see cref="VisibleChanged"/> event and <see cref="OnVisibleChanged"/>
+        /// method.
+        /// </summary>
+        [Browsable(false)]
+        public virtual void RaiseVisibleChanged(EventArgs e)
+        {
+            if (DisposingOrDisposed)
+                return;
+
+            OnVisibleChanged(e);
+            VisibleChanged?.Invoke(this, e);
         }
 
         /// <summary>
@@ -755,12 +847,36 @@ namespace Alternet.UI
             return img;
         }
 
-        /// <inheritdoc />
-        protected override void OnClick(EventArgs e)
+        /// <summary>
+        /// Called when the enabled of the <see cref="Enabled"/> property changes.
+        /// </summary>
+        /// <param name="e">An <see cref="EventArgs"/> that contains the
+        /// event data.</param>
+        /// <remarks>Derived classes can override this method to handle the event without
+        /// attaching a delegate.</remarks>
+        [EditorBrowsable(EditorBrowsableState.Advanced)]
+        protected virtual void OnEnabledChanged(EventArgs e)
         {
-            base.OnClick(e);
-            action?.Invoke();
-            commandSource.Execute();
+        }
+
+        /// <summary>
+        /// Called when menu item is clicked.
+        /// </summary>
+        /// <param name="e">An <see cref="EventArgs"/> that contains the event data.</param>
+        [EditorBrowsable(EditorBrowsableState.Advanced)]
+        protected virtual void OnClick(EventArgs e)
+        {
+        }
+
+        /// <summary>
+        /// Called when the value of the <see cref="Visible"/> property changes.
+        /// </summary>
+        /// <param name="e">An <see cref="EventArgs"/> that contains the event data.</param>
+        /// <remarks>Derived classes can override this method to handle the event without
+        /// attaching a delegate.</remarks>
+        [EditorBrowsable(EditorBrowsableState.Advanced)]
+        protected virtual void OnVisibleChanged(EventArgs e)
+        {
         }
 
         /// <inheritdoc/>
@@ -768,12 +884,6 @@ namespace Alternet.UI
         {
             commandSource.Changed = null;
             base.DisposeManaged();
-        }
-
-        /// <inheritdoc/>
-        protected override IControlHandler CreateHandler()
-        {
-            return (IControlHandler)ControlFactory.Handler.CreateMenuItemHandler(this);
         }
     }
 }

@@ -28,6 +28,7 @@ namespace Alternet.UI
     [ControlCategory("MenusAndToolbars")]
     public partial class ContextMenu : Menu
     {
+        private IContextMenuHandler? handler;
         private IList<IContextMenuHost>? hostControls;
         private WeakReferenceValue<AbstractControl> relatedControl = new();
 
@@ -57,16 +58,6 @@ namespace Alternet.UI
         public event EventHandler<ToolStripDropDownClosedEventArgs>? Closed;
 
         /// <summary>
-        /// This property has no meaning.
-        /// </summary>
-        [Browsable(false)]
-        public override bool Visible
-        {
-            get => base.Visible;
-            set => base.Visible = value;
-        }
-
-        /// <summary>
         /// Gets list of host controls. It can contain <see cref="IContextMenuHost"/> controls
         /// such as <see cref="PopupToolBar"/> or <see cref="InnerPopupToolBar"/>.
         /// </summary>
@@ -77,16 +68,6 @@ namespace Alternet.UI
             {
                 return hostControls;
             }
-        }
-
-        /// <summary>
-        /// This property has no meaning.
-        /// </summary>
-        [Browsable(false)]
-        public override bool Enabled
-        {
-            get => base.Enabled;
-            set => base.Enabled = value;
         }
 
         /// <summary>
@@ -130,23 +111,10 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// This property has no meaning.
-        /// </summary>
-        [Browsable(false)]
-        public override string? ToolTip
-        {
-            get => base.ToolTip;
-            set => base.ToolTip = value;
-        }
-
-        /// <inheritdoc/>
-        public override ControlTypeId ControlKind => ControlTypeId.ContextMenu;
-
-        /// <summary>
         /// Gets handler.
         /// </summary>
         [Browsable(false)]
-        public new IContextMenuHandler Handler => (IContextMenuHandler)base.Handler;
+        public IContextMenuHandler Handler => handler ??= CreateHandler();
 
         /// <summary>
         /// Determines whether any visible child of the specified control
@@ -359,7 +327,8 @@ namespace Alternet.UI
         public virtual void ShowInsideControl(
             AbstractControl container,
             AbstractControl? source = null,
-            PointD? position = null)
+            PointD? position = null,
+            Action? onClose = null)
         {
             var hostControl = GetHostControl<InnerPopupToolBar>();
             relatedControl.Value = null;
@@ -445,6 +414,8 @@ namespace Alternet.UI
         /// </remarks>
         public virtual void Show(AbstractControl control, PointD? position = null)
         {
+            if(DisposingOrDisposed)
+                return;
             relatedControl.Value = null;
             if (Items.Count == 0)
                 return;
@@ -457,18 +428,32 @@ namespace Alternet.UI
                 if (e.Cancel)
                     return;
                 relatedControl.Value = control;
-                Handler.Show(control, position);
-                RaiseClosing(EventArgs.Empty);
+                Handler.Show(
+                    control,
+                    position,
+                    () =>
+                    {
+                        RaiseClosing(EventArgs.Empty);
+                    });
             }
             finally
             {
             }
         }
 
-        /// <inheritdoc/>
-        protected override IControlHandler CreateHandler()
+        /// <summary>
+        /// Creates and returns a handler for the context menu.
+        /// </summary>
+        protected virtual IContextMenuHandler CreateHandler()
         {
-            return (IControlHandler)ControlFactory.Handler.CreateContextMenuHandler(this);
+            return ControlFactory.Handler.CreateContextMenuHandler(this);
+        }
+
+        /// <inheritdoc/>
+        protected override void DisposeManaged()
+        {
+            SafeDispose(ref handler);
+            base.DisposeManaged();
         }
 
         /// <summary>

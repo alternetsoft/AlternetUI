@@ -5,7 +5,7 @@ using System.Security;
 
 namespace Alternet.UI.Native
 {
-    internal partial class MenuItem : IMenuItemHandler
+    internal partial class MainMenu : IMainMenuHandler
     {
     }
 }

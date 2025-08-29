@@ -583,6 +583,13 @@ namespace Alternet::UI
         Complement = 5,
     };
     
+    enum class CoordUnit
+    {
+        Pixel = 0,
+        Dip = 1,
+        Percent = 2,
+    };
+    
     enum class FillMode
     {
         Alternate = 0,
@@ -938,6 +945,15 @@ namespace Alternet::UI
         Right = 4,
         Fill = 5,
         RightAutoSize = 6,
+    };
+    
+    enum class DropDownAlignment
+    {
+        BeforeStart = 0,
+        AfterStart = 1,
+        BeforeEnd = 2,
+        AfterEnd = 3,
+        Center = 4,
     };
     
     enum class GenericOrientation
@@ -1299,6 +1315,7 @@ namespace Alternet::UI
     
     enum class VisualControlStates
     {
+        None = 0,
         Hovered = 1,
         Pressed = 2,
         Disabled = 4,
@@ -1542,6 +1559,30 @@ namespace Alternet::UI
         TrimSpaces = 32,
         NoLeading = 64,
         NoTrailing = 128,
+    };
+    
+    enum class DragAction
+    {
+        Continue = 0,
+        Drop = 1,
+        Cancel = 2,
+    };
+    
+    enum class DragDropEffects
+    {
+        None = 0,
+        Copy = 1,
+        Move = 2,
+        Link = 4,
+        Scroll = -2147483648,
+        All = -2147483645,
+    };
+    
+    enum class RoutingStrategy
+    {
+        Tunnel = 0,
+        Bubble = 1,
+        Direct = 2,
     };
     
     enum class DialogCloseAction
@@ -2478,23 +2519,6 @@ namespace Alternet::UI
         Watch = 25,
     };
     
-    enum class DragAction
-    {
-        Continue = 0,
-        Drop = 1,
-        Cancel = 2,
-    };
-    
-    enum class DragDropEffects
-    {
-        None = 0,
-        Copy = 1,
-        Move = 2,
-        Link = 4,
-        Scroll = -2147483648,
-        All = -2147483645,
-    };
-    
     enum class FlagsOrEnum
     {
         None = 0,
@@ -2531,46 +2555,6 @@ namespace Alternet::UI
     {
         Single = 0,
         Multiple = 1,
-    };
-    
-    enum class Modifiability
-    {
-        Unmodifiable = 0,
-        Modifiable = 1,
-        Inherit = 2,
-    };
-    
-    enum class PropertyUpdateResult
-    {
-        Failure = 0,
-        Ok = 1,
-        CannotChange = 2,
-    };
-    
-    enum class Readability
-    {
-        Unreadable = 0,
-        Readable = 1,
-        Inherit = 2,
-    };
-    
-    enum class RichToolTipKind
-    {
-        None = 0,
-        TopLeft = 1,
-        Top = 2,
-        TopRight = 3,
-        BottomLeft = 4,
-        Bottom = 5,
-        BottomRight = 6,
-        Auto = 7,
-    };
-    
-    enum class RoutingStrategy
-    {
-        Tunnel = 0,
-        Bubble = 1,
-        Direct = 2,
     };
     
     enum class SelectionMode
@@ -2855,6 +2839,27 @@ namespace Alternet::UI
         UneditableCompositeFragment = 32,
         ValueIsCurrent = 64,
         ProgrammaticValue = 128,
+    };
+    
+    enum class Modifiability
+    {
+        Unmodifiable = 0,
+        Modifiable = 1,
+        Inherit = 2,
+    };
+    
+    enum class PropertyUpdateResult
+    {
+        Failure = 0,
+        Ok = 1,
+        CannotChange = 2,
+    };
+    
+    enum class Readability
+    {
+        Unreadable = 0,
+        Readable = 1,
+        Inherit = 2,
     };
     
     enum class RichTextBoxScrollBars
@@ -3253,6 +3258,25 @@ namespace Alternet::UI
         None = 3,
     };
     
+    enum class OverlayToolTipFlags
+    {
+        None = 0,
+        DismissAfterInterval = 1,
+        UseSystemColors = 2,
+    };
+    
+    enum class RichToolTipKind
+    {
+        None = 0,
+        TopLeft = 1,
+        Top = 2,
+        TopRight = 3,
+        BottomLeft = 4,
+        Bottom = 5,
+        BottomRight = 6,
+        Auto = 7,
+    };
+    
     enum class TreeViewButtonsKind
     {
         Null = 0,
@@ -3575,6 +3599,7 @@ template<> struct enable_bitmask_operators<Alternet::UI::MessageBoxOptions> { st
 template<> struct enable_bitmask_operators<Alternet::UI::FontDialogRestrictSelection> { static const bool enable = true; };
 template<> struct enable_bitmask_operators<Alternet::UI::DrawItemState> { static const bool enable = true; };
 template<> struct enable_bitmask_operators<Alternet::UI::TrimTextRules> { static const bool enable = true; };
+template<> struct enable_bitmask_operators<Alternet::UI::DragDropEffects> { static const bool enable = true; };
 template<> struct enable_bitmask_operators<Alternet::UI::Keys> { static const bool enable = true; };
 template<> struct enable_bitmask_operators<Alternet::UI::KeyStates> { static const bool enable = true; };
 template<> struct enable_bitmask_operators<Alternet::UI::ModifierKeys> { static const bool enable = true; };
@@ -3584,7 +3609,6 @@ template<> struct enable_bitmask_operators<Alternet::UI::TouchEventsMask> { stat
 template<> struct enable_bitmask_operators<Alternet::UI::VirtualKeyboardFlags> { static const bool enable = true; };
 template<> struct enable_bitmask_operators<Alternet::UI::ListViewHitTestLocations> { static const bool enable = true; };
 template<> struct enable_bitmask_operators<Alternet::UI::SoundPlayFlags> { static const bool enable = true; };
-template<> struct enable_bitmask_operators<Alternet::UI::DragDropEffects> { static const bool enable = true; };
 template<> struct enable_bitmask_operators<Alternet::UI::PropertyGridApplyFlags> { static const bool enable = true; };
 template<> struct enable_bitmask_operators<Alternet::UI::PropertyGridCreateStyle> { static const bool enable = true; };
 template<> struct enable_bitmask_operators<Alternet::UI::PropertyGridCreateStyleEx> { static const bool enable = true; };
@@ -3609,6 +3633,7 @@ template<> struct enable_bitmask_operators<Alternet::UI::TextBoxSetValueFlags> {
 template<> struct enable_bitmask_operators<Alternet::UI::TextBoxTextAttrBulletStyle> { static const bool enable = true; };
 template<> struct enable_bitmask_operators<Alternet::UI::TextBoxTextAttrEffects> { static const bool enable = true; };
 template<> struct enable_bitmask_operators<Alternet::UI::TextBoxTextAttrFlags> { static const bool enable = true; };
+template<> struct enable_bitmask_operators<Alternet::UI::OverlayToolTipFlags> { static const bool enable = true; };
 template<> struct enable_bitmask_operators<Alternet::UI::TreeViewCreateStyle> { static const bool enable = true; };
 template<> struct enable_bitmask_operators<Alternet::UI::TreeViewHitTestLocations> { static const bool enable = true; };
 template<> struct enable_bitmask_operators<Alternet::UI::ValueValidatorTextStyle> { static const bool enable = true; };

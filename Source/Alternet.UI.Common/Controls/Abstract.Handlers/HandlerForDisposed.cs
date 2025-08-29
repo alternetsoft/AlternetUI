@@ -1792,7 +1792,10 @@ namespace Alternet.UI
         {
         }
 
-        public void Show(AbstractControl control, PointD? position = null)
+        public void Show(
+            AbstractControl control,
+            PointD? position = null,
+            Action? onClose = null)
         {
         }
 

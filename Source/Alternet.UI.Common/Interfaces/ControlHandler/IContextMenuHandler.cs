@@ -11,13 +11,17 @@ namespace Alternet.UI
     /// <summary>
     /// Contains methods and properties which allow to work with context menu.
     /// </summary>
-    public interface IContextMenuHandler
+    public interface IContextMenuHandler : IDisposable
     {
         /// <summary>
         /// Show menu on screen.
         /// </summary>
-        /// <param name="control">Target control.</param>
-        /// <param name="position">Position in local coordinates.</param>
-        void Show(AbstractControl control, PointD? position = null);
+        /// <param name="control">The target control.</param>
+        /// <param name="position">The position in local coordinates.</param>
+        /// <param name="onClose">The action to be invoked when the menu is closed.</param>
+        void Show(
+            AbstractControl control,
+            PointD? position = null,
+            Action? onClose = null);
     }
 }

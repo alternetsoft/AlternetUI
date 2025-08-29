@@ -115,6 +115,8 @@ namespace Alternet::UI
     {
 #include "Api/Control.inc"
     public:
+        bool IsInitInProgress();
+
         wxCursor _cursor = wxNullCursor;
 
         void OnTextChanged(wxCommandEvent& event);
@@ -252,8 +254,6 @@ namespace Alternet::UI
 
         virtual void OnBeginInit();
         virtual void OnEndInit();
-
-        bool IsInitInProgress();
 
     private:
         string _textValue = u"";

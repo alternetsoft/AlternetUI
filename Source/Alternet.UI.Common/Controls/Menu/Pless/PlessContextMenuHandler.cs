@@ -11,21 +11,35 @@ namespace Alternet.UI
     /// <summary>
     /// Implements dummy <see cref="IContextMenuHandler"/> provider.
     /// </summary>
-    public class PlessContextMenuHandler : PlessControlHandler, IContextMenuHandler
+    public class PlessContextMenuHandler : DisposableObject, IContextMenuHandler
     {
+        private readonly ContextMenu contextMenu;
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="PlessContextMenuHandler"/> class.
+        /// </summary>
+        /// <param name="menu"></param>
+        public PlessContextMenuHandler(ContextMenu menu)
+        {
+            contextMenu = menu;
+        }
+
         /// <summary>
         /// Gets the <see cref="ContextMenu"/> associated with this component, if any.
         /// </summary>
-        public new ContextMenu? Control
+        public ContextMenu? Control
         {
             get
             {
-                return (ContextMenu?)base.Control;
+                return contextMenu;
             }
         }
 
         /// <inheritdoc/>
-        public virtual void Show(AbstractControl control, PointD? position = null)
+        public virtual void Show(
+            AbstractControl control,
+            PointD? position = null,
+            Action? onClose = null)
         {
         }
     }

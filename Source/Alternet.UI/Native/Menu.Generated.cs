@@ -8,7 +8,7 @@ using System.ComponentModel;
 using System.Security;
 namespace Alternet.UI.Native
 {
-    internal partial class Menu : Control
+    internal partial class Menu : NativeObject
     {
         static Menu()
         {
@@ -90,16 +90,18 @@ namespace Alternet.UI.Native
             {
                 case NativeApi.MenuEvent.Opened:
                 {
-                    OnPlatformEventOpened(); return IntPtr.Zero;
+                    Opened?.Invoke(); return IntPtr.Zero;
                 }
                 case NativeApi.MenuEvent.Closed:
                 {
-                    OnPlatformEventClosed(); return IntPtr.Zero;
+                    Closed?.Invoke(); return IntPtr.Zero;
                 }
                 default: throw new Exception("Unexpected MenuEvent value: " + e);
             }
         }
         
+        public Action? Opened;
+        public Action? Closed;
         
         [SuppressUnmanagedCodeSecurity]
         public class NativeApi : NativeApiProvider
