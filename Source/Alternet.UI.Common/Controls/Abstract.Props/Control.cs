@@ -271,7 +271,16 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        public override bool IsPlatformControl => true;
+        public override bool IsPlatformControl
+        {
+            get
+            {
+                if (App.Handler is null)
+                    return true;
+
+                return App.Handler.IsPlatformControl(this);
+            }
+        }
 
         /// <inheritdoc/>
         public override Thickness NativePadding
