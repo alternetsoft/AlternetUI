@@ -19,6 +19,15 @@ namespace Alternet.UI
         public static event EventHandler? NameChanged;
 
         /// <summary>
+        /// Occurs when the mouse pointer hovers over a specific element or area.
+        /// </summary>
+        /// <remarks>This event is triggered when the mouse pointer remains stationary
+        /// over a designated area for a certain duration.
+        /// Subscribers can use this event to perform actions such as displaying tooltips
+        /// or highlighting elements.</remarks>
+        public static event EventHandler? MouseHover;
+
+        /// <summary>
         /// Occurs when the data context of the associated object changes.
         /// </summary>
         /// <remarks>This event is raised whenever the data context is updated,
@@ -182,6 +191,17 @@ namespace Alternet.UI
         public static void RaiseNameChanged(object? sender, EventArgs e)
         {
             NameChanged?.Invoke(sender, e);
+        }
+
+        /// <summary>
+        /// Raises the <see cref="MouseHover"/> event.
+        /// </summary>
+        /// <param name="sender">The source of the event, typically the object
+        /// that triggered the event. This parameter can be <see langword="null"/>.</param>
+        /// <param name="e">An <see cref="EventArgs"/> instance containing the event data.</param>
+        public static void RaiseMouseHover(object? sender, EventArgs e)
+        {
+            MouseHover?.Invoke(sender, e);
         }
 
         /// <summary>
