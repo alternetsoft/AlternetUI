@@ -88,6 +88,14 @@ namespace Alternet.UI
         public event EventHandler<LongTapEventArgs>? AfterControlLongTap;
 
         /// <summary>
+        /// Occurs after the mouse pointer hovers over a control.
+        /// </summary>
+        /// <remarks>This event is triggered when the mouse pointer remains stationary
+        /// over a control for a specified duration. It can be used to perform actions
+        /// such as displaying tooltips or initiating hover-based interactions.</remarks>
+        public event EventHandler? AfterControlMouseHover;
+
+        /// <summary>
         /// Occurs when the corresponding control's event is raised.
         /// </summary>
         public event EventHandler<MouseEventArgs>? AfterControlMouseDoubleClick;
@@ -520,6 +528,12 @@ namespace Alternet.UI
         public void AfterMouseCaptureLost(AbstractControl sender, EventArgs e)
         {
             AfterControlMouseCaptureLost?.Invoke(sender, e);
+        }
+
+        /// <inheritdoc/>
+        public void AfterMouseHover(AbstractControl sender, EventArgs e)
+        {
+            AfterControlMouseHover?.Invoke(sender, e);
         }
 
         /// <inheritdoc/>

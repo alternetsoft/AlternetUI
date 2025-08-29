@@ -12,6 +12,13 @@ namespace Alternet.UI
     public interface IControlNotification : IDisposable
     {
         /// <summary>
+        /// Handles the event triggered after the mouse hovers over the specified control.
+        /// </summary>
+        /// <param name="sender">The control over which the mouse hovered, triggering the event.</param>
+        /// <param name="e">An <see cref="EventArgs"/> instance containing the event data.</param>
+        void AfterMouseHover(AbstractControl sender, EventArgs e);
+
+        /// <summary>
         /// Called after the <see cref="AbstractControl.PreviewKeyDown" /> event is raised.
         /// </summary>
         void AfterPreviewKeyDown(
@@ -81,12 +88,12 @@ namespace Alternet.UI
         void AfterChildRemoved(AbstractControl sender, AbstractControl childControl);
 
         /// <summary>
-        /// Called after the conrol's handle is created.
+        /// Called after the control's handle is created.
         /// </summary>
         void AfterHandleCreated(AbstractControl sender, EventArgs e);
 
         /// <summary>
-        /// Called after the native conrol size is changed.
+        /// Called after the native control size is changed.
         /// </summary>
         void AfterHandlerSizeChanged(AbstractControl sender, EventArgs e);
 
@@ -101,12 +108,12 @@ namespace Alternet.UI
         void AfterDeactivated(AbstractControl sender, EventArgs e);
 
         /// <summary>
-        /// Called after the native conrol location is changed.
+        /// Called after the native control location is changed.
         /// </summary>
         void AfterContainerLocationChanged(AbstractControl sender, EventArgs e);
 
         /// <summary>
-        /// Called after the conrol's handle is destroyed.
+        /// Called after the control's handle is destroyed.
         /// </summary>
         void AfterHandleDestroyed(AbstractControl sender, EventArgs e);
 

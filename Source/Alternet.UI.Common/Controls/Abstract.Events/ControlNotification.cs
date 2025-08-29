@@ -146,11 +146,6 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        public virtual void AfterIdle(AbstractControl sender, EventArgs e)
-        {
-        }
-
-        /// <inheritdoc/>
         public virtual void AfterIsMouseOverChanged(AbstractControl sender, EventArgs e)
         {
         }
@@ -346,6 +341,11 @@ namespace Alternet.UI
 
         /// <inheritdoc/>
         public virtual void AfterBoundsChanged(AbstractControl sender, EventArgs e)
+        {
+        }
+
+        /// <inheritdoc/>
+        public virtual void AfterMouseHover(AbstractControl sender, EventArgs e)
         {
         }
     }

@@ -292,6 +292,10 @@ namespace Alternet.UI
                 return;
             OnMouseHover(e);
             MouseHover?.Invoke(this, e);
+
+            StaticControlEvents.RaiseMouseHover(this, e);
+
+            RaiseNotifications((n) => n.AfterMouseHover(this, e));
         }
 
         /// <summary>
