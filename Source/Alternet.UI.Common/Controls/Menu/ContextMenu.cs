@@ -324,6 +324,7 @@ namespace Alternet.UI
         /// <param name="position">The position within the container where the context menu
         /// should be displayed. If null, the current mouse position
         /// relative to the container is used.</param>
+        /// <param name="onClose">The action to be invoked when the context menu is closed.</param>
         public virtual void ShowInsideControl(
             AbstractControl container,
             AbstractControl? source = null,
