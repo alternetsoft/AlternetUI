@@ -26,6 +26,40 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Retrieves the parent platform-specific user control
+        /// of the specified <see cref="AbstractControl"/>.
+        /// </summary>
+        /// <remarks>A platform-specific user control is identified
+        /// as an <see cref="AbstractControl"/> that has
+        /// <see cref="AbstractControl.IsPlatformControl"/> set to
+        /// <see langword="true"/> and is of type <see cref="UserControl"/>.
+        /// The method traverses the parent hierarchy of the
+        /// specified <paramref name="control"/> to locate such a control.</remarks>
+        /// <param name="control">The <see cref="AbstractControl"/> for which
+        /// to find the parent platform-specific <see cref="UserControl"/>.
+        /// Can be <see langword="null"/>.</param>
+        /// <returns>The parent platform-specific <see cref="UserControl"/> if found;
+        /// otherwise, <see langword="null"/>.</returns>
+        public static UserControl? GetParentPlatformUserControl(AbstractControl? control)
+        {
+            if (control is null)
+                return null;
+
+            AbstractControl? overlayParent = control.Parent;
+            while (true)
+            {
+                if (overlayParent is null)
+                    break;
+                if (overlayParent.IsPlatformControl && overlayParent is UserControl userControl)
+                    return userControl;
+
+                overlayParent = overlayParent.Parent;
+            }
+
+            return null;
+        }
+
+        /// <summary>
         /// Finds visible control of the specified type.
         /// </summary>
         /// <typeparam name="T">Type of the control to find.</typeparam>
@@ -63,7 +97,7 @@ namespace Alternet.UI
         /// Gets control for measure purposes in a safe way. Do not change
         /// any properties of the returned control.
         /// </summary>
-        /// <param name="obj">The object which is returrned if it is a control.</param>
+        /// <param name="obj">The object which is returned if it is a control.</param>
         /// <returns></returns>
         public static AbstractControl SafeControl(object? obj)
         {
@@ -73,7 +107,7 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Increazes width or height specified in <paramref name="currentValue"/>
+        /// Increases width or height specified in <paramref name="currentValue"/>
         /// if it is less than value specified in <paramref name="minValueAtLeast"/>.
         /// </summary>
         /// <param name="currentValue">Current width or height.</param>
@@ -90,7 +124,7 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Increazes size specified in <paramref name="currentSize"/>
+        /// Increases size specified in <paramref name="currentSize"/>
         /// if it is less than size specified in <paramref name="minSizeAtLeast"/>.
         /// Width and height are increased individually.
         /// </summary>
