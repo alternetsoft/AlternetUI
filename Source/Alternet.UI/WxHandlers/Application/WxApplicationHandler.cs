@@ -170,7 +170,7 @@ namespace Alternet.UI
         /// top-level frame is deleted.
         /// Returns true if the application will exit when the top-level frame is deleted.
         /// </summary>
-        public bool ExitOnFrameDelete
+        public virtual bool ExitOnFrameDelete
         {
             get => nativeApplication.GetExitOnFrameDelete();
             set => nativeApplication.SetExitOnFrameDelete(value);
@@ -180,10 +180,10 @@ namespace Alternet.UI
         /// Gets whether the application is active, i.e. if one of its windows is currently in
         /// the foreground.
         /// </summary>
-        public bool IsActive => nativeApplication.IsActive();
+        public virtual bool IsActive => nativeApplication.IsActive();
 
         /// <inheritdoc/>
-        public bool InUixmlPreviewerMode
+        public virtual bool InUixmlPreviewerMode
         {
             get => nativeApplication.InUixmlPreviewerMode;
             set => nativeApplication.InUixmlPreviewerMode = value;
@@ -215,25 +215,25 @@ namespace Alternet.UI
         /// Informs all message pumps that they must terminate, and then closes
         /// all application windows after the messages have been processed.
         /// </summary>
-        public void Exit()
+        public virtual void Exit()
         {
             nativeApplication.Exit();
         }
 
         /// <inheritdoc/>
-        public IControlFactoryHandler CreateControlFactoryHandler()
+        public virtual IControlFactoryHandler CreateControlFactoryHandler()
         {
             return new WxControlFactoryHandler();
         }
 
         /// <inheritdoc/>
-        public bool HasPendingEvents()
+        public virtual bool HasPendingEvents()
         {
             return nativeApplication.HasPendingEvents();
         }
 
         /// <inheritdoc/>
-        public void Run(Window window)
+        public virtual void Run(Window window)
         {
             AssertWxWidgetsVersion();
 
@@ -243,43 +243,49 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        public IDialogFactoryHandler CreateDialogFactoryHandler()
+        public virtual IDialogFactoryHandler CreateDialogFactoryHandler()
         {
             return new WxDialogFactoryHandler();
         }
 
         /// <inheritdoc/>
-        public IClipboardHandler CreateClipboardHandler()
+        public virtual IClipboardHandler CreateClipboardHandler()
         {
             return new WxClipboardHandler();
         }
 
         /// <inheritdoc/>
-        public void ProcessPendingEvents()
+        public virtual bool IsPlatformControl(AbstractControl control)
+        {
+            return control is Control;
+        }
+
+        /// <inheritdoc/>
+        public virtual void ProcessPendingEvents()
         {
             nativeApplication.ProcessPendingEvents();
         }
 
         /// <inheritdoc/>
-        public void ExitMainLoop()
+        public virtual void ExitMainLoop()
         {
             nativeApplication.ExitMainLoop();
         }
 
         /// <inheritdoc/>
-        public void SetTopWindow(Window window)
+        public virtual void SetTopWindow(Window window)
         {
             nativeApplication.SetTopWindow(WxApplicationHandler.WxWidget(window));
         }
 
         /// <inheritdoc/>
-        public void WakeUpIdle()
+        public virtual void WakeUpIdle()
         {
             Native.Application.WakeUpIdle();
         }
 
         /// <inheritdoc/>
-        public void BeginInvoke(Action action)
+        public virtual void BeginInvoke(Action action)
         {
             nativeApplication.BeginInvoke(action);
         }
@@ -299,13 +305,13 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        public ISystemSettingsHandler CreateSystemSettingsHandler()
+        public virtual ISystemSettingsHandler CreateSystemSettingsHandler()
         {
             return new WxSystemSettingsHandler();
         }
 
         /// <inheritdoc/>
-        public void NotifyCaptureLost()
+        public virtual void NotifyCaptureLost()
         {
             Native.Control.NotifyCaptureLost();
         }
@@ -323,13 +329,13 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        public AbstractControl? GetFocusedControl()
+        public virtual AbstractControl? GetFocusedControl()
         {
             return FromNativeControl(Native.Control.GetFocusedControl());
         }
 
         /// <inheritdoc/>
-        public Window? GetActiveWindow()
+        public virtual Window? GetActiveWindow()
         {
             var activeWindow = Native.Window.ActiveWindow;
             if (activeWindow == null)
@@ -341,25 +347,25 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        public IActionSimulatorHandler CreateActionSimulatorHandler()
+        public virtual IActionSimulatorHandler CreateActionSimulatorHandler()
         {
             return new WxActionSimulatorHandler();
         }
 
         /// <inheritdoc/>
-        public IPrintingHandler CreatePrintingHandler()
+        public virtual IPrintingHandler CreatePrintingHandler()
         {
             return new WxPrintingHandler();
         }
 
         /// <inheritdoc/>
-        public IGraphicsFactoryHandler CreateGraphicsFactoryHandler()
+        public virtual IGraphicsFactoryHandler CreateGraphicsFactoryHandler()
         {
             return new WxGraphicsFactoryHandler();
         }
 
         /// <inheritdoc/>
-        public ICaretHandler CreateCaretHandler()
+        public virtual ICaretHandler CreateCaretHandler()
         {
             if (Caret.UseGeneric)
                 return new PlessCaretHandler();
@@ -375,16 +381,16 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        public ISoundFactoryHandler CreateSoundFactoryHandler()
+        public virtual ISoundFactoryHandler CreateSoundFactoryHandler()
         {
             return new WxSoundFactoryHandler();
         }
 
         /// <inheritdoc/>
-        public bool IsInvokeRequired => nativeApplication.InvokeRequired;
+        public virtual bool IsInvokeRequired => nativeApplication.InvokeRequired;
 
         /// <inheritdoc/>
-        public IControlPainterHandler CreateControlPainterHandler()
+        public virtual IControlPainterHandler CreateControlPainterHandler()
         {
             PlessControlPainterHandler.NativeHandler = new WxControlPainterHandler();
             if (UseInternalControlPainter)
@@ -393,19 +399,19 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        public IMemoryHandler CreateMemoryHandler()
+        public virtual IMemoryHandler CreateMemoryHandler()
         {
             return new WxMemoryHandler();
         }
 
         /// <inheritdoc/>
-        public IToolTipFactoryHandler CreateToolTipFactoryHandler()
+        public virtual IToolTipFactoryHandler CreateToolTipFactoryHandler()
         {
             return new WxToolTipFactoryHandler();
         }
 
         /// <inheritdoc/>
-        public object? GetAttributeValue(string name)
+        public virtual object? GetAttributeValue(string name)
         {
             if (name == "NotifyIcon.IsAvailable")
             {
@@ -416,13 +422,13 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        public INotifyIconHandler CreateNotifyIconHandler()
+        public virtual INotifyIconHandler CreateNotifyIconHandler()
         {
             return new UI.Native.NotifyIcon();
         }
 
         /// <inheritdoc/>
-        public ITimerHandler CreateTimerHandler(Timer timer)
+        public virtual ITimerHandler CreateTimerHandler(Timer timer)
         {
             if (UseDummyTimer)
                 return new DummyTimerHandler();
@@ -430,7 +436,7 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        public void CrtSetDbgFlag(int value)
+        public virtual void CrtSetDbgFlag(int value)
         {
             WebBrowserHandlerApi.WebBrowser_CrtSetDbgFlag_(value);
         }
@@ -478,13 +484,13 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        public IMouseHandler CreateMouseHandler()
+        public virtual IMouseHandler CreateMouseHandler()
         {
             return new WxMouseHandler();
         }
 
         /// <inheritdoc/>
-        public IKeyboardHandler CreateKeyboardHandler()
+        public virtual IKeyboardHandler CreateKeyboardHandler()
         {
             return new WxKeyboardHandler();
         }

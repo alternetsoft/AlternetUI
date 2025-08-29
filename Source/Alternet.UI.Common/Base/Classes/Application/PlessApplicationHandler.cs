@@ -199,6 +199,12 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
+        public virtual bool IsPlatformControl(AbstractControl control)
+        {
+            return control is Control;
+        }
+
+        /// <inheritdoc/>
         public virtual PropertyUpdateResult SetAppearance(ApplicationAppearance appearance)
         {
             return PropertyUpdateResult.Failure;

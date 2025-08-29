@@ -87,6 +87,14 @@ namespace Alternet.UI
         /// <returns></returns>
         AbstractControl? GetFocusedControl();
 
+        /// <summary>
+        /// Determines whether the specified control is a platform-specific control.
+        /// </summary>
+        /// <param name="control">The control to evaluate. Must not be <c>null</c>.</param>
+        /// <returns><see langword="true"/> if the specified control is a platform-specific
+        /// control; otherwise, <see langword="false"/>.</returns>
+        bool IsPlatformControl(AbstractControl control);
+
         /// <inheritdoc cref="App.Run"/>
         void Run(Window window);
 

@@ -133,6 +133,7 @@ namespace Alternet.UI
         public static PointD ClientToScreen(PointD position, AbstractControl? control)
         {
             PointD absolutePos = PointD.Empty;
+            PointD containerPos;
 
             ControlView? container = null;
 
@@ -153,15 +154,15 @@ namespace Alternet.UI
 
             if (container is null)
             {
-                absolutePos = PointD.MinValue;
+                containerPos = PointD.MinValue;
             }
             else
             {
-                absolutePos = MauiUtils.GetAbsolutePosition(container);
+                containerPos = MauiUtils.GetAbsolutePosition(container);
             }
 
-            var x = absolutePos.X + position.X;
-            var y = absolutePos.Y + position.Y;
+            var x = absolutePos.X + position.X + containerPos.X;
+            var y = absolutePos.Y + position.Y + containerPos.Y;
 
             return (x, y);
         }
@@ -257,6 +258,12 @@ namespace Alternet.UI
         public virtual void Exit()
         {
             MauiUtils.CloseApplication();
+        }
+
+        /// <inheritdoc/>
+        public virtual bool IsPlatformControl(AbstractControl control)
+        {
+            return ControlView.HasContainer(control);
         }
 
         /// <inheritdoc/>
