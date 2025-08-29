@@ -373,11 +373,14 @@ namespace Alternet.UI
         /// Adds the specified overlay to the control.
         /// </summary>
         /// <param name="overlay">The overlay to add.</param>
-        public virtual void AddOverlay(IControlOverlay overlay)
+        /// <param name="invalidate">The <see langword="bool"/> indicating whether
+        /// to invalidate the control. Optional. Default is <see langword="true"/>.</param>
+        public virtual void AddOverlay(IControlOverlay overlay, bool invalidate = true)
         {
             overlays ??= new();
             overlays.Add(overlay);
-            Invalidate();
+            if (invalidate)
+                Invalidate();
         }
 
         /// <inheritdoc/>
