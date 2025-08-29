@@ -343,7 +343,7 @@ namespace Alternet.UI
                 container.IsEnabled = value;
         }
 
-        public virtual void SetToolTip(string? value)
+        public virtual void SetToolTip(object? value)
         {
         }
 

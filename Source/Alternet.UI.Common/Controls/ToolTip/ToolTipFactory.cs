@@ -180,13 +180,13 @@ namespace Alternet.UI
         public static bool ShowInOverlay(
             AbstractControl? control,
             UserControl overlayParent,
-            string? tooltip)
+            object? tooltip)
         {
             HideLastShownInOverlay();
             if (control is null || tooltip is null)
                 return false;
-            tooltip = tooltip.Trim();
-            if (tooltip.Length == 0)
+            var tooltipStr = tooltip.ToString().Trim();
+            if (tooltipStr.Length == 0)
                 return false;
 
             OverlayToolTipParams CreateData()
@@ -200,7 +200,7 @@ namespace Alternet.UI
                 OverlayToolTipParams data = new()
                 {
                     Location = new PointD(pos.X + OverlayToolTipOffset, pos.Y + OverlayToolTipOffset),
-                    Text = tooltip ?? string.Empty,
+                    Text = tooltipStr,
                     Font = font,
                     Options = defaultOptions,
                 };
@@ -344,7 +344,7 @@ namespace Alternet.UI
             public ShowInOverlayParams(
                 AbstractControl? control,
                 UserControl overlayParent,
-                string? toolTip,
+                object? toolTip,
                 OverlayToolTipParams data)
             {
                 Control = control;
@@ -368,7 +368,7 @@ namespace Alternet.UI
             /// Gets or sets the text to display as a tooltip for the control.
             /// Can be <see langword="null"/> or empty if no tooltip is needed.
             /// </summary>
-            public string? Text { get; }
+            public object? Text { get; }
 
             /// <summary>
             /// Gets or sets the parameters used to configure the overlay tooltip.

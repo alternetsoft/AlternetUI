@@ -1428,7 +1428,7 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        public override string? GetRealToolTip()
+        public override object? GetRealToolTip()
         {
             if (!IsToolTipEnabled)
                 return null;

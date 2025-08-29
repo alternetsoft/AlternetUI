@@ -15,7 +15,7 @@ namespace Alternet.UI
     {
 #pragma warning disable
         private bool enabled = true;
-        private string? toolTip;
+        private object? toolTip;
         private bool canSelect = true;
         private bool tabStop = true;
         private bool acceptsFocusRecursively = true;
@@ -289,7 +289,7 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        public void SetToolTip(string? value)
+        public void SetToolTip(object? value)
         {
             toolTip = value;
         }

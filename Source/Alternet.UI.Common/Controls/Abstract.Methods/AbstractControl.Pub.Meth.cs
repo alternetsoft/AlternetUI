@@ -1920,9 +1920,9 @@ namespace Alternet.UI
         /// Override this method to customize tooltip. For example <see cref="SpeedButton"/>
         /// overrides it to add shortcuts.
         /// </remarks>
-        public virtual string? GetRealToolTip()
+        public virtual object? GetRealToolTip()
         {
-            return ToolTip;
+            return ToolTipObject;
         }
 
         /// <summary>

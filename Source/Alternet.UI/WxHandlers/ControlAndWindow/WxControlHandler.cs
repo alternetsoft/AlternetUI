@@ -248,9 +248,9 @@ namespace Alternet.UI
             NativeControl.SetCursor(WxCursorHandler.CursorToPtr(value));
         }
 
-        public void SetToolTip(string? value)
+        public void SetToolTip(object? value)
         {
-            NativeControl.ToolTip = value;
+            NativeControl.ToolTip = value?.ToString();
         }
 
         public void Lower()

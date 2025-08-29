@@ -129,7 +129,7 @@ namespace Alternet.UI
         private Thickness? minPadding;
         private Thickness? minChildMargin;
 
-        private string? toolTip;
+        private object? toolTip;
         private string? text;
         private AnchorStyles anchor = AnchorStyles.LeftTop;
         private LayoutFlags layoutFlags;
@@ -1369,10 +1369,11 @@ namespace Alternet.UI
 
         /// <summary>
         /// Gets or sets the tool-tip that is displayed for this element
-        /// in the user interface.
+        /// in the user interface. This property allows to access the tool-tip as object.
+        /// In order to set/get tool-tip as string, use <see cref="ToolTip"/> property.
         /// </summary>
-        [DefaultValue(null)]
-        public virtual string? ToolTip
+        [Browsable(false)]
+        public virtual object? ToolTipObject
         {
             get
             {
@@ -1384,8 +1385,28 @@ namespace Alternet.UI
                 if (toolTip == value)
                     return;
                 toolTip = value;
-                OnToolTipChanged(EventArgs.Empty);
-                ToolTipChanged?.Invoke(this, EventArgs.Empty);
+                RaiseToolTipChanged(EventArgs.Empty);
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets the tool-tip that is displayed for this element
+        /// in the user interface. This property allows to access the tool-tip as string.
+        /// In order to set/get tool-tip as object, use <see cref="ToolTipObject"/> property.
+        /// </summary>
+        [DefaultValue(null)]
+        public virtual string? ToolTip
+        {
+            get
+            {
+                return toolTip?.ToString();
+            }
+
+            set
+            {
+                if(ToolTip == value)
+                    return;
+                ToolTipObject = value;
             }
         }
 

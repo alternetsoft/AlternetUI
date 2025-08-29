@@ -1256,7 +1256,7 @@ namespace Alternet.UI
         /// Override this method to customize tooltip. For example <see cref="SpeedButton"/>
         /// overrides it to add shortcuts.
         /// </remarks>
-        string? GetRealToolTip();
+        object? GetRealToolTip();
 
         /// <summary>
         /// Sets children font.

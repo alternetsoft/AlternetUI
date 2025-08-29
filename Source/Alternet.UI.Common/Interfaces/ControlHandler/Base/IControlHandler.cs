@@ -108,7 +108,7 @@ namespace Alternet.UI
         /// Sets tooltip text.
         /// </summary>
         /// <param name="value">Tooltip text.</param>
-        void SetToolTip(string? value);
+        void SetToolTip(object? value);
 
         /// <inheritdoc cref="Window.Lower"/>
         void Lower();

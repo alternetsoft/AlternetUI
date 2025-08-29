@@ -299,6 +299,21 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Raises the <see cref="ToolTipChanged"/> event
+        /// to notify subscribers that the tooltip has changed.
+        /// </summary>
+        /// <remarks>This method invokes the <see cref="OnToolTipChanged(EventArgs)"/> method and then
+        /// raises the <see cref="ToolTipChanged"/> event.
+        /// Call this method to programmatically trigger the tooltip
+        /// change notification.</remarks>
+        /// <param name="e">An <see cref="EventArgs"/> instance containing the event data.</param>
+        public void RaiseToolTipChanged(EventArgs e)
+        {
+            OnToolTipChanged(e);
+            ToolTipChanged?.Invoke(this, e);
+        }
+
+        /// <summary>
         /// Raises the <see cref="MouseDown" /> event and <see cref="OnMouseDown"/> method.
         /// </summary>
         public void RaiseMouseDown(MouseEventArgs e)
