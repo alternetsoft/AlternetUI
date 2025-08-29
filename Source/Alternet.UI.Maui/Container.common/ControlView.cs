@@ -37,6 +37,7 @@ namespace Alternet.UI
         static ControlView()
         {
             InitMauiHandler();
+            ToolTipFactory.BindOverlayToolTips();
         }
 
         /// <summary>
