@@ -40,6 +40,7 @@ namespace Alternet.UI
         /// <summary>
         /// Initializes a new instance of the <see cref="ObjectUniqueId"/> struct
         /// using the specified reference to the counter variable.
+        /// You should normally use the parameterless constructor.
         /// </summary>
         public ObjectUniqueId(ref ulong counter)
         {
@@ -55,6 +56,35 @@ namespace Alternet.UI
                 id = counter++;
                 hashCode = id.GetHashCode();
             }
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ObjectUniqueId"/> struct
+        /// using the specified integer identifier.
+        /// You should normally use the parameterless constructor.
+        /// </summary>
+        /// <remarks>This constructor is used to wrap existing integer identifiers
+        /// to <see cref="ObjectUniqueId"/>.</remarks>
+        /// <param name="id">The integer identifier.</param>
+        public ObjectUniqueId(ulong id)
+        {
+            state = State.Long;
+            this.id = id;
+            hashCode = id.GetHashCode();
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ObjectUniqueId"/>
+        /// class using the specified GUID.
+        /// You should normally use the parameterless constructor.
+        /// </summary>
+        /// <param name="guid">The globally unique identifier (GUID) that represents
+        /// the unique identity of the object.</param>
+        public ObjectUniqueId(Guid guid)
+        {
+            state = State.Guid;
+            this.guid = guid;
+            hashCode = guid.GetHashCode();
         }
 
         private enum State : byte
@@ -85,6 +115,40 @@ namespace Alternet.UI
             if(left.state == State.Guid)
                 return left.guid == right.guid;
             return left.id == right.id;
+        }
+
+        /// <summary>
+        /// Converts a string representation of an object unique identifier
+        /// into an <see cref="ObjectUniqueId"/>.
+        /// instance.
+        /// </summary>
+        /// <remarks>The method interprets the input string as follows:
+        /// - If the string starts with 'A', the remainder of the string is parsed as a GUID.
+        /// - If the string does not start with 'A', it is parsed as an unsigned long.
+        /// If the string is <see langword="null"/> or empty, or if the parsing fails,
+        /// the method returns <see langword="null"/>.</remarks>
+        /// <param name="s">The string to convert. The string can represent either a GUID prefixed
+        /// with 'A' or a numeric value.</param>
+        /// <returns>An <see cref="ObjectUniqueId"/> instance if the conversion is successful;
+        /// otherwise, <see langword="null"/>.</returns>
+        public static ObjectUniqueId? FromString(string? s)
+        {
+            if (s is null || s.Length == 0)
+                return null;
+
+            if (s[0] == 'A')
+            {
+                if (Guid.TryParse(s.Substring(1), out var g))
+                {
+                    return new ObjectUniqueId(g);
+                }
+            }
+            else if (ulong.TryParse(s, out var l))
+            {
+                return new ObjectUniqueId(l);
+            }
+
+            return null;
         }
 
         /// <summary>
@@ -120,7 +184,8 @@ namespace Alternet.UI
         /// <returns>A string that represents the current object.</returns>
         public override string ToString()
         {
-            if(state == State.Guid)
+            // This format should not be changed as it is used in serialization.
+            if (state == State.Guid)
                 return $"A{guid:N}";
             return id.ToString();
         }
