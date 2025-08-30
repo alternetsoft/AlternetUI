@@ -158,6 +158,12 @@ namespace Alternet.UI
         public virtual event EventHandler? Click;
 
         /// <summary>
+        /// Occurs when the <see cref="Text" /> property value changes.
+        /// </summary>
+        [Category("Property Changed")]
+        public event EventHandler? TextChanged;
+
+        /// <summary>
         /// Occurs when a change is detected, providing details about the type of change.
         /// </summary>
         /// <remarks>This event is triggered whenever a change occurs, and
@@ -248,10 +254,13 @@ namespace Alternet.UI
 
             set
             {
-                if (Image == value)
-                    return;
-                svgImage.SetImage(VisualControlState.Normal, value);
-                RaiseImageChanged();
+                Invoke(() =>
+                {
+                    if (Image == value)
+                        return;
+                    svgImage.SetImage(VisualControlState.Normal, value);
+                    RaiseImageChanged();
+                });
             }
         }
 
@@ -267,10 +276,13 @@ namespace Alternet.UI
 
             set
             {
-                if (svgImage.SvgImage == value)
-                    return;
-                svgImage.SvgImage = value;
-                RaiseImageChanged();
+                Invoke(() =>
+                {
+                    if (svgImage.SvgImage == value)
+                        return;
+                    svgImage.SvgImage = value;
+                    RaiseImageChanged();
+                });
             }
         }
 
@@ -289,13 +301,16 @@ namespace Alternet.UI
 
             set
             {
-                if (SvgImageSize == value)
-                    return;
-                svgImage.SvgSize = value;
-                if (SvgImage is not null)
+                Invoke(() =>
                 {
-                    RaiseImageChanged();
-                }
+                    if (SvgImageSize == value)
+                        return;
+                    svgImage.SvgSize = value;
+                    if (SvgImage is not null)
+                    {
+                        RaiseImageChanged();
+                    }
+                });
             }
         }
 
@@ -311,10 +326,13 @@ namespace Alternet.UI
 
             set
             {
-                if (DisabledImage == value)
-                    return;
-                svgImage.SetImage(VisualControlState.Disabled, value);
-                RaiseDisabledImageChanged();
+                Invoke(() =>
+                {
+                    if (DisabledImage == value)
+                        return;
+                    svgImage.SetImage(VisualControlState.Disabled, value);
+                    RaiseDisabledImageChanged();
+                });
             }
         }
 
@@ -338,9 +356,12 @@ namespace Alternet.UI
 
             set
             {
-                var key = value.ToKey();
-                var modifiers = value.ToModifiers();
-                Shortcut = new(key, modifiers);
+                Invoke(() =>
+                {
+                    var key = value.ToKey();
+                    var modifiers = value.ToModifiers();
+                    Shortcut = new(key, modifiers);
+                });
             }
         }
 
@@ -356,10 +377,13 @@ namespace Alternet.UI
 
             set
             {
-                if (enabledFunc == value)
-                    return;
-                enabledFunc = value;
-                RaiseEnabledChanged(EventArgs.Empty);
+                Invoke(() =>
+                {
+                    if (enabledFunc == value)
+                        return;
+                    enabledFunc = value;
+                    RaiseEnabledChanged(EventArgs.Empty);
+                });
             }
         }
 
@@ -374,10 +398,13 @@ namespace Alternet.UI
 
             set
             {
-                if (action == value)
-                    return;
-                action = value;
-                RaiseClickActionChanged();
+                Invoke(() =>
+                {
+                    if (action == value)
+                        return;
+                    action = value;
+                    RaiseClickActionChanged();
+                });
             }
         }
 
@@ -398,12 +425,16 @@ namespace Alternet.UI
 
             set
             {
-                if (value == Text)
-                    return;
+                Invoke(() =>
+                {
+                    if (value == Text)
+                        return;
 
-                text = value;
+                    text = value;
 
-                RaiseChanged(MenuItemChangeKind.Text);
+                    RaiseTextChanged(EventArgs.Empty);
+                    RaiseChanged(MenuItemChangeKind.Text);
+                });
             }
         }
 
@@ -417,11 +448,14 @@ namespace Alternet.UI
             get => visible;
             set
             {
-                if (visible == value)
-                    return;
-                visible = value;
-                RaiseVisibleChanged(EventArgs.Empty);
-                RaiseChanged(MenuItemChangeKind.Visible);
+                Invoke(() =>
+                {
+                    if (visible == value)
+                        return;
+                    visible = value;
+                    RaiseVisibleChanged(EventArgs.Empty);
+                    RaiseChanged(MenuItemChangeKind.Visible);
+                });
             }
         }
 
@@ -447,11 +481,14 @@ namespace Alternet.UI
             get => enabled;
             set
             {
-                if (enabled == value)
-                    return;
-                enabled = value;
-                RaiseEnabledChanged(EventArgs.Empty);
-                RaiseChanged(MenuItemChangeKind.Enabled);
+                Invoke(() =>
+                {
+                    if (enabled == value)
+                        return;
+                    enabled = value;
+                    RaiseEnabledChanged(EventArgs.Empty);
+                    RaiseChanged(MenuItemChangeKind.Enabled);
+                });
             }
         }
 
@@ -467,10 +504,13 @@ namespace Alternet.UI
 
             set
             {
-                if (shortcutEnabled == value)
-                    return;
-                shortcutEnabled = value;
-                RaiseShortcutChanged();
+                Invoke(() =>
+                {
+                    if (shortcutEnabled == value)
+                        return;
+                    shortcutEnabled = value;
+                    RaiseShortcutChanged();
+                });
             }
         }
 
@@ -487,11 +527,14 @@ namespace Alternet.UI
 
             set
             {
-                if (shortcut == value)
-                    return;
+                Invoke(() =>
+                {
+                    if (shortcut == value)
+                        return;
 
-                shortcut = value;
-                RaiseShortcutChanged();
+                    shortcut = value;
+                    RaiseShortcutChanged();
+                });
             }
         }
 
@@ -522,11 +565,14 @@ namespace Alternet.UI
 
             set
             {
-                if (role == value)
-                    return;
+                Invoke(() =>
+                {
+                    if (role == value)
+                        return;
 
-                role = value;
-                RaiseRoleChanged();
+                    role = value;
+                    RaiseRoleChanged();
+                });
             }
         }
 
@@ -543,11 +589,14 @@ namespace Alternet.UI
 
             set
             {
-                if (isChecked == value)
-                    return;
+                Invoke(() =>
+                {
+                    if (isChecked == value)
+                        return;
 
-                isChecked = value;
-                RaiseCheckedChanged();
+                    isChecked = value;
+                    RaiseCheckedChanged();
+                });
             }
         }
 
@@ -561,7 +610,10 @@ namespace Alternet.UI
 
             set
             {
-                commandSource.Command = value;
+                Invoke(() =>
+                {
+                    commandSource.Command = value;
+                });
             }
         }
 
@@ -576,7 +628,10 @@ namespace Alternet.UI
 
             set
             {
-                commandSource.CommandParameter = value;
+                Invoke(() =>
+                {
+                    commandSource.CommandParameter = value;
+                });
             }
         }
 
@@ -590,7 +645,10 @@ namespace Alternet.UI
 
             set
             {
-                commandSource.CommandParameter = value;
+                Invoke(() =>
+                {
+                    commandSource.CommandParameter = value;
+                });
             }
         }
 
@@ -639,6 +697,8 @@ namespace Alternet.UI
         /// to reflect the current state of the command source.</remarks>
         public virtual void RaiseCommandSourceChanged()
         {
+            if (DisposingOrDisposed)
+                return;
             Enabled = commandSource.CanExecute;
             RaiseChanged(MenuItemChangeKind.CommandSource);
         }
@@ -653,6 +713,8 @@ namespace Alternet.UI
         /// are properly registered to handle the notification.</remarks>
         public virtual void RaiseClickActionChanged()
         {
+            if (DisposingOrDisposed)
+                return;
             ClickActionChanged?.Invoke(this, EventArgs.Empty);
             RaiseChanged(MenuItemChangeKind.ClickAction);
         }
@@ -662,6 +724,8 @@ namespace Alternet.UI
         /// </summary>
         public virtual void RaiseOpened()
         {
+            if (DisposingOrDisposed)
+                return;
             Opened?.Invoke(this, EventArgs.Empty);
         }
 
@@ -670,6 +734,8 @@ namespace Alternet.UI
         /// </summary>
         public virtual void RaiseClosed()
         {
+            if (DisposingOrDisposed)
+                return;
             Closed?.Invoke(this, EventArgs.Empty);
         }
 
@@ -678,6 +744,8 @@ namespace Alternet.UI
         /// </summary>
         public virtual void RaiseHighlighted()
         {
+            if (DisposingOrDisposed)
+                return;
             Highlighted?.Invoke(this, EventArgs.Empty);
         }
 
@@ -726,6 +794,8 @@ namespace Alternet.UI
         /// </summary>
         public virtual void RaiseShortcutChanged()
         {
+            if (DisposingOrDisposed)
+                return;
             ShortcutChanged?.Invoke(this, EventArgs.Empty);
             RaiseChanged(MenuItemChangeKind.Shortcut);
         }
@@ -735,6 +805,8 @@ namespace Alternet.UI
         /// </summary>
         public virtual void RaiseImageChanged()
         {
+            if (DisposingOrDisposed)
+                return;
             ImageChanged?.Invoke(this, EventArgs.Empty);
             RaiseChanged(MenuItemChangeKind.Image);
         }
@@ -744,6 +816,8 @@ namespace Alternet.UI
         /// </summary>
         public virtual void RaiseDisabledImageChanged()
         {
+            if (DisposingOrDisposed)
+                return;
             DisabledImageChanged?.Invoke(this, EventArgs.Empty);
             RaiseChanged(MenuItemChangeKind.DisabledImage);
         }
@@ -767,6 +841,8 @@ namespace Alternet.UI
         /// </summary>
         public virtual void RaiseRoleChanged()
         {
+            if (DisposingOrDisposed)
+                return;
             RoleChanged?.Invoke(this, EventArgs.Empty);
             RaiseChanged(MenuItemChangeKind.Role);
         }
@@ -777,6 +853,8 @@ namespace Alternet.UI
         /// </summary>
         public virtual void RaiseCheckedChanged()
         {
+            if (DisposingOrDisposed)
+                return;
             CheckedChanged?.Invoke(this, EventArgs.Empty);
             RaiseChanged(MenuItemChangeKind.Checked);
         }
@@ -791,6 +869,8 @@ namespace Alternet.UI
         /// This value determines the nature of the change being reported.</param>
         public virtual void RaiseChanged(MenuItemChangeKind kind)
         {
+            if(DisposingOrDisposed)
+                return;
             Changed?.Invoke(this, new (kind));
         }
 
@@ -822,6 +902,19 @@ namespace Alternet.UI
         void IMenuItemProperties.DoClick()
         {
             RaiseClick();
+        }
+
+        /// <summary>
+        /// Raises the <see cref="TextChanged" /> event.
+        /// </summary>
+        [Browsable(false)]
+        public virtual void RaiseTextChanged(EventArgs e)
+        {
+            if (DisposingOrDisposed)
+                return;
+
+            TextChanged?.Invoke(this, e);
+            OnTextChanged(e);
         }
 
         /// <summary>
@@ -863,8 +956,21 @@ namespace Alternet.UI
         /// Called when menu item is clicked.
         /// </summary>
         /// <param name="e">An <see cref="EventArgs"/> that contains the event data.</param>
+        /// <remarks>Derived classes can override this method to handle the event without
+        /// attaching a delegate.</remarks>
         [EditorBrowsable(EditorBrowsableState.Advanced)]
         protected virtual void OnClick(EventArgs e)
+        {
+        }
+
+        /// <summary>
+        /// Called when the <see cref="TextChanged" /> event is raised.
+        /// </summary>
+        /// <param name="e">An <see cref="EventArgs" /> that contains the event data.</param>
+        /// <remarks>Derived classes can override this method to handle the event without
+        /// attaching a delegate.</remarks>
+        [EditorBrowsable(EditorBrowsableState.Advanced)]
+        protected virtual void OnTextChanged(EventArgs e)
         {
         }
 

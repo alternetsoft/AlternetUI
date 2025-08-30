@@ -29,7 +29,6 @@ namespace Alternet.UI
     public partial class ContextMenu : Menu
     {
         private IContextMenuHandler? handler;
-        private IList<IContextMenuHost>? hostControls;
         private WeakReferenceValue<AbstractControl> relatedControl = new();
 
         /// <summary>
@@ -58,19 +57,6 @@ namespace Alternet.UI
         public event EventHandler<ToolStripDropDownClosedEventArgs>? Closed;
 
         /// <summary>
-        /// Gets list of host controls. It can contain <see cref="IContextMenuHost"/> controls
-        /// such as <see cref="PopupToolBar"/> or <see cref="InnerPopupToolBar"/>.
-        /// </summary>
-        [Browsable(false)]
-        public IList<IContextMenuHost>? HostControls
-        {
-            get
-            {
-                return hostControls;
-            }
-        }
-
-        /// <summary>
         /// Gets or sets the control that was the last source of context menu invocation.
         /// </summary>
         public virtual AbstractControl? RelatedControl
@@ -88,11 +74,11 @@ namespace Alternet.UI
         {
             get
             {
-                if (HostControls is null)
+                if (HostObjects is null)
                     return false;
-                foreach (var host in HostControls)
+                foreach (var host in HostObjects)
                 {
-                    if (Internal(host))
+                    if (Internal(host as IContextMenuHost))
                         return true;
                 }
 
@@ -214,52 +200,6 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Retrieves the first host control of the specified type
-        /// from the available host controls.
-        /// </summary>
-        /// <remarks>This method iterates through the collection of host controls
-        /// and returns the first
-        /// instance that matches the specified type <typeparamref name="T"/>.
-        /// If no matching host control is found, the
-        /// method returns <see langword="null"/>.</remarks>
-        /// <typeparam name="T">The type of the host control to retrieve.
-        /// Must be a class that implements <see cref="IContextMenuHost"/>.</typeparam>
-        /// <returns>The first host control of type <typeparamref name="T"/> if found;
-        /// otherwise, <see langword="null"/>.</returns>
-        public virtual T? GetHostControl<T>()
-            where T : class, IContextMenuHost
-        {
-            if (HostControls is not null)
-            {
-                foreach (var host in HostControls)
-                {
-                    if (host is T typedHost)
-                        return typedHost;
-                }
-            }
-
-            return null;
-        }
-
-        /// <summary>
-        /// Adds a host control to the collection of context menu hosts if it is not already present.
-        /// </summary>
-        /// <remarks>This method ensures that the specified host control is added only once to the
-        /// collection.</remarks>
-        /// <param name="host">The host control to add. Cannot be <see langword="null"/>.</param>
-        /// <exception cref="ArgumentNullException">Thrown if <paramref name="host"/>
-        /// is <see langword="null"/>.</exception>
-        public virtual void AddHostControl(IContextMenuHost host)
-        {
-            if (host is null)
-                throw new ArgumentNullException(nameof(host));
-            if (hostControls is null)
-                hostControls = new List<IContextMenuHost>();
-            if (!hostControls.Contains(host))
-                hostControls.Add(host);
-        }
-
-        /// <summary>
         /// Displays the context menu in a popup window.
         /// </summary>
         /// <remarks>This method creates and configures a popup window to display the context menu.
@@ -282,13 +222,13 @@ namespace Alternet.UI
                 return;
             relatedControl.Value = control;
 
-            var hostControl = GetHostControl<PopupToolBar>();
+            var hostControl = GetHostObject<PopupToolBar>();
 
             if (hostControl is null)
             {
                 var popupWindow = new PopupToolBar();
                 hostControl = popupWindow;
-                AddHostControl(popupWindow);
+                AddHostObject(popupWindow);
                 popupWindow.MainControl.DataContext = this;
                 popupWindow.MainControl.ConfigureAsContextMenu();
                 popupWindow.Activated += (s, e) =>
@@ -331,7 +271,7 @@ namespace Alternet.UI
             PointD? position = null,
             Action? onClose = null)
         {
-            var hostControl = GetHostControl<InnerPopupToolBar>();
+            var hostControl = GetHostObject<InnerPopupToolBar>();
             relatedControl.Value = null;
 
             if (hostControl is not null)
@@ -348,7 +288,7 @@ namespace Alternet.UI
                 hostControl = new InnerPopupToolBar();
                 hostControl.Content.DataContext = this;
                 hostControl.Content.ConfigureAsContextMenu();
-                AddHostControl(hostControl);
+                AddHostObject(hostControl);
             }
 
             hostControl.RelatedControl = source;

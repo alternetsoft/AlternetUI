@@ -133,7 +133,7 @@ namespace Alternet.UI
         /// <inheritdoc/>
         public IContextMenuHandler CreateContextMenuHandler(ContextMenu control)
         {
-            return new Native.Menu();
+            return new Native.Menu(control);
         }
 
         /// <inheritdoc/>

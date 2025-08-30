@@ -7,14 +7,27 @@ namespace Alternet.UI.Native
 {
     internal partial class MenuItem : IMenuItemHandler
     {
-        private readonly Alternet.UI.MenuItem control;
+        private Alternet.UI.MenuItem? control;
 
         public MenuItem(Alternet.UI.MenuItem control)
+            : this()
         {
             this.control = control;
+            OnAttach();
         }
 
-        public Alternet.UI.MenuItem Control => control;
+        public Alternet.UI.MenuItem? Control => control;
+
+        internal Native.Menu EnsureNativeSubmenuCreated()
+        {
+            if (Submenu == null)
+            {
+                Submenu = new Native.Menu();
+                Submenu.OwnerHandler = this;
+            }
+
+            return Submenu;
+        }
 
         protected void OnDetach()
         {
@@ -28,6 +41,13 @@ namespace Alternet.UI.Native
             Control.DisabledImageChanged -= Control_DisabledImageChanged;
             Control.Items.ItemInserted -= Items_ItemInserted;
             Control.Items.ItemRemoved -= Items_ItemRemoved;
+            control = null;
+        }
+
+        protected override void DisposeManaged()
+        {
+            OnDetach();
+            base.DisposeManaged();
         }
 
         protected void OnAttach()
@@ -164,10 +184,15 @@ namespace Alternet.UI.Native
 
         private void InsertItem(Alternet.UI.MenuItem item, int index)
         {
-            if (item.Handler is not Native.MenuItem handler)
-                throw new InvalidOperationException();
+            var host = item.GetHostObject<Native.MenuItem>();
 
-            EnsureNativeSubmenuCreated().InsertItemAt(index, handler);
+            if (host is null)
+            {
+                host = new Native.MenuItem(item);
+                item.AddHostObject(host);
+            }
+
+            EnsureNativeSubmenuCreated().InsertItemAt(index, host);
         }
 
         private void Control_TextChanged(object? sender, EventArgs e)

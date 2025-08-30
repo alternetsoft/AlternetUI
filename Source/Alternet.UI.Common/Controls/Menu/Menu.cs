@@ -13,12 +13,27 @@ namespace Alternet.UI
     public abstract partial class Menu : FrameworkElement, IMenuProperties
     {
         private BaseCollection<MenuItem>? items;
+        private IList<object>? hostObjects;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Menu"/> class.
         /// </summary>
         protected Menu()
         {
+        }
+
+        /// <summary>
+        /// Gets list of host objects. For example, it can contain native object references or
+        /// <see cref="IContextMenuHost"/> controls
+        /// such as <see cref="PopupToolBar"/> or <see cref="InnerPopupToolBar"/>.
+        /// </summary>
+        [Browsable(false)]
+        public IList<object>? HostObjects
+        {
+            get
+            {
+                return hostObjects;
+            }
         }
 
         /// <summary>
@@ -90,6 +105,35 @@ namespace Alternet.UI
         INotifyCollectionChanged ICollectionObserver<object>.Notification
         {
             get => Items;
+        }
+
+        /// <summary>
+        /// Retrieves the first host object of the specified type
+        /// from the available host object.
+        /// </summary>
+        /// <remarks>This method iterates through the collection of host objects
+        /// associated with the menu
+        /// and returns the first
+        /// instance that matches the specified type <typeparamref name="T"/>.
+        /// If no matching host object is found, the
+        /// method returns <see langword="null"/>.</remarks>
+        /// <typeparam name="T">The type of the host object to retrieve.
+        /// Must be a class that implements <see cref="IContextMenuHost"/>.</typeparam>
+        /// <returns>The first host object of type <typeparamref name="T"/> if found;
+        /// otherwise, <see langword="null"/>.</returns>
+        public virtual T? GetHostObject<T>()
+            where T : class
+        {
+            if (HostObjects is not null)
+            {
+                foreach (var host in HostObjects)
+                {
+                    if (host is T typedHost)
+                        return typedHost;
+                }
+            }
+
+            return null;
         }
 
         /// <summary>
@@ -199,6 +243,24 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Adds a host object to the collection of context menu hosts if it is not already present.
+        /// </summary>
+        /// <remarks>This method ensures that the specified host object is added only once to the
+        /// collection.</remarks>
+        /// <param name="host">The host object to add. Cannot be <see langword="null"/>.</param>
+        /// <exception cref="ArgumentNullException">Thrown if <paramref name="host"/>
+        /// is <see langword="null"/>.</exception>
+        public virtual void AddHostObject(object host)
+        {
+            if (host is null)
+                throw new ArgumentNullException(nameof(host));
+            if (hostObjects is null)
+                hostObjects = new List<object>();
+            if (!hostObjects.Contains(host))
+                hostObjects.Add(host);
+        }
+
+        /// <summary>
         /// Adds item to <see cref="Items"/>.
         /// </summary>
         /// <param name="item">Menu item.</param>
@@ -232,6 +294,24 @@ namespace Alternet.UI
             MenuItem item = new(title, onClick);
             Items.Add(item);
             return item;
+        }
+
+        /// <inheritdoc/>
+        protected override void DisposeManaged()
+        {
+            if (hostObjects != null)
+            {
+                foreach (var host in hostObjects)
+                {
+                    if (host is IDisposable disposable)
+                        disposable.Dispose();
+                }
+
+                hostObjects.Clear();
+                hostObjects = null;
+            }
+
+            base.DisposeManaged();
         }
     }
 }

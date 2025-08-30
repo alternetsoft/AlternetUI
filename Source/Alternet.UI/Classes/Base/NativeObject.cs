@@ -24,7 +24,7 @@ namespace Alternet.UI.Native
         {
             if (!App.IsNetOrCoreApp)
             {
-                if (Alternet.UI.Application.Terminating)
+                if (App.Terminating)
                     return;
             }
 
@@ -112,12 +112,21 @@ namespace Alternet.UI.Native
             /*Debug.WriteLineIf(true, $"SetNativePointer: {this.GetType()} : {value}");*/
         }
 
+        /// <summary>
+        /// Override to dispose managed resources.
+        /// Here we dispose all used object references.
+        /// </summary>
+        protected virtual void DisposeManaged()
+        {
+        }
+
         protected virtual void Dispose(bool disposing)
         {
             if (!IsDisposed)
             {
                 if (disposing)
                 {
+                    DisposeManaged();
                 }
 
                 if (NativePointer != IntPtr.Zero)
