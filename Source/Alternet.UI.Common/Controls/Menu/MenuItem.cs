@@ -433,16 +433,18 @@ namespace Alternet.UI
                     text = value;
 
                     RaiseTextChanged(EventArgs.Empty);
-                    RaiseChanged(MenuItemChangeKind.Text);
                 });
             }
         }
 
         /// <summary>
         /// Gets or sets a value indicating whether the menu item is visible.
+        /// Currently this property is not supported when using native menus on
+        /// wxWidgets platform.
         /// </summary>
         /// <remarks>Changing this property raises a change notification event to indicate that the
         /// visibility state has been updated.</remarks>
+        [Browsable(false)]
         public virtual bool Visible
         {
             get => visible;
@@ -454,7 +456,6 @@ namespace Alternet.UI
                         return;
                     visible = value;
                     RaiseVisibleChanged(EventArgs.Empty);
-                    RaiseChanged(MenuItemChangeKind.Visible);
                 });
             }
         }
@@ -486,7 +487,6 @@ namespace Alternet.UI
                     if (enabled == value)
                         return;
                     enabled = value;
-                    RaiseEnabledChanged(EventArgs.Empty);
                     RaiseChanged(MenuItemChangeKind.Enabled);
                 });
             }
@@ -834,6 +834,7 @@ namespace Alternet.UI
 
             OnVisibleChanged(e);
             VisibleChanged?.Invoke(this, e);
+            RaiseChanged(MenuItemChangeKind.Visible);
         }
 
         /// <summary>
@@ -872,6 +873,7 @@ namespace Alternet.UI
             if(DisposingOrDisposed)
                 return;
             Changed?.Invoke(this, new (kind));
+            RaiseEnabledChanged(EventArgs.Empty);
         }
 
         /// <summary>
@@ -915,6 +917,7 @@ namespace Alternet.UI
 
             TextChanged?.Invoke(this, e);
             OnTextChanged(e);
+            RaiseChanged(MenuItemChangeKind.Text);
         }
 
         /// <summary>

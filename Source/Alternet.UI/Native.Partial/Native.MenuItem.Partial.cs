@@ -14,9 +14,33 @@ namespace Alternet.UI.Native
         {
             this.control = control;
             OnAttach();
+            Click = OnPlatformEventClick;
+            Highlight = OnPlatformEventHighlight;
+            Opened = OnPlatformEventOpened;
+            Closed = OnPlatformEventClosed;
         }
 
         public Alternet.UI.MenuItem? Control => control;
+
+        public void OnPlatformEventClick()
+        {
+            (Control as UI.MenuItem)?.RaiseClick();
+        }
+
+        public void OnPlatformEventHighlight()
+        {
+            (Control as UI.MenuItem)?.RaiseHighlighted();
+        }
+
+        public void OnPlatformEventOpened()
+        {
+            (Control as UI.MenuItem)?.RaiseOpened();
+        }
+
+        public void OnPlatformEventClosed()
+        {
+            (Control as UI.MenuItem)?.RaiseClosed();
+        }
 
         internal Native.Menu EnsureNativeSubmenuCreated()
         {
