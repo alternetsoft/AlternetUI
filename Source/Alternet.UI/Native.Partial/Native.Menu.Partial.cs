@@ -21,6 +21,17 @@ namespace Alternet.UI.Native
 
         public Alternet.UI.ContextMenu? Control => control;
 
+        public static Native.MenuItem GetHostObject(Alternet.UI.MenuItem item)
+        {
+            var host = item.GetHostObject<Native.MenuItem>();
+            if (host is null)
+            {
+                host = new Native.MenuItem(item);
+                item.AddHostObject(host);
+            }
+            return host;
+        }
+
         public void OnPlatformEventOpened()
         {
             (OwnerHandler?.Control as UI.MenuItem)?.RaiseOpened();
@@ -78,14 +89,7 @@ namespace Alternet.UI.Native
 
         private void InsertItem(Alternet.UI.MenuItem item, int index)
         {
-            var host = item.GetHostObject<Native.MenuItem>();
-
-            if (host is null)
-            {
-                host = new Native.MenuItem(item);
-                item.AddHostObject(host);
-            }
-
+            var host = GetHostObject(item);
             InsertItemAt(index, host);
         }
 

@@ -2,6 +2,7 @@ using System;
 using System.ComponentModel;
 
 using Alternet.Drawing;
+using Alternet.UI.Localization;
 
 namespace Alternet.UI
 {
@@ -434,6 +435,23 @@ namespace Alternet.UI
 
                     RaiseTextChanged(EventArgs.Empty);
                 });
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets whether <see cref="Text"/> property should be localizable.
+        /// </summary>
+        [Browsable(false)]
+        public virtual bool IsTextLocalized
+        {
+            get
+            {
+                return IntFlags[LocalizationManager.ShouldLocalizeTextIdentifier];
+            }
+
+            set
+            {
+                IntFlags[LocalizationManager.ShouldLocalizeTextIdentifier] = value;
             }
         }
 

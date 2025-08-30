@@ -217,7 +217,14 @@ namespace Alternet.UI
 
         public void SetMenu(object? value)
         {
-            NativeControl.Menu = (value as IControl)?.NativeControl as Native.MainMenu;
+            if(value is MainMenu asMainMenu)
+            {
+                NativeControl.Menu = asMainMenu.Handler as Native.MainMenu;
+            }
+            else
+            {
+                NativeControl.Menu = null;
+            }
         }
 
         public void SetMinSize(SizeD size)

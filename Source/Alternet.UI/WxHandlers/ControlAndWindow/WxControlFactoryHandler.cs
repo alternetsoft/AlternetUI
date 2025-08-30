@@ -127,7 +127,7 @@ namespace Alternet.UI
         /// <inheritdoc/>
         public IMenuItemHandler CreateMenuItemHandler(MenuItem control)
         {
-            return new Native.MenuItem();
+            return new Native.MenuItem(control);
         }
 
         /// <inheritdoc/>
@@ -139,7 +139,7 @@ namespace Alternet.UI
         /// <inheritdoc/>
         public IMainMenuHandler CreateMainMenuHandler(MainMenu control)
         {
-            return new Native.MainMenu();
+            return new Native.MainMenu(control);
         }
 
         /// <inheritdoc/>

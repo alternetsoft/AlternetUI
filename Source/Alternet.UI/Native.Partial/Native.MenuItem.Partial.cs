@@ -208,13 +208,7 @@ namespace Alternet.UI.Native
 
         private void InsertItem(Alternet.UI.MenuItem item, int index)
         {
-            var host = item.GetHostObject<Native.MenuItem>();
-
-            if (host is null)
-            {
-                host = new Native.MenuItem(item);
-                item.AddHostObject(host);
-            }
+            var host = Native.Menu.GetHostObject(item);
 
             EnsureNativeSubmenuCreated().InsertItemAt(index, host);
         }
