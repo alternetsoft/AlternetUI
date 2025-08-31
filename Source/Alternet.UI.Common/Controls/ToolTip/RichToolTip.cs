@@ -1000,8 +1000,8 @@ namespace Alternet.UI
             base.DisposeManaged();
         }
 
-        [Conditional("DEBUG")]
-        private void DefaultPaintDebug(PaintEventArgs e)
+        /// <inheritdoc/>
+        protected override void DefaultPaintDebug(PaintEventArgs e)
         {
             if (ShowDebugRectangleAtCenter)
             {

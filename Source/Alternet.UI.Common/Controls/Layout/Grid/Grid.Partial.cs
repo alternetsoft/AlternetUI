@@ -263,8 +263,8 @@ namespace Alternet.UI
             DefaultPaintDebug(e);
         }
 
-        [Conditional("DEBUG")]
-        private void DefaultPaintDebug(PaintEventArgs e)
+        /// <inheritdoc/>
+        protected override void DefaultPaintDebug(PaintEventArgs e)
         {
             if (ShowDebugCorners)
                 BorderSettings.DrawDesignCorners(e.Graphics, e.ClipRectangle);
