@@ -1,3 +1,37 @@
+# 0.9.751 (2025 August 31)
+
+- Maui: Add support for context menus.
+- TextBox: Remove WxWidgets related features to IWxTextBoxHandler
+- Derive MainMenu, MenuItem, ContextMenu from FrameworkElement.
+- ObjectUniqueId: Add new constructors and static FromString method to parse ObjectUniqueId from string.
+- Refactor ToolTip handling to support object type. Added ToolTipObject property for object access while keeping ToolTip for string access.
+- ToolTipFactory: Add overlay tooltip support.
+- Control: Update IsPlatformControl to use App.Handler.
+- Add MouseHover event to StaticControlEvents.
+- Introduced the AfterMouseHover event and corresponding handler methods to IControlNotification, ControlNotification, and ControlSubscriber.
+- UserControl: Add optional invalidate parameter to AddOverlay.
+- BaseDrawable: Add BeforePaint and AfterPaint delegates to allow custom logic before and after the drawing operation
+- AbstractControl: Siblings, VisibleSiblings, IsSibling.
+- ScrollableUserControl: Refactor scroll actions to use IScrollEventRouter.
+- Fix context menu positioning with nested containers.
+- ToolBar: Handles the ContextMenuShowing event for speed buttons to assign the ToolBar's ContextMenuStrip if not already set.
+- PopupControl: HideOnSiblingShow, HideOnSiblingHide, SuppressParentKeyDown, SuppressParentKeyPress.
+- AbstractControl: Add OnSiblingVisibleChanged.
+- AbstractControl: Add ContextMenuShowing event.
+- Fix click repeat interval calculation in TimerUtils.
+- UserControl: Add ClickTrigger and DropDownTrigger to allow drop-down menu trigger customization.
+- Support multiple host controls in ContextMenu.
+- ContextMenu: Add ShowInPopup method to display the context menu in a popup window, with support for custom alignment.
+- Fixed ToolBarSeparatorItem sizing logic so it will look properly on Maui.
+- PopupControl: Added a ClosedAction property to allow custom actions when the popup closes.
+- PopupControl: Add GetMaxPopupSize, GetContainerScrollbarSize, UpdateMaxPopupSize, GetContainerRect.
+- ContextMenu: Add ShowInsideControl method to display the context menu within a specified container at a given position.
+- Replaces HVAlignment with HVDropDownAlignment and DropDownAlignment enums for more flexible drop-down positioning.
+- UserControl: Add DefaultUseInternalDropDownMenu, UseInternalDropDownMenu to control whether to use an internal drop-down menu.
+- SpeedButton: Add ShowDropDownMenuWhenHovered property, allowing the drop-down menu to appear when the user hovers over the control.
+- Enhance PopupControl with excluded area and scrollbar fitting.
+- AbstractControl: Add MeasureChildrenBounds to calculate the required bounds for child elements, considering their sizes, padding, and margins.
+
 # 0.9.750 (2025 August 24)
 
 ## ToolBar
