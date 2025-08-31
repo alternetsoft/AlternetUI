@@ -127,6 +127,53 @@ namespace Alternet.UI
             AbstractControl? control,
             Func<Graphics> dc)
         {
+            RaisePaintForMatchingChildren(
+                control,
+                dc,
+                c => c is GenericControl);
+        }
+
+        /// <summary>
+        /// Triggers the paint event for all non-platform child controls of the specified control.
+        /// </summary>
+        /// <remarks>This method iterates through the child controls of the specified
+        /// <paramref name="control"/> and raises the paint event for those that
+        /// are not marked as platform controls.</remarks>
+        /// <param name="control">The parent control whose non-platform child controls
+        /// will be painted. Can be <see langword="null"/>.</param>
+        /// <param name="dc">A function that provides the <see cref="Graphics"/>
+        /// object used for painting.</param>
+        public static void RaisePaintForNonPlatformChildren(
+            AbstractControl? control,
+            Func<Graphics> dc)
+        {
+            RaisePaintForMatchingChildren(
+                control,
+                dc,
+                c => !c.IsPlatformControl);
+        }
+
+        /// <summary>
+        /// Raises the paint event for child controls of the specified control
+        /// that match the given predicate.
+        /// </summary>
+        /// <remarks>This method iterates through the child controls of the specified
+        /// <paramref name="control"/> and raises the paint event for those that are visible,
+        /// intersect with the parent's client rectangle, and satisfy the
+        /// <paramref name="predicate"/>.
+        /// If <paramref name="control"/> is <see langword="null"/> or has no children,
+        /// the method does nothing.</remarks>
+        /// <param name="control">The parent control whose child controls will be evaluated.
+        /// Can be <see langword="null"/>.</param>
+        /// <param name="dc">A function that provides a <see cref="Graphics"/>
+        /// object for painting.</param>
+        /// <param name="predicate">A predicate used to determine which child controls
+        /// should have their paint event raised.</param>
+        public static void RaisePaintForMatchingChildren(
+            AbstractControl? control,
+            Func<Graphics> dc,
+            Predicate<AbstractControl> predicate)
+        {
             if (control is null || !control.HasChildren)
                 return;
 
@@ -137,10 +184,10 @@ namespace Alternet.UI
             {
                 if (!child.Visible || !control.ClientRectangle.IntersectsWith(child.Bounds))
                     continue;
-                if (child is not GenericControl)
+                if (!predicate(child))
                     continue;
 
-                if(UseSkiaForPaintGenericChildren)
+                if (UseSkiaForPaintGenericChildren)
                     RaisePaintRecursiveSkia(child, dc, child.Location);
                 else
                     RaisePaintRecursive(child, dc(), child.Location);
