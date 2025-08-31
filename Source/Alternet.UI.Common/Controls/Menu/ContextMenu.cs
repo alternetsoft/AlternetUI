@@ -6,14 +6,11 @@ using Alternet.Drawing;
 namespace Alternet.UI
 {
     /// <summary>
-    /// Represents the context menu.
+    /// The <see cref="ContextMenu"/> class represents shortcut menus that can be displayed when
+    /// the user clicks the right mouse button over a control or area of the form.
     /// </summary>
     /// <remarks>
-    /// <para>
-    /// The <see cref="ContextMenu"/> class represents shortcut menus that can be displayed when
-    /// the user clicks the right mouse
-    /// button over a control or area of the form. Shortcut menus are typically used to
-    /// combine different menu items
+    /// Shortcut menus are typically used to combine different menu items
     /// from a <see cref="MainMenu"/> of a form that are useful for the user given the context
     /// of the application. For example, you
     /// can use a shortcut menu assigned to a <see cref="TextBox"/> control to provide menu items
@@ -23,7 +20,6 @@ namespace Alternet.UI
     /// <see cref="MenuItem"/> objects in a shortcut menu that are not located within
     /// a <see cref="MainMenu"/> to provide situation specific
     /// commands that are not appropriate for the <see cref="MainMenu"/> to display.
-    /// </para>
     /// </remarks>
     [ControlCategory("MenusAndToolbars")]
     public partial class ContextMenu : Menu
