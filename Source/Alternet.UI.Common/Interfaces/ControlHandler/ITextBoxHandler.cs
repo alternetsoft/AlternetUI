@@ -11,14 +11,8 @@ namespace Alternet.UI
     /// <summary>
     /// Contains properties and methods which allow to work with text box control.
     /// </summary>
-    public interface ITextBoxHandler
+    public interface ITextBoxHandler : IDisposableObject
     {
-        /// <summary>
-        /// Gets url at current position of the cursor.
-        /// This property is only valid in the event handler.
-        /// </summary>
-        string ReportedUrl { get; }
-
         /// <inheritdoc cref="TextBox.HideSelection"/>
         bool HideSelection { get; set; }
 
@@ -76,9 +70,6 @@ namespace Alternet.UI
         /// <inheritdoc cref="TextBox.TextAlign"/>
         TextHorizontalAlignment TextAlign { get; set; }
 
-        /// <inheritdoc cref="TextBox.IsRichEdit"/>
-        bool IsRichEdit { get; set; }
-
         /// <inheritdoc cref="TextBox.GetLineLength"/>
         int GetLineLength(long lineNo);
 
@@ -91,8 +82,8 @@ namespace Alternet.UI
         /// <inheritdoc cref="TextBox.PositionToXY"/>
         PointI PositionToXY(long pos);
 
-        /// <inheritdoc cref="TextBox.PositionToCoords"/>
-        PointD PositionToCoords(long pos);
+        /// <inheritdoc cref="TextBox.PositionToCoord"/>
+        PointD PositionToCoord(long pos);
 
         /// <inheritdoc cref="TextBox.ShowPosition"/>
         void ShowPosition(long pos);
@@ -130,9 +121,6 @@ namespace Alternet.UI
         /// <inheritdoc cref="TextBox.SetInsertionPoint"/>
         void SetInsertionPoint(long pos);
 
-        /// <inheritdoc cref="TextBox.CreateTextAttr"/>
-        ITextBoxTextAttr CreateTextAttr();
-
         /// <inheritdoc cref="TextBox.SetInsertionPointEnd"/>
         void SetInsertionPointEnd();
 
@@ -169,15 +157,6 @@ namespace Alternet.UI
         /// <inheritdoc cref="TextBox.IsValidPosition"/>
         bool IsValidPosition(long pos);
 
-        /// <inheritdoc cref="TextBox.GetDefaultStyle"/>
-        ITextBoxTextAttr GetDefaultStyle();
-
-        /// <inheritdoc cref="TextBox.GetStyle"/>
-        ITextBoxTextAttr GetStyle(long pos);
-
-        /// <inheritdoc cref="TextBox.SetDefaultStyle"/>
-        bool SetDefaultStyle(ITextBoxTextAttr style);
-
         /// <inheritdoc cref="TextBox.GetLastPosition"/>
         long GetLastPosition();
 
@@ -186,8 +165,5 @@ namespace Alternet.UI
 
         /// <inheritdoc cref="TextBox.GetSelectionEnd"/>
         long GetSelectionEnd();
-
-        /// <inheritdoc cref="TextBox.SetStyle"/>
-        bool SetStyle(long start, long end, ITextBoxTextAttr style);
     }
 }

@@ -19,7 +19,6 @@ namespace Alternet.UI
     [ControlCategory("Common")]
     public partial class TextBox : CustomTextBox, ISimpleRichTextBox
     {
-        private bool isRichEdit = false;
         private bool multiline = false;
         private bool hasBorder = true;
         private bool readOnly = false;
@@ -303,32 +302,6 @@ namespace Alternet.UI
                 multiline = value;
                 Handler.Multiline = value;
                 MultilineChanged?.Invoke(this, EventArgs.Empty);
-            }
-        }
-
-        /// <summary>
-        /// Gets or sets a value indicating whether text control is in rich edit mode
-        /// </summary>
-        /// <remarks>
-        /// In the rich edit mode it is possible to apply text formatting (for example
-        /// change text font or color). Also it is possible to edit large texts.
-        /// </remarks>
-        [Browsable(false)]
-        public virtual bool IsRichEdit
-        {
-            get
-            {
-                return isRichEdit;
-            }
-
-            set
-            {
-                if (DisposingOrDisposed)
-                    return;
-                if (isRichEdit == value)
-                    return;
-                isRichEdit = value;
-                Handler.IsRichEdit = value;
             }
         }
 
@@ -866,143 +839,11 @@ namespace Alternet.UI
         public new ITextBoxHandler Handler => (ITextBoxHandler)base.Handler;
 
         /// <summary>
-        /// Changes the style of selection (if any). If no text is selected, style of the
-        /// insertion point is changed.
-        /// </summary>
-        /// <param name="style">The new text style.</param>
-        /// <returns>
-        /// <c>true</c> on success, <c>false</c> if an error occurred (this may also
-        /// mean that the styles are not supported under this platform).
-        /// </returns>
-        /// <remarks>
-        /// If any attribute within style is not set, the corresponding
-        /// attribute from <see cref="GetDefaultStyle"/> is used.
-        /// </remarks>
-        /// <remarks>
-        /// Turn on <see cref="TextBox.IsRichEdit"/> in order to use this method.
-        /// </remarks>
-        public virtual bool SetSelectionStyle(ITextBoxTextAttr style)
-        {
-            if (HasSelection)
-            {
-                var selectionStart = GetSelectionStart();
-                var selectionEnd = GetSelectionEnd();
-                var result = SetStyle(selectionStart, selectionEnd, style);
-                return result;
-            }
-            else
-            {
-                var position = GetInsertionPoint();
-                var result = SetStyle(position, position, style);
-                return result;
-            }
-        }
-
-        /// <summary>
-        /// Creates new custom text style.
-        /// </summary>
-        /// <returns></returns>
-        public virtual ITextBoxTextAttr CreateTextAttr()
-        {
-            return Handler.CreateTextAttr();
-        }
-
-        /// <summary>
-        /// Toggles <see cref="FontStyle"/> of the selection. If no text is selected, style of the
-        /// insertion point is changed.
-        /// </summary>
-        /// <param name="toggle">Font style to toggle</param>
-        public virtual void SelectionToggleFontStyle(FontStyle toggle)
-        {
-            var position = GetInsertionPoint();
-            var fs = GetStyle(position);
-            if (fs is null)
-                return;
-            var style = fs.GetFontStyle();
-            style = Font.ChangeFontStyle(style, toggle, !style.HasFlag(toggle));
-
-            var newStyle = CreateTextAttr();
-            newStyle.Copy(fs);
-            newStyle.SetFontStyle(style);
-            SetSelectionStyle(newStyle);
-        }
-
-        /// <summary>
-        /// Clears text formatting when <see cref="TextBox"/> is in rich edit mode.
-        /// </summary>
-        public virtual void ClearTextFormatting()
-        {
-            var attr = CreateTextAttr();
-            attr.SetFlags(TextBoxTextAttrFlags.All);
-            SetSelectionStyle(attr);
-        }
-
-        /// <summary>
         /// Shows 'Go To Line' dialog.
         /// </summary>
         public virtual void ShowDialogGoToLine()
         {
             TextBoxUtils.ShowDialogGoToLine(this);
-        }
-
-        /// <summary>
-        /// Sets foreground and background colors of the selection.  If no text is selected,
-        /// style of the insertion point is changed.
-        /// </summary>
-        /// <param name="textColor">Foreground color.</param>
-        /// <param name="backColor">Background color.</param>
-        /// <remarks>
-        /// If any of the color parameters is null, it will not be changed.
-        /// </remarks>
-        public virtual bool SelectionSetColor(Color? textColor, Color? backColor = null)
-        {
-            var position = GetInsertionPoint();
-            var fs = GetStyle(position);
-            if (fs is null)
-                return false;
-            var newStyle = CreateTextAttr();
-            newStyle.Copy(fs);
-            if (backColor is not null)
-                newStyle.SetBackgroundColor(backColor);
-            if (textColor is not null)
-                newStyle.SetTextColor(textColor);
-            return SetSelectionStyle(newStyle);
-        }
-
-        /// <summary>
-        /// Toggles <see cref="FontStyle.Bold"/> style of the selection. If no text is selected,
-        /// style of the insertion point is changed.
-        /// </summary>
-        public virtual void SelectionToggleBold()
-        {
-            SelectionToggleFontStyle(FontStyle.Bold);
-        }
-
-        /// <summary>
-        /// Toggles <see cref="FontStyle.Italic"/> style of the selection. If no text is selected,
-        /// style of the insertion point is changed.
-        /// </summary>
-        public virtual void SelectionToggleItalic()
-        {
-            SelectionToggleFontStyle(FontStyle.Italic);
-        }
-
-        /// <summary>
-        /// Toggles <see cref="FontStyle.Underline"/> style of the selection. If no text is selected,
-        /// style of the insertion point is changed.
-        /// </summary>
-        public virtual void SelectionToggleUnderline()
-        {
-            SelectionToggleFontStyle(FontStyle.Underline);
-        }
-
-        /// <summary>
-        /// Toggles <see cref="FontStyle.Strikeout"/> style of the selection. If no text is
-        /// selected, style of the insertion point is changed.
-        /// </summary>
-        public virtual void SelectionToggleStrikethrough()
-        {
-            SelectionToggleFontStyle(FontStyle.Strikeout);
         }
 
         /// <summary>
@@ -1112,15 +953,15 @@ namespace Alternet.UI
         /// given position displayed in the text control.
         /// </remarks>
         /// <remarks>
-        /// Availability: only available for the MSW, GTK ports.
+        /// Only available for the MSW, GTK ports.
         /// Additionally, GTK only implements this method for multiline
         /// controls and (-1,-1) is always returned for the single line ones.
         /// </remarks>
-        public virtual PointD PositionToCoords(long pos)
+        public virtual PointD PositionToCoord(long pos)
         {
             if (DisposingOrDisposed)
                 return default;
-            return Handler.PositionToCoords(pos);
+            return Handler.PositionToCoord(pos);
         }
 
         /// <summary>
@@ -1206,36 +1047,6 @@ namespace Alternet.UI
         public virtual void AppendNewLine()
         {
             AppendText("\n");
-        }
-
-        /// <summary>
-        /// Appends text and styles to the end of the text control.
-        /// </summary>
-        /// <param name="list">List containing strings or
-        /// <see cref="ITextBoxTextAttr"/> instances.</param>
-        /// <remarks>
-        /// After the text is appended, the insertion point will be at the end
-        /// of the text control. If this behavior is not desired,
-        /// the programmer should use <see cref="GetInsertionPoint"/>
-        /// and <see cref="SetInsertionPoint"/>.
-        /// </remarks>
-        /// <remarks>
-        /// Turn on <see cref="TextBox.IsRichEdit"/> in order to use this method.
-        /// </remarks>
-        public virtual void AppendTextAndStyles(IEnumerable<object> list)
-        {
-            foreach (object item in list)
-            {
-                var ta = item as ITextBoxTextAttr;
-                if (ta is not null)
-                {
-                    SetDefaultStyle(ta);
-                    continue;
-                }
-
-                if (item != null)
-                    AppendText(item.ToString()!);
-            }
         }
 
         /// <summary>
@@ -1400,15 +1211,7 @@ namespace Alternet.UI
         {
             if (DisposingOrDisposed)
                 return;
-            if (IsRichEdit)
-            {
-                DoInsideUpdate(() =>
-                {
-                    SetSelection(-1, -1);
-                });
-            }
-            else
-                Handler.SelectAll();
+            Handler.SelectAll();
         }
 
         /// <summary>
@@ -1564,156 +1367,6 @@ namespace Alternet.UI
         public virtual void MoveToEndOfText()
         {
             SetInsertionPointEnd();
-        }
-
-        /// <summary>
-        /// Returns the style currently used for the new text.
-        /// </summary>
-        /// <returns></returns>
-        /// <remarks>
-        /// Turn on <see cref="TextBox.IsRichEdit"/> in order to use this method.
-        /// </remarks>
-        public virtual ITextBoxTextAttr? GetDefaultStyle()
-        {
-            if (DisposingOrDisposed)
-                return null;
-            return Handler.GetDefaultStyle();
-        }
-
-        /// <summary>
-        /// Returns the style at this position in the text control.
-        /// </summary>
-        /// <param name="pos">The position for which text style is returned.</param>
-        /// <returns></returns>
-        /// <remarks>
-        /// Turn on <see cref="TextBox.IsRichEdit"/> in order to use this method.
-        /// </remarks>
-        public virtual ITextBoxTextAttr? GetStyle(long pos)
-        {
-            if (DisposingOrDisposed)
-                return null;
-            return Handler.GetStyle(pos);
-        }
-
-        /// <summary>
-        /// Changes the default style to use for the new text which is
-        /// going to be added to the control using <see cref="WriteText"/>
-        /// or <see cref="AppendText"/>.
-        /// </summary>
-        /// <param name="style">The style for the new text.</param>
-        /// <returns>
-        /// true on success, false if an error occurred(this may
-        /// also mean that the styles are not supported under this platform).
-        /// </returns>
-        /// <remarks>
-        /// If either of the font, foreground, or background color is not set in
-        /// style, the values of the previous default style are used for them. If the
-        /// previous default style didn't set them neither, the global font or colors
-        /// of the text control itself are used as fall back.
-        /// </remarks>
-        /// <remarks>
-        /// Turn on <see cref="TextBox.IsRichEdit"/> in order to use this method.
-        /// </remarks>
-        public virtual bool SetDefaultStyle(ITextBoxTextAttr style)
-        {
-            if (DisposingOrDisposed)
-                return default;
-            return Handler.SetDefaultStyle(style);
-        }
-
-        /// <summary>
-        /// Changes the style of the given range.
-        /// </summary>
-        /// <param name="start">The start of the range to change.</param>
-        /// <param name="end">The end of the range to change.</param>
-        /// <param name="style">The new style for the range.</param>
-        /// <returns>
-        /// <c>true</c> on success, <c>false</c> if an error occurred (this may also
-        /// mean that the styles are not supported under this platform).
-        /// </returns>
-        /// <remarks>
-        /// If any attribute within style is not set, the corresponding
-        /// attribute from <see cref="GetDefaultStyle"/> is used.
-        /// </remarks>
-        /// <remarks>
-        /// Turn on <see cref="TextBox.IsRichEdit"/> in order to use this method.
-        /// </remarks>
-        public virtual bool SetStyle(long start, long end, ITextBoxTextAttr style)
-        {
-            if (DisposingOrDisposed)
-                return default;
-            return Handler.SetStyle(start, end, style);
-        }
-
-        /// <summary>
-        /// Executes a browser command with the specified name and parameters.
-        /// </summary>
-        /// <param name = "cmdName" >
-        /// Name of the command to execute.
-        /// </param>
-        /// <param name = "args" >
-        /// Parameters of the command.
-        /// </param>
-        /// <returns>
-        /// An <see cref="object"/> representing the result of the command execution.
-        /// </returns>
-        public virtual object? DoCommand(string cmdName, params object?[] args)
-        {
-            if (DisposingOrDisposed)
-                return default;
-            if (cmdName == "GetReportedUrl")
-            {
-                return Handler.ReportedUrl;
-            }
-
-            return null;
-        }
-
-        /// <summary>
-        /// Sets text alignment in the current position to <paramref name="alignment"/>.
-        /// </summary>
-        /// <param name="alignment">New alignment value.</param>
-        public virtual void SelectionSetAlignment(TextBoxTextAttrAlignment alignment)
-        {
-            var fs = CreateTextAttr();
-            fs.SetAlignment(alignment);
-            SetSelectionStyle(fs);
-        }
-
-        /// <summary>
-        /// Sets text alignment in the current position
-        /// to <see cref="TextBoxTextAttrAlignment.Center"/>
-        /// </summary>
-        public virtual void SelectionAlignCenter()
-        {
-            SelectionSetAlignment(TextBoxTextAttrAlignment.Center);
-        }
-
-        /// <summary>
-        /// Sets text alignment in the current position
-        /// to <see cref="TextBoxTextAttrAlignment.Left"/>
-        /// </summary>
-        public virtual void SelectionAlignLeft()
-        {
-            SelectionSetAlignment(TextBoxTextAttrAlignment.Left);
-        }
-
-        /// <summary>
-        /// Sets text alignment in the current position
-        /// to <see cref="TextBoxTextAttrAlignment.Right"/>
-        /// </summary>
-        public virtual void SelectionAlignRight()
-        {
-            SelectionSetAlignment(TextBoxTextAttrAlignment.Right);
-        }
-
-        /// <summary>
-        /// Sets text alignment in the current position to
-        /// <see cref="TextBoxTextAttrAlignment.Justified"/>
-        /// </summary>
-        public virtual void SelectionAlignJustified()
-        {
-            SelectionSetAlignment(TextBoxTextAttrAlignment.Justified);
         }
 
         /// <inheritdoc/>

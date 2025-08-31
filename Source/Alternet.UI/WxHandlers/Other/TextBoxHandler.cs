@@ -7,7 +7,7 @@ using Alternet.UI.Extensions;
 namespace Alternet.UI
 {
     internal class TextBoxHandler
-        : WxControlHandler<TextBox, Native.TextBox>, ITextBoxHandler
+        : WxControlHandler<TextBox, Native.TextBox>, ITextBoxHandler, IWxTextBoxHandler
     {
         public bool ReadOnly
         {
@@ -275,7 +275,7 @@ namespace Alternet.UI
             return NativeControl.PositionToXY(pos);
         }
 
-        public PointD PositionToCoords(long pos)
+        public PointD PositionToCoord(long pos)
         {
             return NativeControl.PositionToCoords(pos);
         }
@@ -370,26 +370,26 @@ namespace Alternet.UI
             return new TextBoxTextAttr();
         }
 
-        ITextBoxTextAttr ITextBoxHandler.GetDefaultStyle()
+        ITextBoxTextAttr IWxTextBoxHandler.GetDefaultStyle()
         {
             return new TextBoxTextAttr(NativeControl.GetDefaultStyle());
         }
 
-        bool ITextBoxHandler.SetStyle(long start, long end, ITextBoxTextAttr style)
+        bool IWxTextBoxHandler.SetStyle(long start, long end, ITextBoxTextAttr style)
         {
             if (style is not TextBoxTextAttr s)
                 return false;
             return SetStyle(start, end, s.Handle);
         }
 
-        bool ITextBoxHandler.SetDefaultStyle(ITextBoxTextAttr style)
+        bool IWxTextBoxHandler.SetDefaultStyle(ITextBoxTextAttr style)
         {
             if (style is not TextBoxTextAttr s)
                 return false;
             return SetDefaultStyle(s.Handle);
         }
 
-        ITextBoxTextAttr ITextBoxHandler.GetStyle(long pos)
+        ITextBoxTextAttr IWxTextBoxHandler.GetStyle(long pos)
         {
             return new TextBoxTextAttr(NativeControl.GetStyle(pos));
         }
@@ -406,7 +406,22 @@ namespace Alternet.UI
 
         public void SelectAll()
         {
-            NativeControl.SelectAll();
+            if (IsRichEdit)
+            {
+                BeginUpdate();
+                try
+                {
+                    SetSelection(-1, -1);
+                }
+                finally
+                {
+                    EndUpdate();
+                }
+            }
+            else
+            {
+                NativeControl.SelectAll();
+            }
         }
 
         public void SelectNone()

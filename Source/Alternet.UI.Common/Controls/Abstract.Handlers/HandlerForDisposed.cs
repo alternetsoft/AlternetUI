@@ -1420,7 +1420,7 @@ namespace Alternet.UI
             return default;
         }
 
-        public PointD PositionToCoords(long pos)
+        public PointD PositionToCoord(long pos)
         {
             return default;
         }
