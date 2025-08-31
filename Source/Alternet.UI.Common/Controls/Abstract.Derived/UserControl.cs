@@ -59,6 +59,14 @@ namespace Alternet.UI
         public event EventHandler<BaseCancelEventArgs>? DropDownMenuShowing;
 
         /// <summary>
+        /// Occurs after the control has finished its painting operation.
+        /// </summary>
+        /// <remarks>This event is raised after the control's painting logic has been completed.
+        /// It can be used to perform additional custom drawing or to respond to the completion
+        /// of the painting process.</remarks>
+        public event PaintEventHandler? AfterPaint;
+
+        /// <summary>
         /// Specifies the mouse event that triggers the click action of a control.
         /// </summary>
         public enum ClickTriggerKind
@@ -771,6 +779,34 @@ namespace Alternet.UI
             }
 
             DefaultPaintDebug(e);
+
+            RaiseAfterPaint(e);
+        }
+
+        /// <summary>
+        /// Raises the <see cref="AfterPaint"/> event and invokes the <c>OnAfterPaint</c> method.
+        /// </summary>
+        /// <remarks>This method is called to notify subscribers that the painting operation
+        /// has completed. It first calls the <c>OnAfterPaint</c> method,
+        /// allowing derived classes to handle the event, and then raises
+        /// the <see cref="AfterPaint"/> event.</remarks>
+        /// <param name="e">A <see cref="PaintEventArgs"/> that contains the event data.</param>
+        protected void RaiseAfterPaint(PaintEventArgs e)
+        {
+            OnAfterPaint(e);
+            AfterPaint?.Invoke(this, e);
+        }
+
+        /// <summary>
+        /// Invoked after the control has completed its painting operations.
+        /// </summary>
+        /// <remarks>This method is called to allow for additional processing or custom
+        /// behavior after the control's painting is complete.
+        /// Derived classes can override this method to implement custom post-painting logic.</remarks>
+        /// <param name="e">A <see cref="PaintEventArgs"/> that contains the event data,
+        /// including the graphics context used for painting.</param>
+        protected virtual void OnAfterPaint(PaintEventArgs e)
+        {
         }
 
         /// <inheritdoc/>
@@ -810,8 +846,16 @@ namespace Alternet.UI
             Invalidate();
         }
 
+        /// <summary>
+        /// Provides default debug related painting behavior for the control when the application
+        /// is compiled in debug mode.
+        /// </summary>
+        /// <remarks>This method is only executed when the "DEBUG" conditional compilation
+        /// symbol is defined. It is intended for rendering debug-specific visual elements,
+        /// such as focus rectangles, to assist in debugging layout or focus-related issues.</remarks>
+        /// <param name="e">The <see cref="PaintEventArgs"/> containing data for the paint event.</param>
         [Conditional("DEBUG")]
-        private void DefaultPaintDebug(PaintEventArgs e)
+        protected virtual void DefaultPaintDebug(PaintEventArgs e)
         {
             if (DebugUtils.IsDebugDefined && ContainerControl.ShowDebugFocusRect)
             {
