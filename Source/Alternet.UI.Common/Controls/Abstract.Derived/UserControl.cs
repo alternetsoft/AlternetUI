@@ -108,11 +108,13 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets the type of click trigger that determines when a click action is initiated.
         /// </summary>
+        [Browsable(false)]
         public virtual ClickTriggerKind ClickTrigger { get; set; } = ClickTriggerKind.MouseUp;
 
         /// <summary>
         /// Gets or sets the type of click trigger that determines when a drop-down menu is shown.
         /// </summary>
+        [Browsable(false)]
         public virtual ClickTriggerKind DropDownTrigger { get; set; } = ClickTriggerKind.MouseDown;
 
         /// <summary>
