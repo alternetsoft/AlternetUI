@@ -568,7 +568,7 @@ namespace Alternet.UI
         /// <param name="e">An <see cref="EventArgs"/> instance containing the event data.</param>
         protected virtual void OnSizeChanged(object? sender, EventArgs e)
         {
-            UpdateBounds(Bounds.ToRectD());
+            UpdateInnerControlBounds(Bounds.ToRectD());
             control?.RaiseHandlerSizeChanged(e);
         }
 
@@ -651,7 +651,7 @@ namespace Alternet.UI
 
             graphics.OriginalScaleFactor = scaleFactor;
 
-            UpdateBounds(dc.LocalClipBounds);
+            UpdateInnerControlBounds(dc.LocalClipBounds);
 
             dc.Clear(control.BackColor);
 
@@ -662,8 +662,6 @@ namespace Alternet.UI
             var paintArgs = new PaintEventArgs(graphics, control.Bounds);
 
             control.RaisePaint(paintArgs);
-
-            TemplateUtils.RaisePaintForChildren(control, graphics);
 
             dc.Restore();
 
@@ -711,7 +709,18 @@ namespace Alternet.UI
             dc.Restore();
         }
 
-        private void UpdateBounds(RectD max)
+        /// <summary>
+        /// Updates the bounds of the inner control to fit within the specified maximum dimensions.
+        /// </summary>
+        /// <remarks>This method adjusts the size of the inner control to ensure it
+        /// does not exceed the
+        /// specified maximum dimensions. If the control has an associated interior layout,
+        /// the bounds are further
+        /// refined based on the layout's client area. The method ensures that the width
+        /// and height of the control are non-negative.</remarks>
+        /// <param name="max">The maximum allowable dimensions for the inner control,
+        /// represented as a rectangle.</param>
+        protected virtual void UpdateInnerControlBounds(RectD max)
         {
             if (control is null)
                 return;

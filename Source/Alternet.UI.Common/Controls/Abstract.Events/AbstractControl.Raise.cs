@@ -815,9 +815,9 @@ namespace Alternet.UI
                 OnPaint(e);
                 Paint?.Invoke(this, e);
 
-                if(!App.IsMaui && HasVisibleChildren && this is Control)
+                if(this is Control)
                 {
-                    TemplateUtils.RaisePaintForGenericChildren(this, () => e.Graphics);
+                    TemplateUtils.RaisePaintForNonPlatformChildren(this, () => e.Graphics);
                 }
 
                 PaintCaret(e);
