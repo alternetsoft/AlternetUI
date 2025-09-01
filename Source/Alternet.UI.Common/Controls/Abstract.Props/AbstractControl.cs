@@ -50,7 +50,7 @@ namespace Alternet.UI
         private static Font? defaultFont;
         private static Font? defaultMonoFont;
         private static WeakReferenceValue<AbstractControl> weakHoveredControl = new();
-        private static List<IControlNotification>? globalNotifications;
+        private static List<IControlNotification> globalNotifications = new();
 
         private bool enabled = true;
         private bool isMouseLeftButtonDown;
@@ -245,8 +245,6 @@ namespace Alternet.UI
         {
             get
             {
-                if (globalNotifications is null)
-                    return Array.Empty<IControlNotification>();
                 return globalNotifications;
             }
         }
