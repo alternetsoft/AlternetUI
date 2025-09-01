@@ -206,6 +206,13 @@ namespace Alternet.UI
         void AfterKeyDown(AbstractControl sender, KeyEventArgs e);
 
         /// <summary>
+        /// Called before the <see cref="AbstractControl.KeyDown" /> event is raised.
+        /// </summary>
+        /// <param name="sender">Control which sends the notification.</param>
+        /// <param name="e">An <see cref="KeyEventArgs" /> that contains the event data.</param>
+        void BeforeKeyDown(AbstractControl sender, KeyEventArgs e);
+
+        /// <summary>
         /// Called after the value of the <see cref="AbstractControl.Margin"/> property changes.
         /// </summary>
         /// <param name="sender">Control which sends the notification.</param>

@@ -73,6 +73,11 @@ namespace Alternet.UI
         public event EventHandler<KeyEventArgs>? AfterControlKeyDown;
 
         /// <summary>
+        /// Occurs before the corresponding control's event is raised.
+        /// </summary>
+        public event EventHandler<KeyEventArgs>? BeforeControlKeyDown;
+
+        /// <summary>
         /// Occurs when the corresponding control's event is raised.
         /// </summary>
         public event EventHandler<KeyPressEventArgs>? AfterControlKeyPress;
@@ -759,6 +764,12 @@ namespace Alternet.UI
         public void AfterBoundsChanged(AbstractControl sender, EventArgs e)
         {
             AfterControlBoundsChanged?.Invoke(sender, e);
+        }
+
+        /// <inheritdoc/>
+        public void BeforeKeyDown(AbstractControl sender, KeyEventArgs e)
+        {
+            BeforeControlKeyDown?.Invoke(sender, e);
         }
     }
 }

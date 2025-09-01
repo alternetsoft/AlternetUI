@@ -348,5 +348,10 @@ namespace Alternet.UI
         public virtual void AfterMouseHover(AbstractControl sender, EventArgs e)
         {
         }
+
+        /// <inheritdoc/>
+        public virtual void BeforeKeyDown(AbstractControl sender, KeyEventArgs e)
+        {
+        }
     }
 }
