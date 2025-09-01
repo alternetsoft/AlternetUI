@@ -46,7 +46,6 @@ namespace Alternet.UI
         /// </remarks>
         public static void AddGlobalNotification(IControlNotification n)
         {
-            globalNotifications ??= new();
             globalNotifications.Add(n);
         }
 
@@ -56,9 +55,19 @@ namespace Alternet.UI
         /// <param name="n">Notification object to remove.</param>
         public static void RemoveGlobalNotification(IControlNotification n)
         {
-            if (globalNotifications is null)
-                return;
             globalNotifications.Remove(n);
+        }
+
+        /// <summary>
+        /// Moves the specified global notification to the front of the notification list.
+        /// </summary>
+        /// <remarks>This method reorders the global notification list to prioritize the specified
+        /// notification. If the notification is not found in the list, no changes are made.</remarks>
+        /// <param name="n">The notification to move to the front. Must be an existing
+        /// item in the global notification list.</param>
+        public static void MoveGlobalNotificationToFront(IControlNotification n)
+        {
+            ListUtils.MoveItemToFront(globalNotifications, n);
         }
 
         /// <summary>
@@ -2718,6 +2727,20 @@ namespace Alternet.UI
                 return;
             notifications ??= new();
             notifications.Add(n);
+        }
+
+        /// <summary>
+        /// Moves the specified notification to the front of the notification list.
+        /// </summary>
+        /// <remarks>This method reorders the notification list to prioritize the specified
+        /// notification. If the notification is not found in the list, no changes are made.</remarks>
+        /// <param name="n">The notification to move to the front. Must be an existing
+        /// item in the notification list.</param>
+        public virtual void MoveNotificationToFront(IControlNotification n)
+        {
+            if (notifications is null || n is null)
+                return;
+            ListUtils.MoveItemToFront(notifications, n);
         }
 
         /// <summary>
