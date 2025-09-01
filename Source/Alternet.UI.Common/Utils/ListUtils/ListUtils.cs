@@ -13,6 +13,21 @@ namespace Alternet.UI
     public static class ListUtils
     {
         /// <summary>
+        /// Moves the specified item to the front of the list, if it exists.
+        /// </summary>
+        public static void MoveItemToFront<T>(List<T> list, T item)
+        {
+            if (list == null || item == null) return;
+
+            int index = list.IndexOf(item);
+            if (index > 0)
+            {
+                list.RemoveAt(index);
+                list.Insert(0, item);
+            }
+        }
+
+        /// <summary>
         /// Finds the indices of the specified items in the given collection.
         /// </summary>
         /// <typeparam name="T">The type of elements in the collection and items.</typeparam>
