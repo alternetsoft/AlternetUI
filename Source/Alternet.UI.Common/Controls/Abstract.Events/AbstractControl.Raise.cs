@@ -320,7 +320,16 @@ namespace Alternet.UI
         {
             if (DisposingOrDisposed)
                 return;
+
+            RaiseNotifications((n) => n.BeforeMouseDown(this, e));
+
+            if (e.Handled)
+                return;
+
             if (ForEachVisibleChild(e, (control, e) => control.OnBeforeParentMouseDown(this, e)))
+                return;
+
+            if (e.Handled)
                 return;
 
             HoveredControl = this;
@@ -331,13 +340,6 @@ namespace Alternet.UI
 
                 dragEventArgs = e;
                 lastMouseDownPos = Mouse.GetPosition(this);
-            }
-
-            RaiseNotifications((n) => n.BeforeMouseDown(this, e));
-
-            if (e.Handled)
-            {
-                return;
             }
 
             MouseDown?.Invoke(this, e);
@@ -1104,6 +1106,12 @@ namespace Alternet.UI
             if (DisposingOrDisposed)
                 return;
             PlessKeyboard.UpdateKeyStateInMemory(e, isDown: true);
+
+            RaiseNotifications((n) => n.BeforeKeyDown(this, e));
+            if(e.IsHandledOrSupressed)
+            {
+                return;
+            }
 
             if (ForEachParent(e, (control, e) => control.OnBeforeChildKeyDown(this, e)))
                 return;
