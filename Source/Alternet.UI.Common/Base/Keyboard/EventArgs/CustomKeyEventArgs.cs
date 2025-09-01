@@ -139,7 +139,7 @@ namespace Alternet.UI
         public virtual bool Control => modifiers.HasFlag(ModifierKeys.Control);
 
         /// <summary>
-        /// Gets wherher any modifiers are pressed.
+        /// Gets whether any modifiers are pressed.
         /// </summary>
         public virtual bool HasModifiers => modifiers != ModifierKeys.None;
 
