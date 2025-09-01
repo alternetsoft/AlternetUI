@@ -32,6 +32,9 @@ namespace Alternet.UI
             SuppressParentMouse = true;
             SuppressParentKeyDown = true;
             SuppressParentKeyPress = true;
+            SuppressKeyDown = true;
+            SuppressKeyPress = true;
+            SuppressKeyDown = true;
             HideOnSiblingHide = false;
             HideOnSiblingShow = false;
             HideOnEscape = true;
@@ -47,6 +50,17 @@ namespace Alternet.UI
             {
                 return (c as AbstractControl)?.HasIndirectParent<InnerPopupToolBar>() ?? false;
             }
+
+            notification.BeforeControlKeyDown += (s, e) =>
+            {
+                if (!Visible)
+                    return;
+                var insidePopup = InsidePopup(s);
+
+                if(insidePopup || !SuppressKeyDown)
+                    return;
+                e.Suppressed();
+            };
 
             notification.AfterControlMouseMove += (s, e) =>
             {
@@ -107,6 +121,18 @@ namespace Alternet.UI
                 defaultPopup = value;
             }
         }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether key down event for the controls which
+        /// are not children of the popup control should be suppressed.
+        /// </summary>
+        public virtual bool SuppressKeyDown { get; set; }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether key press event for the controls which
+        /// are not children of the popup control should be suppressed.
+        /// </summary>
+        public virtual bool SuppressKeyPress { get; set; }
 
         /// <summary>
         /// Gets or sets the source control that called the popup.
