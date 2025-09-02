@@ -15,11 +15,99 @@ namespace Alternet.UI
         /// </summary>
         public static TypeConverter Default = new ModifierKeysConverter();
 
-        private const char ModifierDelimiter = '+';
+        /// <summary>
+        /// Represents the delimiter character used to separate modifiers in a string.
+        /// </summary>
+        /// <remarks>This field is commonly used in scenarios where multiple modifiers need to be
+        /// concatenated and later parsed. The default value is the '+' character.</remarks>
+        public static char ModifierDelimiter = '+';
+
+        /// <summary>
+        /// Represents the delimiter character used to separate modifiers in display text.
+        /// </summary>
+        public static char DisplayTextModifierDelimiter = '+';
 
         private static readonly ModifierKeys ModifierKeysFlag =
             ModifierKeys.Windows | ModifierKeys.Shift |
             ModifierKeys.Alt | ModifierKeys.Control;
+
+        private static string? modifierDisplayTextControl;
+        private static string? modifierDisplayTextShift;
+        private static string? modifierDisplayTextAlt;
+        private static string? modifierDisplayTextWindows;
+
+        /// <summary>
+        /// Gets or sets the display text used to represent the control key modifier.
+        /// </summary>
+        /// <remarks>This property allows customization of the text used to represent
+        /// the control key modifier. If not explicitly set, the default value is determined
+        /// based on the operating system.</remarks>
+        public static string ModifierDisplayTextControl
+        {
+            get
+            {
+                if (modifierDisplayTextControl != null)
+                    return modifierDisplayTextControl;
+
+                if (App.IsMacOS)
+                    return StringUtils.MacCommandKeyTitle;
+                else
+                    return "Ctrl";
+            }
+
+            set
+            {
+                modifierDisplayTextControl = value;
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets the display text used to represent the "Shift" modifier key.
+        /// </summary>
+        public static string ModifierDisplayTextShift
+        {
+            get
+            {
+                return modifierDisplayTextShift ?? "Shift";
+            }
+
+            set
+            {
+                modifierDisplayTextShift = value;
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets the alternative display text for the "Alt" modifier key.
+        /// </summary>
+        public static string ModifierDisplayTextAlt
+        {
+            get
+            {
+                return modifierDisplayTextAlt ?? "Alt";
+            }
+
+            set
+            {
+                modifierDisplayTextAlt = value;
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets the display text for the Windows key modifier.
+        /// </summary>
+        public static string ModifierDisplayTextWindows
+        {
+            get
+            {
+                return modifierDisplayTextWindows ?? "Windows";
+            }
+
+            set
+            {
+                modifierDisplayTextWindows = value;
+            }
+        }
 
         /// <summary>
         /// Check for valid enum, as any int can be casted to the enum.
@@ -54,6 +142,9 @@ namespace Alternet.UI
         {
             string strModifiers = string.Empty;
 
+            char delimiter = forUser ?
+                DisplayTextModifierDelimiter : ModifierDelimiter;
+
             Add(ModifierKeys.Control);
             Add(ModifierKeys.Alt);
             Add(ModifierKeys.Windows);
@@ -66,7 +157,7 @@ namespace Alternet.UI
                 if ((modifiers & key) == key)
                 {
                     if (strModifiers.Length > 0)
-                        strModifiers += ModifierDelimiter;
+                        strModifiers += delimiter;
 
                     strModifiers += MatchModifiers(key, forUser);
                 }
@@ -137,19 +228,16 @@ namespace Alternet.UI
             switch (modifierKeys)
             {
                 case ModifierKeys.Control:
-                    if (forUser && App.IsMacOS)
-                        modifiers = StringUtils.MacCommandKeyTitle;
-                    else
-                        modifiers = "Ctrl";
+                    modifiers = ModifierDisplayTextControl;
                     break;
                 case ModifierKeys.Shift:
-                    modifiers = "Shift";
+                    modifiers = ModifierDisplayTextShift;
                     break;
                 case ModifierKeys.Alt:
-                    modifiers = "Alt";
+                    modifiers = ModifierDisplayTextAlt;
                     break;
                 case ModifierKeys.Windows:
-                    modifiers = "Windows";
+                    modifiers = ModifierDisplayTextWindows;
                     break;
             }
 
