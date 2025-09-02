@@ -1384,5 +1384,29 @@ namespace Alternet.UI
             if (Options.HasFlag(TextBoxOptions.DefaultValidation))
                 RunDefaultValidation();
         }
+
+        /// <inheritdoc/>
+        protected override void OnKeyDown(KeyEventArgs e)
+        {
+            base.OnKeyDown(e);
+
+            if (App.IsMacOS)
+            {
+                if (Multiline)
+                    return;
+
+                if (e.Key == Key.Home)
+                {
+                    MoveToBeginOfText();
+                    e.Suppressed();
+                }
+                else
+                if (e.Key == Key.End)
+                {
+                    MoveToEndOfText();
+                    e.Suppressed();
+                }
+            }
+        }
     }
 }
