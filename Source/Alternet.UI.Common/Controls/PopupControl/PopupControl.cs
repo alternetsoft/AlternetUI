@@ -735,12 +735,12 @@ namespace Alternet.UI
                 return;
             if (Visible)
             {
-                if (HideOnSiblingShow)
+                if (HideOnSiblingShow && HideWhenSiblingShown(sibling))
                     CloseMe();
             }
             else
             {
-                if (HideOnSiblingHide)
+                if (HideOnSiblingHide && HideWhenSiblingHidden(sibling))
                     CloseMe();
             }
 
@@ -748,6 +748,40 @@ namespace Alternet.UI
             {
                 CloseWhenIdle(ModalResult.Canceled, UI.PopupCloseReason.Other);
             }
+        }
+
+        /// <summary>
+        /// Determines whether the current control should be hidden when a specified sibling control is hidden.
+        /// <see cref="HideOnSiblingHide"/> must be set to <see langword="true"/> for this method to be called.
+        /// </summary>
+        /// <remarks>This method provides a mechanism for customizing visibility behavior based on the
+        /// state of sibling controls. Override this method in a derived class to implement specific logic for
+        /// determining visibility.</remarks>
+        /// <param name="sibling">The sibling control to evaluate.
+        /// This parameter represents the control whose visibility state may influence
+        /// the current control.</param>
+        /// <returns><see langword="true"/> if the current control should be hidden
+        /// when the specified sibling is hidden;
+        /// otherwise, <see langword="false"/>.</returns>
+        protected virtual bool HideWhenSiblingHidden(AbstractControl sibling)
+        {
+            return true;
+        }
+
+        /// <summary>
+        /// Determines whether the current control should be hidden when a specified sibling control is shown.
+        /// <see cref="HideOnSiblingShow"/> must be set to <see langword="true"/> for this method to be called.
+        /// </summary>
+        /// <remarks>This method provides a default implementation that always returns
+        /// <see langword="true"/>. Derived classes can override this method to implement custom
+        /// logic for determining visibility behavior.</remarks>
+        /// <param name="sibling">The sibling control to evaluate.</param>
+        /// <returns><see langword="true"/> if the current control should be hidden
+        /// when the specified sibling is shown;
+        /// otherwise, <see langword="false"/>.</returns>
+        protected virtual bool HideWhenSiblingShown(AbstractControl sibling)
+        {
+            return true;
         }
 
         /// <summary>

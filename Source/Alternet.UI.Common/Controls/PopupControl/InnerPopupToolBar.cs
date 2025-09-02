@@ -35,8 +35,8 @@ namespace Alternet.UI
             SuppressKeyDown = true;
             SuppressKeyPress = true;
             SuppressKeyDown = true;
-            HideOnSiblingHide = false;
-            HideOnSiblingShow = false;
+            HideOnSiblingHide = true;
+            HideOnSiblingShow = true;
             HideOnEscape = true;
             FocusContainerOnClose = true;
             HideOnEnter = true;
@@ -341,6 +341,18 @@ namespace Alternet.UI
         protected override void OnBeforeParentKeyPress(object? sender, KeyPressEventArgs e)
         {
             base.OnBeforeParentKeyPress(sender, e);
+        }
+
+        /// <inheritdoc/>
+        protected override bool HideWhenSiblingHidden(AbstractControl sibling)
+        {
+            return sibling is not InnerPopupToolBar;
+        }
+
+        /// <inheritdoc/>
+        protected override bool HideWhenSiblingShown(AbstractControl sibling)
+        {
+            return sibling is not InnerPopupToolBar;
         }
 
         /// <summary>
