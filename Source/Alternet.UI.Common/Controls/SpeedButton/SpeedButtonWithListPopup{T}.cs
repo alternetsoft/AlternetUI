@@ -463,7 +463,18 @@ namespace Alternet.UI
                     }
                 }
 
-                DropDownMenu.CheckSingleItemWithTag(Value);
+                var valueChecked = DropDownMenu.CheckSingleItemWithTag(Value);
+
+                if (!valueChecked)
+                {
+                    var checkValue = Value is not ListControlItem valueAsItem
+                        ? Value : valueAsItem.Value ?? valueAsItem;
+
+                    DropDownMenu.CheckSingleItemWithTag(
+                        checkValue,
+                        Menu.FindItemFlags.IgnoreCase | Menu.FindItemFlags.TrimText);
+                }
+
                 DropDownMenu.ShowAsDropDown(popupOwner);
             }
 
