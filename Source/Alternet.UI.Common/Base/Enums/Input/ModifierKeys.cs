@@ -5,8 +5,7 @@ using Alternet.UI.Markup;
 namespace Alternet.UI
 {
     /// <summary>
-    ///     The ModifierKeys enumeration describes a set of common keys
-    ///     used to modify other input operations.
+    /// Defines the modifier keys that can be pressed simultaneously with another key.
     /// </summary>
     /// <remarks>
     /// This enumeration supports a bitwise combination of its member values.
