@@ -49,8 +49,8 @@ namespace Alternet.UI
                 if (modifierDisplayTextControl != null)
                     return modifierDisplayTextControl;
 
-                if (App.IsMacOS)
-                    return StringUtils.MacCommandKeyTitle;
+                if (MacModifierSymbols.AreUsed)
+                    return MacModifierSymbols.Command;
                 else
                     return "Ctrl";
             }
@@ -68,7 +68,12 @@ namespace Alternet.UI
         {
             get
             {
-                return modifierDisplayTextShift ?? "Shift";
+                if (modifierDisplayTextShift != null)
+                    return modifierDisplayTextShift;
+                if (MacModifierSymbols.AreUsed)
+                    return MacModifierSymbols.Shift;
+                else
+                    return "Shift";
             }
 
             set
@@ -84,7 +89,13 @@ namespace Alternet.UI
         {
             get
             {
-                return modifierDisplayTextAlt ?? "Alt";
+                if (modifierDisplayTextAlt != null)
+                    return modifierDisplayTextAlt;
+
+                if (MacModifierSymbols.AreUsed)
+                    return MacModifierSymbols.Option;
+                else
+                    return "Alt";
             }
 
             set
@@ -100,7 +111,13 @@ namespace Alternet.UI
         {
             get
             {
-                return modifierDisplayTextWindows ?? "Windows";
+                if (modifierDisplayTextWindows != null)
+                    return modifierDisplayTextWindows;
+
+                if (MacModifierSymbols.AreUsed)
+                    return MacModifierSymbols.Control;
+                else
+                    return "Windows";
             }
 
             set
