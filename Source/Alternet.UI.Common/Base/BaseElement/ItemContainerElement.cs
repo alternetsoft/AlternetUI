@@ -59,6 +59,32 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets the first item in the collection, or <see langword="null"/> if the collection is empty.
+        /// </summary>
+        public T? FirstItem
+        {
+            get
+            {
+                if (!HasItems)
+                    return null;
+                return Items[0];
+            }
+        }
+
+        /// <summary>
+        /// Gets the last item in the collection, or <see langword="null"/> if the collection is empty.
+        /// </summary>
+        public T? LastItem
+        {
+            get
+            {
+                if (!HasItems)
+                    return null;
+                return Items[Items.Count - 1];
+            }
+        }
+
+        /// <summary>
         /// Gets a value indicating whether items have been allocated.
         /// </summary>
         [Browsable(false)]
@@ -128,6 +154,30 @@ namespace Alternet.UI
         object ICollectionObserver<object>.GetItem(int index)
         {
             return Items[index];
+        }
+
+        /// <summary>
+        /// Retrieves an item from the collection by its name.
+        /// </summary>
+        /// <remarks>This method performs a linear search through the <see cref="Items"/> collection.
+        /// If multiple items share
+        /// the same name, the first matching item is returned.
+        /// If the collection is empty, the method returns <see langword="null"/>.</remarks>
+        /// <param name="name">The name of the item to retrieve. This value is case-sensitive.</param>
+        /// <returns>The item of type <typeparamref name="T"/> if an item with the specified
+        /// name exists in the collection; otherwise, <see langword="null"/>.</returns>
+        public virtual T? ItemByName(string name)
+        {
+            if (!HasItems)
+                return null;
+
+            foreach (var child in Items)
+            {
+                if (child.Name == name)
+                    return child;
+            }
+
+            return null;
         }
 
         /// <summary>
