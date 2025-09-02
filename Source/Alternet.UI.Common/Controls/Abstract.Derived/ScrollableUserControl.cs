@@ -10,7 +10,7 @@ namespace Alternet.UI
     /// <summary>
     /// Extends <see cref="UserControl"/> to provide scrollable functionality.
     /// </summary>
-    public abstract class ScrollableUserControl : UserControl
+    public class ScrollableUserControl : UserControl
     {
         /// <summary>
         /// Indicates whether the list box controls use internal scrollbars.
@@ -55,7 +55,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets the router responsible for handling scroll events.
         /// </summary>
-        public abstract IScrollEventRouter ScrollEventRouter { get; }
+        public virtual IScrollEventRouter ScrollEventRouter => DummyScrollEventRouter.Default;
 
         /// <inheritdoc/>
         public override ControlBorderStyle BorderStyle
