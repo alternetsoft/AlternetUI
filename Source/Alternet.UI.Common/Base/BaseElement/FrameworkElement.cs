@@ -135,11 +135,11 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Recursively searches all <see cref="LogicalChildrenCollection"/> for a control with
-        /// the specified name, and returns that control if found.
+        /// Recursively searches all <see cref="LogicalChildrenCollection"/> for an element with
+        /// the specified name, and returns that element if found.
         /// </summary>
-        /// <param name="name">The name of the control to be found.</param>
-        /// <returns>The found control, or <c>null</c> if no control with the provided name
+        /// <param name="name">The name of the element to be found.</param>
+        /// <returns>The found element, or <c>null</c> if no element with the provided name
         /// is found.</returns>
         public virtual FrameworkElement? TryFindElement(string? name)
         {

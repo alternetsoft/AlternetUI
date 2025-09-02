@@ -35,19 +35,19 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Occurs when the control is opening.
+        /// Occurs when the menu is opening.
         /// </summary>
         [Category("Action")]
         public event CancelEventHandler? Opening;
 
         /// <summary>
-        /// Occurs when the control is closing.
+        /// Occurs when the menu is closing.
         /// </summary>
         [Category("Action")]
         public event EventHandler? Closing;
 
         /// <summary>
-        /// Occurs when the control is closing.
+        /// Occurs when the menu is closed.
         /// </summary>
         [Category("Action")]
         public event EventHandler<ToolStripDropDownClosedEventArgs>? Closed;
