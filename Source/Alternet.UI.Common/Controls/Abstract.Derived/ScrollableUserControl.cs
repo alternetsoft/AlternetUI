@@ -55,7 +55,13 @@ namespace Alternet.UI
         /// <summary>
         /// Gets the router responsible for handling scroll events.
         /// </summary>
-        public virtual IScrollEventRouter ScrollEventRouter => DummyScrollEventRouter.Default;
+        public virtual IScrollEventRouter ScrollEventRouter
+        {
+            get
+            {
+                return DummyScrollEventRouter.Default;
+            }
+        }
 
         /// <inheritdoc/>
         public override ControlBorderStyle BorderStyle
