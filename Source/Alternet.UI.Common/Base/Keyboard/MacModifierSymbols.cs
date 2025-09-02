@@ -12,7 +12,7 @@ namespace Alternet.UI
         /// <summary>
         /// Specifies how the macOS-specific symbols should be used in the application.
         /// </summary>
-        public static UsageKind Usage = UsageKind.Always;
+        public static UsageKind Usage = UsageKind.PlatformSpecific;
 
         /// <summary>
         /// Represents the Command key (⌘). Unicode U+2318.
