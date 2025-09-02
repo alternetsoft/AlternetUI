@@ -1462,10 +1462,12 @@ namespace Alternet.UI
         /// formatted using the template specified by  <c>ShortcutToolTipTemplate</c>
         /// or a default template. If <see langword="false"/>, the raw string
         /// representation of the shortcut key is returned.</param>
+        /// <param name="forUser">The <see langword="forUser"/> parameter determines whether
+        /// the shortcut key is formatted for display to the user.</param>
         /// <returns>A string representing the shortcut key. If no shortcut key
         /// is available or the key is null, the method
         /// returns <see langword="null"/>.</returns>
-        public virtual string? GetShortcutText(bool useTemplate)
+        public virtual string? GetShortcutText(bool useTemplate, bool forUser = true)
         {
             var filteredKeys = KeyInfo.FilterBackendOs(shortcut?.KeyInfo);
             if (filteredKeys is not null && filteredKeys.Length > 0)
@@ -1478,12 +1480,12 @@ namespace Alternet.UI
                 if (useTemplate)
                 {
                     var template = ShortcutToolTipTemplate ?? DefaultShortcutToolTipTemplate;
-                    var result = string.Format(template, key);
+                    var result = string.Format(template, key.ToString(forUser));
                     return result;
                 }
                 else
                 {
-                    return key.ToString();
+                    return key.ToString(forUser);
                 }
             }
 
