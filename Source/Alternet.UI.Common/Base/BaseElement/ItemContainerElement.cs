@@ -23,6 +23,30 @@ namespace Alternet.UI
         private BaseCollection<T>? items;
 
         /// <summary>
+        /// Specifies flags that modify the behavior of item search operations.
+        /// </summary>
+        /// <remarks>These flags can be combined using a bitwise OR operation to customize the search
+        /// behavior.</remarks>
+        [Flags]
+        public enum FindItemFlags
+        {
+            /// <summary>
+            /// Represents the absence of any specific options or flags.
+            /// </summary>
+            None = 0,
+
+            /// <summary>
+            /// Specifies that string comparisons should ignore case differences.
+            /// </summary>
+            IgnoreCase = 1 << 0,
+
+            /// <summary>
+            /// Specifies that whitespace should be trimmed from the beginning and end of the search text.
+            /// </summary>
+            TrimText = 1 << 1,
+        }
+
+        /// <summary>
         /// Gets a value indicating whether the collection contains any items.
         /// </summary>
         [Browsable(false)]
@@ -111,6 +135,7 @@ namespace Alternet.UI
         /// matches the specified value.
         /// </summary>
         /// <param name="value">The object to compare with each item's <c>Tag</c> property.</param>
+        /// <param name="flags">The <see cref="FindItemFlags"/> that modify the search behavior.</param>
         /// <returns>
         /// The first item with a matching <c>Tag</c>, or <c>null</c> if
         /// no match is found or <paramref name="value"/> is <c>null</c>.
@@ -118,7 +143,7 @@ namespace Alternet.UI
         /// <remarks>
         /// Useful for retrieving an item based on externally assigned metadata or identifiers.
         /// </remarks>
-        public virtual T? FindItemWithTag(object? value)
+        public virtual T? FindItemWithTag(object? value, FindItemFlags flags = FindItemFlags.None)
         {
             if (!HasItems)
                 return null;
@@ -129,11 +154,43 @@ namespace Alternet.UI
             {
                 var item = Items[i];
 
-                if (value.Equals(item.Tag))
+                if (ValuesAreEqual(value, item.Tag))
                     return item;
             }
 
             return null;
+
+            bool ValuesAreEqual(object? item1, object? item2)
+            {
+                var result = item1?.Equals(item2) ?? item2 is null;
+
+                if (result)
+                    return true;
+
+                bool trimText = flags.HasFlag(FindItemFlags.TrimText);
+                bool ignoreCase = flags.HasFlag(FindItemFlags.IgnoreCase);
+
+                if(trimText || ignoreCase)
+                {
+                    var s1 = item1?.ToString() ?? string.Empty;
+                    var s2 = item2?.ToString() ?? string.Empty;
+
+                    if (trimText)
+                    {
+                        s1 = s1.Trim();
+                        s2 = s2.Trim();
+                    }
+
+                    var comparison = ignoreCase ?
+                        StringComparison.OrdinalIgnoreCase :
+                        StringComparison.Ordinal;
+                    return string.Equals(s1, s2, comparison);
+                }
+                else
+                {
+                    return false;
+                }
+            }
         }
 
         /// <summary>
