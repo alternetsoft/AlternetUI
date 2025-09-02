@@ -42,16 +42,14 @@ namespace Alternet.UI
         /// Checks the menu item whose <c>Tag</c> matches the specified value, and unchecks all others.
         /// </summary>
         /// <param name="value">The value to search for in each item's <c>Tag</c>.</param>
+        /// <param name="flags">The flags that modify the search behavior.</param>
         /// <remarks>
-        /// Uses <see cref="ItemContainerElement{T}.FindItemWithTag(object?)"/>
-        /// to locate the target item, then
-        /// delegates to <see cref="CheckSingleItem(MenuItem?)"/>.
         /// Ensures exclusive checked state among sibling items.
         /// </remarks>
-        public virtual void CheckSingleItemWithTag(object? value)
+        public virtual bool CheckSingleItemWithTag(object? value, FindItemFlags flags = FindItemFlags.None)
         {
-            var item = FindItemWithTag(value);
-            CheckSingleItem(item);
+            var item = FindItemWithTag(value, flags);
+            return CheckSingleItem(item);
         }
 
         /// <summary>
@@ -63,11 +61,16 @@ namespace Alternet.UI
         /// will be set to <c>true</c>.
         /// All other items will be unchecked to maintain exclusivity.
         /// </remarks>
-        public virtual void CheckSingleItem(MenuItem? item)
+        public virtual bool CheckSingleItem(MenuItem? item)
         {
             UncheckItems();
+
             if (item is not null)
+            {
                 item.Checked = true;
+            }
+
+            return item is not null;
         }
 
         /// <summary>
