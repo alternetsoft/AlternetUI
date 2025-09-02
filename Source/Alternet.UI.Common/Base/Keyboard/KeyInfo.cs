@@ -13,6 +13,16 @@ namespace Alternet.UI
         /// </summary>
         public static readonly KeyInfo Empty = new();
 
+        /// <summary>
+        /// Represents the character used to separate modifiers and keys in a key combination.
+        /// </summary>
+        public static char ModifiersAndKeySeparator = '+';
+
+        /// <summary>
+        /// Represents the character used to separate modifier keys and the main key in display text.
+        /// </summary>
+        public static char ModifiersAndKeySeparatorForDisplay = '+';
+
         private static IndexedValues<Key, string>? customKeyLabels;
 
         /// <summary>
@@ -42,17 +52,17 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets <see cref="OperatingSystems"/> in which this key combination is available.
         /// </summary>
-        public OperatingSystems BackendOS { get; set; }
+        public virtual OperatingSystems BackendOS { get; set; }
 
         /// <summary>
         /// Gets or sets key value.
         /// </summary>
-        public Key Key { get; set; }
+        public virtual Key Key { get; set; }
 
         /// <summary>
         /// Gets or sets key modifiers.
         /// </summary>
-        public ModifierKeys Modifiers { get; set; }
+        public virtual ModifierKeys Modifiers { get; set; }
 
         /// <summary>
         /// Runs action if any of the keys is pressed.
@@ -144,26 +154,44 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Returns a string that represents the current object.
+        /// Converts the current key and modifier combination to its string representation.
         /// </summary>
-        /// <returns>A <see cref="string"/> that represents the current object.</returns>
-        public override string ToString()
+        /// <param name="forUser">A value indicating whether the string representation
+        /// should be formatted for user display. If <see langword="true"/>, the output
+        /// is tailored for user-friendly display; otherwise, it is formatted for internal
+        /// or programmatic use.</param>
+        /// <returns>A string that represents the key and modifier combination.
+        /// If modifiers are present, they are included in
+        /// the output, separated by the appropriate separator based
+        /// on the <paramref name="forUser"/> value.</returns>
+        public virtual string ToString(bool forUser)
         {
             var keyText = GetCustomKeyLabel(Key);
             if (Modifiers != ModifierKeys.None)
             {
-                var modifiersText = ModifierKeysConverter.ToString(Modifiers, true);
-                keyText = $"{modifiersText}+{keyText}";
+                var separator = forUser ? ModifiersAndKeySeparatorForDisplay : ModifiersAndKeySeparator;
+
+                var modifiersText = ModifierKeysConverter.ToString(Modifiers, forUser);
+                keyText = $"{modifiersText}{separator}{keyText}";
             }
 
             return keyText;
         }
 
         /// <summary>
+        /// Returns a string that represents the current object.
+        /// </summary>
+        /// <returns>A <see cref="string"/> that represents the current object.</returns>
+        public override string ToString()
+        {
+            return ToString(true);
+        }
+
+        /// <summary>
         /// Checks <paramref name="e"/> event arguments on whether this key is pressed.
         /// </summary>
         /// <param name="e">Event arguments.</param>
-        public bool IsPressed(KeyEventArgs e) => e.Key == Key && e.ModifierKeys == Modifiers;
+        public virtual bool IsPressed(KeyEventArgs e) => e.Key == Key && e.ModifierKeys == Modifiers;
 
         /// <summary>
         /// Runs action if this key is pressed.
@@ -172,7 +200,7 @@ namespace Alternet.UI
         /// <param name="action">Action to run.</param>
         /// <param name="setHandled">Specifies whether to set event arguments Handled property.</param>
         /// <returns><c>true</c> if key is pressed; <c>false</c> otherwise.</returns>
-        public bool Run(KeyEventArgs e, Action? action = null, bool setHandled = true)
+        public virtual bool Run(KeyEventArgs e, Action? action = null, bool setHandled = true)
         {
             if (!BackendOS.HasFlag(App.BackendOS))
                 return false;
