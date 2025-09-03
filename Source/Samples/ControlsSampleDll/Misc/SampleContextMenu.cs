@@ -29,10 +29,14 @@ namespace ControlsSample
                 Text = "_Export",
             };
 
+            MenuUtils.BindMenuItemEventsLogger(exportMenuItem);
+
             var exportToPdfMenuItem = new MenuItem
             {
                 Text = "Export to P_DF",
             };
+
+            MenuUtils.BindMenuItemEventsLogger(exportToPdfMenuItem);
 
             exportToPdfMenuItem.Click += ExportToPdfMenuItem_Click;
 

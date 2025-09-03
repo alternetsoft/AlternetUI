@@ -14,6 +14,10 @@ namespace ControlsSample
         public PopupToolBarPage()
         {
             var contextMenu = new SampleContextMenu();
+
+            MenuUtils.BindContextMenuEventsLogger(contextMenu);
+            MenuUtils.BindMenuItemEventsLogger(contextMenu.FirstItem);
+
             var popupToolBar = new PopupToolBar();
             var syncedPopupToolBar = new PopupToolBar();
 
