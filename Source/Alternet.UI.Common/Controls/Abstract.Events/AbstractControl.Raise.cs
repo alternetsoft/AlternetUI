@@ -1108,7 +1108,7 @@ namespace Alternet.UI
             PlessKeyboard.UpdateKeyStateInMemory(e, isDown: true);
 
             RaiseNotifications((n) => n.BeforeKeyDown(this, e));
-            if(e.IsHandledOrSupressed)
+            if(e.IsHandledOrSuppressed)
             {
                 return;
             }

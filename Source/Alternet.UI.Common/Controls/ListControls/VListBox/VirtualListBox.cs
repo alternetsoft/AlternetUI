@@ -1657,7 +1657,7 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="key">The key that was pressed.</param>
         /// <param name="modifiers">Optional modifier keys associated with the key press.</param>
-        protected virtual void RunKeyDown(Key key, ModifierKeys modifiers = UI.ModifierKeys.None)
+        public virtual void RunKeyDown(Key key, ModifierKeys modifiers = UI.ModifierKeys.None)
         {
             KeyEventArgs e = new();
             e.Key = key;
@@ -1946,7 +1946,7 @@ namespace Alternet.UI
 
             base.OnKeyDown(e);
 
-            if(e.IsHandledOrSupressed || Count == 0)
+            if(e.IsHandledOrSuppressed || Count == 0)
                 return;
 
             ItemClickFlags flags = ItemClickFlags.Keyboard;

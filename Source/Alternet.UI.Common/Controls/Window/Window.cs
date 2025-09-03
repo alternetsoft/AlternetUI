@@ -1721,7 +1721,7 @@ namespace Alternet.UI
                 return;
             base.OnKeyDown(e);
 
-            if (e.IsHandledOrSupressed)
+            if (e.IsHandledOrSuppressed)
                 return;
 
             if (EscapeOrEnterToDefaultButtonClick(e))
@@ -1746,7 +1746,7 @@ namespace Alternet.UI
                 return;
             base.OnAfterChildKeyDown(sender, e);
 
-            if (e.IsHandledOrSupressed)
+            if (e.IsHandledOrSuppressed)
                 return;
 
             if (EscapeOrEnterToDefaultButtonClick(e))
