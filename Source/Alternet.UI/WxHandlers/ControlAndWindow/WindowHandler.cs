@@ -8,6 +8,7 @@ namespace Alternet.UI
     internal class WindowHandler : WxControlHandler, IWindowHandler
     {
         private object? statusBar;
+        private WeakReferenceValue<object> savedMenuRef = new();
 
         public override bool VisibleOnScreen
         {
@@ -105,7 +106,7 @@ namespace Alternet.UI
 
             set
             {
-                if (Control is null)
+                if (Control is null || StatusBar == value)
                     return;
                 SetStatusBar(statusBar, value);
                 statusBar = value;
@@ -169,9 +170,49 @@ namespace Alternet.UI
             }
         }
 
-        protected override void OnNativeControlCreated()
+        public override void OnBeforeHandleDestroyed()
         {
-            base.OnNativeControlCreated();
+            if (Control is not null)
+            {
+                if (Control.Menu is not null)
+                {
+                    savedMenuRef.Value = Control.Menu;
+                    Control.SetMenu(null, performLayout: false);
+                }
+                else
+                {
+                    savedMenuRef.Value = null;
+                }
+
+                SetStatusBar(statusBar, null);
+            }
+
+            base.OnBeforeHandleDestroyed();
+        }
+
+        public override void OnHandleCreated()
+        {
+            base.OnHandleCreated();
+
+            if (statusBar is null && savedMenuRef.Value is null)
+                return;
+
+            if (Control is not null)
+            {
+                Control.DoInsideLayout(() =>
+                {
+                    Control.SetMenu(savedMenuRef.Value, performLayout: true);
+                    savedMenuRef.Value = null;
+                });
+
+                if(statusBar is null)
+                {
+                }
+                else
+                {
+                    SetStatusBar(null, statusBar);
+                }
+            }
         }
 
         internal override Native.Control CreateNativeControl()

@@ -16,6 +16,11 @@ namespace Alternet.UI.Native
             OnAttach();
         }
 
+        public override void OnPlatformEventHandleDestroyed()
+        {
+            base.OnPlatformEventHandleDestroyed();
+        }
+
         public override void OnPlatformEventHandleCreated()
         {
             base.OnPlatformEventHandleCreated();

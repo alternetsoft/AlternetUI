@@ -778,7 +778,7 @@ namespace Alternet.Drawing
             RectD rect,
             GenericAlignment align = GenericAlignment.Left | GenericAlignment.Top,
             DrawFlags flags = 0,
-            TextEllipsizeType ellipsizeMode = TextEllipsizeType.End)
+            TextEllipsisType ellipsizeMode = TextEllipsisType.End)
         {
             Alternet.UI.Native.WxOtherFactory.RendererDrawItemText(
                 default,
@@ -987,7 +987,7 @@ namespace Alternet.Drawing
                         rect,
                         prm?.TextAlignment ?? GenericAlignment.Left | GenericAlignment.Top,
                         flags,
-                        prm?.TextEllipsizeMode ?? TextEllipsizeType.End);
+                        prm?.TextEllipsizeMode ?? TextEllipsisType.End);
                     return 0;
                 case ControlPartKind.SplitterSash:
                     DrawSplitterSash(
@@ -1085,7 +1085,7 @@ namespace Alternet.Drawing
             /// <summary>
             /// Gets or sets text ellipsize mode for the <see cref="DrawItemText"/>.
             /// </summary>
-            public TextEllipsizeType TextEllipsizeMode = TextEllipsizeType.End;
+            public TextEllipsisType TextEllipsizeMode = TextEllipsisType.End;
 
             /// <summary>
             /// Gets or sets value for the <see cref="DrawGauge"/>.
