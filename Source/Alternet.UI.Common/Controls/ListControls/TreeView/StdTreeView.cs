@@ -61,50 +61,11 @@ namespace Alternet.UI
 
             rootItem = new(this);
 
-            ListBox.MouseDown += (s, e) =>
-            {
-                var isOnCheckBox = false;
-
-                var itemIndex = ListBox.HitTest(e.Location);
-                if (itemIndex is null)
-                    return;
-
-                if (ListBox.HitTestCheckBox(e.Location) is not null)
-                    isOnCheckBox = true;
-
-                var item = ListBox.Items[itemIndex] as TreeViewItem;
-
-                if (item is not null && (isOnCheckBox || item.ExpandOnClick))
-                {
-                    ToggleExpanded(item);
-                }
-            };
-
-            ListBox.DoubleClick += (s, e) =>
-            {
-                ToggleExpanded(SelectedItem);
-            };
+            ListBox.MouseDown += OnListBoxMouseDown;
+            ListBox.DoubleClick += OnListBoxDoubleClick;
+            ListBox.KeyDown += OnListBoxKeyDown;
 
             TreeButtons = DefaultTreeButtons;
-
-            void ToggleExpanded(TreeViewItem? item)
-            {
-                Post(() =>
-                {
-                    var visibleBegin = ListBox.TopIndex;
-
-                    ListBox.DoInsideUpdate(() =>
-                    {
-                        DoInsideUpdate(() =>
-                        {
-                            ToggleExpandedAndCollapseSiblings(item, item?.AutoCollapseSiblings ?? false);
-                        });
-
-                        ListBox.ScrollToRow(visibleBegin, false);
-                        ListBox.SelectedItem = item;
-                    });
-                });
-            }
         }
 
         /// <summary>
@@ -1178,27 +1139,6 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Toggles the expanded or collapsed state of the specified tree control item.
-        /// </summary>
-        /// <param name="item">The <see cref="TreeViewItem"/> to toggle. If null or not
-        /// a valid tree item, no action is taken.</param>
-        /// <remarks>
-        /// If the specified item has child items, this method switches its state
-        /// between expanded and collapsed.
-        /// It does not affect the state of child items.
-        /// </remarks>
-        public virtual bool ToggleExpanded(TreeViewItem? item)
-        {
-            if (item is null)
-                return false;
-            if (!item.HasItems)
-                return false;
-
-            item.IsExpanded = !item.IsExpanded;
-            return true;
-        }
-
-        /// <summary>
         /// Toggles the expanded state of the specified tree item and optionally
         /// collapses its sibling items.
         /// If <paramref name="collapseSiblings"/> is <c>true</c> and the item has
@@ -1271,6 +1211,92 @@ namespace Alternet.UI
         public virtual void SelectLastItem()
         {
             ListBox.SelectLastItem();
+        }
+
+        /// <summary>
+        /// Toggles the expanded or collapsed state of the specified tree control item.
+        /// </summary>
+        /// <param name="item">The <see cref="TreeViewItem"/> to toggle. If null or not
+        /// a valid tree item, no action is taken.</param>
+        /// <remarks>
+        /// If the specified item has child items, this method switches its state
+        /// between expanded and collapsed.
+        /// It does not affect the state of child items.
+        /// </remarks>
+        public virtual bool ToggleExpanded(TreeViewItem? item)
+        {
+            if (item is null)
+                return false;
+            if (!item.HasItems)
+                return false;
+
+            item.IsExpanded = !item.IsExpanded;
+            return true;
+        }
+
+        /// <summary>
+        /// Expands or collapses the specified <see cref="TreeViewItem"/> while preserving
+        /// the current scroll position and selection.
+        /// </summary>
+        /// <remarks>This method ensures that the scroll position and the selected item in the associated
+        /// <see cref="ListBox"/> remain unchanged after the operation.</remarks>
+        /// <param name="item">The <see cref="TreeViewItem"/> to expand or collapse.
+        /// If <paramref name="item"/> is <c>null</c> or does not
+        /// have child items, the method does nothing.</param>
+        /// <param name="expanded"><see langword="true"/> to expand the item;
+        /// <see langword="false"/> to collapse it.</param>
+        public virtual void SetExpandedAndKeepPosAndSelection(TreeViewItem? item, bool expanded)
+        {
+            if(item is null)
+                return;
+
+            Post(() =>
+            {
+                var visibleBegin = ListBox.TopIndex;
+
+                ListBox.DoInsideUpdate(() =>
+                {
+                    DoInsideUpdate(() =>
+                    {
+                        item.IsExpanded = expanded;
+                    });
+
+                    ListBox.ScrollToRow(visibleBegin, false);
+                    ListBox.SelectedItem = item;
+                });
+            });
+        }
+
+        /// <summary>
+        /// Toggles the expanded state of the specified <see cref="TreeViewItem"/> while preserving
+        /// the current scroll position and selection.
+        /// </summary>
+        /// <remarks>This method ensures that the scroll position and selection in the inner
+        /// <see cref="ListBox"/> remain unchanged after toggling the expanded state.
+        /// If the <paramref name="item"/> has the <c>AutoCollapseSiblings</c> property set
+        /// to <see langword="true"/>, sibling items will be collapsed.</remarks>
+        /// <param name="item">The <see cref="TreeViewItem"/> to toggle.
+        /// If <c>null</c>, no action is performed.</param>
+        public virtual void ToggleExpandedAndKeepPosAndSelection(TreeViewItem? item)
+        {
+            if (item is null)
+                return;
+
+            Post(() =>
+            {
+                var visibleBegin = ListBox.TopIndex;
+
+                ListBox.DoInsideUpdate(() =>
+                {
+                    DoInsideUpdate(() =>
+                    {
+                        ToggleExpandedAndCollapseSiblings(item, item?.AutoCollapseSiblings ?? false);
+                    });
+
+                    ListBox.ScrollToRow(visibleBegin, false);
+                    ListBox.SelectedItem = item;
+                });
+            });
         }
 
         /// <summary>
@@ -1524,6 +1550,144 @@ namespace Alternet.UI
                 NotNullCollection<ListControlItem> collection = new(list);
                 ListBox.SetItemsFast(collection, VirtualListBox.SetItemsKind.ChangeField);
             });
+        }
+
+        /// <summary>
+        /// Handles the <see cref="AbstractControl.MouseDown"/> event for the inner <see cref="ListBox"/>.
+        /// </summary>
+        /// <remarks>By default, this method determines whether the mouse click occurred on a checkbox
+        /// or an item in the inner <see cref="ListBox"/>.
+        /// If the click is on a checkbox or the item supports expansion on click, the item's
+        /// expanded state is toggled.</remarks>
+        /// <param name="sender">The source of the event, typically the <see cref="ListBox"/>.</param>
+        /// <param name="e">A <see cref="MouseEventArgs"/> that contains the event data.</param>
+        protected virtual void OnListBoxMouseDown(object? sender, MouseEventArgs e)
+        {
+            var isOnCheckBox = false;
+
+            var itemIndex = ListBox.HitTest(e.Location);
+            if (itemIndex is null)
+                return;
+
+            if (ListBox.HitTestCheckBox(e.Location) is not null)
+                isOnCheckBox = true;
+
+            var item = ListBox.Items[itemIndex] as TreeViewItem;
+
+            if (item is not null && (isOnCheckBox || item.ExpandOnClick))
+            {
+                ToggleExpandedAndKeepPosAndSelection(item);
+            }
+        }
+
+        /// <summary>
+        /// Handles the behavior when the left arrow key in the inner list box.
+        /// </summary>
+        /// <remarks>If the currently selected item is expanded and has child items, this method collapses
+        /// the item. If the selected item is not expandable or already collapsed, the parent item
+        /// (if available) is selected instead. The event is marked as handled in both cases.</remarks>
+        /// <param name="e">The <see cref="KeyEventArgs"/> instance containing the event data.</param>
+        protected virtual void OnListBoxLeftKeyDown(KeyEventArgs e)
+        {
+            var item = SelectedItem;
+            if (item is not null && item.HasItems && item.IsExpanded)
+            {
+                SetExpandedAndKeepPosAndSelection(item, false);
+                e.Suppressed();
+            }
+            else
+            if (item?.Parent is not null && item.Parent.Parent is not null)
+            {
+                SelectItem(item.Parent);
+                e.Suppressed();
+            }
+        }
+
+        /// <summary>
+        /// Handles the right arrow key press event for the inner list box,
+        /// expanding the selected item if it has child items.
+        /// </summary>
+        /// <remarks>If the currently selected item has child items and is not already expanded, this
+        /// method expands the item and suppresses further processing of the key event. This method is intended to be
+        /// overridden in derived classes to customize the behavior of the right arrow key press.</remarks>
+        /// <param name="e">The <see cref="KeyEventArgs"/> instance containing the event data.</param>
+        protected virtual void OnListBoxRightKeyDown(KeyEventArgs e)
+        {
+            var item = SelectedItem;
+
+            if (item is not null && item.HasItems && !item.IsExpanded)
+            {
+                SetExpandedAndKeepPosAndSelection(item, true);
+                e.Suppressed();
+            }
+        }
+
+        /// <summary>
+        /// Handles the behavior when the asterisk (*) key is pressed in the inner list box.
+        /// </summary>
+        /// <remarks>This method expands all child items of the currently selected item in the list box,
+        /// if one is selected. The event is suppressed to prevent further processing of the key press.</remarks>
+        /// <param name="e">The <see cref="KeyEventArgs"/> instance containing the event data,
+        /// including the key pressed and its state.</param>
+        protected virtual void OnListBoxAsteriskKeyDown(KeyEventArgs e)
+        {
+            var item = SelectedItem;
+            if (item is not null)
+            {
+                item.ExpandAll();
+                e.Suppressed();
+            }
+        }
+
+        /// <summary>
+        /// Handles the <see cref="AbstractControl.KeyDown"/> event for the inner list box.
+        /// </summary>
+        /// <remarks>This method is invoked when a key is pressed while the inner list box has focus.
+        /// Use this method to implement custom key handling logic.</remarks>
+        /// <param name="sender">The source of the event, typically the list box that triggered the event.</param>
+        /// <param name="e">A <see cref="KeyEventArgs"/> that contains the event data,
+        /// including the key pressed.</param>
+        protected virtual void OnListBoxKeyDown(object? sender, KeyEventArgs e)
+        {
+            switch (e.Key)
+            {
+                case Key.Right:
+                case Key.NumPadPlus:
+                case Key.PlusSign:
+                    OnListBoxRightKeyDown(e);
+                    break;
+                case Key.Left:
+                case Key.Minus:
+                case Key.NumPadMinus:
+                    OnListBoxLeftKeyDown(e);
+                    break;
+                case Key.NumPadStar:
+                case Key.Asterisk:
+                    OnListBoxAsteriskKeyDown(e);
+                    break;
+                case Key.E:
+                    if (e.ControlAndShift)
+                    {
+                        ExpandAll();
+                        e.Suppressed();
+                    }
+
+                    break;
+            }
+        }
+
+        /// <summary>
+        /// Handles the double-click event on the inner list box, toggling the expanded state
+        /// of the selected item while preserving its position and selection.
+        /// </summary>
+        /// <remarks>This method is called when a double-click event occurs on the inner list box. Derived
+        /// classes can override this method to provide custom handling for the double-click event. When overriding,
+        /// ensure the base method is called to maintain the default behavior.</remarks>
+        /// <param name="sender">The source of the event, typically the list box that was double-clicked.</param>
+        /// <param name="e">An <see cref="EventArgs"/> instance containing the event data.</param>
+        protected virtual void OnListBoxDoubleClick(object? sender, EventArgs e)
+        {
+            ToggleExpandedAndKeepPosAndSelection(SelectedItem);
         }
 
         /// <summary>
