@@ -449,6 +449,21 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Raises the <see cref="BeforeHandleDestroyed"/> event and
+        /// invokes the <c>OnBeforeHandleDestroyed</c> method.
+        /// </summary>
+        /// <remarks>This method ensures that the <see cref="BeforeHandleDestroyed"/> event is raised only
+        /// if the object is not in a disposing or disposed state.</remarks>
+        /// <param name="e">An <see cref="EventArgs"/> instance containing the event data.</param>
+        public void RaiseBeforeHandleDestroyed(EventArgs e)
+        {
+            if (DisposingOrDisposed)
+                return;
+            OnBeforeHandleDestroyed(e);
+            BeforeHandleDestroyed?.Invoke(this, e);
+        }
+
+        /// <summary>
         /// Raises the <see cref="Activated" /> event and <see cref="OnActivated"/> method.
         /// </summary>
         [Browsable(false)]

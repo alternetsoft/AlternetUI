@@ -525,6 +525,10 @@ namespace Alternet.UI
             NativeControl.SetFocusFlags(canSelect, tabStop && canSelect, canSelect);
         }
 
+        public virtual void OnBeforeHandleDestroyed()
+        {
+        }
+
         public virtual void OnHandleCreated()
         {
         }

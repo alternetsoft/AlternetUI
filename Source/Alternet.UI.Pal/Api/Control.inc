@@ -231,6 +231,7 @@ enum class ControlEvent
     Activated,
     Deactivated,
     HandleCreated,
+    BeforeHandleDestroyed,
     HandleDestroyed,
     SystemColorsChanged,
 };

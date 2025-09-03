@@ -179,6 +179,17 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Called when the <see cref="BeforeHandleDestroyed" /> event is raised.
+        /// </summary>
+        /// <param name="e">An <see cref="EventArgs" /> that contains the event data.</param>
+        /// <remarks>Derived classes can override this method to handle the event without
+        /// attaching a delegate.</remarks>
+        [EditorBrowsable(EditorBrowsableState.Advanced)]
+        protected virtual void OnBeforeHandleDestroyed(EventArgs e)
+        {
+        }
+
+        /// <summary>
         /// Called when the native control location is changed.
         /// </summary>
         /// <param name="e">An <see cref="EventArgs"/> that contains the

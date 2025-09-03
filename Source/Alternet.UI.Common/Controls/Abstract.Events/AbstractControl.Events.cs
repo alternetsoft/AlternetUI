@@ -155,7 +155,7 @@ namespace Alternet.UI
         public event EventHandler? HandleCreated;
 
         /// <summary>
-        /// Occurs when the control's handle is destroyed.
+        /// Occurs after the control's handle is destroyed.
         /// </summary>
         [Category("Private")]
         [Browsable(false)]
@@ -170,6 +170,17 @@ namespace Alternet.UI
         /// </remarks>
         [Category("Focus")]
         public event EventHandler? Deactivated;
+
+        /// <summary>
+        /// Occurs before the handle of the associated native control is destroyed.
+        /// </summary>
+        /// <remarks>This event allows subscribers to perform any necessary cleanup or actions before the
+        /// handle of the native control is destroyed.
+        /// Ensure that any resources tied to the handle are released or finalized in the event
+        /// handler.</remarks>
+        [Category("Private")]
+        [Browsable(false)]
+        public event EventHandler? BeforeHandleDestroyed;
 
         /// <summary>
         /// Occurs when the control gets focus.

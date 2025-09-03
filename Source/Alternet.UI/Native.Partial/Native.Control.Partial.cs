@@ -204,6 +204,12 @@ namespace Alternet.UI.Native
             UIControl?.RaiseDeactivated(EventArgs.Empty);
         }
 
+        public virtual void OnPlatformEventBeforeHandleDestroyed()
+        {
+            UIControl?.RaiseBeforeHandleDestroyed(EventArgs.Empty);
+            Handler?.OnBeforeHandleDestroyed();
+        }
+
         public virtual void OnPlatformEventHandleCreated()
         {
             if(UIControl is not null)

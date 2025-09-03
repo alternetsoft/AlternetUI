@@ -108,6 +108,7 @@ namespace NativeApi.Api
         public event EventHandler? Activated;
         public event EventHandler? Deactivated;
         public event EventHandler? HandleCreated;
+        public event EventHandler? BeforeHandleDestroyed;
         public event EventHandler? HandleDestroyed;
         public event EventHandler? SystemColorsChanged;
 

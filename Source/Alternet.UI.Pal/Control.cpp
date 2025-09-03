@@ -1067,6 +1067,8 @@ namespace Alternet::UI
 
     void Control::OnBeforeDestroyWxWindow()
     {
+        RaiseEvent(ControlEvent::BeforeHandleDestroyed);
+
         _flags.Set(ControlFlags::DestroyingWxWindow, true);
         if(!_destroying && !_destroyed)
             _delayedValues.ReceiveIfPossible();

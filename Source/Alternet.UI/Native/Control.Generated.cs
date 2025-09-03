@@ -1261,6 +1261,10 @@ namespace Alternet.UI.Native
                 {
                     OnPlatformEventHandleCreated(); return IntPtr.Zero;
                 }
+                case NativeApi.ControlEvent.BeforeHandleDestroyed:
+                {
+                    OnPlatformEventBeforeHandleDestroyed(); return IntPtr.Zero;
+                }
                 case NativeApi.ControlEvent.HandleDestroyed:
                 {
                     OnPlatformEventHandleDestroyed(); return IntPtr.Zero;
@@ -1306,6 +1310,7 @@ namespace Alternet.UI.Native
                 Activated,
                 Deactivated,
                 HandleCreated,
+                BeforeHandleDestroyed,
                 HandleDestroyed,
                 SystemColorsChanged,
             }
