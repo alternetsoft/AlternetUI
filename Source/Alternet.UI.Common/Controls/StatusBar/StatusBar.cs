@@ -13,7 +13,10 @@ namespace Alternet.UI
     [ControlCategory("MenusAndToolbars")]
     public partial class StatusBar : FrameworkElement
     {
-        internal const int VisualStudioStatusBarHeight = 28;
+        /// <summary>
+        /// Represents the height, in dips, of the Visual Studio status bar.
+        /// </summary>
+        public const int VisualStudioStatusBarHeight = 28;
 
         private IStatusBarHandler? handler;
         private int updateCount = 0;
@@ -79,7 +82,7 @@ namespace Alternet.UI
         /// Gets or sets a value indicating whether a sizing grip is displayed in the
         /// lower-right corner of the control.
         /// </summary>
-        public bool SizingGripVisible
+        public virtual bool SizingGripVisible
         {
             get
             {
@@ -102,32 +105,32 @@ namespace Alternet.UI
         /// Gets or sets status texts replacement method when the text widths exceed the
         /// container's widths.
         /// </summary>
-        public virtual TextEllipsizeType TextEllipsize
+        public virtual TextEllipsisType TextEllipsis
         {
             get
             {
                 if (DisposingOrDisposed)
                     return default;
-                return Handler.TextEllipsize;
+                return Handler.TextEllipsis;
             }
 
             set
             {
                 if (DisposingOrDisposed)
                     return;
-                if (TextEllipsize == value)
+                if (TextEllipsis == value)
                     return;
-                Handler.TextEllipsize = value;
+                Handler.TextEllipsis = value;
             }
         }
 
         /// <inheritdoc cref="AbstractControl.InUpdates"/>
-        public bool InUpdates => updateCount > 0;
+        public virtual bool InUpdates => updateCount > 0;
 
         /// <summary>
         /// Gets whether control is fully active and is attached to the window.
         /// </summary>
-        public bool IsOk
+        public virtual bool IsOk
         {
             get
             {
@@ -520,26 +523,48 @@ namespace Alternet.UI
         /// <summary>
         /// Called when item was inserted in the <see cref="Panels"/>.
         /// </summary>
-        internal virtual void OnItemInserted(object? sender, int index, StatusBarPanel item)
+        protected virtual void OnItemInserted(object? sender, int index, StatusBarPanel item)
         {
             item.PropertyChanged += OnItemPropertyChanged;
             ApplyPanels();
         }
 
-        internal virtual void OnItemPropertyChanged(object? sender, EventArgs e)
+        /// <inheritdoc/>
+        protected override void DisposeManaged()
+        {
+            base.DisposeManaged();
+        }
+
+        /// <summary>
+        /// Handles the "PropertyChanged" event for an item in the panel collection.
+        /// </summary>
+        /// <remarks>This method is called when a property of an item in the collection changes. Derived
+        /// classes can override this method to provide custom handling for property changes.</remarks>
+        /// <param name="sender">The source of the event, typically the item whose property changed.
+        /// Can be <see langword="null"/>.</param>
+        /// <param name="e">The event data associated with the property change.</param>
+        protected virtual void OnItemPropertyChanged(object? sender, EventArgs e)
         {
             ApplyPanels();
         }
 
-        internal virtual void OnControlRecreated(object? sender, EventArgs e)
-        {
-            ApplyPanels();
-        }
-
-        internal virtual void OnItemRemoved(object? sender, int index, StatusBarPanel item)
+        /// <summary>
+        /// Invoked when an item is removed from the panels collection.
+        /// </summary>
+        /// <remarks>This method detaches event handlers from the removed item and updates the state of
+        /// the status bar panels. Subclasses can override this method to provide additional behavior
+        /// when an item is removed.</remarks>
+        /// <param name="sender">The source of the event, typically the collection that raised the event.
+        /// Can be <see langword="null"/>.</param>
+        /// <param name="index">The zero-based index at which the item was removed.</param>
+        /// <param name="item">The <see cref="StatusBarPanel"/> instance that was removed.
+        /// This parameter is never <see langword="null"/>.</param>
+        protected virtual void OnItemRemoved(object? sender, int index, StatusBarPanel item)
         {
             item.PropertyChanged -= OnItemPropertyChanged;
             ApplyPanels();
         }
+
+
     }
 }
