@@ -2358,7 +2358,7 @@ namespace Alternet.UI
                     toolTip: null,
                     (s, e) =>
                     {
-                        Post(menuItem.DoClick);
+                        Post(menuItem.RaiseClick);
                     });
                 speedButton.Label.MnemonicMarker = '_';
                 speedButton.Label.MnemonicMarkerEnabled = true;

@@ -86,12 +86,27 @@ namespace Alternet.UI
         bool HasItems { get; }
 
         /// <summary>
+        /// Raises the "Opened" event to notify subscribers that the menu item has been opened.
+        /// </summary>
+        void RaiseOpened();
+
+        /// <summary>
+        /// Raises the "Closed" event to notify subscribers that the menu item has been closed.
+        /// </summary>
+        void RaiseClosed();
+
+        /// <summary>
+        /// Raises the "Highlighted" event to notify subscribers that an item has been highlighted.
+        /// </summary>
+        void RaiseHighlighted();
+
+        /// <summary>
         /// Simulates a click action, triggering any associated event handlers or behaviors.
         /// </summary>
         /// <remarks>This method is typically used to programmatically invoke a click event.
         /// Ensure that any required preconditions for the click action are met before calling this
         /// method.</remarks>
-        void DoClick();
+        void RaiseClick();
 
         /// <summary>
         /// Retrieves the real image associated with the specified visual control state.

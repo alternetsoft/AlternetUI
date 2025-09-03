@@ -912,16 +912,11 @@ namespace Alternet.UI
             IsShortcutEnabled = source.IsShortcutEnabled;
             Role = source.Role;
             Checked = source.Checked;
-            ClickAction = source.DoClick;
+            ClickAction = source.RaiseClick;
             Command = source.CommandSource.Command;
             CommandParameter = source.CommandSource.CommandParameter;
             Enabled = source.Enabled;
             Visible = source.Visible;
-        }
-
-        void IMenuItemProperties.DoClick()
-        {
-            RaiseClick();
         }
 
         /// <summary>
