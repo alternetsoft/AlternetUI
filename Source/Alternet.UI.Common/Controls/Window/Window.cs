@@ -916,21 +916,7 @@ namespace Alternet.UI
 
             set
             {
-                if (DisposingOrDisposed)
-                    return;
-                if (menu == value)
-                    return;
-
-                var oldValue = menu;
-                menu = value;
-
-                (oldValue as AbstractControl)?.SetParentInternal(null);
-                (menu as AbstractControl)?.SetParentInternal(this);
-
-                OnMenuChanged(EventArgs.Empty);
-                MenuChanged?.Invoke(this, EventArgs.Empty);
-                Handler.SetMenu(value);
-                PerformLayout();
+                SetMenu(value);
             }
         }
 
@@ -1609,6 +1595,36 @@ namespace Alternet.UI
             DisplayChanged?.Invoke(this, EventArgs.Empty);
 
             oldDisplay = newDisplay;
+        }
+
+        /// <summary>
+        /// Sets the menu for the control and optionally performs a layout update.
+        /// </summary>
+        /// <remarks>If the control is in a disposing or disposed state, this method does nothing.
+        /// If the specified menu is the same as the current menu, no changes are made.</remarks>
+        /// <param name="value">The new menu to associate with the control.
+        /// Can be <see langword="null"/> to remove the current menu.</param>
+        /// <param name="performLayout">A value indicating whether to perform a layout update
+        /// after setting the menu.  The default value is <see langword="true"/>.</param>
+        public virtual void SetMenu(object? value, bool performLayout = true)
+        {
+            if (DisposingOrDisposed)
+                return;
+            if (menu == value)
+                return;
+
+            var oldValue = menu;
+            menu = value;
+
+            (oldValue as AbstractControl)?.SetParentInternal(null);
+            (menu as AbstractControl)?.SetParentInternal(this);
+
+            OnMenuChanged(EventArgs.Empty);
+            MenuChanged?.Invoke(this, EventArgs.Empty);
+            Handler.SetMenu(value);
+
+            if(performLayout)
+                PerformLayout();
         }
 
         /// <summary>
