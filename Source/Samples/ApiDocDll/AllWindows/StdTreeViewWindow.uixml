@@ -1,0 +1,10 @@
+<Window xmlns="http://schemas.alternetsoft.com/ui/2021"
+        xmlns:x="http://schemas.alternetsoft.com/ui/2021/uixml"
+        x:Class="ApiDoc.StdTreeViewWindow"
+        Title="StdTreeView">
+    <!-- <CreateUixmlDeclaration> -->
+        <StdTreeView SuggestedWidth="300" SuggestedHeight="240" Name="treeView"
+                  SelectionChanged="TreeView_SelectionChanged"
+                  ExpandedChanged="TreeView_ExpandedChanged" />
+    <!-- </CreateUixmlDeclaration> -->
+</Window>
