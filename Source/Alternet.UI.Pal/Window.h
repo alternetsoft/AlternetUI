@@ -16,6 +16,20 @@ namespace Alternet::UI
 
     // Frame =============================================
 
+    class wxStatusBar2 : public wxStatusBar
+    {
+    public:
+        wxStatusBar2(wxWindow* parent,
+            wxWindowID id = wxID_ANY,
+            long style = wxSTB_DEFAULT_STYLE,
+            const wxString& name = wxASCII_STR(wxStatusBarNameStr))
+            : wxStatusBar(parent, id, style, name)
+        {
+        }
+    };
+
+    // Frame =============================================
+
     class Frame : public wxFrame, public wxWidgetExtender
     {
     public:
@@ -30,6 +44,25 @@ namespace Alternet::UI
         bool Layout() override
         {
             return false;
+        }
+
+        // show help text for the currently selected menu or toolbar item
+        // (typically in the status bar) or hide it and restore the status bar text
+        // originally shown before the menu was opened if show == false
+        virtual void DoGiveHelp(const wxString& text, bool show) override
+        {
+        }
+
+        virtual wxStatusBar* OnCreateStatusBar(int number,
+            long style,
+            wxWindowID id,
+            const wxString& name) override
+        {
+            wxStatusBar* statusBar = new wxStatusBar2(this, id, style, name);
+
+            statusBar->SetFieldsCount(number);
+
+            return statusBar;
         }
 /*
         virtual wxWindow* GetMainWindowOfCompositeControl() override
@@ -62,6 +95,13 @@ namespace Alternet::UI
         bool Layout() override
         {
             return false;
+        }
+
+        // show help text for the currently selected menu or toolbar item
+        // (typically in the status bar) or hide it and restore the status bar text
+        // originally shown before the menu was opened if show == false
+        virtual void DoGiveHelp(const wxString& text, bool show) override
+        {
         }
     };
 
