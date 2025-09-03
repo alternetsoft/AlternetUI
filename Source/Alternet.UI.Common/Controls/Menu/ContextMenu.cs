@@ -22,7 +22,7 @@ namespace Alternet.UI
     /// commands that are not appropriate for the <see cref="MainMenu"/> to display.
     /// </remarks>
     [ControlCategory("MenusAndToolbars")]
-    public partial class ContextMenu : Menu
+    public partial class ContextMenu : Menu, IContextMenuProperties
     {
         private IContextMenuHandler? handler;
         private WeakReferenceValue<AbstractControl> relatedControl = new();
