@@ -7,6 +7,26 @@ namespace Alternet.UI.Native
 {
     internal partial class Window
     {
+        public override void OnPlatformEventHandleDestroyed()
+        {
+            base.OnPlatformEventHandleDestroyed();
+        }
+
+        public override void OnPlatformEventHandleCreated()
+        {
+            base.OnPlatformEventHandleCreated();
+
+            if(Handler is WindowHandler windowHandler)
+            {
+                var statusBar = windowHandler.StatusBar as StatusBar;
+                if (statusBar is not null)
+                {
+                    var handler = statusBar.Handler as StatusBarHandler;
+                    handler?.RecreateWidget();
+                }
+            }
+        }
+
         public void OnPlatformEventClosing(CancelEventArgs e)
         {
             if (e.Cancel)

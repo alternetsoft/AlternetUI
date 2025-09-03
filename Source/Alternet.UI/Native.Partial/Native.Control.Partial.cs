@@ -37,7 +37,7 @@ namespace Alternet.UI.Native
         {
         }
 
-        public void OnPlatformEventPaint()
+        public virtual void OnPlatformEventPaint()
         {
             var uiControl = UIControl;
 
@@ -70,24 +70,23 @@ namespace Alternet.UI.Native
             }
         }
 
-        public void OnPlatformEventMouseEnter()
+        public virtual void OnPlatformEventMouseEnter()
         {
             UIControl?.RaiseMouseEnterOnTarget(EventArgs.Empty);
         }
 
-        public void OnPlatformEventMouseLeave()
+        public virtual void OnPlatformEventMouseLeave()
         {
             UIControl?.RaiseMouseLeaveOnTarget(EventArgs.Empty);
         }
 
-        public void OnPlatformEventMouseClick()
+        public virtual void OnPlatformEventMouseClick()
         {
         }
 
-        public void OnPlatformEventVisibleChanged()
+        public virtual void OnPlatformEventVisibleChanged()
         {
             bool visible = Visible;
-            /*UIControl?.SetVisible(visible);*/
 
             if (App.IsLinuxOS && visible)
             {
@@ -101,19 +100,19 @@ namespace Alternet.UI.Native
             }
         }
 
-        public void OnPlatformEventMouseCaptureLost()
+        public virtual void OnPlatformEventMouseCaptureLost()
         {
             UIControl?.RaiseMouseCaptureLost(EventArgs.Empty);
         }
 
-        public void OnPlatformEventRequestCursor()
+        public virtual void OnPlatformEventRequestCursor()
         {
             var uiControl = UIControl;
             if (uiControl is null)
                 return;
         }
 
-        public void OnPlatformEventDpiChanged()
+        public virtual void OnPlatformEventDpiChanged()
         {
             var uiControl = UIControl;
             if (uiControl is null)
@@ -126,32 +125,32 @@ namespace Alternet.UI.Native
             uiControl?.RaiseDpiChanged(e);
         }
 
-        public void OnPlatformEventDestroyed()
+        public virtual void OnPlatformEventDestroyed()
         {
             Handler?.OnNativeControlDestroyed();
         }
 
-        public void OnPlatformEventTextChanged()
+        public virtual void OnPlatformEventTextChanged()
         {
             UIControl?.RaiseHandlerTextChanged(Text);
         }
 
-        public void OnPlatformEventGotFocus()
+        public virtual void OnPlatformEventGotFocus()
         {
             UIControl?.RaiseGotFocus(new(EventUIFocusedControl));
         }
 
-        public void OnPlatformEventLostFocus()
+        public virtual void OnPlatformEventLostFocus()
         {
             UIControl?.RaiseLostFocus(new(EventUIFocusedControl));
         }
 
-        public void OnPlatformEventDragLeave()
+        public virtual void OnPlatformEventDragLeave()
         {
             UIControl?.RaiseDragLeave(EventArgs.Empty);
         }
 
-        public void OnPlatformEventVerticalScrollBarValueChanged()
+        public virtual void OnPlatformEventVerticalScrollBarValueChanged()
         {
             var uiControl = UIControl;
 
@@ -168,7 +167,7 @@ namespace Alternet.UI.Native
             uiControl.RaiseScroll(args);
         }
 
-        public void OnPlatformEventHorizontalScrollBarValueChanged()
+        public virtual void OnPlatformEventHorizontalScrollBarValueChanged()
         {
             var uiControl = UIControl;
 
@@ -185,22 +184,22 @@ namespace Alternet.UI.Native
             uiControl.RaiseScroll(args);
         }
 
-        public void OnPlatformEventSizeChanged()
+        public virtual void OnPlatformEventSizeChanged()
         {
             UIControl?.RaiseHandlerSizeChanged(EventArgs.Empty);
         }
 
-        public void OnPlatformEventLocationChanged()
+        public virtual void OnPlatformEventLocationChanged()
         {
             UIControl?.RaiseContainerLocationChanged(EventArgs.Empty);
         }
 
-        public void OnPlatformEventActivated()
+        public virtual void OnPlatformEventActivated()
         {
             UIControl?.RaiseActivated(EventArgs.Empty);
         }
 
-        public void OnPlatformEventDeactivated()
+        public virtual void OnPlatformEventDeactivated()
         {
             UIControl?.RaiseDeactivated(EventArgs.Empty);
         }
@@ -217,29 +216,29 @@ namespace Alternet.UI.Native
             UIControl?.RaiseHandleCreated(EventArgs.Empty);
         }
 
-        public void OnPlatformEventHandleDestroyed()
+        public virtual void OnPlatformEventHandleDestroyed()
         {
             UIControl?.RaiseHandleDestroyed(EventArgs.Empty);
         }
 
-        public void OnPlatformEventSystemColorsChanged()
+        public virtual void OnPlatformEventSystemColorsChanged()
         {
             UIControl?.RaiseSystemColorsChanged(EventArgs.Empty);
         }
 
-        public void OnPlatformEventDragDrop(NativeEventArgs<DragEventData> ea)
+        public virtual void OnPlatformEventDragDrop(NativeEventArgs<DragEventData> ea)
         {
             if(UIControl is not null)
                 RaiseDragAndDropEvent(ea, UIControl.RaiseDragDrop);
         }
 
-        public void OnPlatformEventDragOver(NativeEventArgs<DragEventData> ea)
+        public virtual void OnPlatformEventDragOver(NativeEventArgs<DragEventData> ea)
         {
             if (UIControl is not null)
                 RaiseDragAndDropEvent(ea, UIControl.RaiseDragOver);
         }
 
-        public void OnPlatformEventDragEnter(NativeEventArgs<DragEventData> ea)
+        public virtual void OnPlatformEventDragEnter(NativeEventArgs<DragEventData> ea)
         {
             if (UIControl is not null)
                 RaiseDragAndDropEvent(ea, UIControl.RaiseDragEnter);

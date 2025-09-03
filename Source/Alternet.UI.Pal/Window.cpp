@@ -86,14 +86,19 @@ namespace Alternet::UI
         return _storedMenu;
     }
 
-    void Window::ApplyMenu(MainMenu* const& value)
+    void Window::ApplyMenuToFrame(MainMenu* const& value, Frame* frame)
     {
-        auto frame = GetFrame();
         if (frame == nullptr)
             return;
         frame->SetMenuBar(value == nullptr ? nullptr : value->GetWxMenuBar());
         frame->Layout();
         frame->PostSizeEvent();
+    }
+
+    void Window::ApplyMenu(MainMenu* const& value)
+    {
+        auto frame = GetFrame();
+        ApplyMenuToFrame(value, frame);
     }
 
     void Window::SetMinSize(const SizeD& size)
@@ -297,6 +302,11 @@ namespace Alternet::UI
 
         /* frame->SetBackgroundStyle(wxBackgroundStyle::wxBG_STYLE_PAINT);*/
         ApplyIcon(frame);
+
+        auto asFrame = dynamic_cast<Frame*>(frame);
+        if (asFrame != nullptr)
+        {
+        }
 
         frame->Bind(wxEVT_CLOSE_WINDOW, &Window::OnClose, this);
         frame->Bind(wxEVT_MAXIMIZE, &Window::OnMaximize, this);
