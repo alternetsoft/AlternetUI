@@ -45,6 +45,8 @@
         <MenuItem Text="Sample Command" Command="SampleCommand"
                   CommandParameter="param1" />
         <MenuItem Text="Toggle Sample Command Enabled" Command="ToggleSampleCommandEnabled"/>
+        <MenuItem Text="-"/>
+        <MenuItem Text="Recreate Window" Name="recreateWindowButton" Click="RecreateWindow_Click"/>
       </MenuItem>
       <MenuItem Text="_Help" IsTextLocalized="true">
         <MenuItem Text="Index" IsTextLocalized="true" Enabled="false" />

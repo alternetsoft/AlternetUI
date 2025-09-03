@@ -152,6 +152,11 @@ namespace Alternet::UI
         throwExNoInfo;
     }
 
+    void MainMenu::OnWxWindowCreated()
+    {
+        Control::OnWxWindowCreated();
+    }
+
     wxMenuBar* MainMenu::GetWxMenuBar()
     {
         return dynamic_cast<wxMenuBar*>(GetWxWindow());

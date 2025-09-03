@@ -519,6 +519,12 @@ namespace MenuSample
                 toolbar.IsVertical = isVertical;
         }
 
+        private void RecreateWindow_Click(object? sender, EventArgs e)
+        {
+            this.HasBorder = !this.HasBorder;
+            this.HasBorder = !this.HasBorder;
+        }
+
         private void ShowToolbarImagesCheckBox_CheckedChanged(
             object? sender,
             EventArgs e)

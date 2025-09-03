@@ -662,6 +662,11 @@ namespace Alternet::UI
         }
     }
 
+    void Window::OnWxWindowCreated()
+    {
+        Control::OnWxWindowCreated();
+    }
+
     void Window::SetParkingWindowFont(Font* font)
     {
         if (!stockGridHooked)

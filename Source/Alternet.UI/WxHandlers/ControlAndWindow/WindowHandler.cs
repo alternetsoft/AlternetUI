@@ -169,6 +169,11 @@ namespace Alternet.UI
             }
         }
 
+        protected override void OnNativeControlCreated()
+        {
+            base.OnNativeControlCreated();
+        }
+
         internal override Native.Control CreateNativeControl()
         {
             return new NativeWindow((int)(Control?.GetWindowKind() ?? WindowKind.Control));

@@ -16,6 +16,11 @@ namespace Alternet.UI.Native
             OnAttach();
         }
 
+        public override void OnPlatformEventHandleCreated()
+        {
+            base.OnPlatformEventHandleCreated();
+        }
+
         public Alternet.UI.MainMenu? Control
         {
             get { return control; }

@@ -113,6 +113,7 @@ namespace Alternet::UI
             Control::CreateWxWindow();
         }
 
+        virtual void OnWxWindowCreated() override;
     private:
         int _frameKind = 0;
 

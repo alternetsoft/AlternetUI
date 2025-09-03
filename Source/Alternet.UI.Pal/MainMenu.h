@@ -22,6 +22,8 @@ namespace Alternet::UI
         void SetItemHidden(Menu* item, bool hidden);
         bool IsItemHidden(Menu* item);
     protected:
+        virtual void OnWxWindowCreated() override;
+
         void ApplyEnabled(bool value) override;
 
         void OnWxWindowDestroyed(wxWindow* window) override;

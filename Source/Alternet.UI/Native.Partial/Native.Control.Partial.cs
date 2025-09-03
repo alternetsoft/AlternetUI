@@ -205,7 +205,7 @@ namespace Alternet.UI.Native
             UIControl?.RaiseDeactivated(EventArgs.Empty);
         }
 
-        public void OnPlatformEventHandleCreated()
+        public virtual void OnPlatformEventHandleCreated()
         {
             if(UIControl is not null)
             {

@@ -53,7 +53,7 @@ namespace Alternet.UI
         public static readonly MenuItemRole Exit = new("Exit");
 
         /// <summary>
-        /// "Exit" menu item role.
+        /// "Preferences" menu item role.
         /// </summary>
         /// <remarks>
         /// This role is deduced from the <see cref="MenuItem.Text"/>
