@@ -21,7 +21,7 @@ namespace Alternet.UI
         public AbstractControl? AttachedTo { get; }
 
         /// <inheritdoc/>
-        public TextEllipsizeType TextEllipsize { get; set; }
+        public TextEllipsisType TextEllipsis { get; set; }
 
         /// <inheritdoc/>
         public int GetBorderX()

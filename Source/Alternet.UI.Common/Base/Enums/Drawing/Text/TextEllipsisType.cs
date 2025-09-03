@@ -10,7 +10,7 @@ namespace Alternet.UI
     /// Enumerates text replacement methods when the text width exceed the
     /// container's width.
     /// </summary>
-    public enum TextEllipsizeType
+    public enum TextEllipsisType
     {
         /// <summary>
         /// No replacement of the text with an ellipsis is done when the text width exceed the

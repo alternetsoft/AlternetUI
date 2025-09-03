@@ -12,47 +12,47 @@ namespace Alternet.UI
     {
         private readonly StatusBar control;
         private bool sizingGripVisible = true;
-        private TextEllipsizeType textEllipsize = TextEllipsizeType.End;
-        private AbstractControl? attachedTo;
+        private TextEllipsisType textEllipse = TextEllipsisType.End;
+        private WeakReferenceValue<AbstractControl> attachedToRef = new ();
 
         public StatusBarHandler(StatusBar control)
         {
             this.control = control;
         }
 
-        public AbstractControl? AttachedTo
+        public virtual AbstractControl? AttachedTo
         {
             get
             {
-                return attachedTo;
+                return attachedToRef.Value;
             }
 
             set
             {
-                if (attachedTo == value)
+                if (attachedToRef.Value == value)
                     return;
-                attachedTo = value;
+                attachedToRef.Value = value;
                 RecreateWidget();
             }
         }
 
-        public TextEllipsizeType TextEllipsize
+        public virtual TextEllipsisType TextEllipsis
         {
             get
             {
-                return textEllipsize;
+                return textEllipse;
             }
 
             set
             {
-                if (textEllipsize == value)
+                if (textEllipse == value)
                     return;
-                textEllipsize = value;
+                textEllipse = value;
                 RecreateWidget();
             }
         }
 
-        public bool SizingGripVisible
+        public virtual bool SizingGripVisible
         {
             get => sizingGripVisible;
 
@@ -65,7 +65,7 @@ namespace Alternet.UI
             }
         }
 
-        public bool IsOk => StatusBarHandle != IntPtr.Zero && !control.IsDisposed;
+        public virtual bool IsOk => StatusBarHandle != IntPtr.Zero && !control.IsDisposed;
 
         internal IntPtr StatusBarHandle
         {
@@ -202,23 +202,23 @@ namespace Alternet.UI
 
             long GetStyle()
             {
-                long ellipsizeStyle = 0;
-                switch (control.TextEllipsize)
+                long ellipseStyle = 0;
+                switch (control.TextEllipsis)
                 {
-                    case TextEllipsizeType.End:
-                        ellipsizeStyle = ELLIPSIZEEND;
+                    case TextEllipsisType.End:
+                        ellipseStyle = ELLIPSIZEEND;
                         break;
-                    case TextEllipsizeType.Start:
-                        ellipsizeStyle = ELLIPSIZESTART;
+                    case TextEllipsisType.Start:
+                        ellipseStyle = ELLIPSIZESTART;
                         break;
-                    case TextEllipsizeType.Middle:
-                        ellipsizeStyle = ELLIPSIZEMIDDLE;
+                    case TextEllipsisType.Middle:
+                        ellipseStyle = ELLIPSIZEMIDDLE;
                         break;
                     default:
                         break;
                 }
 
-                var result = ellipsizeStyle | SHOWTIPS | FULLREPAINTONRESIZE;
+                var result = ellipseStyle | SHOWTIPS | FULLREPAINTONRESIZE;
                 if (control.SizingGripVisible)
                     result |= SIZEGRIP;
                 return result;

@@ -22,8 +22,8 @@ namespace Alternet.UI
         /// <inheritdoc cref="StatusBar.AttachedTo"/>
         AbstractControl? AttachedTo { get; }
 
-        /// <inheritdoc cref="StatusBar.TextEllipsize"/>
-        TextEllipsizeType TextEllipsize { get; set; }
+        /// <inheritdoc cref="StatusBar.TextEllipsis"/>
+        TextEllipsisType TextEllipsis { get; set; }
 
         /// <inheritdoc cref="StatusBar.GetFieldsCount"/>
         int GetFieldsCount();
