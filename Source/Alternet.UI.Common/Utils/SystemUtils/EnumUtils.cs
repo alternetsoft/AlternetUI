@@ -99,6 +99,7 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="value">Value to check.</param>
         /// <returns></returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool IsMaxValueUseLast<T>(T value)
             where T : struct, Enum
         {

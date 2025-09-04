@@ -52,6 +52,7 @@ namespace Alternet.UI
         /// culture-specific information from. If <c>null</c>, the current
         /// culture will be used.</param>
         /// <returns>The time separator character as a string.</returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static string GetTimeSeparator(IFormatProvider? formatProvider)
         {
             var info = GetFormatInfo(formatProvider);
@@ -62,6 +63,7 @@ namespace Alternet.UI
         /// Gets the localized AM and PM designators from the specified format provider,
         /// or uses the current culture if the provider is <c>null</c>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static (string AM, string PM) GetAmPmDesignators(IFormatProvider? formatProvider)
         {
             var info = GetFormatInfo(formatProvider);

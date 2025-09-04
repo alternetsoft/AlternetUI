@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using System.Text;
 
 namespace Alternet.UI
@@ -16,6 +17,7 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="func">Value to convert.</param>
         /// <returns></returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Action<T> ToAction<T>(Func<object, int> func)
         {
             void Fn(T s)

@@ -130,7 +130,7 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// logs execution time of the specified action.
+        /// Logs execution time of the specified action.
         /// </summary>
         /// <param name="action">Action to measure.</param>
         /// <returns></returns>

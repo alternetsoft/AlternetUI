@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -36,6 +37,7 @@ namespace Alternet.UI
         /// Calls <see cref="Thread.Interrupt"/> and clears ref parameter.
         /// </summary>
         /// <param name="thread">The thread to interrupt.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static void EndThread(ref Thread? thread)
         {
             thread?.Interrupt();
@@ -46,12 +48,14 @@ namespace Alternet.UI
         /// Runs the specified task synchronously.
         /// </summary>
         /// <param name="func"></param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static void Sync(Func<Task> func) => Task.Run(func).ConfigureAwait(false);
 
         /// <summary>
         /// Runs the specified task synchronously and returns result.
         /// </summary>
         /// <param name="func"></param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static T Sync<T>(Func<Task<T>> func) => Task.Run(func).Result;
 
         /// <summary>
