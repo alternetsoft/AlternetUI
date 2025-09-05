@@ -18,8 +18,8 @@ namespace Alternet.UI
             /// Initializes a new instance of the <see cref="ControlCollection"/> class.
             /// </summary>
             public ControlCollection()
+                : base(CollectionSecurityFlags.NoNull | CollectionSecurityFlags.NoReplace)
             {
-                ThrowOnNullAdd = true;
             }
 
             /// <summary>

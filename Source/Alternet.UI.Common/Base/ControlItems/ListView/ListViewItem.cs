@@ -239,7 +239,7 @@ namespace Alternet.UI
             {
                 if(cells is null)
                 {
-                    cells = new() { ThrowOnNullAdd = true };
+                    cells = new(CollectionSecurityFlags.NoNullOrReplace);
                     cells.ItemInserted += OnCellInserted;
                     cells.ItemRemoved += OnCellRemoved;
                 }

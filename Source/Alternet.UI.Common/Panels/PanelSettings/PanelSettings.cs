@@ -56,8 +56,7 @@ namespace Alternet.UI
         /// </summary>
         public PanelSettings()
         {
-            items = new();
-            items.ThrowOnNullAdd = true;
+            items = new(CollectionSecurityFlags.NoNullOrReplace);
             items.ItemInserted += ItemInserted;
             items.ItemRemoved += ItemRemoved;
             MinChildMargin = 5;

@@ -53,7 +53,7 @@ namespace Alternet.UI
         /// </summary>
         [Content]
         public virtual BaseCollection<StatusBarPanel> Panels { get; }
-            = new() { ThrowOnNullAdd = true };
+            = new(CollectionSecurityFlags.NoNullOrReplace);
 
         /// <summary>
         /// Gets or sets whether to ignore <see cref="Panels"/>.
@@ -564,7 +564,5 @@ namespace Alternet.UI
             item.PropertyChanged -= OnItemPropertyChanged;
             ApplyPanels();
         }
-
-
     }
 }

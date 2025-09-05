@@ -672,10 +672,6 @@ namespace Alternet.UI
         [Browsable(false)]
         public override IReadOnlyList<FrameworkElement> ContentElements => Pages;
 
-        /// <inheritdoc />
-        [Browsable(false)]
-        public override IEnumerable<FrameworkElement> LogicalChildrenCollection => Pages;
-
         /// <inheritdoc/>
         [Browsable(false)]
         public override Thickness Padding

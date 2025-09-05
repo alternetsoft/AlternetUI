@@ -41,11 +41,15 @@ namespace Alternet.UI
     /// <typeparam name="T">The type of elements in the collection.</typeparam>
     public class BaseCollection<T> : BaseObservableCollection<T>
     {
+        private CollectionSecurityFlags securityFlags;
+
         /// <summary>
         /// Initializes a new instance of the <see cref="BaseCollection{T}"/> class.
         /// </summary>
-        public BaseCollection()
+        /// <param name="securityFlags">The <see cref="CollectionSecurityFlags"/> to apply to the collection.</param>
+        public BaseCollection(CollectionSecurityFlags securityFlags = CollectionSecurityFlags.None)
         {
+            this.securityFlags = securityFlags;
         }
 
         /// <summary>
@@ -53,9 +57,11 @@ namespace Alternet.UI
         /// as a wrapper for the specified list.
         /// </summary>
         /// <param name="list">The list that is wrapped by the new collection.</param>
-        public BaseCollection(List<T> list)
+        /// <param name="securityFlags">The <see cref="CollectionSecurityFlags"/> to apply to the collection.</param>
+        public BaseCollection(List<T> list, CollectionSecurityFlags securityFlags = CollectionSecurityFlags.None)
             : base(list)
         {
+            this.securityFlags = securityFlags;
         }
 
         /// <summary>
@@ -81,6 +87,11 @@ namespace Alternet.UI
         /// Occurs when an item range addition is finished in the collection.
         /// </summary>
         public event CollectionItemRangeChangedHandler<T>? ItemRangeAdditionFinished;
+
+        /// <summary>
+        /// Gets the security flags that define the permissions or restrictions.
+        /// </summary>
+        public CollectionSecurityFlags Flags => securityFlags;
 
         /// <summary>
         /// Returns <see langword="true"/> if <see cref="AddRange"/> is being
@@ -125,11 +136,22 @@ namespace Alternet.UI
         public IList AsList => this;
 
         /// <summary>
-        /// Gets or sets a value indicating whether an
+        /// Gets a value indicating whether an
         /// <see cref="ArgumentNullException"/> should be thrown
         /// on an attempt to add a <c>null</c> value to the collection.
         /// </summary>
-        public virtual bool ThrowOnNullAdd { get; set; }
+        public bool ThrowOnNullAdd
+        {
+            get => securityFlags.HasFlag(CollectionSecurityFlags.NoNull);
+
+            private set
+            {
+                if (value)
+                    securityFlags |= CollectionSecurityFlags.NoNull;
+                else
+                    securityFlags &= ~CollectionSecurityFlags.NoNull;
+            }
+        }
 
         /// <summary>
         /// Gets or sets the element at the specified index.
@@ -406,6 +428,9 @@ namespace Alternet.UI
 
         internal void SafeSetItem(int index, T item)
         {
+            if (securityFlags.HasFlag(CollectionSecurityFlags.NoReplace))
+                throw new InvalidOperationException("Replacing items is not allowed.");
+
             if (Items.IsReadOnly)
                 throw new NotSupportedException(ErrorMessages.Default.CannotChangeReadOnlyObject);
 

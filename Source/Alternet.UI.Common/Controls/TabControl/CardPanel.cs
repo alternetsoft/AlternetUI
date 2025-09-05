@@ -20,6 +20,7 @@ namespace Alternet.UI
     public partial class CardPanel : HiddenBorder
     {
         private CardPanelItem? selectedCard;
+        private BaseCollection<CardPanelItem>? cards;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="CardPanel"/> class.
@@ -38,9 +39,6 @@ namespace Alternet.UI
         {
             ParentBackColor = true;
             ParentForeColor = true;
-            Cards.ThrowOnNullAdd = true;
-            Cards.ItemInserted += Cards_ItemInserted;
-            Cards.ItemRemoved += Cards_ItemRemoved;
         }
 
         /// <summary>
@@ -58,7 +56,20 @@ namespace Alternet.UI
         /// Gets pages with child controls.
         /// </summary>
         [Browsable(false)]
-        public BaseCollection<CardPanelItem> Cards { get; } = new();
+        public BaseCollection<CardPanelItem> Cards
+        {
+            get
+            {
+                if (cards == null)
+                {
+                    cards = new BaseCollection<CardPanelItem>(CollectionSecurityFlags.NoNullOrReplace);
+                    cards.ItemInserted += OnCardsItemInserted;
+                    cards.ItemRemoved += OnCardsItemRemoved;
+                }
+
+                return cards;
+            }
+        }
 
         /// <summary>
         /// Gets the collection of the loaded cards.
@@ -293,21 +304,42 @@ namespace Alternet.UI
             return Cards.Count - 1;
         }
 
-        private void Cards_ItemRemoved(object? sender, int index, CardPanelItem item)
+        /// <summary>
+        /// Called when a card is removed from the <see cref="Cards"/> collection.
+        /// Unsubscribes from the events of the removed card.
+        /// If the removed card is the currently selected card, clears the selection.
+        /// </summary>
+        /// <param name="sender">The source of the event (the collection).</param>
+        /// <param name="index">The index of the removed card.</param>
+        /// <param name="item">The card item that was removed.</param>
+        protected virtual void OnCardsItemRemoved(object? sender, int index, CardPanelItem item)
         {
-            item.PropertyChanged -= Item_PropertyChanged;
+            item.PropertyChanged -= OnCardsItemPropertyChanged;
             if (item == selectedCard)
             {
                 selectedCard = null;
             }
         }
 
-        private void Cards_ItemInserted(object? sender, int index, CardPanelItem item)
+        /// <summary>
+        /// Called when a card is inserted into the <see cref="Cards"/> collection.
+        /// Subscribes to the events of the inserted card.
+        /// </summary>
+        /// <param name="sender">The source of the event (the collection).</param>
+        /// <param name="index">The index where the card was inserted.</param>
+        /// <param name="item">The card item that was inserted.</param>
+        protected virtual void OnCardsItemInserted(object? sender, int index, CardPanelItem item)
         {
-            item.PropertyChanged += Item_PropertyChanged;
+            item.PropertyChanged += OnCardsItemPropertyChanged;
         }
 
-        private void Item_PropertyChanged(object? sender, PropertyChangedEventArgs e)
+        /// <summary>
+        /// Called when a property of a card item changes.
+        /// Raises the <see cref="CardPropertyChanged"/> event.
+        /// </summary>
+        /// <param name="sender">The card item whose property changed.</param>
+        /// <param name="e">The event arguments containing the property name.</param>
+        protected virtual void OnCardsItemPropertyChanged(object? sender, PropertyChangedEventArgs e)
         {
             CardPropertyChanged?.Invoke(this, new(sender, e.PropertyName));
         }

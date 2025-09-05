@@ -17,7 +17,8 @@ namespace Alternet.UI
         /// <summary>
         /// Initializes a new instance of the <see cref="NotNullCollection{T}"/> class.
         /// </summary>
-        public NotNullCollection()
+        public NotNullCollection(CollectionSecurityFlags securityFlags = CollectionSecurityFlags.None)
+            : base(securityFlags | CollectionSecurityFlags.NoNull)
         {
         }
 
@@ -29,15 +30,6 @@ namespace Alternet.UI
         public NotNullCollection(List<T> list)
             : base(list)
         {
-        }
-
-        /// <inheritdoc/>
-        public override bool ThrowOnNullAdd
-        {
-            get => true;
-            set
-            {
-            }
         }
     }
 }
