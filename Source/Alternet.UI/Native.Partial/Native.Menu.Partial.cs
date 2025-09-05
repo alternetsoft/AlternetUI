@@ -7,19 +7,19 @@ namespace Alternet.UI.Native
 {
     internal partial class Menu : IContextMenuHandler
     {
-        private ContextMenu? control;
+        private Alternet.UI.Menu? control;
 
         private Action? onClose;
         internal Native.MenuItem? OwnerHandler;
 
-        public Menu(Alternet.UI.ContextMenu contextMenu)
+        public Menu(Alternet.UI.Menu menu)
             : this()
         {
-            control = contextMenu;
+            control = menu;
             OnAttach();
         }
 
-        public Alternet.UI.ContextMenu? Control => control;
+        public Alternet.UI.Menu? Control => control;
 
         public static Native.MenuItem GetHostObject(Alternet.UI.MenuItem item)
         {

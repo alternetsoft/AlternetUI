@@ -14,10 +14,6 @@ namespace Alternet.UI.Native
         {
             this.control = control;
             OnAttach();
-            Click = OnPlatformEventClick;
-            Highlight = OnPlatformEventHighlight;
-            Opened = OnPlatformEventOpened;
-            Closed = OnPlatformEventClosed;
         }
 
         public Alternet.UI.MenuItem? Control => control;
@@ -76,6 +72,11 @@ namespace Alternet.UI.Native
 
         protected void OnAttach()
         {
+            Click = OnPlatformEventClick;
+            Highlight = OnPlatformEventHighlight;
+            Opened = OnPlatformEventOpened;
+            Closed = OnPlatformEventClosed;
+
             if (Control is null)
                 return;
             ApplyText();
