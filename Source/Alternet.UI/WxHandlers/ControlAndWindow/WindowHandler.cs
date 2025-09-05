@@ -7,8 +7,8 @@ namespace Alternet.UI
 {
     internal class WindowHandler : WxControlHandler, IWindowHandler
     {
-        private object? statusBar;
-        private WeakReferenceValue<object> savedMenuRef = new();
+        private DisposableObject? statusBar;
+        private WeakReferenceValue<DisposableObject> savedMenuRef = new();
 
         public override bool VisibleOnScreen
         {
@@ -97,7 +97,7 @@ namespace Alternet.UI
             }
         }
 
-        public object? StatusBar
+        public DisposableObject? StatusBar
         {
             get
             {
@@ -261,7 +261,7 @@ namespace Alternet.UI
             NativeControl.Icon = (UI.Native.IconSet?)value?.Handler;
         }
 
-        public void SetMenu(object? value)
+        public void SetMenu(DisposableObject? value)
         {
             if(value is MainMenu asMainMenu)
             {
@@ -281,6 +281,13 @@ namespace Alternet.UI
         public void SetMaxSize(SizeD size)
         {
             NativeControl.SetMaxSize(size);
+        }
+
+        protected override void DisposeManaged()
+        {
+            SetMenu(null);
+            SetStatusBar(statusBar, null);
+            base.DisposeManaged();
         }
 
         private class NativeWindow : Native.Window
