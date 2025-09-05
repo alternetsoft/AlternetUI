@@ -76,6 +76,7 @@ namespace Alternet.UI
         private HorizontalAlignment? imageHorizontalAlignment;
         private Coord? minTextWidth;
         private char? mnemonicMarker;
+        private bool isTransparent = true;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Label"/> class
@@ -168,6 +169,29 @@ namespace Alternet.UI
         /// Occurs when the <see cref="Image"/> property changes.
         /// </summary>
         public event EventHandler? ImageChanged;
+
+        /// <summary>
+        /// Gets or sets a value indicating whether the control is transparent. Default is true.
+        /// When true, the control's background is not drawn, allowing the parent control's
+        /// background to show through. When false, the control's background
+        /// is drawn normally. In both states, the control's border is drawn if applicable.
+        /// </summary>
+        /// <remarks>Setting this property to a new value will trigger a redraw of the object.</remarks>
+        public virtual bool IsTransparent
+        {
+            get
+            {
+                return isTransparent;
+            }
+
+            set
+            {
+                if (isTransparent == value)
+                    return;
+                isTransparent = value;
+                Invalidate();
+            }
+        }
 
         /// <summary>
         /// Gets or sets whether text is word wrapped in order to fit label in the parent's
@@ -777,7 +801,11 @@ namespace Alternet.UI
         public override void DefaultPaint(PaintEventArgs e)
         {
             e.ClipRectangle = ClientRectangle;
-            DrawDefaultBackground(e);
+
+            var flags = IsTransparent ? DrawDefaultBackgroundFlags.DrawBorder
+                : DrawDefaultBackgroundFlags.DrawBorderAndBackground;
+
+            DrawDefaultBackground(e, flags);
 
             var state = VisualState;
             var border = GetBorderSettings(state);
