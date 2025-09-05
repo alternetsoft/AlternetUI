@@ -106,7 +106,7 @@ namespace Alternet.UI
             {
                 if (items == null)
                 {
-                    items = new() { ThrowOnNullAdd = true };
+                    items = new(CollectionSecurityFlags.NoNullOrReplace);
                 }
 
                 return items;
@@ -142,9 +142,6 @@ namespace Alternet.UI
                 return items;
             }
         }
-
-        /// <inheritdoc />
-        public override IEnumerable<FrameworkElement> LogicalChildrenCollection => ContentElements;
 
         INotifyCollectionChanged ICollectionObserver<object>.Notification
         {

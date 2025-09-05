@@ -94,7 +94,7 @@ namespace Alternet.UI
         {
             get
             {
-                return LogicalChildrenCollection.ToArray();
+                return [];
             }
         }
 
@@ -107,7 +107,7 @@ namespace Alternet.UI
         {
             get
             {
-                return Array.Empty<FrameworkElement>();
+                return ContentElements;
             }
         }
 
@@ -135,7 +135,7 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Recursively searches all <see cref="LogicalChildrenCollection"/> for an element with
+        /// Recursively searches all child elements for an element with
         /// the specified name, and returns that element if found.
         /// </summary>
         /// <param name="name">The name of the element to be found.</param>
@@ -160,14 +160,14 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Recursively searches all <see cref="LogicalChildrenCollection"/> for a control
+        /// Recursively searches all child elements for an element
         /// with the specified name,
-        /// and throws an exception if the requested control is not found.
+        /// and throws an exception if the requested element is not found.
         /// </summary>
-        /// <param name="name">The name of the control to be found.</param>
-        /// <returns>The requested resource. If no control with the provided name was found,
+        /// <param name="name">The name of the element to be found.</param>
+        /// <returns>The requested element. If no element with the provided name was found,
         /// an exception is thrown.</returns>
-        /// <exception cref="InvalidOperationException">A control with the provided name was
+        /// <exception cref="InvalidOperationException">A element with the provided name was
         /// found.</exception>
         public FrameworkElement FindElement(string name)
         {

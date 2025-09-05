@@ -120,14 +120,14 @@ using System;
                     break;
                 case UIXmlDocument.IndexedObjectEventBinding x:
                     w.WriteLine(
-                        $"{GetIndexedObjectRetreivalExpression(x.ObjectTypeFullName, x.Accessors)}.{x.EventName} += {x.HandlerName};");
+                        $"{GetIndexedObjectRetrievalExpression(x.ObjectTypeFullName, x.Accessors)}.{x.EventName} += {x.HandlerName};");
                     break;
                 default:
                     throw new InvalidOperationException();
             }
         }
 
-        private static string GetIndexedObjectRetreivalExpression(
+        private static string GetIndexedObjectRetrievalExpression(
             string objectTypeFullName,
             IReadOnlyList<UIXmlDocument.AccessorInfo> accessors)
         {
