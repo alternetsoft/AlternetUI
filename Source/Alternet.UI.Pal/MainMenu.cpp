@@ -18,13 +18,13 @@ namespace Alternet::UI
 
     MainMenu::~MainMenu()
     {
-#ifdef __WXOSX_COCOA__
-        window->Unbind(wxEVT_MENU, &MainMenu::OnMenuCommand, this);
-#endif
-
         auto menuBar = GetWxMenuBar();
         if (menuBar == nullptr)
             return;
+
+#ifdef __WXOSX_COCOA__
+        menuBar->Unbind(wxEVT_MENU, &MainMenu::OnMenuCommand, this);
+#endif
 
         wxWindowList windows = wxTopLevelWindows;
         for (wxWindowList::compatibility_iterator node = windows.GetFirst(); node; node = node->GetNext())
