@@ -2557,6 +2557,14 @@ namespace Alternet::UI
         Multiple = 1,
     };
     
+    enum class MenuItemType
+    {
+        Standard = 0,
+        Check = 1,
+        Radio = 2,
+        Separator = 3,
+    };
+    
     enum class SelectionMode
     {
         None = 0,
