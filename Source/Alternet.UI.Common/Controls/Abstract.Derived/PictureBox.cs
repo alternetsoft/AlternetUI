@@ -32,6 +32,7 @@ namespace Alternet.UI
 
         private readonly ImageDrawable primitive = new();
         private bool textVisible = false;
+        private bool isTransparent = true;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="PictureBox"/> class.
@@ -59,6 +60,29 @@ namespace Alternet.UI
         /// Occurs when the <see cref="Image"/> property changes.
         /// </summary>
         public event EventHandler? ImageChanged;
+
+        /// <summary>
+        /// Gets or sets a value indicating whether the control is transparent. Default is true.
+        /// When true, the control's background is not drawn, allowing the parent control's
+        /// background to show through. When false, the control's background
+        /// is drawn normally. In both states, the control's border is drawn if applicable.
+        /// </summary>
+        /// <remarks>Setting this property to a new value will trigger a redraw of the object.</remarks>
+        public virtual bool IsTransparent
+        {
+            get
+            {
+                return isTransparent;
+            }
+
+            set
+            {
+                if (isTransparent == value)
+                    return;
+                isTransparent = value;
+                Invalidate();
+            }
+        }
 
         /// <summary>
         /// Gets or sets whether to display text in the control.
@@ -437,7 +461,10 @@ namespace Alternet.UI
         /// <inheritdoc/>
         public override void DefaultPaint(PaintEventArgs e)
         {
-            DrawDefaultBackground(e);
+            var flags = IsTransparent ? DrawDefaultBackgroundFlags.DrawBorder
+                : DrawDefaultBackgroundFlags.DrawBorderAndBackground;
+
+            DrawDefaultBackground(e, flags);
 
             if (TextVisible)
             {
