@@ -745,6 +745,28 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Raises an event or performs actions when a component is removed.
+        /// </summary>
+        /// <remarks>This method is intended to be overridden in derived classes to handle custom logic
+        /// when a component is removed. Ensure that <paramref name="childElement"/> is properly disposed of if
+        /// necessary.</remarks>
+        /// <param name="childElement">The component that was removed. Cannot be null.</param>
+        public virtual void RaiseComponentRemoved(DisposableObject childElement)
+        {
+        }
+
+        /// <summary>
+        /// Raises an event or performs an action to indicate that a component has been inserted at the specified index.
+        /// </summary>
+        /// <remarks>This method is typically called to notify listeners or perform additional processing
+        /// when a component is added. Derived classes can override this method to provide custom behavior.</remarks>
+        /// <param name="index">The zero-based index at which the component was inserted.</param>
+        /// <param name="childElement">The component that was inserted. Cannot be <see langword="null"/>.</param>
+        public virtual void RaiseComponentInserted(int index, DisposableObject childElement)
+        {
+        }
+
+        /// <summary>
         /// Raises the <see cref="ChildInserted" /> event
         /// and <see cref="OnChildInserted"/> method.
         /// </summary>

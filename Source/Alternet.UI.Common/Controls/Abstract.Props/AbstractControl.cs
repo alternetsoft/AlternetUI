@@ -135,6 +135,7 @@ namespace Alternet.UI
         private LayoutFlags layoutFlags;
         private VisualControlState? visualStateOverride;
         private VisualControlStates? visualStatesOverride;
+        private BaseCollection<DisposableObject>? components;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="AbstractControl"/> class.
@@ -1681,10 +1682,6 @@ namespace Alternet.UI
         [Browsable(false)]
         public abstract bool IsHandleCreated { get; }
 
-        /// <inheritdoc />
-        public override IEnumerable<FrameworkElement> LogicalChildrenCollection
-            => HasChildren ? Children : Array.Empty<FrameworkElement>();
-
         /// <inheritdoc/>
         [Browsable(false)]
         public override IReadOnlyList<FrameworkElement> ContentElements
@@ -1694,6 +1691,29 @@ namespace Alternet.UI
                 if (children == null)
                     return Array.Empty<FrameworkElement>();
                 return children;
+            }
+        }
+
+        /// <inheritdoc/>
+        [Browsable(false)]
+        public override IEnumerable<FrameworkElement> LogicalChildrenCollection
+        {
+            get
+            {
+                if(components != null)
+                {
+                    foreach (var component in components)
+                    {
+                        if (component is FrameworkElement fe)
+                            yield return fe;
+                    }
+                }
+
+                if (children != null)
+                {
+                    foreach (var child in children)
+                        yield return child;
+                }
             }
         }
 
@@ -1734,6 +1754,33 @@ namespace Alternet.UI
                 }
 
                 return children;
+            }
+        }
+
+        /// <summary>
+        /// Gets a value indicating whether the control contains any child components.
+        /// </summary>
+        [Browsable(false)]
+        public bool HasComponents => components != null && components.Count > 0;
+
+        /// <summary>
+        /// Gets the collection of components associated with this object.
+        /// </summary>
+        /// <remarks>This property is not browsable in a property grid. The collection is intended to
+        /// manage disposable objects associated with this instance.</remarks>
+        [Browsable(false)]
+        public virtual BaseCollection<DisposableObject> Components
+        {
+            get
+            {
+                if (components == null)
+                {
+                    components = new(CollectionSecurityFlags.NoNullOrReplace);
+                    components.ItemRemoved += (s, index, item) => RaiseComponentRemoved(item);
+                    components.ItemInserted += (s, index, item) => RaiseComponentInserted(index, item);
+                }
+
+                return components;
             }
         }
 

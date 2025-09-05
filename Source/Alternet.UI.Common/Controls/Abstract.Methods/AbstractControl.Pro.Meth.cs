@@ -211,6 +211,18 @@ namespace Alternet.UI
         {
             SuspendLayout();
 
+            if(HasComponents)
+            {
+                var componentsCopy = components!.ToArray();
+                foreach (var c in componentsCopy)
+                {
+                    var cc = c;
+                    SafeDisposeObject(ref cc);
+                }
+
+                components = null;
+            }
+
             if (FocusedControl == this)
                 FocusedControl = null;
             if (HoveredControl == this)
