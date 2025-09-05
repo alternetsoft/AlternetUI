@@ -34,8 +34,8 @@ namespace Alternet.UI
         /// <inheritdoc/>
         protected override void DisposeManaged()
         {
-            SafeDispose(ref handler);
             base.DisposeManaged();
+            SafeDispose(ref handler);
         }
 
         /// <summary>

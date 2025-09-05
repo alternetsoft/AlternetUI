@@ -1004,6 +1004,7 @@ namespace Alternet.UI
         /// <inheritdoc/>
         protected override void DisposeManaged()
         {
+            Shortcut = null;
             commandSource.Changed = null;
             base.DisposeManaged();
         }

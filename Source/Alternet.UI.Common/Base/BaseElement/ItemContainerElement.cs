@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.ComponentModel;
+using System.Linq;
 using System.Text;
 
 namespace Alternet.UI
@@ -249,6 +250,24 @@ namespace Alternet.UI
         {
             Items.Add(item);
             return item;
+        }
+
+        /// <inheritdoc/>
+        protected override void DisposeManaged()
+        {
+            if (items != null)
+            {
+                var ia = items.ToArray();
+                items.Clear();
+                items = null;
+
+                foreach (var item in ia)
+                {
+                    item.Dispose();
+                }
+            }
+
+            base.DisposeManaged();
         }
     }
 }

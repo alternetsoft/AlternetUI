@@ -8,7 +8,7 @@ using System.ComponentModel;
 using System.Security;
 namespace Alternet.UI.Native
 {
-    internal partial class MainMenu : Control
+    internal partial class MainMenu : NativeObject
     {
         static MainMenu()
         {

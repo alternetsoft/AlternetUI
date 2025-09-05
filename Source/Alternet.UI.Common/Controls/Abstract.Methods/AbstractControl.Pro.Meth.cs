@@ -214,13 +214,13 @@ namespace Alternet.UI
             if(HasComponents)
             {
                 var componentsCopy = components!.ToArray();
+                components!.Clear();
+                components = null;
                 foreach (var c in componentsCopy)
                 {
                     var cc = c;
                     SafeDisposeObject(ref cc);
                 }
-
-                components = null;
             }
 
             if (FocusedControl == this)

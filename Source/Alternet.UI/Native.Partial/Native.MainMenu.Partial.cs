@@ -16,16 +16,6 @@ namespace Alternet.UI.Native
             OnAttach();
         }
 
-        public override void OnPlatformEventHandleDestroyed()
-        {
-            base.OnPlatformEventHandleDestroyed();
-        }
-
-        public override void OnPlatformEventHandleCreated()
-        {
-            base.OnPlatformEventHandleCreated();
-        }
-
         public Alternet.UI.MainMenu? Control
         {
             get { return control; }
@@ -59,6 +49,7 @@ namespace Alternet.UI.Native
         protected override void DisposeManaged()
         {
             OnDetach();
+
             base.DisposeManaged();
         }
 
