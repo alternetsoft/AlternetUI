@@ -1,16 +1,16 @@
 <ContextMenu xmlns="http://schemas.alternetsoft.com/ui/2021"
         xmlns:x="http://schemas.alternetsoft.com/ui/2021/uixml"
         x:Class="MenuSample.ExampleContextMenu">
-  <MenuItem Text="_Open..." Name="openMenuItem" IsTextLocalized="true"
+  <MenuItem Text="_Open item..." Name="openMenuItem" IsTextLocalized="true"
             Click="OpenMenuItem_Click" Shortcut="Ctrl+Alt+1" IsShortcutEnabled="false"/>
-  <MenuItem Text="_Save..." IsTextLocalized="true"
+  <MenuItem Text="_Save item..." IsTextLocalized="true"
             Name="saveMenuItem" Click="SaveMenuItem_Click" Shortcut="Ctrl+Alt+2"
             IsShortcutEnabled="false"/>
   <MenuItem Text="-" />
   <MenuItem Text="_Export" IsTextLocalized="true">
-    <MenuItem Text="Export to P_DF" IsTextLocalized="true"
+    <MenuItem Text="Export item to P_DF" IsTextLocalized="true"
               Name="exportToPdfMenuItem" Click="ExportToPdfMenuItem_Click"/>
-    <MenuItem Text="Export to P_NG" IsTextLocalized="true"
+    <MenuItem Text="Export item to P_NG" IsTextLocalized="true"
               Name="exportToPngMenuItem" Click="ExportToPngMenuItem_Click"/>
   </MenuItem>
 </ContextMenu>

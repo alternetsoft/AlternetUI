@@ -11,8 +11,8 @@
                 CommandParameter="Sample binding message from Window"/>
   </Window.InputBindings>
 
-  <Window.Menu>
-    <MainMenu>
+  <Window.Components>
+    <MainMenu Name="mainMenu">
       <MenuItem Text="_File" IsTextLocalized="true" Name="fileMenu">
         <MenuItem Text="_Open..." Name="openMenuItem" IsTextLocalized="true"
                   Click="OpenMenuItem_Click" Shortcut="Ctrl+O" />
@@ -54,7 +54,7 @@
                   Name="aboutMenuItem" Click="AboutMenuItem_Click" />
       </MenuItem>
     </MainMenu>
-  </Window.Menu>
+  </Window.Components>
 
   <Window.StatusBar>
     <StatusBar>
