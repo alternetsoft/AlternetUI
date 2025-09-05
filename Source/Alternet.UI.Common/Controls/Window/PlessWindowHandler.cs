@@ -57,7 +57,7 @@ namespace Alternet.UI
         public virtual WindowState State { get; set; }
 
         /// <inheritdoc/>
-        public virtual object? StatusBar { get; set; }
+        public virtual DisposableObject? StatusBar { get; set; }
 
         Window? IWindowHandler.Control => (Window?)Control;
 
@@ -82,7 +82,7 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        public virtual void SetMenu(object? value)
+        public virtual void SetMenu(DisposableObject? value)
         {
         }
 

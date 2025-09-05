@@ -267,7 +267,7 @@ namespace Alternet.UI
 
         public ModalResult ModalResult { get; set; }
 
-        public object? StatusBar { get; set; }
+        public DisposableObject? StatusBar { get; set; }
 
         public int ThumbPosition { get; set; }
 
@@ -1719,7 +1719,7 @@ namespace Alternet.UI
         {
         }
 
-        public void SetMenu(object? value)
+        public void SetMenu(DisposableObject? value)
         {
         }
 

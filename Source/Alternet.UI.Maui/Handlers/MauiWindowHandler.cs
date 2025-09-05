@@ -125,7 +125,7 @@ namespace Alternet.UI
             set;
         }
 
-        public virtual object? StatusBar
+        public virtual DisposableObject? StatusBar
         {
             get;
             set;
@@ -157,7 +157,7 @@ namespace Alternet.UI
         {
         }
 
-        public virtual void SetMenu(object? value)
+        public virtual void SetMenu(DisposableObject? value)
         {
         }
 

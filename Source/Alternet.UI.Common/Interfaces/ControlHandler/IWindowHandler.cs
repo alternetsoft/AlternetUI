@@ -57,7 +57,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets window status bar.
         /// </summary>
-        object? StatusBar { get; set; }
+        DisposableObject? StatusBar { get; set; }
 
         /// <summary>
         /// Gets a <see cref="Window"/> this handler provides the implementation for.
@@ -80,7 +80,7 @@ namespace Alternet.UI
         /// Sets window menu.
         /// </summary>
         /// <param name="value"></param>
-        void SetMenu(object? value);
+        void SetMenu(DisposableObject? value);
 
         /// <summary>
         /// Sets minimal window size.
