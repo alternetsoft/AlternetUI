@@ -1,3 +1,34 @@
+# 0.9.752 (2025 September 5)
+
+- Add IsTransparent property to Label and PictureBox controls.
+- Window: Changed the types of Menu and StatusBar properties to DisposableObject for better resource management.
+- Refactored DisposeManaged methods across several UI control classes to ensure proper cleanup of managed resources.
+- MainMenu now inherits from Object instead of Control in both C++ and C# code.
+- AbstractControl: Add Components and HasComponents properties to for managing disposable child components.
+- Replace direct assignment of ThrowOnNullAdd with constructor-based initialization using CollectionSecurityFlags in various collection classes.
+- Window: Reassign MainMenu and StatusBar on Window recreate.
+- Window: do not change status bar on menu item highlight.
+- Add BeforeHandleDestroyed event to control lifecycle.
+- Refactor StdTreeView event handling and expand/collapse logic.
+- Changed ScrollableUserControl from abstract to concrete and provided a default implementation for ScrollEventRouter.
+- PopupControl: HideWhenSiblingHidden and HideWhenSiblingShown to allow customization of visibility behavior when sibling are hidden or shown.
+- Create MacModifierSymbols.
+- SpeedButton.GetShortcutText Add forUser parameter, allowing shortcut key formatting to be customized for user display.
+- ModifierKeysConverter: Add static properties to allow customization of display text for Control, Shift, Alt, and Windows modifier keys,
+ as well as separate delimiters for parsing and display.
+- KeyInfo: Add customizable key separator and improve ToString.
+- MacOS: Add Home and End key handling in TextBox.
+- SpeedButtonWithListPopup: Improve item checking logic.
+- Menu: Update some of the menu item check methods to return success status
+- InnerPopupToolBar: Add SuppressKeyDown and SuppressKeyPress properties.
+- AbstractControl: Add MoveGlobalNotificationToFront and MoveNotificationToFront methods to allow prioritizing specific notifications.
+- Add BeforeKeyDown event to control notification system.
+- Refactor painting and bounds update logic in controls for better Maui support.
+- TemplateUtils: Add flexible paint event methods for child controls.
+- UserControl: Add AfterPaint event, RaiseAfterPaint, and OnAfterPaint methods to allow custom logic after painting operations.
+- Moved common item container logic from Menu to new generic ItemContainerElement{T} base class.
+- Moved host object management logic from Menu to new HostedFrameworkElement base class.
+
 # 0.9.751 (2025 August 31)
 
 - Maui: Add support for context menus.

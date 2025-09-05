@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ApiInfo>
-  <Assembly Name="Alternet.UI.Common, Version=0.9.751.0, Culture=neutral, PublicKeyToken=7fb0fe57212b4b74">
+  <Assembly Name="Alternet.UI.Common, Version=0.9.752.0, Culture=neutral, PublicKeyToken=7fb0fe57212b4b74">
     <Type Name="XamlX.Runtime.IXamlParentStackProviderV1" />
     <Type Name="XamlX.Runtime.IXamlXmlNamespaceInfoProviderV1" />
     <Type Name="XamlX.Runtime.XamlXmlNamespaceInfoV1" />
@@ -365,6 +365,24 @@
     <Type Name="Alternet.UI.ToolboxBitmapAttribute" />
     <Type Name="Alternet.UI.UsableDuringInitializationAttribute" />
     <Type Name="Alternet.UI.XmlnsDefinitionAttribute" />
+    <Type Name="Alternet.UI.FrameworkElement">
+      <Event Name="DataContextChanged" />
+      <Event Name="NameChanged" />
+      <Event Name="Disposed" />
+      <Event Name="PropertyChanged" />
+    </Type>
+    <Type Name="Alternet.UI.HostedFrameworkElement">
+      <Event Name="DataContextChanged" />
+      <Event Name="NameChanged" />
+      <Event Name="Disposed" />
+      <Event Name="PropertyChanged" />
+    </Type>
+    <Type Name="Alternet.UI.ItemContainerElement`1">
+      <Event Name="DataContextChanged" />
+      <Event Name="NameChanged" />
+      <Event Name="Disposed" />
+      <Event Name="PropertyChanged" />
+    </Type>
     <Type Name="Alternet.UI.ActionRef`1" />
     <Type Name="Alternet.UI.ActionRef`2" />
     <Type Name="Alternet.UI.ActionRef`3" />
@@ -380,12 +398,6 @@
       <Event Name="PropertyChanged" />
     </Type>
     <Type Name="Alternet.UI.DisposableObject`1">
-      <Event Name="Disposed" />
-      <Event Name="PropertyChanged" />
-    </Type>
-    <Type Name="Alternet.UI.FrameworkElement">
-      <Event Name="DataContextChanged" />
-      <Event Name="NameChanged" />
       <Event Name="Disposed" />
       <Event Name="PropertyChanged" />
     </Type>
@@ -556,6 +568,7 @@
       <Event Name="CollectionChanged" />
       <Event Name="PropertyChanged" />
     </Type>
+    <Type Name="Alternet.UI.CollectionSecurityFlags" />
     <Type Name="Alternet.UI.NotNullCollection`1">
       <Event Name="PropertyChanged" />
       <Event Name="ItemInserted" />
@@ -710,7 +723,7 @@
     <Type Name="Alternet.UI.DrawItemState" />
     <Type Name="Alternet.UI.DrawMode" />
     <Type Name="Alternet.UI.KnownSvgColor" />
-    <Type Name="Alternet.UI.TextEllipsizeType" />
+    <Type Name="Alternet.UI.TextEllipsisType" />
     <Type Name="Alternet.UI.TrimTextRules" />
     <Type Name="Alternet.UI.DragAction" />
     <Type Name="Alternet.UI.DragDropEffects" />
@@ -916,6 +929,7 @@
     <Type Name="Alternet.UI.KeyInfo" />
     <Type Name="Alternet.UI.KeysExtensions" />
     <Type Name="Alternet.UI.KnownShortcuts" />
+    <Type Name="Alternet.UI.MacModifierSymbols" />
     <Type Name="Alternet.UI.PlatformKeyboardHandler`1">
       <Event Name="Disposed" />
       <Event Name="PropertyChanged" />
@@ -1020,6 +1034,7 @@
     </Type>
     <Type Name="Alternet.UI.Border">
       <Event Name="DropDownMenuShowing" />
+      <Event Name="AfterPaint" />
       <Event Name="ContextMenuCreated" />
       <Event Name="MouseHover" />
       <Event Name="CellChanged" />
@@ -1041,6 +1056,7 @@
       <Event Name="HandleCreated" />
       <Event Name="HandleDestroyed" />
       <Event Name="Deactivated" />
+      <Event Name="BeforeHandleDestroyed" />
       <Event Name="GotFocus" />
       <Event Name="QueryContinueDrag" />
       <Event Name="KeyDown" />
@@ -1108,6 +1124,7 @@
     </Type>
     <Type Name="Alternet.UI.HiddenBorder">
       <Event Name="DropDownMenuShowing" />
+      <Event Name="AfterPaint" />
       <Event Name="ContextMenuCreated" />
       <Event Name="MouseHover" />
       <Event Name="CellChanged" />
@@ -1129,6 +1146,7 @@
       <Event Name="HandleCreated" />
       <Event Name="HandleDestroyed" />
       <Event Name="Deactivated" />
+      <Event Name="BeforeHandleDestroyed" />
       <Event Name="GotFocus" />
       <Event Name="QueryContinueDrag" />
       <Event Name="KeyDown" />
@@ -1207,6 +1225,7 @@
       <Event Name="HandleCreated" />
       <Event Name="HandleDestroyed" />
       <Event Name="Deactivated" />
+      <Event Name="BeforeHandleDestroyed" />
       <Event Name="GotFocus" />
       <Event Name="QueryContinueDrag" />
       <Event Name="KeyDown" />
@@ -1265,6 +1284,7 @@
     </Type>
     <Type Name="Alternet.UI.VerticalLine">
       <Event Name="DropDownMenuShowing" />
+      <Event Name="AfterPaint" />
       <Event Name="ContextMenuCreated" />
       <Event Name="MouseHover" />
       <Event Name="CellChanged" />
@@ -1286,6 +1306,7 @@
       <Event Name="HandleCreated" />
       <Event Name="HandleDestroyed" />
       <Event Name="Deactivated" />
+      <Event Name="BeforeHandleDestroyed" />
       <Event Name="GotFocus" />
       <Event Name="QueryContinueDrag" />
       <Event Name="KeyDown" />
@@ -1344,6 +1365,7 @@
     </Type>
     <Type Name="Alternet.UI.ContainerControl">
       <Event Name="DropDownMenuShowing" />
+      <Event Name="AfterPaint" />
       <Event Name="ContextMenuCreated" />
       <Event Name="MouseHover" />
       <Event Name="CellChanged" />
@@ -1365,6 +1387,7 @@
       <Event Name="HandleCreated" />
       <Event Name="HandleDestroyed" />
       <Event Name="Deactivated" />
+      <Event Name="BeforeHandleDestroyed" />
       <Event Name="GotFocus" />
       <Event Name="QueryContinueDrag" />
       <Event Name="KeyDown" />
@@ -1445,6 +1468,7 @@
       <Event Name="HandleCreated" />
       <Event Name="HandleDestroyed" />
       <Event Name="Deactivated" />
+      <Event Name="BeforeHandleDestroyed" />
       <Event Name="GotFocus" />
       <Event Name="QueryContinueDrag" />
       <Event Name="KeyDown" />
@@ -1503,6 +1527,7 @@
     </Type>
     <Type Name="Alternet.UI.GraphicControl">
       <Event Name="DropDownMenuShowing" />
+      <Event Name="AfterPaint" />
       <Event Name="ContextMenuCreated" />
       <Event Name="MouseHover" />
       <Event Name="CellChanged" />
@@ -1524,6 +1549,7 @@
       <Event Name="HandleCreated" />
       <Event Name="HandleDestroyed" />
       <Event Name="Deactivated" />
+      <Event Name="BeforeHandleDestroyed" />
       <Event Name="GotFocus" />
       <Event Name="QueryContinueDrag" />
       <Event Name="KeyDown" />
@@ -1602,6 +1628,7 @@
       <Event Name="HandleCreated" />
       <Event Name="HandleDestroyed" />
       <Event Name="Deactivated" />
+      <Event Name="BeforeHandleDestroyed" />
       <Event Name="GotFocus" />
       <Event Name="QueryContinueDrag" />
       <Event Name="KeyDown" />
@@ -1660,6 +1687,7 @@
     </Type>
     <Type Name="Alternet.UI.PaintActionsControl">
       <Event Name="DropDownMenuShowing" />
+      <Event Name="AfterPaint" />
       <Event Name="ContextMenuCreated" />
       <Event Name="MouseHover" />
       <Event Name="CellChanged" />
@@ -1681,6 +1709,7 @@
       <Event Name="HandleCreated" />
       <Event Name="HandleDestroyed" />
       <Event Name="Deactivated" />
+      <Event Name="BeforeHandleDestroyed" />
       <Event Name="GotFocus" />
       <Event Name="QueryContinueDrag" />
       <Event Name="KeyDown" />
@@ -1739,6 +1768,7 @@
     </Type>
     <Type Name="Alternet.UI.Panel">
       <Event Name="DropDownMenuShowing" />
+      <Event Name="AfterPaint" />
       <Event Name="ContextMenuCreated" />
       <Event Name="MouseHover" />
       <Event Name="CellChanged" />
@@ -1760,6 +1790,7 @@
       <Event Name="HandleCreated" />
       <Event Name="HandleDestroyed" />
       <Event Name="Deactivated" />
+      <Event Name="BeforeHandleDestroyed" />
       <Event Name="GotFocus" />
       <Event Name="QueryContinueDrag" />
       <Event Name="KeyDown" />
@@ -1839,6 +1870,7 @@
       <Event Name="HandleCreated" />
       <Event Name="HandleDestroyed" />
       <Event Name="Deactivated" />
+      <Event Name="BeforeHandleDestroyed" />
       <Event Name="GotFocus" />
       <Event Name="QueryContinueDrag" />
       <Event Name="KeyDown" />
@@ -1897,6 +1929,7 @@
     </Type>
     <Type Name="Alternet.UI.ScrollableUserControl">
       <Event Name="DropDownMenuShowing" />
+      <Event Name="AfterPaint" />
       <Event Name="ContextMenuCreated" />
       <Event Name="MouseHover" />
       <Event Name="CellChanged" />
@@ -1918,6 +1951,7 @@
       <Event Name="HandleCreated" />
       <Event Name="HandleDestroyed" />
       <Event Name="Deactivated" />
+      <Event Name="BeforeHandleDestroyed" />
       <Event Name="GotFocus" />
       <Event Name="QueryContinueDrag" />
       <Event Name="KeyDown" />
@@ -1976,6 +2010,7 @@
     </Type>
     <Type Name="Alternet.UI.UserControl">
       <Event Name="DropDownMenuShowing" />
+      <Event Name="AfterPaint" />
       <Event Name="ContextMenuCreated" />
       <Event Name="MouseHover" />
       <Event Name="CellChanged" />
@@ -1997,6 +2032,7 @@
       <Event Name="HandleCreated" />
       <Event Name="HandleDestroyed" />
       <Event Name="Deactivated" />
+      <Event Name="BeforeHandleDestroyed" />
       <Event Name="GotFocus" />
       <Event Name="QueryContinueDrag" />
       <Event Name="KeyDown" />
@@ -2075,6 +2111,7 @@
       <Event Name="HandleCreated" />
       <Event Name="HandleDestroyed" />
       <Event Name="Deactivated" />
+      <Event Name="BeforeHandleDestroyed" />
       <Event Name="GotFocus" />
       <Event Name="QueryContinueDrag" />
       <Event Name="KeyDown" />
@@ -2148,6 +2185,7 @@
       <Event Name="AfterControlDragStart" />
       <Event Name="AfterControlHelpRequested" />
       <Event Name="AfterControlKeyDown" />
+      <Event Name="BeforeControlKeyDown" />
       <Event Name="AfterControlKeyPress" />
       <Event Name="AfterControlKeyUp" />
       <Event Name="AfterControlLongTap" />
@@ -2230,6 +2268,7 @@
       <Event Name="HandleCreated" />
       <Event Name="HandleDestroyed" />
       <Event Name="Deactivated" />
+      <Event Name="BeforeHandleDestroyed" />
       <Event Name="GotFocus" />
       <Event Name="QueryContinueDrag" />
       <Event Name="KeyDown" />
@@ -2308,6 +2347,7 @@
       <Event Name="HandleCreated" />
       <Event Name="HandleDestroyed" />
       <Event Name="Deactivated" />
+      <Event Name="BeforeHandleDestroyed" />
       <Event Name="GotFocus" />
       <Event Name="QueryContinueDrag" />
       <Event Name="KeyDown" />
@@ -2386,6 +2426,7 @@
       <Event Name="HandleCreated" />
       <Event Name="HandleDestroyed" />
       <Event Name="Deactivated" />
+      <Event Name="BeforeHandleDestroyed" />
       <Event Name="GotFocus" />
       <Event Name="QueryContinueDrag" />
       <Event Name="KeyDown" />
@@ -2478,6 +2519,7 @@
       <Event Name="HandleCreated" />
       <Event Name="HandleDestroyed" />
       <Event Name="Deactivated" />
+      <Event Name="BeforeHandleDestroyed" />
       <Event Name="GotFocus" />
       <Event Name="QueryContinueDrag" />
       <Event Name="KeyDown" />
@@ -2663,6 +2705,7 @@
       <Event Name="HandleCreated" />
       <Event Name="HandleDestroyed" />
       <Event Name="Deactivated" />
+      <Event Name="BeforeHandleDestroyed" />
       <Event Name="GotFocus" />
       <Event Name="QueryContinueDrag" />
       <Event Name="KeyDown" />
@@ -2741,6 +2784,7 @@
       <Event Name="HandleCreated" />
       <Event Name="HandleDestroyed" />
       <Event Name="Deactivated" />
+      <Event Name="BeforeHandleDestroyed" />
       <Event Name="GotFocus" />
       <Event Name="QueryContinueDrag" />
       <Event Name="KeyDown" />
@@ -2820,6 +2864,7 @@
       <Event Name="HandleCreated" />
       <Event Name="HandleDestroyed" />
       <Event Name="Deactivated" />
+      <Event Name="BeforeHandleDestroyed" />
       <Event Name="GotFocus" />
       <Event Name="QueryContinueDrag" />
       <Event Name="KeyDown" />
@@ -2899,6 +2944,7 @@
       <Event Name="HandleCreated" />
       <Event Name="HandleDestroyed" />
       <Event Name="Deactivated" />
+      <Event Name="BeforeHandleDestroyed" />
       <Event Name="GotFocus" />
       <Event Name="QueryContinueDrag" />
       <Event Name="KeyDown" />
@@ -2960,6 +3006,7 @@
       <Event Name="DelayedTextChanged" />
       <Event Name="ButtonClick" />
       <Event Name="DropDownMenuShowing" />
+      <Event Name="AfterPaint" />
       <Event Name="ContextMenuCreated" />
       <Event Name="MouseHover" />
       <Event Name="CellChanged" />
@@ -2981,6 +3028,7 @@
       <Event Name="HandleCreated" />
       <Event Name="HandleDestroyed" />
       <Event Name="Deactivated" />
+      <Event Name="BeforeHandleDestroyed" />
       <Event Name="GotFocus" />
       <Event Name="QueryContinueDrag" />
       <Event Name="KeyDown" />
@@ -3041,6 +3089,7 @@
       <Event Name="DelayedTextChanged" />
       <Event Name="ButtonClick" />
       <Event Name="DropDownMenuShowing" />
+      <Event Name="AfterPaint" />
       <Event Name="ContextMenuCreated" />
       <Event Name="MouseHover" />
       <Event Name="CellChanged" />
@@ -3062,6 +3111,7 @@
       <Event Name="HandleCreated" />
       <Event Name="HandleDestroyed" />
       <Event Name="Deactivated" />
+      <Event Name="BeforeHandleDestroyed" />
       <Event Name="GotFocus" />
       <Event Name="QueryContinueDrag" />
       <Event Name="KeyDown" />
@@ -3121,6 +3171,7 @@
       <Event Name="DelayedTextChanged" />
       <Event Name="ButtonClick" />
       <Event Name="DropDownMenuShowing" />
+      <Event Name="AfterPaint" />
       <Event Name="ContextMenuCreated" />
       <Event Name="MouseHover" />
       <Event Name="CellChanged" />
@@ -3142,6 +3193,7 @@
       <Event Name="HandleCreated" />
       <Event Name="HandleDestroyed" />
       <Event Name="Deactivated" />
+      <Event Name="BeforeHandleDestroyed" />
       <Event Name="GotFocus" />
       <Event Name="QueryContinueDrag" />
       <Event Name="KeyDown" />
@@ -3201,6 +3253,7 @@
       <Event Name="DelayedTextChanged" />
       <Event Name="ButtonClick" />
       <Event Name="DropDownMenuShowing" />
+      <Event Name="AfterPaint" />
       <Event Name="ContextMenuCreated" />
       <Event Name="MouseHover" />
       <Event Name="CellChanged" />
@@ -3222,6 +3275,7 @@
       <Event Name="HandleCreated" />
       <Event Name="HandleDestroyed" />
       <Event Name="Deactivated" />
+      <Event Name="BeforeHandleDestroyed" />
       <Event Name="GotFocus" />
       <Event Name="QueryContinueDrag" />
       <Event Name="KeyDown" />
@@ -3278,6 +3332,7 @@
     </Type>
     <Type Name="Alternet.UI.ControlAndControl">
       <Event Name="DropDownMenuShowing" />
+      <Event Name="AfterPaint" />
       <Event Name="ContextMenuCreated" />
       <Event Name="MouseHover" />
       <Event Name="CellChanged" />
@@ -3299,6 +3354,7 @@
       <Event Name="HandleCreated" />
       <Event Name="HandleDestroyed" />
       <Event Name="Deactivated" />
+      <Event Name="BeforeHandleDestroyed" />
       <Event Name="GotFocus" />
       <Event Name="QueryContinueDrag" />
       <Event Name="KeyDown" />
@@ -3360,6 +3416,7 @@
       <Event Name="DelayedTextChanged" />
       <Event Name="ButtonClick" />
       <Event Name="DropDownMenuShowing" />
+      <Event Name="AfterPaint" />
       <Event Name="ContextMenuCreated" />
       <Event Name="MouseHover" />
       <Event Name="CellChanged" />
@@ -3381,6 +3438,7 @@
       <Event Name="HandleCreated" />
       <Event Name="HandleDestroyed" />
       <Event Name="Deactivated" />
+      <Event Name="BeforeHandleDestroyed" />
       <Event Name="GotFocus" />
       <Event Name="QueryContinueDrag" />
       <Event Name="KeyDown" />
@@ -3446,6 +3504,7 @@
       <Event Name="DelayedTextChanged" />
       <Event Name="ButtonClick" />
       <Event Name="DropDownMenuShowing" />
+      <Event Name="AfterPaint" />
       <Event Name="ContextMenuCreated" />
       <Event Name="MouseHover" />
       <Event Name="CellChanged" />
@@ -3467,6 +3526,7 @@
       <Event Name="HandleCreated" />
       <Event Name="HandleDestroyed" />
       <Event Name="Deactivated" />
+      <Event Name="BeforeHandleDestroyed" />
       <Event Name="GotFocus" />
       <Event Name="QueryContinueDrag" />
       <Event Name="KeyDown" />
@@ -3526,6 +3586,7 @@
       <Event Name="DelayedTextChanged" />
       <Event Name="ButtonClick" />
       <Event Name="DropDownMenuShowing" />
+      <Event Name="AfterPaint" />
       <Event Name="ContextMenuCreated" />
       <Event Name="MouseHover" />
       <Event Name="CellChanged" />
@@ -3547,6 +3608,7 @@
       <Event Name="HandleCreated" />
       <Event Name="HandleDestroyed" />
       <Event Name="Deactivated" />
+      <Event Name="BeforeHandleDestroyed" />
       <Event Name="GotFocus" />
       <Event Name="QueryContinueDrag" />
       <Event Name="KeyDown" />
@@ -3607,6 +3669,7 @@
       <Event Name="DelayedTextChanged" />
       <Event Name="ButtonClick" />
       <Event Name="DropDownMenuShowing" />
+      <Event Name="AfterPaint" />
       <Event Name="ContextMenuCreated" />
       <Event Name="MouseHover" />
       <Event Name="CellChanged" />
@@ -3628,6 +3691,7 @@
       <Event Name="HandleCreated" />
       <Event Name="HandleDestroyed" />
       <Event Name="Deactivated" />
+      <Event Name="BeforeHandleDestroyed" />
       <Event Name="GotFocus" />
       <Event Name="QueryContinueDrag" />
       <Event Name="KeyDown" />
@@ -3690,6 +3754,7 @@
       <Event Name="DelayedTextChanged" />
       <Event Name="ButtonClick" />
       <Event Name="DropDownMenuShowing" />
+      <Event Name="AfterPaint" />
       <Event Name="ContextMenuCreated" />
       <Event Name="MouseHover" />
       <Event Name="CellChanged" />
@@ -3711,6 +3776,7 @@
       <Event Name="HandleCreated" />
       <Event Name="HandleDestroyed" />
       <Event Name="Deactivated" />
+      <Event Name="BeforeHandleDestroyed" />
       <Event Name="GotFocus" />
       <Event Name="QueryContinueDrag" />
       <Event Name="KeyDown" />
@@ -3771,6 +3837,7 @@
       <Event Name="DelayedTextChanged" />
       <Event Name="ButtonClick" />
       <Event Name="DropDownMenuShowing" />
+      <Event Name="AfterPaint" />
       <Event Name="ContextMenuCreated" />
       <Event Name="MouseHover" />
       <Event Name="CellChanged" />
@@ -3792,6 +3859,7 @@
       <Event Name="HandleCreated" />
       <Event Name="HandleDestroyed" />
       <Event Name="Deactivated" />
+      <Event Name="BeforeHandleDestroyed" />
       <Event Name="GotFocus" />
       <Event Name="QueryContinueDrag" />
       <Event Name="KeyDown" />
@@ -3851,6 +3919,7 @@
       <Event Name="TextChanged" />
       <Event Name="DelayedTextChanged" />
       <Event Name="DropDownMenuShowing" />
+      <Event Name="AfterPaint" />
       <Event Name="ContextMenuCreated" />
       <Event Name="MouseHover" />
       <Event Name="CellChanged" />
@@ -3872,6 +3941,7 @@
       <Event Name="HandleCreated" />
       <Event Name="HandleDestroyed" />
       <Event Name="Deactivated" />
+      <Event Name="BeforeHandleDestroyed" />
       <Event Name="GotFocus" />
       <Event Name="QueryContinueDrag" />
       <Event Name="KeyDown" />
@@ -3930,6 +4000,7 @@
       <Event Name="TextChanged" />
       <Event Name="DelayedTextChanged" />
       <Event Name="DropDownMenuShowing" />
+      <Event Name="AfterPaint" />
       <Event Name="ContextMenuCreated" />
       <Event Name="MouseHover" />
       <Event Name="CellChanged" />
@@ -3951,6 +4022,7 @@
       <Event Name="HandleCreated" />
       <Event Name="HandleDestroyed" />
       <Event Name="Deactivated" />
+      <Event Name="BeforeHandleDestroyed" />
       <Event Name="GotFocus" />
       <Event Name="QueryContinueDrag" />
       <Event Name="KeyDown" />
@@ -4009,6 +4081,7 @@
       <Event Name="TextChanged" />
       <Event Name="DelayedTextChanged" />
       <Event Name="DropDownMenuShowing" />
+      <Event Name="AfterPaint" />
       <Event Name="ContextMenuCreated" />
       <Event Name="MouseHover" />
       <Event Name="CellChanged" />
@@ -4030,6 +4103,7 @@
       <Event Name="HandleCreated" />
       <Event Name="HandleDestroyed" />
       <Event Name="Deactivated" />
+      <Event Name="BeforeHandleDestroyed" />
       <Event Name="GotFocus" />
       <Event Name="QueryContinueDrag" />
       <Event Name="KeyDown" />
@@ -4088,6 +4162,7 @@
       <Event Name="TextChanged" />
       <Event Name="DelayedTextChanged" />
       <Event Name="DropDownMenuShowing" />
+      <Event Name="AfterPaint" />
       <Event Name="ContextMenuCreated" />
       <Event Name="MouseHover" />
       <Event Name="CellChanged" />
@@ -4109,6 +4184,7 @@
       <Event Name="HandleCreated" />
       <Event Name="HandleDestroyed" />
       <Event Name="Deactivated" />
+      <Event Name="BeforeHandleDestroyed" />
       <Event Name="GotFocus" />
       <Event Name="QueryContinueDrag" />
       <Event Name="KeyDown" />
@@ -4167,6 +4243,7 @@
       <Event Name="TextChanged" />
       <Event Name="DelayedTextChanged" />
       <Event Name="DropDownMenuShowing" />
+      <Event Name="AfterPaint" />
       <Event Name="ContextMenuCreated" />
       <Event Name="MouseHover" />
       <Event Name="CellChanged" />
@@ -4188,6 +4265,7 @@
       <Event Name="HandleCreated" />
       <Event Name="HandleDestroyed" />
       <Event Name="Deactivated" />
+      <Event Name="BeforeHandleDestroyed" />
       <Event Name="GotFocus" />
       <Event Name="QueryContinueDrag" />
       <Event Name="KeyDown" />
@@ -4246,6 +4324,7 @@
       <Event Name="TextChanged" />
       <Event Name="DelayedTextChanged" />
       <Event Name="DropDownMenuShowing" />
+      <Event Name="AfterPaint" />
       <Event Name="ContextMenuCreated" />
       <Event Name="MouseHover" />
       <Event Name="CellChanged" />
@@ -4267,6 +4346,7 @@
       <Event Name="HandleCreated" />
       <Event Name="HandleDestroyed" />
       <Event Name="Deactivated" />
+      <Event Name="BeforeHandleDestroyed" />
       <Event Name="GotFocus" />
       <Event Name="QueryContinueDrag" />
       <Event Name="KeyDown" />
@@ -4325,6 +4405,7 @@
       <Event Name="TextChanged" />
       <Event Name="DelayedTextChanged" />
       <Event Name="DropDownMenuShowing" />
+      <Event Name="AfterPaint" />
       <Event Name="ContextMenuCreated" />
       <Event Name="MouseHover" />
       <Event Name="CellChanged" />
@@ -4346,6 +4427,7 @@
       <Event Name="HandleCreated" />
       <Event Name="HandleDestroyed" />
       <Event Name="Deactivated" />
+      <Event Name="BeforeHandleDestroyed" />
       <Event Name="GotFocus" />
       <Event Name="QueryContinueDrag" />
       <Event Name="KeyDown" />
@@ -4404,6 +4486,7 @@
       <Event Name="TextChanged" />
       <Event Name="DelayedTextChanged" />
       <Event Name="DropDownMenuShowing" />
+      <Event Name="AfterPaint" />
       <Event Name="ContextMenuCreated" />
       <Event Name="MouseHover" />
       <Event Name="CellChanged" />
@@ -4425,6 +4508,7 @@
       <Event Name="HandleCreated" />
       <Event Name="HandleDestroyed" />
       <Event Name="Deactivated" />
+      <Event Name="BeforeHandleDestroyed" />
       <Event Name="GotFocus" />
       <Event Name="QueryContinueDrag" />
       <Event Name="KeyDown" />
@@ -4483,6 +4567,7 @@
       <Event Name="TextChanged" />
       <Event Name="DelayedTextChanged" />
       <Event Name="DropDownMenuShowing" />
+      <Event Name="AfterPaint" />
       <Event Name="ContextMenuCreated" />
       <Event Name="MouseHover" />
       <Event Name="CellChanged" />
@@ -4504,6 +4589,7 @@
       <Event Name="HandleCreated" />
       <Event Name="HandleDestroyed" />
       <Event Name="Deactivated" />
+      <Event Name="BeforeHandleDestroyed" />
       <Event Name="GotFocus" />
       <Event Name="QueryContinueDrag" />
       <Event Name="KeyDown" />
@@ -4562,6 +4648,7 @@
       <Event Name="TextChanged" />
       <Event Name="DelayedTextChanged" />
       <Event Name="DropDownMenuShowing" />
+      <Event Name="AfterPaint" />
       <Event Name="ContextMenuCreated" />
       <Event Name="MouseHover" />
       <Event Name="CellChanged" />
@@ -4583,6 +4670,7 @@
       <Event Name="HandleCreated" />
       <Event Name="HandleDestroyed" />
       <Event Name="Deactivated" />
+      <Event Name="BeforeHandleDestroyed" />
       <Event Name="GotFocus" />
       <Event Name="QueryContinueDrag" />
       <Event Name="KeyDown" />
@@ -4642,6 +4730,7 @@
       <Event Name="TextChanged" />
       <Event Name="DelayedTextChanged" />
       <Event Name="DropDownMenuShowing" />
+      <Event Name="AfterPaint" />
       <Event Name="ContextMenuCreated" />
       <Event Name="MouseHover" />
       <Event Name="CellChanged" />
@@ -4663,6 +4752,7 @@
       <Event Name="HandleCreated" />
       <Event Name="HandleDestroyed" />
       <Event Name="Deactivated" />
+      <Event Name="BeforeHandleDestroyed" />
       <Event Name="GotFocus" />
       <Event Name="QueryContinueDrag" />
       <Event Name="KeyDown" />
@@ -4722,6 +4812,7 @@
       <Event Name="TextChanged" />
       <Event Name="DelayedTextChanged" />
       <Event Name="DropDownMenuShowing" />
+      <Event Name="AfterPaint" />
       <Event Name="ContextMenuCreated" />
       <Event Name="MouseHover" />
       <Event Name="CellChanged" />
@@ -4743,6 +4834,7 @@
       <Event Name="HandleCreated" />
       <Event Name="HandleDestroyed" />
       <Event Name="Deactivated" />
+      <Event Name="BeforeHandleDestroyed" />
       <Event Name="GotFocus" />
       <Event Name="QueryContinueDrag" />
       <Event Name="KeyDown" />
@@ -4802,6 +4894,7 @@
       <Event Name="TextChanged" />
       <Event Name="DelayedTextChanged" />
       <Event Name="DropDownMenuShowing" />
+      <Event Name="AfterPaint" />
       <Event Name="ContextMenuCreated" />
       <Event Name="MouseHover" />
       <Event Name="CellChanged" />
@@ -4823,6 +4916,7 @@
       <Event Name="HandleCreated" />
       <Event Name="HandleDestroyed" />
       <Event Name="Deactivated" />
+      <Event Name="BeforeHandleDestroyed" />
       <Event Name="GotFocus" />
       <Event Name="QueryContinueDrag" />
       <Event Name="KeyDown" />
@@ -4881,6 +4975,7 @@
       <Event Name="TextChanged" />
       <Event Name="DelayedTextChanged" />
       <Event Name="DropDownMenuShowing" />
+      <Event Name="AfterPaint" />
       <Event Name="ContextMenuCreated" />
       <Event Name="MouseHover" />
       <Event Name="CellChanged" />
@@ -4902,6 +4997,7 @@
       <Event Name="HandleCreated" />
       <Event Name="HandleDestroyed" />
       <Event Name="Deactivated" />
+      <Event Name="BeforeHandleDestroyed" />
       <Event Name="GotFocus" />
       <Event Name="QueryContinueDrag" />
       <Event Name="KeyDown" />
@@ -4960,6 +5056,7 @@
       <Event Name="TextChanged" />
       <Event Name="DelayedTextChanged" />
       <Event Name="DropDownMenuShowing" />
+      <Event Name="AfterPaint" />
       <Event Name="ContextMenuCreated" />
       <Event Name="MouseHover" />
       <Event Name="CellChanged" />
@@ -4981,6 +5078,7 @@
       <Event Name="HandleCreated" />
       <Event Name="HandleDestroyed" />
       <Event Name="Deactivated" />
+      <Event Name="BeforeHandleDestroyed" />
       <Event Name="GotFocus" />
       <Event Name="QueryContinueDrag" />
       <Event Name="KeyDown" />
@@ -5039,6 +5137,7 @@
       <Event Name="TextChanged" />
       <Event Name="DelayedTextChanged" />
       <Event Name="DropDownMenuShowing" />
+      <Event Name="AfterPaint" />
       <Event Name="ContextMenuCreated" />
       <Event Name="MouseHover" />
       <Event Name="CellChanged" />
@@ -5060,6 +5159,7 @@
       <Event Name="HandleCreated" />
       <Event Name="HandleDestroyed" />
       <Event Name="Deactivated" />
+      <Event Name="BeforeHandleDestroyed" />
       <Event Name="GotFocus" />
       <Event Name="QueryContinueDrag" />
       <Event Name="KeyDown" />
@@ -5118,6 +5218,7 @@
       <Event Name="TextChanged" />
       <Event Name="DelayedTextChanged" />
       <Event Name="DropDownMenuShowing" />
+      <Event Name="AfterPaint" />
       <Event Name="ContextMenuCreated" />
       <Event Name="MouseHover" />
       <Event Name="CellChanged" />
@@ -5139,6 +5240,7 @@
       <Event Name="HandleCreated" />
       <Event Name="HandleDestroyed" />
       <Event Name="Deactivated" />
+      <Event Name="BeforeHandleDestroyed" />
       <Event Name="GotFocus" />
       <Event Name="QueryContinueDrag" />
       <Event Name="KeyDown" />
@@ -5197,6 +5299,7 @@
       <Event Name="TextChanged" />
       <Event Name="DelayedTextChanged" />
       <Event Name="DropDownMenuShowing" />
+      <Event Name="AfterPaint" />
       <Event Name="ContextMenuCreated" />
       <Event Name="MouseHover" />
       <Event Name="CellChanged" />
@@ -5218,6 +5321,7 @@
       <Event Name="HandleCreated" />
       <Event Name="HandleDestroyed" />
       <Event Name="Deactivated" />
+      <Event Name="BeforeHandleDestroyed" />
       <Event Name="GotFocus" />
       <Event Name="QueryContinueDrag" />
       <Event Name="KeyDown" />
@@ -5276,6 +5380,7 @@
       <Event Name="TextChanged" />
       <Event Name="DelayedTextChanged" />
       <Event Name="DropDownMenuShowing" />
+      <Event Name="AfterPaint" />
       <Event Name="ContextMenuCreated" />
       <Event Name="MouseHover" />
       <Event Name="CellChanged" />
@@ -5297,6 +5402,7 @@
       <Event Name="HandleCreated" />
       <Event Name="HandleDestroyed" />
       <Event Name="Deactivated" />
+      <Event Name="BeforeHandleDestroyed" />
       <Event Name="GotFocus" />
       <Event Name="QueryContinueDrag" />
       <Event Name="KeyDown" />
@@ -5355,6 +5461,7 @@
       <Event Name="TextChanged" />
       <Event Name="DelayedTextChanged" />
       <Event Name="DropDownMenuShowing" />
+      <Event Name="AfterPaint" />
       <Event Name="ContextMenuCreated" />
       <Event Name="MouseHover" />
       <Event Name="CellChanged" />
@@ -5376,6 +5483,7 @@
       <Event Name="HandleCreated" />
       <Event Name="HandleDestroyed" />
       <Event Name="Deactivated" />
+      <Event Name="BeforeHandleDestroyed" />
       <Event Name="GotFocus" />
       <Event Name="QueryContinueDrag" />
       <Event Name="KeyDown" />
@@ -5466,6 +5574,7 @@
       <Event Name="HandleCreated" />
       <Event Name="HandleDestroyed" />
       <Event Name="Deactivated" />
+      <Event Name="BeforeHandleDestroyed" />
       <Event Name="GotFocus" />
       <Event Name="QueryContinueDrag" />
       <Event Name="KeyDown" />
@@ -5544,6 +5653,7 @@
       <Event Name="HandleCreated" />
       <Event Name="HandleDestroyed" />
       <Event Name="Deactivated" />
+      <Event Name="BeforeHandleDestroyed" />
       <Event Name="GotFocus" />
       <Event Name="QueryContinueDrag" />
       <Event Name="KeyDown" />
@@ -5623,6 +5733,7 @@
       <Event Name="HandleCreated" />
       <Event Name="HandleDestroyed" />
       <Event Name="Deactivated" />
+      <Event Name="BeforeHandleDestroyed" />
       <Event Name="GotFocus" />
       <Event Name="QueryContinueDrag" />
       <Event Name="KeyDown" />
@@ -5686,6 +5797,7 @@
     </Type>
     <Type Name="Alternet.UI.HeaderLabel">
       <Event Name="DropDownMenuShowing" />
+      <Event Name="AfterPaint" />
       <Event Name="ContextMenuCreated" />
       <Event Name="MouseHover" />
       <Event Name="CellChanged" />
@@ -5707,6 +5819,7 @@
       <Event Name="HandleCreated" />
       <Event Name="HandleDestroyed" />
       <Event Name="Deactivated" />
+      <Event Name="BeforeHandleDestroyed" />
       <Event Name="GotFocus" />
       <Event Name="QueryContinueDrag" />
       <Event Name="KeyDown" />
@@ -5788,6 +5901,7 @@
       <Event Name="HandleCreated" />
       <Event Name="HandleDestroyed" />
       <Event Name="Deactivated" />
+      <Event Name="BeforeHandleDestroyed" />
       <Event Name="GotFocus" />
       <Event Name="QueryContinueDrag" />
       <Event Name="KeyDown" />
@@ -5869,6 +5983,7 @@
       <Event Name="HandleCreated" />
       <Event Name="HandleDestroyed" />
       <Event Name="Deactivated" />
+      <Event Name="BeforeHandleDestroyed" />
       <Event Name="GotFocus" />
       <Event Name="QueryContinueDrag" />
       <Event Name="KeyDown" />
@@ -5933,6 +6048,7 @@
     </Type>
     <Type Name="Alternet.UI.Grid">
       <Event Name="DropDownMenuShowing" />
+      <Event Name="AfterPaint" />
       <Event Name="ContextMenuCreated" />
       <Event Name="MouseHover" />
       <Event Name="CellChanged" />
@@ -5954,6 +6070,7 @@
       <Event Name="HandleCreated" />
       <Event Name="HandleDestroyed" />
       <Event Name="Deactivated" />
+      <Event Name="BeforeHandleDestroyed" />
       <Event Name="GotFocus" />
       <Event Name="QueryContinueDrag" />
       <Event Name="KeyDown" />
@@ -6027,6 +6144,7 @@
     </Type>
     <Type Name="Alternet.UI.LayoutPanel">
       <Event Name="DropDownMenuShowing" />
+      <Event Name="AfterPaint" />
       <Event Name="ContextMenuCreated" />
       <Event Name="MouseHover" />
       <Event Name="CellChanged" />
@@ -6048,6 +6166,7 @@
       <Event Name="HandleCreated" />
       <Event Name="HandleDestroyed" />
       <Event Name="Deactivated" />
+      <Event Name="BeforeHandleDestroyed" />
       <Event Name="GotFocus" />
       <Event Name="QueryContinueDrag" />
       <Event Name="KeyDown" />
@@ -6106,6 +6225,7 @@
     </Type>
     <Type Name="Alternet.UI.SplittedTreeAndCards">
       <Event Name="DropDownMenuShowing" />
+      <Event Name="AfterPaint" />
       <Event Name="ContextMenuCreated" />
       <Event Name="MouseHover" />
       <Event Name="CellChanged" />
@@ -6127,6 +6247,7 @@
       <Event Name="HandleCreated" />
       <Event Name="HandleDestroyed" />
       <Event Name="Deactivated" />
+      <Event Name="BeforeHandleDestroyed" />
       <Event Name="GotFocus" />
       <Event Name="QueryContinueDrag" />
       <Event Name="KeyDown" />
@@ -6185,6 +6306,7 @@
     </Type>
     <Type Name="Alternet.UI.ScrollViewer">
       <Event Name="DropDownMenuShowing" />
+      <Event Name="AfterPaint" />
       <Event Name="ContextMenuCreated" />
       <Event Name="MouseHover" />
       <Event Name="CellChanged" />
@@ -6206,6 +6328,7 @@
       <Event Name="HandleCreated" />
       <Event Name="HandleDestroyed" />
       <Event Name="Deactivated" />
+      <Event Name="BeforeHandleDestroyed" />
       <Event Name="GotFocus" />
       <Event Name="QueryContinueDrag" />
       <Event Name="KeyDown" />
@@ -6265,6 +6388,7 @@
     <Type Name="Alternet.UI.PanelListBoxAndCards">
       <Event Name="AfterDoubleClickAction" />
       <Event Name="DropDownMenuShowing" />
+      <Event Name="AfterPaint" />
       <Event Name="ContextMenuCreated" />
       <Event Name="MouseHover" />
       <Event Name="CellChanged" />
@@ -6286,6 +6410,7 @@
       <Event Name="HandleCreated" />
       <Event Name="HandleDestroyed" />
       <Event Name="Deactivated" />
+      <Event Name="BeforeHandleDestroyed" />
       <Event Name="GotFocus" />
       <Event Name="QueryContinueDrag" />
       <Event Name="KeyDown" />
@@ -6345,6 +6470,7 @@
     <Type Name="Alternet.UI.PanelTreeAndCards">
       <Event Name="AfterDoubleClickAction" />
       <Event Name="DropDownMenuShowing" />
+      <Event Name="AfterPaint" />
       <Event Name="ContextMenuCreated" />
       <Event Name="MouseHover" />
       <Event Name="CellChanged" />
@@ -6366,6 +6492,7 @@
       <Event Name="HandleCreated" />
       <Event Name="HandleDestroyed" />
       <Event Name="Deactivated" />
+      <Event Name="BeforeHandleDestroyed" />
       <Event Name="GotFocus" />
       <Event Name="QueryContinueDrag" />
       <Event Name="KeyDown" />
@@ -6426,6 +6553,7 @@
     <Type Name="Alternet.UI.SplittedControlsPanel">
       <Event Name="AfterDoubleClickAction" />
       <Event Name="DropDownMenuShowing" />
+      <Event Name="AfterPaint" />
       <Event Name="ContextMenuCreated" />
       <Event Name="MouseHover" />
       <Event Name="CellChanged" />
@@ -6447,6 +6575,7 @@
       <Event Name="HandleCreated" />
       <Event Name="HandleDestroyed" />
       <Event Name="Deactivated" />
+      <Event Name="BeforeHandleDestroyed" />
       <Event Name="GotFocus" />
       <Event Name="QueryContinueDrag" />
       <Event Name="KeyDown" />
@@ -6505,6 +6634,7 @@
     </Type>
     <Type Name="Alternet.UI.SplittedPanel">
       <Event Name="DropDownMenuShowing" />
+      <Event Name="AfterPaint" />
       <Event Name="ContextMenuCreated" />
       <Event Name="MouseHover" />
       <Event Name="CellChanged" />
@@ -6526,6 +6656,7 @@
       <Event Name="HandleCreated" />
       <Event Name="HandleDestroyed" />
       <Event Name="Deactivated" />
+      <Event Name="BeforeHandleDestroyed" />
       <Event Name="GotFocus" />
       <Event Name="QueryContinueDrag" />
       <Event Name="KeyDown" />
@@ -6587,6 +6718,7 @@
       <Event Name="SplitterMoving" />
       <Event Name="SplitterMoved" />
       <Event Name="DropDownMenuShowing" />
+      <Event Name="AfterPaint" />
       <Event Name="ContextMenuCreated" />
       <Event Name="MouseHover" />
       <Event Name="CellChanged" />
@@ -6608,6 +6740,7 @@
       <Event Name="HandleCreated" />
       <Event Name="HandleDestroyed" />
       <Event Name="Deactivated" />
+      <Event Name="BeforeHandleDestroyed" />
       <Event Name="GotFocus" />
       <Event Name="QueryContinueDrag" />
       <Event Name="KeyDown" />
@@ -6667,6 +6800,7 @@
     <Type Name="Alternet.UI.HorizontalStackPanel">
       <Event Name="OrientationChanged" />
       <Event Name="DropDownMenuShowing" />
+      <Event Name="AfterPaint" />
       <Event Name="ContextMenuCreated" />
       <Event Name="MouseHover" />
       <Event Name="CellChanged" />
@@ -6688,6 +6822,7 @@
       <Event Name="HandleCreated" />
       <Event Name="HandleDestroyed" />
       <Event Name="Deactivated" />
+      <Event Name="BeforeHandleDestroyed" />
       <Event Name="GotFocus" />
       <Event Name="QueryContinueDrag" />
       <Event Name="KeyDown" />
@@ -6747,6 +6882,7 @@
     <Type Name="Alternet.UI.StackPanel">
       <Event Name="OrientationChanged" />
       <Event Name="DropDownMenuShowing" />
+      <Event Name="AfterPaint" />
       <Event Name="ContextMenuCreated" />
       <Event Name="MouseHover" />
       <Event Name="CellChanged" />
@@ -6768,6 +6904,7 @@
       <Event Name="HandleCreated" />
       <Event Name="HandleDestroyed" />
       <Event Name="Deactivated" />
+      <Event Name="BeforeHandleDestroyed" />
       <Event Name="GotFocus" />
       <Event Name="QueryContinueDrag" />
       <Event Name="KeyDown" />
@@ -6827,6 +6964,7 @@
     <Type Name="Alternet.UI.VerticalStackPanel">
       <Event Name="OrientationChanged" />
       <Event Name="DropDownMenuShowing" />
+      <Event Name="AfterPaint" />
       <Event Name="ContextMenuCreated" />
       <Event Name="MouseHover" />
       <Event Name="CellChanged" />
@@ -6848,6 +6986,7 @@
       <Event Name="HandleCreated" />
       <Event Name="HandleDestroyed" />
       <Event Name="Deactivated" />
+      <Event Name="BeforeHandleDestroyed" />
       <Event Name="GotFocus" />
       <Event Name="QueryContinueDrag" />
       <Event Name="KeyDown" />
@@ -6932,6 +7071,7 @@
       <Event Name="HandleCreated" />
       <Event Name="HandleDestroyed" />
       <Event Name="Deactivated" />
+      <Event Name="BeforeHandleDestroyed" />
       <Event Name="GotFocus" />
       <Event Name="QueryContinueDrag" />
       <Event Name="KeyDown" />
@@ -7016,6 +7156,7 @@
       <Event Name="HandleCreated" />
       <Event Name="HandleDestroyed" />
       <Event Name="Deactivated" />
+      <Event Name="BeforeHandleDestroyed" />
       <Event Name="GotFocus" />
       <Event Name="QueryContinueDrag" />
       <Event Name="KeyDown" />
@@ -7100,6 +7241,7 @@
       <Event Name="HandleCreated" />
       <Event Name="HandleDestroyed" />
       <Event Name="Deactivated" />
+      <Event Name="BeforeHandleDestroyed" />
       <Event Name="GotFocus" />
       <Event Name="QueryContinueDrag" />
       <Event Name="KeyDown" />
@@ -7164,6 +7306,7 @@
       <Event Name="DelayedTextChanged" />
       <Event Name="ButtonClick" />
       <Event Name="DropDownMenuShowing" />
+      <Event Name="AfterPaint" />
       <Event Name="ContextMenuCreated" />
       <Event Name="MouseHover" />
       <Event Name="CellChanged" />
@@ -7185,6 +7328,7 @@
       <Event Name="HandleCreated" />
       <Event Name="HandleDestroyed" />
       <Event Name="Deactivated" />
+      <Event Name="BeforeHandleDestroyed" />
       <Event Name="GotFocus" />
       <Event Name="QueryContinueDrag" />
       <Event Name="KeyDown" />
@@ -7270,6 +7414,7 @@
       <Event Name="SelectionModeChanged" />
       <Event Name="CustomItemText" />
       <Event Name="DropDownMenuShowing" />
+      <Event Name="AfterPaint" />
       <Event Name="ContextMenuCreated" />
       <Event Name="MouseHover" />
       <Event Name="CellChanged" />
@@ -7291,6 +7436,7 @@
       <Event Name="HandleCreated" />
       <Event Name="HandleDestroyed" />
       <Event Name="Deactivated" />
+      <Event Name="BeforeHandleDestroyed" />
       <Event Name="GotFocus" />
       <Event Name="QueryContinueDrag" />
       <Event Name="KeyDown" />
@@ -7357,6 +7503,7 @@
       <Event Name="SelectionModeChanged" />
       <Event Name="CustomItemText" />
       <Event Name="DropDownMenuShowing" />
+      <Event Name="AfterPaint" />
       <Event Name="ContextMenuCreated" />
       <Event Name="MouseHover" />
       <Event Name="CellChanged" />
@@ -7378,6 +7525,7 @@
       <Event Name="HandleCreated" />
       <Event Name="HandleDestroyed" />
       <Event Name="Deactivated" />
+      <Event Name="BeforeHandleDestroyed" />
       <Event Name="GotFocus" />
       <Event Name="QueryContinueDrag" />
       <Event Name="KeyDown" />
@@ -7437,6 +7585,7 @@
     <Type Name="Alternet.UI.IListBoxHeader" />
     <Type Name="Alternet.UI.ListBoxHeader">
       <Event Name="DropDownMenuShowing" />
+      <Event Name="AfterPaint" />
       <Event Name="ContextMenuCreated" />
       <Event Name="MouseHover" />
       <Event Name="CellChanged" />
@@ -7458,6 +7607,7 @@
       <Event Name="HandleCreated" />
       <Event Name="HandleDestroyed" />
       <Event Name="Deactivated" />
+      <Event Name="BeforeHandleDestroyed" />
       <Event Name="GotFocus" />
       <Event Name="QueryContinueDrag" />
       <Event Name="KeyDown" />
@@ -7526,6 +7676,7 @@
       <Event Name="BeforeCollapse" />
       <Event Name="ExpandedChanged" />
       <Event Name="DropDownMenuShowing" />
+      <Event Name="AfterPaint" />
       <Event Name="ContextMenuCreated" />
       <Event Name="MouseHover" />
       <Event Name="CellChanged" />
@@ -7547,6 +7698,7 @@
       <Event Name="HandleCreated" />
       <Event Name="HandleDestroyed" />
       <Event Name="Deactivated" />
+      <Event Name="BeforeHandleDestroyed" />
       <Event Name="GotFocus" />
       <Event Name="QueryContinueDrag" />
       <Event Name="KeyDown" />
@@ -7617,6 +7769,7 @@
       <Event Name="BeforeCollapse" />
       <Event Name="ExpandedChanged" />
       <Event Name="DropDownMenuShowing" />
+      <Event Name="AfterPaint" />
       <Event Name="ContextMenuCreated" />
       <Event Name="MouseHover" />
       <Event Name="CellChanged" />
@@ -7638,6 +7791,7 @@
       <Event Name="HandleCreated" />
       <Event Name="HandleDestroyed" />
       <Event Name="Deactivated" />
+      <Event Name="BeforeHandleDestroyed" />
       <Event Name="GotFocus" />
       <Event Name="QueryContinueDrag" />
       <Event Name="KeyDown" />
@@ -7709,6 +7863,7 @@
       <Event Name="BeforeCollapse" />
       <Event Name="ExpandedChanged" />
       <Event Name="DropDownMenuShowing" />
+      <Event Name="AfterPaint" />
       <Event Name="ContextMenuCreated" />
       <Event Name="MouseHover" />
       <Event Name="CellChanged" />
@@ -7730,6 +7885,7 @@
       <Event Name="HandleCreated" />
       <Event Name="HandleDestroyed" />
       <Event Name="Deactivated" />
+      <Event Name="BeforeHandleDestroyed" />
       <Event Name="GotFocus" />
       <Event Name="QueryContinueDrag" />
       <Event Name="KeyDown" />
@@ -7798,6 +7954,7 @@
       <Event Name="BeforeCollapse" />
       <Event Name="ExpandedChanged" />
       <Event Name="DropDownMenuShowing" />
+      <Event Name="AfterPaint" />
       <Event Name="ContextMenuCreated" />
       <Event Name="MouseHover" />
       <Event Name="CellChanged" />
@@ -7819,6 +7976,7 @@
       <Event Name="HandleCreated" />
       <Event Name="HandleDestroyed" />
       <Event Name="Deactivated" />
+      <Event Name="BeforeHandleDestroyed" />
       <Event Name="GotFocus" />
       <Event Name="QueryContinueDrag" />
       <Event Name="KeyDown" />
@@ -7886,6 +8044,7 @@
       <Event Name="SelectionModeChanged" />
       <Event Name="CustomItemText" />
       <Event Name="DropDownMenuShowing" />
+      <Event Name="AfterPaint" />
       <Event Name="ContextMenuCreated" />
       <Event Name="MouseHover" />
       <Event Name="CellChanged" />
@@ -7907,6 +8066,7 @@
       <Event Name="HandleCreated" />
       <Event Name="HandleDestroyed" />
       <Event Name="Deactivated" />
+      <Event Name="BeforeHandleDestroyed" />
       <Event Name="GotFocus" />
       <Event Name="QueryContinueDrag" />
       <Event Name="KeyDown" />
@@ -7973,6 +8133,7 @@
       <Event Name="SelectionModeChanged" />
       <Event Name="CustomItemText" />
       <Event Name="DropDownMenuShowing" />
+      <Event Name="AfterPaint" />
       <Event Name="ContextMenuCreated" />
       <Event Name="MouseHover" />
       <Event Name="CellChanged" />
@@ -7994,6 +8155,7 @@
       <Event Name="HandleCreated" />
       <Event Name="HandleDestroyed" />
       <Event Name="Deactivated" />
+      <Event Name="BeforeHandleDestroyed" />
       <Event Name="GotFocus" />
       <Event Name="QueryContinueDrag" />
       <Event Name="KeyDown" />
@@ -8053,6 +8215,7 @@
     <Type Name="Alternet.UI.ListControl`1">
       <Event Name="CustomItemText" />
       <Event Name="DropDownMenuShowing" />
+      <Event Name="AfterPaint" />
       <Event Name="ContextMenuCreated" />
       <Event Name="MouseHover" />
       <Event Name="CellChanged" />
@@ -8074,6 +8237,7 @@
       <Event Name="HandleCreated" />
       <Event Name="HandleDestroyed" />
       <Event Name="Deactivated" />
+      <Event Name="BeforeHandleDestroyed" />
       <Event Name="GotFocus" />
       <Event Name="QueryContinueDrag" />
       <Event Name="KeyDown" />
@@ -8140,6 +8304,7 @@
       <Event Name="SelectionModeChanged" />
       <Event Name="CustomItemText" />
       <Event Name="DropDownMenuShowing" />
+      <Event Name="AfterPaint" />
       <Event Name="ContextMenuCreated" />
       <Event Name="MouseHover" />
       <Event Name="CellChanged" />
@@ -8161,6 +8326,7 @@
       <Event Name="HandleCreated" />
       <Event Name="HandleDestroyed" />
       <Event Name="Deactivated" />
+      <Event Name="BeforeHandleDestroyed" />
       <Event Name="GotFocus" />
       <Event Name="QueryContinueDrag" />
       <Event Name="KeyDown" />
@@ -8227,6 +8393,7 @@
       <Event Name="SelectionModeChanged" />
       <Event Name="CustomItemText" />
       <Event Name="DropDownMenuShowing" />
+      <Event Name="AfterPaint" />
       <Event Name="ContextMenuCreated" />
       <Event Name="MouseHover" />
       <Event Name="CellChanged" />
@@ -8248,6 +8415,7 @@
       <Event Name="HandleCreated" />
       <Event Name="HandleDestroyed" />
       <Event Name="Deactivated" />
+      <Event Name="BeforeHandleDestroyed" />
       <Event Name="GotFocus" />
       <Event Name="QueryContinueDrag" />
       <Event Name="KeyDown" />
@@ -8312,6 +8480,7 @@
       <Event Name="SelectionModeChanged" />
       <Event Name="CustomItemText" />
       <Event Name="DropDownMenuShowing" />
+      <Event Name="AfterPaint" />
       <Event Name="ContextMenuCreated" />
       <Event Name="MouseHover" />
       <Event Name="CellChanged" />
@@ -8333,6 +8502,7 @@
       <Event Name="HandleCreated" />
       <Event Name="HandleDestroyed" />
       <Event Name="Deactivated" />
+      <Event Name="BeforeHandleDestroyed" />
       <Event Name="GotFocus" />
       <Event Name="QueryContinueDrag" />
       <Event Name="KeyDown" />
@@ -8419,6 +8589,7 @@
       <Event Name="HandleCreated" />
       <Event Name="HandleDestroyed" />
       <Event Name="Deactivated" />
+      <Event Name="BeforeHandleDestroyed" />
       <Event Name="GotFocus" />
       <Event Name="QueryContinueDrag" />
       <Event Name="KeyDown" />
@@ -8617,6 +8788,7 @@
       <Event Name="HandleCreated" />
       <Event Name="HandleDestroyed" />
       <Event Name="Deactivated" />
+      <Event Name="BeforeHandleDestroyed" />
       <Event Name="GotFocus" />
       <Event Name="QueryContinueDrag" />
       <Event Name="KeyDown" />
@@ -8695,6 +8867,7 @@
       <Event Name="HandleCreated" />
       <Event Name="HandleDestroyed" />
       <Event Name="Deactivated" />
+      <Event Name="BeforeHandleDestroyed" />
       <Event Name="GotFocus" />
       <Event Name="QueryContinueDrag" />
       <Event Name="KeyDown" />
@@ -8753,6 +8926,7 @@
     </Type>
     <Type Name="Alternet.UI.Calculator">
       <Event Name="DropDownMenuShowing" />
+      <Event Name="AfterPaint" />
       <Event Name="ContextMenuCreated" />
       <Event Name="MouseHover" />
       <Event Name="CellChanged" />
@@ -8774,6 +8948,7 @@
       <Event Name="HandleCreated" />
       <Event Name="HandleDestroyed" />
       <Event Name="Deactivated" />
+      <Event Name="BeforeHandleDestroyed" />
       <Event Name="GotFocus" />
       <Event Name="QueryContinueDrag" />
       <Event Name="KeyDown" />
@@ -8836,6 +9011,7 @@
       <Event Name="ColorToString" />
       <Event Name="StickyChanged" />
       <Event Name="DropDownMenuShowing" />
+      <Event Name="AfterPaint" />
       <Event Name="ContextMenuCreated" />
       <Event Name="MouseHover" />
       <Event Name="CellChanged" />
@@ -8857,6 +9033,7 @@
       <Event Name="HandleCreated" />
       <Event Name="HandleDestroyed" />
       <Event Name="Deactivated" />
+      <Event Name="BeforeHandleDestroyed" />
       <Event Name="GotFocus" />
       <Event Name="QueryContinueDrag" />
       <Event Name="KeyDown" />
@@ -8946,6 +9123,7 @@
       <Event Name="HandleCreated" />
       <Event Name="HandleDestroyed" />
       <Event Name="Deactivated" />
+      <Event Name="BeforeHandleDestroyed" />
       <Event Name="GotFocus" />
       <Event Name="QueryContinueDrag" />
       <Event Name="KeyDown" />
@@ -9013,6 +9191,7 @@
       <Event Name="DelayedTextChanged" />
       <Event Name="ButtonClick" />
       <Event Name="DropDownMenuShowing" />
+      <Event Name="AfterPaint" />
       <Event Name="ContextMenuCreated" />
       <Event Name="MouseHover" />
       <Event Name="CellChanged" />
@@ -9034,6 +9213,7 @@
       <Event Name="HandleCreated" />
       <Event Name="HandleDestroyed" />
       <Event Name="Deactivated" />
+      <Event Name="BeforeHandleDestroyed" />
       <Event Name="GotFocus" />
       <Event Name="QueryContinueDrag" />
       <Event Name="KeyDown" />
@@ -9115,6 +9295,7 @@
       <Event Name="HandleCreated" />
       <Event Name="HandleDestroyed" />
       <Event Name="Deactivated" />
+      <Event Name="BeforeHandleDestroyed" />
       <Event Name="GotFocus" />
       <Event Name="QueryContinueDrag" />
       <Event Name="KeyDown" />
@@ -9174,6 +9355,7 @@
     <Type Name="Alternet.UI.InnerPopupToolBar">
       <Event Name="Closed" />
       <Event Name="DropDownMenuShowing" />
+      <Event Name="AfterPaint" />
       <Event Name="ContextMenuCreated" />
       <Event Name="MouseHover" />
       <Event Name="CellChanged" />
@@ -9195,6 +9377,7 @@
       <Event Name="HandleCreated" />
       <Event Name="HandleDestroyed" />
       <Event Name="Deactivated" />
+      <Event Name="BeforeHandleDestroyed" />
       <Event Name="GotFocus" />
       <Event Name="QueryContinueDrag" />
       <Event Name="KeyDown" />
@@ -9255,6 +9438,7 @@
     <Type Name="Alternet.UI.PopupControl">
       <Event Name="Closed" />
       <Event Name="DropDownMenuShowing" />
+      <Event Name="AfterPaint" />
       <Event Name="ContextMenuCreated" />
       <Event Name="MouseHover" />
       <Event Name="CellChanged" />
@@ -9276,6 +9460,7 @@
       <Event Name="HandleCreated" />
       <Event Name="HandleDestroyed" />
       <Event Name="Deactivated" />
+      <Event Name="BeforeHandleDestroyed" />
       <Event Name="GotFocus" />
       <Event Name="QueryContinueDrag" />
       <Event Name="KeyDown" />
@@ -9335,6 +9520,7 @@
     <Type Name="Alternet.UI.PopupControl`1">
       <Event Name="Closed" />
       <Event Name="DropDownMenuShowing" />
+      <Event Name="AfterPaint" />
       <Event Name="ContextMenuCreated" />
       <Event Name="MouseHover" />
       <Event Name="CellChanged" />
@@ -9356,6 +9542,7 @@
       <Event Name="HandleCreated" />
       <Event Name="HandleDestroyed" />
       <Event Name="Deactivated" />
+      <Event Name="BeforeHandleDestroyed" />
       <Event Name="GotFocus" />
       <Event Name="QueryContinueDrag" />
       <Event Name="KeyDown" />
@@ -9453,6 +9640,7 @@
       <Event Name="HandleCreated" />
       <Event Name="HandleDestroyed" />
       <Event Name="Deactivated" />
+      <Event Name="BeforeHandleDestroyed" />
       <Event Name="GotFocus" />
       <Event Name="QueryContinueDrag" />
       <Event Name="KeyDown" />
@@ -9550,6 +9738,7 @@
       <Event Name="HandleCreated" />
       <Event Name="HandleDestroyed" />
       <Event Name="Deactivated" />
+      <Event Name="BeforeHandleDestroyed" />
       <Event Name="GotFocus" />
       <Event Name="QueryContinueDrag" />
       <Event Name="KeyDown" />
@@ -9647,6 +9836,7 @@
       <Event Name="HandleCreated" />
       <Event Name="HandleDestroyed" />
       <Event Name="Deactivated" />
+      <Event Name="BeforeHandleDestroyed" />
       <Event Name="GotFocus" />
       <Event Name="QueryContinueDrag" />
       <Event Name="KeyDown" />
@@ -9744,6 +9934,7 @@
       <Event Name="HandleCreated" />
       <Event Name="HandleDestroyed" />
       <Event Name="Deactivated" />
+      <Event Name="BeforeHandleDestroyed" />
       <Event Name="GotFocus" />
       <Event Name="QueryContinueDrag" />
       <Event Name="KeyDown" />
@@ -9841,6 +10032,7 @@
       <Event Name="HandleCreated" />
       <Event Name="HandleDestroyed" />
       <Event Name="Deactivated" />
+      <Event Name="BeforeHandleDestroyed" />
       <Event Name="GotFocus" />
       <Event Name="QueryContinueDrag" />
       <Event Name="KeyDown" />
@@ -9938,6 +10130,7 @@
       <Event Name="HandleCreated" />
       <Event Name="HandleDestroyed" />
       <Event Name="Deactivated" />
+      <Event Name="BeforeHandleDestroyed" />
       <Event Name="GotFocus" />
       <Event Name="QueryContinueDrag" />
       <Event Name="KeyDown" />
@@ -10035,6 +10228,7 @@
       <Event Name="HandleCreated" />
       <Event Name="HandleDestroyed" />
       <Event Name="Deactivated" />
+      <Event Name="BeforeHandleDestroyed" />
       <Event Name="GotFocus" />
       <Event Name="QueryContinueDrag" />
       <Event Name="KeyDown" />
@@ -10132,6 +10326,7 @@
       <Event Name="HandleCreated" />
       <Event Name="HandleDestroyed" />
       <Event Name="Deactivated" />
+      <Event Name="BeforeHandleDestroyed" />
       <Event Name="GotFocus" />
       <Event Name="QueryContinueDrag" />
       <Event Name="KeyDown" />
@@ -10229,6 +10424,7 @@
       <Event Name="HandleCreated" />
       <Event Name="HandleDestroyed" />
       <Event Name="Deactivated" />
+      <Event Name="BeforeHandleDestroyed" />
       <Event Name="GotFocus" />
       <Event Name="QueryContinueDrag" />
       <Event Name="KeyDown" />
@@ -10326,6 +10522,7 @@
       <Event Name="HandleCreated" />
       <Event Name="HandleDestroyed" />
       <Event Name="Deactivated" />
+      <Event Name="BeforeHandleDestroyed" />
       <Event Name="GotFocus" />
       <Event Name="QueryContinueDrag" />
       <Event Name="KeyDown" />
@@ -10423,6 +10620,7 @@
       <Event Name="HandleCreated" />
       <Event Name="HandleDestroyed" />
       <Event Name="Deactivated" />
+      <Event Name="BeforeHandleDestroyed" />
       <Event Name="GotFocus" />
       <Event Name="QueryContinueDrag" />
       <Event Name="KeyDown" />
@@ -10482,6 +10680,7 @@
     <Type Name="Alternet.UI.IFilePreview" />
     <Type Name="Alternet.UI.PreviewFile">
       <Event Name="DropDownMenuShowing" />
+      <Event Name="AfterPaint" />
       <Event Name="ContextMenuCreated" />
       <Event Name="MouseHover" />
       <Event Name="CellChanged" />
@@ -10503,6 +10702,7 @@
       <Event Name="HandleCreated" />
       <Event Name="HandleDestroyed" />
       <Event Name="Deactivated" />
+      <Event Name="BeforeHandleDestroyed" />
       <Event Name="GotFocus" />
       <Event Name="QueryContinueDrag" />
       <Event Name="KeyDown" />
@@ -10561,6 +10761,7 @@
     </Type>
     <Type Name="Alternet.UI.PreviewFileSplitted">
       <Event Name="DropDownMenuShowing" />
+      <Event Name="AfterPaint" />
       <Event Name="ContextMenuCreated" />
       <Event Name="MouseHover" />
       <Event Name="CellChanged" />
@@ -10582,6 +10783,7 @@
       <Event Name="HandleCreated" />
       <Event Name="HandleDestroyed" />
       <Event Name="Deactivated" />
+      <Event Name="BeforeHandleDestroyed" />
       <Event Name="GotFocus" />
       <Event Name="QueryContinueDrag" />
       <Event Name="KeyDown" />
@@ -10640,6 +10842,7 @@
     </Type>
     <Type Name="Alternet.UI.PreviewInBrowser">
       <Event Name="DropDownMenuShowing" />
+      <Event Name="AfterPaint" />
       <Event Name="ContextMenuCreated" />
       <Event Name="MouseHover" />
       <Event Name="CellChanged" />
@@ -10661,6 +10864,7 @@
       <Event Name="HandleCreated" />
       <Event Name="HandleDestroyed" />
       <Event Name="Deactivated" />
+      <Event Name="BeforeHandleDestroyed" />
       <Event Name="GotFocus" />
       <Event Name="QueryContinueDrag" />
       <Event Name="KeyDown" />
@@ -10719,6 +10923,7 @@
     </Type>
     <Type Name="Alternet.UI.PreviewTextFile">
       <Event Name="DropDownMenuShowing" />
+      <Event Name="AfterPaint" />
       <Event Name="ContextMenuCreated" />
       <Event Name="MouseHover" />
       <Event Name="CellChanged" />
@@ -10740,6 +10945,7 @@
       <Event Name="HandleCreated" />
       <Event Name="HandleDestroyed" />
       <Event Name="Deactivated" />
+      <Event Name="BeforeHandleDestroyed" />
       <Event Name="GotFocus" />
       <Event Name="QueryContinueDrag" />
       <Event Name="KeyDown" />
@@ -10798,6 +11004,7 @@
     </Type>
     <Type Name="Alternet.UI.PreviewUixml">
       <Event Name="DropDownMenuShowing" />
+      <Event Name="AfterPaint" />
       <Event Name="ContextMenuCreated" />
       <Event Name="MouseHover" />
       <Event Name="CellChanged" />
@@ -10819,6 +11026,7 @@
       <Event Name="HandleCreated" />
       <Event Name="HandleDestroyed" />
       <Event Name="Deactivated" />
+      <Event Name="BeforeHandleDestroyed" />
       <Event Name="GotFocus" />
       <Event Name="QueryContinueDrag" />
       <Event Name="KeyDown" />
@@ -10877,6 +11085,7 @@
     </Type>
     <Type Name="Alternet.UI.PreviewUixmlSplitted">
       <Event Name="DropDownMenuShowing" />
+      <Event Name="AfterPaint" />
       <Event Name="ContextMenuCreated" />
       <Event Name="MouseHover" />
       <Event Name="CellChanged" />
@@ -10898,6 +11107,7 @@
       <Event Name="HandleCreated" />
       <Event Name="HandleDestroyed" />
       <Event Name="Deactivated" />
+      <Event Name="BeforeHandleDestroyed" />
       <Event Name="GotFocus" />
       <Event Name="QueryContinueDrag" />
       <Event Name="KeyDown" />
@@ -10997,6 +11207,7 @@
       <Event Name="HandleCreated" />
       <Event Name="HandleDestroyed" />
       <Event Name="Deactivated" />
+      <Event Name="BeforeHandleDestroyed" />
       <Event Name="GotFocus" />
       <Event Name="QueryContinueDrag" />
       <Event Name="KeyDown" />
@@ -11083,6 +11294,7 @@
       <Event Name="HandleCreated" />
       <Event Name="HandleDestroyed" />
       <Event Name="Deactivated" />
+      <Event Name="BeforeHandleDestroyed" />
       <Event Name="GotFocus" />
       <Event Name="QueryContinueDrag" />
       <Event Name="KeyDown" />
@@ -11163,6 +11375,7 @@
       <Event Name="HandleCreated" />
       <Event Name="HandleDestroyed" />
       <Event Name="Deactivated" />
+      <Event Name="BeforeHandleDestroyed" />
       <Event Name="GotFocus" />
       <Event Name="QueryContinueDrag" />
       <Event Name="KeyDown" />
@@ -11247,6 +11460,7 @@
       <Event Name="HandleCreated" />
       <Event Name="HandleDestroyed" />
       <Event Name="Deactivated" />
+      <Event Name="BeforeHandleDestroyed" />
       <Event Name="GotFocus" />
       <Event Name="QueryContinueDrag" />
       <Event Name="KeyDown" />
@@ -11332,6 +11546,7 @@
       <Event Name="HandleCreated" />
       <Event Name="HandleDestroyed" />
       <Event Name="Deactivated" />
+      <Event Name="BeforeHandleDestroyed" />
       <Event Name="GotFocus" />
       <Event Name="QueryContinueDrag" />
       <Event Name="KeyDown" />
@@ -11419,6 +11634,7 @@
       <Event Name="HandleCreated" />
       <Event Name="HandleDestroyed" />
       <Event Name="Deactivated" />
+      <Event Name="BeforeHandleDestroyed" />
       <Event Name="GotFocus" />
       <Event Name="QueryContinueDrag" />
       <Event Name="KeyDown" />
@@ -11497,6 +11713,7 @@
       <Event Name="HandleCreated" />
       <Event Name="HandleDestroyed" />
       <Event Name="Deactivated" />
+      <Event Name="BeforeHandleDestroyed" />
       <Event Name="GotFocus" />
       <Event Name="QueryContinueDrag" />
       <Event Name="KeyDown" />
@@ -11564,6 +11781,7 @@
       <Event Name="LargeChangeChanged" />
       <Event Name="TickFrequencyChanged" />
       <Event Name="DropDownMenuShowing" />
+      <Event Name="AfterPaint" />
       <Event Name="ContextMenuCreated" />
       <Event Name="MouseHover" />
       <Event Name="CellChanged" />
@@ -11585,6 +11803,7 @@
       <Event Name="HandleCreated" />
       <Event Name="HandleDestroyed" />
       <Event Name="Deactivated" />
+      <Event Name="BeforeHandleDestroyed" />
       <Event Name="GotFocus" />
       <Event Name="QueryContinueDrag" />
       <Event Name="KeyDown" />
@@ -11647,6 +11866,7 @@
       <Event Name="BeforeShowPopup" />
       <Event Name="StickyChanged" />
       <Event Name="DropDownMenuShowing" />
+      <Event Name="AfterPaint" />
       <Event Name="ContextMenuCreated" />
       <Event Name="MouseHover" />
       <Event Name="CellChanged" />
@@ -11668,6 +11888,7 @@
       <Event Name="HandleCreated" />
       <Event Name="HandleDestroyed" />
       <Event Name="Deactivated" />
+      <Event Name="BeforeHandleDestroyed" />
       <Event Name="GotFocus" />
       <Event Name="QueryContinueDrag" />
       <Event Name="KeyDown" />
@@ -11731,6 +11952,7 @@
       <Event Name="BeforeShowPopup" />
       <Event Name="StickyChanged" />
       <Event Name="DropDownMenuShowing" />
+      <Event Name="AfterPaint" />
       <Event Name="ContextMenuCreated" />
       <Event Name="MouseHover" />
       <Event Name="CellChanged" />
@@ -11752,6 +11974,7 @@
       <Event Name="HandleCreated" />
       <Event Name="HandleDestroyed" />
       <Event Name="Deactivated" />
+      <Event Name="BeforeHandleDestroyed" />
       <Event Name="GotFocus" />
       <Event Name="QueryContinueDrag" />
       <Event Name="KeyDown" />
@@ -11815,6 +12038,7 @@
       <Event Name="BeforeShowPopup" />
       <Event Name="StickyChanged" />
       <Event Name="DropDownMenuShowing" />
+      <Event Name="AfterPaint" />
       <Event Name="ContextMenuCreated" />
       <Event Name="MouseHover" />
       <Event Name="CellChanged" />
@@ -11836,6 +12060,7 @@
       <Event Name="HandleCreated" />
       <Event Name="HandleDestroyed" />
       <Event Name="Deactivated" />
+      <Event Name="BeforeHandleDestroyed" />
       <Event Name="GotFocus" />
       <Event Name="QueryContinueDrag" />
       <Event Name="KeyDown" />
@@ -11899,6 +12124,7 @@
       <Event Name="BeforeShowPopup" />
       <Event Name="StickyChanged" />
       <Event Name="DropDownMenuShowing" />
+      <Event Name="AfterPaint" />
       <Event Name="ContextMenuCreated" />
       <Event Name="MouseHover" />
       <Event Name="CellChanged" />
@@ -11920,6 +12146,7 @@
       <Event Name="HandleCreated" />
       <Event Name="HandleDestroyed" />
       <Event Name="Deactivated" />
+      <Event Name="BeforeHandleDestroyed" />
       <Event Name="GotFocus" />
       <Event Name="QueryContinueDrag" />
       <Event Name="KeyDown" />
@@ -11983,6 +12210,7 @@
       <Event Name="BeforeShowPopup" />
       <Event Name="StickyChanged" />
       <Event Name="DropDownMenuShowing" />
+      <Event Name="AfterPaint" />
       <Event Name="ContextMenuCreated" />
       <Event Name="MouseHover" />
       <Event Name="CellChanged" />
@@ -12004,6 +12232,7 @@
       <Event Name="HandleCreated" />
       <Event Name="HandleDestroyed" />
       <Event Name="Deactivated" />
+      <Event Name="BeforeHandleDestroyed" />
       <Event Name="GotFocus" />
       <Event Name="QueryContinueDrag" />
       <Event Name="KeyDown" />
@@ -12063,6 +12292,7 @@
     <Type Name="Alternet.UI.SpeedButton">
       <Event Name="StickyChanged" />
       <Event Name="DropDownMenuShowing" />
+      <Event Name="AfterPaint" />
       <Event Name="ContextMenuCreated" />
       <Event Name="MouseHover" />
       <Event Name="CellChanged" />
@@ -12084,6 +12314,7 @@
       <Event Name="HandleCreated" />
       <Event Name="HandleDestroyed" />
       <Event Name="Deactivated" />
+      <Event Name="BeforeHandleDestroyed" />
       <Event Name="GotFocus" />
       <Event Name="QueryContinueDrag" />
       <Event Name="KeyDown" />
@@ -12147,6 +12378,7 @@
       <Event Name="BeforeShowPopup" />
       <Event Name="StickyChanged" />
       <Event Name="DropDownMenuShowing" />
+      <Event Name="AfterPaint" />
       <Event Name="ContextMenuCreated" />
       <Event Name="MouseHover" />
       <Event Name="CellChanged" />
@@ -12168,6 +12400,7 @@
       <Event Name="HandleCreated" />
       <Event Name="HandleDestroyed" />
       <Event Name="Deactivated" />
+      <Event Name="BeforeHandleDestroyed" />
       <Event Name="GotFocus" />
       <Event Name="QueryContinueDrag" />
       <Event Name="KeyDown" />
@@ -12231,6 +12464,7 @@
       <Event Name="BeforeShowPopup" />
       <Event Name="StickyChanged" />
       <Event Name="DropDownMenuShowing" />
+      <Event Name="AfterPaint" />
       <Event Name="ContextMenuCreated" />
       <Event Name="MouseHover" />
       <Event Name="CellChanged" />
@@ -12252,6 +12486,7 @@
       <Event Name="HandleCreated" />
       <Event Name="HandleDestroyed" />
       <Event Name="Deactivated" />
+      <Event Name="BeforeHandleDestroyed" />
       <Event Name="GotFocus" />
       <Event Name="QueryContinueDrag" />
       <Event Name="KeyDown" />
@@ -12314,6 +12549,7 @@
       <Event Name="BeforeShowPopup" />
       <Event Name="StickyChanged" />
       <Event Name="DropDownMenuShowing" />
+      <Event Name="AfterPaint" />
       <Event Name="ContextMenuCreated" />
       <Event Name="MouseHover" />
       <Event Name="CellChanged" />
@@ -12335,6 +12571,7 @@
       <Event Name="HandleCreated" />
       <Event Name="HandleDestroyed" />
       <Event Name="Deactivated" />
+      <Event Name="BeforeHandleDestroyed" />
       <Event Name="GotFocus" />
       <Event Name="QueryContinueDrag" />
       <Event Name="KeyDown" />
@@ -12397,6 +12634,7 @@
       <Event Name="ColorToString" />
       <Event Name="StickyChanged" />
       <Event Name="DropDownMenuShowing" />
+      <Event Name="AfterPaint" />
       <Event Name="ContextMenuCreated" />
       <Event Name="MouseHover" />
       <Event Name="CellChanged" />
@@ -12418,6 +12656,7 @@
       <Event Name="HandleCreated" />
       <Event Name="HandleDestroyed" />
       <Event Name="Deactivated" />
+      <Event Name="BeforeHandleDestroyed" />
       <Event Name="GotFocus" />
       <Event Name="QueryContinueDrag" />
       <Event Name="KeyDown" />
@@ -12480,6 +12719,7 @@
       <Event Name="BeforeShowPopup" />
       <Event Name="StickyChanged" />
       <Event Name="DropDownMenuShowing" />
+      <Event Name="AfterPaint" />
       <Event Name="ContextMenuCreated" />
       <Event Name="MouseHover" />
       <Event Name="CellChanged" />
@@ -12501,6 +12741,7 @@
       <Event Name="HandleCreated" />
       <Event Name="HandleDestroyed" />
       <Event Name="Deactivated" />
+      <Event Name="BeforeHandleDestroyed" />
       <Event Name="GotFocus" />
       <Event Name="QueryContinueDrag" />
       <Event Name="KeyDown" />
@@ -12564,6 +12805,7 @@
       <Event Name="BeforeShowPopup" />
       <Event Name="StickyChanged" />
       <Event Name="DropDownMenuShowing" />
+      <Event Name="AfterPaint" />
       <Event Name="ContextMenuCreated" />
       <Event Name="MouseHover" />
       <Event Name="CellChanged" />
@@ -12585,6 +12827,7 @@
       <Event Name="HandleCreated" />
       <Event Name="HandleDestroyed" />
       <Event Name="Deactivated" />
+      <Event Name="BeforeHandleDestroyed" />
       <Event Name="GotFocus" />
       <Event Name="QueryContinueDrag" />
       <Event Name="KeyDown" />
@@ -12644,6 +12887,7 @@
     <Type Name="Alternet.UI.SpeedTextButton">
       <Event Name="StickyChanged" />
       <Event Name="DropDownMenuShowing" />
+      <Event Name="AfterPaint" />
       <Event Name="ContextMenuCreated" />
       <Event Name="MouseHover" />
       <Event Name="CellChanged" />
@@ -12665,6 +12909,7 @@
       <Event Name="HandleCreated" />
       <Event Name="HandleDestroyed" />
       <Event Name="Deactivated" />
+      <Event Name="BeforeHandleDestroyed" />
       <Event Name="GotFocus" />
       <Event Name="QueryContinueDrag" />
       <Event Name="KeyDown" />
@@ -12740,6 +12985,7 @@
     <Type Name="Alternet.UI.CardPanel">
       <Event Name="CardPropertyChanged" />
       <Event Name="DropDownMenuShowing" />
+      <Event Name="AfterPaint" />
       <Event Name="ContextMenuCreated" />
       <Event Name="MouseHover" />
       <Event Name="CellChanged" />
@@ -12761,6 +13007,7 @@
       <Event Name="HandleCreated" />
       <Event Name="HandleDestroyed" />
       <Event Name="Deactivated" />
+      <Event Name="BeforeHandleDestroyed" />
       <Event Name="GotFocus" />
       <Event Name="QueryContinueDrag" />
       <Event Name="KeyDown" />
@@ -12823,6 +13070,7 @@
       <Event Name="TabClick" />
       <Event Name="CloseButtonClick" />
       <Event Name="DropDownMenuShowing" />
+      <Event Name="AfterPaint" />
       <Event Name="ContextMenuCreated" />
       <Event Name="MouseHover" />
       <Event Name="CellChanged" />
@@ -12844,6 +13092,7 @@
       <Event Name="HandleCreated" />
       <Event Name="HandleDestroyed" />
       <Event Name="Deactivated" />
+      <Event Name="BeforeHandleDestroyed" />
       <Event Name="GotFocus" />
       <Event Name="QueryContinueDrag" />
       <Event Name="KeyDown" />
@@ -12918,6 +13167,7 @@
       <Event Name="SelectedIndexChanged" />
       <Event Name="SelectedPageChanged" />
       <Event Name="DropDownMenuShowing" />
+      <Event Name="AfterPaint" />
       <Event Name="ContextMenuCreated" />
       <Event Name="MouseHover" />
       <Event Name="CellChanged" />
@@ -12939,6 +13189,7 @@
       <Event Name="HandleCreated" />
       <Event Name="HandleDestroyed" />
       <Event Name="Deactivated" />
+      <Event Name="BeforeHandleDestroyed" />
       <Event Name="GotFocus" />
       <Event Name="QueryContinueDrag" />
       <Event Name="KeyDown" />
@@ -13001,6 +13252,7 @@
       <Event Name="SelectedIndexChanged" />
       <Event Name="SelectedPageChanged" />
       <Event Name="DropDownMenuShowing" />
+      <Event Name="AfterPaint" />
       <Event Name="ContextMenuCreated" />
       <Event Name="MouseHover" />
       <Event Name="CellChanged" />
@@ -13022,6 +13274,7 @@
       <Event Name="HandleCreated" />
       <Event Name="HandleDestroyed" />
       <Event Name="Deactivated" />
+      <Event Name="BeforeHandleDestroyed" />
       <Event Name="GotFocus" />
       <Event Name="QueryContinueDrag" />
       <Event Name="KeyDown" />
@@ -13080,6 +13333,7 @@
     </Type>
     <Type Name="Alternet.UI.TabPage">
       <Event Name="DropDownMenuShowing" />
+      <Event Name="AfterPaint" />
       <Event Name="ContextMenuCreated" />
       <Event Name="MouseHover" />
       <Event Name="CellChanged" />
@@ -13101,6 +13355,7 @@
       <Event Name="HandleCreated" />
       <Event Name="HandleDestroyed" />
       <Event Name="Deactivated" />
+      <Event Name="BeforeHandleDestroyed" />
       <Event Name="GotFocus" />
       <Event Name="QueryContinueDrag" />
       <Event Name="KeyDown" />
@@ -13159,6 +13414,7 @@
     </Type>
     <Type Name="Alternet.UI.TemplateControl">
       <Event Name="DropDownMenuShowing" />
+      <Event Name="AfterPaint" />
       <Event Name="ContextMenuCreated" />
       <Event Name="MouseHover" />
       <Event Name="CellChanged" />
@@ -13180,6 +13436,7 @@
       <Event Name="HandleCreated" />
       <Event Name="HandleDestroyed" />
       <Event Name="Deactivated" />
+      <Event Name="BeforeHandleDestroyed" />
       <Event Name="GotFocus" />
       <Event Name="QueryContinueDrag" />
       <Event Name="KeyDown" />
@@ -13261,6 +13518,7 @@
       <Event Name="HandleCreated" />
       <Event Name="HandleDestroyed" />
       <Event Name="Deactivated" />
+      <Event Name="BeforeHandleDestroyed" />
       <Event Name="GotFocus" />
       <Event Name="QueryContinueDrag" />
       <Event Name="KeyDown" />
@@ -13347,6 +13605,7 @@
       <Event Name="HandleCreated" />
       <Event Name="HandleDestroyed" />
       <Event Name="Deactivated" />
+      <Event Name="BeforeHandleDestroyed" />
       <Event Name="GotFocus" />
       <Event Name="QueryContinueDrag" />
       <Event Name="KeyDown" />
@@ -13434,6 +13693,7 @@
       <Event Name="HandleCreated" />
       <Event Name="HandleDestroyed" />
       <Event Name="Deactivated" />
+      <Event Name="BeforeHandleDestroyed" />
       <Event Name="GotFocus" />
       <Event Name="QueryContinueDrag" />
       <Event Name="KeyDown" />
@@ -13501,6 +13761,7 @@
       <Event Name="OptionMatchWholeWordChanged" />
       <Event Name="OptionUseRegularExpressionsChanged" />
       <Event Name="DropDownMenuShowing" />
+      <Event Name="AfterPaint" />
       <Event Name="ContextMenuCreated" />
       <Event Name="MouseHover" />
       <Event Name="CellChanged" />
@@ -13522,6 +13783,7 @@
       <Event Name="HandleCreated" />
       <Event Name="HandleDestroyed" />
       <Event Name="Deactivated" />
+      <Event Name="BeforeHandleDestroyed" />
       <Event Name="GotFocus" />
       <Event Name="QueryContinueDrag" />
       <Event Name="KeyDown" />
@@ -13591,6 +13853,7 @@
     <Type Name="Alternet.UI.ToolBar">
       <Event Name="ToolClick" />
       <Event Name="DropDownMenuShowing" />
+      <Event Name="AfterPaint" />
       <Event Name="ContextMenuCreated" />
       <Event Name="MouseHover" />
       <Event Name="CellChanged" />
@@ -13612,6 +13875,7 @@
       <Event Name="HandleCreated" />
       <Event Name="HandleDestroyed" />
       <Event Name="Deactivated" />
+      <Event Name="BeforeHandleDestroyed" />
       <Event Name="GotFocus" />
       <Event Name="QueryContinueDrag" />
       <Event Name="KeyDown" />
@@ -13670,6 +13934,7 @@
     </Type>
     <Type Name="Alternet.UI.ToolBarSeparatorItem">
       <Event Name="DropDownMenuShowing" />
+      <Event Name="AfterPaint" />
       <Event Name="ContextMenuCreated" />
       <Event Name="MouseHover" />
       <Event Name="CellChanged" />
@@ -13691,6 +13956,7 @@
       <Event Name="HandleCreated" />
       <Event Name="HandleDestroyed" />
       <Event Name="Deactivated" />
+      <Event Name="BeforeHandleDestroyed" />
       <Event Name="GotFocus" />
       <Event Name="QueryContinueDrag" />
       <Event Name="KeyDown" />
@@ -13749,6 +14015,7 @@
     </Type>
     <Type Name="Alternet.UI.ToolBarSet">
       <Event Name="DropDownMenuShowing" />
+      <Event Name="AfterPaint" />
       <Event Name="ContextMenuCreated" />
       <Event Name="MouseHover" />
       <Event Name="CellChanged" />
@@ -13770,6 +14037,7 @@
       <Event Name="HandleCreated" />
       <Event Name="HandleDestroyed" />
       <Event Name="Deactivated" />
+      <Event Name="BeforeHandleDestroyed" />
       <Event Name="GotFocus" />
       <Event Name="QueryContinueDrag" />
       <Event Name="KeyDown" />
@@ -13833,6 +14101,7 @@
     <Type Name="Alternet.UI.RichToolTip">
       <Event Name="ToolTipVisibleChanged" />
       <Event Name="DropDownMenuShowing" />
+      <Event Name="AfterPaint" />
       <Event Name="ContextMenuCreated" />
       <Event Name="MouseHover" />
       <Event Name="CellChanged" />
@@ -13854,6 +14123,7 @@
       <Event Name="HandleCreated" />
       <Event Name="HandleDestroyed" />
       <Event Name="Deactivated" />
+      <Event Name="BeforeHandleDestroyed" />
       <Event Name="GotFocus" />
       <Event Name="QueryContinueDrag" />
       <Event Name="KeyDown" />
@@ -13957,6 +14227,7 @@
       <Event Name="HandleCreated" />
       <Event Name="HandleDestroyed" />
       <Event Name="Deactivated" />
+      <Event Name="BeforeHandleDestroyed" />
       <Event Name="GotFocus" />
       <Event Name="QueryContinueDrag" />
       <Event Name="KeyDown" />
@@ -14056,6 +14327,7 @@
       <Event Name="HandleCreated" />
       <Event Name="HandleDestroyed" />
       <Event Name="Deactivated" />
+      <Event Name="BeforeHandleDestroyed" />
       <Event Name="GotFocus" />
       <Event Name="QueryContinueDrag" />
       <Event Name="KeyDown" />
@@ -14153,6 +14425,7 @@
       <Event Name="HandleCreated" />
       <Event Name="HandleDestroyed" />
       <Event Name="Deactivated" />
+      <Event Name="BeforeHandleDestroyed" />
       <Event Name="GotFocus" />
       <Event Name="QueryContinueDrag" />
       <Event Name="KeyDown" />
@@ -14250,6 +14523,7 @@
       <Event Name="HandleCreated" />
       <Event Name="HandleDestroyed" />
       <Event Name="Deactivated" />
+      <Event Name="BeforeHandleDestroyed" />
       <Event Name="GotFocus" />
       <Event Name="QueryContinueDrag" />
       <Event Name="KeyDown" />
@@ -14347,6 +14621,7 @@
       <Event Name="HandleCreated" />
       <Event Name="HandleDestroyed" />
       <Event Name="Deactivated" />
+      <Event Name="BeforeHandleDestroyed" />
       <Event Name="GotFocus" />
       <Event Name="QueryContinueDrag" />
       <Event Name="KeyDown" />
@@ -14448,6 +14723,7 @@
       <Event Name="HandleCreated" />
       <Event Name="HandleDestroyed" />
       <Event Name="Deactivated" />
+      <Event Name="BeforeHandleDestroyed" />
       <Event Name="GotFocus" />
       <Event Name="QueryContinueDrag" />
       <Event Name="KeyDown" />
@@ -14626,6 +14902,7 @@
       <Event Name="HandleCreated" />
       <Event Name="HandleDestroyed" />
       <Event Name="Deactivated" />
+      <Event Name="BeforeHandleDestroyed" />
       <Event Name="GotFocus" />
       <Event Name="QueryContinueDrag" />
       <Event Name="KeyDown" />
@@ -14723,6 +15000,7 @@
       <Event Name="HandleCreated" />
       <Event Name="HandleDestroyed" />
       <Event Name="Deactivated" />
+      <Event Name="BeforeHandleDestroyed" />
       <Event Name="GotFocus" />
       <Event Name="QueryContinueDrag" />
       <Event Name="KeyDown" />
@@ -14820,6 +15098,7 @@
       <Event Name="HandleCreated" />
       <Event Name="HandleDestroyed" />
       <Event Name="Deactivated" />
+      <Event Name="BeforeHandleDestroyed" />
       <Event Name="GotFocus" />
       <Event Name="QueryContinueDrag" />
       <Event Name="KeyDown" />
@@ -14917,6 +15196,7 @@
       <Event Name="HandleCreated" />
       <Event Name="HandleDestroyed" />
       <Event Name="Deactivated" />
+      <Event Name="BeforeHandleDestroyed" />
       <Event Name="GotFocus" />
       <Event Name="QueryContinueDrag" />
       <Event Name="KeyDown" />
@@ -15014,6 +15294,7 @@
       <Event Name="HandleCreated" />
       <Event Name="HandleDestroyed" />
       <Event Name="Deactivated" />
+      <Event Name="BeforeHandleDestroyed" />
       <Event Name="GotFocus" />
       <Event Name="QueryContinueDrag" />
       <Event Name="KeyDown" />
@@ -15111,6 +15392,7 @@
       <Event Name="HandleCreated" />
       <Event Name="HandleDestroyed" />
       <Event Name="Deactivated" />
+      <Event Name="BeforeHandleDestroyed" />
       <Event Name="GotFocus" />
       <Event Name="QueryContinueDrag" />
       <Event Name="KeyDown" />
@@ -15208,6 +15490,7 @@
       <Event Name="HandleCreated" />
       <Event Name="HandleDestroyed" />
       <Event Name="Deactivated" />
+      <Event Name="BeforeHandleDestroyed" />
       <Event Name="GotFocus" />
       <Event Name="QueryContinueDrag" />
       <Event Name="KeyDown" />
@@ -15305,6 +15588,7 @@
       <Event Name="HandleCreated" />
       <Event Name="HandleDestroyed" />
       <Event Name="Deactivated" />
+      <Event Name="BeforeHandleDestroyed" />
       <Event Name="GotFocus" />
       <Event Name="QueryContinueDrag" />
       <Event Name="KeyDown" />
@@ -15402,6 +15686,7 @@
       <Event Name="HandleCreated" />
       <Event Name="HandleDestroyed" />
       <Event Name="Deactivated" />
+      <Event Name="BeforeHandleDestroyed" />
       <Event Name="GotFocus" />
       <Event Name="QueryContinueDrag" />
       <Event Name="KeyDown" />
@@ -15593,6 +15878,7 @@
     <Type Name="Alternet.UI.IWebBrowserFactoryHandler" />
     <Type Name="Alternet.UI.IWxControlFactoryHandler" />
     <Type Name="Alternet.UI.IContextMenuHost" />
+    <Type Name="Alternet.UI.IContextMenuProperties" />
     <Type Name="Alternet.UI.IMenuItemProperties">
       <Event Name="Changed" />
     </Type>
@@ -15655,6 +15941,7 @@
     <Type Name="Alternet.UI.ITextBoxTextAttr" />
     <Type Name="Alternet.UI.PanelFormSelector">
       <Event Name="DropDownMenuShowing" />
+      <Event Name="AfterPaint" />
       <Event Name="ContextMenuCreated" />
       <Event Name="MouseHover" />
       <Event Name="CellChanged" />
@@ -15676,6 +15963,7 @@
       <Event Name="HandleCreated" />
       <Event Name="HandleDestroyed" />
       <Event Name="Deactivated" />
+      <Event Name="BeforeHandleDestroyed" />
       <Event Name="GotFocus" />
       <Event Name="QueryContinueDrag" />
       <Event Name="KeyDown" />
@@ -15737,6 +16025,7 @@
       <Event Name="FileOpenClick" />
       <Event Name="FileSaveClick" />
       <Event Name="DropDownMenuShowing" />
+      <Event Name="AfterPaint" />
       <Event Name="ContextMenuCreated" />
       <Event Name="MouseHover" />
       <Event Name="CellChanged" />
@@ -15758,6 +16047,7 @@
       <Event Name="HandleCreated" />
       <Event Name="HandleDestroyed" />
       <Event Name="Deactivated" />
+      <Event Name="BeforeHandleDestroyed" />
       <Event Name="GotFocus" />
       <Event Name="QueryContinueDrag" />
       <Event Name="KeyDown" />
@@ -15821,6 +16111,7 @@
       <Event Name="ButtonClicked" />
       <Event Name="OrientationChanged" />
       <Event Name="DropDownMenuShowing" />
+      <Event Name="AfterPaint" />
       <Event Name="ContextMenuCreated" />
       <Event Name="MouseHover" />
       <Event Name="CellChanged" />
@@ -15842,6 +16133,7 @@
       <Event Name="HandleCreated" />
       <Event Name="HandleDestroyed" />
       <Event Name="Deactivated" />
+      <Event Name="BeforeHandleDestroyed" />
       <Event Name="GotFocus" />
       <Event Name="QueryContinueDrag" />
       <Event Name="KeyDown" />
@@ -15903,6 +16195,7 @@
       <Event Name="FileOpenClick" />
       <Event Name="FileSaveClick" />
       <Event Name="DropDownMenuShowing" />
+      <Event Name="AfterPaint" />
       <Event Name="ContextMenuCreated" />
       <Event Name="MouseHover" />
       <Event Name="CellChanged" />
@@ -15924,6 +16217,7 @@
       <Event Name="HandleCreated" />
       <Event Name="HandleDestroyed" />
       <Event Name="Deactivated" />
+      <Event Name="BeforeHandleDestroyed" />
       <Event Name="GotFocus" />
       <Event Name="QueryContinueDrag" />
       <Event Name="KeyDown" />
@@ -15982,6 +16276,7 @@
     </Type>
     <Type Name="Alternet.UI.PanelSettings">
       <Event Name="DropDownMenuShowing" />
+      <Event Name="AfterPaint" />
       <Event Name="ContextMenuCreated" />
       <Event Name="MouseHover" />
       <Event Name="CellChanged" />
@@ -16003,6 +16298,7 @@
       <Event Name="HandleCreated" />
       <Event Name="HandleDestroyed" />
       <Event Name="Deactivated" />
+      <Event Name="BeforeHandleDestroyed" />
       <Event Name="GotFocus" />
       <Event Name="QueryContinueDrag" />
       <Event Name="KeyDown" />
@@ -16066,6 +16362,7 @@
     <Type Name="Alternet.UI.PanelSettingsItemKind" />
     <Type Name="Alternet.UI.PanelWebBrowser">
       <Event Name="DropDownMenuShowing" />
+      <Event Name="AfterPaint" />
       <Event Name="ContextMenuCreated" />
       <Event Name="MouseHover" />
       <Event Name="CellChanged" />
@@ -16087,6 +16384,7 @@
       <Event Name="HandleCreated" />
       <Event Name="HandleDestroyed" />
       <Event Name="Deactivated" />
+      <Event Name="BeforeHandleDestroyed" />
       <Event Name="GotFocus" />
       <Event Name="QueryContinueDrag" />
       <Event Name="KeyDown" />
@@ -16145,6 +16443,7 @@
     </Type>
     <Type Name="Alternet.UI.PanelWithToolBar">
       <Event Name="DropDownMenuShowing" />
+      <Event Name="AfterPaint" />
       <Event Name="ContextMenuCreated" />
       <Event Name="MouseHover" />
       <Event Name="CellChanged" />
@@ -16166,6 +16465,7 @@
       <Event Name="HandleCreated" />
       <Event Name="HandleDestroyed" />
       <Event Name="Deactivated" />
+      <Event Name="BeforeHandleDestroyed" />
       <Event Name="GotFocus" />
       <Event Name="QueryContinueDrag" />
       <Event Name="KeyDown" />
@@ -16237,6 +16537,7 @@
     <Type Name="Alternet.UI.ControlUtils" />
     <Type Name="Alternet.UI.FormUtils" />
     <Type Name="Alternet.UI.ListControlUtils" />
+    <Type Name="Alternet.UI.MenuUtils" />
     <Type Name="Alternet.UI.TextBoxUtils" />
     <Type Name="Alternet.UI.ToolBarUtils" />
     <Type Name="Alternet.UI.ConversionUtils" />
@@ -16335,6 +16636,7 @@
     <Type Name="Alternet.Drawing.GraphicsUnitConverter+GraphicsType" />
     <Type Name="Alternet.Drawing.NineRects+PreviewControl">
       <Event Name="DropDownMenuShowing" />
+      <Event Name="AfterPaint" />
       <Event Name="ContextMenuCreated" />
       <Event Name="MouseHover" />
       <Event Name="CellChanged" />
@@ -16356,6 +16658,7 @@
       <Event Name="HandleCreated" />
       <Event Name="HandleDestroyed" />
       <Event Name="Deactivated" />
+      <Event Name="BeforeHandleDestroyed" />
       <Event Name="GotFocus" />
       <Event Name="QueryContinueDrag" />
       <Event Name="KeyDown" />
@@ -16413,6 +16716,7 @@
       <Event Name="PropertyChanged" />
     </Type>
     <Type Name="Alternet.Drawing.TextFormat+Record" />
+    <Type Name="Alternet.UI.ItemContainerElement`1+FindItemFlags" />
     <Type Name="Alternet.UI.BaseObject+GenericStaticOptions" />
     <Type Name="Alternet.UI.IndexedValues`2+ILockedItem">
       <Event Name="Changed" />
@@ -16430,6 +16734,7 @@
     <Type Name="Alternet.UI.TreeViewItem+EnumExpandedItemsParams" />
     <Type Name="Alternet.UI.KnownShortcuts+FindReplaceControlKeys" />
     <Type Name="Alternet.UI.KnownShortcuts+RichEditKeys" />
+    <Type Name="Alternet.UI.MacModifierSymbols+UsageKind" />
     <Type Name="Alternet.UI.PropInstanceAndValue+SavedPropertiesItem" />
     <Type Name="Alternet.UI.UserControl+ClickTriggerKind" />
     <Type Name="Alternet.UI.AbstractControl+AlignedPosition" />
@@ -16483,6 +16788,7 @@
       <Event Name="SplitterMoving" />
       <Event Name="SplitterMoved" />
       <Event Name="DropDownMenuShowing" />
+      <Event Name="AfterPaint" />
       <Event Name="ContextMenuCreated" />
       <Event Name="MouseHover" />
       <Event Name="CellChanged" />
@@ -16504,6 +16810,7 @@
       <Event Name="HandleCreated" />
       <Event Name="HandleDestroyed" />
       <Event Name="Deactivated" />
+      <Event Name="BeforeHandleDestroyed" />
       <Event Name="GotFocus" />
       <Event Name="QueryContinueDrag" />
       <Event Name="KeyDown" />
@@ -16566,6 +16873,7 @@
     <Type Name="Alternet.UI.TabControl+EnsureSideBarChildFlags" />
     <Type Name="Alternet.UI.TemplateControls+RichToolTipTemplate">
       <Event Name="DropDownMenuShowing" />
+      <Event Name="AfterPaint" />
       <Event Name="ContextMenuCreated" />
       <Event Name="MouseHover" />
       <Event Name="CellChanged" />
@@ -16587,6 +16895,7 @@
       <Event Name="HandleCreated" />
       <Event Name="HandleDestroyed" />
       <Event Name="Deactivated" />
+      <Event Name="BeforeHandleDestroyed" />
       <Event Name="GotFocus" />
       <Event Name="QueryContinueDrag" />
       <Event Name="KeyDown" />
@@ -16645,6 +16954,7 @@
     </Type>
     <Type Name="Alternet.UI.TemplateControls+BoldText`1">
       <Event Name="DropDownMenuShowing" />
+      <Event Name="AfterPaint" />
       <Event Name="ContextMenuCreated" />
       <Event Name="MouseHover" />
       <Event Name="CellChanged" />
@@ -16666,6 +16976,7 @@
       <Event Name="HandleCreated" />
       <Event Name="HandleDestroyed" />
       <Event Name="Deactivated" />
+      <Event Name="BeforeHandleDestroyed" />
       <Event Name="GotFocus" />
       <Event Name="QueryContinueDrag" />
       <Event Name="KeyDown" />
