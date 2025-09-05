@@ -1539,7 +1539,7 @@ namespace Alternet::UI
         MaxValue = 5,
     };
     
-    enum class TextEllipsizeType
+    enum class TextEllipsisType
     {
         None = 0,
         End = 1,

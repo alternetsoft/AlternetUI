@@ -287,9 +287,6 @@ namespace Alternet::UI
         if (mainMenu == nullptr)
             return;
 
-        if (mainMenu->IsInitInProgress())
-            return;
-
         mainMenu->OnItemRoleChanged(this);
     }
 

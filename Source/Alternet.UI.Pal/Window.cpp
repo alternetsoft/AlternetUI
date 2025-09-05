@@ -155,12 +155,14 @@ namespace Alternet::UI
 
     void Window::OnBeforeDestroyWxWindow()
     {
-        Control::OnBeforeDestroyWxWindow();
-
         auto wxWindow = GetWxWindow();
+        auto wxFrame = GetFrame();
+
         wxWindow->Unbind(wxEVT_CLOSE_WINDOW, &Window::OnClose, this);
         wxWindow->Unbind(wxEVT_MAXIMIZE, &Window::OnMaximize, this);
         wxWindow->Unbind(wxEVT_ICONIZE, &Window::OnIconize, this);
+
+        Control::OnBeforeDestroyWxWindow();
     }
             
     string Window::GetTitle()

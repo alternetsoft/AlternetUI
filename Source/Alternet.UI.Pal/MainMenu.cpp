@@ -6,10 +6,38 @@ namespace Alternet::UI
 {
     MainMenu::MainMenu()
     {
+        menuBar = new wxMenuBar();
+#ifdef __WXOSX_COCOA__
+        menuBar->CallAfter([=]() {MacOSMenu::EnsureHelpItemIsLast(GetWxMenuBar()); });
+
+        auto appMenu = menuBar->OSXGetAppleMenu();
+        appMenu->Bind(wxEVT_MENU, &MainMenu::OnMenuCommand, this);
+#endif
+
     }
 
     MainMenu::~MainMenu()
     {
+#ifdef __WXOSX_COCOA__
+        window->Unbind(wxEVT_MENU, &MainMenu::OnMenuCommand, this);
+#endif
+
+        auto menuBar = GetWxMenuBar();
+        if (menuBar == nullptr)
+            return;
+
+        wxWindowList windows = wxTopLevelWindows;
+        for (wxWindowList::compatibility_iterator node = windows.GetFirst(); node; node = node->GetNext())
+        {
+            wxFrame* frame = wxDynamicCast(node->GetData(), wxFrame);
+            if (frame && frame->GetMenuBar() == menuBar)
+            {
+                frame->SetMenuBar(nullptr);
+				break;
+            }
+        }
+
+		delete menuBar;
     }
 
     void MainMenu::OnMenuCommand(wxCommandEvent& event)
@@ -17,10 +45,6 @@ namespace Alternet::UI
         event.Skip();
         auto item = MenuItem::GetMenuItemById(event.GetId());
         item->RaiseClick();
-    }
-
-    void MainMenu::ApplyEnabled(bool value)
-    {
     }
 
     void MainMenu::ApplyItemRoles()
@@ -70,31 +94,6 @@ namespace Alternet::UI
     {
         auto wxIndex = LogicalIndexToWxIndex(index);
         GetWxMenuBar()->SetMenuLabel(wxIndex, MenuItem::CoerceWxItemText(text, nullptr));
-    }
-
-    wxWindow* MainMenu::CreateWxWindowUnparented()
-    {
-        return new wxMenuBar();
-    }
-
-    wxWindow* MainMenu::CreateWxWindowCore(wxWindow* parent)
-    {
-        auto menuBar = new wxMenuBar();
-#ifdef __WXOSX_COCOA__
-        menuBar->CallAfter([=]() {MacOSMenu::EnsureHelpItemIsLast(GetWxMenuBar()); });
-
-        auto appMenu = menuBar->OSXGetAppleMenu();
-        appMenu->Bind(wxEVT_MENU, &MainMenu::OnMenuCommand, this);
-#endif
-
-        return menuBar;
-    }
-    
-    void MainMenu::OnWxWindowDestroyed(wxWindow* window)
-    {
-#ifdef __WXOSX_COCOA__
-        window->Unbind(wxEVT_MENU, &MainMenu::OnMenuCommand, this);
-#endif
     }
 
     int MainMenu::GetItemLogicalIndex(Menu* item)
@@ -152,22 +151,12 @@ namespace Alternet::UI
         throwExNoInfo;
     }
 
-    void MainMenu::OnWxWindowCreated()
-    {
-        Control::OnWxWindowCreated();
-    }
-
     wxMenuBar* MainMenu::GetWxMenuBar()
     {
-        return dynamic_cast<wxMenuBar*>(GetWxWindow());
+        return dynamic_cast<wxMenuBar*>(menuBar);
     }
 
     void MainMenu::OnItemRoleChanged(MenuItem* item)
-    {
-        ApplyItemRoles();
-    }
-
-    void MainMenu::OnEndInit()
     {
         ApplyItemRoles();
     }

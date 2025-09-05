@@ -6,13 +6,10 @@
 
 namespace Alternet::UI
 {
-    class MainMenu : public Control
+    class MainMenu : public Object
     {
 #include "Api/MainMenu.inc"
     public:
-        wxWindow* CreateWxWindowCore(wxWindow* parent) override;
-        wxWindow* CreateWxWindowUnparented() override;
-
         wxMenuBar* GetWxMenuBar();
 
         void OnItemRoleChanged(MenuItem* item);
@@ -22,18 +19,9 @@ namespace Alternet::UI
         void SetItemHidden(Menu* item, bool hidden);
         bool IsItemHidden(Menu* item);
     protected:
-        virtual void OnWxWindowCreated() override;
-
-        void ApplyEnabled(bool value) override;
-
-        void OnWxWindowDestroyed(wxWindow* window) override;
-
-        void OnEndInit() override;
-
-        RectD GetBounds() override { return RectD(); }
-        void SetBounds(const RectD& value) override {}
-
     private:
+        wxMenuBar* menuBar;
+            
         void ApplyItemRoles();
 
         void OnMenuCommand(wxCommandEvent& event);

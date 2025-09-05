@@ -2,7 +2,7 @@
 
 namespace NativeApi.Api
 {
-    public class MainMenu : Control
+    public class MainMenu : Object
     {
         public int ItemsCount { get; }
 
