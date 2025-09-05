@@ -31,7 +31,7 @@ namespace Alternet.UI
         private WindowKind? windowKindOverride;
         private WeakReferenceValue<AbstractControl> activeControl;
         private IconSet? icon = null;
-        private object? menu = null;
+        private DisposableObject? menu = null;
         private WeakReferenceValue<Window> owner;
         private int? oldDisplay;
         private bool loadedCalled;
@@ -884,7 +884,7 @@ namespace Alternet.UI
         /// You can use this property to switch between complete status bar sets at run time.
         /// </remarks>
         [Browsable(false)]
-        public virtual object? StatusBar
+        public virtual DisposableObject? StatusBar
         {
             get => Handler.StatusBar;
 
@@ -892,9 +892,22 @@ namespace Alternet.UI
             {
                 if (DisposingOrDisposed)
                     return;
-                if (StatusBar == value)
+                var oldValue = StatusBar;
+
+                if (oldValue == value)
                     return;
                 Handler.StatusBar = value;
+
+                if (oldValue is not null)
+                {
+                    oldValue.Disposed -= OnStatusBarDisposed;
+                }
+
+                if (value is not null)
+                {
+                    value.Disposed += OnStatusBarDisposed;
+                }
+
                 OnStatusBarChanged(EventArgs.Empty);
                 StatusBarChanged?.Invoke(this, EventArgs.Empty);
                 PerformLayout();
@@ -910,7 +923,7 @@ namespace Alternet.UI
         /// <remarks>
         /// You can use this property to switch between complete menu sets at run time.
         /// </remarks>
-        public virtual object? Menu
+        public virtual DisposableObject? Menu
         {
             get => menu;
 
@@ -1606,7 +1619,7 @@ namespace Alternet.UI
         /// Can be <see langword="null"/> to remove the current menu.</param>
         /// <param name="performLayout">A value indicating whether to perform a layout update
         /// after setting the menu.  The default value is <see langword="true"/>.</param>
-        public virtual void SetMenu(object? value, bool performLayout = true)
+        public virtual void SetMenu(DisposableObject? value, bool performLayout = true)
         {
             if (DisposingOrDisposed)
                 return;
@@ -1616,8 +1629,15 @@ namespace Alternet.UI
             var oldValue = menu;
             menu = value;
 
-            (oldValue as AbstractControl)?.SetParentInternal(null);
-            (menu as AbstractControl)?.SetParentInternal(this);
+            if (oldValue is not null)
+            {
+                oldValue.Disposed -= OnMenuDisposed;
+            }
+
+            if (menu is not null)
+            {
+                menu.Disposed += OnMenuDisposed;
+            }
 
             OnMenuChanged(EventArgs.Empty);
             MenuChanged?.Invoke(this, EventArgs.Empty);
@@ -1784,6 +1804,10 @@ namespace Alternet.UI
             }
 
             Visible = false;
+
+            Menu = null;
+            StatusBar = null;
+
             App.Current.UnregisterWindow(this);
             try
             {
@@ -2091,6 +2115,31 @@ namespace Alternet.UI
         /// <returns></returns>
         protected WindowKind? GetWindowKindOverride()
             => globalWindowKindOverride ?? windowKindOverride;
+
+        /// <summary>
+        /// Handles the disposal of the menu by resetting the <see cref="Menu"/> property to null.
+        /// </summary>
+        /// <remarks>This method is called when the associated menu is disposed. Subclasses can override
+        /// this method to provide additional cleanup logic if necessary. Ensure to call the base
+        /// implementation to maintain the default behavior.</remarks>
+        /// <param name="sender">The source of the event, typically the object being disposed.</param>
+        /// <param name="e">An <see cref="EventArgs"/> instance containing the event data.</param>
+        protected virtual void OnMenuDisposed(object sender, EventArgs e)
+        {
+            Menu = null;
+        }
+
+        /// <summary>
+        /// Handles the disposal of the status bar by performing necessary cleanup operations.
+        /// </summary>
+        /// <remarks>This method is called when the status bar is disposed and sets the <c>StatusBar</c>
+        /// property to <c>null</c>. Subclasses can override this method to provide additional cleanup logic.</remarks>
+        /// <param name="sender">The source of the event, typically the object being disposed.</param>
+        /// <param name="e">An <see cref="EventArgs"/> instance containing the event data.</param>
+        protected virtual void OnStatusBarDisposed(object sender, EventArgs e)
+        {
+            StatusBar = null;
+        }
 
         /// <inheritdoc/>
         protected override void OnHandlerLocationChanged(EventArgs e)
