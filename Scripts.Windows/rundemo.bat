@@ -1,0 +1,1 @@
+start "" "..\Source\Samples\ControlsSample\bin\Debug\net9.0\ControlsSample.exe" -IsDark=true
