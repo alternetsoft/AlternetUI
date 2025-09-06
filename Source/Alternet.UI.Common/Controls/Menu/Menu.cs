@@ -12,11 +12,46 @@ namespace Alternet.UI
     /// </summary>
     public abstract partial class Menu : ItemContainerElement<MenuItem>, IMenuProperties
     {
+        private static readonly BaseDictionary<ObjectUniqueId, Menu> menusById = new();
+
         /// <summary>
         /// Initializes a new instance of the <see cref="Menu"/> class.
         /// </summary>
         protected Menu()
         {
+            menusById.Add(UniqueId, this);
+        }
+
+        /// <summary>
+        /// Retrieves a menu by its unique identifier.
+        /// </summary>
+        /// <remarks>This method searches for a menu in the collection using the provided unique
+        /// identifier. If the identifier does not exist in the collection,
+        /// the method returns <see langword="null"/>.</remarks>
+        /// <param name="id">The unique identifier of the menu to retrieve.</param>
+        /// <returns>The <see cref="Menu"/> associated with the specified identifier,
+        /// or <see langword="null"/> if no menu is found.</returns>
+        public static Menu? MenuFromId(ObjectUniqueId id)
+        {
+            menusById.TryGetValue(id, out var menu);
+            return menu;
+        }
+
+        /// <summary>
+        /// Retrieves a <see cref="Menu"/> instance corresponding to the specified string identifier.
+        /// </summary>
+        /// <param name="stringId">The string representation of the unique identifier for the menu.
+        /// This value can be <see langword="null"/>.</param>
+        /// <returns>The <see cref="Menu"/> instance associated with the given string identifier,
+        /// or <see langword="null"/> if
+        /// the identifier is invalid or does not correspond to an existing menu.</returns>
+        public static Menu? MenuFromStringId(string? stringId)
+        {
+            var id = ObjectUniqueId.FromString(stringId);
+            if (id is null)
+                return null;
+
+            return MenuFromId(id.Value);
         }
 
         /// <summary>
@@ -117,6 +152,13 @@ namespace Alternet.UI
             MenuItem item = new(title, onClick);
             Items.Add(item);
             return item;
+        }
+
+        /// <inheritdoc/>
+        protected override void DisposeManaged()
+        {
+            menusById.Remove(UniqueId);
+            base.DisposeManaged();
         }
     }
 }
