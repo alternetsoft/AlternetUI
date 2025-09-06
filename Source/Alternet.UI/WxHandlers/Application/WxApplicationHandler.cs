@@ -57,23 +57,20 @@ namespace Alternet.UI
                 Native.Application.SuppressDiagnostics(-1);
 
             nativeApplication = new Native.Application();
-            nativeApplication.AssertFailure = NativeApplication_AssertFailure;
+            nativeApplication.AssertFailure = OnNativeApplicationAssertFailure;
 
-            /*
-            nativeApplication.QueryEndSession = ;
-            nativeApplication.EndSession = ;
-            nativeApplication.ActivateApp = ;
-            nativeApplication.Hibernate = ;
-            nativeApplication.DialupConnected = ;
-            nativeApplication.DialupDisconnected = ;
-            nativeApplication.ExceptionInMainLoop = ;
-            nativeApplication.UnhandledException = ;
-            nativeApplication.FatalException = ;
-            */
+            nativeApplication.QueryEndSession = OnNativeApplicationQueryEndSession;
+            nativeApplication.EndSession = OnNativeApplicationEndSession;
+            nativeApplication.ActivateApp = OnNativeApplicationActivateApp;
+            nativeApplication.Hibernate = OnNativeApplicationHibernate;
+            nativeApplication.DialupConnected = OnNativeApplicationDialupConnected;
+            nativeApplication.DialupDisconnected = OnNativeApplicationDialupDisconnected;
+            nativeApplication.ExceptionInMainLoop = OnNativeApplicationExceptionInMainLoop;
+            nativeApplication.UnhandledException = OnNativeApplicationUnhandledException;
+            nativeApplication.FatalException = OnNativeApplicationFatalException;
 
             Native.Application.GlobalObject = nativeApplication;
-            /*nativeApplication.Idle = App.RaiseIdle;*/
-            nativeApplication.LogMessage += NativeApplication_LogMessage;
+            nativeApplication.LogMessage += OnNativeApplicationLogMessage;
             nativeApplication.Name = Path.GetFileNameWithoutExtension(
                 Process.GetCurrentProcess()?.MainModule?.FileName!);
 
@@ -290,14 +287,50 @@ namespace Alternet.UI
             nativeApplication.BeginInvoke(action);
         }
 
-        private static void NativeApplication_LogMessage()
+        private static void OnNativeApplicationLogMessage()
         {
             var s = nativeApplication.EventArgString;
 
             App.LogNativeMessage(s, LogItemKind.Information);
         }
 
-        private static void NativeApplication_AssertFailure()
+        private static void OnNativeApplicationQueryEndSession()
+        {
+
+        }
+        private static void OnNativeApplicationEndSession()
+        {
+        }
+    
+        private static void OnNativeApplicationActivateApp()
+        {
+        }
+
+        private static void OnNativeApplicationHibernate()
+        {
+        }
+
+        private static void OnNativeApplicationDialupConnected()
+        {
+        }
+
+        private static void OnNativeApplicationDialupDisconnected()
+        {
+        }
+
+        private static void OnNativeApplicationExceptionInMainLoop()
+        {
+        }
+
+        private static void OnNativeApplicationUnhandledException()
+        {
+        }
+
+        private static void OnNativeApplicationFatalException()
+        {
+        }
+
+        private static void OnNativeApplicationAssertFailure()
         {
             var s = NativeApplication.EventArgString;
 
@@ -493,6 +526,12 @@ namespace Alternet.UI
         public virtual IKeyboardHandler CreateKeyboardHandler()
         {
             return new WxKeyboardHandler();
+        }
+
+        /// <inheritdoc/>
+        public IMenuFactory? CreateMenuFactory()
+        {
+            return new WxMenuFactory();
         }
     }
 }

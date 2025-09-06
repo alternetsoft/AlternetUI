@@ -12,80 +12,83 @@ namespace Alternet.UI
         /// <summary>
         /// Occurs when a menu item is clicked.
         /// </summary>
-        event EventHandler<BaseEventArgs<string>>? MenuClick;
+        event EventHandler<StringEventArgs>? MenuClick;
 
         /// <summary>
         /// Occurs when a menu item is highlighted.
         /// </summary>
-        event EventHandler<BaseEventArgs<string>>? MenuHighlight;
+        event EventHandler<StringEventArgs>? MenuHighlight;
 
         /// <summary>
         /// Occurs when a menu is opened.
         /// </summary>
-        event EventHandler<BaseEventArgs<string>>? MenuOpened;
+        event EventHandler<StringEventArgs>? MenuOpened;
 
         /// <summary>
         /// Occurs when a menu is closed.
         /// </summary>
-        event EventHandler<BaseEventArgs<string>>? MenuClosed;
+        event EventHandler<StringEventArgs>? MenuClosed;
 
         /// <summary>
         /// Creates a main menu instance.
         /// </summary>
         /// <returns>The handle to the created main menu.</returns>
-        object CreateMainMenu();
+        /// <param name="id">The unique identifier for the menu item.</param>
+        MainMenuHandle CreateMainMenu(string id);
 
         /// <summary>
         /// Creates a context menu instance.
         /// </summary>
         /// <returns>The handle to the created context menu.</returns>
-        object CreateContextMenu();
+        /// <param name="id">The unique identifier for the menu item.</param>
+        ContextMenuHandle CreateContextMenu(string id);
 
         /// <summary>
         /// Creates a menu item of the specified type.
         /// </summary>
         /// <param name="itemType">The type of the menu item to create.</param>
+        /// <param name="id">The unique identifier for the menu item.</param>
         /// <returns>The handle to the created menu item.</returns>
-        object CreateMenuItem(MenuItemType itemType);
+        MenuItemHandle CreateMenuItem(MenuItemType itemType, string id);
 
         /// <summary>
         /// Destroys the specified main menu.
         /// </summary>
         /// <param name="menuHandle">The handle of the main menu to destroy.</param>
-        void DestroyMainMenu(object menuHandle);
+        void DestroyMainMenu(MainMenuHandle menuHandle);
 
         /// <summary>
         /// Destroys the specified menu item.
         /// </summary>
         /// <param name="menuHandle">The handle of the menu item to destroy.</param>
-        void DestroyMenuItem(object menuHandle);
+        void DestroyMenuItem(MenuItemHandle menuHandle);
 
         /// <summary>
         /// Destroys the specified context menu.
         /// </summary>
         /// <param name="menuHandle">The handle of the context menu to destroy.</param>
-        void DestroyContextMenu(object menuHandle);
+        void DestroyContextMenu(ContextMenuHandle menuHandle);
 
         /// <summary>
         /// Gets the type of the menu item associated with the specified handle.
         /// </summary>
         /// <param name="handle">The handle of the menu item.</param>
         /// <returns>The type of the menu item.</returns>
-        MenuItemType GetMenuItemType(object handle);
+        MenuItemType GetMenuItemType(MenuItemHandle handle);
 
         /// <summary>
         /// Sets the bitmap image for the specified menu item.
         /// </summary>
         /// <param name="handle">The handle of the menu item.</param>
         /// <param name="value">The image set to assign.</param>
-        void SetMenuItemBitmap(object handle, ImageSet value);
+        void SetMenuItemBitmap(MenuItemHandle handle, ImageSet? value);
 
         /// <summary>
         /// Sets whether the specified menu item is enabled.
         /// </summary>
         /// <param name="handle">The handle of the menu item.</param>
         /// <param name="value">True to enable, false to disable.</param>
-        void SetMenuItemEnabled(object handle, bool value);
+        void SetMenuItemEnabled(MenuItemHandle handle, bool value);
 
         /// <summary>
         /// Sets the text and optional right-aligned text for the specified menu item.
@@ -93,41 +96,100 @@ namespace Alternet.UI
         /// <param name="handle">The handle of the menu item.</param>
         /// <param name="value">The main text of the menu item.</param>
         /// <param name="rightValue">The right-aligned text (e.g., shortcut).</param>
-        void SetMenuItemText(object handle, string value, string rightValue);
+        void SetMenuItemText(MenuItemHandle handle, string value, string rightValue);
 
         /// <summary>
         /// Sets whether the specified menu item is checked.
         /// </summary>
         /// <param name="handle">The handle of the menu item.</param>
         /// <param name="value">True to check, false to uncheck.</param>
-        void SetMenuItemChecked(object handle, bool value);
-
-        /// <summary>
-        /// Sets the identifier for the specified menu item.
-        /// </summary>
-        /// <param name="handle">The handle of the menu item.</param>
-        /// <param name="id">The identifier to assign.</param>
-        void SetMenuItemId(object handle, string id);
+        void SetMenuItemChecked(MenuItemHandle handle, bool value);
 
         /// <summary>
         /// Sets a submenu for the specified menu item.
         /// </summary>
         /// <param name="handle">The handle of the menu item.</param>
         /// <param name="subMenuHandle">The handle of the submenu to assign.</param>
-        void SetMenuItemSubMenu(object handle, object subMenuHandle);
+        void SetMenuItemSubMenu(MenuItemHandle handle, ContextMenuHandle subMenuHandle);
 
         /// <summary>
-        /// Adds a menu item to the specified menu.
+        /// Adds a menu item to the specified context menu.
         /// </summary>
-        /// <param name="handle">The handle of the menu.</param>
+        /// <param name="handle">The handle of the context menu.</param>
         /// <param name="itemHandle">The handle of the menu item to add.</param>
-        void MenuAddItem(object handle, object itemHandle);
+        void MenuAddItem(ContextMenuHandle handle, MenuItemHandle itemHandle);
 
         /// <summary>
-        /// Removes a menu item from the specified menu.
+        /// Removes a menu item from the specified context menu.
         /// </summary>
-        /// <param name="handle">The handle of the menu.</param>
+        /// <param name="handle">The handle of the context menu.</param>
         /// <param name="itemHandle">The handle of the menu item to remove.</param>
-        void MenuRemoveItem(object handle, object itemHandle);
+        void MenuRemoveItem(ContextMenuHandle handle, MenuItemHandle itemHandle);
+
+        /// <summary>
+        /// Represents a handle to a main menu.
+        /// </summary>
+        public class MainMenuHandle : CustomNativeHandle
+        {
+            /// <summary>
+            /// Initializes a new instance of the <see cref="MainMenuHandle"/> class.
+            /// </summary>
+            public MainMenuHandle()
+            {
+            }
+
+            /// <summary>
+            /// Initializes a new instance of the <see cref="MainMenuHandle"/> class with the specified handle.
+            /// </summary>
+            /// <param name="handle">The native handle object to wrap.</param>
+            public MainMenuHandle(object handle)
+                : base(handle)
+            {
+            }
+        }
+
+        /// <summary>
+        /// Represents a handle to a menu item.
+        /// </summary>
+        public class MenuItemHandle : CustomNativeHandle
+        {
+            /// <summary>
+            /// Initializes a new instance of the <see cref="MenuItemHandle"/> class.
+            /// </summary>
+            public MenuItemHandle()
+            {
+            }
+
+            /// <summary>
+            /// Initializes a new instance of the <see cref="MenuItemHandle"/> class with the specified handle.
+            /// </summary>
+            /// <param name="handle">The native handle object to wrap.</param>
+            public MenuItemHandle(object handle)
+                : base(handle)
+            {
+            }
+        }
+
+        /// <summary>
+        /// Represents a handle to a context menu.
+        /// </summary>
+        public class ContextMenuHandle : CustomNativeHandle
+        {
+            /// <summary>
+            /// Initializes a new instance of the <see cref="ContextMenuHandle"/> class.
+            /// </summary>
+            public ContextMenuHandle()
+            {
+            }
+
+            /// <summary>
+            /// Initializes a new instance of the <see cref="ContextMenuHandle"/> class with the specified handle.
+            /// </summary>
+            /// <param name="handle">The native handle object to wrap.</param>
+            public ContextMenuHandle(object handle)
+                : base(handle)
+            {
+            }
+        }
     }
 }

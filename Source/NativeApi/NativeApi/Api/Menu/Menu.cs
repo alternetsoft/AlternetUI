@@ -6,29 +6,28 @@ namespace NativeApi.Api
 {
     public class Menu
     {
-        public static IntPtr CreateMainMenu() => throw new Exception();
-        public static IntPtr CreateContextMenu() => throw new Exception();
-        public static IntPtr CreateMenuItem(MenuItemType itemType) => throw new Exception();
+        public static IntPtr CreateMainMenu(string id) => throw new Exception();
+        public static IntPtr CreateContextMenu(string id) => throw new Exception();
+        public static IntPtr CreateMenuItem(MenuItemType itemType, string id) => throw new Exception();
 
         public static void DestroyMainMenu(IntPtr menuHandle) => throw new Exception();
         public static void DestroyMenuItem(IntPtr menuHandle) => throw new Exception();
         public static void DestroyContextMenu(IntPtr menuHandle) => throw new Exception();
 
         public static MenuItemType GetMenuItemType(IntPtr handle) => default;
-        public static void SetMenuItemBitmap(IntPtr handle, ImageSet value) { }
+        public static void SetMenuItemBitmap(IntPtr handle, ImageSet? value) { }
         public static void SetMenuItemEnabled(IntPtr handle, bool value) { }
         public static void SetMenuItemText(IntPtr handle, string value, string rightValue) { }
         public static void SetMenuItemChecked(IntPtr handle, bool value) { }
-        public static void SetMenuItemId(IntPtr handle, string id) { }
         public static void SetMenuItemSubMenu(IntPtr handle, IntPtr subMenuHandle) { }
 
         public static void MenuAddItem(IntPtr handle, IntPtr itemHandle) { }
         public static void MenuRemoveItem(IntPtr handle, IntPtr itemHandle) { }
 
-        public static event EventHandler? MenuClick;
-        public static event EventHandler? MenuHighlight;
-        public static event EventHandler? MenuOpened;
-        public static event EventHandler? MenuClosed;
+        public event EventHandler? MenuClick;
+        public event EventHandler? MenuHighlight;
+        public event EventHandler? MenuOpened;
+        public event EventHandler? MenuClosed;
 
         public static string EventMenuItemId { get; }
 

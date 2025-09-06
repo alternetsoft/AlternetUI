@@ -2563,6 +2563,7 @@ namespace Alternet::UI
         Check = 1,
         Radio = 2,
         Separator = 3,
+        Null = 4,
     };
     
     enum class SelectionMode

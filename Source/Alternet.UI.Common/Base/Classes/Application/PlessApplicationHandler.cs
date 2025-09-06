@@ -226,5 +226,11 @@ namespace Alternet.UI
         public virtual void WakeUpIdle()
         {
         }
+
+        /// <inheritdoc/>
+        public virtual IMenuFactory? CreateMenuFactory()
+        {
+            return null;
+        }
     }
 }

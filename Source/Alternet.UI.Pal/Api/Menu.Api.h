@@ -55,34 +55,34 @@ ALTERNET_UI_API int Menu_GetItemsCount_(Menu* obj)
     #endif
 }
 
-ALTERNET_UI_API void* Menu_CreateMainMenu_()
+ALTERNET_UI_API void* Menu_CreateMainMenu_(const char16_t* id)
 {
     #if !defined(__WXMSW__) || defined(_DEBUG)
     return MarshalExceptions<void*>([&](){
     #endif
-        return Menu::CreateMainMenu();
+        return Menu::CreateMainMenu(id);
     #if !defined(__WXMSW__) || defined(_DEBUG)
     });
     #endif
 }
 
-ALTERNET_UI_API void* Menu_CreateContextMenu_()
+ALTERNET_UI_API void* Menu_CreateContextMenu_(const char16_t* id)
 {
     #if !defined(__WXMSW__) || defined(_DEBUG)
     return MarshalExceptions<void*>([&](){
     #endif
-        return Menu::CreateContextMenu();
+        return Menu::CreateContextMenu(id);
     #if !defined(__WXMSW__) || defined(_DEBUG)
     });
     #endif
 }
 
-ALTERNET_UI_API void* Menu_CreateMenuItem_(MenuItemType itemType)
+ALTERNET_UI_API void* Menu_CreateMenuItem_(MenuItemType itemType, const char16_t* id)
 {
     #if !defined(__WXMSW__) || defined(_DEBUG)
     return MarshalExceptions<void*>([&](){
     #endif
-        return Menu::CreateMenuItem(itemType);
+        return Menu::CreateMenuItem(itemType, id);
     #if !defined(__WXMSW__) || defined(_DEBUG)
     });
     #endif
@@ -171,17 +171,6 @@ ALTERNET_UI_API void Menu_SetMenuItemChecked_(void* handle, c_bool value)
     MarshalExceptions<void>([&](){
     #endif
         Menu::SetMenuItemChecked(handle, value);
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    });
-    #endif
-}
-
-ALTERNET_UI_API void Menu_SetMenuItemId_(void* handle, const char16_t* id)
-{
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    MarshalExceptions<void>([&](){
-    #endif
-        Menu::SetMenuItemId(handle, id);
     #if !defined(__WXMSW__) || defined(_DEBUG)
     });
     #endif

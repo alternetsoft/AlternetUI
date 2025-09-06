@@ -10,19 +10,21 @@ namespace Alternet::UI
         return _eventMenuItemId;
     }
 
-    void* Menu::CreateMainMenu()
+    void* Menu::CreateMainMenu(const string& id)
     {
         auto result = new wxAlternetMenuBar();
-		return result;
+        result->_id = id;
+        return result;
     }
 
-    void* Menu::CreateContextMenu()
+    void* Menu::CreateContextMenu(const string& id)
     {
         auto result = new wxAlternetMenu();
+		result->_id = id;
 		return result;
     }
 
-    void* Menu::CreateMenuItem(MenuItemType itemType)
+    void* Menu::CreateMenuItem(MenuItemType itemType, const string& id)
     {
         wxItemKind kind;
         switch (itemType)
@@ -43,6 +45,7 @@ namespace Alternet::UI
         }
 
         auto result = new wxAlternetMenuItem(nullptr, wxID_ANY, wxEmptyString, wxEmptyString, kind, nullptr);
+        result->_id = id;
         return result;
     }
 
@@ -121,12 +124,6 @@ namespace Alternet::UI
     {
         auto item = (wxAlternetMenuItem*)handle;
 		item->Enable(value);
-    }
-
-    void Menu::SetMenuItemId(void* handle, const string& id)
-    {
-        auto item = (wxAlternetMenuItem*)handle;
-		item->_id = id;
     }
 
     void Menu::SetMenuItemText(void* handle, const string& value, const string& rightValue)

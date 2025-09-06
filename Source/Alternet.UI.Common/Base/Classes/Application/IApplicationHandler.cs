@@ -64,6 +64,13 @@ namespace Alternet.UI
         IMouseHandler CreateMouseHandler();
 
         /// <summary>
+        /// Creates and returns an instance of a class that implements the <see cref="IMenuFactory"/> interface.
+        /// </summary>
+        /// <returns>An object that implements the <see cref="IMenuFactory"/> interface,
+        /// which can be used to create menu instances.</returns>
+        IMenuFactory? CreateMenuFactory();
+
+        /// <summary>
         /// Creates <see cref="IKeyboardHandler"/> implementation specific to the platform.
         /// </summary>
         /// <returns></returns>

@@ -25,7 +25,7 @@ namespace Alternet.UI
         static MauiApplicationHandler()
         {
             App.SetUnhandledExceptionModes(UnhandledExceptionMode.CatchWithThrow);
-            DeviceDisplay.MainDisplayInfoChanged += DeviceDisplay_MainDisplayInfoChanged;
+            DeviceDisplay.MainDisplayInfoChanged += OnMainDisplayInfoChanged;
         }
 
         /// <inheritdoc/>
@@ -350,9 +350,13 @@ namespace Alternet.UI
             return PropertyUpdateResult.Failure;
         }
 
-        private static void DeviceDisplay_MainDisplayInfoChanged(
-            object? sender,
-            DisplayInfoChangedEventArgs e)
+        /// <inheritdoc/>
+        public virtual IMenuFactory? CreateMenuFactory()
+        {
+            return null;
+        }
+
+        private static void OnMainDisplayInfoChanged(object? sender, DisplayInfoChangedEventArgs e)
         {
             Display.Reset();
         }

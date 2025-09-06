@@ -7,9 +7,9 @@ void* GetMenuHandle();
 
 int GetItemsCount();
 
-static void* CreateMainMenu();
-static void* CreateContextMenu();
-static void* CreateMenuItem(MenuItemType itemType);
+static void* CreateMainMenu(const string& id);
+static void* CreateContextMenu(const string& id);
+static void* CreateMenuItem(MenuItemType itemType, const string& id);
 static void DestroyMainMenu(void* menuHandle);
 static void DestroyMenuItem(void* menuHandle);
 static void DestroyContextMenu(void* menuHandle);
@@ -18,7 +18,6 @@ static void SetMenuItemBitmap(void* handle, ImageSet* value);
 static void SetMenuItemEnabled(void* handle, bool value);
 static void SetMenuItemText(void* handle, const string& value, const string& rightValue);
 static void SetMenuItemChecked(void* handle, bool value);
-static void SetMenuItemId(void* handle, const string& id);
 static void SetMenuItemSubMenu(void* handle, void* subMenuHandle);
 static void MenuAddItem(void* handle, void* itemHandle);
 static void MenuRemoveItem(void* handle, void* itemHandle);
@@ -30,6 +29,10 @@ public:
 
 enum class MenuEvent
 {
+    MenuClick,
+    MenuHighlight,
+    MenuOpened,
+    MenuClosed,
     Opened,
     Closed,
 };

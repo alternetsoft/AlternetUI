@@ -53,19 +53,19 @@ namespace Alternet.UI.Native
             
         }
         
-        public static System.IntPtr CreateMainMenu()
+        public static System.IntPtr CreateMainMenu(string id)
         {
-            return NativeApi.Menu_CreateMainMenu_();
+            return NativeApi.Menu_CreateMainMenu_(id);
         }
         
-        public static System.IntPtr CreateContextMenu()
+        public static System.IntPtr CreateContextMenu(string id)
         {
-            return NativeApi.Menu_CreateContextMenu_();
+            return NativeApi.Menu_CreateContextMenu_(id);
         }
         
-        public static System.IntPtr CreateMenuItem(Alternet.UI.MenuItemType itemType)
+        public static System.IntPtr CreateMenuItem(Alternet.UI.MenuItemType itemType, string id)
         {
-            return NativeApi.Menu_CreateMenuItem_(itemType);
+            return NativeApi.Menu_CreateMenuItem_(itemType, id);
         }
         
         public static void DestroyMainMenu(System.IntPtr menuHandle)
@@ -88,9 +88,9 @@ namespace Alternet.UI.Native
             return NativeApi.Menu_GetMenuItemType_(handle);
         }
         
-        public static void SetMenuItemBitmap(System.IntPtr handle, ImageSet value)
+        public static void SetMenuItemBitmap(System.IntPtr handle, ImageSet? value)
         {
-            NativeApi.Menu_SetMenuItemBitmap_(handle, value.NativePointer);
+            NativeApi.Menu_SetMenuItemBitmap_(handle, value?.NativePointer ?? IntPtr.Zero);
         }
         
         public static void SetMenuItemEnabled(System.IntPtr handle, bool value)
@@ -106,11 +106,6 @@ namespace Alternet.UI.Native
         public static void SetMenuItemChecked(System.IntPtr handle, bool value)
         {
             NativeApi.Menu_SetMenuItemChecked_(handle, value);
-        }
-        
-        public static void SetMenuItemId(System.IntPtr handle, string id)
-        {
-            NativeApi.Menu_SetMenuItemId_(handle, id);
         }
         
         public static void SetMenuItemSubMenu(System.IntPtr handle, System.IntPtr subMenuHandle)
@@ -172,6 +167,22 @@ namespace Alternet.UI.Native
         {
             switch (e)
             {
+                case NativeApi.MenuEvent.MenuClick:
+                {
+                    MenuClick?.Invoke(); return IntPtr.Zero;
+                }
+                case NativeApi.MenuEvent.MenuHighlight:
+                {
+                    MenuHighlight?.Invoke(); return IntPtr.Zero;
+                }
+                case NativeApi.MenuEvent.MenuOpened:
+                {
+                    MenuOpened?.Invoke(); return IntPtr.Zero;
+                }
+                case NativeApi.MenuEvent.MenuClosed:
+                {
+                    MenuClosed?.Invoke(); return IntPtr.Zero;
+                }
                 case NativeApi.MenuEvent.Opened:
                 {
                     Opened?.Invoke(); return IntPtr.Zero;
@@ -184,6 +195,10 @@ namespace Alternet.UI.Native
             }
         }
         
+        public Action? MenuClick;
+        public Action? MenuHighlight;
+        public Action? MenuOpened;
+        public Action? MenuClosed;
         public Action? Opened;
         public Action? Closed;
         
@@ -197,6 +212,10 @@ namespace Alternet.UI.Native
             
             public enum MenuEvent
             {
+                MenuClick,
+                MenuHighlight,
+                MenuOpened,
+                MenuClosed,
                 Opened,
                 Closed,
             }
@@ -217,13 +236,13 @@ namespace Alternet.UI.Native
             public static extern int Menu_GetItemsCount_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern System.IntPtr Menu_CreateMainMenu_();
+            public static extern System.IntPtr Menu_CreateMainMenu_(string id);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern System.IntPtr Menu_CreateContextMenu_();
+            public static extern System.IntPtr Menu_CreateContextMenu_(string id);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern System.IntPtr Menu_CreateMenuItem_(Alternet.UI.MenuItemType itemType);
+            public static extern System.IntPtr Menu_CreateMenuItem_(Alternet.UI.MenuItemType itemType, string id);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void Menu_DestroyMainMenu_(System.IntPtr menuHandle);
@@ -248,9 +267,6 @@ namespace Alternet.UI.Native
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void Menu_SetMenuItemChecked_(System.IntPtr handle, bool value);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void Menu_SetMenuItemId_(System.IntPtr handle, string id);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void Menu_SetMenuItemSubMenu_(System.IntPtr handle, System.IntPtr subMenuHandle);
