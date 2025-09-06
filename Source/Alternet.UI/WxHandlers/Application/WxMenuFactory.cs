@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Text;
 
+using Alternet.Drawing;
+
 namespace Alternet.UI
 {
     internal class WxMenuFactory : DisposableObject, IMenuFactory
@@ -51,7 +53,7 @@ namespace Alternet.UI
             return new(Native.Menu.CreateMenuItem(itemType, id));
         }
 
-        public void DestroyContextMenu(IMenuFactory.ContextMenuHandle menuHandle)
+        public virtual void DestroyContextMenu(IMenuFactory.ContextMenuHandle menuHandle)
         {
             var ptr = menuHandle.AsPointer;
             if (ptr == IntPtr.Zero)
@@ -59,7 +61,7 @@ namespace Alternet.UI
             Native.Menu.DestroyContextMenu(ptr);
         }
 
-        public void DestroyMainMenu(IMenuFactory.MainMenuHandle menuHandle)
+        public virtual void DestroyMainMenu(IMenuFactory.MainMenuHandle menuHandle)
         {
             var ptr = menuHandle.AsPointer;
             if (ptr == IntPtr.Zero)
@@ -67,7 +69,7 @@ namespace Alternet.UI
             Native.Menu.DestroyMainMenu(ptr);
         }
 
-        public void DestroyMenuItem(IMenuFactory.MenuItemHandle menuHandle)
+        public virtual void DestroyMenuItem(IMenuFactory.MenuItemHandle menuHandle)
         {
             var ptr = menuHandle.AsPointer;
             if (ptr == IntPtr.Zero)
@@ -83,7 +85,7 @@ namespace Alternet.UI
             return Native.Menu.GetMenuItemType(ptr);
         }
 
-        public void MenuAddItem(IMenuFactory.ContextMenuHandle handle, IMenuFactory.MenuItemHandle itemHandle)
+        public virtual void MenuAddItem(IMenuFactory.ContextMenuHandle handle, IMenuFactory.MenuItemHandle itemHandle)
         {
             var menuPtr = handle.AsPointer;
             var itemPtr = itemHandle.AsPointer;
@@ -92,7 +94,7 @@ namespace Alternet.UI
             Native.Menu.MenuAddItem(menuPtr, itemPtr);
         }
 
-        public void MenuRemoveItem(IMenuFactory.ContextMenuHandle handle, IMenuFactory.MenuItemHandle itemHandle)
+        public virtual void MenuRemoveItem(IMenuFactory.ContextMenuHandle handle, IMenuFactory.MenuItemHandle itemHandle)
         {
             var menuPtr = handle.AsPointer;
             var itemPtr = itemHandle.AsPointer;
@@ -101,7 +103,7 @@ namespace Alternet.UI
             Native.Menu.MenuRemoveItem(menuPtr, itemPtr);
         }
 
-        public void SetMenuItemBitmap(IMenuFactory.MenuItemHandle handle, ImageSet? value)
+        public virtual void SetMenuItemBitmap(IMenuFactory.MenuItemHandle handle, ImageSet? value)
         {
             var itemPtr = handle.AsPointer;
             var nativeImage = (UI.Native.ImageSet?)value?.Handler;
@@ -110,7 +112,7 @@ namespace Alternet.UI
             Native.Menu.SetMenuItemBitmap(itemPtr, nativeImage);
         }
 
-        public void SetMenuItemChecked(IMenuFactory.MenuItemHandle handle, bool value)
+        public virtual void SetMenuItemChecked(IMenuFactory.MenuItemHandle handle, bool value)
         {
             var itemPtr = handle.AsPointer;
             if (itemPtr == IntPtr.Zero)
@@ -118,7 +120,15 @@ namespace Alternet.UI
             Native.Menu.SetMenuItemChecked(itemPtr, value);
         }
 
-        public void SetMenuItemEnabled(IMenuFactory.MenuItemHandle handle, bool value)
+        public virtual void Show(
+            IMenuFactory.ContextMenuHandle menuHandle,
+            AbstractControl control,
+            PointD? position = null,
+            Action? onClose = null)
+        {
+            throw new NotImplementedException();
+        }
+        public virtual void SetMenuItemEnabled(IMenuFactory.MenuItemHandle handle, bool value)
         {
             var itemPtr = handle.AsPointer;
             if (itemPtr == IntPtr.Zero)
@@ -126,7 +136,7 @@ namespace Alternet.UI
             Native.Menu.SetMenuItemEnabled(itemPtr, value);
         }
 
-        public void SetMenuItemSubMenu(IMenuFactory.MenuItemHandle handle, IMenuFactory.ContextMenuHandle subMenuHandle)
+        public virtual void SetMenuItemSubMenu(IMenuFactory.MenuItemHandle handle, IMenuFactory.ContextMenuHandle subMenuHandle)
         {
             var itemPtr = handle.AsPointer;
             var subMenuPtr = subMenuHandle.AsPointer;
@@ -135,7 +145,7 @@ namespace Alternet.UI
             Native.Menu.SetMenuItemSubMenu(itemPtr, subMenuPtr);
         }
 
-        public void SetMenuItemText(IMenuFactory.MenuItemHandle handle, string value, string rightValue)
+        public virtual void SetMenuItemText(IMenuFactory.MenuItemHandle handle, string value, string rightValue)
         {
             var itemPtr = handle.AsPointer;
             if (itemPtr == IntPtr.Zero)

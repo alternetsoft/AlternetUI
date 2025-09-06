@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Text;
 
+using Alternet.Drawing;
+
 namespace Alternet.UI
 {
     /// <summary>
@@ -50,6 +52,19 @@ namespace Alternet.UI
         /// <param name="id">The unique identifier for the menu item.</param>
         /// <returns>The handle to the created menu item.</returns>
         MenuItemHandle CreateMenuItem(MenuItemType itemType, string id);
+
+        /// <summary>
+        /// Show menu on screen.
+        /// </summary>
+        /// <param name="control">The target control.</param>
+        /// <param name="position">The position in local coordinates.</param>
+        /// <param name="onClose">The action to be invoked when the menu is closed.</param>
+        /// <param name="menuHandle">The handle of the context menu to show.</param>
+        void Show(
+            ContextMenuHandle menuHandle,
+            AbstractControl control,
+            PointD? position = null,
+            Action? onClose = null);
 
         /// <summary>
         /// Destroys the specified main menu.
