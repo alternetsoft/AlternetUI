@@ -785,31 +785,6 @@ namespace Alternet.UI
             }
         }
 
-        /// <summary>
-        /// Gets or sets the associated shortcut keys.
-        /// </summary>
-        /// <returns>
-        /// One of the <see cref="Keys" /> values.
-        /// The default is <see cref="Keys.None" />.</returns>
-        [Localizable(true)]
-        [DefaultValue(Keys.None)]
-        [Browsable(false)]
-        public virtual Keys ShortcutKeys
-        {
-            get
-            {
-                return shortcut;
-            }
-
-            set
-            {
-                if (ShortcutKeys == value)
-                    return;
-                shortcut = value;
-                UpdateToolTip();
-            }
-        }
-
         /// <inheritdoc/>
         public virtual ICommand? Command
         {
@@ -854,6 +829,31 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets or sets the associated shortcut keys.
+        /// </summary>
+        /// <returns>
+        /// One of the <see cref="Keys" /> values.
+        /// The default is <see cref="Keys.None" />.</returns>
+        [Localizable(true)]
+        [DefaultValue(Keys.None)]
+        [Browsable(false)]
+        public virtual Keys ShortcutKeys
+        {
+            get
+            {
+                return shortcut;
+            }
+
+            set
+            {
+                if (ShortcutKeys == value)
+                    return;
+                shortcut = value;
+                UpdateToolTip();
+            }
+        }
+
+        /// <summary>
         /// Gets or sets a value indicating the associated shortcut key.
         /// </summary>
         [Browsable(false)]
@@ -872,12 +872,6 @@ namespace Alternet.UI
                 UpdateToolTip();
             }
         }
-
-        /// <summary>
-        /// Gets or sets whether <see cref="AbstractControl.ToolTip"/> will be hidden
-        /// when control is clicked. Default is <c>true</c>.
-        /// </summary>
-        public virtual bool HideToolTipOnClick { get; set; } = true;
 
         /// <summary>
         /// Gets or sets a value indicating the associated shortcut key.
@@ -916,6 +910,12 @@ namespace Alternet.UI
                 UpdateToolTip();
             }
         }
+
+        /// <summary>
+        /// Gets or sets whether <see cref="AbstractControl.ToolTip"/> will be hidden
+        /// when control is clicked. Default is <c>true</c>.
+        /// </summary>
+        public virtual bool HideToolTipOnClick { get; set; } = true;
 
         /// <summary>
         /// Gets or sets whether to use <see cref="DefaultTheme"/>.
@@ -1469,27 +1469,18 @@ namespace Alternet.UI
         /// returns <see langword="null"/>.</returns>
         public virtual string? GetShortcutText(bool useTemplate, bool forUser = true)
         {
-            var filteredKeys = KeyInfo.FilterBackendOs(shortcut?.KeyInfo);
-            if (filteredKeys is not null && filteredKeys.Length > 0)
+            if(shortcut is null)
+                return null;
+
+            ShortcutInfo.FormatOptions options = new()
             {
-                var key = filteredKeys[0];
+                UseTemplate = useTemplate,
+                ForUser = forUser,
+                Template = ShortcutToolTipTemplate ?? DefaultShortcutToolTipTemplate,
+            };
 
-                if (key is null)
-                    return null;
-
-                if (useTemplate)
-                {
-                    var template = ShortcutToolTipTemplate ?? DefaultShortcutToolTipTemplate;
-                    var result = string.Format(template, key.ToString(forUser));
-                    return result;
-                }
-                else
-                {
-                    return key.ToString(forUser);
-                }
-            }
-
-            return null;
+            var result = shortcut.ToString(options);
+            return result;
         }
 
         /// <summary>
