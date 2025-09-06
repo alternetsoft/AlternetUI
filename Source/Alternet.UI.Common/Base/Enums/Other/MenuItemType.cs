@@ -28,5 +28,10 @@ namespace Alternet.UI
         /// A menu item that acts as a separator between other items.
         /// </summary>
         Separator,
+
+        /// <summary>
+        /// Represents a null menu item.
+        /// </summary>
+        Null,
     }
 }
