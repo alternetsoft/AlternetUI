@@ -10,6 +10,54 @@ namespace Alternet.UI
     /// </summary>
     public static class MenuUtils
     {
+        private static IMenuFactory? menuFactory;
+        private static bool menuFactoryLoaded;
+
+        /// <summary>
+        /// Gets or sets the factory responsible for creating menu instances.
+        /// </summary>
+        /// <remarks>The property initializes the factory on first access if it has not been explicitly
+        /// set and a valid application handler is available. Once set, the factory remains loaded until explicitly
+        /// replaced.</remarks>
+        public static IMenuFactory? Factory
+        {
+            get
+            {
+                if (menuFactory != null || menuFactoryLoaded)
+                    return menuFactory;
+
+                var handler = App.Handler;
+
+                if (handler == null)
+                    return null;
+
+                Factory = handler.CreateMenuFactory();
+                return menuFactory;
+            }
+
+            set
+            {
+                if (menuFactory is not null)
+                {
+                    menuFactory.MenuClick -= OnMenuFactoryClick;
+                    menuFactory.MenuHighlight -= OnMenuFactoryHighlight;
+                    menuFactory.MenuOpened -= OnMenuFactoryOpened;
+                    menuFactory.MenuClosed -= OnMenuFactoryClosed;
+                }
+
+                menuFactory = value;
+                menuFactoryLoaded = true;
+
+                if (menuFactory is not null)
+                {
+                    menuFactory.MenuClick += OnMenuFactoryClick;
+                    menuFactory.MenuHighlight += OnMenuFactoryHighlight;
+                    menuFactory.MenuOpened += OnMenuFactoryOpened;
+                    menuFactory.MenuClosed += OnMenuFactoryClosed;
+                }
+            }
+        }
+
         /// <summary>
         /// Attaches event handlers to the specified <see cref="MenuItem"/> to log its Opened, Closed,
         /// and Highlighted events.
@@ -83,6 +131,90 @@ namespace Alternet.UI
             void MenuClosed(object? sender, EventArgs e)
             {
                 Alternet.UI.App.DebugLogIf("Editor context menu closed", false);
+            }
+        }
+
+        private static void OnMenuFactoryClosed(object sender, StringEventArgs e)
+        {
+            var menu = Menu.MenuFromStringId(e.Value);
+
+            if (menu is null)
+                return;
+
+            if (menu is MenuItem menuItem)
+            {
+                menuItem.RaiseClosed();
+                return;
+            }
+
+            if (menu is ContextMenu contextMenu)
+            {
+                contextMenu.RaiseClosing(EventArgs.Empty);
+                return;
+            }
+
+            if (menu is MainMenu mainMenu)
+            {
+                return;
+            }
+        }
+
+        private static void OnMenuFactoryOpened(object sender, StringEventArgs e)
+        {
+            var menu = Menu.MenuFromStringId(e.Value);
+
+            if (menu is null)
+                return;
+
+            if (menu is MenuItem menuItem)
+            {
+                menuItem.RaiseOpened();
+                return;
+            }
+
+            if (menu is ContextMenu contextMenu)
+            {
+                return;
+            }
+
+            if (menu is MainMenu mainMenu)
+            {
+                return;
+            }
+        }
+
+        private static void OnMenuFactoryHighlight(object sender, StringEventArgs e)
+        {
+            var menu = Menu.MenuFromStringId(e.Value);
+
+            if (menu is null)
+                return;
+
+            if (menu is MenuItem menuItem)
+            {
+                menuItem.RaiseHighlighted();
+                return;
+            }
+
+            if (menu is ContextMenu contextMenu)
+            {
+                return;
+            }
+
+            if (menu is MainMenu mainMenu)
+            {
+                return;
+            }
+        }
+
+        private static void OnMenuFactoryClick(object sender, StringEventArgs e)
+        {
+            var menu = Menu.MenuFromStringId(e.Value);
+
+            if (menu is MenuItem menuItem)
+            {
+                menuItem.RaiseClick();
+                return;
             }
         }
     }
