@@ -23,9 +23,9 @@ namespace Alternet.UI
         {
             get
             {
-                if(uniqueId is null)
+                lock (locker)
                 {
-                    lock (locker)
+                    if (uniqueId is null)
                     {
                         uniqueId = new();
                     }
