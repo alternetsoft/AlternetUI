@@ -24,7 +24,7 @@ namespace Alternet.UI
 
         private static KnownButtonImage? defaultMenuArrowImage;
 
-        private KeyGesture? shortcut;
+        private ShortcutInfo? shortcutInfo;
         private MenuItemRole? role;
         private bool isChecked;
         private Action? action;
@@ -57,7 +57,7 @@ namespace Alternet.UI
             : this()
         {
             Text = text ?? string.Empty;
-            this.shortcut = shortcut;
+            this.shortcutInfo = new ShortcutInfo(shortcut);
         }
 
         /// <summary>
@@ -97,7 +97,7 @@ namespace Alternet.UI
             : this()
         {
             Text = text ?? string.Empty;
-            this.shortcut = shortcut;
+            this.shortcutInfo = new ShortcutInfo(shortcut);
             if (onClick != null)
                 Click += onClick;
         }
@@ -136,7 +136,7 @@ namespace Alternet.UI
             : this()
         {
             Text = text ?? string.Empty;
-            this.shortcut = shortcut;
+            this.shortcutInfo = new ShortcutInfo(shortcut);
             ClickAction = onClick;
         }
 
@@ -244,6 +244,101 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets or sets the associated shortcut keys.
+        /// </summary>
+        /// <returns>
+        /// One of the <see cref="Keys" /> values.
+        /// The default is <see cref="Keys.None" />.</returns>
+        [Localizable(true)]
+        [DefaultValue(Keys.None)]
+        [Browsable(false)]
+        public virtual Keys ShortcutKeys
+        {
+            get
+            {
+                return shortcutInfo;
+            }
+
+            set
+            {
+                Invoke(() =>
+                {
+                    if (ShortcutKeys == value)
+                        return;
+                    shortcutInfo = value;
+                    RaiseShortcutChanged();
+                });
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets a value indicating the associated shortcut key.
+        /// </summary>
+        [Browsable(false)]
+        public virtual KeyGesture? Shortcut
+        {
+            get
+            {
+                return shortcutInfo;
+            }
+
+            set
+            {
+                Invoke(() =>
+                {
+                    if (Shortcut == value)
+                        return;
+                    shortcutInfo = value;
+                    RaiseShortcutChanged();
+                });
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets a value indicating the associated shortcut key.
+        /// </summary>
+        [Browsable(false)]
+        public virtual ShortcutInfo? ShortcutInfo
+        {
+            get
+            {
+                return shortcutInfo;
+            }
+
+            set
+            {
+                Invoke(() =>
+                {
+                    if (shortcutInfo == value)
+                        return;
+                    shortcutInfo = value;
+                    RaiseShortcutChanged();
+                });
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets a value indicating the associated shortcut key.
+        /// </summary>
+        [Browsable(false)]
+        public virtual KeyInfo[]? ShortcutKeyInfo
+        {
+            get
+            {
+                return shortcutInfo;
+            }
+
+            set
+            {
+                Invoke(() =>
+                {
+                    shortcutInfo = value;
+                    RaiseShortcutChanged();
+                });
+            }
+        }
+
+        /// <summary>
         /// Gets or sets <see cref="ImageSet"/> associated with the menu item.
         /// </summary>
         public virtual ImageSet? Image
@@ -338,35 +433,6 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Gets or sets the shortcut keys associated with the
-        /// <see cref="MenuItem" />.</summary>
-        /// <returns>
-        /// One of the <see cref="Keys" /> values. The default is <see cref="Keys.None" />.</returns>
-        [Localizable(true)]
-        [DefaultValue(Keys.None)]
-        [Browsable(false)]
-        public virtual Keys ShortcutKeys
-        {
-            get
-            {
-                if (Shortcut is null)
-                    return Keys.None;
-                var result = Shortcut.Key.ToKeys(Shortcut.Modifiers);
-                return result;
-            }
-
-            set
-            {
-                Invoke(() =>
-                {
-                    var key = value.ToKey();
-                    var modifiers = value.ToModifiers();
-                    Shortcut = new(key, modifiers);
-                });
-            }
-        }
-
-        /// <summary>
         /// Gets or sets function which is called inside
         /// <see cref="ContextMenu.OnOpening(CancelEventArgs)"/> in order
         /// to update enabled state.
@@ -406,6 +472,18 @@ namespace Alternet.UI
                     action = value;
                     RaiseClickActionChanged();
                 });
+            }
+        }
+
+        /// <summary>
+        /// Gets a value indicating whether the text represents a separator.
+        /// </summary>
+        [Browsable(false)]
+        public bool IsSeparator
+        {
+            get
+            {
+                return Text == "-";
             }
         }
 
@@ -527,30 +605,6 @@ namespace Alternet.UI
                     if (shortcutEnabled == value)
                         return;
                     shortcutEnabled = value;
-                    RaiseShortcutChanged();
-                });
-            }
-        }
-
-        /// <summary>
-        /// Gets or sets a value indicating the shortcut key associated with
-        /// the menu item.
-        /// </summary>
-        public virtual KeyGesture? Shortcut
-        {
-            get
-            {
-                return shortcut;
-            }
-
-            set
-            {
-                Invoke(() =>
-                {
-                    if (shortcut == value)
-                        return;
-
-                    shortcut = value;
                     RaiseShortcutChanged();
                 });
             }
@@ -931,6 +985,63 @@ namespace Alternet.UI
             TextChanged?.Invoke(this, e);
             OnTextChanged(e);
             RaiseChanged(MenuItemChangeKind.Text);
+        }
+
+        /// <summary>
+        /// Creates a handle for the menu item using the specified <see cref="IMenuFactory"/>.
+        /// </summary>
+        /// <remarks>The type of menu item created depends on the state of the object.
+        /// Additional properties such as <see cref="Image"/>, <see cref="Enabled"/>, <see cref="Text"/>,
+        /// and <see cref="Checked"/> are applied to the created menu item handle, if applicable.</remarks>
+        /// <param name="factory">The <see cref="IMenuFactory"/> used to create the menu item handle.
+        /// If <paramref name="factory"/> is <see langword="null"/>,  the default factory from
+        /// <see cref="MenuUtils.Factory"/> is used.</param>
+        /// <returns>A <see cref="IMenuFactory.MenuItemHandle"/> representing the created menu item,
+        /// or <see langword="null"/> if the handle could not be created.</returns>
+        public virtual IMenuFactory.MenuItemHandle? CreateHandle(IMenuFactory? factory = null)
+        {
+            factory ??= MenuUtils.Factory;
+            if (factory == null)
+                return null;
+
+            var itemType = MenuItemType.Standard;
+
+            if (IsSeparator)
+                itemType = MenuItemType.Separator;
+            else
+            if (Checked)
+            {
+                itemType = MenuItemType.Check;
+            }
+
+            var handle = factory.CreateMenuItem(itemType, UniqueId.ToString());
+            if (handle is null)
+                return null;
+
+            if (Image is not null)
+                factory.SetMenuItemBitmap(handle, Image);
+
+            if (!Enabled)
+                factory.SetMenuItemEnabled(handle, Enabled);
+
+            string? rightText = null;
+
+            if (shortcutInfo is not null)
+            {
+                ShortcutInfo.FormatOptions options = new()
+                {
+                    ForUser = true,
+                };
+
+                rightText = shortcutInfo.ToString(options);
+            }
+
+            factory.SetMenuItemText(handle, Text, rightText ?? string.Empty);
+
+            if (Checked)
+                factory.SetMenuItemChecked(handle, Checked);
+
+            return handle;
         }
 
         /// <summary>
