@@ -56,6 +56,9 @@ namespace Alternet.UI
                 case DropDownAlignment.Center:
                     x = (ownerSize.Width - popupSize.Width) / 2;
                     break;
+                case DropDownAlignment.Position:
+                    x = position.Value.Position.X;
+                    break;
             }
 
             switch (position.Value.Vertical)
@@ -74,6 +77,9 @@ namespace Alternet.UI
                     break;
                 case DropDownAlignment.Center:
                     y = (ownerSize.Height - popupSize.Height) / 2;
+                    break;
+                case DropDownAlignment.Position:
+                    y = position.Value.Position.Y;
                     break;
             }
 
