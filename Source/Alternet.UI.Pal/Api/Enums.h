@@ -954,6 +954,7 @@ namespace Alternet::UI
         BeforeEnd = 2,
         AfterEnd = 3,
         Center = 4,
+        Position = 5,
     };
     
     enum class GenericOrientation

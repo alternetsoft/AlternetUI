@@ -40,6 +40,67 @@ namespace Alternet::UI
         wxAlternetMenu(const wxString& title = wxEmptyString, long style = 0)
             : wxMenu(title, style)
         {
+            Bind(wxEVT_MENU, &wxAlternetMenu::OnMenuCommand, this);
+            Bind(wxEVT_MENU_OPEN, &wxAlternetMenu::OnMenuOpen, this);
+            Bind(wxEVT_MENU_CLOSE, &wxAlternetMenu::OnMenuClose, this);
+            Bind(wxEVT_MENU_HIGHLIGHT, &wxAlternetMenu::OnMenuHighlight, this);
+        }
+
+    private:
+        void OnMenuCommand(wxCommandEvent& event)
+        {
+            event.StopPropagation();
+			Menu::_eventMenuItemId = _id;
+
+/*
+        auto item = MenuItem::GetMenuItemById(event.GetId());
+        if (item == nullptr)
+            return;
+        item->RaiseClick();
+*/
+        }
+
+        void OnMenuOpen(wxMenuEvent& event)
+        {
+            event.StopPropagation();
+            Menu::_eventMenuItemId = _id;
+            Menu::RaiseStaticEvent(MenuEvent::Opened);
+
+            /*
+
+        for (auto item : _items)
+        {
+            item->RaiseMenuOpen();
+        }
+*/
+        }
+
+        void OnMenuClose(wxMenuEvent& event)
+        {
+            event.StopPropagation();
+            Menu::_eventMenuItemId = _id;
+
+            /*
+            RaiseEvent(MenuEvent::Closed);
+
+            for (auto item : _items)
+            {
+                item->RaiseMenuClose();
+            }
+*/
+        }
+
+        void OnMenuHighlight(wxMenuEvent& event)
+        {
+            event.StopPropagation();
+            Menu::_eventMenuItemId = _id;
+
+/*
+            auto item = MenuItem::GetMenuItemById(evt.GetMenuId());
+            if (item == nullptr)
+                return;
+            item->RaiseMenuHighlight();
+*/
         }
     };
 

@@ -28,7 +28,7 @@ typedef void* (*CheckBoxEventCallbackType)(CheckBox* obj, CheckBoxEvent event, v
 
 static void SetEventCallback(CheckBoxEventCallbackType value) { eventCallback = value; }
 
-protected:
+public:
 
 bool RaiseEvent(CheckBoxEvent event, void* parameter = nullptr)
 {

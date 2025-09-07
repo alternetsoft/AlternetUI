@@ -78,7 +78,7 @@ typedef void* (*ApplicationEventCallbackType)(Application* obj, ApplicationEvent
 
 static void SetEventCallback(ApplicationEventCallbackType value) { eventCallback = value; }
 
-protected:
+public:
 
 bool RaiseEvent(ApplicationEvent event, void* parameter = nullptr)
 {

@@ -96,7 +96,7 @@ typedef void* (*CalendarEventCallbackType)(Calendar* obj, CalendarEvent event, v
 
 static void SetEventCallback(CalendarEventCallbackType value) { eventCallback = value; }
 
-protected:
+public:
 
 bool RaiseEvent(CalendarEvent event, void* parameter = nullptr)
 {

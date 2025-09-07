@@ -32,7 +32,7 @@ typedef void* (*ScrollBarEventCallbackType)(ScrollBar* obj, ScrollBarEvent event
 
 static void SetEventCallback(ScrollBarEventCallbackType value) { eventCallback = value; }
 
-protected:
+public:
 
 bool RaiseEvent(ScrollBarEvent event, void* parameter = nullptr)
 {

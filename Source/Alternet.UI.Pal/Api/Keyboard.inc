@@ -25,7 +25,7 @@ typedef void* (*KeyboardEventCallbackType)(Keyboard* obj, KeyboardEvent event, v
 
 static void SetEventCallback(KeyboardEventCallbackType value) { eventCallback = value; }
 
-protected:
+public:
 
 bool RaiseEvent(KeyboardEvent event, void* parameter = nullptr)
 {

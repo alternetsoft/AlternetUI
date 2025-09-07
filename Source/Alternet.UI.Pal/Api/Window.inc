@@ -68,7 +68,7 @@ typedef void* (*WindowEventCallbackType)(Window* obj, WindowEvent event, void* p
 
 static void SetEventCallback(WindowEventCallbackType value) { eventCallback = value; }
 
-protected:
+public:
 
 bool RaiseEvent(WindowEvent event, void* parameter = nullptr)
 {

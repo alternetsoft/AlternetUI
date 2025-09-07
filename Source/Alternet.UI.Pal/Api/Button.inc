@@ -45,7 +45,7 @@ typedef void* (*ButtonEventCallbackType)(Button* obj, ButtonEvent event, void* p
 
 static void SetEventCallback(ButtonEventCallbackType value) { eventCallback = value; }
 
-protected:
+public:
 
 bool RaiseEvent(ButtonEvent event, void* parameter = nullptr)
 {

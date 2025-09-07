@@ -41,7 +41,7 @@ typedef void* (*PrintDocumentEventCallbackType)(PrintDocument* obj, PrintDocumen
 
 static void SetEventCallback(PrintDocumentEventCallbackType value) { eventCallback = value; }
 
-protected:
+public:
 
 bool RaiseEvent(PrintDocumentEvent event, void* parameter = nullptr)
 {

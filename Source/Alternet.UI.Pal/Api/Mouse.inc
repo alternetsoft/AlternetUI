@@ -15,7 +15,7 @@ typedef void* (*MouseEventCallbackType)(Mouse* obj, MouseEvent event, void* para
 
 static void SetEventCallback(MouseEventCallbackType value) { eventCallback = value; }
 
-protected:
+public:
 
 bool RaiseEvent(MouseEvent event, void* parameter = nullptr)
 {

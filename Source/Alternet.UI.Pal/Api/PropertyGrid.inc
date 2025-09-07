@@ -244,7 +244,7 @@ typedef void* (*PropertyGridEventCallbackType)(PropertyGrid* obj, PropertyGridEv
 
 static void SetEventCallback(PropertyGridEventCallbackType value) { eventCallback = value; }
 
-protected:
+public:
 
 bool RaiseEvent(PropertyGridEvent event, void* parameter = nullptr)
 {

@@ -76,7 +76,7 @@ typedef void* (*ComboBoxEventCallbackType)(ComboBox* obj, ComboBoxEvent event, v
 
 static void SetEventCallback(ComboBoxEventCallbackType value) { eventCallback = value; }
 
-protected:
+public:
 
 bool RaiseEvent(ComboBoxEvent event, void* parameter = nullptr)
 {

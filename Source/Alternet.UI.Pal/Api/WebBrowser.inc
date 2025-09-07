@@ -115,7 +115,7 @@ typedef void* (*WebBrowserEventCallbackType)(WebBrowser* obj, WebBrowserEvent ev
 
 static void SetEventCallback(WebBrowserEventCallbackType value) { eventCallback = value; }
 
-protected:
+public:
 
 bool RaiseEvent(WebBrowserEvent event, void* parameter = nullptr)
 {

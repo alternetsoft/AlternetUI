@@ -30,7 +30,7 @@ typedef void* (*NotifyIconEventCallbackType)(NotifyIcon* obj, NotifyIconEvent ev
 
 static void SetEventCallback(NotifyIconEventCallbackType value) { eventCallback = value; }
 
-protected:
+public:
 
 bool RaiseEvent(NotifyIconEvent event, void* parameter = nullptr)
 {

@@ -112,7 +112,7 @@ typedef void* (*TextBoxEventCallbackType)(TextBox* obj, TextBoxEvent event, void
 
 static void SetEventCallback(TextBoxEventCallbackType value) { eventCallback = value; }
 
-protected:
+public:
 
 bool RaiseEvent(TextBoxEvent event, void* parameter = nullptr)
 {

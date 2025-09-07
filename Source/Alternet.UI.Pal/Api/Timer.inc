@@ -23,7 +23,7 @@ typedef void* (*TimerEventCallbackType)(Timer* obj, TimerEvent event, void* para
 
 static void SetEventCallback(TimerEventCallbackType value) { eventCallback = value; }
 
-protected:
+public:
 
 bool RaiseEvent(TimerEvent event, void* parameter = nullptr)
 {

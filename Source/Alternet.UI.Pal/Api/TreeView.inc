@@ -111,7 +111,7 @@ typedef void* (*TreeViewEventCallbackType)(TreeView* obj, TreeViewEvent event, v
 
 static void SetEventCallback(TreeViewEventCallbackType value) { eventCallback = value; }
 
-protected:
+public:
 
 bool RaiseEvent(TreeViewEvent event, void* parameter = nullptr)
 {

@@ -270,7 +270,7 @@ typedef void* (*RichTextBoxEventCallbackType)(RichTextBox* obj, RichTextBoxEvent
 
 static void SetEventCallback(RichTextBoxEventCallbackType value) { eventCallback = value; }
 
-protected:
+public:
 
 bool RaiseEvent(RichTextBoxEvent event, void* parameter = nullptr)
 {

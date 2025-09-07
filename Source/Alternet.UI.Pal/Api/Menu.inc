@@ -34,7 +34,7 @@ typedef void* (*MenuEventCallbackType)(Menu* obj, MenuEvent event, void* param);
 
 static void SetEventCallback(MenuEventCallbackType value) { eventCallback = value; }
 
-protected:
+public:
 
 bool RaiseEvent(MenuEvent event, void* parameter = nullptr)
 {

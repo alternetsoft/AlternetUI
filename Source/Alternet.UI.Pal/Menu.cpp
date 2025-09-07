@@ -17,13 +17,6 @@ namespace Alternet::UI
         return _eventMenuItemId;
     }
 
-    void* Menu::CreateMainMenu(const string& id)
-    {
-        auto result = new wxAlternetMenuBar();
-        result->_id = id;
-        return result;
-    }
-
     string Menu::GetMenuId(void* handle)
     {
         wxObject* obj = static_cast<wxObject*>(handle);
@@ -52,7 +45,15 @@ namespace Alternet::UI
     {
         auto result = new wxAlternetMenu();
 		result->_id = id;
+
 		return result;
+    }
+
+    void* Menu::CreateMainMenu(const string& id)
+    {
+        auto result = new wxAlternetMenuBar();
+        result->_id = id;
+        return result;
     }
 
     void* Menu::CreateMenuItem(MenuItemType itemType, const string& id)

@@ -16,7 +16,7 @@ typedef void* (*RadioButtonEventCallbackType)(RadioButton* obj, RadioButtonEvent
 
 static void SetEventCallback(RadioButtonEventCallbackType value) { eventCallback = value; }
 
-protected:
+public:
 
 bool RaiseEvent(RadioButtonEvent event, void* parameter = nullptr)
 {

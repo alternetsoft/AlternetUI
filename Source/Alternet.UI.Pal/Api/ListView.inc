@@ -76,7 +76,7 @@ typedef void* (*ListViewEventCallbackType)(ListView* obj, ListViewEvent event, v
 
 static void SetEventCallback(ListViewEventCallbackType value) { eventCallback = value; }
 
-protected:
+public:
 
 bool RaiseEvent(ListViewEvent event, void* parameter = nullptr)
 {

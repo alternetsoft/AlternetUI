@@ -38,7 +38,7 @@ typedef void* (*SliderEventCallbackType)(Slider* obj, SliderEvent event, void* p
 
 static void SetEventCallback(SliderEventCallbackType value) { eventCallback = value; }
 
-protected:
+public:
 
 bool RaiseEvent(SliderEvent event, void* parameter = nullptr)
 {

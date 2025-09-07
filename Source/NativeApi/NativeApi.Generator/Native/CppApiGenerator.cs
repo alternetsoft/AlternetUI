@@ -137,7 +137,7 @@ namespace ApiGenerator.Native
             w.WriteLine(" { eventCallback = value; }");
 
             w.WriteLine();
-            w.WriteLine("protected:");
+            w.WriteLine("public:");
             w.WriteLine();
 
             w.WriteLine($"bool RaiseEvent({declTName}Event event, void* parameter = nullptr)");

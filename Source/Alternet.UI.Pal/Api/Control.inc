@@ -239,7 +239,7 @@ typedef void* (*ControlEventCallbackType)(Control* obj, ControlEvent event, void
 
 static void SetEventCallback(ControlEventCallbackType value) { eventCallback = value; }
 
-protected:
+public:
 
 bool RaiseEvent(ControlEvent event, void* parameter = nullptr)
 {
