@@ -7,25 +7,33 @@ using Alternet.Drawing;
 namespace Alternet.UI
 {
     /// <summary>
-    /// Represents the mouse device.
+    /// Provides static methods, properties, and events for interacting with the mouse, including retrieving button
+    /// states, mouse position, and handling mouse-related events.
     /// </summary>
+    /// <remarks>The <see cref="Mouse"/> class offers a centralized way to interact with mouse input in an
+    /// application. It includes functionality to determine the state of mouse buttons, retrieve the current mouse
+    /// position, and handle mouse movement events. The class also provides access to the underlying mouse handler
+    /// through the <see cref="Handler"/> property, which can be customized as needed. This class is designed to
+    /// support advanced scenarios, such as handling finer-resolution mouse wheels or calculating positions relative to
+    /// specific controls. It is thread-safe for read operations, but care should be taken when modifying the
+    /// <see cref="Handler"/> property in a multithreaded environment.</remarks>
     public static class Mouse
     {
         /// <summary>
-        ///     The number of units the mouse wheel should be rotated to scroll one line.
+        /// The number of units the mouse wheel should be rotated to scroll one line.
         /// </summary>
         /// <remarks>
-        ///     The delta was set to 120 to allow Microsoft or other vendors to
-        ///     build finer-resolution wheels in the future, including perhaps
-        ///     a freely-rotating wheel with no notches. The expectation is
-        ///     that such a device would send more messages per rotation, but
-        ///     with a smaller value in each message. To support this
-        ///     possibility, you should either add the incoming delta values
-        ///     until MouseWheelDeltaForOneLine amount is reached (so for a
-        ///     delta-rotation you get the same response), or scroll partial
-        ///     lines in response to the more frequent messages. You could also
-        ///     choose your scroll granularity and accumulate deltas until it
-        ///     is reached.
+        /// The delta was set to 120 to allow Microsoft or other vendors to
+        /// build finer-resolution wheels in the future, including perhaps
+        /// a freely-rotating wheel with no notches. The expectation is
+        /// that such a device would send more messages per rotation, but
+        /// with a smaller value in each message. To support this
+        /// possibility, you should either add the incoming delta values
+        /// until MouseWheelDeltaForOneLine amount is reached (so for a
+        /// delta-rotation you get the same response), or scroll partial
+        /// lines in response to the more frequent messages. You could also
+        /// choose your scroll granularity and accumulate deltas until it
+        /// is reached.
         /// </remarks>
         public static int MouseWheelDeltaForOneLine = 120;
 
