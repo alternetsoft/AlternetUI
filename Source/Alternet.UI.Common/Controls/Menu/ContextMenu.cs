@@ -344,7 +344,28 @@ namespace Alternet.UI
         /// </remarks>
         public virtual void Show(AbstractControl control, PointD? position = null)
         {
-            if(DisposingOrDisposed)
+            ShowAtFactory(control, position);
+        }
+
+        /// <summary>
+        /// Displays the context menu at the specified position using the provided control and menu factory.
+        /// </summary>
+        /// <remarks>If the control is <see langword="null"/> or the menu contains no items, the method
+        /// does nothing. If the <paramref name="factory"/> is not provided, the default factory is used.
+        /// The method raises the <c>Opening</c> event before displaying the menu, allowing the operation
+        /// to be canceled. When the menu is closed, the <c>Closing</c> event is raised.</remarks>
+        /// <param name="control">The control associated with the context menu. This parameter cannot
+        /// be <see langword="null"/>.</param>
+        /// <param name="position">The position where the context menu should be displayed,
+        /// or <see langword="null"/> to use the default position.</param>
+        /// <param name="factory">The menu factory used to create and manage the context menu,
+        /// or <see langword="null"/> to use the default factory.</param>
+        public virtual void ShowAtFactory(
+            AbstractControl control,
+            PointD? position = null,
+            IMenuFactory? factory = null)
+        {
+            if (DisposingOrDisposed)
                 return;
             relatedControl.Value = null;
             if (Items.Count == 0)
@@ -358,13 +379,38 @@ namespace Alternet.UI
                 if (e.Cancel)
                     return;
                 relatedControl.Value = control;
-                Handler.Show(
-                    control,
-                    position,
-                    () =>
-                    {
-                        RaiseClosing(EventArgs.Empty);
-                    });
+
+                factory ??= MenuUtils.Factory;
+                if (factory is null)
+                    return;
+
+                var menuHandle = GetHostObject<IMenuFactory.ContextMenuHandle>();
+
+                if (menuHandle is not null)
+                {
+                    RemoveHostObject(menuHandle);
+                    factory.DestroyContextMenu(menuHandle);
+                }
+
+                menuHandle = CreateMenuHandle(factory);
+
+                if (menuHandle is not null)
+                {
+                    AddHostObject(menuHandle);
+                }
+                else
+                {
+                    return;
+                }
+
+                factory.Show(
+                        menuHandle,
+                        control,
+                        position,
+                        () =>
+                        {
+                            RaiseClosing(EventArgs.Empty);
+                        });
             }
             finally
             {
