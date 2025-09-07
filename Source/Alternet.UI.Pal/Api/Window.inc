@@ -79,9 +79,8 @@ else
    return false;
 }
 
-bool RaiseStaticEvent(WindowEvent event, void* parameter = nullptr)
+static bool RaiseStaticEvent(WindowEvent event, void* parameter = nullptr)
 {
-if (EventsSuspended()) return false;
 if (eventCallback != nullptr)
    return eventCallback(nullptr, event, parameter) != nullptr;
 else

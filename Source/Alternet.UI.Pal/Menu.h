@@ -5,8 +5,14 @@
 
 namespace Alternet::UI
 {
-    class MenuItem;
-    class MainMenu;
+    class Menu : public Object
+    {
+#include "Api/Menu.inc"
+    public:
+        static string _eventMenuItemId;
+    protected:
+    private:
+    };
 
     class wxAlternetMenu;
     class wxAlternetMenuBar;
@@ -27,7 +33,6 @@ namespace Alternet::UI
             : wxMenuItem(parent, id, text, help, kind, subMenu)
         {
         }
-
     };
 
     class wxAlternetMenu : public wxMenu
@@ -47,61 +52,11 @@ namespace Alternet::UI
         }
 
     private:
-        void OnMenuCommand(wxCommandEvent& event)
-        {
-            event.StopPropagation();
-			Menu::_eventMenuItemId = _id;
-
-/*
-        auto item = MenuItem::GetMenuItemById(event.GetId());
-        if (item == nullptr)
-            return;
-        item->RaiseClick();
-*/
-        }
-
-        void OnMenuOpen(wxMenuEvent& event)
-        {
-            event.StopPropagation();
-            Menu::_eventMenuItemId = _id;
-            Menu::RaiseStaticEvent(MenuEvent::Opened);
-
-            /*
-
-        for (auto item : _items)
-        {
-            item->RaiseMenuOpen();
-        }
-*/
-        }
-
-        void OnMenuClose(wxMenuEvent& event)
-        {
-            event.StopPropagation();
-            Menu::_eventMenuItemId = _id;
-
-            /*
-            RaiseEvent(MenuEvent::Closed);
-
-            for (auto item : _items)
-            {
-                item->RaiseMenuClose();
-            }
-*/
-        }
-
-        void OnMenuHighlight(wxMenuEvent& event)
-        {
-            event.StopPropagation();
-            Menu::_eventMenuItemId = _id;
-
-/*
-            auto item = MenuItem::GetMenuItemById(evt.GetMenuId());
-            if (item == nullptr)
-                return;
-            item->RaiseMenuHighlight();
-*/
-        }
+        void OnMenuCommand(wxCommandEvent& event);
+        void OnMenuOpen(wxMenuEvent& event);
+        void RaiseMenuEvent(wxMenuEvent& event, Menu::MenuEvent eventType);
+        void OnMenuClose(wxMenuEvent& event);
+        void OnMenuHighlight(wxMenuEvent& event);
     };
 
     class wxAlternetMenuBar : public wxMenuBar
@@ -114,14 +69,5 @@ namespace Alternet::UI
             : wxMenuBar(style)
         {
         }
-    };
-
-    class Menu : public Object
-    {
-#include "Api/Menu.inc"
-    public:
-        static string _eventMenuItemId;
-    protected:
-    private:
     };
 }

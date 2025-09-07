@@ -13,6 +13,7 @@ namespace Alternet.UI
         public WxMenuFactory()
         {
             nativeMenu = new();
+            Native.Menu.GlobalObject = nativeMenu;
             nativeMenu.MenuClick += OnNativeMenuClick;
             nativeMenu.MenuHighlight += OnNativeMenuHighlight;
             nativeMenu.MenuOpened += OnNativeMenuOpened;
@@ -27,6 +28,7 @@ namespace Alternet.UI
             nativeMenu.MenuClosed -= OnNativeMenuClosed;
             nativeMenu.Dispose();
             nativeMenu = null!;
+            Native.Menu.GlobalObject = null;
             base.DisposeManaged();
         }
 

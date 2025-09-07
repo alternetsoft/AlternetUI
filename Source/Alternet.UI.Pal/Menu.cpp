@@ -1,7 +1,60 @@
 #include "Menu.h"
+#include "IdManager.h"
 
 namespace Alternet::UI
 {
+    void wxAlternetMenu::OnMenuCommand(wxCommandEvent& event)
+    {
+        int id = event.GetId();
+        wxMenuItem* wxItem = FindItem(id);
+
+        if (wxItem == nullptr)
+            return;
+
+        wxAlternetMenuItem* item = wxDynamicCast(wxItem, wxAlternetMenuItem);
+        if (item != nullptr)
+        {
+            Menu::_eventMenuItemId = item->_id;
+            Menu::RaiseStaticEvent(Menu::MenuEvent::MenuClick);
+        }
+    }
+
+    void wxAlternetMenu::OnMenuOpen(wxMenuEvent& event)
+    {
+        RaiseMenuEvent(event, Menu::MenuEvent::MenuOpened);
+    }
+
+    void wxAlternetMenu::RaiseMenuEvent(wxMenuEvent& event, Menu::MenuEvent eventType)
+    {
+        event.StopPropagation();
+
+        wxAlternetMenuItem* item = wxDynamicCast(event.GetMenuItem(), wxAlternetMenuItem);
+        if (item != nullptr)
+        {
+            Menu::_eventMenuItemId = item->_id;
+            Menu::RaiseStaticEvent(Menu::MenuEvent::MenuClosed);
+            return;
+        }
+
+        wxAlternetMenu* itemMenu = wxDynamicCast(event.GetMenu(), wxAlternetMenu);
+        if (itemMenu != nullptr)
+        {
+            Menu::_eventMenuItemId = itemMenu->_id;
+            Menu::RaiseStaticEvent(Menu::MenuEvent::MenuClosed);
+            return;
+        }
+    }
+
+    void wxAlternetMenu::OnMenuClose(wxMenuEvent& event)
+    {
+        RaiseMenuEvent(event, Menu::MenuEvent::MenuClosed);
+    }
+
+    void wxAlternetMenu::OnMenuHighlight(wxMenuEvent& event)
+    {
+        RaiseMenuEvent(event, Menu::MenuEvent::MenuHighlight);
+    }
+
     void Menu::Show(void* menuHandle, Control* control, const PointD& position)
     {
         auto item = (wxAlternetMenu*)menuHandle;
@@ -76,7 +129,13 @@ namespace Alternet::UI
             break;
         }
 
-        auto result = new wxAlternetMenuItem(nullptr, wxID_ANY, " ", wxEmptyString, kind, nullptr);
+        auto result = new wxAlternetMenuItem(
+            nullptr,
+            kind == wxITEM_SEPARATOR ? wxID_SEPARATOR : IdManager::AllocateId(),
+            " ",
+            wxEmptyString,
+            kind,
+            nullptr);
         result->_id = id;
         return result;
     }

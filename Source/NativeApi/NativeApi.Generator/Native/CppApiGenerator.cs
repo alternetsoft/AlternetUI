@@ -151,9 +151,8 @@ namespace ApiGenerator.Native
             w.WriteLine();
 
             w.WriteLine(
-                $"bool RaiseStaticEvent({declTName}Event event, void* parameter = nullptr)");
+                $"static bool RaiseStaticEvent({declTName}Event event, void* parameter = nullptr)");
             w.WriteLine("{" + Environment.NewLine +
-                "if (EventsSuspended()) return false;" + Environment.NewLine +
                 "if (eventCallback != nullptr)" + Environment.NewLine +
                 "   return eventCallback(nullptr, event, parameter) != nullptr;" + Environment.NewLine +
                 "else" + Environment.NewLine +

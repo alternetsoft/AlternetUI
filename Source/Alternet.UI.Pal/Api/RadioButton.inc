@@ -27,9 +27,8 @@ else
    return false;
 }
 
-bool RaiseStaticEvent(RadioButtonEvent event, void* parameter = nullptr)
+static bool RaiseStaticEvent(RadioButtonEvent event, void* parameter = nullptr)
 {
-if (EventsSuspended()) return false;
 if (eventCallback != nullptr)
    return eventCallback(nullptr, event, parameter) != nullptr;
 else
