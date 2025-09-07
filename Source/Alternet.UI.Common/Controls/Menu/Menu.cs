@@ -158,6 +158,8 @@ namespace Alternet.UI
 
             foreach (var item in Items)
             {
+                if(!item.Visible)
+                    continue;
                 var itemHandle = item.CreateItemHandle(factory);
                 if(itemHandle is not null)
                     factory.MenuAddItem(result, itemHandle);
