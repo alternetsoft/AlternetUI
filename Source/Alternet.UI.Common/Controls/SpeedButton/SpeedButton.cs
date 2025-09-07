@@ -2270,7 +2270,7 @@ namespace Alternet.UI
         /// <param name="sender">The source of the event, which may be <see langword="null"/>.</param>
         /// <param name="e">An event argument of type <see cref="BaseEventArgs{T}"/>
         /// containing the details of the menu item change, including the kind of change.</param>
-        protected virtual void OnMenuItemChanged(object? sender, BaseEventArgs<MenuItemChangeKind> e)
+        protected virtual void OnMenuItemChanged(object? sender, BaseEventArgs<MenuChangeKind> e)
         {
             if(sender is not IMenuItemProperties menuItem)
                 return;

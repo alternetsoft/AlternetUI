@@ -170,9 +170,9 @@ namespace Alternet.UI
         /// <remarks>This event is triggered whenever a change occurs, and
         /// it provides information about
         /// the change through the <see cref="BaseEventArgs{T}"/> parameter.
-        /// The <see cref="MenuItemChangeKind"/> value
+        /// The <see cref="MenuChangeKind"/> value
         /// indicates the specific type of change that occurred.</remarks>
-        public event EventHandler<BaseEventArgs<MenuItemChangeKind>>? Changed;
+        public event EventHandler<BaseEventArgs<MenuChangeKind>>? Changed;
 
         /// <summary>
         /// Occurs when menu item is opened.
@@ -583,7 +583,7 @@ namespace Alternet.UI
                     if (enabled == value)
                         return;
                     enabled = value;
-                    RaiseChanged(MenuItemChangeKind.Enabled);
+                    RaiseChanged(MenuChangeKind.Enabled);
                 });
             }
         }
@@ -772,7 +772,7 @@ namespace Alternet.UI
             if (DisposingOrDisposed)
                 return;
             Enabled = commandSource.CanExecute;
-            RaiseChanged(MenuItemChangeKind.CommandSource);
+            RaiseChanged(MenuChangeKind.CommandSource);
         }
 
         /// <summary>
@@ -788,7 +788,7 @@ namespace Alternet.UI
             if (DisposingOrDisposed)
                 return;
             ClickActionChanged?.Invoke(this, EventArgs.Empty);
-            RaiseChanged(MenuItemChangeKind.ClickAction);
+            RaiseChanged(MenuChangeKind.ClickAction);
         }
 
         /// <summary>
@@ -869,7 +869,7 @@ namespace Alternet.UI
             if (DisposingOrDisposed)
                 return;
             ShortcutChanged?.Invoke(this, EventArgs.Empty);
-            RaiseChanged(MenuItemChangeKind.Shortcut);
+            RaiseChanged(MenuChangeKind.Shortcut);
         }
 
         /// <summary>
@@ -880,7 +880,7 @@ namespace Alternet.UI
             if (DisposingOrDisposed)
                 return;
             ImageChanged?.Invoke(this, EventArgs.Empty);
-            RaiseChanged(MenuItemChangeKind.Image);
+            RaiseChanged(MenuChangeKind.Image);
         }
 
         /// <summary>
@@ -891,7 +891,7 @@ namespace Alternet.UI
             if (DisposingOrDisposed)
                 return;
             DisabledImageChanged?.Invoke(this, EventArgs.Empty);
-            RaiseChanged(MenuItemChangeKind.DisabledImage);
+            RaiseChanged(MenuChangeKind.DisabledImage);
         }
 
         /// <summary>
@@ -906,7 +906,7 @@ namespace Alternet.UI
 
             OnVisibleChanged(e);
             VisibleChanged?.Invoke(this, e);
-            RaiseChanged(MenuItemChangeKind.Visible);
+            RaiseChanged(MenuChangeKind.Visible);
         }
 
         /// <summary>
@@ -917,7 +917,7 @@ namespace Alternet.UI
             if (DisposingOrDisposed)
                 return;
             RoleChanged?.Invoke(this, EventArgs.Empty);
-            RaiseChanged(MenuItemChangeKind.Role);
+            RaiseChanged(MenuChangeKind.Role);
         }
 
         /// <summary>
@@ -929,7 +929,7 @@ namespace Alternet.UI
             if (DisposingOrDisposed)
                 return;
             CheckedChanged?.Invoke(this, EventArgs.Empty);
-            RaiseChanged(MenuItemChangeKind.Checked);
+            RaiseChanged(MenuChangeKind.Checked);
         }
 
         /// <summary>
@@ -940,12 +940,13 @@ namespace Alternet.UI
         /// behavior when a change is raised.</remarks>
         /// <param name="kind">The type of change that occurred.
         /// This value determines the nature of the change being reported.</param>
-        public virtual void RaiseChanged(MenuItemChangeKind kind)
+        public virtual void RaiseChanged(MenuChangeKind kind)
         {
             if(DisposingOrDisposed)
                 return;
             Changed?.Invoke(this, new (kind));
-            RaiseEnabledChanged(EventArgs.Empty);
+            if(LogicalParent is Menu parentMenu)
+                parentMenu.RaiseItemChanged(this, kind);
         }
 
         /// <summary>
@@ -984,7 +985,7 @@ namespace Alternet.UI
 
             TextChanged?.Invoke(this, e);
             OnTextChanged(e);
-            RaiseChanged(MenuItemChangeKind.Text);
+            RaiseChanged(MenuChangeKind.Text);
         }
 
         /// <summary>

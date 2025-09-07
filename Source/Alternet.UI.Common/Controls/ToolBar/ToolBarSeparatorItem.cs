@@ -92,7 +92,7 @@ namespace Alternet.UI
         /// Handles changes to attached menu item's properties, such as visibility.
         /// </summary>
         /// <remarks>This method is called when attached menu item's state changes.
-        /// If the change is related to visibility (<see cref="MenuItemChangeKind.Visible"/>),
+        /// If the change is related to visibility (<see cref="MenuChangeKind.Visible"/>),
         /// the <see cref="AbstractControl.Visible"/> property is updated based
         /// on the <see cref="IMenuItemProperties.Visible"/> value of the sender.
         /// Derived classes can override
@@ -102,10 +102,10 @@ namespace Alternet.UI
         /// <param name="sender">The source of the event, typically an object
         /// implementing <see cref="IMenuItemProperties"/>.</param>
         /// <param name="e">An event argument containing the type of change,
-        /// represented by <see cref="MenuItemChangeKind"/>.</param>
-        protected virtual void OnMenuItemChanged(object? sender, BaseEventArgs<MenuItemChangeKind> e)
+        /// represented by <see cref="MenuChangeKind"/>.</param>
+        protected virtual void OnMenuItemChanged(object? sender, BaseEventArgs<MenuChangeKind> e)
         {
-            if (e.Value == MenuItemChangeKind.Visible)
+            if (e.Value == MenuChangeKind.Visible)
             {
                 if (sender is IMenuItemProperties properties)
                     Visible = properties.Visible;

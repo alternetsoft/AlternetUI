@@ -17,8 +17,8 @@ namespace Alternet.UI
         /// <remarks>This event is triggered whenever a menu item undergoes a change,
         /// such as being added, removed, or updated.
         /// The event provides information about the type of change through the
-        /// <see cref="MenuItemChangeKind"/> parameter.</remarks>
-        event EventHandler<BaseEventArgs<MenuItemChangeKind>>? Changed;
+        /// <see cref="MenuChangeKind"/> parameter.</remarks>
+        event EventHandler<BaseEventArgs<MenuChangeKind>>? Changed;
 
         /// <summary>
         /// Gets the shortcut key gesture associated with the menu item.

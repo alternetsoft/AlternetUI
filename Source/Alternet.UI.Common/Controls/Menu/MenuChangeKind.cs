@@ -5,9 +5,10 @@ using System.Text;
 namespace Alternet.UI
 {
     /// <summary>
-    /// Specifies the kind of change that can occur in a <see cref="MenuItem"/>.
+    /// Specifies the kind of change that can occur in a <see cref="MenuItem"/>, <see cref="Menu"/>
+    /// or <see cref="MainMenu"/>.
     /// </summary>
-    public enum MenuItemChangeKind
+    public enum MenuChangeKind
     {
         /// <summary>
         /// No change.
@@ -64,6 +65,16 @@ namespace Alternet.UI
         /// The command source or its state has changed.
         /// </summary>
         CommandSource,
+
+        /// <summary>
+        /// Child item has been added.
+        /// </summary>
+        ItemAdded,
+
+        /// <summary>
+        /// Child item has been removed.
+        /// </summary>
+        ItemRemoved,
 
         /// <summary>
         /// Some other property or state has changed.
