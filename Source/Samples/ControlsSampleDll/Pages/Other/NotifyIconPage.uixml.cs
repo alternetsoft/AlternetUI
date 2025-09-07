@@ -16,10 +16,23 @@ namespace ControlsSample
         {
             InitializeComponent();
 
-                notifyIcon = new NotifyIcon { Icon = Image, Text = notifyIconTextTextBox.Text };
-                notifyIcon.Click += NotifyIcon_Click;
-                notifyIcon.DoubleClick += NotifyIcon_DoubleClick;
-                notifyIcon.Menu = new ExampleContextMenu();
+            notifyIcon = new NotifyIcon
+            {
+                Icon = Image,
+                Text = notifyIconTextTextBox.Text,
+            };
+
+            notifyIcon.Click += NotifyIcon_Click;
+            notifyIcon.DoubleClick += NotifyIcon_DoubleClick;
+            notifyIcon.Menu = new ExampleContextMenu();
+
+            mainStackPanel.UseInternalContextMenu = true;
+
+            mainStackPanel.ContextMenuStrip.Add("Toggle first context menu item enabled", () =>
+            {
+                if (notifyIcon?.Menu?.Items.Count > 0)
+                    notifyIcon.Menu.Items[0].Enabled = !notifyIcon.Menu.Items[0].Enabled;
+            });
         }
 
         private void NotifyIcon_DoubleClick(object? sender, EventArgs e)

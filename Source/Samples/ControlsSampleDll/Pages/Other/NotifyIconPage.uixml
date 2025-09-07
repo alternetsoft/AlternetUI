@@ -3,7 +3,7 @@
         xmlns:x="http://schemas.alternetsoft.com/ui/2021/uixml"
         xmlns:local="clr-namespace:ControlsSample;assembly=ControlsSample">
 
-      <StackPanel Orientation="Vertical" Padding="10">
+      <StackPanel Orientation="Vertical" Padding="10" Name="mainStackPanel">
         <CheckBox
             Text="Visible In Taskbar" IsTextLocalized="true"
             Name="notifyIconVisibleCheckBox"

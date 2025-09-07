@@ -7,14 +7,7 @@ namespace Alternet::UI
         auto item = (wxAlternetMenu*)menuHandle;
         auto wxWindow = control->GetWxWindow();
 
-        auto byDefault = (position.X == -1 || position.Y == -1);
-
-        auto sx = byDefault ? -1 : fromDip(position.X, wxWindow);
-        auto sy = byDefault ? -1 : fromDip(position.Y, wxWindow);
-
-		auto pos = PointD(sx, sy);
-
-        wxWindow->PopupMenu(item, fromDip(pos, wxWindow));
+        wxWindow->PopupMenu(item, fromDip(position, wxWindow));
     }
 
     string Menu::_eventMenuItemId = wxStr("");
