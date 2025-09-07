@@ -106,6 +106,15 @@ namespace Alternet.UI
         void SetMenuItemEnabled(MenuItemHandle handle, bool value);
 
         /// <summary>
+        /// Retrieves the unique identifier associated with the specified native handle.
+        /// </summary>
+        /// <param name="handle">The <see cref="CustomNativeHandle"/> representing the native
+        /// resource for which the identifier is retrieved.
+        /// Cannot be null.</param>
+        /// <returns>A string containing the unique identifier associated with the specified handle.</returns>
+        string GetId(CustomNativeHandle handle);
+
+        /// <summary>
         /// Sets the text and optional right-aligned text for the specified menu item.
         /// </summary>
         /// <param name="handle">The handle of the menu item.</param>

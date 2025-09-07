@@ -109,27 +109,6 @@ namespace Alternet.UI
         IControlHandler CreateScrollBarHandler(ScrollBar control);
 
         /// <summary>
-        /// Creates <see cref="IMenuItemHandler"/> interface provider.
-        /// </summary>
-        /// <param name="control">Owner.</param>
-        /// <returns></returns>
-        IMenuItemHandler CreateMenuItemHandler(MenuItem control);
-
-        /// <summary>
-        /// Creates <see cref="IContextMenuHandler"/> interface provider.
-        /// </summary>
-        /// <param name="control">Owner.</param>
-        /// <returns></returns>
-        IContextMenuHandler CreateContextMenuHandler(ContextMenu control);
-
-        /// <summary>
-        /// Creates <see cref="IMainMenuHandler"/> interface provider.
-        /// </summary>
-        /// <param name="control">Owner.</param>
-        /// <returns></returns>
-        IMainMenuHandler CreateMainMenuHandler(MainMenu control);
-
-        /// <summary>
         /// Creates <see cref="IWindowHandler"/> interface provider.
         /// </summary>
         /// <param name="window">Owner.</param>

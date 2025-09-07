@@ -40,7 +40,6 @@ namespace NativeApi.Api
         public static Window ActiveWindow { get; }
         public WindowState State { get; set; }
         public IconSet? Icon { get; set; }
-        public MainMenu? Menu { get; set; }
         public IntPtr WxStatusBar { get; set; }
     }
 }

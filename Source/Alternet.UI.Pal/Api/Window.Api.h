@@ -4,7 +4,6 @@
 
 #include "Window.h"
 #include "IconSet.h"
-#include "MainMenu.h"
 #include "Font.h"
 #include "ApiUtils.h"
 #include "Exceptions.h"
@@ -336,28 +335,6 @@ ALTERNET_UI_API void Window_SetIcon_(Window* obj, IconSet* value)
     MarshalExceptions<void>([&](){
     #endif
         obj->SetIcon(value);
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    });
-    #endif
-}
-
-ALTERNET_UI_API MainMenu* Window_GetMenu_(Window* obj)
-{
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    return MarshalExceptions<MainMenu*>([&](){
-    #endif
-        return obj->GetMenu();
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    });
-    #endif
-}
-
-ALTERNET_UI_API void Window_SetMenu_(Window* obj, MainMenu* value)
-{
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    MarshalExceptions<void>([&](){
-    #endif
-        obj->SetMenu(value);
     #if !defined(__WXMSW__) || defined(_DEBUG)
     });
     #endif

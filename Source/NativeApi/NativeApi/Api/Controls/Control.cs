@@ -154,7 +154,6 @@ namespace NativeApi.Api
         public static void NotifyCaptureLost() { }
         public void Freeze() { }
         public void Thaw() { }
-        public void ShowPopupMenu(IntPtr menu, Coord x, Coord y) { }
         public void BeginIgnoreRecreate() {}
         public void EndIgnoreRecreate() {}
         public SizeD GetDPI() => default;

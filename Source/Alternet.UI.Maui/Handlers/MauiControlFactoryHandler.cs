@@ -43,11 +43,6 @@ namespace Alternet.UI
             return new MauiComboBoxHandler();
         }
 
-        IContextMenuHandler IControlFactoryHandler.CreateContextMenuHandler(ContextMenu control)
-        {
-            return new MauiContextMenuHandler(control);
-        }
-
         IControlHandler IControlFactoryHandler.CreateControlHandler(AbstractControl control)
         {
             return new MauiControlHandler();
@@ -61,16 +56,6 @@ namespace Alternet.UI
         IControlHandler IControlFactoryHandler.CreateListViewHandler(ListView control)
         {
             return new HandlerForDisposed();
-        }
-
-        IMainMenuHandler IControlFactoryHandler.CreateMainMenuHandler(MainMenu control)
-        {
-            return new PlessMainMenuHandler();
-        }
-
-        IMenuItemHandler IControlFactoryHandler.CreateMenuItemHandler(MenuItem control)
-        {
-            return new PlessMenuItemHandler();
         }
 
         IControlHandler IControlFactoryHandler.CreateProgressBarHandler(ProgressBar control)

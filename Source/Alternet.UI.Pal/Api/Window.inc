@@ -45,9 +45,6 @@ void SetState(WindowState value);
 IconSet* GetIcon();
 void SetIcon(IconSet* value);
 
-MainMenu* GetMenu();
-void SetMenu(MainMenu* value);
-
 void* GetWxStatusBar();
 void SetWxStatusBar(void* value);
 

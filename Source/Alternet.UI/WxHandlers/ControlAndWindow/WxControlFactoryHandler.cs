@@ -125,24 +125,6 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        public IMenuItemHandler CreateMenuItemHandler(MenuItem control)
-        {
-            return new Native.MenuItem(control);
-        }
-
-        /// <inheritdoc/>
-        public IContextMenuHandler CreateContextMenuHandler(ContextMenu control)
-        {
-            return new Native.Menu(control);
-        }
-
-        /// <inheritdoc/>
-        public IMainMenuHandler CreateMainMenuHandler(MainMenu control)
-        {
-            return new Native.MainMenu(control);
-        }
-
-        /// <inheritdoc/>
         public IStatusBarHandler CreateStatusBarHandler(StatusBar control)
         {
             return new StatusBarHandler(control);

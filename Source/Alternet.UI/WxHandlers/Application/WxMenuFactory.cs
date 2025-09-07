@@ -126,8 +126,35 @@ namespace Alternet.UI
             PointD? position = null,
             Action? onClose = null)
         {
-            throw new NotImplementedException();
+            var menuPtr = menuHandle.AsPointer;
+            if (menuPtr == IntPtr.Zero)
+                return;
+
+            if (position == null)
+            {
+                var window = control.ParentWindow;
+                if (window == null)
+                    return;
+                var toolRect = control.Bounds;
+                var pt = control.Parent!.ClientToScreen(toolRect.BottomLeft);
+                position = window.ScreenToClient(pt);
+            }
+
+            Native.Menu.Show(
+                menuPtr,
+                (UI.Native.Control)control.NativeControl ?? throw new Exception(),
+                position.Value);
         }
+
+
+        public virtual string GetId(CustomNativeHandle handle)
+        {
+            var ptr = handle.AsPointer;
+            if (ptr == IntPtr.Zero)
+                return string.Empty;
+            return Native.Menu.GetMenuId(ptr);
+        }
+
         public virtual void SetMenuItemEnabled(IMenuFactory.MenuItemHandle handle, bool value)
         {
             var itemPtr = handle.AsPointer;
@@ -136,7 +163,9 @@ namespace Alternet.UI
             Native.Menu.SetMenuItemEnabled(itemPtr, value);
         }
 
-        public virtual void SetMenuItemSubMenu(IMenuFactory.MenuItemHandle handle, IMenuFactory.ContextMenuHandle subMenuHandle)
+        public virtual void SetMenuItemSubMenu(
+            IMenuFactory.MenuItemHandle handle,
+            IMenuFactory.ContextMenuHandle subMenuHandle)
         {
             var itemPtr = handle.AsPointer;
             var subMenuPtr = subMenuHandle.AsPointer;

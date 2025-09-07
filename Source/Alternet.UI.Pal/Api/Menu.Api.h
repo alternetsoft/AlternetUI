@@ -3,9 +3,8 @@
 #pragma once
 
 #include "Menu.h"
-#include "ImageSet.h"
-#include "MenuItem.h"
 #include "Control.h"
+#include "ImageSet.h"
 #include "ApiUtils.h"
 #include "Exceptions.h"
 
@@ -33,23 +32,12 @@ ALTERNET_UI_API char16_t* Menu_GetEventMenuItemId_()
     #endif
 }
 
-ALTERNET_UI_API void* Menu_GetMenuHandle_(Menu* obj)
+ALTERNET_UI_API void Menu_Show_(void* menuHandle, Control* control, PointD position)
 {
     #if !defined(__WXMSW__) || defined(_DEBUG)
-    return MarshalExceptions<void*>([&](){
+    MarshalExceptions<void>([&](){
     #endif
-        return obj->GetMenuHandle();
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    });
-    #endif
-}
-
-ALTERNET_UI_API int Menu_GetItemsCount_(Menu* obj)
-{
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    return MarshalExceptions<int>([&](){
-    #endif
-        return obj->GetItemsCount();
+        Menu::Show(menuHandle, control, position);
     #if !defined(__WXMSW__) || defined(_DEBUG)
     });
     #endif
@@ -132,6 +120,17 @@ ALTERNET_UI_API MenuItemType Menu_GetMenuItemType_(void* handle)
     #endif
 }
 
+ALTERNET_UI_API char16_t* Menu_GetMenuId_(void* handle)
+{
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    return MarshalExceptions<char16_t*>([&](){
+    #endif
+        return AllocPInvokeReturnString(Menu::GetMenuId(handle));
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    });
+    #endif
+}
+
 ALTERNET_UI_API void Menu_SetMenuItemBitmap_(void* handle, ImageSet* value)
 {
     #if !defined(__WXMSW__) || defined(_DEBUG)
@@ -204,39 +203,6 @@ ALTERNET_UI_API void Menu_MenuRemoveItem_(void* handle, void* itemHandle)
     MarshalExceptions<void>([&](){
     #endif
         Menu::MenuRemoveItem(handle, itemHandle);
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    });
-    #endif
-}
-
-ALTERNET_UI_API void Menu_InsertItemAt_(Menu* obj, int index, MenuItem* item)
-{
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    MarshalExceptions<void>([&](){
-    #endif
-        obj->InsertItemAt(index, item);
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    });
-    #endif
-}
-
-ALTERNET_UI_API void Menu_RemoveItemAt_(Menu* obj, int index)
-{
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    MarshalExceptions<void>([&](){
-    #endif
-        obj->RemoveItemAt(index);
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    });
-    #endif
-}
-
-ALTERNET_UI_API void Menu_ShowContextMenu_(Menu* obj, Control* control, PointD position)
-{
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    MarshalExceptions<void>([&](){
-    #endif
-        obj->ShowContextMenu(control, position);
     #if !defined(__WXMSW__) || defined(_DEBUG)
     });
     #endif

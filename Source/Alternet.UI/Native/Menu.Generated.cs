@@ -33,24 +33,9 @@ namespace Alternet.UI.Native
             
         }
         
-        public System.IntPtr MenuHandle
+        public static void Show(System.IntPtr menuHandle, Control control, Alternet.Drawing.PointD position)
         {
-            get
-            {
-                CheckDisposed();
-                return NativeApi.Menu_GetMenuHandle_(NativePointer);
-            }
-            
-        }
-        
-        public int ItemsCount
-        {
-            get
-            {
-                CheckDisposed();
-                return NativeApi.Menu_GetItemsCount_(NativePointer);
-            }
-            
+            NativeApi.Menu_Show_(menuHandle, control.NativePointer, position);
         }
         
         public static System.IntPtr CreateMainMenu(string id)
@@ -88,6 +73,11 @@ namespace Alternet.UI.Native
             return NativeApi.Menu_GetMenuItemType_(handle);
         }
         
+        public static string GetMenuId(System.IntPtr handle)
+        {
+            return NativeApi.Menu_GetMenuId_(handle);
+        }
+        
         public static void SetMenuItemBitmap(System.IntPtr handle, ImageSet? value)
         {
             NativeApi.Menu_SetMenuItemBitmap_(handle, value?.NativePointer ?? IntPtr.Zero);
@@ -121,24 +111,6 @@ namespace Alternet.UI.Native
         public static void MenuRemoveItem(System.IntPtr handle, System.IntPtr itemHandle)
         {
             NativeApi.Menu_MenuRemoveItem_(handle, itemHandle);
-        }
-        
-        public void InsertItemAt(int index, MenuItem item)
-        {
-            CheckDisposed();
-            NativeApi.Menu_InsertItemAt_(NativePointer, index, item.NativePointer);
-        }
-        
-        public void RemoveItemAt(int index)
-        {
-            CheckDisposed();
-            NativeApi.Menu_RemoveItemAt_(NativePointer, index);
-        }
-        
-        public void ShowContextMenu(Control control, Alternet.Drawing.PointD position)
-        {
-            CheckDisposed();
-            NativeApi.Menu_ShowContextMenu_(NativePointer, control.NativePointer, position);
         }
         
         static GCHandle eventCallbackGCHandle;
@@ -183,14 +155,6 @@ namespace Alternet.UI.Native
                 {
                     MenuClosed?.Invoke(); return IntPtr.Zero;
                 }
-                case NativeApi.MenuEvent.Opened:
-                {
-                    Opened?.Invoke(); return IntPtr.Zero;
-                }
-                case NativeApi.MenuEvent.Closed:
-                {
-                    Closed?.Invoke(); return IntPtr.Zero;
-                }
                 default: throw new Exception("Unexpected MenuEvent value: " + e);
             }
         }
@@ -199,8 +163,6 @@ namespace Alternet.UI.Native
         public Action? MenuHighlight;
         public Action? MenuOpened;
         public Action? MenuClosed;
-        public Action? Opened;
-        public Action? Closed;
         
         [SuppressUnmanagedCodeSecurity]
         public class NativeApi : NativeApiProvider
@@ -216,8 +178,6 @@ namespace Alternet.UI.Native
                 MenuHighlight,
                 MenuOpened,
                 MenuClosed,
-                Opened,
-                Closed,
             }
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
@@ -230,10 +190,7 @@ namespace Alternet.UI.Native
             public static extern string Menu_GetEventMenuItemId_();
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern System.IntPtr Menu_GetMenuHandle_(IntPtr obj);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern int Menu_GetItemsCount_(IntPtr obj);
+            public static extern void Menu_Show_(System.IntPtr menuHandle, IntPtr control, Alternet.Drawing.PointD position);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern System.IntPtr Menu_CreateMainMenu_(string id);
@@ -257,6 +214,9 @@ namespace Alternet.UI.Native
             public static extern Alternet.UI.MenuItemType Menu_GetMenuItemType_(System.IntPtr handle);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern string Menu_GetMenuId_(System.IntPtr handle);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void Menu_SetMenuItemBitmap_(System.IntPtr handle, IntPtr value);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
@@ -276,15 +236,6 @@ namespace Alternet.UI.Native
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void Menu_MenuRemoveItem_(System.IntPtr handle, System.IntPtr itemHandle);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void Menu_InsertItemAt_(IntPtr obj, int index, IntPtr item);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void Menu_RemoveItemAt_(IntPtr obj, int index);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void Menu_ShowContextMenu_(IntPtr obj, IntPtr control, Alternet.Drawing.PointD position);
             
         }
     }

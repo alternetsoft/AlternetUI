@@ -24,7 +24,6 @@ namespace Alternet.UI
     [ControlCategory("MenusAndToolbars")]
     public partial class ContextMenu : Menu, IContextMenuProperties
     {
-        private IContextMenuHandler? handler;
         private WeakReferenceValue<AbstractControl> relatedControl = new();
 
         /// <summary>
@@ -91,12 +90,6 @@ namespace Alternet.UI
                 return false;
             }
         }
-
-        /// <summary>
-        /// Gets handler.
-        /// </summary>
-        [Browsable(false)]
-        public IContextMenuHandler Handler => handler ??= CreateHandler();
 
         /// <summary>
         /// Determines whether any visible child of the specified control
@@ -378,18 +371,9 @@ namespace Alternet.UI
             }
         }
 
-        /// <summary>
-        /// Creates and returns a handler for the context menu.
-        /// </summary>
-        protected virtual IContextMenuHandler CreateHandler()
-        {
-            return ControlFactory.Handler.CreateContextMenuHandler(this);
-        }
-
         /// <inheritdoc/>
         protected override void DisposeManaged()
         {
-            SafeDispose(ref handler);
             base.DisposeManaged();
         }
 

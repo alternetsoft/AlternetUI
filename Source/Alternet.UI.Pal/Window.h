@@ -4,7 +4,6 @@
 #include "Control.h"
 #include "ImageSet.h"
 #include "IconSet.h"
-#include "MainMenu.h"
 #include "StatusBar.h"
 
 #include <wx/minifram.h>

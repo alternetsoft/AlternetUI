@@ -1,8 +1,22 @@
 #include "Menu.h"
-#include "MenuItem.h"
 
 namespace Alternet::UI
 {
+    void Menu::Show(void* menuHandle, Control* control, const PointD& position)
+    {
+        auto item = (wxAlternetMenu*)menuHandle;
+        auto wxWindow = control->GetWxWindow();
+
+        auto byDefault = (position.X == -1 || position.Y == -1);
+
+        auto sx = byDefault ? -1 : fromDip(position.X, wxWindow);
+        auto sy = byDefault ? -1 : fromDip(position.Y, wxWindow);
+
+		auto pos = PointD(sx, sy);
+
+        wxWindow->PopupMenu(item, fromDip(pos, wxWindow));
+    }
+
     string Menu::_eventMenuItemId = wxStr("");
 
     string Menu::GetEventMenuItemId()
@@ -15,6 +29,30 @@ namespace Alternet::UI
         auto result = new wxAlternetMenuBar();
         result->_id = id;
         return result;
+    }
+
+    string Menu::GetMenuId(void* handle)
+    {
+        wxObject* obj = static_cast<wxObject*>(handle);
+
+        if (wxAlternetMenuItem* item = wxDynamicCast(obj, wxAlternetMenuItem))
+        {
+			return item->_id;
+        }
+        else
+        if (wxAlternetMenu* menu = wxDynamicCast(obj, wxAlternetMenu))
+        {
+			return menu->_id;
+        }
+        else
+        if (wxAlternetMenuBar* bar = wxDynamicCast(obj, wxAlternetMenuBar))
+        {
+			return bar->_id;
+        }
+        else
+        {
+			return wxStr("");
+        }
     }
 
     void* Menu::CreateContextMenu(const string& id)
@@ -198,43 +236,24 @@ namespace Alternet::UI
 		newItem->ownerMenu = nullptr;
     }
 
-    /*static*/ Menu::MenusByWxMenusMap Menu::s_menusByWxMenusMap;
-
     Menu::Menu()
     {
-        CreateWxMenu();
     }
 
     Menu::~Menu()
     {
-        UnregisterWxMenu();
-        delete _menu;
-        _menu = nullptr;
     }
 
-    void* Menu::GetMenuHandle()
-    {
-        return _menu;
-    }
 
-    void Menu::CreateWxMenu()
-    {
-        _menu = new wxMenu();
-        AssociateMenuWithWxMenu(_menu, this);
-        _menu->Bind(wxEVT_MENU, &Menu::OnMenuCommand, this);
-        _menu->Bind(wxEVT_MENU_OPEN, &Menu::OnMenuOpen, this);
-        _menu->Bind(wxEVT_MENU_CLOSE, &Menu::OnMenuClose, this);
-        _menu->Bind(wxEVT_MENU_HIGHLIGHT, &Menu::OnMenuHighlight, this);
-    }
-
-    void Menu::UnregisterWxMenu()
-    {
-        _menu->Unbind(wxEVT_MENU, &Menu::OnMenuCommand, this);
-        _menu->Unbind(wxEVT_MENU_OPEN, &Menu::OnMenuOpen, this);
-        _menu->Unbind(wxEVT_MENU_CLOSE, &Menu::OnMenuClose, this);
-        _menu->Unbind(wxEVT_MENU_HIGHLIGHT, &Menu::OnMenuHighlight, this);
-        RemoveWxMenuAssociation(_menu);
-    }
+/*
+    _menu->Bind(wxEVT_MENU, &Menu::OnMenuCommand, this);
+    _menu->Bind(wxEVT_MENU_OPEN, &Menu::OnMenuOpen, this);
+    _menu->Bind(wxEVT_MENU_CLOSE, &Menu::OnMenuClose, this);
+    _menu->Bind(wxEVT_MENU_HIGHLIGHT, &Menu::OnMenuHighlight, this);
+    _menu->Unbind(wxEVT_MENU, &Menu::OnMenuCommand, this);
+    _menu->Unbind(wxEVT_MENU_OPEN, &Menu::OnMenuOpen, this);
+    _menu->Unbind(wxEVT_MENU_CLOSE, &Menu::OnMenuClose, this);
+    _menu->Unbind(wxEVT_MENU_HIGHLIGHT, &Menu::OnMenuHighlight, this);
 
     void Menu::OnMenuOpen(wxMenuEvent& evt)
     {
@@ -275,101 +294,5 @@ namespace Alternet::UI
             return;
         item->RaiseClick();
     }
-
-    MainMenu* Menu::GetParentMainMenu()
-    {
-        return _parentMainMenu;
-    }
-
-    void Menu::SetParent(MainMenu* mainMenu)
-    {
-        _parentMainMenu = mainMenu;
-        _parentMenuItem = nullptr;
-    }
-
-    void Menu::SetParent(MenuItem* item)
-    {
-        _parentMenuItem = item;
-        _parentMainMenu = nullptr;
-    }
-
-    MainMenu* Menu::FindParentMainMenu()
-    {
-        if (_parentMainMenu != nullptr)
-            return _parentMainMenu;
-
-        if (_parentMenuItem == nullptr)
-            return nullptr;
-
-        return _parentMenuItem->FindParentMainMenu();
-    }
-
-    std::vector<MenuItem*> Menu::GetItems()
-    {
-        return _items;
-    }
-
-    void Menu::DetachAndRecreateWxMenu()
-    {
-        UnregisterWxMenu();
-        auto oldMenu = _menu;
-
-        CreateWxMenu();
-
-        int index = 0;
-        for (auto item : _items)
-        {
-            auto wxItem = item->GetWxMenuItem();
-            oldMenu->Remove(wxItem);
-            _menu->Insert(index++, wxItem);
-        }
-    }
-
-    int Menu::GetItemsCount()
-    {
-        return _menu->GetMenuItemCount();
-    }
-
-    void Menu::InsertItemAt(int index, MenuItem* item)
-    {
-        _items.insert(_items.begin() + index, item);
-        _menu->Insert(index, item->GetWxMenuItem());
-        item->SetParentMenu(this, index);
-    }
-
-    void Menu::RemoveItemAt(int index)
-    {
-        auto it = _items.begin() + index;
-        auto item = *it;
-        _items.erase(it);
-        _menu->Remove(item->GetWxMenuItem());
-        item->SetParentMenu(nullptr, nullopt);
-    }
-
-    void Menu::ShowContextMenu(Control* control, const Point& position)
-    {
-        auto wxWindow = control->GetWxWindow();
-        wxWindow->PopupMenu(_menu, fromDip(position, wxWindow));
-    }
-
-    wxMenu* Menu::GetWxMenu()
-    {
-        return _menu;
-    }
-
-    /*static*/ Menu* Menu::TryFindMenuByWxMenu(wxMenu* wxMenu)
-    {
-        MenusByWxMenusMap::const_iterator i = s_menusByWxMenusMap.find(wxMenu);
-        return i == s_menusByWxMenusMap.end() ? NULL : i->second;
-    }
-
-    /*static*/ void Menu::AssociateMenuWithWxMenu(wxMenu* wxMenu, Menu* menu)
-    {
-        s_menusByWxMenusMap[wxMenu] = menu;
-    }
-    
-    /*static*/ void Menu::RemoveWxMenuAssociation(wxMenu* wxMenu)
-    {
-        s_menusByWxMenusMap.erase(wxMenu);
-    }
+*/
 }

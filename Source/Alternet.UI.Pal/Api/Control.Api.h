@@ -1287,17 +1287,6 @@ ALTERNET_UI_API void Control_Thaw_(Control* obj)
     #endif
 }
 
-ALTERNET_UI_API void Control_ShowPopupMenu_(Control* obj, void* menu, double x, double y)
-{
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    MarshalExceptions<void>([&](){
-    #endif
-        obj->ShowPopupMenu(menu, x, y);
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    });
-    #endif
-}
-
 ALTERNET_UI_API void Control_BeginIgnoreRecreate_(Control* obj)
 {
     #if !defined(__WXMSW__) || defined(_DEBUG)
