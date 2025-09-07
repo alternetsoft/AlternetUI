@@ -392,7 +392,7 @@ namespace Alternet.UI
                     factory.DestroyContextMenu(menuHandle);
                 }
 
-                menuHandle = CreateMenuHandle(factory);
+                menuHandle = CreateItemsHandle(factory);
 
                 if (menuHandle is not null)
                 {

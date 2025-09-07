@@ -80,7 +80,7 @@ namespace Alternet.UI.Native
                 return;
             }
 
-            menuHandle = value.CreateMenuHandle();
+            menuHandle = value.CreateItemsHandle();
 
             if (menuHandle == null)
                 SetMenu(IntPtr.Zero);

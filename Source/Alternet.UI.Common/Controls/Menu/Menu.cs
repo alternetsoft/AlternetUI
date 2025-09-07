@@ -138,6 +138,7 @@ namespace Alternet.UI
 
         /// <summary>
         /// Creates a context menu handle using the specified menu factory.
+        /// Uses child items for populating the created context menu, if any.
         /// </summary>
         /// <remarks>If the menu contains items, they are added to the created context menu using the
         /// specified or default factory.</remarks>
@@ -145,7 +146,7 @@ namespace Alternet.UI
         /// If null, a default factory is used.</param>
         /// <returns>A <see cref="IMenuFactory.ContextMenuHandle"/> representing the created context menu, or
         /// <see langword="null"/> if no factory is available.</returns>
-        public virtual IMenuFactory.ContextMenuHandle? CreateMenuHandle(IMenuFactory? factory = null)
+        public virtual IMenuFactory.ContextMenuHandle? CreateItemsHandle(IMenuFactory? factory = null)
         {
             factory ??= MenuUtils.Factory;
             if (factory == null)
@@ -157,7 +158,7 @@ namespace Alternet.UI
 
             foreach (var item in Items)
             {
-                var itemHandle = item.CreateHandle(factory);
+                var itemHandle = item.CreateItemHandle(factory);
                 if(itemHandle is not null)
                     factory.MenuAddItem(result, itemHandle);
             }

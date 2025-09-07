@@ -26,7 +26,7 @@ namespace ControlsSample
 
             var exportMenuItem = new MenuItem
             {
-                Text = "_Export",
+                Text = "_Export sub-menu",
             };
 
             MenuUtils.BindMenuItemEventsLogger(exportMenuItem);

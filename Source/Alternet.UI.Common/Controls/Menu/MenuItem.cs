@@ -999,18 +999,20 @@ namespace Alternet.UI
         /// <see cref="MenuUtils.Factory"/> is used.</param>
         /// <returns>A <see cref="IMenuFactory.MenuItemHandle"/> representing the created menu item,
         /// or <see langword="null"/> if the handle could not be created.</returns>
-        public virtual IMenuFactory.MenuItemHandle? CreateHandle(IMenuFactory? factory = null)
+        public virtual IMenuFactory.MenuItemHandle? CreateItemHandle(IMenuFactory? factory = null)
         {
             factory ??= MenuUtils.Factory;
             if (factory == null)
                 return null;
 
             var itemType = MenuItemType.Standard;
+            var isChecked = Checked && !HasItems;
+            var isSeparator = IsSeparator;
 
-            if (IsSeparator)
+            if (isSeparator)
                 itemType = MenuItemType.Separator;
             else
-            if (Checked)
+            if (isChecked)
             {
                 itemType = MenuItemType.Check;
             }
@@ -1039,8 +1041,15 @@ namespace Alternet.UI
 
             factory.SetMenuItemText(handle, Text, rightText ?? string.Empty);
 
-            if (Checked)
-                factory.SetMenuItemChecked(handle, Checked);
+            if (isChecked)
+                factory.SetMenuItemChecked(handle, isChecked);
+
+            if (HasItems && !isSeparator)
+            {
+                var menuHandle = CreateItemsHandle(factory);
+                if (menuHandle is not null)
+                    factory.SetMenuItemSubMenu(handle, menuHandle);
+            }
 
             return handle;
         }
