@@ -23,6 +23,13 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Occurs when an item is changed.
+        /// </summary>
+        /// <remarks>This event is raised whenever an item is modified, allowing subscribers to respond to
+        /// the change. Ensure that event handlers are properly unsubscribed to avoid memory leaks.</remarks>
+        public event EventHandler<MenuChangeEventArgs>? ItemChanged;
+
+        /// <summary>
         /// Retrieves a menu by its unique identifier.
         /// </summary>
         /// <remarks>This method searches for a menu in the collection using the provided unique
@@ -130,6 +137,35 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Creates a context menu handle using the specified menu factory.
+        /// </summary>
+        /// <remarks>If the menu contains items, they are added to the created context menu using the
+        /// specified or default factory.</remarks>
+        /// <param name="factory">The <see cref="IMenuFactory"/> instance used to create the context menu handle.
+        /// If null, a default factory is used.</param>
+        /// <returns>A <see cref="IMenuFactory.ContextMenuHandle"/> representing the created context menu, or
+        /// <see langword="null"/> if no factory is available.</returns>
+        public virtual IMenuFactory.ContextMenuHandle? CreateMenuHandle(IMenuFactory? factory = null)
+        {
+            factory ??= MenuUtils.Factory;
+            if (factory == null)
+                return null;
+            var result = factory.CreateContextMenu(UniqueId.ToString());
+
+            if(!HasItems)
+                return result;
+
+            foreach (var item in Items)
+            {
+                var itemHandle = item.CreateHandle(factory);
+                if(itemHandle is not null)
+                    factory.MenuAddItem(result, itemHandle);
+            }
+
+            return result;
+        }
+
+        /// <summary>
         /// Adds a separator item to the <see cref="ItemContainerElement{T}.Items"/> collection.
         /// </summary>
         /// <returns>The created separator item.</returns>
@@ -152,6 +188,19 @@ namespace Alternet.UI
             MenuItem item = new(title, onClick);
             Items.Add(item);
             return item;
+        }
+
+        /// <summary>
+        /// Notifies that a change has occurred to the specified child item.
+        /// </summary>
+        /// <param name="item">The child item that has been changed. Cannot be <see langword="null"/>.</param>
+        /// <param name="action">The type of change that occurred, represented
+        /// by a <see cref="MenuChangeKind"/> value.</param>
+        public virtual void RaiseItemChanged(Menu item, MenuChangeKind action)
+        {
+            ItemChanged?.Invoke(this, new MenuChangeEventArgs(item, action));
+            if (LogicalParent is Menu parentMenu)
+                parentMenu.RaiseItemChanged(this, action);
         }
 
         /// <inheritdoc/>
