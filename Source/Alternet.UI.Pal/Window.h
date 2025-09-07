@@ -63,17 +63,6 @@ namespace Alternet::UI
 
             return statusBar;
         }
-/*
-        virtual wxWindow* GetMainWindowOfCompositeControl() override
-        {
-            auto result = wxFrame::GetMainWindowOfCompositeControl();
-            if (result == nullptr)
-                return nullptr;
-            if(!result->IsEnabled())
-                return nullptr;
-            return result;
-        }
-*/
 
     private:
     };
@@ -141,8 +130,6 @@ namespace Alternet::UI
         Frame* GetFrame();
         wxDialog* GetDialog();
 
-        void ApplyMenuToFrame(MainMenu* const& value, Frame* frame);
-
     protected:
         void OnBeforeDestroyWxWindow() override;
         void OnWxWindowDestroyed(wxWindow* window) override;
@@ -168,9 +155,6 @@ namespace Alternet::UI
 
         string RetrieveTitle();
         void ApplyTitle(const string& value);
-
-        MainMenu* RetrieveMenu();
-        void ApplyMenu(MainMenu* const& value);
 
         long GetWindowStyle();
 
@@ -203,8 +187,6 @@ namespace Alternet::UI
         FlagsAccessor<WindowFlags> _flags;
         DelayedValue<Window, string> _title;
         WindowState _state = WindowState::Normal;
-        DelayedValue<Window, MainMenu*> _menu;
-        MainMenu* _storedMenu = nullptr;
         IconSet* _icon = nullptr;
         WindowState _lastState = WindowState::Normal;
 

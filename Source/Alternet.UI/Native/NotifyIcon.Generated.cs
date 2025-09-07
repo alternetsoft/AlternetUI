@@ -57,24 +57,6 @@ namespace Alternet.UI.Native
             }
         }
         
-        public Menu? Menu
-        {
-            get
-            {
-                CheckDisposed();
-                var _nnn = NativeApi.NotifyIcon_GetMenu_(NativePointer);
-                var _mmm = NativeObject.GetFromNativePointer<Menu>(_nnn, p => new Menu(p));
-                ReleaseNativeObjectPointer(_nnn);
-                return _mmm;
-            }
-            
-            set
-            {
-                CheckDisposed();
-                NativeApi.NotifyIcon_SetMenu_(NativePointer, value?.NativePointer ?? IntPtr.Zero);
-            }
-        }
-        
         public bool Visible
         {
             get
@@ -117,6 +99,12 @@ namespace Alternet.UI.Native
                 return NativeApi.NotifyIcon_GetIsOk_(NativePointer);
             }
             
+        }
+        
+        public void SetMenu(System.IntPtr menuHandle)
+        {
+            CheckDisposed();
+            NativeApi.NotifyIcon_SetMenu_(NativePointer, menuHandle);
         }
         
         static GCHandle eventCallbackGCHandle;
@@ -193,12 +181,6 @@ namespace Alternet.UI.Native
             public static extern void NotifyIcon_SetIcon_(IntPtr obj, IntPtr value);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern IntPtr NotifyIcon_GetMenu_(IntPtr obj);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void NotifyIcon_SetMenu_(IntPtr obj, IntPtr value);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern bool NotifyIcon_GetVisible_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
@@ -212,6 +194,9 @@ namespace Alternet.UI.Native
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern bool NotifyIcon_GetIsOk_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void NotifyIcon_SetMenu_(IntPtr obj, System.IntPtr menuHandle);
             
         }
     }

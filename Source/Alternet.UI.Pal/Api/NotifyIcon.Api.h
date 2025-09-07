@@ -4,7 +4,6 @@
 
 #include "NotifyIcon.h"
 #include "Image.h"
-#include "Menu.h"
 #include "ApiUtils.h"
 #include "Exceptions.h"
 
@@ -65,28 +64,6 @@ ALTERNET_UI_API void NotifyIcon_SetIcon_(NotifyIcon* obj, Image* value)
     #endif
 }
 
-ALTERNET_UI_API Menu* NotifyIcon_GetMenu_(NotifyIcon* obj)
-{
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    return MarshalExceptions<Menu*>([&](){
-    #endif
-        return obj->GetMenu();
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    });
-    #endif
-}
-
-ALTERNET_UI_API void NotifyIcon_SetMenu_(NotifyIcon* obj, Menu* value)
-{
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    MarshalExceptions<void>([&](){
-    #endif
-        obj->SetMenu(value);
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    });
-    #endif
-}
-
 ALTERNET_UI_API c_bool NotifyIcon_GetVisible_(NotifyIcon* obj)
 {
     #if !defined(__WXMSW__) || defined(_DEBUG)
@@ -137,6 +114,17 @@ ALTERNET_UI_API c_bool NotifyIcon_GetIsOk_(NotifyIcon* obj)
     return MarshalExceptions<c_bool>([&](){
     #endif
         return obj->GetIsOk();
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    });
+    #endif
+}
+
+ALTERNET_UI_API void NotifyIcon_SetMenu_(NotifyIcon* obj, void* menuHandle)
+{
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    MarshalExceptions<void>([&](){
+    #endif
+        obj->SetMenu(menuHandle);
     #if !defined(__WXMSW__) || defined(_DEBUG)
     });
     #endif

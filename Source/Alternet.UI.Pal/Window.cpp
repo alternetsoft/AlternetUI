@@ -51,9 +51,7 @@ namespace Alternet::UI
             {
             }),
         _title(*this, u"", &Control::IsWxWindowCreated, &Window::RetrieveTitle, 
-            &Window::ApplyTitle),
-        _menu(*this, nullptr, &Control::IsWxWindowCreated, &Window::RetrieveMenu,   
-            &Window::ApplyMenu)
+            &Window::ApplyTitle)
     {
         _borderStyle = wxBorder::wxBORDER_DEFAULT;
 
@@ -70,22 +68,7 @@ namespace Alternet::UI
             _icon->Release();
     }
 
-    MainMenu* Window::GetMenu()
-    {
-        return _menu.Get();
-    }
-
-    void Window::SetMenu(MainMenu* value)
-    {
-        _storedMenu = value;
-        _menu.Set(value);
-    }
-
-    MainMenu* Window::RetrieveMenu()
-    {
-        return _storedMenu;
-    }
-
+    /*
     void Window::ApplyMenuToFrame(MainMenu* const& value, Frame* frame)
     {
         if (frame == nullptr)
@@ -100,6 +83,7 @@ namespace Alternet::UI
         auto frame = GetFrame();
         ApplyMenuToFrame(value, frame);
     }
+*/
 
     void Window::SetMinSize(const SizeD& size)
     {

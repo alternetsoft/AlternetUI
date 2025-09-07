@@ -82,7 +82,7 @@ namespace Alternet::UI
             break;
         }
 
-        auto result = new wxAlternetMenuItem(nullptr, wxID_ANY, wxEmptyString, wxEmptyString, kind, nullptr);
+        auto result = new wxAlternetMenuItem(nullptr, wxID_ANY, " ", wxEmptyString, kind, nullptr);
         result->_id = id;
         return result;
     }

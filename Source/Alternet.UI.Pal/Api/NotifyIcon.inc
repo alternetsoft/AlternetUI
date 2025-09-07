@@ -7,9 +7,6 @@ void SetText(optional<string> value);
 Image* GetIcon();
 void SetIcon(Image* value);
 
-Menu* GetMenu();
-void SetMenu(Menu* value);
-
 bool GetVisible();
 void SetVisible(bool value);
 
@@ -19,6 +16,7 @@ bool GetIsIconInstalled();
 
 bool GetIsOk();
 
+void SetMenu(void* menuHandle);
 
 public:
 

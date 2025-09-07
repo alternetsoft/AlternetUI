@@ -38,7 +38,7 @@ namespace Alternet::UI
 
         optional<string> _text;
         Image* _icon = nullptr;
-        Menu* _menu = nullptr;
+        wxMenu* _menu = nullptr;
         bool _visible = false;
 
         inline static std::vector<wxTaskBarIcon*> _taskBarIcons;

@@ -11,7 +11,7 @@ namespace Alternet::UI
         if (_owner->_menu == nullptr)
             return nullptr;
 
-        return _owner->_menu->GetWxMenu();
+        return _owner->_menu;
     }
 
     wxMenu* NotifyIcon::TaskBarIcon::CreatePopupMenu()
@@ -19,7 +19,7 @@ namespace Alternet::UI
 #if __WXOSX_COCOA__
         // macOS implementation does not call GetPopupMenu, so here is a workaround.
         if (_owner->_menu != nullptr)
-            PopupMenu(_owner->_menu->GetWxMenu());
+            PopupMenu(_owner->_menu);
 
         return nullptr;
 #else
@@ -171,21 +171,9 @@ namespace Alternet::UI
             ApplyTextAndIcon();
     }
 
-    Menu* NotifyIcon::GetMenu()
+    void NotifyIcon::SetMenu(void* value)
     {
-        _menu->AddRef();
-        return _menu;
-    }
-
-    void NotifyIcon::SetMenu(Menu* value)
-    {
-        if (_menu != nullptr)
-            _menu->Release();
-
-        _menu = value;
-
-        if (_menu != nullptr)
-            _menu->AddRef();
+        _menu = static_cast<wxMenu*>(value);
     }
 
     bool NotifyIcon::GetVisible()
