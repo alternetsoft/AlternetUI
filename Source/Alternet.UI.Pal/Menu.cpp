@@ -32,7 +32,7 @@ namespace Alternet::UI
         if (item != nullptr)
         {
             Menu::_eventMenuItemId = item->_id;
-            Menu::RaiseStaticEvent(Menu::MenuEvent::MenuClosed);
+            Menu::RaiseStaticEvent(eventType);
             return;
         }
 
@@ -40,7 +40,7 @@ namespace Alternet::UI
         if (itemMenu != nullptr)
         {
             Menu::_eventMenuItemId = itemMenu->_id;
-            Menu::RaiseStaticEvent(Menu::MenuEvent::MenuClosed);
+            Menu::RaiseStaticEvent(eventType);
             return;
         }
     }
