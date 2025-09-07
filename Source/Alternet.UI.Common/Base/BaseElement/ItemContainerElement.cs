@@ -108,6 +108,8 @@ namespace Alternet.UI
                 if (items == null)
                 {
                     items = new(CollectionSecurityFlags.NoNullOrReplace);
+                    items.ItemInserted += OnItemInserted;
+                    items.ItemRemoved += OnItemRemoved;
                 }
 
                 return items;
@@ -268,6 +270,42 @@ namespace Alternet.UI
             }
 
             base.DisposeManaged();
+        }
+
+        /// <summary>
+        /// Invoked when an item is removed from the collection.
+        /// </summary>
+        /// <remarks>This method is called to notify derived classes of item removal.
+        /// Override this method in a subclass to handle the event when an item is removed.</remarks>
+        /// <param name="sender">The source of the event, typically the collection from which
+        /// the item was removed.</param>
+        /// <param name="index">The zero-based index at which the item was removed.</param>
+        /// <param name="item">The item that was removed from the collection.</param>
+        protected virtual void OnItemRemoved(object? sender, int index, T item)
+        {
+            if (item.LogicalParent == this)
+                item.LogicalParent = null;
+        }
+
+        /// <summary>
+        /// Invoked after an item has been inserted into the collection.
+        /// </summary>
+        /// <remarks>This method is called to notify derived classes of an item insertion. Subclasses can
+        /// override this method to perform custom logic in response to the insertion.</remarks>
+        /// <param name="sender">The source of the event, typically the collection that triggered the insertion.</param>
+        /// <param name="index">The zero-based index at which the item was inserted.</param>
+        /// <param name="item">The item that was inserted into the collection.</param>
+        protected virtual void OnItemInserted(object? sender, int index, T item)
+        {
+            if (item.LogicalParent is not null)
+            {
+                if (item.LogicalParent != this)
+                    throw new InvalidOperationException("Item already has a logical parent.");
+            }
+            else
+            {
+                item.LogicalParent = this;
+            }
         }
     }
 }
