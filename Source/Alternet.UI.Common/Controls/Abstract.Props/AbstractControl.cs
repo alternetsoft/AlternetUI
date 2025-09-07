@@ -29,6 +29,12 @@ namespace Alternet.UI
         IWin32Window, ITextProperty, IComponent, IControl, INotifyDataErrorInfo
     {
         /// <summary>
+        /// Indicates whether context menu is shown internally without using native context menu.
+        /// Default is false.
+        /// </summary>
+        public static bool DefaultUseInternalContextMenu = false;
+
+        /// <summary>
         /// Gets or sets default value for <see cref="ParentFont"/> property.
         /// </summary>
         public static bool DefaultUseParentFont = false;
@@ -463,6 +469,23 @@ namespace Alternet.UI
         /// </summary>
         [Browsable(false)]
         public virtual bool IgnoreLayout { get; set; }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether the internal context menu should be used
+        /// instead of the native context menu. Default is null, which means that
+        /// the default behavior will be used as specified in <see cref="DefaultUseInternalContextMenu"/>.
+        /// </summary>
+        [Browsable(false)]
+        public virtual bool? UseInternalContextMenu { get; set; }
+
+        /// <summary>
+        /// Gets or sets the alignment position of the context menu.
+        /// Based on this property, the menu will be aligned horizontally and vertically
+        /// relative to the control bounds. If not set (default value), the context menu will be
+        /// shown at the current mouse cursor position.
+        /// </summary>
+        [Browsable(false)]
+        public virtual HVDropDownAlignment? ContextMenuPosition { get; set; }
 
         /// <summary>
         /// Gets or sets the title of the control as object.

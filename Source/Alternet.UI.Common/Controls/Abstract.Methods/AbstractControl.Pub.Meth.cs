@@ -2629,12 +2629,12 @@ namespace Alternet.UI
         /// can do a better job of positioning the menu in that case.
         /// </remarks>
         /// <param name="menu">The menu to pop up.</param>
-        /// <param name="x">The X position in dips where the menu will appear.</param>
-        /// <param name="y">The Y position in dips where the menu will appear.</param>
+        /// <param name="x">The X position in dips where the menu will be shown.</param>
+        /// <param name="y">The Y position in dips where the menu will be shown.</param>
         /// <remarks>Position is specified in device independent units.</remarks>
         public virtual void ShowPopupMenu(ContextMenu? menu, Coord x = -1, Coord y = -1)
         {
-            if(ContextMenuShowing is not null)
+            if (ContextMenuShowing is not null)
             {
                 var e = new HandledEventArgs<ContextMenu?>(menu);
                 ContextMenuShowing(this, e);
@@ -2643,7 +2643,19 @@ namespace Alternet.UI
                 menu = e.Value;
             }
 
-            menu?.Show(this, (x, y));
+            if (menu is null)
+                return;
+
+            var point = Mouse.CoercePosition(new(x, y), this);
+
+            if (UseInternalContextMenu ?? DefaultUseInternalContextMenu)
+            {
+                menu.ShowInPopup(this, null, ContextMenuPosition ?? new(point));
+            }
+            else
+            {
+                menu.Show(this, point);
+            }
         }
 
         /// <summary>
