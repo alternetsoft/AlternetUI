@@ -1474,21 +1474,21 @@ namespace Alternet.UI
                         var data = XmlUtils.DeserializeFromString<AssertFailureExceptionData>(s);
                         var e = new AssertFailureException(data.Message ?? "Native assert failure");
                         e.AssertData = data;
-                        logMessage(data.Message, e);
+                        LogMessageInternal(data.Message, e);
                     }
                     catch
                     {
                         var r = "AssertFailure: Error getting AssertFailureExceptionData";
-                        logMessage(r);
+                        LogMessageInternal(r);
                     }
                 }
                 else
                 {
-                    logMessage(s);
+                    LogMessageInternal(s);
                 }
             });
 
-            void logMessage(string? txt, Exception? e = null)
+            void LogMessageInternal(string? txt, Exception? e = null)
             {
                 if (txt == previousNativeMessage || txt is null)
                     return;
@@ -1506,7 +1506,7 @@ namespace Alternet.UI
                 if (e is not null)
                     App.LogError(e, kind, true);
                 else
-                    App.Log(txt, kind);
+                    App.Log($"{PlatformKind}: {txt}", kind);
             }
         }
 

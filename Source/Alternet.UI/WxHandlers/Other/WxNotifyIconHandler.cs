@@ -8,6 +8,34 @@ namespace Alternet.UI.Native
 {
     internal partial class NotifyIcon : INotifyIconHandler
     {
+        private IMenuFactory.ContextMenuHandle? menuHandle;
+        private Alternet.UI.ContextMenu? menu;
+
+        public Alternet.UI.ContextMenu? Menu
+        {
+            set
+            {
+                if (menu == value)
+                    return;
+
+                if (menu is not null)
+                {
+                    menu.ItemChanged -= OnMenuItemChanged;
+                    menu.Disposed -= OnMenuDisposed;
+                }
+
+                menu = value;
+
+                UpdateNativeMenu(value);
+
+                if (value is not null)
+                {
+                    value.ItemChanged += OnMenuItemChanged;
+                    value.Disposed += OnMenuDisposed;
+                }
+            }
+        }
+
         Action? INotifyIconHandler.Click
         {
             get => Click;
@@ -28,15 +56,42 @@ namespace Alternet.UI.Native
             }
         }
 
-        Alternet.UI.ContextMenu? INotifyIconHandler.Menu
+        protected void OnMenuDisposed(object sender, EventArgs e)
         {
-            set
+            Menu = null;
+        }
+
+        protected void OnMenuItemChanged(object sender, MenuChangeEventArgs e)
+        {
+            UpdateNativeMenu(menu);
+        }
+
+        protected void UpdateNativeMenu(Alternet.UI.ContextMenu? value)
+        {
+            if (menuHandle != null)
             {
-                if (value == null)
-                    Menu = null;
-                else
-                    Menu = value.Handler as Native.Menu;
+                SetMenu(IntPtr.Zero);
+                MenuUtils.Factory?.DestroyContextMenu(menuHandle);
+                menuHandle = null;
             }
+
+            if (value == null)
+            {
+                return;
+            }
+
+            menuHandle = value.CreateMenuHandle();
+
+            if (menuHandle == null)
+                SetMenu(IntPtr.Zero);
+            else
+                SetMenu(menuHandle.AsPointer);
+        }
+
+        protected override void DisposeManaged()
+        {
+            Menu = null;
+            base.DisposeManaged();
         }
     }
 }

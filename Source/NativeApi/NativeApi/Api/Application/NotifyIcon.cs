@@ -11,7 +11,7 @@ namespace NativeApi.Api
 
         public string? Text { get; set; }
         public Image? Icon { get; set; }
-        public Menu? Menu { get; set; }
+        public void SetMenu(IntPtr menuHandle) { }
         public bool Visible { get; set; }
 
         public static bool IsAvailable { get; }
