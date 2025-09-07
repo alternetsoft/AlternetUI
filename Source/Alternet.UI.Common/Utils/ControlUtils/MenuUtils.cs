@@ -10,6 +10,11 @@ namespace Alternet.UI
     /// </summary>
     public static class MenuUtils
     {
+        /// <summary>
+        /// Indicates whether the factory logs menu events.
+        /// </summary>
+        internal static bool LogFactoryEvents = false;
+
         private static IMenuFactory? menuFactory;
         private static bool menuFactoryLoaded;
 
@@ -134,9 +139,11 @@ namespace Alternet.UI
             }
         }
 
-        private static void OnMenuFactoryClosed(object sender, StringEventArgs e)
+        private static void OnMenuFactoryClosed(object? sender, StringEventArgs e)
         {
             var menu = Menu.MenuFromStringId(e.Value);
+
+            LogEvent(menu, "Closed");
 
             if (menu is null)
                 return;
@@ -159,9 +166,11 @@ namespace Alternet.UI
             }
         }
 
-        private static void OnMenuFactoryOpened(object sender, StringEventArgs e)
+        private static void OnMenuFactoryOpened(object? sender, StringEventArgs e)
         {
             var menu = Menu.MenuFromStringId(e.Value);
+
+            LogEvent(menu, "Opened");
 
             if (menu is null)
                 return;
@@ -183,9 +192,11 @@ namespace Alternet.UI
             }
         }
 
-        private static void OnMenuFactoryHighlight(object sender, StringEventArgs e)
+        private static void OnMenuFactoryHighlight(object? sender, StringEventArgs e)
         {
             var menu = Menu.MenuFromStringId(e.Value);
+
+            LogEvent(menu, "Highlight");
 
             if (menu is null)
                 return;
@@ -207,14 +218,32 @@ namespace Alternet.UI
             }
         }
 
-        private static void OnMenuFactoryClick(object sender, StringEventArgs e)
+        private static void OnMenuFactoryClick(object? sender, StringEventArgs e)
         {
             var menu = Menu.MenuFromStringId(e.Value);
+
+            LogEvent(menu, "Click");
 
             if (menu is MenuItem menuItem)
             {
                 menuItem.RaiseClick();
                 return;
+            }
+        }
+
+        [Conditional("DEBUG")]
+        private static void LogEvent(Menu? menu, string message)
+        {
+            if (!LogFactoryEvents)
+                return;
+
+            if (menu is null)
+            {
+                App.Log($"MenuFactory.{message}: <null>");
+            }
+            else
+            {
+                App.Log($"MenuFactory.{message}: {menu.GetType().Name}, '{(menu as MenuItem)?.Text}'");
             }
         }
     }
