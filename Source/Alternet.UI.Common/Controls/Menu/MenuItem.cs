@@ -535,8 +535,6 @@ namespace Alternet.UI
 
         /// <summary>
         /// Gets or sets a value indicating whether the menu item is visible.
-        /// Currently this property is not supported when using native menus on
-        /// wxWidgets platform.
         /// </summary>
         /// <remarks>Changing this property raises a change notification event to indicate that the
         /// visibility state has been updated.</remarks>
