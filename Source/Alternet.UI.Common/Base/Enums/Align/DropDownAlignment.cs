@@ -33,5 +33,10 @@ namespace Alternet.UI
         /// Aligns the drop-down centered relative to the reference element.
         /// </summary>
         Center,
+
+        /// <summary>
+        /// Aligns the drop-down at a specific position relative to the reference element.
+        /// </summary>
+        Position,
     }
 }
