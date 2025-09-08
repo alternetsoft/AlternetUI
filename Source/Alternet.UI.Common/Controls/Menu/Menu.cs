@@ -144,14 +144,19 @@ namespace Alternet.UI
         /// specified or default factory.</remarks>
         /// <param name="factory">The <see cref="IMenuFactory"/> instance used to create the context menu handle.
         /// If null, a default factory is used.</param>
+        /// <param name="idOverride">The <see cref="ObjectUniqueId"/> to use for the context menu handle.
+        /// If null, the menu's unique ID is used.</param>
         /// <returns>A <see cref="IMenuFactory.ContextMenuHandle"/> representing the created context menu, or
         /// <see langword="null"/> if no factory is available.</returns>
-        public virtual IMenuFactory.ContextMenuHandle? CreateItemsHandle(IMenuFactory? factory = null)
+        public virtual IMenuFactory.ContextMenuHandle? CreateItemsHandle(
+            IMenuFactory? factory = null,
+            ObjectUniqueId? idOverride = null)
         {
             factory ??= MenuUtils.Factory;
             if (factory == null)
                 return null;
-            var result = factory.CreateContextMenu(UniqueId.ToString());
+            var id = idOverride ?? UniqueId;
+            var result = factory.CreateContextMenu(id.ToString());
 
             if(!HasItems)
                 return result;
