@@ -1035,6 +1035,10 @@ namespace Alternet.UI
                 };
 
                 rightText = shortcutInfo.ToString(options);
+
+                var key = shortcutInfo.GetFirstPlatformSpecificKey();
+                if(key is not null)
+                    factory.SetMenuItemShortcut(handle, key.Key, key.Modifiers);
             }
 
             factory.SetMenuItemText(handle, Text, rightText ?? string.Empty);
