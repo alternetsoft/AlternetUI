@@ -897,9 +897,11 @@ namespace Alternet.UI
             uint? timeoutMilliseconds = null,
             PointD? location = null)
         {
+            var s = LogUtils.GetExceptionMessageText(ExceptionUtils.UnwrapTargetInvocationException(e));
+
             return ShowToolTip(
                         title ?? ErrorMessages.Default.ErrorTitle,
-                        e.Message,
+                        s,
                         MessageBoxIcon.Error,
                         timeoutMilliseconds,
                         location);
