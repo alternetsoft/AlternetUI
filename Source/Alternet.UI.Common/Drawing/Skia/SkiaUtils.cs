@@ -1,10 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
+using System.IO;
 using System.Text;
 using System.Threading.Tasks;
 using Alternet.UI;
 using Alternet.UI.Extensions;
+
 using SkiaSharp;
 
 namespace Alternet.Drawing
@@ -498,6 +501,33 @@ namespace Alternet.Drawing
         {
             var surface = CreateNullSurface(width, height);
             return surface.Canvas;
+        }
+
+        /// <summary>
+        /// Saves the contents of the specified <see cref="SKSurface"/> to a file in the specified image format.
+        /// </summary>
+        /// <remarks>This method captures the current state of the <paramref name="surface"/> and encodes
+        /// it into the specified image format. The resulting image is then saved to the file at
+        /// <paramref
+        /// name="filePath"/>.</remarks>
+        /// <param name="surface">The <see cref="SKSurface"/> containing the image to save.</param>
+        /// <param name="filePath">The path of the file where the image will be saved.
+        /// The file will be overwritten if it already exists.</param>
+        /// <param name="format">The format in which to encode the image. The default
+        /// is <see cref="SKEncodedImageFormat.Png"/>.</param>
+        /// <param name="quality">The quality of the encoded image, ranging from 0 (lowest) to 100 (highest).
+        /// This parameter is ignored for
+        /// formats that do not support quality settings. The default is 100.</param>
+        public static void SaveSurfaceToFile(
+            SKSurface surface,
+            string filePath,
+            SKEncodedImageFormat format = SKEncodedImageFormat.Png,
+            int quality = 100)
+        {
+            using var image = surface.Snapshot();
+            using var data = image.Encode(format, quality);
+            using var stream = File.OpenWrite(filePath);
+            data.SaveTo(stream);
         }
 
         /// <summary>
