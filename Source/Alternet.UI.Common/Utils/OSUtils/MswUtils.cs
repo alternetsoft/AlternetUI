@@ -170,6 +170,14 @@ namespace Alternet.UI
 #pragma warning restore
 
             /// <summary>
+            /// Windows-specific: resolve OpenGL function pointers
+            /// </summary>
+            /// <param name="name"></param>
+            /// <returns></returns>
+            [DllImport("opengl32.dll")]
+            public static extern IntPtr wglGetProcAddress(string name);
+
+            /// <summary>
             /// Gets key state.
             /// </summary>
             /// <param name="vKey"></param>
