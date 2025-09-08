@@ -34,19 +34,20 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Occurs when the menu is opening.
+        /// Occurs when the menu is opening. This event is usually raised only for top level menus.
+        /// You can also handle <see cref="MenuItem.Opened"/> to be notified when a menu item is opened.
         /// </summary>
         [Category("Action")]
         public event CancelEventHandler? Opening;
 
         /// <summary>
-        /// Occurs when the menu is closing.
+        /// Occurs when the menu is closing. This event is usually raised only for top level menus.
         /// </summary>
         [Category("Action")]
         public event EventHandler? Closing;
 
         /// <summary>
-        /// Occurs when the menu is closed.
+        /// Occurs when the menu is closed. This event is usually raised only for top level menus.
         /// </summary>
         [Category("Action")]
         public event EventHandler<ToolStripDropDownClosedEventArgs>? Closed;

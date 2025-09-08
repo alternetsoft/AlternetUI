@@ -189,28 +189,6 @@ namespace Alternet.UI
         public event EventHandler? Closed;
 
         /// <summary>
-        /// Occurs when the menu with child items is opening.
-        /// </summary>
-        [Category("Action")]
-        public event CancelEventHandler? ItemsOpening
-        {
-            add => ItemsMenu.Opening += value;
-
-            remove => ItemsMenu.Opening -= value;
-        }
-
-        /// <summary>
-        /// Occurs when the menu with child items is closing.
-        /// </summary>
-        [Category("Action")]
-        public event EventHandler? ItemsClosing
-        {
-            add => ItemsMenu.Closing += value;
-
-            remove => ItemsMenu.Closing -= value;
-        }
-
-        /// <summary>
         /// Occurs when menu item is highlighted.
         /// </summary>
         [Category("Action")]

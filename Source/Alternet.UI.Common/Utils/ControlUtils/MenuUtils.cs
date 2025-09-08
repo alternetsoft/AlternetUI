@@ -103,8 +103,6 @@ namespace Alternet.UI
             if (menuItem == null)
                 return;
 
-            menuItem.ItemsOpening -= MenuItemItemsOpening;
-            menuItem.ItemsClosing -= MenuItemItemsClosing;
             menuItem.Opened -= MenuItemOpened;
             menuItem.Closed -= MenuItemClosed;
             menuItem.Highlighted -= MenuItemHighlighted;
@@ -115,8 +113,6 @@ namespace Alternet.UI
             menuItem.Opened += MenuItemOpened;
             menuItem.Closed += MenuItemClosed;
             menuItem.Highlighted += MenuItemHighlighted;
-            menuItem.ItemsOpening += MenuItemItemsOpening;
-            menuItem.ItemsClosing += MenuItemItemsClosing;
 
             void MenuItemHighlighted(object? sender, EventArgs e)
             {
@@ -132,16 +128,6 @@ namespace Alternet.UI
             void MenuItemClosed(object? sender, EventArgs e)
             {
                 Alternet.UI.App.DebugLogIf($"Menu item '{menuItem.Text}' closed", true);
-            }
-
-            void MenuItemItemsOpening(object? sender, CancelEventArgs e)
-            {
-                Alternet.UI.App.DebugLogIf($"Menu item '{menuItem.Text}' items opening", true);
-            }
-
-            void MenuItemItemsClosing(object? sender, EventArgs e)
-            {
-                Alternet.UI.App.DebugLogIf($"Menu item '{menuItem.Text}' items closing", true);
             }
 
             if (!flags.HasFlag(BindMenuLoggerFlags.Recursive))
