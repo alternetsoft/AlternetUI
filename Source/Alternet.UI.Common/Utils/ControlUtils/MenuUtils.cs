@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Diagnostics;
 using System.Text;
 
@@ -17,6 +18,28 @@ namespace Alternet.UI
 
         private static IMenuFactory? menuFactory;
         private static bool menuFactoryLoaded;
+
+        /// <summary>
+        /// Specifies flags that control the behavior of binding menu item event loggers.
+        /// </summary>
+        [Flags]
+        public enum BindMenuLoggerFlags
+        {
+            /// <summary>
+            /// No special binding behavior.
+            /// </summary>
+            None = 0,
+
+            /// <summary>
+            /// Bind event loggers recursively to all child menu items.
+            /// </summary>
+            Recursive = 1,
+
+            /// <summary>
+            /// Unbind event loggers from the menu item(s).
+            /// </summary>
+            Unbind = 2,
+        }
 
         /// <summary>
         /// Gets or sets the factory responsible for creating menu instances.
@@ -71,32 +94,65 @@ namespace Alternet.UI
         /// is opened, closed, or highlighted.</remarks>
         /// <param name="menuItem">The <see cref="MenuItem"/> to which the event handlers will be bound.
         /// Cannot be <see langword="null"/>.</param>
+        /// <param name="flags">The flags that specify the binding behavior.</param>
         [Conditional("DEBUG")]
-        public static void BindMenuItemEventsLogger(MenuItem? menuItem)
+        public static void BindMenuItemEventsLogger(
+            MenuItem? menuItem,
+            BindMenuLoggerFlags flags = BindMenuLoggerFlags.Recursive)
         {
             if (menuItem == null)
                 return;
 
+            menuItem.ItemsOpening -= MenuItemItemsOpening;
+            menuItem.ItemsClosing -= MenuItemItemsClosing;
             menuItem.Opened -= MenuItemOpened;
-            menuItem.Opened += MenuItemOpened;
             menuItem.Closed -= MenuItemClosed;
-            menuItem.Closed += MenuItemClosed;
             menuItem.Highlighted -= MenuItemHighlighted;
+
+            if (flags.HasFlag(BindMenuLoggerFlags.Unbind))
+                return;
+
+            menuItem.Opened += MenuItemOpened;
+            menuItem.Closed += MenuItemClosed;
             menuItem.Highlighted += MenuItemHighlighted;
+            menuItem.ItemsOpening += MenuItemItemsOpening;
+            menuItem.ItemsClosing += MenuItemItemsClosing;
 
             void MenuItemHighlighted(object? sender, EventArgs e)
             {
-                Alternet.UI.App.DebugLogIf($"Menu item '{menuItem.Text}' highlighted", false);
+                Alternet.UI.App.DebugLogIf($"Menu item '{menuItem.Text}' highlighted", true);
             }
 
             void MenuItemOpened(object? sender, EventArgs e)
             {
-                Alternet.UI.App.DebugLogIf($"Menu item '{menuItem.Text}' opened", false);
+                var s = $"Menu item '{menuItem.Text}' opened";
+                Alternet.UI.App.DebugLogIf(s, true);
             }
 
             void MenuItemClosed(object? sender, EventArgs e)
             {
-                Alternet.UI.App.DebugLogIf($"Menu item '{menuItem.Text}' closed", false);
+                Alternet.UI.App.DebugLogIf($"Menu item '{menuItem.Text}' closed", true);
+            }
+
+            void MenuItemItemsOpening(object? sender, CancelEventArgs e)
+            {
+                Alternet.UI.App.DebugLogIf($"Menu item '{menuItem.Text}' items opening", true);
+            }
+
+            void MenuItemItemsClosing(object? sender, EventArgs e)
+            {
+                Alternet.UI.App.DebugLogIf($"Menu item '{menuItem.Text}' items closing", true);
+            }
+
+            if (!flags.HasFlag(BindMenuLoggerFlags.Recursive))
+                return;
+
+            if (!menuItem.HasItems)
+                return;
+
+            foreach (var item in menuItem.Items)
+            {
+                BindMenuItemEventsLogger(item, flags);
             }
         }
 
@@ -110,32 +166,50 @@ namespace Alternet.UI
         /// with the <see cref="System.Diagnostics.ConditionalAttribute"/> for the "DEBUG" symbol.</remarks>
         /// <param name="menu">The <see cref="Alternet.UI.ContextMenu"/> instance to which
         /// the event handlers will be bound.</param>
+        /// <param name="flags">The flags that specify the binding behavior.</param>
         [Conditional("DEBUG")]
-        public static void BindContextMenuEventsLogger(Alternet.UI.ContextMenu? menu)
+        public static void BindContextMenuEventsLogger(
+            Alternet.UI.ContextMenu? menu,
+            BindMenuLoggerFlags flags = BindMenuLoggerFlags.Recursive)
         {
             if (menu == null)
                 return;
 
             menu.Opening -= MenuOpening;
-            menu.Opening += MenuOpening;
             menu.Closing -= MenuClosing;
-            menu.Closing += MenuClosing;
             menu.Closed -= MenuClosed;
+
+            if (flags.HasFlag(BindMenuLoggerFlags.Unbind))
+                return;
+
+            menu.Opening += MenuOpening;
+            menu.Closing += MenuClosing;
             menu.Closed += MenuClosed;
 
             void MenuOpening(object? sender, EventArgs e)
             {
-                Alternet.UI.App.DebugLogIf("Editor context menu opening", false);
+                Alternet.UI.App.DebugLogIf("Context menu opening", true);
             }
 
             void MenuClosing(object? sender, EventArgs e)
             {
-                Alternet.UI.App.DebugLogIf("Editor context menu closing", false);
+                Alternet.UI.App.DebugLogIf("Context menu closing", true);
             }
 
             void MenuClosed(object? sender, EventArgs e)
             {
-                Alternet.UI.App.DebugLogIf("Editor context menu closed", false);
+                Alternet.UI.App.DebugLogIf("Context menu closed", true);
+            }
+
+            if (!flags.HasFlag(BindMenuLoggerFlags.Recursive))
+                return;
+
+            if (!menu.HasItems)
+                return;
+
+            foreach (var item in menu.Items)
+            {
+                BindMenuItemEventsLogger(item, flags);
             }
         }
 
