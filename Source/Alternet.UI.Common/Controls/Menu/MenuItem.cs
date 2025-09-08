@@ -35,6 +35,7 @@ namespace Alternet.UI
         private string text = string.Empty;
         private bool visible = true;
         private bool enabled = true;
+        private ContextMenu? itemsMenu;
 
         static MenuItem()
         {
@@ -172,46 +173,77 @@ namespace Alternet.UI
         /// the change through the <see cref="BaseEventArgs{T}"/> parameter.
         /// The <see cref="MenuChangeKind"/> value
         /// indicates the specific type of change that occurred.</remarks>
+        [Category("Property Changed")]
         public event EventHandler<BaseEventArgs<MenuChangeKind>>? Changed;
 
         /// <summary>
         /// Occurs when menu item is opened.
         /// </summary>
+        [Category("Action")]
         public event EventHandler? Opened;
 
         /// <summary>
         /// Occurs when menu item is closed.
         /// </summary>
+        [Category("Action")]
         public event EventHandler? Closed;
+
+        /// <summary>
+        /// Occurs when the menu with child items is opening.
+        /// </summary>
+        [Category("Action")]
+        public event CancelEventHandler? ItemsOpening
+        {
+            add => ItemsMenu.Opening += value;
+
+            remove => ItemsMenu.Opening -= value;
+        }
+
+        /// <summary>
+        /// Occurs when the menu with child items is closing.
+        /// </summary>
+        [Category("Action")]
+        public event EventHandler? ItemsClosing
+        {
+            add => ItemsMenu.Closing += value;
+
+            remove => ItemsMenu.Closing -= value;
+        }
 
         /// <summary>
         /// Occurs when menu item is highlighted.
         /// </summary>
+        [Category("Action")]
         public event EventHandler? Highlighted;
 
         /// <summary>
         /// Occurs when the <see cref="Shortcut"/> property changes.
         /// </summary>
+        [Category("Property Changed")]
         public event EventHandler? ShortcutChanged;
 
         /// <summary>
         /// Occurs when the <see cref="Checked"/> property changes.
         /// </summary>
+        [Category("Property Changed")]
         public event EventHandler? CheckedChanged;
 
         /// <summary>
         /// Occurs when the <see cref="Role"/> property changes.
         /// </summary>
+        [Category("Property Changed")]
         public event EventHandler? RoleChanged;
 
         /// <summary>
         /// Occurs when the <see cref="Image"/> property changes.
         /// </summary>
+        [Category("Property Changed")]
         public event EventHandler? ImageChanged;
 
         /// <summary>
         /// Occurs when the <see cref="DisabledImage"/> property changes.
         /// </summary>
+        [Category("Property Changed")]
         public event EventHandler? DisabledImageChanged;
 
         /// <summary>
@@ -219,6 +251,7 @@ namespace Alternet.UI
         /// </summary>
         /// <remarks>This event is triggered whenever the click action is updated,
         /// allowing subscribers to respond to the change.</remarks>
+        [Category("Property Changed")]
         public event EventHandler? ClickActionChanged;
 
         /// <summary>
@@ -725,6 +758,25 @@ namespace Alternet.UI
         ICommandSource IMenuItemProperties.CommandSource => this;
 
         /// <summary>
+        /// Gets the menu with the child menu-items.
+        /// </summary>
+        [Browsable(false)]
+        public virtual ContextMenu ItemsMenu
+        {
+            get
+            {
+                if (itemsMenu is null)
+                {
+                    itemsMenu = new ContextMenu();
+                    itemsMenu.LogicalParent = this;
+                    itemsMenu.Items = Items;
+                }
+
+                return itemsMenu;
+            }
+        }
+
+        /// <summary>
         /// Implicit conversion operator from <see cref="string"/> to
         /// <see cref="MenuItem"/>.
         /// </summary>
@@ -1048,7 +1100,7 @@ namespace Alternet.UI
 
             if (HasItems && !isSeparator)
             {
-                var menuHandle = CreateItemsHandle(factory);
+                var menuHandle = ItemsMenu.CreateItemsHandle(factory);
                 if (menuHandle is not null)
                     factory.SetMenuItemSubMenu(handle, menuHandle);
             }
