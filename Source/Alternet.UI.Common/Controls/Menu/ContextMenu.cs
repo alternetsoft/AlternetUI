@@ -166,6 +166,13 @@ namespace Alternet.UI
             Closing?.Invoke(this, e);
             Closed?.Invoke(this, new(ToolStripDropDownCloseReason.Other));
             OnClosing(e);
+
+            ForEachItem(RaiseItemClosed, recursive: true);
+
+            void RaiseItemClosed(MenuItem item)
+            {
+                item.RaiseClosed();
+            }
         }
 
         /// <summary>
@@ -174,7 +181,7 @@ namespace Alternet.UI
         /// the event data.</param>
         public void RaiseOpening(CancelEventArgs e)
         {
-            ForEachItem(UpdateEnabled, true);
+            ForEachItem(UpdateEnabled, recursive: true);
             Opening?.Invoke(this, e);
 
             static void UpdateEnabled(MenuItem item)
@@ -186,6 +193,13 @@ namespace Alternet.UI
             }
 
             OnOpening(e);
+
+            ForEachItem(RaiseItemOpened, recursive: true);
+
+            void RaiseItemOpened(MenuItem item)
+            {
+                item.RaiseOpened();
+            }
         }
 
         /// <summary>
