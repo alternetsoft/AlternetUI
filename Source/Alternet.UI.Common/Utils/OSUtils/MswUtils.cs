@@ -137,38 +137,6 @@ namespace Alternet.UI
                 ref int pvAttribute,
                 int cbAttribute);
 
-#pragma warning disable
-            [Flags]
-            public enum DwmWindowAttribute : uint
-            {
-                DWMWA_NCRENDERING_ENABLED = 1,
-                DWMWA_NCRENDERING_POLICY,
-                DWMWA_TRANSITIONS_FORCEDISABLED,
-                DWMWA_ALLOW_NCPAINT,
-                DWMWA_CAPTION_BUTTON_BOUNDS,
-                DWMWA_NONCLIENT_RTL_LAYOUT,
-                DWMWA_FORCE_ICONIC_REPRESENTATION,
-                DWMWA_FLIP3D_POLICY,
-                DWMWA_EXTENDED_FRAME_BOUNDS,
-                DWMWA_HAS_ICONIC_BITMAP,
-                DWMWA_DISALLOW_PEEK,
-                DWMWA_EXCLUDED_FROM_PEEK,
-                DWMWA_CLOAK,
-                DWMWA_CLOAKED,
-                DWMWA_FREEZE_REPRESENTATION,
-                DWMWA_PASSIVE_UPDATE_MODE,
-                DWMWA_USE_HOSTBACKDROPBRUSH,
-                DWMWA_USE_IMMERSIVE_DARK_MODE = 20,
-                DWMWA_WINDOW_CORNER_PREFERENCE = 33,
-                DWMWA_BORDER_COLOR,
-                DWMWA_CAPTION_COLOR,
-                DWMWA_TEXT_COLOR,
-                DWMWA_VISIBLE_FRAME_BORDER_THICKNESS,
-                DWMWA_SYSTEMBACKDROP_TYPE,
-                DWMWA_LAST,
-            }
-#pragma warning restore
-
             /// <summary>
             /// Windows-specific: resolve OpenGL function pointers
             /// </summary>
@@ -176,6 +144,115 @@ namespace Alternet.UI
             /// <returns></returns>
             [DllImport("opengl32.dll")]
             public static extern IntPtr wglGetProcAddress(string name);
+
+            /// <summary>
+            /// Retrieves a handle to the device context (DC) for the specified window or for the entire screen.
+            /// </summary>
+            /// <remarks>The device context can be used in subsequent GDI (Graphics Device Interface)
+            /// operations.  After finishing with the device context, the caller must release it by calling the
+            /// <c>ReleaseDC</c> function.</remarks>
+            /// <param name="hwnd">A handle to the window whose device context is to be retrieved.
+            /// If this parameter is <see
+            /// cref="IntPtr.Zero"/>,  the device context for the entire screen is retrieved.</param>
+            /// <returns>A handle to the device context for the specified window or screen.
+            /// If the function fails, the return
+            /// value is <see cref="IntPtr.Zero"/>.</returns>
+            [DllImport("user32.dll")]
+            public static extern IntPtr GetDC(IntPtr hwnd);
+
+            /// <summary>
+            /// Releases a device context (DC) for the specified window, freeing it for use by other applications.
+            /// </summary>
+            /// <remarks>This method is a wrapper for the native `ReleaseDC` function in the Windows
+            /// API. It should be used to release a DC obtained using <see cref="GetDC"/> or similar methods.
+            /// Failure to
+            /// release a DC can result in resource leaks.</remarks>
+            /// <param name="hwnd">A handle to the window whose DC is to be released. This parameter
+            /// can be <see cref="IntPtr.Zero"/> if
+            /// the DC is not associated with a specific window.</param>
+            /// <param name="hdc">A handle to the device context to be released.</param>
+            /// <returns>A nonzero value if the device context is released successfully; otherwise,
+            /// <see cref="IntPtr.Zero"/> if
+            /// the release fails.</returns>
+            [DllImport("user32.dll")]
+            public static extern IntPtr ReleaseDC(IntPtr hwnd, IntPtr hdc);
+
+            /// <summary>
+            /// Chooses the pixel format that best matches the specified device context and pixel format descriptor.
+            /// </summary>
+            /// <remarks>This method is a wrapper for the native <c>ChoosePixelFormat</c> function in
+            /// the GDI32 library.  The returned index can be used with other GDI functions to set or query the pixel
+            /// format of the device context.</remarks>
+            /// <param name="hdc">A handle to the device context for which the pixel format is to be selected.</param>
+            /// <param name="pfd">A reference to a <see cref="PIXELFORMATDESCRIPTOR"/> structure that
+            /// specifies the desired pixel format
+            /// attributes.</param>
+            /// <returns>The index of the pixel format that best matches the specified requirements,
+            /// or 0 if the function fails.</returns>
+            [DllImport("gdi32.dll")]
+            public static extern int ChoosePixelFormat(IntPtr hdc, ref PIXELFORMATDESCRIPTOR pfd);
+
+            /// <summary>
+            /// Sets the pixel format for a device context to the specified format.
+            /// </summary>
+            /// <remarks>This method is a P/Invoke wrapper for the GDI `SetPixelFormat` function. The
+            /// pixel format must be set before rendering to the device context. Once a pixel format is set,
+            /// it cannot be changed for the lifetime of the device context.</remarks>
+            /// <param name="hdc">A handle to the device context for which the pixel format is to be set.</param>
+            /// <param name="format">The index of the pixel format to set. This value must correspond
+            /// to a valid pixel format supported by
+            /// the device context.</param>
+            /// <param name="pfd">A reference to a <see cref="PIXELFORMATDESCRIPTOR"/> structure
+            /// that defines the properties of the pixel
+            /// format.</param>
+            /// <returns><see langword="true"/> if the pixel format was successfully set; otherwise,
+            /// <see langword="false"/>.</returns>
+            [DllImport("gdi32.dll")]
+            public static extern bool SetPixelFormat(IntPtr hdc, int format, ref PIXELFORMATDESCRIPTOR pfd);
+
+            /// <summary>
+            /// Creates a new OpenGL rendering context for the specified device context.
+            /// </summary>
+            /// <remarks>The created rendering context must be made current using
+            /// <c>wglMakeCurrent</c> before it can be used for rendering. Ensure that the device context specified by
+            /// <paramref name="hdc"/> is compatible with OpenGL.</remarks>
+            /// <param name="hdc">A handle to a device context for which the OpenGL
+            /// rendering context is created.</param>
+            /// <returns>A handle to the created OpenGL rendering context if successful; otherwise,
+            /// <see cref="IntPtr.Zero"/>.</returns>
+            [DllImport("opengl32.dll")]
+            public static extern IntPtr wglCreateContext(IntPtr hdc);
+
+            /// <summary>
+            /// Makes a specified OpenGL rendering context the current rendering context for the calling thread.
+            /// </summary>
+            /// <remarks>This method binds the specified OpenGL rendering context to the calling
+            /// thread and the specified device context.  If <paramref name="hglrc"/> is <see langword="IntPtr.Zero"/>,
+            /// the current rendering context is released from the calling thread. Only one rendering
+            /// context can be
+            /// current per thread at a time.</remarks>
+            /// <param name="hdc">A handle to the device context (HDC) to which the OpenGL rendering context
+            /// is to be attached. This
+            /// parameter cannot be <see langword="IntPtr.Zero"/>.</param>
+            /// <param name="hglrc">A handle to the OpenGL rendering context (HGLRC) to be made current.
+            /// This parameter can be <see langword="IntPtr.Zero"/> to release the current rendering context.</param>
+            /// <returns><see langword="true"/> if the operation succeeds;
+            /// otherwise, <see langword="false"/>.</returns>
+            [DllImport("opengl32.dll")]
+            public static extern bool wglMakeCurrent(IntPtr hdc, IntPtr hglrc);
+
+            /// <summary>
+            /// Deletes a specified OpenGL rendering context.
+            /// </summary>
+            /// <remarks>This method releases the resources associated with the specified OpenGL
+            /// rendering context.  Ensure that the rendering context is no longer current in any thread before calling
+            /// this method.</remarks>
+            /// <param name="hglrc">A handle to the OpenGL rendering context to delete.
+            /// This handle must not be null.</param>
+            /// <returns><see langword="true"/> if the rendering context was successfully deleted;
+            /// otherwise, <see langword="false"/>.</returns>
+            [DllImport("opengl32.dll")]
+            public static extern bool wglDeleteContext(IntPtr hglrc);
 
             /// <summary>
             /// Gets key state.
@@ -400,6 +477,71 @@ namespace Alternet.UI
                 [FieldOffset(2)]
                 public short Attributes;
             }
+
+#pragma warning disable
+            [Flags]
+            public enum DwmWindowAttribute : uint
+            {
+                DWMWA_NCRENDERING_ENABLED = 1,
+                DWMWA_NCRENDERING_POLICY,
+                DWMWA_TRANSITIONS_FORCEDISABLED,
+                DWMWA_ALLOW_NCPAINT,
+                DWMWA_CAPTION_BUTTON_BOUNDS,
+                DWMWA_NONCLIENT_RTL_LAYOUT,
+                DWMWA_FORCE_ICONIC_REPRESENTATION,
+                DWMWA_FLIP3D_POLICY,
+                DWMWA_EXTENDED_FRAME_BOUNDS,
+                DWMWA_HAS_ICONIC_BITMAP,
+                DWMWA_DISALLOW_PEEK,
+                DWMWA_EXCLUDED_FROM_PEEK,
+                DWMWA_CLOAK,
+                DWMWA_CLOAKED,
+                DWMWA_FREEZE_REPRESENTATION,
+                DWMWA_PASSIVE_UPDATE_MODE,
+                DWMWA_USE_HOSTBACKDROPBRUSH,
+                DWMWA_USE_IMMERSIVE_DARK_MODE = 20,
+                DWMWA_WINDOW_CORNER_PREFERENCE = 33,
+                DWMWA_BORDER_COLOR,
+                DWMWA_CAPTION_COLOR,
+                DWMWA_TEXT_COLOR,
+                DWMWA_VISIBLE_FRAME_BORDER_THICKNESS,
+                DWMWA_SYSTEMBACKDROP_TYPE,
+                DWMWA_LAST,
+            }
+#pragma warning restore
+
+#pragma warning disable
+            [StructLayout(LayoutKind.Sequential)]
+            public struct PIXELFORMATDESCRIPTOR
+            {
+                public ushort nSize;
+                public ushort nVersion;
+                public uint dwFlags;
+                public byte iPixelType;
+                public byte cColorBits;
+                public byte cRedBits;
+                public byte cRedShift;
+                public byte cGreenBits;
+                public byte cGreenShift;
+                public byte cBlueBits;
+                public byte cBlueShift;
+                public byte cAlphaBits;
+                public byte cAlphaShift;
+                public byte cAccumBits;
+                public byte cAccumRedBits;
+                public byte cAccumGreenBits;
+                public byte cAccumBlueBits;
+                public byte cAccumAlphaBits;
+                public byte cDepthBits;
+                public byte cStencilBits;
+                public byte cAuxBuffers;
+                public byte iLayerType;
+                public byte bReserved;
+                public uint dwLayerMask;
+                public uint dwVisibleMask;
+                public uint dwDamageMask;
+            }
+#pragma warning restore
 
             /// <summary>
             /// Represents small rectangle.
