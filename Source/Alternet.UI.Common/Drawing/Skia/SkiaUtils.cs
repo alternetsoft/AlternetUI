@@ -1,13 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
 using System.IO;
+using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Alternet.UI;
 using Alternet.UI.Extensions;
-
 using SkiaSharp;
 
 namespace Alternet.Drawing
