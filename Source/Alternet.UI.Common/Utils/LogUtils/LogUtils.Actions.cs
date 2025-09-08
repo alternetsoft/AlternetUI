@@ -19,6 +19,41 @@ namespace Alternet.UI
         private static TestActionsWindow? testActionsWindow;
 
         /// <summary>
+        /// Enumerates and logs debug actions from the specified type, invoking a callback for each eligible method.
+        /// </summary>
+        /// <remarks>This method is only executed in debug builds. It identifies static, public methods in
+        /// the specified type whose names start with "Test" and have no parameters.
+        /// For each such method, the callback
+        /// is invoked with the formatted method name (inserting a space after "Test") and an action that
+        /// can be used to
+        /// invoke the method.</remarks>
+        /// <param name="fn">A callback that receives the formatted name of each eligible
+        /// method and an <see cref="Action"/> to invoke the method.</param>
+        /// <param name="type">The type to inspect for static, public methods that start with
+        /// "Test" and have no parameters.</param>
+        [Conditional("DEBUG")]
+        public static void EnumDebugLogActionsFromType(Action<string, Action> fn, Type type)
+        {
+            var methods = type.GetMethods(BindingFlags.Static | BindingFlags.Public);
+
+            foreach (var method in methods)
+            {
+                var name = method.Name;
+                if (!method.Name.StartsWith("Test"))
+                    continue;
+                var prm = method.GetParameters();
+                if (prm is not null && prm.Length > 0)
+                    continue;
+                name = name.Insert(4, StringUtils.OneSpace);
+
+                fn(name, () =>
+                {
+                    method.Invoke(null, null);
+                });
+            }
+        }
+
+        /// <summary>
         /// Logs image created from an array with <see cref="TextAndFontStyle"/> elements.
         /// </summary>
         /// <param name="text">Array of strings with font styles.</param>
@@ -1012,25 +1047,7 @@ namespace Alternet.UI
         [Conditional("DEBUG")]
         private static void EnumDebugLogActions(Action<string, Action> fn)
         {
-            var type = typeof(Alternet.UI.Tests.Tests);
-
-            var methods = type.GetMethods(BindingFlags.Static | BindingFlags.Public);
-
-            foreach (var method in methods)
-            {
-                var name = method.Name;
-                if (!method.Name.StartsWith("Test"))
-                    continue;
-                var prm = method.GetParameters();
-                if (prm is not null && prm.Length > 0)
-                    continue;
-                name = name.Insert(4, StringUtils.OneSpace);
-
-                fn(name, () =>
-                {
-                    method.Invoke(null, null);
-                });
-            }
+            EnumDebugLogActionsFromType(fn, typeof(Alternet.UI.Tests.Tests));
         }
     }
 }
