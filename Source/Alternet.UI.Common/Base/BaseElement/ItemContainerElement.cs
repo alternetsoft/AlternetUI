@@ -107,12 +107,29 @@ namespace Alternet.UI
             {
                 if (items == null)
                 {
-                    items = new(CollectionSecurityFlags.NoNullOrReplace);
+                    Items = new(CollectionSecurityFlags.NoNullOrReplace);
+                }
+
+                return items!;
+            }
+
+            protected internal set
+            {
+                if (items == value)
+                    return;
+                if (items != null)
+                {
+                    items.ItemInserted -= OnItemInserted;
+                    items.ItemRemoved -= OnItemRemoved;
+                }
+
+                items = value ?? new(CollectionSecurityFlags.NoNullOrReplace);
+
+                if (items != null)
+                {
                     items.ItemInserted += OnItemInserted;
                     items.ItemRemoved += OnItemRemoved;
                 }
-
-                return items;
             }
         }
 
@@ -265,7 +282,8 @@ namespace Alternet.UI
 
                 foreach (var item in ia)
                 {
-                    item.Dispose();
+                    if(item.LogicalParent == this)
+                        item.Dispose();
                 }
             }
 
@@ -299,8 +317,6 @@ namespace Alternet.UI
         {
             if (item.LogicalParent is not null)
             {
-                if (item.LogicalParent != this)
-                    throw new InvalidOperationException("Item already has a logical parent.");
             }
             else
             {
