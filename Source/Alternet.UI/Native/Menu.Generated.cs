@@ -103,6 +103,11 @@ namespace Alternet.UI.Native
             NativeApi.Menu_SetMenuItemSubMenu_(handle, subMenuHandle);
         }
         
+        public static void SetMenuItemShortcut(System.IntPtr handle, Alternet.UI.Key key, Alternet.UI.ModifierKeys modifierKeys)
+        {
+            NativeApi.Menu_SetMenuItemShortcut_(handle, key, modifierKeys);
+        }
+        
         public static void MenuAddItem(System.IntPtr handle, System.IntPtr itemHandle)
         {
             NativeApi.Menu_MenuAddItem_(handle, itemHandle);
@@ -230,6 +235,9 @@ namespace Alternet.UI.Native
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void Menu_SetMenuItemSubMenu_(System.IntPtr handle, System.IntPtr subMenuHandle);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void Menu_SetMenuItemShortcut_(System.IntPtr handle, Alternet.UI.Key key, Alternet.UI.ModifierKeys modifierKeys);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void Menu_MenuAddItem_(System.IntPtr handle, System.IntPtr itemHandle);

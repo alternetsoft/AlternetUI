@@ -30,6 +30,8 @@ namespace NativeApi.Api
         public static void SetMenuItemChecked(IntPtr handle, bool value) { }
         public static void SetMenuItemSubMenu(IntPtr handle, IntPtr subMenuHandle) { }
 
+        public static void SetMenuItemShortcut(IntPtr handle, Key key, ModifierKeys modifierKeys) { }
+
         public static void MenuAddItem(IntPtr handle, IntPtr itemHandle) { }
         public static void MenuRemoveItem(IntPtr handle, IntPtr itemHandle) { }
 

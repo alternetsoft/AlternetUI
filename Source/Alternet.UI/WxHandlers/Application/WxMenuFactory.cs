@@ -165,6 +165,17 @@ namespace Alternet.UI
             Native.Menu.SetMenuItemEnabled(itemPtr, value);
         }
 
+        public virtual void SetMenuItemShortcut(
+            IMenuFactory.MenuItemHandle handle,
+            Key key,
+            ModifierKeys modifierKeys)
+        {
+            var itemPtr = handle.AsPointer;
+            if (itemPtr == IntPtr.Zero)
+                return;
+            Native.Menu.SetMenuItemShortcut(itemPtr, key, modifierKeys);
+        }
+
         public virtual void SetMenuItemSubMenu(
             IMenuFactory.MenuItemHandle handle,
             IMenuFactory.ContextMenuHandle subMenuHandle)

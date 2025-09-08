@@ -99,6 +99,17 @@ namespace Alternet.UI
         void SetMenuItemBitmap(MenuItemHandle handle, ImageSet? value);
 
         /// <summary>
+        /// Sets a keyboard shortcut for the specified menu item.
+        /// </summary>
+        /// <remarks>The combination of <paramref name="key"/> and <paramref name="modifierKeys"/> defines
+        /// the shortcut. Ensure that the shortcut does not conflict with existing shortcuts in the
+        /// application.</remarks>
+        /// <param name="handle">The handle of the menu item to which the shortcut will be assigned.</param>
+        /// <param name="key">The key to be used as the shortcut.</param>
+        /// <param name="modifierKeys">The modifier keys (e.g., Ctrl, Alt) to be combined with the shortcut key.</param>
+        void SetMenuItemShortcut(MenuItemHandle handle, Key key, ModifierKeys modifierKeys);
+
+        /// <summary>
         /// Sets whether the specified menu item is enabled.
         /// </summary>
         /// <param name="handle">The handle of the menu item.</param>

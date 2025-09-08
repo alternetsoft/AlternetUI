@@ -17,6 +17,7 @@ static void SetMenuItemEnabled(void* handle, bool value);
 static void SetMenuItemText(void* handle, const string& value, const string& rightValue);
 static void SetMenuItemChecked(void* handle, bool value);
 static void SetMenuItemSubMenu(void* handle, void* subMenuHandle);
+static void SetMenuItemShortcut(void* handle, Key key, ModifierKeys modifierKeys);
 static void MenuAddItem(void* handle, void* itemHandle);
 static void MenuRemoveItem(void* handle, void* itemHandle);
 

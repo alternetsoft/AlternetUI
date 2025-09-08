@@ -1,5 +1,6 @@
 #include "Menu.h"
 #include "IdManager.h"
+#include "Application.h"
 
 namespace Alternet::UI
 {
@@ -217,18 +218,42 @@ namespace Alternet::UI
 		item->Enable(value);
     }
 
+    void Menu::SetMenuItemShortcut(void* handle, Key key, ModifierKeys modifierKeys)
+    {
+        auto item = (wxAlternetMenuItem*)handle;
+
+        if (key == Key::None)
+        {
+            item->SetAccel(nullptr);
+        }
+        else
+        {
+            auto keyboard = Application::GetCurrent()->GetKeyboardInternal();
+            auto wxKey = keyboard->KeyToWxKey(key);
+            auto acceleratorFlags = keyboard->ModifierKeysToAcceleratorFlags(modifierKeys);
+
+            auto accel = new wxAcceleratorEntry(acceleratorFlags, wxKey, item->GetId());
+            item->SetAccel(accel);
+        }
+    }
+
     void Menu::SetMenuItemText(void* handle, const string& value, const string& rightValue)
     {
         auto item = (wxAlternetMenuItem*)handle;
 
         auto text = value.empty() ? wxString(" ") : wxStr(value);
-		auto rightText = rightValue.empty() ? wxString(" ") : wxStr(rightValue);
 
         text.Replace("_", "&");
 
-        auto labelText = text + "\t" + rightText;
-
-		item->SetItemLabel(labelText);
+        if(rightValue.empty())
+        {
+            item->SetItemLabel(text);
+        }
+        else
+        {
+            auto labelText = text + "\t" + wxStr(rightValue);
+            item->SetItemLabel(labelText);
+        }
     }
 
     void Menu::SetMenuItemChecked(void* handle, bool value)
@@ -296,56 +321,4 @@ namespace Alternet::UI
     Menu::~Menu()
     {
     }
-
-
-/*
-    _menu->Bind(wxEVT_MENU, &Menu::OnMenuCommand, this);
-    _menu->Bind(wxEVT_MENU_OPEN, &Menu::OnMenuOpen, this);
-    _menu->Bind(wxEVT_MENU_CLOSE, &Menu::OnMenuClose, this);
-    _menu->Bind(wxEVT_MENU_HIGHLIGHT, &Menu::OnMenuHighlight, this);
-    _menu->Unbind(wxEVT_MENU, &Menu::OnMenuCommand, this);
-    _menu->Unbind(wxEVT_MENU_OPEN, &Menu::OnMenuOpen, this);
-    _menu->Unbind(wxEVT_MENU_CLOSE, &Menu::OnMenuClose, this);
-    _menu->Unbind(wxEVT_MENU_HIGHLIGHT, &Menu::OnMenuHighlight, this);
-
-    void Menu::OnMenuOpen(wxMenuEvent& evt)
-    {
-        evt.StopPropagation();
-        RaiseEvent(MenuEvent::Opened);
-
-        for (auto item : _items)
-        {
-            item->RaiseMenuOpen();
-        }
-    }
-
-    void Menu::OnMenuClose(wxMenuEvent& evt)
-    {
-        evt.StopPropagation();
-        RaiseEvent(MenuEvent::Closed);
-
-        for (auto item : _items)
-        {
-            item->RaiseMenuClose();
-        }
-    }
-
-    void Menu::OnMenuHighlight(wxMenuEvent& evt)
-    {
-        evt.StopPropagation();
-        auto item = MenuItem::GetMenuItemById(evt.GetMenuId());
-        if (item == nullptr)
-            return;
-        item->RaiseMenuHighlight();
-    }
-
-    void Menu::OnMenuCommand(wxCommandEvent& event)
-    {
-        event.StopPropagation();
-        auto item = MenuItem::GetMenuItemById(event.GetId());
-        if (item == nullptr)
-            return;
-        item->RaiseClick();
-    }
-*/
 }

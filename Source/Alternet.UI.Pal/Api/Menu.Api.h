@@ -186,6 +186,17 @@ ALTERNET_UI_API void Menu_SetMenuItemSubMenu_(void* handle, void* subMenuHandle)
     #endif
 }
 
+ALTERNET_UI_API void Menu_SetMenuItemShortcut_(void* handle, Key key, ModifierKeys modifierKeys)
+{
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    MarshalExceptions<void>([&](){
+    #endif
+        Menu::SetMenuItemShortcut(handle, key, modifierKeys);
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    });
+    #endif
+}
+
 ALTERNET_UI_API void Menu_MenuAddItem_(void* handle, void* itemHandle)
 {
     #if !defined(__WXMSW__) || defined(_DEBUG)
