@@ -202,6 +202,35 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Retrieves platform-specific key information based on the current operating system.
+        /// </summary>
+        /// <remarks>The returned key information is filtered to include only those keys relevant to the
+        /// backend operating system. This method can return <see langword="null"/> if the filtering process
+        /// results in no applicable keys.</remarks>
+        /// <returns>An array of <see cref="UI.KeyInfo"/> objects representing the filtered key information
+        /// specific to the current platform, or <see langword="null"/> if no keys are available.</returns>
+        public virtual UI.KeyInfo[]? GetPlatformSpecificKeys()
+        {
+            var filteredKeys = Alternet.UI.KeyInfo.FilterBackendOs(KeyInfo);
+            return filteredKeys;
+        }
+
+        /// <summary>
+        /// Retrieves the first platform-specific key, if available.
+        /// </summary>
+        /// <remarks>This method returns the first key from the collection of platform-specific keys.
+        /// If no platform-specific keys are available, it returns <see langword="null"/>.</remarks>
+        /// <returns>The first platform-specific key as a <see cref="UI.KeyInfo"/> object,
+        /// or <see langword="null"/> if no platform-specific keys are found.</returns>
+        public virtual UI.KeyInfo? GetFirstPlatformSpecificKey()
+        {
+            var filteredKeys = GetPlatformSpecificKeys();
+            if (filteredKeys is not null && filteredKeys.Length > 0)
+                return filteredKeys[0];
+            return null;
+        }
+
+        /// <summary>
         /// Converts the object to its string representation based on the specified formatting options.
         /// </summary>
         /// <remarks>The method applies the specified formatting options to the first valid key in the
@@ -214,26 +243,20 @@ namespace Alternet.UI
         /// or <see langword="null"/> if no valid key information is available.</returns>
         public virtual string? ToString(FormatOptions options)
         {
-            var filteredKeys = Alternet.UI.KeyInfo.FilterBackendOs(KeyInfo);
-            if (filteredKeys is not null && filteredKeys.Length > 0)
+            var key = GetFirstPlatformSpecificKey();
+
+            if (key is null)
+                return null;
+
+            if (options.UseTemplate)
             {
-                var key = filteredKeys[0];
-
-                if (key is null)
-                    return null;
-
-                if (options.UseTemplate)
-                {
-                    var result = string.Format(options.Template, key.ToString(options.ForUser));
-                    return result;
-                }
-                else
-                {
-                    return key.ToString(options.ForUser);
-                }
+                var result = string.Format(options.Template, key.ToString(options.ForUser));
+                return result;
             }
-
-            return null;
+            else
+            {
+                return key.ToString(options.ForUser);
+            }
         }
 
         /// <summary>
