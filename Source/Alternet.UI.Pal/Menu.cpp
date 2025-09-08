@@ -29,18 +29,23 @@ namespace Alternet::UI
     {
         event.StopPropagation();
 
-        wxAlternetMenuItem* item = wxDynamicCast(event.GetMenuItem(), wxAlternetMenuItem);
-        if (item != nullptr)
-        {
-            Menu::_eventMenuItemId = item->_id;
-            Menu::RaiseStaticEvent(eventType);
-            return;
-        }
-
         wxAlternetMenu* itemMenu = wxDynamicCast(event.GetMenu(), wxAlternetMenu);
         if (itemMenu != nullptr)
         {
             Menu::_eventMenuItemId = itemMenu->_id;
+            Menu::RaiseStaticEvent(eventType);
+            return;
+        }
+    }
+
+    void wxAlternetMenu::RaiseMenuItemEvent(wxMenuEvent& event, Menu::MenuEvent eventType)
+    {
+        event.StopPropagation();
+
+        wxAlternetMenuItem* item = wxDynamicCast(event.GetMenuItem(), wxAlternetMenuItem);
+        if (item != nullptr)
+        {
+            Menu::_eventMenuItemId = item->_id;
             Menu::RaiseStaticEvent(eventType);
             return;
         }
@@ -53,7 +58,7 @@ namespace Alternet::UI
 
     void wxAlternetMenu::OnMenuHighlight(wxMenuEvent& event)
     {
-        RaiseMenuEvent(event, Menu::MenuEvent::MenuHighlight);
+        RaiseMenuItemEvent(event, Menu::MenuEvent::MenuHighlight);
     }
 
     void Menu::Show(void* menuHandle, Control* control, const PointD& position)

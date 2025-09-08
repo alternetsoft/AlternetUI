@@ -55,6 +55,7 @@ namespace Alternet::UI
         void OnMenuCommand(wxCommandEvent& event);
         void OnMenuOpen(wxMenuEvent& event);
         void RaiseMenuEvent(wxMenuEvent& event, Menu::MenuEvent eventType);
+        void RaiseMenuItemEvent(wxMenuEvent& event, Menu::MenuEvent eventType);
         void OnMenuClose(wxMenuEvent& event);
         void OnMenuHighlight(wxMenuEvent& event);
     };
