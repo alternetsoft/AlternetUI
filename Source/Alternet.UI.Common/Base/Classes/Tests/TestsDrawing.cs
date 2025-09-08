@@ -1,0 +1,44 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.IO;
+using System.Text;
+
+using Alternet.Drawing;
+
+using SkiaSharp;
+
+namespace Alternet.UI
+{
+    /// <summary>
+    /// Provides test methods related to drawing.
+    /// </summary>
+    /// <remarks>This class is intended for use in debugging scenarios and contains methods that are
+    /// conditionally compiled based on the presence of the <c>DEBUG</c> compilation symbol.</remarks>
+    public static class TestsDrawing
+    {
+        /// <summary>
+        /// Renders a sample frame on the specified Skia graphics context for debugging purposes.
+        /// </summary>
+        /// <remarks>This method is only executed in debug builds, as it is marked with the
+        /// <see cref="ConditionalAttribute"/> for the "DEBUG" symbol. It creates a 500x500 surface,
+        /// renders a sample frame with a black background and red text, and saves the rendered frame
+        /// as an image file to the desktop.</remarks>
+        /// <param name="context">The Skia graphics context (<see cref="GRContext"/>) on which the
+        /// sample frame will be drawn.</param>
+        [Conditional("DEBUG")]
+        public static void DrawSampleOnContext(GRContext context)
+        {
+            var info = new SKImageInfo(500, 500);
+            using var surface = SKSurface.Create(context, true, info);
+            var canvas = surface.Canvas;
+
+            canvas.Clear(SKColors.Black);
+            canvas.DrawText("Frame rendered", 50, 100, SKTextAlign.Left, Control.DefaultFont, Brushes.Red);
+            canvas.Flush();
+            SkiaUtils.SaveSurfaceToFile(
+                surface,
+                Path.Combine(PathUtils.GetDesktopPath(), "frame_rendered.png"));
+        }
+    }
+}
