@@ -61,15 +61,15 @@ namespace Alternet.UI
             int pixelFormat = MswUtils.NativeMethods.ChoosePixelFormat(hdc, ref pfd);
             MswUtils.NativeMethods.SetPixelFormat(hdc, pixelFormat, ref pfd);
 
-            IntPtr hglrc = MswUtils.NativeMethods.wglCreateContext(hdc);
-            MswUtils.NativeMethods.wglMakeCurrent(hdc, hglrc);
+            IntPtr contextPtr = MswUtils.NativeMethods.wglCreateContext(hdc);
+            MswUtils.NativeMethods.wglMakeCurrent(hdc, contextPtr);
 
             var grContext = GRContext.CreateGl();
 
             DrawSampleOnContext(grContext);
 
             MswUtils.NativeMethods.wglMakeCurrent(IntPtr.Zero, IntPtr.Zero);
-            MswUtils.NativeMethods.wglDeleteContext(hglrc);
+            MswUtils.NativeMethods.wglDeleteContext(contextPtr);
             MswUtils.NativeMethods.ReleaseDC(hwnd, hdc);
             form.Dispose();
         }
