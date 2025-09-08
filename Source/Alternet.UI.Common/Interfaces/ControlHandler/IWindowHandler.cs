@@ -13,7 +13,7 @@ namespace Alternet.UI
     /// Extends <see cref="IControlHandler"/> with properties and methods
     /// specific to the window.
     /// </summary>
-    public interface IWindowHandler
+    public interface IWindowHandler : IControlHandler
     {
         /// <inheritdoc cref="Window.ShowInTaskbar"/>
         bool ShowInTaskbar { get; set; }
@@ -62,7 +62,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets a <see cref="Window"/> this handler provides the implementation for.
         /// </summary>
-        Window? Control { get; }
+        new Window? Control { get; }
 
         /// <inheritdoc cref="Window.Close()"/>
         void Close();
