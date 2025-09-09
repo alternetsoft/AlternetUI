@@ -390,6 +390,32 @@ namespace Alternet::UI
         return true;
     }
 
+    void Menu::SetMainMenu(Window* window, void* menu)
+    {
+        if (window == nullptr)
+            return;
+        auto frame = window->GetFrame();
+        if (frame == nullptr)
+			return;
+        auto oldValue = frame->GetMenuBar();
+
+        if (oldValue != nullptr)
+        {
+            wxAlternetMenuBar* alternetMenu = wxDynamicCast(oldValue, wxAlternetMenuBar);
+            if(alternetMenu != nullptr)
+				alternetMenu->ownerFrame = nullptr;
+        }
+
+        auto menuBar = (wxAlternetMenuBar*)menu;
+
+		window->ApplyMenu(menuBar);
+
+        if (menuBar != nullptr)
+        {
+            menuBar->ownerFrame = frame;
+        }
+    }
+
     void* Menu::MainMenuReplace(void* menuHandle, int pos, void* menu, const string& title)
     {
         auto menuBar = (wxAlternetMenuBar*)menuHandle;

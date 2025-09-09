@@ -8,6 +8,8 @@ namespace NativeApi.Api
     {
         /* Work with main menu */
 
+        public static void SetMainMenu(Window window, IntPtr menu) => throw new Exception();
+
         public static bool MainMenuAppend(IntPtr menuHandle, IntPtr menu, string text) => throw new Exception();
 
         public static int MainMenuGetCount(IntPtr menuHandle) => throw new Exception();

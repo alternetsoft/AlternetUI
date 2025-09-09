@@ -261,20 +261,6 @@ namespace Alternet.UI
             NativeControl.Icon = (UI.Native.IconSet?)value?.Handler;
         }
 
-        public void SetMenu(DisposableObject? value)
-        {
-            /*
-            if(value is MainMenu asMainMenu)
-            {
-                NativeControl.Menu = asMainMenu.Handler as Native.MainMenu;
-            }
-            else
-            {
-                NativeControl.Menu = null;
-            }
-            */
-        }
-
         public void SetMinSize(SizeD size)
         {
             NativeControl.SetMinSize(size);
@@ -287,7 +273,8 @@ namespace Alternet.UI
 
         protected override void DisposeManaged()
         {
-            SetMenu(null);
+            if(Control is not null)
+                MenuUtils.Factory?.SetMainMenu(Control, null);
             SetStatusBar(statusBar, null);
             base.DisposeManaged();
         }

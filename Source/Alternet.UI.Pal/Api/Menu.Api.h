@@ -3,6 +3,7 @@
 #pragma once
 
 #include "Menu.h"
+#include "Window.h"
 #include "ImageSet.h"
 #include "Control.h"
 #include "ApiUtils.h"
@@ -27,6 +28,17 @@ ALTERNET_UI_API char16_t* Menu_GetEventMenuItemId_()
     return MarshalExceptions<char16_t*>([&](){
     #endif
         return AllocPInvokeReturnString(Menu::GetEventMenuItemId());
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    });
+    #endif
+}
+
+ALTERNET_UI_API void Menu_SetMainMenu_(Window* window, void* menu)
+{
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    MarshalExceptions<void>([&](){
+    #endif
+        Menu::SetMainMenu(window, menu);
     #if !defined(__WXMSW__) || defined(_DEBUG)
     });
     #endif

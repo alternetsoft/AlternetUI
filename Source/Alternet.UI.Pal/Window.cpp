@@ -68,22 +68,20 @@ namespace Alternet::UI
             _icon->Release();
     }
 
-    /*
-    void Window::ApplyMenuToFrame(MainMenu* const& value, Frame* frame)
+    void Window::ApplyMenuToFrame(wxMenuBar* value, Frame* frame)
     {
         if (frame == nullptr)
             return;
-        frame->SetMenuBar(value == nullptr ? nullptr : value->GetWxMenuBar());
+        frame->SetMenuBar(value);
         frame->Layout();
         frame->PostSizeEvent();
     }
 
-    void Window::ApplyMenu(MainMenu* const& value)
+    void Window::ApplyMenu(wxMenuBar* value)
     {
         auto frame = GetFrame();
         ApplyMenuToFrame(value, frame);
     }
-*/
 
     void Window::SetMinSize(const SizeD& size)
     {

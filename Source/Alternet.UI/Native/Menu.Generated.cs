@@ -33,6 +33,11 @@ namespace Alternet.UI.Native
             
         }
         
+        public static void SetMainMenu(Window window, System.IntPtr menu)
+        {
+            NativeApi.Menu_SetMainMenu_(window.NativePointer, menu);
+        }
+        
         public static bool MainMenuAppend(System.IntPtr menuHandle, System.IntPtr menu, string text)
         {
             return NativeApi.Menu_MainMenuAppend_(menuHandle, menu, text);
@@ -233,6 +238,9 @@ namespace Alternet.UI.Native
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern string Menu_GetEventMenuItemId_();
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void Menu_SetMainMenu_(IntPtr window, System.IntPtr menu);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern bool Menu_MainMenuAppend_(System.IntPtr menuHandle, System.IntPtr menu, string text);

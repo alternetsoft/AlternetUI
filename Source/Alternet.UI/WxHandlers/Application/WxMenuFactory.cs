@@ -397,8 +397,25 @@ namespace Alternet.UI
             return result;
         }
 
-        public override void SetMainMenu(Window window, MainMenu? menuHandle)
+        public override void SetMainMenu(Window window, MainMenu? menu)
         {
+            if (MenuUtils.Factory is not WxMenuFactory factory)
+                return;
+
+            var handler = window.Handler as WindowHandler;
+
+            if (handler?.NativeControl is not UI.Native.Window nativeWindow)
+                return;
+
+            if (menu == null)
+            {
+                Native.Menu.SetMainMenu(nativeWindow, IntPtr.Zero);
+                return;
+            }
+
+            var menuHandle = factory.CreateMainMenuHandle(menu);
+
+            Native.Menu.SetMainMenu(nativeWindow, menuHandle?.AsPointer ?? IntPtr.Zero);
         }
 
         public virtual ContextMenuHandle MainMenuReplace(

@@ -53,7 +53,7 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        public virtual void SetMainMenu(Window window, MainMenu? menuHandle)
+        public virtual void SetMainMenu(Window window, MainMenu? menu)
         {
         }
 

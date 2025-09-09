@@ -130,6 +130,9 @@ namespace Alternet::UI
         Frame* GetFrame();
         wxDialog* GetDialog();
 
+        void ApplyMenuToFrame(wxMenuBar* value, Frame* frame);
+        void ApplyMenu(wxMenuBar* value);
+
     protected:
         void OnBeforeDestroyWxWindow() override;
         void OnWxWindowDestroyed(wxWindow* window) override;
