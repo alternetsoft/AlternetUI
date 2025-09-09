@@ -854,12 +854,13 @@ namespace Alternet.UI
                 OnPaint(e);
                 Paint?.Invoke(this, e);
 
-                if(this is Control)
+                PaintCaret(e);
+
+                if (this is Control)
                 {
                     TemplateUtils.RaisePaintForNonPlatformChildren(this, () => e.Graphics);
                 }
 
-                PaintCaret(e);
                 PlessMouse.DrawTestMouseRect(this, () => e.Graphics);
 
                 RaiseNotifications((n) => n.AfterPaint(this, e));
