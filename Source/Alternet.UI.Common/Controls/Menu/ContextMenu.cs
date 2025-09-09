@@ -118,39 +118,6 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Creates a context menu handle using the specified menu factory.
-        /// Uses child items for populating the created context menu, if any.
-        /// </summary>
-        /// <remarks>If the menu contains items, they are added to the created context menu using the
-        /// specified or default factory.</remarks>
-        /// <param name="factory">The <see cref="IMenuFactory"/> instance used to create the context menu handle.
-        /// If null, a default factory is used.</param>
-        /// <returns>A <see cref="IMenuFactory.ContextMenuHandle"/> representing the created context menu, or
-        /// <see langword="null"/> if no factory is available.</returns>
-        public virtual IMenuFactory.ContextMenuHandle? CreateItemsHandle(
-            IMenuFactory? factory = null)
-        {
-            factory ??= MenuUtils.Factory;
-            if (factory == null)
-                return null;
-            var result = factory.CreateContextMenu(UniqueId.ToString(), this);
-
-            if (!HasItems)
-                return result;
-
-            foreach (var item in Items)
-            {
-                if (!item.Visible)
-                    continue;
-                var itemHandle = item.CreateItemHandle(factory);
-                if (itemHandle is not null)
-                    factory.MenuAddItem(result, itemHandle);
-            }
-
-            return result;
-        }
-
-        /// <summary>
         /// Copies the properties from the specified <see cref="IMenuProperties"/>
         /// source to the current instance.
         /// </summary>
@@ -429,30 +396,9 @@ namespace Alternet.UI
                 relatedControl.Value = control;
 
                 factory ??= MenuUtils.Factory;
-                if (factory is null)
-                    return;
 
-                var menuHandle = GetHostObject<IMenuFactory.ContextMenuHandle>();
-
-                if (menuHandle is not null)
-                {
-                    RemoveHostObject(menuHandle);
-                    factory.DestroyContextMenu(menuHandle);
-                }
-
-                menuHandle = CreateItemsHandle(factory);
-
-                if (menuHandle is not null)
-                {
-                    AddHostObject(menuHandle);
-                }
-                else
-                {
-                    return;
-                }
-
-                factory.Show(
-                        menuHandle,
+                factory?.Show(
+                        this,
                         control,
                         position,
                         () =>

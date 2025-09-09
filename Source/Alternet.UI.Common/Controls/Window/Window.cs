@@ -915,10 +915,10 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Gets or sets the <see cref="MainMenu"/> that is displayed in the window.
+        /// Gets or sets the <see cref="MainMenu"/> or other main menu provider that is displayed in the window.
         /// </summary>
         /// <value>
-        /// A <see cref="MainMenu"/> that represents the menu to display in the window.
+        /// A <see cref="MainMenu"/> or other main menu provider that represents the menu to display in the window.
         /// </value>
         /// <remarks>
         /// You can use this property to switch between complete menu sets at run time.
@@ -1641,9 +1641,10 @@ namespace Alternet.UI
 
             OnMenuChanged(EventArgs.Empty);
             MenuChanged?.Invoke(this, EventArgs.Empty);
-            Handler.SetMenu(value);
 
-            if(performLayout)
+            MenuUtils.Factory?.SetMainMenu(this, menu as MainMenu);
+
+            if (performLayout)
                 PerformLayout();
         }
 

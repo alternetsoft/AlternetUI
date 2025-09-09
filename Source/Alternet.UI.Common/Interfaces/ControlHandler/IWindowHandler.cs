@@ -77,12 +77,6 @@ namespace Alternet.UI
         void SetIcon(IconSet? value);
 
         /// <summary>
-        /// Sets window menu.
-        /// </summary>
-        /// <param name="value"></param>
-        void SetMenu(DisposableObject? value);
-
-        /// <summary>
         /// Sets minimal window size.
         /// </summary>
         /// <param name="size">The minimal window size.</param>

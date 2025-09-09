@@ -8,7 +8,7 @@ namespace Alternet.UI.Native
 {
     internal partial class NotifyIcon : INotifyIconHandler
     {
-        private IMenuFactory.ContextMenuHandle? menuHandle;
+        private WxMenuFactory.ContextMenuHandle? menuHandle;
         private Alternet.UI.ContextMenu? menu;
 
         public Alternet.UI.ContextMenu? Menu
@@ -68,10 +68,13 @@ namespace Alternet.UI.Native
 
         protected void UpdateNativeMenu(Alternet.UI.ContextMenu? value)
         {
+            if (MenuUtils.Factory is not WxMenuFactory factory)
+                return;
+
             if (menuHandle != null)
             {
                 SetMenu(IntPtr.Zero);
-                MenuUtils.Factory?.DestroyContextMenu(menuHandle);
+                factory.DestroyContextMenu(menuHandle);
                 menuHandle = null;
             }
 
@@ -80,7 +83,7 @@ namespace Alternet.UI.Native
                 return;
             }
 
-            menuHandle = value.CreateItemsHandle();
+            menuHandle = factory.CreateItemsHandle(value);
 
             if (menuHandle == null)
                 SetMenu(IntPtr.Zero);
