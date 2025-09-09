@@ -214,7 +214,7 @@ namespace Alternet.UI
             return Native.Menu.MainMenuGetCount(menuHandlePtr);
         }
 
-        public void MainMenuSetEnabled(IMenuFactory.MainMenuHandle menuHandle, int pos, bool enable)
+        public virtual void MainMenuSetEnabled(IMenuFactory.MainMenuHandle menuHandle, int pos, bool enable)
         {
             var menuHandlePtr = menuHandle.AsPointer;
             if (menuHandlePtr == IntPtr.Zero)
@@ -222,7 +222,9 @@ namespace Alternet.UI
             Native.Menu.MainMenuSetEnabled(menuHandlePtr, pos, enable);
         }
 
-        public IMenuFactory.ContextMenuHandle MainMenuGetSubMenu(IMenuFactory.MainMenuHandle menuHandle, int menuIndex)
+        public virtual IMenuFactory.ContextMenuHandle MainMenuGetSubMenu(
+            IMenuFactory.MainMenuHandle menuHandle,
+            int menuIndex)
         {
             var menuHandlePtr = menuHandle.AsPointer;
             if (menuHandlePtr == IntPtr.Zero)
@@ -231,7 +233,9 @@ namespace Alternet.UI
             return new IMenuFactory.ContextMenuHandle(submenuPtr);
         }
 
-        public IMenuFactory.ContextMenuHandle MainMenuRemove(IMenuFactory.MainMenuHandle menuHandle, int pos)
+        public virtual IMenuFactory.ContextMenuHandle MainMenuRemove(
+            IMenuFactory.MainMenuHandle menuHandle,
+            int pos)
         {
             var menuHandlePtr = menuHandle.AsPointer;
             if (menuHandlePtr == IntPtr.Zero)
@@ -240,7 +244,7 @@ namespace Alternet.UI
             return new IMenuFactory.ContextMenuHandle(submenuPtr);
         }
 
-        public bool MainMenuInsert(
+        public virtual bool MainMenuInsert(
             IMenuFactory.MainMenuHandle menuHandle,
             int pos,
             IMenuFactory.ContextMenuHandle menu,
@@ -253,7 +257,7 @@ namespace Alternet.UI
             return Native.Menu.MainMenuInsert(menuHandlePtr, pos, submenuPtr, title);
         }
 
-        public IMenuFactory.ContextMenuHandle MainMenuReplace(
+        public virtual IMenuFactory.ContextMenuHandle MainMenuReplace(
             IMenuFactory.MainMenuHandle menuHandle,
             int pos,
             IMenuFactory.ContextMenuHandle menu,
@@ -267,7 +271,7 @@ namespace Alternet.UI
             return new IMenuFactory.ContextMenuHandle(replacedPtr);
         }
 
-        public void MainMenuSetText(IMenuFactory.MainMenuHandle menuHandle, int pos, string label)
+        public virtual void MainMenuSetText(IMenuFactory.MainMenuHandle menuHandle, int pos, string label)
         {
             var menuHandlePtr = menuHandle.AsPointer;
             if (menuHandlePtr == IntPtr.Zero)
