@@ -137,43 +137,6 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Creates a context menu handle using the specified menu factory.
-        /// Uses child items for populating the created context menu, if any.
-        /// </summary>
-        /// <remarks>If the menu contains items, they are added to the created context menu using the
-        /// specified or default factory.</remarks>
-        /// <param name="factory">The <see cref="IMenuFactory"/> instance used to create the context menu handle.
-        /// If null, a default factory is used.</param>
-        /// <param name="idOverride">The <see cref="ObjectUniqueId"/> to use for the context menu handle.
-        /// If null, the menu's unique ID is used.</param>
-        /// <returns>A <see cref="IMenuFactory.ContextMenuHandle"/> representing the created context menu, or
-        /// <see langword="null"/> if no factory is available.</returns>
-        public virtual IMenuFactory.ContextMenuHandle? CreateItemsHandle(
-            IMenuFactory? factory = null,
-            ObjectUniqueId? idOverride = null)
-        {
-            factory ??= MenuUtils.Factory;
-            if (factory == null)
-                return null;
-            var id = idOverride ?? UniqueId;
-            var result = factory.CreateContextMenu(id.ToString());
-
-            if(!HasItems)
-                return result;
-
-            foreach (var item in Items)
-            {
-                if(!item.Visible)
-                    continue;
-                var itemHandle = item.CreateItemHandle(factory);
-                if(itemHandle is not null)
-                    factory.MenuAddItem(result, itemHandle);
-            }
-
-            return result;
-        }
-
-        /// <summary>
         /// Adds a separator item to the <see cref="ItemContainerElement{T}.Items"/> collection.
         /// </summary>
         /// <returns>The created separator item.</returns>
