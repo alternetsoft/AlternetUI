@@ -68,26 +68,6 @@ namespace Alternet.UI
             }
         }
 
-        /// <summary>
-        /// Gets the first parent control in the parent chain which
-        /// has attached native control.
-        /// </summary>
-        [Browsable(false)]
-        public Control? ParentWithNativeControl
-        {
-            get
-            {
-                var result = Parent;
-
-                while (result is not null && result is not Control)
-                {
-                    result = result.Parent;
-                }
-
-                return result as Control;
-            }
-        }
-
         /// <inheritdoc/>
         public override Cursor? Cursor
         {
