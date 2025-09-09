@@ -142,6 +142,11 @@ namespace Alternet.UI
         private VisualControlState? visualStateOverride;
         private VisualControlStates? visualStatesOverride;
         private BaseCollection<DisposableObject>? components;
+        private int tabIndex;
+        private bool wantTab;
+        private bool canLongTap;
+        private bool bubbleKeys;
+        private long? lastClickedTimestamp;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="AbstractControl"/> class.
@@ -363,6 +368,26 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets the first parent control in the parent chain which
+        /// has attached native control.
+        /// </summary>
+        [Browsable(false)]
+        public virtual Control? PlatformBackedParent
+        {
+            get
+            {
+                var result = Parent;
+
+                while (result is not null && result is not Control && !result.IsPlatformControl)
+                {
+                    result = result.Parent;
+                }
+
+                return result as Control;
+            }
+        }
+
+        /// <summary>
         /// Gets or sets a value indicating whether the TAB key is received and
         /// processed by the control.
         /// </summary>
@@ -374,12 +399,20 @@ namespace Alternet.UI
         /// <remarks>
         /// Normally, TAB key is used for passing to the next control in a dialog.
         /// </remarks>
-        public virtual bool WantTab { get; set; }
+        public virtual bool WantTab
+        {
+            get => wantTab;
+            set => wantTab = value;
+        }
 
         /// <summary>
         /// Gets or sets the tab order of the control within its container.
         /// </summary>
-        public virtual int TabIndex { get; set; }
+        public virtual int TabIndex
+        {
+            get => tabIndex;
+            set => tabIndex = value;
+        }
 
         /// <summary>
         /// Gets time when this control was last clicked.
@@ -387,8 +420,8 @@ namespace Alternet.UI
         [Browsable(false)]
         public long? LastClickedTimestamp
         {
-            get;
-            protected set;
+            get => lastClickedTimestamp;
+            protected set => lastClickedTimestamp = value;
         }
 
         /// <summary>
@@ -401,13 +434,21 @@ namespace Alternet.UI
         /// Gets or sets whether <see cref="LongTap"/> event is raised.
         /// </summary>
         [Browsable(false)]
-        public virtual bool CanLongTap { get; set; }
+        public virtual bool CanLongTap
+        {
+            get => canLongTap;
+            set => canLongTap = value;
+        }
 
         /// <summary>
         /// Gets or sets whether key presses are sent to the parent control.
         /// </summary>
         [Browsable(false)]
-        public virtual bool BubbleKeys { get; set; }
+        public virtual bool BubbleKeys
+        {
+            get => bubbleKeys;
+            set => bubbleKeys = value;
+        }
 
         /// <summary>
         /// Gets or sets border for all visual states of the control.
