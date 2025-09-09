@@ -1045,7 +1045,7 @@ namespace Alternet.UI
                 itemType = MenuItemType.Check;
             }
 
-            var handle = factory.CreateMenuItem(itemType, UniqueId.ToString());
+            var handle = factory.CreateMenuItem(itemType, UniqueId.ToString(), this);
             if (handle is null)
                 return null;
 

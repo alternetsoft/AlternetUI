@@ -35,23 +35,26 @@ namespace Alternet.UI
         /// Creates a main menu instance.
         /// </summary>
         /// <returns>The handle to the created main menu.</returns>
-        /// <param name="id">The unique identifier for the menu item.</param>
-        MainMenuHandle CreateMainMenu(string id);
+        /// <param name="id">The unique identifier for the main menu.</param>
+        /// <param name="menu">The main menu instance.</param>
+        MainMenuHandle CreateMainMenu(string id, MainMenu? menu);
 
         /// <summary>
         /// Creates a context menu instance.
         /// </summary>
         /// <returns>The handle to the created context menu.</returns>
-        /// <param name="id">The unique identifier for the menu item.</param>
-        ContextMenuHandle CreateContextMenu(string id);
+        /// <param name="id">The unique identifier for the menu.</param>
+        /// <param name="menu">The context menu instance.</param>
+        ContextMenuHandle CreateContextMenu(string id, ContextMenu? menu);
 
         /// <summary>
         /// Creates a menu item of the specified type.
         /// </summary>
         /// <param name="itemType">The type of the menu item to create.</param>
         /// <param name="id">The unique identifier for the menu item.</param>
+        /// <param name="menuItem">The menu item instance.</param>
         /// <returns>The handle to the created menu item.</returns>
-        MenuItemHandle CreateMenuItem(MenuItemType itemType, string id);
+        MenuItemHandle CreateMenuItem(MenuItemType itemType, string id, MenuItem? menuItem);
 
         /// <summary>
         /// Show menu on screen.

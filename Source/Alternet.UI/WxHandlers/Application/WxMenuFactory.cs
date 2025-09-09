@@ -40,17 +40,17 @@ namespace Alternet.UI
 
         public event EventHandler<StringEventArgs>? MenuClosed;
 
-        public IMenuFactory.ContextMenuHandle CreateContextMenu(string id)
+        public IMenuFactory.ContextMenuHandle CreateContextMenu(string id, ContextMenu? menu)
         {
             return new(Native.Menu.CreateContextMenu(id));
         }
 
-        public IMenuFactory.MainMenuHandle CreateMainMenu(string id)
+        public IMenuFactory.MainMenuHandle CreateMainMenu(string id, MainMenu? menu)
         {
             return new(Native.Menu.CreateMainMenu(id));
         }
 
-        public IMenuFactory.MenuItemHandle CreateMenuItem(MenuItemType itemType, string id)
+        public IMenuFactory.MenuItemHandle CreateMenuItem(MenuItemType itemType, string id, MenuItem? menuItem)
         {
             return new(Native.Menu.CreateMenuItem(itemType, id));
         }
