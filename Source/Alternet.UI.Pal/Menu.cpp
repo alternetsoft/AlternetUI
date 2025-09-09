@@ -242,13 +242,18 @@ namespace Alternet::UI
         }
     }
 
+    wxString Menu::CoerceMenuText(const string& value)
+    {
+        auto text = value.empty() ? wxString(" ") : wxStr(value);
+        text.Replace("_", "&");
+        return text;
+    }
+
     void Menu::SetMenuItemText(void* handle, const string& value, const string& rightValue)
     {
         auto item = (wxAlternetMenuItem*)handle;
 
-        auto text = value.empty() ? wxString(" ") : wxStr(value);
-
-        text.Replace("_", "&");
+        auto text = CoerceMenuText(value);
 
         if(rightValue.empty())
         {
@@ -325,5 +330,85 @@ namespace Alternet::UI
 
     Menu::~Menu()
     {
+    }
+
+    bool Menu::MainMenuAppend(void* menuHandle, void* menu, const string& text)
+    {
+        auto menuBar = (wxAlternetMenuBar*)menuHandle;
+		auto alternetMenu = (wxAlternetMenu*)menu;
+        auto coercedText = CoerceMenuText(text);
+        auto result = menuBar->Append(alternetMenu, coercedText);
+        if (!result)
+			return false;
+        alternetMenu->ownerMenuBar = menuBar;
+		return true;
+    }
+
+    int Menu::MainMenuGetCount(void* menuHandle)
+    {
+        auto menuBar = (wxAlternetMenuBar*)menuHandle;
+		return menuBar->GetMenuCount();
+    }
+
+    void Menu::MainMenuSetEnabled(void* menuHandle, int pos, bool enable)
+    {
+        auto menuBar = (wxAlternetMenuBar*)menuHandle;
+		menuBar->EnableTop(pos, enable);
+    }
+
+    void* Menu::MainMenuGetSubMenu(void* menuHandle, int menuIndex)
+    {
+        auto menuBar = (wxAlternetMenuBar*)menuHandle;
+		auto result = menuBar->GetMenu(menuIndex);
+		return result;
+    }
+
+    void* Menu::MainMenuRemove(void* menuHandle, int pos)
+    {
+        auto menuBar = (wxAlternetMenuBar*)menuHandle;
+		auto oldSubMenu = menuBar->Remove(pos);
+        if (oldSubMenu != nullptr)
+        {
+            auto alternetSubMenu = (wxAlternetMenu*)oldSubMenu;
+            alternetSubMenu->ownerMenuBar = nullptr;
+        }
+
+		return oldSubMenu;
+    }
+
+    bool Menu::MainMenuInsert(void* menuHandle, int pos, void* menu, const string& title)
+    {
+        auto menuBar = (wxAlternetMenuBar*)menuHandle;
+		auto alternetMenu = (wxAlternetMenu*)menu;
+        auto coercedText = CoerceMenuText(title);
+        auto result = menuBar->Insert(pos, alternetMenu, coercedText);
+        
+        if (!result)
+            return false;
+
+        alternetMenu->ownerMenuBar = menuBar;
+        return true;
+    }
+
+    void* Menu::MainMenuReplace(void* menuHandle, int pos, void* menu, const string& title)
+    {
+        auto menuBar = (wxAlternetMenuBar*)menuHandle;
+		auto alternetMenu = (wxAlternetMenu*)menu;
+        auto coercedText = CoerceMenuText(title);
+        auto oldSubMenu = menuBar->Replace(pos, alternetMenu, coercedText);
+        if (oldSubMenu != nullptr)
+        {
+            auto alternetSubMenu = (wxAlternetMenu*)oldSubMenu;
+            alternetSubMenu->ownerMenuBar = nullptr;
+        }
+		alternetMenu->ownerMenuBar = menuBar;
+		return oldSubMenu;
+    }
+
+    void Menu::MainMenuSetText(void* menuHandle, int pos, const string& label)
+    {
+        auto menuBar = (wxAlternetMenuBar*)menuHandle;
+		auto coercedText = CoerceMenuText(label);
+		menuBar->SetMenuLabel(pos, coercedText);
     }
 }

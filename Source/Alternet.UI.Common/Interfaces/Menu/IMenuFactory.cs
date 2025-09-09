@@ -32,6 +32,74 @@ namespace Alternet.UI
         event EventHandler<StringEventArgs>? MenuClosed;
 
         /// <summary>
+        /// Appends a sub-menu to the main menu with the specified text.
+        /// </summary>
+        /// <param name="menuHandle">The handle of the main menu to append to.</param>
+        /// <param name="menu">The sub-menu handle to append.</param>
+        /// <param name="text">The text to display for the appended menu.</param>
+        /// <returns>True if the menu was appended successfully; otherwise, false.</returns>
+        bool MainMenuAppend(MainMenuHandle menuHandle, ContextMenuHandle menu, string text);
+
+        /// <summary>
+        /// Gets the number of items in the specified main menu.
+        /// </summary>
+        /// <param name="menuHandle">The handle of the main menu.</param>
+        /// <returns>The number of items in the main menu.</returns>
+        int MainMenuGetCount(MainMenuHandle menuHandle);
+
+        /// <summary>
+        /// Sets whether the submenu at the specified position in the main menu is enabled.
+        /// </summary>
+        /// <param name="menuHandle">The handle of the main menu.</param>
+        /// <param name="pos">The position of the submenu.</param>
+        /// <param name="enable">True to enable the submenu; false to disable.</param>
+        void MainMenuSetEnabled(MainMenuHandle menuHandle, int pos, bool enable);
+
+        /// <summary>
+        /// Gets the submenu at the specified index from the main menu.
+        /// </summary>
+        /// <param name="menuHandle">The handle of the main menu.</param>
+        /// <param name="menuIndex">The index of the submenu to retrieve.</param>
+        /// <returns>The handle of the submenu at the specified index.</returns>
+        ContextMenuHandle MainMenuGetSubMenu(MainMenuHandle menuHandle, int menuIndex);
+
+        /// <summary>
+        /// Removes the submenu at the specified position from the main menu.
+        /// </summary>
+        /// <param name="menuHandle">The handle of the main menu.</param>
+        /// <param name="pos">The position of the submenu to remove.</param>
+        /// <returns>The handle of the removed submenu.</returns>
+        ContextMenuHandle MainMenuRemove(MainMenuHandle menuHandle, int pos);
+
+        /// <summary>
+        /// Inserts a submenu into the main menu at the specified position with the given title.
+        /// </summary>
+        /// <param name="menuHandle">The handle of the main menu.</param>
+        /// <param name="pos">The position at which to insert the menu.</param>
+        /// <param name="menu">The context submenu handle to insert.</param>
+        /// <param name="title">The title of the inserted menu.</param>
+        /// <returns>True if the submenu was inserted successfully; otherwise, false.</returns>
+        bool MainMenuInsert(MainMenuHandle menuHandle, int pos, ContextMenuHandle menu, string title);
+
+        /// <summary>
+        /// Replaces the submenu at the specified position in the main menu with a new submenu and title.
+        /// </summary>
+        /// <param name="menuHandle">The handle of the main menu.</param>
+        /// <param name="pos">The position of the submenu to replace.</param>
+        /// <param name="menu">The new submenu handle to set.</param>
+        /// <param name="title">The title of the new menu.</param>
+        /// <returns>The handle of the replaced submenu.</returns>
+        ContextMenuHandle MainMenuReplace(MainMenuHandle menuHandle, int pos, ContextMenuHandle menu, string title);
+
+        /// <summary>
+        /// Sets the text of the item at the specified position in the main menu.
+        /// </summary>
+        /// <param name="menuHandle">The handle of the main menu.</param>
+        /// <param name="pos">The position of the item.</param>
+        /// <param name="label">The new text label for the item.</param>
+        void MainMenuSetText(MainMenuHandle menuHandle, int pos, string label);
+
+        /// <summary>
         /// Creates a main menu instance.
         /// </summary>
         /// <returns>The handle to the created main menu.</returns>

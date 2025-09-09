@@ -195,6 +195,86 @@ namespace Alternet.UI
             Native.Menu.SetMenuItemText(itemPtr, value, rightValue);
         }
 
+        public virtual bool MainMenuAppend(
+            IMenuFactory.MainMenuHandle menuHandle,
+            IMenuFactory.ContextMenuHandle submenu, string text)
+        {
+            var menuHandlePtr = menuHandle.AsPointer;
+            var submenuPtr = submenu.AsPointer;
+            if (menuHandlePtr == IntPtr.Zero || submenuPtr == IntPtr.Zero)
+                return false;
+            return Native.Menu.MainMenuAppend(menuHandlePtr, submenuPtr, text);
+        }
+
+        public virtual int MainMenuGetCount(IMenuFactory.MainMenuHandle menuHandle)
+        {
+            var menuHandlePtr = menuHandle.AsPointer;
+            if (menuHandlePtr == IntPtr.Zero)
+                return 0;
+            return Native.Menu.MainMenuGetCount(menuHandlePtr);
+        }
+
+        public void MainMenuSetEnabled(IMenuFactory.MainMenuHandle menuHandle, int pos, bool enable)
+        {
+            var menuHandlePtr = menuHandle.AsPointer;
+            if (menuHandlePtr == IntPtr.Zero)
+                return;
+            Native.Menu.MainMenuSetEnabled(menuHandlePtr, pos, enable);
+        }
+
+        public IMenuFactory.ContextMenuHandle MainMenuGetSubMenu(IMenuFactory.MainMenuHandle menuHandle, int menuIndex)
+        {
+            var menuHandlePtr = menuHandle.AsPointer;
+            if (menuHandlePtr == IntPtr.Zero)
+                return new IMenuFactory.ContextMenuHandle(IntPtr.Zero);
+            var submenuPtr = Native.Menu.MainMenuGetSubMenu(menuHandlePtr, menuIndex);
+            return new IMenuFactory.ContextMenuHandle(submenuPtr);
+        }
+
+        public IMenuFactory.ContextMenuHandle MainMenuRemove(IMenuFactory.MainMenuHandle menuHandle, int pos)
+        {
+            var menuHandlePtr = menuHandle.AsPointer;
+            if (menuHandlePtr == IntPtr.Zero)
+                return new IMenuFactory.ContextMenuHandle(IntPtr.Zero);
+            var submenuPtr = Native.Menu.MainMenuRemove(menuHandlePtr, pos);
+            return new IMenuFactory.ContextMenuHandle(submenuPtr);
+        }
+
+        public bool MainMenuInsert(
+            IMenuFactory.MainMenuHandle menuHandle,
+            int pos,
+            IMenuFactory.ContextMenuHandle menu,
+            string title)
+        {
+            var menuHandlePtr = menuHandle.AsPointer;
+            var submenuPtr = menu.AsPointer;
+            if (menuHandlePtr == IntPtr.Zero || submenuPtr == IntPtr.Zero)
+                return false;
+            return Native.Menu.MainMenuInsert(menuHandlePtr, pos, submenuPtr, title);
+        }
+
+        public IMenuFactory.ContextMenuHandle MainMenuReplace(
+            IMenuFactory.MainMenuHandle menuHandle,
+            int pos,
+            IMenuFactory.ContextMenuHandle menu,
+            string title)
+        {
+            var menuHandlePtr = menuHandle.AsPointer;
+            var submenuPtr = menu.AsPointer;
+            if (menuHandlePtr == IntPtr.Zero || submenuPtr == IntPtr.Zero)
+                return new IMenuFactory.ContextMenuHandle(IntPtr.Zero);
+            var replacedPtr = Native.Menu.MainMenuReplace(menuHandlePtr, pos, submenuPtr, title);
+            return new IMenuFactory.ContextMenuHandle(replacedPtr);
+        }
+
+        public void MainMenuSetText(IMenuFactory.MainMenuHandle menuHandle, int pos, string label)
+        {
+            var menuHandlePtr = menuHandle.AsPointer;
+            if (menuHandlePtr == IntPtr.Zero)
+                return;
+            Native.Menu.MainMenuSetText(menuHandlePtr, pos, label);
+        }
+
         protected virtual void OnNativeMenuClosed()
         {
             MenuClosed?.Invoke(this, new StringEventArgs(Native.Menu.EventMenuItemId));

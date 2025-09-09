@@ -166,6 +166,79 @@ namespace Alternet.UI
             menu?.ShowInsideControl(control, menu.RelatedControl, pos, onClose);
         }
 
+        /// <inheritdoc/>
+        public virtual bool MainMenuAppend(
+            IMenuFactory.MainMenuHandle menuHandle,
+            IMenuFactory.ContextMenuHandle menu,
+            string text)
+        {
+            return true;
+        }
+
+        /// <inheritdoc/>
+        public virtual int MainMenuGetCount(IMenuFactory.MainMenuHandle menuHandle)
+        {
+            if (menuHandle.Handle is MainMenu mainMenu)
+                return mainMenu.Items.Count;
+            return 0;
+        }
+
+        /// <inheritdoc/>
+        public virtual void MainMenuSetEnabled(
+            IMenuFactory.MainMenuHandle menuHandle,
+            int pos,
+            bool enable)
+        {
+        }
+
+        /// <inheritdoc/>
+        public virtual IMenuFactory.ContextMenuHandle MainMenuGetSubMenu(
+            IMenuFactory.MainMenuHandle menuHandle,
+            int menuIndex)
+        {
+            if (menuHandle.Handle is not MainMenu mainMenu)
+                return new(IntPtr.Zero);
+            var item = mainMenu.Items[menuIndex];
+            IMenuFactory.ContextMenuHandle result = new(item.ItemsMenu);
+            return result;
+        }
+
+        /// <inheritdoc/>
+        public virtual IMenuFactory.ContextMenuHandle MainMenuRemove(
+            IMenuFactory.MainMenuHandle menuHandle,
+            int pos)
+        {
+            return new(IntPtr.Zero);
+        }
+
+        /// <inheritdoc/>
+        public virtual bool MainMenuInsert(
+            IMenuFactory.MainMenuHandle menuHandle,
+            int pos,
+            IMenuFactory.ContextMenuHandle menu,
+            string title)
+        {
+            return true;
+        }
+
+        /// <inheritdoc/>
+        public virtual IMenuFactory.ContextMenuHandle MainMenuReplace(
+            IMenuFactory.MainMenuHandle menuHandle,
+            int pos,
+            IMenuFactory.ContextMenuHandle menu,
+            string title)
+        {
+            return new(IntPtr.Zero);
+        }
+
+        /// <inheritdoc/>
+        public virtual void MainMenuSetText(IMenuFactory.MainMenuHandle menuHandle, int pos, string label)
+        {
+            if (menuHandle.Handle is not MainMenu mainMenu)
+                return;
+            mainMenu.Items[pos].Text = label;
+        }
+
         /// <summary>
         /// Raises the <see cref="MenuClick"/> event.
         /// </summary>

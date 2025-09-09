@@ -10,6 +10,9 @@ namespace Alternet::UI
 #include "Api/Menu.inc"
     public:
         static string _eventMenuItemId;
+
+        static wxString CoerceMenuText(const string& value);
+
     protected:
     private:
     };

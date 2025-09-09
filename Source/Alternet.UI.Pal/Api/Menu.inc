@@ -3,15 +3,22 @@
 public:
 static string GetEventMenuItemId();
 
-static void Show(void* menuHandle, Control* control, const PointD& position);
+static bool MainMenuAppend(void* menuHandle, void* menu, const string& text);
+static int MainMenuGetCount(void* menuHandle);
+static void MainMenuSetEnabled(void* menuHandle, int pos, bool enable);
+static void* MainMenuGetSubMenu(void* menuHandle, int menuIndex);
+static void* MainMenuRemove(void* menuHandle, int pos);
+static bool MainMenuInsert(void* menuHandle, int pos, void* menu, const string& title);
+static void* MainMenuReplace(void* menuHandle, int pos, void* menu, const string& title);
+static void MainMenuSetText(void* menuHandle, int pos, const string& label);
 static void* CreateMainMenu(const string& id);
 static void* CreateContextMenu(const string& id);
 static void* CreateMenuItem(MenuItemType itemType, const string& id);
 static void DestroyMainMenu(void* menuHandle);
 static void DestroyMenuItem(void* menuHandle);
 static void DestroyContextMenu(void* menuHandle);
-static MenuItemType GetMenuItemType(void* handle);
 static string GetMenuId(void* handle);
+static MenuItemType GetMenuItemType(void* handle);
 static void SetMenuItemBitmap(void* handle, ImageSet* value);
 static void SetMenuItemEnabled(void* handle, bool value);
 static void SetMenuItemText(void* handle, const string& value, const string& rightValue);
@@ -20,6 +27,7 @@ static void SetMenuItemSubMenu(void* handle, void* subMenuHandle);
 static void SetMenuItemShortcut(void* handle, Key key, ModifierKeys modifierKeys);
 static void MenuAddItem(void* handle, void* itemHandle);
 static void MenuRemoveItem(void* handle, void* itemHandle);
+static void Show(void* menuHandle, Control* control, const PointD& position);
 
 public:
 
