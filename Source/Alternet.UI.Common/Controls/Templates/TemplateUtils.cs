@@ -15,14 +15,14 @@ namespace Alternet.UI
     public static class TemplateUtils
     {
         /// <summary>
-        /// Gets or sets whether SkiaSharp engine is used when painting generic child controls.
-        /// </summary>
-        public static bool UseSkiaForPaintGenericChildren = false;
-
-        /// <summary>
         /// Gets or sets whether to show debug corners when control is painted.
         /// </summary>
         public static bool ShowDebugCorners = false;
+
+        /// <summary>
+        /// Gets or sets whether SkiaSharp engine is used when painting generic child controls.
+        /// </summary>
+        internal static bool UseSkiaForPaintGenericChildren = false;
 
         static TemplateUtils()
         {
@@ -65,7 +65,9 @@ namespace Alternet.UI
             Graphics dc,
             PointD origin)
         {
-            if(origin != PointD.Empty)
+            dc.Save();
+
+            if (origin != PointD.Empty)
                 dc.PushAndTranslate(origin.X, origin.Y);
             try
             {
@@ -73,8 +75,7 @@ namespace Alternet.UI
             }
             finally
             {
-                if (origin != PointD.Empty)
-                    dc.PopTransform();
+                dc.Restore();
             }
         }
 
@@ -97,6 +98,7 @@ namespace Alternet.UI
             {
                 if (!child.Visible)
                     continue;
+
                 RaisePaintClipped(child, dc, child.Location);
             }
         }
@@ -241,10 +243,17 @@ namespace Alternet.UI
 
             if (control.UserPaint)
             {
-                RectD r = (PointD.Empty, control.Size);
-
-                PaintEventArgs e = new(() => dc, r);
-                control.RaisePaint(e);
+                dc.Save();
+                try
+                {
+                    RectD r = (PointD.Empty, control.Size);
+                    PaintEventArgs e = new(() => dc, r);
+                    control.RaisePaint(e);
+                }
+                finally
+                {
+                    dc.Restore();
+                }
             }
 
             RaisePaintForChildren(control, dc);
