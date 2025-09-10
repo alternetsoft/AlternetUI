@@ -6,6 +6,8 @@ namespace Alternet.UI.Native
 {
     internal partial class Control
     {
+        Drawing.DynamicBitmap? dynamicBitmap;
+
         public AbstractControl? EventUIFocusedControl
         {
             get
@@ -51,22 +53,64 @@ namespace Alternet.UI.Native
             if (!uiControl.VisibleOnScreen)
                 return;
 
-            var e = new PaintEventArgs(() => Handler?.OpenPaintDrawingContext()
-                ?? Alternet.Drawing.PlessGraphics.Default, clientRect);
+            var skia = Drawing.GraphicsFactory.ForceSkiaSharpRendering;
 
-            try
+            Drawing.Graphics CreateDefaultGraphics()
             {
-                uiControl.RaisePaint(e);
+                return Handler?.OpenPaintDrawingContext() ?? Alternet.Drawing.PlessGraphics.Default;
             }
-            finally
+
+            void DefaultPaint()
             {
-                if (e.GraphicsAllocated)
+                var e = new PaintEventArgs(CreateDefaultGraphics, clientRect);
+
+                try
                 {
-                    e.Graphics.Dispose();
+                    uiControl.RaisePaint(e);
                 }
-                else
+                finally
                 {
+                    if (e.GraphicsAllocated)
+                    {
+                        e.Graphics.Dispose();
+                    }
                 }
+            }
+
+            if (skia)
+            {
+                var scaleFactor = uiControl.ScaleFactor;
+                Drawing.DynamicBitmap.CreateOrUpdate(
+                    ref dynamicBitmap,
+                    clientRect.Size,
+                    scaleFactor,
+                    isTransparent: true);
+        
+                var bitmap = dynamicBitmap.Bitmap;
+
+                var canvasLock = bitmap.LockSurface(Drawing.ImageLockMode.WriteOnly);
+
+                var canvas = canvasLock.Canvas;
+                canvas.Scale((float)scaleFactor);
+
+                using var graphics = new Drawing.SkiaGraphics(canvas);
+                graphics.OriginalScaleFactor = (float)scaleFactor;
+                graphics.UseUnscaledDrawImage = true;
+
+                var e = new PaintEventArgs(() => graphics, clientRect);
+                uiControl.RaisePaint(e);
+
+                canvas.Flush();
+
+                canvasLock.Dispose();
+
+                using var dc = CreateDefaultGraphics();
+
+                dc.DrawImage(bitmap, clientRect.Location);
+            }
+            else
+            {
+                DefaultPaint();
             }
         }
 
@@ -248,6 +292,11 @@ namespace Alternet.UI.Native
         {
             if (UIControl is not null)
                 RaiseDragAndDropEvent(ea, UIControl.RaiseDragEnter);
+        }
+
+        protected override void DisposeManaged()
+        {
+            base.DisposeManaged();
         }
 
         private void RaiseDragAndDropEvent(

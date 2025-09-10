@@ -82,6 +82,7 @@ namespace Alternet.Drawing
         private static ImageBitsFormat alphaBitsFormat;
         private static ImageBitsFormat genericBitsFormat;
         private static IGraphicsFactoryHandler? handler;
+        private static bool forceSkiaSharpRendering = false;
 
         static GraphicsFactory()
         {
@@ -92,6 +93,21 @@ namespace Alternet.Drawing
         /// implemented in the <see cref="GraphicsFactory"/>.
         /// </summary>
         public static event EventHandler? PaintCreated;
+
+        /// <summary>
+        /// Indicates whether SkiaSharp rendering is forcibly enabled.
+        /// </summary>
+        /// <remarks>This property allows overriding the default rendering behavior to use SkiaSharp.
+        /// </remarks>
+        public static bool ForceSkiaSharpRendering
+        {
+            get => forceSkiaSharpRendering;
+
+            set
+            {
+                forceSkiaSharpRendering = value;
+            }
+        }
 
         /// <summary>
         /// Gets or sets <see cref="IGraphicsFactoryHandler"/> object which is used internally
@@ -128,7 +144,7 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
-        /// Gets or sets <see cref="ImageBitsFormat"/> for the images with alpha chanell.
+        /// Gets or sets <see cref="ImageBitsFormat"/> for the images with alpha channel.
         /// </summary>
         public static ImageBitsFormat AlphaBitsFormat
         {
@@ -266,7 +282,16 @@ namespace Alternet.Drawing
         /// <returns></returns>
         public static Graphics CreateMemoryCanvas(Coord? scaleFactor = null)
         {
-            return Handler.CreateMemoryCanvas(ScaleFactorOrDefault(scaleFactor));
+            var factor = ScaleFactorOrDefault(scaleFactor);
+
+            if (ForceSkiaSharpRendering)
+            {
+                return SkiaUtils.CreateMeasureCanvas(factor);
+            }
+            else
+            {
+                return Handler.CreateMemoryCanvas(factor);
+            }
         }
 
         /// <summary>
