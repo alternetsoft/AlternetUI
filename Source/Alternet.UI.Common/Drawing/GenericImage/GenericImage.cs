@@ -784,7 +784,7 @@ namespace Alternet.Drawing
         /// <summary>
         /// Converts <see cref="SKBitmap"/> to <see cref="GenericImage"/>.
         /// </summary>
-        /// <param name="bitmap">Iamge to convert.</param>
+        /// <param name="bitmap">Image to convert.</param>
         /// <returns></returns>
         public static GenericImage FromSkia(SKBitmap bitmap)
         {

@@ -26,20 +26,6 @@ namespace Alternet.UI
 
         static TemplateUtils()
         {
-            /*
-            if (App.PlatformKind == UIPlatformKind.WxWidgets)
-            {
-                if(App.IsWindowsOS)
-                    UseSkiaForPaintGenericChildren = false;
-                else
-                    UseSkiaForPaintGenericChildren = true;
-            }
-            else
-            if (App.PlatformKind == UIPlatformKind.Maui)
-            {
-                UseSkiaForPaintGenericChildren = false;
-            }
-            */
         }
 
         /// <summary>
