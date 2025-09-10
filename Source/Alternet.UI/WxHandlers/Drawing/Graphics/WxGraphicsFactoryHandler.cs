@@ -58,7 +58,14 @@ namespace Alternet.Drawing
 
         public Graphics CreateMemoryCanvas(double scaleFactor)
         {
-            return new WxGraphics(UI.Native.DrawingContext.CreateMemoryDC(scaleFactor));
+            if (GraphicsFactory.ForceSkiaSharpRendering)
+            {
+                return SkiaUtils.CreateMeasureCanvas(scaleFactor);
+            }
+            else
+            {
+                return new WxGraphics(UI.Native.DrawingContext.CreateMemoryDC(scaleFactor));
+            }
         }
 
         public Graphics CreateMemoryCanvas(Image image)

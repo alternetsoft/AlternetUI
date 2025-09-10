@@ -65,8 +65,6 @@ namespace Alternet.UI
             Graphics dc,
             PointD origin)
         {
-            dc.Save();
-
             if (origin != PointD.Empty)
                 dc.PushAndTranslate(origin.X, origin.Y);
             try
@@ -75,7 +73,8 @@ namespace Alternet.UI
             }
             finally
             {
-                dc.Restore();
+                if (origin != PointD.Empty)
+                    dc.PopTransform();
             }
         }
 

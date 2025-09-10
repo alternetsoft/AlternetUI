@@ -82,10 +82,11 @@ namespace Alternet.Drawing
         private static ImageBitsFormat alphaBitsFormat;
         private static ImageBitsFormat genericBitsFormat;
         private static IGraphicsFactoryHandler? handler;
-        private static bool forceSkiaSharpRendering = false;
+        private static bool forceSkiaSharpRendering;
 
         static GraphicsFactory()
         {
+            forceSkiaSharpRendering = true;
         }
 
         /// <summary>
@@ -283,15 +284,7 @@ namespace Alternet.Drawing
         public static Graphics CreateMemoryCanvas(Coord? scaleFactor = null)
         {
             var factor = ScaleFactorOrDefault(scaleFactor);
-
-            if (ForceSkiaSharpRendering)
-            {
-                return SkiaUtils.CreateMeasureCanvas(factor);
-            }
-            else
-            {
-                return Handler.CreateMemoryCanvas(factor);
-            }
+            return Handler.CreateMemoryCanvas(factor);
         }
 
         /// <summary>

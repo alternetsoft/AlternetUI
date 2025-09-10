@@ -671,7 +671,7 @@ namespace Alternet.Drawing
         /// </summary>
         protected virtual void AfterDrawImage()
         {
-            if (UseUnscaledDrawImage && OriginalScaleFactor != 1f)
+            if (UseUnscaledDrawImage && IsScaled)
             {
                 canvas.Restore();
             }

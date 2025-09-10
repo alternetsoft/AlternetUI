@@ -213,6 +213,21 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
+        /// Gets a value indicating whether the object is mirrored along either the X or Y axis.
+        /// </summary>
+        public readonly bool IsMirrored => IsMirroredX || IsMirroredY;
+
+        /// <summary>
+        /// Gets a value indicating whether the object is mirrored along the X-axis.
+        /// </summary>
+        public readonly bool IsMirroredX => M11 < 0;
+
+        /// <summary>
+        /// Gets a value indicating whether the transformation includes a vertical mirroring.
+        /// </summary>
+        public readonly bool IsMirroredY => M22 < 0;
+
+        /// <summary>
         /// Gets a value indicating whether this <see cref="TransformMatrix"/>
         /// is the identity matrix.
         /// </summary>
