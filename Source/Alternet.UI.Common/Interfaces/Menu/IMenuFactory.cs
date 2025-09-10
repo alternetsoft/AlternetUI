@@ -12,26 +12,6 @@ namespace Alternet.UI
     public interface IMenuFactory
     {
         /// <summary>
-        /// Occurs when a menu item is clicked.
-        /// </summary>
-        event EventHandler<StringEventArgs>? MenuClick;
-
-        /// <summary>
-        /// Occurs when a menu item is highlighted.
-        /// </summary>
-        event EventHandler<StringEventArgs>? MenuHighlight;
-
-        /// <summary>
-        /// Occurs when a menu is opened.
-        /// </summary>
-        event EventHandler<StringEventArgs>? MenuOpened;
-
-        /// <summary>
-        /// Occurs when a menu is closed.
-        /// </summary>
-        event EventHandler<StringEventArgs>? MenuClosed;
-
-        /// <summary>
         /// Show menu on screen.
         /// </summary>
         /// <param name="control">The target control.</param>

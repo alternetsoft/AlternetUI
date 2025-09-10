@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Text;
 
 using Alternet.Drawing;
@@ -20,17 +21,10 @@ namespace Alternet.UI
     /// ensuring proper resource management. </para></remarks>
     public class InnerMenuFactory : DisposableObject, IMenuFactory
     {
-        /// <inheritdoc/>
-        public event EventHandler<StringEventArgs>? MenuClick;
-
-        /// <inheritdoc/>
-        public event EventHandler<StringEventArgs>? MenuHighlight;
-
-        /// <inheritdoc/>
-        public event EventHandler<StringEventArgs>? MenuOpened;
-
-        /// <inheritdoc/>
-        public event EventHandler<StringEventArgs>? MenuClosed;
+        /// <summary>
+        /// Indicates whether the factory logs menu events.
+        /// </summary>
+        internal static bool LogFactoryEvents = false;
 
         /// <inheritdoc/>
         public virtual void Show(
@@ -58,39 +52,133 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Raises the <see cref="MenuClick"/> event.
+        /// Calls the <see cref="MenuItem.RaiseClick()"/> method of the <see cref="MenuItem"/> instance
+        /// specified by <paramref name="args"/>.
         /// </summary>
         /// <param name="args">The event arguments.</param>
         protected virtual void RaiseMenuClick(StringEventArgs args)
         {
-            MenuClick?.Invoke(this, args);
+            var menu = Menu.MenuFromStringId(args.Value);
+
+            LogEvent(menu, "Click");
+
+            if (menu is MenuItem menuItem)
+            {
+                menuItem.RaiseClick();
+                return;
+            }
         }
 
         /// <summary>
-        /// Raises the <see cref="MenuHighlight"/> event.
+        /// Calls the <see cref="MenuItem.RaiseHighlighted"/> method of the <see cref="MenuItem"/> instance
+        /// specified by <paramref name="args"/>.
         /// </summary>
         /// <param name="args">The event arguments.</param>
         protected virtual void RaiseMenuHighlight(StringEventArgs args)
         {
-            MenuHighlight?.Invoke(this, args);
+            var menu = Menu.MenuFromStringId(args.Value);
+
+            LogEvent(menu, "Highlight");
+
+            if (menu is null)
+                return;
+
+            if (menu is MenuItem menuItem)
+            {
+                menuItem.RaiseHighlighted();
+                return;
+            }
+
+            if (menu is ContextMenu contextMenu)
+            {
+                return;
+            }
+
+            if (menu is MainMenu mainMenu)
+            {
+                return;
+            }
         }
 
         /// <summary>
-        /// Raises the <see cref="MenuOpened"/> event.
+        /// Calls the <see cref="MenuItem.RaiseOpened()"/> method of the <see cref="MenuItem"/> instance
+        /// specified by <paramref name="args"/>.
         /// </summary>
         /// <param name="args">The event arguments.</param>
         protected virtual void RaiseMenuOpened(StringEventArgs args)
         {
-            MenuOpened?.Invoke(this, args);
+            var menu = Menu.MenuFromStringId(args.Value);
+
+            LogEvent(menu, "Opened");
+
+            if (menu is null)
+                return;
+
+            if (menu is MenuItem menuItem)
+            {
+                menuItem.RaiseOpened();
+                return;
+            }
+
+            if (menu is ContextMenu contextMenu)
+            {
+                return;
+            }
+
+            if (menu is MainMenu mainMenu)
+            {
+                return;
+            }
         }
 
         /// <summary>
-        /// Raises the <see cref="MenuClosed"/> event.
+        /// Calls the <see cref="MenuItem.RaiseClosed()"/> method if instance
+        /// specified by <paramref name="args"/> is <see cref="MenuItem"/>.
+        /// Calls the <see cref="ContextMenu.RaiseClosing(EventArgs)"/> method if instance
+        /// specified by <paramref name="args"/> is <see cref="ContextMenu"/>.
         /// </summary>
         /// <param name="args">The event arguments.</param>
         protected virtual void RaiseMenuClosed(StringEventArgs args)
         {
-            MenuClosed?.Invoke(this, args);
+            var menu = Menu.MenuFromStringId(args.Value);
+
+            LogEvent(menu, "Closed");
+
+            if (menu is null)
+                return;
+
+            if (menu is MenuItem menuItem)
+            {
+                menuItem.RaiseClosed();
+                return;
+            }
+
+            if (menu is ContextMenu contextMenu)
+            {
+                contextMenu.RaiseClosing(EventArgs.Empty);
+                return;
+            }
+
+            if (menu is MainMenu mainMenu)
+            {
+                return;
+            }
+        }
+
+        [Conditional("DEBUG")]
+        private static void LogEvent(Menu? menu, string message)
+        {
+            if (!LogFactoryEvents)
+                return;
+
+            if (menu is null)
+            {
+                App.Log($"MenuFactory.{message}: <null>");
+            }
+            else
+            {
+                App.Log($"MenuFactory.{message}: {menu.GetType().Name}, '{(menu as MenuItem)?.Text}'");
+            }
         }
     }
 }
