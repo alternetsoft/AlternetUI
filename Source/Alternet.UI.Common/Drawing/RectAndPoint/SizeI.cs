@@ -32,6 +32,11 @@ namespace Alternet.Drawing
         public static readonly SizeI MinusOne = new(-1, -1);
 
         /// <summary>
+        /// Represents a predefined size with a width and height of 96 units each.
+        /// </summary>
+        public static readonly SizeI NinetySix = new(96, 96);
+
+        /// <summary>
         /// Gets a size with (1, 1) values.
         /// </summary>
         public static readonly SizeI One = new(1, 1);
