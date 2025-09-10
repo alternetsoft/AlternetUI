@@ -720,6 +720,19 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
+        /// Converts the current dimensions from device-independent pixels (DIPs) to physical pixels.
+        /// </summary>
+        /// <remarks>This method is useful for scenarios where precise pixel dimensions are required,
+        /// such as rendering or layout calculations.</remarks>
+        /// <param name="scaleFactor">An optional scaling factor to use for the conversion.
+        /// If <see langword="null"/>, the default scaling factor is applied.</param>
+        /// <returns>A <see cref="SizeI"/> representing the dimensions in physical pixels.</returns>
+        public readonly SizeI PixelFromDip(Coord? scaleFactor = null)
+        {
+            return GraphicsFactory.PixelFromDip(this, scaleFactor);
+        }
+
+        /// <summary>
         /// Clamps the values of the current <see cref="SizeD"/> instance
         /// to zero if they are less than zero.
         /// </summary>
