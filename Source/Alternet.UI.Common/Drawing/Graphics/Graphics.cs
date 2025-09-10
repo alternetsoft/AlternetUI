@@ -15,13 +15,18 @@ namespace Alternet.Drawing
     public abstract partial class Graphics : DisposableObject, IGraphics, IDisposable
     {
         /// <summary>
-        /// Gets half of the maximum value of <see cref="Coord"/>.
+        /// Gets half of the <see cref="int"/> maximum value.
         /// </summary>
         internal const Coord HalfOfMaxValue = int.MaxValue / 2;
 
-        private Stack<TransformMatrix>? stack;
+        private Stack<TransformMatrix> stack = new();
         private TransformMatrix transform = new();
         private GraphicsDocument? document;
+
+        /// <summary>
+        /// Gets the current depth of the transform stack.
+        /// </summary>
+        public int TransformStackDepth => stack?.Count ?? 0;
 
         /// <summary>
         /// Returns true if the object is ok to use.
@@ -1025,7 +1030,6 @@ namespace Alternet.Drawing
         /// </summary>
         public void PopTransform()
         {
-            stack ??= new();
             Transform = stack.Pop();
         }
 
@@ -1048,7 +1052,6 @@ namespace Alternet.Drawing
         /// </summary>
         public void PushTransform()
         {
-            stack ??= new();
             stack.Push(Transform);
         }
 
@@ -1170,6 +1173,21 @@ namespace Alternet.Drawing
         public virtual void Restore()
         {
             PopTransform();
+        }
+
+        /// <summary>
+        /// Ensures that the transform stack depth remains balanced before and after the specified action is executed.
+        /// </summary>
+        /// <param name="action">The action to execute. This action is expected to maintain
+        /// the balance of the transform stack.</param>
+        /// <exception cref="InvalidOperationException">Thrown if the transform stack depth
+        /// is unbalanced after the action is executed.</exception>
+        public void CheckTransformStackDepth(Action action)
+        {
+            var initialDepth = stack.Count;
+            action();
+            if (stack.Count != initialDepth)
+                throw new InvalidOperationException("Unbalanced Push/Pop Transform calls.");
         }
 
         /// <summary>
