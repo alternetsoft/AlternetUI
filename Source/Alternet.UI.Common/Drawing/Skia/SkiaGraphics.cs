@@ -17,6 +17,7 @@ namespace Alternet.Drawing
     /// </summary>
     public partial class SkiaGraphics : Graphics
     {
+        private bool ignoreSetHandlerTransform;
         private SKCanvas canvas;
         private SKBitmap? bitmap;
         private InterpolationMode interpolationMode = InterpolationMode.HighQuality;
@@ -39,6 +40,16 @@ namespace Alternet.Drawing
         {
             this.canvas = canvas;
         }
+
+        /// <summary>
+        /// Gets a value indicating whether the scale factor is 1f.
+        /// </summary>
+        public bool IsUnscaled => OriginalScaleFactor == 1f;
+
+        /// <summary>
+        /// Gets a value indicating whether the object is scaled.
+        /// </summary>
+        public bool IsScaled => OriginalScaleFactor != 1f;
 
         /// <summary>
         /// Gets or sets whether 'DrawImage' methods draw unscaled image.
@@ -491,7 +502,9 @@ namespace Alternet.Drawing
         public override void Restore()
         {
             canvas.Restore();
-            PopTransform();
+            ignoreSetHandlerTransform = true;
+            base.Restore();
+            ignoreSetHandlerTransform = false;
         }
 
         /// <inheritdoc/>
@@ -582,12 +595,20 @@ namespace Alternet.Drawing
         /// <inheritdoc/>
         public override SizeI GetDPI()
         {
+            if(IsUnscaled)
+                return SizeI.NinetySix;
+            var dpiX = 96f * OriginalScaleFactor;
+            var dpiY = 96f * OriginalScaleFactor;
+            return new((int)dpiX, (int)dpiY);
+
+            /*
             var m = canvas.TotalMatrix;
             if (m.IsIdentity)
                 return new(96, 96);
             var dpiX = 96f * m.ScaleX;
             var dpiY = 96f * m.ScaleY;
             return new((int)dpiX, (int)dpiY);
+            */
         }
 
         /// <inheritdoc/>
@@ -607,12 +628,13 @@ namespace Alternet.Drawing
         {
             DebugImageAssert(image);
 
-            if (UseUnscaledDrawImage && OriginalScaleFactor != 1f)
+            if (UseUnscaledDrawImage && IsScaled)
             {
-                location.X *= OriginalScaleFactor;
-                location.Y *= OriginalScaleFactor;
+                var sf = OriginalScaleFactor;
+                location.X *= sf;
+                location.Y *= sf;
                 canvas.Save();
-                canvas.Scale(1 / OriginalScaleFactor);
+                canvas.Scale(1 / sf);
                 return true;
             }
 
@@ -629,14 +651,15 @@ namespace Alternet.Drawing
         {
             DebugImageAssert(image);
 
-            if (UseUnscaledDrawImage && OriginalScaleFactor != 1f)
+            if (UseUnscaledDrawImage && IsScaled)
             {
-                rect.X *= OriginalScaleFactor;
-                rect.Y *= OriginalScaleFactor;
-                rect.Width *= OriginalScaleFactor;
-                rect.Height *= OriginalScaleFactor;
+                var sf = OriginalScaleFactor;
+                rect.X *= sf;
+                rect.Y *= sf;
+                rect.Width *= sf;
+                rect.Height *= sf;
                 canvas.Save();
-                canvas.Scale(1 / OriginalScaleFactor);
+                canvas.Scale(1 / sf);
                 return true;
             }
 
@@ -657,15 +680,18 @@ namespace Alternet.Drawing
         /// <inheritdoc/>
         protected override void SetHandlerTransform(TransformMatrix matrix)
         {
-            var scaleFactor = OriginalScaleFactor;
+            if(ignoreSetHandlerTransform)
+                    return;
+
             SKMatrix native = (SKMatrix)matrix;
 
-            if (OriginalScaleFactor == 1f)
+            if (IsUnscaled)
             {
                 canvas.SetMatrix(native);
             }
             else
             {
+                var scaleFactor = OriginalScaleFactor;
                 var scaleMatrix = SKMatrix.CreateScale(scaleFactor, scaleFactor);
                 var result = scaleMatrix.PreConcat(native);
                 canvas.SetMatrix(result);
