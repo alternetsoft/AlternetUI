@@ -180,7 +180,10 @@ namespace Alternet.Drawing
             if (GraphicsFactory.MeasureCanvasOverride is null)
             {
                 if (storage?.ScaleFactor != scaleFactor)
+                {
                     storage = GraphicsFactory.GetOrCreateMemoryCanvas(scaleFactor);
+                }
+
                 return true;
             }
             else

@@ -73,7 +73,7 @@ namespace Alternet.Drawing
         /// Gets or sets default value for <see cref="SKPaint.IsAntialias"/> property
         /// when <see cref="SKPaint"/> is created by the conversion methods.
         /// </summary>
-        public static bool DefaultAntialias = true;
+        public static bool DefaultAntialiasing = true;
 
         private static readonly BaseDictionary<Coord, Graphics> MemoryCanvases = new();
 
@@ -340,7 +340,7 @@ namespace Alternet.Drawing
         /// <param name="paint"></param>
         public static void SetPaintDefaults(SKPaint paint)
         {
-            paint.IsAntialias = GraphicsFactory.DefaultAntialias;
+            paint.IsAntialias = GraphicsFactory.DefaultAntialiasing;
             PaintCreated?.Invoke(paint, EventArgs.Empty);
         }
 
