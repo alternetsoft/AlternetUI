@@ -21,6 +21,7 @@ namespace Alternet.Drawing
         private SKCanvas canvas;
         private SKBitmap? bitmap;
         private InterpolationMode interpolationMode = InterpolationMode.HighQuality;
+        private SKMatrix? initialMatrix;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="SkiaGraphics"/> class.
@@ -61,6 +62,20 @@ namespace Alternet.Drawing
         /// drawing is performed.
         /// </summary>
         public float OriginalScaleFactor { get; set; } = 1f;
+
+        /// <summary>
+        /// Gets or sets the initial transformation matrix applied to the canvas
+        /// before the first drawing is performed.
+        /// </summary>
+        public SKMatrix? InitialMatrix
+        {
+            get => initialMatrix;
+
+            set
+            {
+                initialMatrix = value;
+            }
+        }
 
         /// <summary>
         /// Gets or sets <see cref="SKBitmap"/> where drawing will be performed.
@@ -680,22 +695,31 @@ namespace Alternet.Drawing
         /// <inheritdoc/>
         protected override void SetHandlerTransform(TransformMatrix matrix)
         {
-            if(ignoreSetHandlerTransform)
-                    return;
+            if (ignoreSetHandlerTransform)
+                return;
 
             SKMatrix native = (SKMatrix)matrix;
 
-            if (IsUnscaled)
-            {
-                canvas.SetMatrix(native);
-            }
-            else
+            SKMatrix combined;
+
+            if (IsScaled)
             {
                 var scaleFactor = OriginalScaleFactor;
                 var scaleMatrix = SKMatrix.CreateScale(scaleFactor, scaleFactor);
-                var result = scaleMatrix.PreConcat(native);
-                canvas.SetMatrix(result);
+
+                combined = SKMatrix.Concat(scaleMatrix, native);
             }
+            else
+            {
+                combined = native;
+            }
+
+            if (InitialMatrix is not null)
+            {
+                combined = SKMatrix.Concat(InitialMatrix.Value, combined);
+            }
+
+            canvas.SetMatrix(combined);
         }
     }
 }

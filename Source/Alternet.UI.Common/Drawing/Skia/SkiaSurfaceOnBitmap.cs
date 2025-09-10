@@ -20,6 +20,7 @@ namespace Alternet.Drawing
         private readonly bool isOk;
         private readonly Image image;
         private readonly ImageLockMode lockMode;
+        private readonly SKMatrix initialMatrix;
 
         public SkiaSurfaceOnBitmap(Image image, ImageLockMode lockMode)
         {
@@ -53,7 +54,8 @@ namespace Alternet.Drawing
                     ptr -= stride * (height - 1);
                 }
 
-                surface = SKSurface.Create(info, ptr, stride);
+                var props = new SKSurfaceProperties(SKPixelGeometry.RgbHorizontal);
+                surface = SKSurface.Create(info, ptr, stride, props);
             }
             else
             {
@@ -63,8 +65,20 @@ namespace Alternet.Drawing
             canvas = surface.Canvas;
 
             if (negative)
+            {
+                canvas.Translate(0, height);
+                canvas.Scale(1, -1);
+            }
+
+            initialMatrix = canvas.TotalMatrix;
+
+            /*
+            if (negative)
                 canvas.Scale(1, -1, 0, height / 2.0f);
+            */
         }
+
+        public SKMatrix InitialMatrix => initialMatrix;
 
         public int Width => width;
 

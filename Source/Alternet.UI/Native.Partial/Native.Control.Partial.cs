@@ -91,11 +91,14 @@ namespace Alternet.UI.Native
                 var canvasLock = bitmap.LockSurface(Drawing.ImageLockMode.WriteOnly);
 
                 var canvas = canvasLock.Canvas;
-                canvas.Scale((float)scaleFactor);
 
                 using var graphics = new Drawing.SkiaGraphics(canvas);
+
                 graphics.OriginalScaleFactor = (float)scaleFactor;
                 graphics.UseUnscaledDrawImage = true;
+                graphics.InitialMatrix = canvas.TotalMatrix;
+
+                canvas.Scale((float)scaleFactor);
 
                 var e = new PaintEventArgs(() => graphics, clientRect);
                 uiControl.RaisePaint(e);

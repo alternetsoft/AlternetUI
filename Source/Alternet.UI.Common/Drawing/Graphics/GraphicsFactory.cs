@@ -86,7 +86,7 @@ namespace Alternet.Drawing
 
         static GraphicsFactory()
         {
-            forceSkiaSharpRendering = true;
+            forceSkiaSharpRendering = false;
         }
 
         /// <summary>
