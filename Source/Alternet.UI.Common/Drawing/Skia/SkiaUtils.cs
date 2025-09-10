@@ -265,6 +265,46 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
+        /// Recreates a cached bitmap canvas with the specified size, scale factor, and transparency settings.
+        /// </summary>
+        /// <remarks>This method ensures that the cached bitmap canvas matches the specified parameters.
+        /// If the existing canvas does not match, it is disposed and replaced with a new instance.
+        /// The method is designed to optimize resource usage by reusing the existing canvas when possible.</remarks>
+        /// <param name="cachedCanvas">A reference to the cached bitmap canvas. If the canvas
+        /// is <see langword="null"/> or does not match the
+        /// specified parameters, it will be replaced with a new instance.</param>
+        /// <param name="size">The dimensions of the bitmap canvas, specified as a <see cref="SizeD"/> structure.</param>
+        /// <param name="scaleFactor">The scaling factor to apply to the bitmap canvas, specified
+        /// as a <see cref="Coord"/> value.</param>
+        /// <param name="isTransparent">A value indicating whether the bitmap canvas should support transparency.
+        /// The default value is <see langword="true"/>.</param>
+        public static void RecreateBitmapCanvas(
+            ref BitmapCanvasCached? cachedCanvas,
+            SizeD size,
+            Coord scaleFactor,
+            bool isTransparent = true)
+        {
+            if(cachedCanvas is null)
+            {
+                cachedCanvas = CreateNew();
+                return;
+            }
+
+            if(cachedCanvas.Equals(size, scaleFactor, isTransparent))
+                return;
+
+            cachedCanvas.Dispose();
+            cachedCanvas = CreateNew();
+
+            BitmapCanvasCached CreateNew()
+            {
+                var result = new BitmapCanvasCached(size, scaleFactor, isTransparent);
+                result.Graphics = CreateBitmapCanvas(size, scaleFactor, isTransparent);
+                return result;
+            }
+        }
+
+        /// <summary>
         /// Creates canvas on the specified bitmap.
         /// </summary>
         /// <param name="bitmap">Bitmap to create canvas on.</param>
@@ -583,6 +623,88 @@ namespace Alternet.Drawing
             canvas.Scale(dpi / 96.0f);
             onRender(surface);
             canvas.Flush();
+        }
+
+        /// <summary>
+        /// Represents a cached bitmap canvas, including its graphics context, size, scale factor, and transparency.
+        /// </summary>
+        public class BitmapCanvasCached : IDisposable
+        {
+            /// <summary>
+            /// Gets or sets the <see cref="SkiaGraphics"/> instance used for drawing on the bitmap.
+            /// </summary>
+            public SkiaGraphics? Graphics;
+
+            /// <summary>
+            /// Gets or sets the size of the bitmap canvas in device-independent units.
+            /// </summary>
+            public SizeD Size;
+
+            /// <summary>
+            /// Gets or sets the scale factor used for the bitmap canvas.
+            /// </summary>
+            public Coord ScaleFactor;
+
+            /// <summary>
+            /// Gets or sets a value indicating whether the bitmap canvas is transparent.
+            /// </summary>
+            public bool IsTransparent;
+
+            /// <summary>
+            /// Gets or sets a value indicating whether the <see cref="Graphics"/>
+            /// instance should be disposed when this instance is disposed.
+            /// </summary>
+            public bool DisposeGraphics = true;
+
+            /// <summary>
+            /// Initializes a new instance of the <see cref="BitmapCanvasCached"/> class with default values.
+            /// </summary>
+            public BitmapCanvasCached()
+            {
+            }
+
+            /// <summary>
+            /// Initializes a new instance of the <see cref="BitmapCanvasCached"/> class
+            /// with the specified size, scale factor, and transparency.
+            /// </summary>
+            /// <param name="size">The size of the bitmap canvas.</param>
+            /// <param name="scaleFactor">The scale factor for the bitmap canvas.</param>
+            /// <param name="isTransparent">Indicates whether the bitmap canvas is transparent.</param>
+            public BitmapCanvasCached(SizeD size, Coord scaleFactor, bool isTransparent = true)
+            {
+                Size = size;
+                ScaleFactor = scaleFactor;
+                IsTransparent = isTransparent;
+            }
+
+            /// <summary>
+            /// Determines whether the specified specified size, scale factor,
+            /// and transparency flag are equal to those used in the current instance.
+            /// </summary>
+            /// <param name="size">The size to compare with the value stored in the current instance.</param>
+            /// <param name="scaleFactor">The scale factor to compare with the value
+            /// stored in the current instance.</param>
+            /// <param name="isTransparent">A value indicating whether the transparency flag to compare
+            /// matches the value stored in the current instance.</param>
+            /// <returns><see langword="true"/> if the specified <see cref="SizeD"/>, <see cref="Coord"/>,
+            /// and transparency flag  are equal to the values stored in the current instance;
+            /// otherwise, <see langword="false"/>.</returns>
+            public bool Equals(SizeD size, Coord scaleFactor, bool isTransparent)
+            {
+                return Size == size && ScaleFactor == scaleFactor && IsTransparent == isTransparent;
+            }
+
+            /// <summary>
+            /// Releases resources used by the <see cref="BitmapCanvasCached"/> class,
+            /// optionally disposing the <see cref="Graphics"/> instance.
+            /// </summary>
+            public void Dispose()
+            {
+                if (!DisposeGraphics)
+                    return;
+                Graphics?.Dispose();
+                Graphics = null;
+            }
         }
     }
 }
