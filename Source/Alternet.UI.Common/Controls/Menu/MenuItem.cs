@@ -786,6 +786,7 @@ namespace Alternet.UI
                 return;
             OnEnabledChanged(e);
             EnabledChanged?.Invoke(this, e);
+            StaticMenuEvents.RaiseItemEnabledChanged(this, e);
         }
 
         /// <summary>
@@ -817,6 +818,7 @@ namespace Alternet.UI
                 return;
             ClickActionChanged?.Invoke(this, EventArgs.Empty);
             RaiseChanged(MenuChangeKind.ClickAction);
+            StaticMenuEvents.RaiseItemClickActionChanged(this, EventArgs.Empty);
         }
 
         /// <summary>
@@ -827,6 +829,7 @@ namespace Alternet.UI
             if (DisposingOrDisposed)
                 return;
             Opened?.Invoke(this, EventArgs.Empty);
+            StaticMenuEvents.RaiseItemOpened(this, EventArgs.Empty);
         }
 
         /// <summary>
@@ -837,6 +840,7 @@ namespace Alternet.UI
             if (DisposingOrDisposed)
                 return;
             Closed?.Invoke(this, EventArgs.Empty);
+            StaticMenuEvents.RaiseItemClosed(this, EventArgs.Empty);
         }
 
         /// <summary>
@@ -847,6 +851,7 @@ namespace Alternet.UI
             if (DisposingOrDisposed)
                 return;
             Highlighted?.Invoke(this, EventArgs.Empty);
+            StaticMenuEvents.RaiseItemHighlighted(this, EventArgs.Empty);
         }
 
         /// <summary>
@@ -887,6 +892,7 @@ namespace Alternet.UI
             action?.Invoke();
             commandSource.Execute();
             Click?.Invoke(this, e);
+            StaticMenuEvents.RaiseItemClick(this, EventArgs.Empty);
         }
 
         /// <summary>
@@ -898,6 +904,7 @@ namespace Alternet.UI
                 return;
             ShortcutChanged?.Invoke(this, EventArgs.Empty);
             RaiseChanged(MenuChangeKind.Shortcut);
+            StaticMenuEvents.RaiseItemShortcutChanged(this, EventArgs.Empty);
         }
 
         /// <summary>
@@ -909,6 +916,7 @@ namespace Alternet.UI
                 return;
             ImageChanged?.Invoke(this, EventArgs.Empty);
             RaiseChanged(MenuChangeKind.Image);
+            StaticMenuEvents.RaiseItemImageChanged(this, EventArgs.Empty);
         }
 
         /// <summary>
@@ -920,6 +928,7 @@ namespace Alternet.UI
                 return;
             DisabledImageChanged?.Invoke(this, EventArgs.Empty);
             RaiseChanged(MenuChangeKind.DisabledImage);
+            StaticMenuEvents.RaiseItemDisabledImageChanged(this, EventArgs.Empty);
         }
 
         /// <summary>
@@ -935,6 +944,7 @@ namespace Alternet.UI
             OnVisibleChanged(e);
             VisibleChanged?.Invoke(this, e);
             RaiseChanged(MenuChangeKind.Visible);
+            StaticMenuEvents.RaiseItemDisabledImageChanged(this, EventArgs.Empty);
         }
 
         /// <summary>
@@ -946,6 +956,7 @@ namespace Alternet.UI
                 return;
             RoleChanged?.Invoke(this, EventArgs.Empty);
             RaiseChanged(MenuChangeKind.Role);
+            StaticMenuEvents.RaiseItemRoleChanged(this, EventArgs.Empty);
         }
 
         /// <summary>
@@ -958,6 +969,7 @@ namespace Alternet.UI
                 return;
             CheckedChanged?.Invoke(this, EventArgs.Empty);
             RaiseChanged(MenuChangeKind.Checked);
+            StaticMenuEvents.RaiseItemCheckedChanged(this, EventArgs.Empty);
         }
 
         /// <summary>
@@ -972,9 +984,13 @@ namespace Alternet.UI
         {
             if(DisposingOrDisposed)
                 return;
-            Changed?.Invoke(this, new (kind));
-            if(LogicalParent is Menu parentMenu)
+            BaseEventArgs<MenuChangeKind> e = new(kind);
+            Changed?.Invoke(this, e);
+            StaticMenuEvents.RaiseItemChanged(this, e);
+            if (LogicalParent is Menu parentMenu)
+            {
                 parentMenu.RaiseItemChanged(this, kind);
+            }
         }
 
         /// <summary>
@@ -1014,6 +1030,7 @@ namespace Alternet.UI
             TextChanged?.Invoke(this, e);
             OnTextChanged(e);
             RaiseChanged(MenuChangeKind.Text);
+            StaticMenuEvents.RaiseItemTextChanged(this, e);
         }
 
         /// <summary>

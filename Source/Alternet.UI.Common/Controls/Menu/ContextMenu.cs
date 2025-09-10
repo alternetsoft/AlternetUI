@@ -165,6 +165,7 @@ namespace Alternet.UI
         public void RaiseClosing(EventArgs e)
         {
             Closing?.Invoke(this, e);
+            StaticMenuEvents.RaiseMenuClosing(this, e);
             Closed?.Invoke(this, new(ToolStripDropDownCloseReason.Other));
             OnClosing(e);
 
@@ -183,6 +184,7 @@ namespace Alternet.UI
         public void RaiseOpening(CancelEventArgs e)
         {
             ForEachItem(UpdateEnabled, recursive: true);
+            StaticMenuEvents.RaiseMenuOpening(this, e);
             Opening?.Invoke(this, e);
 
             static void UpdateEnabled(MenuItem item)
