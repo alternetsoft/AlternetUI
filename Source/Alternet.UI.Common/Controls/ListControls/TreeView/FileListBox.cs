@@ -136,6 +136,33 @@ namespace Alternet.UI
         public event EventHandler? SelectedFolderChanged;
 
         /// <summary>
+        /// Specifies additional behavior when adding a folder to the <see cref="FileListBox"/>.
+        /// </summary>
+        [Flags]
+        public enum FolderAdditionFlags
+        {
+            /// <summary>
+            /// No additional behavior.
+            /// </summary>
+            None = 0,
+
+            /// <summary>
+            /// Lookup the folder title from <see cref="FileListBox.FolderInfo"/> if available.
+            /// </summary>
+            LookupTitle = 1,
+
+            /// <summary>
+            /// Lookup the folder image from <see cref="FileListBox.FolderInfo"/> if available.
+            /// </summary>
+            LookupImage = 2,
+
+            /// <summary>
+            /// Lookup both the folder title and image from <see cref="FileListBox.FolderInfo"/> if available.
+            /// </summary>
+            LookupAll = LookupTitle | LookupImage,
+        }
+
+        /// <summary>
         /// Gets or sets whether folder and file names are sorted. Default value is <c>true</c>.
         /// </summary>
         public virtual bool Sorted
@@ -761,6 +788,48 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Adds a folder to the collection with the specified title, path, and optional image,
+        /// applying the specified folder addition flags.
+        /// </summary>
+        /// <remarks>If folder information is available for the specified <paramref name="path"/>, the
+        /// method can use it to populate the <paramref name="title"/> or <paramref name="image"/> based on
+        /// the specified <paramref name="flags"/>.</remarks>
+        /// <param name="title">The title of the folder. If <paramref name="title"/> is <see langword="null"/>
+        /// and <paramref name="flags"/>
+        /// includes <see cref="FolderAdditionFlags.LookupTitle"/>, the title will be retrieved from
+        /// existing folder information, if available.</param>
+        /// <param name="path">The path of the folder to add. This parameter cannot be <see langword="null"/>
+        /// or empty.</param>
+        /// <param name="image">An optional image associated with the folder.
+        /// If <paramref name="image"/> is <see langword="null"/>  and
+        /// <paramref name="flags"/> includes <see cref="FolderAdditionFlags.LookupImage"/>, the image will be
+        /// retrieved from existing folder information, if available.</param>
+        /// <param name="flags">A combination of <see cref="FolderAdditionFlags"/> values that specify
+        /// additional behavior when adding the
+        /// folder, such as looking up the title or image from existing folder information.</param>
+        /// <returns><see langword="true"/> if the folder was successfully added;
+        /// otherwise, <see langword="false"/>.</returns>
+        public virtual bool AddFolderWithFlags(
+            string? title,
+            string path,
+            SvgImage? image = null,
+            FolderAdditionFlags flags = FolderAdditionFlags.LookupAll)
+        {
+            if (FolderInfo is not null)
+            {
+                if (FolderInfo.TryGetValue(path, out var folderInfo))
+                {
+                    if(flags.HasFlag(FolderAdditionFlags.LookupTitle))
+                        title ??= folderInfo?.Title;
+                    if (flags.HasFlag(FolderAdditionFlags.LookupImage))
+                        image ??= folderInfo?.Image;
+                }
+            }
+
+            return AddFolder(title, path, image);
+        }
+
+        /// <summary>
         /// Adds all special folders to the control.
         /// <see cref="VisibleSpecialFolders"/> and <see cref="HiddenSpecialFolders"/>
         /// can be used to specify what folders are added.
@@ -781,6 +850,14 @@ namespace Alternet.UI
             }
 
             AddSpecialFolder(Environment.SpecialFolder.Desktop);
+
+            if (App.IsWindowsOS)
+            {
+                KnownMswFolders.TryResolvePath(KnownMswFolders.Downloads, out var downloadsPath);
+                if (downloadsPath is not null)
+                    AddFolderWithFlags("Downloads", downloadsPath);
+            }
+
             AddSpecialFolder(Environment.SpecialFolder.MyComputer, "My Computer");
             AddSpecialFolder(Environment.SpecialFolder.MyDocuments, "Documents");
             AddSpecialFolder(Environment.SpecialFolder.MyMusic, "Music");
