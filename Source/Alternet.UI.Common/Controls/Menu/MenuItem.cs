@@ -830,6 +830,7 @@ namespace Alternet.UI
                 return;
             Opened?.Invoke(this, EventArgs.Empty);
             StaticMenuEvents.RaiseItemOpened(this, EventArgs.Empty);
+            RaiseChanged(MenuChangeKind.Opened);
         }
 
         /// <summary>
@@ -841,6 +842,7 @@ namespace Alternet.UI
                 return;
             Closed?.Invoke(this, EventArgs.Empty);
             StaticMenuEvents.RaiseItemClosed(this, EventArgs.Empty);
+            RaiseChanged(MenuChangeKind.Closed);
         }
 
         /// <summary>
@@ -852,6 +854,7 @@ namespace Alternet.UI
                 return;
             Highlighted?.Invoke(this, EventArgs.Empty);
             StaticMenuEvents.RaiseItemHighlighted(this, EventArgs.Empty);
+            RaiseChanged(MenuChangeKind.Highlighted);
         }
 
         /// <summary>
