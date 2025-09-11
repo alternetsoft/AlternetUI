@@ -62,6 +62,35 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets a value indicating whether this <see cref="ContextMenu"/> is attached to the main menu.
+        /// </summary>
+        [Browsable(false)]
+        public virtual bool IsAttachedToMainMenu
+        {
+            get
+            {
+                if(LogicalParent is MenuItem parentMenuItem)
+                {
+                    return parentMenuItem.IsAttachedToMainMenu;
+                }
+
+                return false;
+            }
+        }
+
+        /// <summary>
+        /// Gets a value indicating whether this object is attached to a <see cref="MenuItem"/>.
+        /// </summary>
+        [Browsable(false)]
+        public bool IsAttachedToMenuItem
+        {
+            get
+            {
+                return LogicalParent is MenuItem;
+            }
+        }
+
+        /// <summary>
         /// Gets a value indicating whether the current instance is currently
         /// displayed within a host control.
         /// </summary>
@@ -162,14 +191,19 @@ namespace Alternet.UI
         /// Raises the <see cref="Closing" /> event and <see cref="OnClosing"/> method.</summary>
         /// <param name="e">A <see cref="EventArgs" /> that contains
         /// the event data.</param>
-        public void RaiseClosing(EventArgs e)
+        /// <param name="recursive">The <see langword="bool"/> value indicating
+        /// whether the opening event should be raised for child items.</param>
+        public void RaiseClosing(EventArgs e, bool recursive = true)
         {
             Closing?.Invoke(this, e);
             StaticMenuEvents.RaiseMenuClosing(this, e);
             Closed?.Invoke(this, new(ToolStripDropDownCloseReason.Other));
             OnClosing(e);
 
-            ForEachItem(RaiseItemClosed, recursive: true);
+            if (recursive)
+            {
+                ForEachItem(RaiseItemClosed, recursive: true);
+            }
 
             void RaiseItemClosed(MenuItem item)
             {
@@ -181,7 +215,9 @@ namespace Alternet.UI
         /// Raises the <see cref="Opening" /> event and <see cref="OnOpening"/> method.</summary>
         /// <param name="e">A <see cref="EventArgs" /> that contains
         /// the event data.</param>
-        public void RaiseOpening(CancelEventArgs e)
+        /// <param name="recursive">The <see langword="bool"/> value indicating
+        /// whether the opening event should be raised for child items.</param>
+        public void RaiseOpening(CancelEventArgs e, bool recursive = true)
         {
             ForEachItem(UpdateEnabled, recursive: true);
             StaticMenuEvents.RaiseMenuOpening(this, e);
@@ -197,7 +233,10 @@ namespace Alternet.UI
 
             OnOpening(e);
 
-            ForEachItem(RaiseItemOpened, recursive: true);
+            if (recursive)
+            {
+                ForEachItem(RaiseItemOpened, recursive: true);
+            }
 
             void RaiseItemOpened(MenuItem item)
             {
