@@ -19,12 +19,16 @@ namespace Alternet.UI
         /// closing. Ensure that any necessary cleanup or finalization is performed before invoking this
         /// method.</remarks>
         /// <param name="e">An <see cref="EventArgs"/> instance containing the event data.</param>
-        void RaiseClosing(EventArgs e);
+        /// <param name="recursive">The <see langword="bool"/> value indicating
+        /// whether the closing event should be raised for child items.</param>
+        void RaiseClosing(EventArgs e, bool recursive = true);
 
         /// <summary>
         /// Raises the "Opening" event.
         /// </summary>
         /// <param name="e">A <see cref="CancelEventArgs"/> instance containing the event data.</param>
-        void RaiseOpening(CancelEventArgs e);
+        /// <param name="recursive">The <see langword="bool"/> value indicating
+        /// whether the closing event should be raised for child items.</param>
+        void RaiseOpening(CancelEventArgs e, bool recursive = true);
     }
 }

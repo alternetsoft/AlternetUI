@@ -267,7 +267,7 @@ namespace MenuSample
             MenuItem saveToolbarMenuItem =
                 new("_Save...", ToolbarDropDownMenuItem_Click);
             MenuItem exportToolbarMenuItem =
-                new("E_xport...", ToolbarDropDownMenuItem_Click);
+                new("Export...", ToolbarDropDownMenuItem_Click);
             contextMenu.Items.Add(openToolbarMenuItem);
             contextMenu.Items.Add(saveToolbarMenuItem);
             contextMenu.Items.Add(exportToolbarMenuItem);

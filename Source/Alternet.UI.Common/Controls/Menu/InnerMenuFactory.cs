@@ -88,16 +88,6 @@ namespace Alternet.UI
                 menuItem.RaiseHighlighted();
                 return;
             }
-
-            if (menu is ContextMenu contextMenu)
-            {
-                return;
-            }
-
-            if (menu is MainMenu mainMenu)
-            {
-                return;
-            }
         }
 
         /// <summary>
@@ -122,11 +112,8 @@ namespace Alternet.UI
 
             if (menu is ContextMenu contextMenu)
             {
-                return;
-            }
-
-            if (menu is MainMenu mainMenu)
-            {
+                var recursive = contextMenu.IsAttachedToMainMenu;
+                contextMenu.RaiseOpening(EventArgsUtils.DefaultCancelEventArgs, recursive);
                 return;
             }
         }
@@ -134,7 +121,7 @@ namespace Alternet.UI
         /// <summary>
         /// Calls the <see cref="MenuItem.RaiseClosed()"/> method if instance
         /// specified by <paramref name="args"/> is <see cref="MenuItem"/>.
-        /// Calls the <see cref="ContextMenu.RaiseClosing(EventArgs)"/> method if instance
+        /// Calls the <see cref="ContextMenu.RaiseClosing"/> method if instance
         /// specified by <paramref name="args"/> is <see cref="ContextMenu"/>.
         /// </summary>
         /// <param name="args">The event arguments.</param>
@@ -156,11 +143,6 @@ namespace Alternet.UI
             if (menu is ContextMenu contextMenu)
             {
                 contextMenu.RaiseClosing(EventArgs.Empty);
-                return;
-            }
-
-            if (menu is MainMenu mainMenu)
-            {
                 return;
             }
         }
