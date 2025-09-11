@@ -86,5 +86,20 @@ namespace Alternet.UI
         /// and the specific changes are not being tracked individually.
         /// </summary>
         Any,
+
+        /// <summary>
+        /// The menu item or menu has been opened.
+        /// </summary>
+        Opened,
+
+        /// <summary>
+        /// The menu item or menu has been closed.
+        /// </summary>
+        Closed,
+
+        /// <summary>
+        /// The menu item has been highlighted or focused.
+        /// </summary>
+        Highlighted,
     }
 }
