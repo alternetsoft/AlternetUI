@@ -566,6 +566,42 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets a value indicating whether this menu item is attached to a <see cref="MainMenu"/>.
+        /// </summary>
+        [Browsable(false)]
+        public bool IsAttachedToMainMenu
+        {
+            get
+            {
+                return LogicalParent is MainMenu;
+            }
+        }
+
+        /// <summary>
+        /// Gets a value indicating whether this menu item is attached to a <see cref="ContextMenu"/>.
+        /// </summary>
+        [Browsable(false)]
+        public bool IsAttachedToContextMenu
+        {
+            get
+            {
+                return LogicalParent is ContextMenu;
+            }
+        }
+
+        /// <summary>
+        /// Gets a value indicating whether this menu item is attached to a <see cref="Menu"/>.
+        /// </summary>
+        [Browsable(false)]
+        public bool IsAttachedToMenu
+        {
+            get
+            {
+                return LogicalParent is Menu;
+            }
+        }
+
+        /// <summary>
         /// Gets or sets a value indicating whether the menu item is enabled.
         /// </summary>
         /// <remarks>Changing this property raises the <c>EnabledChanged</c> event and notifies listeners
