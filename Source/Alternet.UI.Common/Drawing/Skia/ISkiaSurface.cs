@@ -15,6 +15,41 @@ namespace Alternet.Drawing
     public interface ISkiaSurface : IDisposable
     {
         /// <summary>
+        /// Specifies the type of pixel data over which a surface is created.
+        /// </summary>
+        /// <remarks>This enumeration defines the different kinds of pixel data that can be used as the
+        /// basis for a surface. It is typically used to indicate the source or format of the
+        /// underlying pixel data when
+        /// creating or working with a surface.</remarks>
+        public enum SurfaceKind
+        {
+            /// <summary>
+            /// Surface is created over an unknown pixel source.
+            /// </summary>
+            Unknown = 0,
+
+            /// <summary>
+            /// Surface is created over the native bitmap pixels.
+            /// </summary>
+            NativeBitmap,
+
+            /// <summary>
+            /// Surface is created over the generic image pixels.
+            /// </summary>
+            GenericImage,
+
+            /// <summary>
+            /// Surface is created over the Skia bitmap pixels.
+            /// </summary>
+            SkiaBitmap,
+        }
+
+        /// <summary>
+        /// Gets the type of surface represented by this instance.
+        /// </summary>
+        SurfaceKind Kind { get; }
+
+        /// <summary>
         /// Gets image lock mode.
         /// </summary>
         ImageLockMode LockMode { get; }

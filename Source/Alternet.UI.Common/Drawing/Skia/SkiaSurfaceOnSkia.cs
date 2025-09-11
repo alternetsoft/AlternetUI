@@ -23,6 +23,8 @@ namespace Alternet.Drawing
             CreateCanvas(bitmap, lockMode);
         }
 
+        public ISkiaSurface.SurfaceKind Kind { get; internal set; }
+
         public ImageLockMode LockMode => lockMode;
 
         public int Width => bitmap?.Width ?? 0;

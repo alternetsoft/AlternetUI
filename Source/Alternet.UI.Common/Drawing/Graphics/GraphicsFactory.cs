@@ -289,6 +289,11 @@ namespace Alternet.Drawing
 
         /// <summary>
         /// Creates <see cref="ISkiaSurface"/> object for the specified image.
+        /// Consider using transparent images as they are handled faster.
+        /// Solid images are handled slower as they are converted to <see cref="GenericImage"/>
+        /// before rendering. This is required as SkiaSharp does not support all pixel formats.
+        /// Also on MacOS all images are handled via <see cref="GenericImage"/> as
+        /// native image pixels cannot be accessed directly via SkiaSharp.
         /// </summary>
         /// <param name="image">Image on which <see cref="ISkiaSurface"/> object is created.</param>
         /// <param name="lockMode">Image lock mode.</param>
@@ -298,7 +303,11 @@ namespace Alternet.Drawing
             Debug.Assert(image.IsOk, "Image.IsOk == true is required.");
 
             if (image.Handler is SkiaImageHandler skiaHandler)
-                return new SkiaSurfaceOnSkia(skiaHandler.Bitmap, lockMode);
+            {
+                var resultSkia = new SkiaSurfaceOnSkia(skiaHandler.Bitmap, lockMode);
+                resultSkia.Kind = ISkiaSurface.SurfaceKind.SkiaBitmap;
+                return resultSkia;
+            }
 
             Debug.Assert(!image.HasMask, "Image.HasMask == false is required.");
 
@@ -307,9 +316,14 @@ namespace Alternet.Drawing
 
             if (!image.HasAlpha || App.IsMacOS || formatKind == ImageBitsFormatKind.Unknown
                 || format.ColorType == SKColorType.Unknown)
-                return CreateUsingGenericImage();
+            {
+                var resultGeneric = CreateUsingGenericImage();
+                return resultGeneric;
+            }
 
-            return new SkiaSurfaceOnBitmap(image, lockMode);
+            var result = new SkiaSurfaceOnBitmap(image, lockMode);
+            result.Kind = ISkiaSurface.SurfaceKind.NativeBitmap;
+            return result;
 
             ISkiaSurface CreateUsingGenericImage()
             {
@@ -318,6 +332,7 @@ namespace Alternet.Drawing
                 SKBitmap bitmap = Image.ToSkia(image, lockMode.CanRead());
 
                 var result = new SkiaSurfaceOnSkia(bitmap, lockMode);
+                result.Kind = ISkiaSurface.SurfaceKind.GenericImage;
 
                 result.Disposed += (s, e) =>
                 {

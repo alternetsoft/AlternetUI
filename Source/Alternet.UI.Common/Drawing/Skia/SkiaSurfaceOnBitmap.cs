@@ -71,11 +71,6 @@ namespace Alternet.Drawing
             }
 
             initialMatrix = canvas.TotalMatrix;
-
-            /*
-            if (negative)
-                canvas.Scale(1, -1, 0, height / 2.0f);
-            */
         }
 
         public SKMatrix InitialMatrix => initialMatrix;
@@ -97,6 +92,8 @@ namespace Alternet.Drawing
         public ImageLockMode LockMode => lockMode;
 
         public SKCanvas Canvas => canvas;
+
+        public ISkiaSurface.SurfaceKind Kind { get; internal set; }
 
         protected override void DisposeManaged()
         {
