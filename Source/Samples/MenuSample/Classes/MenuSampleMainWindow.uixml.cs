@@ -139,6 +139,12 @@ namespace MenuSample
             aboutMenuItem.SvgImage = KnownColorSvgImages.ImgLogo;
 
             this.Menu = mainMenu;
+
+            mainMenu.ItemChanged += (s,e) =>
+            {
+                var itemText = (e.Item is MenuItem mi) ? mi.Text : e.Item.GetType().ToString();
+                LogEvent($"MainMenu ItemChanged: {e.Action} in '{itemText}'");
+            };
         }
 
         private void MenuItem_Highlighted(object? sender, EventArgs e)
