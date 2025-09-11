@@ -219,7 +219,7 @@ namespace Alternet.UI
             OnItemChanged(item, action);
             ItemChanged?.Invoke(this, new MenuChangeEventArgs(item, action));
             if (LogicalParent is Menu parentMenu)
-                parentMenu.RaiseItemChanged(this, action);
+                parentMenu.RaiseItemChanged(item, action);
         }
 
         /// <summary>
