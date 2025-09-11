@@ -32,17 +32,7 @@ namespace Alternet.UI
             if(!App.IsWindowsOS)
                 return;
 
-            var form = new Form
-            {
-                Width = 1,
-                Height = 1,
-                ShowInTaskbar = false,
-                HasBorder = false,
-                StartLocation = WindowStartLocation.Manual,
-                Location = new PointD(-32000, -32000),
-            };
-
-            form.HandleNeeded();
+            var form = FormUtils.GetPhantomWindow();
 
             IntPtr hwnd = form.GetHandle();
             IntPtr hdc = MswUtils.NativeMethods.GetDC(hwnd);
