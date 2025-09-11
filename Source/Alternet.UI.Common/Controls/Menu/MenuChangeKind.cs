@@ -67,9 +67,9 @@ namespace Alternet.UI
         CommandSource,
 
         /// <summary>
-        /// Child item has been added.
+        /// Child item has been inserted.
         /// </summary>
-        ItemAdded,
+        ItemInserted,
 
         /// <summary>
         /// Child item has been removed.
