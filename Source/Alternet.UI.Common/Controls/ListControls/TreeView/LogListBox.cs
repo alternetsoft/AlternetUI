@@ -43,6 +43,8 @@ namespace Alternet.UI
         private MenuItem? menuItemShowDevTools;
         private bool boundToApplicationLog;
         private bool showDebugWelcomeMessage;
+        private MenuItem? menuItemClear;
+        private MenuItem? menuItemCopy;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="LogListBox"/> class.
@@ -77,6 +79,18 @@ namespace Alternet.UI
         /// </summary>
         [Browsable(false)]
         public MenuItem? MenuItemShowDevTools => menuItemShowDevTools;
+
+        /// <summary>
+        /// Gets 'Clear' menu item.
+        /// </summary>
+        [Browsable(false)]
+        public MenuItem? MenuItemClear => menuItemClear;
+
+        /// <summary>
+        /// Gets 'Copy' menu item.
+        /// </summary>
+        [Browsable(false)]
+        public MenuItem? MenuItemCopy => menuItemCopy;
 
         /// <summary>
         /// Gets the last logged message.
@@ -270,10 +284,13 @@ namespace Alternet.UI
         /// <inheritdoc/>
         protected override void InitContextMenu()
         {
-            ContextMenu.Add(new(CommonStrings.Default.ButtonClear, Clear));
+            menuItemClear = new(CommonStrings.Default.ButtonClear, Clear);
+            menuItemCopy = new(CommonStrings.Default.ButtonCopy, () => ListBox.SelectedItemsToClipboard());
 
-            ContextMenu.Add(new(CommonStrings.Default.ButtonCopy, () => ListBox.SelectedItemsToClipboard()))
-                .SetShortcutKeys(Keys.Control | Keys.C);
+            menuItemCopy.SetShortcutKeys(Keys.Control | Keys.C);
+
+            ContextMenu.Add(menuItemClear);
+            ContextMenu.Add(menuItemCopy);
 
             ContextMenu.Add(new("Open log file", AppUtils.OpenLogFile));
 
@@ -302,6 +319,24 @@ namespace Alternet.UI
             {
                 DialogFactory.ShowDeveloperTools();
             }
+
+            ContextMenu.Opening -= OnContextMenuOpening;
+            ContextMenu.Opening += OnContextMenuOpening;
+        }
+
+        /// <summary>
+        /// Invoked when the context menu is about to open, allowing derived classes to handle or cancel the event.
+        /// </summary>
+        /// <remarks>This method is called before the context menu is displayed. Derived classes can
+        /// override this method to perform custom logic, such as modifying the context menu or preventing it from
+        /// opening by setting  <see cref="CancelEventArgs.Cancel"/> to <see langword="true"/>.</remarks>
+        /// <param name="sender">The source of the event, typically the control that triggered the context menu.</param>
+        /// <param name="e">A <see cref="CancelEventArgs"/> instance containing the event data,
+        /// including the ability to cancel the operation.</param>
+        protected virtual void OnContextMenuOpening(object sender, CancelEventArgs e)
+        {
+            MenuItemCopy?.SetEnabled(SelectedItems.Count > 0);
+            MenuItemClear?.SetEnabled(RootItem.ItemCount > 0);
         }
 
         private void LogRefresh()
