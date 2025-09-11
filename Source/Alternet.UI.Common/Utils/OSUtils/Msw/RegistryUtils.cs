@@ -13,7 +13,7 @@ namespace Alternet.UI
     {
         /// <summary>
         /// Gets or sets whether to use <see cref="RegKeyWow6432Node"/> when
-        /// <see cref="WriteRelativeValue"/> and other relative read/write operatiions are performed.
+        /// <see cref="WriteRelativeValue"/> and other relative read/write operations are performed.
         /// Default is <c>false</c>.
         /// </summary>
         public static bool UseWow6432Node = false;

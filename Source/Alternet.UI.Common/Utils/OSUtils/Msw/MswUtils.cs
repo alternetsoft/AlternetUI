@@ -17,6 +17,71 @@ namespace Alternet.UI
         private static bool consoleAllocated = false;
 
         /// <summary>
+        /// Determines whether the current operating system is Windows 10 or later.
+        /// </summary>
+        /// <returns>
+        /// <c>true</c> if the operating system is Windows 10 (version 10.0) or later; otherwise, <c>false</c>.
+        /// </returns>
+        public static bool IsWindows10OrLater()
+        {
+            var os = Environment.OSVersion;
+            return os.Platform == PlatformID.Win32NT &&
+                   os.Version.Major >= 10;
+        }
+
+        /// <summary>
+        /// Determines whether the current operating system is Windows 7 or later.
+        /// </summary>
+        /// <returns>
+        /// <c>true</c> if the operating system is Windows 7 (version 6.1) or later; otherwise, <c>false</c>.
+        /// </returns>
+        public static bool IsWindows7OrLater()
+        {
+            var os = Environment.OSVersion;
+            return os.Platform == PlatformID.Win32NT &&
+                   (os.Version.Major > 6 || (os.Version.Major == 6 && os.Version.Minor >= 1));
+        }
+
+        /// <summary>
+        /// Determines whether the current operating system is Windows 8 or later.
+        /// </summary>
+        /// <returns>
+        /// <c>true</c> if the operating system is Windows 8 (version 6.2) or later; otherwise, <c>false</c>.
+        /// </returns>
+        public static bool IsWindows8OrLater()
+        {
+            var os = Environment.OSVersion;
+            return os.Platform == PlatformID.Win32NT &&
+                   (os.Version.Major > 6 || (os.Version.Major == 6 && os.Version.Minor >= 2));
+        }
+
+        /// <summary>
+        /// Determines whether the current operating system is Windows Vista or later.
+        /// </summary>
+        /// <returns>
+        /// <c>true</c> if the operating system is Windows Vista (version 6.0) or later; otherwise, <c>false</c>.
+        /// </returns>
+        public static bool IsWindowsVistaOrLater()
+        {
+            var os = Environment.OSVersion;
+            return os.Platform == PlatformID.Win32NT && os.Version.Major >= 6;
+        }
+
+        /// <summary>
+        /// Determines whether the current operating system is exactly Windows Vista.
+        /// </summary>
+        /// <returns>
+        /// <c>true</c> if the operating system is exactly Windows Vista (version 6.0); otherwise, <c>false</c>.
+        /// </returns>
+        public static bool IsExactlyWindowsVista()
+        {
+            var os = Environment.OSVersion;
+            return os.Platform == PlatformID.Win32NT &&
+                   os.Version.Major == 6 &&
+                   os.Version.Minor == 0;
+        }
+
+        /// <summary>
         /// Sets preference for the window corners.
         /// </summary>
         /// <param name="window"></param>
@@ -324,6 +389,34 @@ namespace Alternet.UI
             /// <returns></returns>
             [DllImport("kernel32.dll")]
             public static extern IntPtr GetConsoleWindow();
+
+            /// <summary>
+            /// Retrieves the full path of a known folder identified by its GUID.
+            /// </summary>
+            /// <remarks>This method is a P/Invoke declaration for the Windows API function
+            /// SHGetKnownFolderPath. It is used to retrieve the path of a known folder, such as the Documents or
+            /// Desktop folder. Ensure that the memory pointed to by <paramref name="ppszPath"/>
+            /// is freed after use to
+            /// avoid memory leaks.</remarks>
+            /// <param name="rfid">The GUID of the known folder. This identifies the folder whose path
+            /// is being retrieved.</param>
+            /// <param name="dwFlags">Flags that specify special retrieval options.
+            /// Typically set to 0 for default behavior.</param>
+            /// <param name="hToken">An access token that represents a particular user.
+            /// If this parameter is <see cref="IntPtr.Zero"/>, the
+            /// function uses the access token of the calling process.</param>
+            /// <param name="ppszPath">When the method returns, contains a pointer to the string
+            /// that specifies the path of the known folder.
+            /// The caller is responsible for freeing this memory using <see cref="Marshal.FreeCoTaskMem"/>.</param>
+            /// <returns>Returns 0 if the function succeeds; otherwise, returns an error code.
+            /// For a list of possible error
+            /// codes, see the Windows API documentation.</returns>
+            [DllImport("shell32.dll", CharSet = CharSet.Unicode)]
+            public static extern int SHGetKnownFolderPath(
+                    [MarshalAs(UnmanagedType.LPStruct)] Guid rfid,
+                    uint dwFlags,
+                    IntPtr hToken,
+                    out IntPtr ppszPath);
 
             [return: MarshalAs(UnmanagedType.Bool)]
             [DllImport(User32, SetLastError = true)]
