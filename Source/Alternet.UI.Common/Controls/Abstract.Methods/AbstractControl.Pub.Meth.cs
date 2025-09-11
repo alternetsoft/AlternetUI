@@ -1606,7 +1606,6 @@ namespace Alternet.UI
         /// <remarks>
         /// Do not recreate control (or its child controls), add or remove child controls between
         /// <see cref="BeginUpdate"/> and <see cref="EndUpdate"/> calls.
-        /// This method is mainly for multiple add or remove of the items in list like controls.
         /// </remarks>
         public virtual void DoInsideUpdate(Action action)
         {
