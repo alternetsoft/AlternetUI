@@ -33,35 +33,8 @@ namespace Alternet.UI
                 return;
 
             var form = FormUtils.GetPhantomWindow();
-
-            IntPtr hwnd = form.GetHandle();
-            IntPtr hdc = MswUtils.NativeMethods.GetDC(hwnd);
-
-            var pfd = new MswUtils.NativeMethods.PIXELFORMATDESCRIPTOR
-            {
-                nSize = (ushort)Marshal.SizeOf<MswUtils.NativeMethods.PIXELFORMATDESCRIPTOR>(),
-                nVersion = 1,
-                dwFlags = 0x00000004 | 0x00000020, // PFD_DRAW_TO_WINDOW | PFD_SUPPORT_OPENGL
-                iPixelType = 0, // PFD_TYPE_RGBA
-                cColorBits = 32,
-                cDepthBits = 24,
-                iLayerType = 0, // PFD_MAIN_PLANE
-            };
-
-            int pixelFormat = MswUtils.NativeMethods.ChoosePixelFormat(hdc, ref pfd);
-            MswUtils.NativeMethods.SetPixelFormat(hdc, pixelFormat, ref pfd);
-
-            IntPtr contextPtr = MswUtils.NativeMethods.wglCreateContext(hdc);
-            MswUtils.NativeMethods.wglMakeCurrent(hdc, contextPtr);
-
-            var grContext = GRContext.CreateGl();
-
-            DrawSampleOnContext(grContext);
-
-            MswUtils.NativeMethods.wglMakeCurrent(IntPtr.Zero, IntPtr.Zero);
-            MswUtils.NativeMethods.wglDeleteContext(contextPtr);
-            MswUtils.NativeMethods.ReleaseDC(hwnd, hdc);
-            form.Dispose();
+            using var glContext = new SkiaOpenGlContextMsw(form);
+            DrawSampleOnContext(glContext.Context);
         }
 
         /// <summary>
