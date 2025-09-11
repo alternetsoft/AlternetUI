@@ -77,7 +77,7 @@ namespace Alternet.UI.Native
                 }
             }
 
-            if (skia)
+            void SkiaPaint()
             {
                 var scaleFactor = uiControl.ScaleFactor;
                 Drawing.DynamicBitmap.CreateOrUpdate(
@@ -85,7 +85,7 @@ namespace Alternet.UI.Native
                     clientRect.Size,
                     scaleFactor,
                     isTransparent: true);
-        
+
                 var bitmap = dynamicBitmap.Bitmap;
 
                 var canvasLock = bitmap.LockSurface(Drawing.ImageLockMode.WriteOnly);
@@ -110,6 +110,11 @@ namespace Alternet.UI.Native
                 using var dc = CreateDefaultGraphics();
 
                 dc.DrawImage(bitmap, clientRect.Location);
+            }
+
+            if (skia)
+            {
+                SkiaPaint();
             }
             else
             {
