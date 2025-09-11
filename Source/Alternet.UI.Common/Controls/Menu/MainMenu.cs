@@ -1,4 +1,5 @@
 using System;
+using System.ComponentModel;
 
 namespace Alternet.UI
 {
@@ -13,6 +14,42 @@ namespace Alternet.UI
         /// </summary>
         public MainMenu()
         {
+        }
+
+        /// <summary>
+        /// Gets a value indicating whether this <see cref="MainMenu"/> is currently attached to a window.
+        /// </summary>
+        [Browsable(false)]
+        public bool IsAttached
+        {
+            get
+            {
+                return AttachedWindow != null;
+            }
+        }
+
+        /// <summary>
+        /// Gets the <see cref="Window"/> instance to which this menu is attached, if any.
+        /// </summary>
+        [Browsable(false)]
+        public virtual Window? AttachedWindow
+        {
+            get
+            {
+                foreach(var window in App.Current.Windows)
+                {
+                    if (window.Menu == this)
+                        return window;
+                }
+
+                return null;
+            }
+        }
+
+        /// <inheritdoc/>
+        protected override void OnItemChanged(Menu item, MenuChangeKind action)
+        {
+            base.OnItemChanged(item, action);
         }
 
         /// <inheritdoc/>
