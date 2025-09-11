@@ -13,6 +13,7 @@ namespace Alternet.UI
     public abstract partial class Menu : ItemContainerElement<MenuItem>, IMenuProperties
     {
         private static readonly BaseDictionary<ObjectUniqueId, Menu> menusById = new();
+        private int updateCounter;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Menu"/> class.
@@ -28,6 +29,11 @@ namespace Alternet.UI
         /// <remarks>This event is raised whenever an item is modified, allowing subscribers to respond to
         /// the change. Ensure that event handlers are properly unsubscribed to avoid memory leaks.</remarks>
         public event EventHandler<MenuChangeEventArgs>? ItemChanged;
+
+        /// <summary>
+        /// Gets a value indicating whether the object is currently in an update block.
+        /// </summary>
+        public virtual bool InUpdates => updateCounter > 0;
 
         /// <summary>
         /// Retrieves a menu by its unique identifier.
@@ -145,6 +151,47 @@ namespace Alternet.UI
             MenuItem item = new("-");
             Items.Add(item);
             return item;
+        }
+
+        /// <summary>
+        /// Begins an update block, incrementing the update counter.
+        /// </summary>
+        public virtual void BeginUpdate()
+        {
+            updateCounter++;
+        }
+
+        /// <summary>
+        /// Executes <paramref name="action"/> between calls to <see cref="BeginUpdate"/>
+        /// and <see cref="EndUpdate"/>.
+        /// </summary>
+        /// <param name="action">Action that will be executed.</param>
+        public virtual void DoInsideUpdate(Action action)
+        {
+            BeginUpdate();
+            try
+            {
+                action();
+            }
+            finally
+            {
+                EndUpdate();
+            }
+        }
+
+        /// <summary>
+        /// Ends an update block, decrementing the update counter.
+        /// </summary>
+        public virtual void EndUpdate()
+        {
+            if (updateCounter > 0)
+            {
+                updateCounter--;
+            }
+            else
+            {
+                RaiseItemChanged(this, MenuChangeKind.Any);
+            }
         }
 
         /// <summary>

@@ -80,5 +80,11 @@ namespace Alternet.UI
         /// Some other property or state has changed.
         /// </summary>
         Other,
+
+        /// <summary>
+        /// This value is typically used to indicate that a bulk update has occurred,
+        /// and the specific changes are not being tracked individually.
+        /// </summary>
+        Any,
     }
 }
