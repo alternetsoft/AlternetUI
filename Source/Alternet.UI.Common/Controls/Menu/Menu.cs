@@ -167,11 +167,40 @@ namespace Alternet.UI
         /// <param name="item">The child item that has been changed. Cannot be <see langword="null"/>.</param>
         /// <param name="action">The type of change that occurred, represented
         /// by a <see cref="MenuChangeKind"/> value.</param>
-        public virtual void RaiseItemChanged(Menu item, MenuChangeKind action)
+        public void RaiseItemChanged(Menu item, MenuChangeKind action)
         {
+            OnItemChanged(item, action);
             ItemChanged?.Invoke(this, new MenuChangeEventArgs(item, action));
             if (LogicalParent is Menu parentMenu)
                 parentMenu.RaiseItemChanged(this, action);
+        }
+
+        /// <summary>
+        /// Invoked when an item in the menu is changed.
+        /// </summary>
+        /// <remarks>This method is called to notify derived classes of changes to a menu item.
+        /// Subclasses can override this method to handle item changes, such as updates, additions,
+        /// or removals.</remarks>
+        /// <param name="item">The <see cref="Menu"/> instance that was changed.
+        /// Cannot be <see langword="null"/>.</param>
+        /// <param name="action">The type of change that occurred,
+        /// represented by a <see cref="MenuChangeKind"/> value.</param>
+        protected virtual void OnItemChanged(Menu item, MenuChangeKind action)
+        {
+        }
+
+        /// <inheritdoc/>
+        protected override void OnItemRemoved(object? sender, int index, MenuItem item)
+        {
+            base.OnItemRemoved(sender, index, item);
+            RaiseItemChanged(item, MenuChangeKind.ItemRemoved);
+        }
+
+        /// <inheritdoc/>
+        protected override void OnItemInserted(object? sender, int index, MenuItem item)
+        {
+            base.OnItemInserted(sender, index, item);
+            RaiseItemChanged(item, MenuChangeKind.ItemInserted);
         }
 
         /// <inheritdoc/>
