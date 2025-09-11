@@ -45,6 +45,7 @@ namespace Alternet.UI
         public static readonly NotifyCollectionChangedEventArgs ResetCollectionChangedArgs
             = new(NotifyCollectionChangedAction.Reset);
 
+        private static CancelEventArgs? defaultCancelEventArgs;
         private static PropertyChangedEventArgs? defaultPropertyChangedEventArgs;
 
         /// <summary>
@@ -64,6 +65,25 @@ namespace Alternet.UI
             get
             {
                 return defaultPropertyChangedEventArgs ??= new(string.Empty);
+            }
+        }
+
+        /// <summary>
+        /// Gets a default instance of <see cref="CancelEventArgs"/>
+        /// with the <see cref="CancelEventArgs.Cancel"/>
+        /// property set to <see langword="false"/>.
+        /// </summary>
+        /// <remarks>This property provides a shared instance of <see cref="CancelEventArgs"/> to reduce
+        /// object allocations. The <see cref="CancelEventArgs.Cancel"/> property
+        /// is reset to <see langword="false"/>
+        /// each time the instance is accessed.</remarks>
+        public static CancelEventArgs DefaultCancelEventArgs
+        {
+            get
+            {
+                defaultCancelEventArgs ??= new(false);
+                defaultCancelEventArgs.Cancel = false;
+                return defaultCancelEventArgs;
             }
         }
 
