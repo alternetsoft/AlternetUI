@@ -20,7 +20,7 @@ namespace Alternet.Drawing
     /// the OpenGL context and is not cross-platform. </para> <para> Proper disposal of this object is required to
     /// release native resources. Use the <see cref="IDisposable.Dispose"/> method
     /// or a `using` statement to ensure resources are cleaned up appropriately.</para></remarks>
-    public class SkiaOpenGLContextMsw : DisposableObject
+    public class MswSkiaOpenGLContext : DisposableObject
     {
         private readonly IntPtr hwnd;
         private readonly IntPtr hdc;
@@ -28,7 +28,7 @@ namespace Alternet.Drawing
         private readonly GRContext grContext;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="SkiaOpenGLContextMsw"/> class,
+        /// Initializes a new instance of the <see cref="MswSkiaOpenGLContext"/> class,
         /// setting up an OpenGL rendering
         /// context for the specified Windows control.
         /// </summary>
@@ -41,20 +41,30 @@ namespace Alternet.Drawing
         /// context.</para></remarks>
         /// <param name="control">The <see cref="Control"/> for which the OpenGL rendering
         /// context will be created. This control must have a valid window handle.</param>
-        public SkiaOpenGLContextMsw(Control control)
+        public MswSkiaOpenGLContext(Control control)
         {
             hwnd = control.GetHandle();
             hdc = MswUtils.NativeMethods.GetDC(hwnd);
+
+            MswPixelFormatDescriptorEnums.Flags flags =
+                MswPixelFormatDescriptorEnums.Flags.DrawToWindow |
+                MswPixelFormatDescriptorEnums.Flags.SupportOpenGl;
+
+            MswPixelFormatDescriptorEnums.PixelType pixelType =
+                MswPixelFormatDescriptorEnums.PixelType.Rgba;
+
+            MswPixelFormatDescriptorEnums.PixelLayerType layerType =
+                MswPixelFormatDescriptorEnums.PixelLayerType.MainPlane;
 
             var pfd = new MswUtils.NativeMethods.PIXELFORMATDESCRIPTOR
             {
                 nSize = (ushort)Marshal.SizeOf<MswUtils.NativeMethods.PIXELFORMATDESCRIPTOR>(),
                 nVersion = 1,
-                dwFlags = 0x00000004 | 0x00000020, // PFD_DRAW_TO_WINDOW | PFD_SUPPORT_OPENGL
-                iPixelType = 0, // PFD_TYPE_RGBA
+                dwFlags = (uint)flags,
+                iPixelType = (byte)pixelType,
                 cColorBits = 32,
                 cDepthBits = 24,
-                iLayerType = 0, // PFD_MAIN_PLANE
+                iLayerType = (byte)layerType,
             };
 
             int pixelFormat = MswUtils.NativeMethods.ChoosePixelFormat(hdc, ref pfd);
@@ -70,6 +80,21 @@ namespace Alternet.Drawing
         /// Gets the current graphics rendering context.
         /// </summary>
         public GRContext Context => grContext;
+
+        /// <summary>
+        /// Gets the window handle associated with the OpenGL context.
+        /// </summary>
+        public IntPtr Hwnd => hwnd;
+
+        /// <summary>
+        /// Gets the device context handle associated with the OpenGL context.
+        /// </summary>
+        public IntPtr Hdc => hdc;
+
+        /// <summary>
+        /// Gets the native OpenGL context pointer.
+        /// </summary>
+        public IntPtr ContextPtr => contextPtr;
 
         /// <inheritdoc/>
         protected override void DisposeManaged()
