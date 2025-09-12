@@ -112,14 +112,59 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets a value indicating whether this instance is the root element.
+        /// </summary>
+        [Browsable(false)]
+        public virtual bool IsRoot => LogicalParent == null;
+
+        /// <summary>
+        /// Gets the logical root of the element tree to which this element belongs.
+        /// If this element is the root, it returns itself.
+        /// </summary>
+        [Browsable(false)]
+        public virtual FrameworkElement LogicalRoot
+        {
+            get
+            {
+                var parent = LogicalParent;
+                if (parent is null)
+                    return this;
+                var result = parent.LogicalRoot;
+                return result;
+            }
+        }
+
+        /// <summary>
+        /// Gets the topmost logical parent in the hierarchy of this element.
+        /// </summary>
+        /// <remarks>This property traverses the logical parent chain to
+        /// find the highest-level parent.
+        /// If the current element has no logical parent, the value
+        /// is <see langword="null"/>.</remarks>
+        [Browsable(false)]
+        public virtual FrameworkElement? LogicalTopParent
+        {
+            get
+            {
+                var parent = LogicalParent;
+                if (parent is null)
+                    return null;
+                var result = parent.LogicalTopParent;
+                if (result is null)
+                    return parent;
+                return result;
+            }
+        }
+
+        /// <summary>
         /// Gets logical parent.
         /// </summary>
         [Browsable(false)]
-        internal virtual FrameworkElement? LogicalParent
+        public virtual FrameworkElement? LogicalParent
         {
             get => logicalParent;
 
-            set
+            internal set
             {
                 logicalParent = value;
             }
