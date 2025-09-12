@@ -88,6 +88,7 @@ namespace Alternet.Drawing
         static GraphicsFactory()
         {
             forceSkiaSharpRendering = false;
+            forceOpenGLRendering = false;
         }
 
         /// <summary>
@@ -108,6 +109,20 @@ namespace Alternet.Drawing
             set
             {
                 forceSkiaSharpRendering = value;
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether OpenGL rendering is forcibly enabled.
+        /// This setting is used when <see cref="ForceSkiaSharpRendering"/> is true.
+        /// </summary>
+        public static bool ForceOpenGLRendering
+        {
+            get => forceOpenGLRendering;
+
+            set
+            {
+                forceOpenGLRendering = value;
             }
         }
 

@@ -186,6 +186,19 @@ namespace Alternet.UI
                 App.DebugLog($"Log File = {App.LogFilePath}");
             if (Display.MinScaleFactor != Display.MaxScaleFactor)
                 App.DebugLog("Displays have different scale factors");
+
+            if(App.PlatformKind == UIPlatformKind.WxWidgets)
+            {
+                if(GraphicsFactory.ForceSkiaSharpRendering)
+                {
+                    App.DebugLog("SkiaSharp rendering is forcibly enabled.");
+                }
+
+                if(GraphicsFactory.ForceOpenGLRendering)
+                {
+                    App.DebugLog("OpenGL rendering is forcibly enabled.");
+                }
+            }
         }
 
         /// <summary>
