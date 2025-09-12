@@ -1189,7 +1189,7 @@ namespace Alternet.UI
                             rect,
                             GetSelectedItemBackColor(item, container)?.AsBrush,
                             selectionBorder,
-                            true,
+                            hasBorder: false,
                             control);
                     }
                 }
