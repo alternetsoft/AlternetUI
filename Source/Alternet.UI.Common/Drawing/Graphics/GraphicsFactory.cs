@@ -83,6 +83,7 @@ namespace Alternet.Drawing
         private static ImageBitsFormat genericBitsFormat;
         private static IGraphicsFactoryHandler? handler;
         private static bool forceSkiaSharpRendering;
+        private static bool forceOpenGLRendering;
 
         static GraphicsFactory()
         {
