@@ -99,7 +99,10 @@ namespace Alternet.UI
             {
                 if (value && (!Control?.CanUserPaint ?? false))
                     return;
-
+                /*
+                if(GraphicsFactory.ForceSkiaSharpRendering)
+                    return;
+                */
                 NativeControl.UserPaint = value;
             }
         }

@@ -45,8 +45,10 @@ namespace Alternet.UI.Native
 
             if (uiControl is null)
                 return;
-            if (!UserPaint)
+
+            if (!uiControl.UserPaint)
                 return;
+
             var clientRect = uiControl.ClientRectangle;
             if (clientRect.SizeIsEmpty)
                 return;
@@ -75,6 +77,19 @@ namespace Alternet.UI.Native
                         e.Graphics.Dispose();
                     }
                 }
+            }
+
+            void OpenGLPaint()
+            {
+                using var glContext = new Drawing.MswSkiaOpenGLContext(uiControl);
+                var context = glContext.Context;
+
+                TestsDrawing.DrawSampleOnContext(context, false);
+                /*
+                MswUtils.NativeMethods.SwapBuffers(glContext.Hdc);
+                var e = new PaintEventArgs(() => glContext.CreateSkiaGraphics(), clientRect);
+                uiControl.RaisePaint(e);
+                */
             }
 
             void SkiaPaint()
@@ -114,7 +129,10 @@ namespace Alternet.UI.Native
 
             if (skia)
             {
-                SkiaPaint();
+                if(Drawing.GraphicsFactory.ForceOpenGLRendering)
+                    OpenGLPaint();
+                else
+                    SkiaPaint();
             }
             else
             {
