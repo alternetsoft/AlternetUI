@@ -171,6 +171,29 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets an enumerable collection of all parent elements in the visual tree,
+        /// starting from the immediate parent and traversing upward.
+        /// </summary>
+        /// <remarks>The enumeration begins with the immediate parent of the current element
+        /// and continues up the visual tree until no more parents are found.
+        /// This property is useful for scenarios where you need to inspect or process
+        /// all ancestor elements of a given element.</remarks>
+        [Browsable(false)]
+        public virtual IEnumerable<FrameworkElement> LogicalParents
+        {
+            get
+            {
+                var result = LogicalParent;
+
+                while (result != null)
+                {
+                    yield return result;
+                    result = result.LogicalParent;
+                }
+            }
+        }
+
+        /// <summary>
         /// Same as setting <see cref="DataContext"/> property.
         /// </summary>
         /// <param name="value">The new data context value.</param>
