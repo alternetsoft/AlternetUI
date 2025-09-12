@@ -65,6 +65,16 @@ namespace Alternet::UI
                 if (alternetItem != nullptr && alternetItem->_id == id)
                     return alternetItem;
             }
+
+            for (int n = GetMenuItemCount() - 1; n >= 0; --n)
+            {
+                wxMenuItem* item = FindItemByPosition(n);
+                auto alternetItem = wxDynamicCast(item, wxAlternetMenuItem);
+                alternetItem = alternetItem->GetSubMenuItemById(id);
+                if (alternetItem != nullptr)
+                    return alternetItem;
+            }
+
             return nullptr;
         }
 
