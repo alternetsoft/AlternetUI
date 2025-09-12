@@ -358,13 +358,10 @@ namespace Alternet::UI
         wxWindow->Unbind(wxEVT_DPI_CHANGED, &Control::OnDpiChanged, this);
         wxWindow->Unbind(wxEVT_TEXT, &Control::OnTextChanged, this);
         wxWindow->Unbind(wxEVT_SET_CURSOR, &Control::OnSetCursor, this);
-        /*wxWindow->Unbind(wxEVT_IDLE, &Control::OnIdle, this);*/
         wxWindow->Unbind(wxEVT_PAINT, &Control::OnPaint, this);
         wxWindow->Unbind(wxEVT_DESTROY, &Control::OnDestroy, this);
         wxWindow->Unbind(wxEVT_SHOW, &Control::OnVisibleChanged, this);
         wxWindow->Unbind(wxEVT_MOUSE_CAPTURE_LOST, &Control::OnMouseCaptureLost, this);
-        /*wxWindow->Unbind(wxEVT_ENTER_WINDOW, &Control::OnMouseEnter, this);
-        wxWindow->Unbind(wxEVT_LEAVE_WINDOW, &Control::OnMouseLeave, this);*/
         wxWindow->Unbind(wxEVT_ACTIVATE, &Control::OnActivate, this);
         wxWindow->Unbind(wxEVT_SIZE, &Control::OnSizeChanged, this);
         wxWindow->Unbind(wxEVT_MOVE, &Control::OnLocationChanged, this);
@@ -964,8 +961,6 @@ namespace Alternet::UI
         _wxWindow->Bind(wxEVT_DESTROY, &Control::OnDestroy, this);
         _wxWindow->Bind(wxEVT_SHOW, &Control::OnVisibleChanged, this);
         _wxWindow->Bind(wxEVT_MOUSE_CAPTURE_LOST, &Control::OnMouseCaptureLost, this);
-        /*_wxWindow->Bind(wxEVT_ENTER_WINDOW, &Control::OnMouseEnter, this);
-        _wxWindow->Bind(wxEVT_LEAVE_WINDOW, &Control::OnMouseLeave, this);*/
         _wxWindow->Bind(wxEVT_SIZE, &Control::OnSizeChanged, this);
         _wxWindow->Bind(wxEVT_MOVE, &Control::OnLocationChanged, this);
         _wxWindow->Bind(wxEVT_SET_FOCUS, &Control::OnGotFocus, this);
@@ -974,7 +969,6 @@ namespace Alternet::UI
         _wxWindow->Bind(wxEVT_CONTEXT_MENU, &Control::OnContextMenu, this);
         _wxWindow->Bind(wxEVT_LEFT_UP, &Control::OnMouseLeftUp, this);
         _wxWindow->Bind(wxEVT_RIGHT_UP, &Control::OnMouseRightUp, this);
-        /*_wxWindow->Bind(wxEVT_IDLE, &Control::OnIdle, this);*/
         _wxWindow->Bind(wxEVT_SYS_COLOUR_CHANGED, &Control::OnSysColorChanged, this);
         _wxWindow->Bind(wxEVT_SET_CURSOR, &Control::OnSetCursor, this);
 
