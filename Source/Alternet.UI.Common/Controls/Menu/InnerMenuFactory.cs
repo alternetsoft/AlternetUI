@@ -112,7 +112,7 @@ namespace Alternet.UI
 
             if (menu is ContextMenu contextMenu)
             {
-                var recursive = contextMenu.IsAttachedToMainMenu;
+                var recursive = contextMenu.IsImmediateChildOfMainMenu;
                 contextMenu.RaiseOpening(EventArgsUtils.DefaultCancelEventArgs, recursive);
                 return;
             }

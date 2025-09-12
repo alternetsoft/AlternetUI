@@ -6,13 +6,19 @@ using System.Text;
 namespace Alternet.UI
 {
     /// <summary>
-    /// Provides a collection of static events and methods for managing and interacting with menu-related actions.
+    /// Provides a collection of static events and methods for managing and
+    /// interacting with menu-related actions.
     /// </summary>
-    /// <remarks>The <see cref="StaticMenuEvents"/> class defines a set of events that are triggered in
-    /// response to various menu-related actions, such as opening, closing, or interacting with menu items. These events
-    /// are primarily intended for use with menus and their associated menu items. Additionally, the class
-    /// provides static methods to raise these events programmatically. <para> This class is useful for scenarios where
-    /// centralized handling of menu events is required, such as in applications with dynamic or context-sensitive
+    /// <remarks>The <see cref="StaticMenuEvents"/> class defines a set of events
+    /// that are triggered in
+    /// response to various menu-related actions, such as opening, closing,
+    /// or interacting with menu items. These events
+    /// are primarily intended for use with menus and their associated menu items.
+    /// Additionally, the class
+    /// provides static methods to raise these events programmatically.
+    /// <para> This class is useful for scenarios where
+    /// centralized handling of menu events is required, such as in applications
+    /// with dynamic or context-sensitive
     /// menus. </para></remarks>
     public static class StaticMenuEvents
     {

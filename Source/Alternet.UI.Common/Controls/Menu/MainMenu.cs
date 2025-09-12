@@ -28,6 +28,12 @@ namespace Alternet.UI
             }
         }
 
+        /// <inheritdoc/>
+        public override MainMenu? MenuBar
+        {
+            get => this;
+        }
+
         /// <summary>
         /// Gets the <see cref="Window"/> instance to which this menu is attached, if any.
         /// </summary>
@@ -36,7 +42,7 @@ namespace Alternet.UI
         {
             get
             {
-                foreach(var window in App.Current.Windows)
+                foreach (var window in App.Current.Windows)
                 {
                     if (window.Menu == this)
                         return window;

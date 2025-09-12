@@ -10,6 +10,37 @@ namespace Alternet.UI
     {
         private Native.Menu nativeMenu;
 
+        static WxMenuFactory()
+        {
+            StaticMenuEvents.ItemEnabledChanged += (s, e) =>
+            {
+            };
+
+            StaticMenuEvents.ItemTextChanged += (s, e) =>
+            {
+            };
+
+            StaticMenuEvents.ItemShortcutChanged += (s, e) =>
+            {
+            };
+
+            StaticMenuEvents.ItemCheckedChanged += (s, e) =>
+            {
+            };
+
+            StaticMenuEvents.ItemRoleChanged += (s, e) =>
+            {
+            };
+
+            StaticMenuEvents.ItemImageChanged += (s, e) =>
+            {
+            };
+
+            StaticMenuEvents.ItemChanged += (s, e) =>
+            {
+            };
+        }
+
         public WxMenuFactory()
         {
             nativeMenu = new();
