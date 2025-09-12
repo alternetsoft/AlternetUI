@@ -10,10 +10,11 @@ namespace Alternet.UI
 {
     public partial class AbstractControl
     {
-        internal override FrameworkElement? LogicalParent
+        /// <inheritdoc/>
+        public override FrameworkElement? LogicalParent
         {
             get => Parent;
-            set => Parent = value as AbstractControl;
+            internal set => Parent = value as AbstractControl;
         }
     }
 }
