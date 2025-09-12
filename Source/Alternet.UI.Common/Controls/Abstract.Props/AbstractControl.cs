@@ -147,12 +147,14 @@ namespace Alternet.UI
         private bool canLongTap;
         private bool bubbleKeys;
         private long? lastClickedTimestamp;
+        private ControlRenderingFlags renderingFlags;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="AbstractControl"/> class.
         /// </summary>
         public AbstractControl()
         {
+            renderingFlags = GetDefaultRenderingFlags();
             visible = GetDefaultVisible();
             var defaults = GetDefaults(ControlKind);
             defaults.RaiseInitDefaults(this);
@@ -316,6 +318,22 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets or sets the rendering flags that determine how the control is rendered.
+        /// </summary>
+        [Browsable(false)]
+        public virtual ControlRenderingFlags RenderingFlags
+        {
+            get => renderingFlags;
+
+            set
+            {
+                if (renderingFlags == value)
+                    return;
+                renderingFlags = value;
+            }
+        }
+
+        /// <summary>
         /// Gets an override value
         /// </summary>
         [Browsable(false)]
@@ -341,9 +359,15 @@ namespace Alternet.UI
         {
             get
             {
-                Graphics? result = null;
+                Graphics? result = measureCanvas;
 
-                if(Graphics.RequireMeasure(ScaleFactor, ref result))
+                Graphics.CanvasCreateParams prm = new()
+                {
+                    ControlRenderingFlags = RenderingFlags,
+                    ScaleFactor = this.ScaleFactor,
+                };
+
+                if (Graphics.RequireMeasure(ref result, prm))
                 {
                     measureCanvas = result;
                 }
