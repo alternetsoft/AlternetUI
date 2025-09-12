@@ -240,7 +240,7 @@ namespace Alternet.UI
         {
             get
             {
-                if(defaultMenuArrowImage is null)
+                if (defaultMenuArrowImage is null)
                 {
                     defaultMenuArrowImage = new(KnownSvgImages.ImgAngleRight, DefaultMenuArrowImageSize);
                 }
@@ -566,10 +566,33 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets a value indicating whether a <see cref="MainMenu"/> exists in the logical
+        /// parent hierarchy of this element.
+        /// </summary>
+        /// <remarks>This property traverses the logical parent hierarchy to determine
+        /// if any ancestor is a <see cref="MainMenu"/>.</remarks>
+        [Browsable(false)]
+        public virtual bool HasMainMenuInParents
+        {
+            get
+            {
+                FrameworkElement? p = LogicalParent;
+                while (p is not null)
+                {
+                    if (p is MainMenu)
+                        return true;
+                    p = p.LogicalParent;
+                }
+
+                return false;
+            }
+        }
+
+        /// <summary>
         /// Gets a value indicating whether this menu item is attached to a <see cref="MainMenu"/>.
         /// </summary>
         [Browsable(false)]
-        public bool IsAttachedToMainMenu
+        public bool IsImmediateChildOfMainMenu
         {
             get
             {
@@ -581,7 +604,7 @@ namespace Alternet.UI
         /// Gets a value indicating whether this menu item is attached to a <see cref="ContextMenu"/>.
         /// </summary>
         [Browsable(false)]
-        public bool IsAttachedToContextMenu
+        public bool IsImmediateChildOfContextMenu
         {
             get
             {
@@ -593,7 +616,7 @@ namespace Alternet.UI
         /// Gets a value indicating whether this menu item is attached to a <see cref="Menu"/>.
         /// </summary>
         [Browsable(false)]
-        public bool IsAttachedToMenu
+        public bool IsImmediateChildOfMenu
         {
             get
             {
@@ -1021,7 +1044,7 @@ namespace Alternet.UI
         /// This value determines the nature of the change being reported.</param>
         public virtual void RaiseChanged(MenuChangeKind kind)
         {
-            if(DisposingOrDisposed)
+            if (DisposingOrDisposed)
                 return;
             BaseEventArgs<MenuChangeKind> e = new(kind);
             Changed?.Invoke(this, e);
