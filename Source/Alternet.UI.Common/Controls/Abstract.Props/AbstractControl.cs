@@ -2011,7 +2011,7 @@ namespace Alternet.UI
         /// Gets whether this control is the root control (has no parent).
         /// </summary>
         [Browsable(false)]
-        public bool IsRoot => Parent == null;
+        public override bool IsRoot => Parent == null;
 
         /// <summary>
         /// Gets the root parent control in the chain of parent controls.
