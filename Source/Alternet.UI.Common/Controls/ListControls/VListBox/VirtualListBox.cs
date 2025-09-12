@@ -35,6 +35,11 @@ namespace Alternet.UI
     public partial class VirtualListBox : VirtualListControl, IListControl, IScrollEventRouter
     {
         /// <summary>
+        /// Represents the default rendering flags for <see cref="VirtualListBox"/> and it's descendants.
+        /// </summary>
+        public static ControlRenderingFlags DefaultRenderingFlags;
+
+        /// <summary>
         /// Gets or sets the default border color of the full item tooltip.
         /// </summary>
         public static LightDarkColor? DefaultFullItemToolTipBorderColor;
@@ -64,6 +69,7 @@ namespace Alternet.UI
 
         static VirtualListBox()
         {
+            DefaultRenderingFlags = ControlRenderingFlags.None;
         }
 
         /// <summary>
@@ -2087,6 +2093,12 @@ namespace Alternet.UI
         {
             base.OnLostFocus(e);
             Invalidate();
+        }
+
+        /// <inheritdoc/>
+        protected override ControlRenderingFlags GetDefaultRenderingFlags()
+        {
+            return DefaultRenderingFlags;
         }
 
         /// <inheritdoc/>
