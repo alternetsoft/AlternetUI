@@ -853,7 +853,7 @@ namespace Alternet.UI
 
             if (App.IsWindowsOS)
             {
-                KnownMswFolders.TryResolvePath(KnownMswFolders.Downloads, out var downloadsPath);
+                MswKnownFolders.TryResolvePath(MswKnownFolders.Downloads, out var downloadsPath);
                 if (downloadsPath is not null)
                     AddFolderWithFlags("Downloads", downloadsPath);
             }

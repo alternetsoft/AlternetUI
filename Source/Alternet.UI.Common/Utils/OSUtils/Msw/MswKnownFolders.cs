@@ -8,7 +8,7 @@ namespace Alternet.UI;
 /// <summary>
 /// Provides GUIDs for known Windows folders.
 /// </summary>
-public static class KnownMswFolders
+public static class MswKnownFolders
 {
     /// <summary>
     /// Provides a mapping between shell folder identifiers and their corresponding GUIDs.
@@ -17,50 +17,50 @@ public static class KnownMswFolders
     /// return their corresponding <see cref="Guid"/> values. The keys are case-insensitive and use the format
     /// "shell:{FolderName}", where {FolderName} corresponds to a specific shell folder (e.g., "shell:Documents").
     /// The GUIDs returned by the functions correspond to the identifiers of the respective shell folders
-    /// as defined in the <see cref="KnownMswFolders"/> class.
+    /// as defined in the <see cref="MswKnownFolders"/> class.
     /// This mapping can be used to resolve shell folder paths to their GUIDs for
     /// various system operations.</remarks>
     public static readonly Dictionary<string, Func<Guid>> ShellToGuid = new(StringComparer.OrdinalIgnoreCase)
     {
-        { "shell:3D Objects", () => KnownMswFolders.Objects3D },
-        { "shell:AccountPictures", () => KnownMswFolders.AccountPictures },
-        { "shell:AppData", () => KnownMswFolders.RoamingAppData },
-        { "shell:Common AppData", () => KnownMswFolders.ProgramData },
-        { "shell:Common Desktop", () => KnownMswFolders.PublicDesktop },
-        { "shell:Common Documents", () => KnownMswFolders.PublicDocuments },
-        { "shell:CommonDownloads", () => KnownMswFolders.PublicDownloads },
-        { "shell:CommonMusic", () => KnownMswFolders.PublicMusic },
-        { "shell:CommonPictures", () => KnownMswFolders.PublicPictures },
-        { "shell:CommonVideo", () => KnownMswFolders.PublicVideos },
-        { "shell:Contacts", () => KnownMswFolders.Contacts },
-        { "shell:Cookies", () => KnownMswFolders.Cookies },
-        { "shell:Desktop", () => KnownMswFolders.Desktop },
-        { "shell:Documents", () => KnownMswFolders.Documents },
-        { "shell:Downloads", () => KnownMswFolders.Downloads },
-        { "shell:Favorites", () => KnownMswFolders.Favorites },
-        { "shell:Fonts", () => KnownMswFolders.Fonts },
-        { "shell:GameTasks", () => KnownMswFolders.GameTasks },
-        { "shell:History", () => KnownMswFolders.History },
-        { "shell:Links", () => KnownMswFolders.Links },
-        { "shell:Local AppData", () => KnownMswFolders.LocalAppData },
-        { "shell:LocalAppDataLow", () => KnownMswFolders.LocalAppDataLow },
-        { "shell:Music", () => KnownMswFolders.Music },
-        { "shell:Pictures", () => KnownMswFolders.Pictures },
-        { "shell:ProgramFiles", () => KnownMswFolders.ProgramFiles },
-        { "shell:ProgramFilesCommon", () => KnownMswFolders.ProgramFilesCommon },
-        { "shell:ProgramFilesCommonX86", () => KnownMswFolders.ProgramFilesCommonX86 },
-        { "shell:ProgramFilesX86", () => KnownMswFolders.ProgramFilesX86 },
-        { "shell:Programs", () => KnownMswFolders.Programs },
-        { "shell:Public", () => KnownMswFolders.Profile }, // fallback
-        { "shell:SavedGames", () => KnownMswFolders.SavedGames },
-        { "shell:Searches", () => KnownMswFolders.Searches },
-        { "shell:Start Menu", () => KnownMswFolders.StartMenu },
-        { "shell:Startup", () => KnownMswFolders.Startup },
-        { "shell:System", () => KnownMswFolders.System },
-        { "shell:SystemX86", () => KnownMswFolders.SystemX86 },
-        { "shell:Templates", () => KnownMswFolders.Templates },
-        { "shell:Videos", () => KnownMswFolders.Videos },
-        { "shell:Windows", () => KnownMswFolders.Windows },
+        { "shell:3D Objects", () => MswKnownFolders.Objects3D },
+        { "shell:AccountPictures", () => MswKnownFolders.AccountPictures },
+        { "shell:AppData", () => MswKnownFolders.RoamingAppData },
+        { "shell:Common AppData", () => MswKnownFolders.ProgramData },
+        { "shell:Common Desktop", () => MswKnownFolders.PublicDesktop },
+        { "shell:Common Documents", () => MswKnownFolders.PublicDocuments },
+        { "shell:CommonDownloads", () => MswKnownFolders.PublicDownloads },
+        { "shell:CommonMusic", () => MswKnownFolders.PublicMusic },
+        { "shell:CommonPictures", () => MswKnownFolders.PublicPictures },
+        { "shell:CommonVideo", () => MswKnownFolders.PublicVideos },
+        { "shell:Contacts", () => MswKnownFolders.Contacts },
+        { "shell:Cookies", () => MswKnownFolders.Cookies },
+        { "shell:Desktop", () => MswKnownFolders.Desktop },
+        { "shell:Documents", () => MswKnownFolders.Documents },
+        { "shell:Downloads", () => MswKnownFolders.Downloads },
+        { "shell:Favorites", () => MswKnownFolders.Favorites },
+        { "shell:Fonts", () => MswKnownFolders.Fonts },
+        { "shell:GameTasks", () => MswKnownFolders.GameTasks },
+        { "shell:History", () => MswKnownFolders.History },
+        { "shell:Links", () => MswKnownFolders.Links },
+        { "shell:Local AppData", () => MswKnownFolders.LocalAppData },
+        { "shell:LocalAppDataLow", () => MswKnownFolders.LocalAppDataLow },
+        { "shell:Music", () => MswKnownFolders.Music },
+        { "shell:Pictures", () => MswKnownFolders.Pictures },
+        { "shell:ProgramFiles", () => MswKnownFolders.ProgramFiles },
+        { "shell:ProgramFilesCommon", () => MswKnownFolders.ProgramFilesCommon },
+        { "shell:ProgramFilesCommonX86", () => MswKnownFolders.ProgramFilesCommonX86 },
+        { "shell:ProgramFilesX86", () => MswKnownFolders.ProgramFilesX86 },
+        { "shell:Programs", () => MswKnownFolders.Programs },
+        { "shell:Public", () => MswKnownFolders.Profile }, // fallback
+        { "shell:SavedGames", () => MswKnownFolders.SavedGames },
+        { "shell:Searches", () => MswKnownFolders.Searches },
+        { "shell:Start Menu", () => MswKnownFolders.StartMenu },
+        { "shell:Startup", () => MswKnownFolders.Startup },
+        { "shell:System", () => MswKnownFolders.System },
+        { "shell:SystemX86", () => MswKnownFolders.SystemX86 },
+        { "shell:Templates", () => MswKnownFolders.Templates },
+        { "shell:Videos", () => MswKnownFolders.Videos },
+        { "shell:Windows", () => MswKnownFolders.Windows },
     };
 
     // User Profile
