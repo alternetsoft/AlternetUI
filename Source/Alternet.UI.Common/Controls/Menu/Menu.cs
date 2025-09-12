@@ -26,7 +26,8 @@ namespace Alternet.UI
         /// <summary>
         /// Occurs when an item is changed.
         /// </summary>
-        /// <remarks>This event is raised whenever an item is modified, allowing subscribers to respond to
+        /// <remarks>This event is raised whenever an item is modified,
+        /// allowing subscribers to respond to
         /// the change. Ensure that event handlers are properly unsubscribed
         /// to avoid memory leaks.</remarks>
         public event EventHandler<MenuChangeEventArgs>? ItemChanged;
