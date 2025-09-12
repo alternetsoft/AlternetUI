@@ -592,7 +592,7 @@ namespace Alternet.UI
         /// Gets a value indicating whether this menu item is attached to a <see cref="MainMenu"/>.
         /// </summary>
         [Browsable(false)]
-        public bool IsImmediateChildOfMainMenu
+        public bool HasMainMenuParent
         {
             get
             {
@@ -604,7 +604,7 @@ namespace Alternet.UI
         /// Gets a value indicating whether this menu item is attached to a <see cref="ContextMenu"/>.
         /// </summary>
         [Browsable(false)]
-        public bool IsImmediateChildOfContextMenu
+        public bool HasContextMenuParent
         {
             get
             {
@@ -616,7 +616,7 @@ namespace Alternet.UI
         /// Gets a value indicating whether this menu item is attached to a <see cref="Menu"/>.
         /// </summary>
         [Browsable(false)]
-        public bool IsImmediateChildOfMenu
+        public bool HasMenuParent
         {
             get
             {
@@ -625,10 +625,43 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets the <see cref="Window"/> instance to which this menu item is attached, if any.
+        /// </summary>
+        [Browsable(false)]
+        public virtual Window? AttachedWindow
+        {
+            get
+            {
+                return MenuBar?.AttachedWindow;
+            }
+        }
+
+        /// <summary>
+        /// Gets the top-level <see cref="MenuItem"/> in the logical parent hierarchy, if one exists.
+        /// This method uses the <see cref="FrameworkElement.LogicalParents"/> property
+        /// to traverse the hierarchy.
+        /// </summary>
+        public virtual MenuItem? TopLevelMenuItem
+        {
+            get
+            {
+                MenuItem? result = null;
+
+                foreach(var p in LogicalParents)
+                {
+                    if (p is MenuItem mi)
+                        result = mi;
+                }
+
+                return result;
+            }
+        }
+
+        /// <summary>
         /// Gets or sets a value indicating whether the menu item is enabled.
         /// </summary>
-        /// <remarks>Changing this property raises the <c>EnabledChanged</c> event and notifies listeners
-        /// of the change.</remarks>
+        /// <remarks>Changing this property raises the <c>EnabledChanged</c>
+        /// event and notifies listeners of the change.</remarks>
         public bool IsEnabled
         {
             get => Enabled;
@@ -651,7 +684,7 @@ namespace Alternet.UI
                     if (enabled == value)
                         return;
                     enabled = value;
-                    RaiseChanged(MenuChangeKind.Enabled);
+                    RaiseEnabledChanged(EventArgs.Empty);
                 });
             }
         }
@@ -846,6 +879,7 @@ namespace Alternet.UI
             OnEnabledChanged(e);
             EnabledChanged?.Invoke(this, e);
             StaticMenuEvents.RaiseItemEnabledChanged(this, e);
+            RaiseChanged(MenuChangeKind.Enabled);
         }
 
         /// <summary>
