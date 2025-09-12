@@ -33,7 +33,7 @@ namespace Alternet.UI
                 return;
 
             var form = FormUtils.GetPhantomWindow();
-            using var glContext = new SkiaOpenGLContextMsw_(form);
+            using var glContext = new SkiaOpenGLContextMsw(form);
             DrawSampleOnContext(glContext.Context);
         }
 

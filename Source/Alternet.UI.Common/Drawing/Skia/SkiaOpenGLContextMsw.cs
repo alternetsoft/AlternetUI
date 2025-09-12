@@ -20,7 +20,7 @@ namespace Alternet.Drawing
     /// the OpenGL context and is not cross-platform. </para> <para> Proper disposal of this object is required to
     /// release native resources. Use the <see cref="IDisposable.Dispose"/> method
     /// or a `using` statement to ensure resources are cleaned up appropriately.</para></remarks>
-    public class SkiaOpenGLContextMsw_ : DisposableObject
+    public class SkiaOpenGLContextMsw : DisposableObject
     {
         private readonly IntPtr hwnd;
         private readonly IntPtr hdc;
@@ -28,7 +28,7 @@ namespace Alternet.Drawing
         private readonly GRContext grContext;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="SkiaOpenGLContextMsw_"/> class,
+        /// Initializes a new instance of the <see cref="SkiaOpenGLContextMsw"/> class,
         /// setting up an OpenGL rendering
         /// context for the specified Windows control.
         /// </summary>
@@ -41,7 +41,7 @@ namespace Alternet.Drawing
         /// context.</para></remarks>
         /// <param name="control">The <see cref="Control"/> for which the OpenGL rendering
         /// context will be created. This control must have a valid window handle.</param>
-        public SkiaOpenGLContextMsw_(Control control)
+        public SkiaOpenGLContextMsw(Control control)
         {
             hwnd = control.GetHandle();
             hdc = MswUtils.NativeMethods.GetDC(hwnd);
