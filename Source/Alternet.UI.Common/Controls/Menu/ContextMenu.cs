@@ -61,6 +61,12 @@ namespace Alternet.UI
             set => relatedControl.Value = value;
         }
 
+        /// <summary>
+        /// Gets a value indicating whether a <see cref="MainMenu"/> exists
+        /// in the parent hierarchy of this menu item.
+        /// </summary>
+        /// <remarks>This property traverses the logical parent hierarchy to determine if a
+        /// <see cref="MainMenu"/> is present.</remarks>
         [Browsable(false)]
         public virtual bool HasMainMenuInParents
         {
@@ -79,13 +85,13 @@ namespace Alternet.UI
         /// Gets a value indicating whether this <see cref="ContextMenu"/> is attached to the main menu.
         /// </summary>
         [Browsable(false)]
-        public virtual bool IsImmediateChildOfMainMenu
+        public virtual bool HasMainMenuParent
         {
             get
             {
                 if (LogicalParent is MenuItem parentMenuItem)
                 {
-                    return parentMenuItem.IsImmediateChildOfMainMenu;
+                    return parentMenuItem.HasMainMenuParent;
                 }
 
                 return false;
