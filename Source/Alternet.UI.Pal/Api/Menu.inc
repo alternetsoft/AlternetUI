@@ -3,15 +3,15 @@
 public:
 static string GetEventMenuItemId();
 
+static void* GetMainMenu(Window* window);
 static void SetMainMenu(Window* window, void* menu);
 static bool MainMenuAppend(void* menuHandle, void* menu, const string& text);
-static int MainMenuGetCount(void* menuHandle);
-static void MainMenuSetEnabled(void* menuHandle, int pos, bool enable);
-static void* MainMenuGetSubMenu(void* menuHandle, int menuIndex);
-static void* MainMenuRemove(void* menuHandle, int pos);
-static bool MainMenuInsert(void* menuHandle, int pos, void* menu, const string& title);
-static void* MainMenuReplace(void* menuHandle, int pos, void* menu, const string& title);
-static void MainMenuSetText(void* menuHandle, int pos, const string& label);
+static void MainMenuSetEnabled(void* menuHandle, const string& childId, bool enable);
+static void* MainMenuGetSubMenu(void* menuHandle, const string& childId);
+static void* MainMenuRemove(void* menuHandle, const string& childId);
+static bool MainMenuInsert(void* menuHandle, const string& childId, void* menu, const string& title);
+static void* MainMenuReplace(void* menuHandle, const string& childId, void* menu, const string& title);
+static void MainMenuSetText(void* menuHandle, const string& childId, const string& label);
 static void* CreateMainMenu(const string& id);
 static void* CreateContextMenu(const string& id);
 static void* CreateMenuItem(MenuItemType itemType, const string& id);
@@ -20,14 +20,14 @@ static void DestroyMenuItem(void* menuHandle);
 static void DestroyContextMenu(void* menuHandle);
 static string GetMenuId(void* handle);
 static MenuItemType GetMenuItemType(void* handle);
-static void SetMenuItemBitmap(void* handle, ImageSet* value);
-static void SetMenuItemEnabled(void* handle, bool value);
-static void SetMenuItemText(void* handle, const string& value, const string& rightValue);
-static void SetMenuItemChecked(void* handle, bool value);
-static void SetMenuItemSubMenu(void* handle, void* subMenuHandle);
-static void SetMenuItemShortcut(void* handle, Key key, ModifierKeys modifierKeys);
+static void SetMenuItemBitmap(void* handle, const string& childId, ImageSet* value);
+static void SetMenuItemEnabled(void* handle, const string& childId, bool value);
+static void SetMenuItemText(void* handle, const string& childId, const string& value, const string& rightValue);
+static void SetMenuItemChecked(void* handle, const string& childId, bool value);
+static void SetMenuItemSubMenu(void* handle, const string& childId, void* subMenuHandle);
+static void SetMenuItemShortcut(void* handle, const string& childId, Key key, ModifierKeys modifierKeys);
 static void MenuAddItem(void* handle, void* itemHandle);
-static void MenuRemoveItem(void* handle, void* itemHandle);
+static void MenuRemoveItem(void* handle, const string& childId);
 static void Show(void* menuHandle, Control* control, const PointD& position);
 
 public:

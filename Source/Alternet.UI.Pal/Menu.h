@@ -36,6 +36,8 @@ namespace Alternet::UI
             : wxMenuItem(parent, id, text, help, kind, subMenu)
         {
         }
+
+        wxAlternetMenuItem* GetSubMenuItemById(const string& id);
     };
 
     class wxAlternetMenu : public wxMenu
@@ -53,6 +55,32 @@ namespace Alternet::UI
             Bind(wxEVT_MENU_CLOSE, &wxAlternetMenu::OnMenuClose, this);
             Bind(wxEVT_MENU_HIGHLIGHT, &wxAlternetMenu::OnMenuHighlight, this);
         }
+
+        wxAlternetMenuItem* GetItemById(const string& id)
+        {
+            for (int n = GetMenuItemCount() - 1; n >= 0; --n)
+            {
+                wxMenuItem* item = FindItemByPosition(n);
+                auto alternetItem = wxDynamicCast(item, wxAlternetMenuItem);
+                if (alternetItem != nullptr && alternetItem->_id == id)
+                    return alternetItem;
+            }
+            return nullptr;
+        }
+
+        int GetItemIndex(const string& id)
+        {
+            for (int n = GetMenuItemCount() - 1; n >= 0; --n)
+            {
+                wxMenuItem* item = FindItemByPosition(n);
+                auto alternetItem = wxDynamicCast(item, wxAlternetMenuItem);
+
+                if (alternetItem != nullptr && alternetItem->_id == id)
+                    return n;
+            }
+
+            return -1;
+		}
 
     private:
         void OnMenuCommand(wxCommandEvent& event);
@@ -73,5 +101,35 @@ namespace Alternet::UI
             : wxMenuBar(style)
         {
         }
+
+        wxAlternetMenu* GetItemById(const string& id)
+        {
+            for (int i = 0; i < GetMenuCount(); i++)
+            {
+                wxMenu* menu = GetMenu(i);
+                if (menu != nullptr)
+                {
+                    auto alternetMenu = wxDynamicCast(menu, wxAlternetMenu);
+                    if (alternetMenu != nullptr && alternetMenu->_id == id)
+                        return alternetMenu;
+                }
+            }
+            return nullptr;
+        }
+
+        int GetItemIndex(const string& id)
+        {
+            for (int i = 0; i < GetMenuCount(); i++)
+            {
+                wxMenu* menu = GetMenu(i);
+                if (menu != nullptr)
+                {
+                    auto alternetMenu = wxDynamicCast(menu, wxAlternetMenu);
+                    if (alternetMenu != nullptr && alternetMenu->_id == id)
+                        return i;
+                }
+            }
+            return -1;
+		}
     };
 }

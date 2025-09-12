@@ -88,30 +88,29 @@ namespace Alternet.UI
             Native.Menu.MenuAddItem(menuPtr, itemPtr);
         }
 
-        public virtual void MenuRemoveItem(ContextMenuHandle handle, MenuItemHandle itemHandle)
+        public virtual void MenuRemoveItem(ContextMenuHandle handle, string id)
         {
             var menuPtr = handle.AsPointer;
-            var itemPtr = itemHandle.AsPointer;
-            if (menuPtr == IntPtr.Zero || itemPtr == IntPtr.Zero)
+            if (menuPtr == IntPtr.Zero)
                 return;
-            Native.Menu.MenuRemoveItem(menuPtr, itemPtr);
+            Native.Menu.MenuRemoveItem(menuPtr, id);
         }
 
-        public virtual void SetMenuItemBitmap(MenuItemHandle handle, ImageSet? value)
+        public virtual void SetMenuItemBitmap(MenuItemHandle handle, string id, ImageSet? value)
         {
             var itemPtr = handle.AsPointer;
             var nativeImage = (UI.Native.ImageSet?)value?.Handler;
             if (itemPtr == IntPtr.Zero)
                 return;
-            Native.Menu.SetMenuItemBitmap(itemPtr, nativeImage);
+            Native.Menu.SetMenuItemBitmap(itemPtr, id, nativeImage);
         }
 
-        public virtual void SetMenuItemChecked(MenuItemHandle handle, bool value)
+        public virtual void SetMenuItemChecked(MenuItemHandle handle, string id, bool value)
         {
             var itemPtr = handle.AsPointer;
             if (itemPtr == IntPtr.Zero)
                 return;
-            Native.Menu.SetMenuItemChecked(itemPtr, value);
+            Native.Menu.SetMenuItemChecked(itemPtr, id, value);
         }
 
         public override void Show(
@@ -167,42 +166,48 @@ namespace Alternet.UI
             return Native.Menu.GetMenuId(ptr);
         }
 
-        public virtual void SetMenuItemEnabled(MenuItemHandle handle, bool value)
+        public virtual void SetMenuItemEnabled(MenuItemHandle handle, string id, bool value)
         {
             var itemPtr = handle.AsPointer;
             if (itemPtr == IntPtr.Zero)
                 return;
-            Native.Menu.SetMenuItemEnabled(itemPtr, value);
+            Native.Menu.SetMenuItemEnabled(itemPtr, id, value);
         }
 
         public virtual void SetMenuItemShortcut(
             MenuItemHandle handle,
+            string id,
             Key key,
             ModifierKeys modifierKeys)
         {
             var itemPtr = handle.AsPointer;
             if (itemPtr == IntPtr.Zero)
                 return;
-            Native.Menu.SetMenuItemShortcut(itemPtr, key, modifierKeys);
+            Native.Menu.SetMenuItemShortcut(itemPtr, id, key, modifierKeys);
         }
 
         public virtual void SetMenuItemSubMenu(
             MenuItemHandle handle,
+            string id,
             ContextMenuHandle subMenuHandle)
         {
             var itemPtr = handle.AsPointer;
             var subMenuPtr = subMenuHandle.AsPointer;
             if (itemPtr == IntPtr.Zero || subMenuPtr == IntPtr.Zero)
                 return;
-            Native.Menu.SetMenuItemSubMenu(itemPtr, subMenuPtr);
+            Native.Menu.SetMenuItemSubMenu(itemPtr, id, subMenuPtr);
         }
 
-        public virtual void SetMenuItemText(MenuItemHandle handle, string value, string rightValue)
+        public virtual void SetMenuItemText(
+            MenuItemHandle handle,
+            string id,
+            string value,
+            string rightValue)
         {
             var itemPtr = handle.AsPointer;
             if (itemPtr == IntPtr.Zero)
                 return;
-            Native.Menu.SetMenuItemText(itemPtr, value, rightValue);
+            Native.Menu.SetMenuItemText(itemPtr, id, value, rightValue);
         }
 
         public virtual bool MainMenuAppend(
@@ -216,47 +221,39 @@ namespace Alternet.UI
             return Native.Menu.MainMenuAppend(menuHandlePtr, submenuPtr, text);
         }
 
-        public virtual int MainMenuGetCount(MainMenuHandle menuHandle)
-        {
-            var menuHandlePtr = menuHandle.AsPointer;
-            if (menuHandlePtr == IntPtr.Zero)
-                return 0;
-            return Native.Menu.MainMenuGetCount(menuHandlePtr);
-        }
-
-        public virtual void MainMenuSetEnabled(MainMenuHandle menuHandle, int pos, bool enable)
+        public virtual void MainMenuSetEnabled(MainMenuHandle menuHandle, string childId, bool enable)
         {
             var menuHandlePtr = menuHandle.AsPointer;
             if (menuHandlePtr == IntPtr.Zero)
                 return;
-            Native.Menu.MainMenuSetEnabled(menuHandlePtr, pos, enable);
+            Native.Menu.MainMenuSetEnabled(menuHandlePtr, childId, enable);
         }
 
         public virtual ContextMenuHandle MainMenuGetSubMenu(
             MainMenuHandle menuHandle,
-            int menuIndex)
+            string childId)
         {
             var menuHandlePtr = menuHandle.AsPointer;
             if (menuHandlePtr == IntPtr.Zero)
                 return new ContextMenuHandle(IntPtr.Zero);
-            var submenuPtr = Native.Menu.MainMenuGetSubMenu(menuHandlePtr, menuIndex);
+            var submenuPtr = Native.Menu.MainMenuGetSubMenu(menuHandlePtr, childId);
             return new ContextMenuHandle(submenuPtr);
         }
 
         public virtual ContextMenuHandle MainMenuRemove(
             MainMenuHandle menuHandle,
-            int pos)
+            string childId)
         {
             var menuHandlePtr = menuHandle.AsPointer;
             if (menuHandlePtr == IntPtr.Zero)
                 return new ContextMenuHandle(IntPtr.Zero);
-            var submenuPtr = Native.Menu.MainMenuRemove(menuHandlePtr, pos);
+            var submenuPtr = Native.Menu.MainMenuRemove(menuHandlePtr, childId);
             return new ContextMenuHandle(submenuPtr);
         }
 
         public virtual bool MainMenuInsert(
             MainMenuHandle menuHandle,
-            int pos,
+            string childId,
             ContextMenuHandle menu,
             string title)
         {
@@ -264,7 +261,7 @@ namespace Alternet.UI
             var submenuPtr = menu.AsPointer;
             if (menuHandlePtr == IntPtr.Zero || submenuPtr == IntPtr.Zero)
                 return false;
-            return Native.Menu.MainMenuInsert(menuHandlePtr, pos, submenuPtr, title);
+            return Native.Menu.MainMenuInsert(menuHandlePtr, childId, submenuPtr, title);
         }
 
         /// <summary>
@@ -328,10 +325,10 @@ namespace Alternet.UI
                 return null;
 
             if (item.Image is not null)
-                SetMenuItemBitmap(handle, item.Image);
+                SetMenuItemBitmap(handle, string.Empty, item.Image);
 
             if (!item.Enabled)
-                SetMenuItemEnabled(handle, item.Enabled);
+                SetMenuItemEnabled(handle, string.Empty, item.Enabled);
 
             string? rightText = null;
 
@@ -346,19 +343,19 @@ namespace Alternet.UI
 
                 var key = item.ShortcutInfo.GetFirstPlatformSpecificKey();
                 if (key is not null)
-                    SetMenuItemShortcut(handle, key.Key, key.Modifiers);
+                    SetMenuItemShortcut(handle, string.Empty, key.Key, key.Modifiers);
             }
 
-            SetMenuItemText(handle, item.Text, rightText ?? string.Empty);
+            SetMenuItemText(handle, string.Empty, item.Text, rightText ?? string.Empty);
 
             if (isChecked)
-                SetMenuItemChecked(handle, isChecked);
+                SetMenuItemChecked(handle, string.Empty, isChecked);
 
             if (item.HasItems && !isSeparator)
             {
                 var menuHandle = CreateItemsHandle(item.ItemsMenu);
                 if (menuHandle is not null)
-                    SetMenuItemSubMenu(handle, menuHandle);
+                    SetMenuItemSubMenu(handle, string.Empty, menuHandle);
             }
 
             return handle;
@@ -420,7 +417,7 @@ namespace Alternet.UI
 
         public virtual ContextMenuHandle MainMenuReplace(
             MainMenuHandle menuHandle,
-            int pos,
+            string childId,
             ContextMenuHandle menu,
             string title)
         {
@@ -428,16 +425,19 @@ namespace Alternet.UI
             var submenuPtr = menu.AsPointer;
             if (menuHandlePtr == IntPtr.Zero || submenuPtr == IntPtr.Zero)
                 return new ContextMenuHandle(IntPtr.Zero);
-            var replacedPtr = Native.Menu.MainMenuReplace(menuHandlePtr, pos, submenuPtr, title);
+            var replacedPtr = Native.Menu.MainMenuReplace(menuHandlePtr, childId, submenuPtr, title);
             return new ContextMenuHandle(replacedPtr);
         }
 
-        public virtual void MainMenuSetText(MainMenuHandle menuHandle, int pos, string label)
+        public virtual void MainMenuSetText(
+            MainMenuHandle menuHandle,
+            string childId,
+            string label)
         {
             var menuHandlePtr = menuHandle.AsPointer;
             if (menuHandlePtr == IntPtr.Zero)
                 return;
-            Native.Menu.MainMenuSetText(menuHandlePtr, pos, label);
+            Native.Menu.MainMenuSetText(menuHandlePtr, childId, label);
         }
 
         protected virtual void OnNativeMenuClosed()

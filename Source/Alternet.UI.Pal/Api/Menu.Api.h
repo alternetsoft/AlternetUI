@@ -33,6 +33,17 @@ ALTERNET_UI_API char16_t* Menu_GetEventMenuItemId_()
     #endif
 }
 
+ALTERNET_UI_API void* Menu_GetMainMenu_(Window* window)
+{
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    return MarshalExceptions<void*>([&](){
+    #endif
+        return Menu::GetMainMenu(window);
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    });
+    #endif
+}
+
 ALTERNET_UI_API void Menu_SetMainMenu_(Window* window, void* menu)
 {
     #if !defined(__WXMSW__) || defined(_DEBUG)
@@ -55,78 +66,67 @@ ALTERNET_UI_API c_bool Menu_MainMenuAppend_(void* menuHandle, void* menu, const 
     #endif
 }
 
-ALTERNET_UI_API int Menu_MainMenuGetCount_(void* menuHandle)
-{
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    return MarshalExceptions<int>([&](){
-    #endif
-        return Menu::MainMenuGetCount(menuHandle);
-    #if !defined(__WXMSW__) || defined(_DEBUG)
-    });
-    #endif
-}
-
-ALTERNET_UI_API void Menu_MainMenuSetEnabled_(void* menuHandle, int pos, c_bool enable)
+ALTERNET_UI_API void Menu_MainMenuSetEnabled_(void* menuHandle, const char16_t* childId, c_bool enable)
 {
     #if !defined(__WXMSW__) || defined(_DEBUG)
     MarshalExceptions<void>([&](){
     #endif
-        Menu::MainMenuSetEnabled(menuHandle, pos, enable);
+        Menu::MainMenuSetEnabled(menuHandle, childId, enable);
     #if !defined(__WXMSW__) || defined(_DEBUG)
     });
     #endif
 }
 
-ALTERNET_UI_API void* Menu_MainMenuGetSubMenu_(void* menuHandle, int menuIndex)
+ALTERNET_UI_API void* Menu_MainMenuGetSubMenu_(void* menuHandle, const char16_t* childId)
 {
     #if !defined(__WXMSW__) || defined(_DEBUG)
     return MarshalExceptions<void*>([&](){
     #endif
-        return Menu::MainMenuGetSubMenu(menuHandle, menuIndex);
+        return Menu::MainMenuGetSubMenu(menuHandle, childId);
     #if !defined(__WXMSW__) || defined(_DEBUG)
     });
     #endif
 }
 
-ALTERNET_UI_API void* Menu_MainMenuRemove_(void* menuHandle, int pos)
+ALTERNET_UI_API void* Menu_MainMenuRemove_(void* menuHandle, const char16_t* childId)
 {
     #if !defined(__WXMSW__) || defined(_DEBUG)
     return MarshalExceptions<void*>([&](){
     #endif
-        return Menu::MainMenuRemove(menuHandle, pos);
+        return Menu::MainMenuRemove(menuHandle, childId);
     #if !defined(__WXMSW__) || defined(_DEBUG)
     });
     #endif
 }
 
-ALTERNET_UI_API c_bool Menu_MainMenuInsert_(void* menuHandle, int pos, void* menu, const char16_t* title)
+ALTERNET_UI_API c_bool Menu_MainMenuInsert_(void* menuHandle, const char16_t* childId, void* menu, const char16_t* title)
 {
     #if !defined(__WXMSW__) || defined(_DEBUG)
     return MarshalExceptions<c_bool>([&](){
     #endif
-        return Menu::MainMenuInsert(menuHandle, pos, menu, title);
+        return Menu::MainMenuInsert(menuHandle, childId, menu, title);
     #if !defined(__WXMSW__) || defined(_DEBUG)
     });
     #endif
 }
 
-ALTERNET_UI_API void* Menu_MainMenuReplace_(void* menuHandle, int pos, void* menu, const char16_t* title)
+ALTERNET_UI_API void* Menu_MainMenuReplace_(void* menuHandle, const char16_t* childId, void* menu, const char16_t* title)
 {
     #if !defined(__WXMSW__) || defined(_DEBUG)
     return MarshalExceptions<void*>([&](){
     #endif
-        return Menu::MainMenuReplace(menuHandle, pos, menu, title);
+        return Menu::MainMenuReplace(menuHandle, childId, menu, title);
     #if !defined(__WXMSW__) || defined(_DEBUG)
     });
     #endif
 }
 
-ALTERNET_UI_API void Menu_MainMenuSetText_(void* menuHandle, int pos, const char16_t* label)
+ALTERNET_UI_API void Menu_MainMenuSetText_(void* menuHandle, const char16_t* childId, const char16_t* label)
 {
     #if !defined(__WXMSW__) || defined(_DEBUG)
     MarshalExceptions<void>([&](){
     #endif
-        Menu::MainMenuSetText(menuHandle, pos, label);
+        Menu::MainMenuSetText(menuHandle, childId, label);
     #if !defined(__WXMSW__) || defined(_DEBUG)
     });
     #endif
@@ -220,67 +220,67 @@ ALTERNET_UI_API MenuItemType Menu_GetMenuItemType_(void* handle)
     #endif
 }
 
-ALTERNET_UI_API void Menu_SetMenuItemBitmap_(void* handle, ImageSet* value)
+ALTERNET_UI_API void Menu_SetMenuItemBitmap_(void* handle, const char16_t* childId, ImageSet* value)
 {
     #if !defined(__WXMSW__) || defined(_DEBUG)
     MarshalExceptions<void>([&](){
     #endif
-        Menu::SetMenuItemBitmap(handle, value);
+        Menu::SetMenuItemBitmap(handle, childId, value);
     #if !defined(__WXMSW__) || defined(_DEBUG)
     });
     #endif
 }
 
-ALTERNET_UI_API void Menu_SetMenuItemEnabled_(void* handle, c_bool value)
+ALTERNET_UI_API void Menu_SetMenuItemEnabled_(void* handle, const char16_t* childId, c_bool value)
 {
     #if !defined(__WXMSW__) || defined(_DEBUG)
     MarshalExceptions<void>([&](){
     #endif
-        Menu::SetMenuItemEnabled(handle, value);
+        Menu::SetMenuItemEnabled(handle, childId, value);
     #if !defined(__WXMSW__) || defined(_DEBUG)
     });
     #endif
 }
 
-ALTERNET_UI_API void Menu_SetMenuItemText_(void* handle, const char16_t* value, const char16_t* rightValue)
+ALTERNET_UI_API void Menu_SetMenuItemText_(void* handle, const char16_t* childId, const char16_t* value, const char16_t* rightValue)
 {
     #if !defined(__WXMSW__) || defined(_DEBUG)
     MarshalExceptions<void>([&](){
     #endif
-        Menu::SetMenuItemText(handle, value, rightValue);
+        Menu::SetMenuItemText(handle, childId, value, rightValue);
     #if !defined(__WXMSW__) || defined(_DEBUG)
     });
     #endif
 }
 
-ALTERNET_UI_API void Menu_SetMenuItemChecked_(void* handle, c_bool value)
+ALTERNET_UI_API void Menu_SetMenuItemChecked_(void* handle, const char16_t* childId, c_bool value)
 {
     #if !defined(__WXMSW__) || defined(_DEBUG)
     MarshalExceptions<void>([&](){
     #endif
-        Menu::SetMenuItemChecked(handle, value);
+        Menu::SetMenuItemChecked(handle, childId, value);
     #if !defined(__WXMSW__) || defined(_DEBUG)
     });
     #endif
 }
 
-ALTERNET_UI_API void Menu_SetMenuItemSubMenu_(void* handle, void* subMenuHandle)
+ALTERNET_UI_API void Menu_SetMenuItemSubMenu_(void* handle, const char16_t* childId, void* subMenuHandle)
 {
     #if !defined(__WXMSW__) || defined(_DEBUG)
     MarshalExceptions<void>([&](){
     #endif
-        Menu::SetMenuItemSubMenu(handle, subMenuHandle);
+        Menu::SetMenuItemSubMenu(handle, childId, subMenuHandle);
     #if !defined(__WXMSW__) || defined(_DEBUG)
     });
     #endif
 }
 
-ALTERNET_UI_API void Menu_SetMenuItemShortcut_(void* handle, Key key, ModifierKeys modifierKeys)
+ALTERNET_UI_API void Menu_SetMenuItemShortcut_(void* handle, const char16_t* childId, Key key, ModifierKeys modifierKeys)
 {
     #if !defined(__WXMSW__) || defined(_DEBUG)
     MarshalExceptions<void>([&](){
     #endif
-        Menu::SetMenuItemShortcut(handle, key, modifierKeys);
+        Menu::SetMenuItemShortcut(handle, childId, key, modifierKeys);
     #if !defined(__WXMSW__) || defined(_DEBUG)
     });
     #endif
@@ -297,12 +297,12 @@ ALTERNET_UI_API void Menu_MenuAddItem_(void* handle, void* itemHandle)
     #endif
 }
 
-ALTERNET_UI_API void Menu_MenuRemoveItem_(void* handle, void* itemHandle)
+ALTERNET_UI_API void Menu_MenuRemoveItem_(void* handle, const char16_t* childId)
 {
     #if !defined(__WXMSW__) || defined(_DEBUG)
     MarshalExceptions<void>([&](){
     #endif
-        Menu::MenuRemoveItem(handle, itemHandle);
+        Menu::MenuRemoveItem(handle, childId);
     #if !defined(__WXMSW__) || defined(_DEBUG)
     });
     #endif

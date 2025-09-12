@@ -1162,6 +1162,13 @@ namespace Alternet::UI
         RefreshOnState = 16,
     };
     
+    enum class ControlRenderingFlags
+    {
+        None = 0,
+        UseSkiaSharp = 1,
+        UseOpenGL = 2,
+    };
+    
     enum class ControlRenderSizeVariant
     {
         Normal = 0,
@@ -3600,6 +3607,7 @@ template<> struct enable_bitmask_operators<Alternet::UI::Border3DSide> { static 
 template<> struct enable_bitmask_operators<Alternet::UI::BoundsSpecified> { static const bool enable = true; };
 template<> struct enable_bitmask_operators<Alternet::UI::ControlFlags> { static const bool enable = true; };
 template<> struct enable_bitmask_operators<Alternet::UI::ControlRefreshOptions> { static const bool enable = true; };
+template<> struct enable_bitmask_operators<Alternet::UI::ControlRenderingFlags> { static const bool enable = true; };
 template<> struct enable_bitmask_operators<Alternet::UI::ControlStyles> { static const bool enable = true; };
 template<> struct enable_bitmask_operators<Alternet::UI::SetBoundsFlags> { static const bool enable = true; };
 template<> struct enable_bitmask_operators<Alternet::UI::VisualControlStates> { static const bool enable = true; };
