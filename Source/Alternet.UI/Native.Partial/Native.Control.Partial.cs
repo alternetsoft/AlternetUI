@@ -129,7 +129,8 @@ namespace Alternet.UI.Native
 
             if (skia)
             {
-                if(uiControl.RenderingFlags.HasFlag(ControlRenderingFlags.UseOpenGL))
+                if (DebugUtils.IsDebugDefinedAndAttached
+                    && uiControl.RenderingFlags.HasFlag(ControlRenderingFlags.UseOpenGL))
                     OpenGLPaint();
                 else
                     SkiaPaint();
