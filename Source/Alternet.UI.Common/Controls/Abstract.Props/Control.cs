@@ -25,6 +25,7 @@ namespace Alternet.UI
 
         private int handlerTextChanging;
         private IControlHandler? handler;
+        private bool userPaint;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="AbstractControl"/> class.
@@ -138,14 +139,17 @@ namespace Alternet.UI
         /// <inheritdoc/>
         public override bool UserPaint
         {
-            get => SafeHandler?.UserPaint ?? false;
+            get => userPaint;
 
             set
             {
+                if (userPaint == value)
+                    return;
                 if (value && !CanUserPaint)
                     return;
                 if (DisposingOrDisposed)
                     return;
+                userPaint = value;
                 Handler.UserPaint = value;
             }
         }
