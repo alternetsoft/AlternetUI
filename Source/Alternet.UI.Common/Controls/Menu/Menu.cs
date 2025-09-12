@@ -27,13 +27,37 @@ namespace Alternet.UI
         /// Occurs when an item is changed.
         /// </summary>
         /// <remarks>This event is raised whenever an item is modified, allowing subscribers to respond to
-        /// the change. Ensure that event handlers are properly unsubscribed to avoid memory leaks.</remarks>
+        /// the change. Ensure that event handlers are properly unsubscribed
+        /// to avoid memory leaks.</remarks>
         public event EventHandler<MenuChangeEventArgs>? ItemChanged;
 
         /// <summary>
         /// Gets a value indicating whether the object is currently in an update block.
         /// </summary>
         public virtual bool InUpdates => updateCounter > 0;
+
+        /// <summary>
+        /// Gets the <see cref="MainMenu"/> associated with this element, if any.
+        /// </summary>
+        /// <remarks>This property traverses the logical tree of the element to locate the nearest
+        /// <see cref="MainMenu"/> ancestor.
+        /// It returns <see langword="null"/> if no such ancestor exists.</remarks>
+        [Browsable(false)]
+        public virtual MainMenu? MenuBar
+        {
+            get
+            {
+                FrameworkElement? p = LogicalParent;
+                while (p is not null)
+                {
+                    if (p is MainMenu mainMenu)
+                        return mainMenu;
+                    p = p.LogicalParent;
+                }
+
+                return null;
+            }
+        }
 
         /// <summary>
         /// Retrieves a menu by its unique identifier.
@@ -211,7 +235,8 @@ namespace Alternet.UI
         /// <summary>
         /// Notifies that a change has occurred to the specified child item.
         /// </summary>
-        /// <param name="item">The child item that has been changed. Cannot be <see langword="null"/>.</param>
+        /// <param name="item">The child item that has been changed.
+        /// Cannot be <see langword="null"/>.</param>
         /// <param name="action">The type of change that occurred, represented
         /// by a <see cref="MenuChangeKind"/> value.</param>
         public void RaiseItemChanged(Menu item, MenuChangeKind action)
