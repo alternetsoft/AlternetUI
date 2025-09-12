@@ -33,8 +33,8 @@ namespace Alternet.UI
                 return;
 
             var form = FormUtils.GetPhantomWindow();
-            using var glContext = new SkiaOpenGLContextMsw(form);
-            DrawSampleOnContext(glContext.Context);
+            using var glContext = new MswSkiaOpenGLContext(form);
+            DrawSampleOnContext(glContext.Context, saveToFile: true);
         }
 
         /// <summary>
@@ -46,19 +46,25 @@ namespace Alternet.UI
         /// as an image file to the desktop.</remarks>
         /// <param name="context">The Skia graphics context (<see cref="GRContext"/>) on which the
         /// sample frame will be drawn.</param>
+        /// <param name="saveToFile">The <c>saveToFile</c> parameter determines whether the rendered
+        /// frame should be saved to a file.</param>
         [Conditional("DEBUG")]
-        public static void DrawSampleOnContext(GRContext context)
+        public static void DrawSampleOnContext(GRContext context, bool saveToFile = false)
         {
+            MswUtils.NativeMethods.glViewport(0, 0, 500, 500);
             var info = new SKImageInfo(500, 500);
             using var surface = SKSurface.Create(context, true, info);
             var canvas = surface.Canvas;
 
-            canvas.Clear(SKColors.Black);
+            canvas.Clear(SKColors.Bisque);
             canvas.DrawText("Frame rendered", 50, 100, SKTextAlign.Left, Control.DefaultFont, Brushes.Red);
             canvas.Flush();
-            SkiaUtils.SaveSurfaceToFile(
-                surface,
-                Path.Combine(PathUtils.GetDesktopPath(), "frame_rendered.png"));
+            if (saveToFile)
+            {
+                SkiaUtils.SaveSurfaceToFile(
+                    surface,
+                    Path.Combine(PathUtils.GetDesktopPath(), "frame_rendered.png"));
+            }
         }
     }
 }
