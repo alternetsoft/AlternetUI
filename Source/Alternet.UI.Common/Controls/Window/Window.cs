@@ -915,10 +915,12 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Gets or sets the <see cref="MainMenu"/> or other main menu provider that is displayed in the window.
+        /// Gets or sets the <see cref="MainMenu"/> or other main menu provider
+        /// that is displayed in the window.
         /// </summary>
         /// <value>
-        /// A <see cref="MainMenu"/> or other main menu provider that represents the menu to display in the window.
+        /// A <see cref="MainMenu"/> or other main menu provider that represents
+        /// the menu to display in the window.
         /// </value>
         /// <remarks>
         /// You can use this property to switch between complete menu sets at run time.
@@ -929,6 +931,8 @@ namespace Alternet.UI
 
             set
             {
+                if (menu == value)
+                    return;
                 SetMenu(value);
             }
         }
@@ -1614,16 +1618,17 @@ namespace Alternet.UI
         /// Sets the menu for the control and optionally performs a layout update.
         /// </summary>
         /// <remarks>If the control is in a disposing or disposed state, this method does nothing.
-        /// If the specified menu is the same as the current menu, no changes are made.</remarks>
+        /// If the specified menu is the same as the current menu, it is assigned anyway,
+        /// allowing to rebuild the native menu.</remarks>
         /// <param name="value">The new menu to associate with the control.
         /// Can be <see langword="null"/> to remove the current menu.</param>
         /// <param name="performLayout">A value indicating whether to perform a layout update
         /// after setting the menu.  The default value is <see langword="true"/>.</param>
-        public virtual void SetMenu(DisposableObject? value, bool performLayout = true)
+        public virtual void SetMenu(
+            DisposableObject? value,
+            bool performLayout = true)
         {
             if (DisposingOrDisposed)
-                return;
-            if (menu == value)
                 return;
 
             var oldValue = menu;
