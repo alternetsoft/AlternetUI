@@ -189,14 +189,14 @@ namespace Alternet.UI
 
             if(App.PlatformKind == UIPlatformKind.WxWidgets)
             {
-                if(GraphicsFactory.ForceSkiaSharpRendering)
+                if(VirtualListBox.DefaultRenderingFlags.HasFlag(ControlRenderingFlags.UseSkiaSharp))
                 {
-                    App.DebugLog("SkiaSharp rendering is forcibly enabled.");
+                    App.DebugLog("SkiaSharp rendering is forcibly enabled for VirtualListBox.");
                 }
 
-                if(GraphicsFactory.ForceOpenGLRendering)
+                if(VirtualListBox.DefaultRenderingFlags.HasFlag(ControlRenderingFlags.UseOpenGL))
                 {
-                    App.DebugLog("OpenGL rendering is forcibly enabled.");
+                    App.DebugLog("OpenGL rendering is forcibly enabled for VirtualListBox.");
                 }
             }
         }
@@ -707,8 +707,8 @@ namespace Alternet.UI
             LogMeasureSkiaFont("xy;", SkiaUtils.DefaultFont);
             App.LogEmptyLine();
 
-            var canvas1 = GraphicsFactory.GetOrCreateMemoryCanvas(1);
-            var canvas2 = GraphicsFactory.GetOrCreateMemoryCanvas(2);
+            var canvas1 = GraphicsFactory.GetOrCreateMemoryCanvas(new(1));
+            var canvas2 = GraphicsFactory.GetOrCreateMemoryCanvas(new(2));
 
             var textWidth1 = canvas1.MeasureText("Hello", AbstractControl.DefaultFont);
             var textWidth2 = canvas2.MeasureText("Hello", AbstractControl.DefaultFont);

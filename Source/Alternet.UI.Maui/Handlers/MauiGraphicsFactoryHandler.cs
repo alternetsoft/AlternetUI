@@ -298,9 +298,9 @@ namespace Alternet.UI
             throw new NotImplementedException();
         }
 
-        public Graphics CreateMemoryCanvas(Coord scaleFactor)
+        public Graphics CreateMemoryCanvas(Graphics.CanvasCreateParams createParams)
         {
-            return SkiaUtils.CreateMeasureCanvas(scaleFactor);
+            return SkiaUtils.CreateMeasureCanvas(createParams.ScaleFactor);
         }
 
         public IGenericImageHandler CreateGenericImageHandler(int width, int height, SKColor[] data)

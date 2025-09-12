@@ -56,15 +56,15 @@ namespace Alternet.Drawing
             }
         }
 
-        public Graphics CreateMemoryCanvas(double scaleFactor)
+        public Graphics CreateMemoryCanvas(Graphics.CanvasCreateParams prm)
         {
-            if (GraphicsFactory.ForceSkiaSharpRendering)
+            if (prm.ControlRenderingFlags.HasFlag(ControlRenderingFlags.UseSkiaSharp))
             {
-                return SkiaUtils.CreateMeasureCanvas(scaleFactor);
+                return SkiaUtils.CreateMeasureCanvas(prm.ScaleFactor);
             }
             else
             {
-                return new WxGraphics(UI.Native.DrawingContext.CreateMemoryDC(scaleFactor));
+                return new WxGraphics(UI.Native.DrawingContext.CreateMemoryDC(prm.ScaleFactor));
             }
         }
 

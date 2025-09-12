@@ -18,7 +18,7 @@ namespace Alternet.Drawing
         {
             get
             {
-                Graphics.RequireMeasure(Display.MaxScaleFactor, ref measure);
+                Graphics.RequireMeasure(ref measure, new(Display.MaxScaleFactor));
                 return measure;
             }
         }

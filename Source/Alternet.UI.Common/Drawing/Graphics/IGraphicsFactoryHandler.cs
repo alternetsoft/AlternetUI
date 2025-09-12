@@ -25,9 +25,9 @@ namespace Alternet.Drawing
         /// <summary>
         /// Creates memory drawing context.
         /// </summary>
-        /// <param name="scaleFactor">Scale factor.</param>
+        /// <param name="prm">The parameters for creating the measurement canvas.</param>
         /// <returns></returns>
-        Graphics CreateMemoryCanvas(Coord scaleFactor);
+        Graphics CreateMemoryCanvas(Graphics.CanvasCreateParams prm);
 
         /// <summary>
         /// Creates memory drawing context.

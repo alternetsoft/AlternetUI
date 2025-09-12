@@ -75,20 +75,16 @@ namespace Alternet.Drawing
         /// </summary>
         public static bool DefaultAntialiasing = true;
 
-        private static readonly BaseDictionary<Coord, Graphics> MemoryCanvases = new();
+        private static readonly BaseDictionary<Graphics.CanvasCreateParams, Graphics> MemoryCanvases = new();
 
         private static bool imageBitsFormatsLoaded = false;
         private static ImageBitsFormat nativeBitsFormat;
         private static ImageBitsFormat alphaBitsFormat;
         private static ImageBitsFormat genericBitsFormat;
         private static IGraphicsFactoryHandler? handler;
-        private static bool forceSkiaSharpRendering;
-        private static bool forceOpenGLRendering;
 
         static GraphicsFactory()
         {
-            forceSkiaSharpRendering = false;
-            forceOpenGLRendering = false;
         }
 
         /// <summary>
@@ -96,35 +92,6 @@ namespace Alternet.Drawing
         /// implemented in the <see cref="GraphicsFactory"/>.
         /// </summary>
         public static event EventHandler? PaintCreated;
-
-        /// <summary>
-        /// Indicates whether SkiaSharp rendering is forcibly enabled.
-        /// </summary>
-        /// <remarks>This property allows overriding the default rendering behavior to use SkiaSharp.
-        /// </remarks>
-        public static bool ForceSkiaSharpRendering
-        {
-            get => forceSkiaSharpRendering;
-
-            set
-            {
-                forceSkiaSharpRendering = value;
-            }
-        }
-
-        /// <summary>
-        /// Gets or sets a value indicating whether OpenGL rendering is forcibly enabled.
-        /// This setting is used when <see cref="ForceSkiaSharpRendering"/> is true.
-        /// </summary>
-        public static bool ForceOpenGLRendering
-        {
-            get => forceOpenGLRendering;
-
-            set
-            {
-                forceOpenGLRendering = value;
-            }
-        }
 
         /// <summary>
         /// Gets or sets <see cref="IGraphicsFactoryHandler"/> object which is used internally
@@ -269,15 +236,14 @@ namespace Alternet.Drawing
         /// Gets memory canvas for the specified scale factor. This canvas can be used
         /// to perform text measure.
         /// </summary>
-        /// <param name="scaleFactor">Scale factor.</param>
+        /// <param name="prm">The parameters for creating the measurement canvas.</param>
         /// <returns></returns>
         /// <remarks>
         /// Use <see cref="Graphics.RequireMeasure"/> to get measurement canvas.
         /// </remarks>
-        public static Graphics GetOrCreateMemoryCanvas(Coord? scaleFactor = null)
+        public static Graphics GetOrCreateMemoryCanvas(Graphics.CanvasCreateParams prm)
         {
-            var factor = ScaleFactorOrDefault(scaleFactor);
-            var result = MemoryCanvases.GetOrCreate(factor, () => CreateMemoryCanvas(factor));
+            var result = MemoryCanvases.GetOrCreate(prm, () => CreateMemoryCanvas(prm));
             return result;
         }
 
@@ -295,12 +261,11 @@ namespace Alternet.Drawing
         /// Creates memory canvas for the specified scale factor. This canvas can be used
         /// to perform text measure.
         /// </summary>
-        /// <param name="scaleFactor">Scale factor.</param>
+        /// <param name="prm">The parameters for creating the measurement canvas.</param>
         /// <returns></returns>
-        public static Graphics CreateMemoryCanvas(Coord? scaleFactor = null)
+        public static Graphics CreateMemoryCanvas(Graphics.CanvasCreateParams prm)
         {
-            var factor = ScaleFactorOrDefault(scaleFactor);
-            return Handler.CreateMemoryCanvas(factor);
+            return Handler.CreateMemoryCanvas(prm);
         }
 
         /// <summary>

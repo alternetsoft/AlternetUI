@@ -55,7 +55,7 @@ namespace Alternet.UI.Native
             if (!uiControl.VisibleOnScreen)
                 return;
 
-            var skia = Drawing.GraphicsFactory.ForceSkiaSharpRendering;
+            var skia = uiControl.RenderingFlags.HasFlag(ControlRenderingFlags.UseSkiaSharp);
 
             Drawing.Graphics CreateDefaultGraphics()
             {
@@ -129,7 +129,7 @@ namespace Alternet.UI.Native
 
             if (skia)
             {
-                if(Drawing.GraphicsFactory.ForceOpenGLRendering)
+                if(uiControl.RenderingFlags.HasFlag(ControlRenderingFlags.UseOpenGL))
                     OpenGLPaint();
                 else
                     SkiaPaint();
