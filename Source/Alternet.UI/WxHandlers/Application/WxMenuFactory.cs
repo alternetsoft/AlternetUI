@@ -14,26 +14,48 @@ namespace Alternet.UI
         {
             StaticMenuEvents.ItemEnabledChanged += (s, e) =>
             {
+                if (s is not MenuItem item)
+                    return;
+                MenuItemHandle itemHandle = GetItemHandle(item);
+
+                CurrentFactory?.SetMenuItemEnabled(itemHandle, string.Empty, item.Enabled);
             };
 
             StaticMenuEvents.ItemTextChanged += (s, e) =>
             {
+                if (s is not MenuItem item)
+                    return;
+                MenuItemHandle itemHandle = GetItemHandle(item);
+                CurrentFactory?.SetMenuItemTextAndShortcut(itemHandle, item);
             };
 
             StaticMenuEvents.ItemShortcutChanged += (s, e) =>
             {
+                if (s is not MenuItem item)
+                    return;
+                MenuItemHandle itemHandle = GetItemHandle(item);
+                CurrentFactory?.SetMenuItemTextAndShortcut(itemHandle, item);
             };
 
             StaticMenuEvents.ItemCheckedChanged += (s, e) =>
             {
+                if (s is not MenuItem item)
+                    return;
+                MenuItemHandle itemHandle = GetItemHandle(item);
             };
 
             StaticMenuEvents.ItemRoleChanged += (s, e) =>
             {
+                if (s is not MenuItem item)
+                    return;
+                MenuItemHandle itemHandle = GetItemHandle(item);
             };
 
             StaticMenuEvents.ItemImageChanged += (s, e) =>
             {
+                if (s is not MenuItem item)
+                    return;
+                MenuItemHandle itemHandle = GetItemHandle(item);
             };
 
             StaticMenuEvents.ItemChanged += (s, e) =>
@@ -61,6 +83,58 @@ namespace Alternet.UI
             nativeMenu = null!;
             Native.Menu.GlobalObject = null;
             base.DisposeManaged();
+        }
+
+        public static WxMenuFactory? CurrentFactory => MenuUtils.Factory as WxMenuFactory;
+
+        public static MenuItemHandle? MenuItemHandleFromId(Window window, string id)
+        {
+            if (window is null)
+                return null;
+            var handler = window.Handler as WindowHandler;
+            if (handler?.NativeControl is not UI.Native.Window nativeWindow)
+                return null;
+            var itemPtr = Native.Menu.FindMenuItem(nativeWindow, id);
+            if (itemPtr == IntPtr.Zero)
+                return null;
+            return new MenuItemHandle(itemPtr);
+        }
+
+        public static MenuItemHandle? FindMenuItem(Window window, string id)
+        {
+            var handler = window.Handler as WindowHandler;
+            if (handler?.NativeControl is not UI.Native.Window nativeWindow)
+                return null;
+            var itemPtr = Native.Menu.FindMenuItem(nativeWindow, id);
+            if (itemPtr == IntPtr.Zero)
+                return null;
+            return new MenuItemHandle(itemPtr);
+        }
+
+        public static MenuItemHandle GetItemHandle(MenuItem item)
+        {
+            if (item is null)
+                return new MenuItemHandle(IntPtr.Zero);
+            var window = item.AttachedWindow;
+            if (window is null)
+                return new MenuItemHandle(IntPtr.Zero);
+            return MenuItemHandleFromId(window, item.UniqueId.ToString()) ?? new MenuItemHandle(IntPtr.Zero);
+        }
+
+        public static MainMenuHandle? MainMenuHandleFromItem(MenuItem? item)
+        {
+            if (item is null)
+                return null;
+            var menuBar = item.MenuBar;
+            if (menuBar is null)
+                return null;
+            var window = menuBar.AttachedWindow;
+            if (window is null)
+                return null;
+            if (MenuUtils.Factory is not WxMenuFactory factory)
+                return null;
+            var mainMenuHandle = factory.GetMainMenu(window);
+            return mainMenuHandle;
         }
 
         public ContextMenuHandle CreateContextMenu(string id, ContextMenu? menu)
@@ -229,6 +303,29 @@ namespace Alternet.UI
             Native.Menu.SetMenuItemSubMenu(itemPtr, id, subMenuPtr);
         }
 
+        public virtual void SetMenuItemTextAndShortcut(
+            MenuItemHandle handle,
+            MenuItem item)
+        {
+            string? rightText = null;
+
+            if (item.ShortcutInfo is not null)
+            {
+                ShortcutInfo.FormatOptions options = new()
+                {
+                    ForUser = true,
+                };
+
+                rightText = item.ShortcutInfo.ToString(options);
+
+                var key = item.ShortcutInfo.GetFirstPlatformSpecificKey();
+                if (key is not null)
+                    SetMenuItemShortcut(handle, string.Empty, key.Key, key.Modifiers);
+            }
+
+            SetMenuItemText(handle, string.Empty, item.Text, rightText ?? string.Empty);
+        }
+
         public virtual void SetMenuItemText(
             MenuItemHandle handle,
             string id,
@@ -361,23 +458,7 @@ namespace Alternet.UI
             if (!item.Enabled)
                 SetMenuItemEnabled(handle, string.Empty, item.Enabled);
 
-            string? rightText = null;
-
-            if (item.ShortcutInfo is not null)
-            {
-                ShortcutInfo.FormatOptions options = new()
-                {
-                    ForUser = true,
-                };
-
-                rightText = item.ShortcutInfo.ToString(options);
-
-                var key = item.ShortcutInfo.GetFirstPlatformSpecificKey();
-                if (key is not null)
-                    SetMenuItemShortcut(handle, string.Empty, key.Key, key.Modifiers);
-            }
-
-            SetMenuItemText(handle, string.Empty, item.Text, rightText ?? string.Empty);
+            SetMenuItemTextAndShortcut(handle, item);
 
             if (isChecked)
                 SetMenuItemChecked(handle, string.Empty, isChecked);
@@ -425,13 +506,20 @@ namespace Alternet.UI
             return result;
         }
 
+        public MainMenuHandle? GetMainMenu(Window window)
+        {
+            var handler = window.Handler as WindowHandler;
+            if (handler?.NativeControl is not UI.Native.Window nativeWindow)
+                return null;
+            var menuPtr = Native.Menu.GetMainMenu(nativeWindow);
+            if (menuPtr == IntPtr.Zero)
+                return null;
+            return new MainMenuHandle(menuPtr);
+        }
+
         public override void SetMainMenu(Window window, MainMenu? menu)
         {
-            if (MenuUtils.Factory is not WxMenuFactory factory)
-                return;
-
             var handler = window.Handler as WindowHandler;
-
             if (handler?.NativeControl is not UI.Native.Window nativeWindow)
                 return;
 
@@ -441,7 +529,7 @@ namespace Alternet.UI
                 return;
             }
 
-            var menuHandle = factory.CreateMainMenuHandle(menu);
+            var menuHandle = CreateMainMenuHandle(menu);
 
             Native.Menu.SetMainMenu(nativeWindow, menuHandle?.AsPointer ?? IntPtr.Zero);
         }
@@ -488,7 +576,14 @@ namespace Alternet.UI
 
         protected virtual void OnNativeMenuClick()
         {
-            RaiseMenuClick(new StringEventArgs(Native.Menu.EventMenuItemId));
+            var menu = Menu.MenuFromStringId(Native.Menu.EventMenuItemId);
+
+            if (menu is MenuItem menuItem)
+            {
+                menuItem.Checked = Native.Menu.EventMenuItemChecked;
+                menuItem.RaiseClick();
+                return;
+            }
         }
 
         /// <summary>
@@ -504,7 +599,8 @@ namespace Alternet.UI
             }
 
             /// <summary>
-            /// Initializes a new instance of the <see cref="MainMenuHandle"/> class with the specified handle.
+            /// Initializes a new instance of the <see cref="MainMenuHandle"/> class
+            /// with the specified handle.
             /// </summary>
             /// <param name="handle">The native handle object to wrap.</param>
             public MainMenuHandle(object handle)
@@ -526,7 +622,8 @@ namespace Alternet.UI
             }
 
             /// <summary>
-            /// Initializes a new instance of the <see cref="MenuItemHandle"/> class with the specified handle.
+            /// Initializes a new instance of the <see cref="MenuItemHandle"/> class
+            /// with the specified handle.
             /// </summary>
             /// <param name="handle">The native handle object to wrap.</param>
             public MenuItemHandle(object handle)
@@ -548,7 +645,8 @@ namespace Alternet.UI
             }
 
             /// <summary>
-            /// Initializes a new instance of the <see cref="ContextMenuHandle"/> class with the specified handle.
+            /// Initializes a new instance of the <see cref="ContextMenuHandle"/> class
+            /// with the specified handle.
             /// </summary>
             /// <param name="handle">The native handle object to wrap.</param>
             public ContextMenuHandle(object handle)

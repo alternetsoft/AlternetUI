@@ -16,6 +16,7 @@ namespace MenuSample
 
         private readonly string ResPrefix;
         private readonly string CalendarUrl;
+        private readonly ContextMenu contextMenu;
 
         private int newItemIndex = 0;
 
@@ -53,13 +54,21 @@ namespace MenuSample
             ExportToPngCommand?.Execute(null);
         }
 
-        public void SaveCommand_Click(object? sender, EventArgs e)
-        {
-            SaveCommand?.Execute(null);
-        }
-
         public MenuMainWindow()
         {
+            contextMenu = new ExampleContextMenu();
+            contextMenu.AddSeparator();
+            contextMenu.Add("Toggle shortcut in main menu", () =>
+            {
+                var shortcut1 = new KeyGesture(Key.O, ModifierKey.Control);
+                var shortcut2 = new KeyGesture(Key.O, ModifierKey.ControlShift);
+
+                if (openMenuItem.Shortcut?.HasKey(shortcut1) ?? false)
+                    openMenuItem.Shortcut = shortcut2;
+                else
+                    openMenuItem.Shortcut = shortcut1;
+            });
+
             var resFolder =
                 ImageSize == 16 ? "Resources.ToolBarPng.Small." : "Resources.ToolBarPng.Large.";
 
@@ -140,11 +149,17 @@ namespace MenuSample
 
             this.Menu = mainMenu;
 
+            bool logItemChanged = false;
+
             mainMenu.ItemChanged += (s,e) =>
             {
+                if(!logItemChanged)
+                    return;
                 var itemText = (e.Item is MenuItem mi) ? mi.Text : e.Item.GetType().ToString();
                 LogEvent($"MainMenu ItemChanged: {e.Action} in '{itemText}'");
             };
+
+            saveMenuItem.Command = SaveCommand;
         }
 
         private void MenuItem_Highlighted(object? sender, EventArgs e)
@@ -288,8 +303,10 @@ namespace MenuSample
         private void OpenMenuItem_Click(object? sender, EventArgs e) =>
             LogEvent("Open");
 
-        private void SaveEnabledMenuItem_Click(object? sender, EventArgs e) =>
+        private void SaveEnabledMenuItem_Click(object? sender, EventArgs e)
+        {
             SaveCommand!.RaiseCanExecuteChanged();
+        }
 
         private void ExportToPdfMenuItem_Click(object? sender, EventArgs e) =>
             LogEvent("Export to PDF");
@@ -409,7 +426,7 @@ namespace MenuSample
 
         private void ContextMenuBorder_MouseRightButtonUp(object? sender, MouseEventArgs e)
         {
-            new ExampleContextMenu().Show(contextMenuBorder, Mouse.GetPosition(contextMenuBorder));
+            contextMenu.Show(contextMenuBorder, Mouse.GetPosition(contextMenuBorder));
         }
 
         private void ToolbarItem_Click(object? sender, EventArgs e)

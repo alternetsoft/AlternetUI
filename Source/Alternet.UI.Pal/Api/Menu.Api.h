@@ -33,12 +33,34 @@ ALTERNET_UI_API char16_t* Menu_GetEventMenuItemId_()
     #endif
 }
 
+ALTERNET_UI_API c_bool Menu_GetEventMenuItemChecked_()
+{
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    return MarshalExceptions<c_bool>([&](){
+    #endif
+        return Menu::GetEventMenuItemChecked();
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    });
+    #endif
+}
+
 ALTERNET_UI_API void* Menu_GetMainMenu_(Window* window)
 {
     #if !defined(__WXMSW__) || defined(_DEBUG)
     return MarshalExceptions<void*>([&](){
     #endif
         return Menu::GetMainMenu(window);
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    });
+    #endif
+}
+
+ALTERNET_UI_API void* Menu_FindMenuItem_(Window* window, const char16_t* id)
+{
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    return MarshalExceptions<void*>([&](){
+    #endif
+        return Menu::FindMenuItem(window, id);
     #if !defined(__WXMSW__) || defined(_DEBUG)
     });
     #endif

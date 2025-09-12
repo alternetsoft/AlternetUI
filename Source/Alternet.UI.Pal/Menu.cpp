@@ -6,7 +6,8 @@ namespace Alternet::UI
 {
     wxAlternetMenuItem* wxAlternetMenuItem::GetSubMenuItemById(const string& id)
     {
-        auto subMenu = wxDynamicCast(GetSubMenu(), wxAlternetMenu);
+        auto wxSubMenu = GetSubMenu();
+        auto subMenu = wxDynamicCast(wxSubMenu, wxAlternetMenu);
         if (subMenu != nullptr)
             return subMenu->GetItemById(id);
         return nullptr;
@@ -24,6 +25,7 @@ namespace Alternet::UI
         if (item != nullptr)
         {
             Menu::_eventMenuItemId = item->_id;
+			Menu::_eventMenuItemChecked = item->IsCheckable() ? item->IsChecked() : false;
             Menu::RaiseStaticEvent(Menu::MenuEvent::MenuClick);
         }
     }
@@ -78,10 +80,16 @@ namespace Alternet::UI
     }
 
     string Menu::_eventMenuItemId = wxStr("");
+    bool Menu::_eventMenuItemChecked = false;
 
     string Menu::GetEventMenuItemId()
     {
         return _eventMenuItemId;
+    }
+
+    bool Menu::GetEventMenuItemChecked()
+    {
+        return _eventMenuItemChecked;
     }
 
     string Menu::GetMenuId(void* handle)
@@ -488,6 +496,22 @@ namespace Alternet::UI
             return nullptr;
         auto oldValue = frame->GetMenuBar();
 		return oldValue;
+    }
+
+    void* Menu::FindMenuItem(Window* window, const string& id)
+    {
+        if (window == nullptr)
+            return nullptr;
+        auto frame = window->GetFrame();
+        if (frame == nullptr)
+            return nullptr;
+        auto oldValue = frame->GetMenuBar();
+        if (oldValue == nullptr)
+			return nullptr;
+        wxAlternetMenuBar* alternetMenu = wxDynamicCast(oldValue, wxAlternetMenuBar);
+        if (alternetMenu == nullptr)
+			return nullptr;
+		return alternetMenu->GetMenuItemById(id);
     }
 
     void Menu::SetMainMenu(Window* window, void* menu)

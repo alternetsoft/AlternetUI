@@ -3,7 +3,10 @@
 public:
 static string GetEventMenuItemId();
 
+static bool GetEventMenuItemChecked();
+
 static void* GetMainMenu(Window* window);
+static void* FindMenuItem(Window* window, const string& id);
 static void SetMainMenu(Window* window, void* menu);
 static bool MainMenuAppend(void* menuHandle, void* menu, const string& text);
 static void MainMenuSetEnabled(void* menuHandle, const string& childId, bool enable);

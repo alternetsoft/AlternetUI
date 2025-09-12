@@ -10,6 +10,7 @@ namespace Alternet::UI
 #include "Api/Menu.inc"
     public:
         static string _eventMenuItemId;
+        static bool _eventMenuItemChecked;
 
         static wxString CoerceMenuText(const string& value);
 
@@ -112,7 +113,7 @@ namespace Alternet::UI
         {
         }
 
-        wxAlternetMenu* GetItemById(const string& id)
+        wxAlternetMenuItem* GetMenuItemById(const string& id)
         {
             for (int i = 0; i < GetMenuCount(); i++)
             {
@@ -120,8 +121,11 @@ namespace Alternet::UI
                 if (menu != nullptr)
                 {
                     auto alternetMenu = wxDynamicCast(menu, wxAlternetMenu);
-                    if (alternetMenu != nullptr && alternetMenu->_id == id)
-                        return alternetMenu;
+                    if (alternetMenu == nullptr)
+                        continue;
+					auto item = alternetMenu->GetItemById(id);
+                    if (item != nullptr)
+						return item;
                 }
             }
             return nullptr;

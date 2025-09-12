@@ -16,7 +16,7 @@
       <MenuItem Text="_File" IsTextLocalized="true" Name="fileMenu">
         <MenuItem Text="_Open..." Name="openMenuItem" IsTextLocalized="true"
                   Click="OpenMenuItem_Click" Shortcut="Ctrl+O" />
-        <MenuItem Text="_Save..." Name="saveMenuItem" Click="SaveCommand_Click"
+        <MenuItem Text="_Save..." Name="saveMenuItem"
                   Shortcut="Ctrl+S" IsTextLocalized="true"/>
         <MenuItem Text="_Save Enabled" Name="saveEnabledMenuItem" IsTextLocalized="true"
                   Click="SaveEnabledMenuItem_Click" Checked="True" />

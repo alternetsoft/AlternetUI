@@ -10,6 +10,8 @@ namespace NativeApi.Api
 
         public static IntPtr GetMainMenu(Window window) => throw new Exception();
 
+        public static IntPtr FindMenuItem(Window window, string id) => throw new Exception();
+
         public static void SetMainMenu(Window window, IntPtr menu) => throw new Exception();
 
         public static bool MainMenuAppend(IntPtr menuHandle, IntPtr menu, string text)
@@ -85,5 +87,6 @@ namespace NativeApi.Api
         public event EventHandler? MenuClosed;
 
         public static string EventMenuItemId { get; }
-     }
+        public static bool EventMenuItemChecked { get; }
+    }
 }
