@@ -200,6 +200,22 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Determines whether the specified key gesture has the same
+        /// <see cref="Key"/> and <see cref="Modifiers"/> as this instance.
+        /// </summary>
+        /// <param name="gesture">The key gesture to check. Can be <see langword="null"/>.</param>
+        /// <returns><see langword="true"/> if the specified key gesture has the same
+        /// <see cref="Key"/> and <see cref="Modifiers"/> as this instance;
+        /// otherwise, <see langword="false"/>. Returns
+        /// <see langword="false"/> if <paramref name="gesture"/> is <see langword="null"/>.</returns>
+        public virtual bool HasKey(KeyGesture? gesture)
+        {
+            if (gesture == null)
+                return false;
+            return HasKey(gesture.Key, gesture.Modifiers);
+        }
+
+        /// <summary>
         /// Gets whether <see cref="Key"/> and <see cref="Modifiers"/>
         /// are equal to the values specified in the parameters.
         /// </summary>
