@@ -19,7 +19,8 @@ namespace Alternet.Drawing
         /// </summary>
         internal const Coord HalfOfMaxValue = int.MaxValue / 2;
 
-        private Stack<TransformMatrix> stack = new();
+        private readonly Stack<TransformMatrix> stack = new();
+
         private TransformMatrix transform = new();
         private GraphicsDocument? document;
 
@@ -176,17 +177,19 @@ namespace Alternet.Drawing
         /// Updates <paramref name="storage"/> with measurement canvas which can be used
         /// in order to measure text sizes.
         /// </summary>
-        /// <param name="scaleFactor">Scaling factor.</param>
         /// <param name="storage">Updated measurement canvas.</param>
+        /// <param name="prm">The parameters for creating the measurement canvas.</param>
         /// <returns>True if <paramref name="storage"/> contains permanent canvas that
         /// can be kept in memory; False if canvas is temporary and should not be saved.</returns>
-        public static bool RequireMeasure(Coord scaleFactor, [NotNull] ref Graphics? storage)
+        public static bool RequireMeasure(
+            [NotNull] ref Graphics? storage,
+            CanvasCreateParams prm)
         {
             if (GraphicsFactory.MeasureCanvasOverride is null)
             {
-                if (storage?.ScaleFactor != scaleFactor)
+                if (storage?.ScaleFactor != prm.ScaleFactor)
                 {
-                    storage = GraphicsFactory.GetOrCreateMemoryCanvas(scaleFactor);
+                    storage = GraphicsFactory.GetOrCreateMemoryCanvas(prm);
                 }
 
                 return true;
@@ -1195,5 +1198,115 @@ namespace Alternet.Drawing
         /// </summary>
         /// <param name="matrix">New transform value.</param>
         protected abstract void SetHandlerTransform(TransformMatrix matrix);
+
+        /// <summary>
+        /// Represents the parameters required to create a measure canvas.
+        /// </summary>
+        /// <remarks>This structure is used to encapsulate the configuration options or data necessary 
+        /// for initializing a measure canvas. The specific parameters should be defined within this structure to
+        /// ensure clarity and maintainability.</remarks>
+        public struct CanvasCreateParams : IEquatable<CanvasCreateParams>
+        {
+            private Coord? scaleFactor;
+            private ControlRenderingFlags controlRenderingFlags;
+            private int? hashCode;
+
+            /// <summary>
+            /// Initializes a new instance of the <see cref="CanvasCreateParams"/> class.
+            /// </summary>
+            public CanvasCreateParams()
+            {
+            }
+
+            /// <summary>
+            /// Initializes a new instance of the <see cref="CanvasCreateParams"/>
+            /// class with the specified scale factor.
+            /// </summary>
+            /// <param name="scaleFactor">The scale factor to be applied to the canvas measurements.
+            /// If <see langword="null"/>, a default scale factor will be used.</param>
+            public CanvasCreateParams(Coord? scaleFactor)
+            {
+                this.scaleFactor = scaleFactor;
+            }
+
+            /// <summary>
+            /// Initializes a new instance of the <see cref="CanvasCreateParams"/>
+            /// class with the specified scale factor and control rendering flags.
+            /// </summary>
+            /// <param name="scaleFactor">An optional scaling factor to be applied to the canvas.
+            /// If <see langword="null"/>, no scaling is applied.</param>
+            /// <param name="controlRenderingFlags">Flags that specify how controls should
+            /// be rendered on the canvas.</param>
+            public CanvasCreateParams(Coord? scaleFactor, ControlRenderingFlags controlRenderingFlags)
+            {
+                this.controlRenderingFlags = controlRenderingFlags;
+                this.scaleFactor = scaleFactor;
+            }
+
+            /// <summary>
+            /// Specifies the rendering options for a control.
+            /// </summary>
+            /// <remarks>This field defines the flags that determine how a control is rendered.
+            /// The value is typically a combination of flags from an enumeration,
+            /// allowing for fine-grained control over rendering behavior.</remarks>
+            public ControlRenderingFlags ControlRenderingFlags
+            {
+                readonly get => controlRenderingFlags;
+
+                set
+                {
+                    controlRenderingFlags = value;
+                    hashCode = null;
+                }
+            }
+
+            /// <summary>
+            /// Represents a scaling factor for a coordinate system.
+            /// </summary>
+            /// <remarks>This field can be used to adjust the scale of a coordinate system or
+            /// transform. Ensure that the value is appropriately set to avoid unintended transformations.</remarks>
+            public Coord ScaleFactor
+            {
+                readonly get => GraphicsFactory.ScaleFactorOrDefault(scaleFactor);
+
+                set
+                {
+                    scaleFactor = value;
+                    hashCode = null;
+                }
+            }
+
+            /// <inheritdoc/>
+            public override int GetHashCode()
+            {
+                return hashCode ??= (ScaleFactor, controlRenderingFlags).GetHashCode();
+            }
+
+            /// <inheritdoc/>
+            public readonly override string ToString()
+            {
+                return $"ScaleFactor: {ScaleFactor}, ControlRenderingFlags: {ControlRenderingFlags}";
+            }
+
+            /// <inheritdoc/>
+            public override bool Equals(object obj)
+            {
+                return obj is CanvasCreateParams other && Equals(other);
+            }
+
+            /// <summary>
+            /// Determines whether the current instance is equal to another instance
+            /// of <see cref="CanvasCreateParams"/>.
+            /// </summary>
+            /// <param name="other">The <see cref="CanvasCreateParams"/> instance to compare
+            /// with the current instance.</param>
+            /// <returns><see langword="true"/> if the current instance is equal
+            /// to the <paramref name="other"/> instance; otherwise, <see langword="false"/>.</returns>
+            public readonly bool Equals(CanvasCreateParams other)
+            {
+                return ScaleFactor == other.ScaleFactor &&
+                    controlRenderingFlags == other.controlRenderingFlags;
+            }
+        }
     }
 }
