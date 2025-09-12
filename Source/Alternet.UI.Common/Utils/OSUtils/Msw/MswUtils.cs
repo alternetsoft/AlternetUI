@@ -203,6 +203,28 @@ namespace Alternet.UI
                 int cbAttribute);
 
             /// <summary>
+            /// Sets the viewport for rendering in OpenGL.
+            /// </summary>
+            /// <remarks>The viewport specifies the affine transformation of normalized device
+            /// coordinates to window coordinates. It defines the rectangular region of the window where OpenGL will
+            /// draw.  Typically, this method is called during initialization or when the window is resized.</remarks>
+            /// <param name="x">The x-coordinate of the lower-left corner of the viewport, in pixels.</param>
+            /// <param name="y">The y-coordinate of the lower-left corner of the viewport, in pixels.</param>
+            /// <param name="width">The width of the viewport, in pixels. Must be greater than or equal to 0.</param>
+            /// <param name="height">The height of the viewport, in pixels. Must be greater than or equal to 0.</param>
+            [DllImport("opengl32.dll")]
+            public static extern void glViewport(int x, int y, int width, int height);
+
+            /// <summary>
+            /// Exchanges the front and back buffers if the pixel format supports double buffering.
+            /// </summary>
+            /// <param name="hdc">Handle to the device context associated with the OpenGL rendering surface.</param>
+            /// <returns>True if the operation succeeds; otherwise, false.</returns>
+            [DllImport("gdi32.dll", SetLastError = true)]
+            [return: MarshalAs(UnmanagedType.Bool)]
+            public static extern bool SwapBuffers(IntPtr hdc);
+
+            /// <summary>
             /// Windows-specific: resolve OpenGL function pointers
             /// </summary>
             /// <param name="name"></param>
