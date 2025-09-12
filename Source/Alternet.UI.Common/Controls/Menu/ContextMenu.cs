@@ -61,17 +61,31 @@ namespace Alternet.UI
             set => relatedControl.Value = value;
         }
 
+        [Browsable(false)]
+        public virtual bool HasMainMenuInParents
+        {
+            get
+            {
+                if (LogicalParent is MenuItem parentMenuItem)
+                {
+                    return parentMenuItem.HasMainMenuInParents;
+                }
+
+                return LogicalParent is MainMenu;
+            }
+        }
+
         /// <summary>
         /// Gets a value indicating whether this <see cref="ContextMenu"/> is attached to the main menu.
         /// </summary>
         [Browsable(false)]
-        public virtual bool IsAttachedToMainMenu
+        public virtual bool IsImmediateChildOfMainMenu
         {
             get
             {
-                if(LogicalParent is MenuItem parentMenuItem)
+                if (LogicalParent is MenuItem parentMenuItem)
                 {
-                    return parentMenuItem.IsAttachedToMainMenu;
+                    return parentMenuItem.IsImmediateChildOfMainMenu;
                 }
 
                 return false;
@@ -79,10 +93,10 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Gets a value indicating whether this object is attached to a <see cref="MenuItem"/>.
+        /// Gets a value indicating whether this object is an immediate child of a <see cref="MenuItem"/>.
         /// </summary>
         [Browsable(false)]
-        public bool IsAttachedToMenuItem
+        public bool IsImmediateChildOfMenuItem
         {
             get
             {
