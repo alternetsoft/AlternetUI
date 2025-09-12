@@ -58,6 +58,16 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Retrieves the default rendering flags for the control.
+        /// </summary>
+        /// <returns>A <see cref="ControlRenderingFlags"/> value representing the default rendering behavior.
+        /// The default is <see cref="ControlRenderingFlags.None"/>.</returns>
+        protected virtual ControlRenderingFlags GetDefaultRenderingFlags()
+        {
+            return ControlRenderingFlags.None;
+        }
+
+        /// <summary>
         /// Returns the size of the area which can fit all the children of this
         /// control, with an added padding.
         /// </summary>
