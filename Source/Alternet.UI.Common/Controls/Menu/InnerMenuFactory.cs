@@ -52,24 +52,6 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Calls the <see cref="MenuItem.RaiseClick()"/> method of the <see cref="MenuItem"/> instance
-        /// specified by <paramref name="args"/>.
-        /// </summary>
-        /// <param name="args">The event arguments.</param>
-        protected virtual void RaiseMenuClick(StringEventArgs args)
-        {
-            var menu = Menu.MenuFromStringId(args.Value);
-
-            LogEvent(menu, "Click");
-
-            if (menu is MenuItem menuItem)
-            {
-                menuItem.RaiseClick();
-                return;
-            }
-        }
-
-        /// <summary>
         /// Calls the <see cref="MenuItem.RaiseHighlighted"/> method of the <see cref="MenuItem"/> instance
         /// specified by <paramref name="args"/>.
         /// </summary>
@@ -112,7 +94,7 @@ namespace Alternet.UI
 
             if (menu is ContextMenu contextMenu)
             {
-                var recursive = contextMenu.IsImmediateChildOfMainMenu;
+                var recursive = contextMenu.HasMainMenuParent;
                 contextMenu.RaiseOpening(EventArgsUtils.DefaultCancelEventArgs, recursive);
                 return;
             }
