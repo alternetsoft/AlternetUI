@@ -53,9 +53,9 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        protected override void OnItemChanged(Menu item, MenuChangeKind action)
+        protected override void OnItemChanged(Menu item, MenuChangeEventArgs e)
         {
-            base.OnItemChanged(item, action);
+            base.OnItemChanged(item, e);
         }
 
         /// <inheritdoc/>

@@ -67,9 +67,93 @@ namespace Alternet.UI
                     CurrentFactory?.SetMenuItemBitmap(itemHandle, item.Image);
             };
 
+            StaticMenuEvents.ItemVisibleChanged += (s, e) =>
+            {
+                if (s is not MenuItem item || item.LogicalParent is null)
+                    return;
+
+                if (item.Visible)
+                {
+                    ShowItem(item);
+                }
+                else
+                {
+                    HideItem(item);
+                }
+            };
+
+            StaticMenuEvents.ItemRemoved += (s, e) =>
+            {
+                if (e.Item is not MenuItem item)
+                    return;
+                HideItem(item);
+            };
+
+            StaticMenuEvents.ItemInserted += (s, e) =>
+            {
+                if (e.Item is not MenuItem item)
+                    return;
+                ShowItem(item);
+            };
+
             StaticMenuEvents.ItemChanged += (s, e) =>
             {
             };
+
+            void ShowItem(MenuItem item)
+            {
+                if (item.HasMainMenuParent)
+                {
+                    ShowItemInMainMenu();
+                }
+                else
+                {
+                    ShowItemInContextMenu();
+                }
+
+                void ShowItemInMainMenu()
+                {
+                }
+
+                void ShowItemInContextMenu()
+                {
+                }
+            }
+
+            void HideItem(MenuItem item)
+            {
+                if (item.HasMainMenuParent)
+                {
+                    HideItemInMainMenu();
+                }
+                else
+                {
+                    HideItemInContextMenu();
+                }
+
+                void HideItemInMainMenu()
+                {
+                    var menuBarHandles = item.MenuBar?.GetHostObjects<MainMenuHandle>() ?? [];
+                    var id = item.ItemsMenu.UniqueId.ToString();
+                    foreach (var menuBarHandle in menuBarHandles)
+                    {
+                        CurrentFactory?.MainMenuRemove(menuBarHandle, id);
+                    }
+                }
+
+                void HideItemInContextMenu()
+                {
+                    if (item.LogicalParent is not ContextMenu contextMenu)
+                        return;
+                    var contextMenuHandles = contextMenu.GetHostObjects<ContextMenuHandle>();
+                    var id = item.UniqueId.ToString();
+
+                    foreach (var menuHandle in contextMenuHandles)
+                    {
+                        CurrentFactory?.MenuRemoveItem(menuHandle, id);
+                    }
+                }
+            }
         }
 
         public WxMenuFactory()
@@ -424,23 +508,26 @@ namespace Alternet.UI
         /// specified or default factory.</remarks>
         /// <returns>A <see cref="ContextMenuHandle"/> representing the created context menu, or
         /// <see langword="null"/> if no factory is available.</returns>
-        public virtual ContextMenuHandle? CreateItemsHandle(ContextMenu? menu)
+        public virtual ContextMenuHandle? CreateItemsHandle(ContextMenu? menu, bool allowEmpty = false)
         {
             if (menu == null)
                 return null;
 
-            if (!menu.HasItems)
+            if (!menu.HasItems && !allowEmpty)
                 return null;
 
             var result = CreateContextMenu(menu.UniqueId.ToString(), menu);
 
-            foreach (var item in menu.Items)
+            if (menu.HasItems)
             {
-                if (!item.Visible)
-                    continue;
-                var itemHandle = CreateItemHandle(item);
-                if (itemHandle is not null)
-                    MenuAddItem(result, itemHandle);
+                foreach (var item in menu.Items)
+                {
+                    if (!item.Visible)
+                        continue;
+                    var itemHandle = CreateItemHandle(item);
+                    if (itemHandle is not null)
+                        MenuAddItem(result, itemHandle);
+                }
             }
 
             return result;
@@ -520,7 +607,7 @@ namespace Alternet.UI
                 if (!item.Visible)
                     continue;
 
-                var subMenuHandle = CreateItemsHandle(item.ItemsMenu);
+                var subMenuHandle = CreateItemsHandle(item.ItemsMenu, allowEmpty: true);
                 if (subMenuHandle == null)
                     continue;
 

@@ -215,7 +215,7 @@ namespace Alternet.UI
             }
             else
             {
-                RaiseItemChanged(this, MenuChangeKind.Any);
+                RaiseItemChanged(this, new MenuChangeEventArgs(this, MenuChangeKind.Any));
             }
         }
 
@@ -234,18 +234,29 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Raises an event to notify that a menu item has changed.
+        /// </summary>
+        /// <param name="item">The <see cref="Menu"/> instance that has changed.</param>
+        /// <param name="kind">The type of change that occurred, represented
+        /// by a <see cref="MenuChangeKind"/> value.</param>
+        public void RaiseItemChanged(Menu item, MenuChangeKind kind)
+        {
+            var e = new MenuChangeEventArgs(item, kind);
+            RaiseItemChanged(item, e);
+        }
+
+        /// <summary>
         /// Notifies that a change has occurred to the specified child item.
         /// </summary>
         /// <param name="item">The child item that has been changed.
         /// Cannot be <see langword="null"/>.</param>
-        /// <param name="action">The type of change that occurred, represented
-        /// by a <see cref="MenuChangeKind"/> value.</param>
-        public void RaiseItemChanged(Menu item, MenuChangeKind action)
+        /// <param name="e"></param>
+        public void RaiseItemChanged(Menu item, MenuChangeEventArgs e)
         {
-            OnItemChanged(item, action);
-            ItemChanged?.Invoke(this, new MenuChangeEventArgs(item, action));
+            OnItemChanged(item, e);
+            ItemChanged?.Invoke(this, e);
             if (LogicalParent is Menu parentMenu)
-                parentMenu.RaiseItemChanged(item, action);
+                parentMenu.RaiseItemChanged(item, e);
         }
 
         /// <summary>
@@ -256,9 +267,8 @@ namespace Alternet.UI
         /// or removals.</remarks>
         /// <param name="item">The <see cref="Menu"/> instance that was changed.
         /// Cannot be <see langword="null"/>.</param>
-        /// <param name="action">The type of change that occurred,
-        /// represented by a <see cref="MenuChangeKind"/> value.</param>
-        protected virtual void OnItemChanged(Menu item, MenuChangeKind action)
+        /// <param name="e">The event arguments containing information about the change.</param>
+        protected virtual void OnItemChanged(Menu item, MenuChangeEventArgs e)
         {
         }
 
@@ -266,14 +276,18 @@ namespace Alternet.UI
         protected override void OnItemRemoved(object? sender, int index, MenuItem item)
         {
             base.OnItemRemoved(sender, index, item);
-            RaiseItemChanged(item, MenuChangeKind.ItemRemoved);
+            var e = new MenuChangeEventArgs(item, MenuChangeKind.ItemRemoved, index);
+            RaiseItemChanged(item, e);
+            StaticMenuEvents.RaiseItemRemoved(this, e);
         }
 
         /// <inheritdoc/>
         protected override void OnItemInserted(object? sender, int index, MenuItem item)
         {
             base.OnItemInserted(sender, index, item);
-            RaiseItemChanged(item, MenuChangeKind.ItemInserted);
+            var e = new MenuChangeEventArgs(item, MenuChangeKind.ItemInserted, index);
+            RaiseItemChanged(item, e);
+            StaticMenuEvents.RaiseItemInserted(this, e);
         }
 
         /// <inheritdoc/>
