@@ -74,11 +74,11 @@ namespace Alternet.UI
 
                 if (item.Visible)
                 {
-                    ShowItem(item);
+                    InsertItem(item);
                 }
                 else
                 {
-                    HideItem(item);
+                    RemoveItem(item);
                 }
             };
 
@@ -86,52 +86,86 @@ namespace Alternet.UI
             {
                 if (e.Item is not MenuItem item)
                     return;
-                HideItem(item);
+                if (item.LogicalParent != s)
+                    return;
+                RemoveItem(item);
             };
 
             StaticMenuEvents.ItemInserted += (s, e) =>
             {
                 if (e.Item is not MenuItem item)
                     return;
-                ShowItem(item);
+                if(item.LogicalParent != s)
+                    return;
+                InsertItem(item);
             };
 
             StaticMenuEvents.ItemChanged += (s, e) =>
             {
             };
 
-            void ShowItem(MenuItem item)
+            void InsertItem(MenuItem item)
             {
                 if (item.HasMainMenuParent)
                 {
-                    ShowItemInMainMenu();
+                    InsertToMainMenu();
                 }
                 else
                 {
-                    ShowItemInContextMenu();
+                    InsertToContextMenu();
                 }
 
-                void ShowItemInMainMenu()
+                void InsertToMainMenu()
                 {
+                    var menuBarHandles = item.MenuBar?.GetHostObjects<MainMenuHandle>() ?? [];
+
+                    if (item.IsLastInParent)
+                    {
+                        foreach (var menuBarHandle in menuBarHandles)
+                        {
+                            CurrentFactory?.AppendItemToMainMenu(menuBarHandle, item);
+                        }
+                    }
+                    else
+                    {
+                    }
+
+                    var id = item.ItemsMenu.UniqueId.ToString();
                 }
 
-                void ShowItemInContextMenu()
+                void InsertToContextMenu()
                 {
+                    if (item.LogicalParent is not MenuItem parent)
+                        return;
+                    var contextMenuHandles = parent.ItemsMenu.GetHostObjects<ContextMenuHandle>();
+
+                    if (item.IsLastInParent)
+                    {
+                        foreach (var menuHandle in contextMenuHandles)
+                        {
+                            var itemHandle = CurrentFactory?.CreateItemHandle(item);
+                            if (itemHandle is not null)
+                                CurrentFactory?.MenuAddItem(menuHandle, itemHandle);
+                        }
+                    }
+                    else
+                    {
+                    }
                 }
             }
 
-            void HideItem(MenuItem item)
+            void RemoveItem(MenuItem item)
             {
                 if (item.HasMainMenuParent)
                 {
-                    HideItemInMainMenu();
+                    RemoveItemFromMainMenu();
                 }
                 else
                 {
-                    HideItemInContextMenu();
+                    RemoveItemFromContextMenu();
                 }
 
-                void HideItemInMainMenu()
+                void RemoveItemFromMainMenu()
                 {
                     var menuBarHandles = item.MenuBar?.GetHostObjects<MainMenuHandle>() ?? [];
                     var id = item.ItemsMenu.UniqueId.ToString();
@@ -141,11 +175,11 @@ namespace Alternet.UI
                     }
                 }
 
-                void HideItemInContextMenu()
+                void RemoveItemFromContextMenu()
                 {
-                    if (item.LogicalParent is not ContextMenu contextMenu)
+                    if (item.LogicalParent is not MenuItem parent)
                         return;
-                    var contextMenuHandles = contextMenu.GetHostObjects<ContextMenuHandle>();
+                    var contextMenuHandles = parent.ItemsMenu.GetHostObjects<ContextMenuHandle>();
                     var id = item.UniqueId.ToString();
 
                     foreach (var menuHandle in contextMenuHandles)
@@ -606,15 +640,19 @@ namespace Alternet.UI
             {
                 if (!item.Visible)
                     continue;
-
-                var subMenuHandle = CreateItemsHandle(item.ItemsMenu, allowEmpty: true);
-                if (subMenuHandle == null)
-                    continue;
-
-                MainMenuAppend(result, subMenuHandle, item.Text);
+                AppendItemToMainMenu(result, item);
             }
 
             return result;
+        }
+
+        public void AppendItemToMainMenu(MainMenuHandle menuHandle, MenuItem item)
+        {
+            var subMenuHandle = CreateItemsHandle(item.ItemsMenu, allowEmpty: true);
+            if (subMenuHandle == null)
+                return;
+
+            MainMenuAppend(menuHandle, subMenuHandle, item.Text);
         }
 
         public MainMenuHandle? GetMainMenu(Window window)
