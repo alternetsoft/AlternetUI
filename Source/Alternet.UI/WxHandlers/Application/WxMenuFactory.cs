@@ -16,49 +16,55 @@ namespace Alternet.UI
             {
                 if (s is not MenuItem item)
                     return;
-                MenuItemHandle itemHandle = GetItemHandle(item);
+                var itemHandles = GetItemHandles(item);
 
-                CurrentFactory?.SetMenuItemEnabled(itemHandle, item.Enabled);
+                foreach (var itemHandle in itemHandles)
+                    CurrentFactory?.SetMenuItemEnabled(itemHandle, item.Enabled);
             };
 
             StaticMenuEvents.ItemTextChanged += (s, e) =>
             {
                 if (s is not MenuItem item)
                     return;
-                MenuItemHandle itemHandle = GetItemHandle(item);
-                CurrentFactory?.SetMenuItemTextAndShortcut(itemHandle, item);
+                var itemHandles = GetItemHandles(item);
+                foreach (var itemHandle in itemHandles)
+                    CurrentFactory?.SetMenuItemTextAndShortcut(itemHandle, item);
             };
 
             StaticMenuEvents.ItemShortcutChanged += (s, e) =>
             {
                 if (s is not MenuItem item)
                     return;
-                MenuItemHandle itemHandle = GetItemHandle(item);
-                CurrentFactory?.SetMenuItemTextAndShortcut(itemHandle, item);
+                var itemHandles = GetItemHandles(item);
+                foreach (var itemHandle in itemHandles)
+                    CurrentFactory?.SetMenuItemTextAndShortcut(itemHandle, item);
             };
 
             StaticMenuEvents.ItemCheckedChanged += (s, e) =>
             {
                 if (s is not MenuItem item)
                     return;
-                MenuItemHandle itemHandle = GetItemHandle(item);
-                CurrentFactory?.SetMenuItemChecked(itemHandle, item.Checked && !item.HasItems);
+                var itemHandles = GetItemHandles(item);
+                foreach (var itemHandle in itemHandles)
+                    CurrentFactory?.SetMenuItemChecked(itemHandle, item.Checked && !item.HasItems);
             };
 
             StaticMenuEvents.ItemRoleChanged += (s, e) =>
             {
                 if (s is not MenuItem item)
                     return;
-                MenuItemHandle itemHandle = GetItemHandle(item);
-                CurrentFactory?.SetMenuItemRole(itemHandle, item.Role?.Name ?? string.Empty);
+                var itemHandles = GetItemHandles(item);
+                foreach (var itemHandle in itemHandles)
+                    CurrentFactory?.SetMenuItemRole(itemHandle, item.Role?.Name ?? string.Empty);
             };
 
             StaticMenuEvents.ItemImageChanged += (s, e) =>
             {
                 if (s is not MenuItem item)
                     return;
-                MenuItemHandle itemHandle = GetItemHandle(item);
-                CurrentFactory?.SetMenuItemBitmap(itemHandle, item.Image);
+                var itemHandles = GetItemHandles(item);
+                foreach (var itemHandle in itemHandles)
+                    CurrentFactory?.SetMenuItemBitmap(itemHandle, item.Image);
             };
 
             StaticMenuEvents.ItemChanged += (s, e) =>
@@ -116,14 +122,16 @@ namespace Alternet.UI
             return new MenuItemHandle(itemPtr);
         }
 
-        public static MenuItemHandle GetItemHandle(MenuItem item)
+        public static IEnumerable<MenuItemHandle> GetItemHandles(MenuItem item)
         {
-            if (item is null)
-                return new MenuItemHandle(IntPtr.Zero);
-            var window = item.AttachedWindow;
-            if (window is null)
-                return new MenuItemHandle(IntPtr.Zero);
-            return MenuItemHandleFromId(window, item.UniqueId.ToString()) ?? new MenuItemHandle(IntPtr.Zero);
+            if (item is null || item.HostObjects is null)
+                yield break;
+
+            foreach (var hostObject in item.HostObjects)
+            {
+                if (hostObject is MenuItemHandle itemHandle)
+                    yield return itemHandle;
+            }
         }
 
         public static MainMenuHandle? MainMenuHandleFromItem(MenuItem? item)
@@ -142,19 +150,25 @@ namespace Alternet.UI
             return mainMenuHandle;
         }
 
-        public ContextMenuHandle CreateContextMenu(string id, ContextMenu? menu)
+        public ContextMenuHandle CreateContextMenu(string id, ContextMenu menu)
         {
-            return new(Native.Menu.CreateContextMenu(id));
+            ContextMenuHandle result = new(Native.Menu.CreateContextMenu(id));
+            menu.AddHostObject(result);
+            return result;
         }
 
-        public MainMenuHandle CreateMainMenu(string id, MainMenu? menu)
+        public MainMenuHandle CreateMainMenu(string id, MainMenu menu)
         {
-            return new(Native.Menu.CreateMainMenu(id));
+            MainMenuHandle result = new (Native.Menu.CreateMainMenu(id));
+            menu.AddHostObject(result);
+            return result;
         }
 
-        public MenuItemHandle CreateMenuItem(MenuItemType itemType, string id, MenuItem? menuItem)
+        public MenuItemHandle CreateMenuItem(MenuItemType itemType, string id, MenuItem menuItem)
         {
-            return new(Native.Menu.CreateMenuItem(itemType, id));
+            MenuItemHandle result = new(Native.Menu.CreateMenuItem(itemType, id));
+            menuItem.AddHostObject(result);
+            return result;
         }
 
         public virtual void DestroyContextMenu(ContextMenuHandle menuHandle)
