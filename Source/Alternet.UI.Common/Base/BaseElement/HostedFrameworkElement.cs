@@ -83,6 +83,30 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Finds the index of the first host object in <see cref="HostObjects"/> that
+        /// matches the specified predicate.
+        /// </summary>
+        /// <param name="predicate">A function to test each host object for a condition.</param>
+        /// <returns>The zero-based index of the first matching host object if found;
+        /// otherwise, -1.</returns>
+        /// <exception cref="ArgumentNullException">Thrown if <paramref name="predicate"/>
+        /// is <see langword="null"/>.</exception>
+        public virtual int FindHostObjectIndex(Predicate<object> predicate)
+        {
+            if (predicate is null)
+                throw new ArgumentNullException(nameof(predicate));
+            if (hostObjects is null)
+                return -1;
+            for (int i = 0; i < hostObjects.Count; i++)
+            {
+                if (predicate(hostObjects[i]))
+                    return i;
+            }
+
+            return -1;
+        }
+
+        /// <summary>
         /// Removes the specified host object from the collection of host objects.
         /// </summary>
         /// <remarks>If the specified host object is not found in the collection, no action is
