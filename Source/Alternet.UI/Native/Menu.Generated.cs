@@ -132,34 +132,39 @@ namespace Alternet.UI.Native
             return NativeApi.Menu_GetMenuItemType_(handle);
         }
         
-        public static void SetMenuItemBitmap(System.IntPtr handle, string childId, ImageSet? value)
+        public static void SetMenuItemBitmap(System.IntPtr handle, ImageSet? value)
         {
-            NativeApi.Menu_SetMenuItemBitmap_(handle, childId, value?.NativePointer ?? IntPtr.Zero);
+            NativeApi.Menu_SetMenuItemBitmap_(handle, value?.NativePointer ?? IntPtr.Zero);
         }
         
-        public static void SetMenuItemEnabled(System.IntPtr handle, string childId, bool value)
+        public static void SetMenuItemEnabled(System.IntPtr handle, bool value)
         {
-            NativeApi.Menu_SetMenuItemEnabled_(handle, childId, value);
+            NativeApi.Menu_SetMenuItemEnabled_(handle, value);
         }
         
-        public static void SetMenuItemText(System.IntPtr handle, string childId, string value, string rightValue)
+        public static void SetMenuItemRole(System.IntPtr handle, string role)
         {
-            NativeApi.Menu_SetMenuItemText_(handle, childId, value, rightValue);
+            NativeApi.Menu_SetMenuItemRole_(handle, role);
         }
         
-        public static void SetMenuItemChecked(System.IntPtr handle, string childId, bool value)
+        public static void SetMenuItemText(System.IntPtr handle, string value, string rightValue)
         {
-            NativeApi.Menu_SetMenuItemChecked_(handle, childId, value);
+            NativeApi.Menu_SetMenuItemText_(handle, value, rightValue);
         }
         
-        public static void SetMenuItemSubMenu(System.IntPtr handle, string childId, System.IntPtr subMenuHandle)
+        public static void SetMenuItemChecked(System.IntPtr handle, bool value)
         {
-            NativeApi.Menu_SetMenuItemSubMenu_(handle, childId, subMenuHandle);
+            NativeApi.Menu_SetMenuItemChecked_(handle, value);
         }
         
-        public static void SetMenuItemShortcut(System.IntPtr handle, string childId, Alternet.UI.Key key, Alternet.UI.ModifierKeys modifierKeys)
+        public static void SetMenuItemSubMenu(System.IntPtr handle, System.IntPtr subMenuHandle)
         {
-            NativeApi.Menu_SetMenuItemShortcut_(handle, childId, key, modifierKeys);
+            NativeApi.Menu_SetMenuItemSubMenu_(handle, subMenuHandle);
+        }
+        
+        public static void SetMenuItemShortcut(System.IntPtr handle, Alternet.UI.Key key, Alternet.UI.ModifierKeys modifierKeys)
+        {
+            NativeApi.Menu_SetMenuItemShortcut_(handle, key, modifierKeys);
         }
         
         public static void MenuAddItem(System.IntPtr handle, System.IntPtr itemHandle)
@@ -219,6 +224,10 @@ namespace Alternet.UI.Native
                 {
                     MenuClosed?.Invoke(); return IntPtr.Zero;
                 }
+                case NativeApi.MenuEvent.MenuDestroying:
+                {
+                    MenuDestroying?.Invoke(); return IntPtr.Zero;
+                }
                 default: throw new Exception("Unexpected MenuEvent value: " + e);
             }
         }
@@ -227,6 +236,7 @@ namespace Alternet.UI.Native
         public Action? MenuHighlight;
         public Action? MenuOpened;
         public Action? MenuClosed;
+        public Action? MenuDestroying;
         
         [SuppressUnmanagedCodeSecurity]
         public class NativeApi : NativeApiProvider
@@ -242,6 +252,7 @@ namespace Alternet.UI.Native
                 MenuHighlight,
                 MenuOpened,
                 MenuClosed,
+                MenuDestroying,
             }
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
@@ -311,22 +322,25 @@ namespace Alternet.UI.Native
             public static extern Alternet.UI.MenuItemType Menu_GetMenuItemType_(System.IntPtr handle);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void Menu_SetMenuItemBitmap_(System.IntPtr handle, string childId, IntPtr value);
+            public static extern void Menu_SetMenuItemBitmap_(System.IntPtr handle, IntPtr value);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void Menu_SetMenuItemEnabled_(System.IntPtr handle, string childId, bool value);
+            public static extern void Menu_SetMenuItemEnabled_(System.IntPtr handle, bool value);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void Menu_SetMenuItemText_(System.IntPtr handle, string childId, string value, string rightValue);
+            public static extern void Menu_SetMenuItemRole_(System.IntPtr handle, string role);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void Menu_SetMenuItemChecked_(System.IntPtr handle, string childId, bool value);
+            public static extern void Menu_SetMenuItemText_(System.IntPtr handle, string value, string rightValue);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void Menu_SetMenuItemSubMenu_(System.IntPtr handle, string childId, System.IntPtr subMenuHandle);
+            public static extern void Menu_SetMenuItemChecked_(System.IntPtr handle, bool value);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void Menu_SetMenuItemShortcut_(System.IntPtr handle, string childId, Alternet.UI.Key key, Alternet.UI.ModifierKeys modifierKeys);
+            public static extern void Menu_SetMenuItemSubMenu_(System.IntPtr handle, System.IntPtr subMenuHandle);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void Menu_SetMenuItemShortcut_(System.IntPtr handle, Alternet.UI.Key key, Alternet.UI.ModifierKeys modifierKeys);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void Menu_MenuAddItem_(System.IntPtr handle, System.IntPtr itemHandle);

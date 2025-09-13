@@ -14,6 +14,12 @@ namespace Alternet::UI
 
         static wxString CoerceMenuText(const string& value);
 
+        static bool RaiseStaticEventWithId(MenuEvent event, string id, void* parameter = nullptr)
+        {
+            _eventMenuItemId = id;
+            return RaiseStaticEvent(event, parameter);
+        }
+
     protected:
     private:
     };
@@ -27,6 +33,7 @@ namespace Alternet::UI
         wxAlternetMenu* ownerMenu = nullptr;
         ImageSet* _normalImage = nullptr;
         string _id;
+        string _role;
 
         wxAlternetMenuItem(wxMenu* parent = nullptr,
             int id = wxID_ANY,
@@ -38,7 +45,14 @@ namespace Alternet::UI
         {
         }
 
+        ~wxAlternetMenuItem()
+        {
+            Menu::RaiseStaticEventWithId(Menu::MenuEvent::MenuDestroying, _id);
+        }
+
         wxAlternetMenuItem* GetSubMenuItemById(const string& id);
+
+        wxAlternetMenuBar* FindParentMainMenu();
     };
 
     class wxAlternetMenu : public wxMenu
@@ -56,6 +70,13 @@ namespace Alternet::UI
             Bind(wxEVT_MENU_CLOSE, &wxAlternetMenu::OnMenuClose, this);
             Bind(wxEVT_MENU_HIGHLIGHT, &wxAlternetMenu::OnMenuHighlight, this);
         }
+
+        ~wxAlternetMenu()
+        {
+            Menu::RaiseStaticEventWithId(Menu::MenuEvent::MenuDestroying, _id);
+        }
+
+        wxAlternetMenuBar* FindParentMainMenu();
 
         wxAlternetMenuItem* GetItemById(const string& id)
         {
@@ -91,7 +112,7 @@ namespace Alternet::UI
             }
 
             return -1;
-		}
+        }
 
     private:
         void OnMenuCommand(wxCommandEvent& event);
@@ -111,6 +132,11 @@ namespace Alternet::UI
         wxAlternetMenuBar(long style = 0)
             : wxMenuBar(style)
         {
+        }
+
+        ~wxAlternetMenuBar()
+        {
+            Menu::RaiseStaticEventWithId(Menu::MenuEvent::MenuDestroying, _id);
         }
 
         wxAlternetMenuItem* GetMenuItemById(const string& id)

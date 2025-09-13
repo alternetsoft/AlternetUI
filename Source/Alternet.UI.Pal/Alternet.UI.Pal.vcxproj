@@ -388,7 +388,6 @@
     <ClInclude Include="Keyboard.h" />
     <ClInclude Include="LinearGradientBrush.h" />
     <ClInclude Include="ListView.h" />
-    <ClInclude Include="MacOSMenu.h" />
     <ClInclude Include="ManagedInputStream.h" />
     <ClInclude Include="ManagedOutputStream.h" />
     <ClInclude Include="MemoryFSHandler.h" />

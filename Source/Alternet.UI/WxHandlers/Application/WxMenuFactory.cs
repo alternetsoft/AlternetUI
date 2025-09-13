@@ -18,7 +18,7 @@ namespace Alternet.UI
                     return;
                 MenuItemHandle itemHandle = GetItemHandle(item);
 
-                CurrentFactory?.SetMenuItemEnabled(itemHandle, string.Empty, item.Enabled);
+                CurrentFactory?.SetMenuItemEnabled(itemHandle, item.Enabled);
             };
 
             StaticMenuEvents.ItemTextChanged += (s, e) =>
@@ -42,6 +42,7 @@ namespace Alternet.UI
                 if (s is not MenuItem item)
                     return;
                 MenuItemHandle itemHandle = GetItemHandle(item);
+                CurrentFactory?.SetMenuItemChecked(itemHandle, item.Checked && !item.HasItems);
             };
 
             StaticMenuEvents.ItemRoleChanged += (s, e) =>
@@ -49,6 +50,7 @@ namespace Alternet.UI
                 if (s is not MenuItem item)
                     return;
                 MenuItemHandle itemHandle = GetItemHandle(item);
+                CurrentFactory?.SetMenuItemRole(itemHandle, item.Role?.Name ?? string.Empty);
             };
 
             StaticMenuEvents.ItemImageChanged += (s, e) =>
@@ -56,6 +58,7 @@ namespace Alternet.UI
                 if (s is not MenuItem item)
                     return;
                 MenuItemHandle itemHandle = GetItemHandle(item);
+                CurrentFactory?.SetMenuItemBitmap(itemHandle, item.Image);
             };
 
             StaticMenuEvents.ItemChanged += (s, e) =>
@@ -201,21 +204,29 @@ namespace Alternet.UI
             Native.Menu.MenuRemoveItem(menuPtr, id);
         }
 
-        public virtual void SetMenuItemBitmap(MenuItemHandle handle, string id, ImageSet? value)
+        public virtual void SetMenuItemBitmap(MenuItemHandle handle, ImageSet? value)
         {
             var itemPtr = handle.AsPointer;
             var nativeImage = (UI.Native.ImageSet?)value?.Handler;
             if (itemPtr == IntPtr.Zero)
                 return;
-            Native.Menu.SetMenuItemBitmap(itemPtr, id, nativeImage);
+            Native.Menu.SetMenuItemBitmap(itemPtr, nativeImage);
         }
 
-        public virtual void SetMenuItemChecked(MenuItemHandle handle, string id, bool value)
+        public virtual void SetMenuItemRole(MenuItemHandle handle, string role)
         {
             var itemPtr = handle.AsPointer;
             if (itemPtr == IntPtr.Zero)
                 return;
-            Native.Menu.SetMenuItemChecked(itemPtr, id, value);
+            Native.Menu.SetMenuItemRole(itemPtr, role);
+        }
+
+        public virtual void SetMenuItemChecked(MenuItemHandle handle, bool value)
+        {
+            var itemPtr = handle.AsPointer;
+            if (itemPtr == IntPtr.Zero)
+                return;
+            Native.Menu.SetMenuItemChecked(itemPtr, value);
         }
 
         public override void Show(
@@ -271,36 +282,34 @@ namespace Alternet.UI
             return Native.Menu.GetMenuId(ptr);
         }
 
-        public virtual void SetMenuItemEnabled(MenuItemHandle handle, string id, bool value)
+        public virtual void SetMenuItemEnabled(MenuItemHandle handle, bool value)
         {
             var itemPtr = handle.AsPointer;
             if (itemPtr == IntPtr.Zero)
                 return;
-            Native.Menu.SetMenuItemEnabled(itemPtr, id, value);
+            Native.Menu.SetMenuItemEnabled(itemPtr, value);
         }
 
         public virtual void SetMenuItemShortcut(
             MenuItemHandle handle,
-            string id,
             Key key,
             ModifierKeys modifierKeys)
         {
             var itemPtr = handle.AsPointer;
             if (itemPtr == IntPtr.Zero)
                 return;
-            Native.Menu.SetMenuItemShortcut(itemPtr, id, key, modifierKeys);
+            Native.Menu.SetMenuItemShortcut(itemPtr, key, modifierKeys);
         }
 
         public virtual void SetMenuItemSubMenu(
             MenuItemHandle handle,
-            string id,
             ContextMenuHandle subMenuHandle)
         {
             var itemPtr = handle.AsPointer;
             var subMenuPtr = subMenuHandle.AsPointer;
             if (itemPtr == IntPtr.Zero || subMenuPtr == IntPtr.Zero)
                 return;
-            Native.Menu.SetMenuItemSubMenu(itemPtr, id, subMenuPtr);
+            Native.Menu.SetMenuItemSubMenu(itemPtr, subMenuPtr);
         }
 
         public virtual void SetMenuItemTextAndShortcut(
@@ -320,22 +329,21 @@ namespace Alternet.UI
 
                 var key = item.ShortcutInfo.GetFirstPlatformSpecificKey();
                 if (key is not null)
-                    SetMenuItemShortcut(handle, string.Empty, key.Key, key.Modifiers);
+                    SetMenuItemShortcut(handle, key.Key, key.Modifiers);
             }
 
-            SetMenuItemText(handle, string.Empty, item.Text, rightText ?? string.Empty);
+            SetMenuItemText(handle, item.Text, rightText ?? string.Empty);
         }
 
         public virtual void SetMenuItemText(
             MenuItemHandle handle,
-            string id,
             string value,
             string rightValue)
         {
             var itemPtr = handle.AsPointer;
             if (itemPtr == IntPtr.Zero)
                 return;
-            Native.Menu.SetMenuItemText(itemPtr, id, value, rightValue);
+            Native.Menu.SetMenuItemText(itemPtr, value, rightValue);
         }
 
         public virtual bool MainMenuAppend(
@@ -453,21 +461,21 @@ namespace Alternet.UI
                 return null;
 
             if (item.Image is not null)
-                SetMenuItemBitmap(handle, string.Empty, item.Image);
+                SetMenuItemBitmap(handle, item.Image);
 
             if (!item.Enabled)
-                SetMenuItemEnabled(handle, string.Empty, item.Enabled);
+                SetMenuItemEnabled(handle, item.Enabled);
 
             SetMenuItemTextAndShortcut(handle, item);
 
             if (isChecked)
-                SetMenuItemChecked(handle, string.Empty, isChecked);
+                SetMenuItemChecked(handle, isChecked);
 
             if (item.HasItems && !isSeparator)
             {
                 var menuHandle = CreateItemsHandle(item.ItemsMenu);
                 if (menuHandle is not null)
-                    SetMenuItemSubMenu(handle, string.Empty, menuHandle);
+                    SetMenuItemSubMenu(handle, menuHandle);
             }
 
             return handle;

@@ -54,18 +54,18 @@ namespace NativeApi.Api
         /* Work with menu item */
 
         public static MenuItemType GetMenuItemType(IntPtr handle) => default;
-        public static void SetMenuItemBitmap(IntPtr handle, string childId, ImageSet? value) { }
-        public static void SetMenuItemEnabled(IntPtr handle, string childId, bool value) { }
-        
+        public static void SetMenuItemBitmap(IntPtr handle, ImageSet? value) { }
+        public static void SetMenuItemEnabled(IntPtr handle, bool value) { }
+        public static void SetMenuItemRole(IntPtr handle, string role) { }
+
         public static void SetMenuItemText(
             IntPtr handle,
-            string childId,
             string value,
             string rightValue) { }
 
-        public static void SetMenuItemChecked(IntPtr handle, string childId, bool value) { }
-        public static void SetMenuItemSubMenu(IntPtr handle, string childId, IntPtr subMenuHandle) { }
-        public static void SetMenuItemShortcut(IntPtr handle, string childId,
+        public static void SetMenuItemChecked(IntPtr handle, bool value) { }
+        public static void SetMenuItemSubMenu(IntPtr handle, IntPtr subMenuHandle) { }
+        public static void SetMenuItemShortcut(IntPtr handle, 
             Key key, ModifierKeys modifierKeys) { }
 
         /* Work with menu */
@@ -85,6 +85,7 @@ namespace NativeApi.Api
         public event EventHandler? MenuHighlight;
         public event EventHandler? MenuOpened;
         public event EventHandler? MenuClosed;
+        public event EventHandler? MenuDestroying;
 
         public static string EventMenuItemId { get; }
         public static bool EventMenuItemChecked { get; }

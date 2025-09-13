@@ -23,12 +23,13 @@ static void DestroyMenuItem(void* menuHandle);
 static void DestroyContextMenu(void* menuHandle);
 static string GetMenuId(void* handle);
 static MenuItemType GetMenuItemType(void* handle);
-static void SetMenuItemBitmap(void* handle, const string& childId, ImageSet* value);
-static void SetMenuItemEnabled(void* handle, const string& childId, bool value);
-static void SetMenuItemText(void* handle, const string& childId, const string& value, const string& rightValue);
-static void SetMenuItemChecked(void* handle, const string& childId, bool value);
-static void SetMenuItemSubMenu(void* handle, const string& childId, void* subMenuHandle);
-static void SetMenuItemShortcut(void* handle, const string& childId, Key key, ModifierKeys modifierKeys);
+static void SetMenuItemBitmap(void* handle, ImageSet* value);
+static void SetMenuItemEnabled(void* handle, bool value);
+static void SetMenuItemRole(void* handle, const string& role);
+static void SetMenuItemText(void* handle, const string& value, const string& rightValue);
+static void SetMenuItemChecked(void* handle, bool value);
+static void SetMenuItemSubMenu(void* handle, void* subMenuHandle);
+static void SetMenuItemShortcut(void* handle, Key key, ModifierKeys modifierKeys);
 static void MenuAddItem(void* handle, void* itemHandle);
 static void MenuRemoveItem(void* handle, const string& childId);
 static void Show(void* menuHandle, Control* control, const PointD& position);
@@ -41,6 +42,7 @@ enum class MenuEvent
     MenuHighlight,
     MenuOpened,
     MenuClosed,
+    MenuDestroying,
 };
 
 typedef void* (*MenuEventCallbackType)(Menu* obj, MenuEvent event, void* param);
