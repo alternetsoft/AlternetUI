@@ -589,10 +589,26 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets a value indicating whether this item is the last child in its parent menu.
+        /// </summary>
+        /// <remarks>This property returns <see langword="false"/> if the item does not have a logical
+        /// parent or if the parent is not a <see cref="Menu"/>.</remarks>
+        [Browsable(false)]
+        public virtual bool IsLastInParent
+        {
+            get
+            {
+                if (LogicalParent is not Menu parent)
+                    return false;
+                return parent.LastItem == this;
+            }
+        }
+
+        /// <summary>
         /// Gets the index in the items of the container.
         /// </summary>
         [Browsable(false)]
-        public int? IndexInParent
+        public virtual int? IndexInParent
         {
             get
             {
