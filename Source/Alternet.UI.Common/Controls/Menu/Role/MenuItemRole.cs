@@ -14,7 +14,7 @@ namespace Alternet.UI
     /// For more information, see <see cref="MenuItemRoles"/> class members.
     /// </remarks>
     [TypeConverter(typeof(MenuItemRoleConverter))]
-    public class MenuItemRole
+    public class MenuItemRole : IEquatable<MenuItemRole>
     {
         /// <summary>
         /// Initializes and instance of <see cref="MenuItemRole"/> class.
@@ -33,9 +33,9 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Gets or sets the name for the role.
+        /// Gets the name for the role.
         /// </summary>
-        public string Name { get; }
+        public virtual string Name { get; }
 
         /// <summary>
         /// Determines whether two object instances are equal.
@@ -48,7 +48,7 @@ namespace Alternet.UI
             if (obj is not MenuItemRole other)
                 return false;
 
-            return Name == other.Name;
+            return Equals(other);
         }
 
         /// <summary>
@@ -62,5 +62,23 @@ namespace Alternet.UI
         /// </summary>
         /// <returns>A string that represents the current object.</returns>
         public override string ToString() => Name;
+
+        /// <summary>
+        /// Determines whether the current <see cref="MenuItemRole"/> instance
+        /// is equal to the specified <see cref="MenuItemRole"/> instance.
+        /// </summary>
+        /// <param name="other">The <see cref="MenuItemRole"/> instance to compare
+        /// with the current instance, or <see langword="null"/>.</param>
+        /// <returns><see langword="true"/> if the specified <see cref="MenuItemRole"/>
+        /// instance is equal to the current
+        /// instance; otherwise, <see langword="false"/>.</returns>
+        public bool Equals(MenuItemRole? other)
+        {
+            if (other is null)
+                return false;
+            if(this == other)
+                return true;
+            return Name == other.Name;
+        }
     }
 }
