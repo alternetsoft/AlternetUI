@@ -1,5 +1,6 @@
 using System;
 using System.ComponentModel;
+
 using Alternet.UI.Markup;
 
 namespace Alternet.UI
@@ -13,6 +14,14 @@ namespace Alternet.UI
     /// </summary>
     public partial class KeyBinding : InputBinding
     {
+        /// <summary>
+        /// Represents an empty key binding with no associated keys or actions.
+        /// </summary>
+        /// <remarks>This field provides a default, immutable instance of a key binding
+        /// that can be used to represent the absence of any key binding.
+        /// It is equivalent to a "null object" pattern for key bindings.</remarks>
+        public static readonly KeyBinding Empty = new EmptyKeyBinding();
+
         private bool settingGesture = false;
         private ModifierKeys modifiers = ModifierKeys.None;
         private Key key = Key.None;
@@ -143,6 +152,64 @@ namespace Alternet.UI
                 finally
                 {
                     settingGesture = false;
+                }
+            }
+        }
+
+        internal class EmptyKeyBinding : KeyBinding
+        {
+            public override Key Key
+            {
+                get => Key.None;
+                set
+                {
+                }
+            }
+
+            public override ModifierKeys Modifiers
+            {
+                get => ModifierKeys.None;
+                set
+                {
+                }
+            }
+
+            public override ICommand? Command
+            {
+                get => null;
+                set
+                {
+                }
+            }
+
+            public override object? CommandParameter
+            {
+                get => null;
+                set
+                {
+                }
+            }
+
+            public override bool IsActive
+            {
+                get => false;
+                set
+                {
+                }
+            }
+            public override object? CommandTarget
+            {
+                get => null;
+                set
+                {
+                }
+            }
+
+            public override InputGesture? Gesture
+            {
+                get => null;
+                set
+                {
                 }
             }
         }
