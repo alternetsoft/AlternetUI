@@ -605,6 +605,23 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets a value indicating whether this item is the last visible item in its parent menu.
+        /// </summary>
+        /// <remarks>This property returns <see langword="false"/> if the item
+        /// does not have a logical
+        /// parent or if the parent is not a <see cref="Menu"/>.</remarks>
+        [Browsable(false)]
+        public virtual bool IsLastVisibleInParent
+        {
+            get
+            {
+                if (LogicalParent is not Menu parent)
+                    return false;
+                return parent.LastVisibleItem == this;
+            }
+        }
+
+        /// <summary>
         /// Gets the index in the items of the container.
         /// </summary>
         [Browsable(false)]
@@ -842,6 +859,58 @@ namespace Alternet.UI
             }
         }
 
+        /// <summary>
+        /// Gets next visible sibling item.
+        /// </summary>
+        [Browsable(false)]
+        public virtual MenuItem? NextVisibleSibling
+        {
+            get
+            {
+                var index = IndexInParent;
+                if (index is null)
+                    return null;
+
+                var chi = (LogicalParent as Menu)?.Items ?? [];
+                var count = chi.Count;
+
+                for (int i = index.Value + 1; i < count; i++)
+                {
+                    var child = chi[i];
+                    if (child.Visible)
+                        return child;
+                }
+
+                return null;
+            }
+        }
+
+        /// <summary>
+        /// Gets previous visible sibling item.
+        /// </summary>
+        [Browsable(false)]
+        public virtual MenuItem? PreviousVisibleSibling
+        {
+            get
+            {
+                var index = IndexInParent;
+                if (index is null)
+                    return null;
+
+                var chi = (LogicalParent as Menu)?.Items ?? [];
+                var count = chi.Count;
+
+                for (int i = index.Value - 1; i >= 0; i--)
+                {
+                    var child = chi[i];
+                    if (child.Visible)
+                        return child;
+                }
+
+                return null;
+            }
+        }
+
         /// <inheritdoc/>
         public virtual object? CommandParameter
         {
@@ -985,6 +1054,12 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Sets the text content of the object. Same as setting <see cref="Text"/> property.
+        /// </summary>
+        /// <param name="value">The new text value to set. Cannot be <see langword="null"/>.</param>
+        public void SetText(string value) => Text = value;
+
+        /// <summary>
         /// Same as <see cref="Enabled"/> but implemented as method.
         /// </summary>
         /// <param name="value">New <see cref="Enabled"/> property value.</param>
@@ -1074,7 +1149,7 @@ namespace Alternet.UI
             OnVisibleChanged(e);
             VisibleChanged?.Invoke(this, e);
             RaiseChanged(MenuChangeKind.Visible);
-            StaticMenuEvents.RaiseItemDisabledImageChanged(this, EventArgs.Empty);
+            StaticMenuEvents.RaiseItemVisibleChanged(this, EventArgs.Empty);
         }
 
         /// <summary>
@@ -1185,6 +1260,14 @@ namespace Alternet.UI
             var img = state == VisualControlState.Disabled ? DisabledImage : Image;
             return img;
         }
+
+        /// <summary>
+        /// Sets the visibility state of the object. Same as setting <see cref="Visible"/> property.
+        /// </summary>
+        /// <param name="value">A value indicating whether the object should be visible.
+        /// <see langword="true"/> to make the object visible;
+        /// otherwise, <see langword="false"/>.</param>
+        public void SetVisible(bool value) => Visible = value;
 
         /// <summary>
         /// Called when the enabled of the <see cref="Enabled"/> property changes.
