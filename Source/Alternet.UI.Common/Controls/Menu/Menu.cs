@@ -61,6 +61,51 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets the first visible menu item in the collection,
+        /// or <see langword="null"/> if no items are visible.
+        /// </summary>
+        [Browsable(false)]
+        public virtual MenuItem? FirstVisibleItem
+        {
+            get
+            {
+                if (!HasItems)
+                    return null;
+                foreach (var child in Items)
+                {
+                    if (child.Visible)
+                        return child;
+                }
+
+                return null;
+            }
+        }
+
+        /// <summary>
+        /// Gets the last visible menu item in the collection of items.
+        /// </summary>
+        /// <remarks>This property iterates through the collection of items in reverse order to find the
+        /// last item with its <see cref="MenuItem.Visible"/> property
+        /// set to <see langword="true"/>.</remarks>
+        [Browsable(false)]
+        public virtual MenuItem? LastVisibleItem
+        {
+            get
+            {
+                if (!HasItems)
+                    return null;
+                for (int i = Items.Count - 1; i >= 0; i--)
+                {
+                    var child = Items[i];
+                    if (child.Visible)
+                        return child;
+                }
+
+                return null;
+            }
+        }
+
+        /// <summary>
         /// Retrieves a menu by its unique identifier.
         /// </summary>
         /// <remarks>This method searches for a menu in the collection using the provided unique
