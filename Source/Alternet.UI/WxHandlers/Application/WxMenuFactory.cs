@@ -74,6 +74,7 @@ namespace Alternet.UI
             nativeMenu.MenuHighlight += OnNativeMenuHighlight;
             nativeMenu.MenuOpened += OnNativeMenuOpened;
             nativeMenu.MenuClosed += OnNativeMenuClosed;
+            nativeMenu.MenuDestroying += OnNativeMenuDestroying;
         }
 
         protected override void DisposeManaged()
@@ -82,6 +83,7 @@ namespace Alternet.UI
             nativeMenu.MenuHighlight -= OnNativeMenuHighlight;
             nativeMenu.MenuOpened -= OnNativeMenuOpened;
             nativeMenu.MenuClosed -= OnNativeMenuClosed;
+            nativeMenu.MenuDestroying -= OnNativeMenuDestroying;
             nativeMenu.Dispose();
             nativeMenu = null!;
             Native.Menu.GlobalObject = null;
@@ -565,6 +567,26 @@ namespace Alternet.UI
             if (menuHandlePtr == IntPtr.Zero)
                 return;
             Native.Menu.MainMenuSetText(menuHandlePtr, childId, label);
+        }
+
+        protected virtual void OnNativeMenuDestroying()
+        {
+            var menu = Menu.MenuFromStringId(Native.Menu.EventMenuItemId);
+
+            if (menu is null)
+                return;
+
+            var index = menu.FindHostObjectIndex(MyPredicate);
+
+            if (index >= 0)
+            {
+                menu.HostObjects?.RemoveAt(index);
+            }
+
+            bool MyPredicate(object obj)
+            {
+                return obj is ContextMenuHandle || obj is MenuItemHandle || obj is MainMenuHandle;
+            }
         }
 
         protected virtual void OnNativeMenuClosed()
