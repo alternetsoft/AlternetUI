@@ -65,6 +65,32 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Retrieves all host objects of the specified type from the collection.
+        /// </summary>
+        /// <remarks>This method filters the <c>HostObjects</c> collection and returns
+        /// only those objects
+        /// that can be cast to the specified type <typeparamref name="T"/>.
+        /// If the <c>HostObjects</c> collection is
+        /// <see langword="null"/>, the method returns an empty enumerable.</remarks>
+        /// <typeparam name="T">The type of host objects to retrieve.
+        /// Must be a reference type.</typeparam>
+        /// <returns>An enumerable collection of objects of type <typeparamref name="T"/>.
+        /// The collection will be empty if no
+        /// objects of the specified type are found.</returns>
+        public virtual IEnumerable<T> GetHostObjects<T>()
+            where T : class
+        {
+            if (HostObjects is not null)
+            {
+                foreach (var host in HostObjects)
+                {
+                    if (host is T typedHost)
+                        yield return typedHost;
+                }
+            }
+        }
+
+        /// <summary>
         /// Adds a host object to the collection of context menu hosts if it is not already present.
         /// </summary>
         /// <remarks>This method ensures that the specified host object is added only once to the
