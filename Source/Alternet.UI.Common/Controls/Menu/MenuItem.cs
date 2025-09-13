@@ -764,7 +764,7 @@ namespace Alternet.UI
             {
                 Invoke(() =>
                 {
-                    if (isChecked == value)
+                    if (isChecked == value || HasItems)
                         return;
 
                     isChecked = value;
