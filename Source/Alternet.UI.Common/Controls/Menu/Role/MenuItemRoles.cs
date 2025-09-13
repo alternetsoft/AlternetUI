@@ -36,7 +36,7 @@ namespace Alternet.UI
         /// This role is deduced from the <see cref="MenuItem.Text"/> when its value
         /// starts with "About".
         /// On macOS, a menu item with the "About" role is placed in the application
-        /// menu with a display text of "About [appname]...".
+        /// menu with a display text of "About [application name]...".
         /// </remarks>
         public static readonly MenuItemRole About = new("About");
 
