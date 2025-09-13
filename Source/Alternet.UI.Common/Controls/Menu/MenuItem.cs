@@ -589,6 +589,24 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets the index in the items of the container.
+        /// </summary>
+        [Browsable(false)]
+        public int? IndexInParent
+        {
+            get
+            {
+                if (LogicalParent is not Menu parent)
+                    return null;
+
+                var index = parent.Items.IndexOf(this);
+                if (index < 0)
+                    return null;
+                return index;
+            }
+        }
+
+        /// <summary>
         /// Gets a value indicating whether this menu item is attached to a <see cref="MainMenu"/>.
         /// </summary>
         [Browsable(false)]
