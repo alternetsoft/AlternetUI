@@ -31,6 +31,16 @@ namespace Alternet.UI
             : base(handle)
         {
         }
+        public virtual string Id
+        {
+            get
+            {
+                var ptr = AsPointer;
+                if (ptr == IntPtr.Zero)
+                    return string.Empty;
+                return Native.Menu.GetMenuId(ptr);
+            }
+        }
 
         public virtual bool Append(WxContextMenu submenu, string text)
         {

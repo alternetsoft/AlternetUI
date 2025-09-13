@@ -49,6 +49,17 @@ namespace Alternet.UI
             menu.AddHostObject(this);
         }
 
+        public virtual string Id
+        {
+            get
+            {
+                var ptr = AsPointer;
+                if (ptr == IntPtr.Zero)
+                    return string.Empty;
+                return Native.Menu.GetMenuId(ptr);
+            }
+        }
+
         public virtual void Insert(string posId, WxMenuItem itemHandle)
         {
             var menuPtr = AsPointer;

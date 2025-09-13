@@ -63,6 +63,17 @@ namespace Alternet.UI
             }
         }
 
+        public virtual string Id
+        {
+            get
+            {
+                var ptr = AsPointer;
+                if (ptr == IntPtr.Zero)
+                    return string.Empty;
+                return Native.Menu.GetMenuId(ptr);
+            }
+        }
+
         public virtual ImageSet? Bitmap
         {
             set
