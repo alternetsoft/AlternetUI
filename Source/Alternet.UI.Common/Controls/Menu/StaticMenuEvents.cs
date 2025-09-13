@@ -23,21 +23,39 @@ namespace Alternet.UI
     public static class StaticMenuEvents
     {
         /// <summary>
-        /// Occurs when a new item is inserted into the menu.
+        /// Occurs when a new item is inserted into the items of <see cref="MenuItem"/>.
         /// </summary>
-        /// <remarks>This event is triggered whenever an item is added to the menu.
+        /// <remarks>This event is triggered whenever an item is added.
         /// Subscribers can use
         /// this event to respond to changes in the menu's structure.</remarks>
         public static event EventHandler<MenuChangeEventArgs>? ItemInserted;
 
         /// <summary>
-        /// Occurs when an item is removed from the menu.
+        /// Occurs when an item is removed from the items of <see cref="MenuItem"/>.
+        /// </summary>
+        /// <remarks>This event is triggered whenever an item is removed, providing details about the
+        /// removed item through the <see cref="MenuChangeEventArgs"/> parameter.
+        /// Subscribers can use this event to
+        /// perform actions such as updating the UI or logging changes.</remarks>
+        public static event EventHandler<MenuChangeEventArgs>? ItemRemoved;
+
+        /// <summary>
+        /// Occurs when an item is removed from the main menu.
         /// </summary>
         /// <remarks>This event is triggered whenever an item is removed, providing details about the
         /// removed item  through the <see cref="MenuChangeEventArgs"/> parameter.
         /// Subscribers can use this event to
         /// perform actions such as updating the UI or logging changes.</remarks>
-        public static event EventHandler<MenuChangeEventArgs>? ItemRemoved;
+        public static event EventHandler<MenuChangeEventArgs>? MainMenuItemRemoved;
+
+        /// <summary>
+        /// Occurs when an item is removed from the context menu.
+        /// </summary>
+        /// <remarks>This event is triggered whenever an item is removed, providing details about the
+        /// removed item  through the <see cref="MenuChangeEventArgs"/> parameter.
+        /// Subscribers can use this event to
+        /// perform actions such as updating the UI or logging changes.</remarks>
+        public static event EventHandler<MenuChangeEventArgs>? ContextMenuItemRemoved;
 
         /// <summary>
         /// Occurs when the menu is opening. This event is usually raised only for top level menus.
@@ -289,7 +307,7 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Raises the <see cref="ItemInserted"/> event to notify subscribers
+        /// Raises the "item inserted" events to notify subscribers
         /// that a new menu item has been inserted.
         /// </summary>
         /// <param name="sender">The <see cref="MenuItem"/> that triggered the event.</param>
@@ -300,7 +318,7 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Raises the <see cref="ItemRemoved"/> event to notify subscribers that
+        /// Raises the "item removed" events to notify subscribers that
         /// a menu item has been removed.
         /// </summary>
         /// <param name="sender">The <see cref="MenuItem"/> that was removed.</param>
@@ -308,7 +326,14 @@ namespace Alternet.UI
         /// containing additional details.</param>
         public static void RaiseItemRemoved(Menu sender, MenuChangeEventArgs e)
         {
-            ItemRemoved?.Invoke(sender, e);
+            if (sender is MainMenu)
+                MainMenuItemRemoved?.Invoke(sender, e);
+            else
+            if (sender is ContextMenu)
+                ContextMenuItemRemoved?.Invoke(sender, e);
+            else
+            if (sender is MenuItem)
+                ItemRemoved?.Invoke(sender, e);
         }
     }
 }
