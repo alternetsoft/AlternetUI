@@ -23,6 +23,23 @@ namespace Alternet.UI
     public static class StaticMenuEvents
     {
         /// <summary>
+        /// Occurs when a new item is inserted into the menu.
+        /// </summary>
+        /// <remarks>This event is triggered whenever an item is added to the menu.
+        /// Subscribers can use
+        /// this event to respond to changes in the menu's structure.</remarks>
+        public static event EventHandler<MenuChangeEventArgs>? ItemInserted;
+
+        /// <summary>
+        /// Occurs when an item is removed from the menu.
+        /// </summary>
+        /// <remarks>This event is triggered whenever an item is removed, providing details about the
+        /// removed item  through the <see cref="MenuChangeEventArgs"/> parameter.
+        /// Subscribers can use this event to
+        /// perform actions such as updating the UI or logging changes.</remarks>
+        public static event EventHandler<MenuChangeEventArgs>? ItemRemoved;
+
+        /// <summary>
         /// Occurs when the menu is opening. This event is usually raised only for top level menus.
         /// You can also handle <see cref="MenuItem.Opened"/> to be notified when a menu item is opened.
         /// </summary>
@@ -174,7 +191,8 @@ namespace Alternet.UI
         /// Raises the <see cref="ItemChanged"/> event.
         /// </summary>
         /// <param name="sender">The source of the event.</param>
-        /// <param name="e">A <see cref="BaseEventArgs{MenuChangeKind}"/> that contains the event data.</param>
+        /// <param name="e">A <see cref="BaseEventArgs{MenuChangeKind}"/>
+        /// that contains the event data.</param>
         public static void RaiseItemChanged(MenuItem sender, BaseEventArgs<MenuChangeKind> e)
         {
             ItemChanged?.Invoke(sender, e);
@@ -268,6 +286,29 @@ namespace Alternet.UI
         public static void RaiseItemClickActionChanged(MenuItem sender, EventArgs e)
         {
             ItemClickActionChanged?.Invoke(sender, e);
+        }
+
+        /// <summary>
+        /// Raises the <see cref="ItemInserted"/> event to notify subscribers
+        /// that a new menu item has been inserted.
+        /// </summary>
+        /// <param name="sender">The <see cref="MenuItem"/> that triggered the event.</param>
+        /// <param name="e">The event data associated with the menu item insertion.</param>
+        public static void RaiseItemInserted(Menu sender, MenuChangeEventArgs e)
+        {
+            ItemInserted?.Invoke(sender, e);
+        }
+
+        /// <summary>
+        /// Raises the <see cref="ItemRemoved"/> event to notify subscribers that
+        /// a menu item has been removed.
+        /// </summary>
+        /// <param name="sender">The <see cref="MenuItem"/> that was removed.</param>
+        /// <param name="e">The event data associated with the removal,
+        /// containing additional details.</param>
+        public static void RaiseItemRemoved(Menu sender, MenuChangeEventArgs e)
+        {
+            ItemRemoved?.Invoke(sender, e);
         }
     }
 }
