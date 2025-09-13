@@ -32,6 +32,7 @@ static void SetMenuItemSubMenu(void* handle, void* subMenuHandle);
 static void SetMenuItemShortcut(void* handle, Key key, ModifierKeys modifierKeys);
 static void MenuAddItem(void* handle, void* itemHandle);
 static void MenuRemoveItem(void* handle, const string& childId);
+static bool MenuInsertItem(void* handle, const string& childId, void* itemHandle);
 static void Show(void* menuHandle, Control* control, const PointD& position);
 
 public:

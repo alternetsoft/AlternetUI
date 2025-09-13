@@ -58,7 +58,37 @@ namespace MenuSample
         {
             contextMenu = new ExampleContextMenu();
             contextMenu.AddSeparator();
-            contextMenu.Add("Toggle shortcut in main menu", () =>
+
+            contextMenu.Add("Toggle top item visible", () =>
+            {
+                mainMenu.FirstItem?.SetVisible(!mainMenu.FirstItem.Visible);
+            });
+
+            contextMenu.Add("Toggle top item enabled", () =>
+            {
+                mainMenu.FirstItem?.SetEnabled(!mainMenu.FirstItem.Enabled);
+            });
+
+            contextMenu.Add("Toggle top item text", () =>
+            {
+                mainMenu.FirstItem?.SetText(
+                    mainMenu.FirstItem.Text.Contains("(Modified)") ? "_File" : "_File (Modified)");
+            });
+
+            contextMenu.AddSeparator();
+
+            contextMenu.Add("Toggle File|Open item visible", () =>
+            {
+                openMenuItem.SetVisible(!openMenuItem.Visible);
+            });
+
+            contextMenu.Add("Toggle File|Open item text", () =>
+            {
+                openMenuItem.SetText(
+                    openMenuItem.Text.Contains("(Modified)") ? "_Open..." : "_Open... (Modified)");
+            });
+
+            contextMenu.Add("Toggle File|Open shortcut", () =>
             {
                 var shortcut1 = new KeyGesture(Key.O, ModifierKey.Control);
                 var shortcut2 = new KeyGesture(Key.O, ModifierKey.ControlShift);

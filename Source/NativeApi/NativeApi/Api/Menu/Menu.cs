@@ -72,6 +72,8 @@ namespace NativeApi.Api
 
         public static void MenuAddItem(IntPtr handle, IntPtr itemHandle) { }
         public static void MenuRemoveItem(IntPtr handle, string childId) { }
+        public static bool MenuInsertItem(IntPtr handle, string childId, IntPtr itemHandle)
+            => throw new Exception();
 
         public static void Show(
             IntPtr menuHandle,

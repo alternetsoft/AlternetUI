@@ -341,6 +341,17 @@ ALTERNET_UI_API void Menu_MenuRemoveItem_(void* handle, const char16_t* childId)
     #endif
 }
 
+ALTERNET_UI_API c_bool Menu_MenuInsertItem_(void* handle, const char16_t* childId, void* itemHandle)
+{
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    return MarshalExceptions<c_bool>([&](){
+    #endif
+        return Menu::MenuInsertItem(handle, childId, itemHandle);
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    });
+    #endif
+}
+
 ALTERNET_UI_API void Menu_Show_(void* menuHandle, Control* control, PointD position)
 {
     #if !defined(__WXMSW__) || defined(_DEBUG)

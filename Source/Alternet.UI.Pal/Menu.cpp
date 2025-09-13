@@ -353,6 +353,24 @@ namespace Alternet::UI
 		newItem->ownerMenu = menu;
     }
 
+    bool Menu::MenuInsertItem(void* handle, const string& childId, void* itemHandle)
+    {
+        auto menu = (wxAlternetMenu*)handle;
+        auto newItem = (wxAlternetMenuItem*)itemHandle;
+        if (menu == nullptr)
+            return false;
+        if (newItem->ownerMenu != nullptr)
+            return false;
+
+        auto pos = menu->GetItemIndex(childId);
+
+        if (pos < 0)
+            return false;
+		menu->Insert(pos, newItem);
+        newItem->ownerMenu = menu;
+        return true;
+    }
+
     void Menu::MenuRemoveItem(void* handle, const string& childId)
     {
         auto menu = (wxAlternetMenu*)handle;

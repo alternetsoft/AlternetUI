@@ -177,6 +177,11 @@ namespace Alternet.UI.Native
             NativeApi.Menu_MenuRemoveItem_(handle, childId);
         }
         
+        public static bool MenuInsertItem(System.IntPtr handle, string childId, System.IntPtr itemHandle)
+        {
+            return NativeApi.Menu_MenuInsertItem_(handle, childId, itemHandle);
+        }
+        
         public static void Show(System.IntPtr menuHandle, Control control, Alternet.Drawing.PointD position)
         {
             NativeApi.Menu_Show_(menuHandle, control.NativePointer, position);
@@ -347,6 +352,9 @@ namespace Alternet.UI.Native
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void Menu_MenuRemoveItem_(System.IntPtr handle, string childId);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool Menu_MenuInsertItem_(System.IntPtr handle, string childId, System.IntPtr itemHandle);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void Menu_Show_(System.IntPtr menuHandle, IntPtr control, Alternet.Drawing.PointD position);
