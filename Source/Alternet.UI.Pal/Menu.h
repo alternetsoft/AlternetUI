@@ -12,6 +12,7 @@ namespace Alternet::UI
         static string _eventMenuItemId;
         static bool _eventMenuItemChecked;
 
+        static wxString CoerceMenuHelp(const string& value);
         static wxString CoerceMenuText(const string& value);
 
         static bool RaiseStaticEventWithId(MenuEvent event, string id, void* parameter = nullptr)

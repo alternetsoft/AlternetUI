@@ -147,7 +147,8 @@ namespace Alternet::UI
         return result;
     }
 
-    void* Menu::CreateMenuItem(MenuItemType itemType, const string& id)
+    void* Menu::CreateMenuItem(MenuItemType itemType, const string& id,
+        const string& title, const string& help, void* menuHandle)
     {
         wxItemKind kind;
         switch (itemType)
@@ -170,8 +171,8 @@ namespace Alternet::UI
         auto result = new wxAlternetMenuItem(
             nullptr,
             kind == wxITEM_SEPARATOR ? wxID_SEPARATOR : IdManager::AllocateId(),
-            " ",
-            wxEmptyString,
+            CoerceMenuText(title),
+            CoerceMenuHelp(help),
             kind,
             nullptr);
         result->_id = id;
@@ -271,6 +272,11 @@ namespace Alternet::UI
             auto accel = new wxAcceleratorEntry(acceleratorFlags, wxKey, item->GetId());
             item->SetAccel(accel);
         }
+    }
+
+    wxString Menu::CoerceMenuHelp(const string& value)
+    {
+        return wxStr(value);
     }
 
     wxString Menu::CoerceMenuText(const string& value)

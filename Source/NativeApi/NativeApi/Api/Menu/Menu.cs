@@ -38,7 +38,13 @@ namespace NativeApi.Api
 
         public static IntPtr CreateMainMenu(string id) => throw new Exception();
         public static IntPtr CreateContextMenu(string id) => throw new Exception();
-        public static IntPtr CreateMenuItem(MenuItemType itemType, string id)
+
+        public static IntPtr CreateMenuItem(
+            MenuItemType itemType,
+            string id,
+            string title,
+            string help,
+            IntPtr menuHandle)
             => throw new Exception();
 
         /* Destroy menu and menu items */

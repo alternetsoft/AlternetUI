@@ -102,9 +102,9 @@ namespace Alternet.UI.Native
             return NativeApi.Menu_CreateContextMenu_(id);
         }
         
-        public static System.IntPtr CreateMenuItem(Alternet.UI.MenuItemType itemType, string id)
+        public static System.IntPtr CreateMenuItem(Alternet.UI.MenuItemType itemType, string id, string title, string help, System.IntPtr menuHandle)
         {
-            return NativeApi.Menu_CreateMenuItem_(itemType, id);
+            return NativeApi.Menu_CreateMenuItem_(itemType, id, title, help, menuHandle);
         }
         
         public static void DestroyMainMenu(System.IntPtr menuHandle)
@@ -309,7 +309,7 @@ namespace Alternet.UI.Native
             public static extern System.IntPtr Menu_CreateContextMenu_(string id);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern System.IntPtr Menu_CreateMenuItem_(Alternet.UI.MenuItemType itemType, string id);
+            public static extern System.IntPtr Menu_CreateMenuItem_(Alternet.UI.MenuItemType itemType, string id, string title, string help, System.IntPtr menuHandle);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void Menu_DestroyMainMenu_(System.IntPtr menuHandle);

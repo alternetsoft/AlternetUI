@@ -176,12 +176,12 @@ ALTERNET_UI_API void* Menu_CreateContextMenu_(const char16_t* id)
     #endif
 }
 
-ALTERNET_UI_API void* Menu_CreateMenuItem_(MenuItemType itemType, const char16_t* id)
+ALTERNET_UI_API void* Menu_CreateMenuItem_(MenuItemType itemType, const char16_t* id, const char16_t* title, const char16_t* help, void* menuHandle)
 {
     #if !defined(__WXMSW__) || defined(_DEBUG)
     return MarshalExceptions<void*>([&](){
     #endif
-        return Menu::CreateMenuItem(itemType, id);
+        return Menu::CreateMenuItem(itemType, id, title, help, menuHandle);
     #if !defined(__WXMSW__) || defined(_DEBUG)
     });
     #endif

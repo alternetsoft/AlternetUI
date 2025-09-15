@@ -41,7 +41,13 @@ namespace Alternet.UI
                 itemType = MenuItemType.Check;
             }
 
-            Handle = Native.Menu.CreateMenuItem(itemType, item.UniqueId.ToString());
+            Handle = Native.Menu.CreateMenuItem(
+                itemType,
+                item.UniqueId.ToString(),
+                item.Text,
+                string.Empty,
+                IntPtr.Zero);
+
             item.AddHostObject(this);
 
             if (item.Image is not null)
@@ -50,7 +56,8 @@ namespace Alternet.UI
             if (!item.Enabled)
                 Enabled = item.Enabled;
 
-            SetTextAndShortcut(item);
+            if(item.ShortcutInfo is not null)
+                SetTextAndShortcut(item);
 
             if (isChecked)
                 Checked = isChecked;

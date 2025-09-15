@@ -17,7 +17,7 @@ static void* MainMenuReplace(void* menuHandle, const string& childId, void* menu
 static void MainMenuSetText(void* menuHandle, const string& childId, const string& label);
 static void* CreateMainMenu(const string& id);
 static void* CreateContextMenu(const string& id);
-static void* CreateMenuItem(MenuItemType itemType, const string& id);
+static void* CreateMenuItem(MenuItemType itemType, const string& id, const string& title, const string& help, void* menuHandle);
 static void DestroyMainMenu(void* menuHandle);
 static void DestroyMenuItem(void* menuHandle);
 static void DestroyContextMenu(void* menuHandle);
