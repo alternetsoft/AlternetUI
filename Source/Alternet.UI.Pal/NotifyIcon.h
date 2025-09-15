@@ -10,8 +10,6 @@ namespace Alternet::UI
     {
 #include "Api/NotifyIcon.inc"
     public:
-        static void DestroyAllNotifyIcons();
-
     private:
 
         class TaskBarIcon : public wxTaskBarIcon
