@@ -34,14 +34,39 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Occurs when the user clicks the icon in the notification area.
+        /// Occurs when the icon in the notification area is clicked with the right mouse button.
         /// </summary>
         public event EventHandler? Click;
 
         /// <summary>
-        /// Occurs when the user double clicks the icon in the notification area.
+        /// Occurs when the icon in the notification area is double-clicked with the right mouse button.
         /// </summary>
-        public event EventHandler? DoubleClick;
+        public event EventHandler? RightMouseButtonDoubleClick;
+
+        /// <summary>
+        /// Occurs when the icon in the notification area is pressed with the right mouse button.
+        /// </summary>
+        public event EventHandler? RightMouseButtonDown;
+
+        /// <summary>
+        /// Occurs when the icon in the notification area is released with the right mouse button.
+        /// </summary>
+        public event EventHandler? RightMouseButtonUp;
+
+        /// <summary>
+        /// Occurs when the icon in the notification area is double-clicked with the left mouse button.
+        /// </summary>
+        public event EventHandler? LeftMouseButtonDoubleClick;
+
+        /// <summary>
+        /// Occurs when the icon in the notification area is pressed with the left mouse button.
+        /// </summary>
+        public event EventHandler? LeftMouseButtonDown;
+
+        /// <summary>
+        /// Occurs when the icon in the notification area is released with the left mouse button.
+        /// </summary>
+        public event EventHandler? LeftMouseButtonUp;
 
         /// <summary>
         /// Gets whether system tray is available in the desktop environment the app runs under.
@@ -140,15 +165,14 @@ namespace Alternet.UI
         {
             get
             {
-                CheckDisposed();
                 return menu;
             }
 
             set
             {
-                CheckDisposed();
+                if (menu == value)
+                    return;
                 menu = value;
-                Handler.Menu = value;
             }
         }
 
@@ -181,21 +205,100 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Raises the <see cref="Click"/> event.
+        /// Displays the specified context menu at the notification icon position.
         /// </summary>
-        /// <param name="e">An <see cref="EventArgs"/> that contains the event data.</param>
-        protected virtual void OnClick(EventArgs e)
+        /// <param name="menu">The <see cref="ContextMenu"/> to display.</param>
+        public virtual void ShowContextMenu(ContextMenu? menu)
         {
-            Click?.Invoke(this, e);
+            if (menu == null)
+                return;
+            if (!menu.HasItems)
+                return;
+            CheckDisposed();
+            Handler.ShowContextMenu(menu);
         }
 
         /// <summary>
-        /// Raises the <see cref="DoubleClick"/> event.
+        /// Raises the <see cref="RightMouseButtonDoubleClick"/> event
+        /// and calls <see cref="OnRightMouseButtonDoubleClick"/>.
         /// </summary>
-        /// <param name="e">An <see cref="EventArgs"/> that contains the event data.</param>
-        protected virtual void OnDoubleClick(EventArgs e)
+        public void RaiseRightMouseButtonDoubleClick()
         {
-            DoubleClick?.Invoke(this, e);
+            RightMouseButtonDoubleClick?.Invoke(this, EventArgs.Empty);
+            OnRightMouseButtonDoubleClick(EventArgs.Empty);
+        }
+
+        /// <summary>
+        /// Raises the <see cref="RightMouseButtonDown"/> event
+        /// and calls <see cref="OnRightMouseButtonDown"/>.
+        /// </summary>
+        public void RaiseRightMouseButtonDown()
+        {
+            RightMouseButtonDown?.Invoke(this, EventArgs.Empty);
+            OnRightMouseButtonDown(EventArgs.Empty);
+        }
+
+        /// <summary>
+        /// Raises the <see cref="RightMouseButtonUp"/> event
+        /// and calls <see cref="OnRightMouseButtonUp"/>.
+        /// </summary>
+        public void RaiseRightMouseButtonUp()
+        {
+            RightMouseButtonUp?.Invoke(this, EventArgs.Empty);
+            OnRightMouseButtonUp(EventArgs.Empty);
+        }
+
+        /// <summary>
+        /// Raises the <see cref="LeftMouseButtonDoubleClick"/> event
+        /// and calls <see cref="OnLeftMouseButtonDoubleClick"/>.
+        /// </summary>
+        public void RaiseLeftMouseButtonDoubleClick()
+        {
+            LeftMouseButtonDoubleClick?.Invoke(this, EventArgs.Empty);
+            OnLeftMouseButtonDoubleClick(EventArgs.Empty);
+        }
+
+        /// <summary>
+        /// Raises the <see cref="LeftMouseButtonDown"/> event
+        /// and calls <see cref="OnLeftMouseButtonDown"/>.
+        /// </summary>
+        public void RaiseLeftMouseButtonDown()
+        {
+            LeftMouseButtonDown?.Invoke(this, EventArgs.Empty);
+            OnLeftMouseButtonDown(EventArgs.Empty);
+        }
+
+        /// <summary>
+        /// Raises the <see cref="LeftMouseButtonUp"/> event
+        /// and calls <see cref="OnLeftMouseButtonUp"/>.
+        /// </summary>
+        public void RaiseLeftMouseButtonUp()
+        {
+            LeftMouseButtonUp?.Invoke(this, EventArgs.Empty);
+            OnLeftMouseButtonUp(EventArgs.Empty);
+        }
+
+        /// <summary>
+        /// Raises the <see cref="Click"/> event and calls <see cref="OnClick"/>.
+        /// </summary>
+        public void RaiseClick()
+        {
+            Click?.Invoke(this, EventArgs.Empty);
+            OnClick(EventArgs.Empty);
+            ShowContextMenu(Menu);
+        }
+
+        /// <summary>
+        /// Called when the <see cref="Click"/> event is raised.
+        /// </summary>
+        /// <remarks>
+        /// Derived classes can
+        /// override this method to provide additional handling when the event is raised.
+        /// When overriding, ensure to
+        /// call the base implementation to preserve the event invocation.</remarks>
+        /// <param name="e">An <see cref="EventArgs"/> that contains the event data.</param>
+        protected virtual void OnClick(EventArgs e)
+        {
         }
 
         /// <inheritdoc/>
@@ -204,7 +307,12 @@ namespace Alternet.UI
             if (IsHandlerCreated)
             {
                 Handler.Click = null;
-                Handler.DoubleClick = null;
+                Handler.LeftMouseButtonUp = null;
+                Handler.LeftMouseButtonDown = null;
+                Handler.LeftMouseButtonDoubleClick = null;
+                Handler.RightMouseButtonUp = null;
+                Handler.RightMouseButtonDown = null;
+                Handler.RightMouseButtonDoubleClick = null;
             }
 
             base.DisposeManaged();
@@ -215,18 +323,97 @@ namespace Alternet.UI
         {
             var result = App.Handler.CreateNotifyIconHandler();
             result.Click = RaiseClick;
-            result.DoubleClick = RaiseDoubleClick;
+            result.LeftMouseButtonUp = RaiseLeftMouseButtonUp;
+            result.LeftMouseButtonDown = RaiseLeftMouseButtonDown;
+            result.LeftMouseButtonDoubleClick = RaiseLeftMouseButtonDoubleClick;
+            result.RightMouseButtonUp = RaiseRightMouseButtonUp;
+            result.RightMouseButtonDown = RaiseRightMouseButtonDown;
+            result.RightMouseButtonDoubleClick = RaiseRightMouseButtonDoubleClick;
             return result;
         }
 
-        private void RaiseClick()
+        /// <summary>
+        /// Called when the left mouse button is released over the notification icon.
+        /// </summary>
+        /// <param name="empty">An <see cref="EventArgs"/> that contains the event data.</param>
+        /// <remarks>
+        /// Derived classes can override this method to provide additional
+        /// handling when the event is raised.
+        /// When overriding, ensure to call the base implementation
+        /// to preserve the event invocation.
+        /// </remarks>
+        protected virtual void OnLeftMouseButtonUp(EventArgs empty)
         {
-            OnClick(EventArgs.Empty);
         }
 
-        private void RaiseDoubleClick()
+        /// <summary>
+        /// Called when the right mouse button is double-clicked over the notification icon.
+        /// </summary>
+        /// <param name="empty">An <see cref="EventArgs"/> that contains the event data.</param>
+        /// <remarks>
+        /// Derived classes can override this method to provide additional
+        /// handling when the event is raised.
+        /// When overriding, ensure to call the base implementation
+        /// to preserve the event invocation.
+        /// </remarks>
+        protected virtual void OnRightMouseButtonDoubleClick(EventArgs empty)
         {
-            OnDoubleClick(EventArgs.Empty);
+        }
+
+        /// <summary>
+        /// Called when the right mouse button is released over the notification icon.
+        /// </summary>
+        /// <param name="empty">An <see cref="EventArgs"/> that contains the event data.</param>
+        /// <remarks>
+        /// Derived classes can override this method to provide additional
+        /// handling when the event is raised.
+        /// When overriding, ensure to call the base implementation
+        /// to preserve the event invocation.
+        /// </remarks>
+        protected virtual void OnRightMouseButtonUp(EventArgs empty)
+        {
+        }
+
+        /// <summary>
+        /// Called when the right mouse button is pressed over the notification icon.
+        /// </summary>
+        /// <param name="empty">An <see cref="EventArgs"/> that contains the event data.</param>
+        /// <remarks>
+        /// Derived classes can override this method to provide
+        /// additional handling when the event is raised.
+        /// When overriding, ensure to call the base implementation
+        /// to preserve the event invocation.
+        /// </remarks>
+        protected virtual void OnRightMouseButtonDown(EventArgs empty)
+        {
+        }
+
+        /// <summary>
+        /// Called when the left mouse button is double-clicked over the notification icon.
+        /// </summary>
+        /// <param name="empty">An <see cref="EventArgs"/> that contains the event data.</param>
+        /// <remarks>
+        /// Derived classes can override this method to provide additional
+        /// handling when the event is raised.
+        /// When overriding, ensure to call the base implementation
+        /// to preserve the event invocation.
+        /// </remarks>
+        protected virtual void OnLeftMouseButtonDoubleClick(EventArgs empty)
+        {
+        }
+
+        /// <summary>
+        /// Called when the left mouse button is pressed over the notification icon.
+        /// </summary>
+        /// <param name="empty">An <see cref="EventArgs"/> that contains the event data.</param>
+        /// <remarks>
+        /// Derived classes can override this method to provide
+        /// additional handling when the event is raised.
+        /// When overriding, ensure to call the base implementation
+        /// to preserve the event invocation.
+        /// </remarks>
+        protected virtual void OnLeftMouseButtonDown(EventArgs empty)
+        {
         }
     }
 }
