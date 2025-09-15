@@ -775,8 +775,6 @@ namespace Alternet.UI
         /// For more information, see <see cref="MenuItemRoles"/> class members.
         /// </para>
         /// <para>
-        /// Setting <see cref="Role"/> to <see langword="null"/>
-        /// has the same effect as the <see cref="MenuItemRoles.Auto"/> value.
         /// The <see langword="null"/> is the default value of this property.
         /// </para>
         /// </remarks>
@@ -898,7 +896,6 @@ namespace Alternet.UI
                     return null;
 
                 var chi = (LogicalParent as Menu)?.Items ?? [];
-                var count = chi.Count;
 
                 for (int i = index.Value - 1; i >= 0; i--)
                 {
