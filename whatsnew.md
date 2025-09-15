@@ -1,3 +1,57 @@
+# 0.9.753 (2025 September 15)
+
+- ContextMenu: Add ShowAtMouse method
+- WindowTextInput: Added IsMessageEmpty property and updated Message setter to toggle label visibility and resize window when the message changes.
+- Added AskTextAsync method to DialogFactory.
+- Window: Add TitleWidth property.
+- MenuItem: IsLastVisibleInParent, NextVisibleSibling, PreviousVisibleSibling, IsLastInParent, IndexInParent.
+- MenuItem: SetText, SetVisible methods for convenience.
+- Menu: BeginUpdate and EndUpdate.
+- Menu: FirstVisibleItem and LastVisibleItem.
+- MenuItemRole: Implement IEquatable.
+- ContextMenu: HasMainMenuInParents, HasMainMenuParent.
+- FrameworkElement: LogicalParents property.
+- StaticMenuEvents: ItemInserted and ItemRemoved events.
+- KeyGesture.HasKey.
+- Added ModifierKey class with constants for keyboard modifiers.
+- Menu: Added MenuBar property.
+- FrameworkElement: IsRoot, LogicalRoot, and LogicalTopParent.
+- FrameworkElement: Change LogicalParent's accessibility to public getter and internal setter.
+- VirtualListBox: Disable custom border in selected item rendering when item is not focused.
+- AbstractControl: RenderingFlags, GetDefaultRenderingFlags. 
+- Graphics: Add CanvasCreateParams struct for measure canvas creation
+- VirtualListBox: DefaultRenderingFlags.
+- Add MswKnownFolders class.
+- ISkiaSurface.SurfaceKind.
+- Add phantom window utility methods to FormUtils.
+- FileListBox: Add FolderAdditionFlags and AddFolderWithFlags method
+- FileListBox: Show "Downloads" folder on Windows on root level.
+- Invoke RaiseChanged on menu item state changes.
+- Fix SkiaGraphics transform matrix usage in some cases.
+- SkiaUtils: Add BitmapCanvasCached class and canvas recreation logic
+- Create DynamicBitmap class.
+- Add StaticMenuEvents for centralized menu event handling.
+- AbstractControl: PlatformBackedParent.
+- AbstractControl: DefaultUseInternalContextMenu, UseInternalContextMenu, and ContextMenuPosition.
+- AbstractControl: Fix internal caret painted over child controls.
+- MenuItem: Add ItemsMenu property.
+- MenuItem: Added logic to use the first platform-specific shortcut key. Now it is possible to specify multiple shortcuts for the item to use on different platforms.
+- Complete reimplementation of MainMenu, MenuItem and ContextMenu.
+- Fix thread safety in UniqueId property getter
+- Add formatting options for ShortcutInfo string output.
+- Introduced a static dictionary to track Menu instances by their unique IDs.
+- MenuItem.IsSeparator.
+- More shortcut related properties in MenuItem: ShortcutKeys, Shortcut, ShortcutInfo, ShortcutKeyInfo.
+- ItemContainerElement: OnItemInserted and OnItemRemoved virtual methods to handle item addition and removal in the collection.
+- Menu: Add the ItemChanged event to notify subscribers when a menu or it's child item is modified.
+- Add position-based alignment to HVDropDownAlignment.
+- MenuItem: Add full support of Visible property.
+- Extend IWindowHandler to inherit from IControlHandler.
+- ShortcutInfo: Add platform-specific key retrieval methods GetPlatformSpecificKeys and GetFirstPlatformSpecificKey.
+- Expanded NotifyIcon to support distinct left/right mouse button events (up, down, double-click).
+
+---
+
 # 0.9.752 (2025 September 5)
 
 - Add IsTransparent property to Label and PictureBox controls.
@@ -28,6 +82,8 @@
 - UserControl: Add AfterPaint event, RaiseAfterPaint, and OnAfterPaint methods to allow custom logic after painting operations.
 - Moved common item container logic from Menu to new generic ItemContainerElement{T} base class.
 - Moved host object management logic from Menu to new HostedFrameworkElement base class.
+
+---
 
 # 0.9.751 (2025 August 31)
 
@@ -62,6 +118,8 @@
 - SpeedButton: Add ShowDropDownMenuWhenHovered property, allowing the drop-down menu to appear when the user hovers over the control.
 - Enhance PopupControl with excluded area and scrollbar fitting.
 - AbstractControl: Add MeasureChildrenBounds to calculate the required bounds for child elements, considering their sizes, padding, and margins.
+
+---
 
 # 0.9.750 (2025 August 24)
 

@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ApiInfo>
-  <Assembly Name="Alternet.UI.Common, Version=0.9.752.0, Culture=neutral, PublicKeyToken=7fb0fe57212b4b74">
+  <Assembly Name="Alternet.UI.Common, Version=0.9.753.0, Culture=neutral, PublicKeyToken=7fb0fe57212b4b74">
     <Type Name="XamlX.Runtime.IXamlParentStackProviderV1" />
     <Type Name="XamlX.Runtime.IXamlXmlNamespaceInfoProviderV1" />
     <Type Name="XamlX.Runtime.XamlXmlNamespaceInfoV1" />
@@ -244,6 +244,14 @@
       <Event Name="Disposed" />
       <Event Name="PropertyChanged" />
     </Type>
+    <Type Name="Alternet.Drawing.DynamicBitmap">
+      <Event Name="Disposed" />
+      <Event Name="PropertyChanged" />
+    </Type>
+    <Type Name="Alternet.Drawing.DynamicBitmap`1">
+      <Event Name="Disposed" />
+      <Event Name="PropertyChanged" />
+    </Type>
     <Type Name="Alternet.Drawing.IImageHandler" />
     <Type Name="Alternet.Drawing.ILockImageBits" />
     <Type Name="Alternet.Drawing.Image">
@@ -284,6 +292,10 @@
       <Event Name="PropertyChanged" />
     </Type>
     <Type Name="Alternet.Drawing.ISkiaSurface" />
+    <Type Name="Alternet.Drawing.MswSkiaOpenGLContext">
+      <Event Name="Disposed" />
+      <Event Name="PropertyChanged" />
+    </Type>
     <Type Name="Alternet.Drawing.SkiaColorFilter" />
     <Type Name="Alternet.Drawing.SkiaFontFactoryHandler">
       <Event Name="Disposed" />
@@ -465,6 +477,10 @@
     <Type Name="Alternet.UI.CommandLineArgs">
       <Event Name="Error" />
     </Type>
+    <Type Name="Alternet.UI.CustomNativeHandle">
+      <Event Name="Disposed" />
+      <Event Name="PropertyChanged" />
+    </Type>
     <Type Name="Alternet.UI.IndexedValues`2">
       <Event Name="AfterClear" />
     </Type>
@@ -516,12 +532,18 @@
     <Type Name="Alternet.UI.INotifyIconHandler" />
     <Type Name="Alternet.UI.NotifyIcon">
       <Event Name="Click" />
-      <Event Name="DoubleClick" />
+      <Event Name="RightMouseButtonDoubleClick" />
+      <Event Name="RightMouseButtonDown" />
+      <Event Name="RightMouseButtonUp" />
+      <Event Name="LeftMouseButtonDoubleClick" />
+      <Event Name="LeftMouseButtonDown" />
+      <Event Name="LeftMouseButtonUp" />
       <Event Name="Disposed" />
       <Event Name="PropertyChanged" />
     </Type>
     <Type Name="Alternet.UI.IProcessRunnerNotification" />
     <Type Name="Alternet.UI.ProcessRunnerWithNotification" />
+    <Type Name="Alternet.UI.TestsDrawing" />
     <Type Name="Alternet.UI.DummyTimerHandler">
       <Event Name="Disposed" />
       <Event Name="PropertyChanged" />
@@ -689,6 +711,7 @@
     <Type Name="Alternet.UI.ControlBackgroundStyle" />
     <Type Name="Alternet.UI.ControlFlags" />
     <Type Name="Alternet.UI.ControlRefreshOptions" />
+    <Type Name="Alternet.UI.ControlRenderingFlags" />
     <Type Name="Alternet.UI.ControlRenderSizeVariant" />
     <Type Name="Alternet.UI.ControlStyles" />
     <Type Name="Alternet.UI.FileListBoxColumn" />
@@ -765,6 +788,7 @@
     <Type Name="Alternet.UI.HelpNavigator" />
     <Type Name="Alternet.UI.HiddenOrVisible" />
     <Type Name="Alternet.UI.ListBoxSelectionMode" />
+    <Type Name="Alternet.UI.MenuItemType" />
     <Type Name="Alternet.UI.SelectionMode" />
     <Type Name="Alternet.UI.PropertyGridApplyFlags" />
     <Type Name="Alternet.UI.PropertyGridCreateStyle" />
@@ -852,6 +876,7 @@
     <Type Name="Alternet.UI.WindowState" />
     <Type Name="Alternet.UI.BaseEventArgs" />
     <Type Name="Alternet.UI.BaseEventArgs`1" />
+    <Type Name="Alternet.UI.StringEventArgs" />
     <Type Name="Alternet.UI.BaseCancelEventArgs" />
     <Type Name="Alternet.UI.LogMessageEventArgs" />
     <Type Name="Alternet.UI.UrlEventHandler" />
@@ -930,6 +955,7 @@
     <Type Name="Alternet.UI.KeysExtensions" />
     <Type Name="Alternet.UI.KnownShortcuts" />
     <Type Name="Alternet.UI.MacModifierSymbols" />
+    <Type Name="Alternet.UI.ModifierKey" />
     <Type Name="Alternet.UI.PlatformKeyboardHandler`1">
       <Event Name="Disposed" />
       <Event Name="PropertyChanged" />
@@ -7400,6 +7426,88 @@
     <Type Name="Alternet.UI.IListControl`1">
       <Event Name="CustomItemText" />
     </Type>
+    <Type Name="Alternet.UI.IListBoxHeader" />
+    <Type Name="Alternet.UI.ListBoxHeader">
+      <Event Name="DropDownMenuShowing" />
+      <Event Name="AfterPaint" />
+      <Event Name="ContextMenuCreated" />
+      <Event Name="MouseHover" />
+      <Event Name="CellChanged" />
+      <Event Name="ContextMenuShowing" />
+      <Event Name="Activated" />
+      <Event Name="TitleChanged" />
+      <Event Name="MouseMove" />
+      <Event Name="Touch" />
+      <Event Name="MouseDown" />
+      <Event Name="MouseUp" />
+      <Event Name="MouseWheel" />
+      <Event Name="MouseLeftButtonDown" />
+      <Event Name="MouseRightButtonDown" />
+      <Event Name="MouseRightButtonUp" />
+      <Event Name="CustomLayout" />
+      <Event Name="MouseDoubleClick" />
+      <Event Name="DoubleClick" />
+      <Event Name="MouseLeftButtonUp" />
+      <Event Name="HandleCreated" />
+      <Event Name="HandleDestroyed" />
+      <Event Name="Deactivated" />
+      <Event Name="BeforeHandleDestroyed" />
+      <Event Name="GotFocus" />
+      <Event Name="QueryContinueDrag" />
+      <Event Name="KeyDown" />
+      <Event Name="KeyUp" />
+      <Event Name="LostFocus" />
+      <Event Name="TextChanged" />
+      <Event Name="DelayedTextChanged" />
+      <Event Name="KeyPress" />
+      <Event Name="PreviewKeyDown" />
+      <Event Name="VisualStateChanged" />
+      <Event Name="ToolTipChanged" />
+      <Event Name="IsMouseOverChanged" />
+      <Event Name="LongTap" />
+      <Event Name="Click" />
+      <Event Name="ParentChanged" />
+      <Event Name="Paint" />
+      <Event Name="MarginChanged" />
+      <Event Name="PaddingChanged" />
+      <Event Name="VisibleChanged" />
+      <Event Name="AfterShow" />
+      <Event Name="AfterHide" />
+      <Event Name="MouseCaptureLost" />
+      <Event Name="MouseCaptureChanged" />
+      <Event Name="HelpRequested" />
+      <Event Name="ProcessException" />
+      <Event Name="MouseEnter" />
+      <Event Name="MouseLeave" />
+      <Event Name="ChildRemoved" />
+      <Event Name="ChildVisibleChanged" />
+      <Event Name="ChildInserted" />
+      <Event Name="EnabledChanged" />
+      <Event Name="BackgroundChanged" />
+      <Event Name="ForegroundChanged" />
+      <Event Name="FontChanged" />
+      <Event Name="VerticalAlignmentChanged" />
+      <Event Name="HorizontalAlignmentChanged" />
+      <Event Name="SizeChanged" />
+      <Event Name="Resize" />
+      <Event Name="LocationChanged" />
+      <Event Name="BoundsChanged" />
+      <Event Name="DragStart" />
+      <Event Name="DragDrop" />
+      <Event Name="DragOver" />
+      <Event Name="DragEnter" />
+      <Event Name="DragLeave" />
+      <Event Name="DpiChanged" />
+      <Event Name="SystemColorsChanged" />
+      <Event Name="ErrorsChanged" />
+      <Event Name="Invalidated" />
+      <Event Name="LayoutUpdated" />
+      <Event Name="Scroll" />
+      <Event Name="DataContextChanged" />
+      <Event Name="NameChanged" />
+      <Event Name="Disposed" />
+      <Event Name="PropertyChanged" />
+    </Type>
     <Type Name="Alternet.UI.ListBoxItems">
       <Event Name="PropertyChanged" />
       <Event Name="CollectionChanged" />
@@ -7502,88 +7610,6 @@
       <Event Name="SelectedIndexChanged" />
       <Event Name="SelectionModeChanged" />
       <Event Name="CustomItemText" />
-      <Event Name="DropDownMenuShowing" />
-      <Event Name="AfterPaint" />
-      <Event Name="ContextMenuCreated" />
-      <Event Name="MouseHover" />
-      <Event Name="CellChanged" />
-      <Event Name="ContextMenuShowing" />
-      <Event Name="Activated" />
-      <Event Name="TitleChanged" />
-      <Event Name="MouseMove" />
-      <Event Name="Touch" />
-      <Event Name="MouseDown" />
-      <Event Name="MouseUp" />
-      <Event Name="MouseWheel" />
-      <Event Name="MouseLeftButtonDown" />
-      <Event Name="MouseRightButtonDown" />
-      <Event Name="MouseRightButtonUp" />
-      <Event Name="CustomLayout" />
-      <Event Name="MouseDoubleClick" />
-      <Event Name="DoubleClick" />
-      <Event Name="MouseLeftButtonUp" />
-      <Event Name="HandleCreated" />
-      <Event Name="HandleDestroyed" />
-      <Event Name="Deactivated" />
-      <Event Name="BeforeHandleDestroyed" />
-      <Event Name="GotFocus" />
-      <Event Name="QueryContinueDrag" />
-      <Event Name="KeyDown" />
-      <Event Name="KeyUp" />
-      <Event Name="LostFocus" />
-      <Event Name="TextChanged" />
-      <Event Name="DelayedTextChanged" />
-      <Event Name="KeyPress" />
-      <Event Name="PreviewKeyDown" />
-      <Event Name="VisualStateChanged" />
-      <Event Name="ToolTipChanged" />
-      <Event Name="IsMouseOverChanged" />
-      <Event Name="LongTap" />
-      <Event Name="Click" />
-      <Event Name="ParentChanged" />
-      <Event Name="Paint" />
-      <Event Name="MarginChanged" />
-      <Event Name="PaddingChanged" />
-      <Event Name="VisibleChanged" />
-      <Event Name="AfterShow" />
-      <Event Name="AfterHide" />
-      <Event Name="MouseCaptureLost" />
-      <Event Name="MouseCaptureChanged" />
-      <Event Name="HelpRequested" />
-      <Event Name="ProcessException" />
-      <Event Name="MouseEnter" />
-      <Event Name="MouseLeave" />
-      <Event Name="ChildRemoved" />
-      <Event Name="ChildVisibleChanged" />
-      <Event Name="ChildInserted" />
-      <Event Name="EnabledChanged" />
-      <Event Name="BackgroundChanged" />
-      <Event Name="ForegroundChanged" />
-      <Event Name="FontChanged" />
-      <Event Name="VerticalAlignmentChanged" />
-      <Event Name="HorizontalAlignmentChanged" />
-      <Event Name="SizeChanged" />
-      <Event Name="Resize" />
-      <Event Name="LocationChanged" />
-      <Event Name="BoundsChanged" />
-      <Event Name="DragStart" />
-      <Event Name="DragDrop" />
-      <Event Name="DragOver" />
-      <Event Name="DragEnter" />
-      <Event Name="DragLeave" />
-      <Event Name="DpiChanged" />
-      <Event Name="SystemColorsChanged" />
-      <Event Name="ErrorsChanged" />
-      <Event Name="Invalidated" />
-      <Event Name="LayoutUpdated" />
-      <Event Name="Scroll" />
-      <Event Name="DataContextChanged" />
-      <Event Name="NameChanged" />
-      <Event Name="Disposed" />
-      <Event Name="PropertyChanged" />
-    </Type>
-    <Type Name="Alternet.UI.IListBoxHeader" />
-    <Type Name="Alternet.UI.ListBoxHeader">
       <Event Name="DropDownMenuShowing" />
       <Event Name="AfterPaint" />
       <Event Name="ContextMenuCreated" />
@@ -8653,23 +8679,32 @@
       <Event Name="Opening" />
       <Event Name="Closing" />
       <Event Name="Closed" />
+      <Event Name="ItemChanged" />
       <Event Name="DataContextChanged" />
       <Event Name="NameChanged" />
       <Event Name="Disposed" />
       <Event Name="PropertyChanged" />
     </Type>
+    <Type Name="Alternet.UI.InnerMenuFactory">
+      <Event Name="Disposed" />
+      <Event Name="PropertyChanged" />
+    </Type>
     <Type Name="Alternet.UI.MainMenu">
+      <Event Name="ItemChanged" />
       <Event Name="DataContextChanged" />
       <Event Name="NameChanged" />
       <Event Name="Disposed" />
       <Event Name="PropertyChanged" />
     </Type>
     <Type Name="Alternet.UI.Menu">
+      <Event Name="ItemChanged" />
       <Event Name="DataContextChanged" />
       <Event Name="NameChanged" />
       <Event Name="Disposed" />
       <Event Name="PropertyChanged" />
     </Type>
+    <Type Name="Alternet.UI.MenuChangeEventArgs" />
+    <Type Name="Alternet.UI.MenuChangeKind" />
     <Type Name="Alternet.UI.MenuItem">
       <Event Name="EnabledChanged" />
       <Event Name="VisibleChanged" />
@@ -8685,30 +8720,21 @@
       <Event Name="ImageChanged" />
       <Event Name="DisabledImageChanged" />
       <Event Name="ClickActionChanged" />
+      <Event Name="ItemChanged" />
       <Event Name="DataContextChanged" />
       <Event Name="NameChanged" />
       <Event Name="Disposed" />
       <Event Name="PropertyChanged" />
     </Type>
-    <Type Name="Alternet.UI.MenuItemChangeKind" />
-    <Type Name="Alternet.UI.PlessContextMenuHandler">
-      <Event Name="Disposed" />
-      <Event Name="PropertyChanged" />
-    </Type>
-    <Type Name="Alternet.UI.PlessMainMenuHandler">
-      <Event Name="Disposed" />
-      <Event Name="PropertyChanged" />
-    </Type>
-    <Type Name="Alternet.UI.PlessMenuItemHandler">
-      <Event Name="Disposed" />
-      <Event Name="PropertyChanged" />
-    </Type>
     <Type Name="Alternet.UI.MenuItemRole" />
     <Type Name="Alternet.UI.MenuItemRoles" />
+    <Type Name="Alternet.UI.MenuItemRoleType" />
+    <Type Name="Alternet.UI.StaticMenuEvents" />
     <Type Name="Alternet.UI.ContextMenuStrip">
       <Event Name="Opening" />
       <Event Name="Closing" />
       <Event Name="Closed" />
+      <Event Name="ItemChanged" />
       <Event Name="DataContextChanged" />
       <Event Name="NameChanged" />
       <Event Name="Disposed" />
@@ -8729,6 +8755,7 @@
       <Event Name="ImageChanged" />
       <Event Name="DisabledImageChanged" />
       <Event Name="ClickActionChanged" />
+      <Event Name="ItemChanged" />
       <Event Name="DataContextChanged" />
       <Event Name="NameChanged" />
       <Event Name="Disposed" />
@@ -8749,6 +8776,7 @@
       <Event Name="ImageChanged" />
       <Event Name="DisabledImageChanged" />
       <Event Name="ClickActionChanged" />
+      <Event Name="ItemChanged" />
       <Event Name="DataContextChanged" />
       <Event Name="NameChanged" />
       <Event Name="Disposed" />
@@ -15760,10 +15788,7 @@
     <Type Name="Alternet.UI.ICalendarHandler" />
     <Type Name="Alternet.UI.ICheckBoxHandler" />
     <Type Name="Alternet.UI.IComboBoxHandler" />
-    <Type Name="Alternet.UI.IContextMenuHandler" />
     <Type Name="Alternet.UI.IListViewHandler" />
-    <Type Name="Alternet.UI.IMainMenuHandler" />
-    <Type Name="Alternet.UI.IMenuItemHandler" />
     <Type Name="Alternet.UI.IRadioButtonHandler" />
     <Type Name="Alternet.UI.IScrollBarHandler" />
     <Type Name="Alternet.UI.ISliderHandler" />
@@ -15879,6 +15904,7 @@
     <Type Name="Alternet.UI.IWxControlFactoryHandler" />
     <Type Name="Alternet.UI.IContextMenuHost" />
     <Type Name="Alternet.UI.IContextMenuProperties" />
+    <Type Name="Alternet.UI.IMenuFactory" />
     <Type Name="Alternet.UI.IMenuItemProperties">
       <Event Name="Changed" />
     </Type>
@@ -16557,12 +16583,14 @@
     <Type Name="Alternet.UI.ULongUtils" />
     <Type Name="Alternet.UI.CpuUtils" />
     <Type Name="Alternet.UI.LinuxUtils" />
+    <Type Name="Alternet.UI.UnixSignal" />
     <Type Name="Alternet.UI.MacOsUtils" />
+    <Type Name="Alternet.UI.MswKnownFolders" />
+    <Type Name="Alternet.UI.MswPixelFormatDescriptorEnums" />
     <Type Name="Alternet.UI.MswUtils" />
+    <Type Name="Alternet.UI.RegistryUtils" />
     <Type Name="Alternet.UI.NativeLibraryInspector" />
     <Type Name="Alternet.UI.OSUtils" />
-    <Type Name="Alternet.UI.RegistryUtils" />
-    <Type Name="Alternet.UI.UnixSignal" />
     <Type Name="Alternet.UI.PathUtils" />
     <Type Name="Alternet.UI.PlessUtils" />
     <Type Name="Alternet.UI.CharUtils" />
@@ -16605,10 +16633,10 @@
     <Type Name="Alternet.UI.Localization.LocalizationManager" />
     <Type Name="Alternet.UI.Localization.PropCategoryStrings" />
     <Type Name="Alternet.UI.Localization.PropNameStrings" />
-    <Type Name="Alternet.UI.Tests.Tests" />
     <Type Name="Alternet.UI.Threading.BackgroundTaskQueue" />
     <Type Name="Alternet.UI.Threading.BackgroundWorkManager" />
     <Type Name="Alternet.UI.Markup.INameScope" />
+    <Type Name="Alternet.UI.Tests.Tests" />
     <Type Name="Alternet.UI.Port.IUixmlPortXamlIlParentStackProvider" />
     <Type Name="Alternet.UI.Port.IUixmlPortXamlIlXmlNamespaceInfoProvider" />
     <Type Name="Alternet.UI.Port.UixmlPortXamlIlXmlNamespaceInfo" />
@@ -16630,6 +16658,7 @@
     <Type Name="Alternet.Drawing.ScrollBarDrawable+HitTestResult" />
     <Type Name="Alternet.Drawing.IFontHandler+FontParams" />
     <Type Name="Alternet.Drawing.GenericImage+PixelStrategy" />
+    <Type Name="Alternet.Drawing.Graphics+CanvasCreateParams" />
     <Type Name="Alternet.Drawing.Graphics+DrawElementsParams" />
     <Type Name="Alternet.Drawing.Graphics+DrawElementParams" />
     <Type Name="Alternet.Drawing.Graphics+DrawLabelParams" />
@@ -16715,6 +16744,8 @@
       <Event Name="Disposed" />
       <Event Name="PropertyChanged" />
     </Type>
+    <Type Name="Alternet.Drawing.ISkiaSurface+SurfaceKind" />
+    <Type Name="Alternet.Drawing.SkiaUtils+BitmapCanvasCached" />
     <Type Name="Alternet.Drawing.TextFormat+Record" />
     <Type Name="Alternet.UI.ItemContainerElement`1+FindItemFlags" />
     <Type Name="Alternet.UI.BaseObject+GenericStaticOptions" />
@@ -16735,6 +16766,7 @@
     <Type Name="Alternet.UI.KnownShortcuts+FindReplaceControlKeys" />
     <Type Name="Alternet.UI.KnownShortcuts+RichEditKeys" />
     <Type Name="Alternet.UI.MacModifierSymbols+UsageKind" />
+    <Type Name="Alternet.UI.ShortcutInfo+FormatOptions" />
     <Type Name="Alternet.UI.PropInstanceAndValue+SavedPropertiesItem" />
     <Type Name="Alternet.UI.UserControl+ClickTriggerKind" />
     <Type Name="Alternet.UI.AbstractControl+AlignedPosition" />
@@ -16758,6 +16790,7 @@
     <Type Name="Alternet.UI.ColorComboBox+DefaultColorItemPainter" />
     <Type Name="Alternet.UI.ComboBox+OwnerDrawFlags" />
     <Type Name="Alternet.UI.ComboBox+DefaultItemPainter" />
+    <Type Name="Alternet.UI.FileListBox+FolderAdditionFlags" />
     <Type Name="Alternet.UI.FileListBox+FolderInfoItem" />
     <Type Name="Alternet.UI.FileListBox+NewItemInfo" />
     <Type Name="Alternet.UI.ColorListBox+DefaultItemPainter" />
@@ -17044,6 +17077,7 @@
     <Type Name="Alternet.UI.PanelSettings+RegisterConversionDelegate" />
     <Type Name="Alternet.UI.AppUtils+ExecuteTerminalCommandResult" />
     <Type Name="Alternet.UI.DebugUtils+DebugTraceListener" />
+    <Type Name="Alternet.UI.MenuUtils+BindMenuLoggerFlags" />
     <Type Name="Alternet.UI.StringConverters+BaseToStringConverter" />
     <Type Name="Alternet.UI.StringConverters+SByteToStringConverter" />
     <Type Name="Alternet.UI.StringConverters+ByteToStringConverter" />
@@ -17069,16 +17103,20 @@
     <Type Name="Alternet.UI.LogUtils+LogItem" />
     <Type Name="Alternet.UI.LinuxUtils+NativeMethods" />
     <Type Name="Alternet.UI.MacOsUtils+NativeMethods" />
+    <Type Name="Alternet.UI.MswPixelFormatDescriptorEnums+Flags" />
+    <Type Name="Alternet.UI.MswPixelFormatDescriptorEnums+PixelType" />
+    <Type Name="Alternet.UI.MswPixelFormatDescriptorEnums+PixelLayerType" />
     <Type Name="Alternet.UI.MswUtils+NativeMethods" />
     <Type Name="Alternet.UI.StringUtils+ComparerUsingToString`1" />
     <Type Name="Alternet.UI.AsyncUtils+ValueWaiter`1" />
     <Type Name="Alternet.UI.FileDialogFilterItem+Kind" />
     <Type Name="Alternet.UI.XmlUtils+XmlStreamConvertParams" />
     <Type Name="Alternet.UI.ScrollBar+AltPositionInfo+Record" />
-    <Type Name="Alternet.UI.MswUtils+NativeMethods+DwmWindowAttribute" />
     <Type Name="Alternet.UI.MswUtils+NativeMethods+SmallPoint" />
     <Type Name="Alternet.UI.MswUtils+NativeMethods+ConsoleCharUnion" />
     <Type Name="Alternet.UI.MswUtils+NativeMethods+ConsoleCharInfo" />
+    <Type Name="Alternet.UI.MswUtils+NativeMethods+DwmWindowAttribute" />
+    <Type Name="Alternet.UI.MswUtils+NativeMethods+PIXELFORMATDESCRIPTOR" />
     <Type Name="Alternet.UI.MswUtils+NativeMethods+SmallRect" />
   </Assembly>
 </ApiInfo>
