@@ -14,16 +14,6 @@ namespace Alternet.UI
         private static IMenuFactory? menuFactory;
         private static bool menuFactoryLoaded;
 
-        /*
-        public event EventHandler<StringEventArgs>? MenuClick;
-
-        public event EventHandler<StringEventArgs>? MenuHighlight;
-
-        public event EventHandler<StringEventArgs>? MenuOpened;
-
-        public event EventHandler<StringEventArgs>? MenuClosed;
-        */
-
         /// <summary>
         /// Specifies flags that control the behavior of binding menu item event loggers.
         /// </summary>
@@ -81,6 +71,18 @@ namespace Alternet.UI
                 {
                 }
             }
+        }
+
+        /// <summary>
+        /// Ensures that the required dependencies or configurations are initialized.
+        /// </summary>
+        /// <remarks>This method is typically used to verify that necessary components are set up before
+        /// proceeding with further operations.</remarks>
+        public static void Required()
+        {
+#pragma warning disable
+            var factory = Factory;
+#pragma warning restore
         }
 
         /// <summary>
