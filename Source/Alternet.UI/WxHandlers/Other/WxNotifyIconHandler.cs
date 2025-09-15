@@ -60,19 +60,31 @@ namespace Alternet.UI.Native
 
         public void ShowContextMenu(ContextMenu menu)
         {
-            MenuUtils.Required();
+            if(App.IsMacOS)
+                ShowViaContextMenu();
+            else
+                ShowViaNotifyIcon();
 
-            var wxMenu = menu.GetHostObject<WxContextMenu>();
-            if (wxMenu == null)
+            void ShowViaContextMenu()
             {
-                wxMenu = new WxContextMenu(menu);
-                menu.AddHostObject(wxMenu);
+                menu.ShowAtMouse();
             }
 
-            if (wxMenu == null || wxMenu.AsPointer == IntPtr.Zero)
-                return;
+            void ShowViaNotifyIcon()
+            {
+                MenuUtils.Required();
 
-            this.ShowPopup(wxMenu.AsPointer);
+                var wxMenus = menu.GetHostObjects<WxContextMenu>().ToArray();
+                foreach (var m in wxMenus)
+                {
+                    menu.RemoveHostObject(m);
+                    m.Delete();
+                }
+
+                var wxMenu = new WxContextMenu(menu);
+                menu.AddHostObject(wxMenu);
+                this.ShowPopup(wxMenu.AsPointer);
+            }
         }
 
         protected override void DisposeManaged()
