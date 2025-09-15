@@ -386,6 +386,18 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets the approximate width of the title, in device-independent pixels (DIPs).
+        /// </summary>
+        [Browsable(false)]
+        public virtual Coord TitleWidth
+        {
+            get
+            {
+                return MeasureCanvas.MeasureText(Title, RealFont).Width + Width - ClientRectangle.Width;
+            }
+        }
+
+        /// <summary>
         /// Gets or sets <see cref="ModalResult"/> of the ESC key.
         /// </summary>
         /// <remarks>
