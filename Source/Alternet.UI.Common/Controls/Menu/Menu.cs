@@ -229,6 +229,7 @@ namespace Alternet.UI
         public virtual void BeginUpdate()
         {
             updateCounter++;
+            (LogicalParent as Menu)?.BeginUpdate();
         }
 
         /// <summary>
@@ -262,6 +263,8 @@ namespace Alternet.UI
             {
                 RaiseItemChanged(this, new MenuChangeEventArgs(this, MenuChangeKind.Any));
             }
+
+            (LogicalParent as Menu)?.EndUpdate();
         }
 
         /// <summary>
