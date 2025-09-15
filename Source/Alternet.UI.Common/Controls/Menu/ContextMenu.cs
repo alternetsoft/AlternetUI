@@ -401,7 +401,7 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="control">A <see cref="AbstractControl"/> that specifies
         /// the control with which
-        /// this shortcut menu is associated.</param>
+        /// this context menu is associated.</param>
         /// <param name="position">
         /// A <see cref="PointD"/> that specifies the coordinates at which to display the menu.
         /// These coordinates are specified relative
@@ -411,7 +411,7 @@ namespace Alternet.UI
         /// mouse button on a control
         /// or area of the form that the <see cref="ContextMenu"/> is bound to. You can use
         /// this method to manually display
-        /// the shortcut menu at a specific location and bind it with a specific control. This
+        /// the context menu at a specific location and bind it with a specific control. This
         /// method does not return until the menu is dismissed.
         /// </remarks>
         /// <remarks>
@@ -421,6 +421,18 @@ namespace Alternet.UI
         public virtual void Show(AbstractControl control, PointD? position = null)
         {
             ShowAtFactory(control, position);
+        }
+
+        /// <summary>
+        /// Displays the context menu at the position of the mouse pointer.
+        /// </summary>
+        public virtual void ShowAtMouse()
+        {
+            var control = Control.HoveredControl ?? App.MainWindow;
+            if (control is null)
+                return;
+            var pos = Mouse.GetPosition(control);
+            ShowAtFactory(control, pos);
         }
 
         /// <summary>
