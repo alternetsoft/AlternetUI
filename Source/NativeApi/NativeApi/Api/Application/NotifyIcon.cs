@@ -6,12 +6,19 @@ namespace NativeApi.Api
     // https://docs.wxwidgets.org/3.2/classwx_task_bar_icon.html
     public class NotifyIcon
     {
+        public event EventHandler? LeftMouseButtonUp;
+        public event EventHandler? LeftMouseButtonDown;
+        public event EventHandler? LeftMouseButtonDoubleClick;
+
+        public event EventHandler? RightMouseButtonUp;
+        public event EventHandler? RightMouseButtonDown;
+        public event EventHandler? RightMouseButtonDoubleClick;
+
         public event EventHandler? Click;
-        public event EventHandler? DoubleClick;
 
         public string? Text { get; set; }
         public Image? Icon { get; set; }
-        public void SetMenu(IntPtr menuHandle) { }
+        public void ShowPopup(IntPtr menuHandle) { }
         public bool Visible { get; set; }
 
         public static bool IsAvailable { get; }

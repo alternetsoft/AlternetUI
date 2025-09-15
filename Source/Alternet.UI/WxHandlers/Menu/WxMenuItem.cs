@@ -42,7 +42,7 @@ namespace Alternet.UI
             }
 
             Handle = Native.Menu.CreateMenuItem(itemType, item.UniqueId.ToString());
-            item.AddHostObject(Handle);
+            item.AddHostObject(this);
 
             if (item.Image is not null)
                 Bitmap = item.Image;

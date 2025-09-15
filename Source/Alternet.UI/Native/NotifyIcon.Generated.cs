@@ -101,10 +101,10 @@ namespace Alternet.UI.Native
             
         }
         
-        public void SetMenu(System.IntPtr menuHandle)
+        public void ShowPopup(System.IntPtr menuHandle)
         {
             CheckDisposed();
-            NativeApi.NotifyIcon_SetMenu_(NativePointer, menuHandle);
+            NativeApi.NotifyIcon_ShowPopup_(NativePointer, menuHandle);
         }
         
         static GCHandle eventCallbackGCHandle;
@@ -133,20 +133,45 @@ namespace Alternet.UI.Native
         {
             switch (e)
             {
+                case NativeApi.NotifyIconEvent.LeftMouseButtonUp:
+                {
+                    LeftMouseButtonUp?.Invoke(); return IntPtr.Zero;
+                }
+                case NativeApi.NotifyIconEvent.LeftMouseButtonDown:
+                {
+                    LeftMouseButtonDown?.Invoke(); return IntPtr.Zero;
+                }
+                case NativeApi.NotifyIconEvent.LeftMouseButtonDoubleClick:
+                {
+                    LeftMouseButtonDoubleClick?.Invoke(); return IntPtr.Zero;
+                }
+                case NativeApi.NotifyIconEvent.RightMouseButtonUp:
+                {
+                    RightMouseButtonUp?.Invoke(); return IntPtr.Zero;
+                }
+                case NativeApi.NotifyIconEvent.RightMouseButtonDown:
+                {
+                    RightMouseButtonDown?.Invoke(); return IntPtr.Zero;
+                }
+                case NativeApi.NotifyIconEvent.RightMouseButtonDoubleClick:
+                {
+                    RightMouseButtonDoubleClick?.Invoke(); return IntPtr.Zero;
+                }
                 case NativeApi.NotifyIconEvent.Click:
                 {
                     Click?.Invoke(); return IntPtr.Zero;
-                }
-                case NativeApi.NotifyIconEvent.DoubleClick:
-                {
-                    DoubleClick?.Invoke(); return IntPtr.Zero;
                 }
                 default: throw new Exception("Unexpected NotifyIconEvent value: " + e);
             }
         }
         
+        public Action? LeftMouseButtonUp;
+        public Action? LeftMouseButtonDown;
+        public Action? LeftMouseButtonDoubleClick;
+        public Action? RightMouseButtonUp;
+        public Action? RightMouseButtonDown;
+        public Action? RightMouseButtonDoubleClick;
         public Action? Click;
-        public Action? DoubleClick;
         
         [SuppressUnmanagedCodeSecurity]
         public class NativeApi : NativeApiProvider
@@ -158,8 +183,13 @@ namespace Alternet.UI.Native
             
             public enum NotifyIconEvent
             {
+                LeftMouseButtonUp,
+                LeftMouseButtonDown,
+                LeftMouseButtonDoubleClick,
+                RightMouseButtonUp,
+                RightMouseButtonDown,
+                RightMouseButtonDoubleClick,
                 Click,
-                DoubleClick,
             }
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
@@ -196,7 +226,7 @@ namespace Alternet.UI.Native
             public static extern bool NotifyIcon_GetIsOk_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void NotifyIcon_SetMenu_(IntPtr obj, System.IntPtr menuHandle);
+            public static extern void NotifyIcon_ShowPopup_(IntPtr obj, System.IntPtr menuHandle);
             
         }
     }

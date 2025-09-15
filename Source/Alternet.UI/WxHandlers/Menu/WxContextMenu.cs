@@ -29,6 +29,7 @@ namespace Alternet.UI
         public WxContextMenu(ContextMenu menu)
         {
             Handle = Native.Menu.CreateContextMenu(menu.UniqueId.ToString());
+            menu.AddHostObject(this);
 
             if (menu.HasItems)
             {
@@ -41,12 +42,6 @@ namespace Alternet.UI
                         Add(itemHandle);
                 }
             }
-        }
-
-        public WxContextMenu(string id, ContextMenu menu)
-            : this(Native.Menu.CreateContextMenu(id))
-        {
-            menu.AddHostObject(this);
         }
 
         public virtual string Id

@@ -22,15 +22,43 @@ namespace Alternet.UI
         Action? Click { get; set; }
 
         /// <summary>
-        /// Gets or sets action which is called when notify icon is double-clicked.
+        /// Gets or sets the action which is called when the
+        /// left mouse button is released on the notify icon.
         /// </summary>
-        Action? DoubleClick { get; set; }
+        Action? LeftMouseButtonUp { get; set; }
+
+        /// <summary>
+        /// Gets or sets the action which is called when the left
+        /// mouse button is pressed on the notify icon.
+        /// </summary>
+        Action? LeftMouseButtonDown { get; set; }
+
+        /// <summary>
+        /// Gets or sets the action which is called when the left mouse button
+        /// is double-clicked on the notify icon.
+        /// </summary>
+        Action? LeftMouseButtonDoubleClick { get; set; }
+
+        /// <summary>
+        /// Gets or sets the action which is called when the right mouse button
+        /// is released on the notify icon.
+        /// </summary>
+        Action? RightMouseButtonUp { get; set; }
+
+        /// <summary>
+        /// Gets or sets the action which is called when the right mouse button
+        /// is pressed on the notify icon.
+        /// </summary>
+        Action? RightMouseButtonDown { get; set; }
+
+        /// <summary>
+        /// Gets or sets the action which is called when the right mouse button
+        /// is double-clicked on the notify icon.
+        /// </summary>
+        Action? RightMouseButtonDoubleClick { get; set; }
 
         /// <inheritdoc cref="NotifyIcon.Icon"/>
         Image? Icon { set; }
-
-        /// <inheritdoc cref="NotifyIcon.Menu"/>
-        ContextMenu? Menu { set; }
 
         /// <inheritdoc cref="NotifyIcon.Visible"/>
         bool Visible { get; set; }
@@ -40,5 +68,12 @@ namespace Alternet.UI
 
         /// <inheritdoc cref="NotifyIcon.IsOk"/>
         bool IsOk { get; }
+
+        /// <summary>
+        /// Displays the specified context menu at the notification icon position.
+        /// </summary>
+        /// <param name="menu">The <see cref="ContextMenu"/> to display.
+        /// Cannot be <see langword="null"/>.</param>
+        void ShowContextMenu(ContextMenu menu);
     }
 }

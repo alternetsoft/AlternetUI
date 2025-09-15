@@ -8,44 +8,46 @@ namespace Alternet.UI.Native
 {
     internal partial class NotifyIcon : INotifyIconHandler
     {
-        private WxContextMenu? menuHandle;
-        private Alternet.UI.ContextMenu? menu;
-
-        public Alternet.UI.ContextMenu? Menu
+        Action? INotifyIconHandler.LeftMouseButtonUp
         {
-            set
-            {
-                if (menu == value)
-                    return;
+            get => LeftMouseButtonUp;
+            set => LeftMouseButtonUp = value;
+        }
 
-                if (menu is not null)
-                {
-                    menu.ItemChanged -= OnMenuItemChanged;
-                    menu.Disposed -= OnMenuDisposed;
-                }
+        Action? INotifyIconHandler.LeftMouseButtonDown
+        {
+            get => LeftMouseButtonDown;
+            set => LeftMouseButtonDown = value;
+        }
 
-                menu = value;
+        Action? INotifyIconHandler.LeftMouseButtonDoubleClick
+        { 
+            get => LeftMouseButtonDoubleClick;
+            set => LeftMouseButtonDoubleClick = value;
+        }
 
-                UpdateNativeMenu(value);
+        Action? INotifyIconHandler.RightMouseButtonUp
+        {
+            get => RightMouseButtonUp;
+            set => RightMouseButtonUp = value;
+        }
 
-                if (value is not null)
-                {
-                    value.ItemChanged += OnMenuItemChanged;
-                    value.Disposed += OnMenuDisposed;
-                }
-            }
+        Action? INotifyIconHandler.RightMouseButtonDown
+        {
+            get => RightMouseButtonDown;
+            set => RightMouseButtonDown = value;
+        }
+
+        Action? INotifyIconHandler.RightMouseButtonDoubleClick
+        {
+            get => RightMouseButtonDoubleClick;
+            set => RightMouseButtonDoubleClick = value;
         }
 
         Action? INotifyIconHandler.Click
         {
             get => Click;
             set => Click = value;
-        }
-
-        Action? INotifyIconHandler.DoubleClick
-        {
-            get => DoubleClick;
-            set => DoubleClick = value;
         }
 
         Alternet.Drawing.Image? INotifyIconHandler.Icon
@@ -56,44 +58,25 @@ namespace Alternet.UI.Native
             }
         }
 
-        protected void OnMenuDisposed(object sender, EventArgs e)
+        public void ShowContextMenu(ContextMenu menu)
         {
-            Menu = null;
-        }
+            MenuUtils.Required();
 
-        protected void OnMenuItemChanged(object sender, MenuChangeEventArgs e)
-        {
-            UpdateNativeMenu(menu);
-        }
-
-        protected void UpdateNativeMenu(Alternet.UI.ContextMenu? value)
-        {
-            if (MenuUtils.Factory is not WxMenuFactory factory)
-                return;
-
-            if (menuHandle != null)
+            var wxMenu = menu.GetHostObject<WxContextMenu>();
+            if (wxMenu == null)
             {
-                SetMenu(IntPtr.Zero);
-                menuHandle.Delete();
-                menuHandle = null;
+                wxMenu = new WxContextMenu(menu);
+                menu.AddHostObject(wxMenu);
             }
 
-            if (value == null)
-            {
+            if (wxMenu == null || wxMenu.AsPointer == IntPtr.Zero)
                 return;
-            }
 
-            menuHandle = new WxContextMenu(value);
-
-            if (menuHandle == null)
-                SetMenu(IntPtr.Zero);
-            else
-                SetMenu(menuHandle.AsPointer);
+            this.ShowPopup(wxMenu.AsPointer);
         }
 
         protected override void DisposeManaged()
         {
-            Menu = null;
             base.DisposeManaged();
         }
     }

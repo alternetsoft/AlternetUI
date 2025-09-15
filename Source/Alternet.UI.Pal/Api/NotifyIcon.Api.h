@@ -119,12 +119,12 @@ ALTERNET_UI_API c_bool NotifyIcon_GetIsOk_(NotifyIcon* obj)
     #endif
 }
 
-ALTERNET_UI_API void NotifyIcon_SetMenu_(NotifyIcon* obj, void* menuHandle)
+ALTERNET_UI_API void NotifyIcon_ShowPopup_(NotifyIcon* obj, void* menuHandle)
 {
     #if !defined(__WXMSW__) || defined(_DEBUG)
     MarshalExceptions<void>([&](){
     #endif
-        obj->SetMenu(menuHandle);
+        obj->ShowPopup(menuHandle);
     #if !defined(__WXMSW__) || defined(_DEBUG)
     });
     #endif

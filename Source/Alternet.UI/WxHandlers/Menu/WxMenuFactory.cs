@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 using Alternet.Drawing;
@@ -28,7 +29,7 @@ namespace Alternet.UI
                     }
                 }
 
-                var itemHandles = GetItemHandles(item);
+                var itemHandles = GetItemHandles(item).ToArray();
 
                 foreach (var itemHandle in itemHandles)
                     itemHandle.Enabled = item.Enabled;
@@ -50,10 +51,19 @@ namespace Alternet.UI
                     }
                 }
 
-                var itemHandles = GetItemHandles(item);
+                var itemHandles = GetItemHandles(item).ToArray();
+
                 foreach (var itemHandle in itemHandles)
                 {
-                    itemHandle.SetTextAndShortcut(item);
+                    var isSeparator = itemHandle.ItemType == MenuItemType.Separator;
+                    if (isSeparator == item.IsSeparator)
+                    {
+                        itemHandle.SetTextAndShortcut(item);
+                    }
+                    else
+                    {
+
+                    }
                 }
             };
 
@@ -377,14 +387,6 @@ namespace Alternet.UI
                 menuPtr,
                 (UI.Native.Control)control.NativeControl ?? throw new Exception(),
                 position.Value);
-        }
-
-        public virtual string GetId(CustomNativeHandle handle)
-        {
-            var ptr = handle.AsPointer;
-            if (ptr == IntPtr.Zero)
-                return string.Empty;
-            return Native.Menu.GetMenuId(ptr);
         }
 
         /// <summary>

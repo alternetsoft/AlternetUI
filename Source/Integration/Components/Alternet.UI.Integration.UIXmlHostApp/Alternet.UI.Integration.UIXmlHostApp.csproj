@@ -9,14 +9,18 @@
     <AlternetUIPath>$(MSBuildProjectDirectory)\..\..\..\..\</AlternetUIPath>	
   </PropertyGroup>
 
-  <Import Project="$(AlternetUIPath)\Source\Build\Alternet.UI.Copy.props"/>
+  <Import Project="$(AlternetUIPath)\Source\Build\Alternet.UI.Copy.props" />
+
+  <ItemGroup>
+    <Compile Remove="Utils\**" />
+    <EmbeddedResource Remove="Utils\**" />
+    <None Remove="Utils\**" />
+    <UIXml Remove="Utils\**" />
+  </ItemGroup>
     
   <ItemGroup>
     <ProjectReference Include="..\Alternet.UI.Integration.Remoting\Alternet.UI.Integration.Remoting.csproj" />
     <PackageReference Include="ExposedObject" Version="2.2.0" />
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Utils\" />
   </ItemGroup>
 
   <Import Project="$(MSBuildThisFileDirectory)\..\..\..\Alternet.UI.Common\SignDll.proj" />

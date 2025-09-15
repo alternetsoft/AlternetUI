@@ -31,6 +31,11 @@ namespace Alternet::UI
         void DeleteTaskBarIcon();
         void RecreateTaskBarIconIfNeeded();
 
+        void OnLeftMouseButtonDown(wxTaskBarIconEvent& event);
+        void OnRightMouseButtonDown(wxTaskBarIconEvent& event);
+        void OnRightMouseButtonUp(wxTaskBarIconEvent& event);
+        void OnRightMouseButtonDoubleClick(wxTaskBarIconEvent& event);
+        void OnClick(wxTaskBarIconEvent& event);
         void OnLeftMouseButtonUp(wxTaskBarIconEvent& event);
         void OnLeftMouseButtonDoubleClick(wxTaskBarIconEvent& event);
 
@@ -38,9 +43,6 @@ namespace Alternet::UI
 
         optional<string> _text;
         Image* _icon = nullptr;
-        wxMenu* _menu = nullptr;
         bool _visible = false;
-
-        inline static std::vector<wxTaskBarIcon*> _taskBarIcons;
     };
 }
