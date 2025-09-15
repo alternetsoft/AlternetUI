@@ -42,6 +42,34 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Displays a prompt to the user with a specified title and an optional default value,
+        /// and invokes a callback with the user's input.
+        /// </summary>
+        /// <param name="title">The title of the prompt displayed to the user.</param>
+        /// <param name="onApply">A callback action that is invoked with the user's
+        /// input when the prompt is confirmed. The input is
+        /// guaranteed to be non-null.</param>
+        /// <param name="defaultValue">The default value pre-filled in the prompt.
+        /// This parameter is optional and can be <see langword="null"/>.</param>
+        public static void AskTextAsync(
+            string title,
+            Action<string> onApply,
+            string? defaultValue = default)
+        {
+            TextFromUserParams prm = new()
+            {
+                Title = title,
+                DefaultValue = defaultValue,
+                OnApply = (s) =>
+                {
+                    if (s is not null)
+                        onApply(s);
+                },
+            };
+            GetTextFromUserAsync(prm);
+        }
+
+        /// <summary>
         /// Shows "Run terminal command" dialog.
         /// </summary>
         /// <param name="defaultValue"></param>
