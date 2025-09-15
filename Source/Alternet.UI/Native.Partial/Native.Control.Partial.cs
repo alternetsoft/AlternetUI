@@ -55,7 +55,8 @@ namespace Alternet.UI.Native
             if (!uiControl.VisibleOnScreen)
                 return;
 
-            var skia = uiControl.RenderingFlags.HasFlag(ControlRenderingFlags.UseSkiaSharp);
+            var skia = !App.IsMacOS &&
+                uiControl.RenderingFlags.HasFlag(ControlRenderingFlags.UseSkiaSharp);
 
             Drawing.Graphics CreateDefaultGraphics()
             {
@@ -129,7 +130,7 @@ namespace Alternet.UI.Native
 
             if (skia)
             {
-                if (DebugUtils.IsDebugDefinedAndAttached
+                if (DebugUtils.IsDebugDefinedAndAttached && App.IsWindowsOS
                     && uiControl.RenderingFlags.HasFlag(ControlRenderingFlags.UseOpenGL))
                     OpenGLPaint();
                 else
