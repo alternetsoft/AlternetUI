@@ -28,13 +28,15 @@ namespace Alternet.UI
         /// <param name="until">End date (UTC). Defaults to current UTC time if null.</param>
         /// <param name="token">GitHub token for authenticated access.
         /// Optional for public repos.</param>
+        /// <param name="branch">The branch name. If not specified, defaults to "master".</param>
         /// <returns>A collection of <see cref="CommitInfo"/> containing commit metadata.</returns>
         public static async Task<IEnumerable<CommitInfo>> GetCommitsAsync(
             string owner,
             string repo,
             DateTime since,
             DateTime? until = null,
-            string? token = null)
+            string? token = null,
+            string? branch = null)
         {
             token ??= string.Empty;
             until ??= DateTime.UtcNow;
@@ -52,29 +54,53 @@ namespace Alternet.UI
             int page = 1;
             const int perPage = 100;
 
+            if (string.IsNullOrEmpty(branch))
+                branch = "master";
+
             while (true)
             {
                 string url = $"https://api.github.com/repos/{owner}/{repo}/commits" +
-                             $"?since={since:O}&until={until:O}&per_page={perPage}&page={page}";
-
-                var response = await client.GetAsync(url);
-                response.EnsureSuccessStatusCode();
-
-                var json = await response.Content.ReadAsStringAsync();
-                var commits = JsonDocument.Parse(json).RootElement;
-
-                if (commits.GetArrayLength() == 0)
-                    break;
-
-                foreach (var commit in commits.EnumerateArray())
+                             $"?sha={branch}&since={since:O}&until={until:O}&per_page={perPage}&page={page}";
+                try
                 {
-                    result.Add(new CommitInfo(commit));
-                }
+                    var response = await client.GetAsync(url);
 
-                page++;
+                    if (!response.IsSuccessStatusCode)
+                    {
+                        var errorContent = await response.Content.ReadAsStringAsync();
+                        AddError($"{response.StatusCode}: {errorContent}");
+                        return result;
+                    }
+
+                    var json = await response.Content.ReadAsStringAsync();
+                    var commits = JsonDocument.Parse(json).RootElement;
+
+                    if (commits.GetArrayLength() == 0)
+                        break;
+
+                    foreach (var commit in commits.EnumerateArray())
+                    {
+                        result.Add(new CommitInfo(commit));
+                    }
+
+                    page++;
+                }
+                catch (HttpRequestException ex)
+                {
+                    AddError($"Request failed: {ex.Message}");
+                }
+                catch (Exception ex)
+                {
+                    AddError($"Unexpected error: {ex.Message}");
+                }
             }
 
             return result;
+
+            void AddError(string message)
+            {
+                result.Add(new CommitInfo { ErrorMessage = "[Error] " + message });
+            }
         }
 
         /// <summary>
@@ -82,16 +108,23 @@ namespace Alternet.UI
         /// </summary>
         /// <remarks>This method retrieves and logs the SHA and message of each commit made
         /// to the AlternetUI repository within the past week.</remarks>
-        public static async void LogCommitsForAlternetUI()
+        public static void LogCommitsForAlternetUI()
         {
-            var commits = await GetCommitsAsync(
-                "alternetsoft",
-                "AlternetUI",
-                DateTime.UtcNow.AddDays(-7));
+            DialogFactory.AskTextAsync(
+                "Specify Alternet.UI branch name (empty for master)",
+                async (branch) =>
+                {
+                    var commits = await GetCommitsAsync(
+                        "alternetsoft",
+                        "AlternetUI",
+                        DateTime.UtcNow.AddDays(-7),
+                        token: null,
+                        branch: branch);
 
-            var s = CommitsToString(commits);
+                    var s = CommitsToString(commits);
 
-            WindowWithMemoAndButton.ShowDialog("AlternetUI Commits in the Last 7 Days", s);
+                    WindowWithMemoAndButton.ShowDialog("AlternetUI Commits in the Last 7 Days", s);
+                });
         }
 
         /// <summary>
@@ -105,7 +138,7 @@ namespace Alternet.UI
             foreach (var commit in commits)
             {
                 sb.AppendLine($"{commit.Message}");
-                sb.AppendLine();
+                sb.AppendLine(LogUtils.SectionSeparator);
             }
 
             return sb.ToString();
@@ -126,6 +159,13 @@ namespace Alternet.UI
             public CommitInfo(JsonElement? element)
             {
                 Element = element;
+            }
+
+            /// <summary>
+            /// Initializes a new instance of the <see cref="CommitInfo"/> class.
+            /// </summary>
+            public CommitInfo()
+            {
             }
 
             /// <summary>
@@ -153,9 +193,19 @@ namespace Alternet.UI
             }
 
             /// <summary>
+            /// Gets or sets the error message associated with the current operation or state.
+            /// </summary>
+            public string? ErrorMessage { get; set; }
+
+            /// <summary>
             /// Gets or sets the JSON element associated with this instance.
             /// </summary>
             public JsonElement? Element { get; set; }
+
+            /// <summary>
+            /// Gets a value indicating whether the current state represents an error.
+            /// </summary>
+            public bool IsError => !string.IsNullOrEmpty(ErrorMessage);
         }
     }
 }
