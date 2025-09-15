@@ -15,11 +15,6 @@ namespace Alternet.UI
         None,
 
         /// <summary>
-        /// Role is determined automatically.
-        /// </summary>
-        Auto,
-
-        /// <summary>
         /// Represents an "About" menu item.
         /// </summary>
         About,
