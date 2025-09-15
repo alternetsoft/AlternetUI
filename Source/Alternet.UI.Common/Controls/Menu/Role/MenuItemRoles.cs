@@ -45,5 +45,36 @@ namespace Alternet.UI
         /// menu with a display text of "Preferences..." and a shortcut of "Cmd+,".
         /// </remarks>
         public static readonly MenuItemRole Preferences = new("Preferences");
+
+        /// <summary>
+        /// Maps a nullable <see cref="MenuItemRole"/> to its corresponding
+        /// <see cref="MenuItemRoleType"/> value.
+        /// </summary>
+        /// <param name="role">The nullable <see cref="MenuItemRole"/> to map.
+        /// If <see langword="null"/>, the method returns <see cref="MenuItemRoleType.None"/>.</param>
+        /// <returns>A <see cref="MenuItemRoleType"/> value that corresponds to the
+        /// specified <paramref name="role"/>. If
+        /// <paramref name="role"/> is <see langword="null"/>, the method returns
+        /// <see cref="MenuItemRoleType.None"/>.
+        /// If the <paramref name="role"/> does not match any predefined mapping, the method returns
+        /// <see cref="MenuItemRoleType.Other"/>.</returns>
+        public static MenuItemRoleType GetRoleType(MenuItemRole? role)
+        {
+            if (role == null)
+                return MenuItemRoleType.None;
+
+            if (role == About)
+                return MenuItemRoleType.About;
+            else
+            if (role == Exit)
+                return MenuItemRoleType.Exit;
+            else
+            if (role == Preferences)
+                return MenuItemRoleType.Preferences;
+            else
+            if (role == None)
+                return MenuItemRoleType.None;
+            return MenuItemRoleType.Other;
+        }
     }
 }
