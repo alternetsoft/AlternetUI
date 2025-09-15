@@ -62,7 +62,7 @@ namespace Alternet.UI
                     }
                     else
                     {
-
+                        RecreateItem(item);
                     }
                 }
             };
@@ -264,6 +264,19 @@ namespace Alternet.UI
                     RemoveItemFromContextMenu(parent, item);
                 }
             }
+
+            void RemoveItemSimple(MenuItem item)
+            {
+                if (item.LogicalParent is not Menu parent)
+                    return;
+                RemoveItem(parent, item);
+            }
+
+            void RecreateItem(MenuItem item)
+            {
+                RemoveItemSimple(item);
+                InsertItem(item);
+            }
         }
 
         public WxMenuFactory()
@@ -378,6 +391,10 @@ namespace Alternet.UI
                 var window = control.ParentWindow;
                 if (window == null)
                     return;
+
+                if (control.Parent == null)
+                    return;
+
                 var toolRect = control.Bounds;
                 var pt = control.Parent!.ClientToScreen(toolRect.BottomLeft);
                 position = window.ScreenToClient(pt);
