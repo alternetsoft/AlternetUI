@@ -197,6 +197,7 @@ namespace Alternet.UI
                 {
                 }
             }
+
             public override object? CommandTarget
             {
                 get => null;

@@ -82,11 +82,6 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        public virtual void SetMenu(DisposableObject? value)
-        {
-        }
-
-        /// <inheritdoc/>
         public virtual void SetMinSize(SizeD size)
         {
         }

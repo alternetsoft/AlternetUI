@@ -1202,8 +1202,9 @@ namespace Alternet.Drawing
         /// <summary>
         /// Represents the parameters required to create a measure canvas.
         /// </summary>
-        /// <remarks>This structure is used to encapsulate the configuration options or data necessary 
-        /// for initializing a measure canvas. The specific parameters should be defined within this structure to
+        /// <remarks>This structure is used to encapsulate the configuration options or data necessary
+        /// for initializing a measure canvas. The specific parameters should
+        /// be defined within this structure to
         /// ensure clarity and maintainability.</remarks>
         public struct CanvasCreateParams : IEquatable<CanvasCreateParams>
         {

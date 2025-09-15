@@ -34,5 +34,4 @@ namespace Alternet.UI
         /// </summary>
         Other,
     }
-
 }
