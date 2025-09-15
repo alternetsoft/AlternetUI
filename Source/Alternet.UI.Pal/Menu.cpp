@@ -290,13 +290,17 @@ namespace Alternet::UI
     {
         auto item = (wxAlternetMenuItem*)handle;
         auto text = CoerceMenuText(value);
-        if (rightValue.empty())
+
+        auto accel = item->GetAccel();
+
+        if (accel == nullptr)
         {
             item->SetItemLabel(text);
         }
         else
         {
-            auto labelText = text + "\t" + wxStr(rightValue);
+			auto rVal = accel->ToRawString();
+            auto labelText = text + "\t" + rVal;
             item->SetItemLabel(labelText);
         }
     }
