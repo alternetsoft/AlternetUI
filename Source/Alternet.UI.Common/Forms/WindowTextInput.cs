@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Text;
 
+using Alternet.Drawing;
 using Alternet.UI.Localization;
 
 namespace Alternet.UI
@@ -89,12 +90,28 @@ namespace Alternet.UI
         public TextBoxAndButton Edit => edit;
 
         /// <summary>
+        /// Gets a value indicating whether the message is null or an empty string.
+        /// </summary>
+        [Browsable(false)]
+        public virtual bool IsMessageEmpty => string.IsNullOrEmpty(Message);
+
+        /// <summary>
         /// Gets or sets dialog message.
         /// </summary>
         public virtual string Message
         {
             get => Label.Text;
-            set => Label.Text = value;
+
+            set
+            {
+                if (Message == value)
+                    return;
+                Label.Text = value;
+                var oldVisible = Label.Visible;
+                Label.Visible = !IsMessageEmpty;
+                if (oldVisible != Label.Visible)
+                    SetSizeToContent();
+            }
         }
 
         /// <inheritdoc/>
@@ -164,6 +181,17 @@ namespace Alternet.UI
 
                 prm.RaiseActions(result ? s : null);
             });
+        }
+
+        /// <inheritdoc/>
+        public override void SetSizeToContent(
+            WindowSizeToContentMode mode = WindowSizeToContentMode.WidthAndHeight,
+            SizeD? additionalSpace = null)
+        {
+            base.SetSizeToContent(mode, additionalSpace);
+            var tw = TitleWidth;
+            if (Width < tw)
+                Width = tw;
         }
 
         /// <summary>
