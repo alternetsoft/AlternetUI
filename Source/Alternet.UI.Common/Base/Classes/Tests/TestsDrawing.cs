@@ -34,6 +34,7 @@ namespace Alternet.UI
 
             var form = FormUtils.GetPhantomWindow();
             using var glContext = new MswSkiaOpenGLContext(form);
+            MswUtils.NativeMethods.glViewport(0, 0, 500, 500);
             DrawSampleOnContext(glContext.Context, saveToFile: true);
         }
 
@@ -51,13 +52,12 @@ namespace Alternet.UI
         [Conditional("DEBUG")]
         public static void DrawSampleOnContext(GRContext context, bool saveToFile = false)
         {
-            MswUtils.NativeMethods.glViewport(0, 0, 500, 500);
             var info = new SKImageInfo(500, 500);
             using var surface = SKSurface.Create(context, true, info);
             var canvas = surface.Canvas;
 
             canvas.Clear(SKColors.Bisque);
-            canvas.DrawText("Frame rendered", 50, 100, SKTextAlign.Left, Control.DefaultFont, Brushes.Red);
+            canvas.DrawText("Frame rendered", 5, 5, SKTextAlign.Left, Control.DefaultFont, Brushes.Red);
             canvas.Flush();
             if (saveToFile)
             {

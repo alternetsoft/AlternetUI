@@ -15,6 +15,8 @@ namespace Alternet.UI
     {
         GenericImageLoadFlags IGraphicsFactoryHandler.GenericImageDefaultLoadFlags { get; set; }
 
+        public virtual bool IsOpenGLAvailable => false;
+
         /// <inheritdoc/>
         IPenHandler IGraphicsFactoryHandler.CreatePenHandler(Pen pen)
         {

@@ -184,17 +184,14 @@ namespace Alternet::UI
         SizeI _eventNewDpi;
         wxWindow* _eventFocusWindow = nullptr;
 
+        bool IsNullOrDeleting();
+
         long GetDefaultStyle();
 
         virtual void OnPaint(wxPaintEvent& event);
         virtual void OnEraseBackground(wxEraseEvent& event);
 
         void OnMouseCaptureLost(wxEvent& event);
-
-        /*
-        virtual void OnMouseEnter(wxMouseEvent& event);
-        virtual void OnMouseLeave(wxMouseEvent& event);
-        */
 
         virtual void OnMouseWheel(wxMouseEvent& event);
         virtual void OnContextMenu(wxContextMenuEvent& event);
@@ -312,8 +309,6 @@ namespace Alternet::UI
         static DragDropEffects GetDragDropEffects(wxDragResult input);
         static wxDragResult GetDragResult(DragDropEffects input);
         static int GetDoDragDropFlags(DragDropEffects allowedEffects);
-
-        bool IsNullOrDeleting();
 
         wxDragResult RaiseDragAndDropEvent(
             const wxPoint& location,

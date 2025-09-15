@@ -108,8 +108,8 @@ void SetVisible(bool value);
 virtual bool GetEnabled();
 virtual void SetEnabled(bool value);
 
-bool GetUserPaint();
-void SetUserPaint(bool value);
+virtual bool GetUserPaint();
+virtual void SetUserPaint(bool value);
 
 bool GetIsMouseOver();
 

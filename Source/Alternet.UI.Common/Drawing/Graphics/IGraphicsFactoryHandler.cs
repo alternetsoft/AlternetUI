@@ -18,6 +18,11 @@ namespace Alternet.Drawing
     public interface IGraphicsFactoryHandler : IDisposable
     {
         /// <summary>
+        /// Gets a value indicating whether OpenGL is available on the current system.
+        /// </summary>
+        public bool IsOpenGLAvailable { get; }
+
+        /// <summary>
         /// Gets or sets <see cref="GenericImageLoadFlags"/> used to specify default load image flags.
         /// </summary>
         GenericImageLoadFlags GenericImageDefaultLoadFlags { get; set; }

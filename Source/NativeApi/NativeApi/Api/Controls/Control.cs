@@ -142,7 +142,7 @@ namespace NativeApi.Api
 
         public bool Visible { get; set; }
         public virtual bool Enabled { get; set; }
-        public bool UserPaint { get; set; }
+        public virtual bool UserPaint { get; set; }
         public bool IsMouseOver { get; }
         public bool HasWindowCreated { get; }
         public Color BackgroundColor { get; set; }

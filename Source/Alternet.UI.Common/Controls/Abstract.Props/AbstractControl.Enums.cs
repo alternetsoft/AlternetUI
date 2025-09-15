@@ -28,14 +28,19 @@ namespace Alternet.UI
         public enum HandlerType
         {
             /// <summary>
-            /// Native handler type.
+            /// Native handler. Depends on the type of control for which it is created.
             /// </summary>
             Native,
 
             /// <summary>
-            /// Generic type.
+            /// Generic handler. Creates handler suitable for owner drawn controls.
             /// </summary>
             Generic,
+
+            /// <summary>
+            /// OpenGL handler. Creates handler suitable for controls painted with OpenGL.
+            /// </summary>
+            OpenGL,
         }
 
         /// <summary>

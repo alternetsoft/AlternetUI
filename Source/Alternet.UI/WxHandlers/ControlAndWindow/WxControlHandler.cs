@@ -85,7 +85,7 @@ namespace Alternet.UI
             }
         }
 
-        public bool Visible
+        public virtual bool Visible
         {
             get => NativeControl.Visible;
             set => NativeControl.Visible = value;

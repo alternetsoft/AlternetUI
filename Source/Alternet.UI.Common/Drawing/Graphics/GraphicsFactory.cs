@@ -75,13 +75,15 @@ namespace Alternet.Drawing
         /// </summary>
         public static bool DefaultAntialiasing = true;
 
-        private static readonly BaseDictionary<Graphics.CanvasCreateParams, Graphics> MemoryCanvases = new();
+        private static readonly BaseDictionary<Graphics.CanvasCreateParams, Graphics>
+            MemoryCanvases = new();
 
         private static bool imageBitsFormatsLoaded = false;
         private static ImageBitsFormat nativeBitsFormat;
         private static ImageBitsFormat alphaBitsFormat;
         private static ImageBitsFormat genericBitsFormat;
         private static IGraphicsFactoryHandler? handler;
+        private static bool? isOpenGLAvailable;
 
         static GraphicsFactory()
         {
@@ -102,6 +104,34 @@ namespace Alternet.Drawing
             get => handler ??= App.Handler.CreateGraphicsFactoryHandler();
 
             set => handler = value;
+        }
+
+        /// <summary>
+        /// Gets a value indicating whether OpenGL is available on the current system.
+        /// </summary>
+        /// <remarks>This property checks the system's capabilities to determine if OpenGL support is
+        /// present. It can be used to conditionally enable features that depend on OpenGL.
+        /// Value is cached after the first access for performance reasons.
+        /// </remarks>
+        public static bool IsOpenGLAvailable
+        {
+            get
+            {
+                if (isOpenGLAvailable is null)
+                {
+                    try
+                    {
+                        isOpenGLAvailable = App.IsWindowsOS && Handler.IsOpenGLAvailable;
+                    }
+                    catch (Exception ex)
+                    {
+                        App.Log($"IsOpenGLAvailable check failed: {ex.Message}");
+                        isOpenGLAvailable = false;
+                    }
+                }
+
+                return isOpenGLAvailable.Value;
+            }
         }
 
         /// <summary>

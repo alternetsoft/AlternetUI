@@ -791,10 +791,21 @@ namespace Alternet.UI
 
             void CreateAndAttachHandler()
             {
-                if (GetRequiredHandlerType() == HandlerType.Native)
-                    handler = CreateHandler();
-                else
-                    handler = ControlFactory.Handler.CreateControlHandler(this);
+                var requiredHandlerType = GetRequiredHandlerType();
+
+                switch (requiredHandlerType)
+                {
+                    case HandlerType.Native:
+                        handler = CreateHandler();
+                        break;
+                    default:
+                    case HandlerType.Generic:
+                        handler = ControlFactory.Handler.CreateControlHandler(this);
+                        break;
+                    case HandlerType.OpenGL:
+                        handler = ControlFactory.Handler.CreateOpenGLControlHandler(this);
+                        break;
+                }
 
                 handler.Attach(this);
 

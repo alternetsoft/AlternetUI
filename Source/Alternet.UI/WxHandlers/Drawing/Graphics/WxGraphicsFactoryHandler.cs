@@ -35,6 +35,11 @@ namespace Alternet.Drawing
             Alpha = 6,
         };
 
+        public bool IsOpenGLAvailable
+        {
+            get => UI.Native.GLControl.IsOpenGLAvailable();
+        }
+
         private static ImageBitsFormat GetImageBitsFormat(ImageStaticObjectId objectId)
         {
             ImageBitsFormat result = new();

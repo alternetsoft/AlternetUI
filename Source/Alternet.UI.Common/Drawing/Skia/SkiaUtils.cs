@@ -226,6 +226,26 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
+        /// Creates <see cref="SkiaGraphics"/> on the specified canvas
+        /// with the specified scaling factor. The canvas is additionally scaled by the factor.
+        /// </summary>
+        /// <param name="canvas">The <see cref="SKCanvas"/> on which to create the graphics.</param>
+        /// <param name="scaleFactor">The scaling factor.</param>
+        /// <returns></returns>
+        public static SkiaGraphics CreateSkiaGraphicsOnCanvas(SKCanvas canvas, float scaleFactor)
+        {
+            var graphics = new Drawing.SkiaGraphics(canvas);
+
+            graphics.OriginalScaleFactor = scaleFactor;
+            graphics.UseUnscaledDrawImage = true;
+            graphics.InitialMatrix = canvas.TotalMatrix;
+
+            canvas.Scale(scaleFactor);
+
+            return graphics;
+        }
+
+        /// <summary>
         /// Creates measure canvas for the specified scaling factor.
         /// </summary>
         /// <param name="scaleFactor">Scaling factor.</param>

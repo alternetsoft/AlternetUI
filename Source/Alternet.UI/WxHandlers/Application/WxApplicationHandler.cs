@@ -11,6 +11,8 @@ using Alternet.Drawing.Printing;
 
 using Alternet.UI.Extensions;
 
+using SkiaSharp;
+
 namespace Alternet.UI
 {
     /// <summary>
@@ -184,6 +186,27 @@ namespace Alternet.UI
         {
             get => nativeApplication.InUixmlPreviewerMode;
             set => nativeApplication.InUixmlPreviewerMode = value;
+        }
+
+        /// <summary>
+        /// Creates a dummy OpenGL canvas to initialize OpenGL context.
+        /// </summary>
+        internal static void CreateDummyOpenGlCanvas()
+        {
+            try
+            {
+                Native.GLControl.CreateDummyOpenGlCanvas();
+
+                var glInterface = GRGlInterface.Create();
+                if (glInterface == null || !glInterface.Validate())
+                    Debug.WriteLine("Failed to create OpenGL interface");
+                var grContext = GRContext.CreateGl(glInterface);
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine($"Failed to create OpenGL canvas: {ex.Message}");
+                throw;
+            }
         }
 
         internal static Native.Clipboard NativeClipboard => nativeApplication.Clipboard;

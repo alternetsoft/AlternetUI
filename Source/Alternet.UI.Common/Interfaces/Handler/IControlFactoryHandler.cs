@@ -130,6 +130,16 @@ namespace Alternet.UI
         IControlHandler CreateControlHandler(AbstractControl control);
 
         /// <summary>
+        /// Creates a platform-specific handler for an OpenGL-based control.
+        /// </summary>
+        /// <param name="control">The abstract representation of the control for
+        /// which the handler is being created. This parameter cannot be
+        /// <see langword="null"/>.</param>
+        /// <returns>An instance of <see cref="IControlHandler"/> that provides the
+        /// platform-specific implementation for the OpenGL control.</returns>
+        IControlHandler CreateOpenGLControlHandler(AbstractControl control);
+
+        /// <summary>
         /// Creates <see cref="IAnimationPlayerHandler"/> interface provider.
         /// </summary>
         /// <param name="control">Owner.</param>

@@ -1167,6 +1167,7 @@ namespace Alternet::UI
         None = 0,
         UseSkiaSharp = 1,
         UseOpenGL = 2,
+        UseSkiaSharpWithOpenGL = 3,
     };
     
     enum class ControlRenderSizeVariant

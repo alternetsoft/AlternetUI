@@ -145,5 +145,10 @@ namespace Alternet.UI
         {
             return new SliderHandler();
         }
+
+        public IControlHandler CreateOpenGLControlHandler(AbstractControl control)
+        {
+            return new OpenGLControlHandler();
+        }
     }
 }

@@ -2,6 +2,7 @@
 using System.Runtime.InteropServices;
 using System.ComponentModel;
 using System.Security;
+using SkiaSharp;
 namespace Alternet.UI.Native
 {
     internal partial class Control
@@ -39,102 +40,39 @@ namespace Alternet.UI.Native
         {
         }
 
-        public virtual void OnPlatformEventPaint()
+        public virtual bool NeedUserPaint()
         {
             var uiControl = UIControl;
 
             if (uiControl is null)
-                return;
+                return false;
 
             if (!uiControl.UserPaint)
-                return;
+                return false;
 
             var clientRect = uiControl.ClientRectangle;
             if (clientRect.SizeIsEmpty)
-                return;
+                return false;
             if (!uiControl.VisibleOnScreen)
+                return false;
+
+            return true;
+        }
+
+        public virtual void OnPlatformEventPaint()
+        {
+            if (!NeedUserPaint())
+                return;
+            var uiControl = UIControl;
+            if (uiControl is null)
                 return;
 
             var skia = !App.IsMacOS &&
                 uiControl.RenderingFlags.HasFlag(ControlRenderingFlags.UseSkiaSharp);
 
-            Drawing.Graphics CreateDefaultGraphics()
-            {
-                return Handler?.OpenPaintDrawingContext() ?? Alternet.Drawing.PlessGraphics.Default;
-            }
-
-            void DefaultPaint()
-            {
-                var e = new PaintEventArgs(CreateDefaultGraphics, clientRect);
-
-                try
-                {
-                    uiControl.RaisePaint(e);
-                }
-                finally
-                {
-                    if (e.GraphicsAllocated)
-                    {
-                        e.Graphics.Dispose();
-                    }
-                }
-            }
-
-            void OpenGLPaint()
-            {
-                using var glContext = new Drawing.MswSkiaOpenGLContext(uiControl);
-                var context = glContext.Context;
-
-                TestsDrawing.DrawSampleOnContext(context, false);
-                /*
-                MswUtils.NativeMethods.SwapBuffers(glContext.Hdc);
-                var e = new PaintEventArgs(() => glContext.CreateSkiaGraphics(), clientRect);
-                uiControl.RaisePaint(e);
-                */
-            }
-
-            void SkiaPaint()
-            {
-                var scaleFactor = uiControl.ScaleFactor;
-                Drawing.DynamicBitmap.CreateOrUpdate(
-                    ref dynamicBitmap,
-                    clientRect.Size,
-                    scaleFactor,
-                    isTransparent: true);
-
-                var bitmap = dynamicBitmap.Bitmap;
-
-                var canvasLock = bitmap.LockSurface(Drawing.ImageLockMode.WriteOnly);
-
-                var canvas = canvasLock.Canvas;
-
-                using var graphics = new Drawing.SkiaGraphics(canvas);
-
-                graphics.OriginalScaleFactor = (float)scaleFactor;
-                graphics.UseUnscaledDrawImage = true;
-                graphics.InitialMatrix = canvas.TotalMatrix;
-
-                canvas.Scale((float)scaleFactor);
-
-                var e = new PaintEventArgs(() => graphics, clientRect);
-                uiControl.RaisePaint(e);
-
-                canvas.Flush();
-
-                canvasLock.Dispose();
-
-                using var dc = CreateDefaultGraphics();
-
-                dc.DrawImage(bitmap, clientRect.Location);
-            }
-
             if (skia)
             {
-                if (DebugUtils.IsDebugDefinedAndAttached && App.IsWindowsOS
-                    && uiControl.RenderingFlags.HasFlag(ControlRenderingFlags.UseOpenGL))
-                    OpenGLPaint();
-                else
-                    SkiaPaint();
+                SkiaPaint();
             }
             else
             {
@@ -320,6 +258,67 @@ namespace Alternet.UI.Native
         {
             if (UIControl is not null)
                 RaiseDragAndDropEvent(ea, UIControl.RaiseDragEnter);
+        }
+
+        protected Drawing.Graphics CreateDefaultGraphics()
+        {
+            return Handler?.OpenPaintDrawingContext() ?? Alternet.Drawing.PlessGraphics.Default;
+        }
+
+        protected void DefaultPaint()
+        {
+            var uiControl = UIControl;
+
+            if (uiControl is null)
+                return;
+
+            var e = new PaintEventArgs(CreateDefaultGraphics, uiControl.ClientRectangle);
+
+            try
+            {
+                uiControl.RaisePaint(e);
+            }
+            finally
+            {
+                if (e.GraphicsAllocated)
+                {
+                    e.Graphics.Dispose();
+                }
+            }
+        }
+
+        protected void SkiaPaint()
+        {
+            var uiControl = UIControl;
+            if (uiControl is null)
+                return;
+            var clientRect = uiControl.ClientRectangle;
+
+            var scaleFactor = uiControl.ScaleFactor;
+            Drawing.DynamicBitmap.CreateOrUpdate(
+                ref dynamicBitmap,
+                clientRect.Size,
+                scaleFactor,
+                isTransparent: true);
+
+            var bitmap = dynamicBitmap.Bitmap;
+
+            var canvasLock = bitmap.LockSurface(Drawing.ImageLockMode.WriteOnly);
+
+            var canvas = canvasLock.Canvas;
+
+            using var graphics = Drawing.SkiaUtils.CreateSkiaGraphicsOnCanvas(canvas, (float)scaleFactor);
+
+            var e = new PaintEventArgs(() => graphics, clientRect);
+            uiControl.RaisePaint(e);
+
+            canvas.Flush();
+
+            canvasLock.Dispose();
+
+            using var dc = CreateDefaultGraphics();
+
+            dc.DrawImage(bitmap, clientRect.Location);
         }
 
         protected override void DisposeManaged()
