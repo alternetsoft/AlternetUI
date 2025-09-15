@@ -16,6 +16,8 @@ namespace Alternet.UI
     [TypeConverter(typeof(MenuItemRoleConverter))]
     public class MenuItemRole : IEquatable<MenuItemRole>
     {
+        private MenuItemRoleType? roleType;
+
         /// <summary>
         /// Initializes and instance of <see cref="MenuItemRole"/> class.
         /// </summary>
@@ -36,6 +38,17 @@ namespace Alternet.UI
         /// Gets the name for the role.
         /// </summary>
         public virtual string Name { get; }
+
+        /// <summary>
+        /// Gets the role type.
+        /// </summary>
+        public virtual MenuItemRoleType RoleType
+        {
+            get
+            {
+                return roleType ??= MenuItemRoles.GetRoleType(this);
+            }
+        }
 
         /// <summary>
         /// Determines whether two object instances are equal.
