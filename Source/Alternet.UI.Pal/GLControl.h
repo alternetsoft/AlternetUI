@@ -32,25 +32,35 @@ namespace Alternet::UI
         {
             if (m_context == nullptr)
             {
-                auto ctxAttrs = GetGLContextAttributes(3, 3);
+                auto ctxAttrs = GetGLContextAttributes(4, 5);
                 m_context = new wxGLContext(this, nullptr, &ctxAttrs);
+
+                if (!m_context->IsOK()) {
+                    auto ctxAttrs = GetGLContextAttributes(3, 3);
+                    m_context = new wxGLContext(this, nullptr, &ctxAttrs);
+                }
             }
 
             m_context->SetCurrent(*this);
-            // wxGLCanvas::SetCurrent(*m_context);
         }
 
         static wxGLContextAttrs GetGLContextAttributes(int majorVersion, int minorVersion)
         {
             wxGLContextAttrs ctxAttrs;
-            ctxAttrs.CoreProfile().OGLVersion(majorVersion, minorVersion).EndList();
+            ctxAttrs
+                .PlatformDefaults()
+                .CoreProfile()
+                .OGLVersion(majorVersion, minorVersion)
+                .EndList();
             return ctxAttrs;
         }
 
         static wxGLAttributes GetGLAttributes()
         {
             wxGLAttributes attrs;
-            attrs.PlatformDefaults().RGBA().DoubleBuffer().Depth(16).Stencil(8).EndList();
+            attrs.PlatformDefaults().RGBA().DoubleBuffer().FrameBuffersRGB()
+                .Stencil(8)
+                .EndList();
             return attrs;
         }
 
