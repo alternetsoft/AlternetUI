@@ -130,6 +130,17 @@ ALTERNET_UI_API void NotifyIcon_ShowPopup_(NotifyIcon* obj, void* menuHandle)
     #endif
 }
 
+ALTERNET_UI_API void NotifyIcon_SetPopupMenu_(NotifyIcon* obj, void* menuHandle)
+{
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    MarshalExceptions<void>([&](){
+    #endif
+        obj->SetPopupMenu(menuHandle);
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    });
+    #endif
+}
+
 ALTERNET_UI_API void NotifyIcon_SetEventCallback_(NotifyIcon::NotifyIconEventCallbackType callback)
 {
     NotifyIcon::SetEventCallback(callback);

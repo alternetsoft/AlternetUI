@@ -173,6 +173,7 @@ namespace Alternet.UI
                 if (menu == value)
                     return;
                 menu = value;
+                Handler.SetContextMenu(value);
             }
         }
 
@@ -202,20 +203,6 @@ namespace Alternet.UI
                 CheckDisposed();
                 Handler.Visible = value;
             }
-        }
-
-        /// <summary>
-        /// Displays the specified context menu at the notification icon position.
-        /// </summary>
-        /// <param name="menu">The <see cref="ContextMenu"/> to display.</param>
-        public virtual void ShowContextMenu(ContextMenu? menu)
-        {
-            if (menu == null)
-                return;
-            if (!menu.HasItems)
-                return;
-            CheckDisposed();
-            Handler.ShowContextMenu(menu);
         }
 
         /// <summary>
@@ -285,7 +272,6 @@ namespace Alternet.UI
         {
             Click?.Invoke(this, EventArgs.Empty);
             OnClick(EventArgs.Empty);
-            ShowContextMenu(Menu);
         }
 
         /// <summary>
@@ -329,6 +315,10 @@ namespace Alternet.UI
             result.RightMouseButtonUp = RaiseRightMouseButtonUp;
             result.RightMouseButtonDown = RaiseRightMouseButtonDown;
             result.RightMouseButtonDoubleClick = RaiseRightMouseButtonDoubleClick;
+            result.Created = () =>
+            {
+                result.SetContextMenu(menu);
+            };
             return result;
         }
 

@@ -17,6 +17,7 @@ bool GetIsIconInstalled();
 bool GetIsOk();
 
 void ShowPopup(void* menuHandle);
+void SetPopupMenu(void* menuHandle);
 
 public:
 
@@ -29,6 +30,7 @@ enum class NotifyIconEvent
     RightMouseButtonDown,
     RightMouseButtonDoubleClick,
     Click,
+    Created,
 };
 
 typedef void* (*NotifyIconEventCallbackType)(NotifyIcon* obj, NotifyIconEvent event, void* param);

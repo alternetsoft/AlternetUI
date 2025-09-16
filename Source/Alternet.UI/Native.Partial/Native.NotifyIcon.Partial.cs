@@ -8,10 +8,19 @@ namespace Alternet.UI.Native
 {
     internal partial class NotifyIcon : INotifyIconHandler
     {
+        private ContextMenu? contextMenu;
+        private Action? click;
+
         Action? INotifyIconHandler.LeftMouseButtonUp
         {
             get => LeftMouseButtonUp;
             set => LeftMouseButtonUp = value;
+        }
+
+        Action? INotifyIconHandler.Created
+        {
+            get => Created;
+            set => Created = value;
         }
 
         Action? INotifyIconHandler.LeftMouseButtonDown
@@ -46,8 +55,18 @@ namespace Alternet.UI.Native
 
         Action? INotifyIconHandler.Click
         {
-            get => Click;
-            set => Click = value;
+            get => click;
+            set
+            {
+                click = value;
+
+                Click = () =>
+                {
+                    if (contextMenu != null && !App.IsMacOS)
+                        ShowContextMenu(contextMenu);
+                    click?.Invoke();
+                };
+            }
         }
 
         Alternet.Drawing.Image? INotifyIconHandler.Icon
@@ -58,17 +77,24 @@ namespace Alternet.UI.Native
             }
         }
 
+        public void SetContextMenu(ContextMenu? menu)
+        {
+            contextMenu = menu;
+
+            if (menu == null)
+            {
+                SetPopupMenu(IntPtr.Zero);
+                return;
+            }
+
+            var wxMenu = new WxContextMenu(menu);
+            menu.AddHostObject(wxMenu);
+            SetPopupMenu(wxMenu.AsPointer);
+        }
+
         public void ShowContextMenu(ContextMenu menu)
         {
-            if(App.IsMacOS)
-                ShowViaContextMenu();
-            else
-                ShowViaNotifyIcon();
-
-            void ShowViaContextMenu()
-            {
-                menu.ShowAtMouse();
-            }
+            ShowViaNotifyIcon();
 
             void ShowViaNotifyIcon()
             {

@@ -13,7 +13,11 @@ namespace Alternet::UI
 
     wxMenu* NotifyIcon::TaskBarIcon::CreatePopupMenu()
     {
+#if __WXOSX__
+        return _menu;
+#else
         return nullptr;
+#endif
     }
 
     //===========================================================
@@ -105,6 +109,8 @@ namespace Alternet::UI
         _taskBarIcon->Bind(wxEVT_TASKBAR_CLICK, &NotifyIcon::OnClick, this);
 
         ApplyTextAndIcon();
+
+        RaiseEvent(NotifyIconEvent::Created);
     }
 
     void NotifyIcon::DeleteTaskBarIcon()
@@ -192,6 +198,16 @@ namespace Alternet::UI
             RecreateTaskBarIconIfNeeded();
         else
             ApplyTextAndIcon();
+    }
+
+    void NotifyIcon::SetPopupMenu(void* menuHandle)
+    {
+        wxObject* obj = static_cast<wxObject*>(menuHandle);
+        wxMenu* menu = wxDynamicCast(obj, wxMenu);
+        if (_taskBarIcon == nullptr)
+            RecreateTaskBarIconIfNeeded();
+        else
+            _taskBarIcon->_menu = menu;
     }
 
     void NotifyIcon::ShowPopup(void* menuHandle)

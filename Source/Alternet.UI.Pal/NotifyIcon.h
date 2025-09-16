@@ -16,14 +16,17 @@ namespace Alternet::UI
         {
         public:
             TaskBarIcon(NotifyIcon* owner);
+
+            wxMenu* _menu = nullptr;
         protected:
             virtual wxMenu* GetPopupMenu() override;
             virtual wxMenu* CreatePopupMenu() override;
+
         private:
             NotifyIcon* _owner;
         };
 
-        wxTaskBarIcon* _taskBarIcon = nullptr;
+        TaskBarIcon* _taskBarIcon = nullptr;
     
         void CreateTaskBarIcon();
         void DeleteTaskBarIcon();

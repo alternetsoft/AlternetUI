@@ -107,6 +107,12 @@ namespace Alternet.UI.Native
             NativeApi.NotifyIcon_ShowPopup_(NativePointer, menuHandle);
         }
         
+        public void SetPopupMenu(System.IntPtr menuHandle)
+        {
+            CheckDisposed();
+            NativeApi.NotifyIcon_SetPopupMenu_(NativePointer, menuHandle);
+        }
+        
         static GCHandle eventCallbackGCHandle;
         public static NotifyIcon? GlobalObject;
         
@@ -161,6 +167,10 @@ namespace Alternet.UI.Native
                 {
                     Click?.Invoke(); return IntPtr.Zero;
                 }
+                case NativeApi.NotifyIconEvent.Created:
+                {
+                    Created?.Invoke(); return IntPtr.Zero;
+                }
                 default: throw new Exception("Unexpected NotifyIconEvent value: " + e);
             }
         }
@@ -172,6 +182,7 @@ namespace Alternet.UI.Native
         public Action? RightMouseButtonDown;
         public Action? RightMouseButtonDoubleClick;
         public Action? Click;
+        public Action? Created;
         
         [SuppressUnmanagedCodeSecurity]
         public class NativeApi : NativeApiProvider
@@ -190,6 +201,7 @@ namespace Alternet.UI.Native
                 RightMouseButtonDown,
                 RightMouseButtonDoubleClick,
                 Click,
+                Created,
             }
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
@@ -227,6 +239,9 @@ namespace Alternet.UI.Native
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void NotifyIcon_ShowPopup_(IntPtr obj, System.IntPtr menuHandle);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void NotifyIcon_SetPopupMenu_(IntPtr obj, System.IntPtr menuHandle);
             
         }
     }

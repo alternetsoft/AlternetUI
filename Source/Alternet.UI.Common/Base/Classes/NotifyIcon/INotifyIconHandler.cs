@@ -57,6 +57,11 @@ namespace Alternet.UI
         /// </summary>
         Action? RightMouseButtonDoubleClick { get; set; }
 
+        /// <summary>
+        /// Gets or sets the action to be executed when the notify icon is created.
+        /// </summary>
+        Action? Created { get; set; }
+
         /// <inheritdoc cref="NotifyIcon.Icon"/>
         Image? Icon { set; }
 
@@ -75,5 +80,13 @@ namespace Alternet.UI
         /// <param name="menu">The <see cref="ContextMenu"/> to display.
         /// Cannot be <see langword="null"/>.</param>
         void ShowContextMenu(ContextMenu menu);
+
+        /// <summary>
+        /// Sets the context menu to be displayed when the notification icon is right-clicked.
+        /// </summary>
+        /// <param name="menu">The <see cref="ContextMenu"/> to show.
+        /// If <see langword="null"/>, the context menu
+        /// will be removed.</param>
+        void SetContextMenu(ContextMenu? menu);
     }
 }
