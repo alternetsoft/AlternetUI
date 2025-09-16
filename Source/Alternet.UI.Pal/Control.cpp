@@ -1995,24 +1995,6 @@ namespace Alternet::UI
 
     /*static*/ Control* Control::HitTest(const Point& screenPoint)
     {
-#if __WXOSX__
-        /*
-        for (auto popupWindow : Popup::GetVisiblePopupWindows())
-        {
-            auto window = wxFindWindowAtPoint(popupWindow, fromDip(screenPoint, nullptr));
-            if (window == nullptr)
-                continue;
-        
-            auto control = TryFindControlByWxWindow(window);
-            if (control != nullptr)
-            {
-                control->AddRef();
-                return control;
-            }
-        }
-        */
-#endif
-
         auto window = wxFindWindowAtPoint(fromDip(screenPoint, nullptr));
         if (window == nullptr)
             return nullptr;

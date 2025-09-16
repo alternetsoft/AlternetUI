@@ -8,7 +8,6 @@
 
 namespace Alternet::UI
 {
-
     class wxGLCanvas2 : public wxGLCanvas, public wxWidgetExtender
     {
     public:
@@ -28,20 +27,63 @@ namespace Alternet::UI
         {
         }
 
+#ifdef  __WXMSW__
+#define DEFAULT_ASK_GL_45 true
+#endif
+
+#ifdef __WXOSX__
+#define DEFAULT_ASK_GL_45 false
+#endif
+
+#ifdef __WXGTK__
+#define DEFAULT_ASK_GL_45 true
+#endif
+
+		static int defaultMajorVersion;
+		static int defaultMinorVersion;
+
         void SetCurrent()
         {
             if (m_context == nullptr)
             {
-                auto ctxAttrs = GetGLContextAttributes(4, 5);
-                m_context = new wxGLContext(this, nullptr, &ctxAttrs);
+                if (defaultMajorVersion != 0)
+                {
+                    m_context = CreateContext(defaultMajorVersion, defaultMinorVersion);
+                }
+                else
+                {
+                    if (DEFAULT_ASK_GL_45)
+                        m_context = CreateContext(4, 5);
 
-                if (!m_context->IsOK()) {
-                    auto ctxAttrs = GetGLContextAttributes(3, 3);
-                    m_context = new wxGLContext(this, nullptr, &ctxAttrs);
+                    if (m_context == nullptr)
+                        m_context = CreateContext(4, 1);
+
+					if (m_context == nullptr)
+						m_context = CreateContext(3, 3);
                 }
             }
 
-            m_context->SetCurrent(*this);
+            if(m_context != nullptr)
+                m_context->SetCurrent(*this);
+        }
+
+        wxGLContext* CreateContext(int majorVersion, int minorVersion)
+        {
+            auto ctxAttrs = GetGLContextAttributes(majorVersion, minorVersion);
+            auto result = new wxGLContext(this, nullptr, &ctxAttrs);
+
+            if (!result->IsOK())
+            {
+                delete result;
+				return nullptr;
+            }
+            else
+            {
+                defaultMajorVersion = majorVersion;
+                defaultMinorVersion = minorVersion;
+            }
+
+            return result;
         }
 
         static wxGLContextAttrs GetGLContextAttributes(int majorVersion, int minorVersion)
@@ -97,6 +139,8 @@ namespace Alternet::UI
         virtual void OnPaint(wxPaintEvent& event) override;
 
         void LogInfo();
+    protected:
+        virtual void OnSizeChanged(wxSizeEvent& event) override;
     private:
         wxSize _viewport;
         bool _defaultPaintUsed = false;

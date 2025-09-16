@@ -2,6 +2,9 @@
 
 namespace Alternet::UI
 {
+    int wxGLCanvas2::defaultMajorVersion = 0;
+    int wxGLCanvas2::defaultMinorVersion = 0;
+
     GLControl::GLControl()
     {
     }
@@ -79,13 +82,27 @@ namespace Alternet::UI
         wxLogDebug("Depth Bits: %d", depthBits);
     }
 
+    void GLControl::OnSizeChanged(wxSizeEvent& event)
+    {
+		Control::OnSizeChanged(event);
+        auto wxWnd = GetGLCanvas();
+
+        int w, h;
+        wxWnd->GetClientSize(&w, &h);
+
+        wxWnd->SetCurrent();
+
+        glViewport(0, 0, w, h);
+        wxWnd->Refresh();
+    }
+
     void GLControl::OnPaint(wxPaintEvent& event)
     {
         event.Skip();
         if (IsNullOrDeleting())
             return;
         auto wxWnd = GetGLCanvas();
-        auto size = wxWnd->GetSize();
+        auto size = wxWnd->GetClientSize();
 
         if(size.x <= 0 || size.y <= 0)
             return;
