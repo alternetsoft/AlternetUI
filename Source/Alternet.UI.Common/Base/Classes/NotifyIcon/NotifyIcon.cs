@@ -18,6 +18,9 @@ namespace Alternet.UI
     /// <see cref="Menu"/> property. The <see cref="Text"/> property assigns tool tip text.
     /// In order for the icon to
     /// show up in the notification area, the Visible property must be set to true.
+    /// There are also events to handle mouse actions, such as clicks and double-clicks.
+    /// These events do not work on macOS.
+    /// <para/>
     /// </remarks>
     public class NotifyIcon : HandledObject<INotifyIconHandler>
     {
@@ -35,36 +38,43 @@ namespace Alternet.UI
 
         /// <summary>
         /// Occurs when the icon in the notification area is clicked with the right mouse button.
+        /// This event is not raised on macOS.
         /// </summary>
         public event EventHandler? Click;
 
         /// <summary>
         /// Occurs when the icon in the notification area is double-clicked with the right mouse button.
+        /// This event is not raised on macOS.
         /// </summary>
         public event EventHandler? RightMouseButtonDoubleClick;
 
         /// <summary>
         /// Occurs when the icon in the notification area is pressed with the right mouse button.
+        /// This event is not raised on macOS.
         /// </summary>
         public event EventHandler? RightMouseButtonDown;
 
         /// <summary>
         /// Occurs when the icon in the notification area is released with the right mouse button.
+        /// This event is not raised on macOS.
         /// </summary>
         public event EventHandler? RightMouseButtonUp;
 
         /// <summary>
         /// Occurs when the icon in the notification area is double-clicked with the left mouse button.
+        /// This event is not raised on macOS.
         /// </summary>
         public event EventHandler? LeftMouseButtonDoubleClick;
 
         /// <summary>
         /// Occurs when the icon in the notification area is pressed with the left mouse button.
+        /// This event is not raised on macOS.
         /// </summary>
         public event EventHandler? LeftMouseButtonDown;
 
         /// <summary>
         /// Occurs when the icon in the notification area is released with the left mouse button.
+        /// This event is not raised on macOS.
         /// </summary>
         public event EventHandler? LeftMouseButtonUp;
 
