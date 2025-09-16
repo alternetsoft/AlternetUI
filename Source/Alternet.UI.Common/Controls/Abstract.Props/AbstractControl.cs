@@ -329,7 +329,18 @@ namespace Alternet.UI
             {
                 if (renderingFlags == value)
                     return;
+                var hasOpenGL = renderingFlags.HasFlag(ControlRenderingFlags.UseSkiaSharpWithOpenGL);
+                var newHasOpenGL = value.HasFlag(ControlRenderingFlags.UseSkiaSharpWithOpenGL);
                 renderingFlags = value;
+                if (hasOpenGL != newHasOpenGL)
+                {
+                    RecreateHandler();
+                    Refresh();
+                }
+                else
+                {
+                    Refresh();
+                }
             }
         }
 
