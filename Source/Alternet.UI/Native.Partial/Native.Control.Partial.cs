@@ -272,6 +272,8 @@ namespace Alternet.UI.Native
             if (uiControl is null)
                 return;
 
+            KnownRunTimeTrackers.DefaultPaintStart(uiControl);
+
             var e = new PaintEventArgs(CreateDefaultGraphics, uiControl.ClientRectangle);
 
             try
@@ -285,6 +287,8 @@ namespace Alternet.UI.Native
                     e.Graphics.Dispose();
                 }
             }
+
+            KnownRunTimeTrackers.DefaultPaintStop(uiControl);
         }
 
         protected void SkiaPaint()
@@ -292,6 +296,9 @@ namespace Alternet.UI.Native
             var uiControl = UIControl;
             if (uiControl is null)
                 return;
+
+            KnownRunTimeTrackers.SkiaPaintStart(uiControl);
+
             var clientRect = uiControl.ClientRectangle;
 
             var scaleFactor = uiControl.ScaleFactor;
@@ -319,6 +326,8 @@ namespace Alternet.UI.Native
             using var dc = CreateDefaultGraphics();
 
             dc.DrawImage(bitmap, clientRect.Location);
+
+            KnownRunTimeTrackers.SkiaPaintStop(uiControl);
         }
 
         protected override void DisposeManaged()
