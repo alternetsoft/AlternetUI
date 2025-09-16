@@ -26,6 +26,125 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Creates a menu item that allows the user to select the rendering mode for the specified control.
+        /// </summary>
+        /// <remarks>The menu includes options for "Software", "OpenGL", and "SkiaSharp" rendering modes.
+        /// Selecting an option updates the rendering mode of the specified control and displays
+        /// a tooltip indicating
+        /// the selected mode. The menu dynamically updates the checked state of its items based
+        /// on the current
+        /// rendering mode when opened.</remarks>
+        /// <param name="control">The <see cref="UserControl"/> for which the rendering
+        /// mode can be selected.</param>
+        /// <returns>A <see cref="MenuItem"/> containing options to switch between
+        /// different rendering modes.</returns>
+        public static MenuItem CreateRenderingModeSelector(UserControl control)
+        {
+            var renderingModeMenu = new MenuItem("Rendering Mode");
+
+            var softwareItem = renderingModeMenu.Add("Software", () =>
+            {
+                ControlUtils.SetRenderingMode(control, ControlRenderingMode.SoftwareDoubleBuffered);
+
+                control.Overlays = [];
+                control.ShowOverlayToolTipSimple(
+                    "Software rendering mode is selected.",
+                    null,
+                    HVAlignment.BottomLeft);
+            });
+
+            var openGLItem = renderingModeMenu.Add("OpenGL", () =>
+            {
+                ControlUtils.SetRenderingMode(control, ControlRenderingMode.SkiaSharpWithOpenGL);
+
+                control.Overlays = [];
+                control.ShowOverlayToolTipSimple(
+                    "OpenGL rendering mode is selected.",
+                    null,
+                    HVAlignment.BottomLeft);
+            });
+
+            var skiaSharpItem = renderingModeMenu.Add("SkiaSharp", () =>
+            {
+                ControlUtils.SetRenderingMode(control, ControlRenderingMode.SkiaSharp);
+
+                control.Overlays = [];
+                control.ShowOverlayToolTipSimple(
+                    "SkiaSharp rendering mode is selected.",
+                    null,
+                    HVAlignment.BottomLeft);
+            });
+
+            renderingModeMenu.Opened += (s, e) =>
+            {
+                var mode = ControlUtils.GetRenderingMode(control);
+                softwareItem.Checked = mode == ControlRenderingMode.SoftwareDoubleBuffered;
+                openGLItem.Checked = mode == ControlRenderingMode.SkiaSharpWithOpenGL;
+                skiaSharpItem.Checked = mode == ControlRenderingMode.SkiaSharp;
+            };
+
+            return renderingModeMenu;
+        }
+
+        /// <summary>
+        /// Configures the rendering mode for the specified control.
+        /// </summary>
+        /// <remarks>This method updates the rendering flags of the specified control based
+        /// on the provided rendering mode. Supported modes include
+        /// <see cref="ControlRenderingMode.SkiaSharpWithOpenGL"/>,
+        /// <see cref="ControlRenderingMode.SkiaSharp"/>, and
+        /// <see cref="ControlRenderingMode.SoftwareDoubleBuffered"/>.
+        /// If an unsupported mode is provided, the method will return <see langword="false"/>
+        /// without modifying the control.</remarks>
+        /// <param name="control">The control whose rendering mode is to be set.
+        /// Cannot be <see langword="null"/>.</param>
+        /// <param name="mode">The desired rendering mode to apply.
+        /// Must be a valid value of <see cref="ControlRenderingMode"/>.</param>
+        /// <returns><see langword="true"/> if the rendering mode was successfully set;
+        /// otherwise, <see langword="false"/> if the
+        /// specified mode is unsupported.</returns>
+        public static bool SetRenderingMode(AbstractControl control, ControlRenderingMode mode)
+        {
+            var renderingFlags = control.RenderingFlags;
+
+            switch (mode)
+            {
+                case ControlRenderingMode.SkiaSharpWithOpenGL:
+                    renderingFlags |= ControlRenderingFlags.UseSkiaSharpWithOpenGL;
+                    control.RenderingFlags = renderingFlags;
+                    return true;
+                case ControlRenderingMode.SkiaSharp:
+                    renderingFlags |= ControlRenderingFlags.UseSkiaSharp;
+                    renderingFlags &= ~ControlRenderingFlags.UseOpenGL;
+                    control.RenderingFlags = renderingFlags;
+                    return true;
+                case ControlRenderingMode.SoftwareDoubleBuffered:
+                    renderingFlags &= ~ControlRenderingFlags.UseSkiaSharpWithOpenGL;
+                    control.RenderingFlags = renderingFlags;
+                    return true;
+                case ControlRenderingMode.SoftwareClipped:
+                default:
+                    return false;
+            }
+        }
+
+        /// <summary>
+        /// Determines the rendering mode to be used for the specified control based
+        /// on its rendering flags.
+        /// </summary>
+        /// <param name="control">The control for which the rendering mode is to be determined.
+        /// Cannot be <see langword="null"/>.</param>
+        /// <returns>A <see cref="ControlRenderingMode"/> value indicating the rendering mode.</returns>
+        public static ControlRenderingMode GetRenderingMode(AbstractControl control)
+        {
+            if (control.RenderingFlags.HasFlag(ControlRenderingFlags.UseSkiaSharpWithOpenGL))
+                return ControlRenderingMode.SkiaSharpWithOpenGL;
+            if (control.RenderingFlags.HasFlag(ControlRenderingFlags.UseSkiaSharp))
+                return ControlRenderingMode.SkiaSharp;
+            return ControlRenderingMode.SoftwareDoubleBuffered;
+        }
+
+        /// <summary>
         /// Retrieves the parent platform-specific user control
         /// of the specified <see cref="AbstractControl"/>.
         /// </summary>
