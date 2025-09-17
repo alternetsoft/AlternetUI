@@ -1,4 +1,5 @@
 ﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Alternet.UI;
@@ -99,7 +100,11 @@ namespace ControlsSample
                 listBox.Invalidate();
             });
 
-            listBox.HasBorder = VirtualListBox.DefaultUseInternalScrollBars;
+            contextMenu.AddSeparator();
+            contextMenu.Add(ControlUtils.CreateMenuItemRenderingModeSelector(listBox));
+            contextMenu.Add(ControlUtils.CreateMenuItemTrackPaintingTime(listBox));
+
+            listBox.HasBorder = VirtualListBox.DefaultUseInternalScrollBars || App.IsWindowsOS;
         }
 
         private void ListBox_CheckedChanged(object? sender, EventArgs e)
