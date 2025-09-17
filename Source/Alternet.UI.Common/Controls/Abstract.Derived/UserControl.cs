@@ -250,6 +250,12 @@ namespace Alternet.UI
             get => overlays;
             set
             {
+                if (overlays is null)
+                {
+                    if (value is null || value.Count == 0)
+                        return;
+                }
+
                 overlays = value?.ToList();
                 Invalidate();
             }
@@ -462,6 +468,35 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Displays a simple overlay tooltip with the specified message, alignment, and options.
+        /// </summary>
+        /// <remarks>This method provides a simplified way to display an overlay tooltip. For more
+        /// advanced customization, consider using an overload of this method with additional
+        /// parameters.</remarks>
+        /// <param name="message">The content to display in the tooltip. Can be a string
+        /// or another object representing the message.
+        /// If <see langword="null"/>, the tooltip will not display any content.</param>
+        /// <param name="alignment">Specifies the horizontal and vertical alignment
+        /// of the tooltip relative to its target.</param>
+        /// <param name="options">A combination of flags from <see cref="OverlayToolTipFlags"/>
+        /// that determine the behavior and appearance and behavior of the tooltip.</param>
+        /// <returns>An <see cref="ObjectUniqueId"/> representing the unique identifier
+        /// of the displayed tooltip. This identifier
+        /// can be used to manage or dismiss the tooltip.</returns>
+        public virtual ObjectUniqueId ShowOverlayToolTipSimple(
+            object? message,
+            HVAlignment alignment,
+            OverlayToolTipFlags options)
+        {
+            return ShowOverlayToolTipSimple(
+                message,
+                null,
+                alignment,
+                options,
+                null);
+        }
+
+        /// <summary>
         /// Displays a simple overlay tooltip with the specified
         /// message and optional customization parameters.
         /// </summary>
@@ -571,6 +606,9 @@ namespace Alternet.UI
         /// can be used to manage or remove it later.</returns>
         public virtual ObjectUniqueId ShowOverlayToolTip(OverlayToolTipParams data)
         {
+            if (data.Options.HasFlag(OverlayToolTipFlags.Clear))
+                Overlays = [];
+
             data.Font ??= RealFont;
             data.ContainerBounds ??= GetOverlayRectangle();
             var container = data.ContainerBounds.Value;
