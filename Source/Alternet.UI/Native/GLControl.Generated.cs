@@ -58,6 +58,12 @@ namespace Alternet.UI.Native
             NativeApi.GLControl_CreateDummyOpenGlCanvas_();
         }
         
+        public System.IntPtr GetGLContext()
+        {
+            CheckDisposed();
+            return NativeApi.GLControl_GetGLContext_(NativePointer);
+        }
+        
         
         [SuppressUnmanagedCodeSecurity]
         public class NativeApi : NativeApiProvider
@@ -81,6 +87,9 @@ namespace Alternet.UI.Native
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void GLControl_CreateDummyOpenGlCanvas_();
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern System.IntPtr GLControl_GetGLContext_(IntPtr obj);
             
         }
     }

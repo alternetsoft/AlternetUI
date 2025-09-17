@@ -8,8 +8,24 @@ namespace Alternet.UI.Native
 {
     internal partial class GLControl
     {
-        private bool openGLPaintLogged;
+        internal static bool DrawGLTextAtCorner = DebugUtils.IsDebugDefined;
+
         private bool firstPaintDone;
+        private GRGlFramebufferInfo? glInfo;
+        private GRBackendRenderTarget? renderTarget;
+        private GRGlInterface? glInterface;
+        private GRContext? grContext;
+        private IntPtr? lastUsedGLContext;
+
+        public void ResetGLResources()
+        {
+            glInfo = null;
+            SafeDispose(ref renderTarget);
+            SafeDispose(ref glInterface);
+            SafeDispose(ref grContext);
+            SafeDispose(ref renderTarget);
+            lastUsedGLContext = null;
+        }
 
         public override void OnPlatformEventPaint()
         {
@@ -20,12 +36,6 @@ namespace Alternet.UI.Native
 
             if (openGL && Drawing.GraphicsFactory.IsOpenGLAvailable)
             {
-                if (DebugUtils.IsDebugDefinedAndAttached && !openGLPaintLogged)
-                {
-                    openGLPaintLogged = true;
-                    System.Diagnostics.Debug.WriteLine("GLControl: OpenGLPaint");
-                }
-
                 if (firstPaintDone || !App.IsWindowsOS)
                 {
                     if (!OpenGLPaint())
@@ -73,42 +83,63 @@ namespace Alternet.UI.Native
 
             bool InternalPaint()
             {
+                var newContext = GetGLContext();
+                var contextChanged = newContext != lastUsedGLContext;
+                lastUsedGLContext = newContext;
+
                 // Step 1: Create the GL interface and context
 
-                var glInterface = GRGlInterface.Create();
-                if (glInterface == null)
+                if (contextChanged || glInterface is null || grContext is null)
                 {
-                    Debug.WriteLine("[Error] GRGlInterface.Create() returned null");
-                    return false;
+                    ResetGLResources();
                 }
 
-                var grContext = GRContext.CreateGl(glInterface);
-                if (grContext == null)
+                if (glInterface is null || grContext is null)
                 {
-                    Debug.WriteLine("[Error] GRContext.CreateGl() returned null");
-                    return false;
+                    glInterface = GRGlInterface.Create();
+                    if (glInterface == null)
+                    {
+                        Debug.WriteLine("[Error] GRGlInterface.Create() returned null");
+                        return false;
+                    }
+
+                    grContext = GRContext.CreateGl(glInterface);
+                    if (grContext == null)
+                    {
+                        Debug.WriteLine("[Error] GRContext.CreateGl() returned null");
+                        return false;
+                    }
                 }
+                else
+                {
+                    grContext.ResetContext();
+                }
+
 
                 // Step 2: Define framebuffer info
-                var glInfo = new GRGlFramebufferInfo
-                {
-                    FramebufferObjectId = 0,
-                    Format = 0x8058, // GL_RGBA8
-                };
+                glInfo ??= new GRGlFramebufferInfo
+                    {
+                        FramebufferObjectId = 0,
+                        Format = 0x8058, // GL_RGBA8
+                    };
 
                 var size = this.ViewportSize;
 
-                // Step 3: Create the backend render target
-                var renderTarget = new GRBackendRenderTarget(
-                    width: size.Width,
-                    height: size.Height,
-                    sampleCount: 0,     // No multisampling
-                    stencilBits: 8,     // Typical stencil buffer size
-                    glInfo: glInfo
-                );
+                if (renderTarget is null || renderTarget.Width != size.Width
+                    || renderTarget.Height != size.Height)
+                {
+                    renderTarget?.Dispose();
+                    renderTarget = new GRBackendRenderTarget(
+                        width: size.Width,
+                        height: size.Height,
+                        sampleCount: 0,     // No multisampling
+                        stencilBits: 8,     // Typical stencil buffer size
+                        glInfo: glInfo.Value
+                    );
+                }
 
                 // Step 4: Create the Skia surface
-                var surface = SKSurface.Create(
+                using var surface = SKSurface.Create(
                     grContext,
                     renderTarget,
                     GRSurfaceOrigin.BottomLeft, // OpenGL convention
@@ -132,6 +163,9 @@ namespace Alternet.UI.Native
 
                 var e = new PaintEventArgs(() => graphics, clientRect);
                 uiControl.RaisePaint(e);
+
+                if(DrawGLTextAtCorner)
+                    DrawingUtils.DrawDebugTextAtCorner(graphics, "GL", clientRect);
 
                 canvas.Flush();
 

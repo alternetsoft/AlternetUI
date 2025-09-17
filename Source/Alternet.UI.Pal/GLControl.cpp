@@ -18,6 +18,11 @@ namespace Alternet::UI
         return dynamic_cast<wxGLCanvas2*>(GetWxWindow());
     }
 
+    void* GLControl::GetGLContext()
+    {
+        return GetGLCanvas()->m_context;
+    }
+
     void GLControl::CreateDummyOpenGlCanvas()
     {
         // Step 1: Create hidden canvas
@@ -142,6 +147,9 @@ namespace Alternet::UI
     wxWindow* GLControl::CreateWxWindowCore(wxWindow* parent)
     {
         auto style = GetDefaultStyle();
+
+        style &= ~(wxHSCROLL | wxALWAYS_SHOW_SB | wxVSCROLL);
+
         auto window = new wxGLCanvas2(parent,
             wxGLCanvas2::GetGLAttributes(),
             wxID_ANY,

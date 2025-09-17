@@ -14,6 +14,8 @@ namespace NativeApi.Api
 
         public SizeI ViewportSize { get; }
 
+        public IntPtr GetGLContext() => default;
+
         public bool DefaultPaintUsed { get; set; }
     }
 }

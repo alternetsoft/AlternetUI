@@ -74,3 +74,14 @@ ALTERNET_UI_API void GLControl_CreateDummyOpenGlCanvas_()
     #endif
 }
 
+ALTERNET_UI_API void* GLControl_GetGLContext_(GLControl* obj)
+{
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    return MarshalExceptions<void*>([&](){
+    #endif
+        return obj->GetGLContext();
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    });
+    #endif
+}
+

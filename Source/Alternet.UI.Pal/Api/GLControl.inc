@@ -8,6 +8,7 @@ void SetDefaultPaintUsed(bool value);
 
 static bool IsOpenGLAvailable();
 static void CreateDummyOpenGlCanvas();
+void* GetGLContext();
 
 public:
 GLControl();

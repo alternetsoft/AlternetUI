@@ -22,6 +22,7 @@ namespace Alternet.UI
         public override void OnHandleCreated()
         {
             base.OnHandleCreated();
+            ((Native.GLControl)NativeControl).ResetGLResources();
         }
 
         internal override Native.Control CreateNativeControl()

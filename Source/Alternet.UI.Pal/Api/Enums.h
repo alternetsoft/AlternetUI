@@ -1170,6 +1170,14 @@ namespace Alternet::UI
         UseSkiaSharpWithOpenGL = 3,
     };
     
+    enum class ControlRenderingMode
+    {
+        SoftwareClipped = 0,
+        SoftwareDoubleBuffered = 1,
+        SkiaSharp = 2,
+        SkiaSharpWithOpenGL = 3,
+    };
+    
     enum class ControlRenderSizeVariant
     {
         Normal = 0,
