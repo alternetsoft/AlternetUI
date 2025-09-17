@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Text;
 
 namespace Alternet.UI
@@ -34,6 +35,7 @@ namespace Alternet.UI
         /// Starts tracking the default paint operation for the specified control.
         /// </summary>
         /// <param name="control">The <see cref="UserControl"/> to track.</param>
+        [Conditional("DEBUG")]
         public static void DefaultPaintStart(AbstractControl control)
         {
             if (TrackedControl != control)
@@ -45,6 +47,7 @@ namespace Alternet.UI
         /// Stops tracking the default paint operation for the specified control.
         /// </summary>
         /// <param name="control">The <see cref="UserControl"/> to stop tracking.</param>
+        [Conditional("DEBUG")]
         public static void DefaultPaintStop(AbstractControl control)
         {
             if (TrackedControl != control)
@@ -57,6 +60,7 @@ namespace Alternet.UI
         /// for the specified control.
         /// </summary>
         /// <param name="control">The <see cref="AbstractControl"/> to track.</param>
+        [Conditional("DEBUG")]
         public static void SkiaPaintStart(AbstractControl control)
         {
             if (TrackedControl != control)
@@ -69,6 +73,7 @@ namespace Alternet.UI
         /// for the specified control.
         /// </summary>
         /// <param name="control">The <see cref="AbstractControl"/> to stop tracking.</param>
+        [Conditional("DEBUG")]
         public static void SkiaPaintStop(AbstractControl control)
         {
             if (TrackedControl != control)
@@ -81,6 +86,7 @@ namespace Alternet.UI
         /// for the specified control.
         /// </summary>
         /// <param name="control">The <see cref="AbstractControl"/> to track.</param>
+        [Conditional("DEBUG")]
         public static void OpenGLPaintStart(AbstractControl control)
         {
             if (TrackedControl != control)
@@ -93,6 +99,7 @@ namespace Alternet.UI
         /// for the specified control.
         /// </summary>
         /// <param name="control">The <see cref="AbstractControl"/> to stop tracking.</param>
+        [Conditional("DEBUG")]
         public static void OpenGLPaintStop(AbstractControl control)
         {
             if (TrackedControl != control)
