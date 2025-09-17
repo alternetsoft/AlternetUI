@@ -874,9 +874,8 @@ namespace Alternet.UI
             var rect = Drawing.RectD.FromLTRB(
                 bounds.Left + padding,
                 bounds.BottomLeft.Y - textSize.Height - padding,
-                bounds.Left + textSize.Width + 2 * padding,
-                bounds.BottomLeft.Y - padding
-            );
+                bounds.Left + textSize.Width + (2 * padding),
+                bounds.BottomLeft.Y - padding);
 
             graphics.FillRectangle(backColor.AsBrush, rect);
             graphics.DrawRectangle(borderColor.AsPen, rect);

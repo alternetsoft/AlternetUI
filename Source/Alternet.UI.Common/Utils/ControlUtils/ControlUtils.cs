@@ -40,12 +40,16 @@ namespace Alternet.UI
         {
             MenuItem result = new("Track painting time", () =>
             {
+                control.ShowOverlayToolTipSimple(
+                    "Tracking painting time...",
+                    HVAlignment.Center,
+                    OverlayToolTipFlags.Clear);
                 KnownRunTimeTrackers.TrackAllModesPainting(control, repeatCount);
                 control.Overlays = [];
                 control.ShowOverlayToolTipSimple(
                     "Track paint time done. Results in Output.",
-                    null,
-                    HVAlignment.BottomLeft);
+                    HVAlignment.Center,
+                    OverlayToolTipFlags.ClearAndDismiss);
             });
 
             return result;
