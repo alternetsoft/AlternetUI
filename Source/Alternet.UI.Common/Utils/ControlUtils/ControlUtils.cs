@@ -26,6 +26,32 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Creates a menu item that tracks the painting time for all modes of the specified control.
+        /// </summary>
+        /// <remarks>After tracking the painting time, the control's overlays are cleared, and
+        /// a tooltip is displayed to indicate that the operation is complete.</remarks>
+        /// <param name="control">The <see cref="UserControl"/> for which painting
+        /// time will be tracked.</param>
+        /// <param name="repeatCount">The number of times the painting operation
+        /// should be repeated for tracking purposes. Must be a positive integer.</param>
+        /// <returns>A <see cref="MenuItem"/> that, when executed, tracks the painting
+        /// time and displays the results in the Output panel.</returns>
+        public static MenuItem CreateMenuItemTrackPaintingTime(UserControl control, int repeatCount = 250)
+        {
+            MenuItem result = new("Track painting time", () =>
+            {
+                KnownRunTimeTrackers.TrackAllModesPainting(control, repeatCount);
+                control.Overlays = [];
+                control.ShowOverlayToolTipSimple(
+                    "Track paint time done. Results in Output.",
+                    null,
+                    HVAlignment.BottomLeft);
+            });
+
+            return result;
+        }
+
+        /// <summary>
         /// Creates a menu item that allows the user to select the rendering mode for the specified control.
         /// </summary>
         /// <remarks>The menu includes options for "Software", "OpenGL", and "SkiaSharp" rendering modes.
@@ -38,7 +64,7 @@ namespace Alternet.UI
         /// mode can be selected.</param>
         /// <returns>A <see cref="MenuItem"/> containing options to switch between
         /// different rendering modes.</returns>
-        public static MenuItem CreateRenderingModeSelector(UserControl control)
+        public static MenuItem CreateMenuItemRenderingModeSelector(UserControl control)
         {
             var renderingModeMenu = new MenuItem("Rendering Mode");
 
