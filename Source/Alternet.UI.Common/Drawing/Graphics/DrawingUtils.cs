@@ -847,6 +847,43 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Draws the specified text at the bottom-left corner of the given bounds,
+        /// with a highlighted background and border.
+        /// </summary>
+        /// <remarks>The text is drawn with a light yellow background, a dark gray border, and black
+        /// foreground color. Padding is applied around the text to ensure proper spacing within
+        /// the highlighted area.</remarks>
+        /// <param name="graphics">The <see cref="Drawing.Graphics"/> instance used to draw
+        /// the text and shapes.</param>
+        /// <param name="text">The text to be displayed at the corner of the bounds.</param>
+        /// <param name="bounds">The rectangular area that defines the position for the text.
+        /// The text will be drawn near the bottom-left corner of this rectangle.</param>
+        public static void DrawDebugTextAtCorner(
+            Drawing.Graphics graphics,
+            string text,
+            Drawing.RectD bounds)
+        {
+            var font = UI.Control.DefaultFont;
+            var foreColor = Drawing.Color.Black;
+            var backColor = Drawing.Color.LightYellow;
+            var borderColor = Drawing.Color.DarkGray;
+
+            var textSize = graphics.MeasureText(text, font);
+
+            var padding = 4.0;
+            var rect = Drawing.RectD.FromLTRB(
+                bounds.Left + padding,
+                bounds.BottomLeft.Y - textSize.Height - padding,
+                bounds.Left + textSize.Width + 2 * padding,
+                bounds.BottomLeft.Y - padding
+            );
+
+            graphics.FillRectangle(backColor.AsBrush, rect);
+            graphics.DrawRectangle(borderColor.AsPen, rect);
+            graphics.DrawText(text, font, foreColor.AsBrush, rect);
+        }
+
+        /// <summary>
         /// Performs word wrapping of the single text line which doesn't contain new line characters.
         /// </summary>
         /// <param name="text">Text to wrap.</param>
