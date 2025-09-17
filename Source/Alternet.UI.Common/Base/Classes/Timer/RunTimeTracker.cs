@@ -61,20 +61,22 @@ namespace Alternet.UI
         /// Logs the runtime statistics of all <see cref="RunTimeTracker"/>
         /// instances to the debug output.
         /// </summary>
-        public static void Log()
+        public static void Log(ILogWriter? logWriter = null)
         {
-            Debug.WriteLine("RunTimeTracker Log:");
-            Debug.Indent();
+            logWriter ??= LogWriter.Current;
+
+            logWriter.WriteLine("RunTimeTracker Log:");
+            logWriter.Indent();
 
             foreach (var item in Items)
             {
                 if (item.Count == 0)
                     continue;
-                Debug.WriteLine($"{item.Name}: TotalElapsed={item.TotalElapsed} Count={item.Count} AverageElapsed={item.AverageElapsed}");
+                logWriter.WriteLine($"{item.Name}: TotalElapsed={item.TotalElapsed} Count={item.Count} AverageElapsed={item.AverageElapsed}");
             }
 
-            Debug.Unindent();
-            Debug.WriteLine("End of RunTimeTracker Log");
+            logWriter.Unindent();
+            logWriter.WriteLine("End of RunTimeTracker Log");
         }
 
         /// <summary>
