@@ -1,0 +1,53 @@
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003" InitialTargets="CompileLicenses">
+
+  <PropertyGroup>
+    <LicenseTargetExt Condition="'$(OutputType)' == 'Exe'">.exe</LicenseTargetExt>
+    <LicenseTargetExt Condition="'$(OutputType)' != 'Exe'">.dll</LicenseTargetExt>
+    <LicenseTargetAssembly>$(AssemblyName)$(LicenseTargetExt)</LicenseTargetAssembly>
+    <LicenseOutputDir>$(IntermediateOutputPath)\</LicenseOutputDir>
+    <LicenseResourceName>$(LicenseTargetAssembly).licenses</LicenseResourceName>
+  </PropertyGroup>
+
+
+  <ItemGroup>
+    <LicxFiles Include="$(LicxPath)\licenses.licx" />
+  </ItemGroup>
+
+<Target Name="PrepareReferenceAssemblies" BeforeTargets="CompileLicenses" Condition="'$(ReferencePaths)' != ''">
+  <ItemGroup>
+    <ReferenceAssemblies Include="$(ReferencePaths.Split(';'))" />
+  </ItemGroup>
+</Target>
+
+
+
+  <Target Name="CompileLicenses">
+    <Message Text="***************************" Importance="High" />
+    <Message Text="***************************" Importance="High" />
+    <Message Text="Running LC task inside delegated MSBuild..." Importance="High" />
+
+<Message Text="LC Inputs:" Importance="High" />
+<Message Text="  Sources: @(LicxFiles)" Importance="High" />
+<Message Text="  Target: $(LicenseTargetAssembly)" Importance="High" />
+<Message Text="  OutputDir: $(LicenseOutputDir)" Importance="High" />
+<Message Text="  Framework: $(TargetFrameworkVersion)" Importance="High" />
+<Message Text="  References: @(ReferenceAssemblies)" Importance="High" />
+
+<LC
+  Sources="@(LicxFiles)"
+  LicenseTarget="$(LicenseTargetAssembly)"
+  OutputDirectory="$(LicenseOutputDir)"
+  ReferencedAssemblies="@(ReferenceAssemblies)"
+  TargetFrameworkVersion="$(TargetFrameworkVersion)">
+  <Output TaskParameter="OutputLicense" ItemName="GeneratedLicenseFile" />
+</LC>
+
+<Message Text="Generated license file: %(GeneratedLicenseFile.Identity)" Importance="High" />
+
+
+<Message Text="Expected licenses output: $(LicenseOutputDir)\$(LicenseTargetAssembly).licenses" Importance="High" />
+<Message Text="License file exists: TRUE" Condition="Exists('$(LicenseOutputDir)\$(LicenseTargetAssembly).licenses')" Importance="High" />
+<Message Text="License file exists: FALSE" Condition="!Exists('$(LicenseOutputDir)\$(LicenseTargetAssembly).licenses')" Importance="High" />
+</Target>
+
+</Project>

@@ -1,0 +1,134 @@
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+
+<PropertyGroup >
+    <LicenseDelegateProject>$(MSBuildThisFileDirectory)\LicenseCompiler.delegate.proj</LicenseDelegateProject>
+  </PropertyGroup>
+
+
+<UsingTask TaskName="LocateMSBuildInline" TaskFactory="RoslynCodeTaskFactory"
+           AssemblyFile="$(MSBuildToolsPath)\Microsoft.Build.Tasks.Core.dll">
+  <ParameterGroup>
+    <VsWherePath ParameterType="System.String" Required="true" />
+    <ResolvedMSBuildPath ParameterType="System.String" Output="true" />
+  </ParameterGroup>
+  <Task>
+    <Using Namespace="System" />
+    <Using Namespace="System.Diagnostics" />
+    <Code Type="Fragment" Language="cs"><![CDATA[
+      var psi = new ProcessStartInfo {
+        FileName = VsWherePath,
+        Arguments = "-latest -requires Microsoft.Component.MSBuild -find MSBuild\\**\\Bin\\MSBuild.exe",
+        RedirectStandardOutput = true,
+        UseShellExecute = false,
+        CreateNoWindow = true
+      };
+
+      using (var process = Process.Start(psi)) {
+        ResolvedMSBuildPath = process?.StandardOutput.ReadLine()?.Trim();
+        process?.WaitForExit();
+      }
+
+      Log.LogMessage(MessageImportance.High, $"Resolved MSBuild.exe path: {ResolvedMSBuildPath}");
+    ]]></Code>
+  </Task>
+</UsingTask>
+
+  <ItemGroup>
+    <LicxFiles Include="$(MSBuildProjectDirectory)\Properties\licenses.licx" />
+  </ItemGroup>
+
+
+<Target Name="LocateMSBuild" BeforeTargets="LogLicenseCompilerConditions">
+  <LocateMSBuildInline VsWherePath="$(MSBuildProgramFiles32)\Microsoft Visual Studio\Installer\vswhere.exe">
+    <Output TaskParameter="ResolvedMSBuildPath" PropertyName="ResolvedMSBuildPath" />
+  </LocateMSBuildInline>
+
+  <Message Text="MSBuild.exe path: $(ResolvedMSBuildPath)" Importance="High" />
+</Target>
+
+
+  <Target Name="PrepareReferencePaths" BeforeTargets="RunLicenseCompilerViaMSBuild">
+    <PropertyGroup>
+      <ResolvedReferencePaths>@(ReferencePath->'%(FullPath)', ';')</ResolvedReferencePaths>
+    </PropertyGroup>
+
+  </Target>
+
+<Target Name="LogLicenseCompilerConditions" BeforeTargets="RunLicenseCompilerViaMSBuild">
+
+<Message Text="Checking for licenses.licx at: $(MSBuildProjectDirectory)\Properties\licenses.licx" Importance="High" />
+<Message Text="Exists: @(LicxFiles)" Importance="High" Condition="Exists('$(MSBuildProjectDirectory)\Properties\licenses.licx')" />
+
+
+  <Message Text="TargetFrameworkIdentifier: $(TargetFrameworkIdentifier)" Importance="High" />
+  <Message Text="ResolvedMSBuildPath: $(ResolvedMSBuildPath)" Importance="High" />
+
+    <Message Text="--- License Compiler Invocation ---" Importance="High" />
+    <Message Text="ResolvedMSBuildPath: $(ResolvedMSBuildPath)" Importance="High" />
+    <Message Text="LicenseDelegateProject: $(LicenseDelegateProject)" Importance="High" />
+    <Message Text="AssemblyName: $(AssemblyName)" Importance="High" />
+    <Message Text="OutputType: $(OutputType)" Importance="High" />
+    <Message Text="IntermediateOutputPath: $(IntermediateOutputPath)" Importance="High" />
+    <Message Text="TargetFrameworkVersion: $(TargetFrameworkVersion)" Importance="High" />
+    <Message Text="TargetFrameworkIdentifier: $(TargetFrameworkIdentifier)" Importance="High" />
+
+<!--
+    <Message Text="ReferencePaths: $(ResolvedReferencePaths)" Importance="High" />
+
+-->
+
+    <Message Text="----------------------------------" Importance="High" />
+
+</Target>
+
+<Target Name="LogLicenseCompilerConditionsAA" BeforeTargets="CoreCompile">
+    <Message Text="----------------------------------" Importance="High" />
+  <Message Text="TargetFrameworkIdentifier: $(TargetFrameworkIdentifier)" Importance="High" />
+  <Message Text="ResolvedMSBuildPath: $(ResolvedMSBuildPath)" Importance="High" />
+
+<Message Text="licenses.licx exists: TRUE" Importance="High"
+         Condition="Exists('$(MSBuildProjectDirectory)\Properties\licenses.licx')" />
+
+<Message Text="licenses.licx exists: FALSE" Importance="High"
+         Condition="!Exists('$(MSBuildProjectDirectory)\Properties\licenses.licx')" />
+
+
+   <Message Text="----------------------------------" Importance="High" />
+</Target>
+
+
+  <Target Name="RunLicenseCompilerViaMSBuild" BeforeTargets="CoreCompile" DependsOnTargets="PrepareReferencePaths;LocateMSBuild"
+          Condition="'$(TargetFrameworkIdentifier)' == '.NETFramework' and Exists('$(MSBuildProjectDirectory)\Properties\licenses.licx')">
+
+     <Message Text="========================================" Importance="High" />
+     <Message Text="========================================" Importance="High" />
+     <Message Text="Started RunLicenseCompilerViaMSBuild" Importance="High" />
+    <Message Text="ResolvedMSBuildPath: $(ResolvedMSBuildPath)" Importance="High" />
+
+    <!-- Invoke delegated MSBuild -->
+
+<PropertyGroup>
+  <IntermediateOutputPath Condition="HasTrailingSlash('$(IntermediateOutputPath)')">$(IntermediateOutputPath.TrimEnd('\'))</IntermediateOutputPath>
+</PropertyGroup>
+
+<Exec ConsoleToMSBuild="true"
+      Command='"$(ResolvedMSBuildPath)" "$(LicenseDelegateProject)" /p:AssemblyName="$(AssemblyName)" /p:OutputType="$(OutputType)" /p:IntermediateOutputPath="$(IntermediateOutputPath)" /p:TargetFrameworkVersion="$(TargetFrameworkVersion)" /p:ReferencePaths="$(ResolvedReferencePaths)" /p:LicxPath="$(MSBuildProjectDirectory)\Properties" /verbosity:detailed'>
+  <Output TaskParameter="ConsoleOutput" ItemName="LicenseCompilerOutput" />
+</Exec>
+
+<Message Text="License compiler output:" Importance="High" />
+<Message Text="  %(LicenseCompilerOutput.Identity)" Importance="High" />
+
+  </Target>
+
+
+<Target Name="BeforeBuildCheckAA" BeforeTargets="BeforeBuild">
+  <Message Text="BeforeBuild target is executing. Build graph is active." Importance="High" />
+</Target>
+
+<Target Name="BeforeCoreCompileAA" BeforeTargets="CoreCompile">
+  <Message Text="CoreCompile target is executing. Build graph is active." Importance="High" />
+</Target>
+
+
+</Project>

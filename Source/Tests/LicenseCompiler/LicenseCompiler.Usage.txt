@@ -1,0 +1,13 @@
+This is how to use it:
+
+<Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
+
+  <PropertyGroup>
+    <TargetFrameworks>net6.0-windows;net48</TargetFrameworks>
+    <UseWindowsForms>true</UseWindowsForms>
+  </PropertyGroup>
+
+  <!-- Import the license compiler logic -->
+  <Import Project="LicenseCompiler.targets" Condition="Exists('LicenseCompiler.targets')" />
+
+</Project>
