@@ -47,7 +47,8 @@ namespace Alternet.UI
         /// </summary>
         public ScrollableUserControl()
         {
-            hasInternalScrollBars = DefaultUseInternalScrollBars;
+            var useOpenGL = RenderingFlags.HasFlag(ControlRenderingFlags.UseOpenGL);
+            hasInternalScrollBars = useOpenGL || DefaultUseInternalScrollBars;
 
             OnHasInternalScrollBarsChanged();
         }
@@ -118,13 +119,38 @@ namespace Alternet.UI
 
             set
             {
+                var useOpenGL = RenderingFlags.HasFlag(ControlRenderingFlags.UseOpenGL);
+                if (useOpenGL)
+                    value = true;
+
                 if (hasInternalScrollBars == value)
                     return;
                 if (internalScrollBarsImmutable)
                     return;
+
                 hasInternalScrollBars = value;
                 OnHasInternalScrollBarsChanged();
                 UpdateScrollBars(true);
+            }
+        }
+
+        /// <inheritdoc/>
+        public override ControlRenderingFlags RenderingFlags
+        {
+            get => base.RenderingFlags;
+            set
+            {
+                if (RenderingFlags == value)
+                    return;
+
+                var newOpenGL = value.HasFlag(ControlRenderingFlags.UseOpenGL);
+
+                if (newOpenGL)
+                {
+                    UseInternalScrollBars = true;
+                }
+
+                base.RenderingFlags = value;
             }
         }
 
