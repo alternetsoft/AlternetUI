@@ -44,6 +44,22 @@ namespace ControlsSample
                 period: TestTimerInterval);
         }
 
+        public static void TestMacOsSpecific()
+        {
+            if (App.Handler is not IMacOsApplicationHandler macOsApp)
+            {
+                App.Log("MacOS specific application info is not available on this platform.");
+                return;
+            }
+
+            App.LogBeginSection("MacOS specific application info");
+
+            App.LogNameValue("HelpMenuTitleName", macOsApp.HelpMenuTitleName);
+            App.LogNameValue("Window", macOsApp.WindowMenuTitleName);
+
+            App.LogEndSection();
+        }
+
         public static void TestTimerXX()
         {
             TestTimerWithInterval(TestTimerInterval);
