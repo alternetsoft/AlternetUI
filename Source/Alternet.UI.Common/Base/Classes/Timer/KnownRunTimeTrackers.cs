@@ -165,6 +165,11 @@ namespace Alternet.UI
             UserControl control,
             int repeatCount)
         {
+            if(control is ScrollableUserControl scrollable)
+            {
+                scrollable.UseInternalScrollBars = true;
+            }
+
             ControlUtils.SetRenderingMode(control, ControlRenderingMode.SoftwareDoubleBuffered);
             App.DoEvents();
             control.Refresh();
