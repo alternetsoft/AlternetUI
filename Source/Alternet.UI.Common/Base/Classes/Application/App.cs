@@ -787,6 +787,18 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets the most recently activated window,
+        /// or <see langword="null"/> if no windows have been activated.
+        /// </summary>
+        public virtual Window? LastActivatedWindow
+        {
+            get
+            {
+                return LastActivatedWindows.FirstOrDefault();
+            }
+        }
+
+        /// <summary>
         /// Gets all visible windows in the application ordered by the last activated time.
         /// Last activated window will be the first one in the result.
         /// </summary>
