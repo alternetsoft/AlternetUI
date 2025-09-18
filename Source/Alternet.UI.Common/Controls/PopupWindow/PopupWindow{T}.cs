@@ -22,6 +22,7 @@ namespace Alternet.UI
         public static bool DefaultHasAdditionalBorder = true;
 
         private readonly VerticalStackPanel mainPanel = new();
+        private readonly ControlSubscriber notification = new();
         private readonly ToolBar bottomToolBar = new();
         private ModalResult popupResult;
         private T? mainControl;
@@ -115,6 +116,14 @@ namespace Alternet.UI
         /// Gets or sets default popup window padding.
         /// </summary>
         public static Thickness DefaultPadding { get; set; } = (5, 5, 5, 10);
+
+        /// <summary>
+        /// Gets the <see cref="ControlSubscriber"/> associated with the notification system.
+        /// This subscriber is used to manage notifications related to the popup window.
+        /// It is automatically added to the global notification system when the popup
+        /// window is shown and removed when it is hidden.
+        /// </summary>
+        public virtual ControlSubscriber Subscriber => notification;
 
         /// <summary>
         /// Gets or sets whether 'Ok' and 'Cancel' buttons are visible.
@@ -678,6 +687,27 @@ namespace Alternet.UI
         {
             e.Cancel = true;
             HidePopup(ModalResult.Canceled);
+        }
+
+        /// <inheritdoc/>
+        protected override void OnVisibleChanged(EventArgs e)
+        {
+            base.OnVisibleChanged(e);
+            if (Visible)
+            {
+                AddGlobalNotification(notification);
+            }
+            else
+            {
+                RemoveGlobalNotification(notification);
+            }
+        }
+
+        /// <inheritdoc/>
+        protected override void DisposeManaged()
+        {
+            RemoveGlobalNotification(notification);
+            base.DisposeManaged();
         }
 
         /// <summary>
