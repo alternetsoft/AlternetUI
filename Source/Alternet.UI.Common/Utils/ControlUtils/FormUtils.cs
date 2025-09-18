@@ -23,7 +23,8 @@ namespace Alternet.UI
         /// If such a window is not already created, it creates one.
         /// </summary>
         /// <remarks>This phantom window is not shown in the taskbar and is intended for scenarios where
-        /// an invisible or off-screen window is required, such as for background processing or interoperation
+        /// an invisible or off-screen window is required, such as for background
+        /// processing or interoperation
         /// purposes.</remarks>
         /// <returns>A <see cref="Window"/> instance configured with minimal dimensions, no border,
         /// and positioned outside the visible screen area.</returns>

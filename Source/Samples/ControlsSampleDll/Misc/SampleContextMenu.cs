@@ -24,6 +24,25 @@ namespace ControlsSample
 
             var separator = new MenuItem { Text = "-" };
 
+            var importMenuItem = new MenuItem
+            {
+                Text = "_Import sub-menu",
+            };
+
+            var importPdfMenuItem = new MenuItem
+            {
+                Text = "Import from P_DF",
+            };
+
+            importPdfMenuItem.Click += ExportToPdfMenuItem_Click;
+
+            var importPngMenuItem = new MenuItem
+            {
+                Text = "Import from P_NG",
+                IsEnabled = false,
+            };
+            importPngMenuItem.Click += ExportToPngMenuItem_Click;
+
             var exportMenuItem = new MenuItem
             {
                 Text = "_Export sub-menu",
@@ -46,10 +65,14 @@ namespace ControlsSample
             exportMenuItem.Items.Add(exportToPdfMenuItem);
             exportMenuItem.Items.Add(exportToPngMenuItem);
 
+            importMenuItem.Items.Add(importPdfMenuItem);
+            importMenuItem.Items.Add(importPngMenuItem);
+
             Items.Add(openMenuItem);
             Items.Add(saveMenuItem);
             Items.Add(separator);
             Items.Add(exportMenuItem);
+            Items.Add(importMenuItem);
         }
 
         private void OpenMenuItem_Click(object? sender, EventArgs e)
