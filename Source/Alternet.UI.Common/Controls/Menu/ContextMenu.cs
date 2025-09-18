@@ -296,11 +296,17 @@ namespace Alternet.UI
                 AddHostObject(popupWindow);
                 popupWindow.MainControl.DataContext = this;
                 popupWindow.MainControl.ConfigureAsContextMenu();
+
+                popupWindow.Deactivated += (s, e) =>
+                {
+                };
+
                 popupWindow.Activated += (s, e) =>
                 {
                     Post(() =>
                     {
-                        PopupToolBar.IsHideOnDeactivateSuppressed = false;
+                        PopupToolBar.RestoreHideOnDeactivate();
+
                         afterShow?.Invoke();
                     });
                 };
@@ -308,7 +314,8 @@ namespace Alternet.UI
 
             if (hostControl is PopupToolBar popupToolBar)
             {
-                PopupToolBar.IsHideOnDeactivateSuppressed = true;
+                PopupToolBar.SuppressHideOnDeactivate();
+
                 popupToolBar.ShowPopup(control, dropDownMenuPosition);
             }
         }

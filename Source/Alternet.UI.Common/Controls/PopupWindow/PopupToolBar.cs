@@ -16,12 +16,6 @@ namespace Alternet.UI
     public partial class PopupToolBar : PopupWindow<ToolBar>, IContextMenuHost
     {
         /// <summary>
-        /// Indicates whether the suppression of the "Hide on Deactivate" behavior is enabled.
-        /// Default is <c>false</c>.
-        /// </summary>
-        public static bool IsHideOnDeactivateSuppressed;
-
-        /// <summary>
         /// Represents the default margin applied to <see cref="ToolBar"/>,
         /// measured in device-independent units.
         /// </summary>
@@ -30,6 +24,9 @@ namespace Alternet.UI
         public static Thickness DefaultContentMargin = 4;
 
         private static PopupToolBar? defaultPopup;
+        private static int hideOnDeactivateSuppressCounter;
+
+        private bool hideOtherPopupsSupressed;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="PopupToolBar"/> class.
@@ -51,6 +48,42 @@ namespace Alternet.UI
             HideOnDeactivate = true;
 
             MainControl.ToolClick += OnToolClick;
+
+            Subscriber.AfterControlMouseEnter += (s, e) =>
+            {
+                if (!Visible)
+                    return;
+                if (PopupOwner?.IsSibling(s as AbstractControl) ?? false)
+                {
+                    HideOnlyThisPopup();
+                }
+            };
+
+            Subscriber.AfterControlVisibleChanged += (s, e) =>
+            {
+                if (!Visible || s == this)
+                    return;
+                if (s is not PopupToolBar control)
+                    return;
+                if (!control.Visible)
+                    return;
+                if (PopupOwner?.IsSibling(control.PopupOwner) ?? false)
+                {
+                    HideOnlyThisPopup();
+                }
+            };
+        }
+
+        /// <summary>
+        /// Indicates whether the suppression of the "Hide on Deactivate" behavior is enabled.
+        /// Default is <c>false</c>.
+        /// </summary>
+        public static bool IsHideOnDeactivateSuppressed
+        {
+            get
+            {
+                return hideOnDeactivateSuppressCounter > 0;
+            }
         }
 
         /// <summary>
@@ -107,6 +140,34 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets or sets the parent <see cref="PopupToolBar"/> that contains this instance.
+        /// </summary>
+        [Browsable(false)]
+        public PopupToolBar? ParentPopup { get; set; }
+
+        /// <summary>
+        /// Gets an enumerable collection of parent <see cref="PopupToolBar"/> instances,
+        /// starting from the immediate parent and traversing up the hierarchy.
+        /// </summary>
+        /// <remarks>This property returns the sequence of parent popups
+        /// in the hierarchy, with the
+        /// immediate parent first, followed by its parent, and so on,
+        /// until no more parents exist.</remarks>
+        [Browsable(false)]
+        public virtual IEnumerable<PopupToolBar> ParentPopups
+        {
+            get
+            {
+                var current = ParentPopup;
+                while (current is not null)
+                {
+                    yield return current;
+                    current = current.ParentPopup;
+                }
+            }
+        }
+
+        /// <summary>
         /// Gets or sets a value indicating whether the remaining label images are required
         /// for the toolbar items.
         /// When set to <c>true</c>, the control will ensure that all label images
@@ -153,6 +214,74 @@ namespace Alternet.UI
             }
         }
 
+        /// <summary>
+        /// Restores the default behavior of hiding <see cref="PopupToolBar"/> window on deactivation
+        /// by decrementing the suppression.
+        /// counter.
+        /// </summary>
+        /// <remarks>This method reduces the internal suppression counter by one.
+        /// If the counter reaches zero, the application will resume its default behavior
+        /// of hiding on deactivation. Ensure that calls to this
+        /// method are balanced with calls that suppress the hide-on-deactivate behavior.</remarks>
+        public static void RestoreHideOnDeactivate()
+        {
+            if (hideOnDeactivateSuppressCounter > 0)
+                hideOnDeactivateSuppressCounter--;
+        }
+
+        /// <summary>
+        /// Prevents the application from hiding <see cref="PopupToolBar"/> when it is deactivated.
+        /// </summary>
+        /// <remarks>This method increments an internal counter to suppress
+        /// the default behavior of hiding
+        /// the <see cref="PopupToolBar"/> window when the application or window loses focus.
+        /// Call this method to ensure the window remains visible during
+        /// deactivation. To restore the default behavior, a corresponding decrement method
+        /// must be called.</remarks>
+        public static void SuppressHideOnDeactivate()
+        {
+            hideOnDeactivateSuppressCounter++;
+        }
+
+        /// <summary>
+        /// Determines whether the specified <see cref="PopupToolBar"/> is a parent
+        /// of this popup. This method checks the hierarchy of parent popups using the
+        /// <see cref="ParentPopups"/> property.
+        /// </summary>
+        /// <param name="popup">The <see cref="PopupToolBar"/> to check.</param>
+        /// <returns><see langword="true"/> if the specified <see cref="PopupToolBar"/>
+        /// is a parent popup; otherwise, <see
+        /// langword="false"/>.</returns>
+        public virtual bool IsParentPopup(PopupToolBar popup)
+        {
+            return ParentPopups.Contains(popup);
+        }
+
+        /// <summary>
+        /// Hides the current popup without affecting the visibility of other popups.
+        /// </summary>
+        /// <remarks>This method ensures that only the current popup is hidden,
+        /// while suppressing any side
+        /// effects that might otherwise hide other popups. It restores
+        /// the original state after the operation
+        /// completes.If the popup is already not visible, the method does nothing.</remarks>
+        public virtual void HideOnlyThisPopup()
+        {
+            if (!Visible)
+                return;
+            SuppressHideOnDeactivate();
+            hideOtherPopupsSupressed = true;
+            try
+            {
+                Hide();
+            }
+            finally
+            {
+                hideOtherPopupsSupressed = false;
+                RestoreHideOnDeactivate();
+            }
+        }
+
         /// <inheritdoc/>
         public override SizeD GetPreferredSize(SizeD availableSize)
         {
@@ -189,9 +318,12 @@ namespace Alternet.UI
         /// <inheritdoc/>
         protected override void OnVisibleChanged(EventArgs e)
         {
+            base.OnVisibleChanged(e);
             if (Visible)
                 return;
-            HideOtherPopups();
+
+            if(!hideOtherPopupsSupressed)
+                HideOtherPopups();
         }
 
         /// <summary>

@@ -1836,6 +1836,9 @@ namespace Alternet.UI
                 RightSideElement = SpeedButton.RightSideElementKind.KeyGesture;
                 ShowDropDownMenuWhenHovered = true;
 
+                if(!App.IsMaui)
+                    UseInternalDropDownMenu = true;
+
                 if (DropDownMenu is null)
                 {
                     SetLabelImage(null);
