@@ -780,20 +780,19 @@ namespace Alternet.UI
         /// <inheritdoc/>
         public override int? HitTest(PointD position)
         {
-            if (DisposingOrDisposed)
+            if (DisposingOrDisposed || Count == 0)
                 return null;
-            var y = position.Y;
-            var unitMax = GetVisibleEnd();
 
-            MeasureItemEventArgs e = new(MeasureCanvas, 0);
+            int lineMax = GetVisibleEnd();
+            int lineFirst = GetVisibleBegin();
 
-            for (int unit = GetVisibleBegin(); unit < unitMax; ++unit)
+            for (int line = lineFirst; line < lineMax; line++)
             {
-                e.Index = unit;
-                MeasureItemSize(e);
-                y -= e.ItemHeight;
-                if (y < 0)
-                    return unit;
+                var rect = GetItemRect(line);
+                if(rect is null)
+                    continue;
+                if (rect.Value.Contains(position))
+                    return line;
             }
 
             return null;
