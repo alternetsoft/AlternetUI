@@ -81,8 +81,23 @@ namespace Alternet.UI
                 if (s is not MenuItem item)
                     return;
                 var itemHandles = GetItemHandles(item);
+                var recreateItem = false;
+
                 foreach (var itemHandle in itemHandles)
+                {
+                    var isCheckable = itemHandle.ItemType == MenuItemType.Check;
+
+                    if (!isCheckable)
+                    {
+                        recreateItem = true;
+                        break;
+                    }
+
                     itemHandle.Checked = item.Checked && !item.HasItems;
+                }
+
+                if(recreateItem)
+                    RecreateItem(item);
             };
 
             StaticMenuEvents.ItemRoleChanged += (s, e) =>
