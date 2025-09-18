@@ -6,6 +6,14 @@ namespace NativeApi.Api
 {
     public class Menu
     {
+        // Used to detect localized Help menu titles
+        public string MacHelpMenuTitleName { get; }
+
+        // Used to identify the Window menu
+        public string MacWindowMenuTitleName { get; }
+
+        public void MacSetCommonMenuBar(IntPtr menuBar) { }
+
         /* Work with main menu */
 
         public static IntPtr GetMainMenu(Window window) => throw new Exception();
