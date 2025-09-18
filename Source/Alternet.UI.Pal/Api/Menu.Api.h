@@ -22,6 +22,28 @@ ALTERNET_UI_API Menu* Menu_Create_()
     #endif
 }
 
+ALTERNET_UI_API char16_t* Menu_GetMacHelpMenuTitleName_(Menu* obj)
+{
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    return MarshalExceptions<char16_t*>([&](){
+    #endif
+        return AllocPInvokeReturnString(obj->GetMacHelpMenuTitleName());
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    });
+    #endif
+}
+
+ALTERNET_UI_API char16_t* Menu_GetMacWindowMenuTitleName_(Menu* obj)
+{
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    return MarshalExceptions<char16_t*>([&](){
+    #endif
+        return AllocPInvokeReturnString(obj->GetMacWindowMenuTitleName());
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    });
+    #endif
+}
+
 ALTERNET_UI_API char16_t* Menu_GetEventMenuItemId_()
 {
     #if !defined(__WXMSW__) || defined(_DEBUG)
@@ -39,6 +61,17 @@ ALTERNET_UI_API c_bool Menu_GetEventMenuItemChecked_()
     return MarshalExceptions<c_bool>([&](){
     #endif
         return Menu::GetEventMenuItemChecked();
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    });
+    #endif
+}
+
+ALTERNET_UI_API void Menu_MacSetCommonMenuBar_(Menu* obj, void* menuBar)
+{
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    MarshalExceptions<void>([&](){
+    #endif
+        obj->MacSetCommonMenuBar(menuBar);
     #if !defined(__WXMSW__) || defined(_DEBUG)
     });
     #endif

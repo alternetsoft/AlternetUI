@@ -18,7 +18,7 @@ namespace Alternet.UI
     /// <summary>
     /// Implementation of the <see cref="IApplicationHandler"/> for the WxWidgets library.
     /// </summary>
-    public class WxApplicationHandler : DisposableObject, IApplicationHandler
+    public class WxApplicationHandler : DisposableObject, IApplicationHandler, IMacOsApplicationHandler
     {
         /// <summary>  
         /// Gets or sets a value indicating whether to use the internal control painter.  
@@ -445,6 +445,22 @@ namespace Alternet.UI
         /// <inheritdoc/>
         public virtual bool IsInvokeRequired => nativeApplication.InvokeRequired;
 
+        string? IMacOsApplicationHandler.HelpMenuTitleName
+        {
+            get
+            {
+                return WxMenuFactory.NativeMenu?.MacHelpMenuTitleName;
+            }
+        }
+
+        string? IMacOsApplicationHandler.WindowMenuTitleName
+        {
+            get
+            {
+                return WxMenuFactory.NativeMenu?.MacWindowMenuTitleName;
+            }
+        }
+
         /// <inheritdoc/>
         public virtual IControlPainterHandler CreateControlPainterHandler()
         {
@@ -555,6 +571,18 @@ namespace Alternet.UI
         public IMenuFactory? CreateMenuFactory()
         {
             return new WxMenuFactory();
+        }
+
+        void IMacOsApplicationHandler.MacSetCommonMenuBar(MainMenu? menuBar)
+        {
+            if (menuBar == null)
+            {
+                WxMenuFactory.NativeMenu?.MacSetCommonMenuBar(IntPtr.Zero);
+                return;
+            }
+
+            var nativeMenu = new WxMainMenu(menuBar.UniqueId.ToString(), menuBar);
+            WxMenuFactory.NativeMenu?.MacSetCommonMenuBar(nativeMenu.AsPointer);
         }
     }
 }

@@ -3289,6 +3289,8 @@ namespace Alternet::UI
         None = 0,
         DismissAfterInterval = 1,
         UseSystemColors = 2,
+        Clear = 4,
+        ClearAndDismiss = 5,
     };
     
     enum class RichToolTipKind

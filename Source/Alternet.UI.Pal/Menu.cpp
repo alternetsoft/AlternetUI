@@ -98,6 +98,32 @@ namespace Alternet::UI
     string Menu::_eventMenuItemId = wxStr("");
     bool Menu::_eventMenuItemChecked = false;
 
+    void Menu::MacSetCommonMenuBar(void* menuBar)
+    {
+        auto bar = (wxAlternetMenuBar*)menuBar;
+#ifdef __WXOSX__
+		wxMenuBar::SetMacCommonMenuBar(bar);
+#endif
+    }
+
+    string Menu::GetMacHelpMenuTitleName()
+    {
+#ifdef __WXOSX__
+        return wxApp::s_macHelpMenuTitleName;
+#else
+        return wxStr("");
+#endif
+    }
+
+    string Menu::GetMacWindowMenuTitleName()
+    {
+#ifdef __WXOSX__
+        return wxApp::s_macWindowMenuTitleName;
+#else
+        return wxStr("");
+#endif
+    }
+
     string Menu::GetEventMenuItemId()
     {
         return _eventMenuItemId;

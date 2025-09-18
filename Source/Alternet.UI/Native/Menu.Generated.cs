@@ -24,6 +24,26 @@ namespace Alternet.UI.Native
         {
         }
         
+        public string MacHelpMenuTitleName
+        {
+            get
+            {
+                CheckDisposed();
+                return NativeApi.Menu_GetMacHelpMenuTitleName_(NativePointer);
+            }
+            
+        }
+        
+        public string MacWindowMenuTitleName
+        {
+            get
+            {
+                CheckDisposed();
+                return NativeApi.Menu_GetMacWindowMenuTitleName_(NativePointer);
+            }
+            
+        }
+        
         public static string EventMenuItemId
         {
             get
@@ -40,6 +60,12 @@ namespace Alternet.UI.Native
                 return NativeApi.Menu_GetEventMenuItemChecked_();
             }
             
+        }
+        
+        public void MacSetCommonMenuBar(System.IntPtr menuBar)
+        {
+            CheckDisposed();
+            NativeApi.Menu_MacSetCommonMenuBar_(NativePointer, menuBar);
         }
         
         public static System.IntPtr GetMainMenu(Window window)
@@ -267,10 +293,19 @@ namespace Alternet.UI.Native
             public static extern IntPtr Menu_Create_();
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern string Menu_GetMacHelpMenuTitleName_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern string Menu_GetMacWindowMenuTitleName_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern string Menu_GetEventMenuItemId_();
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern bool Menu_GetEventMenuItemChecked_();
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void Menu_MacSetCommonMenuBar_(IntPtr obj, System.IntPtr menuBar);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern System.IntPtr Menu_GetMainMenu_(IntPtr window);

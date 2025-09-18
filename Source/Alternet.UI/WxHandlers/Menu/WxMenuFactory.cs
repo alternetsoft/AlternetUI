@@ -320,6 +320,8 @@ namespace Alternet.UI
 
         public static WxMenuFactory? CurrentFactory => MenuUtils.Factory as WxMenuFactory;
 
+        public static Native.Menu? NativeMenu => CurrentFactory?.nativeMenu;
+
         public static WxMenuItem? MenuItemHandleFromId(Window window, string id)
         {
             if (window is null)
