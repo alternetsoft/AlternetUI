@@ -1102,6 +1102,8 @@ namespace Alternet.UI
                 AfterShow?.Invoke(this, e);
             else
                 AfterHide?.Invoke(this, e);
+
+            RaiseNotifications((n) => n.AfterVisibleChanged(this, e));
         }
 
         /// <summary>
