@@ -13,10 +13,11 @@ namespace Alternet::UI
 
     wxMenu* NotifyIcon::TaskBarIcon::CreatePopupMenu()
     {
-#ifdef __WXOSX__
-        return _menu;
-#else
+        if(_menu != nullptr)
+		PopupMenu(_menu);
         return nullptr;
+#ifdef __WXOSX__
+#else
 #endif
     }
 

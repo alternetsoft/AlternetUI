@@ -75,13 +75,6 @@ namespace Alternet.UI
         bool IsOk { get; }
 
         /// <summary>
-        /// Displays the specified context menu at the notification icon position.
-        /// </summary>
-        /// <param name="menu">The <see cref="ContextMenu"/> to display.
-        /// Cannot be <see langword="null"/>.</param>
-        void ShowContextMenu(ContextMenu menu);
-
-        /// <summary>
         /// Sets the context menu to be displayed when the notification icon is right-clicked.
         /// </summary>
         /// <param name="menu">The <see cref="ContextMenu"/> to show.
