@@ -19,14 +19,14 @@ namespace Alternet.Drawing
         /// <summary>
         /// Font size.
         /// </summary>
-        public FontSize Size;
+        public FontScalar Size;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="FontNameAndSize"/> struct.
         /// </summary>
         /// <param name="name">Font name.</param>
         /// <param name="size">Font size.</param>
-        public FontNameAndSize(string name, FontSize size)
+        public FontNameAndSize(string name, FontScalar size)
         {
             Name = name;
             Size = size;

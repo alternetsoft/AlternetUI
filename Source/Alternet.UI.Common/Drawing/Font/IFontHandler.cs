@@ -28,7 +28,7 @@ namespace Alternet.Drawing
         /// Gets the em-size, in points, of the font.
         /// </summary>
         /// <returns></returns>
-        FontSize SizeInPoints { get; }
+        FontScalar SizeInPoints { get; }
 
         /// <summary>
         /// Gets font encoding.
@@ -116,7 +116,7 @@ namespace Alternet.Drawing
             /// <summary>
             /// Gets or sets font size.
             /// </summary>
-            public FontSize Size;
+            public FontScalar Size;
 
             /// <summary>
             /// Gets or sets font style.
@@ -141,7 +141,7 @@ namespace Alternet.Drawing
             }
 
             /// <summary>
-            /// Initializes a new instance of the <see cref="FontParams"/> class and assings
+            /// Initializes a new instance of the <see cref="FontParams"/> class and sets
             /// its properties using the specified font.
             /// </summary>
             /// <param name="font">Font.</param>

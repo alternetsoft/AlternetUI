@@ -16,10 +16,10 @@ namespace Alternet.Drawing
     {
         private static FontFamily defaultFontFamily = FontFamily.GenericDefault;
         private object nameOrFamily = DefaultFontFamily;
-        private FontSize sizeInPoints = DefaultSizeInPoints;
+        private FontScalar sizeInPoints = DefaultSizeInPoints;
 
         /// <summary>
-        /// Initializes a new <see cref="FontInfo"/> using a specified font familty
+        /// Initializes a new <see cref="FontInfo"/> using a specified font family
         /// name, size in points and style.
         /// </summary>
         /// <param name="familyName">A string representation of the font family
@@ -30,7 +30,7 @@ namespace Alternet.Drawing
         /// equal to 0, evaluates to infinity or is not a valid number.</exception>
         public FontInfo(
             string familyName,
-            FontSize emSize,
+            FontScalar emSize,
             FontStyle style = FontStyle.Regular)
         {
             Font.CheckSize(emSize);
@@ -73,7 +73,7 @@ namespace Alternet.Drawing
         /// <summary>
         /// Gets or sets default font size for the <see cref="FontInfo"/> instances.
         /// </summary>
-        public static FontSize DefaultSizeInPoints { get; set; } = Font.Default.SizeInPoints;
+        public static FontScalar DefaultSizeInPoints { get; set; } = Font.Default.SizeInPoints;
 
         /// <summary>
         /// Gets the <see cref="FontFamily"/> name associated with the font.
@@ -125,7 +125,7 @@ namespace Alternet.Drawing
         /// Gets the em-size, in points, of the font.
         /// </summary>
         /// <value>The em-size, in points, of the font.</value>
-        public FontSize SizeInPoints
+        public FontScalar SizeInPoints
         {
             readonly get
             {

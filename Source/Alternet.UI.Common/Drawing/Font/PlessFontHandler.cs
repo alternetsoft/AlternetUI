@@ -9,7 +9,7 @@ using Alternet.UI;
 namespace Alternet.Drawing
 {
     /// <summary>
-    /// Platformless <see cref="IFontHandler"/> implementation.
+    /// <see cref="IFontHandler"/> implementation which is not platform-dependent.
     /// </summary>
     public class PlessFontHandler : DisposableObject, IFontHandler
     {

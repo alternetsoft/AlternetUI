@@ -16,8 +16,8 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets array of font sizes used for picker controls.
         /// </summary>
-        public static double[] DefaultFontSizesForPicker
-            = new double[] { 8, 9, 10, 11, 12, 14, 18, 24, 30, 36, 48, 60, 72, 96 };
+        public static FontScalar[] DefaultFontSizesForPicker
+            = new FontScalar[] { 8, 9, 10, 11, 12, 14, 18, 24, 30, 36, 48, 60, 72, 96 };
 
         /// <summary>
         /// Adds test child items to the specified <see cref="TreeViewItem"/>.
