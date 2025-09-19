@@ -24,10 +24,20 @@ namespace Alternet.Drawing
         private TransformMatrix transform = new();
         private GraphicsDocument? document;
 
+        static Graphics()
+        {
+            RunTests();
+        }
+
         /// <summary>
         /// Gets the current depth of the transform stack.
         /// </summary>
         public int TransformStackDepth => stack?.Count ?? 0;
+
+        /// <summary>
+        /// Gets the graphics configuration identity for this <see cref="Graphics"/> instance.
+        /// </summary>
+        public GraphicsConfigIdentity ConfigIdentity => new (this);
 
         /// <summary>
         /// Gets or sets name of the <see cref="Graphics"/> for the debug purposes.
@@ -786,7 +796,7 @@ namespace Alternet.Drawing
         /// ensure clarity and maintainability.</remarks>
         public struct CanvasCreateParams : IEquatable<CanvasCreateParams>
         {
-            private Coord? scaleFactor;
+            private Coord scaleFactor;
             private ControlRenderingFlags controlRenderingFlags;
             private int? hashCode;
 
@@ -794,6 +804,7 @@ namespace Alternet.Drawing
             /// Initializes a new instance of the <see cref="CanvasCreateParams"/> class.
             /// </summary>
             public CanvasCreateParams()
+                : this(null)
             {
             }
 
@@ -805,7 +816,7 @@ namespace Alternet.Drawing
             /// If <see langword="null"/>, a default scale factor will be used.</param>
             public CanvasCreateParams(Coord? scaleFactor)
             {
-                this.scaleFactor = scaleFactor;
+                this.scaleFactor = GraphicsFactory.ScaleFactorOrDefault(scaleFactor);
             }
 
             /// <summary>
@@ -817,9 +828,9 @@ namespace Alternet.Drawing
             /// <param name="controlRenderingFlags">Flags that specify how controls should
             /// be rendered on the canvas.</param>
             public CanvasCreateParams(Coord? scaleFactor, ControlRenderingFlags controlRenderingFlags)
+                : this(scaleFactor)
             {
                 this.controlRenderingFlags = controlRenderingFlags;
-                this.scaleFactor = scaleFactor;
             }
 
             /// <summary>
@@ -847,7 +858,7 @@ namespace Alternet.Drawing
             /// unintended transformations.</remarks>
             public Coord ScaleFactor
             {
-                readonly get => GraphicsFactory.ScaleFactorOrDefault(scaleFactor);
+                readonly get => scaleFactor;
 
                 set
                 {
