@@ -28,6 +28,9 @@ namespace Alternet.Drawing
         public override bool IsOk => dc.IsOk;
 
         /// <inheritdoc/>
+        public override GraphicsBackendType BackendType => GraphicsBackendType.WxWidgets;
+
+        /// <inheritdoc/>
         public virtual Region? Clip
         {
             get

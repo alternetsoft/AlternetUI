@@ -19,6 +19,9 @@ namespace Alternet.Drawing
         public static readonly Graphics Default = new PlessGraphics();
 
         /// <inheritdoc/>
+        public override GraphicsBackendType BackendType => GraphicsBackendType.WxWidgets;
+
+        /// <inheritdoc/>
         public override bool IsOk
         {
             get;

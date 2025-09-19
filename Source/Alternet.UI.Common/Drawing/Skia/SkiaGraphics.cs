@@ -52,6 +52,9 @@ namespace Alternet.Drawing
         /// </summary>
         public bool IsScaled => OriginalScaleFactor != 1f;
 
+        /// <inheritdoc/>
+        public override GraphicsBackendType BackendType => GraphicsBackendType.SkiaSharp;
+
         /// <summary>
         /// Gets or sets whether 'DrawImage' methods draw unscaled image.
         /// </summary>

@@ -15,6 +15,9 @@ namespace Alternet.Drawing
     public class NotImplementedGraphics : Graphics
     {
         /// <inheritdoc/>
+        public override GraphicsBackendType BackendType => GraphicsBackendType.Null;
+
+        /// <inheritdoc/>
         public override bool IsOk
         {
             get
