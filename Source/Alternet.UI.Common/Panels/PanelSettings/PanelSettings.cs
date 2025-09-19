@@ -94,7 +94,7 @@ namespace Alternet.UI
         public delegate void RegisterConversionDelegate(
             PanelSettingsItemKind kind,
             ItemToControlDelegate? conversion,
-            UIPlatformKind platform = UIPlatformKind.Platformless);
+            UIPlatformKind platform = UIPlatformKind.Unspecified);
 
         /// <summary>
         /// Gets or sets whether controls are automatically created and updated
@@ -324,7 +324,7 @@ namespace Alternet.UI
         public static void RegisterConversion(
             PanelSettingsItemKind kind,
             ItemToControlDelegate? func,
-            UIPlatformKind platform = UIPlatformKind.Platformless)
+            UIPlatformKind platform = UIPlatformKind.Unspecified)
         {
             itemToControl[kind] = func;
         }
@@ -336,7 +336,7 @@ namespace Alternet.UI
         /// <param name="kind">Item kind.</param>
         public static ItemToControlDelegate? GetRegisteredConversion(
             PanelSettingsItemKind kind,
-            UIPlatformKind platform = UIPlatformKind.Platformless)
+            UIPlatformKind platform = UIPlatformKind.Unspecified)
         {
             return itemToControl[kind];
         }

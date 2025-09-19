@@ -247,7 +247,7 @@ namespace Alternet.UI
         /// <inheritdoc/>
         public virtual UIPlatformKind GetPlatformKind()
         {
-            return UIPlatformKind.Platformless;
+            return UIPlatformKind.Unspecified;
         }
 
         /// <inheritdoc/>

@@ -37,8 +37,8 @@ namespace Alternet.UI
         WinUI,
 
         /// <summary>
-        /// Platformless.
+        /// Platform-independent.
         /// </summary>
-        Platformless,
+        Unspecified,
     }
 }
