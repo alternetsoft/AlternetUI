@@ -464,7 +464,13 @@ namespace Alternet.UI
         /// <summary>
         /// Gets currently used platform.
         /// </summary>
-        public static UIPlatformKind PlatformKind => SystemSettings.Handler.GetPlatformKind();
+        public static UIPlatformKind PlatformKind
+        {
+            get
+            {
+                return SystemSettings.Handler.GetPlatformKind();
+            }
+        }
 
         /// <summary>
         /// Returns True if application runs on Net or NetCore platform (Net 5 or higher).
