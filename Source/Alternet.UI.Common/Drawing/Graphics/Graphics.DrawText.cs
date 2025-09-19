@@ -23,6 +23,38 @@ namespace Alternet.Drawing
 #endif
 
         /// <summary>
+        /// Gets the dimensions of the string using the specified font.
+        /// </summary>
+        /// <param name="text">The text string to measure.</param>
+        /// <param name="font">The Font used to get text dimensions.</param>
+        /// <returns><see cref="SizeD"/> with the total calculated width and height
+        /// of the text.</returns>
+        /// <remarks>
+        /// This function only works with single-line strings.
+        /// It works faster than MeasureText methods.
+        /// </remarks>
+        public abstract SizeD GetTextExtent(string text, Font font);
+
+        /// <summary>
+        /// Draws text with the specified angle, font, background and foreground colors.
+        /// </summary>
+        /// <param name="location">Location used to draw the text.</param>
+        /// <param name="text">Text to draw.</param>
+        /// <param name="font">Font used to draw the text.</param>
+        /// <param name="foreColor">Foreground color of the text.</param>
+        /// <param name="backColor">Background color of the text. If parameter is equal
+        /// to <see cref="Color.Empty"/>, background will not be painted. </param>
+        /// <param name="angle">The angle, in degrees, relative to the (default) horizontal
+        /// direction to draw the string.</param>
+        public abstract void DrawTextWithAngle(
+            string text,
+            PointD location,
+            Font font,
+            Color foreColor,
+            Color backColor,
+            double angle);
+
+        /// <summary>
         /// Draws text string with the specified bounds, <see cref="Brush"/>
         /// and <see cref="Font"/> objects.
         /// </summary>
@@ -47,18 +79,6 @@ namespace Alternet.Drawing
         public abstract void DrawText(string text, Font font, Brush brush, PointD origin);
 
         /// <summary>
-        /// Draws text with <see cref="AbstractControl.DefaultFont"/> and <see cref="Brush.Default"/>.
-        /// </summary>
-        /// <param name="text">String to draw.</param>
-        /// <param name="origin"><see cref="PointD"/> structure that specifies the upper-left
-        /// corner of the text position on the canvas.</param>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public void DrawText(string text, PointD origin)
-        {
-            DrawText(text, Control.DefaultFont, Brush.Default, origin);
-        }
-
-        /// <summary>
         /// Draws text with the specified font, background and foreground colors.
         /// This is the fastest method to draw text.
         /// </summary>
@@ -76,23 +96,16 @@ namespace Alternet.Drawing
             Color backColor);
 
         /// <summary>
-        /// Draws text with the specified angle, font, background and foreground colors.
+        /// Draws text with <see cref="AbstractControl.DefaultFont"/> and <see cref="Brush.Default"/>.
         /// </summary>
-        /// <param name="location">Location used to draw the text.</param>
-        /// <param name="text">Text to draw.</param>
-        /// <param name="font">Font used to draw the text.</param>
-        /// <param name="foreColor">Foreground color of the text.</param>
-        /// <param name="backColor">Background color of the text. If parameter is equal
-        /// to <see cref="Color.Empty"/>, background will not be painted. </param>
-        /// <param name="angle">The angle, in degrees, relative to the (default) horizontal
-        /// direction to draw the string.</param>
-        public abstract void DrawTextWithAngle(
-            string text,
-            PointD location,
-            Font font,
-            Color foreColor,
-            Color backColor,
-            double angle);
+        /// <param name="text">String to draw.</param>
+        /// <param name="origin"><see cref="PointD"/> structure that specifies the upper-left
+        /// corner of the text position on the canvas.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public void DrawText(string text, PointD origin)
+        {
+            DrawText(text, Control.DefaultFont, Brush.Default, origin);
+        }
 
         /// <summary>
         /// Draws text inside the bounds with the specified font, background and foreground colors.
