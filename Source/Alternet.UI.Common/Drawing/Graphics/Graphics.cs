@@ -139,6 +139,11 @@ namespace Alternet.Drawing
         public abstract InterpolationMode InterpolationMode { get; set; }
 
         /// <summary>
+        /// Gets the type of graphics backend used by the implementation.
+        /// </summary>
+        public abstract GraphicsBackendType BackendType { get; }
+
+        /// <summary>
         /// Gets native drawing context.
         /// </summary>
         public abstract object NativeObject { get; }
@@ -187,9 +192,23 @@ namespace Alternet.Drawing
         {
             if (GraphicsFactory.MeasureCanvasOverride is null)
             {
-                if (storage?.ScaleFactor != prm.ScaleFactor)
+                if(storage is null)
                 {
                     storage = GraphicsFactory.GetOrCreateMemoryCanvas(prm);
+                }
+                else
+                {
+                    var changed = storage.ScaleFactor != prm.ScaleFactor;
+
+                    if (!changed)
+                    {
+                        changed = storage.BackendType != prm.GraphicsBackendType;
+                    }
+
+                    if (changed)
+                    {
+                        storage = GraphicsFactory.GetOrCreateMemoryCanvas(prm);
+                    }
                 }
 
                 return true;
@@ -1179,7 +1198,8 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
-        /// Ensures that the transform stack depth remains balanced before and after the specified action is executed.
+        /// Ensures that the transform stack depth remains balanced before
+        /// and after the specified action is executed.
         /// </summary>
         /// <param name="action">The action to execute. This action is expected to maintain
         /// the balance of the transform stack.</param>
@@ -1265,7 +1285,8 @@ namespace Alternet.Drawing
             /// Represents a scaling factor for a coordinate system.
             /// </summary>
             /// <remarks>This field can be used to adjust the scale of a coordinate system or
-            /// transform. Ensure that the value is appropriately set to avoid unintended transformations.</remarks>
+            /// transform. Ensure that the value is appropriately set to avoid
+            /// unintended transformations.</remarks>
             public Coord ScaleFactor
             {
                 readonly get => GraphicsFactory.ScaleFactorOrDefault(scaleFactor);
@@ -1274,6 +1295,20 @@ namespace Alternet.Drawing
                 {
                     scaleFactor = value;
                     hashCode = null;
+                }
+            }
+
+            /// <summary>
+            /// Gets the graphics backend type used for rendering.
+            /// </summary>
+            public readonly GraphicsBackendType GraphicsBackendType
+            {
+                get
+                {
+                    if (ControlRenderingFlags.HasFlag(ControlRenderingFlags.UseSkiaSharp))
+                        return GraphicsBackendType.SkiaSharp;
+                    else
+                        return GraphicsBackendType.WxWidgets;
                 }
             }
 
