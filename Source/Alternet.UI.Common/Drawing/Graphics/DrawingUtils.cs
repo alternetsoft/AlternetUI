@@ -466,6 +466,75 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Draws a rounded rectangle on the specified graphics surface
+        /// using the given dimensions and corner radii.
+        /// </summary>
+        /// <remarks>The method calculates the corner radius as half the smaller of
+        /// <paramref name="cornerWidth"/> and <paramref name="cornerHeight"/>.
+        /// The rectangle is defined by the coordinates
+        /// specified by <paramref name="left"/>, <paramref name="top"/>, <paramref name="right"/>,
+        /// and <paramref name="bottom"/>.</remarks>
+        /// <param name="dc">The <see cref="Graphics"/> object on which the rounded rectangle
+        /// will be drawn. Cannot be <see langword="null"/>.</param>
+        /// <param name="pen">The <see cref="Pen"/> used to outline the rounded rectangle.
+        /// Cannot be <see langword="null"/>.</param>
+        /// <param name="left">The x-coordinate of the left edge of the rectangle.</param>
+        /// <param name="top">The y-coordinate of the top edge of the rectangle.</param>
+        /// <param name="right">The x-coordinate of the right edge of the rectangle.</param>
+        /// <param name="bottom">The y-coordinate of the bottom edge of the rectangle.</param>
+        /// <param name="cornerWidth">The width of the ellipse used to define the horizontal
+        /// curvature of the corners. Must be non-negative.</param>
+        /// <param name="cornerHeight">The height of the ellipse used to define
+        /// the vertical curvature of the corners. Must be non-negative.</param>
+        public static void DrawRoundRectangleLTRB(
+            Graphics dc,
+            Pen pen,
+            Coord left,
+            Coord top,
+            Coord right,
+            Coord bottom,
+            Coord cornerWidth,
+            Coord cornerHeight)
+        {
+            var radius = Math.Min(cornerWidth, cornerHeight) / 2;
+            var r = RectD.FromLTRB(left, top, right, bottom);
+            dc.DrawRoundedRectangle(pen, r, radius);
+        }
+
+        /// <summary>
+        /// Fills a rounded rectangle defined by its left, top, right, and bottom coordinates.
+        /// </summary>
+        /// <remarks>The method calculates the corner radius as half the smaller of
+        /// <paramref name="cornerWidth"/> and <paramref name="cornerHeight"/>.
+        /// The resulting rounded rectangle is filled using
+        /// the specified brush.</remarks>
+        /// <param name="dc">The <see cref="Graphics"/> object used to draw
+        /// the filled rounded rectangle.</param>
+        /// <param name="brush">The <see cref="Brush"/> used to fill the rounded rectangle.</param>
+        /// <param name="left">The x-coordinate of the left edge of the rectangle.</param>
+        /// <param name="top">The y-coordinate of the top edge of the rectangle.</param>
+        /// <param name="right">The x-coordinate of the right edge of the rectangle.</param>
+        /// <param name="bottom">The y-coordinate of the bottom edge of the rectangle.</param>
+        /// <param name="cornerWidth">The width of the rectangle's corner rounding.
+        /// Must be non-negative.</param>
+        /// <param name="cornerHeight">The height of the rectangle's corner rounding.
+        /// Must be non-negative.</param>
+        public static void FillRoundRectangleLTRB(
+            Graphics dc,
+            Brush brush,
+            Coord left,
+            Coord top,
+            Coord right,
+            Coord bottom,
+            Coord cornerWidth,
+            Coord cornerHeight)
+        {
+            var radius = Math.Min(cornerWidth, cornerHeight) / 2;
+            var r = RectD.FromLTRB(left, top, right, bottom);
+            dc.FillRoundedRectangle(brush, r, radius);
+        }
+
+        /// <summary>
         /// Draws border in the specified rectangle of the drawing context.
         /// </summary>
         /// <param name="control">Control in which drawing is performed.</param>
