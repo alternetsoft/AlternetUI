@@ -23,6 +23,65 @@ namespace Alternet.Drawing
 #endif
 
         /// <summary>
+        /// Returns the size of a single character when drawn with the specified font.
+        /// </summary>
+        /// <param name="ch">The character to measure.</param>
+        /// <param name="font">The font used for measurement.</param>
+        /// <returns>
+        /// A <see cref="SizeD"/> structure representing the width and height of the character.
+        /// </returns>
+        public SizeD CharSize(char ch, Font font)
+        {
+            return GetTextExtent(ch.ToString(), font);
+        }
+
+        /// <summary>
+        /// Returns the size of a pair of identical characters when drawn with the specified font.
+        /// </summary>
+        /// <param name="ch">The character to measure as a pair.</param>
+        /// <param name="font">The font used for measurement.</param>
+        /// <returns>
+        /// A <see cref="SizeD"/> structure representing the width and height of the character pair.
+        /// </returns>
+        public SizeD CharPairSize(char ch, Font font)
+        {
+            return GetTextExtent(new(ch, 2), font);
+        }
+
+        /// <summary>
+        /// Calculates the size of a single character and the spacing between two consecutive characters.
+        /// </summary>
+        /// <param name="ch">The character to measure.</param>
+        /// <param name="font">The font used for measurement.</param>
+        /// <param name="charSize">When this method returns, contains the size of the character.</param>
+        /// <param name="spacing">When this method returns, contains the spacing between
+        /// two consecutive characters.</param>
+        public void InterCharSpacing(char ch, Font font, out SizeD charSize, out Coord spacing)
+        {
+            charSize = CharSize(ch, font);
+            spacing = CharPairSize(ch, font).Width - (2 * charSize.Width);
+        }
+
+        /// <summary>
+        /// Returns the size of a sequence of identical characters when drawn with the specified font.
+        /// </summary>
+        /// <param name="ch">The character to measure.</param>
+        /// <param name="count">The number of times the character is repeated.</param>
+        /// <param name="font">The font used for measurement.</param>
+        /// <returns>
+        /// A <see cref="SizeD"/> structure representing the width and height of the repeated characters.
+        /// </returns>
+        public SizeD CharSize(char ch, int count, Font font)
+        {
+            if (count <= 0)
+                return SizeD.Empty;
+            if (count == 1)
+                return CharSize(ch, font);
+
+            return GetTextExtent(new(ch, count), font);
+        }
+
+        /// <summary>
         /// Gets the dimensions of the string using the specified font.
         /// </summary>
         /// <param name="text">The text string to measure.</param>
