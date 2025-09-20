@@ -246,6 +246,20 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Performs additional operations after the vertical scroll bar has been painted.
+        /// </summary>
+        /// <remarks>This method is intended to be overridden in derived classes
+        /// to customize behavior after the vertical scroll bar painting is complete.
+        /// The default implementation does nothing.</remarks>
+        /// <param name="prm">A reference to the parameters used during the painting operation.
+        /// This parameter provides context about the
+        /// painting process, such as the graphics surface and clipping region.</param>
+        public virtual void AfterVertScrollBarPaint(
+            ref Alternet.Drawing.BaseDrawable.PaintDelegateParams prm)
+        {
+        }
+
+        /// <summary>
         /// Updates the vertical and horizontal scrollbars.
         /// </summary>
         public virtual void UpdateScrollBars(bool refresh)
