@@ -122,7 +122,16 @@ namespace Alternet.UI
                 if (control is not null)
                 {
                     if(interior is not null)
+                    {
                         control.RemoveNotification(interior.Notification);
+
+                        var scrollBar = interior.VertScrollBar;
+
+                        if (scrollBar is not null)
+                        {
+                            scrollBar.AfterPaint = null;
+                        }
+                    }
 
                     var handler = (control as Control)?.Handler as MauiControlHandler;
 
@@ -138,7 +147,16 @@ namespace Alternet.UI
                 if (control is not null)
                 {
                     if (interior is not null && !control.HasOwnInterior)
+                    {
                         control.AddNotification(interior.Notification);
+
+                        var scrollBar = interior.VertScrollBar;
+
+                        if (scrollBar is not null && control is ScrollableUserControl scrollable)
+                        {
+                            scrollBar.AfterPaint = scrollable.AfterVertScrollBarPaint;
+                        }
+                    }
 
                     var handler = (control as Control)?.Handler as MauiControlHandler;
 
