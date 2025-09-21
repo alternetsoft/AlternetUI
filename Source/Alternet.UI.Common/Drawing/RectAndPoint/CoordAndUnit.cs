@@ -51,13 +51,13 @@ namespace Alternet.Drawing
         /// of the base value.</returns>
         /// <exception cref="NotSupportedException">Thrown if the current
         /// unit is not supported.</exception>
-        public int ToPixels(double scaleFactor, int baseValue)
+        public int ToPixels(Coord scaleFactor, int baseValue)
         {
             return Unit switch
             {
                 CoordUnit.Pixel => Value,
                 CoordUnit.Dip => GraphicsFactory.PixelFromDip(Value, scaleFactor),
-                CoordUnit.Percent => (int)(((double)baseValue / 100d) * Value),
+                CoordUnit.Percent => (int)(((Coord)baseValue / 100) * Value),
                 _ => throw new NotSupportedException($"Unsupported unit: {Unit}"),
             };
         }

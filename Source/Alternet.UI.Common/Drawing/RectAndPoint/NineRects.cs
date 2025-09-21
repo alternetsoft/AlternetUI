@@ -44,7 +44,7 @@ namespace Alternet.Drawing
         /// within the container.</param>
         /// <param name="scaleFactor">The scale factor to convert from device-independent
         /// pixels (DIPs) to pixels.</param>
-        public NineRects(RectD container, RectD patch, double scaleFactor)
+        public NineRects(RectD container, RectD patch, Coord scaleFactor)
         {
             this.container = container.PixelFromDip(scaleFactor);
             this.patch = patch.PixelFromDip(scaleFactor);

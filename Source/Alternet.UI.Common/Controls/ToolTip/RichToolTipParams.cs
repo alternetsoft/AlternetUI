@@ -42,7 +42,7 @@ namespace Alternet.UI
         /// <summary>
         /// Represents the scale factor to be applied in calculations or transformations.
         /// </summary>
-        public virtual double? ScaleFactor { get; set; }
+        public virtual Coord? ScaleFactor { get; set; }
 
         /// <summary>
         /// Gets or sets the border settings for the element.

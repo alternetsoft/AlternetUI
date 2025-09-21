@@ -1617,11 +1617,11 @@ namespace Alternet.UI
         /// <returns>The maximum width, in device-independent units,
         /// of the labels for all child speed buttons. Returns 0 if
         /// there are no child speed buttons.</returns>
-        public virtual double GetMaxToolLabelTextWidth(Font? font = null)
+        public virtual Coord GetMaxToolLabelTextWidth(Font? font = null)
         {
             font ??= RealFont;
 
-            double maxWidth = 0;
+            Coord maxWidth = 0;
             foreach (var speedButton in ToolsAsButton)
             {
                 var labelWidth = speedButton.Label.GetFormattedTextSize(font).Width;
@@ -1657,7 +1657,7 @@ namespace Alternet.UI
         /// that is a <see cref="SpeedButton"/>.</remarks>
         /// <param name="width">The minimum width, in device-independent units,
         /// to set for the right side of each speed button.</param>
-        public virtual void SetToolRightSideElementMinWidth(double width)
+        public virtual void SetToolRightSideElementMinWidth(Coord width)
         {
             foreach (var speedButton in ToolsAsButton)
             {
@@ -1677,9 +1677,9 @@ namespace Alternet.UI
         /// <returns>The maximum right-side width of the labels for
         /// all <see cref="SpeedButton"/> elements in the collection.
         /// Returns 0 if no such elements are found.</returns>
-        public virtual double GetMaxToolRightSideElementWidth()
+        public virtual Coord GetMaxToolRightSideElementWidth()
         {
-            double maxWidth = 0;
+            Coord maxWidth = 0;
             foreach (var speedButton in ToolsAsButton)
             {
                 var rightSideWidth = speedButton.Label.GetRightSideWidth(true);

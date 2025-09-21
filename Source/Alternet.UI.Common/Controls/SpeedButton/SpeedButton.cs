@@ -183,7 +183,7 @@ namespace Alternet.UI
         private CheckedSpreadMode stickySpreadMode;
         private RightSideElementKind rightSideElementKind;
         private bool isToolTipEnabled = true;
-        private double minRightSideWidth;
+        private Coord minRightSideWidth;
 
         static SpeedButton()
         {

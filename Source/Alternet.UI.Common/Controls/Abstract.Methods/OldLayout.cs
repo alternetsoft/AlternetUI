@@ -21,8 +21,8 @@ namespace Alternet.UI
 
             var stackPanelPadding = container.Padding;
 
-            double width = 0;
-            double maxHeight = 0;
+            Coord width = 0;
+            Coord maxHeight = 0;
             foreach (var control in container.AllChildrenInLayout)
             {
                 if (control.Dock != DockStyle.None)
@@ -49,8 +49,8 @@ namespace Alternet.UI
 
             var padding = container.Padding;
 
-            double maxWidth = 0;
-            double height = 0;
+            Coord maxWidth = 0;
+            Coord height = 0;
             foreach (var control in container.AllChildrenInLayout)
             {
                 if (control.Dock != DockStyle.None)
@@ -121,7 +121,7 @@ namespace Alternet.UI
 
             void AlignCenterControls()
             {
-                double totalWidth = 0;
+                Coord totalWidth = 0;
                 foreach (var item in centerControls)
                     totalWidth += item.Size.Width;
                 var offset = (childrenLayoutBounds.Width - totalWidth) / 2;

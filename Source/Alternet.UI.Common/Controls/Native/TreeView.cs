@@ -996,7 +996,7 @@ namespace Alternet.UI
             rootItem.Add(item);
         }
 
-        double ITreeViewItemContainer.GetLevelMargin()
+        Coord ITreeViewItemContainer.GetLevelMargin()
         {
             return StdTreeView.DefaultLevelMargin;
         }

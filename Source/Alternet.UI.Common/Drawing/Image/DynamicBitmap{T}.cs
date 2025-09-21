@@ -20,7 +20,7 @@ namespace Alternet.Drawing
         where T : class, IDisposableObject
     {
         private SizeD size;
-        private double scaleFactor = 1;
+        private Coord scaleFactor = 1;
         private bool isTransparent;
         private T? bitmap;
 

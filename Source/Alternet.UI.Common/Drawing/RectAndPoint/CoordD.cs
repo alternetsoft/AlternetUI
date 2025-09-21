@@ -9,7 +9,6 @@ global using FontScalar = double;
 #else
 global using Coord = single;
 global using CoordUtils = Alternet.UI.SingleUtils;
-global using FontMeasure = single;
 global using FontScalar = single;
 #endif
 
@@ -30,22 +29,22 @@ namespace Alternet.Drawing
         /// <summary>
         /// Gets an empty coordinate which is equal to 0.
         /// </summary>
-        public const Coord Empty = 0D;
+        public const Coord Empty = 0;
 
         /// <summary>
         /// Gets a coordinate which is equal to -1.
         /// </summary>
-        public const Coord MinusOne = -1D;
+        public const Coord MinusOne = -1;
 
         /// <summary>
         /// Gets a coordinate which is equal to 1.
         /// </summary>
-        public const Coord One = 1D;
+        public const Coord One = 1;
 
         /// <summary>
         /// Gets a coordinate which is equal to 1.
         /// </summary>
-        public const Coord Two = 2D;
+        public const Coord Two = 2;
 #pragma warning enable
     }
 }

@@ -567,7 +567,7 @@ namespace Alternet.UI
         /// The height is determined based on the font's metrics and the associated
         /// measurement canvas.</remarks>
         /// <returns>The height of the font as a <see cref="double"/> value.</returns>
-        public virtual double GetContainerFontHeight()
+        public virtual FontScalar GetContainerFontHeight()
         {
             var c = GetContainer() ?? this;
             var h = c.RealFont.GetHeight(MeasureCanvas);

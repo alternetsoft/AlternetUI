@@ -1716,7 +1716,7 @@ namespace Alternet.UI
             if (!HasChildren)
                 return null;
             AbstractControl? result = null;
-            double maxRight = double.MinValue;
+            Coord maxRight = Coord.MinValue;
             foreach (var child in Children)
             {
                 if (!child.Visible)
