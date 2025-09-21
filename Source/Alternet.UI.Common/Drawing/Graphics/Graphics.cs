@@ -894,7 +894,7 @@ namespace Alternet.Drawing
             }
 
             /// <inheritdoc/>
-            public override bool Equals(object obj)
+            public readonly override bool Equals(object obj)
             {
                 return obj is CanvasCreateParams other && Equals(other);
             }
