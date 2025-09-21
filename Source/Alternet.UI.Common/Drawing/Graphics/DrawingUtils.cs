@@ -466,6 +466,145 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Draws a dotted line on the specified graphics context, alternating between two colors.
+        /// </summary>
+        /// <remarks>This method supports drawing horizontal or vertical dotted lines only.
+        /// The line alternates between <paramref name="color1"/> and
+        /// <paramref name="color2"/> (or transparency if <paramref name="color2"/> is
+        /// <see cref="Color.Empty"/>). The size of the dots is determined by the
+        /// <paramref name="size"/> parameter.</remarks>
+        /// <param name="dc">The <see cref="Graphics"/> object used to draw the line.</param>
+        /// <param name="x1">The starting x-coordinate of the line.</param>
+        /// <param name="y1">The starting y-coordinate of the line.</param>
+        /// <param name="x2">The ending x-coordinate of the line.</param>
+        /// <param name="y2">The ending y-coordinate of the line.</param>
+        /// <param name="color1">The primary color used for the dots in the line.</param>
+        /// <param name="color2">The secondary color used for the dots in the line.
+        /// If set to <see cref="Color.Empty"/>, the line will
+        /// alternate between the primary color and transparency.</param>
+        /// <param name="size">The size of each dot in pixels. Defaults to 1.
+        /// Larger values result in thicker dots.</param>
+        public static void DrawDotLine(
+            Graphics dc,
+            Coord x1,
+            Coord y1,
+            Coord x2,
+            Coord y2,
+            Color color1,
+            Color color2,
+            int size = 1)
+        {
+            var pxSize = size;
+
+            bool isTransparent = color2 == Color.Empty;
+            if (x1 == x2)
+            {
+                if (pxSize > 1)
+                {
+                    int oldStart = 0;
+                    Color oldColor = Color.Empty;
+                    Color color;
+
+                    for (int i = 0; i < y2 - y1; i++)
+                    {
+                        if ((i + y1) % (size * 2) < size)
+                            color = color1;
+                        else
+                            color = color2;
+
+                        if (i != 0 && color != oldColor)
+                        {
+                            if (oldColor != Color.Empty)
+                            {
+                                dc.DrawVertLine(
+                                    oldColor.AsBrush,
+                                    (x1, oldStart + y1),
+                                    i - oldStart,
+                                    1);
+                            }
+
+                            oldStart = i;
+                            oldColor = color;
+                        }
+                    }
+
+                    if (oldColor != Color.Empty && oldStart + y1 < y2)
+                    {
+                        dc.DrawVertLine(
+                            oldColor.AsBrush,
+                            (x1, oldStart + y1),
+                            y2 - oldStart - y1,
+                            1);
+                    }
+                }
+                else
+                {
+                    for (int i = 0; i < y2 - y1; i++)
+                    {
+                        if ((i + y1) % (size * 2) < size)
+                            dc.DrawHorzLine(color1.AsBrush, (x1, i + y1), 1, 1);
+                        else
+                            if (!isTransparent)
+                            dc.DrawHorzLine(color2.AsBrush, (x1, i + y1), 1, 1);
+                    }
+                }
+            }
+            else
+            if (y1 == y2)
+            {
+                if (pxSize > 1)
+                {
+                    int oldStart = 0;
+                    Color oldColor = Color.Empty;
+                    Color color;
+
+                    for (int i = 0; i < x2 - x1; i++)
+                    {
+                        if ((i + y1) % (size * 2) < size)
+                            color = color1;
+                        else
+                            color = color2;
+
+                        if (i != 0 && color != oldColor)
+                        {
+                            if (oldColor != Color.Empty)
+                            {
+                                dc.DrawHorzLine(
+                                    oldColor.AsBrush,
+                                    (oldStart + x1, y1),
+                                    i - oldStart,
+                                    1);
+                            }
+
+                            oldStart = i;
+                            oldColor = color;
+                        }
+                    }
+
+                    if (oldColor != Color.Empty && oldStart + y1 < y2)
+                    {
+                        dc.DrawHorzLine(
+                            oldColor.AsBrush,
+                            (oldStart + x1, y1),
+                            x2 - x1 - oldStart,
+                            1);
+                    }
+                }
+                else
+                {
+                    for (int i = 0; i < x2 - x1; i++)
+                    {
+                        if ((i + y1) % (size * 2) < size)
+                            dc.DrawHorzLine(color1.AsBrush, (i + x1, y1), 1, 1);
+                        else
+                            if (!isTransparent)
+                            dc.DrawHorzLine(color2.AsBrush, (i + x1, y1), 1, 1);
+                    }
+                }
+            }
+        }
+
+        /// <summary>
         /// Draws a rounded rectangle on the specified graphics surface
         /// using the given dimensions and corner radii.
         /// </summary>
