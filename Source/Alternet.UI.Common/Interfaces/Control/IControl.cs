@@ -354,6 +354,11 @@ namespace Alternet.UI
         Coord ScaleFactor { get; }
 
         /// <summary>
+        /// Gets or sets the rendering flags that determine how the control is rendered.
+        /// </summary>
+        ControlRenderingFlags RenderingFlags { get; set; }
+
+        /// <summary>
         /// Gets <see cref="Graphics"/> which can be used to measure text size
         /// and for other measure purposes.
         /// </summary>
