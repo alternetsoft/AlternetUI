@@ -11,16 +11,8 @@ namespace Alternet.UI
     /// <summary>
     /// Contains <see cref="Math"/> related static methods.
     /// </summary>
-    public static class MathUtils
+    public static partial class MathUtils
     {
-        /// <summary>
-        /// Represents the smallest positive <see cref="double"/> value such
-        /// that 1.0 + <see cref="DoubleEpsilon"/> is not equal to 1.0.
-        /// </summary>
-        /// <remarks>This constant is useful for comparing floating-point numbers with a tolerance for
-        /// precision errors.</remarks>
-        public const double DoubleEpsilon = 2.2204460492503131e-016;
-
         /// <summary>
         /// Represents the smallest positive value that can be added to 1.0f
         /// to produce a distinct value of type <see cref="float"/>.
@@ -135,7 +127,7 @@ namespace Alternet.UI
         /// <returns><see cref="double"/> value with distance between point (x1, y1) and
         /// point (x2, y2).</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static double GetDistance(double x1, double y1, double x2, double y2)
+        public static double GetDistance(Coord x1, Coord y1, Coord x2, Coord y2)
         {
             return Math.Sqrt(Math.Pow(x2 - x1, 2) + Math.Pow(y2 - y1, 2));
         }
@@ -265,6 +257,7 @@ namespace Alternet.UI
         /// <param name="b">The second of two objects to compare.</param>
         /// <returns>Parameter <paramref name="a"/> or <paramref name="b"/>,
         /// whichever is smaller.</returns>
+        /// <remarks>Any of the objects can be <c>null</c>.</remarks>
         /// <remarks>Any of the objects can be <c>null</c>.</remarks>
         public static object? Min(object? a, object? b)
         {
@@ -616,126 +609,6 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Determines whether two <see cref="double"/> values are equal using
-        /// a layered comparison strategy.
-        /// This method combines magnitude-scaled epsilon comparison,
-        /// bitwise proximity (with default step threshold),
-        /// and relative/absolute tolerance checks.
-        /// It is suitable for robust floating-point validation across domains such
-        /// as diagnostics, serialization, and numerical correctness.
-        /// </summary>
-        /// <param name="a">The first double value to compare.</param>
-        /// <param name="b">The second double value to compare.</param>
-        /// <returns>
-        /// <c>true</c> if any of the following conditions are met:
-        /// <list type="bullet">
-        /// <item><description><see cref="AreCloseScaled"/> returns true</description></item>
-        /// <item><description><see cref="AreCloseBitwise"/> returns true using
-        /// its default threshold</description></item>
-        /// <item><description><see cref="AreCloseWithTolerance"/> returns true</description></item>
-        /// </list>
-        /// Otherwise, <c>false</c>.
-        /// </returns>
-        public static bool AreClose(double a, double b)
-        {
-            return AreCloseScaled(a, b)
-                || AreCloseBitwise(a, b)
-                || AreCloseWithTolerance(a, b);
-        }
-
-        /// <summary>
-        /// Returns true if the two doubles are close enough to be considered equal.
-        /// Handles infinities and near-zero values.
-        /// </summary>
-        /// <seealso cref="AreClose"/>
-        public static bool AreCloseScaled(double value1, double value2)
-        {
-            if (value1 == value2)
-            {
-                return true;
-            }
-
-            double delta = value1 - value2;
-            double eps = (Math.Abs(value1) + Math.Abs(value2)) * DoubleEpsilon;
-
-            if (eps == 0.0)
-            {
-                eps = DoubleEpsilon;
-            }
-
-            return Math.Abs(delta) < eps;
-        }
-
-        /// <summary>
-        /// Determines whether two <see cref="double"/> values are equal within
-        /// a specified number of representable steps.
-        /// This comparison is based on the binary distance between the two values
-        /// in IEEE 754 format,
-        /// making it suitable for bitwise proximity checks, serialization validation,
-        /// and low-level diagnostics.
-        /// </summary>
-        /// <param name="a">The first double value to compare.</param>
-        /// <param name="b">The second double value to compare.</param>
-        /// <param name="maxSteps">
-        /// The maximum number of representable floating-point steps (units in the last place)
-        /// allowed between <paramref name="a"/> and <paramref name="b"/>.
-        /// A value of 4 allows for minor rounding differences while still
-        /// ensuring tight binary proximity.
-        /// Increase this value to tolerate more drift; decrease
-        /// it for stricter equivalence.
-        /// </param>
-        /// <returns>
-        /// <c>true</c> if the binary representations of <paramref name="a"/>
-        /// and <paramref name="b"/> differ by no more than <paramref name="maxSteps"/> steps;
-        /// otherwise, <c>false</c>.
-        /// </returns>
-        /// <seealso cref="AreCloseBitwise"/>
-        /// <seealso cref="AreClose"/>
-        public static bool AreCloseBitwiseEx(double a, double b, int maxSteps = 4)
-        {
-            long aBits = BitConverter.DoubleToInt64Bits(a);
-            long bBits = BitConverter.DoubleToInt64Bits(b);
-
-            // Handle sign differences explicitly
-            if ((aBits < 0) != (bBits < 0))
-                return a == b;
-
-            long distance = Math.Abs(aBits - bBits);
-            return distance <= maxSteps;
-        }
-
-        /// <summary>
-        /// Determines whether two double-precision floating-point numbers are
-        /// equal within a small bitwise difference.
-        /// </summary>
-        /// <remarks>This method compares the bitwise representations
-        /// of the two numbers and allows for a
-        /// maximum difference of 4 in their bitwise values. It accounts for sign
-        /// differences explicitly and falls back
-        /// to a direct comparison when the signs differ.</remarks>
-        /// <param name="a">The first double-precision floating-point number to compare.</param>
-        /// <param name="b">The second double-precision floating-point number to compare.</param>
-        /// <returns><see langword="true"/> if the bitwise difference between
-        /// <paramref name="a"/> and <paramref name="b"/> is
-        /// within a small threshold; otherwise, <see langword="false"/>.</returns>
-        /// <seealso cref="AreCloseBitwiseEx"/>
-        /// <seealso cref="AreClose(double, double)"/>
-        public static bool AreCloseBitwise(double a, double b)
-        {
-            const int maxSteps = 4;
-
-            long aBits = BitConverter.DoubleToInt64Bits(a);
-            long bBits = BitConverter.DoubleToInt64Bits(b);
-
-            // Handle sign differences explicitly
-            if ((aBits < 0) != (bBits < 0))
-                return a == b;
-
-            long distance = Math.Abs(aBits - bBits);
-            return distance <= maxSteps;
-        }
-
-        /// <summary>
         /// Determines whether two <see cref="RectD"/> instances are approximately equal.
         /// </summary>
         /// <remarks>If both rectangles are empty, they are considered approximately equal.
@@ -781,103 +654,6 @@ namespace Alternet.UI
         {
             return AreClose(size1.Width, size2.Width) &&
                    AreClose(size1.Height, size2.Height);
-        }
-
-        /// <summary>
-        /// Determines whether two double-precision floating-point numbers are approximately equal
-        /// within a specified relative and absolute tolerance.
-        /// </summary>
-        /// <remarks>The comparison uses a relative tolerance of 1e-12 and an absolute tolerance of 1e-15.
-        /// This ensures that the method accounts for both small differences in large numbers
-        /// and significant differences in numbers close to zero.</remarks>
-        /// <param name="a">The first double-precision floating-point number to compare.</param>
-        /// <param name="b">The second double-precision floating-point number to compare.</param>
-        /// <returns><see langword="true"/> if the two numbers are approximately equal
-        /// within the defined tolerances; otherwise, <see langword="false"/>.</returns>
-        /// <seealso cref="AreClose"/>
-        public static bool AreCloseWithTolerance(double a, double b)
-        {
-            if (a == b)
-                return true;
-
-            const double relTol = 1e-12;
-            const double absTol = 1e-15;
-
-            double diff = Math.Abs(a - b);
-            double scale = Math.Max(Math.Abs(a), Math.Abs(b));
-            double eps = Math.Max(relTol * scale, absTol);
-
-            return diff <= eps;
-        }
-
-        /// <summary>
-        /// Determines whether two double-precision floating-point numbers are approximately
-        /// equal within a specified relative and absolute tolerance.
-        /// </summary>
-        /// <remarks>This method is useful for comparing floating-point numbers
-        /// where precision errors may
-        /// occur due to the limitations of binary representation.
-        /// The comparison accounts for both the scale of the
-        /// numbers and a fixed minimum tolerance.</remarks>
-        /// <param name="a">The first double-precision floating-point number to compare.</param>
-        /// <param name="b">The second double-precision floating-point number to compare.</param>
-        /// <param name="relTol">The relative tolerance, which defines
-        /// the allowable difference relative to the larger of the two values.
-        /// Must be a non-negative value. Defaults to <c>1e-12</c>.</param>
-        /// <param name="absTol">The absolute tolerance, which defines the minimum
-        /// allowable difference regardless of scale. Must be a non-negative value.
-        /// Defaults to <c>1e-15</c>.</param>
-        /// <returns><see langword="true"/> if the difference
-        /// between <paramref name="a"/> and <paramref name="b"/> is less than
-        /// or equal to the greater of the relative or absolute tolerance;
-        /// otherwise, <see langword="false"/>.</returns>
-        public static bool AreCloseWithToleranceEx(
-            double a,
-            double b,
-            double relTol = 1e-12,
-            double absTol = 1e-15)
-        {
-            /*
-            When to Specify relTol (Relative Tolerance)
-            ===========================================
-
-            Use a larger relTol when:
-            - Comparing large magnitude values (e.g., 1e6, 1e9)
-            - Working with low-precision inputs (e.g., sensor data, financial rounding)
-            - You expect acceptable drift due to accumulation or conversion
-            Example:
-            AreClose(1e9, 1e9 + 0.01, relTol: 1e-8); // Accepts small relative error
-
-            Use a smaller relTol when:
-            - Comparing high-precision results (e.g., scientific computation)
-            - Validating numerical algorithms or unit tests
-            - Ensuring bitwise reproducibility
-
-            ===========================================
-            When to Specify absTol (Absolute Tolerance)
-            ===========================================
-
-            Use a larger absTol when:
-            - Comparing values near zero
-            - Avoiding false negatives due to denormal or rounding
-            - Working with physical measurements where zero is noisy
-
-            Example:
-            AreClose(1e-16, 0.0, absTol: 1e-14); // Accepts near-zero drift
-
-            Use a smaller absTol when:
-            - You need strict zero comparison
-            - You're validating mathematical identities or symbolic results
-            */
-
-            if (a == b)
-                return true;
-
-            double diff = Math.Abs(a - b);
-            double scale = Math.Max(Math.Abs(a), Math.Abs(b));
-            double eps = Math.Max(relTol * scale, absTol);
-
-            return diff <= eps;
         }
     }
 }
