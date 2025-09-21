@@ -1058,7 +1058,7 @@ namespace Alternet.UI
                 {
                     if (Coord.IsNaN(specifiedWidth))
                     {
-                        if (CoordUtils.IsInfinityOrNanOrMax(availableSize.Width))
+                        if (MathUtils.IsInfinityOrNanOrMax(availableSize.Width))
                             specifiedWidth = defaultAutoWidth;
                         else
                             specifiedWidth = Math.Min(defaultAutoWidth, availableSize.Width);
@@ -1111,7 +1111,7 @@ namespace Alternet.UI
 
                     if (Coord.IsNaN(specifiedHeight))
                     {
-                        if (CoordUtils.IsInfinityOrNanOrMax(availableSize.Height))
+                        if (MathUtils.IsInfinityOrNanOrMax(availableSize.Height))
                             specifiedHeight = defaultAutoWidth;
                         else
                             specifiedHeight = Math.Min(defaultAutoWidth, availableSize.Height);

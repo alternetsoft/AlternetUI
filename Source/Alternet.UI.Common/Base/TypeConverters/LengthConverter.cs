@@ -10,7 +10,7 @@ using System.Reflection;
 namespace Alternet.UI
 {
     /// <summary>
-    /// Converter class for converting instances of other types to and from coord representing length.
+    /// Converter class for converting instances of other types to and from coordinate representing length.
     /// </summary> 
     public class LengthConverter : BaseTypeConverter
     {
@@ -20,7 +20,7 @@ namespace Alternet.UI
         /// CanConvertFrom - Returns whether or not this class can convert from a given type.
         /// </summary>
         /// <returns>
-        /// bool - True if thie converter can convert from the provided type, false if not.
+        /// bool - True if this converter can convert from the provided type, false if not.
         /// </returns>
         /// <param name="typeDescriptorContext"> The ITypeDescriptorContext for this call. </param>
         /// <param name="sourceType"> The Type being queried for support. </param>
@@ -134,7 +134,7 @@ namespace Alternet.UI
                 Coord l = (Coord)value;
                 if (destinationType == typeof(string))
                 {
-                    if (CoordUtils.IsNaN(l))
+                    if (MathUtils.IsNaN(l))
                         return "Auto";
                     else
                         return Convert.ToString(l, cultureInfo);
@@ -166,7 +166,7 @@ namespace Alternet.UI
             Coord unitFactor = 1.0;
 
             //Auto is represented and Coord.NaN
-            //properties that do not want Auto and NaN to be in their ligit values,
+            //properties that do not want Auto and NaN to be in their legit values,
             //should disallow NaN in validation callbacks (same goes for negative values)
             if (goodString == "auto") return Coord.NaN;
 
@@ -204,7 +204,7 @@ namespace Alternet.UI
 
         // This array contains strings for unit types 
         // These are effectively "TypeConverter only" units.
-        // They are all expressable in terms of the Pixel unit type and a conversion factor.
+        // They are all expressed in terms of the Pixel unit type and a conversion factor.
         static private string[] PixelUnitStrings = { "px", "in", "cm", "pt" };
         static private Coord[] PixelUnitFactors =
         {
@@ -216,7 +216,7 @@ namespace Alternet.UI
 
         static internal string ToString(Coord l, CultureInfo cultureInfo)
         {
-            if (CoordUtils.IsNaN(l)) return "Auto";
+            if (MathUtils.IsNaN(l)) return "Auto";
             return Convert.ToString(l, cultureInfo);
         }
 

@@ -4,11 +4,9 @@ global using CoordI = int;
 
 #if CoordIsDouble
 global using Coord = double;
-global using CoordUtils = Alternet.UI.DoubleUtils;
 global using FontScalar = double;
 #else
 global using Coord = single;
-global using CoordUtils = Alternet.UI.SingleUtils;
 global using FontScalar = single;
 #endif
 

@@ -44,11 +44,11 @@ namespace Alternet.UI
         //    if (_sharedState == null)
         //    {
         //        //  start with getting SharedSizeGroup value.
-        //        //  this property is NOT inhereted which should result in better overall perf.
+        //        //  this property is NOT inherited which should result in better overall perf.
         //        string sharedSizeGroupId = SharedSizeGroup;
         //        if (sharedSizeGroupId != null)
         //        {
-        //            // yezo todo
+        //            // yet to do
         //            //var privateSharedSizeScope = GetPrivateSharedSizeScope();
         //            //if (privateSharedSizeScope != null)
         //            //{
@@ -60,7 +60,7 @@ namespace Alternet.UI
         // }
 
         /// <summary>
-        /// Callback to notify about exitting model tree.
+        /// Callback to notify about exiting model tree.
         /// </summary>
         internal void OnExitParentTree()
         {
@@ -104,7 +104,7 @@ namespace Alternet.UI
         }
 
         /// <remarks>
-        /// This method needs to be internal to be accessable from derived classes.
+        /// This method needs to be internal to be accessible from derived classes.
         /// </remarks>
         internal void OnUserSizePropertyChanged(GridLength oldValue, GridLength newValue)
         {
@@ -126,7 +126,7 @@ namespace Alternet.UI
         }
 
         /// <remarks>
-        /// This method needs to be internal to be accessable from derived classes.
+        /// This method needs to be internal to be accessible from derived classes.
         /// </remarks>
         internal static bool IsUserSizePropertyValueValid(object value)
         {
@@ -134,7 +134,7 @@ namespace Alternet.UI
         }
 
         /// <remarks>
-        /// This method needs to be internal to be accessable from derived classes.
+        /// This method needs to be internal to be accessible from derived classes.
         /// </remarks>
         internal void OnUserMinSizePropertyChanged(Coord newValue)
         {
@@ -146,16 +146,16 @@ namespace Alternet.UI
         }
 
         /// <remarks>
-        /// This method needs to be internal to be accessable from derived classes.
+        /// This method needs to be internal to be accessible from derived classes.
         /// </remarks>
         internal static bool IsUserMinSizePropertyValueValid(object value)
         {
             Coord v = (Coord)value;
-            return (!CoordUtils.IsNaN(v) && v >= 0.0d && !Coord.IsPositiveInfinity(v));
+            return (!MathUtils.IsNaN(v) && v >= 0.0d && !Coord.IsPositiveInfinity(v));
         }
 
         /// <remarks>
-        /// This method needs to be internal to be accessable from derived classes.
+        /// This method needs to be internal to be accessible from derived classes.
         /// </remarks>
         internal void OnUserMaxSizePropertyChanged(Coord newValue)
         {
@@ -167,25 +167,26 @@ namespace Alternet.UI
         }
 
         /// <remarks>
-        /// This method needs to be internal to be accessable from derived classes.
+        /// This method needs to be internal to be accessible from derived classes.
         /// </remarks>
         internal static bool IsUserMaxSizePropertyValueValid(object value)
         {
             Coord v = (Coord)value;
-            return (!CoordUtils.IsNaN(v) && v >= 0.0d);
+            return (!MathUtils.IsNaN(v) && v >= 0.0d);
         }
 
         /// <remarks>
         /// This method reflects Grid.SharedScopeProperty state by setting / clearing
         /// dynamic property PrivateSharedSizeScopeProperty. Value of PrivateSharedSizeScopeProperty
         /// is a collection of SharedSizeState objects for the scope.
-        /// Also PrivateSharedSizeScopeProperty is FrameworkPropertyMetadataOptions.Inherits property. So that all children
+        /// Also PrivateSharedSizeScopeProperty is FrameworkPropertyMetadataOptions.Inherits property.
+        /// So that all children
         /// elements belonging to a certain scope can easily access SharedSizeState collection. As well
-        /// as been norified about enter / exit a scope.
+        /// as been notified about enter / exit a scope.
         /// </remarks>
         internal static void OnIsSharedSizeScopePropertyChanged(AbstractControl control, bool newValue)
         {
-            // yezo todo
+            // yet to do
             ////  is it possible to optimize here something like this:
             ////  if ((bool)d.GetValue(Grid.IsSharedSizeScopeProperty) == (d.GetLocalValue(PrivateSharedSizeScopeProperty) != null)
             ////  { /* do nothing */ }
@@ -557,7 +558,7 @@ namespace Alternet.UI
         private Grid.LayoutTimeSizeType _sizeType;      //  layout-time user size type. it may differ from _userSizeValueCache.UnitType when calculating "to-content"
 
         private Coord _minSize;                        //  used during measure to accumulate size for "Auto" and "Star" DefinitionBase's
-        private Coord _measureSize;                    //  size, calculated to be the input contstraint size for Child.Measure
+        private Coord _measureSize;                    //  size, calculated to be the input constraint size for Child.Measure
         private Coord _sizeCache;                      //  cache used for various purposes (sorting, caching, etc) during calculations
         private Coord _offset;                         //  offset of the DefinitionBase from left / top corner (assuming LTR case)
 
@@ -757,7 +758,7 @@ namespace Alternet.UI
                     sharedMinSize = Math.Max(sharedMinSize, _registry[i]._minSize);
                 }
 
-                bool sharedMinSizeChanged = !CoordUtils.AreClose(_minSize, sharedMinSize);
+                bool sharedMinSizeChanged = !MathUtils.AreClose(_minSize, sharedMinSize);
 
                 //  compare accumulated min size with min sizes of the individual definitions
                 for (int i = 0, count = _registry.Count; i < count; ++i)
@@ -773,7 +774,7 @@ namespace Alternet.UI
                     // short-pole definitions.  This distinction allows us to react
                     // to changes in "long-pole-ness" more efficiently and correctly,
                     // by avoiding remeasures when a long-pole definition changes.
-                    bool useSharedMinimum = !CoordUtils.AreClose(definitionBase._minSize, sharedMinSize);
+                    bool useSharedMinimum = !MathUtils.AreClose(definitionBase._minSize, sharedMinSize);
 
                     // before doing that, determine whether d's Grid needs to be remeasured.
                     // It's important _not_ to remeasure if the last measure is still
@@ -803,7 +804,7 @@ namespace Alternet.UI
                         // measure is invalid - it used the old shared size,
                         // which is larger than d's (possibly changed) minSize
                         measureIsValid = (definitionBase.LayoutWasUpdated &&
-                                        CoordUtils.GreaterThanOrClose(definitionBase._minSize, this.MinSize));
+                                        MathUtils.GreaterThanOrClose(definitionBase._minSize, this.MinSize));
                     }
 
                     if (!measureIsValid)
@@ -811,7 +812,7 @@ namespace Alternet.UI
                         Grid parentGrid = (Grid)definitionBase.LogicalParent;
                         parentGrid.PerformLayout();
                     }
-                    else if (!CoordUtils.AreClose(sharedMinSize, definitionBase.SizeCache))
+                    else if (!MathUtils.AreClose(sharedMinSize, definitionBase.SizeCache))
                     {
                         //  if measure is valid then also need to check arrange.
                         //  Note: definitionBase.SizeCache is volatile but at this point

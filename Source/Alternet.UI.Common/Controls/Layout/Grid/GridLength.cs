@@ -59,7 +59,7 @@ namespace Alternet.UI
         /// </exception>
         public GridLength(Coord value = 0, GridUnitType type = GridUnitType.Auto)
         {
-            if (CoordUtils.IsNaN(value) || Coord.IsInfinity(value))
+            if (MathUtils.IsNaN(value) || Coord.IsInfinity(value))
                 throw new ArgumentException();
 
             unitValue = (type == GridUnitType.Auto) ? 1 : value;

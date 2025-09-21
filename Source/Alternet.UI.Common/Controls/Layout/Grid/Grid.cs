@@ -412,7 +412,7 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Initializes DefinitionsV memeber either to user supplied RowDefinitions collection
+        /// Initializes DefinitionsV member either to user supplied RowDefinitions collection
         /// or to a default single element collection. DefinitionsV gets trimmed to size.
         /// </summary>
         /// <remarks>
@@ -540,7 +540,7 @@ namespace Alternet.UI
         {
             for (int i = 0; i < minSizes.Length; i++)
             {
-                if (CoordUtils.GreaterThanOrClose(minSizes[i], 0))
+                if (MathUtils.GreaterThanOrClose(minSizes[i], 0))
                 {
                     if (isRows)
                     {
@@ -610,7 +610,7 @@ namespace Alternet.UI
 
                 MeasureCell(i, forceInfinityV);
 
-                hasDesiredSizeUChanged |= !CoordUtils.AreClose(oldWidth, childPreferredSize.Width);
+                hasDesiredSizeUChanged |= !MathUtils.AreClose(oldWidth, childPreferredSize.Width);
 
                 if (!ignoreDesiredSizeU)
                 {
@@ -992,10 +992,10 @@ namespace Alternet.UI
                             //  sanity check: totalRemainingSize and sizeToDistribute
                             //  must be real positive numbers
                             Debug.Assert(!Coord.IsInfinity(totalRemainingSize)
-                                        && !CoordUtils.IsNaN(totalRemainingSize)
+                                        && !MathUtils.IsNaN(totalRemainingSize)
                                         && totalRemainingSize > 0
                                         && !Coord.IsInfinity(sizeToDistribute)
-                                        && !CoordUtils.IsNaN(sizeToDistribute)
+                                        && !MathUtils.IsNaN(sizeToDistribute)
                                         && sizeToDistribute > 0);
 
                             for (int i = 0; i < count; ++i)
@@ -1506,14 +1506,14 @@ namespace Alternet.UI
             Coord newValue;
 
             // If DPI == 1, don't use DPI-aware rounding.
-            if (!CoordUtils.AreClose(dpiScale, 1.0))
+            if (!MathUtils.AreClose(dpiScale, 1.0))
             {
                 newValue = (Coord)Math.Round(value * dpiScale) / dpiScale;
                 // If rounding produces a value unacceptable to layout (NaN, Infinity or MaxValue),
                 // use the original value.
-                if (CoordUtils.IsNaN(newValue) ||
+                if (MathUtils.IsNaN(newValue) ||
                     Coord.IsInfinity(newValue) ||
-                    CoordUtils.AreClose(newValue, Coord.MaxValue))
+                    MathUtils.AreClose(newValue, Coord.MaxValue))
                 {
                     newValue = value;
                 }
@@ -1540,11 +1540,11 @@ namespace Alternet.UI
             Coord[] roundingErrors = null;
 
             // If using layout rounding, check whether rounding needs to compensate for high DPI
-            Coord dpi = 1; // yezo todo
+            Coord dpi = 1; // yet to do
 
             if (useLayoutRounding)
             {
-                //DpiScale dpiScale = GetDpi(); // yezo todo
+                //DpiScale dpiScale = GetDpi(); // yet to do
                 //dpi = columns ? dpiScale.DpiScaleX : dpiScale.DpiScaleY;
                 //roundingErrors = RoundingErrors;
             }
@@ -1560,7 +1560,7 @@ namespace Alternet.UI
 
                     if (_IsZero(starValue))
                     {
-                        //  cach normilized star value temporary into MeasureSize
+                        //  cache normalized star value temporary into MeasureSize
                         definitions[i].MeasureSize = 0;
                         definitions[i].SizeCache = 0;
                     }
@@ -1951,7 +1951,7 @@ namespace Alternet.UI
                     // which leads to meaningless results.   Check for that, and recompute from
                     // the remaining definitions.   [This leads to quadratic behavior in really
                     // pathological cases - but they'd never arise in practice.]
-                    const Coord starFactor = 1 / 256; // lose more than 8 bits of precision -> recalc
+                    const Coord starFactor = 1 / 256; // lose more than 8 bits of precision -> recalculate
                     if (remainingStarWeight < totalStarWeight * starFactor)
                     {
                         takenStarWeight = 0;
@@ -2141,7 +2141,7 @@ namespace Alternet.UI
             // unrounded sizes, to avoid breaking assumptions in the previous phases
             if (UseLayoutRounding)
             {
-                // DpiScale dpiScale = GetDpi(); // todo yezo
+                // DpiScale dpiScale = GetDpi(); // yet to do
                 // Coord dpi = columns ? dpiScale.DpiScaleX : dpiScale.DpiScaleY;
                 var dpi = 1.0f;
                 Coord[] roundingErrors = RoundingErrors;
@@ -2182,7 +2182,7 @@ namespace Alternet.UI
                 //
                 // Fortunately, our scenarios tend to have a small number of columns (~10 or fewer)
                 // each being allocated a large number of pixels (~50 or greater), and
-                // people don't even notice the kind of 1-pixel anomolies that are
+                // people don't even notice the kind of 1-pixel anomalies that are
                 // theoretically inevitable, or don't care if they do.  At least they shouldn't
                 // care - no one should be using the results Alternet UI's grid layout to make
                 // quantitative decisions; its job is to produce a reasonable display, not
