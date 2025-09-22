@@ -257,7 +257,7 @@ namespace Alternet.UI
             - Working with low-precision inputs (e.g., sensor data, financial rounding)
             - You expect acceptable drift due to accumulation or conversion
             Example:
-            AreClose(1e9, 1e9 + 0.01, relTol: 1e-8); // Accepts small relative error
+            AreCloseWithToleranceEx(1e9, 1e9 + 0.01, relTol: 1e-8); // Accepts small relative error
 
             Use a smaller relTol when:
             - Comparing high-precision results (e.g., scientific computation)
@@ -274,7 +274,7 @@ namespace Alternet.UI
             - Working with physical measurements where zero is noisy
 
             Example:
-            AreClose(1e-16, 0.0, absTol: 1e-14); // Accepts near-zero drift
+            AreCloseWithToleranceEx(1e-16, 0.0, absTol: 1e-14); // Accepts near-zero drift
 
             Use a smaller absTol when:
             - You need strict zero comparison
@@ -301,11 +301,11 @@ namespace Alternet.UI
         /// </returns>
         /// <example>
         /// <code>
-        /// IsEven(4.0)    // returns true
-        /// IsEven(3.0)    // returns false
-        /// IsEven(2.5)    // returns false
-        /// IsEven(-6.0)   // returns true
-        /// IsEven(0.0)    // returns true
+        /// IsEvenInteger(4.0)    // returns true
+        /// IsEvenInteger(3.0)    // returns false
+        /// IsEvenInteger(2.5)    // returns false
+        /// IsEvenInteger(-6.0)   // returns true
+        /// IsEvenInteger(0.0)    // returns true
         /// </code>
         /// </example>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -316,6 +316,20 @@ namespace Alternet.UI
                 return false;
 
             return ((int)value % 2) == 0;
+        }
+
+        /// <summary>
+        /// Determines whether the specified double-precision floating-point number
+        /// represents an integer value.
+        /// </summary>
+        /// <param name="value">The double-precision floating-point
+        /// number to evaluate.</param>
+        /// <returns><see langword="true"/> if the specified value represents an integer;
+        /// otherwise, <see langword="false"/>.</returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static bool IsInteger(double value)
+        {
+            return value % 1 == 0;
         }
 
         /// <summary>
@@ -464,33 +478,13 @@ namespace Alternet.UI
         /// IsNaNFast(0.0 / 0.0)               // returns true (NaN)
         /// </code>
         /// </example>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool IsNaN(double value)
         {
             // PS item that tracks the CLR improvement is DevDiv Schedule : 26916.
             DoubleUnion t = new() { DoubleValue = value };
-            ulong exp = t.UintValue & 0xfff0000000000000;
-            ulong man = t.UintValue & 0x000fffffffffffff;
+            ulong exp = t.ULongValue & 0xfff0000000000000;
+            ulong man = t.ULongValue & 0x000fffffffffffff;
             return (exp == 0x7ff0000000000000 || exp == 0xfff0000000000000) && (man != 0);
-        }
-
-        /// <summary>
-        /// Provides a union for accessing the bitwise representation of a <see cref="double"/> value.
-        /// </summary>
-        [StructLayout(LayoutKind.Explicit)]
-        public struct DoubleUnion
-        {
-            /// <summary>
-            /// The double-precision floating-point value.
-            /// </summary>
-            [FieldOffset(0)]
-            public double DoubleValue;
-
-            /// <summary>
-            /// The unsigned 64-bit integer representation of the double value.
-            /// </summary>
-            [FieldOffset(0)]
-            public ulong UintValue;
         }
     }
 }

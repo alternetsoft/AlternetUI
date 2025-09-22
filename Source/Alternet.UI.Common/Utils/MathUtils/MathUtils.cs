@@ -14,14 +14,6 @@ namespace Alternet.UI
     public static partial class MathUtils
     {
         /// <summary>
-        /// Represents the smallest positive value that can be added to 1.0f
-        /// to produce a distinct value of type <see cref="float"/>.
-        /// </summary>
-        /// <remarks>This constant is useful for comparisons and calculations that require a very small
-        /// tolerance value to account for floating-point precision errors.</remarks>
-        public const float FloatEpsilon = 1.192092896e-07F;
-
-        /// <summary>
         /// Gets <see cref="Math.PI"/> divided by 180d.
         /// </summary>
         public const double DegToRad = Math.PI / 180d;

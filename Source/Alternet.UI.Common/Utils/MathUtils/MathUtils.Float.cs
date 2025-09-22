@@ -9,11 +9,189 @@ namespace Alternet.UI
     public static partial class MathUtils
     {
         /// <summary>
+        /// Represents the smallest positive value that can be added to 1.0f
+        /// to produce a distinct value of type <see cref="float"/>.
+        /// </summary>
+        /// <remarks>This constant is useful for comparisons and calculations that require a very small
+        /// tolerance value to account for floating-point precision errors.</remarks>
+        public const float FloatEpsilon = 1.192092896e-07F;
+
+        /// <summary>
         /// Optional override for single-precision floating-point equality comparison.
         /// If set, this delegate will be used by <c>AreClose(float, float)</c>
         /// instead of the default implementation.
         /// </summary>
         public static Func<float, float, bool>? AreCloseOverrideF;
+
+        /// <summary>
+        /// Determines whether the first value is less than the second value
+        /// and not approximately equal to it.
+        /// </summary>
+        /// <remarks>The method uses a predefined tolerance to determine whether the two values are
+        /// approximately equal.</remarks>
+        /// <param name="value1">The first floating-point value to compare.</param>
+        /// <param name="value2">The second floating-point value to compare.</param>
+        /// <returns><see langword="true"/> if <paramref name="value1"/>
+        /// is less than <paramref name="value2"/>  and the two
+        /// values are not considered approximately equal;
+        /// otherwise, <see langword="false"/>.</returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static bool LessThanAndNotClose(float value1, float value2)
+        {
+            return (value1 < value2) && !AreClose(value1, value2);
+        }
+
+        /// <summary>
+        /// Determines whether the first value is greater than the
+        /// second value and not approximately equal to it.
+        /// </summary>
+        /// <remarks>The method uses a predefined tolerance to determine whether the two values are
+        /// approximately equal.</remarks>
+        /// <param name="value1">The first floating-point value to compare.</param>
+        /// <param name="value2">The second floating-point value to compare.</param>
+        /// <returns><see langword="true"/> if <paramref name="value1"/> is
+        /// greater than <paramref name="value2"/>  and the two
+        /// values are not approximately equal; otherwise, <see langword="false"/>.</returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static bool GreaterThanAndNotClose(float value1, float value2)
+        {
+            return (value1 > value2) && !AreClose(value1, value2);
+        }
+
+        /// <summary>
+        /// Determines whether the first floating-point
+        /// value is less than or approximately equal to the second value.
+        /// </summary>
+        /// <remarks>The method uses a predefined tolerance to determine whether
+        /// the two values are
+        /// approximately equal. This is useful for comparisons where floating-point
+        /// precision errors might otherwise
+        /// lead to unexpected results.</remarks>
+        /// <param name="value1">The first floating-point value to compare.</param>
+        /// <param name="value2">The second floating-point value to compare.</param>
+        /// <returns><see langword="true"/> if <paramref name="value1"/> is less than
+        /// <paramref name="value2"/>, or if the two
+        /// values are approximately equal; otherwise, <see langword="false"/>.</returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static bool LessThanOrClose(float value1, float value2)
+        {
+            return (value1 < value2) || AreClose(value1, value2);
+        }
+
+        /// <summary>
+        /// Returns true if the two single-precision floats are close enough to be considered equal.
+        /// Handles infinities and near-zero values using scaled epsilon.
+        /// </summary>
+        /// <param name="value1">First value to compare.</param>
+        /// <param name="value2">Second value to compare.</param>
+        /// <returns><c>true</c> if the values are close; otherwise, <c>false</c>.</returns>
+        /// <remarks>
+        /// This method scales the epsilon based on the magnitude of the inputs,
+        /// ensuring robustness near zero and across large ranges.
+        /// </remarks>
+        /// <example>
+        /// <code>
+        /// AreCloseScaled(1.0f, 1.000001f)     // true
+        /// AreCloseScaled(0.0f, 1e-8f)         // false
+        /// AreCloseScaled(float.NaN, float.NaN) // false
+        /// AreCloseScaled(float.PositiveInfinity, float.PositiveInfinity) // true
+        /// </code>
+        /// </example>
+        public static bool AreCloseScaled(float value1, float value2)
+        {
+            if (value1 == value2)
+            {
+                return true;
+            }
+
+            float delta = value1 - value2;
+            float eps = (Math.Abs(value1) + Math.Abs(value2)) * FloatEpsilon;
+
+            if (eps == 0.0f)
+            {
+                eps = FloatEpsilon;
+            }
+
+            return Math.Abs(delta) < eps;
+        }
+
+        /// <summary>
+        /// Returns true if the two single-precision floats are close enough to be considered equal,
+        /// using both relative and absolute tolerance.
+        /// </summary>
+        /// <param name="a">First value to compare.</param>
+        /// <param name="b">Second value to compare.</param>
+        /// <returns><c>true</c> if the values are close; otherwise, <c>false</c>.</returns>
+        /// <remarks>
+        /// This method handles near-zero comparisons and large magnitudes
+        /// by combining relative and absolute tolerances.
+        /// It is symmetric with <see cref="AreCloseWithTolerance(double, double)"/>.
+        /// </remarks>
+        /// <example>
+        /// <code>
+        /// AreCloseWithTolerance(1.0f, 1.000001f);     // true
+        /// AreCloseWithTolerance(0.0f, 1e-8f);         // false
+        /// AreCloseWithTolerance(float.NaN, float.NaN); // false
+        /// AreCloseWithTolerance(float.PositiveInfinity, float.PositiveInfinity); // true
+        /// </code>
+        /// </example>
+        public static bool AreCloseWithTolerance(float a, float b)
+        {
+            if (a == b)
+                return true;
+
+            const float relTol = 1e-6f;
+            const float absTol = 1e-8f;
+
+            float diff = Math.Abs(a - b);
+            float scale = Math.Max(Math.Abs(a), Math.Abs(b));
+            float eps = Math.Max(relTol * scale, absTol);
+
+            return diff <= eps;
+        }
+
+        /// <summary>
+        /// Returns true if the two single-precision floats
+        /// are close enough to be considered equal,
+        /// using both relative and absolute tolerance thresholds.
+        /// </summary>
+        /// <param name="a">First value to compare.</param>
+        /// <param name="b">Second value to compare.</param>
+        /// <param name="relTol">Relative tolerance, scaled by the magnitude of the inputs.
+        /// Default is 1e-6f.</param>
+        /// <param name="absTol">Absolute tolerance, used for near-zero comparisons.
+        /// Default is 1e-8f.</param>
+        /// <returns><c>true</c> if the values are close within the specified tolerances;
+        /// otherwise, <c>false</c>.</returns>
+        /// <remarks>
+        /// This method is robust across magnitudes and avoids false positives near zero.
+        /// It is symmetric with <see cref="AreCloseWithTolerance(double, double)"/>
+        /// and suitable for diagnostic-grade comparisons.
+        /// </remarks>
+        /// <example>
+        /// <code>
+        /// AreCloseWithToleranceEx(1.0f, 1.000001f);     // true
+        /// AreCloseWithToleranceEx(0.0f, 1e-8f);         // false
+        /// AreCloseWithToleranceEx(1e-7f, 2e-7f, 1e-5f, 1e-7f); // true
+        /// AreCloseWithToleranceEx(float.NaN, float.NaN); // false
+        /// AreCloseWithToleranceEx(float.PositiveInfinity, float.PositiveInfinity); // true
+        /// </code>
+        /// </example>
+        public static bool AreCloseWithToleranceEx(
+            float a,
+            float b,
+            float relTol = 1e-6f,
+            float absTol = 1e-8f)
+        {
+            if (a == b)
+                return true;
+
+            float diff = Math.Abs(a - b);
+            float scale = Math.Max(Math.Abs(a), Math.Abs(b));
+            float eps = Math.Max(relTol * scale, absTol);
+
+            return diff <= eps;
+        }
 
         /// <summary>
         /// Determines whether a single-precision floating-point value represents an even integer.
@@ -35,11 +213,23 @@ namespace Alternet.UI
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool IsEvenInteger(float value)
         {
-            // Check whether the value is an integer
             if (value % 1 != 0)
                 return false;
 
             return ((int)value % 2) == 0;
+        }
+
+        /// <summary>
+        /// Determines whether the specified floating-point value represents an integer.
+        /// </summary>
+        /// <remarks>A value is considered an integer if it has no fractional component.
+        /// For example, 5.0 and -3.0 are integers, but 5.5 and -3.1 are not.</remarks>
+        /// <param name="value">The floating-point value to evaluate.</param>
+        /// <returns><see langword="true"/> if the specified value is an integer;
+        /// otherwise, <see langword="false"/>.</returns>
+        public static bool IsInteger(float value)
+        {
+            return value % 1 == 0;
         }
 
         /// <summary>
@@ -62,31 +252,172 @@ namespace Alternet.UI
         public static bool IsNaNFast(float value)
         {
             FloatUnion u = new() { FloatValue = value };
-            uint exp = u.UintValue & 0x7F800000;
-            uint man = u.UintValue & 0x007FFFFF;
+            uint exp = u.UIntValue & 0x7F800000;
+            uint man = u.UIntValue & 0x007FFFFF;
             return exp == 0x7F800000 && man != 0;
         }
 
         /// <summary>
-        /// Provides a union view of a single-precision floating-point value and its
-        /// underlying 32-bit unsigned integer representation.
+        /// Returns true if the two single-precision floats are close enough to be considered equal,
+        /// based on bitwise proximity. Handles sign differences explicitly.
         /// </summary>
+        /// <param name="a">First value to compare.</param>
+        /// <param name="b">Second value to compare.</param>
+        /// <returns><c>true</c> if the values are within a few representable steps;
+        /// otherwise, <c>false</c>.</returns>
         /// <remarks>
-        /// This struct allows bit-level inspection and manipulation of a <see cref="float"/>
-        /// value by exposing its raw binary representation as a <see cref="uint"/>.
+        /// This method compares the bitwise distance between two floats, allowing up
+        /// to <c>maxSteps</c> ULPs (Units in the Last Place).
+        /// It is symmetric with <see cref="AreCloseBitwise(double, double)"/>
+        /// and suitable for low-level numeric diagnostics.
         /// </remarks>
-        [StructLayout(LayoutKind.Explicit)]
-        public struct FloatUnion
+        /// <example>
+        /// <code>
+        /// AreCloseBitwise(1.0f, 1.0000001f)     // true
+        /// AreCloseBitwise(0.0f, -0.0f)          // true
+        /// AreCloseBitwise(float.NaN, float.NaN) // false
+        /// AreCloseBitwise(float.PositiveInfinity, float.PositiveInfinity) // true
+        /// </code>
+        /// </example>
+        public static bool AreCloseBitwise(float a, float b)
         {
-            /// <summary>
-            /// The single-precision floating-point value.
-            /// </summary>
-            [FieldOffset(0)] public float FloatValue;
+            const int maxSteps = 4;
 
-            /// <summary>
-            /// The 32-bit unsigned integer representation of the floating-point value.
-            /// </summary>
-            [FieldOffset(0)] public uint UintValue;
+            int aBits = FloatUnion.AsInt(a);
+            int bBits = FloatUnion.AsInt(b);
+
+            // Handle sign differences explicitly
+            if ((aBits < 0) != (bBits < 0))
+                return a == b;
+
+            int distance = Math.Abs(aBits - bBits);
+            return distance <= maxSteps;
+        }
+
+        /// <summary>
+        /// Determines whether two <see cref="float"/> values are equal using
+        /// a layered comparison strategy.
+        /// This method combines magnitude-scaled epsilon comparison,
+        /// bitwise proximity (with default step threshold),
+        /// and relative/absolute tolerance checks.
+        /// It is suitable for robust floating-point validation across domains such
+        /// as diagnostics, serialization, and numerical correctness.
+        /// </summary>
+        /// <param name="a">The first float value to compare.</param>
+        /// <param name="b">The second float value to compare.</param>
+        /// <returns>
+        /// <c>true</c> if any of the following conditions are met:
+        /// <list type="bullet">
+        /// <item><description><see cref="AreCloseScaled(float,float)"/>
+        /// returns true</description></item>
+        /// <item><description><see cref="AreCloseBitwise(float,float)"/>
+        /// returns true using
+        /// its default threshold</description></item>
+        /// <item><description><see cref="AreCloseWithTolerance(float,float)"/>
+        /// returns true</description></item>
+        /// </list>
+        /// Otherwise, <c>false</c>.
+        /// </returns>
+        public static bool AreClose(float a, float b)
+        {
+            if (AreCloseOverrideF != null)
+                return AreCloseOverrideF(a, b);
+
+            return AreCloseScaled(a, b)
+                || AreCloseBitwise(a, b)
+                || AreCloseWithTolerance(a, b);
+        }
+
+        /// <summary>
+        /// Determines whether the specified <paramref name="value"/> is either
+        /// infinite (positive or negative) or not a number (NaN).
+        /// </summary>
+        /// <param name="value">The floating-point number to evaluate.</param>
+        /// <returns>
+        /// <c>true</c> if <paramref name="value"/> is <see cref="float.NaN"/>,
+        /// <see cref="float.PositiveInfinity"/>, or <see cref="float.NegativeInfinity"/>;
+        /// otherwise, <c>false</c>.
+        /// </returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static bool IsInfinityOrNan(float value)
+        {
+            return IsNaN(value) || float.IsInfinity(value);
+        }
+
+        /// <summary>
+        /// Determines whether the specified floating-point value is NaN,
+        /// infinite, or equal to the
+        /// maximum representable value.
+        /// </summary>
+        /// <remarks>This method can be used to validate or filter floating-point values that are
+        /// not finite or exceed typical numeric ranges.</remarks>
+        /// <param name="value">The floating-point value to evaluate.</param>
+        /// <returns><see langword="true"/> if <paramref name="value"/> is NaN, infinite,
+        /// or equal to <see
+        /// cref="float.MaxValue"/>;  otherwise, <see langword="false"/>. </returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static bool IsInfinityOrNanOrMax(float value)
+        {
+            return value == float.MaxValue || IsNaN(value) || float.IsInfinity(value);
+        }
+
+        /// <summary>
+        /// Clamps the specified value to zero if it is less than zero.
+        /// </summary>
+        /// <param name="value">The value to clamp. If the value is negative,
+        /// it will be clamped to zero; otherwise, the original value is
+        /// returned.</param>
+        /// <returns>The original value if it is zero or positive; otherwise, zero.</returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static float ClampToZero(float value) => value < 0 ? 0 : value;
+
+        /// <summary>
+        /// Determines whether the first floating-point
+        /// value is greater than or approximately equal
+        /// to the second value.
+        /// </summary>
+        /// <remarks>Two values are considered approximately equal if the difference
+        /// between them is
+        /// within  a small tolerance. The tolerance is determined by the implementation
+        /// of the <c>AreClose(float,float)</c> method.</remarks>
+        /// <param name="value1">The first floating-point value to compare.</param>
+        /// <param name="value2">The second floating-point value to compare.</param>
+        /// <returns><see langword="true"/> if <paramref name="value1"/> is greater
+        /// than or approximately equal to  <paramref
+        /// name="value2"/>; otherwise, <see langword="false"/>.</returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static bool GreaterThanOrClose(float value1, float value2)
+        {
+            return (value1 > value2) || AreClose(value1, value2);
+        }
+
+        /// <summary>
+        /// Determines whether the specified value is equal to 1.0 within a small tolerance.
+        /// </summary>
+        /// <remarks>This method uses a tolerance-based comparison to account for potential floating-point
+        /// precision errors.</remarks>
+        /// <param name="value">The floating-point number to compare to 1.0.</param>
+        /// <returns><see langword="true"/> if the specified value is approximately equal to 1.0;
+        /// otherwise, <see langword="false"/>.</returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static bool IsOne(float value)
+        {
+            return AreClose(value, 1);
+        }
+
+        /// <summary>
+        /// Determines whether the specified floating-point value is equal to zero.
+        /// </summary>
+        /// <remarks>The comparison accounts for potential floating-point
+        /// precision issues and considers
+        /// values close to zero as equal to zero.</remarks>
+        /// <param name="value">The floating-point value to compare to zero.</param>
+        /// <returns><see langword="true"/> if the specified value is considered equal to zero;
+        /// otherwise, <see langword="false"/>.</returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static bool IsZero(float value)
+        {
+            return AreClose(value, 0);
         }
     }
 }
