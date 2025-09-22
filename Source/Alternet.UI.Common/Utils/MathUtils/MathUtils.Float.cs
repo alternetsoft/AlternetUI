@@ -234,6 +234,34 @@ namespace Alternet.UI
 
         /// <summary>
         /// Determines whether the specified single-precision floating-point value is NaN (Not a Number).
+        /// This method uses bit-level inspection for performance-critical scenarios.
+        /// </summary>
+        /// <param name="value">The value to evaluate.</param>
+        /// <returns><c>true</c> if the value is NaN; otherwise, <c>false</c>.</returns>
+        /// <remarks>
+        /// IEEE 754: NaN values have all exponent bits set (0x7F8) and a non-zero mantissa.
+        /// This avoids the overhead of <see cref="float.IsNaN"/> and is suitable for tight loops.
+        /// </remarks>
+        /// <example>
+        /// <code>
+        /// IsNaN(float.NaN);               // returns true
+        /// IsNaN(0f);                      // returns false
+        /// IsNaN(float.PositiveInfinity);  // returns false
+        /// IsNaN(float.NegativeInfinity);  // returns false
+        /// IsNaN(1f / 0f);                 // returns false (infinity)
+        /// IsNaN(0f / 0f);                 // returns true (NaN)
+        /// </code>
+        /// </example>
+        public static bool IsNaN(float value)
+        {
+            FloatUnion u = new() { FloatValue = value };
+            uint exp = u.UIntValue & 0x7F800000;
+            uint man = u.UIntValue & 0x007FFFFF;
+            return exp == 0x7F800000 && man != 0;
+        }
+
+        /// <summary>
+        /// Determines whether the specified single-precision floating-point value is NaN (Not a Number).
         /// This method uses bit-level inspection.
         /// </summary>
         /// <param name="value">The value to evaluate.</param>
@@ -251,10 +279,7 @@ namespace Alternet.UI
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool IsNaNFast(float value)
         {
-            FloatUnion u = new() { FloatValue = value };
-            uint exp = u.UIntValue & 0x7F800000;
-            uint man = u.UIntValue & 0x007FFFFF;
-            return exp == 0x7F800000 && man != 0;
+            return IsNaN(value);
         }
 
         /// <summary>
