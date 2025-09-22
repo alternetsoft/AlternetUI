@@ -295,6 +295,22 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Determines whether the specified floating-point number is negative.
+        /// </summary>
+        /// <remarks>This method evaluates the sign bit of the floating-point number to determine its
+        /// negativity. It does not consider special cases such as negative zero, which is treated as
+        /// negative.</remarks>
+        /// <param name="f">The floating-point number to evaluate.</param>
+        /// <returns><see langword="true"/> if the specified number is negative;
+        /// otherwise, <see langword="false"/>.</returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static bool IsNegative(float f)
+        {
+            var u = new FloatUnion { FloatValue = f };
+            return (u.IntValue & 0x80000000) != 0;
+        }
+
+        /// <summary>
         /// Determines whether two <see cref="float"/> values are equal using
         /// a layered comparison strategy.
         /// This method combines magnitude-scaled epsilon comparison,
