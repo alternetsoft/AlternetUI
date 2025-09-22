@@ -165,8 +165,9 @@ namespace Alternet.UI
         public static void Fill<T>(ref T[] a, T value)
         {
 #if NETSTANDARD2_1_OR_GREATER
-        #error Add using Array.Fill here
+            Array.Fill(a, value);
 #else
+            // Manual fallback for older frameworks
             for (int i = 0; i < a.Length; i++)
             {
                 a[i] = value;
