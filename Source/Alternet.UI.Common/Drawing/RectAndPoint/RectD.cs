@@ -630,7 +630,7 @@ namespace Alternet.Drawing
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static int CoordToInt(Coord value)
         {
-            int i = (int)Math.Round(value, DefaultMidpointRounding);
+            int i = (int)MathF.Round(value, DefaultMidpointRounding);
             return i;
         }
 
@@ -704,10 +704,10 @@ namespace Alternet.Drawing
         public static RectI Ceiling(RectD value)
         {
             return new(
-                (int)Math.Ceiling(value.x),
-                (int)Math.Ceiling(value.y),
-                (int)Math.Ceiling(value.width),
-                (int)Math.Ceiling(value.height));
+                (int)MathF.Ceiling(value.x),
+                (int)MathF.Ceiling(value.y),
+                (int)MathF.Ceiling(value.width),
+                (int)MathF.Ceiling(value.height));
         }
 
         /// <summary>

@@ -167,7 +167,7 @@ namespace Alternet.Drawing
         /// <summary>
         /// Gets the x-coordinate of the upper-left corner of the rectangular
         /// region defined by this
-        /// <see cref='Drawing.RectI'/> .
+        /// <see cref='Drawing.RectI'/>.
         /// </summary>
         [Browsable(false)]
         public readonly int Left => x;
@@ -419,10 +419,10 @@ namespace Alternet.Drawing
             unchecked
             {
                 return new RectI(
-                    (int)Math.Ceiling(value.X),
-                    (int)Math.Ceiling(value.Y),
-                    (int)Math.Ceiling(value.Width),
-                    (int)Math.Ceiling(value.Height));
+                    (int)MathF.Ceiling(value.X),
+                    (int)MathF.Ceiling(value.Y),
+                    (int)MathF.Ceiling(value.Width),
+                    (int)MathF.Ceiling(value.Height));
             }
         }
 
@@ -495,10 +495,10 @@ namespace Alternet.Drawing
             unchecked
             {
                 return new RectI(
-                    (int)Math.Round(value.X),
-                    (int)Math.Round(value.Y),
-                    (int)Math.Round(value.Width),
-                    (int)Math.Round(value.Height));
+                    (int)MathF.Round(value.X),
+                    (int)MathF.Round(value.Y),
+                    (int)MathF.Round(value.Width),
+                    (int)MathF.Round(value.Height));
             }
         }
 
@@ -522,15 +522,18 @@ namespace Alternet.Drawing
 
         /// <summary>
         /// Determines if the specified point is contained within the rectangular region
-        /// defined by this <see cref='RectI'/> .
+        /// defined by this <see cref='RectI'/>.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public readonly bool Contains(int px, int py) => (x <= px) && (px < x + width)
+        public readonly bool Contains(int px, int py)
+        {
+            return (x <= px) && (px < x + width)
             && (y <= py) && (py < y + height);
+        }
 
         /// <summary>
         /// Determines if the specified point is contained within the rectangular region defined
-        /// by this <see cref='RectI'/> .
+        /// by this <see cref='RectI'/>.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public readonly bool Contains(PointI pt) => Contains(pt.X, pt.Y);
@@ -538,7 +541,7 @@ namespace Alternet.Drawing
         /// <summary>
         /// Determines if the rectangular region represented by <paramref name="rect"/> is
         /// entirely contained within the
-        /// rectangular region represented by this <see cref='Drawing.RectI'/> .
+        /// rectangular region represented by this <see cref='Drawing.RectI'/>.
         /// </summary>
         public readonly bool Contains(RectI rect) =>
             (x <= rect.x) && (rect.x + rect.width <= x + width) &&
@@ -554,15 +557,15 @@ namespace Alternet.Drawing
         /// <summary>
         /// Inflates this <see cref='RectI'/> by the specified amount.
         /// </summary>
-        public void Inflate(int nwidth, int nheight)
+        public void Inflate(int deltaWidth, int deltaHeight)
         {
             unchecked
             {
-                x -= nwidth;
-                y -= nheight;
+                x -= deltaWidth;
+                y -= deltaHeight;
 
-                width += 2 * nwidth;
-                height += 2 * nheight;
+                width += 2 * deltaWidth;
+                height += 2 * deltaHeight;
             }
         }
 
@@ -631,11 +634,11 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
-        /// Converts this rectangle to rectangle with device-indepdenent units using
+        /// Converts this rectangle to rectangle with device-independent units using
         /// the specified scale factor.
         /// </summary>
         /// <param name="scaleFactor">Scale factor. Optional. If not specified, the default
-        /// scale factor is used for the convertion.</param>
+        /// scale factor is used for the conversion.</param>
         /// <returns></returns>
         public readonly RectD PixelToDip(Coord? scaleFactor = null)
         {
@@ -671,23 +674,23 @@ namespace Alternet.Drawing
         /// <summary>
         /// Returns new rectangle with location and width of this rectangle and the specified height.
         /// </summary>
-        /// <param name="aheight">New height.</param>
+        /// <param name="newHeight">New height.</param>
         /// <returns>Rectangle object with the new height.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public readonly RectI WithHeight(int aheight)
+        public readonly RectI WithHeight(int newHeight)
         {
-            return new(x, y, width, aheight);
+            return new(x, y, width, newHeight);
         }
 
         /// <summary>
         /// Returns new rectangle with location and height of this rectangle and the specified width.
         /// </summary>
-        /// <param name="awidth">New width.</param>
+        /// <param name="newWidth">New width.</param>
         /// <returns>Rectangle object with the new width.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public readonly RectI WithWidth(int awidth)
+        public readonly RectI WithWidth(int newWidth)
         {
-            return new(x, y, awidth, height);
+            return new(x, y, newWidth, height);
         }
 
         /// <summary>
@@ -713,7 +716,8 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
-        /// Returns new rectangle with size and y-coordinate of this rectangle and the specified x-coordinate.
+        /// Returns new rectangle with size and y-coordinate of this rectangle and
+        /// the specified x-coordinate.
         /// </summary>
         /// <param name="ax">New X position.</param>
         /// <returns>Rectangle object with the new x-coordinate.</returns>
@@ -724,7 +728,8 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
-        /// Returns new rectangle with size and x-coordinate of this rectangle and the specified y-coordinate.
+        /// Returns new rectangle with size and x-coordinate of this rectangle and the
+        /// specified y-coordinate.
         /// </summary>
         /// <param name="ay">New Y position.</param>
         /// <returns>Rectangle object with the new y-coordinate.</returns>
