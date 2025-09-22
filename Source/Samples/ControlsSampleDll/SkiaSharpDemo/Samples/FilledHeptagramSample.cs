@@ -29,7 +29,7 @@ namespace SkiaSharpSample.Samples
 				for (var i = 1; i < 7; ++i)
 				{
 					var theta = 3f * i * TAU / 7f;
-					path.LineTo(R * (float)Math.Cos(theta), R * (float)Math.Sin(theta));
+					path.LineTo(R * MathF.Cos(theta), R * MathF.Sin(theta));
 				}
 				path.Close();
 

@@ -413,7 +413,7 @@ namespace Alternet.UI
                 if (newScaleFactor >= 1)
                     scaleFactor = newScaleFactor;
 
-                return Math.Max(1, newScaleFactor);
+                return Math.Max(1f, newScaleFactor);
             }
         }
 

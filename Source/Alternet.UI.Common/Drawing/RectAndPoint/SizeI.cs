@@ -332,8 +332,8 @@ namespace Alternet.Drawing
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static SizeI Ceiling(SizeD value) =>
             new(
-                unchecked((int)Math.Ceiling(value.Width)),
-                unchecked((int)Math.Ceiling(value.Height)));
+                unchecked((int)MathF.Ceiling(value.Width)),
+                unchecked((int)MathF.Ceiling(value.Height)));
 
         /// <summary>
         /// Multiplies <see cref="SizeI"/> by an <see cref="int"/>
@@ -383,8 +383,8 @@ namespace Alternet.Drawing
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static SizeI Round(SizeD value) =>
             new(
-                unchecked((int)Math.Round(value.Width)),
-                unchecked((int)Math.Round(value.Height)));
+                unchecked((int)MathF.Round(value.Width)),
+                unchecked((int)MathF.Round(value.Height)));
 
         /// <summary>
         /// Tests to see whether the specified object is a

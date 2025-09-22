@@ -656,7 +656,7 @@ namespace Alternet.Drawing
 
             if (factor == 1)
                 return (int)value;
-            return (int)Math.Round(value * factor);
+            return (int)MathF.Round(value * factor);
         }
 
         /// <summary>

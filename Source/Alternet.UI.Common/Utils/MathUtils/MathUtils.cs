@@ -74,7 +74,7 @@ namespace Alternet.UI
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static int RoundUpAndIncrementIfOdd(Coord value)
         {
-            return IncrementIfOdd((int)Math.Ceiling(value));
+            return IncrementIfOdd((int)MathF.Ceiling(value));
         }
 
         /// <summary>
@@ -466,7 +466,7 @@ namespace Alternet.UI
 
             // Normalize to [0, 2*pi) if needed
             if (angleRadians < 0f)
-                angleRadians += 2f * (float)Math.PI;
+                angleRadians += 2f * MathF.PI;
 
             return angleRadians;
         }

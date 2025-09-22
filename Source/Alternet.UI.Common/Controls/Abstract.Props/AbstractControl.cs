@@ -1091,8 +1091,8 @@ namespace Alternet.UI
 
             set
             {
-                value.Width = Math.Max(0, value.Width);
-                value.Height = Math.Max(0, value.Height);
+                value.Width = Math.Max(0f, value.Width);
+                value.Height = Math.Max(0f, value.Height);
                 Size = value + InteriorSize;
             }
         }
@@ -2697,8 +2697,8 @@ namespace Alternet.UI
 
             set
             {
-                value.Width = Math.Max(0, value.Width);
-                value.Height = Math.Max(0, value.Height);
+                value.Width = Math.Max(0f, value.Width);
+                value.Height = Math.Max(0f, value.Height);
                 if (MinimumSize == value)
                     return;
                 minimumSize = value;
@@ -2719,8 +2719,8 @@ namespace Alternet.UI
 
             set
             {
-                value.Width = Math.Max(0, value.Width);
-                value.Height = Math.Max(0, value.Height);
+                value.Width = Math.Max(0f, value.Width);
+                value.Height = Math.Max(0f, value.Height);
                 if (MaximumSize == value)
                     return;
                 maximumSize = value;
@@ -3638,8 +3638,7 @@ namespace Alternet.UI
         {
             get
             {
-                var size = ClientSize;
-                return new(0, 0, size.Width, size.Height);
+                return new(PointD.Empty, ClientSize);
             }
         }
 

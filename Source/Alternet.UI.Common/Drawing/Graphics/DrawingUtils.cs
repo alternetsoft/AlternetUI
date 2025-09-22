@@ -712,7 +712,7 @@ namespace Alternet.UI
         /// than <paramref name="value"/>; <c>false</c> otherwise.</returns>
         public static bool DistanceIsLess(PointD p1, PointD p2, Coord value)
         {
-            return (Math.Pow(p2.X - p1.X, 2) + Math.Pow(p2.Y - p1.Y, 2)) < Math.Pow(value, 2);
+            return (MathF.Pow(p2.X - p1.X, 2) + MathF.Pow(p2.Y - p1.Y, 2)) < MathF.Pow(value, 2);
         }
 
         /// <summary>

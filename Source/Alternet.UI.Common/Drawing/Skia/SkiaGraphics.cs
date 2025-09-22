@@ -567,7 +567,7 @@ namespace Alternet.Drawing
             }
 
             // Ensures the polygon is closed
-            path.Close(); 
+            path.Close();
 
             return path;
         }
