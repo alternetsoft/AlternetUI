@@ -224,6 +224,21 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Adds a disabled menu item with the specified text to the menu.
+        /// </summary>
+        /// <remarks>The added menu item will have its <see cref="MenuItem.IsEnabled"/>
+        /// property set to <see langword="false"/>.</remarks>
+        /// <param name="text">The text to display for the disabled menu item.</param>
+        /// <returns>The <see cref="MenuItem"/> instance representing
+        /// the disabled menu item.</returns>
+        public virtual MenuItem AddDisabledText(string text)
+        {
+            var result = Add(new(text));
+            result.IsEnabled = false;
+            return result;
+        }
+
+        /// <summary>
         /// Begins an update block, incrementing the update counter.
         /// </summary>
         public virtual void BeginUpdate()
