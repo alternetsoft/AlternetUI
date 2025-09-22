@@ -24,22 +24,22 @@ namespace Alternet.Drawing
         /// <summary>
         /// Gets an empty coordinate which is equal to 0.
         /// </summary>
-        public const Coord Empty = 0;
+        public const Coord Empty = 0f;
 
         /// <summary>
         /// Gets a coordinate which is equal to -1.
         /// </summary>
-        public const Coord MinusOne = -1;
+        public const Coord MinusOne = -1f;
 
         /// <summary>
         /// Gets a coordinate which is equal to 1.
         /// </summary>
-        public const Coord One = 1;
+        public const Coord One = 1f;
 
         /// <summary>
         /// Gets a coordinate which is equal to 2.
         /// </summary>
-        public const Coord Two = 2;
+        public const Coord Two = 2f;
 
         /// <summary>
         /// Gets a coordinate which is equal to 72.0.
