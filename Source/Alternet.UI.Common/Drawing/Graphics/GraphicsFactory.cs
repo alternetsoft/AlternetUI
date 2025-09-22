@@ -581,6 +581,7 @@ namespace Alternet.Drawing
         /// </summary>
         /// <param name="scaleFactor">Scale factor.</param>
         /// <returns></returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Coord ScaleFactorOrDefault(Coord? scaleFactor = null)
         {
             return scaleFactor ?? Display.MaxScaleFactor;
@@ -629,6 +630,18 @@ namespace Alternet.Drawing
         public static RectD PixelToDip(RectI value, Coord? scaleFactor = null)
         {
             return new(PixelToDip(value.Location, scaleFactor), PixelToDip(value.Size, scaleFactor));
+        }
+
+        /// <summary>
+        /// Converts a single pixel to device-independent pixels (DIPs).
+        /// </summary>
+        /// <param name="scaleFactor">An optional scaling factor to use for the conversion.
+        /// If <see langword="null"/>, the default scaling factor is applied.</param>
+        /// <returns>The equivalent size of one pixel in device-independent pixels (DIPs).</returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static Coord OnePixelAsDip(Coord? scaleFactor = null)
+        {
+            return PixelToDip(1, scaleFactor);
         }
 
         /// <summary>
