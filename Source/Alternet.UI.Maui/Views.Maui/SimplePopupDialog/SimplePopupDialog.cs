@@ -464,13 +464,13 @@ namespace Alternet.Maui
             {
                 if(origin == AlignOrigin.Layout || view is null)
                     return layout.Bounds.ToRectD();
-                Drawing.SizeD size = (view.Bounds.Size.Width, view.Bounds.Size.Height);
+                Drawing.SizeD size = ((Coord)view.Bounds.Size.Width, (Coord)view.Bounds.Size.Height);
                 Drawing.PointD location = Drawing.PointD.Empty;
 
                 while (view is not AbsoluteLayout && view is not null)
                 {
-                    location.X += view.Bounds.X;
-                    location.Y += view.Bounds.Y;
+                    location.X += (Coord)view.Bounds.X;
+                    location.Y += (Coord)view.Bounds.Y;
                     view = view.Parent as View;
                 }
 

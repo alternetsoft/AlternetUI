@@ -491,7 +491,7 @@ namespace Alternet.UI
             var position = e.GetPosition(this);
             if (position is null)
                 return;
-            PointD pt = (position.Value.X, position.Value.Y);
+            PointD pt = ((Coord)position.Value.X, (Coord)position.Value.Y);
 
             AbstractControl.BubbleMouseDoubleClick(
                         control,
@@ -753,7 +753,7 @@ namespace Alternet.UI
             newWidth = Math.Max(0, newWidth);
             newHeight = Math.Max(0, newHeight);
 
-            RectD newBounds = (0, 0, newWidth, newHeight);
+            RectD newBounds = (0, 0, (Coord)newWidth, (Coord)newHeight);
 
             if (interior is null)
             {

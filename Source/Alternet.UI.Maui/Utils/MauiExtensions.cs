@@ -70,7 +70,7 @@ namespace Alternet.Maui.Extensions
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static RectD ToRectD(this Rect value)
         {
-            return new(value.X, value.Y, value.Width, value.Height);
+            return new((Coord)value.X, (Coord)value.Y, (Coord)value.Width, (Coord)value.Height);
         }
 
         /// <summary>

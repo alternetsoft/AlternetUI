@@ -179,7 +179,7 @@ namespace Alternet.UI
                 }
             }
 
-            return new(x, y);
+            return new((Coord)x, (Coord)y);
         }
 
         /// <summary>

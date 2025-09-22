@@ -28,7 +28,7 @@ namespace Alternet.UI
 
         public static Coord GetDefaultScaleFactor()
         {
-            return DeviceDisplay.Current.MainDisplayInfo.Density;
+            return (Coord)DeviceDisplay.Current.MainDisplayInfo.Density;
         }
 
         public void Log()
