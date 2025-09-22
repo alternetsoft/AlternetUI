@@ -17,7 +17,7 @@ namespace Alternet.Drawing
     /// Stores the location and size of a rectangular region.
     /// </summary>
     [Serializable]
-    [StructLayout(LayoutKind.Sequential, Pack = 1)]
+    [StructLayout(LayoutKind.Explicit)]
     public struct RectD : IEquatable<RectD>
     {
         /// <summary>
@@ -44,10 +44,29 @@ namespace Alternet.Drawing
         /// </summary>
         public static MidpointRounding DefaultMidpointRounding = MidpointRounding.AwayFromZero;
 
+        [FieldOffset(0)]
         private Coord x;
+
+        [FieldOffset(4)]
         private Coord y;
+
+        [FieldOffset(8)]
         private Coord width;
+
+        [FieldOffset(12)]
         private Coord height;
+
+        [FieldOffset(0)]
+        private PointD location;
+
+        [FieldOffset(8)]
+        private SizeD size;
+
+        [FieldOffset(0)]
+        private SKPoint skiaLocation;
+
+        [FieldOffset(8)]
+        private SKSize skiaSize;
 
         /// <summary>
         /// Initializes a new instance of the <see cref='RectD'/> class with the
@@ -71,10 +90,8 @@ namespace Alternet.Drawing
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public RectD(PointD location, SizeD size)
         {
-            x = location.X;
-            y = location.Y;
-            width = size.Width;
-            height = size.Height;
+            this.location = location;
+            this.size = size;
         }
 
         /// <summary>
@@ -98,13 +115,12 @@ namespace Alternet.Drawing
         public PointD Location
         {
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
-            readonly get => new(x, y);
+            readonly get => location;
 
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
             set
             {
-                x = value.X;
-                y = value.Y;
+                location = value;
             }
         }
 
@@ -133,6 +149,16 @@ namespace Alternet.Drawing
                     || width <= CoordD.Empty || height <= CoordD.Empty;
             }
         }
+
+        /// <summary>
+        /// Gets the SkiaSharp location (<see cref="SKPoint"/>) of this rectangle.
+        /// </summary>
+        public readonly SKPoint SkiaLocation => skiaLocation;
+
+        /// <summary>
+        /// Gets the SkiaSharp size (<see cref="SKSize"/>) of this rectangle.
+        /// </summary>
+        public readonly SKSize SkiaSize => skiaSize;
 
         /// <summary>
         /// Gets a value indicating whether location is negative.
@@ -165,13 +191,12 @@ namespace Alternet.Drawing
         public SizeD Size
         {
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
-            readonly get => new(width, height);
+            readonly get => size;
 
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
             set
             {
-                width = value.Width;
-                height = value.Height;
+                size = value;
             }
         }
 
@@ -369,7 +394,7 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
-        /// This is a read-only alias for the point which is at (X, Y).
+        /// This is a read-only alias for the point which is at (X, Y). Same as <see cref="Location"/>.
         /// </summary>
         [Browsable(false)]
         public readonly PointD TopLeft
@@ -377,7 +402,7 @@ namespace Alternet.Drawing
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
             get
             {
-                return new PointD(x, y);
+                return location;
             }
         }
 
@@ -517,8 +542,7 @@ namespace Alternet.Drawing
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static implicit operator SKRect(RectD rect)
         {
-            SKRect result = SKRect.Create((float)rect.Width, (float)rect.Height);
-            result.Offset((float)rect.X, (float)rect.Y);
+            var result = SKRect.Create(rect.skiaLocation, rect.skiaSize);
             return result;
         }
 
@@ -555,7 +579,7 @@ namespace Alternet.Drawing
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static implicit operator System.Drawing.RectangleF(RectD p) =>
-            new((float)p.X, (float)p.Y, (float)p.Width, (float)p.Height);
+            new(p.X, p.Y, p.Width, p.Height);
 
         /// <summary>
         /// Implicit operator conversion from tuple (<see cref="PointD"/>, <see cref="Size"/>)
@@ -1015,7 +1039,7 @@ namespace Alternet.Drawing
         /// Gets the hash code for this <see cref='RectD'/>.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public override readonly int GetHashCode() => (x, y, width, height).GetHashCode();
+        public override readonly int GetHashCode() => (location, size).GetHashCode();
 
         /// <summary>
         /// Inflates this <see cref='RectD'/> by the specified amount.
@@ -1059,7 +1083,7 @@ namespace Alternet.Drawing
         /// Creates a <see cref='RectD'/> that is inflated by 1.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public readonly RectD Inflated() => Inflate(this, 1, 1);
+        public readonly RectD Inflated() => Inflate(this, CoordD.One, CoordD.One);
 
         /// <summary>
         /// Creates a <see cref='RectD'/> that is offset by the specified amount.
@@ -1416,7 +1440,7 @@ namespace Alternet.Drawing
         /// </summary>
         /// <returns>Point that contains location of the upper-left rectangle corner.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public readonly PointD LeftTop() => new(x, y);
+        public readonly PointD LeftTop() => location;
 
         /// <summary>
         /// Returns location of the upper-right corner of this rectangle.
