@@ -48,6 +48,13 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets or sets the unique identifier that allows the automation
+        /// framework to find and interact with this element.
+        /// This value may only be set once on an element.
+        /// </summary>
+        public virtual string? AutomationId { get; set; }
+
+        /// <summary>
         /// Gets or sets the <see cref="ISite"/> associated with the object.
         /// </summary>
         /// <returns>
