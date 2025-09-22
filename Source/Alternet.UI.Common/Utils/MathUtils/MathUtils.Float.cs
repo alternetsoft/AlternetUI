@@ -419,5 +419,122 @@ namespace Alternet.UI
         {
             return AreClose(value, 0);
         }
+
+        /// <summary>
+        /// Returns the smallest integral value greater than or equal
+        /// to the specified single-precision float.
+        /// Behaves like <see cref="Math.Ceiling(double)"/> including handling of NaN and infinities.
+        /// </summary>
+        /// <param name="value">The value to round up.</param>
+        /// <returns>The smallest integral float greater than or equal
+        /// to <paramref name="value"/>.</returns>
+        /// <remarks>
+        /// This method mimics <see cref="Math.Ceiling(double)"/> behavior for <c>float</c> values,
+        /// including correct handling of special IEEE 754 values.
+        /// </remarks>
+        /// <example>
+        /// <code>
+        /// Ceiling(3.14f);       // returns 4.0f
+        /// Ceiling(-2.7f);       // returns -2.0f
+        /// Ceiling(float.NaN);   // returns float.NaN
+        /// Ceiling(float.PositiveInfinity); // returns float.PositiveInfinity
+        /// Ceiling(float.NegativeInfinity); // returns float.NegativeInfinity
+        /// </code>
+        /// </example>
+        public static float Ceiling(float value)
+        {
+            if (float.IsNaN(value) || float.IsInfinity(value))
+                return value;
+
+            int i = (int)value;
+            return (value > i) ? i + 1 : i;
+        }
+
+        /// <summary>
+        /// Converts an angle from radians to degrees.
+        /// </summary>
+        /// <param name="radians">Angle in radians.</param>
+        /// <returns>Angle in degrees.</returns>
+        public static float ToDegrees(float radians)
+        {
+            var angleDegrees = radians * RadToDegF;
+
+            // Ensure angle is in [0, 360)
+            if (angleDegrees < 0f)
+                angleDegrees += 360f;
+
+            return angleDegrees;
+        }
+
+        /// <summary>
+        /// Gets percentage of <paramref name="value"/>.
+        /// </summary>
+        /// <param name="value">Value.</param>
+        /// <param name="percent">Value from 0 to 100.</param>
+        /// <returns></returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static float PercentOf(float value, float percent)
+        {
+            float result = (percent / 100) * value;
+            return result;
+        }
+
+        /// <summary>
+        /// Returns the larger of the specified numbers.
+        /// </summary>
+        /// <param name="values">Array of <see cref="float"/> numbers.</param>
+        /// <exception cref="ArgumentOutOfRangeException">if <paramref name="values"/> is
+        /// an empty array.</exception>
+        public static float Max(params float[] values)
+        {
+            var length = values.Length;
+
+            if (length < 2)
+            {
+                if (length == 0)
+                    throw new ArgumentOutOfRangeException(nameof(values));
+                return values[0];
+            }
+
+            var result = values[0];
+
+            for (int i = 1; i < values.Length; i++)
+            {
+                var item = values[i];
+                if (item > result)
+                    result = item;
+            }
+
+            return result;
+        }
+
+        /// <summary>
+        /// Returns the smaller of the specified numbers.
+        /// </summary>
+        /// <param name="values">Array of <see cref="float"/> numbers.</param>
+        /// <exception cref="ArgumentOutOfRangeException">if <paramref name="values"/> is
+        /// an empty array.</exception>
+        public static float Min(params float[] values)
+        {
+            var length = values.Length;
+
+            if (length < 2)
+            {
+                if (length == 0)
+                    throw new ArgumentOutOfRangeException(nameof(values));
+                return values[0];
+            }
+
+            var result = values[0];
+
+            for (int i = 1; i < values.Length; i++)
+            {
+                var item = values[i];
+                if (item < result)
+                    result = item;
+            }
+
+            return result;
+        }
     }
 }

@@ -486,5 +486,120 @@ namespace Alternet.UI
             ulong man = t.ULongValue & 0x000fffffffffffff;
             return (exp == 0x7ff0000000000000 || exp == 0xfff0000000000000) && (man != 0);
         }
+
+        /// <summary>
+        /// Returns the smallest integral value that is greater than
+        /// or equal to the specified double-precision floating-point number.
+        /// </summary>
+        /// <remarks>This method uses the IEEE 754 standard for rounding. The return value is of type
+        /// <see cref="double"/>, even though it represents an integral value.</remarks>
+        /// <param name="value">A double-precision floating-point number to be rounded up.</param>
+        /// <returns>The smallest integral value that is greater than or equal
+        /// to <paramref name="value"/>.
+        /// If <paramref name="value"/> is equal to <see cref="double.NaN"/>,
+        /// <see cref="double.PositiveInfinity"/>, or <see cref="double.NegativeInfinity"/>,
+        /// the same value is returned.</returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static double Ceiling(double value)
+        {
+            return Math.Ceiling(value);
+        }
+
+        /// <summary>
+        /// Returns the larger of the specified numbers.
+        /// </summary>
+        /// <param name="values">Array of <see cref="double"/> numbers.</param>
+        /// <exception cref="ArgumentOutOfRangeException">if <paramref name="values"/> is
+        /// an empty array.</exception>
+        public static double Max(params double[] values)
+        {
+            var length = values.Length;
+
+            if (length < 2)
+            {
+                if (length == 0)
+                    throw new ArgumentOutOfRangeException(nameof(values));
+                return values[0];
+            }
+
+            var result = values[0];
+
+            for (int i = 1; i < values.Length; i++)
+            {
+                var item = values[i];
+                if (item > result)
+                    result = item;
+            }
+
+            return result;
+        }
+
+        /// <inheritdoc cref="ApplyMinMax(int, int?, int?)"/>
+        public static double ApplyMinMax(double value, double? min = null, double? max = null)
+        {
+            if (min is not null && value < min)
+                value = min.Value;
+            if (max is not null && value > max)
+                value = max.Value;
+            return value;
+        }
+
+        /// <summary>
+        /// Converts an angle from radians to degrees.
+        /// </summary>
+        /// <param name="radians">Angle in radians.</param>
+        /// <returns>Angle in degrees.</returns>
+        public static double ToDegrees(double radians)
+        {
+            var angleDegrees = radians * RadToDegD;
+
+            // Ensure angle is in [0, 360)
+            if (angleDegrees < 0d)
+                angleDegrees += 360d;
+
+            return angleDegrees;
+        }
+
+        /// <summary>
+        /// Gets percentage of <paramref name="value"/>.
+        /// </summary>
+        /// <param name="value">Value.</param>
+        /// <param name="percent">Value from 0 to 100.</param>
+        /// <returns></returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static double PercentOf(double value, double percent)
+        {
+            double result = (percent / 100) * value;
+            return result;
+        }
+
+        /// <summary>
+        /// Returns the smaller of the specified numbers.
+        /// </summary>
+        /// <param name="values">Array of <see cref="double"/> numbers.</param>
+        /// <exception cref="ArgumentOutOfRangeException">if <paramref name="values"/> is
+        /// an empty array.</exception>
+        public static double Min(params double[] values)
+        {
+            var length = values.Length;
+
+            if (length < 2)
+            {
+                if (length == 0)
+                    throw new ArgumentOutOfRangeException(nameof(values));
+                return values[0];
+            }
+
+            var result = values[0];
+
+            for (int i = 1; i < values.Length; i++)
+            {
+                var item = values[i];
+                if (item < result)
+                    result = item;
+            }
+
+            return result;
+        }
     }
 }

@@ -16,22 +16,22 @@ namespace Alternet.UI
         /// <summary>
         /// Gets <see cref="Math.PI"/> divided by 180d.
         /// </summary>
-        public const double DegToRad = Math.PI / 180d;
+        public const double DegToRadD = Math.PI / 180d;
 
         /// <summary>
         /// Gets 180d divided by <see cref="Math.PI"/>.
         /// </summary>
-        public const double RadToDeg = 180d / Math.PI;
+        public const double RadToDegD = 180d / Math.PI;
 
         /// <summary>
-        /// Gets <see cref="Math.PI"/> divided by 180f.
+        /// Gets <see cref="MathF.PI"/> divided by 180f.
         /// </summary>
-        public const float DegToRadF = (float)Math.PI / 180f;
+        public const float DegToRadF = MathF.PI / 180f;
 
         /// <summary>
-        /// Gets 180f divided by <see cref="Math.PI"/>.
+        /// Gets 180f divided by <see cref="MathF.PI"/>.
         /// </summary>
-        public const float RadToDegF = 180f / (float)Math.PI;
+        public const float RadToDegF = 180f / MathF.PI;
 
         /// <summary>
         /// Gets high <see cref="short"/> of the <see cref="int"/> value.
@@ -119,22 +119,9 @@ namespace Alternet.UI
         /// <returns><see cref="double"/> value with distance between point (x1, y1) and
         /// point (x2, y2).</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static double GetDistance(Coord x1, Coord y1, Coord x2, Coord y2)
+        public static Coord GetDistance(Coord x1, Coord y1, Coord x2, Coord y2)
         {
-            return Math.Sqrt(Math.Pow(x2 - x1, 2) + Math.Pow(y2 - y1, 2));
-        }
-
-        /// <summary>
-        /// Gets percentage of <paramref name="value"/>.
-        /// </summary>
-        /// <param name="value">Value.</param>
-        /// <param name="percent">Value from 0 to 100.</param>
-        /// <returns></returns>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static double PercentOf(double value, double percent)
-        {
-            double result = (percent / 100) * value;
-            return result;
+            return MathF.Sqrt(MathF.Pow(x2 - x1, 2) + MathF.Pow(y2 - y1, 2));
         }
 
         /// <summary>
@@ -266,64 +253,6 @@ namespace Alternet.UI
         /// <summary>
         /// Returns the larger of the specified numbers.
         /// </summary>
-        /// <param name="values">Array of <see cref="double"/> numbers.</param>
-        /// <exception cref="ArgumentOutOfRangeException">if <paramref name="values"/> is
-        /// an empty array.</exception>
-        public static double Max(params double[] values)
-        {
-            var length = values.Length;
-
-            if (length < 2)
-            {
-                if(length == 0)
-                    throw new ArgumentOutOfRangeException(nameof(values));
-                return values[0];
-            }
-
-            var result = values[0];
-
-            for(int i = 1; i < values.Length; i++)
-            {
-                var item = values[i];
-                if (item > result)
-                    result = item;
-            }
-
-            return result;
-        }
-
-        /// <summary>
-        /// Returns the smaller of the specified numbers.
-        /// </summary>
-        /// <param name="values">Array of <see cref="double"/> numbers.</param>
-        /// <exception cref="ArgumentOutOfRangeException">if <paramref name="values"/> is
-        /// an empty array.</exception>
-        public static double Min(params double[] values)
-        {
-            var length = values.Length;
-
-            if (length < 2)
-            {
-                if (length == 0)
-                    throw new ArgumentOutOfRangeException(nameof(values));
-                return values[0];
-            }
-
-            var result = values[0];
-
-            for (int i = 1; i < values.Length; i++)
-            {
-                var item = values[i];
-                if (item < result)
-                    result = item;
-            }
-
-            return result;
-        }
-
-        /// <summary>
-        /// Returns the larger of the specified numbers.
-        /// </summary>
         /// <param name="values">Array of <see cref="int"/> numbers.</param>
         /// <exception cref="ArgumentOutOfRangeException">if <paramref name="values"/> is
         /// an empty array.</exception>
@@ -425,17 +354,7 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc cref="ApplyMinMax(int, int?, int?)"/>
-        public static double ApplyMinMax(double value, double? min = null, double? max = null)
-        {
-            if (min is not null && value < min)
-                value = min.Value;
-            if (max is not null && value > max)
-                value = max.Value;
-            return value;
-        }
-
-        /// <inheritdoc cref="ApplyMinMax(int, int?, int?)"/>
-        public static Coord ApplyMinMaxCoord(Coord value, Coord? min = null, Coord? max = null)
+        public static Coord ApplyMinMax(float value, float? min = null, float? max = null)
         {
             if (min is not null && value < min)
                 value = min.Value;
@@ -553,22 +472,6 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Converts an angle from radians to degrees.
-        /// </summary>
-        /// <param name="radians">Angle in radians.</param>
-        /// <returns>Angle in degrees.</returns>
-        public static float ToDegrees(float radians)
-        {
-            var angleDegrees = radians * RadToDegF;
-
-            // Ensure angle is in [0, 360)
-            if (angleDegrees < 0f)
-                angleDegrees += 360f;
-
-            return angleDegrees;
-        }
-
-        /// <summary>
         /// Converts an angle from degrees to radians.
         /// </summary>
         /// <param name="degrees">Angle in degrees.</param>
@@ -582,22 +485,6 @@ namespace Alternet.UI
                 angleRadians += 2d * Math.PI;
 
             return angleRadians;
-        }
-
-        /// <summary>
-        /// Converts an angle from radians to degrees.
-        /// </summary>
-        /// <param name="radians">Angle in radians.</param>
-        /// <returns>Angle in degrees.</returns>
-        public static double ToDegrees(double radians)
-        {
-            var angleDegrees = radians * RadToDeg;
-
-            // Ensure angle is in [0, 360)
-            if (angleDegrees < 0d)
-                angleDegrees += 360d;
-
-            return angleDegrees;
         }
 
         /// <summary>
