@@ -23,7 +23,7 @@ namespace Alternet.Drawing
     /// two-dimensional plane.
     /// </summary>
     [Serializable]
-    [StructLayout(LayoutKind.Sequential, Pack = 1)]
+    [StructLayout(LayoutKind.Explicit)]
     public struct PointD : IEquatable<PointD>
     {
         /// <summary>
@@ -51,8 +51,39 @@ namespace Alternet.Drawing
         /// </summary>
         public static readonly PointD One = new(CoordD.One, CoordD.One);
 
-        private Coord x; // Do not rename (binary serialization)
-        private Coord y; // Do not rename (binary serialization)
+        [FieldOffset(0)]
+        private float x;
+
+        [FieldOffset(4)]
+        private float y;
+        
+        [FieldOffset(0)]
+        private SKPoint skiaPoint;
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="PointD"/>
+        /// class using the specified SkiaSharp point.
+        /// </summary>
+        /// <param name="p">The <see cref="SKPoint"/> to initialize the <see cref="PointD"/>
+        /// instance with.</param>
+        public PointD(SKPoint p)
+        {
+            skiaPoint = p;
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="PointD"/> structure using
+        /// the specified <see cref="PointI"/>.
+        /// </summary>
+        /// <remarks>This constructor converts the integer coordinates of the <see cref="PointI"/> to
+        /// double-precision floating-point values for the <see cref="PointD"/> instance.</remarks>
+        /// <param name="p">The <see cref="PointI"/> instance whose coordinates are used to
+        /// initialize this <see cref="PointD"/>.</param>
+        public PointD(PointI p)
+        {
+            x = p.X;
+            y = p.Y;
+        }
 
         /// <summary>
         /// Initializes a new instance of the <see cref='Drawing.PointD'/> class with the
@@ -162,7 +193,7 @@ namespace Alternet.Drawing
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static implicit operator PointD(SKPoint value)
         {
-            return new(value.X, value.Y);
+            return new(value);
         }
 
         /// <summary>
@@ -172,7 +203,7 @@ namespace Alternet.Drawing
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static implicit operator SKPoint(PointD point)
         {
-            return new SKPoint((float)point.x, (float)point.y);
+            return point.skiaPoint;
         }
 
         /// <summary>
@@ -286,6 +317,40 @@ namespace Alternet.Drawing
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static PointD Subtract(PointD pt, SizeD sz)
             => new(pt.X - sz.Width, pt.Y - sz.Height);
+
+        /// <summary>
+        /// Converts an array of <see cref="PointD"/> structures
+        /// to a span of <see cref="SKPoint"/> structures.
+        /// </summary>
+        /// <remarks>This method performs a memory reinterpretation
+        /// of the input array without copying data.</remarks>
+        /// <param name="points">An array of <see cref="PointD"/> representing
+        /// the points to convert.</param>
+        /// <returns>A <see cref="Span{T}"/> of <see cref="SKPoint"/>
+        /// representing the converted points.</returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static Span<SKPoint> ToSkiaSpan(PointD[] points)
+        {
+            return MemoryMarshal.Cast<PointD, SKPoint>(points.AsSpan());
+        }
+
+        /// <summary>
+        /// Converts an array of <see cref="PointD"/> structures to an array of
+        /// <see cref="SKPoint"/> structures.
+        /// </summary>
+        /// <remarks>This method performs a memory-efficient conversion by casting the elements of the
+        /// input array. The resulting array contains the same data as the input,
+        /// but represented as <see
+        /// cref="SKPoint"/> structures.</remarks>
+        /// <param name="source">The array of <see cref="PointD"/> to convert.
+        /// Must not be null.</param>
+        /// <returns>An array of <see cref="SKPoint"/>
+        /// structures corresponding to the input <paramref name="source"/> array.</returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static SKPoint[] ToSkiaArray(PointD[] source)
+        {
+            return MemoryMarshal.Cast<PointD, SKPoint>(source.AsSpan()).ToArray();
+        }
 
         /// <summary>
         /// Returns an instance converted from the provided string using
