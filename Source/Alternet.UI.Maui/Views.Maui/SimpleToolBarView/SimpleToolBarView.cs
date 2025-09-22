@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -857,7 +858,23 @@ namespace Alternet.Maui
             if (toolTip is not null)
                 ToolTipProperties.SetText(button, toolTip);
 
-            button.SvgImage = image;
+            try
+            {
+                button.SvgImage = image;
+            }
+            catch (Exception ex)
+            {
+                try
+                {
+                    button.SvgImage = Alternet.UI.KnownColorSvgImages.ImgError;
+                }
+                catch
+                {
+                }
+
+                Debug.WriteLine($"Error setting button SVG image: {ex.Message}");
+            }
+
             button.StickyStyle = StickyStyle;
             button.IsBoldWhenSticky = IsBoldWhenSticky;
 
