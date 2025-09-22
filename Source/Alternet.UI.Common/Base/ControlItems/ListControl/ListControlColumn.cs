@@ -13,7 +13,7 @@ namespace Alternet.UI
     /// </remarks>
     public class ListControlColumn : BaseControlItem
     {
-        private double suggestedWidth;
+        private Coord suggestedWidth;
         private string? title;
 
         /// <summary>

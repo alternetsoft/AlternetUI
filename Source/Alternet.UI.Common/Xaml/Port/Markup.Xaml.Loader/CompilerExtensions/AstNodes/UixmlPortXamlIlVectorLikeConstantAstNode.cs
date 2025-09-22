@@ -12,9 +12,9 @@ namespace Alternet.UI.Markup.Xaml.XamlIl.CompilerExtensions.AstNodes
     class UixmlPortXamlIlVectorLikeConstantAstNode : XamlAstNode, IXamlAstValueNode, IXamlAstILEmitableNode
     {
         private readonly IXamlConstructor _constructor;
-        private readonly double[] _values;
+        private readonly Coord[] _values;
 
-        public UixmlPortXamlIlVectorLikeConstantAstNode(IXamlLineInfo lineInfo, UixmlPortXamlIlWellKnownTypes types, IXamlType type, IXamlConstructor constructor, double[] values) : base(lineInfo)
+        public UixmlPortXamlIlVectorLikeConstantAstNode(IXamlLineInfo lineInfo, UixmlPortXamlIlWellKnownTypes types, IXamlType type, IXamlConstructor constructor, Coord[] values) : base(lineInfo)
         {
             var parameters = constructor.Parameters;
 

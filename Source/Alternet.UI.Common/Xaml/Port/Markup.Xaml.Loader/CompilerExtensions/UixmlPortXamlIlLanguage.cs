@@ -185,7 +185,7 @@ namespace Alternet.UI.Markup.Xaml.XamlIl.CompilerExtensions
             var text = textNode.Text;
             var types = context.GetUixmlPortTypes();
 
-            if (UixmlPortXamlIlLanguageParseIntrinsics.TryConvert(
+            if (UixmlPortXamlIlLanguageParseIntrinsic.TryConvert(
                 context,
                 node,
                 text,

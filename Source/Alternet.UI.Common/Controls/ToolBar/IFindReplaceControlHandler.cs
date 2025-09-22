@@ -60,7 +60,7 @@ namespace Alternet.UI
         bool IsScopeEditEnabled { get; set; }
 
         /// <inheritdoc cref="FindReplaceControl.TextBoxWidth"/>
-        double TextBoxWidth { get; set; }
+        Coord TextBoxWidth { get; set; }
 
         /// <inheritdoc cref="FindReplaceControl.WantKeys"/>
         bool WantKeys { get; set; }

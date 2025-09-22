@@ -103,7 +103,7 @@ namespace Alternet.Drawing
         /// <remarks>
         /// Default value of 1.2 was inspired by the W3C CSS specification.
         /// </remarks>
-        public static FontScalar SmallerLargerSizeScaleFactor = 1.2;
+        public static FontScalar SmallerLargerSizeScaleFactor = 1.2f;
 
         private static Font? defaultFont;
         private static Font? defaultMonoFont;

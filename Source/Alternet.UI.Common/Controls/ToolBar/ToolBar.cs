@@ -1597,7 +1597,7 @@ namespace Alternet.UI
         /// of type <see cref="SpeedButton"/>.</remarks>
         /// <param name="width">The minimum width, in device-independent units,
         /// to set for the labels' text.</param>
-        public virtual void SetMinToolLabelTextWidth(double width)
+        public virtual void SetMinToolLabelTextWidth(Coord width)
         {
             foreach (var speedButton in ToolsAsButton)
             {

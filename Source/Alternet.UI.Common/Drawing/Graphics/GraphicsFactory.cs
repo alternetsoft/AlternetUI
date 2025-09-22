@@ -544,7 +544,7 @@ namespace Alternet.Drawing
         public static Coord PixelToInch(int value, Coord? scaleFactor = null)
         {
             var result = PixelToDip(value, scaleFactor);
-            result /= 96.0;
+            result /= CoordD.Coord96;
             return result;
         }
 

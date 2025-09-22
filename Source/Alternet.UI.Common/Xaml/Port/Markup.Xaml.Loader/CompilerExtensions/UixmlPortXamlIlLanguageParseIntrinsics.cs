@@ -16,7 +16,7 @@ using XamlX.TypeSystem;
 
 namespace Alternet.UI.Markup.Xaml.XamlIl.CompilerExtensions
 {
-    class UixmlPortXamlIlLanguageParseIntrinsics
+    class UixmlPortXamlIlLanguageParseIntrinsic
     {
         public static bool TryConvert(AstTransformationContext context, IXamlAstValueNode node, string text, IXamlType type, UixmlPortXamlIlWellKnownTypes types, out IXamlAstValueNode result)
         {
@@ -115,7 +115,7 @@ namespace Alternet.UI.Markup.Xaml.XamlIl.CompilerExtensions
                 }
             }
 
-            /* yezo
+            /* 
             if (type.Equals(types.Matrix))
             {
                 try
@@ -213,7 +213,7 @@ namespace Alternet.UI.Markup.Xaml.XamlIl.CompilerExtensions
                 return true;
             }
 
-            /* yezo
+            /* 
             if (types.IBrush.IsAssignableFrom(type))
             {
                 if (Color.TryParse(text, out Color color))

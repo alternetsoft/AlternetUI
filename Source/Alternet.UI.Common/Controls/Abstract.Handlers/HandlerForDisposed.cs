@@ -400,7 +400,7 @@ namespace Alternet.UI
             return default;
         }
 
-        public bool BeginFontSize(double pointSize)
+        public bool BeginFontSize(Coord pointSize)
         {
             return default;
         }
@@ -933,7 +933,7 @@ namespace Alternet.UI
             return default;
         }
 
-        public double GetFontScale()
+        public Coord GetFontScale()
         {
             return default;
         }
@@ -1568,7 +1568,7 @@ namespace Alternet.UI
         {
         }
 
-        public void SetColumnWidth(long columnIndex, double width, ListViewColumnWidthMode widthMode)
+        public void SetColumnWidth(long columnIndex, Coord width, ListViewColumnWidthMode widthMode)
         {
         }
 
@@ -1619,7 +1619,7 @@ namespace Alternet.UI
         {
         }
 
-        public void SetFontScale(double fontScale, bool refresh = false)
+        public void SetFontScale(Coord fontScale, bool refresh = false)
         {
         }
 
@@ -1655,7 +1655,7 @@ namespace Alternet.UI
         {
         }
 
-        public void SetImageMargins(double x, double y)
+        public void SetImageMargins(Coord x, Coord y)
         {
         }
 

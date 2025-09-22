@@ -33,7 +33,7 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        public virtual double GetScaleFactor()
+        public virtual Coord GetScaleFactor()
         {
             return 1;
         }

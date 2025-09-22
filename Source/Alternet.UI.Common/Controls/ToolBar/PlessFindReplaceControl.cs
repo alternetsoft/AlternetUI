@@ -41,7 +41,7 @@ namespace Alternet.UI
 
         public virtual bool IsScopeEditEnabled { get; set; }
 
-        public virtual double TextBoxWidth { get; set; }
+        public virtual Coord TextBoxWidth { get; set; }
 
         public virtual bool WantKeys { get; set; }
 

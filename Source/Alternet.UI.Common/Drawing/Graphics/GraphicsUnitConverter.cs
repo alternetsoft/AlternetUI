@@ -29,7 +29,7 @@ namespace Alternet.Drawing
     public static class GraphicsUnitConverter
     {
         /// <summary>
-        /// Gets or set convertion event handler method.
+        /// Gets or set conversion event handler method.
         /// </summary>
         public static ConvertGraphicsUnit Convert = DefaultConvert;
 
@@ -136,7 +136,7 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
-        /// Default convertion method.
+        /// Default conversion method.
         /// </summary>
         /// <param name="from"><see cref="GraphicsUnit"/> of the value which is converted.</param>
         /// <param name="to"><see cref="GraphicsUnit"/> of the result.</param>
@@ -151,7 +151,7 @@ namespace Alternet.Drawing
             Coord nSrc,
             GraphicsType type = GraphicsType.Undefined)
         {
-            Coord inchs;
+            Coord inches;
 
             if (from == to)
                 return nSrc;
@@ -159,34 +159,34 @@ namespace Alternet.Drawing
             switch (from)
             {
                 case GraphicsUnit.Document: // Each unit is 1/300 inch.
-                    inchs = nSrc / 300.0;
+                    inches = nSrc / CoordD.Coord300;
                     break;
                 case GraphicsUnit.Inch:
-                    inchs = nSrc;
+                    inches = nSrc;
                     break;
                 case GraphicsUnit.Millimeter:
-                    inchs = nSrc / 25.4;
+                    inches = nSrc / CoordD.Coord25And4;
                     break;
                 case GraphicsUnit.Display:
                     if (type == GraphicsType.PostScript)
                     { /* Uses 1/100th on printers */
-                        inchs = nSrc / 100;
+                        inches = nSrc / 100;
                     }
                     else
                     { /* Pixel for video display */
-                        inchs = nSrc / dpi;
+                        inches = nSrc / dpi;
                     }
 
                     break;
                 case GraphicsUnit.Pixel:
                 case GraphicsUnit.World:
-                    inchs = nSrc / dpi;
+                    inches = nSrc / dpi;
                     break;
                 case GraphicsUnit.Point:
-                    inchs = nSrc / 72.0;
+                    inches = nSrc / CoordD.Coord72;
                     break;
                 case GraphicsUnit.Dip:
-                    inchs = nSrc / 96.0;
+                    inches = nSrc / CoordD.Coord96;
                     break;
                 default:
                     return nSrc;
@@ -195,28 +195,28 @@ namespace Alternet.Drawing
             switch (to)
             {
                 case GraphicsUnit.Document:
-                    return inchs * 300.0;
+                    return inches * CoordD.Coord300;
                 case GraphicsUnit.Inch:
-                    return inchs;
+                    return inches;
                 case GraphicsUnit.Millimeter:
-                    return inchs * 25.4;
+                    return inches * CoordD.Coord25And4;
                 case GraphicsUnit.Display:
                     if (type == GraphicsType.PostScript)
                     { /* Uses 1/100th on printers */
-                        return inchs * 100;
+                        return inches * 100;
                     }
                     else
                     { /* Pixel for video display */
-                        return inchs * dpi;
+                        return inches * dpi;
                     }
 
                 case GraphicsUnit.Pixel:
                 case GraphicsUnit.World:
-                    return inchs * dpi;
+                    return inches * dpi;
                 case GraphicsUnit.Point:
-                    return inchs * 72.0;
+                    return inches * CoordD.Coord72;
                 case GraphicsUnit.Dip:
-                    return inchs * 96.0;
+                    return inches * CoordD.Coord96;
                 default:
                     return nSrc;
             }

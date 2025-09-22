@@ -472,7 +472,7 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        public ITextBoxTextAttr SetFontPointSize(double pointSize)
+        public ITextBoxTextAttr SetFontPointSize(Coord pointSize)
         {
             return this;
         }

@@ -116,7 +116,7 @@ namespace Alternet.UI
         public virtual void SetBorder(
             Color color,
             bool radiusIsPercent = true,
-            double cornerRadius = 0)
+            Coord cornerRadius = 0)
         {
             if (Border is null)
                 Border = new BorderSettings();

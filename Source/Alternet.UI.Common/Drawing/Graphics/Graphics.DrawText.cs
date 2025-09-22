@@ -464,7 +464,7 @@ namespace Alternet.Drawing
             var origin = rect.Location;
             SizeD totalMeasure = (wrappedWidth, 0);
 
-            double? emptyStringMeasure = null;
+            Coord? emptyStringMeasure = null;
 
             foreach (var s in wrappedText)
             {
@@ -475,7 +475,7 @@ namespace Alternet.Drawing
                 if (isEmpty)
                 {
                     emptyStringMeasure ??= font.GetHeight(this);
-                    measure = (0d, emptyStringMeasure.Value);
+                    measure = (CoordD.Empty, emptyStringMeasure.Value);
                 }
                 else
                 {

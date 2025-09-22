@@ -75,15 +75,15 @@ namespace Alternet.Drawing
                 switch (font)
                 {
                     case SystemSettingsFont.OemFixed:
-                        return new("Terminal", 7.5);
+                        return new("Terminal", CoordD.Coord7And5);
                     case SystemSettingsFont.AnsiFixed:
-                        return new("Courier", 4.5);
+                        return new("Courier", CoordD.Coord4And5);
                     case SystemSettingsFont.AnsiVar:
-                        return new("MS Sans Serif", 4.5);
+                        return new("MS Sans Serif", CoordD.Coord4And5);
                     case SystemSettingsFont.System:
-                        return new("System", 7.5);
+                        return new("System", CoordD.Coord7And5);
                     case SystemSettingsFont.DeviceDefault:
-                        return new("System", 7.5);
+                        return new("System", CoordD.Coord7And5);
                     case SystemSettingsFont.DefaultGui:
                     default:
                         return new("Segoe UI", 9);
