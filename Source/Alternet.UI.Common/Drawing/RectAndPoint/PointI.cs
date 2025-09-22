@@ -242,8 +242,8 @@ namespace Alternet.Drawing
         public static PointI Ceiling(PointD value)
         {
             return new(
-                unchecked((int)Math.Ceiling(value.X)),
-                unchecked((int)Math.Ceiling(value.Y)));
+                unchecked((int)MathF.Ceiling(value.X)),
+                unchecked((int)MathF.Ceiling(value.Y)));
         }
 
         /// <summary>
@@ -260,7 +260,7 @@ namespace Alternet.Drawing
         /// by performing a round operation on the coordinates.
         /// </summary>
         /// <param name="rounding">The <see cref="MidpointRounding"/> to use when
-        /// <see cref="Math.Round(double,MidpointRounding)"/> is called.</param>
+        /// <see cref="MathF.Round(float,MidpointRounding)"/> is called.</param>
         /// <remarks>
         /// Rounds a floating-point value to the nearest integer.
         /// </remarks>
@@ -270,8 +270,8 @@ namespace Alternet.Drawing
         {
             rounding ??= RectD.DefaultMidpointRounding;
             return new(
-                unchecked((int)Math.Round(value.X, rounding.Value)),
-                unchecked((int)Math.Round(value.Y, rounding.Value)));
+                unchecked((int)MathF.Round(value.X, rounding.Value)),
+                unchecked((int)MathF.Round(value.Y, rounding.Value)));
         }
 
         /// <summary>
