@@ -13,7 +13,7 @@ namespace Alternet.Maui
     /// </summary>
     public static class MauiCommands
     {
-        private static Command? exitCommand;
+        private static Alternet.UI.Command? exitCommand;
 
         /// <summary>
         /// Gets the command to exit the application.
@@ -22,11 +22,11 @@ namespace Alternet.Maui
         /// This command executes the <see cref="Alternet.UI.MauiUtils.CloseApplication"/> method
         /// to close the application. The command is always executable.
         /// </remarks>
-        public static Command ExitCommand
+        public static Alternet.UI.Command ExitCommand
         {
             get
             {
-                exitCommand ??= new Command(
+                exitCommand ??= new Alternet.UI.Command(
                     execute: () =>
                     {
                         Alternet.UI.MauiUtils.CloseApplication();
@@ -52,6 +52,20 @@ namespace Alternet.Maui
         /// <returns>A <see cref="Microsoft.Maui.Controls.Command"/> instance that
         /// wraps the provided <see cref="Alternet.UI.Command"/>.</returns>
         public static Command ToMaui(this Alternet.UI.Command command)
+        {
+            var result = new Command(command.Execute, command.CanExecute);
+            return result;
+        }
+
+        /// <summary>
+        /// Converts an <see cref="Alternet.UI.ICommand"/> to a <see cref="Command"/>
+        /// for use in .NET MAUI applications.
+        /// </summary>
+        /// <param name="command">The <see cref="Alternet.UI.ICommand"/> instance to convert.
+        /// Cannot be <see langword="null"/>.</param>
+        /// <returns>A <see cref="Command"/> instance that wraps the specified
+        /// <see cref="Alternet.UI.ICommand"/>.</returns>
+        public static Command ToMaui(this Alternet.UI.ICommand command)
         {
             var result = new Command(command.Execute, command.CanExecute);
             return result;
