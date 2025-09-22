@@ -74,7 +74,7 @@ namespace Alternet.Drawing
         /// Gets or sets scale factor used when conversion device-independent units
         /// to/from pixels is performed.
         /// </summary>
-        public Coord? ScaleFactor { get; set; } = 1.0;
+        public Coord? ScaleFactor { get; set; } = 1;
 
         /// <seealso cref="Region.Clear()"/>
         public virtual void Clear()

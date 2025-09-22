@@ -1072,7 +1072,7 @@ namespace Alternet.UI
                         specifiedHeight = MathUtils.Max(
                             MinimumSize.Height,
                             DefaultSliderMinimumSize);
-                        specifiedHeight = Math.Ceiling(specifiedHeight);
+                        specifiedHeight = MathUtils.Ceiling(specifiedHeight);
 
                         if (leftTopScale.Parent is not null)
                         {
