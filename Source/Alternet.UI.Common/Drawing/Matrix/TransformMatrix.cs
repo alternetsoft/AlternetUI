@@ -357,12 +357,12 @@ namespace Alternet.Drawing
         /// </summary>
         public void Reset()
         {
-            M11 = 1d;
-            M12 = 0d;
-            M21 = 0d;
-            M22 = 1d;
-            DX = 0d;
-            DY = 0d;
+            M11 = CoordD.One;
+            M12 = CoordD.Empty;
+            M21 = CoordD.Empty;
+            M22 = CoordD.One;
+            DX = CoordD.Empty;
+            DY = CoordD.Empty;
         }
 
         /// <summary>
@@ -451,8 +451,8 @@ namespace Alternet.Drawing
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void Rotate(Coord angle)
         {
-            angle %= 360.0; // Doing the modulo before converting to radians reduces total error
-            RotateRadians(angle * MathUtils.DegToRad);
+            angle %= CoordD.Coord360; // Doing the modulo before converting to radians reduces total error
+            RotateRadians(angle * MathUtils.DegToRadF);
         }
 
         /// <summary>
@@ -469,8 +469,8 @@ namespace Alternet.Drawing
             // |  0      0    1 |   | m_tx  m_ty   1 |
             */
 
-            var c = Math.Cos(angleRadians);
-            var s = Math.Sin(angleRadians);
+            var c = MathF.Cos(angleRadians);
+            var s = MathF.Sin(angleRadians);
 
             var e11 = (c * M11) + (s * M21);
             var e12 = (c * M12) + (s * M22);
@@ -616,7 +616,7 @@ namespace Alternet.Drawing
         /// <inheritdoc/>
         public readonly override int GetHashCode()
         {
-            return (M11, M12, M21, M22, DX, DY).GetHashCode();
+            return HashCode.Combine(M11, M12, M21, M22, DX, DY);
         }
 
         /// <summary>
@@ -632,11 +632,11 @@ namespace Alternet.Drawing
         /// </returns>
         public readonly bool IsRotationIdentity()
         {
-            const Coord epsilon = 0.00001d;
+            const Coord epsilon = 0.00001f;
 
             bool isRotationIdentity =
-                Math.Abs(M11 - 1d) < epsilon &&
-                Math.Abs(M21) < epsilon;
+                MathF.Abs(M11 - 1f) < epsilon &&
+                MathF.Abs(M21) < epsilon;
             return isRotationIdentity;
         }
 
@@ -647,17 +647,17 @@ namespace Alternet.Drawing
         /// <returns>
         /// The rotation angle in radians. Returns 0 if the matrix has no rotation.
         /// </returns>
-        public readonly double GetRotationAngleInRadians()
+        public readonly Coord GetRotationAngleInRadians()
         {
             if(IsRotationIdentity())
-                return 0d;
+                return CoordD.Empty;
 
             // Extract angle using clockwise convention
-            double angleRadians = Math.Atan2(M21, M11);
+            Coord angleRadians = MathF.Atan2(M21, M11);
 
             // Normalize to [0, 2*pi) if needed
-            if (angleRadians < 0d)
-                angleRadians += 2d * Math.PI;
+            if (angleRadians < CoordD.Empty)
+                angleRadians += CoordD.Two * MathF.PI;
 
             return angleRadians;
         }
@@ -671,8 +671,8 @@ namespace Alternet.Drawing
         {
             Coord angleRadians = GetRotationAngleInRadians();
 
-            if (angleRadians == 0d)
-                return 0d;
+            if (angleRadians == 0f)
+                return 0f;
 
             Coord angleDegrees = MathUtils.ToDegrees(angleRadians);
 

@@ -63,10 +63,10 @@ ALTERNET_UI_API void PageSettings_SetLandscape_(PageSettings* obj, c_bool value)
     #endif
 }
 
-ALTERNET_UI_API double PageSettings_GetMarginLeft_(PageSettings* obj)
+ALTERNET_UI_API float PageSettings_GetMarginLeft_(PageSettings* obj)
 {
     #if !defined(__WXMSW__) || defined(_DEBUG)
-    return MarshalExceptions<double>([&](){
+    return MarshalExceptions<float>([&](){
     #endif
         return obj->GetMarginLeft();
     #if !defined(__WXMSW__) || defined(_DEBUG)
@@ -74,7 +74,7 @@ ALTERNET_UI_API double PageSettings_GetMarginLeft_(PageSettings* obj)
     #endif
 }
 
-ALTERNET_UI_API void PageSettings_SetMarginLeft_(PageSettings* obj, double value)
+ALTERNET_UI_API void PageSettings_SetMarginLeft_(PageSettings* obj, float value)
 {
     #if !defined(__WXMSW__) || defined(_DEBUG)
     MarshalExceptions<void>([&](){
@@ -85,10 +85,10 @@ ALTERNET_UI_API void PageSettings_SetMarginLeft_(PageSettings* obj, double value
     #endif
 }
 
-ALTERNET_UI_API double PageSettings_GetMarginRight_(PageSettings* obj)
+ALTERNET_UI_API float PageSettings_GetMarginRight_(PageSettings* obj)
 {
     #if !defined(__WXMSW__) || defined(_DEBUG)
-    return MarshalExceptions<double>([&](){
+    return MarshalExceptions<float>([&](){
     #endif
         return obj->GetMarginRight();
     #if !defined(__WXMSW__) || defined(_DEBUG)
@@ -96,7 +96,7 @@ ALTERNET_UI_API double PageSettings_GetMarginRight_(PageSettings* obj)
     #endif
 }
 
-ALTERNET_UI_API void PageSettings_SetMarginRight_(PageSettings* obj, double value)
+ALTERNET_UI_API void PageSettings_SetMarginRight_(PageSettings* obj, float value)
 {
     #if !defined(__WXMSW__) || defined(_DEBUG)
     MarshalExceptions<void>([&](){
@@ -107,10 +107,10 @@ ALTERNET_UI_API void PageSettings_SetMarginRight_(PageSettings* obj, double valu
     #endif
 }
 
-ALTERNET_UI_API double PageSettings_GetMarginTop_(PageSettings* obj)
+ALTERNET_UI_API float PageSettings_GetMarginTop_(PageSettings* obj)
 {
     #if !defined(__WXMSW__) || defined(_DEBUG)
-    return MarshalExceptions<double>([&](){
+    return MarshalExceptions<float>([&](){
     #endif
         return obj->GetMarginTop();
     #if !defined(__WXMSW__) || defined(_DEBUG)
@@ -118,7 +118,7 @@ ALTERNET_UI_API double PageSettings_GetMarginTop_(PageSettings* obj)
     #endif
 }
 
-ALTERNET_UI_API void PageSettings_SetMarginTop_(PageSettings* obj, double value)
+ALTERNET_UI_API void PageSettings_SetMarginTop_(PageSettings* obj, float value)
 {
     #if !defined(__WXMSW__) || defined(_DEBUG)
     MarshalExceptions<void>([&](){
@@ -129,10 +129,10 @@ ALTERNET_UI_API void PageSettings_SetMarginTop_(PageSettings* obj, double value)
     #endif
 }
 
-ALTERNET_UI_API double PageSettings_GetMarginBottom_(PageSettings* obj)
+ALTERNET_UI_API float PageSettings_GetMarginBottom_(PageSettings* obj)
 {
     #if !defined(__WXMSW__) || defined(_DEBUG)
-    return MarshalExceptions<double>([&](){
+    return MarshalExceptions<float>([&](){
     #endif
         return obj->GetMarginBottom();
     #if !defined(__WXMSW__) || defined(_DEBUG)
@@ -140,7 +140,7 @@ ALTERNET_UI_API double PageSettings_GetMarginBottom_(PageSettings* obj)
     #endif
 }
 
-ALTERNET_UI_API void PageSettings_SetMarginBottom_(PageSettings* obj, double value)
+ALTERNET_UI_API void PageSettings_SetMarginBottom_(PageSettings* obj, float value)
 {
     #if !defined(__WXMSW__) || defined(_DEBUG)
     MarshalExceptions<void>([&](){

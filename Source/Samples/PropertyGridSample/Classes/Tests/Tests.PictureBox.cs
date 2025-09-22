@@ -53,7 +53,7 @@ namespace PropertyGridSample
                     template.TitleLabel.Text = "This is title";
                     template.TitleLabel.ParentForeColor = false;
                     template.TitleLabel.ParentFont = false;
-                    template.TitleLabel.Font = template.RealFont.Scaled(1.5);
+                    template.TitleLabel.Font = template.RealFont.Scaled(1.5f);
                     template.TitleLabel.ForegroundColor = RichToolTip.DefaultToolTipTitleForegroundColor;
 
                     template.MessageLabel.Text = "This is message text";

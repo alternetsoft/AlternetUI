@@ -23,7 +23,7 @@ namespace Alternet.UI.Native
         {
         }
         
-        public void Initialize(Alternet.Drawing.PointD center, double radius, Alternet.Drawing.PointD gradientOrigin, Alternet.Drawing.Color[] gradientStopsColors, System.Double[] gradientStopsOffsets)
+        public void Initialize(Alternet.Drawing.PointD center, float radius, Alternet.Drawing.PointD gradientOrigin, Alternet.Drawing.Color[] gradientStopsColors, System.Single[] gradientStopsOffsets)
         {
             CheckDisposed();
             NativeApi.RadialGradientBrush_Initialize_(NativePointer, center, radius, gradientOrigin, Array.ConvertAll<Alternet.Drawing.Color, NativeApiTypes.Color>(gradientStopsColors, x => x), gradientStopsColors.Length, gradientStopsOffsets, gradientStopsOffsets.Length);
@@ -39,7 +39,7 @@ namespace Alternet.UI.Native
             public static extern IntPtr RadialGradientBrush_Create_();
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void RadialGradientBrush_Initialize_(IntPtr obj, Alternet.Drawing.PointD center, double radius, Alternet.Drawing.PointD gradientOrigin, NativeApiTypes.Color[] gradientStopsColors, int gradientStopsColorsCount, System.Double[] gradientStopsOffsets, int gradientStopsOffsetsCount);
+            public static extern void RadialGradientBrush_Initialize_(IntPtr obj, Alternet.Drawing.PointD center, float radius, Alternet.Drawing.PointD gradientOrigin, NativeApiTypes.Color[] gradientStopsColors, int gradientStopsColorsCount, System.Single[] gradientStopsOffsets, int gradientStopsOffsetsCount);
             
         }
     }

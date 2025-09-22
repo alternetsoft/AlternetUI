@@ -89,7 +89,7 @@ namespace Alternet::UI
 		return GetBitmapBundle().GetPreferredBitmapSizeFor((wxWindow*)window);
 	}
 
-	Int32Size ImageSet::GetPreferredBitmapSizeAtScale(double scale)
+	Int32Size ImageSet::GetPreferredBitmapSizeAtScale(Coord scale)
 	{
 		return GetBitmapBundle().GetPreferredBitmapSizeAtScale(scale);
 	}

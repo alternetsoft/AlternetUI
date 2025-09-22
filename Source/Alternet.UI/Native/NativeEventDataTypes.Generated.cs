@@ -7,8 +7,8 @@ namespace Alternet.UI.Native
     class DragEventData
     {
         public System.IntPtr data;
-        public double mouseClientLocationX;
-        public double mouseClientLocationY;
+        public float mouseClientLocationX;
+        public float mouseClientLocationY;
         public DragDropEffects effect;
     }
     

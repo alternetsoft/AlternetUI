@@ -226,8 +226,8 @@ namespace ControlsSample
                 FontStyle fontStyle = boldCheckBox.IsChecked ? FontStyle.Bold : FontStyle.Regular;
 
                 var s = comboBoxFontSize.Value?.ToString();
-                double fontSize = string.IsNullOrWhiteSpace(s) ?
-                    defaultFont.SizeInPoints : Double.Parse(s);
+                Coord fontSize = string.IsNullOrWhiteSpace(s) ?
+                    defaultFont.SizeInPoints : Coord.Parse(s);
 
                 s = comboBoxFontName.Value?.ToString();
                 string fontName = string.IsNullOrWhiteSpace(s) ? defaultFont.Name : s!;

@@ -14,7 +14,7 @@ void LoadSvgFromStream(void* stream, int width, int height, const Color& color);
 void LoadSvgFromString(const string& s, int width, int height, const Color& color);
 void InitImage(Image* image, int width, int height);
 void InitImageFor(Image* image, void* window);
-SizeI GetPreferredBitmapSizeAtScale(double scale);
+SizeI GetPreferredBitmapSizeAtScale(float scale);
 SizeI GetPreferredBitmapSizeFor(void* window);
 
 public:

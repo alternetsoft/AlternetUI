@@ -1,13 +1,11 @@
-﻿#define CoordIsDouble
-
-#if CoordIsDouble
+﻿#if CoordIsDouble
 global using Coord = double;
 global using FontMeasure = double;
 global using FontSize = double;
 #else
-global using Coord = single;
-global using FontMeasure = single;
-global using FontSize = single;
+global using Coord = float;
+global using FontMeasure = float;
+global using FontSize = float;
 #endif
 
 namespace Alternet.UI.Internal

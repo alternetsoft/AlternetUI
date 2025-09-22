@@ -237,7 +237,7 @@ namespace Alternet.UI
 
             set
             {
-                left = MathUtils.ApplyMinMaxCoord(value, minLeft, maxLeft);
+                left = MathUtils.ApplyMinMax(value, minLeft, maxLeft);
             }
         }
 
@@ -253,7 +253,7 @@ namespace Alternet.UI
 
             set
             {
-                top = MathUtils.ApplyMinMaxCoord(value, minTop, maxTop);
+                top = MathUtils.ApplyMinMax(value, minTop, maxTop);
             }
         }
 
@@ -269,7 +269,7 @@ namespace Alternet.UI
 
             set
             {
-                right = MathUtils.ApplyMinMaxCoord(value, minRight, maxRight);
+                right = MathUtils.ApplyMinMax(value, minRight, maxRight);
             }
         }
 
@@ -285,7 +285,7 @@ namespace Alternet.UI
 
             set
             {
-                bottom = MathUtils.ApplyMinMaxCoord(value, minBottom, maxBottom);
+                bottom = MathUtils.ApplyMinMax(value, minBottom, maxBottom);
             }
         }
 
@@ -471,7 +471,7 @@ namespace Alternet.UI
         /// <returns>A hash code for the current object.</returns>
         public override readonly int GetHashCode()
         {
-            return (left, right, top, bottom).GetHashCode();
+            return HashCode.Combine(left, right, top, bottom);
         }
 
         /// <summary>

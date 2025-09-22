@@ -216,7 +216,7 @@ namespace Alternet.Drawing
             Font font,
             Color foreColor,
             Color backColor,
-            double angle)
+            Coord angle)
         {
             canvas.Save();
             canvas.Translate((float)location.X, (float)location.Y);

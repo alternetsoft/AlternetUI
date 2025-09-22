@@ -119,7 +119,7 @@ ALTERNET_UI_API void GraphicsPath_AddBezierTo_(GraphicsPath* obj, PointD control
     #endif
 }
 
-ALTERNET_UI_API void GraphicsPath_AddArc_(GraphicsPath* obj, PointD center, double radius, double startAngle, double sweepAngle)
+ALTERNET_UI_API void GraphicsPath_AddArc_(GraphicsPath* obj, PointD center, float radius, float startAngle, float sweepAngle)
 {
     #if !defined(__WXMSW__) || defined(_DEBUG)
     MarshalExceptions<void>([&](){
@@ -141,7 +141,7 @@ ALTERNET_UI_API void GraphicsPath_AddRectangle_(GraphicsPath* obj, RectD rect)
     #endif
 }
 
-ALTERNET_UI_API void GraphicsPath_AddRoundedRectangle_(GraphicsPath* obj, RectD rect, double cornerRadius)
+ALTERNET_UI_API void GraphicsPath_AddRoundedRectangle_(GraphicsPath* obj, RectD rect, float cornerRadius)
 {
     #if !defined(__WXMSW__) || defined(_DEBUG)
     MarshalExceptions<void>([&](){

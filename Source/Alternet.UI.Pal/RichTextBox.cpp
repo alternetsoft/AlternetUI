@@ -923,12 +923,12 @@ namespace Alternet::UI
 		return GetTextCtrl()->GetVerticalScrollbarEnabled();
 	}
 
-	void RichTextBox::SetFontScale(double fontScale, bool refresh)
+	void RichTextBox::SetFontScale(Coord fontScale, bool refresh)
 	{
 		GetTextCtrl()->SetFontScale(fontScale, refresh);
 	}
 
-	double RichTextBox::GetFontScale()
+	Coord RichTextBox::GetFontScale()
 	{
 		return GetTextCtrl()->GetFontScale();
 	}

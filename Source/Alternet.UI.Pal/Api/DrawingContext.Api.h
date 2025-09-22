@@ -80,7 +80,7 @@ ALTERNET_UI_API void DrawingContext_SetInterpolationMode_(DrawingContext* obj, I
     #endif
 }
 
-ALTERNET_UI_API DrawingContext* DrawingContext_CreateMemoryDC_(double scaleFactor)
+ALTERNET_UI_API DrawingContext* DrawingContext_CreateMemoryDC_(float scaleFactor)
 {
     #if !defined(__WXMSW__) || defined(_DEBUG)
     return MarshalExceptions<DrawingContext*>([&](){
@@ -179,7 +179,7 @@ ALTERNET_UI_API RectD_C DrawingContext_GetClippingBox_(DrawingContext* obj)
     #endif
 }
 
-ALTERNET_UI_API void DrawingContext_DrawText_(DrawingContext* obj, const char16_t* text, PointD location, Font* font, Color foreColor, Brush* backColor, double angle, c_bool useBrush)
+ALTERNET_UI_API void DrawingContext_DrawText_(DrawingContext* obj, const char16_t* text, PointD location, Font* font, Color foreColor, Brush* backColor, float angle, c_bool useBrush)
 {
     #if !defined(__WXMSW__) || defined(_DEBUG)
     MarshalExceptions<void>([&](){
@@ -256,7 +256,7 @@ ALTERNET_UI_API DrawingContext* DrawingContext_FromScreen_()
     #endif
 }
 
-ALTERNET_UI_API void DrawingContext_RoundedRectangle_(DrawingContext* obj, Pen* pen, Brush* brush, RectD rectangle, double cornerRadius)
+ALTERNET_UI_API void DrawingContext_RoundedRectangle_(DrawingContext* obj, Pen* pen, Brush* brush, RectD rectangle, float cornerRadius)
 {
     #if !defined(__WXMSW__) || defined(_DEBUG)
     MarshalExceptions<void>([&](){
@@ -300,7 +300,7 @@ ALTERNET_UI_API void DrawingContext_Path_(DrawingContext* obj, Pen* pen, Brush* 
     #endif
 }
 
-ALTERNET_UI_API void DrawingContext_Pie_(DrawingContext* obj, Pen* pen, Brush* brush, PointD center, double radius, double startAngle, double sweepAngle)
+ALTERNET_UI_API void DrawingContext_Pie_(DrawingContext* obj, Pen* pen, Brush* brush, PointD center, float radius, float startAngle, float sweepAngle)
 {
     #if !defined(__WXMSW__) || defined(_DEBUG)
     MarshalExceptions<void>([&](){
@@ -311,7 +311,7 @@ ALTERNET_UI_API void DrawingContext_Pie_(DrawingContext* obj, Pen* pen, Brush* b
     #endif
 }
 
-ALTERNET_UI_API void DrawingContext_Circle_(DrawingContext* obj, Pen* pen, Brush* brush, PointD center, double radius)
+ALTERNET_UI_API void DrawingContext_Circle_(DrawingContext* obj, Pen* pen, Brush* brush, PointD center, float radius)
 {
     #if !defined(__WXMSW__) || defined(_DEBUG)
     MarshalExceptions<void>([&](){
@@ -432,7 +432,7 @@ ALTERNET_UI_API void DrawingContext_DrawImageAtRect_(DrawingContext* obj, Image*
     #endif
 }
 
-ALTERNET_UI_API void DrawingContext_SetTransformValues_(DrawingContext* obj, double m11, double m12, double m21, double m22, double dx, double dy)
+ALTERNET_UI_API void DrawingContext_SetTransformValues_(DrawingContext* obj, float m11, float m12, float m21, float m22, float dx, float dy)
 {
     #if !defined(__WXMSW__) || defined(_DEBUG)
     MarshalExceptions<void>([&](){
@@ -465,7 +465,7 @@ ALTERNET_UI_API void DrawingContext_DrawLines_(DrawingContext* obj, Pen* pen, Po
     #endif
 }
 
-ALTERNET_UI_API void DrawingContext_DrawArc_(DrawingContext* obj, Pen* pen, PointD center, double radius, double startAngle, double sweepAngle)
+ALTERNET_UI_API void DrawingContext_DrawArc_(DrawingContext* obj, Pen* pen, PointD center, float radius, float startAngle, float sweepAngle)
 {
     #if !defined(__WXMSW__) || defined(_DEBUG)
     MarshalExceptions<void>([&](){
@@ -476,7 +476,7 @@ ALTERNET_UI_API void DrawingContext_DrawArc_(DrawingContext* obj, Pen* pen, Poin
     #endif
 }
 
-ALTERNET_UI_API void DrawingContext_FillPie_(DrawingContext* obj, Brush* brush, PointD center, double radius, double startAngle, double sweepAngle)
+ALTERNET_UI_API void DrawingContext_FillPie_(DrawingContext* obj, Brush* brush, PointD center, float radius, float startAngle, float sweepAngle)
 {
     #if !defined(__WXMSW__) || defined(_DEBUG)
     MarshalExceptions<void>([&](){
@@ -487,7 +487,7 @@ ALTERNET_UI_API void DrawingContext_FillPie_(DrawingContext* obj, Brush* brush, 
     #endif
 }
 
-ALTERNET_UI_API void DrawingContext_DrawPie_(DrawingContext* obj, Pen* pen, PointD center, double radius, double startAngle, double sweepAngle)
+ALTERNET_UI_API void DrawingContext_DrawPie_(DrawingContext* obj, Pen* pen, PointD center, float radius, float startAngle, float sweepAngle)
 {
     #if !defined(__WXMSW__) || defined(_DEBUG)
     MarshalExceptions<void>([&](){
@@ -520,7 +520,7 @@ ALTERNET_UI_API void DrawingContext_DrawBeziers_(DrawingContext* obj, Pen* pen, 
     #endif
 }
 
-ALTERNET_UI_API void DrawingContext_DrawPoint_(DrawingContext* obj, Pen* pen, double x, double y)
+ALTERNET_UI_API void DrawingContext_DrawPoint_(DrawingContext* obj, Pen* pen, float x, float y)
 {
     #if !defined(__WXMSW__) || defined(_DEBUG)
     MarshalExceptions<void>([&](){
@@ -531,7 +531,7 @@ ALTERNET_UI_API void DrawingContext_DrawPoint_(DrawingContext* obj, Pen* pen, do
     #endif
 }
 
-ALTERNET_UI_API void DrawingContext_DrawCircle_(DrawingContext* obj, Pen* pen, PointD center, double radius)
+ALTERNET_UI_API void DrawingContext_DrawCircle_(DrawingContext* obj, Pen* pen, PointD center, float radius)
 {
     #if !defined(__WXMSW__) || defined(_DEBUG)
     MarshalExceptions<void>([&](){
@@ -542,7 +542,7 @@ ALTERNET_UI_API void DrawingContext_DrawCircle_(DrawingContext* obj, Pen* pen, P
     #endif
 }
 
-ALTERNET_UI_API void DrawingContext_FillCircle_(DrawingContext* obj, Brush* brush, PointD center, double radius)
+ALTERNET_UI_API void DrawingContext_FillCircle_(DrawingContext* obj, Brush* brush, PointD center, float radius)
 {
     #if !defined(__WXMSW__) || defined(_DEBUG)
     MarshalExceptions<void>([&](){
@@ -553,7 +553,7 @@ ALTERNET_UI_API void DrawingContext_FillCircle_(DrawingContext* obj, Brush* brus
     #endif
 }
 
-ALTERNET_UI_API void DrawingContext_DrawRoundedRectangle_(DrawingContext* obj, Pen* pen, RectD rect, double cornerRadius)
+ALTERNET_UI_API void DrawingContext_DrawRoundedRectangle_(DrawingContext* obj, Pen* pen, RectD rect, float cornerRadius)
 {
     #if !defined(__WXMSW__) || defined(_DEBUG)
     MarshalExceptions<void>([&](){
@@ -564,7 +564,7 @@ ALTERNET_UI_API void DrawingContext_DrawRoundedRectangle_(DrawingContext* obj, P
     #endif
 }
 
-ALTERNET_UI_API void DrawingContext_FillRoundedRectangle_(DrawingContext* obj, Brush* brush, RectD rect, double cornerRadius)
+ALTERNET_UI_API void DrawingContext_FillRoundedRectangle_(DrawingContext* obj, Brush* brush, RectD rect, float cornerRadius)
 {
     #if !defined(__WXMSW__) || defined(_DEBUG)
     MarshalExceptions<void>([&](){

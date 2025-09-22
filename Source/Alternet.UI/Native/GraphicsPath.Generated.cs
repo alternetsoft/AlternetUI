@@ -80,7 +80,7 @@ namespace Alternet.UI.Native
             NativeApi.GraphicsPath_AddBezierTo_(NativePointer, controlPoint1, controlPoint2, endPoint);
         }
         
-        public void AddArc(Alternet.Drawing.PointD center, double radius, double startAngle, double sweepAngle)
+        public void AddArc(Alternet.Drawing.PointD center, float radius, float startAngle, float sweepAngle)
         {
             CheckDisposed();
             NativeApi.GraphicsPath_AddArc_(NativePointer, center, radius, startAngle, sweepAngle);
@@ -92,7 +92,7 @@ namespace Alternet.UI.Native
             NativeApi.GraphicsPath_AddRectangle_(NativePointer, rect);
         }
         
-        public void AddRoundedRectangle(Alternet.Drawing.RectD rect, double cornerRadius)
+        public void AddRoundedRectangle(Alternet.Drawing.RectD rect, float cornerRadius)
         {
             CheckDisposed();
             NativeApi.GraphicsPath_AddRoundedRectangle_(NativePointer, rect, cornerRadius);
@@ -153,13 +153,13 @@ namespace Alternet.UI.Native
             public static extern void GraphicsPath_AddBezierTo_(IntPtr obj, Alternet.Drawing.PointD controlPoint1, Alternet.Drawing.PointD controlPoint2, Alternet.Drawing.PointD endPoint);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void GraphicsPath_AddArc_(IntPtr obj, Alternet.Drawing.PointD center, double radius, double startAngle, double sweepAngle);
+            public static extern void GraphicsPath_AddArc_(IntPtr obj, Alternet.Drawing.PointD center, float radius, float startAngle, float sweepAngle);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void GraphicsPath_AddRectangle_(IntPtr obj, Alternet.Drawing.RectD rect);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void GraphicsPath_AddRoundedRectangle_(IntPtr obj, Alternet.Drawing.RectD rect, double cornerRadius);
+            public static extern void GraphicsPath_AddRoundedRectangle_(IntPtr obj, Alternet.Drawing.RectD rect, float cornerRadius);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern Alternet.Drawing.RectD GraphicsPath_GetBounds_(IntPtr obj);

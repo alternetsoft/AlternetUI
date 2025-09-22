@@ -217,9 +217,9 @@ Environment.NewLine + Environment.NewLine +
                     if (sender is not ProgressBar control)
                         return;
                     if (control.Orientation == ProgressBarOrientation.Vertical)
-                        control.SuggestedSize = (Double.NaN, 250);
+                        control.SuggestedSize = (Coord.NaN, 250);
                     else
-                        control.SuggestedSize = (250, Double.NaN);
+                        control.SuggestedSize = (250, Coord.NaN);
                     control.PerformLayout();
                 }
 

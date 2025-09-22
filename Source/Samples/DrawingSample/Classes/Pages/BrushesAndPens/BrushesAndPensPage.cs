@@ -287,8 +287,8 @@ namespace DrawingSample
                         new[]
                         {
                             new GradientStop(Color.FromArgb(c.R, c.G, c.B), 0),
-                            new GradientStop(Color.FromArgb(c1.R, c1.G, c1.B), 0.5),
-                            new GradientStop(Color.FromArgb(c2.R, c2.G, c2.B), 0.8),
+                            new GradientStop(Color.FromArgb(c1.R, c1.G, c1.B), 0.5f),
+                            new GradientStop(Color.FromArgb(c2.R, c2.G, c2.B), 0.8f),
                         }),
                 
                 BrushType.RadialGradient =>
@@ -299,8 +299,8 @@ namespace DrawingSample
                         new[]
                         {
                             new GradientStop(Color.FromArgb(c.R, c.G, c.B), 0),
-                            new GradientStop(Color.FromArgb(c1.R, c1.G, c1.B), 0.5),
-                            new GradientStop(Color.FromArgb(c2.R, c2.G, c2.B), 0.8),
+                            new GradientStop(Color.FromArgb(c1.R, c1.G, c1.B), 0.5f),
+                            new GradientStop(Color.FromArgb(c2.R, c2.G, c2.B), 0.8f),
                         }),
                 
                 _ => throw new Exception(),

@@ -58,7 +58,7 @@ namespace Alternet::UI
     }
 
     void ListView::InsertColumnAt(int64_t index, const string& header, 
-        double width, ListViewColumnWidthMode widthMode)
+        Coord width, ListViewColumnWidthMode widthMode)
     {
         if (_view == ListViewView::Details)
         {
@@ -286,7 +286,7 @@ namespace Alternet::UI
         }
     }
 
-    void ListView::SetColumnWidth(int64_t columnIndex, double fixedWidth,
+    void ListView::SetColumnWidth(int64_t columnIndex, Coord fixedWidth,
         ListViewColumnWidthMode widthMode)
     {
         if (_view != ListViewView::Details)

@@ -143,17 +143,17 @@ namespace Alternet::UI
 		return _bitmap.GetDIPSize();
 	}
 
-	double Image::GetScaleFactor()
+	Coord Image::GetScaleFactor()
 	{
 		return _bitmap.GetScaleFactor();
 	}
 
-	void Image::SetScaleFactor(double value)
+	void Image::SetScaleFactor(Coord value)
 	{
 		_bitmap.SetScaleFactor(value);
 	}
 
-	double Image::GetScaledHeight()
+	Coord Image::GetScaledHeight()
 	{
 		return _bitmap.GetScaledHeight();
 	}
@@ -163,7 +163,7 @@ namespace Alternet::UI
 		return _bitmap.GetScaledSize();
 	}
 
-	double Image::GetScaledWidth() 
+	Coord Image::GetScaledWidth() 
 	{
 		return _bitmap.GetScaledWidth();
 	}
@@ -186,7 +186,7 @@ namespace Alternet::UI
 		return true;
 	}
 
-	bool Image::InitializeFromDipSize(int width, int height, double scale, int depth)
+	bool Image::InitializeFromDipSize(int width, int height, Coord scale, int depth)
 	{
 		_bitmap = wxBitmap();
 		return _bitmap.CreateWithDIPSize(width, height, scale, depth);

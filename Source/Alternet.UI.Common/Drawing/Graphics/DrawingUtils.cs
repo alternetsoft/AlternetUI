@@ -747,8 +747,8 @@ namespace Alternet.UI
         public static PointD GetPointOnCircle(PointD center, Coord radius, Coord angle)
         {
             return new(
-                center.X + (radius * Math.Cos(angle * MathUtils.DegToRad)),
-                center.Y + (radius * Math.Sin(angle * MathUtils.DegToRad)));
+                center.X + (radius * MathF.Cos(angle * MathUtils.DegToRadF)),
+                center.Y + (radius * MathF.Sin(angle * MathUtils.DegToRadF)));
         }
 
         /// <summary>
@@ -1078,7 +1078,7 @@ namespace Alternet.UI
 
             var textSize = graphics.MeasureText(text, font);
 
-            var padding = 4.0;
+            var padding = 4;
             var rect = Drawing.RectD.FromLTRB(
                 bounds.Left + padding,
                 bounds.BottomLeft.Y - textSize.Height - padding,

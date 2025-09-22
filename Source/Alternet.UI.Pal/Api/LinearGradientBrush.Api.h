@@ -19,7 +19,7 @@ ALTERNET_UI_API LinearGradientBrush* LinearGradientBrush_Create_()
     #endif
 }
 
-ALTERNET_UI_API void LinearGradientBrush_Initialize_(LinearGradientBrush* obj, PointD startPoint, PointD endPoint, Color* gradientStopsColors, int gradientStopsColorsCount, double* gradientStopsOffsets, int gradientStopsOffsetsCount)
+ALTERNET_UI_API void LinearGradientBrush_Initialize_(LinearGradientBrush* obj, PointD startPoint, PointD endPoint, Color* gradientStopsColors, int gradientStopsColorsCount, float* gradientStopsOffsets, int gradientStopsOffsetsCount)
 {
     #if !defined(__WXMSW__) || defined(_DEBUG)
     MarshalExceptions<void>([&](){

@@ -111,7 +111,7 @@ namespace Alternet.Drawing
             Font font,
             Color foreColor,
             Color backColor,
-            double angle);
+            Coord angle);
 
         /// <summary>
         /// Draws text string with the specified bounds, <see cref="Brush"/>

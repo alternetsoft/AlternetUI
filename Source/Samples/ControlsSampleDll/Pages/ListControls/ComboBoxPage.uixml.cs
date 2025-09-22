@@ -293,12 +293,12 @@ namespace ControlsSample
             }
         }
 
-        double IComboBoxItemPainter.GetHeight(ComboBox sender, int index, double defaultHeight)
+        Coord IComboBoxItemPainter.GetHeight(ComboBox sender, int index, Coord defaultHeight)
         {
             return painter.GetHeight(sender, index, defaultHeight);
         }
 
-        double IComboBoxItemPainter.GetWidth(ComboBox sender, int index, double defaultWidth)
+        Coord IComboBoxItemPainter.GetWidth(ComboBox sender, int index, Coord defaultWidth)
         {
             return painter.GetWidth(sender, index, defaultWidth);
         }

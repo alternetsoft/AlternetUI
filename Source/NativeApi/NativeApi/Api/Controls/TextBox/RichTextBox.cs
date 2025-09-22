@@ -570,16 +570,16 @@ namespace NativeApi.Api
         // Returns <c>true</c> if the vertical scrollbar is enabled.
         public bool GetVerticalScrollbarEnabled() => default;
 
-        // Sets the scale factor for displaying fonts, for example for more comfortableediting.
-        public void SetFontScale(double fontScale, bool refresh = false) { }
+        // Sets the scale factor for displaying fonts, for example for more comfortable editing.
+        public void SetFontScale(float fontScale, bool refresh = false) { }
 
         // Returns the scale factor for displaying fonts, for example for more comfortable editing.
-        public double GetFontScale() => default;
+        public float GetFontScale() => default;
 
-        // Returns <c>true</c> if this control can use attributes and text. The default is @false.    
+        // Returns <c>true</c> if this control can use attributes and text. The default is False.    
         public bool GetVirtualAttributesEnabled() => default;
 
-        // Pass <c>true</c> to let the control use attributes. The default is @false.
+        // Pass <c>true</c> to let the control use attributes. The default is False.
         public void EnableVirtualAttributes(bool b) { }
 
         // Write text

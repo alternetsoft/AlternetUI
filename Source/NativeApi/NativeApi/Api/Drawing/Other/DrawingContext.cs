@@ -4,11 +4,11 @@ using Alternet.Drawing;
 
 namespace NativeApi.Api
 {
-    using Coord = double;
+    using Coord = float;
 
     public class DrawingContext
     {
-        public static DrawingContext CreateMemoryDC(double scaleFactor) => default;
+        public static DrawingContext CreateMemoryDC(Coord scaleFactor) => default;
 
         public static DrawingContext CreateMemoryDCFromImage(Image image) => default;
 
@@ -36,7 +36,7 @@ namespace NativeApi.Api
         backgroundBrush Brush to fill the text with.
         */
         public void DrawText(string text, PointD location, Font font,
-            Color foreColor, Brush backColor, double angle, bool useBrush)
+            Color foreColor, Brush backColor, Coord angle, bool useBrush)
         {
         }        
 
@@ -94,12 +94,12 @@ namespace NativeApi.Api
             => throw new Exception();
 
         public void SetTransformValues(
-            double m11,
-            double m12,
-            double m21,
-            double m22,
-            double dx,
-            double dy) => throw new Exception();
+            Coord m11,
+            Coord m12,
+            Coord m21,
+            Coord m22,
+            Coord dx,
+            Coord dy) => throw new Exception();
 
         public void DrawLine(Pen pen, PointD a, PointD b) => throw new Exception();
 

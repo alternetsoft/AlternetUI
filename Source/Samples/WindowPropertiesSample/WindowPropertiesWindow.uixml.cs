@@ -573,22 +573,22 @@ namespace WindowPropertiesSample
             {
             }
 
-            public double X
+            public Coord X
             {
                 get; set;
             }
 
-            public double Y
+            public Coord Y
             {
                 get; set;
             }
 
-            public double Width
+            public Coord Width
             {
                 get; set;
             }
 
-            public double Height
+            public Coord Height
             {
                 get; set;
             }

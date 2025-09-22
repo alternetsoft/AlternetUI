@@ -836,22 +836,22 @@ namespace Alternet.UI.Native
             return _mmm;
         }
         
-        public static int DrawingFromDip(double value, System.IntPtr window)
+        public static int DrawingFromDip(float value, System.IntPtr window)
         {
             return NativeApi.Control_DrawingFromDip_(value, window);
         }
         
-        public static double DrawingDPIScaleFactor(System.IntPtr window)
+        public static float DrawingDPIScaleFactor(System.IntPtr window)
         {
             return NativeApi.Control_DrawingDPIScaleFactor_(window);
         }
         
-        public static double DrawingToDip(int value, System.IntPtr window)
+        public static float DrawingToDip(int value, System.IntPtr window)
         {
             return NativeApi.Control_DrawingToDip_(value, window);
         }
         
-        public static double DrawingFromDipF(double value, System.IntPtr window)
+        public static float DrawingFromDipF(float value, System.IntPtr window)
         {
             return NativeApi.Control_DrawingFromDipF_(value, window);
         }
@@ -1631,16 +1631,16 @@ namespace Alternet.UI.Native
             public static extern IntPtr Control_GetClassDefaultAttributesFont_(int controlType, int windowVariant);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern int Control_DrawingFromDip_(double value, System.IntPtr window);
+            public static extern int Control_DrawingFromDip_(float value, System.IntPtr window);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern double Control_DrawingDPIScaleFactor_(System.IntPtr window);
+            public static extern float Control_DrawingDPIScaleFactor_(System.IntPtr window);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern double Control_DrawingToDip_(int value, System.IntPtr window);
+            public static extern float Control_DrawingToDip_(int value, System.IntPtr window);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern double Control_DrawingFromDipF_(double value, System.IntPtr window);
+            public static extern float Control_DrawingFromDipF_(float value, System.IntPtr window);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void Control_SetCursor_(IntPtr obj, System.IntPtr handle);

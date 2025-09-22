@@ -111,7 +111,7 @@ namespace Alternet::UI
         _region.Subtract(region->GetRegion());
     }
 
-    void Region::Translate(double dx, double dy)
+    void Region::Translate(Coord dx, Coord dy)
     {
         _region.Offset(fromDip(dx, GetWindow()), fromDip(dy, GetWindow()));
     }

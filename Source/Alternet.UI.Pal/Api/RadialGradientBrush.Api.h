@@ -19,7 +19,7 @@ ALTERNET_UI_API RadialGradientBrush* RadialGradientBrush_Create_()
     #endif
 }
 
-ALTERNET_UI_API void RadialGradientBrush_Initialize_(RadialGradientBrush* obj, PointD center, double radius, PointD gradientOrigin, Color* gradientStopsColors, int gradientStopsColorsCount, double* gradientStopsOffsets, int gradientStopsOffsetsCount)
+ALTERNET_UI_API void RadialGradientBrush_Initialize_(RadialGradientBrush* obj, PointD center, float radius, PointD gradientOrigin, Color* gradientStopsColors, int gradientStopsColorsCount, float* gradientStopsOffsets, int gradientStopsOffsetsCount)
 {
     #if !defined(__WXMSW__) || defined(_DEBUG)
     MarshalExceptions<void>([&](){

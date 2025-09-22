@@ -42,7 +42,7 @@ void CloseSelectedIndicesArray(void* array);
 void InsertItemAt(int64_t index, const string& text, int64_t columnIndex, int imageIndex);
 void RemoveItemAt(int64_t index);
 void ClearItems();
-void InsertColumnAt(int64_t index, const string& header, double width, ListViewColumnWidthMode widthMode);
+void InsertColumnAt(int64_t index, const string& header, float width, ListViewColumnWidthMode widthMode);
 void RemoveColumnAt(int64_t index);
 void ClearSelected();
 void SetSelected(int64_t index, bool value);
@@ -57,7 +57,7 @@ void Clear();
 void EnsureItemVisible(int64_t itemIndex);
 void SetItemText(int64_t itemIndex, int64_t columnIndex, const string& text);
 void SetItemImageIndex(int64_t itemIndex, int64_t columnIndex, int imageIndex);
-void SetColumnWidth(int64_t columnIndex, double fixedWidth, ListViewColumnWidthMode widthMode);
+void SetColumnWidth(int64_t columnIndex, float fixedWidth, ListViewColumnWidthMode widthMode);
 void SetColumnTitle(int64_t columnIndex, const string& text);
 
 public:

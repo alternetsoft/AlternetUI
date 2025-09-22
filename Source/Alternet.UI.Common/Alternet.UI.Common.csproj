@@ -14,7 +14,7 @@
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <DefineConstants>$(DefineConstants);XAMLX_INTERNAL</DefineConstants>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
-    <TargetFramework>netstandard2.0</TargetFramework>
+    <TargetFramework>netstandard2.1</TargetFramework>
     <IncludeSymbols>true</IncludeSymbols>
     <ProduceReferenceAssembly>true</ProduceReferenceAssembly>
     <PackageId>Alternet.UI.Common</PackageId>

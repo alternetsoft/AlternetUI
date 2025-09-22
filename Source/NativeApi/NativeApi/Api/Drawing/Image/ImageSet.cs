@@ -49,7 +49,7 @@ namespace NativeApi.Api
         Passing a size returned by this function to GetBitmap() ensures that bitmap
         doesn't need to be rescaled, which typically significantly lowers its quality.         
          */
-        public SizeI GetPreferredBitmapSizeAtScale(double scale) => default;
+        public SizeI GetPreferredBitmapSizeAtScale(float scale) => default;
 
         /*
         Get the size that would be best to use for this bundle at the DPI

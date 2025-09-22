@@ -38,11 +38,11 @@ namespace Alternet.UI
             return UI.Native.WxOtherFactory.DisplayGetPPI(Handle);
         }
 
-        public double GetScaleFactor()
+        public Coord GetScaleFactor()
         {
             if (App.IsWindowsOS)
                 return UI.Native.WxOtherFactory.DisplayGetScaleFactor(Handle);
-            return 1D;
+            return 1f;
         }
 
         public bool IsPrimary()

@@ -20,7 +20,7 @@ namespace NativeApi.Api
         public int GetWeight() => default;
 
         public void Initialize(GenericFontFamily genericFamily, string? familyName,
-            double emSizeInPoints, FontStyle style) => throw new Exception();
+            float emSizeInPoints, FontStyle style) => throw new Exception();
         public void InitializeWithDefaultFont() => throw new Exception();
         public void InitializeWithDefaultMonoFont() => throw new Exception();
         public void InitializeFromFont(Font font) { }
@@ -31,7 +31,7 @@ namespace NativeApi.Api
         public static string[] Families { get => throw new Exception(); }
 
         public string Name { get => throw new Exception(); }
-        public double SizeInPoints { get => throw new Exception(); }
+        public float SizeInPoints { get => throw new Exception(); }
         public FontStyle Style { get => throw new Exception(); }
 
         public string Description { get => throw new Exception(); }

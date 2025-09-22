@@ -260,7 +260,7 @@ namespace Alternet.Drawing
         /// by performing a round operation on the coordinates.
         /// </summary>
         /// <param name="rounding">The <see cref="MidpointRounding"/> to use when
-        /// <see cref="Math.Round(Coord,MidpointRounding)"/> is called.</param>
+        /// <see cref="Math.Round(double,MidpointRounding)"/> is called.</param>
         /// <remarks>
         /// Rounds a floating-point value to the nearest integer.
         /// </remarks>

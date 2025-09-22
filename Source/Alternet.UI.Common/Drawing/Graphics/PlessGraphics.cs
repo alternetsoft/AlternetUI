@@ -137,7 +137,7 @@ namespace Alternet.Drawing
         }
 
         /// <inheritdoc/>
-        public override void DrawTextWithAngle(string text, PointD location, Font font, Color foreColor, Color backColor, double angle)
+        public override void DrawTextWithAngle(string text, PointD location, Font font, Color foreColor, Color backColor, Coord angle)
         {
         }
 

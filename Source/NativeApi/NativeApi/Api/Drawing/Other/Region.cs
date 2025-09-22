@@ -40,7 +40,7 @@ namespace NativeApi.Api
 
         public void SubtractRegion(Region region) => throw new Exception();
 
-        public void Translate(double dx, double dy) => throw new Exception();
+        public void Translate(float dx, float dy) => throw new Exception();
 
         public RectD GetBounds() => throw new Exception();
 

@@ -68,7 +68,7 @@ namespace ControlsSample
                 new FontAndColor(
                     Color.Red,
                     Color.LightGoldenrodYellow,
-                    Control.DefaultFont.Scaled(1.5)));
+                    Control.DefaultFont.Scaled(1.5f)));
             controlTemplate.HasBorder = true;
             templateImage = TemplateUtils.GetTemplateAsImage(controlTemplate);
 
@@ -79,7 +79,7 @@ namespace ControlsSample
                 new FontAndColor(
                     Color.Brown,
                     Color.LightGoldenrodYellow,
-                    Control.DefaultFont.Scaled(1.5)));
+                    Control.DefaultFont.Scaled(1.5f)));
             toolTemplate.HasBorder = true;
             toolTemplate.BorderColor = Color.Red;
 

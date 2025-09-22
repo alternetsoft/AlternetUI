@@ -33,7 +33,7 @@ namespace Alternet.UI.Native
             
         }
         
-        public double ScaleFactor
+        public float ScaleFactor
         {
             get
             {
@@ -58,7 +58,7 @@ namespace Alternet.UI.Native
             
         }
         
-        public double ScaledHeight
+        public float ScaledHeight
         {
             get
             {
@@ -78,7 +78,7 @@ namespace Alternet.UI.Native
             
         }
         
-        public double ScaledWidth
+        public float ScaledWidth
         {
             get
             {
@@ -163,7 +163,7 @@ namespace Alternet.UI.Native
             NativeApi.Image_Log_();
         }
         
-        public bool InitializeFromDipSize(int width, int height, double scale, int depth)
+        public bool InitializeFromDipSize(int width, int height, float scale, int depth)
         {
             CheckDisposed();
             return NativeApi.Image_InitializeFromDipSize_(NativePointer, width, height, scale, depth);
@@ -331,22 +331,22 @@ namespace Alternet.UI.Native
             public static extern bool Image_GetHasMask_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern double Image_GetScaleFactor_(IntPtr obj);
+            public static extern float Image_GetScaleFactor_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void Image_SetScaleFactor_(IntPtr obj, double value);
+            public static extern void Image_SetScaleFactor_(IntPtr obj, float value);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern Alternet.Drawing.SizeI Image_GetDipSize_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern double Image_GetScaledHeight_(IntPtr obj);
+            public static extern float Image_GetScaledHeight_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern Alternet.Drawing.SizeI Image_GetScaledSize_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern double Image_GetScaledWidth_(IntPtr obj);
+            public static extern float Image_GetScaledWidth_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern Alternet.Drawing.SizeI Image_GetPixelSize_(IntPtr obj);
@@ -376,7 +376,7 @@ namespace Alternet.UI.Native
             public static extern void Image_Log_();
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern bool Image_InitializeFromDipSize_(IntPtr obj, int width, int height, double scale, int depth);
+            public static extern bool Image_InitializeFromDipSize_(IntPtr obj, int width, int height, float scale, int depth);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern bool Image_InitializeFromScreen_(IntPtr obj);

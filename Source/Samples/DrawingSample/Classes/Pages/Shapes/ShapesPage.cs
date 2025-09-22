@@ -115,12 +115,12 @@ namespace DrawingSample
                 };
 
                 const int ColumnCount = 5;
-                const double CellMargin = 0;
+                const Coord CellMargin = 0;
                 var cellSize =
                     (Math.Max(bounds.Width, bounds.Height) / (ColumnCount)) - CellMargin
                     - (CellMargin / (ColumnCount));
 
-                double x = CellMargin, y = CellMargin;
+                Coord x = CellMargin, y = CellMargin;
 
                 var cellBackgroundBrush = Brushes.White;
                 var cellBorderPen = Pens.White;

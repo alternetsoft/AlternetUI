@@ -339,7 +339,7 @@ ALTERNET_UI_API void ListView_ClearItems_(ListView* obj)
     #endif
 }
 
-ALTERNET_UI_API void ListView_InsertColumnAt_(ListView* obj, int64_t index, const char16_t* header, double width, ListViewColumnWidthMode widthMode)
+ALTERNET_UI_API void ListView_InsertColumnAt_(ListView* obj, int64_t index, const char16_t* header, float width, ListViewColumnWidthMode widthMode)
 {
     #if !defined(__WXMSW__) || defined(_DEBUG)
     MarshalExceptions<void>([&](){
@@ -504,7 +504,7 @@ ALTERNET_UI_API void ListView_SetItemImageIndex_(ListView* obj, int64_t itemInde
     #endif
 }
 
-ALTERNET_UI_API void ListView_SetColumnWidth_(ListView* obj, int64_t columnIndex, double fixedWidth, ListViewColumnWidthMode widthMode)
+ALTERNET_UI_API void ListView_SetColumnWidth_(ListView* obj, int64_t columnIndex, float fixedWidth, ListViewColumnWidthMode widthMode)
 {
     #if !defined(__WXMSW__) || defined(_DEBUG)
     MarshalExceptions<void>([&](){

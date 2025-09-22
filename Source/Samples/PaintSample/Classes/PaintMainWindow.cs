@@ -644,7 +644,7 @@ namespace PaintSample
             Bitmap toucan = new("SampleImages/toucan.png");
             toucan.Rescale(toucan.Size * 3);
 
-            var backgroundSize = (toucan.Size * 1.5).ToSize();
+            var backgroundSize = (toucan.Size * 1.5f).ToSize();
 
             var background = Image.Create(backgroundSize.Width, backgroundSize.Height, Color.LightGreen);
 

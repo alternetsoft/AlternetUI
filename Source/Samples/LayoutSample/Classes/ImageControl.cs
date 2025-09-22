@@ -7,7 +7,7 @@ namespace LayoutSample
 {
     internal class ImageControl : HiddenBorder
     {
-        private double zoom = 1;
+        private Coord zoom = 1;
 
         public ImageControl()
         {
@@ -16,7 +16,7 @@ namespace LayoutSample
 
         public Image? Image { get; set; }
 
-        public double Zoom
+        public Coord Zoom
         {
             get => zoom;
             set

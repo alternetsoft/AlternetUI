@@ -19,11 +19,11 @@ namespace NativeApi.Api
 
         public void AddBezierTo(PointD controlPoint1, PointD controlPoint2, PointD endPoint) => throw new Exception();
 
-        public void AddArc(PointD center, double radius, double startAngle, double sweepAngle) => throw new Exception();
+        public void AddArc(PointD center, float radius, float startAngle, float sweepAngle) => throw new Exception();
 
         public void AddRectangle(RectD rect) => throw new Exception();
 
-        public void AddRoundedRectangle(RectD rect, double cornerRadius) => throw new Exception();
+        public void AddRoundedRectangle(RectD rect, float cornerRadius) => throw new Exception();
 
         public RectD GetBounds() => throw new Exception();
 

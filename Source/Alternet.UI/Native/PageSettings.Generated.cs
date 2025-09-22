@@ -53,7 +53,7 @@ namespace Alternet.UI.Native
             }
         }
         
-        public double MarginLeft
+        public float MarginLeft
         {
             get
             {
@@ -68,7 +68,7 @@ namespace Alternet.UI.Native
             }
         }
         
-        public double MarginRight
+        public float MarginRight
         {
             get
             {
@@ -83,7 +83,7 @@ namespace Alternet.UI.Native
             }
         }
         
-        public double MarginTop
+        public float MarginTop
         {
             get
             {
@@ -98,7 +98,7 @@ namespace Alternet.UI.Native
             }
         }
         
-        public double MarginBottom
+        public float MarginBottom
         {
             get
             {
@@ -195,28 +195,28 @@ namespace Alternet.UI.Native
             public static extern void PageSettings_SetLandscape_(IntPtr obj, bool value);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern double PageSettings_GetMarginLeft_(IntPtr obj);
+            public static extern float PageSettings_GetMarginLeft_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void PageSettings_SetMarginLeft_(IntPtr obj, double value);
+            public static extern void PageSettings_SetMarginLeft_(IntPtr obj, float value);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern double PageSettings_GetMarginRight_(IntPtr obj);
+            public static extern float PageSettings_GetMarginRight_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void PageSettings_SetMarginRight_(IntPtr obj, double value);
+            public static extern void PageSettings_SetMarginRight_(IntPtr obj, float value);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern double PageSettings_GetMarginTop_(IntPtr obj);
+            public static extern float PageSettings_GetMarginTop_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void PageSettings_SetMarginTop_(IntPtr obj, double value);
+            public static extern void PageSettings_SetMarginTop_(IntPtr obj, float value);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern double PageSettings_GetMarginBottom_(IntPtr obj);
+            public static extern float PageSettings_GetMarginBottom_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void PageSettings_SetMarginBottom_(IntPtr obj, double value);
+            public static extern void PageSettings_SetMarginBottom_(IntPtr obj, float value);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern Alternet.Drawing.SizeD PageSettings_GetCustomPaperSize_(IntPtr obj);

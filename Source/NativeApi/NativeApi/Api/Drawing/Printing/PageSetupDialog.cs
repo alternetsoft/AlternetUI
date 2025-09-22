@@ -9,12 +9,12 @@ namespace NativeApi.Api
         public ModalResult ShowModal(Window? owner) => throw new Exception();
         public PrintDocument? Document { get => throw new Exception(); set => throw new Exception(); }
 
-        public double MinMarginLeft { get => throw new Exception(); set => throw new Exception(); }
-        public double MinMarginTop { get => throw new Exception(); set => throw new Exception(); }
+        public float MinMarginLeft { get => throw new Exception(); set => throw new Exception(); }
+        public float MinMarginTop { get => throw new Exception(); set => throw new Exception(); }
 
-        public double MinMarginRight { get => throw new Exception(); set => throw new Exception(); }
+        public float MinMarginRight { get => throw new Exception(); set => throw new Exception(); }
 
-        public double MinMarginBottom { get => throw new Exception(); set => throw new Exception(); }
+        public float MinMarginBottom { get => throw new Exception(); set => throw new Exception(); }
 
         public bool MinMarginsValueSet { get => throw new Exception(); set => throw new Exception(); }
 

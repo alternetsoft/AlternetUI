@@ -253,7 +253,7 @@ namespace Alternet.UI.Native
             return NativeApi.WxOtherFactory_DisplayGetPPI_(handle);
         }
         
-        public static double DisplayGetScaleFactor(System.IntPtr handle)
+        public static float DisplayGetScaleFactor(System.IntPtr handle)
         {
             return NativeApi.WxOtherFactory_DisplayGetScaleFactor_(handle);
         }
@@ -804,7 +804,7 @@ namespace Alternet.UI.Native
             public static extern Alternet.Drawing.SizeI WxOtherFactory_DisplayGetPPI_(System.IntPtr handle);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern double WxOtherFactory_DisplayGetScaleFactor_(System.IntPtr handle);
+            public static extern float WxOtherFactory_DisplayGetScaleFactor_(System.IntPtr handle);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern bool WxOtherFactory_DisplayIsPrimary_(System.IntPtr handle);

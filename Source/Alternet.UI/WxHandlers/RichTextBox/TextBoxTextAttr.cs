@@ -87,7 +87,7 @@ namespace Alternet.UI
             Native.TextBoxTextAttr.Copy(Handle, s.Handle);
         }
 
-        public ITextBoxTextAttr SetFontPointSize(double pointSize)
+        public ITextBoxTextAttr SetFontPointSize(Coord pointSize)
         {
             SetFontPointSize((int)pointSize);
             return this;

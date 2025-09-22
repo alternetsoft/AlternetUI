@@ -15,10 +15,10 @@ namespace Alternet::UI
     public:
     
     private:
-        GenericFontFamily _genericFamily;
+        GenericFontFamily _genericFamily = GenericFontFamily::None;
         optional<string> _familyName;
-        double _fontSizeInPoints;
-        FontStyle _fontStyle;
+        double _fontSizeInPoints = 12.0;
+        FontStyle _fontStyle = FontStyle::Regular;
 
         void RecreateDialog();
 

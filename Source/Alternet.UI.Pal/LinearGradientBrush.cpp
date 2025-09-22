@@ -15,7 +15,7 @@ namespace Alternet::UI
         const Point& endPoint,
         Color* gradientStopsColors,
         int gradientStopsColorsCount,
-        double* gradientStopsOffsets,
+        Coord* gradientStopsOffsets,
         int gradientStopsOffsetsCount)
     {
         if (gradientStopsColorsCount != gradientStopsOffsetsCount)

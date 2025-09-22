@@ -728,7 +728,7 @@ namespace Alternet.Drawing
         /// <param name="value">The <see cref="RectD" /> to be converted.</param>
         /// <returns>The rounded integer value of the <see cref="RectI" />.</returns>
         /// <param name="rounding">The <see cref="MidpointRounding"/> to use when
-        /// <see cref="Math.Round(Coord,MidpointRounding)"/> is called.</param>
+        /// <see cref="MathF.Round(Coord,MidpointRounding)"/> is called.</param>
         /// <remarks>
         /// Rounds a floating-point value to the nearest integer.
         /// </remarks>
@@ -737,10 +737,10 @@ namespace Alternet.Drawing
             rounding ??= DefaultMidpointRounding;
 
             return new(
-                unchecked((int)Math.Round(value.x, rounding.Value)),
-                unchecked((int)Math.Round(value.y, rounding.Value)),
-                unchecked((int)Math.Round(value.width, rounding.Value)),
-                unchecked((int)Math.Round(value.height, rounding.Value)));
+                unchecked((int)MathF.Round(value.x, rounding.Value)),
+                unchecked((int)MathF.Round(value.y, rounding.Value)),
+                unchecked((int)MathF.Round(value.width, rounding.Value)),
+                unchecked((int)MathF.Round(value.height, rounding.Value)));
         }
 
         /// <summary>
@@ -1105,13 +1105,17 @@ namespace Alternet.Drawing
 
         /// <summary>
         /// Returns new <see cref="RectD"/> value with ceiling of location and size.
-        /// Uses <see cref="Math.Ceiling(Coord)"/> on values.
+        /// Uses <see cref="MathUtils.Ceiling(Coord)"/> on values.
         /// </summary>
         /// <returns></returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public readonly RectD Ceiling()
         {
-            return new(Math.Ceiling(x), Math.Ceiling(y), Math.Ceiling(width), Math.Ceiling(height));
+            return new(
+                MathUtils.Ceiling(x),
+                MathUtils.Ceiling(y),
+                MathUtils.Ceiling(width),
+                MathUtils.Ceiling(height));
         }
 
         /// <summary>

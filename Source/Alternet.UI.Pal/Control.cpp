@@ -171,22 +171,22 @@ namespace Alternet::UI
         SetExtraStyle(wxWS_EX_PROCESS_IDLE, false);
     }
 
-    int Control::DrawingFromDip(double value, void* window)
+    int Control::DrawingFromDip(float value, void* window)
     {
         return fromDip(value, (wxWindow*)window);
     }
 
-    double Control::DrawingDPIScaleFactor(void* window)
+    float Control::DrawingDPIScaleFactor(void* window)
     {
         return ((wxWindow*)window)->GetDPIScaleFactor();
     }
 
-    double Control::DrawingToDip(int value, void* window)
+    float Control::DrawingToDip(int value, void* window)
     {
         return toDip(value, (wxWindow*)window);
     }
 
-    double Control::DrawingFromDipF(double value, void* window)
+    float Control::DrawingFromDipF(float value, void* window)
     {
         return fromDipF(value, (wxWindow*)window);
     }

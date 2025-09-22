@@ -577,12 +577,12 @@ namespace Alternet.UI
             return NativeControl.GetVerticalScrollbarEnabled();
         }
 
-        void IRichTextBox.SetFontScale(double fontScale, bool refresh)
+        void IRichTextBox.SetFontScale(Coord fontScale, bool refresh)
         {
             NativeControl.SetFontScale(fontScale, refresh);
         }
 
-        double IRichTextBox.GetFontScale()
+        Coord IRichTextBox.GetFontScale()
         {
             return NativeControl.GetFontScale();
         }
@@ -1006,8 +1006,8 @@ namespace Alternet.UI
         /// Begins a numbered bullet.
         /// </summary>
         /// <param name="bulletNumber">A number, usually starting with 1</param>
-        /// <param name="leftIndent">A value in tenths of a millimetre.</param>
-        /// <param name="leftSubIndent">A value in tenths of a millimetre.</param>
+        /// <param name="leftIndent">A value in tenths of a millimeter.</param>
+        /// <param name="leftSubIndent">A value in tenths of a millimeter.</param>
         /// <param name="bulletStyle">Bullet style.</param>
         /// <remarks>
         /// This call will be needed for each item in the list, and the
@@ -1149,7 +1149,7 @@ namespace Alternet.UI
         /// <summary>
         /// Begins using the given point size.
         /// </summary>
-        public bool BeginFontSize(double pointSize)
+        public bool BeginFontSize(Coord pointSize)
         {
             return NativeControl.BeginFontSize((int)pointSize);
         }

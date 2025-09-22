@@ -1,6 +1,8 @@
+using System;
+
 using Alternet.Drawing;
 using Alternet.UI;
-using System;
+using Alternet.UI.Extensions;
 
 namespace PaintSample
 {
@@ -13,9 +15,9 @@ namespace PaintSample
         {
         }
 
-        public double Size { get; set; } = 20;
+        public Coord Size { get; set; } = 20;
 
-        public double Flow { get; set; } = 40;
+        public Coord Flow { get; set; } = 40;
 
         public override string Name => "Airbrush";
 
@@ -104,12 +106,12 @@ namespace PaintSample
             if (state == null)
                 throw new InvalidOperationException();
 
-            static PointD RandomPointInCircle(Random random, PointD center, double radius)
+            static PointD RandomPointInCircle(Random random, PointD center, float radius)
             {
-                var angle = 2.0 * Math.PI * random.NextDouble();
-                var radiusX = random.NextDouble() * radius;
-                var radiusY = random.NextDouble() * radius;
-                return new PointD(center.X + radiusX * Math.Cos(angle), center.Y + radiusY * Math.Sin(angle));
+                var angle = 2.0f * MathF.PI * random.NextFloat();
+                var radiusX = random.NextFloat() * radius;
+                var radiusY = random.NextFloat() * radius;
+                return new PointD(center.X + radiusX * MathF.Cos(angle), center.Y + radiusY * MathF.Sin(angle));
             }
 
             return RandomPointInCircle(state.Random, state.Center, Size / 2);

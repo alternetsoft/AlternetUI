@@ -158,7 +158,7 @@ namespace NativeApi.Api
         public static SizeI DisplayGetPPI(IntPtr handle) => default;
 
         // Returns scaling factor used by this display. 
-        public static double DisplayGetScaleFactor(IntPtr handle) => default;
+        public static float DisplayGetScaleFactor(IntPtr handle) => default;
 
         // Returns true if the display is the primary display. 
         public static bool DisplayIsPrimary(IntPtr handle) => default;

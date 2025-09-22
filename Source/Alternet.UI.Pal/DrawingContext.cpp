@@ -25,7 +25,7 @@ namespace Alternet::UI
             wxDELETE(_dc);
     }
 
-    DrawingContext* DrawingContext::CreateMemoryDC(double scaleFactor)
+    DrawingContext* DrawingContext::CreateMemoryDC(float scaleFactor)
     {
         auto bitmap = wxBitmap(10, 10);
         bitmap.SetScaleFactor(scaleFactor);
@@ -162,8 +162,8 @@ namespace Alternet::UI
         }
     }
 
-    void DrawingContext::DrawArc(Pen* pen, const Point& center, double radius, double startAngle,
-        double sweepAngle)
+    void DrawingContext::DrawArc(Pen* pen, const Point& center, float radius, float startAngle,
+        float sweepAngle)
     {
         auto path = new GraphicsPath(_dc, _graphicsContext);
 
@@ -173,8 +173,8 @@ namespace Alternet::UI
         path->Release();
     }
 
-    void DrawingContext::FillPie(Brush* brush, const Point& center, double radius, double startAngle,
-        double sweepAngle)
+    void DrawingContext::FillPie(Brush* brush, const Point& center, float radius, float startAngle,
+        float sweepAngle)
     {
         auto path = new GraphicsPath(_dc, _graphicsContext);
 
@@ -186,8 +186,8 @@ namespace Alternet::UI
         path->Release();
     }
 
-    void DrawingContext::DrawPie(Pen* pen, const Point& center, double radius, double startAngle,
-        double sweepAngle)
+    void DrawingContext::DrawPie(Pen* pen, const Point& center, float radius, float startAngle,
+        float sweepAngle)
     {
         auto path = new GraphicsPath(_dc, _graphicsContext);
 
@@ -200,8 +200,8 @@ namespace Alternet::UI
     }
 
     void DrawingContext::Pie(Pen* pen, Brush* brush, const Point& center,
-        double radius, double startAngle,
-        double sweepAngle)
+        float radius, float startAngle,
+        float sweepAngle)
     {
         auto path = new GraphicsPath(_dc, _graphicsContext);
         path->AddArc(center, radius, startAngle, sweepAngle);
@@ -238,25 +238,25 @@ namespace Alternet::UI
         path->Release();
     }
 
-    void DrawingContext::DrawCircle(Pen* pen, const Point& center, double radius)
+    void DrawingContext::DrawCircle(Pen* pen, const Point& center, float radius)
     {
         auto diameter = radius * 2;
         DrawEllipse(pen, Rect(center - Size(radius, radius), Size(diameter, diameter)));
     }
 
-    void DrawingContext::FillCircle(Brush* brush, const Point& center, double radius)
+    void DrawingContext::FillCircle(Brush* brush, const Point& center, float radius)
     {
         auto diameter = radius * 2;
         FillEllipse(brush, Rect(center - Size(radius, radius), Size(diameter, diameter)));
     }
 
-    void DrawingContext::Circle(Pen* pen, Brush* brush, const Point& center, double radius)
+    void DrawingContext::Circle(Pen* pen, Brush* brush, const Point& center, float radius)
     {
         auto diameter = radius * 2;
         Ellipse(pen, brush, Rect(center - Size(radius, radius), Size(diameter, diameter)));
     }
 
-    void DrawingContext::RoundedRectangle(Pen* pen, Brush* brush, const Rect& rect, double cornerRadius)
+    void DrawingContext::RoundedRectangle(Pen* pen, Brush* brush, const Rect& rect, float cornerRadius)
     {
         _graphicsContext->SetPen(pen->GetWxPen());
         _graphicsContext->SetBrush(GetGraphicsBrush(brush, wxPoint2DDouble(rect.X, rect.Y)));
@@ -264,7 +264,7 @@ namespace Alternet::UI
         _graphicsContext->DrawRoundedRectangle(r.X, r.Y, r.Width, r.Height, cornerRadius);
     }
 
-    void DrawingContext::DrawRoundedRectangle(Pen* pen, const Rect& rect, double cornerRadius)
+    void DrawingContext::DrawRoundedRectangle(Pen* pen, const Rect& rect, float cornerRadius)
     {
         _graphicsContext->SetPen(pen->GetWxPen());
         _graphicsContext->SetBrush(*wxTRANSPARENT_BRUSH);
@@ -282,7 +282,7 @@ namespace Alternet::UI
         _graphicsContext->PopState();
     }
 
-    void DrawingContext::FillRoundedRectangle(Brush* brush, const Rect& rect, double cornerRadius)
+    void DrawingContext::FillRoundedRectangle(Brush* brush, const Rect& rect, float cornerRadius)
     {
         _graphicsContext->SetPen(*wxTRANSPARENT_PEN);
         _graphicsContext->SetBrush(GetGraphicsBrush(brush, wxPoint2DDouble(rect.X, rect.Y)));
@@ -392,7 +392,7 @@ namespace Alternet::UI
     }
 
     void DrawingContext::SetTransformValues(
-        double m11, double m12, double m21, double m22, double dx, double dy)
+        float m11, float m12, float m21, float m22, float dx, float dy)
     {
         wxMatrix2D m(m11, m12, m21, m22);
         wxPoint2DDouble t(dx, dy);
@@ -451,7 +451,7 @@ namespace Alternet::UI
         _graphicsContext->DrawRectangle(rectangle.X, rectangle.Y, rectangle.Width, rectangle.Height);
     }
 
-    void DrawingContext::DrawPoint(Pen* pen, double x, double y)
+    void DrawingContext::DrawPoint(Pen* pen, float x, float y)
     {
         auto& oldPen = _dc->GetPen();
         _dc->SetPen(pen->GetWxPen());
@@ -534,14 +534,14 @@ namespace Alternet::UI
     }
 
     void DrawingContext::DrawText(const string& text, const PointD& location,
-        Font* font, const Color& foreColor, Brush* backColor, double angle, bool useBrush)
+        Font* font, const Color& foreColor, Brush* backColor, float angle, bool useBrush)
     {
         auto window = DrawingContext::GetWindow(_dc);
 
         auto point = fromDip(location, window);
 
-        auto x = static_cast<double>(point.x);
-        auto y = static_cast<double>(point.y);
+        auto x = static_cast<float>(point.x);
+        auto y = static_cast<float>(point.y);
 
         wxColour wxForeColor = foreColor;
 

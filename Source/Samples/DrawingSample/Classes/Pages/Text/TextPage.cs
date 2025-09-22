@@ -27,7 +27,7 @@ namespace DrawingSample
         private bool textHeightSet = false;
 
         private static readonly Font fontInfoFont;
-        private static double fontSize;
+        private static Coord fontSize;
 
         internal TextFormat textFormat = new()
         {
@@ -47,7 +47,7 @@ namespace DrawingSample
 
         public override string Name => "Text";
 
-        public double FontSize
+        public Coord FontSize
         {
             get => fontSize;
             set

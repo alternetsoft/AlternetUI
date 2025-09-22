@@ -15,7 +15,7 @@ namespace PaintSample
         {
         }
 
-        public double Thickness { get; set; } = 5;
+        public Coord Thickness { get; set; } = 5;
         
         public abstract Color PenColor { get; }
 
@@ -93,7 +93,7 @@ namespace PaintSample
                 rect = new RectD(point, new SizeD(width, width));
             else
             {
-                double halfWidth = width / 2;
+                Coord halfWidth = width / 2;
                 rect = new RectD(point - new SizeD(halfWidth, halfWidth), new SizeD(width, width));
             }
 

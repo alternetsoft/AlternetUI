@@ -3,7 +3,7 @@
 namespace Alternet::UI
 {
     void FontDialog::SetInitialFont(GenericFontFamily genericFamily, 
-        optional<string> familyName, double emSizeInPoints, FontStyle style)
+        optional<string> familyName, Coord emSizeInPoints, FontStyle style)
     {
         _genericFamily = genericFamily;
         _familyName = familyName;
@@ -18,7 +18,7 @@ namespace Alternet::UI
         return wxStr(wxEmptyString);
     }
 
-    double FontDialog::GetResultFontSizeInPoints() 
+    Coord FontDialog::GetResultFontSizeInPoints() 
     {
         return _fontSizeInPoints;
     }
@@ -236,12 +236,6 @@ namespace Alternet::UI
             delete _dialog;
             _dialog = nullptr;
         }
-
-        /*if (_data != nullptr)
-        {
-            delete _data;
-            _data = nullptr;
-        }*/
     }
 
     FontDialog::FontDialog()

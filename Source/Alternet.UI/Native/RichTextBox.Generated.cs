@@ -996,13 +996,13 @@ namespace Alternet.UI.Native
             return NativeApi.RichTextBox_GetVerticalScrollbarEnabled_(NativePointer);
         }
         
-        public void SetFontScale(double fontScale, bool refresh)
+        public void SetFontScale(float fontScale, bool refresh)
         {
             CheckDisposed();
             NativeApi.RichTextBox_SetFontScale_(NativePointer, fontScale, refresh);
         }
         
-        public double GetFontScale()
+        public float GetFontScale()
         {
             CheckDisposed();
             return NativeApi.RichTextBox_GetFontScale_(NativePointer);
@@ -2096,10 +2096,10 @@ namespace Alternet.UI.Native
             public static extern bool RichTextBox_GetVerticalScrollbarEnabled_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void RichTextBox_SetFontScale_(IntPtr obj, double fontScale, bool refresh);
+            public static extern void RichTextBox_SetFontScale_(IntPtr obj, float fontScale, bool refresh);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern double RichTextBox_GetFontScale_(IntPtr obj);
+            public static extern float RichTextBox_GetFontScale_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern bool RichTextBox_GetVirtualAttributesEnabled_(IntPtr obj);

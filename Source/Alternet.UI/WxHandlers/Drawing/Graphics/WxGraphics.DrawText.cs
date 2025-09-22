@@ -57,7 +57,7 @@ namespace Alternet.Drawing
             if (!foreColor.IsOk)
                 return;
 
-            double angle;
+            Coord angle;
 
             if (GetNoTransformToNative())
                 angle = 0;
@@ -95,14 +95,14 @@ namespace Alternet.Drawing
             Font font,
             Color foreColor,
             Color backColor,
-            double angle)
+            Coord angle)
         {
             DebugTextAssert(text);
             DebugFontAssert(font);
             if (!foreColor.IsOk)
                 return;
 
-            double angle2;
+            Coord angle2;
 
             if (GetNoTransformToNative())
                 angle2 = 0;

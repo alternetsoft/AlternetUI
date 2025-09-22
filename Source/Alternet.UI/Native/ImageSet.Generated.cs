@@ -95,7 +95,7 @@ namespace Alternet.UI.Native
             NativeApi.ImageSet_InitImageFor_(NativePointer, image.NativePointer, window);
         }
         
-        public Alternet.Drawing.SizeI GetPreferredBitmapSizeAtScale(double scale)
+        public Alternet.Drawing.SizeI GetPreferredBitmapSizeAtScale(float scale)
         {
             CheckDisposed();
             return NativeApi.ImageSet_GetPreferredBitmapSizeAtScale_(NativePointer, scale);
@@ -147,7 +147,7 @@ namespace Alternet.UI.Native
             public static extern void ImageSet_InitImageFor_(IntPtr obj, IntPtr image, System.IntPtr window);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern Alternet.Drawing.SizeI ImageSet_GetPreferredBitmapSizeAtScale_(IntPtr obj, double scale);
+            public static extern Alternet.Drawing.SizeI ImageSet_GetPreferredBitmapSizeAtScale_(IntPtr obj, float scale);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern Alternet.Drawing.SizeI ImageSet_GetPreferredBitmapSizeFor_(IntPtr obj, System.IntPtr window);

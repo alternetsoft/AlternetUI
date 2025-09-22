@@ -3,16 +3,16 @@
 public:
 bool GetHasMask();
 
-double GetScaleFactor();
-void SetScaleFactor(double value);
+float GetScaleFactor();
+void SetScaleFactor(float value);
 
 SizeI GetDipSize();
 
-double GetScaledHeight();
+float GetScaledHeight();
 
 SizeI GetScaledSize();
 
-double GetScaledWidth();
+float GetScaledWidth();
 
 SizeI GetPixelSize();
 
@@ -29,7 +29,7 @@ int GetDepth();
 
 static int GetStaticOption(int objectId, int propId);
 static void Log();
-bool InitializeFromDipSize(int width, int height, double scale, int depth);
+bool InitializeFromDipSize(int width, int height, float scale, int depth);
 bool InitializeFromScreen();
 bool LoadFromStream(void* stream);
 bool LoadSvgFromStream(void* stream, int width, int height, const Color& color);

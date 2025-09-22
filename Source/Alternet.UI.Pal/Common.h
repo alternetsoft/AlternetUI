@@ -12,7 +12,7 @@ namespace Alternet::UI
 {
     constexpr auto DialogCancelGuid = "5DB20A10B5974CD4885CFCF346AF0F81";
 
-    const double DegToRad = M_PI / 180;
+    const Coord DegToRad = M_PI_Coord / 180;
 
     namespace Collections
     {

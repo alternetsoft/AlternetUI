@@ -13,7 +13,7 @@ namespace Alternet::UI
     void Pen::Initialize(
         DashStyle style,
         const Color& color,
-        double width,
+        Coord width,
         LineCap lineCap,
         LineJoin lineJoin)
     {

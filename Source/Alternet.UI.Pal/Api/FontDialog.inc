@@ -18,7 +18,7 @@ void SetColor(const Color& value);
 
 string GetResultFontName();
 
-double GetResultFontSizeInPoints();
+float GetResultFontSizeInPoints();
 
 FontStyle GetResultFontStyle();
 
@@ -27,7 +27,7 @@ void SetTitle(optional<string> value);
 
 ModalResult ShowModal(Window* owner);
 void SetRange(int minRange, int maxRange);
-void SetInitialFont(GenericFontFamily genericFamily, optional<string> familyName, double emSizeInPoints, FontStyle style);
+void SetInitialFont(GenericFontFamily genericFamily, optional<string> familyName, float emSizeInPoints, FontStyle style);
 
 public:
 FontDialog();

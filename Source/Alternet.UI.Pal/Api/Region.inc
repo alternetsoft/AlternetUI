@@ -17,7 +17,7 @@ void XorWithRect(const RectD& rect);
 void XorWithRegion(Region* region);
 void SubtractRect(const RectD& rect);
 void SubtractRegion(Region* region);
-void Translate(double dx, double dy);
+void Translate(float dx, float dy);
 RectD GetBounds();
 bool IsEqualTo(Region* other);
 int GetHashCode_();

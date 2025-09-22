@@ -6,7 +6,7 @@ using ApiCommon;
 
 namespace NativeApi.Api
 {
-    using Coord = double;
+    using Coord = float;
 
     public abstract class Control
     {
@@ -62,7 +62,7 @@ namespace NativeApi.Api
         public static int DrawingFromDip(Coord value, IntPtr window) => default;
         public static Coord DrawingDPIScaleFactor(IntPtr window) => default;
         public static Coord DrawingToDip(int value, IntPtr window) => default;
-        public static Coord DrawingFromDipF(double value, IntPtr window) => default;
+        public static Coord DrawingFromDipF(Coord value, IntPtr window) => default;
 
         public bool ProcessIdle { get; set; }
         public bool ProcessUIUpdates { get; set; }

@@ -108,7 +108,7 @@ namespace Alternet.UI.Native
             
         }
         
-        public double ResultFontSizeInPoints
+        public float ResultFontSizeInPoints
         {
             get
             {
@@ -155,7 +155,7 @@ namespace Alternet.UI.Native
             NativeApi.FontDialog_SetRange_(NativePointer, minRange, maxRange);
         }
         
-        public void SetInitialFont(Alternet.Drawing.GenericFontFamily genericFamily, string? familyName, double emSizeInPoints, Alternet.Drawing.FontStyle style)
+        public void SetInitialFont(Alternet.Drawing.GenericFontFamily genericFamily, string? familyName, float emSizeInPoints, Alternet.Drawing.FontStyle style)
         {
             CheckDisposed();
             NativeApi.FontDialog_SetInitialFont_(NativePointer, genericFamily, familyName, emSizeInPoints, style);
@@ -204,7 +204,7 @@ namespace Alternet.UI.Native
             public static extern string FontDialog_GetResultFontName_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern double FontDialog_GetResultFontSizeInPoints_(IntPtr obj);
+            public static extern float FontDialog_GetResultFontSizeInPoints_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern Alternet.Drawing.FontStyle FontDialog_GetResultFontStyle_(IntPtr obj);
@@ -222,7 +222,7 @@ namespace Alternet.UI.Native
             public static extern void FontDialog_SetRange_(IntPtr obj, int minRange, int maxRange);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void FontDialog_SetInitialFont_(IntPtr obj, Alternet.Drawing.GenericFontFamily genericFamily, string? familyName, double emSizeInPoints, Alternet.Drawing.FontStyle style);
+            public static extern void FontDialog_SetInitialFont_(IntPtr obj, Alternet.Drawing.GenericFontFamily genericFamily, string? familyName, float emSizeInPoints, Alternet.Drawing.FontStyle style);
             
         }
     }

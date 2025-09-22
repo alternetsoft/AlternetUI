@@ -349,7 +349,7 @@ namespace Alternet.UI
         {
             if(App.IsWindowsOS && !DisposingOrDisposed)
                 return Native.Control.DrawingDPIScaleFactor(NativeControl.WxWidget);
-            return 1D;
+            return 1f;
         }
 
         public RectI GetUpdateClientRectI()

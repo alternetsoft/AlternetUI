@@ -75,7 +75,7 @@ namespace Alternet.UI.Native
             }
         }
         
-        public static DrawingContext CreateMemoryDC(double scaleFactor)
+        public static DrawingContext CreateMemoryDC(float scaleFactor)
         {
             var _nnn = NativeApi.DrawingContext_CreateMemoryDC_(scaleFactor);
             var _mmm = NativeObject.GetFromNativePointer<DrawingContext>(_nnn, p => new DrawingContext(p))!;
@@ -133,7 +133,7 @@ namespace Alternet.UI.Native
             return NativeApi.DrawingContext_GetClippingBox_(NativePointer);
         }
         
-        public void DrawText(string text, Alternet.Drawing.PointD location, Font font, Alternet.Drawing.Color foreColor, Brush backColor, double angle, bool useBrush)
+        public void DrawText(string text, Alternet.Drawing.PointD location, Font font, Alternet.Drawing.Color foreColor, Brush backColor, float angle, bool useBrush)
         {
             CheckDisposed();
             NativeApi.DrawingContext_DrawText_(NativePointer, text, location, font.NativePointer, foreColor, backColor.NativePointer, angle, useBrush);
@@ -177,7 +177,7 @@ namespace Alternet.UI.Native
             return _mmm;
         }
         
-        public void RoundedRectangle(Pen pen, Brush brush, Alternet.Drawing.RectD rectangle, double cornerRadius)
+        public void RoundedRectangle(Pen pen, Brush brush, Alternet.Drawing.RectD rectangle, float cornerRadius)
         {
             CheckDisposed();
             NativeApi.DrawingContext_RoundedRectangle_(NativePointer, pen.NativePointer, brush.NativePointer, rectangle, cornerRadius);
@@ -201,13 +201,13 @@ namespace Alternet.UI.Native
             NativeApi.DrawingContext_Path_(NativePointer, pen.NativePointer, brush.NativePointer, path.NativePointer);
         }
         
-        public void Pie(Pen pen, Brush brush, Alternet.Drawing.PointD center, double radius, double startAngle, double sweepAngle)
+        public void Pie(Pen pen, Brush brush, Alternet.Drawing.PointD center, float radius, float startAngle, float sweepAngle)
         {
             CheckDisposed();
             NativeApi.DrawingContext_Pie_(NativePointer, pen.NativePointer, brush.NativePointer, center, radius, startAngle, sweepAngle);
         }
         
-        public void Circle(Pen pen, Brush brush, Alternet.Drawing.PointD center, double radius)
+        public void Circle(Pen pen, Brush brush, Alternet.Drawing.PointD center, float radius)
         {
             CheckDisposed();
             NativeApi.DrawingContext_Circle_(NativePointer, pen.NativePointer, brush.NativePointer, center, radius);
@@ -273,7 +273,7 @@ namespace Alternet.UI.Native
             NativeApi.DrawingContext_DrawImageAtRect_(NativePointer, image.NativePointer, destinationRect, useMask);
         }
         
-        public void SetTransformValues(double m11, double m12, double m21, double m22, double dx, double dy)
+        public void SetTransformValues(float m11, float m12, float m21, float m22, float dx, float dy)
         {
             CheckDisposed();
             NativeApi.DrawingContext_SetTransformValues_(NativePointer, m11, m12, m21, m22, dx, dy);
@@ -291,19 +291,19 @@ namespace Alternet.UI.Native
             NativeApi.DrawingContext_DrawLines_(NativePointer, pen.NativePointer, points, points.Length);
         }
         
-        public void DrawArc(Pen pen, Alternet.Drawing.PointD center, double radius, double startAngle, double sweepAngle)
+        public void DrawArc(Pen pen, Alternet.Drawing.PointD center, float radius, float startAngle, float sweepAngle)
         {
             CheckDisposed();
             NativeApi.DrawingContext_DrawArc_(NativePointer, pen.NativePointer, center, radius, startAngle, sweepAngle);
         }
         
-        public void FillPie(Brush brush, Alternet.Drawing.PointD center, double radius, double startAngle, double sweepAngle)
+        public void FillPie(Brush brush, Alternet.Drawing.PointD center, float radius, float startAngle, float sweepAngle)
         {
             CheckDisposed();
             NativeApi.DrawingContext_FillPie_(NativePointer, brush.NativePointer, center, radius, startAngle, sweepAngle);
         }
         
-        public void DrawPie(Pen pen, Alternet.Drawing.PointD center, double radius, double startAngle, double sweepAngle)
+        public void DrawPie(Pen pen, Alternet.Drawing.PointD center, float radius, float startAngle, float sweepAngle)
         {
             CheckDisposed();
             NativeApi.DrawingContext_DrawPie_(NativePointer, pen.NativePointer, center, radius, startAngle, sweepAngle);
@@ -321,31 +321,31 @@ namespace Alternet.UI.Native
             NativeApi.DrawingContext_DrawBeziers_(NativePointer, pen.NativePointer, points, points.Length);
         }
         
-        public void DrawPoint(Pen pen, double x, double y)
+        public void DrawPoint(Pen pen, float x, float y)
         {
             CheckDisposed();
             NativeApi.DrawingContext_DrawPoint_(NativePointer, pen.NativePointer, x, y);
         }
         
-        public void DrawCircle(Pen pen, Alternet.Drawing.PointD center, double radius)
+        public void DrawCircle(Pen pen, Alternet.Drawing.PointD center, float radius)
         {
             CheckDisposed();
             NativeApi.DrawingContext_DrawCircle_(NativePointer, pen.NativePointer, center, radius);
         }
         
-        public void FillCircle(Brush brush, Alternet.Drawing.PointD center, double radius)
+        public void FillCircle(Brush brush, Alternet.Drawing.PointD center, float radius)
         {
             CheckDisposed();
             NativeApi.DrawingContext_FillCircle_(NativePointer, brush.NativePointer, center, radius);
         }
         
-        public void DrawRoundedRectangle(Pen pen, Alternet.Drawing.RectD rect, double cornerRadius)
+        public void DrawRoundedRectangle(Pen pen, Alternet.Drawing.RectD rect, float cornerRadius)
         {
             CheckDisposed();
             NativeApi.DrawingContext_DrawRoundedRectangle_(NativePointer, pen.NativePointer, rect, cornerRadius);
         }
         
-        public void FillRoundedRectangle(Brush brush, Alternet.Drawing.RectD rect, double cornerRadius)
+        public void FillRoundedRectangle(Brush brush, Alternet.Drawing.RectD rect, float cornerRadius)
         {
             CheckDisposed();
             NativeApi.DrawingContext_FillRoundedRectangle_(NativePointer, brush.NativePointer, rect, cornerRadius);
@@ -388,7 +388,7 @@ namespace Alternet.UI.Native
             public static extern void DrawingContext_SetInterpolationMode_(IntPtr obj, Alternet.Drawing.InterpolationMode value);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern IntPtr DrawingContext_CreateMemoryDC_(double scaleFactor);
+            public static extern IntPtr DrawingContext_CreateMemoryDC_(float scaleFactor);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern IntPtr DrawingContext_CreateMemoryDCFromImage_(IntPtr image);
@@ -415,7 +415,7 @@ namespace Alternet.UI.Native
             public static extern Alternet.Drawing.RectD DrawingContext_GetClippingBox_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void DrawingContext_DrawText_(IntPtr obj, string text, Alternet.Drawing.PointD location, IntPtr font, NativeApiTypes.Color foreColor, IntPtr backColor, double angle, bool useBrush);
+            public static extern void DrawingContext_DrawText_(IntPtr obj, string text, Alternet.Drawing.PointD location, IntPtr font, NativeApiTypes.Color foreColor, IntPtr backColor, float angle, bool useBrush);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern Alternet.Drawing.SizeI DrawingContext_GetDpi_(IntPtr obj);
@@ -436,7 +436,7 @@ namespace Alternet.UI.Native
             public static extern IntPtr DrawingContext_FromScreen_();
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void DrawingContext_RoundedRectangle_(IntPtr obj, IntPtr pen, IntPtr brush, Alternet.Drawing.RectD rectangle, double cornerRadius);
+            public static extern void DrawingContext_RoundedRectangle_(IntPtr obj, IntPtr pen, IntPtr brush, Alternet.Drawing.RectD rectangle, float cornerRadius);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void DrawingContext_Rectangle_(IntPtr obj, IntPtr pen, IntPtr brush, Alternet.Drawing.RectD rectangle);
@@ -448,10 +448,10 @@ namespace Alternet.UI.Native
             public static extern void DrawingContext_Path_(IntPtr obj, IntPtr pen, IntPtr brush, IntPtr path);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void DrawingContext_Pie_(IntPtr obj, IntPtr pen, IntPtr brush, Alternet.Drawing.PointD center, double radius, double startAngle, double sweepAngle);
+            public static extern void DrawingContext_Pie_(IntPtr obj, IntPtr pen, IntPtr brush, Alternet.Drawing.PointD center, float radius, float startAngle, float sweepAngle);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void DrawingContext_Circle_(IntPtr obj, IntPtr pen, IntPtr brush, Alternet.Drawing.PointD center, double radius);
+            public static extern void DrawingContext_Circle_(IntPtr obj, IntPtr pen, IntPtr brush, Alternet.Drawing.PointD center, float radius);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void DrawingContext_Polygon_(IntPtr obj, IntPtr pen, IntPtr brush, Alternet.Drawing.PointD[] points, int pointsCount, Alternet.Drawing.FillMode fillMode);
@@ -484,7 +484,7 @@ namespace Alternet.UI.Native
             public static extern void DrawingContext_DrawImageAtRect_(IntPtr obj, IntPtr image, Alternet.Drawing.RectD destinationRect, bool useMask);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void DrawingContext_SetTransformValues_(IntPtr obj, double m11, double m12, double m21, double m22, double dx, double dy);
+            public static extern void DrawingContext_SetTransformValues_(IntPtr obj, float m11, float m12, float m21, float m22, float dx, float dy);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void DrawingContext_DrawLine_(IntPtr obj, IntPtr pen, Alternet.Drawing.PointD a, Alternet.Drawing.PointD b);
@@ -493,13 +493,13 @@ namespace Alternet.UI.Native
             public static extern void DrawingContext_DrawLines_(IntPtr obj, IntPtr pen, Alternet.Drawing.PointD[] points, int pointsCount);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void DrawingContext_DrawArc_(IntPtr obj, IntPtr pen, Alternet.Drawing.PointD center, double radius, double startAngle, double sweepAngle);
+            public static extern void DrawingContext_DrawArc_(IntPtr obj, IntPtr pen, Alternet.Drawing.PointD center, float radius, float startAngle, float sweepAngle);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void DrawingContext_FillPie_(IntPtr obj, IntPtr brush, Alternet.Drawing.PointD center, double radius, double startAngle, double sweepAngle);
+            public static extern void DrawingContext_FillPie_(IntPtr obj, IntPtr brush, Alternet.Drawing.PointD center, float radius, float startAngle, float sweepAngle);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void DrawingContext_DrawPie_(IntPtr obj, IntPtr pen, Alternet.Drawing.PointD center, double radius, double startAngle, double sweepAngle);
+            public static extern void DrawingContext_DrawPie_(IntPtr obj, IntPtr pen, Alternet.Drawing.PointD center, float radius, float startAngle, float sweepAngle);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void DrawingContext_DrawBezier_(IntPtr obj, IntPtr pen, Alternet.Drawing.PointD startPoint, Alternet.Drawing.PointD controlPoint1, Alternet.Drawing.PointD controlPoint2, Alternet.Drawing.PointD endPoint);
@@ -508,19 +508,19 @@ namespace Alternet.UI.Native
             public static extern void DrawingContext_DrawBeziers_(IntPtr obj, IntPtr pen, Alternet.Drawing.PointD[] points, int pointsCount);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void DrawingContext_DrawPoint_(IntPtr obj, IntPtr pen, double x, double y);
+            public static extern void DrawingContext_DrawPoint_(IntPtr obj, IntPtr pen, float x, float y);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void DrawingContext_DrawCircle_(IntPtr obj, IntPtr pen, Alternet.Drawing.PointD center, double radius);
+            public static extern void DrawingContext_DrawCircle_(IntPtr obj, IntPtr pen, Alternet.Drawing.PointD center, float radius);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void DrawingContext_FillCircle_(IntPtr obj, IntPtr brush, Alternet.Drawing.PointD center, double radius);
+            public static extern void DrawingContext_FillCircle_(IntPtr obj, IntPtr brush, Alternet.Drawing.PointD center, float radius);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void DrawingContext_DrawRoundedRectangle_(IntPtr obj, IntPtr pen, Alternet.Drawing.RectD rect, double cornerRadius);
+            public static extern void DrawingContext_DrawRoundedRectangle_(IntPtr obj, IntPtr pen, Alternet.Drawing.RectD rect, float cornerRadius);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void DrawingContext_FillRoundedRectangle_(IntPtr obj, IntPtr brush, Alternet.Drawing.RectD rect, double cornerRadius);
+            public static extern void DrawingContext_FillRoundedRectangle_(IntPtr obj, IntPtr brush, Alternet.Drawing.RectD rect, float cornerRadius);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void DrawingContext_DrawPolygon_(IntPtr obj, IntPtr pen, Alternet.Drawing.PointD[] points, int pointsCount);

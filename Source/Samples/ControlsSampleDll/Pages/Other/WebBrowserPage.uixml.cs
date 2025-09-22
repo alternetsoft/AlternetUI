@@ -48,7 +48,7 @@ namespace ControlsSample
         {
             InitializeComponent();
 
-            var width = BackButton.Height * 1.5;
+            var width = BackButton.Height * 1.5f;
 
             BackButton.SuggestedWidth = width;
             ForwardButton.SuggestedWidth = width;

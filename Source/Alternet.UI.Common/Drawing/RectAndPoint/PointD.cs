@@ -427,7 +427,7 @@ namespace Alternet.Drawing
 
         /// <summary>
         /// Returns new <see cref="PointD"/> value with ceiling of the <see cref="X"/> and
-        /// <see cref="Y"/>. Uses <see cref="Math.Ceiling(Coord)"/> on values.
+        /// <see cref="Y"/>. Uses <see cref="MathUtils.Ceiling(Coord)"/> on values.
         /// </summary>
         /// <returns></returns>
         /// <remarks>
@@ -437,7 +437,7 @@ namespace Alternet.Drawing
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public readonly PointD Ceiling()
         {
-            return new(Math.Ceiling(x), Math.Ceiling(y));
+            return new(MathUtils.Ceiling(x), MathUtils.Ceiling(y));
         }
 
         /// <summary>

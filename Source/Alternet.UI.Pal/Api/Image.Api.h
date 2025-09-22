@@ -32,10 +32,10 @@ ALTERNET_UI_API c_bool Image_GetHasMask_(Image* obj)
     #endif
 }
 
-ALTERNET_UI_API double Image_GetScaleFactor_(Image* obj)
+ALTERNET_UI_API float Image_GetScaleFactor_(Image* obj)
 {
     #if !defined(__WXMSW__) || defined(_DEBUG)
-    return MarshalExceptions<double>([&](){
+    return MarshalExceptions<float>([&](){
     #endif
         return obj->GetScaleFactor();
     #if !defined(__WXMSW__) || defined(_DEBUG)
@@ -43,7 +43,7 @@ ALTERNET_UI_API double Image_GetScaleFactor_(Image* obj)
     #endif
 }
 
-ALTERNET_UI_API void Image_SetScaleFactor_(Image* obj, double value)
+ALTERNET_UI_API void Image_SetScaleFactor_(Image* obj, float value)
 {
     #if !defined(__WXMSW__) || defined(_DEBUG)
     MarshalExceptions<void>([&](){
@@ -65,10 +65,10 @@ ALTERNET_UI_API SizeI_C Image_GetDipSize_(Image* obj)
     #endif
 }
 
-ALTERNET_UI_API double Image_GetScaledHeight_(Image* obj)
+ALTERNET_UI_API float Image_GetScaledHeight_(Image* obj)
 {
     #if !defined(__WXMSW__) || defined(_DEBUG)
-    return MarshalExceptions<double>([&](){
+    return MarshalExceptions<float>([&](){
     #endif
         return obj->GetScaledHeight();
     #if !defined(__WXMSW__) || defined(_DEBUG)
@@ -87,10 +87,10 @@ ALTERNET_UI_API SizeI_C Image_GetScaledSize_(Image* obj)
     #endif
 }
 
-ALTERNET_UI_API double Image_GetScaledWidth_(Image* obj)
+ALTERNET_UI_API float Image_GetScaledWidth_(Image* obj)
 {
     #if !defined(__WXMSW__) || defined(_DEBUG)
-    return MarshalExceptions<double>([&](){
+    return MarshalExceptions<float>([&](){
     #endif
         return obj->GetScaledWidth();
     #if !defined(__WXMSW__) || defined(_DEBUG)
@@ -197,7 +197,7 @@ ALTERNET_UI_API void Image_Log_()
     #endif
 }
 
-ALTERNET_UI_API c_bool Image_InitializeFromDipSize_(Image* obj, int width, int height, double scale, int depth)
+ALTERNET_UI_API c_bool Image_InitializeFromDipSize_(Image* obj, int width, int height, float scale, int depth)
 {
     #if !defined(__WXMSW__) || defined(_DEBUG)
     return MarshalExceptions<c_bool>([&](){

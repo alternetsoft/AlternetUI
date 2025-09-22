@@ -1177,7 +1177,7 @@ ALTERNET_UI_API Font* Control_GetClassDefaultAttributesFont_(int controlType, in
     #endif
 }
 
-ALTERNET_UI_API int Control_DrawingFromDip_(double value, void* window)
+ALTERNET_UI_API int Control_DrawingFromDip_(float value, void* window)
 {
     #if !defined(__WXMSW__) || defined(_DEBUG)
     return MarshalExceptions<int>([&](){
@@ -1188,10 +1188,10 @@ ALTERNET_UI_API int Control_DrawingFromDip_(double value, void* window)
     #endif
 }
 
-ALTERNET_UI_API double Control_DrawingDPIScaleFactor_(void* window)
+ALTERNET_UI_API float Control_DrawingDPIScaleFactor_(void* window)
 {
     #if !defined(__WXMSW__) || defined(_DEBUG)
-    return MarshalExceptions<double>([&](){
+    return MarshalExceptions<float>([&](){
     #endif
         return Control::DrawingDPIScaleFactor(window);
     #if !defined(__WXMSW__) || defined(_DEBUG)
@@ -1199,10 +1199,10 @@ ALTERNET_UI_API double Control_DrawingDPIScaleFactor_(void* window)
     #endif
 }
 
-ALTERNET_UI_API double Control_DrawingToDip_(int value, void* window)
+ALTERNET_UI_API float Control_DrawingToDip_(int value, void* window)
 {
     #if !defined(__WXMSW__) || defined(_DEBUG)
-    return MarshalExceptions<double>([&](){
+    return MarshalExceptions<float>([&](){
     #endif
         return Control::DrawingToDip(value, window);
     #if !defined(__WXMSW__) || defined(_DEBUG)
@@ -1210,10 +1210,10 @@ ALTERNET_UI_API double Control_DrawingToDip_(int value, void* window)
     #endif
 }
 
-ALTERNET_UI_API double Control_DrawingFromDipF_(double value, void* window)
+ALTERNET_UI_API float Control_DrawingFromDipF_(float value, void* window)
 {
     #if !defined(__WXMSW__) || defined(_DEBUG)
-    return MarshalExceptions<double>([&](){
+    return MarshalExceptions<float>([&](){
     #endif
         return Control::DrawingFromDipF(value, window);
     #if !defined(__WXMSW__) || defined(_DEBUG)

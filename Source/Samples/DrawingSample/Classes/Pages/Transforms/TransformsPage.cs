@@ -125,12 +125,12 @@ namespace DrawingSample
 
                 var pathRadius = 80;
 
-                PointD GetPointOnCircle(double r, double a) =>
+                PointD GetPointOnCircle(float r, float a) =>
                     DrawingUtils.GetPointOnCircle(center, r, a);
 
                 path.StartFigure(GetPointOnCircle(pathRadius, 0));
 
-                for (double a = 0; a < 360; a += 10)
+                for (float a = 0; a < 360; a += 10)
                 {
                     path.AddLineTo(GetPointOnCircle(pathRadius, a + 280));
                     path.AddLineTo(GetPointOnCircle(pathRadius, a));
@@ -154,7 +154,7 @@ namespace DrawingSample
                 dc.DrawTextWithAngle(
                     "Vertical Text",
                     innerFrame.Location.OffsetBy(280, 50),
-                    Control.DefaultFont.Scaled(1.3).AsBold,
+                    Control.DefaultFont.Scaled(1.3f).AsBold,
                     Color.Red,
                     Color.Empty,
                     270);
@@ -162,14 +162,14 @@ namespace DrawingSample
                 dc.DrawTextWithAngle(
                     "Text with angle = 25",
                     innerFrame.Location.OffsetBy(180, 250),
-                    Control.DefaultFont.Scaled(1.3),
+                    Control.DefaultFont.Scaled(1.3f),
                     Color.DarkKhaki,
                     Color.Gray100,
                     25);
 
                 dc.DrawText(
                     "AlterNET UI",
-                    Control.DefaultFont.Scaled(1.5),
+                    Control.DefaultFont.Scaled(1.5f),
                     Brushes.Blue,
                     innerFrame.Location.OffsetBy(150, 10));
 
@@ -215,7 +215,7 @@ namespace DrawingSample
         {
             var matrix = new TransformMatrix();
             matrix.Rotate(Rotation);
-            matrix.Scale(1 + ScaleFactorX / 100.0, 1 + ScaleFactorY / 100.0);
+            matrix.Scale(1 + ScaleFactorX / 100.0f, 1 + ScaleFactorY / 100.0f);
             matrix.Translate(TranslationX, TranslationY);
             return matrix;
         }

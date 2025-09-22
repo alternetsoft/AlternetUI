@@ -23,7 +23,7 @@ namespace Alternet.UI.Native
         {
         }
         
-        public void Initialize(Alternet.Drawing.PointD startPoint, Alternet.Drawing.PointD endPoint, Alternet.Drawing.Color[] gradientStopsColors, System.Double[] gradientStopsOffsets)
+        public void Initialize(Alternet.Drawing.PointD startPoint, Alternet.Drawing.PointD endPoint, Alternet.Drawing.Color[] gradientStopsColors, System.Single[] gradientStopsOffsets)
         {
             CheckDisposed();
             NativeApi.LinearGradientBrush_Initialize_(NativePointer, startPoint, endPoint, Array.ConvertAll<Alternet.Drawing.Color, NativeApiTypes.Color>(gradientStopsColors, x => x), gradientStopsColors.Length, gradientStopsOffsets, gradientStopsOffsets.Length);
@@ -39,7 +39,7 @@ namespace Alternet.UI.Native
             public static extern IntPtr LinearGradientBrush_Create_();
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void LinearGradientBrush_Initialize_(IntPtr obj, Alternet.Drawing.PointD startPoint, Alternet.Drawing.PointD endPoint, NativeApiTypes.Color[] gradientStopsColors, int gradientStopsColorsCount, System.Double[] gradientStopsOffsets, int gradientStopsOffsetsCount);
+            public static extern void LinearGradientBrush_Initialize_(IntPtr obj, Alternet.Drawing.PointD startPoint, Alternet.Drawing.PointD endPoint, NativeApiTypes.Color[] gradientStopsColors, int gradientStopsColorsCount, System.Single[] gradientStopsOffsets, int gradientStopsOffsetsCount);
             
         }
     }

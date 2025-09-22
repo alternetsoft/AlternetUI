@@ -10,7 +10,7 @@ namespace DrawingSample
         private readonly Timer timer;
         private readonly List<ClipAreaPart> clipAreaParts = new();
 
-        private double x;
+        private Coord x;
         private bool mouseDown;
         private ClipOperation selectedClipOperation = ClipOperation.Union;
 
@@ -51,9 +51,9 @@ namespace DrawingSample
             PointD[] GetPolygonPoints()
             {
                 var lines = new List<PointD>();
-                var r = Math.Min(bounds.Width, bounds.Height) * 0.3;
+                var r = Math.Min(bounds.Width, bounds.Height) * 0.3f;
                 var c = bounds.Center;
-                for (double a = 0; a <= 360; a += 10)
+                for (Coord a = 0; a <= 360; a += 10)
                 {
                     lines.Add(DrawingUtils.GetPointOnCircle(c, r, a));
                 }

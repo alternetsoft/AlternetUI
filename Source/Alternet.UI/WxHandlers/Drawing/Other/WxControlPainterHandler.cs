@@ -830,7 +830,7 @@ namespace Alternet.Drawing
         }
 
         /// <inheritdoc/>
-        public double GetHeaderButtonHeight(AbstractControl control)
+        public Coord GetHeaderButtonHeight(AbstractControl control)
         {
             var result = Alternet.UI.Native.WxOtherFactory.RendererGetHeaderButtonHeight(
                 default,
@@ -839,7 +839,7 @@ namespace Alternet.Drawing
         }
 
         /// <inheritdoc/>
-        public double GetHeaderButtonMargin(AbstractControl control)
+        public Coord GetHeaderButtonMargin(AbstractControl control)
         {
             var result = Alternet.UI.Native.WxOtherFactory.RendererGetHeaderButtonMargin(
                 default,
@@ -871,7 +871,7 @@ namespace Alternet.Drawing
             AbstractControl control,
             Graphics dc,
             SizeD size,
-            double position,
+            Coord position,
             GenericOrientation orientation,
             DrawFlags flags = 0)
         {
@@ -1115,7 +1115,7 @@ namespace Alternet.Drawing
             /// <summary>
             /// Gets or sets sash position for the <see cref="DrawSplitterSash"/>.
             /// </summary>
-            public double SashPosition;
+            public Coord SashPosition;
 
             /// <summary>
             /// Gets or sets sash orientation for the <see cref="DrawSplitterSash"/>.

@@ -67,7 +67,7 @@ namespace Alternet.Drawing
 
         /// <summary>
         /// Gets or sets coerce function used in <see cref="Coerce()"/> method.
-        /// Default is Null. You can assign here for example <see cref="Math.Ceiling(Coord)"/>.
+        /// Default is Null. You can assign here for example <see cref="MathUtils.Ceiling(Coord)"/>.
         /// </summary>
         public static Func<Coord, Coord>? CoerceCoordFunc = null;
 
@@ -165,8 +165,8 @@ namespace Alternet.Drawing
         {
             get
             {
-                var result = Math.Pow(Width, CoordD.Two) + Math.Pow(Height, CoordD.Two);
-                result = Math.Sqrt(result);
+                var result = MathF.Pow(Width, CoordD.Two) + MathF.Pow(Height, CoordD.Two);
+                result = MathF.Sqrt(result);
                 return result;
             }
         }
@@ -665,7 +665,7 @@ namespace Alternet.Drawing
 
         /// <summary>
         /// Returns new <see cref="SizeD"/> value with ceiling of the <see cref="Width"/> and
-        /// <see cref="Height"/>. Uses <see cref="Math.Ceiling(Coord)"/> on values.
+        /// <see cref="Height"/>. Uses <see cref="MathUtils.Ceiling(Coord)"/> on values.
         /// </summary>
         /// <returns></returns>
         /// <remarks>
@@ -675,7 +675,7 @@ namespace Alternet.Drawing
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public readonly SizeD Ceiling()
         {
-            return new(Math.Ceiling(width), Math.Ceiling(height));
+            return new(MathUtils.Ceiling(width), MathUtils.Ceiling(height));
         }
 
         /// <summary>

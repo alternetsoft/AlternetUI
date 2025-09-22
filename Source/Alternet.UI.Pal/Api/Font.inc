@@ -3,7 +3,7 @@
 public:
 string GetName();
 
-double GetSizeInPoints();
+float GetSizeInPoints();
 
 FontStyle GetStyle();
 
@@ -24,7 +24,7 @@ bool IsFixedWidth();
 static int GetDefaultEncoding();
 static void SetDefaultEncoding(int encoding);
 int GetWeight();
-void Initialize(GenericFontFamily genericFamily, optional<string> familyName, double emSizeInPoints, FontStyle style);
+void Initialize(GenericFontFamily genericFamily, optional<string> familyName, float emSizeInPoints, FontStyle style);
 void InitializeWithDefaultFont();
 void InitializeWithDefaultMonoFont();
 void InitializeFromFont(Font* font);

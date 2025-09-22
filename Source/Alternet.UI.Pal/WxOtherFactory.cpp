@@ -519,7 +519,7 @@ namespace Alternet::UI
 		return ((wxDisplay*)handle)->GetPPI();
 	}
 
-	double WxOtherFactory::DisplayGetScaleFactor(void* handle)
+	Coord WxOtherFactory::DisplayGetScaleFactor(void* handle)
 	{
 		return ((wxDisplay*)handle)->GetScaleFactor();
 	}

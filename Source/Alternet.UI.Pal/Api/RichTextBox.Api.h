@@ -1794,7 +1794,7 @@ ALTERNET_UI_API c_bool RichTextBox_GetVerticalScrollbarEnabled_(RichTextBox* obj
     #endif
 }
 
-ALTERNET_UI_API void RichTextBox_SetFontScale_(RichTextBox* obj, double fontScale, c_bool refresh)
+ALTERNET_UI_API void RichTextBox_SetFontScale_(RichTextBox* obj, float fontScale, c_bool refresh)
 {
     #if !defined(__WXMSW__) || defined(_DEBUG)
     MarshalExceptions<void>([&](){
@@ -1805,10 +1805,10 @@ ALTERNET_UI_API void RichTextBox_SetFontScale_(RichTextBox* obj, double fontScal
     #endif
 }
 
-ALTERNET_UI_API double RichTextBox_GetFontScale_(RichTextBox* obj)
+ALTERNET_UI_API float RichTextBox_GetFontScale_(RichTextBox* obj)
 {
     #if !defined(__WXMSW__) || defined(_DEBUG)
-    return MarshalExceptions<double>([&](){
+    return MarshalExceptions<float>([&](){
     #endif
         return obj->GetFontScale();
     #if !defined(__WXMSW__) || defined(_DEBUG)

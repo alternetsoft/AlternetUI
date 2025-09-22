@@ -39,7 +39,7 @@ namespace Alternet.UI
             return new SizeD(100, 100);
         }
 
-        internal double GetControlRadius()
+        internal Coord GetControlRadius()
         {
             var bounds = ClientRectangle;
             var gaugePadding = 10;
@@ -184,10 +184,10 @@ namespace Alternet.UI
             dc.DrawBorderWithBrush(DefaultColors.GetControlBorderBrush(this), bounds);
                 
             var center = GetControlCenter();
-            double controlRadius = GetControlRadius();
-            var largeTickLength = controlRadius * 0.1;
-            var smallTickLength = largeTickLength * 0.5;
-            var knobPadding = largeTickLength * 0.5;
+            var controlRadius = GetControlRadius();
+            var largeTickLength = controlRadius * 0.1f;
+            var smallTickLength = largeTickLength * 0.5f;
+            var knobPadding = largeTickLength * 0.5f;
             var knobRadius = controlRadius - largeTickLength - knobPadding;
 
             /*
@@ -208,7 +208,7 @@ namespace Alternet.UI
 
             dc.DrawCircle(knobBorderPen, center, knobRadius);
 
-            var emptyScaleSectorAngle = 70.0;
+            var emptyScaleSectorAngle = 70.0f;
             var emptyScaleSectorHalfAngle = emptyScaleSectorAngle / 2;
 
             var scaleStartAngle = 90 + emptyScaleSectorHalfAngle;
@@ -222,20 +222,20 @@ namespace Alternet.UI
                 scaleStartAngle,
                 scaleEndAngle);
 
-            const double DegreesToRadians = Math.PI / 180;
+            const float DegreesToRadians = MathF.PI / 180;
 
-            PointD GetScalePoint(double angle, double radius)
+            PointD GetScalePoint(Coord angle, Coord radius)
             {
                 var radians = angle * DegreesToRadians;
-                return center + new SizeD(radius * Math.Cos(radians), radius * Math.Sin(radians));
+                return center + new SizeD(radius * MathF.Cos(radians), radius * MathF.Sin(radians));
             }
 
-            var pointerEndPoint1 = GetScalePoint(pointerAngle, knobRadius * 0.95);
-            var pointerEndPoint2 = GetScalePoint(pointerAngle, knobRadius * 0.5);
+            var pointerEndPoint1 = GetScalePoint(pointerAngle, knobRadius * 0.95f);
+            var pointerEndPoint2 = GetScalePoint(pointerAngle, knobRadius * 0.5f);
             dc.DrawLine(knobPointerPen1, pointerEndPoint1, pointerEndPoint2);
             dc.DrawLine(knobPointerPen2, pointerEndPoint1, pointerEndPoint2);
 
-            void DrawTicks(Pen pen, double step, double tickLength)
+            void DrawTicks(Pen pen, float step, float tickLength)
             {
                 for (var angle = scaleStartAngle; angle <= scaleEndAngle; angle += step)
                 {
@@ -253,12 +253,12 @@ namespace Alternet.UI
             DrawTicks(largeTickPen, scaleRange / largeTicksCount, largeTickLength);
         }
 
-        private static double MapRanges(
-            double value,
-            double from1,
-            double to1,
-            double from2,
-            double to2) =>
+        private static float MapRanges(
+            float value,
+            float from1,
+            float to1,
+            float from2,
+            float to2) =>
             ((value - from1) / (to1 - from1) * (to2 - from2)) + from2;
 
         private void Control_ValueChanged(object? sender, EventArgs e)

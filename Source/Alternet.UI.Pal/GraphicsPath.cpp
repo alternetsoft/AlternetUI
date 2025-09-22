@@ -80,7 +80,7 @@ namespace Alternet::UI
         _path.AddCurveToPoint(fromDip(controlPoint1, window), fromDip(controlPoint2, window), fromDip(endPoint, window));
     }
     
-    void GraphicsPath::AddArc(const Point& center, double radius, double startAngle, double sweepAngle)
+    void GraphicsPath::AddArc(const Point& center, Coord radius, Coord startAngle, Coord sweepAngle)
     {
         auto window = GetWindow();
         
@@ -108,8 +108,8 @@ namespace Alternet::UI
         auto wxRect = fromDip(rect, window);
         _path.AddRectangle(wxRect.x, wxRect.y, wxRect.width, wxRect.height);
     }
-    
-    void GraphicsPath::AddRoundedRectangle(const Rect& rect, double cornerRadius)
+
+    void GraphicsPath::AddRoundedRectangle(const Rect& rect, Coord cornerRadius)
     {
         auto window = GetWindow();
         auto wxRect = fromDip(rect, window);

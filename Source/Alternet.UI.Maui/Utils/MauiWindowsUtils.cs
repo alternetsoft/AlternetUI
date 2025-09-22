@@ -27,7 +27,7 @@ public static class MauiWindowsUtils
 
         var touchDevice = ToTouchDeviceType(device);
 
-        LongTapEventArgs result = new(touchDevice, (position.X, position.Y));
+        LongTapEventArgs result = new(touchDevice, new PointD((float)position.X, (float)position.Y));
         return result;
     }
 

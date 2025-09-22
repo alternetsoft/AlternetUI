@@ -32,7 +32,7 @@ int GetTextAlign();
 void SetTextAlign(int value);
 
 void SetImagePosition(int dir);
-void SetImageMargins(double x, double y);
+void SetImageMargins(float x, float y);
 
 public:
 

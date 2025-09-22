@@ -4,17 +4,17 @@ public:
 PrintDocument* GetDocument();
 void SetDocument(PrintDocument* value);
 
-double GetMinMarginLeft();
-void SetMinMarginLeft(double value);
+float GetMinMarginLeft();
+void SetMinMarginLeft(float value);
 
-double GetMinMarginTop();
-void SetMinMarginTop(double value);
+float GetMinMarginTop();
+void SetMinMarginTop(float value);
 
-double GetMinMarginRight();
-void SetMinMarginRight(double value);
+float GetMinMarginRight();
+void SetMinMarginRight(float value);
 
-double GetMinMarginBottom();
-void SetMinMarginBottom(double value);
+float GetMinMarginBottom();
+void SetMinMarginBottom(float value);
 
 bool GetMinMarginsValueSet();
 void SetMinMarginsValueSet(bool value);

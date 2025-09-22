@@ -251,7 +251,7 @@ ALTERNET_UI_API void Button_SetImagePosition_(Button* obj, int dir)
     #endif
 }
 
-ALTERNET_UI_API void Button_SetImageMargins_(Button* obj, double x, double y)
+ALTERNET_UI_API void Button_SetImageMargins_(Button* obj, float x, float y)
 {
     #if !defined(__WXMSW__) || defined(_DEBUG)
     MarshalExceptions<void>([&](){

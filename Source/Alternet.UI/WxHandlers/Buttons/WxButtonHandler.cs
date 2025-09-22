@@ -76,7 +76,7 @@ namespace Alternet.UI
                 NativeControl.SetImagePosition((int)dir);
         }
 
-        public void SetImageMargins(double x, double y)
+        public void SetImageMargins(Coord x, Coord y)
         {
             if (App.IsWindowsOS && Control?.Image != null)
             {

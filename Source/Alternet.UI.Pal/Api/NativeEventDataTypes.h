@@ -8,8 +8,8 @@ namespace Alternet::UI
     struct DragEventData
     {
         void* data;
-        double mouseClientLocationX;
-        double mouseClientLocationY;
+        float mouseClientLocationX;
+        float mouseClientLocationY;
         DragDropEffects effect;
     };
     #pragma pack(pop)

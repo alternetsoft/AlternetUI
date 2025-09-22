@@ -244,7 +244,7 @@ namespace Alternet.UI.Native
             NativeApi.ListView_ClearItems_(NativePointer);
         }
         
-        public void InsertColumnAt(long index, string header, double width, Alternet.UI.ListViewColumnWidthMode widthMode)
+        public void InsertColumnAt(long index, string header, float width, Alternet.UI.ListViewColumnWidthMode widthMode)
         {
             CheckDisposed();
             NativeApi.ListView_InsertColumnAt_(NativePointer, index, header, width, widthMode);
@@ -334,7 +334,7 @@ namespace Alternet.UI.Native
             NativeApi.ListView_SetItemImageIndex_(NativePointer, itemIndex, columnIndex, imageIndex);
         }
         
-        public void SetColumnWidth(long columnIndex, double fixedWidth, Alternet.UI.ListViewColumnWidthMode widthMode)
+        public void SetColumnWidth(long columnIndex, float fixedWidth, Alternet.UI.ListViewColumnWidthMode widthMode)
         {
             CheckDisposed();
             NativeApi.ListView_SetColumnWidth_(NativePointer, columnIndex, fixedWidth, widthMode);
@@ -517,7 +517,7 @@ namespace Alternet.UI.Native
             public static extern void ListView_ClearItems_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void ListView_InsertColumnAt_(IntPtr obj, long index, string header, double width, Alternet.UI.ListViewColumnWidthMode widthMode);
+            public static extern void ListView_InsertColumnAt_(IntPtr obj, long index, string header, float width, Alternet.UI.ListViewColumnWidthMode widthMode);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void ListView_RemoveColumnAt_(IntPtr obj, long index);
@@ -562,7 +562,7 @@ namespace Alternet.UI.Native
             public static extern void ListView_SetItemImageIndex_(IntPtr obj, long itemIndex, long columnIndex, int imageIndex);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void ListView_SetColumnWidth_(IntPtr obj, long columnIndex, double fixedWidth, Alternet.UI.ListViewColumnWidthMode widthMode);
+            public static extern void ListView_SetColumnWidth_(IntPtr obj, long columnIndex, float fixedWidth, Alternet.UI.ListViewColumnWidthMode widthMode);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void ListView_SetColumnTitle_(IntPtr obj, long columnIndex, string text);

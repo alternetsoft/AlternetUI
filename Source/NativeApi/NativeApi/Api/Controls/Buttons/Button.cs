@@ -28,6 +28,6 @@ namespace NativeApi.Api
         public bool TextVisible { get; set; }
         public int TextAlign { get; set; }
         public void SetImagePosition(int dir) {}
-        public void SetImageMargins(double x, double y) {}
+        public void SetImageMargins(float x, float y) {}
     }
 }

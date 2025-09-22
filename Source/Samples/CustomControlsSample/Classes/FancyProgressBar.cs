@@ -74,8 +74,8 @@ namespace Alternet.UI
                 scaleBounds,
                 () =>
                 {
-                    DrawTicks(scaleBounds.Left + (scaleBounds.Width * 0.45), 0);
-                    DrawTicks(scaleBounds.Left + (scaleBounds.Width * 0.7), 0.5);
+                    DrawTicks(scaleBounds.Left + (scaleBounds.Width * 0.45f), 0);
+                    DrawTicks(scaleBounds.Left + (scaleBounds.Width * 0.7f), 0.5f);
 
                     var pointerLineStartPoint = new PointD(scaleBounds.Left, bounds.Center.Y);
                     var pointerLineEndPoint = new PointD(scaleBounds.Right, bounds.Center.Y);
@@ -83,7 +83,7 @@ namespace Alternet.UI
                     dc.DrawLine(pointerPen2, pointerLineStartPoint, pointerLineEndPoint);
                 });
 
-            void DrawTicks(double ticksStartX, double offsetInSteps)
+            void DrawTicks(Coord ticksStartX, Coord offsetInSteps)
             {
                 int step = 10;
 
@@ -117,19 +117,19 @@ namespace Alternet.UI
                         value.ToString(),
                         font,
                         Brushes.White,
-                        startPoint - new SizeD(fontMaxSize.Width * 0.6, fontMaxSize.Height / 2));
+                        startPoint - new SizeD(fontMaxSize.Width * 0.6f, fontMaxSize.Height / 2));
 
                     y += yStep;
                 }
             }
         }
 
-        internal static double MapRanges(
-            double value,
-            double from1,
-            double to1,
-            double from2,
-            double to2) =>
+        internal static Coord MapRanges(
+            Coord value,
+            Coord from1,
+            Coord to1,
+            Coord from2,
+            Coord to2) =>
             ((value - from1) / (to1 - from1) * (to2 - from2)) + from2;
 
         private void Control_ValueChanged(object? sender, EventArgs e)

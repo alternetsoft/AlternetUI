@@ -47,7 +47,7 @@ static int DisplayGetStdPPIValue();
 static SizeI DisplayGetStdPPI();
 static string DisplayGetName(void* handle);
 static SizeI DisplayGetPPI(void* handle);
-static double DisplayGetScaleFactor(void* handle);
+static float DisplayGetScaleFactor(void* handle);
 static bool DisplayIsPrimary(void* handle);
 static RectI DisplayGetClientArea(void* handle);
 static RectI DisplayGetGeometry(void* handle);

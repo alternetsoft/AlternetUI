@@ -12,11 +12,11 @@ namespace Alternet::UI
 
     void RadialGradientBrush::Initialize(
         const Point& center,
-        double radius,
+        Coord radius,
         const Point& gradientOrigin,
         Color* gradientStopsColors,
         int gradientStopsColorsCount,
-        double* gradientStopsOffsets,
+        Coord* gradientStopsOffsets,
         int gradientStopsOffsetsCount)
     {
         if (gradientStopsColorsCount != gradientStopsOffsetsCount)

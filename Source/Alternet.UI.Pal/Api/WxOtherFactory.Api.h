@@ -528,10 +528,10 @@ ALTERNET_UI_API SizeI_C WxOtherFactory_DisplayGetPPI_(void* handle)
     #endif
 }
 
-ALTERNET_UI_API double WxOtherFactory_DisplayGetScaleFactor_(void* handle)
+ALTERNET_UI_API float WxOtherFactory_DisplayGetScaleFactor_(void* handle)
 {
     #if !defined(__WXMSW__) || defined(_DEBUG)
-    return MarshalExceptions<double>([&](){
+    return MarshalExceptions<float>([&](){
     #endif
         return WxOtherFactory::DisplayGetScaleFactor(handle);
     #if !defined(__WXMSW__) || defined(_DEBUG)

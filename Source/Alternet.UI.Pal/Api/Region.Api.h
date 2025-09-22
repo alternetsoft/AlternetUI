@@ -195,7 +195,7 @@ ALTERNET_UI_API void Region_SubtractRegion_(Region* obj, Region* region)
     #endif
 }
 
-ALTERNET_UI_API void Region_Translate_(Region* obj, double dx, double dy)
+ALTERNET_UI_API void Region_Translate_(Region* obj, float dx, float dy)
 {
     #if !defined(__WXMSW__) || defined(_DEBUG)
     MarshalExceptions<void>([&](){

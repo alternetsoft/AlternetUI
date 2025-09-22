@@ -26,7 +26,7 @@ namespace ControlsSample
                 new FontAndColor(
                     Color.Red,
                     Color.LightGoldenrodYellow,
-                    Control.DefaultFont.Scaled(1.5)));
+                    Control.DefaultFont.Scaled(1.5f)));
 
             controlTemplate.Parent = this;
             controlTemplate.SetSizeToContent();

@@ -27,7 +27,7 @@ namespace NativeApi.Api
         // (i.e. MacOs and Linux, but not Windows). This doesn't change the bitmap actual size
         // or its contents, but changes its scale factor, so that it appears in a smaller
         // size when it is drawn on screen:
-        public double ScaleFactor { get; set; }
+        public float ScaleFactor { get; set; }
 
         // Returns the size of bitmap in DPI-independent units.
         // This assumes that the bitmap was created using the value of scale factor corresponding
@@ -37,13 +37,13 @@ namespace NativeApi.Api
         public SizeI DipSize { get; }
 
         // Returns the height of the bitmap in logical pixels.
-        public double ScaledHeight { get; }
+        public float ScaledHeight { get; }
 
         // Returns the size of the bitmap in logical pixels.        
         public SizeI ScaledSize { get; }
 
         // Returns the width of the bitmap in logical pixels.
-        public double ScaledWidth { get; }
+        public float ScaledWidth { get; }
 
         // Create a bitmap specifying its size in DPI-independent pixels and the scale factor to use.
         // The physical size of the bitmap is obtained by multiplying the given size by scale and
@@ -58,7 +58,7 @@ namespace NativeApi.Api
         // depth - The number of bits used to represent each bitmap pixel.
         // true - if the creation was successful.          
         public bool InitializeFromDipSize(int width, int height,
-            double scale, int depth = -1) => default;
+            float scale, int depth = -1) => default;
 
         public bool InitializeFromScreen() => default;
 

@@ -131,7 +131,7 @@ ALTERNET_UI_API void ImageSet_InitImageFor_(ImageSet* obj, Image* image, void* w
     #endif
 }
 
-ALTERNET_UI_API SizeI_C ImageSet_GetPreferredBitmapSizeAtScale_(ImageSet* obj, double scale)
+ALTERNET_UI_API SizeI_C ImageSet_GetPreferredBitmapSizeAtScale_(ImageSet* obj, float scale)
 {
     #if !defined(__WXMSW__) || defined(_DEBUG)
     return MarshalExceptions<SizeI_C>([&](){

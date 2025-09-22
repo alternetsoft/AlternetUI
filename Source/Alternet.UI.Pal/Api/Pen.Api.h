@@ -19,7 +19,7 @@ ALTERNET_UI_API Pen* Pen_Create_()
     #endif
 }
 
-ALTERNET_UI_API void Pen_Initialize_(Pen* obj, DashStyle style, Color color, double width, LineCap lineCap, LineJoin lineJoin)
+ALTERNET_UI_API void Pen_Initialize_(Pen* obj, DashStyle style, Color color, float width, LineCap lineCap, LineJoin lineJoin)
 {
     #if !defined(__WXMSW__) || defined(_DEBUG)
     MarshalExceptions<void>([&](){

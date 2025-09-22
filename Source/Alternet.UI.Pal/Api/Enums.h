@@ -596,6 +596,14 @@ namespace Alternet::UI
         Winding = 1,
     };
     
+    enum class GraphicsBackendType
+    {
+        SkiaSharp = 0,
+        WxWidgets = 1,
+        Null = 2,
+        Other = 3,
+    };
+    
     enum class GraphicsUnit
     {
         World = 0,
@@ -3035,7 +3043,7 @@ namespace Alternet::UI
         Avalonia = 2,
         WinForms = 3,
         WinUI = 4,
-        Platformless = 5,
+        Unspecified = 5,
     };
     
     enum class TabAlignment

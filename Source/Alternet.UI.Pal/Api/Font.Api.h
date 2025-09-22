@@ -30,10 +30,10 @@ ALTERNET_UI_API char16_t* Font_GetName_(Font* obj)
     #endif
 }
 
-ALTERNET_UI_API double Font_GetSizeInPoints_(Font* obj)
+ALTERNET_UI_API float Font_GetSizeInPoints_(Font* obj)
 {
     #if !defined(__WXMSW__) || defined(_DEBUG)
-    return MarshalExceptions<double>([&](){
+    return MarshalExceptions<float>([&](){
     #endif
         return obj->GetSizeInPoints();
     #if !defined(__WXMSW__) || defined(_DEBUG)
@@ -228,7 +228,7 @@ ALTERNET_UI_API int Font_GetWeight_(Font* obj)
     #endif
 }
 
-ALTERNET_UI_API void Font_Initialize_(Font* obj, GenericFontFamily genericFamily, const char16_t* familyName, double emSizeInPoints, FontStyle style)
+ALTERNET_UI_API void Font_Initialize_(Font* obj, GenericFontFamily genericFamily, const char16_t* familyName, float emSizeInPoints, FontStyle style)
 {
     #if !defined(__WXMSW__) || defined(_DEBUG)
     MarshalExceptions<void>([&](){

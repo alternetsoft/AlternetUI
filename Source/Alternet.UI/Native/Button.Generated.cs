@@ -193,7 +193,7 @@ namespace Alternet.UI.Native
             NativeApi.Button_SetImagePosition_(NativePointer, dir);
         }
         
-        public void SetImageMargins(double x, double y)
+        public void SetImageMargins(float x, float y)
         {
             CheckDisposed();
             NativeApi.Button_SetImageMargins_(NativePointer, x, y);
@@ -310,7 +310,7 @@ namespace Alternet.UI.Native
             public static extern void Button_SetImagePosition_(IntPtr obj, int dir);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void Button_SetImageMargins_(IntPtr obj, double x, double y);
+            public static extern void Button_SetImageMargins_(IntPtr obj, float x, float y);
             
         }
     }

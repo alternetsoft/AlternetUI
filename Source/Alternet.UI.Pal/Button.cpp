@@ -78,7 +78,7 @@ namespace Alternet::UI
         GetButton()->SetBitmapPosition((wxDirection)dir);
     }
 
-    void Button::SetImageMargins(double x, double y)
+    void Button::SetImageMargins(Coord x, Coord y)
     {
         GetButton()->SetBitmapMargins(x, y);
     }

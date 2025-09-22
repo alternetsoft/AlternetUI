@@ -119,7 +119,7 @@ namespace Alternet.UI.Native
             NativeApi.Region_SubtractRegion_(NativePointer, region.NativePointer);
         }
         
-        public void Translate(double dx, double dy)
+        public void Translate(float dx, float dy)
         {
             CheckDisposed();
             NativeApi.Region_Translate_(NativePointer, dx, dy);
@@ -201,7 +201,7 @@ namespace Alternet.UI.Native
             public static extern void Region_SubtractRegion_(IntPtr obj, IntPtr region);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void Region_Translate_(IntPtr obj, double dx, double dy);
+            public static extern void Region_Translate_(IntPtr obj, float dx, float dy);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern Alternet.Drawing.RectD Region_GetBounds_(IntPtr obj);

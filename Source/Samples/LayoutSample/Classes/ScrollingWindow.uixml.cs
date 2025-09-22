@@ -10,7 +10,7 @@ namespace LayoutSample
     public partial class ScrollingWindow : Window
     {
         private readonly ImageControl imageControl = new();
-        private double zoomFactor = 30;
+        private Coord zoomFactor = 30;
 
         public ScrollingWindow()
         {
@@ -196,7 +196,7 @@ namespace LayoutSample
         private void UpdateImageZoom()
         {
             if (imageControl != null)
-                imageControl.Zoom = 1 + 0.1 * zoomFactor;
+                imageControl.Zoom = 1 + 0.1f * zoomFactor;
         }
     }
 }

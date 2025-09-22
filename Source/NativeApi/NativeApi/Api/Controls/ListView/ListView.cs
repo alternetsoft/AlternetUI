@@ -22,7 +22,7 @@ namespace NativeApi.Api
 
         public void ClearItems() => throw new Exception();
 
-        public void InsertColumnAt(long index, string header, double width, ListViewColumnWidthMode widthMode) => throw new Exception();
+        public void InsertColumnAt(long index, string header, float width, ListViewColumnWidthMode widthMode) => throw new Exception();
         
         public void RemoveColumnAt(long index) => throw new Exception();
 
@@ -74,7 +74,7 @@ namespace NativeApi.Api
         public void SetItemText(long itemIndex, long columnIndex, string text) => throw new Exception();
         public void SetItemImageIndex(long itemIndex, long columnIndex, int imageIndex) => throw new Exception();
 
-        public void SetColumnWidth(long columnIndex, double fixedWidth, ListViewColumnWidthMode widthMode) => throw new Exception();
+        public void SetColumnWidth(long columnIndex, float fixedWidth, ListViewColumnWidthMode widthMode) => throw new Exception();
         public void SetColumnTitle(long columnIndex, string text) => throw new Exception();
     }
 }

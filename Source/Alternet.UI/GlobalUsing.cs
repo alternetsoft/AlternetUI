@@ -1,4 +1,4 @@
-﻿global using Coord = double;
+﻿global using Coord = float;
 
 #pragma warning disable
 namespace Alternet.Base.Collections

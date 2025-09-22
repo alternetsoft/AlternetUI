@@ -41,7 +41,7 @@ namespace Alternet.UI.Native
             }
         }
         
-        public double MinMarginLeft
+        public float MinMarginLeft
         {
             get
             {
@@ -56,7 +56,7 @@ namespace Alternet.UI.Native
             }
         }
         
-        public double MinMarginTop
+        public float MinMarginTop
         {
             get
             {
@@ -71,7 +71,7 @@ namespace Alternet.UI.Native
             }
         }
         
-        public double MinMarginRight
+        public float MinMarginRight
         {
             get
             {
@@ -86,7 +86,7 @@ namespace Alternet.UI.Native
             }
         }
         
-        public double MinMarginBottom
+        public float MinMarginBottom
         {
             get
             {
@@ -198,28 +198,28 @@ namespace Alternet.UI.Native
             public static extern void PageSetupDialog_SetDocument_(IntPtr obj, IntPtr value);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern double PageSetupDialog_GetMinMarginLeft_(IntPtr obj);
+            public static extern float PageSetupDialog_GetMinMarginLeft_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void PageSetupDialog_SetMinMarginLeft_(IntPtr obj, double value);
+            public static extern void PageSetupDialog_SetMinMarginLeft_(IntPtr obj, float value);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern double PageSetupDialog_GetMinMarginTop_(IntPtr obj);
+            public static extern float PageSetupDialog_GetMinMarginTop_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void PageSetupDialog_SetMinMarginTop_(IntPtr obj, double value);
+            public static extern void PageSetupDialog_SetMinMarginTop_(IntPtr obj, float value);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern double PageSetupDialog_GetMinMarginRight_(IntPtr obj);
+            public static extern float PageSetupDialog_GetMinMarginRight_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void PageSetupDialog_SetMinMarginRight_(IntPtr obj, double value);
+            public static extern void PageSetupDialog_SetMinMarginRight_(IntPtr obj, float value);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern double PageSetupDialog_GetMinMarginBottom_(IntPtr obj);
+            public static extern float PageSetupDialog_GetMinMarginBottom_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void PageSetupDialog_SetMinMarginBottom_(IntPtr obj, double value);
+            public static extern void PageSetupDialog_SetMinMarginBottom_(IntPtr obj, float value);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern bool PageSetupDialog_GetMinMarginsValueSet_(IntPtr obj);

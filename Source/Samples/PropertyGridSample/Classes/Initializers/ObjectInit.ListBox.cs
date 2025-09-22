@@ -82,7 +82,7 @@ namespace PropertyGridSample
             addAction(item);
 
             item = new();
-            item.Font = Control.DefaultFont.Scaled(1.5);
+            item.Font = Control.DefaultFont.Scaled(1.5f);
             item.Text = "Custom Font";
             addAction(item);
 

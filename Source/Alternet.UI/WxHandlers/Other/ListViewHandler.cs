@@ -148,7 +148,7 @@ namespace Alternet.UI
 
         public void SetColumnWidth(
             long columnIndex,
-            double width,
+            Coord width,
             ListViewColumnWidthMode widthMode)
         {
             NativeControl.SetColumnWidth(columnIndex, width, CoerceWidthMode(widthMode));

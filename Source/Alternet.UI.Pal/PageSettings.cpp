@@ -31,42 +31,42 @@ namespace Alternet::UI
         _landscape = value;
     }
 
-    double PageSettings::GetMarginBottom()
+    Coord PageSettings::GetMarginBottom()
     {
         return _margins.Bottom;
     }
 
-    double PageSettings::GetMarginTop()
+    Coord PageSettings::GetMarginTop()
     {
         return _margins.Top;
     }
 
-    double PageSettings::GetMarginRight()
+    Coord PageSettings::GetMarginRight()
     {
         return _margins.Right;
     }
 
-    double PageSettings::GetMarginLeft()
+    Coord PageSettings::GetMarginLeft()
     {
         return _margins.Left;
     }
-    
-    void PageSettings::SetMarginTop(double value)
+
+    void PageSettings::SetMarginTop(Coord value)
     {
         _margins.Top = value;
     }
 
-    void PageSettings::SetMarginBottom(double value)
+    void PageSettings::SetMarginBottom(Coord value)
     {
         _margins.Bottom = value;
     }
 
-    void PageSettings::SetMarginRight(double value)
+    void PageSettings::SetMarginRight(Coord value)
     {
         _margins.Right = value;
     }
 
-    void PageSettings::SetMarginLeft(double value)
+    void PageSettings::SetMarginLeft(Coord value)
     {
         _margins.Left = value;
     }

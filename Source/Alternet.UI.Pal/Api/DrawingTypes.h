@@ -10,7 +10,9 @@
 namespace Alternet::UI
 {
 
-#define Coord double
+#define Coord float
+
+constexpr Coord M_PI_Coord = 3.1415927f; 
 
 #pragma pack(push, 1)
 

@@ -21,13 +21,13 @@ namespace Alternet::UI
     }
 
     void Font::Initialize(GenericFontFamily genericFamily,
-        optional<string> familyName, double emSize, FontStyle style)
+        optional<string> familyName, Coord emSize, FontStyle style)
     {
         _font = InitializeWxFont(genericFamily, familyName, emSize, style);
     }
 
     wxFont Font::InitializeWxFont(GenericFontFamily genericFamily, 
-        optional<string> familyName, double emSize, FontStyle style)
+        optional<string> familyName, Coord emSize, FontStyle style)
     {
         wxFontInfo fontInfo(emSize);
 
@@ -163,7 +163,7 @@ namespace Alternet::UI
         return _font.GetWeight();
     }
 
-    double Font::GetSizeInPoints()
+    Coord Font::GetSizeInPoints()
     {
         return _font.GetFractionalPointSize();
     }

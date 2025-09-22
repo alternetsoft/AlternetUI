@@ -29,42 +29,42 @@ namespace Alternet::UI
             _document->AddRef();
     }
 
-    double PageSetupDialog::GetMinMarginBottom()
+    Coord PageSetupDialog::GetMinMarginBottom()
     {
         return _minMargins.Bottom;
     }
 
-    double PageSetupDialog::GetMinMarginTop()
+    Coord PageSetupDialog::GetMinMarginTop()
     {
         return _minMargins.Top;
     }
 
-    double PageSetupDialog::GetMinMarginRight()
+    Coord PageSetupDialog::GetMinMarginRight()
     {
         return _minMargins.Right;
     }
 
-    double PageSetupDialog::GetMinMarginLeft()
+    Coord PageSetupDialog::GetMinMarginLeft()
     {
         return _minMargins.Left;
     }
 
-    void PageSetupDialog::SetMinMarginBottom(double value)
+    void PageSetupDialog::SetMinMarginBottom(Coord value)
     {
         _minMargins.Bottom = value;
     }
 
-    void PageSetupDialog::SetMinMarginTop(double value)
+    void PageSetupDialog::SetMinMarginTop(Coord value)
     {
         _minMargins.Top = value;
     }
 
-    void PageSetupDialog::SetMinMarginRight(double value)
+    void PageSetupDialog::SetMinMarginRight(Coord value)
     {
         _minMargins.Right = value;
     }
 
-    void PageSetupDialog::SetMinMarginLeft(double value)
+    void PageSetupDialog::SetMinMarginLeft(Coord value)
     {
         _minMargins.Left = value;
     }

@@ -1,4 +1,4 @@
-﻿global using Coord = double;
+﻿global using Coord = float;
 
 #if ANDROID
 global using PlatformApplication = Android.App.Application;

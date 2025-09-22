@@ -141,10 +141,10 @@ ALTERNET_UI_API char16_t* FontDialog_GetResultFontName_(FontDialog* obj)
     #endif
 }
 
-ALTERNET_UI_API double FontDialog_GetResultFontSizeInPoints_(FontDialog* obj)
+ALTERNET_UI_API float FontDialog_GetResultFontSizeInPoints_(FontDialog* obj)
 {
     #if !defined(__WXMSW__) || defined(_DEBUG)
-    return MarshalExceptions<double>([&](){
+    return MarshalExceptions<float>([&](){
     #endif
         return obj->GetResultFontSizeInPoints();
     #if !defined(__WXMSW__) || defined(_DEBUG)
@@ -207,7 +207,7 @@ ALTERNET_UI_API void FontDialog_SetRange_(FontDialog* obj, int minRange, int max
     #endif
 }
 
-ALTERNET_UI_API void FontDialog_SetInitialFont_(FontDialog* obj, GenericFontFamily genericFamily, const char16_t* familyName, double emSizeInPoints, FontStyle style)
+ALTERNET_UI_API void FontDialog_SetInitialFont_(FontDialog* obj, GenericFontFamily genericFamily, const char16_t* familyName, float emSizeInPoints, FontStyle style)
 {
     #if !defined(__WXMSW__) || defined(_DEBUG)
     MarshalExceptions<void>([&](){

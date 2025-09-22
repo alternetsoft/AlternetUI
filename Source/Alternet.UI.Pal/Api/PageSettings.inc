@@ -7,17 +7,17 @@ void SetColor(bool value);
 bool GetLandscape();
 void SetLandscape(bool value);
 
-double GetMarginLeft();
-void SetMarginLeft(double value);
+float GetMarginLeft();
+void SetMarginLeft(float value);
 
-double GetMarginRight();
-void SetMarginRight(double value);
+float GetMarginRight();
+void SetMarginRight(float value);
 
-double GetMarginTop();
-void SetMarginTop(double value);
+float GetMarginTop();
+void SetMarginTop(float value);
 
-double GetMarginBottom();
-void SetMarginBottom(double value);
+float GetMarginBottom();
+void SetMarginBottom(float value);
 
 SizeD GetCustomPaperSize();
 void SetCustomPaperSize(const SizeD& value);

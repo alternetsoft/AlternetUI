@@ -18,6 +18,22 @@ namespace Alternet.UI.Extensions
     public static partial class ExtensionsPublic
     {
         /// <summary>
+        /// Returns a random single-precision float in the range [0.0f, 1.0f).
+        /// </summary>
+        public static float NextFloat(this Random rng)
+        {
+            return (float)rng.NextDouble();
+        }
+
+        /// <summary>
+        /// Returns a random float in the range [min, max).
+        /// </summary>
+        public static float NextFloat(this Random rng, float min, float max)
+        {
+            return min + (float)rng.NextDouble() * (max - min);
+        }
+
+        /// <summary>
         /// Converts <see cref="GenericAlignment"/> to <see cref="TextHorizontalAlignment"/>.
         /// </summary>
         /// <param name="value">Value to convert.</param>

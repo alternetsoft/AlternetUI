@@ -38,7 +38,7 @@ namespace DrawingSample
         {
             var lines = new List<PointD>();
             var w = bounds.Width / 6;
-            for (double x = 0; x < bounds.Width; x += w)
+            for (Coord x = 0; x < bounds.Width; x += w)
             {
                 lines.Add(bounds.TopLeft + new SizeD(x, 0));
                 lines.Add(bounds.BottomLeft + new SizeD(x, 0));
@@ -54,17 +54,17 @@ namespace DrawingSample
 
         public void DrawArc(Graphics dc, RectD bounds)
         {
-            dc.DrawArc(StrokePen, bounds.Center, Math.Min(bounds.Width, bounds.Height) * 0.3, 10, 210);
+            dc.DrawArc(StrokePen, bounds.Center, Math.Min(bounds.Width, bounds.Height) * 0.3f, 10, 210);
         }
 
         public void FillPie(Graphics dc, RectD bounds)
         {
-            dc.FillPie(FillBrush, bounds.Center, Math.Min(bounds.Width, bounds.Height) * 0.3, 10, 210);
+            dc.FillPie(FillBrush, bounds.Center, Math.Min(bounds.Width, bounds.Height) * 0.3f, 10, 210);
         }
 
         public void DrawPie(Graphics dc, RectD bounds)
         {
-            dc.DrawPie(StrokePen, bounds.Center, Math.Min(bounds.Width, bounds.Height) * 0.3, 10, 210);
+            dc.DrawPie(StrokePen, bounds.Center, Math.Min(bounds.Width, bounds.Height) * 0.3f, 10, 210);
         }
 
         public void DrawBeziers(Graphics dc, RectD bounds)
@@ -119,12 +119,12 @@ namespace DrawingSample
 
         public void DrawCircle(Graphics dc, RectD bounds)
         {
-            dc.DrawCircle(StrokePen, bounds.Center, Math.Min(bounds.Width, bounds.Height) * 0.3);
+            dc.DrawCircle(StrokePen, bounds.Center, Math.Min(bounds.Width, bounds.Height) * 0.3f);
         }
 
         public void FillCircle(Graphics dc, RectD bounds)
         {
-            dc.FillCircle(FillBrush, bounds.Center, Math.Min(bounds.Width, bounds.Height) * 0.3);
+            dc.FillCircle(FillBrush, bounds.Center, Math.Min(bounds.Width, bounds.Height) * 0.3f);
         }
 
         public void DrawRoundedRectangle(Graphics dc, RectD bounds)
@@ -153,7 +153,7 @@ namespace DrawingSample
 
         private static RectD GetRectangle(RectD bounds)
         {
-            var s = Math.Min(bounds.Width, bounds.Height) * 0.1;
+            var s = Math.Min(bounds.Width, bounds.Height) * 0.1f;
             var r = bounds.InflatedBy(-s, -s * 2);
             return r;
         }
@@ -175,7 +175,7 @@ namespace DrawingSample
             var lines = new List<PointD>();
             var r = Math.Min(bounds.Width, bounds.Height) / 2;
             var c = bounds.Center;
-            for (double a = 0; a <= 360; a += 45)
+            for (Coord a = 0; a <= 360; a += 45)
             {
                 lines.Add(DrawingUtils.GetPointOnCircle(c, r, a));
             }

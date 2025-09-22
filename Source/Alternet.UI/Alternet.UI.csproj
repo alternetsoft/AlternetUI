@@ -6,11 +6,10 @@
 
 <!-- ================================================= -->
 
-
   <PropertyGroup>
     <NuGetAuditMode>direct</NuGetAuditMode>
     <NoWarn>$(NoWarn);CS8032</NoWarn>
-    <TargetFramework>netstandard2.0</TargetFramework>
+    <TargetFramework>netstandard2.1</TargetFramework>
     <LangVersion>12.0</LangVersion>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <Nullable>enable</Nullable>
