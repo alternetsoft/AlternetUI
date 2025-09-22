@@ -97,6 +97,16 @@ namespace Alternet.UI
 
         private static SvgImage? imgSizingGripLeft;
         private static SvgImage? imgSizingGripRight;
+        private static SvgImage? imgBars;
+
+        /// <summary>
+        /// Gets or sets the SVG image with the bars.
+        /// </summary>
+        public static SvgImage ImgBars
+        {
+            get => imgBars ??= new MonoSvgImage(KnownSvgUrls.UrlImageBars);
+            set => imgBars = value;
+        }
 
         /// <summary>
         /// Gets or sets the SVG image used for the left sizing grip.

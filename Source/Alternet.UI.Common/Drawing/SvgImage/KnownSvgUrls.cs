@@ -447,13 +447,19 @@ namespace Alternet.UI
         /// Gets or sets the URL of the image used for the left sizing grip.
         /// </summary>
         public static string UrlImageSizingGripLeft { get; set; }
-            = GetImageUrl("alternet-sizinggrip-left.svg");
+            = GetImageUrl("alternet-sizinggrip-left");
 
         /// <summary>
         /// Gets or sets the URL of the image used for the right sizing grip.
         /// </summary>
         public static string UrlImageSizingGripRight { get; set; }
-            = GetImageUrl("alternet-sizinggrip-right.svg");
+            = GetImageUrl("alternet-sizinggrip-right");
+
+        /// <summary>
+        /// Gets or sets the URL of the image with the bars.
+        /// </summary>
+        public static string UrlImageBars { get; set; }
+            = GetImageUrl("alternet-bars");
 
         private static string GetImageUrl(string name) => string.Format(ResTemplate, name);
     }
