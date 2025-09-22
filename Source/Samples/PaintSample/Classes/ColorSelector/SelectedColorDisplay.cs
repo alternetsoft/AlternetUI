@@ -23,12 +23,13 @@ namespace PaintSample
             }
         }
 
-        public override SizeD GetPreferredSize(SizeD availableSize)
+        public override SizeD GetPreferredSize(PreferredSizeContext context)
         {
             return (50, 50);
         }
 
-        private readonly Brush backgroundHatchBrush = new HatchBrush(BrushHatchStyle.BackwardDiagonal, Color.Gray);
+        private readonly Brush backgroundHatchBrush
+            = new HatchBrush(BrushHatchStyle.BackwardDiagonal, Color.Gray);
 
         protected override void OnPaint(PaintEventArgs e)
         {

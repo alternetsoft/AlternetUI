@@ -1042,7 +1042,7 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        public override SizeD GetPreferredSize(SizeD availableSize)
+        public override SizeD GetPreferredSize(PreferredSizeContext context)
         {
             var width = NormalBorder.Width;
             return Internal() + (width.Horizontal, width.Vertical);
@@ -1058,10 +1058,10 @@ namespace Alternet.UI
                 {
                     if (Coord.IsNaN(specifiedWidth))
                     {
-                        if (MathUtils.IsInfinityOrNanOrMax(availableSize.Width))
+                        if (MathUtils.IsInfinityOrNanOrMax(context.AvailableSize.Width))
                             specifiedWidth = defaultAutoWidth;
                         else
-                            specifiedWidth = Math.Min(defaultAutoWidth, availableSize.Width);
+                            specifiedWidth = Math.Min(defaultAutoWidth, context.AvailableSize.Width);
                     }
                     else
                     {
@@ -1111,10 +1111,10 @@ namespace Alternet.UI
 
                     if (Coord.IsNaN(specifiedHeight))
                     {
-                        if (MathUtils.IsInfinityOrNanOrMax(availableSize.Height))
+                        if (MathUtils.IsInfinityOrNanOrMax(context.AvailableSize.Height))
                             specifiedHeight = defaultAutoWidth;
                         else
-                            specifiedHeight = Math.Min(defaultAutoWidth, availableSize.Height);
+                            specifiedHeight = Math.Min(defaultAutoWidth, context.AvailableSize.Height);
                     }
                 }
 

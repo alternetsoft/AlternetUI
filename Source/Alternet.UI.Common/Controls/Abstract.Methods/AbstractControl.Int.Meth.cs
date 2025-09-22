@@ -100,7 +100,7 @@ namespace Alternet.UI
                     continue;
 
                 var preferredSize = control.GetPreferredSizeLimited(
-                    childrenLayoutBounds.Size - control.Margin.Size);
+                    new PreferredSizeContext(childrenLayoutBounds.Size - control.Margin.Size));
 
                 var horizontalPosition =
                     AlignHorizontal(
@@ -125,11 +125,11 @@ namespace Alternet.UI
 
         internal static SizeD GetPreferredSizeDefaultLayout(
             AbstractControl container,
-            SizeD availableSize)
+            PreferredSizeContext context)
         {
             if (container.HasChildren)
-                return container.GetBestSizeWithChildren(availableSize);
-            return container.GetBestSizeWithPadding(availableSize);
+                return container.GetBestSizeWithChildren(context);
+            return container.GetBestSizeWithPadding(context);
         }
 
         internal static Color GetClassDefaultAttributesBgColor(
@@ -165,9 +165,9 @@ namespace Alternet.UI
             LogicalParent = value;
         }
 
-        internal virtual SizeD GetPreferredSizeLimited(SizeD availableSize)
+        internal virtual SizeD GetPreferredSizeLimited(PreferredSizeContext context)
         {
-            var preferredSize = GetPreferredSize(availableSize);
+            var preferredSize = GetPreferredSize(context);
             var result = GetSizeLimited(preferredSize);
             return result;
         }

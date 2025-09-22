@@ -104,35 +104,32 @@ namespace Alternet.UI
         /// Retrieves the size of a rectangular area into which a control can
         /// be fitted, in device-independent units.
         /// </summary>
-        /// <param name="availableSize">The available space that a parent element
-        /// can allocate a child control.</param>
-        /// <returns>A <see cref="SuggestedSize"/> representing the width and height of
+        /// <param name="context">The <see cref="PreferredSizeContext"/> providing
+        /// the available size and other layout information.</param>
+        /// <returns>A <see cref="SizeD"/> representing the preferred width and height of
         /// a rectangle, in device-independent units.</returns>
-        public virtual SizeD GetPreferredSize(SizeD availableSize)
+        public virtual SizeD GetPreferredSize(PreferredSizeContext context)
         {
             var layoutType = Layout ?? GetDefaultLayout();
 
             if (StaticControlEvents.HasRequestPreferredSizeHandlers)
             {
-                var e = new DefaultPreferredSizeEventArgs(layoutType, availableSize);
+                var e = new DefaultPreferredSizeEventArgs(layoutType, context);
                 StaticControlEvents.RaiseRequestPreferredSize(this, e);
                 if (e.Handled && e.Result != SizeD.MinusOne)
                     return e.Result;
             }
 
-            return DefaultGetPreferredSize(
-                this,
-                availableSize,
-                layoutType);
+            return DefaultGetPreferredSize(this, context, layoutType);
         }
 
         /// <summary>
-        /// Calls <see cref="GetPreferredSize(SizeD)"/> with <see cref="SizeD.PositiveInfinity"/>
-        /// as a parameter value.
+        /// Calls <see cref="GetPreferredSize(PreferredSizeContext)"/>
+        /// with <see cref="PreferredSizeContext.PositiveInfinity"/> as a parameter value.
         /// </summary>
         /// <returns></returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public SizeD GetPreferredSize() => GetPreferredSize(SizeD.PositiveInfinity);
+        public SizeD GetPreferredSize() => GetPreferredSize(PreferredSizeContext.PositiveInfinity);
 
         /// <summary>
         /// Aligns control in the parent using horizontal and vertical
@@ -234,19 +231,19 @@ namespace Alternet.UI
 
         internal static SizeD GetPreferredSizeWhenScroll(
             AbstractControl container,
-            SizeD availableSize)
+            PreferredSizeContext context)
         {
             var result = container.LayoutMaxSize
-                ?? GetPreferredSizeDefaultLayout(container, availableSize);
+                ?? GetPreferredSizeDefaultLayout(container, context);
 
             var cornerSize = ScrollBar.GetCornerSize(container);
 
-            if (result.Width > availableSize.Width)
+            if (result.Width > context.AvailableSize.Width)
             {
                 result.Width += cornerSize.Width;
             }
 
-            if (result.Height > availableSize.Height)
+            if (result.Height > context.AvailableSize.Height)
             {
                 result.Height += cornerSize.Height;
             }
@@ -256,22 +253,22 @@ namespace Alternet.UI
 
         internal static SizeD GetPreferredSizeWhenHorizontal(
             AbstractControl container,
-            SizeD availableSize)
+            PreferredSizeContext context)
         {
             if (UseLayoutMethod == DefaultLayoutMethod.Original)
-                return OldLayout.GetPreferredSizeWhenHorizontal(container, availableSize);
+                return OldLayout.GetPreferredSizeWhenHorizontal(container, context);
             else
-                return GetPreferredSizeWhenStack(container, availableSize, isVert: false);
+                return GetPreferredSizeWhenStack(container, context, isVert: false);
         }
 
         internal static SizeD GetPreferredSizeWhenVertical(
             AbstractControl container,
-            SizeD availableSize)
+            PreferredSizeContext context)
         {
             if (UseLayoutMethod == DefaultLayoutMethod.Original)
-                return OldLayout.GetPreferredSizeWhenVertical(container, availableSize);
+                return OldLayout.GetPreferredSizeWhenVertical(container, context);
             else
-                return GetPreferredSizeWhenStack(container, availableSize, isVert: true);
+                return GetPreferredSizeWhenStack(container, context, isVert: true);
         }
 
         internal static void LayoutWhenHorizontal(
@@ -333,10 +330,10 @@ namespace Alternet.UI
 
         internal static SizeD GetPreferredSizeWhenStack(
             AbstractControl container,
-            SizeD availableSize,
+            PreferredSizeContext context,
             bool isVert)
         {
-            if (availableSize.AnyIsEmptyOrNegative)
+            if (context.AvailableSize.AnyIsEmptyOrNegative)
                 return SizeD.Empty;
 
             var containerSuggestedSize = container.SuggestedSize;
@@ -347,7 +344,7 @@ namespace Alternet.UI
 
             var isNanWidth = containerSuggestedSize.IsNanWidth;
             var isNanHeight = containerSuggestedSize.IsNanHeight;
-            var containerSize = container.GetSizeLimited(availableSize);
+            var containerSize = container.GetSizeLimited(context.AvailableSize);
 
             SizeD result = SizeD.Empty;
 

@@ -388,16 +388,16 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        public override SizeD GetPreferredSize(SizeD availableSize)
+        public override SizeD GetPreferredSize(PreferredSizeContext context)
         {
             if (HasBorder)
             {
                 var width = NormalBorder.Width;
-                return base.GetPreferredSize(availableSize) + width.Size;
+                return base.GetPreferredSize(context) + width.Size;
             }
             else
             {
-                return base.GetPreferredSize(availableSize);
+                return base.GetPreferredSize(context);
             }
         }
 

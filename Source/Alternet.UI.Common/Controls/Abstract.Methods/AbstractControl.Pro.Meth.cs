@@ -31,14 +31,14 @@ namespace Alternet.UI
         /// and <see cref="AbstractControl.SuggestedHeight"/>
         /// properties or calculates preferred size from its children.
         /// </summary>
-        protected virtual SizeD GetBestSizeWithChildren(SizeD availableSize)
+        protected virtual SizeD GetBestSizeWithChildren(PreferredSizeContext context)
         {
             var specifiedWidth = SuggestedWidth;
             var specifiedHeight = SuggestedHeight;
             if (!Coord.IsNaN(specifiedWidth) && !Coord.IsNaN(specifiedHeight))
                 return new SizeD(specifiedWidth, specifiedHeight);
 
-            var maxSize = GetChildrenMaxPreferredSizePadded(availableSize);
+            var maxSize = GetChildrenMaxPreferredSizePadded(context);
             var maxWidth = maxSize.Width;
             var maxHeight = maxSize.Height;
 
@@ -81,7 +81,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets the size of the area which can fit all the children of this control.
         /// </summary>
-        protected virtual SizeD GetChildrenMaxPreferredSize(SizeD availableSize)
+        protected virtual SizeD GetChildrenMaxPreferredSize(PreferredSizeContext context)
         {
             Coord maxWidth = 0;
             Coord maxHeight = 0;
@@ -91,7 +91,8 @@ namespace Alternet.UI
                 var margin = control.Margin.Size;
 
                 var preferredSize =
-                    control.GetPreferredSize(availableSize - margin) + margin;
+                    control.GetPreferredSize(
+                        new PreferredSizeContext(context.AvailableSize - margin)) + margin;
                 maxWidth = Math.Max(preferredSize.Width, maxWidth);
                 maxHeight = Math.Max(preferredSize.Height, maxHeight);
             }
@@ -286,9 +287,10 @@ namespace Alternet.UI
         /// <summary>
         /// Gets size of the native control without padding.
         /// </summary>
-        /// <param name="availableSize">Available size for the control.</param>
+        /// <param name="context">The <see cref="PreferredSizeContext"/> representing
+        /// context for the layout.</param>
         /// <returns></returns>
-        protected virtual SizeD GetBestSizeWithoutPadding(SizeD availableSize)
+        protected virtual SizeD GetBestSizeWithoutPadding(PreferredSizeContext context)
         {
             return SizeD.Empty;
         }
@@ -296,13 +298,14 @@ namespace Alternet.UI
         /// <summary>
         /// Gets size of the native control based on the specified available size.
         /// </summary>
-        /// <param name="availableSize">Available size for the control.</param>
+        /// <param name="context">The <see cref="PreferredSizeContext"/> representing
+        /// context for the layout.</param>
         /// <returns></returns>
-        protected SizeD GetBestSizeWithPadding(SizeD availableSize)
+        protected SizeD GetBestSizeWithPadding(PreferredSizeContext context)
         {
             if (IsDummy)
                 return SizeD.Empty;
-            var s = GetBestSizeWithoutPadding(availableSize);
+            var s = GetBestSizeWithoutPadding(context);
             s += Padding.Size;
             return new SizeD(
                 Coord.IsNaN(SuggestedWidth) ? s.Width : SuggestedWidth,

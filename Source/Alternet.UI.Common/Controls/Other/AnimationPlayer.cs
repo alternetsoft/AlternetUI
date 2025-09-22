@@ -297,7 +297,7 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        public override SizeD GetPreferredSize(SizeD availableSize)
+        public override SizeD GetPreferredSize(PreferredSizeContext context)
         {
             if (IsOk)
             {
@@ -306,7 +306,7 @@ namespace Alternet.UI
                 return sizeDips;
             }
 
-            return base.GetPreferredSize(availableSize);
+            return base.GetPreferredSize(context);
         }
 
         /// <inheritdoc/>

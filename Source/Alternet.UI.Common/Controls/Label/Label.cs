@@ -869,13 +869,13 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        public override SizeD GetPreferredSize(SizeD availableSize)
+        public override SizeD GetPreferredSize(PreferredSizeContext context)
         {
-            if (availableSize.AnyIsEmptyOrNegative)
+            if (context.AvailableSize.AnyIsEmptyOrNegative)
                 return SizeD.Empty;
 
             var result = GetDefaultPreferredSize(
-                        availableSize,
+                        context.AvailableSize,
                         withPadding: true,
                         (size) =>
                         {

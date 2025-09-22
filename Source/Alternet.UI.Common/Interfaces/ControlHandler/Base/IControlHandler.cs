@@ -200,8 +200,8 @@ namespace Alternet.UI
         /// <inheritdoc cref="AbstractControl.GetHandle"/>
         IntPtr GetHandle();
 
-        /// <inheritdoc cref="AbstractControl.GetPreferredSize(SizeD)"/>
-        SizeD GetPreferredSize(SizeD availableSize);
+        /// <inheritdoc cref="AbstractControl.GetPreferredSize(PreferredSizeContext)"/>
+        SizeD GetPreferredSize(PreferredSizeContext context);
 
         /// <summary>
         /// Opens drawing context. Available only in the event handler.

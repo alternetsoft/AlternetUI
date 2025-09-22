@@ -193,19 +193,19 @@ namespace Alternet.UI
         /// Retrieves the size of a rectangular area into which a control can
         /// be fitted, in device-independent units.
         /// </summary>
-        /// <param name="availableSize">The available space that a parent element
-        /// can allocate a child control.</param>
+        /// <param name="context">The <see cref="PreferredSizeContext"/> providing
+        /// the available size and other layout information.</param>
         /// <returns>A <see cref="SuggestedSize"/> representing the width and height of
         /// a rectangle, in device-independent units.</returns>
         /// <remarks>
         /// This is a default implementation which is called from
-        /// <see cref="AbstractControl.GetPreferredSize(SizeD)"/>.
+        /// <see cref="AbstractControl.GetPreferredSize(PreferredSizeContext)"/>.
         /// </remarks>
         /// <param name="container">Container control which children will be processed.</param>
         /// <param name="layout">Layout style to use.</param>
         public static SizeD DefaultGetPreferredSize(
             AbstractControl container,
-            SizeD availableSize,
+            PreferredSizeContext context,
             LayoutStyle layout)
         {
             switch (layout)
@@ -213,15 +213,15 @@ namespace Alternet.UI
                 case LayoutStyle.Dock:
                 case LayoutStyle.None:
                 default:
-                    return GetPreferredSizeDefaultLayout(container, availableSize);
+                    return GetPreferredSizeDefaultLayout(container, context);
                 case LayoutStyle.Basic:
-                    return AbstractControl.GetPreferredSizeDefaultLayout(container, availableSize);
+                    return AbstractControl.GetPreferredSizeDefaultLayout(container, context);
                 case LayoutStyle.Vertical:
-                    return AbstractControl.GetPreferredSizeWhenVertical(container, availableSize);
+                    return AbstractControl.GetPreferredSizeWhenVertical(container, context);
                 case LayoutStyle.Horizontal:
-                    return AbstractControl.GetPreferredSizeWhenHorizontal(container, availableSize);
+                    return AbstractControl.GetPreferredSizeWhenHorizontal(container, context);
                 case LayoutStyle.Scroll:
-                    return AbstractControl.GetPreferredSizeWhenScroll(container, availableSize);
+                    return AbstractControl.GetPreferredSizeWhenScroll(container, context);
             }
         }
 
@@ -2836,9 +2836,9 @@ namespace Alternet.UI
         /// <summary>
         /// Returns a maximal preferred size of the children with an added padding.
         /// </summary>
-        public virtual SizeD GetChildrenMaxPreferredSizePadded(SizeD availableSize)
+        public virtual SizeD GetChildrenMaxPreferredSizePadded(PreferredSizeContext context)
         {
-            var preferredSize = GetChildrenMaxPreferredSize(availableSize);
+            var preferredSize = GetChildrenMaxPreferredSize(context);
             var padded = GetPaddedPreferredSize(preferredSize);
             return padded;
         }

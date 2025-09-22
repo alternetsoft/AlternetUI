@@ -78,10 +78,11 @@ namespace Alternet.UI
         public static event EventHandler? VisibleChanged;
 
         /// <summary>
-        /// Occurs inside <see cref="AbstractControl.GetPreferredSize(SizeD)"/> method.
+        /// Occurs inside <see cref="AbstractControl.GetPreferredSize(PreferredSizeContext)"/> method.
         /// </summary>
         /// <remarks>
-        /// If default <see cref="AbstractControl.GetPreferredSize(SizeD)"/> call is not needed,
+        /// If default <see cref="AbstractControl.GetPreferredSize(PreferredSizeContext)"/>
+        /// call is not needed,
         /// set <see cref="HandledEventArgs.Handled"/>
         /// property to <c>true</c>.
         /// </remarks>

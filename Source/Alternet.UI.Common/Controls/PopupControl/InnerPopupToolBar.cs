@@ -221,9 +221,9 @@ namespace Alternet.UI
         AbstractControl IContextMenuHost.ContextMenuHost => Content;
 
         /// <inheritdoc/>
-        public override SizeD GetPreferredSize(SizeD availableSize)
+        public override SizeD GetPreferredSize(PreferredSizeContext context)
         {
-            var preferredSize = Content.GetPreferredSize(SizeD.HalfOfMaxValueI);
+            var preferredSize = Content.GetPreferredSize(PreferredSizeContext.HalfOfMaxValueI);
 
             var lastChild = Content.GetVisibleChildWithMaxBottom();
             if (lastChild is not null)

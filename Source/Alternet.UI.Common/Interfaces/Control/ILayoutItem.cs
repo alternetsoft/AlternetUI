@@ -375,14 +375,15 @@ namespace Alternet.UI
         /// Retrieves the size of a rectangular area into which a control can
         /// be fitted, in device-independent units.
         /// </summary>
-        /// <param name="availableSize">The available space that a parent element
-        /// can allocate a child control.</param>
+        /// <param name="context">The <see cref="PreferredSizeContext"/> representing context
+        /// for the layout.</param>
         /// <returns>A <see cref="SizeD"/> representing the width and height of
         /// a rectangle, in device-independent units.</returns>
-        SizeD GetPreferredSize(SizeD availableSize);
+        SizeD GetPreferredSize(PreferredSizeContext context);
 
         /// <summary>
-        /// Calls <see cref="GetPreferredSize(SizeD)"/> with <see cref="SizeD.PositiveInfinity"/>
+        /// Calls <see cref="GetPreferredSize(PreferredSizeContext)"/>
+        /// with <see cref="PreferredSizeContext.PositiveInfinity"/>
         /// as a parameter value.
         /// </summary>
         /// <returns>A <see cref="SizeD"/> representing the preferred size.</returns>

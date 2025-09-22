@@ -29,7 +29,7 @@ namespace Alternet.UI
         public override ProgressBarOrientation Orientation { get; set; }
 
         /// <inheritdoc/>
-        public override SizeD GetPreferredSize(SizeD availableSize)
+        public override SizeD GetPreferredSize(PreferredSizeContext context)
         {
             return new SizeD(200, 100);
         }

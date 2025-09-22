@@ -34,7 +34,7 @@ namespace Alternet.UI
         public override SliderTickStyle TickStyle { get; set; }
 
         /// <inheritdoc/>
-        public override SizeD GetPreferredSize(SizeD availableSize)
+        public override SizeD GetPreferredSize(PreferredSizeContext context)
         {
             return new SizeD(100, 100);
         }

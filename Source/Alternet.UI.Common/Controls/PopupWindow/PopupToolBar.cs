@@ -26,7 +26,7 @@ namespace Alternet.UI
         private static PopupToolBar? defaultPopup;
         private static int hideOnDeactivateSuppressCounter;
 
-        private bool hideOtherPopupsSupressed;
+        private bool hideOtherPopupsSuppressed;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="PopupToolBar"/> class.
@@ -270,20 +270,20 @@ namespace Alternet.UI
             if (!Visible)
                 return;
             SuppressHideOnDeactivate();
-            hideOtherPopupsSupressed = true;
+            hideOtherPopupsSuppressed = true;
             try
             {
                 Hide();
             }
             finally
             {
-                hideOtherPopupsSupressed = false;
+                hideOtherPopupsSuppressed = false;
                 RestoreHideOnDeactivate();
             }
         }
 
         /// <inheritdoc/>
-        public override SizeD GetPreferredSize(SizeD availableSize)
+        public override SizeD GetPreferredSize(PreferredSizeContext context)
         {
             var preferredSize = MainControl.GetPreferredSize(SizeD.HalfOfMaxValueI);
 
@@ -322,7 +322,7 @@ namespace Alternet.UI
             if (Visible)
                 return;
 
-            if(!hideOtherPopupsSupressed)
+            if(!hideOtherPopupsSuppressed)
                 HideOtherPopups();
         }
 

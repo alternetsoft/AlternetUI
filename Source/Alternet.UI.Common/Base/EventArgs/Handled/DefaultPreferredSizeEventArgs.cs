@@ -16,24 +16,30 @@ namespace Alternet.UI
         /// Initializes a new instance of the <see cref="DefaultPreferredSizeEventArgs"/> class.
         /// </summary>
         /// <param name="layout">Layout style to use.</param>
-        /// <param name="availableSize">Available size for the layout.</param>
-        public DefaultPreferredSizeEventArgs(LayoutStyle layout, SizeD availableSize)
+        /// <param name="context">The <see cref="PreferredSizeContext"/> providing
+        /// the available size and other layout information.</param>
+        public DefaultPreferredSizeEventArgs(LayoutStyle layout, PreferredSizeContext context)
         {
             Layout = layout;
-            AvailableSize = availableSize;
+            Context = context;
             Result = SizeD.MinusOne;
         }
 
         /// <summary>
         /// Gets layout style to use.
         /// </summary>
-        public LayoutStyle Layout { get; }
+        public LayoutStyle Layout { get; set; }
 
         /// <summary>
         /// Gets the available space that a parent element
         /// can allocate a child control.
         /// </summary>
-        public SizeD AvailableSize { get; }
+        public SizeD AvailableSize => Context.AvailableSize;
+
+        /// <summary>
+        /// Gets the context that determines the preferred size calculation behavior.
+        /// </summary>
+        public PreferredSizeContext Context { get; set; }
 
         /// <summary>
         /// Gets or sets preferred size (a result of event execution).

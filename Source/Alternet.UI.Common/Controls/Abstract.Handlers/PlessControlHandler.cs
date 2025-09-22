@@ -185,9 +185,9 @@ namespace Alternet.UI
             return Control?.Parent?.ScaleFactor ?? Display.Primary.ScaleFactor;
         }
 
-        SizeD IControlHandler.GetPreferredSize(SizeD availableSize)
+        SizeD IControlHandler.GetPreferredSize(PreferredSizeContext context)
         {
-            return availableSize;
+            return context.AvailableSize;
         }
 
         RectI IControlHandler.GetUpdateClientRectI()

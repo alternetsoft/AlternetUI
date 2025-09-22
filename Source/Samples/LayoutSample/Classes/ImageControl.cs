@@ -26,11 +26,11 @@ namespace LayoutSample
             }
         }
 
-        public override SizeD GetPreferredSize(SizeD availableSize)
+        public override SizeD GetPreferredSize(PreferredSizeContext context)
         {
             var image = Image;
             if (image == null)
-                return new SizeD();
+                return SizeD.Empty;
 
             var size = image.SizeDip(this);
             var zoom = Zoom;

@@ -417,9 +417,9 @@ namespace Alternet.UI
             return NativeControl.Handle;
         }
 
-        public SizeD GetPreferredSize(SizeD availableSize)
+        public SizeD GetPreferredSize(PreferredSizeContext context)
         {
-            return NativeControl.GetPreferredSize(availableSize);
+            return NativeControl.GetPreferredSize(context.AvailableSize);
         }
 
         public Graphics OpenPaintDrawingContext()

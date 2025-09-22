@@ -257,22 +257,22 @@ namespace Alternet.UI
         {
             var result = MauiDisplayHandler.GetDefaultScaleFactor();
 
-            if (result >= 1)
+            if (result >= 1f)
                 return result;
 
             return null;
         }
 
-        public virtual SizeD GetPreferredSize(SizeD availableSize)
+        public virtual SizeD GetPreferredSize(PreferredSizeContext context)
         {
-            return availableSize;
+            return context.AvailableSize;
         }
 
         public virtual RectI GetUpdateClientRectI()
         {
             if (Control is null)
                 return RectI.Empty;
-            return new RectI((0, 0), Control.PixelFromDip(ClientSize));
+            return new RectI(PointI.Empty, Control.PixelFromDip(ClientSize));
         }
 
         public virtual void HandleNeeded()

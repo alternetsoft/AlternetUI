@@ -13,7 +13,7 @@ namespace Alternet.UI
         /// <inheritdoc/>
         public override void OnLayout()
         {
-            GetPreferredSize(SizeD.PositiveInfinity); // yezo
+            GetPreferredSize(PreferredSizeContext.PositiveInfinity);
 
             var arrangeSize = ChildrenLayoutBounds.Size;
             try
@@ -73,7 +73,7 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        public override SizeD GetPreferredSize(SizeD availableSize)
+        public override SizeD GetPreferredSize(PreferredSizeContext context)
         {
             SizeD gridDesiredSize;
             ExtendedData extData = ExtData;
@@ -93,7 +93,7 @@ namespace Alternet.UI
                         AbstractControl child = children[i];
                         if (child != null)
                         {
-                            var s = child.GetPreferredSizeLimited(availableSize);
+                            var s = child.GetPreferredSizeLimited(context);
                             var childDesiredSize = new SizeD(
                                 s.Width + child.Margin.Horizontal,
                                 s.Height + child.Margin.Vertical);
@@ -109,8 +109,8 @@ namespace Alternet.UI
                 else
                 {
                     {
-                        bool sizeToContentU = Coord.IsPositiveInfinity(availableSize.Width);
-                        bool sizeToContentV = Coord.IsPositiveInfinity(availableSize.Height);
+                        bool sizeToContentU = Coord.IsPositiveInfinity(context.AvailableSize.Width);
+                        bool sizeToContentV = Coord.IsPositiveInfinity(context.AvailableSize.Height);
 
                         // Clear index information and rounding errors
                         if (RowDefinitionCollectionDirty || ColumnDefinitionCollectionDirty)
@@ -204,7 +204,7 @@ namespace Alternet.UI
                     //  value of Auto column), "cell 2 1" needs to be calculated first,
                     //  as it contributes to the Auto column's calculated value.
                     //  At the same time in order to accurately calculate constraint
-                    //  height for "cell 2 1", "cell 1 2" needs to be calcualted first,
+                    //  height for "cell 2 1", "cell 1 2" needs to be calculated first,
                     //  as it contributes to Auto row height, which is used in the
                     //  computation of Star row resolved height.
                     //
@@ -279,11 +279,11 @@ namespace Alternet.UI
                     //
                     //  where:
                     //  *   all [Measure GroupN] - regular children measure process -
-                    //      each cell is measured given contraint size as an input
+                    //      each cell is measured given constraint size as an input
                     //      and each cell's desired size is accumulated on the
                     //      corresponding column / row;
                     //  *   [Measure Group2'] - is when each cell is measured with
-                    //      infinit height as a constraint and a cell's desired
+                    //      infinity height as a constraint and a cell's desired
                     //      height is ignored;
                     //  *   [Measure Groups''] - is when each cell is measured (second
                     //      time during single Grid.MeasureOverride) regularly but its
@@ -298,7 +298,7 @@ namespace Alternet.UI
                     //      appears in Auto column.
                     //
 
-                    MeasureCellsGroup(extData.CellGroup1, availableSize, false, false);
+                    MeasureCellsGroup(extData.CellGroup1, context.AvailableSize, false, false);
 
                     {
                         //  after Group1 is measured,  only Group3 may have cells
@@ -307,10 +307,10 @@ namespace Alternet.UI
 
                         if (canResolveStarsV)
                         {
-                            if (HasStarCellsV) { ResolveStar(DefinitionsV, availableSize.Height); }
-                            MeasureCellsGroup(extData.CellGroup2, availableSize, false, false);
-                            if (HasStarCellsU) { ResolveStar(DefinitionsU, availableSize.Width); }
-                            MeasureCellsGroup(extData.CellGroup3, availableSize, false, false);
+                            if (HasStarCellsV) { ResolveStar(DefinitionsV, context.AvailableSize.Height); }
+                            MeasureCellsGroup(extData.CellGroup2, context.AvailableSize, false, false);
+                            if (HasStarCellsU) { ResolveStar(DefinitionsU, context.AvailableSize.Width); }
+                            MeasureCellsGroup(extData.CellGroup3, context.AvailableSize, false, false);
                         }
                         else
                         {
@@ -319,9 +319,9 @@ namespace Alternet.UI
                             bool canResolveStarsU = extData.CellGroup2 > PrivateCells.Length;
                             if (canResolveStarsU)
                             {
-                                if (HasStarCellsU) { ResolveStar(DefinitionsU, availableSize.Width); }
-                                MeasureCellsGroup(extData.CellGroup3, availableSize, false, false);
-                                if (HasStarCellsV) { ResolveStar(DefinitionsV, availableSize.Height); }
+                                if (HasStarCellsU) { ResolveStar(DefinitionsU, context.AvailableSize.Width); }
+                                MeasureCellsGroup(extData.CellGroup3, context.AvailableSize, false, false);
+                                if (HasStarCellsV) { ResolveStar(DefinitionsV, context.AvailableSize.Height); }
                             }
                             else
                             {
@@ -337,7 +337,7 @@ namespace Alternet.UI
                                 Coord[] group2MinSizes = CacheMinSizes(extData.CellGroup2, false);
                                 Coord[] group3MinSizes = CacheMinSizes(extData.CellGroup3, true);
 
-                                MeasureCellsGroup(extData.CellGroup2, availableSize, false, true);
+                                MeasureCellsGroup(extData.CellGroup2, context.AvailableSize, false, true);
 
                                 do
                                 {
@@ -349,22 +349,22 @@ namespace Alternet.UI
 
                                     if (HasStarCellsU)
                                     {
-                                        ResolveStar(DefinitionsU, availableSize.Width);
+                                        ResolveStar(DefinitionsU, context.AvailableSize.Width);
                                     }
 
-                                    MeasureCellsGroup(extData.CellGroup3, availableSize, false, false);
+                                    MeasureCellsGroup(extData.CellGroup3, context.AvailableSize, false, false);
 
                                     // Reset cached Group2Widths
                                     ApplyCachedMinSizes(group2MinSizes, false);
 
                                     if (HasStarCellsV)
                                     {
-                                        ResolveStar(DefinitionsV, availableSize.Height);
+                                        ResolveStar(DefinitionsV, context.AvailableSize.Height);
                                     }
 
                                     MeasureCellsGroup(
                                         extData.CellGroup2,
-                                        availableSize,
+                                        context.AvailableSize,
                                         cnt == c_layoutLoopMaxCount,
                                         false,
                                         out hasDesiredSizeUChanged);
@@ -375,7 +375,7 @@ namespace Alternet.UI
                         }
                     }
 
-                    MeasureCellsGroup(extData.CellGroup4, availableSize, false, false);
+                    MeasureCellsGroup(extData.CellGroup4, context.AvailableSize, false, false);
 
                     gridDesiredSize = new SizeD(
                             CalculateDesiredSize(DefinitionsU),

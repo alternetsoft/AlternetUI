@@ -444,7 +444,7 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        public override SizeD GetPreferredSize(SizeD availableSize)
+        public override SizeD GetPreferredSize(PreferredSizeContext context)
         {
             var specifiedWidth = SuggestedWidth;
             var specifiedHeight = SuggestedHeight;
@@ -455,7 +455,7 @@ namespace Alternet.UI
             if (result != SizeD.Empty)
                 return result + Padding.Size;
 
-            return base.GetPreferredSize(availableSize);
+            return base.GetPreferredSize(context);
         }
 
         /// <inheritdoc/>

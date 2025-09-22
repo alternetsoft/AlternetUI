@@ -12,7 +12,7 @@ namespace Alternet.UI
     {
         internal static SizeD GetPreferredSizeWhenHorizontal(
             AbstractControl container,
-            SizeD availableSize)
+            PreferredSizeContext context)
         {
             var isNanHeight = Coord.IsNaN(container.SuggestedHeight);
             var isNanWidth = Coord.IsNaN(container.SuggestedWidth);
@@ -30,7 +30,9 @@ namespace Alternet.UI
 
                 var margin = control.Margin;
                 var preferredSize = control.GetPreferredSizeLimited(
-                    new SizeD(availableSize.Width - width, availableSize.Height));
+                    new PreferredSizeContext(
+                        context.AvailableSize.Width - width,
+                        context.AvailableSize.Height));
                 width += preferredSize.Width + margin.Horizontal;
                 maxHeight = Math.Max(maxHeight, preferredSize.Height + margin.Vertical);
             }
@@ -42,7 +44,7 @@ namespace Alternet.UI
 
         internal static SizeD GetPreferredSizeWhenVertical(
             AbstractControl container,
-            SizeD availableSize)
+            PreferredSizeContext context)
         {
             var isNanWidth = Coord.IsNaN(container.SuggestedWidth);
             var isNanHeight = Coord.IsNaN(container.SuggestedHeight);
@@ -57,8 +59,12 @@ namespace Alternet.UI
                     continue;
 
                 var margin = control.Margin;
+
                 var preferredSize = control.GetPreferredSizeLimited(
-                    new SizeD(availableSize.Width, availableSize.Height - height));
+                    new PreferredSizeContext(
+                        context.AvailableSize.Width,
+                        context.AvailableSize.Height - height));
+
                 maxWidth = Math.Max(maxWidth, preferredSize.Width + margin.Horizontal);
                 height += preferredSize.Height + margin.Vertical;
             }
@@ -147,7 +153,7 @@ namespace Alternet.UI
                 var availableWidth = childrenLayoutBounds.Width - x - horizontalMargin - w;
 
                 var preferredSize = control.GetPreferredSizeLimited(
-                    new SizeD(
+                    new PreferredSizeContext(
                         availableWidth,
                         childrenLayoutBounds.Height));
 
@@ -219,7 +225,7 @@ namespace Alternet.UI
                     var freeSize = new SizeD(
                             lBounds.Width,
                             lBounds.Height - stretchedSize - verticalMargin);
-                    var preferredSize = control.GetPreferredSizeLimited(freeSize);
+                    var preferredSize = control.GetPreferredSizeLimited(new PreferredSizeContext(freeSize));
                     stretchedSize += preferredSize.Height + verticalMargin;
                 }
             }
@@ -267,7 +273,7 @@ namespace Alternet.UI
                 var freeSize = new SizeD(
                     lBounds.Width,
                     lBounds.Height - y - vertMargin - h);
-                var preferSize = control.GetPreferredSizeLimited(freeSize);
+                var preferSize = control.GetPreferredSizeLimited(new PreferredSizeContext(freeSize));
                 if (stretch)
                     preferSize.Height = stretchedSize - vertMargin;
                 var alignedPos = AbstractControl.AlignHorizontal(
@@ -328,9 +334,9 @@ namespace Alternet.UI
                 if (control.Dock != DockStyle.None || control.IgnoreLayout)
                     continue;
 
-                var boundedPreferredSize = control.GetPreferredSize(childrenLayoutBounds.Size);
+                var boundedPreferredSize = control.GetPreferredSize(new PreferredSizeContext(childrenLayoutBounds.Size));
                 var unboundedPreferredSize =
-                    control.GetPreferredSize(SizeD.PositiveInfinity);
+                    control.GetPreferredSize(new PreferredSizeContext(SizeD.PositiveInfinity));
 
                 boundedPreferredSize.Width *= sizeMultiplicator;
                 boundedPreferredSize.Height *= sizeMultiplicator;

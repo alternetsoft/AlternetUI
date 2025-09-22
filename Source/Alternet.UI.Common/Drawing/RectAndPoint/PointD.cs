@@ -56,7 +56,7 @@ namespace Alternet.Drawing
 
         [FieldOffset(4)]
         private float y;
-        
+
         [FieldOffset(0)]
         private SKPoint skiaPoint;
 

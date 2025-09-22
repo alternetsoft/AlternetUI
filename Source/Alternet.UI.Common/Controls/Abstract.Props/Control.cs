@@ -896,9 +896,9 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        protected override SizeD GetBestSizeWithoutPadding(SizeD availableSize)
+        protected override SizeD GetBestSizeWithoutPadding(PreferredSizeContext context)
         {
-            return SafeHandler?.GetPreferredSize(availableSize) ?? SizeD.Empty;
+            return SafeHandler?.GetPreferredSize(context) ?? SizeD.Empty;
         }
 
         /// <inheritdoc/>
