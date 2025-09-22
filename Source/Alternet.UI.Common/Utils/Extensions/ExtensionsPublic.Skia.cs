@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using System.Text;
 
 using Alternet.Drawing;
@@ -15,13 +16,10 @@ namespace Alternet.UI.Extensions
         /// </summary>
         /// <param name="points">Array of points.</param>
         /// <returns></returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static SKPoint[] ToSkia(this PointD[] points)
         {
-            var length = points.Length;
-            SKPoint[] result = new SKPoint[length];
-            for (int i = 0; i < length; i++)
-                result[i] = points[i];
-            return result;
+            return PointD.ToSkiaArray(points);
         }
 
         /// <summary>
@@ -54,6 +52,10 @@ namespace Alternet.UI.Extensions
         /// <returns></returns>
         public static SKPoint[] PixelFromDipD(this PointD[] points, Coord? scaleFactor = null)
         {
+            scaleFactor = GraphicsFactory.ScaleFactorOrDefault(scaleFactor);
+            if (scaleFactor == CoordD.One)
+                return PointD.ToSkiaArray(points);
+
             var length = points.Length;
             SKPoint[] result = new SKPoint[length];
             for (int i = 0; i < length; i++)
