@@ -190,7 +190,7 @@ namespace Alternet.Drawing
         /// <param name="color">The color used to set the pixel.</param>
         public void SetPixel(Coord x, Coord y, Color color)
         {
-            canvas.DrawPoint((float)x, (float)y, color.AsFillPaint);
+            canvas.DrawPoint(x, y, color.AsFillPaint);
         }
 
         /// <inheritdoc/>
@@ -219,8 +219,8 @@ namespace Alternet.Drawing
             Coord angle)
         {
             canvas.Save();
-            canvas.Translate((float)location.X, (float)location.Y);
-            canvas.RotateDegrees((float)angle);
+            canvas.Translate(location.X, location.Y);
+            canvas.RotateDegrees(angle);
 
             canvas.DrawText(
                 text,
@@ -236,8 +236,7 @@ namespace Alternet.Drawing
         public override void DrawPolygon(Pen pen, PointD[] points)
         {
             DebugPenAssert(pen);
-            var skiaPoints = points.ToSkia();
-            canvas.DrawPoints(SKPointMode.Polygon, skiaPoints, pen);
+            canvas.DrawPoints(SKPointMode.Polygon, PointD.ToSkiaArray(points), pen);
         }
 
         /// <inheritdoc/>
@@ -398,8 +397,7 @@ namespace Alternet.Drawing
         public override void DrawLines(Pen pen, PointD[] points)
         {
             DebugPenAssert(pen);
-            var skiaPoints = points.ToSkia();
-            canvas.DrawPoints(SkiaSharp.SKPointMode.Lines, skiaPoints, pen);
+            canvas.DrawPoints(SKPointMode.Lines, PointD.ToSkiaArray(points), pen);
         }
 
         /// <inheritdoc/>
@@ -560,15 +558,16 @@ namespace Alternet.Drawing
             };
 
             // Move to the first point
-            path.MoveTo((float)points[0].X, (float)points[0].Y);
+            path.MoveTo(points[0].X, points[0].Y);
 
             // Draw lines between the points
             for (int i = 1; i < points.Length; i++)
             {
-                path.LineTo((float)points[i].X, (float)points[i].Y);
+                path.LineTo(points[i].X, points[i].Y);
             }
 
-            path.Close(); // Ensures the polygon is closed
+            // Ensures the polygon is closed
+            path.Close(); 
 
             return path;
         }
