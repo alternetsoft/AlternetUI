@@ -321,6 +321,32 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Displays the context menu inside the specified container,
+        /// aligned according to the specified alignment.
+        /// </summary>
+        /// <param name="container">The container control in which the context menu
+        /// will be displayed.</param>
+        /// <param name="align">The alignment of the context menu within the container.
+        /// If <see langword="null"/>, the default alignment
+        /// <see cref="HVDropDownAlignment.Center"/> is used.</param>
+        public virtual void ShowInsideControlAligned(
+            AbstractControl? container,
+            HVDropDownAlignment? align = null)
+        {
+            if(container is null)
+                return;
+
+            align ??= Alternet.UI.HVDropDownAlignment.Center;
+
+            ShowInsideControl(
+                container,
+                container,
+                (0, 0),
+                onClose: null,
+                align: align);
+        }
+
+        /// <summary>
         /// Displays the context menu inside the specified container at the given position.
         /// Uses <see cref="InnerPopupToolBar"/> as the host control.
         /// </summary>
@@ -341,7 +367,8 @@ namespace Alternet.UI
             AbstractControl container,
             AbstractControl? source = null,
             PointD? position = null,
-            Action? onClose = null)
+            Action? onClose = null,
+            HVDropDownAlignment? align = null)
         {
             var hostControl = GetHostObject<InnerPopupToolBar>();
             relatedControl.Value = null;
@@ -398,6 +425,14 @@ namespace Alternet.UI
                     popupToolBar.Parent = null;
                     popupToolBar.Container = null;
                 };
+
+                if(align is not null && containerRect is not null)
+                {
+                    popupToolBar.Location = AlignUtils.GetDropDownPosition(
+                            containerRect.Value.Size,
+                            popupToolBar.Size,
+                            align);
+                }
 
                 popupToolBar.Show();
             }
