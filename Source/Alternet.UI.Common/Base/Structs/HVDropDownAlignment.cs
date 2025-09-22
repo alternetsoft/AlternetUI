@@ -67,6 +67,14 @@ namespace Alternet.UI
             DropDownAlignment.AfterEnd);
 
         /// <summary>
+        /// Gets a predefined alignment configuration where
+        /// both horizontal and vertical alignments are centered.
+        /// </summary>
+        public static HVDropDownAlignment Center => new(
+            DropDownAlignment.Center,
+            DropDownAlignment.Center);
+
+        /// <summary>
         /// Gets a value indicating whether the horizontal alignment
         /// is set to <see cref="DropDownAlignment.Position"/>.
         /// </summary>
