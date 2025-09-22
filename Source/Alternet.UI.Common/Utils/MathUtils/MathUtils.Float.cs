@@ -240,16 +240,16 @@ namespace Alternet.UI
         /// <returns><c>true</c> if the value is NaN; otherwise, <c>false</c>.</returns>
         /// <example>
         /// <code>
-        /// IsNaNFast(float.NaN);               // returns true
-        /// IsNaNFast(0f);                      // returns false
-        /// IsNaNFast(float.PositiveInfinity);  // returns false
-        /// IsNaNFast(float.NegativeInfinity);  // returns false
-        /// IsNaNFast(1f / 0f);                 // returns false (infinity)
-        /// IsNaNFast(0f / 0f);                 // returns true (NaN)
+        /// IsNaN(float.NaN);               // returns true
+        /// IsNaN(0f);                      // returns false
+        /// IsNaN(float.PositiveInfinity);  // returns false
+        /// IsNaN(float.NegativeInfinity);  // returns false
+        /// IsNaN(1f / 0f);                 // returns false (infinity)
+        /// IsNaN(0f / 0f);                 // returns true (NaN)
         /// </code>
         /// </example>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static bool IsNaNFast(float value)
+        public static bool IsNaN(float value)
         {
             FloatUnion u = new() { FloatValue = value };
             uint exp = u.UIntValue & 0x7F800000;
@@ -441,13 +441,18 @@ namespace Alternet.UI
         /// Ceiling(float.NegativeInfinity); // returns float.NegativeInfinity
         /// </code>
         /// </example>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static float Ceiling(float value)
         {
+#if NETSTANDARD2_0
             if (float.IsNaN(value) || float.IsInfinity(value))
                 return value;
 
             int i = (int)value;
             return (value > i) ? i + 1 : i;
+#else
+            return MathF.Ceiling(value);
+#endif
         }
 
         /// <summary>
