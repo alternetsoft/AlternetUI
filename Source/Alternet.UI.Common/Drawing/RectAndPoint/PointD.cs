@@ -353,6 +353,25 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
+        /// Converts a read-only span of <see cref="PointD"/> structures
+        /// to an array of <see cref="SKPoint"/>
+        /// structures.
+        /// </summary>
+        /// <remarks>This method performs a memory cast to convert the elements
+        /// of the span. The resulting
+        /// array is a copy of the data,  and modifications to the returned
+        /// array will not affect the original
+        /// span.</remarks>
+        /// <param name="source">The read-only span of <see cref="PointD"/> to convert.</param>
+        /// <returns>An array of <see cref="SKPoint"/> structures representing
+        /// the converted points.</returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static SKPoint[] ToSkiaArray(ReadOnlySpan<PointD> source)
+        {
+            return MemoryMarshal.Cast<PointD, SKPoint>(source).ToArray();
+        }
+
+        /// <summary>
         /// Returns an instance converted from the provided string using
         /// <see cref="App.InvariantEnglishUS"/> culture.
         /// <param name="source">String with data.</param>
