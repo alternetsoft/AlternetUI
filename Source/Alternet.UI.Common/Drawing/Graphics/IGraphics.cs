@@ -61,7 +61,7 @@ namespace Alternet.Drawing
         void Circle(Pen pen, Brush brush, PointD center, Coord radius);
 
         /// <inheritdoc cref="Graphics.Polygon"/>
-        void Polygon(Pen pen, Brush brush, PointD[] points, FillMode fillMode);
+        void Polygon(Pen pen, Brush brush, ReadOnlySpan<PointD> points, FillMode fillMode);
 
         /// <inheritdoc cref="Graphics.FillRectangle(Brush, RectD)"/>
         void FillRectangle(Brush brush, RectD rectangle);
@@ -99,7 +99,7 @@ namespace Alternet.Drawing
             PointD endPoint);
 
         /// <inheritdoc cref="Graphics.DrawBeziers"/>
-        void DrawBeziers(Pen pen, PointD[] points);
+        void DrawBeziers(Pen pen, ReadOnlySpan<PointD> points);
 
         /// <inheritdoc cref="Graphics.DrawCircle"/>
         void DrawCircle(Pen pen, PointD center, Coord radius);
@@ -114,19 +114,19 @@ namespace Alternet.Drawing
         void FillRoundedRectangle(Brush brush, RectD rect, Coord cornerRadius);
 
         /// <inheritdoc cref="Graphics.DrawPolygon"/>
-        void DrawPolygon(Pen pen, PointD[] points);
+        void DrawPolygon(Pen pen, ReadOnlySpan<PointD> points);
 
         /// <inheritdoc cref="Graphics.FillPolygon"/>
         void FillPolygon(
             Brush brush,
-            PointD[] points,
+            ReadOnlySpan<PointD> points,
             FillMode fillMode = FillMode.Alternate);
 
         /// <inheritdoc cref="Graphics.DrawRectangles"/>
-        void DrawRectangles(Pen pen, RectD[] rects);
+        void DrawRectangles(Pen pen, ReadOnlySpan<RectD> rects);
 
         /// <inheritdoc cref="Graphics.FillRectangles"/>
-        void FillRectangles(Brush brush, RectD[] rects);
+        void FillRectangles(Brush brush, ReadOnlySpan<RectD> rects);
 
         /// <inheritdoc cref="Graphics.FillEllipse"/>
         void FillEllipse(Brush brush, RectD bounds);

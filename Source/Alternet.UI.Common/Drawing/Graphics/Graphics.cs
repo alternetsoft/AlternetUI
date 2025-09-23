@@ -263,7 +263,7 @@ namespace Alternet.Drawing
         [Conditional("DEBUG")]
         [System.Diagnostics.DebuggerNonUserCodeAttribute]
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static void DebugBezierPointsAssert(PointD[] points)
+        public static void DebugBezierPointsAssert(ReadOnlySpan<PointD> points)
         {
             var length = points.Length;
 
@@ -478,7 +478,7 @@ namespace Alternet.Drawing
         /// of the outlines of the rectangles.</param>
         /// <param name="rects">Array of <see cref="RectD"/> structures that represent the
         /// rectangles to draw.</param>
-        public void DrawRectangles(Pen pen, RectD[] rects)
+        public void DrawRectangles(Pen pen, ReadOnlySpan<RectD> rects)
         {
             for (int i = 0; i < rects.Length; i++)
                 DrawRectangle(pen, rects[i]);
@@ -491,7 +491,7 @@ namespace Alternet.Drawing
         /// of the fill.</param>
         /// <param name="rects">Array of <see cref="RectD"/> structures that represent the
         /// rectangles to fill.</param>
-        public void FillRectangles(Brush brush, RectD[] rects)
+        public void FillRectangles(Brush brush, ReadOnlySpan<RectD> rects)
         {
             for (int i = 0; i < rects.Length; i++)
                 FillRectangle(brush, rects[i]);

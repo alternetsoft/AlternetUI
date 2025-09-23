@@ -233,7 +233,7 @@ namespace Alternet.Drawing
         }
 
         /// <inheritdoc/>
-        public override void DrawPolygon(Pen pen, PointD[] points)
+        public override void DrawPolygon(Pen pen, ReadOnlySpan<PointD> points)
         {
             DebugPenAssert(pen);
             canvas.DrawPoints(SKPointMode.Polygon, PointD.ToSkiaArray(points), pen);
@@ -288,7 +288,7 @@ namespace Alternet.Drawing
         }
 
         /// <inheritdoc/>
-        public override void DrawBeziers(Pen pen, PointD[] points)
+        public override void DrawBeziers(Pen pen, ReadOnlySpan<PointD> points)
         {
             DebugPenAssert(pen);
             canvas.DrawBeziers(pen, points);
@@ -394,7 +394,7 @@ namespace Alternet.Drawing
         }
 
         /// <inheritdoc/>
-        public override void DrawLines(Pen pen, PointD[] points)
+        public override void DrawLines(Pen pen, ReadOnlySpan<PointD> points)
         {
             DebugPenAssert(pen);
             canvas.DrawPoints(SKPointMode.Lines, PointD.ToSkiaArray(points), pen);
@@ -547,7 +547,7 @@ namespace Alternet.Drawing
         /// <param name="points">The array of points.</param>
         /// <param name="fillMode">The fill mode.</param>
         /// <returns></returns>
-        public virtual SKPath? GetPathFromPoints(PointD[] points, FillMode fillMode)
+        public virtual SKPath? GetPathFromPoints(ReadOnlySpan<PointD> points, FillMode fillMode)
         {
             if (points == null || points.Length < 3)
                 return null;
@@ -573,7 +573,7 @@ namespace Alternet.Drawing
         }
 
         /// <inheritdoc/>
-        public override void Polygon(Pen? pen, Brush brush, PointD[] points, FillMode fillMode)
+        public override void Polygon(Pen? pen, Brush brush, ReadOnlySpan<PointD> points, FillMode fillMode)
         {
             using var path = GetPathFromPoints(points, fillMode);
             if (path is null)
@@ -597,7 +597,7 @@ namespace Alternet.Drawing
         /// <inheritdoc/>
         public override void FillPolygon(
             Brush brush,
-            PointD[] points,
+            ReadOnlySpan<PointD> points,
             FillMode fillMode = FillMode.Alternate)
         {
             DebugBrushAssert(brush);

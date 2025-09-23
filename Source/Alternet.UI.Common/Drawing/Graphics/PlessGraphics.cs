@@ -62,7 +62,7 @@ namespace Alternet.Drawing
         }
 
         /// <inheritdoc/>
-        public override void DrawBeziers(Pen pen, PointD[] points)
+        public override void DrawBeziers(Pen pen, ReadOnlySpan<PointD> points)
         {
         }
 
@@ -92,7 +92,7 @@ namespace Alternet.Drawing
         }
 
         /// <inheritdoc/>
-        public override void DrawLines(Pen pen, PointD[] points)
+        public override void DrawLines(Pen pen, ReadOnlySpan<PointD> points)
         {
         }
 
@@ -107,7 +107,7 @@ namespace Alternet.Drawing
         }
 
         /// <inheritdoc/>
-        public override void DrawPolygon(Pen pen, PointD[] points)
+        public override void DrawPolygon(Pen pen, ReadOnlySpan<PointD> points)
         {
         }
 
@@ -167,7 +167,7 @@ namespace Alternet.Drawing
         }
 
         /// <inheritdoc/>
-        public override void FillPolygon(Brush brush, PointD[] points, FillMode fillMode = FillMode.Alternate)
+        public override void FillPolygon(Brush brush, ReadOnlySpan<PointD> points, FillMode fillMode = FillMode.Alternate)
         {
         }
 
@@ -209,7 +209,7 @@ namespace Alternet.Drawing
         }
 
         /// <inheritdoc/>
-        public override void Polygon(Pen pen, Brush brush, PointD[] points, FillMode fillMode)
+        public override void Polygon(Pen pen, Brush brush, ReadOnlySpan<PointD> points, FillMode fillMode)
         {
         }
 

@@ -125,7 +125,7 @@ namespace Alternet.Drawing
         public abstract void Polygon(
             Pen pen,
             Brush brush,
-            PointD[] points,
+            ReadOnlySpan<PointD> points,
             FillMode fillMode = FillMode.Alternate);
 
         /// <summary>
@@ -230,7 +230,7 @@ namespace Alternet.Drawing
         /// determine the curve.
         /// The number of points in the array should be a multiple of 3 plus 1, such as 4, 7, or 10.
         /// </param>
-        public abstract void DrawBeziers(Pen pen, PointD[] points);
+        public abstract void DrawBeziers(Pen pen, ReadOnlySpan<PointD> points);
 
         /// <summary>
         /// Draws an circle specified by a center <see cref="PointD"/> and a radius.
@@ -278,7 +278,7 @@ namespace Alternet.Drawing
         /// of the polygon.</param>
         /// <param name="points">Array of <see cref="PointD"/> structures that represent the
         /// vertices of the polygon.</param>
-        public abstract void DrawPolygon(Pen pen, PointD[] points);
+        public abstract void DrawPolygon(Pen pen, ReadOnlySpan<PointD> points);
 
         /// <summary>
         /// Fills the interior of a polygon defined by an array of <see cref="PointD"/> structures.
@@ -291,7 +291,7 @@ namespace Alternet.Drawing
         /// determines the style of the fill.</param>
         public abstract void FillPolygon(
             Brush brush,
-            PointD[] points,
+            ReadOnlySpan<PointD> points,
             FillMode fillMode = FillMode.Alternate);
 
         /// <summary>
@@ -378,7 +378,7 @@ namespace Alternet.Drawing
         /// </remarks>
         /// <exception cref="ArgumentNullException"><paramref name="pen"/> is
         /// <see langword="null"/>.</exception>
-        public abstract void DrawLines(Pen pen, PointD[] points);
+        public abstract void DrawLines(Pen pen, ReadOnlySpan<PointD> points);
 
         /// <summary>
         /// Draws an ellipse defined by a bounding <see cref="RectD"/>.
