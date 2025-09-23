@@ -363,6 +363,9 @@ namespace Alternet.UI
         /// should be displayed. If null, the current mouse position
         /// relative to the container is used.</param>
         /// <param name="onClose">The action to be invoked when the context menu is closed.</param>
+        /// <param name="align">The alignment of the context menu within the container.
+        /// If <see langword="null"/>, the default alignment
+        /// <see cref="HVDropDownAlignment.Center"/> is used if position is not specified.</param>
         public virtual void ShowInsideControl(
             AbstractControl container,
             AbstractControl? source = null,
