@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Reflection.Metadata;
 using System.Text;
 using System.Threading.Tasks;
 using Alternet.UI;
@@ -522,7 +523,7 @@ namespace Alternet.Drawing
         /// The number of points in the array should be a multiple of 3 plus 1, such as 4, 7, or 10.
         /// </param>
         /// <param name="canvas">Drawing context.</param>
-        public static void DrawBeziers(this SKCanvas canvas, Pen pen, PointD[] points)
+        public static void DrawBeziers(this SKCanvas canvas, Pen pen, ReadOnlySpan<PointD> points)
         {
             var pointsCount = points.Length;
             Graphics.DebugPenAssert(pen);
@@ -646,7 +647,8 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
-        /// Represents a cached bitmap canvas, including its graphics context, size, scale factor, and transparency.
+        /// Represents a cached bitmap canvas, including its graphics context, size,
+        /// scale factor, and transparency.
         /// </summary>
         public class BitmapCanvasCached : IDisposable
         {
