@@ -148,15 +148,25 @@ namespace Alternet.Drawing
         }
 
         /// <inheritdoc/>
-        public override void Polygon(Pen pen, Brush brush, PointD[] points, FillMode fillMode)
+        public override void Polygon(Pen pen, Brush brush, ReadOnlySpan<PointD> points, FillMode fillMode)
         {
             DebugBrushAssert(brush);
             DebugPenAssert(pen);
-            dc.Polygon(
-                (UI.Native.Pen)pen.Handler,
-                (UI.Native.Brush)brush.Handler,
-                TransformPointsToNative(points),
-                fillMode);
+
+            var transformed = TransformPointsToNative(points);
+
+            unsafe
+            {
+                fixed (PointD* ptr = transformed)
+                {
+                    dc.Polygon(
+                        (UI.Native.Pen)pen.Handler,
+                        (UI.Native.Brush)brush.Handler,
+                        ptr,        
+                        transformed.Length,
+                        fillMode);
+                }
+            }
         }
 
         /// <inheritdoc/>
@@ -237,13 +247,23 @@ namespace Alternet.Drawing
         }
 
         /// <inheritdoc/>
-        public override void DrawBeziers(Pen pen, PointD[] points)
+        public override void DrawBeziers(Pen pen, ReadOnlySpan<PointD> points)
         {
             DebugPenAssert(pen);
             DebugBezierPointsAssert(points);
-            dc.DrawBeziers(
-                (UI.Native.Pen)pen.Handler,
-                TransformPointsToNative(points));
+
+            var transformed = TransformPointsToNative(points);
+
+            unsafe
+            {
+                fixed (PointD* ptr = transformed)
+                {
+                    dc.DrawBeziers(
+                        (UI.Native.Pen)pen.Handler,
+                        ptr,
+                        transformed.Length);
+                }
+            }
         }
 
         /// <inheritdoc/>
@@ -287,25 +307,45 @@ namespace Alternet.Drawing
         }
 
         /// <inheritdoc/>
-        public override void DrawPolygon(Pen pen, PointD[] points)
+        public override void DrawPolygon(Pen pen, ReadOnlySpan<PointD> points)
         {
             DebugPenAssert(pen);
-            dc.DrawPolygon(
-                (UI.Native.Pen)pen.Handler,
-                TransformPointsToNative(points));
+
+            var transformed = TransformPointsToNative(points);
+
+            unsafe
+            {
+                fixed (PointD* ptr = transformed)
+                {
+                    dc.DrawPolygon(
+                        (UI.Native.Pen)pen.Handler,
+                        ptr,
+                        transformed.Length);
+                }
+            }
         }
 
         /// <inheritdoc/>
         public override void FillPolygon(
             Brush brush,
-            PointD[] points,
+            ReadOnlySpan<PointD> points,
             FillMode fillMode = FillMode.Alternate)
         {
             DebugBrushAssert(brush);
-            dc.FillPolygon(
-                (UI.Native.Brush)brush.Handler,
-                TransformPointsToNative(points),
-                fillMode);
+
+            var transformed = TransformPointsToNative(points);
+
+            unsafe
+            {
+                fixed (PointD* ptr = transformed)
+                {
+                    dc.FillPolygon(
+                        (UI.Native.Brush)brush.Handler,
+                        ptr,
+                        transformed.Length,
+                        fillMode);
+                }
+            }
         }
 
         /// <inheritdoc/>
@@ -357,12 +397,22 @@ namespace Alternet.Drawing
         }
 
         /// <inheritdoc/>
-        public override void DrawLines(Pen pen, PointD[] points)
+        public override void DrawLines(Pen pen, ReadOnlySpan<PointD> points)
         {
             DebugPenAssert(pen);
-            dc.DrawLines(
-                (UI.Native.Pen)pen.Handler,
-                TransformPointsToNative(points));
+
+            var transformed = TransformPointsToNative(points);
+
+            unsafe
+            {
+                fixed (PointD* ptr = transformed)
+                {
+                    dc.DrawLines(
+                        (UI.Native.Pen)pen.Handler,
+                        ptr,
+                        transformed.Length);
+                }
+            }
         }
 
         /// <inheritdoc/>

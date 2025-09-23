@@ -322,12 +322,12 @@ ALTERNET_UI_API void DrawingContext_Circle_(DrawingContext* obj, Pen* pen, Brush
     #endif
 }
 
-ALTERNET_UI_API void DrawingContext_Polygon_(DrawingContext* obj, Pen* pen, Brush* brush, PointD* points, int pointsCount, FillMode fillMode)
+ALTERNET_UI_API void DrawingContext_Polygon_(DrawingContext* obj, Pen* pen, Brush* brush, PointD* points, int pointsLength, FillMode fillMode)
 {
     #if !defined(__WXMSW__) || defined(_DEBUG)
     MarshalExceptions<void>([&](){
     #endif
-        obj->Polygon(pen, brush, points, pointsCount, fillMode);
+        obj->Polygon(pen, brush, points, pointsLength, fillMode);
     #if !defined(__WXMSW__) || defined(_DEBUG)
     });
     #endif
@@ -454,12 +454,12 @@ ALTERNET_UI_API void DrawingContext_DrawLine_(DrawingContext* obj, Pen* pen, Poi
     #endif
 }
 
-ALTERNET_UI_API void DrawingContext_DrawLines_(DrawingContext* obj, Pen* pen, PointD* points, int pointsCount)
+ALTERNET_UI_API void DrawingContext_DrawLines_(DrawingContext* obj, Pen* pen, PointD* points, int pointsLength)
 {
     #if !defined(__WXMSW__) || defined(_DEBUG)
     MarshalExceptions<void>([&](){
     #endif
-        obj->DrawLines(pen, points, pointsCount);
+        obj->DrawLines(pen, points, pointsLength);
     #if !defined(__WXMSW__) || defined(_DEBUG)
     });
     #endif
@@ -509,12 +509,12 @@ ALTERNET_UI_API void DrawingContext_DrawBezier_(DrawingContext* obj, Pen* pen, P
     #endif
 }
 
-ALTERNET_UI_API void DrawingContext_DrawBeziers_(DrawingContext* obj, Pen* pen, PointD* points, int pointsCount)
+ALTERNET_UI_API void DrawingContext_DrawBeziers_(DrawingContext* obj, Pen* pen, PointD* points, int pointsLength)
 {
     #if !defined(__WXMSW__) || defined(_DEBUG)
     MarshalExceptions<void>([&](){
     #endif
-        obj->DrawBeziers(pen, points, pointsCount);
+        obj->DrawBeziers(pen, points, pointsLength);
     #if !defined(__WXMSW__) || defined(_DEBUG)
     });
     #endif
@@ -575,23 +575,23 @@ ALTERNET_UI_API void DrawingContext_FillRoundedRectangle_(DrawingContext* obj, B
     #endif
 }
 
-ALTERNET_UI_API void DrawingContext_DrawPolygon_(DrawingContext* obj, Pen* pen, PointD* points, int pointsCount)
+ALTERNET_UI_API void DrawingContext_DrawPolygon_(DrawingContext* obj, Pen* pen, PointD* points, int pointsLength)
 {
     #if !defined(__WXMSW__) || defined(_DEBUG)
     MarshalExceptions<void>([&](){
     #endif
-        obj->DrawPolygon(pen, points, pointsCount);
+        obj->DrawPolygon(pen, points, pointsLength);
     #if !defined(__WXMSW__) || defined(_DEBUG)
     });
     #endif
 }
 
-ALTERNET_UI_API void DrawingContext_FillPolygon_(DrawingContext* obj, Brush* brush, PointD* points, int pointsCount, FillMode fillMode)
+ALTERNET_UI_API void DrawingContext_FillPolygon_(DrawingContext* obj, Brush* brush, PointD* points, int pointsLength, FillMode fillMode)
 {
     #if !defined(__WXMSW__) || defined(_DEBUG)
     MarshalExceptions<void>([&](){
     #endif
-        obj->FillPolygon(brush, points, pointsCount, fillMode);
+        obj->FillPolygon(brush, points, pointsLength, fillMode);
     #if !defined(__WXMSW__) || defined(_DEBUG)
     });
     #endif

@@ -73,7 +73,8 @@ namespace NativeApi.Api
         public void Pie(Pen pen, Brush brush, PointD center, Coord radius, Coord startAngle,
             Coord sweepAngle) { }
         public void Circle(Pen pen, Brush brush, PointD center, Coord radius) { }
-        public void Polygon(Pen pen, Brush brush, PointD[] points, FillMode fillMode) { }
+        public unsafe void Polygon(Pen pen, Brush brush,
+            PointD* points, int pointsLength,  FillMode fillMode) { }
 
         public void FillRectangle(Brush brush, RectD rectangle) { }
 
@@ -103,7 +104,7 @@ namespace NativeApi.Api
 
         public void DrawLine(Pen pen, PointD a, PointD b) => throw new Exception();
 
-        public void DrawLines(Pen pen, PointD[] points) => throw new Exception();
+        public unsafe void DrawLines(Pen pen, PointD* points, int pointsLength) => throw new Exception();
 
         public void DrawArc(Pen pen, PointD center, Coord radius, Coord startAngle,
             Coord sweepAngle) => throw new Exception();
@@ -117,7 +118,7 @@ namespace NativeApi.Api
         public void DrawBezier(Pen pen, PointD startPoint, PointD controlPoint1,
             PointD controlPoint2, PointD endPoint) => throw new Exception();
 
-        public void DrawBeziers(Pen pen, PointD[] points) => throw new Exception();
+        public unsafe void DrawBeziers(Pen pen, PointD* points, int pointsLength) => throw new Exception();
 
         public void DrawPoint(Pen pen, Coord x, Coord y) { }
 
@@ -131,9 +132,9 @@ namespace NativeApi.Api
         public void FillRoundedRectangle(Brush brush, RectD rect, Coord cornerRadius)
             => throw new Exception();
 
-        public void DrawPolygon(Pen pen, PointD[] points) => throw new Exception();
+        public unsafe void DrawPolygon(Pen pen, PointD* points, int pointsLength) => throw new Exception();
 
-        public void FillPolygon(Brush brush, PointD[] points, FillMode fillMode)
+        public unsafe void FillPolygon(Brush brush, PointD* points, int pointsLength, FillMode fillMode)
             => throw new Exception();
 
         public Region? Clip { get; set; }

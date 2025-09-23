@@ -33,7 +33,7 @@ void Ellipse(Pen* pen, Brush* brush, const RectD& rectangle);
 void Path(Pen* pen, Brush* brush, GraphicsPath* path);
 void Pie(Pen* pen, Brush* brush, const PointD& center, float radius, float startAngle, float sweepAngle);
 void Circle(Pen* pen, Brush* brush, const PointD& center, float radius);
-void Polygon(Pen* pen, Brush* brush, PointD* points, int pointsCount, FillMode fillMode);
+void Polygon(Pen* pen, Brush* brush, PointD* points, int pointsLength, FillMode fillMode);
 void FillRectangle(Brush* brush, const RectD& rectangle);
 void FillRectangleI(Brush* brush, const RectI& rectangle);
 void DrawRectangle(Pen* pen, const RectD& rectangle);
@@ -45,19 +45,19 @@ void DrawImageAtPoint(Image* image, const PointD& origin, bool useMask);
 void DrawImageAtRect(Image* image, const RectD& destinationRect, bool useMask);
 void SetTransformValues(float m11, float m12, float m21, float m22, float dx, float dy);
 void DrawLine(Pen* pen, const PointD& a, const PointD& b);
-void DrawLines(Pen* pen, PointD* points, int pointsCount);
+void DrawLines(Pen* pen, PointD* points, int pointsLength);
 void DrawArc(Pen* pen, const PointD& center, float radius, float startAngle, float sweepAngle);
 void FillPie(Brush* brush, const PointD& center, float radius, float startAngle, float sweepAngle);
 void DrawPie(Pen* pen, const PointD& center, float radius, float startAngle, float sweepAngle);
 void DrawBezier(Pen* pen, const PointD& startPoint, const PointD& controlPoint1, const PointD& controlPoint2, const PointD& endPoint);
-void DrawBeziers(Pen* pen, PointD* points, int pointsCount);
+void DrawBeziers(Pen* pen, PointD* points, int pointsLength);
 void DrawPoint(Pen* pen, float x, float y);
 void DrawCircle(Pen* pen, const PointD& center, float radius);
 void FillCircle(Brush* brush, const PointD& center, float radius);
 void DrawRoundedRectangle(Pen* pen, const RectD& rect, float cornerRadius);
 void FillRoundedRectangle(Brush* brush, const RectD& rect, float cornerRadius);
-void DrawPolygon(Pen* pen, PointD* points, int pointsCount);
-void FillPolygon(Brush* brush, PointD* points, int pointsCount, FillMode fillMode);
+void DrawPolygon(Pen* pen, PointD* points, int pointsLength);
+void FillPolygon(Brush* brush, PointD* points, int pointsLength, FillMode fillMode);
 
 private:
 DrawingContext() {}

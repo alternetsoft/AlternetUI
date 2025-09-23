@@ -141,7 +141,7 @@ namespace Alternet.Drawing
             return false;
         }
 
-        protected virtual PointD[] TransformPointsToNative(PointD[] points)
+        protected virtual ReadOnlySpan<PointD> TransformPointsToNative(ReadOnlySpan<PointD> points)
         {
             if (GetNoTransformToNative())
                 return points;
