@@ -174,6 +174,13 @@ namespace ApiGenerator.Native
                 var parameter = parameters[i];
 
                 var parameterType = types.GetParameterTypeName(parameter);
+
+                if (parameterType.EndsWith("**"))
+                {
+                    // Remove the last '*' character
+                    parameterType = parameterType.Substring(0, parameterType.Length - 1);
+                }
+
                 signatureParametersString.Append(parameterType + " " + parameter.Name);
                 callParametersString.Append(GetCToCppArgument(parameter.ToContextualParameter(), parameter.Name!));
 

@@ -90,6 +90,13 @@ namespace ApiGenerator.Native
                 var parameter = parameters[i];
 
                 var parameterType = types.GetParameterTypeName(parameter);
+
+                if (parameterType.EndsWith("**"))
+                {
+                    // Remove the last '*' character
+                    parameterType = parameterType.Substring(0, parameterType.Length - 1);
+                }
+
                 signatureParameters.Append(parameterType + " " + parameter.Name);
 
                 if (parameter.ParameterType.IsArray)

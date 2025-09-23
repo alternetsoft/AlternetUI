@@ -184,12 +184,30 @@ using System.Security;");
                     signatureParametersString.Append(", ");
             }
 
+            var isUnsafe = false;
+
             for (var i = 0; i < parameters.Length; i++)
             {
                 var parameter = parameters[i];
 
                 var parameterType = types.GetTypeName(parameter.ToContextualParameter());
                 signatureParametersString.Append(parameterType + " " + parameter.Name);
+
+                var isPointer = false;
+
+                if (parameterType.EndsWith('*'))
+                {
+                    isUnsafe = true;
+                    isPointer = true;
+                }
+
+                if (isPointer)
+                {
+                }
+                else
+                {
+                }
+
                 callParametersString.Append(GetNativeToManagedArgument(parameter.ParameterType, parameter.Name!));
 
                 if (i < parameters.Length - 1)
@@ -199,7 +217,9 @@ using System.Security;");
                 }
             }
 
-            w.WriteLine($"private static {returnTypeName} {ManagedServerMemberProvider.GetMethodTrampolineName(method)}({signatureParametersString})");
+            var unsafeSpecifier = isUnsafe ? "unsafe " : "";
+
+            w.WriteLine($"private static {unsafeSpecifier}{returnTypeName} {ManagedServerMemberProvider.GetMethodTrampolineName(method)}({signatureParametersString})");
 
             using (new BlockIndent(w))
             {

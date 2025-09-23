@@ -118,6 +118,8 @@ namespace ApiGenerator.Managed
                     signatureParametersString.Append(", ");
             }
 
+            var isUnsafe = false;
+
             for (var i = 0; i < parameters.Length; i++)
             {
                 var parameter = parameters[i];
@@ -129,6 +131,14 @@ namespace ApiGenerator.Managed
                     parameterType);
 
                 signatureParametersString.Append($"{MemberProvider.GetPInvokeAttributes(parameter)}{parameterTypeNameOverride} {parameter.Name}");
+
+                if (parameter.ParameterType.Name.EndsWith("*"))
+                {
+                    isUnsafe = true;
+                }
+                else
+                {
+                }
 
                 if (parameter.ParameterType.IsArray)
                 {
@@ -144,7 +154,10 @@ namespace ApiGenerator.Managed
             }
 
             WriteDllImport(w);
-            w.WriteLine($"public static extern {returnTypeNameOverride} {declaringTypeName}_{methodName}_({signatureParametersString});");
+
+            var needUnsafe = isUnsafe ? "unsafe " : "";
+
+            w.WriteLine($"public {needUnsafe}static extern {returnTypeNameOverride} {declaringTypeName}_{methodName}_({signatureParametersString});");
             w.WriteLine();
         }
 

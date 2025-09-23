@@ -120,9 +120,6 @@ using System.Security;");
             WriteConstructor(w, types, type);
             WriteFromPointerConstructor(w, types, type);
 
-            //if (MemberProvider.GetDestructorVisibility(type) == MemberVisibility.Public)
-            //    WriteDestructor(w, types, type);
-
             foreach (var property in managedApiType.Properties)
                 WriteProperty(w, property, types, pinvokeTypes);
 
@@ -142,27 +139,6 @@ using System.Security;");
 
             return GetFinalCode(codeWriter.ToString(), types);
         }
-
-        //private static void WriteDestructor(IndentedTextWriter w, Types types, Type type)
-        //{
-        //    w.WriteLine("protected override void Dispose(bool disposing)");
-        //    using (new BlockIndent(w))
-        //    {
-        //        w.WriteLine("if (!IsDisposed)");
-        //        using (new BlockIndent(w))
-        //        {
-        //            w.WriteLine("if (NativePointer != IntPtr.Zero)");
-        //            using (new BlockIndent(w))
-        //            {
-        //                w.WriteLine($"NativeApi.{TypeProvider.GetNativeName(type)}_Destroy_(NativePointer);");
-        //                w.WriteLine("SetNativePointer(IntPtr.Zero);");
-        //            }
-        //        }
-        //        w.WriteLine("base.Dispose(disposing);");
-        //    }
-
-        //    w.WriteLine();
-        //}
 
         private static void WriteStaticConstructor(IndentedTextWriter w, Types types, Type type, bool hasEvents)
         {
@@ -378,6 +354,8 @@ using System.Security;");
                     callParametersString.Append(", ");
             }
 
+            bool addUnsafe = false;
+            
             for (var i = 0; i < parameters.Length; i++)
             {
                 var parameter = parameters[i];
@@ -393,10 +371,26 @@ using System.Security;");
                     cparameterType!,
                     parameterType);
 
+                var isPointerParameter = false;
+
+                if (managedParameterTypeName.EndsWith("*"))
+                {
+                    addUnsafe = true;
+                    isPointerParameter = true;
+                }
+
                 signatureParametersString.Append(managedParameterTypeName 
                     + " " + parameter.Name);
-                callParametersString.Append(GetManagedToNativeArgument(
+
+                if (!isPointerParameter)
+                {
+                    callParametersString.Append(GetManagedToNativeArgument(
                     parameter, types, pinvokeTypes));
+                }
+                else
+                {
+                    callParametersString.Append(parameter.Name);
+                }
 
                 if (parameter.ParameterType.IsArray)
                 {
@@ -410,8 +404,10 @@ using System.Security;");
                 }
             }
 
+            var unsafeModifier = addUnsafe ? "unsafe " : "";
+
             w.WriteLine(
-                $"public {GetModifiers(method)}{managedDeclaringTypeName} {methodName}({signatureParametersString})");
+                $"public {unsafeModifier}{GetModifiers(method)}{managedDeclaringTypeName} {methodName}({signatureParametersString})");
             w.WriteLine("{");
             w.Indent++;
 

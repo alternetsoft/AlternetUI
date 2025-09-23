@@ -55,8 +55,12 @@ namespace ApiGenerator.Native
         protected virtual string? TryGetPrimitiveType(ContextualType type) =>
             primitiveTypes.TryGetValue(type, out var result) ? result : null;
 
-        protected void AddIncludedFile(string fileNameWithoutExtension) =>
+        protected void AddIncludedFile(string fileNameWithoutExtension)
+        {
+            if (fileNameWithoutExtension.EndsWith("*"))
+                return;
             includes.Add($"#include \"{fileNameWithoutExtension}.h\"");
+        }
     }
 
     internal class CppTypes : Types
