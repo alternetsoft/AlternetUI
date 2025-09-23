@@ -2,6 +2,8 @@
 #include "IdManager.h"
 #include "Application.h"
 
+#include <wx/menu.h>
+
 namespace Alternet::UI
 {
     wxAlternetMenuBar* wxAlternetMenuItem::FindParentMainMenu()
@@ -102,14 +104,14 @@ namespace Alternet::UI
     {
         auto bar = (wxAlternetMenuBar*)menuBar;
 #ifdef __WXOSX__
-		wxMenuBar::SetMacCommonMenuBar(bar);
+		wxMenuBar::MacSetCommonMenuBar(bar);
 #endif
     }
 
     string Menu::GetMacHelpMenuTitleName()
     {
 #ifdef __WXOSX__
-        return wxApp::s_macHelpMenuTitleName;
+        return wxStr(wxApp::s_macHelpMenuTitleName);
 #else
         return wxStr("");
 #endif
@@ -118,7 +120,7 @@ namespace Alternet::UI
     string Menu::GetMacWindowMenuTitleName()
     {
 #ifdef __WXOSX__
-        return wxApp::s_macWindowMenuTitleName;
+        return wxStr(wxApp::s_macWindowMenuTitleName);
 #else
         return wxStr("");
 #endif
