@@ -9,6 +9,9 @@ namespace Alternet.Drawing
     /// principles in user interface components.
     /// This class includes standardized values and settings based on Material Design guidelines.
     /// </summary>
+    /// <remarks>
+    /// See <see href="https://m3.material.io/">Material Design guidelines</see> for more information.
+    /// </remarks>
     public static partial class MaterialDesign
     {
         /// <summary>
