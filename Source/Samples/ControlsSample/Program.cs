@@ -4,60 +4,18 @@ using System.IO;
 using System.Reflection;
 using System.Runtime.InteropServices;
 using System.Threading;
+
 using Alternet.Drawing;
 
 using Alternet.UI;
 
 namespace ControlsSample
 {
-    class NativeRedirect
-    {
-        [DllImport("libc")]
-        private static extern int pipe(int[] fds);
-
-        [DllImport("libc")]
-        private static extern int dup2(int oldfd, int newfd);
-
-        private static int[] stdoutPipe = new int[2];
-
-        public static void RedirectNativeStdoutToMemory()
-        {
-            pipe(stdoutPipe); // stdoutPipe[0] = read end, stdoutPipe[1] = write end
-            dup2(stdoutPipe[1], 2); // redirect stdout to write end of pipe
-
-            // Start a thread to read from the pipe
-            var thr = new Thread(() =>
-            {
-                using var reader = new FileStream(new Microsoft.Win32.SafeHandles.SafeFileHandle((IntPtr)stdoutPipe[0], ownsHandle: false), FileAccess.Read);
-                using var sr = new StreamReader(reader);
-                while (true)
-                {
-                    string? line = sr.ReadLine();
-                    if (line != null)
-                        Console.WriteLine("Captured native stdout: " + line);
-                }
-            });
-            thr.IsBackground = true;
-            thr.Start();
-        }
-    
-        [DllImport("libc")]
-        private static extern int close(int fd);
-
-        public static void CleanupRedirection()
-        {
-            close(stdoutPipe[0]);
-            close(stdoutPipe[1]);
-            // Optionally restore original stdout/stderr if saved
-        }
-
-}    
     internal class Program
     {
         static Program()
         {
-            if (App.IsMacOS)
-                NativeRedirect.RedirectNativeStdoutToMemory();
+            UnixStdOutRedirect.RedirectStdErrOnMacOs();
             KnownAssemblies.PreloadReferenced();
             FormulaEngine.Init();
         }
@@ -155,7 +113,7 @@ namespace ControlsSample
             LogSimple("InitSamples Done.");
 
             if (testBadFont)
-                AbstractControl.DefaultFont = new Font("abrakadabra", 12);
+                AbstractControl.DefaultFont = new Font("PineApple", 12);
 
             var window = new MainWindow();
 
@@ -167,9 +125,6 @@ namespace ControlsSample
 
             window.Dispose();
             application.Dispose();
-            if (App.IsMacOS)
-                NativeRedirect.RedirectNativeStdoutToMemory();
-
         }
     }
 }
