@@ -50,9 +50,10 @@ namespace Alternet.Drawing
                 return;
             }
 
+            Save();
+
             try
             {
-                Save();
                 ClipRect(rect);
                 action();
             }
