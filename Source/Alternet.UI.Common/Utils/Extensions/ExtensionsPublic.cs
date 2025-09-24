@@ -30,7 +30,7 @@ namespace Alternet.UI.Extensions
         /// </summary>
         public static float NextFloat(this Random rng, float min, float max)
         {
-            return min + (float)rng.NextDouble() * (max - min);
+            return min + ((float)rng.NextDouble() * (max - min));
         }
 
         /// <summary>

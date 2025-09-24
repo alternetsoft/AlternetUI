@@ -19,6 +19,6 @@ namespace Alternet.UI
         Multiple,
 
         /// <summary>Border is always shown regardless of selection mode.</summary>
-        Always
+        Always,
     }
 }
