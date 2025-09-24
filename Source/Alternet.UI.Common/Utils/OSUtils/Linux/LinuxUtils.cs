@@ -368,6 +368,51 @@ namespace Alternet.UI
                 return (string.Empty, default);
             }
 
+            /// <summary>
+            /// Closes the file descriptor, releasing the associated system resources.
+            /// </summary>
+            /// <remarks>This method is a P/Invoke declaration for the `close` function
+            /// in the C standard library. Ensure that the file descriptor is valid and
+            /// not already closed before calling this method.</remarks>
+            /// <param name="fd">The file descriptor to close. Must be a valid,
+            /// open file descriptor.</param>
+            /// <returns>Returns 0 if the file descriptor was successfully closed;
+            /// otherwise, returns -1 and sets the errNo to indicate the error.</returns>
+            [DllImport("libc")]
+            public static extern int close(int fd);
+
+            /// <summary>
+            /// Creates a unidirectional data channel for interprocess communication.
+            /// </summary>
+            /// <remarks>The pipe is a unidirectional communication channel, meaning data written to
+            /// the write end can be read from the read end. The caller is responsible for
+            /// ensuring that the <paramref
+            /// name="fds"/> array has exactly two elements.</remarks>
+            /// <param name="fds">An array of two integers where the file descriptors for the
+            /// read and write ends of the pipe will be
+            /// stored. The first element represents the read end, and the second element
+            /// represents the write end.</param>
+            /// <returns>Returns 0 on success. On failure, returns -1 and sets the global
+            /// errNo variable to indicate the error.</returns>
+            [DllImport("libc")]
+            public static extern int pipe(int[] fds);
+
+            /// <summary>
+            /// Duplicates a file descriptor, replacing the target file descriptor if it is already open.
+            /// </summary>
+            /// <remarks>This method is a P/Invoke wrapper for the <c>dup2</c> function in the C
+            /// standard library. It is used to duplicate file descriptors, ensuring that
+            /// <paramref name="newfd"/>
+            /// refers to the same open file description as <paramref name="oldfd"/>.</remarks>
+            /// <param name="oldfd">The file descriptor to duplicate.</param>
+            /// <param name="newfd">The target file descriptor to replace.
+            /// If <paramref name="newfd"/> is already open, it will be closed
+            /// before duplication.</param>
+            /// <returns>0 on success; otherwise, -1 if an error occurs. Check the global errNo
+            /// variable for error details.</returns>
+            [DllImport("libc")]
+            public static extern int dup2(int oldfd, int newfd);
+
             [DllImport("libc.so.6")]
             internal static extern int dl_iterate_phdr(DlIteratePhdrCallback callback, IntPtr data);
 
