@@ -115,6 +115,40 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Logs the last Win32 error that occurred, along with the name of the function
+        /// where the error occurred.
+        /// </summary>
+        /// <remarks>This method retrieves the last Win32 error using <see
+        /// cref="Marshal.GetLastWin32Error"/> and logs the error number and its corresponding
+        /// message. The log message
+        /// is written to the debug output using <see cref="Debug.WriteLine(string)"/>.</remarks>
+        /// <param name="function">The name of the function where the error occurred.
+        /// This is included in the log message to provide context.</param>
+        public static void LogLastNativeError(string function)
+        {
+            int errorNumber = Marshal.GetLastWin32Error();
+            var s = GetStrError(errorNumber);
+            Debug.WriteLine($"{function} failed with error: [{errorNumber}] {s}");
+        }
+
+        /// <summary>
+        /// Retrieves the error message string corresponding to the specified error number.
+        /// </summary>
+        /// <remarks>This method uses platform-specific functionality to retrieve the error message.
+        /// The returned string is localized based on the system's current locale settings.</remarks>
+        /// <param name="errorNumber">The error number for which to retrieve the error message.</param>
+        /// <returns>A string containing the error message associated with
+        /// the specified error number, or an empty string if the
+        /// error message cannot be retrieved.</returns>
+        public static string GetStrError(int errorNumber)
+        {
+            var errPtr = NativeMethods.strerror(errorNumber);
+            if (errPtr != IntPtr.Zero)
+                return Marshal.PtrToStringAnsi(errPtr) ?? string.Empty;
+            return string.Empty;
+        }
+
+        /// <summary>
         /// Gets whether specific package is installed using dpkg utility.
         /// </summary>
         /// <param name="packageName">Package name.</param>
@@ -382,7 +416,7 @@ namespace Alternet.UI
             public static extern int close(int fd);
 
             /// <summary>
-            /// Creates a unidirectional data channel for interprocess communication.
+            /// Creates a unidirectional data channel for inter-process communication.
             /// </summary>
             /// <remarks>The pipe is a unidirectional communication channel, meaning data written to
             /// the write end can be read from the read end. The caller is responsible for
@@ -394,7 +428,7 @@ namespace Alternet.UI
             /// represents the write end.</param>
             /// <returns>Returns 0 on success. On failure, returns -1 and sets the global
             /// errNo variable to indicate the error.</returns>
-            [DllImport("libc")]
+            [DllImport("libc", SetLastError = true)]
             public static extern int pipe(int[] fds);
 
             /// <summary>
@@ -410,8 +444,27 @@ namespace Alternet.UI
             /// before duplication.</param>
             /// <returns>0 on success; otherwise, -1 if an error occurs. Check the global errNo
             /// variable for error details.</returns>
-            [DllImport("libc")]
+            [DllImport("libc", SetLastError = true)]
             public static extern int dup2(int oldfd, int newfd);
+
+            /// <summary>
+            /// Retrieves a pointer to the textual representation of the specified error number.
+            /// </summary>
+            /// <remarks>This method is a P/Invoke declaration for the `strerror`
+            /// function in the C standard library (`libc`).
+            /// The returned pointer may be invalidated by
+            /// subsequent calls to `strerror` or
+            /// other library functions. Use the returned string immediately or copy
+            /// it if it needs to be
+            /// preserved.</remarks>
+            /// <param name="errnum">The error number for which to retrieve the
+            /// corresponding error message.</param>
+            /// <returns>A pointer to a null-terminated string containing the error
+            /// message associated with the specified error
+            /// number. The string is managed by the system and should not be modified
+            /// or freed by the caller.</returns>
+            [DllImport("libc")]
+            public static extern IntPtr strerror(int errnum);
 
             [DllImport("libc.so.6")]
             internal static extern int dl_iterate_phdr(DlIteratePhdrCallback callback, IntPtr data);

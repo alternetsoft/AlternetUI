@@ -15,7 +15,7 @@ namespace ControlsSample
     {
         static Program()
         {
-            UnixStdOutRedirect.RedirectStdErrOnMacOs();
+            UnixStdStreamRedirector.RedirectStdErrOnMacOs();
             KnownAssemblies.PreloadReferenced();
             FormulaEngine.Init();
         }

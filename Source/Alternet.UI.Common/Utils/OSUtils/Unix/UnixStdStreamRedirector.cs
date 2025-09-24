@@ -2,8 +2,11 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading;
+
+using Microsoft.Win32.SafeHandles;
 
 namespace Alternet.UI
 {
@@ -11,12 +14,24 @@ namespace Alternet.UI
     /// Redirects native Linux standard output and error streams to memory, allowing
     /// capturing and handling of their output within managed code.
     /// </summary>
-    public class UnixStdOutRedirect : DisposableObject
+    public class UnixStdStreamRedirector : DisposableObject
     {
-        private static UnixStdOutRedirect? stdOutRedirect;
-        private static UnixStdOutRedirect? stdErrRedirect;
+        private static UnixStdStreamRedirector? stdOutRedirect;
+        private static UnixStdStreamRedirector? stdErrRedirect;
 
-        private readonly int[] stdOutPipe = new int[2];
+        private readonly int[] redirectPipe = new int[2];
+        private readonly CancellationTokenSource cancellation = new();
+        private Thread? readerThread;
+        private bool pipeClosed;
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="UnixStdStreamRedirector"/> class.
+        /// </summary>
+        /// <remarks>This class is designed to handle standard output and error redirection on Unix-based
+        /// systems.</remarks>
+        public UnixStdStreamRedirector()
+        {
+        }
 
         /// <summary>
         /// Occurs when a line is received from the redirected standard output stream.
@@ -51,8 +66,8 @@ namespace Alternet.UI
                 if (stdOutRedirect is not null)
                     return;
 
-                stdOutRedirect = new UnixStdOutRedirect();
-                stdOutRedirect.RedirectNativeStdOutToMemory(redirectStdErr: false, StdOutReceived);
+                stdOutRedirect = new UnixStdStreamRedirector();
+                stdOutRedirect.StartRedirectingStream(redirectStdErr: false, StdOutReceived);
             }
             catch(Exception ex)
             {
@@ -70,8 +85,8 @@ namespace Alternet.UI
                 return;
             try
             {
-                stdErrRedirect = new UnixStdOutRedirect();
-                stdErrRedirect.RedirectNativeStdOutToMemory(redirectStdErr: true, StdErrReceived);
+                stdErrRedirect = new UnixStdStreamRedirector();
+                stdErrRedirect.StartRedirectingStream(redirectStdErr: true, StdErrReceived);
             }
             catch(Exception ex)
             {
@@ -101,7 +116,15 @@ namespace Alternet.UI
         /// </summary>
         protected override void DisposeManaged()
         {
-            CleanupRedirection();
+            cancellation.Cancel();
+            if (readerThread?.IsAlive == true)
+            {
+                readerThread.Join();
+                readerThread = null;
+            }
+
+            cancellation.Dispose();
+            CleanupPipe();
             base.DisposeManaged();
         }
 
@@ -112,58 +135,71 @@ namespace Alternet.UI
         /// <param name="redirectStdErr">If true, redirects standard error; otherwise,
         /// redirects standard output.</param>
         /// <param name="callback">Callback to invoke for each line received.</param>
-        private bool RedirectNativeStdOutToMemory(bool redirectStdErr, Action<string>? callback = null)
+        private bool StartRedirectingStream(bool redirectStdErr, Action<string>? callback = null)
         {
             int idx = redirectStdErr ? 2 : 1;
 
             // stdOutPipe[0] = read end, stdOutPipe[1] = write end
-            var result = LinuxUtils.NativeMethods.pipe(stdOutPipe);
+            var result = LinuxUtils.NativeMethods.pipe(redirectPipe);
             if (result != 0)
             {
-                Debug.WriteLine("Failed to create pipe for StdOut redirection.");
+                LinuxUtils.LogLastNativeError(redirectStdErr ? "[pipe StdErr]" : "[pipe StdOut]");
                 return false;
             }
 
-            result = LinuxUtils.NativeMethods.dup2(stdOutPipe[1], idx);
+            result = LinuxUtils.NativeMethods.dup2(redirectPipe[1], idx);
             if (result != 0)
             {
-                Debug.WriteLine("Failed to duplicate file descriptor for StdOut redirection.");
+                CleanupPipe();
+                LinuxUtils.LogLastNativeError(redirectStdErr ? "[dup2 StdErr]" : "[dup2 StdOut]");
                 return false;
             }
 
-            // Start a thread to read from the pipe
-            var thr = new Thread(() =>
+            LinuxUtils.NativeMethods.close(redirectPipe[1]);
+
+            void ReadLoop(Action<string>? callback)
             {
-                using var reader = new FileStream(
-                    new Microsoft.Win32.SafeHandles.SafeFileHandle(
-                        (IntPtr)stdOutPipe[0],
-                        ownsHandle: false),
-                    FileAccess.Read);
+                using var handle = new SafeFileHandle((IntPtr)redirectPipe[0], ownsHandle: true);
+                using var stream = new FileStream(handle, FileAccess.Read);
+                using var reader = new StreamReader(stream, Encoding.UTF8);
 
-                using var sr = new StreamReader(reader);
-
-                while (true)
+                try
                 {
-                    string? line = sr.ReadLine();
-                    if (line != null)
+                    while (!cancellation.Token.IsCancellationRequested)
+                    {
+                        var line = reader.ReadLine();
+                        if (line == null) break;
                         callback?.Invoke(line);
+                    }
                 }
-            });
+                catch (Exception ex)
+                {
+                    Debug.WriteLine($"Reader thread failed: {ex}");
+                }
+            }
 
-            thr.IsBackground = true;
-            thr.Start();
+            readerThread = new Thread(() => ReadLoop(callback))
+            {
+                IsBackground = true,
+                Name = redirectStdErr ? "UnixStdErrReader" : "UnixStdOutReader",
+            };
+
+            readerThread.Start();
             return true;
         }
 
         /// <summary>
-        /// Cleans up the redirection by closing pipe handles.
+        /// Cleans up the redirection by closing pipe handle.
         /// </summary>
-        private void CleanupRedirection()
+        private void CleanupPipe()
         {
+            if (pipeClosed) return;
+            pipeClosed = true;
             try
             {
-                LinuxUtils.NativeMethods.close(stdOutPipe[0]);
-                LinuxUtils.NativeMethods.close(stdOutPipe[1]);
+                LinuxUtils.NativeMethods.close(redirectPipe[0]);
+                redirectPipe[0] = -1;
+                redirectPipe[1] = -1;
             }
             catch
             {
