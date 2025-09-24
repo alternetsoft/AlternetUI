@@ -25,10 +25,9 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="s">Html text to split.</param>
         /// <returns></returns>
-        public static TextAndFontStyle[] GetBoldTagSplitted(object? s)
+        public static TextAndFontStyle[] GetBoldTagSplitted(ReadOnlySpan<char> s)
         {
-            var text = s.SafeToString();
-            if (text.Length == 0)
+            if (s.Length == 0)
                 return Array.Empty<TextAndFontStyle>();
 
             var list = new List<TextAndFontStyle>();
@@ -36,7 +35,7 @@ namespace Alternet.UI
             var isInTag = false;
             var inTagValue = string.Empty;
 
-            foreach (var subStr in Regex.Split(text, pattern))
+            foreach (var subStr in Regex.Split(s.ToString(), pattern))
             {
                 if (subStr.Equals(StringUtils.BoldTagStart))
                 {
