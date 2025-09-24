@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Linq;
 using System.Reflection;
 using System.Runtime.CompilerServices;
@@ -157,6 +158,37 @@ namespace Alternet.UI
             var t = disposable;
             disposable = default;
             t.Dispose();
+        }
+
+        /// <summary>
+        /// Safely disposes of the specified disposable object, suppressing any exceptions
+        /// that occur during disposal.
+        /// </summary>
+        /// <remarks>This method ensures that the disposal of the object does not propagate exceptions,
+        /// which can be useful in scenarios where disposal failures should not
+        /// disrupt the execution flow. Any
+        /// exceptions encountered during disposal are logged using
+        /// <see cref="Debug.WriteLine(string)"/>.</remarks>
+        /// <typeparam name="T">The type of the disposable object, which must
+        /// implement <see cref="IDisposable"/>.</typeparam>
+        /// <param name="disposable">A reference to the disposable object to be disposed.
+        /// The reference is set to <see langword="null"/> after
+        /// disposal.</param>
+        public static void SafeDisposeSuppressException<T>(ref T? disposable)
+            where T : IDisposable
+        {
+            if (disposable is null)
+                return;
+            var t = disposable;
+            disposable = default;
+            try
+            {
+                t.Dispose();
+            }
+            catch (Exception e)
+            {
+                Debug.WriteLine(e);
+            }
         }
 
         /// <summary>
