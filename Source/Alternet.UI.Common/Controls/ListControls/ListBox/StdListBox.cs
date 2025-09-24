@@ -113,7 +113,7 @@ namespace Alternet.UI
         /// <remarks>
         /// When single selection mode is used, you can use this property to
         /// determine the index of the item that is selected
-        /// in the control. If the <see cref="SelectionMode"/>
+        /// in the control. If the <see cref="VirtualListControl.SelectionMode"/>
         /// property of the control is set to either
         /// <see cref="ListBoxSelectionMode.Multiple"/> (which indicates a
         /// multiple-selection control) and multiple items
