@@ -101,6 +101,7 @@ namespace Alternet.UI
         private bool selectionUnderImage = true;
 
         private HVAlignment itemAlignment = ListControlItem.DefaultItemAlignment;
+        private SelectionBasedVisibility selectionBasedItemBorder = SelectionBasedVisibility.Multiple;
 
         static VirtualListControl()
         {
@@ -507,13 +508,47 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets or sets item border visibility behavior depending on selection mode.
+        /// </summary>
+        public SelectionBasedVisibility SelectionBasedItemBorder
+        {
+            get => selectionBasedItemBorder;
+
+            set
+            {
+                if (selectionBasedItemBorder == value)
+                    return;
+                selectionBasedItemBorder = value;
+                Invalidate();
+            }
+        }
+
+        /// <summary>
         /// Gets or sets whether current item border is visible.
         /// </summary>
+        [Browsable(false)]
         public virtual bool CurrentItemBorderVisible
         {
             get
             {
-                return currentItemBorderVisible;
+                return currentItemBorderVisible && GetSelectionBasedVisibility();
+
+                bool GetSelectionBasedVisibility()
+                {
+                    switch (selectionBasedItemBorder)
+                    {
+                        case SelectionBasedVisibility.None:
+                            return false;
+                        case SelectionBasedVisibility.Always:
+                            return true;
+                        case SelectionBasedVisibility.Multiple:
+                            return IsSelectionModeMultiple;
+                        case SelectionBasedVisibility.Single:
+                            return IsSelectionModeSingle;
+                        default:
+                            return true;
+                    }
+                }
             }
 
             set
