@@ -78,17 +78,22 @@ namespace Alternet.Drawing
         /// </returns>
         public SizeD CharSize(char ch, int count, Font font)
         {
-            if (count <= 0)
-                return SizeD.Empty;
             if (count == 1)
                 return CharSize(ch, font);
+            if (count <= 0)
+                return SizeD.Empty;
 
-            Span<char> buffer = count <= SpanUtils.SpanStackLimit
-                ? stackalloc char[count]
-                : new char[count];
+            SizeD result = SizeD.Empty;
 
-            buffer.Slice(0, count).Fill(ch);
-            return GetTextExtent(buffer, font);
+            SpanUtils.InvokeWithFilledSpan(
+                count,
+                ch,
+                span =>
+                {
+                    result = GetTextExtent(span, font);
+                });
+
+            return result;
         }
 
         /// <summary>
