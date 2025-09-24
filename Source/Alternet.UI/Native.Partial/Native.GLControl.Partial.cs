@@ -8,7 +8,7 @@ namespace Alternet.UI.Native
 {
     internal partial class GLControl
     {
-        internal static bool DrawGLTextAtCorner = DebugUtils.IsDebugDefined;
+        internal static bool DrawGLTextAtCorner = DebugUtils.IsDebugDefined && false;
 
         private bool firstPaintDone;
         private GRGlFramebufferInfo? glInfo;
