@@ -21,6 +21,57 @@ namespace Alternet.UI
         public static int SpanStackLimit = 256;
 
         /// <summary>
+        /// Represents a method that performs an action on a read-only span
+        /// of elements of type <typeparamref name="T"/>.
+        /// </summary>
+        /// <remarks>This delegate is commonly used to define operations that work on spans of data
+        /// without modifying the underlying memory.</remarks>
+        /// <typeparam name="T">The type of the elements in the read-only span.</typeparam>
+        /// <param name="span">The read-only span of elements to process.</param>
+        public delegate void ReadOnlySpanAction<T>(ReadOnlySpan<T> span);
+
+        /// <summary>
+        /// Allocates a <see cref="Span{Char}"/> of the specified length,
+        /// fills it with the given character,
+        /// and invokes the provided action with the resulting <see cref="ReadOnlySpan{Char}"/>.
+        /// Uses stack allocation if the span size is below the threshold; otherwise falls back to heap.
+        /// </summary>
+        /// <param name="count">The number of characters to allocate and fill.</param>
+        /// <param name="ch">The character to fill the span with.</param>
+        /// <param name="action">The callback to invoke with the filled span.</param>
+        /// <param name="invokeOnEmpty">
+        /// If <c>true</c>, the action will be invoked with an empty span
+        /// when <paramref name="count"/> is zero or negative.
+        /// If <c>false</c>, the action will be skipped in that case.
+        /// </param>
+        public static void InvokeWithFilledSpan(
+            int count,
+            char ch,
+            ReadOnlySpanAction<char> action,
+            bool invokeOnEmpty = false)
+        {
+            if (count <= 0)
+            {
+                if (invokeOnEmpty)
+                    action(ReadOnlySpan<char>.Empty);
+                return;
+            }
+
+            if (count <= SpanStackLimit)
+            {
+                Span<char> buffer = stackalloc char[count];
+                buffer.Fill(ch);
+                action(buffer);
+            }
+            else
+            {
+                char[] buffer = new char[count];
+                Array.Fill(buffer, ch);
+                action(buffer);
+            }
+        }
+
+        /// <summary>
         /// Converts the specified UTF-16 character span to UTF-8 and invokes
         /// the provided action with a pointer to the
         /// UTF-8 data and its length.
