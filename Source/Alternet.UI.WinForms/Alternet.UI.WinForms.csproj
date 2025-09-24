@@ -8,7 +8,7 @@
     <NoWarn>$(NoWarn);WFO5001</NoWarn>
     <Nullable>enable</Nullable>
     <UseWindowsForms>true</UseWindowsForms>
-    <TargetFrameworks>net9.0-windows</TargetFrameworks>
+    <TargetFrameworks>net8.0-windows;net9.0-windows</TargetFrameworks>
     <ImplicitUsings>enable</ImplicitUsings>
   </PropertyGroup>
 
