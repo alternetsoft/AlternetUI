@@ -76,7 +76,7 @@ namespace Alternet.Drawing
         /// whose starting point is the endpoint of the previous line.
         /// </remarks>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public void AddLines(PointD[] points)
+        public void AddLines(ReadOnlySpan<PointD> points)
         {
             CheckDisposed();
             Handler.AddLines(points);

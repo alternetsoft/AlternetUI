@@ -7,7 +7,7 @@ namespace NativeApi.Api
     {
         public void Initialize(DrawingContext dc) => throw new Exception();
 
-        public void AddLines(PointD[] points) => throw new Exception();
+        public unsafe void AddLines(PointD* points, int pointCount) => throw new Exception();
 
         public void AddLine(PointD pt1, PointD pt2) => throw new Exception();
 

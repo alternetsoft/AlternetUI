@@ -5,7 +5,7 @@ FillMode GetFillMode();
 void SetFillMode(FillMode value);
 
 void Initialize(DrawingContext* dc);
-void AddLines(PointD* points, int pointsCount);
+void AddLines(PointD* points, int pointCount);
 void AddLine(const PointD& pt1, const PointD& pt2);
 void AddLineTo(const PointD& pt);
 void AddEllipse(const RectD& rect);

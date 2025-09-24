@@ -148,14 +148,14 @@ namespace Alternet.Drawing
             => SkiaUtils.InterpolationModePaints[InterpolationMode];
 
         /// <inheritdoc/>
-        public override SizeD GetTextExtent(string text, Font font)
+        public override SizeD GetTextExtent(ReadOnlySpan<char> text, Font font)
         {
             return canvas.GetTextExtent(text, font);
         }
 
         /// <inheritdoc/>
         public override void DrawText(
-            string text,
+            ReadOnlySpan<char> text,
             Font font,
             Brush brush,
             PointD origin)
@@ -169,17 +169,24 @@ namespace Alternet.Drawing
         }
 
         /// <inheritdoc/>
-        public override void DrawText(string text, Font font, Brush brush, RectD bounds)
+        public override void DrawText(ReadOnlySpan<char> text, Font font, Brush brush, RectD bounds)
         {
-            DoInsideClipped(bounds, () =>
+            Save();
+
+            try
             {
+                ClipRect(bounds);
                 canvas.DrawText(
                     text,
                     bounds.Location,
                     font,
                     brush.AsColor,
                     Color.Empty);
-            });
+            }
+            finally
+            {
+                Restore();
+            }
         }
 
         /// <summary>
@@ -195,7 +202,7 @@ namespace Alternet.Drawing
 
         /// <inheritdoc/>
         public override void DrawText(
-            string text,
+            ReadOnlySpan<char> text,
             PointD location,
             Font font,
             Color foreColor,
@@ -211,7 +218,7 @@ namespace Alternet.Drawing
 
         /// <inheritdoc/>
         public override void DrawTextWithAngle(
-            string text,
+            ReadOnlySpan<char> text,
             PointD location,
             Font font,
             Color foreColor,
@@ -614,18 +621,8 @@ namespace Alternet.Drawing
         {
             if(IsUnscaled)
                 return SizeI.NinetySix;
-            var dpiX = 96f * OriginalScaleFactor;
-            var dpiY = 96f * OriginalScaleFactor;
-            return new((int)dpiX, (int)dpiY);
-
-            /*
-            var m = canvas.TotalMatrix;
-            if (m.IsIdentity)
-                return new(96, 96);
-            var dpiX = 96f * m.ScaleX;
-            var dpiY = 96f * m.ScaleY;
-            return new((int)dpiX, (int)dpiY);
-            */
+            var dpi = 96f * OriginalScaleFactor;
+            return new((int)dpi, (int)dpi);
         }
 
         /// <inheritdoc/>

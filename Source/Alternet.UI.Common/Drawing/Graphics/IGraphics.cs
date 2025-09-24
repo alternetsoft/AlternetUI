@@ -36,8 +36,8 @@ namespace Alternet.Drawing
             RectD rectangle,
             Coord cornerRadius);
 
-        /// <inheritdoc cref="Graphics.GetTextExtent(string, Font)"/>
-        SizeD GetTextExtent(string text, Font font);
+        /// <inheritdoc cref="Graphics.GetTextExtent(ReadOnlySpan{char}, Font)"/>
+        SizeD GetTextExtent(ReadOnlySpan<char> text, Font font);
 
         /// <inheritdoc cref="Graphics.Rectangle"/>
         void Rectangle(Pen pen, Brush brush, RectD rectangle);
@@ -158,20 +158,20 @@ namespace Alternet.Drawing
         /// <inheritdoc cref="Graphics.DrawImage(Image, RectD)"/>
         void DrawImage(Image image, RectD destinationRect);
 
-        /// <inheritdoc cref="Graphics.DrawText(string, Font, Brush, PointD)"/>
-        void DrawText(string text, Font font, Brush brush, PointD origin);
+        /// <inheritdoc cref="Graphics.DrawText(ReadOnlySpan{char}, Font, Brush, PointD)"/>
+        void DrawText(ReadOnlySpan<char> text, Font font, Brush brush, PointD origin);
 
-        /// <inheritdoc cref="Graphics.DrawText(string, PointD)"/>
-        void DrawText(string text, PointD origin);
+        /// <inheritdoc cref="Graphics.DrawText(ReadOnlySpan{char}, PointD)"/>
+        void DrawText(ReadOnlySpan<char> text, PointD origin);
 
-        /// <inheritdoc cref="Graphics.DrawText(string, Font, Brush, RectD)"/>
-        void DrawText(string text, Font font, Brush brush, RectD bounds);
+        /// <inheritdoc cref="Graphics.DrawText(ReadOnlySpan{char}, Font, Brush, RectD)"/>
+        void DrawText(ReadOnlySpan<char> text, Font font, Brush brush, RectD bounds);
 
         /// <inheritdoc cref="Graphics.DrawWave(RectD, Color)"/>
         void DrawWave(RectD rect, Color color);
 
-        /// <inheritdoc cref="Graphics.MeasureText(string, Font)"/>
-        SizeD MeasureText(string text, Font font);
+        /// <inheritdoc cref="Graphics.MeasureText(ReadOnlySpan{char}, Font)"/>
+        SizeD MeasureText(ReadOnlySpan<char> text, Font font);
 
         /// <inheritdoc cref="Graphics.PopTransform"/>
         void PopTransform();
@@ -188,17 +188,17 @@ namespace Alternet.Drawing
         /// <inheritdoc cref="Graphics.Restore()"/>
         void Restore();
 
-        /// <inheritdoc cref="Graphics. DrawText(string,PointD,Font,Color,Color)"/>
+        /// <inheritdoc cref="Graphics.DrawText(ReadOnlySpan{char},PointD,Font,Color,Color)"/>
         void DrawText(
-            string text,
+            ReadOnlySpan<char> text,
             PointD location,
             Font font,
             Color foreColor,
             Color backColor);
 
-        /// <inheritdoc cref="Graphics.DrawLabel(string, Font, Color, Color, Image?, RectD, HVAlignment?, int)"/>
+        /// <inheritdoc cref="Graphics.DrawLabel(ReadOnlySpan{char}, Font, Color, Color, Image?, RectD, HVAlignment?, int)"/>
         RectD DrawLabel(
-            string text,
+            ReadOnlySpan<char> text,
             Font font,
             Color foreColor,
             Color backColor,

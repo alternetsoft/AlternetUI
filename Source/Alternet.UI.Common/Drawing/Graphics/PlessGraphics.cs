@@ -122,22 +122,22 @@ namespace Alternet.Drawing
         }
 
         /// <inheritdoc/>
-        public override void DrawText(string text, Font font, Brush brush, PointD origin)
+        public override void DrawText(ReadOnlySpan<char> text, Font font, Brush brush, PointD origin)
         {
         }
 
         /// <inheritdoc/>
-        public override void DrawText(string text, Font font, Brush brush, RectD bounds)
+        public override void DrawText(ReadOnlySpan<char> text, Font font, Brush brush, RectD bounds)
         {
         }
 
         /// <inheritdoc/>
-        public override void DrawText(string text, PointD location, Font font, Color foreColor, Color backColor)
+        public override void DrawText(ReadOnlySpan<char> text, PointD location, Font font, Color foreColor, Color backColor)
         {
         }
 
         /// <inheritdoc/>
-        public override void DrawTextWithAngle(string text, PointD location, Font font, Color foreColor, Color backColor, Coord angle)
+        public override void DrawTextWithAngle(ReadOnlySpan<char> text, PointD location, Font font, Color foreColor, Color backColor, Coord angle)
         {
         }
 
@@ -193,7 +193,7 @@ namespace Alternet.Drawing
         }
 
         /// <inheritdoc/>
-        public override SizeD GetTextExtent(string text, Font font)
+        public override SizeD GetTextExtent(ReadOnlySpan<char> text, Font font)
         {
             return default;
         }

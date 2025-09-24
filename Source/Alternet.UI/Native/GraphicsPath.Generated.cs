@@ -44,10 +44,10 @@ namespace Alternet.UI.Native
             NativeApi.GraphicsPath_Initialize_(NativePointer, dc.NativePointer);
         }
         
-        public void AddLines(Alternet.Drawing.PointD[] points)
+        public unsafe void AddLines(Alternet.Drawing.PointD* points, int pointCount)
         {
             CheckDisposed();
-            NativeApi.GraphicsPath_AddLines_(NativePointer, points, points.Length);
+            NativeApi.GraphicsPath_AddLines_(NativePointer, points, pointCount);
         }
         
         public void AddLine(Alternet.Drawing.PointD pt1, Alternet.Drawing.PointD pt2)
@@ -135,7 +135,7 @@ namespace Alternet.UI.Native
             public static extern void GraphicsPath_Initialize_(IntPtr obj, IntPtr dc);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void GraphicsPath_AddLines_(IntPtr obj, Alternet.Drawing.PointD[] points, int pointsCount);
+            public unsafe static extern void GraphicsPath_AddLines_(IntPtr obj, Alternet.Drawing.PointD* points, int pointCount);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void GraphicsPath_AddLine_(IntPtr obj, Alternet.Drawing.PointD pt1, Alternet.Drawing.PointD pt2);

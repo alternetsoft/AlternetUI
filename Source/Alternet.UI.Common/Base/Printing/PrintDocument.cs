@@ -41,7 +41,7 @@ namespace Alternet.Drawing.Printing
         /// property of the <see
         /// cref="PrintPageEventArgs"/>. For example, to specify a line of text that should be
         /// printed, draw the text
-        /// using the <see cref="Graphics.DrawText(string, Font, Brush, PointD)"/> method.
+        /// using the <see cref="Graphics.DrawText(ReadOnlySpan{char}, Font, Brush, PointD)"/> method.
         /// </para>
         /// <para>
         /// In addition to specifying the output, you can indicate if there are additional pages

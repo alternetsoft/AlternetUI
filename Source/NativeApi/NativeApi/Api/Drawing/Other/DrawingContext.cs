@@ -35,7 +35,7 @@ namespace NativeApi.Api
         angle The angle, in radians, relative to the (default) horizontal direction to draw the string.
         backgroundBrush Brush to fill the text with.
         */
-        public void DrawText(string text, PointD location, Font font,
+        public unsafe void DrawText(IntPtr text, int charLength, PointD location, Font font,
             Color foreColor, Brush backColor, Coord angle, bool useBrush)
         {
         }        
@@ -59,7 +59,7 @@ namespace NativeApi.Api
         //(usually is zero).
         //Gets the dimensions of the string using the currently selected font.
         //This function only works with single-line strings.
-        public SizeD GetTextExtentSimple(string text, Font font, IntPtr control) => default;
+        public unsafe SizeD GetTextExtentSimple(IntPtr text, int charLength, Font font, IntPtr control) => default;
 
         public static DrawingContext FromImage(Image image) => throw new Exception();
 

@@ -32,7 +32,9 @@ namespace Alternet.Drawing
         /// </returns>
         public SizeD CharSize(char ch, Font font)
         {
-            return GetTextExtent(ch.ToString(), font);
+            Span<char> buffer = stackalloc char[1];
+            buffer[0] = ch;
+            return GetTextExtent(buffer, font);
         }
 
         /// <summary>
@@ -45,7 +47,10 @@ namespace Alternet.Drawing
         /// </returns>
         public SizeD CharPairSize(char ch, Font font)
         {
-            return GetTextExtent(new(ch, 2), font);
+            Span<char> buffer = stackalloc char[2];
+            buffer[0] = ch;
+            buffer[1] = ch;
+            return GetTextExtent(buffer, font);
         }
 
         /// <summary>
@@ -78,7 +83,12 @@ namespace Alternet.Drawing
             if (count == 1)
                 return CharSize(ch, font);
 
-            return GetTextExtent(new(ch, count), font);
+            Span<char> buffer = count <= SpanUtils.SpanStackLimit
+                ? stackalloc char[count]
+                : new char[count];
+
+            buffer.Slice(0, count).Fill(ch);
+            return GetTextExtent(buffer, font);
         }
 
         /// <summary>
@@ -92,7 +102,7 @@ namespace Alternet.Drawing
         /// This function only works with single-line strings.
         /// It works faster than MeasureText methods.
         /// </remarks>
-        public abstract SizeD GetTextExtent(string text, Font font);
+        public abstract SizeD GetTextExtent(ReadOnlySpan<char> text, Font font);
 
         /// <summary>
         /// Draws text with the specified angle, font, background and foreground colors.
@@ -106,7 +116,7 @@ namespace Alternet.Drawing
         /// <param name="angle">The angle, in degrees, relative to the (default) horizontal
         /// direction to draw the string.</param>
         public abstract void DrawTextWithAngle(
-            string text,
+            ReadOnlySpan<char> text,
             PointD location,
             Font font,
             Color foreColor,
@@ -123,7 +133,7 @@ namespace Alternet.Drawing
         /// of the drawn text.</param>
         /// <param name="bounds"><see cref="RectD"/> structure that specifies the bounds of
         /// the drawn text.</param>
-        public abstract void DrawText(string text, Font font, Brush brush, RectD bounds);
+        public abstract void DrawText(ReadOnlySpan<char> text, Font font, Brush brush, RectD bounds);
 
         /// <summary>
         /// Draws text string with the specified location, <see cref="Brush"/>
@@ -135,7 +145,7 @@ namespace Alternet.Drawing
         /// the drawn text.</param>
         /// <param name="origin"><see cref="PointD"/> structure that specifies the upper-left
         /// corner of the text position on the canvas.</param>
-        public abstract void DrawText(string text, Font font, Brush brush, PointD origin);
+        public abstract void DrawText(ReadOnlySpan<char> text, Font font, Brush brush, PointD origin);
 
         /// <summary>
         /// Draws text with the specified font, background and foreground colors.
@@ -148,7 +158,7 @@ namespace Alternet.Drawing
         /// <param name="backColor">Background color of the text. If parameter is equal
         /// to <see cref="Color.Empty"/>, background will not be painted. </param>
         public abstract void DrawText(
-            string text,
+            ReadOnlySpan<char> text,
             PointD location,
             Font font,
             Color foreColor,
@@ -161,7 +171,7 @@ namespace Alternet.Drawing
         /// <param name="origin"><see cref="PointD"/> structure that specifies the upper-left
         /// corner of the text position on the canvas.</param>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public void DrawText(string text, PointD origin)
+        public void DrawText(ReadOnlySpan<char> text, PointD origin)
         {
             DrawText(text, Control.DefaultFont, Brush.Default, origin);
         }
@@ -176,21 +186,28 @@ namespace Alternet.Drawing
         /// <param name="backColor">Background color of the text. If parameter is equal
         /// to <see cref="Color.Empty"/>, background will not be painted. </param>
         public virtual void DrawText(
-            string text,
+            ReadOnlySpan<char> text,
             RectD rect,
             Font font,
             Color foreColor,
             Color backColor)
         {
-            DoInsideClipped(rect, () =>
+            Save();
+
+            try
             {
+                ClipRect(rect);
                 DrawText(
-                            text,
-                            rect.Location,
-                            font,
-                            foreColor,
-                            backColor);
-            });
+                    text,
+                    rect.Location,
+                    font,
+                    foreColor,
+                    backColor);
+            }
+            finally
+            {
+                Restore();
+            }
         }
 
         /// <summary>
@@ -213,15 +230,13 @@ namespace Alternet.Drawing
         /// You can pass 0 as height of the <paramref name="rect"/>.
         /// </remarks>
         public virtual RectD DrawText(
-            object? text,
+            ReadOnlySpan<char> text,
             Font font,
             Brush brush,
             RectD rect,
             TextFormat format)
         {
-            string s = text?.ToString() ?? string.Empty;
-
-            if (s.Length == 0)
+            if (text.IsEmpty)
                 return rect.WithEmptySize();
 
             var document = SafeDocument;
@@ -233,15 +248,20 @@ namespace Alternet.Drawing
             if (rect.HasEmptyHeight)
                 rect.Height = HalfOfMaxValue;
 
-            wrappedText.DoInsideLayout(() =>
+            wrappedText.SuspendLayout();
+            try
             {
                 document.Size = rect.Size;
                 wrappedText.SetFormat(format.AsRecord);
                 wrappedText.Text = string.Empty;
-                wrappedText.Text = s;
+                wrappedText.Text = text.ToString();
                 wrappedText.Font = font;
                 wrappedText.ForegroundColor = brush.AsColor;
-            });
+            }
+            finally
+            {
+                wrappedText.ResumeLayout(true, true);
+            }
 
             TemplateUtils.RaisePaintClipped(wrappedText, this, rect.Location, isClipped: true);
             var result = wrappedText.Bounds.WithLocation(rect.Location);
@@ -252,7 +272,7 @@ namespace Alternet.Drawing
         /// Draws text with html bold tags.
         /// </summary>
         public virtual SizeD DrawTextWithBoldTags(
-            string text,
+            ReadOnlySpan<char> text,
             PointD location,
             Font font,
             Color foreColor,
@@ -312,7 +332,7 @@ namespace Alternet.Drawing
         /// <param name="indexAccel">Index of underlined mnemonic character.</param>
         /// <returns>The bounding rectangle.</returns>
         public virtual RectD DrawLabel(
-            string text,
+            ReadOnlySpan<char> text,
             Font font,
             Color foreColor,
             Color backColor,
@@ -322,7 +342,7 @@ namespace Alternet.Drawing
             int indexAccel = -1)
         {
             DrawLabelParams prm = new(
-                text,
+                text.ToString(),
                 font,
                 foreColor,
                 backColor,

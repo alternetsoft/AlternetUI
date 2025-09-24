@@ -329,10 +329,8 @@ namespace Alternet.Drawing
         [Conditional("DEBUG")]
         [System.Diagnostics.DebuggerNonUserCodeAttribute]
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static void DebugTextAssert(string text)
+        public static void DebugTextAssert(ReadOnlySpan<char> text)
         {
-            if (text is null)
-                throw new Exception("Text is null");
         }
 
         /// <summary>
@@ -627,7 +625,7 @@ namespace Alternet.Drawing
         /// string specified by the <c>text</c> parameter as drawn with the <c>font</c> parameter.
         /// </returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public SizeD MeasureText(string text, Font font)
+        public SizeD MeasureText(ReadOnlySpan<char> text, Font font)
             => GetTextExtent(text, font);
 
         /// <summary>

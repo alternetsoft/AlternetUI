@@ -12,31 +12,64 @@ namespace Alternet.Drawing
     internal partial class WxGraphics
     {
         /// <inheritdoc/>
-        public override SizeD GetTextExtent(string text, Font font)
+        public override SizeD GetTextExtent(ReadOnlySpan<char> text, Font font)
         {
-            if (text is null || text.Length == 0)
+            if (text.Length == 0)
                 return SizeD.Empty;
 
-            var result = dc.GetTextExtentSimple(
-                text,
-                (UI.Native.Font)font.Handler,
-                default);
+            if (App.IsWindowsOS)
+            {
+                unsafe
+                {
+                    fixed (char* p = text)
+                    {
+                        var result = dc.GetTextExtentSimple(
+                            (IntPtr)p,
+                            text.Length,
+                            (UI.Native.Font)font.Handler,
+                            default);
+                        return result;
+                    }
+                }
+            }
+            else
+            {
+                SizeD result = SizeD.Empty;
 
-            return result;
+                SpanUtils.InvokeWithUTF8Span(text, (ptr, length) =>
+                {
+                    result = dc.GetTextExtentSimple(
+                        ptr,
+                        length,
+                        (UI.Native.Font)font.Handler,
+                        default);
+                });
+
+                return result;
+            }
         }
 
         /// <inheritdoc/>
-        public override void DrawText(string text, Font font, Brush brush, RectD bounds)
+        public override void DrawText(ReadOnlySpan<char> text, Font font, Brush brush, RectD bounds)
         {
-            DoInsideClipped(TransformRectToNative(bounds), () =>
+            var rect = TransformRectToNative(bounds);
+
+            Save();
+
+            try
             {
-                DrawText(text, font, brush, bounds.Location);
-            });
+                ClipRect(rect);
+                DrawText(text, font, brush, rect.Location);
+            }
+            finally
+            {
+                Restore();
+            }
         }
 
         /// <inheritdoc/>
         public override void DrawText(
-            string text,
+            ReadOnlySpan<char> text,
             Font font,
             Brush brush,
             PointD origin)
@@ -46,51 +79,23 @@ namespace Alternet.Drawing
 
         /// <inheritdoc/>
         public override void DrawText(
-            string text,
+            ReadOnlySpan<char> text,
             PointD location,
             Font font,
             Color foreColor,
             Color backColor)
         {
-            DebugTextAssert(text);
-            DebugFontAssert(font);
-            if (!foreColor.IsOk)
-                return;
-
-            Coord angle;
-
-            if (GetNoTransformToNative())
-                angle = 0;
-            else
-                angle = Transform.GetRotationAngleInRadians();
-
-            UI.Native.Brush brush;
-            bool useBrush;
-
-            if (backColor.IsOk && !backColor.IsEmpty)
-            {
-                brush = (UI.Native.Brush)backColor.AsBrush.Handler;
-                useBrush = true;
-            }
-            else
-            {
-                brush = (UI.Native.Brush)Brush.Transparent.Handler;
-                useBrush = false;
-            }
-
-            font = TransformFontSizeToNative(font);
-            dc.DrawText(
+            DrawTextWithAngle(
                 text,
-                TransformPointToNative(location),
-                (UI.Native.Font)font.Handler,
+                location,
+                font,
                 foreColor,
-                brush,
-                angle,
-                useBrush);
+                backColor,
+                0);
         }
 
         public override void DrawTextWithAngle(
-            string text,
+            ReadOnlySpan<char> text,
             PointD location,
             Font font,
             Color foreColor,
@@ -124,14 +129,40 @@ namespace Alternet.Drawing
             }
 
             font = TransformFontSizeToNative(font);
-            dc.DrawText(
-                text,
-                TransformPointToNative(location),
-                (UI.Native.Font)font.Handler,
-                foreColor,
-                brush,
-                MathUtils.ToRadians(angle) + angle2,
-                useBrush);
+
+            if (App.IsWindowsOS)
+            {
+                unsafe
+                {
+                    fixed (char* p = text)
+                    {
+                        dc.DrawText(
+                            (IntPtr)p,
+                            text.Length,
+                            TransformPointToNative(location),
+                            (UI.Native.Font)font.Handler,
+                            foreColor,
+                            brush,
+                            MathUtils.ToRadians(angle) + angle2,
+                            useBrush);
+                    }
+                }
+            }
+            else
+            {
+                SpanUtils.InvokeWithUTF8Span(text, (ptr, length) =>
+                {
+                    dc.DrawText(
+                        ptr,
+                        length,
+                        TransformPointToNative(location),
+                        (UI.Native.Font)font.Handler,
+                        foreColor,
+                        brush,
+                        MathUtils.ToRadians(angle) + angle2,
+                        useBrush);
+                });
+            }
         }
 
         protected virtual bool GetNoTransformToNative()

@@ -179,12 +179,12 @@ ALTERNET_UI_API RectD_C DrawingContext_GetClippingBox_(DrawingContext* obj)
     #endif
 }
 
-ALTERNET_UI_API void DrawingContext_DrawText_(DrawingContext* obj, const char16_t* text, PointD location, Font* font, Color foreColor, Brush* backColor, float angle, c_bool useBrush)
+ALTERNET_UI_API void DrawingContext_DrawText_(DrawingContext* obj, void* text, int charLength, PointD location, Font* font, Color foreColor, Brush* backColor, float angle, c_bool useBrush)
 {
     #if !defined(__WXMSW__) || defined(_DEBUG)
     MarshalExceptions<void>([&](){
     #endif
-        obj->DrawText(text, location, font, foreColor, backColor, angle, useBrush);
+        obj->DrawText(text, charLength, location, font, foreColor, backColor, angle, useBrush);
     #if !defined(__WXMSW__) || defined(_DEBUG)
     });
     #endif
@@ -223,12 +223,12 @@ ALTERNET_UI_API void DrawingContext_ImageFromGenericImageDC_(Image* image, void*
     #endif
 }
 
-ALTERNET_UI_API SizeD_C DrawingContext_GetTextExtentSimple_(DrawingContext* obj, const char16_t* text, Font* font, void* control)
+ALTERNET_UI_API SizeD_C DrawingContext_GetTextExtentSimple_(DrawingContext* obj, void* text, int charLength, Font* font, void* control)
 {
     #if !defined(__WXMSW__) || defined(_DEBUG)
     return MarshalExceptions<SizeD_C>([&](){
     #endif
-        return obj->GetTextExtentSimple(text, font, control);
+        return obj->GetTextExtentSimple(text, charLength, font, control);
     #if !defined(__WXMSW__) || defined(_DEBUG)
     });
     #endif

@@ -462,6 +462,9 @@ namespace Alternet.UI
         /// <returns>Angle in radians.</returns>
         public static float ToRadians(float degrees)
         {
+            if (degrees == 0f)
+                return 0f;
+
             var angleRadians = degrees * DegToRadF;
 
             // Normalize to [0, 2*pi) if needed
@@ -478,6 +481,9 @@ namespace Alternet.UI
         /// <returns>Angle in radians.</returns>
         public static double ToRadians(double degrees)
         {
+            if (degrees == 0d)
+                return 0d;
+
             var angleRadians = degrees * DegToRadF;
 
             // Normalize to [0, 2*pi) if needed

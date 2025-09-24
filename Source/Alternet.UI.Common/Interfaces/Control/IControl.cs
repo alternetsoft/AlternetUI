@@ -1048,7 +1048,7 @@ namespace Alternet.UI
         /// you cannot cache
         /// the <see cref="Graphics"/> object for reuse, except to use
         /// non-visual methods like
-        /// <see cref="Graphics.MeasureText(string, Font)"/>.
+        /// <see cref="Graphics.MeasureText(ReadOnlySpan{char}, Font)"/>.
         /// Instead, you must call <see cref="CreateDrawingContext"/> every time
         /// that you want to use the <see cref="Graphics"/> object,
         /// and then call its Dispose() when you are finished using it.

@@ -53,12 +53,12 @@ ALTERNET_UI_API void GraphicsPath_Initialize_(GraphicsPath* obj, DrawingContext*
     #endif
 }
 
-ALTERNET_UI_API void GraphicsPath_AddLines_(GraphicsPath* obj, PointD* points, int pointsCount)
+ALTERNET_UI_API void GraphicsPath_AddLines_(GraphicsPath* obj, PointD* points, int pointCount)
 {
     #if !defined(__WXMSW__) || defined(_DEBUG)
     MarshalExceptions<void>([&](){
     #endif
-        obj->AddLines(points, pointsCount);
+        obj->AddLines(points, pointCount);
     #if !defined(__WXMSW__) || defined(_DEBUG)
     });
     #endif

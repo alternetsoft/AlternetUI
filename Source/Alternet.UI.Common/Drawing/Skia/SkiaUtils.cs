@@ -430,7 +430,7 @@ namespace Alternet.Drawing
         /// <returns></returns>
         public static SizeD GetTextExtent(
             this SKCanvas canvas,
-            string text,
+            ReadOnlySpan<char> text,
             Font font)
         {
             var skFont = (SKFont)font;
@@ -456,14 +456,14 @@ namespace Alternet.Drawing
         /// Pass <see cref="Color.Empty"/> to have transparent background under the text.</param>
         public static void DrawText(
             this SKCanvas canvas,
-            string s,
+            ReadOnlySpan<char> s,
             PointD location,
             Font font,
             Color foreColor,
             Color backColor)
         {
-            float x = (float)location.X;
-            float y = (float)location.Y;
+            float x = location.X;
+            float y = location.Y;
 
             var skFont = (SKFont)font;
 
@@ -480,7 +480,8 @@ namespace Alternet.Drawing
             if (backColor.IsOk)
                 canvas.DrawRect(rect, backColor.AsFillPaint);
 
-            canvas.DrawText(s, x + offsetX, y + offsetY, font, foreColor.AsStrokeAndFillPaint);
+            using var blob = SKTextBlob.Create(s, skFont);
+            canvas.DrawText(blob, x + offsetX, y + offsetY, foreColor.AsStrokeAndFillPaint);
         }
 
         /// <summary>

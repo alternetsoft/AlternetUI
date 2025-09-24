@@ -1087,6 +1087,37 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Executes the specified action within a layout suspension context,
+        /// ensuring that layout updates are resumed afterward.
+        /// </summary>
+        /// <remarks>This method suspends layout updates before executing the specified
+        /// action and ensures that layout updates are resumed afterward,
+        /// even if the action throws an exception. Use this method to
+        /// perform operations that temporarily modify the layout without
+        /// triggering intermediate layout
+        /// updates.</remarks>
+        /// <typeparam name="T">The type of the parameter to be passed to the action.</typeparam>
+        /// <param name="action">The action to execute. This action is provided with
+        /// a parameter of type <typeparamref name="T"/>.</param>
+        /// <param name="prm">The parameter of type <typeparamref name="T"/>
+        /// to pass to the <paramref name="action"/>.</param>
+        /// <param name="layoutParent">A value indicating whether
+        /// the parent layout should also be resumed.
+        /// The default value is <see langword="true"/>.</param>
+        public virtual void DoInsideLayout<T>(T prm, Action<T> action, bool layoutParent = true)
+        {
+            SuspendLayout();
+            try
+            {
+                action(prm);
+            }
+            finally
+            {
+                ResumeLayout(true, layoutParent);
+            }
+        }
+
+        /// <summary>
         /// Executes <paramref name="action"/> between calls to <see cref="BeginInit"/>
         /// and <see cref="EndInit"/>.
         /// </summary>
@@ -1177,7 +1208,7 @@ namespace Alternet.UI
         /// you cannot cache
         /// the <see cref="Graphics"/> object for reuse, except to use
         /// non-visual methods like
-        /// <see cref="Graphics.MeasureText(string, Font)"/>.
+        /// <see cref="Graphics.MeasureText(ReadOnlySpan{char}, Font)"/>.
         /// Instead, you must call <see cref="CreateDrawingContext"/> every time
         /// that you want to use the <see cref="Graphics"/> object,
         /// and then call its Dispose() when you are finished using it.

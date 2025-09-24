@@ -15,7 +15,7 @@ namespace Alternet.Drawing
         FillMode FillMode { get; set; }
 
         /// <inheritdoc cref="GraphicsPath.AddLines"/>
-        void AddLines(PointD[] points);
+        void AddLines(ReadOnlySpan<PointD> points);
 
         /// <inheritdoc cref="GraphicsPath.AddLine"/>
         void AddLine(PointD pt1, PointD pt2);

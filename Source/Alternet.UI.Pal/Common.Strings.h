@@ -136,6 +136,22 @@ namespace Alternet::UI
         return value16;
     }
 
+    inline wxString FromSmartString(void* text, int charLength)
+    {
+        if (!text || charLength <= 0)
+            return wxString();
+
+#if defined(__WXMSW__)
+        // On Windows: UTF-16 input, reinterpret as wchar_t*
+        const wchar_t* wide = reinterpret_cast<const wchar_t*>(text);
+        return wxString(wide, charLength);
+#else
+        // On Linux/macOS: UTF-8 input, reinterpret as char*
+        const char* utf8 = static_cast<const char*>(text);
+        return wxString::FromUTF8(utf8, charLength);
+#endif
+    }
+
     inline wxString wxStr(const string& value)
     {
 #if defined(__WXMSW__)
