@@ -26,6 +26,15 @@ namespace Alternet.Drawing
         /// <summary>
         /// Initializes a new instance of the <see cref="SkiaGraphics"/> class.
         /// </summary>
+        public SkiaGraphics()
+        {
+            canvas = SkiaUtils.NullCanvas;
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="SkiaGraphics"/> class
+        /// on the specified bitmap.
+        /// </summary>
         /// <param name="bitmap"><see cref="SKBitmap"/> where drawing will be performed.</param>
         public SkiaGraphics(SKBitmap bitmap)
         {
@@ -34,7 +43,8 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="SkiaGraphics"/> class.
+        /// Initializes a new instance of the <see cref="SkiaGraphics"/> class
+        /// on the specified <see cref="SKCanvas"/>.
         /// </summary>
         /// <param name="canvas"><see cref="SKCanvas"/> where painting will be performed.</param>
         public SkiaGraphics(SKCanvas canvas)
@@ -93,7 +103,7 @@ namespace Alternet.Drawing
                     return;
                 bitmap = value;
                 if (value is null)
-                    canvas = SkiaUtils.CreateNullCanvas();
+                    canvas = SkiaUtils.CreateNullCanvas(1, 1);
                 else
                     canvas = new SKCanvas(bitmap);
             }
@@ -112,7 +122,7 @@ namespace Alternet.Drawing
                     return;
                 bitmap = null;
                 if (value is null)
-                    canvas = SkiaUtils.CreateNullCanvas();
+                    canvas = SkiaUtils.CreateNullCanvas(1, 1);
                 else
                     canvas = value;
             }
