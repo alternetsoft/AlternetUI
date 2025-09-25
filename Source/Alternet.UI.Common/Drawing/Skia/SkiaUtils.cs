@@ -29,10 +29,21 @@ namespace Alternet.Drawing
         private static SKFont? defaultSkiaFont;
         private static SKTypeface? defaultTypeFace;
         private static SKColorFilter? grayscaleColorFilter;
+        private static SKCanvas? nullCanvas;
 
         static SkiaUtils()
         {
         }
+
+        /// <summary>
+        /// Gets a null SKCanvas instance that performs no drawing operations.
+        /// </summary>
+        /// <remarks>This property provides a placeholder <see cref="SKCanvas"/>
+        /// that can be used in
+        /// scenarios where a non-null canvas is required, but no actual drawing is needed.
+        /// The returned canvas does not
+        /// render any output and is intended for use as a no-op implementation.</remarks>
+        public static SKCanvas NullCanvas => nullCanvas ??= CreateNullCanvas(1, 1);
 
         /// <summary>
         /// Gets or sets default font for use with SkiaSharp.
@@ -547,7 +558,7 @@ namespace Alternet.Drawing
         /// <param name="width">Surface width.</param>
         /// <param name="height">Surface height.</param>
         /// <returns></returns>
-        public static SKSurface CreateNullSurface(int width = 0, int height = 0)
+        public static SKSurface CreateNullSurface(int width, int height)
         {
             return SKSurface.CreateNull(width, height);
         }
@@ -558,14 +569,15 @@ namespace Alternet.Drawing
         /// <param name="width">Surface width.</param>
         /// <param name="height">Surface height.</param>
         /// <returns></returns>
-        public static SKCanvas CreateNullCanvas(int width = 0, int height = 0)
+        public static SKCanvas CreateNullCanvas(int width, int height)
         {
             var surface = CreateNullSurface(width, height);
             return surface.Canvas;
         }
 
         /// <summary>
-        /// Saves the contents of the specified <see cref="SKSurface"/> to a file in the specified image format.
+        /// Saves the contents of the specified <see cref="SKSurface"/> to a file in
+        /// the specified image format.
         /// </summary>
         /// <remarks>This method captures the current state of the <paramref name="surface"/> and encodes
         /// it into the specified image format. The resulting image is then saved to the file at
