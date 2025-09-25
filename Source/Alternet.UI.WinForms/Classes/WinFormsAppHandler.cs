@@ -104,7 +104,7 @@ namespace Alternet.UI.WinForms
 
         public ISystemSettingsHandler CreateSystemSettingsHandler()
         {
-            throw new NotImplementedException();
+            return new WinFormsSystemSettingsHandler();
         }
 
         public ITimerHandler CreateTimerHandler(Timer timer)
@@ -119,7 +119,6 @@ namespace Alternet.UI.WinForms
 
         public void CrtSetDbgFlag(int value)
         {
-            throw new NotImplementedException();
         }
 
         public void Exit()
