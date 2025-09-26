@@ -132,6 +132,47 @@ namespace Alternet.UI
         public PanelOkCancelButtons Buttons => buttons;
 
         /// <summary>
+        /// Resets the cached dialog instances used by this class.
+        /// </summary>
+        /// <remarks>
+        /// This method calls <see cref="ResetTextDialog"/>, <see cref="ResetLongDialog"/>
+        /// and other reset dialog methods to dispose
+        /// of the current dialog instances, if they exist. This is useful to clear any existing state
+        /// or configuration from the dialogs.
+        /// </remarks>
+        public static void ResetDialogs()
+        {
+            ResetTextDialog();
+            ResetLongDialog();
+        }
+
+        /// <summary>
+        /// Disposes and clears the cached single-line text input dialog instance.
+        /// </summary>
+        /// <remarks>
+        /// If the cached instance referenced by single-line text input dialog is not null,
+        /// it will be disposed and the reference will be set to null.
+        /// </remarks>
+        /// <seealso cref="ResetLongDialog"/>
+        public static void ResetTextDialog()
+        {
+            SafeDispose(ref textDialog);
+        }
+
+        /// <summary>
+        /// Disposes and clears the cached numeric (long) input dialog instance.
+        /// </summary>
+        /// <remarks>
+        /// If the cached instance referenced by (long) input dialog instance is not null,
+        /// it will be disposed and the reference will be set to null.
+        /// </remarks>
+        /// <seealso cref="ResetTextDialog"/>
+        public static void ResetLongDialog()
+        {
+            SafeDispose(ref longDialog);
+        }
+
+        /// <summary>
         /// Popups a dialog box with title, message and text input bot.
         /// The user may type in text and press 'OK' or 'Cancel'.
         /// </summary>
