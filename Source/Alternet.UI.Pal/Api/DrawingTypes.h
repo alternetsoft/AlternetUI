@@ -1,5 +1,6 @@
 #pragma once
 
+#include <limits>
 #include <stdint.h>
 #include <wx/display.h>
 
@@ -662,9 +663,20 @@ constexpr Coord M_PI_Coord = 3.1415927f;
 		return int(std::lround(x));
 	}
 
+	constexpr float MinIntBound = float(INT_MIN) - 0.5f;
+	constexpr float MaxIntBound = float(INT_MAX) + 0.5f;
+
 	inline int fromDip(Coord value, wxWindow* window)
 	{
-		return wxRound(value * GetDPIScaleFactor(window));
+		auto px = value * GetDPIScaleFactor(window);
+
+		if(px >= MaxIntBound)
+			return INT_MAX;
+		else
+		if(px <= MinIntBound)
+			return INT_MIN;
+
+		return wxRound(px);
 	}
 
 	inline Coord fromDipF(Coord value, wxWindow* window)
