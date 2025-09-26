@@ -66,6 +66,22 @@ namespace Alternet.UI.WinForms
         }
 
         /// <summary>
+        /// Converts an array of <see cref="System.Drawing.Point"/> objects to an array
+        /// of  <see cref="Drawing.PointD"/>
+        /// objects.
+        /// </summary>
+        /// <param name="points">The array of <see cref="System.Drawing.Point"/> objects to convert.
+        /// This parameter cannot be <see
+        /// langword="null"/>.</param>
+        /// <returns>An array of <see cref="Drawing.PointD"/> objects representing the converted points.
+        /// The array will be empty
+        /// if the input array is empty.</returns>
+        public static Drawing.PointD[] ToAlternet(this System.Drawing.Point[] points)
+        {
+            return points.Select(p => new Drawing.PointD(p.X, p.Y)).ToArray();
+        }
+
+        /// <summary>
         /// Ensures that the specified <see cref="Alternet.Drawing.Font"/> instance corresponds
         /// to the given <see cref="System.Drawing.Font"/> instance.
         /// </summary>
