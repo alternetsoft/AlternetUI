@@ -8,6 +8,26 @@ namespace Alternet.UI
 {
     public static partial class MathUtils
     {
+        /// <summary>
+        /// Represents the maximum value of a 32-bit signed integer
+        /// as a double-precision floating-point number.
+        /// </summary>
+        /// <remarks>This constant is useful when working with APIs
+        /// or calculations that require the
+        /// maximum value of an <c>int</c> in the form of a <c>double</c>.
+        /// The value is equivalent to <c>(double)int.MaxValue</c>.</remarks>
+        public const double MaxIntAsDouble = (double)int.MaxValue;
+
+        /// <summary>
+        /// Represents the minimum value of a 32-bit signed integer
+        /// as a double-precision floating-point number.
+        /// </summary>
+        /// <remarks>This constant is useful when working with APIs
+        /// or calculations that require the
+        /// minimum value of an <c>int</c> in the form of a <c>double</c>.
+        /// The value is equivalent to <c>(double)int.MinValue</c>.</remarks>
+        public const double MinIntAsDouble = (double)int.MinValue;
+
         // DoubleEpsilon and FloatEpsilon come from sdk\inc\crt\double.h
 
         /// <summary>
@@ -387,6 +407,21 @@ namespace Alternet.UI
             }
 
             return Math.Abs(delta) < eps;
+        }
+
+        /// <summary>
+        /// Returns the smallest integer greater than or equal to the specified double-precision
+        /// floating-point number.
+        /// </summary>
+        /// <remarks>This method uses <see cref="Math.Ceiling(double)"/> internally and casts the result
+        /// to an integer. If <paramref name="value"/> exceeds the range of the <see cref="int"/> type,
+        /// the result may overflow.</remarks>
+        /// <param name="value">The double-precision floating-point number to be rounded up.</param>
+        /// <returns>The smallest integer greater than or equal to <paramref name="value"/>.</returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static int CeilingAsInt(double value)
+        {
+            return (int)Math.Ceiling(value);
         }
 
         /// <summary>
