@@ -120,6 +120,7 @@ namespace Alternet.Drawing
         /// <summary>
         /// Initializes a new <see cref="Font"/> using a <see cref="FontInfo"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public Font(FontInfo fontInfo)
             : this(fontInfo.Name, fontInfo.SizeInPoints, fontInfo.Style)
         {
@@ -137,6 +138,7 @@ namespace Alternet.Drawing
         /// If bad parameters are passed to the font constructor, error message is output to log
         /// and font is created with default parameters. No exceptions are raised.
         /// </remarks>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public Font(
             string familyName,
             FontScalar emSize,
@@ -157,6 +159,7 @@ namespace Alternet.Drawing
         /// If bad parameters are passed to the font constructor, error message is output to log
         /// and font is created with default parameters. No exceptions are raised.
         /// </remarks>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public Font(
             FontFamily family,
             FontScalar emSize,
@@ -182,6 +185,7 @@ namespace Alternet.Drawing
         /// If bad parameters are passed to the font constructor, error message is output to log
         /// and font is created with default parameters. No exceptions are raised.
         /// </remarks>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public Font(Font prototype, FontStyle newStyle)
             : this(
                 prototype.fontFamily?.GenericFamily,
@@ -202,6 +206,7 @@ namespace Alternet.Drawing
         /// If bad parameters are passed to the font constructor, error message is output to log
         /// and font is created with default parameters. No exceptions are raised.
         /// </remarks>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public Font(Font prototype, FontScalar newSize)
             : this(
                 prototype.fontFamily?.GenericFamily,
@@ -224,6 +229,7 @@ namespace Alternet.Drawing
         /// If bad parameters are passed to the font constructor, error message is output to log
         /// and font is created with default parameters. No exceptions are raised.
         /// </remarks>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public Font(FontFamily family, FontScalar emSize, FontStyle style, GraphicsUnit unit)
             : this(family?.GenericFamily, family?.Name, emSize, style, unit)
         {
@@ -243,6 +249,7 @@ namespace Alternet.Drawing
         /// If bad parameters are passed to the font constructor, error message is output to log
         /// and font is created with default parameters. No exceptions are raised.
         /// </remarks>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public Font(
             FontFamily family,
             FontScalar emSize,
@@ -270,6 +277,7 @@ namespace Alternet.Drawing
         /// If bad parameters are passed to the font constructor, error message is output to log
         /// and font is created with default parameters. No exceptions are raised.
         /// </remarks>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public Font(
             FontFamily family,
             FontScalar emSize,
@@ -296,6 +304,7 @@ namespace Alternet.Drawing
         /// If bad parameters are passed to the font constructor, error message is output to log
         /// and font is created with default parameters. No exceptions are raised.
         /// </remarks>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public Font(
             string familyName,
             FontScalar emSize,
@@ -325,6 +334,7 @@ namespace Alternet.Drawing
         /// If bad parameters are passed to the font constructor, error message is output to log
         /// and font is created with default parameters. No exceptions are raised.
         /// </remarks>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public Font(
             string familyName,
             FontScalar emSize,
@@ -348,6 +358,7 @@ namespace Alternet.Drawing
         /// If bad parameters are passed to the font constructor, error message is output to log
         /// and font is created with default parameters. No exceptions are raised.
         /// </remarks>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public Font(FontFamily family, float emSize, GraphicsUnit unit)
             : this(family?.GenericFamily, family?.Name, emSize, FontStyle.Regular, unit)
         {
@@ -360,6 +371,7 @@ namespace Alternet.Drawing
         /// If bad parameters are passed to the font constructor, error message is output to log
         /// and font is created with default parameters. No exceptions are raised.
         /// </remarks>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public Font(FontFamily family, FontScalar emSize)
             : this(family?.GenericFamily, family?.Name, emSize, FontStyle.Regular)
         {
@@ -378,6 +390,7 @@ namespace Alternet.Drawing
         /// If bad parameters are passed to the font constructor, error message is output to log
         /// and font is created with default parameters. No exceptions are raised.
         /// </remarks>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public Font(string familyName, FontScalar emSize, FontStyle style, GraphicsUnit unit)
             : this(null, familyName, emSize, style, unit)
         {
@@ -396,6 +409,7 @@ namespace Alternet.Drawing
         /// If bad parameters are passed to the font constructor, error message is output to log
         /// and font is created with default parameters. No exceptions are raised.
         /// </remarks>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public Font(string familyName, FontScalar emSize, GraphicsUnit unit)
             : this(null, familyName, emSize, FontStyle.Regular, unit)
         {
@@ -409,6 +423,7 @@ namespace Alternet.Drawing
         /// If bad parameters are passed to the font constructor, error message is output to log
         /// and font is created with default parameters. No exceptions are raised.
         /// </remarks>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public Font(string familyName, FontScalar emSize)
             : this(null, familyName, emSize, FontStyle.Regular)
         {
@@ -418,6 +433,7 @@ namespace Alternet.Drawing
         /// Initializes a new <see cref="Font" /> using a specified font handler.
         /// </summary>
         /// <param name="handler">Font handler.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public Font(IFontHandler handler)
         {
             Handler = handler;
@@ -503,7 +519,13 @@ namespace Alternet.Drawing
         /// Gets the pixel size.
         /// </summary>
         [Browsable(false)]
-        public virtual int SizeInPixels => Handler.GetPixelSize(this);
+        public virtual int SizeInPixels
+        {
+            get
+            {
+                return Handler.GetPixelSize(this);
+            }
+        }
 
         /// <summary>
         /// Gets the size in dips.
@@ -516,7 +538,13 @@ namespace Alternet.Drawing
         /// </summary>
         /// <returns></returns>
         [Browsable(false)]
-        public virtual bool IsUsingSizeInPixels => Handler.IsUsingSizeInPixels(this);
+        public virtual bool IsUsingSizeInPixels
+        {
+            get
+            {
+                return Handler.IsUsingSizeInPixels(this);
+            }
+        }
 
         /// <summary>
         /// Gets the em-size of this <see cref="Font" /> measured in the units specified by
@@ -561,6 +589,15 @@ namespace Alternet.Drawing
                 skiaFont = value;
             }
         }
+
+        /*
+        /// <summary>
+        /// Gets or sets the associated font object which is native to the platform.
+        /// This could be a <c>System.Drawing.Font</c> when used inside Win Forms application.
+        /// </summary>
+        [Browsable(false)]
+        public virtual object? PlatformFont { get; set; }
+        */
 
         /// <summary>
         /// Gets a byte value that specifies the character set that this <see cref="Font" /> uses.
@@ -864,6 +901,7 @@ namespace Alternet.Drawing
         /// Style = Font.ChangeFontStyle(Style, FontStyle.Italic, value);
         /// </code>
         /// </example>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static FontStyle ChangeFontStyle(FontStyle value, FontStyle element, bool add)
         {
             var result = value;
@@ -918,6 +956,7 @@ namespace Alternet.Drawing
         /// Gets size of the array with <see cref="FontStyle"/> as index.
         /// </summary>
         /// <returns></returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static int GetFontStyleArraySize()
         {
             var a = FontStyle.Bold | FontStyle.Italic | FontStyle.Strikeout | FontStyle.Underline;
@@ -929,6 +968,7 @@ namespace Alternet.Drawing
         /// </summary>
         /// <param name="familyName">Name of the font.</param>
         /// <returns></returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool IsVerticalName(string? familyName)
         {
             if (string.IsNullOrEmpty(familyName))
@@ -1008,6 +1048,7 @@ namespace Alternet.Drawing
         }
 
         [Obsolete("Use Font.WithStyle")]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public Font GetWithStyle(FontStyle style)
         {
             return WithStyle(style);
@@ -1173,6 +1214,21 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
+        /// Determines whether the current font matches the specified name, style,
+        /// and size within a close tolerance.
+        /// </summary>
+        /// <param name="name">The name of the font to compare.</param>
+        /// <param name="sizeInPoints">The size of the font, in points, to compare.</param>
+        /// <param name="style">The style of the font to compare.</param>
+        /// <returns><see langword="true"/> if the current font's name and style exactly match
+        /// the specified values and size is within a close tolerance; 
+        /// otherwise, <see langword="false"/>.</returns>
+        public virtual bool IsClose(string name, FontScalar sizeInPoints, FontStyle style)
+        {
+            return Name == name && Style == style && MathUtils.AreClose(SizeInPoints, sizeInPoints);
+        }
+
+        /// <summary>
         /// Gets unique id of this object.
         /// </summary>
         [Browsable(false)]
@@ -1235,6 +1291,18 @@ namespace Alternet.Drawing
             }
         }
 
+        /// <summary>
+        /// Adjusts the specified font parameters to ensure they conform to expected values.
+        /// </summary>
+        /// <remarks>This method ensures that the font size is converted to points
+        /// if it is specified in a
+        /// different unit, and that a default font family is assigned if both the
+        /// generic family and specific family
+        /// name are null. Additionally, the font size is validated to ensure
+        /// it falls within acceptable bounds.</remarks>
+        /// <param name="prm">The font parameters to coerce. The
+        /// <see cref="IFontHandler.FontParams"/> object must specify the font size,
+        /// unit, and optionally the font family or generic family.</param>
         public static void CoerceFontParams(IFontHandler.FontParams prm)
         {
             if (prm.Unit != GraphicsUnit.Point)
@@ -1291,6 +1359,17 @@ namespace Alternet.Drawing
             return (FontWeight)weight;
         }
 
+        /// <summary>
+        /// Converts the specified <see cref="FontWeight"/> value to its corresponding
+        /// user-friendly string representation.
+        /// </summary>
+        /// <param name="weight">The <see cref="FontWeight"/> value to convert.</param>
+        /// <returns>A string representing the specified font weight. For example,
+        /// "thin" for <see cref="FontWeight.Thin"/> or
+        /// "bold" for <see cref="FontWeight.Bold"/>.
+        /// Returns an empty string if the font weight is <see cref="FontWeight.Normal"/>.</returns>
+        /// <exception cref="ArgumentException">Thrown if the
+        /// <paramref name="weight"/> value is not a recognized <see cref="FontWeight"/>.</exception>
         public static string ToUserString(FontWeight weight)
         {
             switch (weight)
@@ -1320,6 +1399,23 @@ namespace Alternet.Drawing
             }
         }
 
+        /// <summary>
+        /// Converts the specified font style and weight into a list
+        /// of user-friendly string descriptions.
+        /// </summary>
+        /// <remarks>The method checks for specific flags in the <paramref name="style"/> parameter and
+        /// adds corresponding descriptions to the result. If the <see cref="FontStyle.Bold"/>
+        /// flag is set, the <paramref name="weight"/> parameter is used
+        /// to generate a description for the font weight.</remarks>
+        /// <param name="style">The <see cref="FontStyle"/> value representing
+        /// the font styles to convert. Multiple styles can be combined
+        /// using bitwise operations.</param>
+        /// <param name="weight">The <see cref="FontWeight"/> value
+        /// representing the font weight to include in the description if the <see
+        /// cref="FontStyle.Bold"/> flag is set.</param>
+        /// <returns>A list of strings describing the font styles and weight.
+        /// The list may include "underlined", "strikethrough",
+        /// "italic", and a description of the font weight if applicable.</returns>
         public static List<string> ToUserString(FontStyle style, FontWeight weight)
         {
             List<string> result = new();
@@ -1336,6 +1432,18 @@ namespace Alternet.Drawing
             return result;
         }
 
+        /// <summary>
+        /// Converts a <see cref="GenericFontFamily"/> value to its corresponding
+        /// user-friendly string representation.
+        /// </summary>
+        /// <param name="family">The <see cref="GenericFontFamily"/> value to convert.</param>
+        /// <returns>A string representing the specified font family. Returns an empty string
+        /// for <see cref="GenericFontFamily.None"/> or <see cref="GenericFontFamily.Default"/>.
+        /// Returns "swiss" for <see cref="GenericFontFamily.SansSerif"/>,
+        /// "roman" for <see cref="GenericFontFamily.Serif"/>,
+        /// and "teletype" for <see cref="GenericFontFamily.Monospace"/>.</returns>
+        /// <exception cref="ArgumentException">Thrown if <paramref name="family"/>
+        /// is not a recognized <see cref="GenericFontFamily"/> value.</exception>
         public static string ToUserString(GenericFontFamily family)
         {
             switch (family)
@@ -1354,6 +1462,11 @@ namespace Alternet.Drawing
             }
         }
 
+        /// <summary>
+        /// Converts the specified font information to a user-friendly string representation.
+        /// </summary>
+        /// <param name="font">The font to convert. Cannot be <see langword="null"/>.</param>
+        /// <returns>A string that represents the font in a user-friendly format.</returns>
         public static string ToUserString(IFontHandler font)
         {
             List<string> list = ToUserAsList(font);
@@ -1367,11 +1480,33 @@ namespace Alternet.Drawing
             return result;
         }
 
+        /// <summary>
+        /// Determines whether the specified font weight is considered bold.
+        /// </summary>
+        /// <param name="weight">The font weight to evaluate.</param>
+        /// <returns><see langword="true"/> if the specified font weight
+        /// is greater than <see cref="FontWeight.Normal"/>;
+        /// otherwise, <see langword="false"/>.</returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool GetIsBold(FontWeight weight)
         {
             return weight > FontWeight.Normal;
         }
 
+        /// <summary>
+        /// Determines the combined <see cref="FontStyle"/> based on the attributes of the specified font.
+        /// </summary>
+        /// <remarks>The returned <see cref="FontStyle"/> is a bitwise combination of applicable styles.
+        /// For example, if the font is both bold and italic, the result will include both
+        /// <see cref="FontStyle.Bold"/>
+        /// and <see cref="FontStyle.Italic"/>.</remarks>
+        /// <param name="font">An object implementing <see cref="IFontHandler"/> that provides
+        /// font attributes such as weight, italic,
+        /// underline, and strikethrough.</param>
+        /// <returns>A <see cref="FontStyle"/> value representing the combination of font styles
+        /// (e.g., <see cref="FontStyle.Bold"/>, <see cref="FontStyle.Italic"/>, etc.)
+        /// that are applicable to the specified font.
+        /// Returns <see cref="FontStyle.Regular"/> if no specific styles are applied.</returns>
         public static FontStyle GetStyle(IFontHandler font)
         {
             FontStyle result = FontStyle.Regular;
@@ -1391,6 +1526,18 @@ namespace Alternet.Drawing
             return result;
         }
 
+        /// <summary>
+        /// Converts the specified font's attributes into a list of strings representing
+        /// its user-readable properties.
+        /// </summary>
+        /// <remarks>The method ensures that the font name is properly formatted for user readability.
+        /// If the font name contains spaces, semicolons, or commas, it is enclosed in single
+        /// quotes to preserve its
+        /// integrity as a single entity.</remarks>
+        /// <param name="font">An object implementing <see cref="IFontHandler"/>
+        /// that provides the font's attributes, such as name, weight, and size.</param>
+        /// <returns>A list of strings representing the font's user-readable properties.
+        /// The list typically includes the font's style, weight, name, and size in points.</returns>
         public static List<string> ToUserAsList(IFontHandler font)
         {
             var result = ToUserString(GetStyle(font), font.GetWeight());
@@ -1451,14 +1598,26 @@ namespace Alternet.Drawing
             baseFont?.ResetSkiaFont();
         }
 
+        /// <summary>
+        /// Calculates the width of the character "x" when rendered with the current font settings.
+        /// </summary>
+        /// <param name="dc">The <see cref="Graphics"/> context used to measure the text.</param>
+        /// <returns>A <see cref="FontScalar"/> representing the width of the character "x"
+        /// in the current font.</returns>
         public virtual FontScalar GetWidth(Graphics dc)
         {
-            return dc.MeasureText("x", this).Width;
+            return dc.MeasureText(StringUtils.SymbolLowercaseX, this).Width;
         }
 
+        /// <summary>
+        /// Calculates the height of the font when rendered in the specified graphics context.
+        /// Uses the height of the characters "Wg" as a reference.
+        /// </summary>
+        /// <param name="dc">The graphics context used to measure the font height.</param>
+        /// <returns>The height of the font as a <see cref="FontScalar"/> value.</returns>
         public virtual FontScalar GetHeight(Graphics dc)
         {
-            return dc.MeasureText("Wg", this).Height;
+            return dc.MeasureText(StringUtils.SymbolWg, this).Height;
         }
 
         /// <inheritdoc/>
