@@ -25,5 +25,21 @@ namespace Alternet.Drawing
         /// Specifies high quality interpolation.
         /// </summary>
         HighQuality,
+
+        /// <summary>
+        /// Same as <see cref="LowQuality"/>. Added for compatibility with GDI+.
+        /// </summary>
+        Low = LowQuality,
+
+        /// <summary>
+        /// Same as <see cref="HighQuality"/>. Added for compatibility with GDI+.
+        /// </summary>
+        High = HighQuality,
+
+        /// <summary>
+        /// Same as <see cref="None"/>. Added for compatibility with GDI+.
+        /// This is "nearest-neighbor" interpolation.
+        /// </summary>
+        NearestNeighbor = None,
     }
 }
