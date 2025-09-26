@@ -108,23 +108,48 @@ namespace Alternet.UI
         /// </summary>
         /// <remarks>This method retrieves and logs the SHA and message of each commit made
         /// to the AlternetUI repository within the past week.</remarks>
-        public static void LogCommitsForAlternetUI()
+        public static void ShowCommitsForAlternetUI()
         {
-            DialogFactory.AskTextAsync(
-                "Specify Alternet.UI branch name (empty for master)",
-                async (branch) =>
+            DialogFactory.AskByteAsync(
+                "Specify number of days to look back",
+                (days) =>
                 {
-                    var commits = await GetCommitsAsync(
-                        "alternetsoft",
-                        "AlternetUI",
-                        DateTime.UtcNow.AddDays(-7),
-                        token: null,
-                        branch: branch);
+                    DialogFactory.AskTextAsync(
+                        "Specify Alternet.UI branch name (empty for master)",
+                        async (branch) =>
+                        {
+                            await ShowCommitsForAlternetUI(days, branch);
+                        });
+                },
+                7);
+        }
 
-                    var s = CommitsToString(commits);
+        /// <summary>
+        /// Displays a dialog showing the commits for the AlternetUI
+        /// repository within the specified number of days.
+        /// </summary>
+        /// <remarks>This method retrieves commit data from the AlternetUI repository on GitHub and
+        /// displays it in a dialog window. The dialog includes the
+        /// commit details formatted as a string.</remarks>
+        /// <param name="days">The number of days to look back from the
+        /// current date to retrieve commits. Must be a positive integer.</param>
+        /// <param name="branch">The name of the branch to filter commits by.
+        /// If <see langword="null"/>, commits from the default branch are
+        /// retrieved.</param>
+        /// <returns>A task that represents the asynchronous operation.</returns>
+        public static async Task ShowCommitsForAlternetUI(int days, string? branch = null)
+        {
+            var commits = await GetCommitsAsync(
+                "alternetsoft",
+                "AlternetUI",
+                DateTime.UtcNow.AddDays(-days),
+                token: null,
+                branch: branch);
 
-                    WindowWithMemoAndButton.ShowDialog("AlternetUI Commits in the Last 7 Days", s);
-                });
+            var s = CommitsToString(commits);
+
+            WindowWithMemoAndButton.ShowDialog(
+                $"AlternetUI Commits in the Last {days} Days", s);
         }
 
         /// <summary>
