@@ -9,6 +9,26 @@ namespace Alternet.UI
     public static partial class MathUtils
     {
         /// <summary>
+        /// Represents the maximum value of a 32-bit signed integer
+        /// as a floating-point number.
+        /// </summary>
+        /// <remarks>This constant is useful when working with APIs
+        /// or calculations that require the
+        /// maximum value of an <c>int</c> in the form of a <c>float</c>.
+        /// The value is equivalent to <c>(float)int.MaxValue</c>.</remarks>
+        public const float MaxIntAsFloat = (float)int.MaxValue;
+
+        /// <summary>
+        /// Represents the minimum value of a 32-bit signed integer
+        /// as a floating-point number.
+        /// </summary>
+        /// <remarks>This constant is useful when working with APIs
+        /// or calculations that require the
+        /// minimum value of an <c>int</c> in the form of a <c>float</c>.
+        /// The value is equivalent to <c>(float)int.MinValue</c>.</remarks>
+        public const float MinIntAsFloat = (float)int.MinValue;
+
+        /// <summary>
         /// Represents the smallest positive value that can be added to 1.0f
         /// to produce a distinct value of type <see cref="float"/>.
         /// </summary>
@@ -386,6 +406,40 @@ namespace Alternet.UI
         /// <returns>The original value if it is zero or positive; otherwise, zero.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static float ClampToZero(float value) => value < 0 ? 0 : value;
+
+        /// <summary>
+        /// Converts a floating-point value to the smallest integer greater than or equal to the value.
+        /// </summary>
+        /// <param name="value">The floating-point value to convert.</param>
+        /// <returns>The smallest integer greater than or equal to <paramref name="value"/>.</returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static int SafeCeilCoordToInt(float value)
+        {
+            var ceiling = MathF.Ceiling(value);
+
+            if(ceiling >= MaxIntAsFloat)
+                return int.MaxValue;
+            if(ceiling <= MinIntAsFloat)
+                return int.MinValue;
+
+            return (int)ceiling;
+        }
+
+        /// <summary>
+        /// Rounds the specified floating-point value up to the nearest integer and returns
+        /// the result as an <see cref="int"/>.
+        /// </summary>
+        /// <remarks>This method performs a fast ceiling operation by adding a small offset to the input
+        /// value before truncating it to an integer. It is optimized for performance
+        /// and may not handle edge cases such
+        /// as very large or special floating-point values (e.g., NaN, infinity).</remarks>
+        /// <param name="value">The single-precision floating-point value to round up.</param>
+        /// <returns>The smallest integer greater than or equal to <paramref name="value"/>.</returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static int FastCeilToInt(float value)
+        {
+            return (int)(value + 0.9999999f);
+        }
 
         /// <summary>
         /// Determines whether the first floating-point
