@@ -30,17 +30,29 @@ namespace Alternet.UI.WinForms
         /// <returns><see langword="true"/> if both fonts are <see langword="null"/>
         /// or if they represent the same font;
         /// otherwise, <see langword="false"/>.</returns>
-        public static bool Equals(Alternet.Drawing.Font? uiFont, System.Drawing.Font? winFont)
+        public static bool Equals(
+            Alternet.Drawing.Font? uiFont,
+            System.Drawing.Font? winFont,
+            float scale)
         {
             if (uiFont == null && winFont == null)
                 return true;
             if (uiFont == null || winFont == null)
                 return false;
 
+            var size = FontSizeToAlternet(winFont.SizeInPoints, scale);
+
             return uiFont.Equals(
                 winFont.Name,
-                (float)winFont.SizeInPoints,
+                size,
                 (Alternet.Drawing.FontStyle)winFont.Style);
+        }
+
+        public static float FontSizeToAlternet(float sizeInPoints, float scale)
+        {
+            var size = sizeInPoints * (96 / 72);
+            size *= scale;
+            return size;
         }
 
         /// <summary>
@@ -55,13 +67,14 @@ namespace Alternet.UI.WinForms
         /// <returns>An <see cref="Alternet.Drawing.Font"/> object that represents
         /// the converted font, or <see langword="null"/>
         /// if <paramref name="winFont"/> is <see langword="null"/>.</returns>
-        public static Alternet.Drawing.Font? ToAlternet(this System.Drawing.Font? winFont)
+        public static Alternet.Drawing.Font? ToAlternet(this System.Drawing.Font? winFont, float scale)
         {
             if (winFont is null)
                 return null;
+            var size = FontSizeToAlternet(winFont.SizeInPoints, scale);
             return new Alternet.Drawing.Font(
                 winFont.Name,
-                (float)winFont.SizeInPoints,
+                size,
                 (Alternet.Drawing.FontStyle)winFont.Style);
         }
 
@@ -95,7 +108,10 @@ namespace Alternet.UI.WinForms
         /// <param name="winFont">The <see cref="System.Drawing.Font"/> instance to synchronize with.
         /// If <see langword="null"/>, <paramref name="uiFont"/>
         /// will be set to <see langword="null"/>.</param>
-        public static void EnsureFont(ref Alternet.Drawing.Font? uiFont, System.Drawing.Font? winFont)
+        public static void EnsureFont(
+            ref Alternet.Drawing.Font? uiFont,
+            System.Drawing.Font? winFont,
+            float scale = 1)
         {
             if (winFont == null)
             {
@@ -105,12 +121,12 @@ namespace Alternet.UI.WinForms
 
             if(uiFont is null)
             {
-                uiFont = winFont.ToAlternet();
+                uiFont = winFont.ToAlternet(scale);
             }
             else
             {
-                if (!Equals(uiFont, winFont))
-                    uiFont = winFont.ToAlternet();
+                if (!Equals(uiFont, winFont, scale))
+                    uiFont = winFont.ToAlternet(scale);
             }
         }
 

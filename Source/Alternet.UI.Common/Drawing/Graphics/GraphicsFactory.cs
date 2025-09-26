@@ -692,7 +692,7 @@ namespace Alternet.Drawing
                 SKFontStyleWidth.Normal,
                 skiaSlant);
 
-            SKFont skiaFont = new(typeFace, (float)font.SizeInDips);
+            SKFont skiaFont = new(typeFace, font.SizeInDips);
 
             skiaFont.Subpixel = Font.DefaultSkiaFontSubpixel;
             skiaFont.Hinting = Font.DefaultSkiaFontHinting;
