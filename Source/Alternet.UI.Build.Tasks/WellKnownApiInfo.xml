@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ApiInfo>
-  <Assembly Name="Alternet.UI.Common, Version=0.9.753.0, Culture=neutral, PublicKeyToken=7fb0fe57212b4b74">
+  <Assembly Name="Alternet.UI.Common, Version=0.9.754.0, Culture=neutral, PublicKeyToken=7fb0fe57212b4b74">
     <Type Name="XamlX.Runtime.IXamlParentStackProviderV1" />
     <Type Name="XamlX.Runtime.IXamlXmlNamespaceInfoProviderV1" />
     <Type Name="XamlX.Runtime.XamlXmlNamespaceInfoV1" />
@@ -34,6 +34,7 @@
     <Type Name="Alternet.Drawing.CombineMode" />
     <Type Name="Alternet.Drawing.CoordUnit" />
     <Type Name="Alternet.Drawing.FillMode" />
+    <Type Name="Alternet.Drawing.GraphicsBackendType" />
     <Type Name="Alternet.Drawing.GraphicsUnit" />
     <Type Name="Alternet.Drawing.RasterOperationMode" />
     <Type Name="Alternet.Drawing.RegionContain" />
@@ -182,6 +183,7 @@
       <Event Name="Disposed" />
       <Event Name="PropertyChanged" />
     </Type>
+    <Type Name="Alternet.Drawing.GraphicsConfigIdentity" />
     <Type Name="Alternet.Drawing.GraphicsFactory" />
     <Type Name="Alternet.Drawing.ConvertGraphicsUnit" />
     <Type Name="Alternet.Drawing.GraphicsUnitConverter" />
@@ -267,6 +269,7 @@
       <Event Name="PropertyChanged" />
     </Type>
     <Type Name="Alternet.Drawing.TransformMatrix" />
+    <Type Name="Alternet.Drawing.MaterialDesign" />
     <Type Name="Alternet.Drawing.IPenHandler" />
     <Type Name="Alternet.Drawing.Pen">
       <Event Name="Disposed" />
@@ -456,6 +459,7 @@
       <Event Name="PropertyChanged" />
     </Type>
     <Type Name="Alternet.UI.IApplicationHandler" />
+    <Type Name="Alternet.UI.IMacOsApplicationHandler" />
     <Type Name="Alternet.UI.PlessApplicationHandler">
       <Event Name="Disposed" />
       <Event Name="PropertyChanged" />
@@ -541,6 +545,7 @@
       <Event Name="Disposed" />
       <Event Name="PropertyChanged" />
     </Type>
+    <Type Name="Alternet.UI.LogWriter" />
     <Type Name="Alternet.UI.IProcessRunnerNotification" />
     <Type Name="Alternet.UI.ProcessRunnerWithNotification" />
     <Type Name="Alternet.UI.TestsDrawing" />
@@ -549,6 +554,8 @@
       <Event Name="PropertyChanged" />
     </Type>
     <Type Name="Alternet.UI.ITimerHandler" />
+    <Type Name="Alternet.UI.KnownRunTimeTrackers" />
+    <Type Name="Alternet.UI.RunTimeTracker" />
     <Type Name="Alternet.UI.Timer">
       <Event Name="Tick" />
       <Event Name="Elapsed" />
@@ -712,6 +719,7 @@
     <Type Name="Alternet.UI.ControlFlags" />
     <Type Name="Alternet.UI.ControlRefreshOptions" />
     <Type Name="Alternet.UI.ControlRenderingFlags" />
+    <Type Name="Alternet.UI.ControlRenderingMode" />
     <Type Name="Alternet.UI.ControlRenderSizeVariant" />
     <Type Name="Alternet.UI.ControlStyles" />
     <Type Name="Alternet.UI.FileListBoxColumn" />
@@ -789,6 +797,7 @@
     <Type Name="Alternet.UI.HiddenOrVisible" />
     <Type Name="Alternet.UI.ListBoxSelectionMode" />
     <Type Name="Alternet.UI.MenuItemType" />
+    <Type Name="Alternet.UI.SelectionBasedVisibility" />
     <Type Name="Alternet.UI.SelectionMode" />
     <Type Name="Alternet.UI.PropertyGridApplyFlags" />
     <Type Name="Alternet.UI.PropertyGridCreateStyle" />
@@ -1036,6 +1045,7 @@
     <Type Name="Alternet.UI.KnownButtonImage" />
     <Type Name="Alternet.UI.LazyStruct`1" />
     <Type Name="Alternet.UI.ObjectUniqueId" />
+    <Type Name="Alternet.UI.PreferredSizeContext" />
     <Type Name="Alternet.UI.PropInstanceAndValue" />
     <Type Name="Alternet.UI.RowColumnIndex" />
     <Type Name="Alternet.UI.ShortcutAndAction" />
@@ -14879,6 +14889,10 @@
       <Event Name="PropertyChanged" />
     </Type>
     <Type Name="Alternet.UI.Thickness" />
+    <Type Name="Alternet.UI.SkiaGraphicsFactoryHandler">
+      <Event Name="Disposed" />
+      <Event Name="PropertyChanged" />
+    </Type>
     <Type Name="Alternet.UI.SkiaImageHandler">
       <Event Name="Disposed" />
       <Event Name="PropertyChanged" />
@@ -15909,10 +15923,10 @@
       <Event Name="Changed" />
     </Type>
     <Type Name="Alternet.UI.IMenuProperties" />
-    <Type Name="Alternet.UI.ICustomTypeProvider" />
     <Type Name="Alternet.UI.IDoCommand" />
     <Type Name="Alternet.UI.IEnumerableTree" />
     <Type Name="Alternet.UI.IEnumerableTree`1" />
+    <Type Name="Alternet.UI.ILogWriter" />
     <Type Name="Alternet.UI.IPropInfoAndInstance" />
     <Type Name="Alternet.UI.IRaiseSystemColorsChanged" />
     <Type Name="Alternet.UI.ITextProperty" />
@@ -16576,14 +16590,13 @@
     <Type Name="Alternet.UI.EnumerableUtils" />
     <Type Name="Alternet.UI.ListUtils" />
     <Type Name="Alternet.UI.LogUtils" />
-    <Type Name="Alternet.UI.DoubleUtils" />
     <Type Name="Alternet.UI.IntPtrUtils" />
     <Type Name="Alternet.UI.IntUtils" />
     <Type Name="Alternet.UI.MathUtils" />
     <Type Name="Alternet.UI.ULongUtils" />
     <Type Name="Alternet.UI.CpuUtils" />
+    <Type Name="Alternet.UI.LibraryUtils" />
     <Type Name="Alternet.UI.LinuxUtils" />
-    <Type Name="Alternet.UI.UnixSignal" />
     <Type Name="Alternet.UI.MacOsUtils" />
     <Type Name="Alternet.UI.MswKnownFolders" />
     <Type Name="Alternet.UI.MswPixelFormatDescriptorEnums" />
@@ -16591,6 +16604,11 @@
     <Type Name="Alternet.UI.RegistryUtils" />
     <Type Name="Alternet.UI.NativeLibraryInspector" />
     <Type Name="Alternet.UI.OSUtils" />
+    <Type Name="Alternet.UI.UnixSignal" />
+    <Type Name="Alternet.UI.UnixStdStreamRedirector">
+      <Event Name="Disposed" />
+      <Event Name="PropertyChanged" />
+    </Type>
     <Type Name="Alternet.UI.PathUtils" />
     <Type Name="Alternet.UI.PlessUtils" />
     <Type Name="Alternet.UI.CharUtils" />
@@ -16609,6 +16627,7 @@
     <Type Name="Alternet.UI.FileDialogFilterItem" />
     <Type Name="Alternet.UI.FileMaskUtils" />
     <Type Name="Alternet.UI.FileUtils" />
+    <Type Name="Alternet.UI.SpanUtils" />
     <Type Name="Alternet.UI.StreamUtils" />
     <Type Name="Alternet.UI.TimerUtils" />
     <Type Name="Alternet.UI.WebUtils" />
@@ -16663,6 +16682,7 @@
     <Type Name="Alternet.Drawing.Graphics+DrawElementParams" />
     <Type Name="Alternet.Drawing.Graphics+DrawLabelParams" />
     <Type Name="Alternet.Drawing.GraphicsUnitConverter+GraphicsType" />
+    <Type Name="Alternet.Drawing.MaterialDesign+CornerRadius" />
     <Type Name="Alternet.Drawing.NineRects+PreviewControl">
       <Event Name="DropDownMenuShowing" />
       <Event Name="AfterPaint" />
@@ -16754,6 +16774,12 @@
     </Type>
     <Type Name="Alternet.UI.KnownButtons+Info" />
     <Type Name="Alternet.UI.KnownProperties+AbstractControlProperties" />
+    <Type Name="Alternet.UI.LogWriter+MultiLogWriter" />
+    <Type Name="Alternet.UI.LogWriter+NullLogWriter" />
+    <Type Name="Alternet.UI.LogWriter+DebugLogWriter" />
+    <Type Name="Alternet.UI.LogWriter+ApplicationLogWriter" />
+    <Type Name="Alternet.UI.LogWriter+StringBuilderLogWriter" />
+    <Type Name="Alternet.UI.LogWriter+ConsoleLogWriter" />
     <Type Name="Alternet.UI.UixmlLoader+Flags" />
     <Type Name="Alternet.UI.DataObject+XmlDictionaryItems" />
     <Type Name="Alternet.UI.DataObject+XmlDictionaryItem" />
@@ -17101,6 +17127,8 @@
     <Type Name="Alternet.UI.GitHubUtils+CommitInfo" />
     <Type Name="Alternet.UI.LogUtils+LogFlags" />
     <Type Name="Alternet.UI.LogUtils+LogItem" />
+    <Type Name="Alternet.UI.MathUtils+DoubleUnion" />
+    <Type Name="Alternet.UI.MathUtils+FloatUnion" />
     <Type Name="Alternet.UI.LinuxUtils+NativeMethods" />
     <Type Name="Alternet.UI.MacOsUtils+NativeMethods" />
     <Type Name="Alternet.UI.MswPixelFormatDescriptorEnums+Flags" />
@@ -17110,6 +17138,7 @@
     <Type Name="Alternet.UI.StringUtils+ComparerUsingToString`1" />
     <Type Name="Alternet.UI.AsyncUtils+ValueWaiter`1" />
     <Type Name="Alternet.UI.FileDialogFilterItem+Kind" />
+    <Type Name="Alternet.UI.SpanUtils+ReadOnlySpanAction`1" />
     <Type Name="Alternet.UI.XmlUtils+XmlStreamConvertParams" />
     <Type Name="Alternet.UI.ScrollBar+AltPositionInfo+Record" />
     <Type Name="Alternet.UI.MswUtils+NativeMethods+SmallPoint" />

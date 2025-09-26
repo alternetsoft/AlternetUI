@@ -1,3 +1,50 @@
+# 0.9.754 (2025 September 26)
+
+- Alternet.UI is now compiled with netstandard2.1.
+- Coordinates and bounds type changed to float.
+- VirtualListBox: Add selection-based item border visibility option.
+- Graphics: Refactor text and point APIs to use spans for performance.
+- Introduce Graphics.MaxCoord for layout sizing.
+- WindowTextInput: ResetDialogs, ResetTextDialog, and ResetLongDialog static methods.
+- Added logic to ensure the result of fromDip does not exceed INT_MIN or INT_MAX by clamping the value before rounding.
+- Introduces a parameterless constructor for SkiaGraphics that initializes the canvas to SkiaUtils.NullCanvas.
+- Add NullCanvas property to SkiaUtils.
+- Add SkiaGraphicsFactoryHandler.
+- Introduces UnixStdStreamRedirector to capture native Linux standard output and error streams in memory.
+- Add Material Design corner radius constants (MaterialDesign.CornerRadius).
+- Add native stdout redirection for macOS which allows to suppress unwanted system messages.
+- Fix macOS menu handling and string conversion.
+- Add extension method to convert ICommand to MAUI Command.
+- SimpleToolBarView: Handle exceptions when setting button SVG image.
+- Introduces AddDisabledText method to Menu, allowing addition of a disabled menu item with specified text.
+- ContextMenu: Introduces the ShowInsideControlAligned method to display context menus with specified alignment inside a container.
+- Add Center alignment preset to HVDropDownAlignment.
+- Add AutomationId property to FrameworkElement.
+- Refactor GetPreferredSize to use PreferredSizeContext.
+- Refactor PointD and RectD to use explicit layout with SKPoint fields.
+- Add OnePixelAsDip method to GraphicsFactory.
+- Refactor and extend MathUtils for float and double operations.
+- Refactor LengthConverter for improved clarity and API.
+- MathUtils: Introduced several methods for comparing double and float values with tolerance for precision errors,
+ including magnitude-scaled, bitwise, and relative/absolute tolerance checks.
+- MathUtils: AreClose, AreCloseScaled, AreCloseBitwise, AreCloseBitwiseEx, AreCloseWithTolerance, AreCloseWithToleranceEx, AreCloseRect, and AreCloseSize methods.
+- DrawingUtils.DrawDotLine: for drawing of horizontal or vertical dotted lines that alternate between two colors or transparency.
+- Graphics: Introduces methods to measure the size of single characters, character pairs, and repeated characters with a specified font.
+- Introduces the GraphicsConfigIdentity struct to uniquely identify graphics configurations by backend type and scale factor.
+- Graphics: Fix MeasureCanvas canvas management logic to account for backend type changes, improving rendering flexibility.
+- Add BackendType property to Graphics implementations.
+- Introduced DrawRoundRectangleLTRB and FillRoundRectangleLTRB methods.
+- Introduces methods to get and set macOS common menu bar and retrieve Help/Window menu titles in Menu classes.
+- Add notification subscriber to PopupWindow.
+- Added a call to RaiseNotifications to trigger AfterVisibleChanged on notifications after the control's visibility changes.
+- Add LastActivatedWindow property to App.
+- Refactor HitTest logic in VirtualListBox as previously it was buggy.
+- UserControl: Add ShowOverlayToolTipSimple overload for easier display of overlay tooltips with basic parameters.
+- Add Clear and ClearAndDismiss flags to OverlayToolTipFlags.
+- Add LogWriter staticclass, providing several ILogWriter implementations for logging to debug output, console, application log, and StringBuilder.
+- Refactor NotifyIcon context menu handling.
+- OpenGL rendering for UserControl
+
 # 0.9.753 (2025 September 15)
 
 - ContextMenu: Add ShowAtMouse method
