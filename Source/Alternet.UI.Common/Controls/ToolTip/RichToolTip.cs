@@ -429,10 +429,10 @@ namespace Alternet.UI
             var rect = template.Bounds;
 
             if (rect.HasEmptyWidth)
-                rect.Width = Graphics.HalfOfMaxValue;
+                rect.Width = Graphics.MaxCoord;
 
             if (rect.HasEmptyHeight)
-                rect.Height = Graphics.HalfOfMaxValue;
+                rect.Height = Graphics.MaxCoord;
 
             template.Bounds = rect;
 

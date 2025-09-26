@@ -1504,7 +1504,7 @@ namespace Alternet.UI
         public virtual SizeD MeasureChildrenBounds(SizeD? availableSize = null)
         {
             availableSize ??= SizeD.Empty;
-            var sz = availableSize.Value.ValueIfEmpty(Graphics.HalfOfMaxValue).Ceiling();
+            var sz = availableSize.Value.ValueIfEmpty(Graphics.MaxCoord).Ceiling();
 
             var newSize1 = GetChildrenMaxPreferredSize(sz).Ceiling();
             var newSize2 = GetPreferredSize(sz).Ceiling();

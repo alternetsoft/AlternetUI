@@ -21,18 +21,6 @@ namespace Alternet.UI
         public static readonly PreferredSizeContext PositiveInfinity = new(SizeD.PositiveInfinity);
 
         /// <summary>
-        /// Represents a preferred size context initialized to half of the maximum value
-        /// for the integer-based size.
-        /// </summary>
-        /// <remarks>This static readonly field provides a predefined
-        /// <see cref="PreferredSizeContext"/>
-        /// instance  with a size value set to half of the maximum allowable integer size.
-        /// It can be used as a
-        /// convenient default or reference value in scenarios where
-        /// such a size context is appropriate.</remarks>
-        public static readonly PreferredSizeContext HalfOfMaxValueI = new(SizeD.HalfOfMaxValueI);
-
-        /// <summary>
         /// Initializes a new instance of the <see cref="PreferredSizeContext"/> struct
         /// with the specified available size.
         /// </summary>
@@ -52,6 +40,12 @@ namespace Alternet.UI
             : this(new SizeD(width, height))
         {
         }
+
+        /// <summary>
+        /// Gets a <see cref="PreferredSizeContext"/> instance representing the maximum coordinate value
+        /// which can be used for the layout purposes.
+        /// </summary>
+        public static PreferredSizeContext MaxCoord => new(SizeD.MaxCoord);
 
         /// <summary>
         /// Gets the available size for the UI element in this context.

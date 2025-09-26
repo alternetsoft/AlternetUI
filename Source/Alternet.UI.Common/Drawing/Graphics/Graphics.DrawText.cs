@@ -248,10 +248,10 @@ namespace Alternet.Drawing
             var wrappedText = document.WrappedText;
 
             if (rect.HasEmptyWidth)
-                rect.Width = HalfOfMaxValue;
+                rect.Width = MaxCoord;
 
             if (rect.HasEmptyHeight)
-                rect.Height = HalfOfMaxValue;
+                rect.Height = MaxCoord;
 
             wrappedText.SuspendLayout();
             try

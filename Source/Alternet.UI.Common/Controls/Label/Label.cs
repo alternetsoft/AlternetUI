@@ -923,7 +923,7 @@ namespace Alternet.UI
         {
             if (remeasure)
             {
-                GetPreferredSize(SizeD.HalfOfMaxValueI);
+                GetPreferredSize(SizeD.MaxCoord);
             }
 
             return prm;

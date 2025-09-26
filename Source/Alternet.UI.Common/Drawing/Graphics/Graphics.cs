@@ -15,9 +15,9 @@ namespace Alternet.Drawing
     public abstract partial class Graphics : DisposableObject, IGraphics, IDisposable
     {
         /// <summary>
-        /// Gets half of the <see cref="int"/> maximum value.
+        /// This is max coordinate value used for the layout purposes.
         /// </summary>
-        internal const Coord HalfOfMaxValue = int.MaxValue / 2;
+        public static Coord MaxCoord = ushort.MaxValue;
 
         private readonly Stack<TransformMatrix> stack = new();
 

@@ -285,7 +285,7 @@ namespace Alternet.UI
         /// <inheritdoc/>
         public override SizeD GetPreferredSize(PreferredSizeContext context)
         {
-            var preferredSize = MainControl.GetPreferredSize(SizeD.HalfOfMaxValueI);
+            var preferredSize = MainControl.GetPreferredSize(SizeD.MaxCoord);
 
             var lastChild = MainControl.GetVisibleChildWithMaxBottom();
             if (lastChild is not null)
