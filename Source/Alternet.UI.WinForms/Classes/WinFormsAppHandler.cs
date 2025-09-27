@@ -141,6 +141,11 @@ namespace Alternet.UI.WinForms
             throw new NotImplementedException();
         }
 
+        public string GetCustomData(string key)
+        {
+            return string.Empty;
+        }
+
         public AbstractControl? GetFocusedControl()
         {
             throw new NotImplementedException();
