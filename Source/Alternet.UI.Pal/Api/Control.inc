@@ -124,6 +124,7 @@ void SetForegroundColor(const Color& value);
 Font* GetFont();
 void SetFont(Font* value);
 
+void* GetCGContextRef();
 void SetAllowDefaultContextMenu(bool value);
 void SetScrollBar(ScrollBarOrientation orientation, HiddenOrVisible visible, int value, int largeChange, int maximum);
 bool IsScrollBarVisible(ScrollBarOrientation orientation);

@@ -230,6 +230,8 @@ namespace Alternet.UI
             }
         }
 
+        public IntPtr NativeGraphicsContext => NativeControl.GetCGContextRef();
+
         public object GetNativeControl() => NativeControl;
 
         public override void OnLayoutChanged()

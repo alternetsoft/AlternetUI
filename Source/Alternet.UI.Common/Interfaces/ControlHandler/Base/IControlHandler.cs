@@ -14,6 +14,11 @@ namespace Alternet.UI
     public partial interface IControlHandler : IDisposableObject
     {
         /// <summary>
+        /// Gets the reference to native graphics context.
+        /// </summary>
+        IntPtr NativeGraphicsContext { get; }
+
+        /// <summary>
         /// Gets or sets a value indicating whether the control has a border.
         /// </summary>
         bool HasBorder { get; set; }

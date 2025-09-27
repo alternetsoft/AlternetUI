@@ -187,7 +187,7 @@ namespace Alternet.Drawing
         /// <param name="value">Value specified as <see cref="uint"/>.</param>
         /// <param name="state">State flags.</param>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        internal Color(uint value, StateFlags state)
+        public Color(uint value, StateFlags state)
         {
             color.Value = value;
             this.state = state;
@@ -201,7 +201,7 @@ namespace Alternet.Drawing
         /// <param name="name">Name of the color.</param>
         /// <param name="knownColor"></param>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        internal Color(uint value, StateFlags state, string? name, KnownColor knownColor)
+        public Color(uint value, StateFlags state, string? name, KnownColor knownColor)
         {
             color.Value = value;
             this.state = state;
@@ -232,19 +232,34 @@ namespace Alternet.Drawing
         public enum StateFlags : short
         {
             /// <summary>
+            /// Represents the absence of any specific options or flags.
+            /// </summary>
+            None = 0,
+
+            /// <summary>
             /// KnownColor property is specified and valid.
             /// </summary>
-            KnownColorValid = 0x0001,
+            KnownColorValid = 1 << 0,
 
             /// <summary>
             /// Value property is valid.
             /// </summary>
-            ValueValid = 0x0002,
+            ValueValid = 1 << 1,
 
             /// <summary>
             /// Name property is valid.
             /// </summary>
-            NameValid = 0x0004,
+            NameValid = 1 << 2,
+
+            /// <summary>
+            /// Represents a combination of flags indicating that both
+            /// the color name and the known color value are valid.
+            /// </summary>
+            /// <remarks>This value is a bitwise combination of the <see cref="KnownColorValid"/> and
+            /// <see cref="NameValid"/> flags. It is used to validate that both
+            /// the color name and the known color value
+            /// meet the required conditions.</remarks>
+            NameAndKnownColorValid = KnownColorValid | NameValid,
         }
 
         /// <summary>
@@ -510,7 +525,7 @@ namespace Alternet.Drawing
         {
             get
             {
-                return state.HasFlag(StateFlags.NameValid) || state.HasFlag(StateFlags.KnownColorValid);
+                return (state & StateFlags.NameAndKnownColorValid) != 0;
             }
         }
 
@@ -782,8 +797,20 @@ namespace Alternet.Drawing
         {
             if (color.IsEmpty)
                 return Color.Empty;
-            var argb = color.ToArgb();
-            return FromArgb(argb);
+
+            var knownColor = color.ToKnownColor();
+
+            if (knownColor == 0)
+            {
+                var argb = color.ToArgb();
+                return FromArgb(argb);
+            }
+            else
+            {
+                /* Use here a known color */
+                var argb = color.ToArgb();
+                return FromArgb(argb);
+            }
         }
 
         /// <summary>
@@ -794,8 +821,20 @@ namespace Alternet.Drawing
         {
             if (color is null || color.IsEmpty)
                 return System.Drawing.Color.Empty;
-            var argb = color.ToArgb();
-            return System.Drawing.Color.FromArgb(argb);
+
+            var knownColor = color.ToKnownColor();
+
+            if (knownColor == 0)
+            {
+                var argb = color.ToArgb();
+                return System.Drawing.Color.FromArgb(argb);
+            }
+            else
+            {
+                /* Use here a known color */
+                var argb = color.ToArgb();
+                return System.Drawing.Color.FromArgb(argb);
+            }
         }
 
         /// <summary>

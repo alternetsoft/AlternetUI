@@ -106,6 +106,9 @@ namespace Alternet.UI
         /// <inheritdoc/>
         public bool IsScrollable { get; set; }
 
+        /// <inheritdoc/>
+        public IntPtr NativeGraphicsContext { get; }
+
         void IControlHandler.BeginInit()
         {
         }

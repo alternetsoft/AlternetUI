@@ -1795,11 +1795,23 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Gets native handler of the control. For Windows this is hWnd, for other
-        /// operating systems currently returns null.
-        /// You should not use this property.
+        /// Gets native handle of the control.
         /// </summary>
-        /// <returns></returns>
+        /// <remarks>
+        /// You should not use this property directly.
+        /// </remarks>
+        /// <returns>
+        /// On WxWidgets platform returns pointer to the native control.
+        /// For Windows returns hWnd,
+        /// for macOs returns pointer to NSView,
+        /// for Linux GTK returns pointer to GtkWidget.
+        /// For other operating systems returns <see cref="IntPtr.Zero"/>.
+        /// If control has no native representation, returns <see cref="IntPtr.Zero"/>.
+        /// If native control is not created, returns <see cref="IntPtr.Zero"/>.
+        /// If control is disposed, returns <see cref="IntPtr.Zero"/>.
+        /// If control is not attached to the visual tree, returns <see cref="IntPtr.Zero"/>.
+        /// If control is not WxWidgets control, returns <see cref="IntPtr.Zero"/>.
+        /// </returns>
         [Browsable(false)]
         public virtual IntPtr GetHandle()
         {

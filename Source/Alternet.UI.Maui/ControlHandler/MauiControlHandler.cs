@@ -185,6 +185,8 @@ namespace Alternet.UI
             }
         }
 
+        public virtual nint NativeGraphicsContext { get; }
+
         public virtual void BeginInit()
         {
         }

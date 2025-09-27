@@ -648,6 +648,12 @@ namespace Alternet.UI.Native
             }
         }
         
+        public System.IntPtr GetCGContextRef()
+        {
+            CheckDisposed();
+            return NativeApi.Control_GetCGContextRef_(NativePointer);
+        }
+        
         public void SetAllowDefaultContextMenu(bool value)
         {
             CheckDisposed();
@@ -1539,6 +1545,9 @@ namespace Alternet.UI.Native
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void Control_SetFont_(IntPtr obj, IntPtr value);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern System.IntPtr Control_GetCGContextRef_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void Control_SetAllowDefaultContextMenu_(IntPtr obj, bool value);

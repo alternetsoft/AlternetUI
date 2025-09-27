@@ -535,9 +535,12 @@ namespace Alternet::UI
     enum class InterpolationMode
     {
         None = 0,
+        NearestNeighbor = 0,
         LowQuality = 1,
+        Low = 1,
         MediumQuality = 2,
         HighQuality = 3,
+        High = 3,
     };
     
     enum class PixelFormat
@@ -2589,6 +2592,14 @@ namespace Alternet::UI
         Radio = 2,
         Separator = 3,
         Null = 4,
+    };
+    
+    enum class SelectionBasedVisibility
+    {
+        None = 0,
+        Single = 1,
+        Multiple = 2,
+        Always = 3,
     };
     
     enum class SelectionMode

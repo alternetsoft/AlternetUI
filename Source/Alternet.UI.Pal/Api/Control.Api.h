@@ -847,6 +847,17 @@ ALTERNET_UI_API void Control_SetFont_(Control* obj, Font* value)
     #endif
 }
 
+ALTERNET_UI_API void* Control_GetCGContextRef_(Control* obj)
+{
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    return MarshalExceptions<void*>([&](){
+    #endif
+        return obj->GetCGContextRef();
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    });
+    #endif
+}
+
 ALTERNET_UI_API void Control_SetAllowDefaultContextMenu_(Control* obj, c_bool value)
 {
     #if !defined(__WXMSW__) || defined(_DEBUG)

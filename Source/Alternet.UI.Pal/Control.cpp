@@ -308,12 +308,25 @@ namespace Alternet::UI
         return IsWxWindowCreated();
     }
 
-    void* Control::GetHandle()
+    void* Control::GetCGContextRef()
     {
-#ifdef  __WXMSW__
-        return GetWxWindow()->GetHWND();
+#if __WXOSX_COCOA__
+		return (void*)GetWxWindow()->MacGetCGContextRef();
 #else
         return nullptr;
+#endif
+    }
+
+    void* Control::GetHandle()
+    {
+#ifdef __WXMSW__
+        return GetWxWindow()->GetHWND(); // HWND — type-safe
+#elif defined(__WXOSX_COCOA__)
+        return GetWxWindow()->GetHandle(); // NSView*
+#elif defined(__WXGTK__)
+        return GetWxWindow()->GetHandle(); // GtkWidget*
+#else
+        return nullptr; // Unknown or unsupported platform
 #endif
     }
 
