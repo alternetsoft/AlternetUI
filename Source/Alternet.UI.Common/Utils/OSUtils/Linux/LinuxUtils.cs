@@ -9,7 +9,7 @@ namespace Alternet.UI
     /// <summary>
     /// Contains static methods and properties related to Linux.
     /// </summary>
-    public static class LinuxUtils
+    public static partial class LinuxUtils
     {
         private static bool? isUbuntu;
         private static string? uNameResult;
