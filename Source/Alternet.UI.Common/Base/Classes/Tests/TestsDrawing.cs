@@ -19,6 +19,53 @@ namespace Alternet.UI
     public static class TestsDrawing
     {
         /// <summary>
+        /// Compares the <see cref="System.Drawing.KnownColor"/> enumeration with the
+        /// <see cref="Alternet.Drawing.KnownColor"/> enumeration to identify differences
+        /// in names or values.
+        /// </summary>
+        /// <remarks>This method iterates through all members of the
+        /// <see cref="System.Drawing.KnownColor"/> enumeration and checks if they exist in the
+        /// <see cref="Alternet.Drawing.KnownColor"/> enumeration.
+        /// It verifies that the names and integer values of the
+        /// corresponding members match between the two enumerations.
+        /// Any mismatches in names or values are logged
+        /// to debug output. If all members match, a success message is logged.
+        /// Otherwise, the total number of mismatches is reported.</remarks>
+        [Conditional("DEBUG")]
+        public static void TestCompareKnownColorEnums()
+        {
+            var systemValues = Enum.GetValues(typeof(System.Drawing.KnownColor));
+            var alternetValues = Enum.GetValues(typeof(Alternet.Drawing.KnownColor));
+
+            int mismatches = 0;
+
+            foreach (var sysColor in systemValues)
+            {
+                string name = sysColor.ToString();
+                int value = (int)sysColor;
+
+                if (Enum.TryParse(name, out Alternet.Drawing.KnownColor altColor))
+                {
+                    if ((int)altColor != value)
+                    {
+                        Debug.WriteLine($"Value mismatch: {name} — System={value}, Alternet={(int)altColor}");
+                        mismatches++;
+                    }
+                }
+                else
+                {
+                    Debug.WriteLine($"Missing in Alternet: {name}");
+                    mismatches++;
+                }
+            }
+
+            if (mismatches == 0)
+                Debug.WriteLine("All KnownColor members match in name and value.");
+            else
+                Debug.WriteLine($"Found {mismatches} mismatches.");
+        }
+
+        /// <summary>
         /// Creates an offscreen rendering context using OpenGL and renders a sample graphic.
         /// </summary>
         /// <remarks>This method initializes an invisible form to create an offscreen rendering context.
