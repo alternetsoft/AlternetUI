@@ -42,9 +42,9 @@ namespace Alternet.UI
 
         static LogWriter()
         {
-            multi.Add(application);
+            multi.Add(() => application);
             if (DebugUtils.IsDebugDefinedAndAttached)
-                multi.Add(debug);
+                multi.Add(() => debug);
             current = multi;
         }
 
@@ -133,7 +133,7 @@ namespace Alternet.UI
         /// such as a file, console, or remote logging service.</remarks>
         public class MultiLogWriter : ILogWriter
         {
-            private readonly List<ILogWriter> writers = new();
+            private readonly List<Func<ILogWriter>> writers = new();
 
             /// <summary>
             /// Initializes a new instance of the <see cref="MultiLogWriter"/> class
@@ -157,7 +157,7 @@ namespace Alternet.UI
             /// <remarks>Use this property to inspect the current log writers.
             /// To modify the collection, update the underlying configuration or use the appropriate
             /// methods to add or remove writers.</remarks>
-            public IList<ILogWriter> Writers => writers;
+            public IList<Func<ILogWriter>> Writers => writers;
 
             /// <summary>
             /// Adds a log writer to the collection of writers.
@@ -170,7 +170,22 @@ namespace Alternet.UI
             {
                 if (writer == null)
                     throw new ArgumentNullException(nameof(writer));
-                writers.Add(writer);
+                writers.Add(() => writer);
+            }
+
+            /// <summary>
+            /// Adds a log writer factory function to the collection of log writers.
+            /// </summary>
+            /// <param name="writerFunc">A function that returns an instance
+            /// of <see cref="ILogWriter"/>.  This function cannot be <see
+            /// langword="null"/>.</param>
+            /// <exception cref="ArgumentNullException">Thrown
+            /// if <paramref name="writerFunc"/> is <see langword="null"/>.</exception>
+            public void Add(Func<ILogWriter> writerFunc)
+            {
+                if (writerFunc == null)
+                    throw new ArgumentNullException(nameof(writerFunc));
+                writers.Add(writerFunc);
             }
 
             /// <inheritdoc/>
@@ -180,7 +195,7 @@ namespace Alternet.UI
                 {
                     try
                     {
-                        writer.Indent();
+                        writer()?.Indent();
                     }
                     catch
                     {
@@ -195,7 +210,7 @@ namespace Alternet.UI
                 {
                     try
                     {
-                        writer.Unindent();
+                        writer()?.Unindent();
                     }
                     catch
                     {
@@ -210,7 +225,7 @@ namespace Alternet.UI
                 {
                     try
                     {
-                        writer.WriteLine(message);
+                        writer()?.WriteLine(message);
                     }
                     catch
                     {
