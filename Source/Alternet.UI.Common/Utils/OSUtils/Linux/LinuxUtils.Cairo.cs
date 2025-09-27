@@ -13,6 +13,8 @@ namespace Alternet.UI
 {
     public static partial class LinuxUtils
     {
+        private static bool? isCairoSupported;
+
         /// <summary>
         /// Contains P/Invoke signatures for the native Cairo graphics library used on Linux.
         /// </summary>
@@ -116,6 +118,19 @@ namespace Alternet.UI
             public static extern void cairo_paint(IntPtr cr);
 
             /// <summary>
+            /// Retrieves the version number of the Cairo graphics library.
+            /// </summary>
+            /// <remarks>This method provides the version of the Cairo library linked at runtime.  The
+            /// version number can be used to verify compatibility or enable features based
+            /// on the library
+            /// version.</remarks>
+            /// <returns>An integer representing the version of the Cairo library,
+            /// encoded as a single number. The version is
+            /// typically represented as (major * 10000 + minor * 100 + micro).</returns>
+            [DllImport(LIB_CAIRO, CallingConvention = CallingConvention.Cdecl)]
+            public static extern int cairo_version();
+
+            /// <summary>
             /// Destroys a Cairo surface and frees associated resources.
             /// </summary>
             /// <param name="surface">Pointer to a <c>cairo_surface_t</c> to destroy.</param>
@@ -157,6 +172,73 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets the Cairo library version as a .NET Version struct.
+        /// </summary>
+        public static Version GetCairoVersion()
+        {
+            try
+            {
+                int version = CairoNative.cairo_version();
+                int major = version / 10000;
+                int minor = (version / 100) % 100;
+                int build = version % 100;
+                return new Version(major, minor, build);
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine($"[Error] Failed to get Cairo version: {ex.Message}");
+                return new Version(0, 0, 0);
+            }
+        }
+
+        /// <summary>
+        /// Checks if the Cairo library version is 1.10.0 or higher.
+        /// </summary>
+        public static bool IsCairoVersionSupported()
+        {
+            Version caVersion = GetCairoVersion();
+            Version minRequired = new Version(1, 10, 0);
+            return caVersion >= minRequired;
+        }
+
+        /// <summary>
+        /// Checks if the Cairo library and key functions are available.
+        /// Use this at startup to ensure your application will run correctly.
+        /// </summary>
+        public static bool IsCairoSupported()
+        {
+            var result = isCairoSupported ??= Internal();
+            return result;
+
+            bool Internal()
+            {
+                try
+                {
+                    var result = IsCairoVersionSupported();
+
+                    if (!result)
+                        return false;
+
+                    // Attempt to call a basic Cairo function as a test
+                    IntPtr dummy = CairoNative.cairo_image_surface_create_for_data(IntPtr.Zero, 0, 1, 1, 4);
+                    CairoNative.cairo_surface_destroy(dummy);
+                    // Add more function calls if needed
+                    return true;
+                }
+                catch (DllNotFoundException)
+                {
+                    Debug.WriteLine("[Error] Cairo library not found.");
+                    return false;
+                }
+                catch (EntryPointNotFoundException ex)
+                {
+                    Debug.WriteLine($"[Error] Cairo function missing: {ex.Message}. The library version may be outdated or incompatible.");
+                    return false;
+                }
+            }
+        }
+
+        /// <summary>
         /// Paints the SkiaSharp buffer onto the given Cairo drawing context.
         /// </summary>
         /// <param name="cr">
@@ -166,6 +248,12 @@ namespace Alternet.UI
         /// <param name="drawAction">The action to perform on the SkiaSharp surface.</param>
         public static bool DrawOnCairo(IntPtr cr, Action<SKSurface>? drawAction)
         {
+            if(!App.IsLinuxOS || !IsCairoSupported())
+            {
+                Debug.WriteLine("[Error] Cairo is not supported on this system.");
+                return false;
+            }
+
             IntPtr surface = CairoNative.cairo_get_target(cr);
             int width = CairoNative.cairo_image_surface_get_width(surface);
             int height = CairoNative.cairo_image_surface_get_height(surface);
@@ -184,7 +272,7 @@ namespace Alternet.UI
                 if(skiaSurface is null)
                 {
                     handle.Free();
-                    Debug.WriteLine("Failed to create SkiaSharp surface over Cairo.");
+                    Debug.WriteLine("[Error] Failed to create SkiaSharp surface over Cairo.");
                     return false;
                 }
 
@@ -215,7 +303,7 @@ namespace Alternet.UI
             if (caSurface == IntPtr.Zero)
             {
                 handle.Free();
-                Debug.WriteLine("Failed to create Cairo surface.");
+                Debug.WriteLine("[Error] Failed to create Cairo surface.");
                 return false;
             }
 
