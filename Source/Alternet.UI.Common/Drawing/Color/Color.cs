@@ -807,9 +807,7 @@ namespace Alternet.Drawing
             }
             else
             {
-                /* Use here a known color */
-                var argb = color.ToArgb();
-                return FromArgb(argb);
+                return ColorCache.Get((KnownColor)knownColor);
             }
         }
 
@@ -831,9 +829,7 @@ namespace Alternet.Drawing
             }
             else
             {
-                /* Use here a known color */
-                var argb = color.ToArgb();
-                return System.Drawing.Color.FromArgb(argb);
+                return SystemDrawingColorCache.Get((System.Drawing.KnownColor)knownColor);
             }
         }
 
@@ -1114,9 +1110,17 @@ namespace Alternet.Drawing
         /// <remarks>A predefined color is also called a known color and is
         /// represented by an element of the <see cref="KnownColor"/> enumeration.
         /// </remarks>
-        public static Color FromKnownColor(KnownColor color) =>
-            color <= 0 || color > KnownColor.RebeccaPurple ?
-            FromName(color.ToString()) : new Color(color);
+        public static Color FromKnownColor(KnownColor color)
+        {
+            if (color <= 0 || color > KnownColor.RebeccaPurple)
+            {
+                return FromName(color.ToString());
+            }
+            else
+            {
+                return ColorCache.Get(color);
+            }
+        }
 
         /// <summary>
         /// Creates a <see cref="Color"/> structure from the specified name of
