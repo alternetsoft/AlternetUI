@@ -461,7 +461,6 @@ namespace Alternet::UI
         webView->SetBackgroundStyle(wxBackgroundStyle::wxBG_STYLE_COLOUR);
         webView->SetBackgroundColour(*wxWHITE);
         
-        /*webView->Bind(wxEVT_ERASE_BACKGROUND, &WebBrowser::OnEraseBackground, this);*/
         webView->Bind(wxEVT_WEBVIEW_NAVIGATING, &WebBrowser::OnNavigating, this);
         webView->Bind(wxEVT_WEBVIEW_NAVIGATED, &WebBrowser::OnNavigated, this);
         webView->Bind(wxEVT_WEBVIEW_LOADED, &WebBrowser::OnLoaded, this);
@@ -483,7 +482,6 @@ namespace Alternet::UI
             auto window = GetWxWindow();
             if (window != nullptr)
             {
-                /*window->Unbind(wxEVT_ERASE_BACKGROUND, &WebBrowser::OnEraseBackground, this);*/
                 window->Unbind(wxEVT_WEBVIEW_NAVIGATING, &WebBrowser::OnNavigating, this);
                 window->Unbind(wxEVT_WEBVIEW_NAVIGATED, &WebBrowser::OnNavigated, this);
                 window->Unbind(wxEVT_WEBVIEW_LOADED, &WebBrowser::OnLoaded, this);

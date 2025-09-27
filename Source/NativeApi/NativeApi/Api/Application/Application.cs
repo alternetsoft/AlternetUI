@@ -109,5 +109,7 @@ namespace NativeApi.Api
         // Allows the programmer to specify whether the application will use the best
         // visual on systems that support several visual on the same display.  
         public void SetUseBestVisual(bool flag, bool forceTrueColor = false) { }
+
+        public string GetCustomData(string key) => default;
     }
 }

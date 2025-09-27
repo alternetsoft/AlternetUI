@@ -55,6 +55,7 @@ void SetExitOnFrameDelete(bool flag);
 bool SetNativeTheme(const string& theme);
 void SetTopWindow(void* window);
 void SetUseBestVisual(bool flag, bool forceTrueColor);
+string GetCustomData(const string& key);
 
 public:
 

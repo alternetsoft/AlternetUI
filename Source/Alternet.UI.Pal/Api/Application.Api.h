@@ -496,6 +496,17 @@ ALTERNET_UI_API void Application_SetUseBestVisual_(Application* obj, c_bool flag
     #endif
 }
 
+ALTERNET_UI_API char16_t* Application_GetCustomData_(Application* obj, const char16_t* key)
+{
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    return MarshalExceptions<char16_t*>([&](){
+    #endif
+        return AllocPInvokeReturnString(obj->GetCustomData(key));
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    });
+    #endif
+}
+
 ALTERNET_UI_API void Application_SetEventCallback_(Application::ApplicationEventCallbackType callback)
 {
     Application::SetEventCallback(callback);

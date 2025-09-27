@@ -97,19 +97,6 @@ namespace Alternet::UI
 
         virtual void OnEraseBackground(wxEraseEvent& event) override
         {
-/*
-            auto dc = event.GetDC();
-
-            auto background = GetBackgroundColor();
-            wxColor color;
-            if (background.IsEmpty())
-                color = wxSystemSettings::GetColour(wxSystemColour::wxSYS_COLOUR_WINDOW);
-            else
-                color = background;
-
-            dc->SetBackground(wxBrush(color));
-            dc->Clear();
-*/
         }
     };
 }

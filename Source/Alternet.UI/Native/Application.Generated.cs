@@ -331,6 +331,12 @@ namespace Alternet.UI.Native
             NativeApi.Application_SetUseBestVisual_(NativePointer, flag, forceTrueColor);
         }
         
+        public string GetCustomData(string key)
+        {
+            CheckDisposed();
+            return NativeApi.Application_GetCustomData_(NativePointer, key);
+        }
+        
         static GCHandle eventCallbackGCHandle;
         public static Application? GlobalObject;
         
@@ -580,6 +586,9 @@ namespace Alternet.UI.Native
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void Application_SetUseBestVisual_(IntPtr obj, bool flag, bool forceTrueColor);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern string Application_GetCustomData_(IntPtr obj, string key);
             
         }
     }

@@ -22,7 +22,6 @@ IMPLEMENT_WX_THEME_SUPPORT;
 
 namespace Alternet::UI
 {
-
     bool Application::_injectGtkCss = false;
 
     wxString Application::_gtkCss = R"(
@@ -607,7 +606,7 @@ If doIt is true, the fatal exceptions (also known as general protection faults u
 segmentation violations in the Unix world) will be caught and passed to wxApp::OnFatalException.
 By default, i.e. before this function is called, they will be handled in the normal way which
 usually just means that the application will be terminated. Calling wxHandleFatalExceptions()
-with doIt equal to false will restore this default behaviour.
+with doIt equal to false will restore this default behavior.
 Notice that this function is only available if wxUSE_ON_FATAL_EXCEPTION is 1 and under Windows
 platform this requires a compiler with support for SEH (structured exception handling) which
 currently means only Microsoft Visual C++.
@@ -758,4 +757,22 @@ public:
         RaiseStaticEvent(ApplicationEvent::ExceptionInMainLoop);
         return false;
     }
+
+    string Application::GetCustomData(const string& key)
+    {
+        if (key == wxStr("wx.Gtk.Version"))
+        {
+#ifdef __WXGTK3__
+            return wxStr("3");
+#endif
+#ifdef __WXGTK20__
+            return wxStr("2");
+#else
+            return wxStr("none");
+#endif
+        }
+
+		return string();
+    }
+
 }
