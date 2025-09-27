@@ -14,6 +14,7 @@ extern "C" void gdk_set_allowed_backends(const char*);
 #include "Exceptions.h"
 #include "GLControl.h"
 
+#include <wx/platform.h>
 #include <wx/sysopt.h>
 #include <wx/glcanvas.h>
 
@@ -758,18 +759,27 @@ public:
         return false;
     }
 
+    /// <summary>
+    /// Gets the wxWidgets platform port name and its version as a string, separated by space.
+    /// Example: "GTK3 3.24.38"
+    /// </summary>
+    static wxString GetPortAndVersion()
+    {
+        const wxPlatformInfo& info = wxPlatformInfo::Get();
+        wxString portName = info.GetPortIdName();
+        int major = info.GetToolkitMajorVersion();
+        int minor = info.GetToolkitMinorVersion();
+        int micro = info.GetToolkitMicroVersion();
+        wxString version;
+        version.Printf("%d.%d.%d", major, minor, micro);
+        return portName + " " + version;
+    }
+
     string Application::GetCustomData(const string& key)
     {
-        if (key == wxStr("wx.Gtk.Version"))
+        if (key == wxStr("wx.PortAndVersion"))
         {
-#ifdef __WXGTK3__
-            return wxStr("3");
-#endif
-#ifdef __WXGTK20__
-            return wxStr("2");
-#else
-            return wxStr("none");
-#endif
+            return wxStr(GetPortAndVersion());
         }
 
 		return string();

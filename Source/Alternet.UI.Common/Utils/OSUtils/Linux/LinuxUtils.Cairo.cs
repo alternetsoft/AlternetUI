@@ -197,7 +197,7 @@ namespace Alternet.UI
         public static bool IsCairoVersionSupported()
         {
             Version caVersion = GetCairoVersion();
-            Version minRequired = new Version(1, 10, 0);
+            Version minRequired = new(1, 10, 0);
             return caVersion >= minRequired;
         }
 

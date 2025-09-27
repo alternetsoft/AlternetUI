@@ -232,5 +232,11 @@ namespace Alternet.UI
         {
             return null;
         }
+
+        /// <inheritdoc/>
+        public virtual string GetCustomData(string key)
+        {
+            return string.Empty;
+        }
     }
 }

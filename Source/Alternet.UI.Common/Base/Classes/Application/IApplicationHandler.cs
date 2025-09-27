@@ -213,5 +213,14 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="value">Value.</param>
         void CrtSetDbgFlag(int value);
+
+        /// <summary>
+        /// Retrieves the custom data associated with the specified key.
+        /// </summary>
+        /// <param name="key">The key used to identify the custom data.
+        /// Cannot be null or empty.</param>
+        /// <returns>The custom data as a string if the key exists;
+        /// otherwise, an empty string.</returns>
+        string GetCustomData(string key);
     }
 }

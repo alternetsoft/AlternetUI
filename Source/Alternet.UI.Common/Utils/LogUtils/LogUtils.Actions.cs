@@ -817,6 +817,11 @@ namespace Alternet.UI
             App.LogNameValue("App.Is64BitOS", App.Is64BitOS);
             App.LogNameValue("C++ CPU", WebBrowser.DoCommandGlobal("CPU"));
 
+            var s = App.Handler.GetCustomData("wx.PortAndVersion");
+
+            if(!string.IsNullOrEmpty(s))
+                App.LogNameValue("wx.PortAndVersion", s);
+
             App.LogNameValue("AppUtils.FrameworkIdentifier", AppUtils.FrameworkIdentifier);
 
             App.LogNameValue(

@@ -241,6 +241,12 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
+        public virtual string GetCustomData(string key)
+        {
+            return nativeApplication.GetCustomData(key);
+        }
+
+        /// <inheritdoc/>
         public virtual IControlFactoryHandler CreateControlFactoryHandler()
         {
             return new WxControlFactoryHandler();

@@ -279,6 +279,12 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
+        public virtual string GetCustomData(string key)
+        {
+            return string.Empty;
+        }
+
+        /// <inheritdoc/>
         public virtual IClipboardHandler CreateClipboardHandler()
         {
             return new MauiClipboardHandler();
