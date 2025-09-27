@@ -98,7 +98,21 @@ namespace Alternet.Drawing
         {
         }
 
-        internal Pen(
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Pen"/> class with
+        /// the specified color, width, dash style, line cap, and line join settings.
+        /// </summary>
+        /// <param name="color">The color of the pen used for drawing.</param>
+        /// <param name="width">The width of the pen, typically measured
+        /// in device-independent units.</param>
+        /// <param name="dashStyle">The dash style of the pen, which determines
+        /// the pattern of dashes and gaps.</param>
+        /// <param name="lineCap">The style of the ends of lines drawn with the pen.</param>
+        /// <param name="lineJoin">The style of the joints between connected lines or segments.</param>
+        /// <param name="immutable">A value indicating whether the pen is immutable. 
+        /// If <see langword="true"/>, the pen cannot be modified
+        /// after creation; otherwise, it can be modified.</param>
+        public Pen(
             Color color,
             Coord width,
             DashStyle dashStyle,
@@ -165,9 +179,10 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
-        /// Creates <see cref="SolidBrush"/> with <see cref="Color"/> of this pen.
+        /// Gets <see cref="SolidBrush"/> with <see cref="Color"/> of this pen.
+        /// Uses <see cref="Color.AsBrush"/> internally.
         /// </summary>
-        public virtual SolidBrush AsBrush => new(Color);
+        public virtual SolidBrush AsBrush => Color.AsBrush;
 
         /// <summary>
         /// Gets or sets the style used for dashed lines drawn with this <see cref="Pen"/>.
