@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -22,6 +23,10 @@ namespace Alternet.Drawing
         private SKBitmap? bitmap;
         private InterpolationMode interpolationMode = InterpolationMode.HighQuality;
         private SKMatrix? initialMatrix;
+
+        static SkiaGraphics()
+        {
+        }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="SkiaGraphics"/> class.
@@ -252,8 +257,22 @@ namespace Alternet.Drawing
         /// <inheritdoc/>
         public override void DrawPolygon(Pen pen, ReadOnlySpan<PointD> points)
         {
+            if (points.Length < 2)
+                return;
+
             DebugPenAssert(pen);
-            canvas.DrawPoints(SKPointMode.Polygon, PointD.ToSkiaArray(points), pen);
+
+            var paint = pen.SkiaPaint;
+
+            using var path = new SKPath();
+            path.MoveTo(points[0].X, points[0].Y);
+
+            for (int i = 1; i < points.Length; i++)
+                path.LineTo(points[i].X, points[i].Y);
+
+            path.Close();
+
+            canvas.DrawPath(path, paint);
         }
 
         /// <inheritdoc/>
@@ -413,8 +432,20 @@ namespace Alternet.Drawing
         /// <inheritdoc/>
         public override void DrawLines(Pen pen, ReadOnlySpan<PointD> points)
         {
+            if (points.Length < 2)
+                return;
+
             DebugPenAssert(pen);
-            canvas.DrawPoints(SKPointMode.Lines, PointD.ToSkiaArray(points), pen);
+
+            var paint = pen.SkiaPaint;
+
+            using var path = new SKPath();
+            path.MoveTo(points[0]);
+
+            for (int i = 1; i < points.Length; i++)
+                path.LineTo(points[i]);
+
+            canvas.DrawPath(path, paint);
         }
 
         /// <inheritdoc/>
