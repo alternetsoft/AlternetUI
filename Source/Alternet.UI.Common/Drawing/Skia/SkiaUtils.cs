@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Reflection.Metadata;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 using Alternet.UI;
@@ -15,13 +17,38 @@ namespace Alternet.Drawing
     /// <summary>
     /// Contains static methods and properties related to SkiaSharp drawing.
     /// </summary>
-    public static class SkiaUtils
+    public static partial class SkiaUtils
     {
+        /// <summary>
+        /// Represents the name of the SkiaSharp canvas method used to draw points.
+        /// </summary>
+        /// <remarks>This constant is typically used as an identifier or key for referencing the
+        /// "sk_canvas_draw_points" method in SkiaSharp, a 2D graphics library.</remarks>
+        public const string SKCanvasDrawPointsName = "sk_canvas_draw_points";
+
+        /// <summary>
+        /// Gets a lazily initialized delegate for the SkiaSharp canvas draw points function.
+        /// </summary>
+        /// <remarks>This property provides a delegate that represents the native SkiaSharp
+        /// function for
+        /// drawing points on a canvas.
+        /// The delegate is initialized only when accessed for the first time, using the
+        /// native library symbol lookup.</remarks>
+        public static readonly LazyStruct<SkCanvasDrawPointsDelegate?> CanvasDrawPointsNative = new(() =>
+        {
+            return GetNativeLibrarySymbol<SkCanvasDrawPointsDelegate>(SKCanvasDrawPointsName);
+        });
+
         /// <summary>
         /// Contains <see cref="SKPaint"/> object used when images are painted with the specific
         /// <see cref="InterpolationMode"/>.
         /// </summary>
         public static readonly EnumArray<InterpolationMode, SKPaint?> InterpolationModePaints = new();
+
+        /// <summary>
+        /// Represents the name of the SkiaSharp native library.
+        /// </summary>
+        public static string NativeLibraryName = "libSkiaSharp";
 
         private static string[]? fontFamilies;
         private static FontScalar defaultFontSize = 10;
@@ -30,10 +57,49 @@ namespace Alternet.Drawing
         private static SKTypeface? defaultTypeFace;
         private static SKColorFilter? grayscaleColorFilter;
         private static SKCanvas? nullCanvas;
+        private static IntPtr? nativeLibraryHandle;
 
         static SkiaUtils()
         {
         }
+
+        /// <summary>
+        /// Represents a delegate for drawing points on a canvas using the specified mode,
+        /// point data, and paint.
+        /// </summary>
+        /// <remarks>This delegate is used to invoke unmanaged code for drawing points on a canvas.
+        /// The caller is
+        /// responsible for ensuring that all pointers are valid and that the memory they
+        /// reference remains accessible for
+        /// the duration of the call.</remarks>
+        /// <param name="canvas">A pointer to the canvas on which the points will be drawn.
+        /// Must not be <see langword="IntPtr.Zero"/>.</param>
+        /// <param name="mode">The mode that determines how the points are interpreted and drawn.
+        /// See <see cref="SKPointMode"/> for available
+        /// modes.</param>
+        /// <param name="count">A pointer to the number of points to draw. Must not be
+        /// <see langword="IntPtr.Zero"/>.</param>
+        /// <param name="points">A pointer to the array of points to be drawn.
+        /// The array must contain at least the number of points specified by
+        /// <paramref name="count"/>. Must not be <see langword="IntPtr.Zero"/>.</param>
+        /// <param name="paint">A pointer to the paint object that defines the style
+        /// and color of the points. Must not be <see
+        /// langword="IntPtr.Zero"/>.</param>
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+        public delegate void SkCanvasDrawPointsDelegate(
+            IntPtr canvas,
+            SKPointMode mode,
+            IntPtr count,
+            IntPtr points,
+            IntPtr paint);
+
+        /// <summary>
+        /// Gets the handle to the SkiaSharp native library.
+        /// </summary>
+        /// <remarks>The handle can be used to interact with the native library directly,
+        /// such as for invoking unmanaged functions.</remarks>
+        public static IntPtr NativeLibraryHandle =>
+            nativeLibraryHandle ??= LibraryLoader.TryLoadLocalLibrary<SKCanvas>(NativeLibraryName);
 
         /// <summary>
         /// Gets a null SKCanvas instance that performs no drawing operations.
@@ -653,6 +719,80 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
+        /// Draws a series of points on the specified canvas using the given mode, points, and paint.
+        /// </summary>
+        /// <remarks>This method is a wrapper for invoking the native SkiaSharp function
+        /// to draw points on
+        /// a canvas. Ensure that all pointers passed to this method are valid and properly
+        /// initialized to avoid
+        /// undefined behavior.</remarks>
+        /// <param name="canvas">A pointer to the native canvas on which the points will be drawn.
+        /// Cannot be <see langword="null"/>.</param>
+        /// <param name="mode">The mode that determines how the points are drawn,
+        /// such as individual points, lines, or polygonal paths.</param>
+        /// <param name="count">A pointer to the number of points to draw.
+        /// Must be a valid, non-negative integer.</param>
+        /// <param name="points">A pointer to the array of points to be drawn.
+        /// The array must contain at least the number of points specified
+        /// by <paramref name="count"/>.</param>
+        /// <param name="paint">A pointer to the paint object that defines the style
+        /// and color used to draw the points. Cannot be <see langword="null"/>.</param>
+        public static bool SkCanvasDrawPointsNative(
+            IntPtr canvas,
+            SKPointMode mode,
+            IntPtr count,
+            IntPtr points,
+            IntPtr paint)
+        {
+            var symbol = CanvasDrawPointsNative.Value;
+            if (symbol is null)
+                return false;
+            symbol(canvas, mode, count, points, paint);
+            return true;
+        }
+
+        /// <summary>
+        /// Checks whether the type LibraryLoader exists in the
+        /// SkiaSharp namespace of the loaded SkiaSharp assembly.
+        /// </summary>
+        public static bool IsLibraryLoaderExists()
+        {
+            var skiaApiType = KnownTypes.SkiaSharpSkiaApi.Value;
+            if (skiaApiType == null)
+                return false;
+
+            var assembly = skiaApiType.Assembly;
+
+            var libraryLoaderType = assembly.GetType(
+                "SkiaSharp.LibraryLoader",
+                throwOnError: false,
+                ignoreCase: false);
+            return libraryLoaderType != null;
+        }
+
+        /// <summary>
+        /// Retrieves a delegate of the specified type that represents
+        /// a symbol with the given name from the SkiaSharp native library.
+        /// </summary>
+        /// <remarks>This method attempts to locate the specified symbol in the native library
+        /// and create a delegate of the specified type.
+        /// Ensure that the native library is loaded and the handle is valid before
+        /// calling this method.</remarks>
+        /// <typeparam name="T">The type of the delegate to retrieve. Must be a delegate type.</typeparam>
+        /// <param name="name">The name of the symbol to locate in the native library.</param>
+        /// <returns>An instance of the delegate of type <typeparamref name="T"/>
+        /// representing the symbol,  or <see langword="null"/>
+        /// if the symbol is not found or the native library handle is not initialized.</returns>
+        public static T? GetNativeLibrarySymbol<T>(string name)
+            where T : Delegate
+        {
+            if (NativeLibraryHandle == IntPtr.Zero)
+                return null;
+
+            return LibraryLoader.TryGetSymbolDelegate<T>(NativeLibraryHandle, name);
+        }
+
+        /// <summary>
         /// Creates <see cref="SKCanvas"/> on the memory buffer and calls specified action.
         /// </summary>
         /// <param name="width">Width of the image data.</param>
@@ -681,89 +821,6 @@ namespace Alternet.Drawing
             canvas.Scale(dpi / 96.0f);
             onRender(surface);
             canvas.Flush();
-        }
-
-        /// <summary>
-        /// Represents a cached bitmap canvas, including its graphics context, size,
-        /// scale factor, and transparency.
-        /// </summary>
-        public class BitmapCanvasCached : IDisposable
-        {
-            /// <summary>
-            /// Gets or sets the <see cref="SkiaGraphics"/> instance used for drawing on the bitmap.
-            /// </summary>
-            public SkiaGraphics? Graphics;
-
-            /// <summary>
-            /// Gets or sets the size of the bitmap canvas in device-independent units.
-            /// </summary>
-            public SizeD Size;
-
-            /// <summary>
-            /// Gets or sets the scale factor used for the bitmap canvas.
-            /// </summary>
-            public Coord ScaleFactor;
-
-            /// <summary>
-            /// Gets or sets a value indicating whether the bitmap canvas is transparent.
-            /// </summary>
-            public bool IsTransparent;
-
-            /// <summary>
-            /// Gets or sets a value indicating whether the <see cref="Graphics"/>
-            /// instance should be disposed when this instance is disposed.
-            /// </summary>
-            public bool DisposeGraphics = true;
-
-            /// <summary>
-            /// Initializes a new instance of the <see cref="BitmapCanvasCached"/> class with default values.
-            /// </summary>
-            public BitmapCanvasCached()
-            {
-            }
-
-            /// <summary>
-            /// Initializes a new instance of the <see cref="BitmapCanvasCached"/> class
-            /// with the specified size, scale factor, and transparency.
-            /// </summary>
-            /// <param name="size">The size of the bitmap canvas.</param>
-            /// <param name="scaleFactor">The scale factor for the bitmap canvas.</param>
-            /// <param name="isTransparent">Indicates whether the bitmap canvas is transparent.</param>
-            public BitmapCanvasCached(SizeD size, Coord scaleFactor, bool isTransparent = true)
-            {
-                Size = size;
-                ScaleFactor = scaleFactor;
-                IsTransparent = isTransparent;
-            }
-
-            /// <summary>
-            /// Determines whether the specified specified size, scale factor,
-            /// and transparency flag are equal to those used in the current instance.
-            /// </summary>
-            /// <param name="size">The size to compare with the value stored in the current instance.</param>
-            /// <param name="scaleFactor">The scale factor to compare with the value
-            /// stored in the current instance.</param>
-            /// <param name="isTransparent">A value indicating whether the transparency flag to compare
-            /// matches the value stored in the current instance.</param>
-            /// <returns><see langword="true"/> if the specified <see cref="SizeD"/>, <see cref="Coord"/>,
-            /// and transparency flag  are equal to the values stored in the current instance;
-            /// otherwise, <see langword="false"/>.</returns>
-            public bool Equals(SizeD size, Coord scaleFactor, bool isTransparent)
-            {
-                return Size == size && ScaleFactor == scaleFactor && IsTransparent == isTransparent;
-            }
-
-            /// <summary>
-            /// Releases resources used by the <see cref="BitmapCanvasCached"/> class,
-            /// optionally disposing the <see cref="Graphics"/> instance.
-            /// </summary>
-            public void Dispose()
-            {
-                if (!DisposeGraphics)
-                    return;
-                Graphics?.Dispose();
-                Graphics = null;
-            }
         }
     }
 }
