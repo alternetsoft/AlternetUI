@@ -4,6 +4,8 @@ using System.Text;
 
 using Alternet.UI;
 using Alternet.Drawing;
+using SkiaSharp;
+using Cairo;
 
 namespace ControlsSample
 {
@@ -34,6 +36,33 @@ namespace ControlsSample
             {
                 if (!App.IsLinuxOS)
                     return;
+
+                IntPtr gtkWidgetPtr = Handler.GetHandle();
+                if (gtkWidgetPtr == IntPtr.Zero)
+                    return;
+
+                Gtk.Widget widget = new Gtk.Widget(gtkWidgetPtr);
+
+                int width = widget.AllocatedWidth;
+                int height = widget.AllocatedHeight;
+
+                Gdk.Window gdkWindow = widget.Window;
+
+                using var cairoContext = Gdk.CairoHelper.Create(gdkWindow);
+
+                var info = new SKImageInfo(width, height, SKColorType.Bgra8888, SKAlphaType.Premul);
+                using var bitmap = new SKBitmap(info);
+                using var surface = SKSurface.Create(bitmap.Info, bitmap.GetPixels(), bitmap.RowBytes);
+
+                var canvas = surface.Canvas;
+                canvas.Clear(SKColors.DarkOliveGreen);
+                SkiaUtils.DrawHelloText(canvas);
+
+                var data = bitmap.Bytes;
+                using var imageSurface = new ImageSurface(data, Format.Argb32, width, height, bitmap.RowBytes);
+
+                cairoContext.SetSourceSurface(imageSurface, 0, 0);
+                cairoContext.Paint();
             }
         }
     }
