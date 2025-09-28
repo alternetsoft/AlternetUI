@@ -83,6 +83,15 @@ namespace Alternet.Drawing
         /// </summary>
         public static readonly Color Empty = new();
 
+        /// <summary>
+        /// Represents the maximum width, in dips, of a pen that can be cached
+        /// in <see cref="GetPen"/> method.
+        /// </summary>
+        /// <remarks>This value is used to limit the size of pens stored in the cache to optimize
+        /// performance and memory usage. Pens with a width greater
+        /// than this value will not be cached by <see cref="GetPen"/> method.</remarks>
+        public static int MaxCachedPenWidth = 10;
+
         // User supplied name of color. Will not be filled in if
         // we map to a known color.
         private readonly string? name;
@@ -101,6 +110,7 @@ namespace Alternet.Drawing
         private SKPaint? fillPaint;
         private SKPaint? strokePaint;
         private SKPaint? strokeAndFillPaint;
+        private Pen[]? penCache;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Color"/> class.
@@ -559,12 +569,13 @@ namespace Alternet.Drawing
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
             get
             {
+                RequireArgb();
                 return asBrush ??= new(this, immutable: true);
             }
         }
 
         /// <summary>
-        /// Creates <see cref="Pen"/> instance for this color.
+        /// Gets a <see cref="Pen"/> instance representing the current state of the object.
         /// </summary>
         [Browsable(false)]
         public Pen AsPen
@@ -572,13 +583,8 @@ namespace Alternet.Drawing
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
             get
             {
-                return asPen ??= new(
-                    this,
-                    1,
-                    DashStyle.Solid,
-                    LineCap.Flat,
-                    LineJoin.Miter,
-                    immutable: true);
+                RequireArgb();
+                return asPen ??= CreatePenInstance(1);
             }
         }
 
@@ -592,6 +598,7 @@ namespace Alternet.Drawing
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
             get
             {
+                RequireArgb();
                 return strokeAndFillPaint ??= GraphicsFactory.ColorToStrokeAndFillPaint(this);
             }
         }
@@ -606,6 +613,7 @@ namespace Alternet.Drawing
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
             get
             {
+                RequireArgb();
                 return strokePaint ??= GraphicsFactory.ColorToStrokePaint(this);
             }
         }
@@ -620,6 +628,7 @@ namespace Alternet.Drawing
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
             get
             {
+                RequireArgb();
                 return fillPaint ??= GraphicsFactory.ColorToFillPaint(this);
             }
         }
@@ -1364,6 +1373,18 @@ namespace Alternet.Drawing
             rgb.R = AlphaBlend(rgb.R, brightness, 0.4);
             rgb.G = AlphaBlend(rgb.G, brightness, 0.4);
             rgb.B = AlphaBlend(rgb.B, brightness, 0.4);
+        }
+
+        /// <summary>
+        /// Creates a <see cref="LightDarkColor"/> instance with
+        /// the specified color used for both light and dark themes.
+        /// </summary>
+        /// <param name="lightDark">The color to be used for both the light and dark themes.</param>
+        /// <returns>A <see cref="LightDarkColor"/> instance where the same
+        /// color is applied to both themes.</returns>
+        public static LightDarkColor LightDark(Color lightDark)
+        {
+            return new LightDarkColor(lightDark, lightDark);
         }
 
         /// <summary>
@@ -2135,14 +2156,107 @@ namespace Alternet.Drawing
             return (color, state, knownColor).GetHashCode();
         }
 
+        /// <summary>
+        /// Retrieves a <see cref="Pen"/> instance with the specified width.
+        /// </summary>
+        /// <remarks>This method optimizes performance by caching <see cref="Pen"/>
+        /// instances for widths
+        /// up to a predefined limit. For widths exceeding the cache limit,
+        /// a new <see cref="Pen"/> instance is created
+        /// on each call.</remarks>
+        /// <param name="width">The width of the pen to retrieve.
+        /// Must be a positive integer.</param>
+        /// <returns>A <see cref="Pen"/> instance with the specified width.
+        /// If the width is less than or equal to a predefined
+        /// maximum cached width, a cached instance may be returned;
+        /// otherwise, a new instance is created.</returns>
+        /// <see cref="AsPen"/>
+        public virtual Pen GetPen(int width)
+        {
+            if (width <= 1)
+                return AsPen;
+            if(width <= MaxCachedPenWidth)
+            {
+                penCache ??= new Pen[MaxCachedPenWidth + 1];
+                var pen = penCache[width];
+                if (pen == null)
+                {
+                    pen = CreatePenInstance(width);
+                    penCache[width] = pen;
+                }
+
+                return pen;
+            }
+            else
+            {
+                return CreatePenInstance(width);
+            }
+        }
+
+        /// <summary>
+        /// Resets all cached resources used for rendering.
+        /// </summary>
+        /// <remarks>This method clears any cached brushes, pens, and paints,
+        /// ensuring that subsequent
+        /// rendering operations will recreate these resources as needed.
+        /// Use this method to release memory or refresh
+        /// resources when their state may have changed due
+        /// to changes in system colors or user preferences.</remarks>
+        public virtual void ResetCachedResources()
+        {
+            asBrush = null;
+            asPen = null;
+            fillPaint = null;
+            strokePaint = null;
+            strokeAndFillPaint = null;
+            penCache = null;
+        }
+
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         internal static bool IsKnownColorSystem(KnownColor knownColor)
              => KnownColorTable.ColorKindTable[(int)knownColor] ==
                  KnownColorTable.KnownColorKindSystem;
 
-        internal static LightDarkColor LightDark(Color lightDark)
+        /// <summary>
+        /// Creates a new instance of a <see cref="Pen"/> with
+        /// the specified width and default settings.
+        /// </summary>
+        /// <remarks>This method is intended to be overridden in derived
+        /// classes to customize the creation
+        /// of <see cref="Pen"/> instances used in <see cref="AsPen"/> and <see cref="GetPen"/>.
+        /// By default, the pen is created with
+        /// a solid dash style, flat line caps,
+        /// mitered line joins, and is immutable.</remarks>
+        /// <param name="width">The width of the pen, in device-independent units (DIPs).</param>
+        /// <returns>A new <see cref="Pen"/> instance configured with the specified
+        /// width and default settings.</returns>
+        protected virtual Pen CreatePenInstance(Coord width)
         {
-            return new LightDarkColor(lightDark, lightDark);
+            return new(
+                this,
+                width,
+                DashStyle.Solid,
+                LineCap.Flat,
+                LineJoin.Miter,
+                immutable: true);
+        }
+
+        /// <summary>
+        /// Ensures that the color ARGB value is valid.
+        /// </summary>
+        /// <remarks>This method validates or enforces that the associated color value adheres
+        /// to the ARGB format. It is intended to be used internally to maintain consistency
+        /// in color representation. This method is called before any operations where ARGB
+        /// values are accessed.</remarks>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        protected void RequireArgb()
+        {
+            RefreshCachedResources();
+            RequireArgb(ref color);
+
+            void RefreshCachedResources()
+            {
+            }
         }
 
         /// <summary>
@@ -2162,27 +2276,14 @@ namespace Alternet.Drawing
 
         private static void CheckByte(int value, string name)
         {
-            static void ThrowOutOfByteRange(int v, string n) =>
-                throw new ArgumentException(
-                    string.Format(
-                        "Variable {0} has invalid value {1}." + " " +
-                        "Minimum allowed value is {2}, maximum is {3}.",
-                        new object[] { n, v, byte.MinValue, byte.MaxValue }));
-
             if (unchecked((uint)value) > byte.MaxValue)
-                ThrowOutOfByteRange(value, name);
+                ExceptionUtils.ThrowOutOfByteRange(value, name);
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         private static Color FromArgb(uint argb)
         {
             return new(argb, StateFlags.ValueValid);
-        }
-
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        private void RequireArgb()
-        {
-            RequireArgb(ref color);
         }
 
         /// <summary>
