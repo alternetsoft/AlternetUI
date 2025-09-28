@@ -14,6 +14,7 @@
     <PackageReference Include="SkiaSharp.Extended.Iconify.FontAwesome" 
                       Version="$(SkiaSharpExtendedIconifyFontAwesomeVersion)" />
 -->
+    <PackageReference Include="SkiaSharp.Views.Gtk3" Version="$(SkiaSharpVersion)" />
     <PackageReference Include="SkiaSharp.NativeAssets.Linux" Version="$(SkiaSharpVersion)" />
     <PackageReference Include="SkiaSharp.NativeAssets.macOS" Version="$(SkiaSharpVersion)" />
     <PackageReference Include="SkiaSharp.NativeAssets.Win32" Version="$(SkiaSharpVersion)" />
