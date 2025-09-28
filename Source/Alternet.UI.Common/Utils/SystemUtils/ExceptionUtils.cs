@@ -13,6 +13,25 @@ namespace Alternet.UI
     public static class ExceptionUtils
     {
         /// <summary>
+        /// Throws an <see cref="ArgumentException"/> if the specified value
+        /// is outside the valid range for a byte.
+        /// </summary>
+        /// <param name="v">The value to validate.</param>
+        /// <param name="n">The name of the variable being validated,
+        /// used in the exception message.</param>
+        /// <exception cref="ArgumentException">Thrown if <paramref name="v"/>
+        /// is less than <see cref="byte.MinValue"/> or greater than
+        /// <see cref="byte.MaxValue"/>.</exception>
+        public static void ThrowOutOfByteRange(int v, string n)
+        {
+            throw new ArgumentException(
+                string.Format(
+                    "Variable '{0}' has invalid value {1}." + " " +
+                    "Minimum allowed value is {2}, maximum is {3}.",
+                    new object[] { n, v, byte.MinValue, byte.MaxValue }));
+        }
+
+        /// <summary>
         /// Rethrows the specified exception with the correct call stack information
         /// if the condition is true.
         /// </summary>
