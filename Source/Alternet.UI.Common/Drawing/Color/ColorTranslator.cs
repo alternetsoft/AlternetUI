@@ -1,5 +1,6 @@
-// Licensed to the .NET Foundation under one or more agreements.
-// The .NET Foundation licenses this file to you under the MIT license.
+// This code is based on the .NET implementation.
+// We thank the .NET team for making it available under the MIT license.
+// We have modified this code to fit our needs.
 
 using System;
 using System.Collections.Generic;
