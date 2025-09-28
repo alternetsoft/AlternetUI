@@ -47,6 +47,16 @@ namespace ControlsSample
             AddPage<NativeTreeViewPage>("Native TreeView");
             AddPage<PopupToolBarPage>("Popup ToolBar");
 
+            if (App.IsMacOS)
+            {
+                AddPage<SkiaDirectPaintMacOsPage>("SkiaSharp macOs Direct Paint Sample");
+            }
+
+            if (App.IsLinuxOS)
+            {
+                AddPage<SkiaDirectPaintGtkPage>("SkiaSharp Gtk3 Direct Paint Sample");
+            }
+
             mainPanel.LeftListBox.SelectFirstItem();
 
             mainPanel.Name = "mainPanel";

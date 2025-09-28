@@ -7,14 +7,14 @@ using Alternet.Drawing;
 
 namespace ControlsSample
 {
-    internal class SkiaDirectPaintMacOsPage : Panel
+    internal class SkiaDirectPaintGtkPage : Panel
     {
-        public SkiaDirectPaintMacOsPage()
+        public SkiaDirectPaintGtkPage()
         {
-            if (!App.IsMacOS)
+            if (!App.IsLinuxOS)
             {
                 var label = new Label();
-                label.Text = "This page is available only on macOs.";
+                label.Text = "This page is available only on Linux.";
                 label.Parent = this;
                 label.Dock = DockStyle.Fill;
                 label.HorizontalAlignment = HorizontalAlignment.Center;
@@ -22,20 +22,17 @@ namespace ControlsSample
             }
             else
             {
-                var skiaControl = new SkiaDirectPaintMacOs();
+                var skiaControl = new SkiaDirectPaintLinux();
                 skiaControl.Parent = this;
                 skiaControl.Dock = DockStyle.Fill;
             }
         }
 
-        private class SkiaDirectPaintMacOs : UserControl        
+        private class SkiaDirectPaintLinux : UserControl        
         {
             public override void DefaultPaint(PaintEventArgs e)
             {
-                if (!App.IsMacOS)
-                    return;
-                IntPtr nsViewPtr = Handler.GetHandle();
-                if (nsViewPtr == IntPtr.Zero)
+                if (!App.IsLinuxOS)
                     return;
             }
         }
