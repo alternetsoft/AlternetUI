@@ -1796,16 +1796,16 @@ namespace Alternet.UI
 
         /// <summary>
         /// Gets native handle of the control.
-        /// </summary>
-        /// <remarks>
-        /// You should not use this property directly.
-        /// </remarks>
-        /// <returns>
         /// On WxWidgets platform returns pointer to the native control.
         /// For Windows returns hWnd,
         /// for macOs returns pointer to NSView,
         /// for Linux GTK returns pointer to GtkWidget.
         /// For other operating systems returns <see cref="IntPtr.Zero"/>.
+        /// </summary>
+        /// <remarks>
+        /// You should not use this property directly.
+        /// </remarks>
+        /// <returns>
         /// If control has no native representation, returns <see cref="IntPtr.Zero"/>.
         /// If native control is not created, returns <see cref="IntPtr.Zero"/>.
         /// If control is disposed, returns <see cref="IntPtr.Zero"/>.

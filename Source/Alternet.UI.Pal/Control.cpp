@@ -310,8 +310,12 @@ namespace Alternet::UI
 
     void* Control::GetCGContextRef()
     {
-#if __WXOSX_COCOA__
-		return (void*)GetWxWindow()->MacGetCGContextRef();
+#ifdef __WXMSW__
+        return nullptr;
+#elif defined(__WXOSX_COCOA__)
+        return (void*)GetWxWindow()->MacGetCGContextRef();
+#elif defined(__WXGTK__)
+        return nullptr;
 #else
         return nullptr;
 #endif
