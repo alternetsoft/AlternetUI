@@ -14,6 +14,63 @@ namespace Alternet.UI
         private static bool? isUbuntu;
         private static string? uNameResult;
         private static bool? isAndroid;
+        private static bool? isMusl;
+
+        /// <summary>
+        /// Determines the Linux flavor used by the current system.
+        /// </summary>
+        /// <returns>A string representing the Linux flavor.
+        /// Returns <see langword="musl"/> if the system uses musl libc;
+        /// otherwise, returns <see langword="glibc"/>.</returns>
+        public static string GetLinuxFlavor()
+        {
+            if (IsMusl())
+                return "musl";
+            else
+                return "glibc";
+        }
+
+        /// <summary>
+        /// Determines whether the current system uses the musl C library.
+        /// </summary>
+        /// <remarks>This method checks the version information of the `ldd` command
+        /// to determine if the
+        /// musl C library is in use. It returns <see langword="true"/>
+        /// if the output of `ldd --version` contains the
+        /// string "musl", ignoring case. If the `ldd` command is unavailable
+        /// or an error occurs during execution, the
+        /// method returns <see langword="false"/>.</remarks>
+        /// <returns><see langword="true"/> if the musl C library is detected;
+        /// otherwise, <see langword="false"/>.</returns>
+        private static bool IsMusl()
+        {
+            if (isMusl != null) return (bool)isMusl;
+
+            try
+            {
+                var proc = new System.Diagnostics.Process
+                {
+                    StartInfo = new System.Diagnostics.ProcessStartInfo
+                    {
+                        FileName = "ldd",
+                        Arguments = "--version",
+                        RedirectStandardOutput = true,
+                        UseShellExecute = false
+                    }
+                };
+                proc.Start();
+                string output = proc.StandardOutput.ReadToEnd();
+                proc.WaitForExit();
+
+                isMusl = output.ToLowerInvariant().Contains("musl");
+                return (bool)isMusl;
+            }
+            catch
+            {
+                isMusl = false;
+                return false;
+            }
+        }
 
         /// <summary>
         /// Indicates whether the current application is running on Android.
