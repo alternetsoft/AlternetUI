@@ -15,6 +15,14 @@ namespace Alternet.UI
     /// </summary>
     public static class OSUtils
     {
+        /// <summary>
+        /// Gets or sets the file extension override for the native libraries.
+        /// </summary>
+        /// <remarks>This property allows you to specify a custom file extension to be used by the
+        /// native libraries.
+        /// If set to <see langword="null"/>, the default file extension will be used.</remarks>
+        public static string? NativeLibraryExtensionOverride;
+
         private static ConcurrentDictionary<string, string?> commandPath { get; } = new();
 
         /// <summary>
@@ -133,13 +141,16 @@ namespace Alternet.UI
         /// <returns></returns>
         public static string GetLibraryExtension()
         {
+            if (NativeLibraryExtensionOverride is not null)
+                return NativeLibraryExtensionOverride;
+
             if (App.IsWindowsOS)
                 return ".dll";
             if (App.IsLinuxOS || App.IsAndroidOS)
                 return ".so";
             if (App.IsMacOS || App.IsIOS)
                 return ".dylib";
-            throw new Exception("GetLibraryExtension");
+            return ".so";
         }
 
         /// <summary>
