@@ -167,5 +167,17 @@ namespace Alternet.UI
                 action((TKey)Enum.ToObject(typeof(TKey), i));
             }
         }
+
+        /// <summary>
+        /// Retrieves all values stored in this array.
+        /// </summary>
+        /// <returns>An <see cref="IEnumerable{TValue}"/> containing all values in the array.</returns>
+        public IEnumerable<TValue> GetValues()
+        {
+            for (int i = 0; i < Data.Length; i++)
+            {
+                yield return Data[i];
+            }
+        }
     }
 }
