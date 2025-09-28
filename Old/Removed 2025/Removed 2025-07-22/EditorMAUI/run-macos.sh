@@ -1,1 +1,0 @@
-dotnet run -f net9.0-maccatalyst
