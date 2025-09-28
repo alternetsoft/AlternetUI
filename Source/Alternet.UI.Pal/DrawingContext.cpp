@@ -506,16 +506,13 @@ namespace Alternet::UI
         if (pointsCount <= 2)
             return;
 
-        _graphicsContext->SetPen(pen->GetWxPen());
-        _graphicsContext->SetBrush(*wxTRANSPARENT_BRUSH);
+        auto path = new GraphicsPath(_dc, _graphicsContext);
 
-        auto window = _dc->GetWindow();
+        path->AddLines(points, pointsCount);
 
-        std::vector<wxPoint2DDouble> wxPoints(pointsCount);
-        for (int i = 0; i < pointsCount; i++)
-            wxPoints[i] = fromDip(points[i], window);
+        DrawPath(pen, path);
 
-        _graphicsContext->DrawLines(pointsCount, &wxPoints[0]);
+        path->Release();
     }
 
     void DrawingContext::DrawEllipse(Pen* pen, const Rect& bounds)
