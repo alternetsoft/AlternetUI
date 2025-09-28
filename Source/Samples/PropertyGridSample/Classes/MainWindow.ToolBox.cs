@@ -160,6 +160,7 @@ namespace PropertyGridSample
                     {
                         categoryItem = new TreeViewItem(categoryTitle);
                         categoryItem.HideSelection = true;
+                        categoryItem.ExpandOnClick = true;
                         categoryItem.AutoCollapseSiblings = true;
                         categories[categoryTitle] = categoryItem;
                         ToolBox.Add(categoryItem);
