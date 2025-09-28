@@ -90,7 +90,7 @@ namespace Alternet.Drawing
         /// <remarks>This value is used to limit the size of pens stored in the cache to optimize
         /// performance and memory usage. Pens with a width greater
         /// than this value will not be cached by <see cref="GetPen"/> method.</remarks>
-        public static int MaxCachedPenWidth = 10;
+        public static readonly int MaxCachedPenWidth = 10;
 
         // User supplied name of color. Will not be filled in if
         // we map to a known color.
@@ -110,7 +110,7 @@ namespace Alternet.Drawing
         private SKPaint? fillPaint;
         private SKPaint? strokePaint;
         private SKPaint? strokeAndFillPaint;
-        private Pen[]? penCache;
+        private Pen?[]? penCache;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Color"/> class.
