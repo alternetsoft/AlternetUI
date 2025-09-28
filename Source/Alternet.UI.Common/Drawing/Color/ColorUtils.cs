@@ -13,20 +13,12 @@ namespace Alternet.Drawing
     /// </summary>
     public static class ColorUtils
     {
-        private static BaseDictionary<KnownColor, IKnownColorInfo>? knownColorItems;
+        private static EnumArray<KnownColor, IKnownColorInfo> knownColorItems;
+        private static bool knownColorsRegistered = false;
 
-        private static BaseDictionary<KnownColor, IKnownColorInfo> KnownColorItems
+        static ColorUtils()
         {
-            get
-            {
-                if (knownColorItems == null)
-                {
-                    knownColorItems = new();
-                    RegisterKnownColors();
-                }
-
-                return knownColorItems;
-            }
+            knownColorItems = new();
         }
 
         /// <summary>
@@ -95,7 +87,7 @@ namespace Alternet.Drawing
         /// <param name="color">Known color.</param>
         public static string GetLabelLocalized(KnownColor color)
         {
-            return ColorUtils.GetColorInfo(color).LabelLocalized;
+            return GetColorInfo(color).LabelLocalized;
         }
 
         /// <summary>
@@ -113,7 +105,19 @@ namespace Alternet.Drawing
         /// </summary>
         public static IEnumerable<IKnownColorInfo> GetColorInfoItems()
         {
-            return KnownColorItems.Values;
+            RequireKnownColorItems();
+
+            var collection = knownColorItems.GetValues();
+
+            if (collection is null)
+                yield break;
+
+            foreach (var item in collection)
+            {
+                if (item is null)
+                    continue;
+                yield return item;
+            }
         }
 
         /// <summary>
@@ -122,9 +126,16 @@ namespace Alternet.Drawing
         /// <param name="color">Known color.</param>
         public static IKnownColorInfo GetColorInfo(KnownColor color)
         {
-            var result = KnownColorItems.GetOrCreate(
-                color,
-                () => { return new KnownColorInfo(color); });
+            RequireKnownColorItems();
+
+            var result = knownColorItems[color];
+
+            if (result is null)
+            {
+                result = new KnownColorInfo(color);
+                knownColorItems[color] = result;
+            }
+
             return result;
         }
 
@@ -188,10 +199,11 @@ namespace Alternet.Drawing
             }
         }
 
-        private static void RegisterKnownColors()
+        private static void RequireKnownColorItems()
         {
-            if (KnownColorItems.Count > 0)
+            if (knownColorsRegistered)
                 return;
+            knownColorsRegistered = true;
 
             static void RegisterKnownColor(KnownColor color, KnownColorCategory cat)
             {
@@ -199,7 +211,8 @@ namespace Alternet.Drawing
                 {
                     Category = cat,
                 };
-                KnownColorItems.Add(color, item);
+
+                knownColorItems[color] = item;
             }
 
             RegisterKnownColor(KnownColor.ActiveBorder, KnownColorCategory.System);
