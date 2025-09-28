@@ -456,6 +456,30 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
+        /// Draws the specified text on the canvas at the given location,
+        /// using default styling if no parameters are provided.
+        /// </summary>
+        /// <remarks>This method uses default font and color settings to render the text. The text is
+        /// drawn with a green foreground and a yellow background.</remarks>
+        /// <param name="canvas">The <see cref="SKCanvas"/> on which the text will be drawn.
+        /// Cannot be <see langword="null"/>.</param>
+        /// <param name="text">The text to draw. If <see langword="null"/>, the default text
+        /// "Hello from SkiaSharp" will be used.</param>
+        /// <param name="location">The location where the text will be drawn,
+        /// specified as a <see cref="PointD"/>. If <see langword="null"/>,
+        /// the default location (10, 10) will be used.</param>
+        public static void DrawHelloText(this SKCanvas canvas, string? text = null, PointD? location = null)
+        {
+            DrawText(
+                canvas,
+                text ?? "Hello from SkiaSharp",
+                location ?? (10, 10),
+                Font.Default,
+                Color.Green,
+                Color.Yellow);
+        }
+
+        /// <summary>
         /// Draws text with the specified parameters.
         /// </summary>
         /// <param name="canvas">Drawing context.</param>
