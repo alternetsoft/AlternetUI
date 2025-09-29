@@ -72,7 +72,7 @@ namespace Alternet.Drawing
         {
             get
             {
-                return IsDarkOverride ?? SystemSettings.IsUsingDarkBackground;
+                return IsDarkOverride ?? SystemSettings.AppearanceIsDark;
             }
         }
 
