@@ -171,3 +171,5 @@ dotnet_diagnostic.SA1121.severity = none
 
 # IDE0306: Simplify collection initialization
 dotnet_diagnostic.IDE0306.severity = none
+
+dotnet_diagnostic.IDE0070.severity = none

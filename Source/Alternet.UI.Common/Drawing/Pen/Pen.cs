@@ -109,7 +109,7 @@ namespace Alternet.Drawing
         /// the pattern of dashes and gaps.</param>
         /// <param name="lineCap">The style of the ends of lines drawn with the pen.</param>
         /// <param name="lineJoin">The style of the joints between connected lines or segments.</param>
-        /// <param name="immutable">A value indicating whether the pen is immutable. 
+        /// <param name="immutable">A value indicating whether the pen is immutable.
         /// If <see langword="true"/>, the pen cannot be modified
         /// after creation; otherwise, it can be modified.</param>
         public Pen(
@@ -282,14 +282,17 @@ namespace Alternet.Drawing
         /// <inheritdoc/>
         protected override bool UpdateRequired
         {
-            get => base.UpdateRequired;
+            get
+            {
+                return base.UpdateRequired;
+            }
 
             set
             {
                 if (UpdateRequired == value)
                     return;
                 base.UpdateRequired = value;
-                if(value)
+                if (value)
                 {
                     SafeDispose(ref paint);
                 }

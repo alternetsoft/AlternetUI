@@ -1099,8 +1099,9 @@ namespace Alternet.UI
                 }
                 else
                 {
-                    return defaults.UnfocusedSelectedItemBackColor
+                    var result = defaults.UnfocusedSelectedItemBackColor
                         ?? VirtualListBox.DefaultUnfocusedSelectedItemBackColor;
+                    return result;
                 }
             }
             else
