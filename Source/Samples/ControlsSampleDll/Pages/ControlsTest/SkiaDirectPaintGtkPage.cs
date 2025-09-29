@@ -48,7 +48,8 @@ namespace ControlsSample
 
                 Gdk.Window gdkWindow = widget.Window;
 
-                using var cairoContext = Gdk.CairoHelper.Create(gdkWindow);
+                var cairoPtr = Handler.NativeGraphicsContext;
+                using var cairoContext = new Context(cairoPtr, false);
 
                 var info = new SKImageInfo(width, height, SKColorType.Bgra8888, SKAlphaType.Premul);
                 using var bitmap = new SKBitmap(info);

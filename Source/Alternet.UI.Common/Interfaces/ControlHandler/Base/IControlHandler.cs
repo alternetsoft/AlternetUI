@@ -15,6 +15,9 @@ namespace Alternet.UI
     {
         /// <summary>
         /// Gets the reference to native graphics context.
+        /// For wxWidgets backend it returns the following:
+        /// - On Linux it return cairo_t* pointer.
+        /// - On MacOS it returns CGContextRef pointer.
         /// </summary>
         IntPtr NativeGraphicsContext { get; }
 
