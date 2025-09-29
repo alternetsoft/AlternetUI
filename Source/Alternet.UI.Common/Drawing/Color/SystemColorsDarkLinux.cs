@@ -22,6 +22,11 @@ namespace Alternet.Drawing
             {
                 return defaultValue ??= new SystemColorsDarkLinux();
             }
+
+            set
+            {
+                defaultValue = value;
+            }
         }
 
         /// <inheritdoc/>

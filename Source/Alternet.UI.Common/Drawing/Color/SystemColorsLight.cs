@@ -23,6 +23,11 @@ namespace Alternet.Drawing
             {
                 return defaultValue ??= new SystemColorsLight();
             }
+
+            set
+            {
+                defaultValue = value;
+            }
         }
 
         /// <summary>

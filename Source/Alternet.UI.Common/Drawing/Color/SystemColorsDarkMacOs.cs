@@ -22,6 +22,11 @@ namespace Alternet.Drawing
             {
                 return defaultValue ??= new SystemColorsDarkMacOs();
             }
+
+            set
+            {
+                defaultValue = value;
+            }
         }
 
         /// <inheritdoc/>
