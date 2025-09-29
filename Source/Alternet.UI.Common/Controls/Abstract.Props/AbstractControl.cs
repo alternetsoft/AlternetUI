@@ -387,6 +387,18 @@ namespace Alternet.UI
             }
         }
 
+
+        /// <summary>
+        /// Gets or sets a value indicating whether the colors should
+        /// be automatically updated when the color theme or system colors are changed.
+        /// </summary>
+        /// <remarks>
+        /// Behavior of this property is affected by the control implementation
+        /// and may not work as expected in all scenarios.
+        /// </remarks>
+        [Browsable(false)]
+        public virtual bool AutoUpdateColors { get; set; } = true;
+
         /// <summary>
         /// Gets or sets layout flags which are used to control how layout is performed.
         /// </summary>
