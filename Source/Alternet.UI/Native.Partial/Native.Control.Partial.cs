@@ -239,7 +239,8 @@ namespace Alternet.UI.Native
 
         public virtual void OnPlatformEventSystemColorsChanged()
         {
-            UIControl?.RaiseSystemColorsChanged(EventArgs.Empty);
+            if(UIControl == App.MainWindow)
+                SystemSettings.ResetColors();
         }
 
         public virtual void OnPlatformEventDragDrop(NativeEventArgs<DragEventData> ea)
