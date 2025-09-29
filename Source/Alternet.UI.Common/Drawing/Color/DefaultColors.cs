@@ -29,39 +29,12 @@ namespace Alternet.Drawing
         private static LightDarkColor controlBackColor;
         private static LightDarkColor controlForeColor;
 
+#pragma warning disable CS8618
         static DefaultColors()
         {
-            Color darkBackColor;
-            Color darkForeColor;
-
-            if (SystemColors.Control.IsDark())
-            {
-                darkBackColor = SystemColors.Control;
-                darkForeColor = SystemColors.ControlText;
-            }
-            else
-            {
-                darkBackColor = (30, 30, 30);
-                darkForeColor = (164, 164, 164);
-            }
-
-            windowBackColor = new(light: new(240, 240, 240), dark: darkBackColor);
-            windowForeColor = new(light: Color.Black, dark: darkForeColor);
-
-            if (SystemColors.Window.IsDark())
-            {
-                darkBackColor = SystemColors.Window;
-                darkForeColor = SystemColors.WindowText;
-            }
-            else
-            {
-                darkBackColor = (30, 30, 30);
-                darkForeColor = (164, 164, 164);
-            }
-
-            controlBackColor = new(light: Color.White, dark: darkBackColor);
-            controlForeColor = new(light: Color.Black, dark: darkForeColor);
+            Initialize();
         }
+#pragma warning restore CS8618
 
         /// <summary>
         /// Gets or sets the default color of a checkbox in its normal state.
@@ -205,6 +178,49 @@ namespace Alternet.Drawing
                 ?? control.BackgroundColor?.AsBrush
                 ?? GetControlBorderColor(control).AsBrush;
             return brush;
+        }
+
+        /// <summary>
+        /// Initializes the <see cref="DefaultColors"/> based on the current system theme.
+        /// </summary>
+        /// <remarks>This method determines appropriate light and dark color values for various UI
+        /// elements (such as window and control backgrounds and foregrounds)
+        /// by inspecting the system's current color
+        /// scheme. It ensures that the application adapts to both light and dark themes
+        /// for a consistent user
+        /// experience.</remarks>
+        public static void Initialize()
+        {
+            Color darkBackColor;
+            Color darkForeColor;
+
+            if (SystemColors.Control.IsDark())
+            {
+                darkBackColor = SystemColors.Control;
+                darkForeColor = SystemColors.ControlText;
+            }
+            else
+            {
+                darkBackColor = (30, 30, 30);
+                darkForeColor = (164, 164, 164);
+            }
+
+            windowBackColor = new(light: new(240, 240, 240), dark: darkBackColor);
+            windowForeColor = new(light: Color.Black, dark: darkForeColor);
+
+            if (SystemColors.Window.IsDark())
+            {
+                darkBackColor = SystemColors.Window;
+                darkForeColor = SystemColors.WindowText;
+            }
+            else
+            {
+                darkBackColor = (30, 30, 30);
+                darkForeColor = (164, 164, 164);
+            }
+
+            controlBackColor = new(light: Color.White, dark: darkBackColor);
+            controlForeColor = new(light: Color.Black, dark: darkForeColor);
         }
     }
 }
