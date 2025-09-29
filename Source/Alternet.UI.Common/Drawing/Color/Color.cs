@@ -105,12 +105,7 @@ namespace Alternet.Drawing
 
         private readonly StateFlags state;
 
-        private SolidBrush? asBrush;
-        private Pen? asPen;
-        private SKPaint? fillPaint;
-        private SKPaint? strokePaint;
-        private SKPaint? strokeAndFillPaint;
-        private Pen?[]? penCache;
+        private CachedResources resources = new();
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Color"/> class.
@@ -570,7 +565,7 @@ namespace Alternet.Drawing
             get
             {
                 RequireArgb();
-                return asBrush ??= new(this, immutable: true);
+                return resources.AsBrush ??= new(this, immutable: true);
             }
         }
 
@@ -584,7 +579,7 @@ namespace Alternet.Drawing
             get
             {
                 RequireArgb();
-                return asPen ??= CreatePenInstance(1);
+                return resources.AsPen ??= CreatePenInstance(1);
             }
         }
 
@@ -599,7 +594,7 @@ namespace Alternet.Drawing
             get
             {
                 RequireArgb();
-                return strokeAndFillPaint ??= GraphicsFactory.ColorToStrokeAndFillPaint(this);
+                return resources.StrokeAndFillPaint ??= GraphicsFactory.ColorToStrokeAndFillPaint(this);
             }
         }
 
@@ -614,7 +609,7 @@ namespace Alternet.Drawing
             get
             {
                 RequireArgb();
-                return strokePaint ??= GraphicsFactory.ColorToStrokePaint(this);
+                return resources.StrokePaint ??= GraphicsFactory.ColorToStrokePaint(this);
             }
         }
 
@@ -629,7 +624,7 @@ namespace Alternet.Drawing
             get
             {
                 RequireArgb();
-                return fillPaint ??= GraphicsFactory.ColorToFillPaint(this);
+                return resources.FillPaint ??= GraphicsFactory.ColorToFillPaint(this);
             }
         }
 
@@ -2177,12 +2172,12 @@ namespace Alternet.Drawing
                 return AsPen;
             if(width <= MaxCachedPenWidth)
             {
-                penCache ??= new Pen[MaxCachedPenWidth + 1];
-                var pen = penCache[width];
+                resources.PenCache ??= new Pen[MaxCachedPenWidth + 1];
+                var pen = resources.PenCache[width];
                 if (pen == null)
                 {
                     pen = CreatePenInstance(width);
-                    penCache[width] = pen;
+                    resources.PenCache[width] = pen;
                 }
 
                 return pen;
@@ -2204,12 +2199,7 @@ namespace Alternet.Drawing
         /// to changes in system colors or user preferences.</remarks>
         public virtual void ResetCachedResources()
         {
-            asBrush = null;
-            asPen = null;
-            fillPaint = null;
-            strokePaint = null;
-            strokeAndFillPaint = null;
-            penCache = null;
+            resources = new();
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -2251,12 +2241,10 @@ namespace Alternet.Drawing
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         protected void RequireArgb()
         {
-            RefreshCachedResources();
+            var oldColor = color;
             RequireArgb(ref color);
-
-            void RefreshCachedResources()
-            {
-            }
+            if (oldColor != color)
+                ResetCachedResources();
         }
 
         /// <summary>
@@ -2284,6 +2272,21 @@ namespace Alternet.Drawing
         private static Color FromArgb(uint argb)
         {
             return new(argb, StateFlags.ValueValid);
+        }
+
+        private struct CachedResources
+        {
+            public SolidBrush? AsBrush;
+
+            public Pen? AsPen;
+
+            public SKPaint? FillPaint;
+
+            public SKPaint? StrokePaint;
+
+            public SKPaint? StrokeAndFillPaint;
+
+            public Pen?[]? PenCache;
         }
 
         /// <summary>
