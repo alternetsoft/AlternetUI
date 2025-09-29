@@ -25,6 +25,7 @@ namespace Alternet.UI
         private static bool? isUsingDarkBackgroundOverride;
         private static bool insideResetColors;
         private static int mouseHoverTime = 400;
+        private static int colorsVersion;
 
         static SystemSettings()
         {
@@ -35,6 +36,14 @@ namespace Alternet.UI
         /// Occurs when the system colors change.
         /// </summary>
         public static event Action? SystemColorsChanged;
+
+        /// <summary>
+        /// Gets the version number of the color configuration.
+        /// </summary>
+        public static int ColorsVersion
+        {
+            get => colorsVersion;
+        }
 
         /// <summary>
         /// Gets or sets the duration, in milliseconds, that the mouse pointer must
@@ -283,6 +292,18 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Increments the version number for the color configuration.
+        /// This method is called internally when colors are reset, by <see cref="ResetColors"/>.
+        /// </summary>
+        /// <remarks>This method updates the internal version number, which can be used to track changes
+        /// to the color configuration.</remarks>
+        /// <see cref="ColorsVersion"/>.
+        public static void IncVersion()
+        {
+            colorsVersion++;
+        }
+
+        /// <summary>
         /// Logs all fonts with fixed widths (<see cref="Font.IsFixedWidth"/> property is true).
         /// </summary>
         public static void LogFixedWidthFonts()
@@ -342,6 +363,7 @@ namespace Alternet.UI
             if (insideResetColors)
                 return;
             insideResetColors = true;
+            IncVersion();
             try
             {
                 validColors = false;
