@@ -2041,7 +2041,6 @@ namespace Alternet.UI
             if (DisposingOrDisposed)
                 return;
             base.OnSystemColorsChanged(e);
-            SystemSettings.ResetColors();
         }
 
         /// <inheritdoc/>
