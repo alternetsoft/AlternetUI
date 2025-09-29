@@ -331,6 +331,12 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets or sets a value indicating whether the colors should
+        /// be automatically updated when the color theme or system colors are changed.
+        /// </summary>
+        public virtual bool AutoUpdateColors { get; set; } = true;
+
+        /// <summary>
         /// Gets or sets a value indicating whether an item tooltip is shown
         /// for items that don't fit in the control's view. Default is <c>true</c>.
         /// </summary>
@@ -2103,15 +2109,15 @@ namespace Alternet.UI
         /// <inheritdoc/>
         protected override void OnSystemColorsChanged(EventArgs e)
         {
-            base.OnSystemColorsChanged(e);
-
-            if (App.IsMaui)
+            if (AutoUpdateColors)
             {
                 if (SystemSettings.AppearanceIsDark)
                     SetColorThemeToDark();
                 else
-                    SetColorThemeToDefault();
+                    SetColorThemeToLight();
             }
+
+            base.OnSystemColorsChanged(e);
         }
     }
 }
