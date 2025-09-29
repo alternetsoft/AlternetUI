@@ -331,7 +331,7 @@ namespace Alternet.UI
             currentIsDark = IsDark;
             if (control is null)
                 return;
-            AbstractControl.BubbleSystemColorsChanged(control, EventArgs.Empty);
+            SystemSettings.ResetColors();
 
             if(!control.HasOwnInterior)
                 Interior.UpdateThemeMetrics();
