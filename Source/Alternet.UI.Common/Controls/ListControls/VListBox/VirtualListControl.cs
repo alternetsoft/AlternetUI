@@ -1243,14 +1243,17 @@ namespace Alternet.UI
         /// </summary>
         public virtual void SetColorThemeToDark()
         {
-            BackgroundColor = DefaultColors.ControlBackColor.Dark;
-            ForegroundColor = DefaultColors.ControlForeColor.Dark;
+            DoInsideUpdate(() =>
+            {
+                BackgroundColor = DefaultColors.ControlBackColor.Dark;
+                ForegroundColor = DefaultColors.ControlForeColor.Dark;
 
-            SelectedItemTextColor = null;
-            SelectedItemBackColor = null;
-            CurrentItemBorder ??= new();
-            CurrentItemBorder.SetColor(DefaultCurrentItemBorderColor.Dark);
-            ItemTextColor = (204, 204, 204);
+                SelectedItemTextColor = null;
+                SelectedItemBackColor = null;
+                CurrentItemBorder ??= new();
+                CurrentItemBorder.SetColor(DefaultCurrentItemBorderColor.Dark);
+                ItemTextColor = (204, 204, 204);
+            });
         }
 
         /// <summary>
@@ -1258,13 +1261,35 @@ namespace Alternet.UI
         /// </summary>
         public virtual void SetColorThemeToDefault()
         {
-            BackColor = DefaultColors.ControlBackColor;
-            ForeColor = DefaultColors.ControlForeColor;
+            DoInsideUpdate(() =>
+            {
+                BackColor = DefaultColors.ControlBackColor;
+                ForeColor = DefaultColors.ControlForeColor;
 
-            SelectedItemTextColor = null;
-            SelectedItemBackColor = null;
-            CurrentItemBorder?.SetColor(VirtualListBox.DefaultCurrentItemBorderColor);
-            ItemTextColor = null;
+                SelectedItemTextColor = null;
+                SelectedItemBackColor = null;
+                CurrentItemBorder ??= new();
+                CurrentItemBorder.SetColor(VirtualListBox.DefaultCurrentItemBorderColor);
+                ItemTextColor = null;
+            });
+        }
+
+        /// <summary>
+        /// Sets colors used in the control to the light theme.
+        /// </summary>
+        public virtual void SetColorThemeToLight()
+        {
+            DoInsideUpdate(() =>
+            {
+                BackColor = DefaultColors.ControlBackColor.Light;
+                ForeColor = DefaultColors.ControlForeColor.Light;
+
+                SelectedItemTextColor = null;
+                SelectedItemBackColor = null;
+                CurrentItemBorder ??= new();
+                CurrentItemBorder.SetColor(VirtualListBox.DefaultCurrentItemBorderColor.Light);
+                ItemTextColor = null;
+            });
         }
 
         /// <summary>
