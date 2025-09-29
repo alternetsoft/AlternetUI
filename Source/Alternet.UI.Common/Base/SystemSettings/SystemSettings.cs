@@ -368,7 +368,22 @@ namespace Alternet.UI
             {
                 validColors = false;
                 PlessSystemColors.Reset();
+                DefaultColors.Initialize();
                 SystemColorsChanged?.Invoke();
+
+                FormUtils.ForEach((form) =>
+                {
+                    if (form.DisposingOrDisposed)
+                        return;
+                    form.RaiseSystemColorsChanged(EventArgs.Empty);
+                    if (!form.HasChildren)
+                        return;
+                    form.ForEachChild((c) => c.RaiseSystemColorsChanged(EventArgs.Empty), true);
+                });
+
+                FormUtils.InvalidateAll();
+
+                App.DebugLogIf("System colors were changed.", true);
             }
             finally
             {
