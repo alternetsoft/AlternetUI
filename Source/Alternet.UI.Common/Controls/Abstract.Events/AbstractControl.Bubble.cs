@@ -372,21 +372,6 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Bubbles the <see cref="SystemColorsChanged" /> event
-        /// and <see cref="OnSystemColorsChanged"/> method for the controls and its children.
-        /// </summary>
-        [Browsable(false)]
-        public static void BubbleSystemColorsChanged(AbstractControl control, EventArgs e)
-        {
-            if (control.DisposingOrDisposed)
-                return;
-            control.RaiseSystemColorsChanged(e);
-            if (!control.HasChildren)
-                return;
-            control.ForEachChild((c) => c.RaiseSystemColorsChanged(e), true);
-        }
-
-        /// <summary>
         /// Calls <see cref="BubbleKeyUp(KeyEventArgs)"/> for the focused control with
         /// the specified parameters.
         /// </summary>
