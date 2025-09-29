@@ -2036,14 +2036,6 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        protected override void OnSystemColorsChanged(EventArgs e)
-        {
-            if (DisposingOrDisposed)
-                return;
-            base.OnSystemColorsChanged(e);
-        }
-
-        /// <inheritdoc/>
         protected override void OnDpiChanged(DpiChangedEventArgs e)
         {
             if (DisposingOrDisposed)
@@ -2150,7 +2142,8 @@ namespace Alternet.UI
         /// Handles the disposal of the status bar by performing necessary cleanup operations.
         /// </summary>
         /// <remarks>This method is called when the status bar is disposed and sets the <c>StatusBar</c>
-        /// property to <c>null</c>. Subclasses can override this method to provide additional cleanup logic.</remarks>
+        /// property to <c>null</c>. Subclasses can override this
+        /// method to provide additional cleanup logic.</remarks>
         /// <param name="sender">The source of the event, typically the object being disposed.</param>
         /// <param name="e">An <see cref="EventArgs"/> instance containing the event data.</param>
         protected virtual void OnStatusBarDisposed(object sender, EventArgs e)
@@ -2166,6 +2159,16 @@ namespace Alternet.UI
             base.OnHandlerLocationChanged(e);
 
             InsideTryCatch(RaiseDisplayChanged);
+        }
+
+        /// <inheritdoc/>
+        protected override void OnSystemColorsChanged(EventArgs e)
+        {
+            if (DisposingOrDisposed)
+                return;
+            base.OnSystemColorsChanged(e);
+            if (AutoUpdateColors)
+                InitializeColors();
         }
 
         /// <summary>
@@ -2185,8 +2188,7 @@ namespace Alternet.UI
                 OwnerChanged?.Invoke(this, EventArgs.Empty);
             };
 
-            BackColor = DefaultColors.WindowBackColor;
-            ForeColor = DefaultColors.WindowForeColor;
+            InitializeColors();
 
             if (windowKind != WindowKind.Control)
                 App.Current.RegisterWindow(this);
@@ -2195,6 +2197,14 @@ namespace Alternet.UI
 
             if (AbstractControl.DefaultFont != Font.Default)
                 Font = AbstractControl.DefaultFont;
+        }
+
+        private void InitializeColors()
+        {
+            if (DisposingOrDisposed)
+                return;
+            BackColor = DefaultColors.WindowBackColor.Current;
+            ForeColor = DefaultColors.WindowForeColor.Current;
         }
 
         private void RaiseLoadedOnce()
