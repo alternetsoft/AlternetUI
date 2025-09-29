@@ -315,7 +315,7 @@ namespace Alternet::UI
 #elif defined(__WXOSX_COCOA__)
         return (void*)GetWxWindow()->MacGetCGContextRef();
 #elif defined(__WXGTK__)
-        return nullptr;
+        return (void*)GetWxWindow()->GTKPaintContext();
 #else
         return nullptr;
 #endif
