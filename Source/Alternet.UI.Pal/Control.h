@@ -168,6 +168,8 @@ namespace Alternet::UI
 
         bool HasEnabledChilds();
 
+        virtual void OnSysColorChanged(wxSysColourChangedEvent& event);
+
     protected:
         bool _wantChars = false;
         bool _showVertScrollBar = false;
@@ -204,7 +206,6 @@ namespace Alternet::UI
         virtual void OnIdle(wxIdleEvent& event);
         virtual void OnSetCursor(wxSetCursorEvent& event);
         virtual void OnActivate(wxActivateEvent& event);
-        virtual void OnSysColorChanged(wxSysColourChangedEvent& event);
 
         virtual void OnScrollTop(wxScrollWinEvent& event);
         virtual void OnScrollBottom(wxScrollWinEvent& event);

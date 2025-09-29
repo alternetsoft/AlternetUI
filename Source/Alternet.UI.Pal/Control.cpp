@@ -388,7 +388,6 @@ namespace Alternet::UI
         wxWindow->Unbind(wxEVT_CONTEXT_MENU, &Control::OnContextMenu, this);       
         wxWindow->Unbind(wxEVT_RIGHT_UP, &Control::OnMouseRightUp, this);
         wxWindow->Unbind(wxEVT_MOUSEWHEEL, &Control::OnMouseWheel, this);
-        wxWindow->Unbind(wxEVT_SYS_COLOUR_CHANGED, &Control::OnSysColorChanged, this);
 
         if (bindScrollEvents) 
         {
@@ -411,7 +410,7 @@ namespace Alternet::UI
         if (IsRecreatingWxWindow())
             SetRecreatingWxWindow(false);
     }
-
+    
     void Control::OnSysColorChanged(wxSysColourChangedEvent& event)
     {
         event.Skip();
@@ -986,7 +985,6 @@ namespace Alternet::UI
         _wxWindow->Bind(wxEVT_CONTEXT_MENU, &Control::OnContextMenu, this);
         _wxWindow->Bind(wxEVT_LEFT_UP, &Control::OnMouseLeftUp, this);
         _wxWindow->Bind(wxEVT_RIGHT_UP, &Control::OnMouseRightUp, this);
-        _wxWindow->Bind(wxEVT_SYS_COLOUR_CHANGED, &Control::OnSysColorChanged, this);
         _wxWindow->Bind(wxEVT_SET_CURSOR, &Control::OnSetCursor, this);
 
         if (bindScrollEvents)

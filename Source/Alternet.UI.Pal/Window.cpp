@@ -139,6 +139,7 @@ namespace Alternet::UI
         wxWindow->Unbind(wxEVT_CLOSE_WINDOW, &Window::OnClose, this);
         wxWindow->Unbind(wxEVT_MAXIMIZE, &Window::OnMaximize, this);
         wxWindow->Unbind(wxEVT_ICONIZE, &Window::OnIconize, this);
+        wxWindow->Unbind(wxEVT_SYS_COLOUR_CHANGED, &Control::OnSysColorChanged, this);
 
         Control::OnBeforeDestroyWxWindow();
     }
@@ -288,6 +289,7 @@ namespace Alternet::UI
         {
         }
 
+        frame->Bind(wxEVT_SYS_COLOUR_CHANGED, &Control::OnSysColorChanged, this);
         frame->Bind(wxEVT_CLOSE_WINDOW, &Window::OnClose, this);
         frame->Bind(wxEVT_MAXIMIZE, &Window::OnMaximize, this);
         frame->Bind(wxEVT_ICONIZE, &Window::OnIconize, this);
