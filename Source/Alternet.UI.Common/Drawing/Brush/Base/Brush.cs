@@ -111,6 +111,7 @@ namespace Alternet.Drawing
                 if (value)
                 {
                     SafeDispose(ref paint);
+                    asPen = null;
                 }
             }
         }
