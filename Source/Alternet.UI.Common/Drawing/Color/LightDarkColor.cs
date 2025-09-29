@@ -77,6 +77,11 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
+        /// Gets the current color based on whether a dark or light color scheme is in use.
+        /// </summary>
+        public Color Current => LightOrDark(IsUsingDarkColor);
+
+        /// <summary>
         /// Gets dark color.
         /// </summary>
         public Color Dark
