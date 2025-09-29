@@ -882,7 +882,6 @@ namespace Alternet.UI
         protected override void OnSystemColorsChanged(EventArgs e)
         {
             base.OnSystemColorsChanged(e);
-            SystemSettings.ResetColors();
             Invalidate();
         }
 
