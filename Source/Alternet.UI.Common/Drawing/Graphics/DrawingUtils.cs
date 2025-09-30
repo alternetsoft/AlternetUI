@@ -9,6 +9,8 @@ using System.Threading.Tasks;
 
 using Alternet.Drawing;
 
+using SkiaSharp;
+
 namespace Alternet.UI
 {
     /// <summary>
@@ -1139,6 +1141,64 @@ namespace Alternet.UI
             {
                 return canvas.MeasureText(s, font).Ceiling().Width;
             }
+        }
+
+        /// <summary>
+        /// Renders content on a Linux Cairo surface for the specified control
+        /// using the provided drawing action. This method is intended to be used
+        /// in the paint event of a control to perform custom SkiaSharp rendering.
+        /// </summary>
+        /// <remarks>This method is intended for use in Linux environments where GTK 3
+        /// and Cairo are available. It uses the control's native graphics context to create
+        /// a Cairo surface and an SkiaSharp canvas for rendering.
+        /// The provided <paramref name="action"/> is invoked to perform the actual drawing on
+        /// the <see cref="SKCanvas"/>. <para> Ensure that the <paramref name="control"/>
+        /// is properly initialized
+        /// and has a valid GTK surface before calling this method. </para></remarks>
+        /// <param name="control">The control whose surface will be used for rendering.
+        /// Must be a created over a valid GTK3 native control.</param>
+        /// <param name="action">An action that performs drawing operations
+        /// on the <see cref="SKCanvas"/> associated with the surface.</param>
+        /// <returns><see langword="true"/> if the operation was successful
+        /// and the content was rendered; otherwise,
+        /// <see langword="false"/>. Returns <see langword="false"/> if the application
+        /// is not running on Linux or if the control's surface is invalid.</returns>
+        public static bool DrawOnLinuxCairoSurface(Control control, Action<SKCanvas> action)
+        {
+            if (!App.IsLinuxOS)
+                return false;
+
+            IntPtr gtkWidgetPtr = control.Handler.GetHandle();
+            if (gtkWidgetPtr == IntPtr.Zero)
+                return false;
+
+            var widget = new Gtk.Widget(gtkWidgetPtr);
+
+            int width = widget.AllocatedWidth;
+            int height = widget.AllocatedHeight;
+
+            var cairoPtr = control.Handler.NativeGraphicsContext;
+            using var cairoContext = new Cairo.Context(cairoPtr, false);
+
+            var info = new SKImageInfo(width, height, SKColorType.Bgra8888, SKAlphaType.Premul);
+            using var bitmap = new SKBitmap(info);
+            using var surface = SKSurface.Create(bitmap.Info, bitmap.GetPixels(), bitmap.RowBytes);
+
+            var canvas = surface.Canvas;
+
+            action(canvas);
+
+            var data = bitmap.Bytes;
+            using var imageSurface = new Cairo.ImageSurface(
+                data,
+                Cairo.Format.Argb32,
+                width,
+                height,
+                bitmap.RowBytes);
+
+            cairoContext.SetSourceSurface(imageSurface, 0, 0);
+            cairoContext.Paint();
+            return true;
         }
 
         /// <summary>
