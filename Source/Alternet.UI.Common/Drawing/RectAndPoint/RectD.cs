@@ -153,12 +153,26 @@ namespace Alternet.Drawing
         /// <summary>
         /// Gets the SkiaSharp location (<see cref="SKPoint"/>) of this rectangle.
         /// </summary>
-        public readonly SKPoint SkiaLocation => skiaLocation;
+        public readonly SKPoint SkiaLocation
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get
+            {
+                return skiaLocation;
+            }
+        }
 
         /// <summary>
         /// Gets the SkiaSharp size (<see cref="SKSize"/>) of this rectangle.
         /// </summary>
-        public readonly SKSize SkiaSize => skiaSize;
+        public readonly SKSize SkiaSize
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get
+            {
+                return skiaSize;
+            }
+        }
 
         /// <summary>
         /// Gets a value indicating whether location is negative.
@@ -176,13 +190,27 @@ namespace Alternet.Drawing
         /// Gets whether height is less or equal 0.
         /// </summary>
         [Browsable(false)]
-        public readonly bool HasEmptyHeight => height <= CoordD.Empty;
+        public readonly bool HasEmptyHeight
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get
+            {
+                return height <= CoordD.Empty;
+            }
+        }
 
         /// <summary>
         /// Gets whether width is less or equal 0.
         /// </summary>
         [Browsable(false)]
-        public readonly bool HasEmptyWidth => width <= CoordD.Empty;
+        public readonly bool HasEmptyWidth
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get
+            {
+                return width <= CoordD.Empty;
+            }
+        }
 
         /// <summary>
         /// Gets or sets the size of this <see cref='RectD'/>.
@@ -449,13 +477,135 @@ namespace Alternet.Drawing
         /// Gets minimum of <see cref="Width"/> and <see cref="Height"/>.
         /// </summary>
         [Browsable(false)]
-        public readonly Coord MinWidthHeight => Math.Min(width, height);
+        public readonly Coord MinWidthHeight
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get
+            {
+                return Math.Min(width, height);
+            }
+        }
 
         /// <summary>
         /// Gets maximum of <see cref="Width"/> and <see cref="Height"/>.
         /// </summary>
         [Browsable(false)]
-        public readonly Coord MaxWidthHeight => Math.Max(width, height);
+        public readonly Coord MaxWidthHeight
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get
+            {
+                return Math.Max(width, height);
+            }
+        }
+
+        /// <summary>
+        /// Gets the radius of the circle, calculated as half the smaller dimension of the bounding area.
+        /// </summary>
+        public readonly Coord CircleRadius
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get
+            {
+                return Math.Min(width, height) / 2f;
+            }
+        }
+
+        /// <summary>
+        /// Gets the diameter of the largest circle that can fit within the current dimensions.
+        /// </summary>
+        public readonly Coord CircleDiameter
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get
+            {
+                return Math.Min(width, height);
+            }
+        }
+
+        /// <summary>
+        /// Gets the top half of the current rectangle.
+        /// </summary>
+        public readonly RectD TopHalf
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get
+            {
+                return new RectD(x, y, width, height / 2f);
+            }
+        }
+
+        /// <summary>
+        /// Gets the bottom half of the current rectangle.
+        /// </summary>
+        public readonly RectD BottomHalf
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get
+            {
+                return new RectD(x, y + (height / 2f), width, height / 2f);
+            }
+        }
+
+        /// <summary>
+        /// Gets the left half of the current rectangle.
+        /// </summary>
+        public readonly RectD LeftHalf
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get
+            {
+                return new RectD(x, y, width / 2f, height);
+            }
+        }
+
+        /// <summary>
+        /// Gets the right half of the current rectangle.
+        /// </summary>
+        public readonly RectD RightHalf
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get
+            {
+                return new RectD(x + (width / 2f), y, width / 2f, height);
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets the vertical center coordinate of the rectangle.
+        /// </summary>
+        public Coord CenterVert
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            readonly get
+            {
+                return y + (height / CoordD.Two);
+            }
+
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            set
+            {
+                y = value - (height / CoordD.Two);
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets the horizontal center coordinate of the rectangle.
+        /// </summary>
+        public Coord CenterHorz
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            readonly get
+            {
+                return x + (width / CoordD.Two);
+            }
+
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            set
+            {
+                x = value - (width / CoordD.Two);
+            }
+        }
 
         /// <summary>
         /// Gets or sets the center point of this <see cref="RectD"/>.
