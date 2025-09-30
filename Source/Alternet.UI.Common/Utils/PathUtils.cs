@@ -35,6 +35,46 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets the path to the user's Downloads folder.
+        /// </summary>
+        /// <returns>The full path to the Downloads folder as a string,
+        /// or <see langword="null"/> if the path cannot be resolved.</returns>
+        public static string GetDownloadsPath()
+        {
+            if (MswKnownFolders.TryResolvePath(MswKnownFolders.Downloads, out var path))
+            {
+                if (!string.IsNullOrEmpty(path))
+                    return path;
+            }
+
+            string downloadsPath = Path.Combine(
+                Environment.GetFolderPath(Environment.SpecialFolder.UserProfile),
+                "Downloads");
+
+            return downloadsPath;
+        }
+
+        /// <summary>
+        /// Generates a unique filename in the user's Downloads folder based
+        /// on the specified filename template.
+        /// </summary>
+        /// <remarks>This method ensures that the generated filename is unique by checking for conflicts
+        /// in the Downloads folder. The filename template should be designed to allow for
+        /// uniqueness, such as including
+        /// placeholders for numbering.</remarks>
+        /// <param name="fileNameTemplate">The template for the filename, which may include
+        /// placeholders or a base name.  For example, "file_{0}.txt"
+        /// can be used to generate filenames like "file_1.txt", "file_2.txt", etc.</param>
+        /// <returns>A unique filename within the Downloads folder that does not conflict
+        /// with existing files.</returns>
+        public static string GenerateUniqueFilenameInDownloads(string fileNameTemplate)
+        {
+            var path = GetDownloadsPath();
+            var result = GenerateUniqueFilename(path, fileNameTemplate);
+            return result;
+        }
+
+        /// <summary>
         /// Generates a unique file name in the specified folder based on the provided
         /// file name template.
         /// </summary>
@@ -239,10 +279,10 @@ namespace Alternet.UI
             result = PathUtils.AddDirectorySeparatorChar(result);
             result = Path.GetFullPath(result);
 
-            if(Directory.Exists(result))
+            if (Directory.Exists(result))
                 return result;
             else
-            if(create)
+            if (create)
             {
                 Directory.CreateDirectory(result);
                 return result;
