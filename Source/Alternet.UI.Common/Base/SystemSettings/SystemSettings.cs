@@ -375,10 +375,13 @@ namespace Alternet.UI
                 {
                     if (form.DisposingOrDisposed)
                         return;
-                    form.RaiseSystemColorsChanged(EventArgs.Empty);
-                    if (!form.HasChildren)
-                        return;
-                    form.ForEachChild((c) => c.RaiseSystemColorsChanged(EventArgs.Empty), true);
+                    form.DoInsideUpdate(() =>
+                    {
+                        form.RaiseSystemColorsChanged(EventArgs.Empty);
+                        if (!form.HasChildren)
+                            return;
+                        form.ForEachChild((c) => c.RaiseSystemColorsChanged(EventArgs.Empty), true);
+                    });
                 });
 
                 FormUtils.InvalidateAll();
