@@ -823,6 +823,10 @@ namespace Alternet.UI
                     {
                         if (!item.HasImage(VisualControlState.Selected, isDark))
                         {
+                            var colorOverride = svgImage.GetSvgColor(KnownSvgColor.Selected, isDark);
+                            if(colorOverride is not null)
+                                svgColor = colorOverride;
+
                             item.SetImage(
                                 VisualControlState.Selected,
                                 svgImage.ImageWithColor(imageHeight, svgColor),
@@ -887,8 +891,8 @@ namespace Alternet.UI
             var itemImages = ListControlItem.GetItemImages(
                 item,
                 container,
-                null,
-                !AllowDifferentSizeForDisabledImage);
+                svgColor: null,
+                onlyNormal: !AllowDifferentSizeForDisabledImage);
 
             var normal = itemImages[VisualControlState.Normal];
             var maxHeightI = normal?.Size.Height ?? 0;
