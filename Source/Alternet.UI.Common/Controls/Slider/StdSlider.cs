@@ -336,7 +336,11 @@ namespace Alternet.UI
         /// </summary>
         public static Color DefaultSecondarySpacerColor
         {
-            get => defaultSecondarySpacerColor ?? DefaultColors.ControlBackColor;
+            get
+            {
+                return defaultSecondarySpacerColor ?? DefaultColors.BorderColor;
+            }
+
             set => defaultSecondarySpacerColor = value;
         }
 
