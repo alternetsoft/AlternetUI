@@ -1582,6 +1582,22 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Resets the cached images for all items in the collection.
+        /// </summary>
+        /// <remarks>This method iterates through all items in the collection and invokes their
+        /// <see cref="ListControlItem.ResetCachedImages"/> method to clear any
+        /// cached image data. Use this method to ensure that all items
+        /// refresh their cached images,  for example, after an update
+        /// to the underlying image source.</remarks>
+        public virtual void ResetCachedImagesInItems()
+        {
+            foreach (var item in Items)
+            {
+                item.ResetCachedImages();
+            }
+        }
+
+        /// <summary>
         /// Searches for the specified item within the current list and returns its index if found.
         /// </summary>
         /// <param name="value">The item to locate within the
@@ -2109,6 +2125,7 @@ namespace Alternet.UI
                     SetColorThemeToDark();
                 else
                     SetColorThemeToLight();
+                ResetCachedImagesInItems();
             }
 
             base.OnSystemColorsChanged(e);

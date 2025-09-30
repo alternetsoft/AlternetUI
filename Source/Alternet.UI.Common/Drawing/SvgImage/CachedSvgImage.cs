@@ -60,6 +60,17 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
+        /// Resets the cached image data to its initial state.
+        /// </summary>
+        /// <remarks>This method clears any cached image data, ensuring that subsequent operations will
+        /// use fresh data. If no image data is currently cached, the method has no effect.</remarks>
+        public void ResetCachedImages()
+        {
+            if(svgImage != null)
+                imageData.Reset();
+        }
+
+        /// <summary>
         /// Gets whether image exists for the specified item state and light/dark theme flag.
         /// </summary>
         /// <param name="state">Item state.</param>

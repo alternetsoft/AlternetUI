@@ -1839,6 +1839,17 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Clears all cached images, forcing them to be reloaded on the next access.
+        /// </summary>
+        /// <remarks>This method is typically used to refresh the image cache when the underlying image
+        /// data has changed. After calling this method,
+        /// any subsequent access to cached images will result in a reload operation.</remarks>
+        public virtual void ResetCachedImages()
+        {
+            cachedSvg.ResetCachedImages();
+        }
+
+        /// <summary>
         /// Toggles selected state of the item.
         /// </summary>
         /// <param name="container">Item container.</param>
