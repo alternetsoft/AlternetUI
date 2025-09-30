@@ -85,7 +85,10 @@ namespace Alternet.UI
         /// </summary>
         public static void InvalidateAll()
         {
-            ForEach((window) => window.Invalidate());
+            ForEach((window) =>
+            {
+                window.DoInsideUpdate(window.Invalidate);
+            });
         }
 
         /// <summary>
