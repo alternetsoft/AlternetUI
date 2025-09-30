@@ -266,11 +266,6 @@ namespace Alternet.UI
 
             Window.UpdateDefaultFont();
 
-            DebugUtils.DebugCall(() =>
-            {
-                WebBrowser.CrtSetDbgFlag(0);
-            });
-
             Invoke(ProcessIdleTasks);
         }
 

@@ -55,6 +55,11 @@ namespace Alternet.UI
             }
 
             Handler = CreateDefaultHandler();
+
+            DebugUtils.DebugCall(() =>
+            {
+                WebBrowser.CrtSetDbgFlag(0);
+            });
         }
 
         /// <summary>
