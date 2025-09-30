@@ -342,7 +342,8 @@ namespace Alternet.UI
             var result = DefaultFolderImage
                 ?? (UseSolidFolderDefaultImages
                 ? KnownSvgImages.ImgIconFolderSolid : KnownSvgImages.ImgIconFolder);
-            result.SetColorOverride(KnownSvgColor.Normal, FolderImageColorOverride?.Invoke());
+            var colorOverride = FolderImageColorOverride?.Invoke();
+            result.SetColorOverride(KnownSvgColor.Normal, colorOverride);
             return result;
         }
 
