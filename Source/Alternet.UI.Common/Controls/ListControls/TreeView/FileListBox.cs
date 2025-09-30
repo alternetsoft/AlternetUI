@@ -94,6 +94,16 @@ namespace Alternet.UI
             return LightDarkColors.Yellow;
         };
 
+        /// <summary>
+        /// Gets or sets a function that determines the color override for the selected folder image.
+        /// </summary>
+        /// <remarks>This property allows customization of the color used for the selected folder image.
+        /// If the function returns <see langword="null"/>, the default color will be used.</remarks>
+        public static Func<LightDarkColor?>? SelectedFolderImageColorOverride = () =>
+        {
+            return LightDarkColors.Yellow;
+        };
+
         private string? selectedFolder;
         private string searchPattern = "*";
         private int reloading;
@@ -342,8 +352,12 @@ namespace Alternet.UI
             var result = DefaultFolderImage
                 ?? (UseSolidFolderDefaultImages
                 ? KnownSvgImages.ImgIconFolderSolid : KnownSvgImages.ImgIconFolder);
+
             var colorOverride = FolderImageColorOverride?.Invoke();
+            var selectedColorOverride = SelectedFolderImageColorOverride?.Invoke();
+
             result.SetColorOverride(KnownSvgColor.Normal, colorOverride);
+            result.SetColorOverride(KnownSvgColor.Selected, selectedColorOverride);
             return result;
         }
 
