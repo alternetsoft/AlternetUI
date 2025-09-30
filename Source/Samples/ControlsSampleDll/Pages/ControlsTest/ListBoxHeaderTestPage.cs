@@ -13,10 +13,7 @@ namespace ControlsSample
             Padding = 20;
             Layout = LayoutStyle.Vertical;
             var header = new ListBoxHeader();
-            header.ParentBackColor = false;
-            header.BackColor = DefaultColors.ControlBackColor;
-
-            BackColor = Color.WhiteSmoke;
+            header.HasBorder = true;
 
             var c1 = header.AddColumn("Column 1");
             
