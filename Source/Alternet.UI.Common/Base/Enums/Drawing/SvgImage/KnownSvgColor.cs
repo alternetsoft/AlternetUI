@@ -42,8 +42,13 @@ namespace Alternet.UI
         HighlightText,
 
         /// <summary>
+        /// Selected item color.
+        /// </summary>
+        Selected,
+
+        /// <summary>
         /// Maximum value in the enumeration.
         /// </summary>
-        MaxValue = HighlightText,
+        MaxValue = Selected,
     }
 }
