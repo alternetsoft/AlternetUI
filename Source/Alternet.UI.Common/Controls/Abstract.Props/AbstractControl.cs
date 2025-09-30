@@ -387,7 +387,6 @@ namespace Alternet.UI
             }
         }
 
-
         /// <summary>
         /// Gets or sets a value indicating whether the colors should
         /// be automatically updated when the color theme or system colors are changed.
