@@ -113,6 +113,12 @@ namespace Alternet.UI
         public static Coord DefaultSliderThumbWidth = 15;
 
         /// <summary>
+        /// Represents the default size of the space, as a percentage of the thumb size.
+        /// </summary>
+        /// <remarks>The default value is 30%.</remarks>
+        public static int DefaultSpaceSizeInPercentOfThumb = 30;
+
+        /// <summary>
         /// Represents the default tick style for a slider control.
         /// </summary>
         public static SliderTickStyle DefaultTickStyle = SliderTickStyle.None;
@@ -143,6 +149,7 @@ namespace Alternet.UI
         private bool isLastTickVisible = true;
         private bool autoSize = true;
         private bool useSpacerColor;
+        private int spaceSizeInPercentOfThumb;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="StdSlider"/> class.
@@ -161,6 +168,7 @@ namespace Alternet.UI
         {
             AutoPadding = false;
             useSpacerColor = DefaultUseSpacerColor;
+            spaceSizeInPercentOfThumb = DefaultSpaceSizeInPercentOfThumb;
 
             leftTopScale = CreateScale(isLeftTop: true);
             leftTopScale.Dock = DockStyle.Top;
@@ -180,6 +188,7 @@ namespace Alternet.UI
             leftTopSpacer.ParentBackColor = true;
             leftTopSpacer.Dock = DockStyle.Left;
             leftTopSpacer.BackgroundPadding = 4;
+            leftTopSpacer.HasBackground = false;
 
             thumb = CreateSliderThumb();
 
@@ -188,6 +197,7 @@ namespace Alternet.UI
             rightBottomSpacer.Dock = DockStyle.Fill;
             rightBottomSpacer.Margin = 1;
             rightBottomSpacer.BackgroundPadding = 4;
+            rightBottomSpacer.HasBackground = false;
 
             SuggestedSize = 150;
 
@@ -305,18 +315,18 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets default slider thumb border color.
         /// </summary>
-        public static Color? DefaultThumbBorderColor
+        public static Color DefaultThumbBorderColor
         {
-            get => defaultThumbBorderColor ?? DefaultColors.WindowForeColor;
+            get => defaultThumbBorderColor ?? DefaultColors.DefaultCheckBoxColor;
             set => defaultThumbBorderColor = value;
         }
 
         /// <summary>
         /// Gets or sets default slider thumb background color.
         /// </summary>
-        public static Color? DefaultThumbBackColor
+        public static Color DefaultThumbBackColor
         {
-            get => defaultThumbBackColor ?? DefaultColors.WindowBackColor;
+            get => defaultThumbBackColor ?? DefaultColors.DefaultCheckBoxColor;
             set => defaultThumbBackColor = value;
         }
 
@@ -437,6 +447,29 @@ namespace Alternet.UI
                     return;
                 isLastTickVisible = value;
                 InvalidateScales();
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets the size of the spacer, as a percentage of the thumb size.
+        /// </summary>
+        /// <remarks>Setting a value outside the range of 0 to 100 will automatically clamp
+        /// the value to the nearest valid boundary.
+        /// For example, setting a value of -10 will result in 0, and setting a value of
+        /// 150 will result in 100.</remarks>
+        public virtual int SpaceSizeInPercentOfThumb
+        {
+            get => spaceSizeInPercentOfThumb;
+            set
+            {
+                if (value < 0)
+                    value = 0;
+                if (value > 100)
+                    value = 100;
+                if (spaceSizeInPercentOfThumb == value)
+                    return;
+                spaceSizeInPercentOfThumb = value;
+                Invalidate();
             }
         }
 
@@ -971,6 +1004,75 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Calculates and retrieves the bounding rectangles for the left-top
+        /// and right-bottom spacer elements based on
+        /// the current thumb bounds and orientation.
+        /// </summary>
+        /// <remarks>The method adjusts the spacer rectangles' dimensions and positions depending on
+        /// whether the layout is horizontal or vertical. The spacers'
+        /// sizes are determined as a percentage of the
+        /// thumb's dimensions, and their positions are aligned relative
+        /// to the thumb's center.</remarks>
+        /// <param name="leftTop">When this method returns, contains
+        /// the bounding rectangle for the left-top spacer element. The dimensions
+        /// and position are calculated based on the thumb's bounds and
+        /// the current orientation.</param>
+        /// <param name="rightBottom">When this method returns,
+        /// contains the bounding rectangle for the right-bottom spacer element. The
+        /// dimensions and position are calculated based on the thumb's
+        /// bounds and the current orientation.</param>
+        public virtual void GetSpacerRectangles(out RectD leftTop, out RectD rightBottom)
+        {
+            var thumbRect = thumb.Bounds;
+            var spacerHeight = thumbRect.PercentOfHeight(SpaceSizeInPercentOfThumb);
+            var spacerWidth = thumbRect.PercentOfWidth(SpaceSizeInPercentOfThumb);
+            var center = thumbRect.Center;
+
+            var leftTopSpacerRect = leftTopSpacer.Bounds;
+            var rightBottomSpacerRect = rightBottomSpacer.Bounds;
+
+            if (IsHorizontal)
+            {
+                leftTopSpacerRect.Width = center.X - leftTopSpacerRect.X;
+                leftTopSpacerRect.Height = spacerHeight;
+                leftTopSpacerRect.CenterVert = center.Y;
+
+                rightBottomSpacerRect.Width = rightBottomSpacerRect.Right - center.X;
+                rightBottomSpacerRect.Left = center.X;
+                rightBottomSpacerRect.Height = spacerHeight;
+                rightBottomSpacerRect.CenterVert = center.Y;
+            }
+            else
+            {
+                leftTopSpacerRect.Width = spacerWidth;
+                leftTopSpacerRect.Height = center.Y - leftTopSpacerRect.Y;
+                leftTopSpacerRect.CenterHorz = center.X;
+
+                rightBottomSpacerRect.Width = spacerWidth;
+                rightBottomSpacerRect.Height = rightBottomSpacerRect.Bottom - center.Y;
+                rightBottomSpacerRect.CenterHorz = center.X;
+            }
+
+            leftTop = leftTopSpacerRect;
+            rightBottom = rightBottomSpacerRect;
+        }
+
+        /// <inheritdoc/>
+        public override void DefaultPaint(PaintEventArgs e)
+        {
+            base.DefaultPaint(e);
+
+            var g = e.Graphics;
+
+            GetSpacerRectangles(out var leftTopSpacerRect, out var rightBottomSpacerRect);
+
+            if(!leftTopSpacerRect.SizeIsEmpty)
+                g.FillRectangle(leftTopSpacer.BackColor.AsBrush, leftTopSpacerRect);
+            if(!rightBottomSpacerRect.SizeIsEmpty)
+                g.FillRectangle(rightBottomSpacer.BackColor.AsBrush, rightBottomSpacerRect);
+        }
+
+        /// <summary>
         /// Raises the <see cref="MaximumChanged"/> event and calls
         /// <see cref="OnMaximumChanged(EventArgs)"/>.
         /// </summary>
@@ -1163,8 +1265,6 @@ namespace Alternet.UI
         {
             leftTopSpacer.ParentBackColor = leftTopSpacerColor is null;
             leftTopSpacer.BackgroundColor = leftTopSpacerColor;
-            leftTopSpacer.HasBackground = leftTopSpacerColor is not null;
-            leftTopSpacer.HasBackground = leftTopSpacerColor is not null;
         }
 
         /// <summary>
@@ -1176,8 +1276,6 @@ namespace Alternet.UI
         {
             rightBottomSpacer.ParentBackColor = spacerColor is null;
             rightBottomSpacer.BackgroundColor = spacerColor;
-            rightBottomSpacer.HasBackground = spacerColor is not null;
-            rightBottomSpacer.HasBackground = spacerColor is not null;
         }
 
         /// <summary>
@@ -1494,6 +1592,13 @@ namespace Alternet.UI
         public class SliderThumb : Splitter
         {
             /// <summary>
+            /// Represents the default shape type used when to initialize <see cref="Shape"/> property.
+            /// </summary>
+            public static ShapeType DefaultShape = ShapeType.Circle;
+
+            private ShapeType shape = ShapeType.Circle;
+
+            /// <summary>
             /// Initializes a new instance of the <see cref="SliderThumb"/> class.
             /// </summary>
             public SliderThumb()
@@ -1504,6 +1609,39 @@ namespace Alternet.UI
                 BackgroundColor = DefaultThumbBackColor;
                 UniformBorderRadiusIsPercent = DefaultThumbCornerRadiusIsPercent;
                 UniformBorderCornerRadius = DefaultThumbCornerRadius;
+                shape = DefaultShape;
+            }
+
+            /// <summary>
+            /// Represents the type of a geometric shape used to paint the slider thumb.
+            /// </summary>
+            /// <remarks>This enumeration defines the supported shape types,
+            /// such as <see cref="Circle"/> and <see cref="Rectangle"/>.</remarks>
+            public enum ShapeType
+            {
+                /// <summary>
+                /// Represents a geometric circle defined by its radius.
+                /// </summary>
+                Circle,
+
+                /// <summary>
+                /// Represents a rectangle defined by its width and height.
+                /// </summary>
+                Rectangle,
+            }
+
+            /// <summary>
+            /// Gets or sets the shape type of the thumb.
+            /// </summary>
+            public virtual ShapeType Shape
+            {
+                get => shape;
+                set
+                {
+                    if (shape == value) return;
+                    shape = value;
+                    Invalidate();
+                }
             }
 
             /// <inheritdoc/>
@@ -1527,16 +1665,14 @@ namespace Alternet.UI
             }
 
             /// <summary>
-            /// Gets the container that holds the slider scale.
-            /// In the default implementation, this property returns the parent control
-            /// that implements the <see cref="ISliderScaleContainer"/> interface.
+            /// Gets the container that holds the thumb.
             /// </summary>
             [Browsable(false)]
-            public virtual ISliderScaleContainer? Container
+            public virtual StdSlider? Container
             {
                 get
                 {
-                    return Parent as ISliderScaleContainer;
+                    return Parent as StdSlider;
                 }
             }
 
@@ -1575,6 +1711,79 @@ namespace Alternet.UI
                 {
                     base.Bounds = value;
                 }
+            }
+
+            /// <inheritdoc/>
+            public override void DrawSplitterForeground(PaintEventArgs e, Color? color)
+            {
+                if (Shape == ShapeType.Circle)
+                    return;
+                base.DrawSplitterForeground(e, color);
+            }
+
+            /// <inheritdoc/>
+            public override void DrawSplitterBackground(PaintEventArgs e, Color? color)
+            {
+                color ??= DefaultThumbBackColor;
+                var parentBackBrush = (Parent?.BackColor ?? color).AsBrush;
+
+                var leftTopColor = Container?.LeftTopSpacer.BackColor ?? DefaultSpacerColor;
+                var rightBottomColor = Container?.RightBottomSpacer.BackColor ?? DefaultSecondarySpacerColor;
+
+                var r = ClientRectangle;
+                var center = r.Center;
+                var dc = e.Graphics;
+                dc.FillRectangle(parentBackBrush, r);
+
+                if(Container is not null)
+                {
+                    Container.GetSpacerRectangles(out var leftTop, out var rightBottom);
+
+                    if (IsHorizontal)
+                    {
+                        leftTop.CenterVert = center.Y;
+                        leftTop.Width = center.X;
+                        leftTop.X = 0;
+                        rightBottom.CenterVert = center.Y;
+                        rightBottom.X = center.X;
+                        rightBottom.Width = Container.Width - center.X;
+                    }
+                    else
+                    {
+                        leftTop.CenterHorz = center.X;
+                        leftTop.Height = center.Y;
+                        leftTop.Y = 0;
+                        rightBottom.CenterHorz = center.X;
+                        rightBottom.Y = center.Y;
+                        rightBottom.Height = Container.Height - center.Y;
+                    }
+
+                    dc.FillRectangle(leftTopColor.AsBrush, leftTop);
+                    dc.FillRectangle(rightBottomColor.AsBrush, rightBottom);
+                }
+
+                if (Shape == ShapeType.Circle)
+                {
+                    dc.FillCircle(color.AsBrush, center, r.CircleRadius);
+                }
+                else
+                {
+                    dc.FillRectangle(color.AsBrush, r);
+                }
+            }
+
+            /// <inheritdoc/>
+            public override void DefaultPaint(PaintEventArgs e)
+            {
+                base.DefaultPaint(e);
+            }
+
+            /// <inheritdoc/>
+            public override void DrawSplitterBorder(PaintEventArgs e)
+            {
+                if (Shape == ShapeType.Circle)
+                    return;
+                base.DrawSplitterBorder(e);
             }
 
             /// <inheritdoc/>
