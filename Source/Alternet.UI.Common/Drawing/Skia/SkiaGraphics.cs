@@ -339,21 +339,10 @@ namespace Alternet.Drawing
                 antialiasing);
         }
 
-        /// <summary>
-        /// Gets <see cref="SKPaint"/> for the specified brush and pen.
-        /// </summary>
-        /// <param name="pen">Pen to use.</param>
-        /// <param name="brush">Brush to use.</param>
-        /// <returns></returns>
-        public virtual (SKPaint? Fill, SKPaint? Stroke) GetFillAndStrokePaint(Pen? pen, Brush? brush)
-        {
-            return (brush?.SkiaPaint, pen?.SkiaPaint);
-        }
-
         /// <inheritdoc/>
         public override void RoundedRectangle(Pen pen, Brush brush, RectD rectangle, Coord cornerRadius)
         {
-            var (fill, stroke) = GetFillAndStrokePaint(pen, brush);
+            var (fill, stroke) = SkiaUtils.GetFillAndStrokePaint(pen, brush);
             SKRoundRect roundRect = new(rectangle, (float)cornerRadius);
             if(fill is not null)
                 canvas.DrawRoundRect(roundRect, fill);
@@ -364,7 +353,7 @@ namespace Alternet.Drawing
         /// <inheritdoc/>
         public override void Rectangle(Pen pen, Brush brush, RectD rectangle)
         {
-            var (fill, stroke) = GetFillAndStrokePaint(pen, brush);
+            var (fill, stroke) = SkiaUtils.GetFillAndStrokePaint(pen, brush);
             SKRect rect = rectangle;
             if (fill is not null)
                 canvas.DrawRect(rect, fill);
@@ -375,7 +364,7 @@ namespace Alternet.Drawing
         /// <inheritdoc/>
         public override void Ellipse(Pen pen, Brush brush, RectD rectangle)
         {
-            var (fill, stroke) = GetFillAndStrokePaint(pen, brush);
+            var (fill, stroke) = SkiaUtils.GetFillAndStrokePaint(pen, brush);
             SKRect rect = rectangle;
             if (fill is not null)
                 canvas.DrawOval(rect, fill);
@@ -386,13 +375,7 @@ namespace Alternet.Drawing
         /// <inheritdoc/>
         public override void Circle(Pen pen, Brush brush, PointD center, Coord radius)
         {
-            var (fill, stroke) = GetFillAndStrokePaint(pen, brush);
-            var radiusF = (float)radius;
-            SKPoint centerF = center;
-            if (fill is not null)
-                canvas.DrawCircle(centerF, radiusF, fill);
-            if (stroke is not null)
-                canvas.DrawCircle(centerF, radiusF, stroke);
+            SkiaUtils.GraphicsCircle(canvas, pen, brush, center, radius);
         }
 
         /// <inheritdoc/>
@@ -405,7 +388,7 @@ namespace Alternet.Drawing
         {
             DebugPenAssert(pen);
             var rect = RectD.GetCircleBoundingBox(center, radius);
-            canvas.DrawArc(rect, (float)startAngle, (float)sweepAngle, true, pen);
+            canvas.DrawArc(rect, startAngle, sweepAngle, true, pen);
         }
 
         /// <inheritdoc/>
@@ -589,45 +572,14 @@ namespace Alternet.Drawing
                 canvas.DrawPath(path, pen);
         }
 
-        /// <summary>
-        /// Gets <see cref="SKPath"/> from array of points and fill mode.
-        /// </summary>
-        /// <param name="points">The array of points.</param>
-        /// <param name="fillMode">The fill mode.</param>
-        /// <returns></returns>
-        public virtual SKPath? GetPathFromPoints(ReadOnlySpan<PointD> points, FillMode fillMode)
-        {
-            if (points == null || points.Length < 3)
-                return null;
-
-            var path = new SKPath
-            {
-                FillType = fillMode.ToSkia(),
-            };
-
-            // Move to the first point
-            path.MoveTo(points[0].X, points[0].Y);
-
-            // Draw lines between the points
-            for (int i = 1; i < points.Length; i++)
-            {
-                path.LineTo(points[i].X, points[i].Y);
-            }
-
-            // Ensures the polygon is closed
-            path.Close();
-
-            return path;
-        }
-
         /// <inheritdoc/>
         public override void Polygon(Pen? pen, Brush brush, ReadOnlySpan<PointD> points, FillMode fillMode)
         {
-            using var path = GetPathFromPoints(points, fillMode);
+            using var path = SkiaUtils.GetPathFromPoints(points, fillMode);
             if (path is null)
                 return;
 
-            var (fill, stroke) = GetFillAndStrokePaint(pen, brush);
+            var (fill, stroke) = SkiaUtils.GetFillAndStrokePaint(pen, brush);
 
             if (fill is not null)
                 canvas.DrawPath(path, fill);
@@ -650,7 +602,7 @@ namespace Alternet.Drawing
         {
             DebugBrushAssert(brush);
 
-            var path = GetPathFromPoints(points, fillMode);
+            var path = SkiaUtils.GetPathFromPoints(points, fillMode);
             if (path is null)
                 return;
 

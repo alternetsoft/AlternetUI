@@ -481,6 +481,110 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
+        /// Gets <see cref="SKPath"/> from array of points and fill mode.
+        /// </summary>
+        /// <param name="points">The array of points.</param>
+        /// <param name="fillMode">The fill mode.</param>
+        /// <returns></returns>
+        public static SKPath? GetPathFromPoints(ReadOnlySpan<PointD> points, FillMode fillMode)
+        {
+            if (points == null || points.Length < 3)
+                return null;
+
+            var path = new SKPath
+            {
+                FillType = fillMode.ToSkia(),
+            };
+
+            // Move to the first point
+            path.MoveTo(points[0].X, points[0].Y);
+
+            // Draw lines between the points
+            for (int i = 1; i < points.Length; i++)
+            {
+                path.LineTo(points[i].X, points[i].Y);
+            }
+
+            // Ensures the polygon is closed
+            path.Close();
+
+            return path;
+        }
+
+        /// <summary>
+        /// Saves the specified image to the user's Downloads folder with a unique filename.
+        /// Image is saved in PNG format.
+        /// </summary>
+        /// <remarks>The image is saved in PNG format. A unique filename is automatically generated to
+        /// avoid overwriting existing files in the Downloads folder.</remarks>
+        /// <param name="image">The image to save. Must not be <see langword="null"/>.</param>
+        public static void SaveImageToDownloads(SKImage image)
+        {
+            var path = PathUtils.GenerateUniqueFilenameInDownloads("image.png");
+            SaveImageToPng(image, path);
+        }
+
+        /// <summary>
+        /// Saves an <see cref="SKImage"/> instance to a file in PNG format.
+        /// </summary>
+        /// <param name="image">The <see cref="SKImage"/> to save.</param>
+        /// <param name="fileName">The destination file path for the PNG image.</param>
+        /// <exception cref="ArgumentNullException">Thrown if <paramref name="image"/>
+        /// or <paramref name="fileName"/> is null.</exception>
+        /// <exception cref="IOException">Thrown if the file cannot be written.</exception>
+        public static void SaveImageToPng(SKImage image, string fileName)
+        {
+            if (image == null)
+                throw new ArgumentNullException(nameof(image));
+            if (fileName == null)
+                throw new ArgumentNullException(nameof(fileName));
+
+            using var data = image.Encode(SKEncodedImageFormat.Png, 100);
+            using var stream = File.OpenWrite(fileName);
+            data.SaveTo(stream);
+        }
+
+        /// <summary>
+        /// Draws a circle on the specified <see cref="SKCanvas"/> using the provided pen,
+        /// brush, center point, and radius.
+        /// </summary>
+        /// <remarks>If both <paramref name="pen"/> and <paramref name="brush"/> are <c>null</c>, no
+        /// circle will be drawn. The method uses SkiaSharp to render the circle,
+        /// and the appearance of the circle
+        /// depends on the styles defined by the <paramref name="pen"/> and <paramref name="brush"/>.</remarks>
+        /// <param name="canvas">The <see cref="SKCanvas"/> on which the circle will be drawn.
+        /// Cannot be <c>null</c>.</param>
+        /// <param name="pen">The <see cref="Pen"/> that defines the stroke style of the circle.
+        /// Can be <c>null</c> if no stroke is
+        /// desired.</param>
+        /// <param name="brush">The <see cref="Brush"/> that defines the fill style of the circle.
+        /// Can be <c>null</c> if no fill is desired.</param>
+        /// <param name="center">The <see cref="PointD"/> representing the center of the circle.</param>
+        /// <param name="radius">The radius of the circle, specified as a <see cref="Coord"/>.
+        /// Must be a non-negative value.</param>
+        public static void GraphicsCircle(SKCanvas canvas, Pen pen, Brush brush, PointD center, Coord radius)
+        {
+            var (fill, stroke) = SkiaUtils.GetFillAndStrokePaint(pen, brush);
+            var radiusF = (float)radius;
+            SKPoint centerF = center;
+            if (fill is not null)
+                canvas.DrawCircle(centerF, radiusF, fill);
+            if (stroke is not null)
+                canvas.DrawCircle(centerF, radiusF, stroke);
+        }
+
+        /// <summary>
+        /// Gets <see cref="SKPaint"/> pair for the specified brush and pen.
+        /// </summary>
+        /// <param name="pen">Pen to use.</param>
+        /// <param name="brush">Brush to use.</param>
+        /// <returns></returns>
+        public static (SKPaint? Fill, SKPaint? Stroke) GetFillAndStrokePaint(Pen? pen, Brush? brush)
+        {
+            return (brush?.SkiaPaint, pen?.SkiaPaint);
+        }
+
+        /// <summary>
         /// Converts <see cref="FillMode"/> to <see cref="SKPathFillType"/>.
         /// </summary>
         /// <param name="fillMode">Value to convert.</param>
