@@ -59,6 +59,8 @@ namespace Alternet.UI
         private Coord maxSize;
         private Cursor? defaultCursor;
         private SplitterTargetMode targetMode = SplitterTargetMode.Auto;
+        private bool isBackgroundPainted = true;
+        private bool isForegroundPainted = true;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Splitter"/> class.
@@ -127,6 +129,40 @@ namespace Alternet.UI
         /// Use this property to override the default splitter colors resolve method.
         /// </summary>
         public ResolveSplitterColorsDelegate? ResolveSplitterColorsOverride { get; set; }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether the background is painted.
+        /// Default is true.
+        /// </summary>
+        public virtual bool IsBackgroundPainted
+        {
+            get => isBackgroundPainted;
+
+            set
+            {
+                if(value == isBackgroundPainted)
+                    return;
+                isBackgroundPainted = value;
+                Invalidate();
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether the foreground is painted.
+        /// Default is true.
+        /// </summary>
+        public virtual bool IsForegroundPainted
+        {
+            get => isForegroundPainted;
+
+            set
+            {
+                if(value == isForegroundPainted)
+                    return;
+                isForegroundPainted = value;
+                Invalidate();
+            }
+        }
 
         /// <summary>
         /// Gets or sets splitter background and line color when control state
@@ -466,15 +502,30 @@ namespace Alternet.UI
             e.Graphics.FillRectangle(color.AsBrush, e.ClipRectangle);
         }
 
+        /// <summary>
+        /// Draws the border of the splitter control.
+        /// </summary>
+        /// <remarks>This method is responsible for rendering the border of the splitter control.
+        /// It uses the provided <see cref="PaintEventArgs"/>
+        /// to perform the drawing operation.</remarks>
+        /// <param name="e">A <see cref="PaintEventArgs"/> object that contains data
+        /// for the paint operation.</param>
+        public virtual void DrawSplitterBorder(PaintEventArgs e)
+        {
+            DrawDefaultBackground(e, DrawDefaultBackgroundFlags.DrawBorder);
+        }
+
         /// <inheritdoc/>
         public override void DefaultPaint(PaintEventArgs e)
         {
             ResolveSplitterColors(out var backColor, out var foreColor);
-            DrawSplitterBackground(e, backColor);
-            DrawSplitterForeground(e, foreColor);
+            if(IsBackgroundPainted)
+                DrawSplitterBackground(e, backColor);
+            if(IsForegroundPainted)
+                DrawSplitterForeground(e, foreColor);
             if(HasBorder)
             {
-                DrawDefaultBackground(e, DrawDefaultBackgroundFlags.DrawBorder);
+                DrawSplitterBorder(e);
             }
         }
 
