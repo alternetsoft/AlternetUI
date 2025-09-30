@@ -16,7 +16,7 @@ namespace Alternet.Drawing
     /// </summary>
     [Serializable]
     [StructLayout(LayoutKind.Explicit, Pack = 1)]
-    public struct ColorStruct
+    public struct ColorStruct : IEquatable<ColorStruct>
     {
         /// <summary>
         /// Gets default value with all fields assigned to default values.
@@ -177,7 +177,7 @@ namespace Alternet.Drawing
         public static implicit operator uint(ColorStruct d) => d.Value;
 
         /// <summary>
-        /// Implicit operator convertion from tuple with three <see cref="byte"/> values
+        /// Implicit operator conversion from tuple with three <see cref="byte"/> values
         /// to <see cref="Color"/>. Tuple values define RGB of the color.
         /// </summary>
         /// <param name="d">New color value.</param>
@@ -190,7 +190,7 @@ namespace Alternet.Drawing
             new(d.Red, d.Green, d.Blue);
 
         /// <summary>
-        /// Implicit operator convertion from tuple with three <see cref="byte"/> values
+        /// Implicit operator conversion from tuple with three <see cref="byte"/> values
         /// to <see cref="Color"/>. Tuple values define ARGB of the color.
         /// </summary>
         /// <param name="d">New color value.</param>
@@ -265,6 +265,19 @@ namespace Alternet.Drawing
         public override readonly int GetHashCode()
         {
             return Value.GetHashCode();
+        }
+
+        /// <inheritdoc/>
+        public override readonly string ToString()
+        {
+            return $"A={A}, R={R}, G={G}, B={B}";
+        }
+
+        /// <inheritdoc/>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public readonly bool Equals(ColorStruct other)
+        {
+            return this == other;
         }
     }
 }
