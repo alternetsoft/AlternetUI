@@ -454,6 +454,28 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
+        /// Sets an override for the specified SVG color with the provided value.
+        /// </summary>
+        /// <remarks>If the <paramref name="value"/> is a <see cref="LightDarkColor"/>,
+        /// the method applies
+        /// the override for both light and dark themes using the specified color.
+        /// Otherwise, the override is applied
+        /// separately for light and dark themes with the same color value.</remarks>
+        /// <param name="knownColor">The predefined SVG color to override.</param>
+        /// <param name="value">The new color value to apply as the override.
+        /// If <see langword="null"/>, the override is removed.</param>
+        public virtual void SetColorOverride(KnownSvgColor knownColor, Color? value)
+        {
+            if(value is LightDarkColor ldc)
+                SetColorOverride(knownColor, ldc);
+            else
+            {
+                SetColorOverride(knownColor, true, value);
+                SetColorOverride(knownColor, false, value);
+            }
+        }
+
+        /// <summary>
         /// Sets color overrides used instead of default known svg colors.
         /// Override is used only for this svg image.
         /// </summary>
@@ -523,7 +545,27 @@ namespace Alternet.Drawing
             }
         }
 
-        internal void Resize(int size)
+        /// <summary>
+        /// Resets the cached images by clearing the internal data storage.
+        /// </summary>
+        /// <remarks>This method initializes the cache to its default state, removing any previously
+        /// stored data. It can be used to free up memory or prepare the cache for reuse.</remarks>
+        public virtual void ResetCachedImages()
+        {
+            data = new Data?[16];
+        }
+
+        /// <summary>
+        /// Resizes the internal data structure to the specified max image size.
+        /// This is called automatically when image with the specified size is requested.
+        /// </summary>
+        /// <param name="size">The new size of the data structure.
+        /// Must be a non-negative value and less than or equal to <see
+        /// cref="short.MaxValue"/>.</param>
+        /// <exception cref="ArgumentOutOfRangeException">Thrown
+        /// if <paramref name="size"/> is less than 0 or greater
+        /// than <see cref="short.MaxValue"/>.</exception>
+        public virtual void Resize(int size)
         {
             if (size > short.MaxValue || size < 0)
                 throw new ArgumentOutOfRangeException(nameof(size));
