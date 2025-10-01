@@ -2125,8 +2125,9 @@ namespace Alternet.UI
                     SetColorThemeToDark();
                 else
                     SetColorThemeToLight();
-                ResetCachedImagesInItems();
             }
+
+            ResetCachedImagesInItems();
 
             base.OnSystemColorsChanged(e);
         }
