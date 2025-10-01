@@ -28,6 +28,8 @@ namespace Alternet.Drawing
         private static LightDarkColor windowForeColor;
         private static LightDarkColor controlBackColor;
         private static LightDarkColor controlForeColor;
+        private static LightDarkColor? svgDisabledColor;
+        private static LightDarkColor? svgNormalColor;
 
 #pragma warning disable CS8618
         static DefaultColors()
@@ -92,6 +94,28 @@ namespace Alternet.Drawing
             {
                 windowBackColor = value;
             }
+        }
+
+        /// <summary>
+        /// Gets or sets the color used for SVG images in both light and dark themes.
+        /// </summary>
+        public static LightDarkColor SvgNormalColor
+        {
+            get => svgNormalColor ??= new LightDarkColor(
+                light: Color.Black,
+                dark: Color.White);
+            set => svgNormalColor = value;
+        }
+
+        /// <summary>
+        /// Gets or sets the color used for disabled SVG images in both light and dark themes.
+        /// </summary>
+        public static LightDarkColor SvgDisabledColor
+        {
+            get => svgDisabledColor ??= new LightDarkColor(
+                light: SystemColors.GrayText,
+                dark: DefaultColors.GetBorderColor(isDark: false));
+            set => svgDisabledColor = value;
         }
 
         /// <summary>
