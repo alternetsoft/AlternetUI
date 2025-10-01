@@ -667,6 +667,9 @@ namespace Alternet.Drawing
             Color foreColor,
             Color backColor)
         {
+            if(s.Length == 0)
+                return;
+
             float x = location.X;
             float y = location.Y;
 
