@@ -14,6 +14,33 @@ namespace Alternet.Drawing
     public static class SvgUtils
     {
         /// <summary>
+        /// Gets or sets a function that overrides the default calculation of SVG size.
+        /// </summary>
+        /// <remarks>The function takes a <see cref="Coord"/> object
+        /// and an integer as input parameters,
+        /// and returns an integer representing the calculated size.
+        /// If this property is set to <see langword="null"/>,
+        /// the default size calculation logic will be used.</remarks>
+        public static Func<Coord, int, object?, int>? GetSvgSizeOverride;
+
+        /// <summary>
+        /// Calculates the size of an SVG element based on a scaling factor and a base size.
+        /// </summary>
+        /// <param name="scaleFactor">The scaling factor to apply to the base size.
+        /// Must be a valid <see cref="Coord"/> value.</param>
+        /// <param name="baseSize">The base size of the SVG element.
+        /// Defaults to 16 if not specified.</param>
+        /// <param name="context">The context object.</param>
+        /// <returns>The calculated size of the SVG element as an integer.</returns>
+        public static int GetSvgSize(Coord scaleFactor, int baseSize = 16, object? context = null)
+        {
+            if (GetSvgSizeOverride != null)
+                return GetSvgSizeOverride(scaleFactor, baseSize, context);
+            var result = (int)(scaleFactor * baseSize);
+            return result;
+        }
+
+        /// <summary>
         /// Initializes a tuple with two instances of the <see cref="ImageSet"/> class
         /// from the specified <see cref="Stream"/> which contains svg data. Images are loaded
         /// for the normal and disabled states using <see cref="AbstractControl.GetSvgColor"/>.
