@@ -113,6 +113,66 @@ namespace Alternet.UI
             }
         }
 
+        /// <summary>
+        /// Loads and initializes the images used for code completion symbols.
+        /// </summary>
+        /// <remarks>This method initializes the image collection for various symbol kinds (e.g., fields,
+        /// events,  methods, and properties) by assigning appropriate image names and colors.
+        /// It also loads the  images
+        /// from embedded resources in the assembly. If the images have already been initialized,
+        /// the method returns
+        /// without performing any actions.</remarks>
+        /// <param name="isDark">A value indicating whether the dark theme is enabled.
+        /// If <see langword="true"/>, the images will be adjusted
+        /// for the dark theme; otherwise, the default theme is used.</param>
+        public virtual void LoadImages(bool isDark)
+        {
+            images = new();
+
+            string prefix = "Resources.Svg.CodeCompletionSymbols.";
+
+            images.SetImageName(SymbolKind.Field, $"{prefix}Field.svg");
+            images.SetImageName(SymbolKind.Event, $"{prefix}Event.svg");
+            images.SetImageName(SymbolKind.Method, $"{prefix}Method1.svg");
+            images.SetImageName(SymbolKind.Property, $"{prefix}Property.svg");
+
+            images.SetSvgColor(SymbolKind.Field, LightDarkColors.Green);
+            images.SetSvgColor(SymbolKind.Event, LightDarkColors.Yellow);
+            images.SetSvgColor(SymbolKind.Method, LightDarkColors.Blue);
+            images.SetSvgColor(SymbolKind.Property, DefaultColors.SvgNormalColor);
+
+            images.AssignImageNames(true);
+
+            images.LoadSvgFromResource(typeof(WindowSearchForMembers).Assembly);
+        }
+
+        /// <inheritdoc/>
+        protected override void OnSystemColorsChanged(EventArgs e)
+        {
+            base.OnSystemColorsChanged(e);
+            images?.ResetCachedImages();
+        }
+
+        /// <summary>
+        /// Retrieves an image representation for the specified member type.
+        /// </summary>
+        /// <remarks>If the member type corresponds to an unknown or unsupported kind, a default
+        /// placeholder image  is returned. The size of the placeholder image depends
+        /// on whether a scale factor is
+        /// applied.</remarks>
+        /// <param name="memberType">The type of the member for which to retrieve the image.</param>
+        /// <returns>An <see cref="Image"/> object representing the specified
+        /// member type, or <see langword="null"/>  if no image
+        /// is available.</returns>
+        protected virtual SvgImage? GetImage(MemberTypes memberType)
+        {
+            var kind = GetKind(memberType);
+            if (kind == SymbolKind.Other)
+                return KnownSvgImages.ImgEmpty;
+            var result = images?.GetSvgImage(kind);
+            return result;
+        }
+
         /// <inheritdoc/>
         protected override void OnClosed(EventArgs e)
         {
@@ -219,42 +279,6 @@ namespace Alternet.UI
             }
         }
 
-        private Image? GetImage(MemberTypes memberType)
-        {
-            var kind = GetKind(memberType);
-            if (kind == SymbolKind.Other)
-                return KnownSvgImages.ImgEmpty.AsImage(HasScaleFactor ? 32 : 16);
-            var result = images?.GetImage(kind, !HasScaleFactor);
-            return result;
-        }
-
-        private void LoadImages(bool isDark)
-        {
-            if (images != null)
-                return;
-            images = new();
-
-            string prefix = "Resources.Svg.CodeCompletionSymbols.";
-
-            images.SetImageName(SymbolKind.Field, $"{prefix}Field.svg");
-            images.SetImageName(SymbolKind.Event, $"{prefix}Event.svg");
-            images.SetImageName(SymbolKind.Method, $"{prefix}Method1.svg");
-            images.SetImageName(SymbolKind.Property, $"{prefix}Property.svg");
-
-            images.SetSvgColor(SymbolKind.Field, LightDarkColors.Green.LightOrDark(isDark));
-            images.SetSvgColor(SymbolKind.Event, LightDarkColors.Yellow.LightOrDark(isDark));
-            images.SetSvgColor(SymbolKind.Method, LightDarkColors.Blue.LightOrDark(isDark));
-
-            images.SetSvgColor(
-                SymbolKind.Property,
-                new LightDarkColor(KnownSvgColor.Normal).LightOrDark(isDark));
-
-            images.AssignImageNames(true);
-
-            images.LoadImagesFromResource(typeof(WindowSearchForMembers).Assembly, true);
-            images.LoadImagesFromResource(typeof(WindowSearchForMembers).Assembly, false);
-        }
-
         private VirtualListBox.RangeAdditionController<MemberInfo>? CreateController()
         {
             var containsText = textBox.Text;
@@ -294,7 +318,8 @@ namespace Alternet.UI
                 var item = new MemberInfoItem();
                 item.Text = replaced;
                 item.LabelFlags = DrawLabelFlags.TextHasBold;
-                item.Image = GetImage(member.MemberType);
+                item.SvgImageSize = SvgUtils.GetSvgSize(ScaleFactor);
+                item.SvgImage = GetImage(member.MemberType);
                 item.MemberInfo = member;
                 item.DoubleClickAction = doubleClickAction;
 
