@@ -571,6 +571,20 @@ namespace Alternet.UI
             IsExpanded = false;
         }
 
+        /// <inheritdoc/>
+        public override void ResetCachedImages()
+        {
+            base.ResetCachedImages();
+
+            if (HasItems)
+            {
+                foreach (var item in Items)
+                {
+                    item.ResetCachedImages();
+                }
+            }
+        }
+
         /// <summary>
         /// Toggles the tree item to either the expanded or collapsed state.
         /// </summary>
