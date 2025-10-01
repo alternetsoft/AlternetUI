@@ -37,11 +37,6 @@ namespace Alternet.UI
         Warning,
 
         /// <summary>
-        /// Highlight Text color.
-        /// </summary>
-        HighlightText,
-
-        /// <summary>
         /// Selected item color.
         /// </summary>
         Selected,
