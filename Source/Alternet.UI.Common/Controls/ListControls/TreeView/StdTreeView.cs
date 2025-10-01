@@ -1452,6 +1452,22 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Resets the cached images for all items in the collection.
+        /// </summary>
+        /// <remarks>This method iterates through all items in the collection and invokes their
+        /// <see cref="ListControlItem.ResetCachedImages"/> method to clear any
+        /// cached image data. Use this method to ensure that all items
+        /// refresh their cached images,  for example, after an update
+        /// to the underlying image source.</remarks>
+        public virtual void ResetCachedImagesInItems()
+        {
+            foreach (var item in Items)
+            {
+                item.ResetCachedImages();
+            }
+        }
+
+        /// <summary>
         /// Gets a value indicating whether the specified item contains the specified substring.
         /// </summary>
         /// <param name="item">The tree view item to check.</param>
@@ -1608,7 +1624,8 @@ namespace Alternet.UI
         /// expanding the selected item if it has child items.
         /// </summary>
         /// <remarks>If the currently selected item has child items and is not already expanded, this
-        /// method expands the item and suppresses further processing of the key event. This method is intended to be
+        /// method expands the item and suppresses further processing
+        /// of the key event. This method is intended to be
         /// overridden in derived classes to customize the behavior of the right arrow key press.</remarks>
         /// <param name="e">The <see cref="KeyEventArgs"/> instance containing the event data.</param>
         protected virtual void OnListBoxRightKeyDown(KeyEventArgs e)
@@ -1626,7 +1643,8 @@ namespace Alternet.UI
         /// Handles the behavior when the asterisk (*) key is pressed in the inner list box.
         /// </summary>
         /// <remarks>This method expands all child items of the currently selected item in the list box,
-        /// if one is selected. The event is suppressed to prevent further processing of the key press.</remarks>
+        /// if one is selected. The event is suppressed to prevent
+        /// further processing of the key press.</remarks>
         /// <param name="e">The <see cref="KeyEventArgs"/> instance containing the event data,
         /// including the key pressed and its state.</param>
         protected virtual void OnListBoxAsteriskKeyDown(KeyEventArgs e)
@@ -1644,7 +1662,8 @@ namespace Alternet.UI
         /// </summary>
         /// <remarks>This method is invoked when a key is pressed while the inner list box has focus.
         /// Use this method to implement custom key handling logic.</remarks>
-        /// <param name="sender">The source of the event, typically the list box that triggered the event.</param>
+        /// <param name="sender">The source of the event, typically
+        /// the list box that triggered the event.</param>
         /// <param name="e">A <see cref="KeyEventArgs"/> that contains the event data,
         /// including the key pressed.</param>
         protected virtual void OnListBoxKeyDown(object? sender, KeyEventArgs e)
@@ -1681,9 +1700,11 @@ namespace Alternet.UI
         /// of the selected item while preserving its position and selection.
         /// </summary>
         /// <remarks>This method is called when a double-click event occurs on the inner list box. Derived
-        /// classes can override this method to provide custom handling for the double-click event. When overriding,
+        /// classes can override this method to provide custom handling for
+        /// the double-click event. When overriding,
         /// ensure the base method is called to maintain the default behavior.</remarks>
-        /// <param name="sender">The source of the event, typically the list box that was double-clicked.</param>
+        /// <param name="sender">The source of the event, typically the list box
+        /// that was double-clicked.</param>
         /// <param name="e">An <see cref="EventArgs"/> instance containing the event data.</param>
         protected virtual void OnListBoxDoubleClick(object? sender, EventArgs e)
         {
@@ -1779,6 +1800,13 @@ namespace Alternet.UI
         protected virtual VirtualListBox CreateListBox()
         {
             return new VirtualListBox();
+        }
+
+        /// <inheritdoc/>
+        protected override void OnSystemColorsChanged(EventArgs e)
+        {
+            ResetCachedImagesInItems();
+            base.OnSystemColorsChanged(e);
         }
     }
 }
