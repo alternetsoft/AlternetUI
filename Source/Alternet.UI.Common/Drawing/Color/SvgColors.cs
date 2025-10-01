@@ -25,32 +25,32 @@ namespace Alternet.UI
         /// <summary>
         /// Normal svg color.
         /// </summary>
-        public Color Normal { get; set; } = SystemColors.WindowText;
+        public virtual Color Normal { get; set; } = SystemColors.WindowText;
 
         /// <summary>
         /// Disabled svg color.
         /// </summary>
-        public Color Disabled { get; set; } = SystemColors.GrayText;
+        public virtual Color Disabled { get; set; } = SystemColors.GrayText;
 
         /// <summary>
         /// Error svg color.
         /// </summary>
-        public Color Error { get; set; } = SystemColors.WindowText;
+        public virtual Color Error { get; set; } = SystemColors.WindowText;
 
         /// <summary>
         /// Information svg color.
         /// </summary>
-        public Color Information { get; set; } = SystemColors.WindowText;
+        public virtual Color Information { get; set; } = SystemColors.WindowText;
 
         /// <summary>
         /// Warning svg color.
         /// </summary>
-        public Color Warning { get; set; } = SystemColors.WindowText;
+        public virtual Color Warning { get; set; } = SystemColors.WindowText;
 
         /// <summary>
         /// Highlight text svg color.
         /// </summary>
-        public Color HighlightText { get; set; } = SystemColors.HighlightText;
+        public virtual Color HighlightText { get; set; } = SystemColors.HighlightText;
 
         /// <summary>
         /// Gets known svg color for the specified <see cref="KnownSvgColor"/>.
@@ -85,33 +85,66 @@ namespace Alternet.UI
                     return Information;
                 case KnownSvgColor.Warning:
                     return Warning;
-                case KnownSvgColor.HighlightText:
-                    return HighlightText;
             }
         }
 
-        private class SvgColorsDark : SvgColors
+        private abstract class SvgColorOverDefault : SvgColors
+        {
+            private Color? normal;
+            private Color? disabled;
+            private Color? error;
+            private Color? information;
+            private Color? warning;
+
+            public abstract bool IsDark { get; }
+
+            public override Color Normal
+            {
+                get => normal ?? DefaultColors.SvgNormalColor;
+                set => normal = value;
+            }
+
+            public override Color Disabled
+            {
+                get => disabled ?? DefaultColors.SvgDisabledColor;
+                set => disabled = value;
+            }
+
+            public override Color Error
+            {
+                get => error ?? Normal;
+                set => error = value;
+            }
+
+            public override Color Information
+            {
+                get => information ?? Normal;
+                set => information = value;
+            }
+
+            public override Color Warning
+            {
+                get => warning ?? Normal;
+                set => warning = value;
+            }
+        }
+
+        private class SvgColorsDark : SvgColorOverDefault
         {
             public SvgColorsDark()
             {
-                Normal = Color.White;
-                Disabled = SystemColors.GrayText;
-                Error = Normal;
-                Information = Normal;
-                Warning = Normal;
             }
+
+            public override bool IsDark => true;
         }
 
-        private class SvgColorsWhite : SvgColors
+        private class SvgColorsWhite : SvgColorOverDefault
         {
             public SvgColorsWhite()
             {
-                Normal = Color.Black;
-                Error = Normal;
-                Information = Normal;
-                Warning = Normal;
-                Disabled = DefaultColors.GetBorderColor(isDark: false);
             }
+
+            public override bool IsDark => false;
         }
     }
 }
