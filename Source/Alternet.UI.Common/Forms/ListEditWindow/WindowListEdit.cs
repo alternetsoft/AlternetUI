@@ -315,7 +315,7 @@ namespace Alternet.UI
             }
 
             var propInstance = dataSource?.GetProperties(instance);
-            propertyGrid.SetProps(propInstance);
+            propertyGrid.SetProps(propInstance, sort: true);
         }
 
         private void LoadData()
