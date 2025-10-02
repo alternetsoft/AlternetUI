@@ -60,6 +60,7 @@ namespace Alternet.UI
         /// </summary>
         /// <remarks>Changing this property updates the selection state
         /// of the item within its associated container, if any.</remarks>
+        [Browsable(false)]
         public new virtual bool IsSelected
         {
             get
@@ -121,6 +122,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets the parent item of this tree control item.
         /// </summary>
+        [Browsable(false)]
         public virtual TreeViewItem? Parent
         {
             get => parent;
@@ -233,6 +235,7 @@ namespace Alternet.UI
         /// If this item is the root item, the owner is the object passed to the constructor.
         /// Otherwise, the owner is the owner of the root item.
         /// </remarks>
+        [Browsable(false)]
         public virtual ITreeViewItemContainer? Owner
         {
             get
@@ -324,6 +327,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets the first child item of this tree control item.
         /// </summary>
+        [Browsable(false)]
         public TreeViewItem? FirstChild
         {
             get
@@ -337,6 +341,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets the last child item of this tree control item.
         /// </summary>
+        [Browsable(false)]
         public TreeViewItem? LastChild
         {
             get
@@ -361,6 +366,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets whether item has collapsed parents.
         /// </summary>
+        [Browsable(false)]
         public virtual bool HasCollapsedParents
         {
             get
@@ -374,6 +380,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets the number of child items in this tree control item.
         /// </summary>
+        [Browsable(false)]
         public virtual int ItemCount
         {
             get
@@ -515,6 +522,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets the indent level of this item.
         /// </summary>
+        [Browsable(false)]
         public virtual int IndentLevel
         {
             get

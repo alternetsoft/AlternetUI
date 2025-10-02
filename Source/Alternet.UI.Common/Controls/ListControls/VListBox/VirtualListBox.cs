@@ -185,6 +185,7 @@ namespace Alternet.UI
         /// <value>
         /// A <see cref="Coord"/> representing the current horizontal scroll position.
         /// </value>
+        [Browsable(false)]
         public Coord ScrollOffsetX => scrollOffsetX;
 
         /// <summary>

@@ -206,6 +206,7 @@ namespace Alternet.UI
         /// Gets or sets a value indicating whether the item is checked.
         /// Uses <see cref="CheckState"/> internally.
         /// </summary>
+        [Browsable(false)]
         public bool IsChecked
         {
             get
@@ -231,6 +232,7 @@ namespace Alternet.UI
         /// <value>
         /// <c>true</c> if the font style is bold; otherwise, <c>false</c>.
         /// </value>
+        [Browsable(false)]
         public bool IsBold
         {
             get
@@ -383,11 +385,13 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets array of elements to draw before the label text and image.
         /// </summary>
+        [Browsable(false)]
         public virtual Graphics.DrawElementParams[]? PrefixElements { get; set; }
 
         /// <summary>
         /// Gets or sets array of elements to draw after the label text and image.
         /// </summary>
+        [Browsable(false)]
         public virtual Graphics.DrawElementParams[]? SuffixElements { get; set; }
 
         /// <summary>
