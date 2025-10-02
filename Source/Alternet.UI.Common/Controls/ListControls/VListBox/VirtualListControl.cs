@@ -179,6 +179,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets the header control for the list box.
         /// </summary>
+        [Browsable(false)]
         public virtual IListBoxHeader? HeaderControl
         {
             get

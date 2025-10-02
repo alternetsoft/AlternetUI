@@ -153,6 +153,7 @@ namespace Alternet.Drawing
         /// <summary>
         /// Gets the SkiaSharp location (<see cref="SKPoint"/>) of this rectangle.
         /// </summary>
+        [Browsable(false)]
         public readonly SKPoint SkiaLocation
         {
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -165,6 +166,7 @@ namespace Alternet.Drawing
         /// <summary>
         /// Gets the SkiaSharp size (<see cref="SKSize"/>) of this rectangle.
         /// </summary>
+        [Browsable(false)]
         public readonly SKSize SkiaSize
         {
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -502,6 +504,7 @@ namespace Alternet.Drawing
         /// <summary>
         /// Gets the radius of the circle, calculated as half the smaller dimension of the bounding area.
         /// </summary>
+        [Browsable(false)]
         public readonly Coord CircleRadius
         {
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -514,6 +517,7 @@ namespace Alternet.Drawing
         /// <summary>
         /// Gets the diameter of the largest circle that can fit within the current dimensions.
         /// </summary>
+        [Browsable(false)]
         public readonly Coord CircleDiameter
         {
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -526,6 +530,7 @@ namespace Alternet.Drawing
         /// <summary>
         /// Gets the top half of the current rectangle.
         /// </summary>
+        [Browsable(false)]
         public readonly RectD TopHalf
         {
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -538,6 +543,7 @@ namespace Alternet.Drawing
         /// <summary>
         /// Gets the bottom half of the current rectangle.
         /// </summary>
+        [Browsable(false)]
         public readonly RectD BottomHalf
         {
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -550,6 +556,7 @@ namespace Alternet.Drawing
         /// <summary>
         /// Gets the left half of the current rectangle.
         /// </summary>
+        [Browsable(false)]
         public readonly RectD LeftHalf
         {
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -562,6 +569,7 @@ namespace Alternet.Drawing
         /// <summary>
         /// Gets the right half of the current rectangle.
         /// </summary>
+        [Browsable(false)]
         public readonly RectD RightHalf
         {
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -574,6 +582,7 @@ namespace Alternet.Drawing
         /// <summary>
         /// Gets or sets the vertical center coordinate of the rectangle.
         /// </summary>
+        [Browsable(false)]
         public Coord CenterVert
         {
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -592,6 +601,7 @@ namespace Alternet.Drawing
         /// <summary>
         /// Gets or sets the horizontal center coordinate of the rectangle.
         /// </summary>
+        [Browsable(false)]
         public Coord CenterHorz
         {
             [MethodImpl(MethodImplOptions.AggressiveInlining)]

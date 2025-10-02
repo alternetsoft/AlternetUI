@@ -199,6 +199,7 @@ namespace Alternet.UI
         /// <remarks>This property is affected by the application's platform. If the application
         /// is running on Maui, the property will always return <see langword="false"/> and
         /// cannot be set.</remarks>
+        [Browsable(false)]
         public virtual bool IsPartialRowVisible
         {
             get

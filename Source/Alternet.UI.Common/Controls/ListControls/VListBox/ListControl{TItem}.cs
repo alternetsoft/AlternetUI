@@ -54,6 +54,7 @@ namespace Alternet.UI
         /// for the display and other purposes. Default is <c>null</c>.
         /// If not specified, <see cref="CultureInfo.CurrentCulture"/> is used.
         /// </summary>
+        [Browsable(false)]
         public virtual IFormatProvider? FormatProvider { get; set; }
 
         /// <summary>

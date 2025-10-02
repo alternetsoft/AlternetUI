@@ -56,6 +56,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets the router responsible for handling scroll events.
         /// </summary>
+        [Browsable(false)]
         public virtual IScrollEventRouter ScrollEventRouter
         {
             get
@@ -99,6 +100,7 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
+        [Browsable(false)]
         public override bool HasOwnInterior
         {
             get
@@ -135,6 +137,7 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
+        [Browsable(false)]
         public override ControlRenderingFlags RenderingFlags
         {
             get => base.RenderingFlags;
@@ -189,6 +192,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets whether the control has initialized <see cref="Interior"/>.
         /// </summary>
+        [Browsable(false)]
         public bool HasInterior => interior is not null;
 
         /// <summary>

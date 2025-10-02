@@ -401,6 +401,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets layout flags which are used to control how layout is performed.
         /// </summary>
+        [Browsable(false)]
         public virtual LayoutFlags LayoutFlags
         {
             get => layoutFlags;
@@ -800,6 +801,7 @@ namespace Alternet.UI
         /// its <see cref="AbstractControl.Visible"/> property is <see langword="true"/>.
         /// If the current control has no parent or the parent has fewer than two children, the
         /// collection will be empty.</remarks>
+        [Browsable(false)]
         public virtual IEnumerable<AbstractControl> VisibleSiblings
         {
             get
@@ -821,6 +823,7 @@ namespace Alternet.UI
         /// <remarks>Sibling controls are the other children of the same parent control,
         /// excluding the current control itself. If the current control has no parent
         /// or the parent has fewer than two children, the collection will be empty.</remarks>
+        [Browsable(false)]
         public virtual IEnumerable<AbstractControl> Siblings
         {
             get
@@ -1335,6 +1338,7 @@ namespace Alternet.UI
         /// Gets the last child control in the collection of children,
         /// or <see langword="null"/> if there are no children.
         /// </summary>
+        [Browsable(false)]
         public virtual AbstractControl? LastChild
         {
             get
@@ -1395,6 +1399,7 @@ namespace Alternet.UI
         /// </summary>
         /// <remarks>This property iterates through the collection of children
         /// in reverse order to find the last visible child.</remarks>
+        [Browsable(false)]
         public AbstractControl? LastVisibleChild
         {
             get
@@ -2421,6 +2426,7 @@ namespace Alternet.UI
         /// Gets or sets minimal value of the child's <see cref="Margin"/> property.
         /// </summary>
         [DefaultValue(null)]
+        [Browsable(false)]
         public virtual Thickness? MinChildMargin
         {
             get
@@ -2683,6 +2689,7 @@ namespace Alternet.UI
         /// A nullable <see cref="PointD"/> indicating the minimum allowable location,
         /// or <c>null</c> if unconstrained.
         /// </value>
+        [Browsable(false)]
         public virtual PointD? MinimumLocation
         {
             get => minimumLocation;

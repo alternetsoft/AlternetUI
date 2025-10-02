@@ -171,6 +171,7 @@ namespace Alternet.UI
         /// </summary>
         /// <value>The zero-based index of the first character in the string
         /// of the current text selection.</value>
+        [Browsable(false)]
         public virtual int TextSelectionStart
         {
             get
@@ -186,6 +187,7 @@ namespace Alternet.UI
         /// of the combo box.
         /// </summary>
         /// <value>The number of characters selected.</value>
+        [Browsable(false)]
         public virtual int TextSelectionLength
         {
             get
