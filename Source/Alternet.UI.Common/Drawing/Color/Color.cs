@@ -826,7 +826,7 @@ namespace Alternet.Drawing
 
             var knownColor = color.ToKnownColor();
 
-            if (knownColor == 0)
+            if (knownColor == 0 || knownColor > KnownColor.MenuHighlight)
             {
                 var argb = color.ToArgb();
                 return System.Drawing.Color.FromArgb(argb);

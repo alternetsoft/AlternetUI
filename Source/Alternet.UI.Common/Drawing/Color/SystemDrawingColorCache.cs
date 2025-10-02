@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Runtime.CompilerServices;
 using System.Text;
 
@@ -20,12 +21,20 @@ namespace Alternet.Drawing
 
         static SystemDrawingColorCache()
         {
-            var values = Enum.GetValues(typeof(System.Drawing.KnownColor));
-            colors = new System.Drawing.Color[values.Length];
-
-            foreach (System.Drawing.KnownColor kc in values)
+            try
             {
-                colors[(int)kc] = System.Drawing.Color.FromKnownColor(kc);
+                var values = Enum.GetValues(typeof(System.Drawing.KnownColor));
+                colors = new System.Drawing.Color[values.Length + 1];
+
+                foreach (System.Drawing.KnownColor kc in values)
+                {
+                    colors[(int)kc] = System.Drawing.Color.FromKnownColor(kc);
+                }
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine($"[Error] {ex}");
+                throw;
             }
         }
 
