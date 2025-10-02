@@ -5,6 +5,8 @@ namespace PropertyGridSample
 {
     internal class WelcomePage : HiddenBorder
     {
+        private readonly Image logoImage;
+
         private readonly RichTextBox richText = new()
         {
             HasBorder = false,
@@ -12,17 +14,26 @@ namespace PropertyGridSample
 
         public WelcomePage()
         {
+            logoImage = Image.FromUrl(ObjectInit.ResPrefixImage);
             VerticalAlignment = VerticalAlignment.Stretch;
             HorizontalAlignment = HorizontalAlignment.Stretch;
 
-            var baseFontSize = (int)AbstractControl.DefaultFont.SizeInPoints;
-
             SuggestedSize = new(300, 400);
+            richText.Parent = this;
+
+            richText.ReadOnly = true;
+            richText.AutoUrlOpen = true;
+            richText.AutoUrlModifiers = Alternet.UI.ModifierKeys.None;
+            RenderText();
+        }
+
+        private void RenderText()
+        {
+            var baseFontSize = (int)AbstractControl.DefaultFont.SizeInPoints;
             var homePage = @"https://www.alternet-ui.com/";
             var docsHomePage = @"https://docs.alternet-ui.com/";
             var docsUrl = $"{docsHomePage}introduction/getting-started.html";
 
-            richText.Parent = this;
             var r = richText;
 
             r.SetDefaultStyle(r.CreateTextAttr());
@@ -51,7 +62,6 @@ namespace PropertyGridSample
             r.EndBold();
             r.NewLine();
 
-            var logoImage = Image.FromUrl(ObjectInit.ResPrefixImage);
             r.WriteImage(logoImage);
 
             r.NewLine();
@@ -62,9 +72,16 @@ namespace PropertyGridSample
 
             r.EndSuppressUndo();
             r.EndUpdate();
-            r.ReadOnly = true;
-            r.AutoUrlOpen = true;
-            r.AutoUrlModifiers = Alternet.UI.ModifierKeys.None;
+        }
+
+        protected override void OnSystemColorsChanged(EventArgs e)
+        {
+            base.OnSystemColorsChanged(e);
+            richText.DoInsideUpdate(() =>
+            {
+                richText.Clear();
+                RenderText();
+            });
         }
     }
 }

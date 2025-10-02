@@ -5,6 +5,8 @@ namespace ControlsSample
 {
     internal class WelcomePage : HiddenBorder
     {
+        private readonly Image logoImage;
+
         private readonly RichTextBox richText = new()
         {
             HasBorder = false,
@@ -14,16 +16,26 @@ namespace ControlsSample
         {
             VerticalAlignment = VerticalAlignment.Stretch;
             HorizontalAlignment = HorizontalAlignment.Stretch;
+
+            richText.Parent = this;
+            richText.TextUrl += RichTextBox_TextUrl;
+            logoImage = Image.FromUrl("embres:ControlsSampleDll.Resources.logo128x128.png");
+
+            richText.ReadOnly = true;
+            richText.AutoUrlOpen = true;
+            richText.AutoUrlModifiers = Alternet.UI.ModifierKeys.None;
+            RenderText();
+        }
+
+        private void RenderText()
+        {
             var homePage = @"https://www.alternet-ui.com/";
             var docsHomePage = @"https://docs.alternet-ui.com/";
             var docsUrl = $"{docsHomePage}introduction/getting-started.html";
 
             var baseFontSize = (int)AbstractControl.DefaultFont.SizeInPoints;
 
-            richText.Parent = this;
             var r = richText;
-
-            r.TextUrl += RichTextBox_TextUrl;
 
             r.SetDefaultStyle(r.CreateTextAttr());
 
@@ -37,7 +49,6 @@ namespace ControlsSample
             r.BeginBold();
             r.BeginFontSize(baseFontSize + 15);
 
-
             r.WriteText("Alternet UI");
             r.EndFontSize();
 
@@ -49,7 +60,6 @@ namespace ControlsSample
             r.EndBold();
             r.NewLine();
 
-            var logoImage = Image.FromUrl("embres:ControlsSampleDll.Resources.logo128x128.png");
             r.WriteImage(logoImage);
 
             r.NewLine(2);
@@ -74,9 +84,16 @@ namespace ControlsSample
 
             r.EndSuppressUndo();
             r.EndUpdate();
-            r.ReadOnly = true;
-            r.AutoUrlOpen = true;
-            r.AutoUrlModifiers = Alternet.UI.ModifierKeys.None;
+        }
+
+        protected override void OnSystemColorsChanged(EventArgs e)
+        {
+            base.OnSystemColorsChanged(e);
+            richText.DoInsideUpdate(() =>
+            {
+                richText.Clear();
+                RenderText();
+            });
         }
 
         private void RichTextBox_TextUrl(object? sender, UrlEventArgs e)
