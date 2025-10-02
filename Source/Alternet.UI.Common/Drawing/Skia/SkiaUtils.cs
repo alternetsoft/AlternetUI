@@ -363,18 +363,23 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
-        /// Recreates a cached bitmap canvas with the specified size, scale factor, and transparency settings.
+        /// Recreates a cached bitmap canvas with the specified size, scale factor,
+        /// and transparency settings.
         /// </summary>
         /// <remarks>This method ensures that the cached bitmap canvas matches the specified parameters.
         /// If the existing canvas does not match, it is disposed and replaced with a new instance.
-        /// The method is designed to optimize resource usage by reusing the existing canvas when possible.</remarks>
+        /// The method is designed to optimize resource usage by
+        /// reusing the existing canvas when possible.</remarks>
         /// <param name="cachedCanvas">A reference to the cached bitmap canvas. If the canvas
         /// is <see langword="null"/> or does not match the
         /// specified parameters, it will be replaced with a new instance.</param>
-        /// <param name="size">The dimensions of the bitmap canvas, specified as a <see cref="SizeD"/> structure.</param>
-        /// <param name="scaleFactor">The scaling factor to apply to the bitmap canvas, specified
+        /// <param name="size">The dimensions of the bitmap canvas,
+        /// specified as a <see cref="SizeD"/> structure.</param>
+        /// <param name="scaleFactor">The scaling factor to apply
+        /// to the bitmap canvas, specified
         /// as a <see cref="Coord"/> value.</param>
-        /// <param name="isTransparent">A value indicating whether the bitmap canvas should support transparency.
+        /// <param name="isTransparent">A value indicating whether
+        /// the bitmap canvas should support transparency.
         /// The default value is <see langword="true"/>.</param>
         public static void RecreateBitmapCanvas(
             ref BitmapCanvasCached? cachedCanvas,
@@ -551,7 +556,8 @@ namespace Alternet.Drawing
         /// <remarks>If both <paramref name="pen"/> and <paramref name="brush"/> are <c>null</c>, no
         /// circle will be drawn. The method uses SkiaSharp to render the circle,
         /// and the appearance of the circle
-        /// depends on the styles defined by the <paramref name="pen"/> and <paramref name="brush"/>.</remarks>
+        /// depends on the styles defined by the <paramref name="pen"/>
+        /// and <paramref name="brush"/>.</remarks>
         /// <param name="canvas">The <see cref="SKCanvas"/> on which the circle will be drawn.
         /// Cannot be <c>null</c>.</param>
         /// <param name="pen">The <see cref="Pen"/> that defines the stroke style of the circle.
@@ -875,6 +881,49 @@ namespace Alternet.Drawing
                 throwOnError: false,
                 ignoreCase: false);
             return libraryLoaderType != null;
+        }
+
+        /// <summary>
+        /// Draws a debug text label at the bottom-left corner of the specified bounds.
+        /// </summary>
+        /// <remarks>The text is drawn with a default font and styled with
+        /// a light yellow background, a
+        /// dark gray border, and black foreground text.
+        /// Ensure that the <paramref name="graphics"/> object is valid and
+        /// properly initialized before calling this method.</remarks>
+        /// <param name="graphics">The <see cref="SKCanvas"/>
+        /// on which the text will be drawn. This cannot be <see langword="null"/>.</param>
+        /// <param name="text">The text to display. This cannot be <see langword="null"/>
+        /// or empty.</param>
+        /// <param name="bounds">The bounding rectangle that defines
+        /// the area for positioning the text. The text will be drawn near the
+        /// bottom-left corner of this rectangle.</param>
+        public static void DrawDebugTextAtCorner(
+            SKCanvas graphics,
+            string text,
+            Drawing.RectD bounds)
+        {
+            var font = UI.Control.DefaultFont.Scaled(Display.MaxScaleFactor);
+            var foreColor = Drawing.Color.Black;
+            var backColor = Drawing.Color.LightYellow;
+            var borderColor = Drawing.Color.DarkGray;
+
+            var textSize = graphics.GetTextExtent(text, font);
+
+            var padding = 4;
+            var rect = Drawing.RectD.FromLTRB(
+                bounds.Left + padding,
+                bounds.BottomLeft.Y - textSize.Height - padding,
+                bounds.Left + textSize.Width + (2 * padding),
+                bounds.BottomLeft.Y - padding);
+
+            DrawText(
+                graphics,
+                text,
+                rect.Location,
+                font,
+                foreColor,
+                backColor);
         }
 
         /// <summary>
