@@ -1246,6 +1246,21 @@ namespace Alternet.Drawing
         public readonly RectD Inflated() => Inflate(this, CoordD.One, CoordD.One);
 
         /// <summary>
+        /// Returns a new rectangle that is inflated by the specified size.
+        /// </summary>
+        /// <param name="size">The amount by which to inflate the rectangle.
+        /// The width and height of the rectangle are increased by the
+        /// specified size.</param>
+        /// <returns>A new <see cref="RectD"/> that is inflated by the specified size.</returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public readonly RectD Inflated(SizeD size)
+        {
+            var r = this;
+            r.Inflate(size);
+            return r;
+        }
+
+        /// <summary>
         /// Creates a <see cref='RectD'/> that is offset by the specified amount.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
