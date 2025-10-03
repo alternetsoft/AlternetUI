@@ -483,6 +483,17 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
+        /// Fills the specified rectangle with the given color.
+        /// </summary>
+        /// <param name="color">The color to fill the rectangle with.</param>
+        /// <param name="rectangle">The rectangle to be filled,
+        /// defined by its dimensions and position.</param>
+        public virtual void FillRectangleWithColor(Color color, RectD rectangle)
+        {
+            FillRectangle(color.AsBrush, rectangle);
+        }
+
+        /// <summary>
         /// Fills a series of rectangles specified by <see cref="RectD"/> structures.
         /// </summary>
         /// <param name="brush"><see cref="Brush"/> that determines the characteristics
@@ -547,6 +558,36 @@ namespace Alternet.Drawing
             {
                 var transform = TransformMatrix.CreateTranslation(offsetX, offsetY);
                 PushTransform(transform);
+            }
+        }
+
+        /// <summary>
+        /// Fills the specified rectangle with a linear gradient defined by the given colors and points.
+        /// </summary>
+        /// <remarks>The gradient is defined by a line connecting <paramref name="point1"/>
+        /// and <paramref name="point2"/>, transitioning
+        /// from <paramref name="beginColor"/> to <paramref name="endColor"/>. The
+        /// gradient is applied to the entire area of the specified rectangle.</remarks>
+        /// <param name="rect">The rectangle to fill with the gradient.</param>
+        /// <param name="beginColor">The starting color of the gradient.</param>
+        /// <param name="endColor">The ending color of the gradient.</param>
+        /// <param name="point1">The starting point of the gradient.</param>
+        /// <param name="point2">The ending point of the gradient.</param>
+        public virtual void FillGradient(
+            RectD rect,
+            Color beginColor,
+            Color endColor,
+            PointD point1,
+            PointD point2)
+        {
+            var br = new LinearGradientBrush(point1, point2, beginColor, endColor);
+            try
+            {
+                FillRectangle(br, rect);
+            }
+            finally
+            {
+                br.Dispose();
             }
         }
 

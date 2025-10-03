@@ -1784,6 +1784,43 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
+        /// Retrieves a <see cref="Pen"/> instance with the specified width.
+        /// </summary>
+        /// <remarks>This method optimizes performance by caching <see cref="Pen"/>
+        /// instances for widths
+        /// up to a predefined limit. For widths exceeding the cache limit,
+        /// a new <see cref="Pen"/> instance is created
+        /// on each call.</remarks>
+        /// <param name="width">The width of the pen to retrieve.
+        /// Must be a positive integer.</param>
+        /// <returns>A <see cref="Pen"/> instance with the specified width.
+        /// If the width is less than or equal to a predefined
+        /// maximum cached width, a cached instance may be returned;
+        /// otherwise, a new instance is created.</returns>
+        /// <see cref="AsPen"/>
+        public virtual Pen GetPen(int width)
+        {
+            if (width <= 1)
+                return AsPen;
+            if (width <= MaxCachedPenWidth)
+            {
+                resources.PenCache ??= new Pen[MaxCachedPenWidth + 1];
+                var pen = resources.PenCache[width];
+                if (pen == null)
+                {
+                    pen = CreatePenInstance(width);
+                    resources.PenCache[width] = pen;
+                }
+
+                return pen;
+            }
+            else
+            {
+                return CreatePenInstance(width);
+            }
+        }
+
+        /// <summary>
         /// Gets this color as <see cref="Pen"/> with the specified width.
         /// </summary>
         /// <param name="width">Width of the pen.</param>
@@ -2149,43 +2186,6 @@ namespace Alternet.Drawing
                 return name.GetHashCode();
 
             return (color, state, knownColor).GetHashCode();
-        }
-
-        /// <summary>
-        /// Retrieves a <see cref="Pen"/> instance with the specified width.
-        /// </summary>
-        /// <remarks>This method optimizes performance by caching <see cref="Pen"/>
-        /// instances for widths
-        /// up to a predefined limit. For widths exceeding the cache limit,
-        /// a new <see cref="Pen"/> instance is created
-        /// on each call.</remarks>
-        /// <param name="width">The width of the pen to retrieve.
-        /// Must be a positive integer.</param>
-        /// <returns>A <see cref="Pen"/> instance with the specified width.
-        /// If the width is less than or equal to a predefined
-        /// maximum cached width, a cached instance may be returned;
-        /// otherwise, a new instance is created.</returns>
-        /// <see cref="AsPen"/>
-        public virtual Pen GetPen(int width)
-        {
-            if (width <= 1)
-                return AsPen;
-            if(width <= MaxCachedPenWidth)
-            {
-                resources.PenCache ??= new Pen[MaxCachedPenWidth + 1];
-                var pen = resources.PenCache[width];
-                if (pen == null)
-                {
-                    pen = CreatePenInstance(width);
-                    resources.PenCache[width] = pen;
-                }
-
-                return pen;
-            }
-            else
-            {
-                return CreatePenInstance(width);
-            }
         }
 
         /// <summary>
