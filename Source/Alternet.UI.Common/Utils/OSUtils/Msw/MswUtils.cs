@@ -146,6 +146,14 @@ namespace Alternet.UI
         /// </summary>
         public static class NativeMethods
         {
+#pragma warning disable
+            public const int BI_RGB = 0;
+
+            public const int DIB_RGB_COLORS = 0;
+
+            public const int SRCCOPY = 0x00CC0020;
+#pragma warning restore
+
             private const string User32 = "user32.dll";
             private const string UxTheme = "uxtheme.dll";
             private const string DwmApi = "dwmapi.dll";
@@ -190,6 +198,150 @@ namespace Alternet.UI
                 Usedarkmodecolors = 26,
                 Last = 27,
             }
+
+            /// <summary>
+            /// Creates a memory device context (DC) compatible with the specified device context.
+            /// </summary>
+            /// <remarks>The memory DC can be used for off-screen drawing and is compatible with the
+            /// device context specified by <paramref name="hdc"/>. After using the
+            /// memory DC, it must be deleted by
+            /// calling the <c>DeleteDC</c> function to release system resources.</remarks>
+            /// <param name="hdc">A handle to an existing device context.
+            /// If this parameter is <see langword="null"/>, the function
+            /// creates a memory DC compatible with the application's current screen.</param>
+            /// <returns>A handle to the newly created memory device context
+            /// if the operation succeeds; otherwise, <see
+            /// cref="IntPtr.Zero"/>.</returns>
+            [DllImport("gdi32.dll", SetLastError = true)]
+            public static extern IntPtr CreateCompatibleDC(IntPtr hdc);
+
+            /// <summary>
+            /// Deletes the specified device context (DC).
+            /// </summary>
+            /// <remarks>This method is a wrapper for the native <c>DeleteDC</c> function in the GDI
+            /// library.  It should be used to release a device context that was created
+            /// using functions such as
+            /// <c>CreateCompatibleDC</c>. Failure to delete a device context may result
+            /// in resource leaks.</remarks>
+            /// <param name="hdc">A handle to the device context to be deleted.</param>
+            /// <returns><see langword="true"/> if the device context is successfully
+            /// deleted; otherwise, <see langword="false"/>.</returns>
+            [DllImport("gdi32.dll", SetLastError = true)]
+            public static extern bool DeleteDC(IntPtr hdc);
+
+            /// <summary>
+            /// Selects an object into the specified device context, replacing the previous object.
+            /// </summary>
+            /// <remarks>This method is a wrapper for the GDI `SelectObject` function. The caller is
+            /// responsible for ensuring that the selected object is compatible with the device context.
+            /// The previous
+            /// object returned by this method should be restored to the device context before releasing
+            /// it to avoid
+            /// resource leaks.</remarks>
+            /// <param name="hdc">A handle to the device context.</param>
+            /// <param name="hgdiobj">A handle to the GDI object to be selected into the device context.
+            /// This can be a pen, brush, font,
+            /// bitmap, or other GDI object.</param>
+            /// <returns>A handle to the object being replaced in the device context,
+            /// or <see cref="IntPtr.Zero"/> if an error occurs.</returns>
+            [DllImport("gdi32.dll", SetLastError = true)]
+            public static extern IntPtr SelectObject(IntPtr hdc, IntPtr hgdiobj);
+
+            /// <summary>
+            /// Deletes a GDI object, such as a pen, brush, font, bitmap, or region,
+            /// and frees any system resources
+            /// associated with it.
+            /// </summary>
+            /// <remarks>After the object is deleted, the handle becomes invalid and should not be
+            /// used in subsequent GDI calls.  Ensure that the handle is no longer
+            /// in use before calling this method to
+            /// avoid undefined behavior.</remarks>
+            /// <param name="hObject">A handle to the GDI object to be deleted.
+            /// This handle must have been created by a GDI function.</param>
+            /// <returns><see langword="true"/> if the object is successfully deleted;
+            /// otherwise, <see langword="false"/>.</returns>
+            [DllImport("gdi32.dll", SetLastError = true)]
+            public static extern bool DeleteObject(IntPtr hObject);
+
+            /// <summary>
+            /// Performs a bit-block transfer of color data from a source device context
+            /// to a destination device
+            /// context.
+            /// </summary>
+            /// <remarks>The <c>BitBlt</c> function is a low-level GDI operation used for copying
+            /// pixel data between device contexts. It is commonly used for rendering
+            /// graphics or performing screen
+            /// captures.</remarks>
+            /// <param name="hdcDest">A handle to the destination device context.</param>
+            /// <param name="nXDest">The x-coordinate, in logical units, of the upper-left
+            /// corner of the destination rectangle.</param>
+            /// <param name="nYDest">The y-coordinate, in logical units, of the upper-left
+            /// corner of the destination rectangle.</param>
+            /// <param name="nWidth">The width, in logical units, of the rectangle
+            /// to be transferred.</param>
+            /// <param name="nHeight">The height, in logical units, of the rectangle to
+            /// be transferred.</param>
+            /// <param name="hdcSrc">A handle to the source device context.</param>
+            /// <param name="nXSrc">The x-coordinate, in logical units, of the upper-left
+            /// corner of the source rectangle.</param>
+            /// <param name="nYSrc">The y-coordinate, in logical units, of the upper-left
+            /// corner of the source rectangle.</param>
+            /// <param name="rop">The raster-operation code that specifies how the source
+            /// and destination data are combined. For a list of
+            /// common raster-operation codes, see the Windows GDI documentation.</param>
+            /// <returns>If the operation succeeds, the return value is a nonzero value.
+            /// If the operation fails, the return value
+            /// is zero, and extended error information can be retrieved by calling <see
+            /// cref="Marshal.GetLastWin32Error"/>.</returns>
+            [DllImport("gdi32.dll", SetLastError = true)]
+            public static extern int BitBlt(
+                IntPtr hdcDest,
+                int nXDest,
+                int nYDest,
+                int nWidth,
+                int nHeight,
+                IntPtr hdcSrc,
+                int nXSrc,
+                int nYSrc,
+                int rop);
+
+            /// <summary>
+            /// Creates a device-independent bitmap (DIB) and returns a handle to the newly created DIB.
+            /// </summary>
+            /// <remarks>The <see cref="CreateDIBSection"/> function allows applications to directly
+            /// access the bits of the bitmap, which can improve performance for certain operations.
+            /// The caller is
+            /// responsible for releasing the DIB handle using the <c>DeleteObject</c> function
+            /// when it is no longer
+            /// needed.</remarks>
+            /// <param name="hdc">A handle to a device context. This parameter can be
+            /// <see langword="null"/> if the DIB is not associated
+            /// with a specific device context.</param>
+            /// <param name="pbmi">A reference to a <see cref="BITMAPINFO"/> structure
+            /// that specifies the dimensions and color format of
+            /// the DIB.</param>
+            /// <param name="iUsage">Specifies whether the <paramref name="pbmi"/>
+            /// structure contains RGB values or palette indices.  Use
+            /// <c>DIB_RGB_COLORS</c> for RGB values or <c>DIB_PAL_COLORS</c> for palette indices.</param>
+            /// <param name="ppvBits">When the function returns, this parameter receives
+            /// a pointer to the location of the DIB's bit values.</param>
+            /// <param name="hSection">A handle to a file mapping object that the
+            /// DIB will use to store the bitmap. If this parameter is <see
+            /// langword="null"/>, the DIB is created in memory.</param>
+            /// <param name="dwOffset">The offset from the beginning of the file
+            /// mapping object referenced by <paramref name="hSection"/>. This
+            /// value is ignored if <paramref name="hSection"/> is <see langword="null"/>.</param>
+            /// <returns>A handle to the newly created DIB, or <see cref="IntPtr.Zero"/>
+            /// if the function fails. Call <see
+            /// cref="Marshal.GetLastWin32Error"/> to retrieve extended error information.</returns>
+            [DllImport("gdi32.dll", SetLastError = true)]
+            public static extern IntPtr CreateDIBSection(
+                IntPtr hdc,
+                ref BITMAPINFO pbmi,
+                uint iUsage,
+                out IntPtr ppvBits,
+                IntPtr hSection,
+                uint dwOffset);
 
             /// <summary>
             /// Sets the value of Desktop Window Manager (DWM) non-client rendering
@@ -594,6 +746,39 @@ namespace Alternet.UI
             }
 
 #pragma warning disable
+            [StructLayout(LayoutKind.Sequential)]
+            public struct BITMAPINFOHEADER
+            {
+                public uint biSize;
+                public int biWidth;
+                public int biHeight;
+                public short biPlanes;
+                public short biBitCount;
+                public uint biCompression;
+                public uint biSizeImage;
+                public int biXPelsPerMeter;
+                public int biYPelsPerMeter;
+                public uint biClrUsed;
+                public uint biClrImportant;
+            }
+
+            [StructLayout(LayoutKind.Sequential)]
+            public struct RGBQUAD
+            {
+                public byte rgbBlue;
+                public byte rgbGreen;
+                public byte rgbRed;
+                public byte rgbReserved;
+            }
+
+            [StructLayout(LayoutKind.Sequential)]
+            public struct BITMAPINFO
+            {
+                public BITMAPINFOHEADER bmiHeader;
+                [MarshalAs(UnmanagedType.ByValArray, SizeConst = 256)]
+                public RGBQUAD[] bmiColors;
+            }
+
             [Flags]
             public enum DwmWindowAttribute : uint
             {
