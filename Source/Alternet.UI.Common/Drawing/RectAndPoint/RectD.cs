@@ -68,6 +68,18 @@ namespace Alternet.Drawing
         [FieldOffset(8)]
         private SKSize skiaSize;
 
+        // Vector2 for (x,y)
+        [FieldOffset(0)]
+        private Vector2 vectorLocation;
+
+        // Vector2 for (width,height)
+        [FieldOffset(8)]
+        private Vector2 vectorSize;
+
+        // Vector4 for (x,y,width,height)
+        [FieldOffset(0)]
+        private Vector4 vectorAll;
+
         /// <summary>
         /// Initializes a new instance of the <see cref='RectD'/> class with the
         /// specified location
@@ -84,14 +96,42 @@ namespace Alternet.Drawing
 
         /// <summary>
         /// Initializes a new instance of the <see cref='RectD'/> class with the
-        /// specified location
-        /// and size.
+        /// specified location and size.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public RectD(PointD location, SizeD size)
         {
             this.location = location;
             this.size = size;
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="RectD"/> structure
+        /// with the specified location and size.
+        /// </summary>
+        /// <param name="location">The top-left corner of the rectangle,
+        /// represented as a <see cref="PointI"/>.</param>
+        /// <param name="size">The dimensions of the rectangle,
+        /// represented as a <see cref="SizeI"/>.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public RectD(PointI location, SizeI size)
+        {
+            this.location = location;
+            this.size = size;
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="RectD"/>
+        /// structure using the specified <see cref="RectI"/> instance.
+        /// </summary>
+        /// <param name="r">The <see cref="RectI"/> instance whose
+        /// dimensions and position are used to initialize this <see
+        /// cref="RectD"/>.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public RectD(RectI r)
+        {
+            this.location = r.Location;
+            this.size = r.Size;
         }
 
         /// <summary>
@@ -121,6 +161,49 @@ namespace Alternet.Drawing
             set
             {
                 location = value;
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets the location (X,Y) as a Vector2 sharing memory with scalar fields.
+        /// </summary>
+        public Vector2 LocationAsVector
+        {
+            readonly get => vectorLocation;
+
+            set
+            {
+                vectorLocation = value;
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets the size (Width, Height) as a Vector2 sharing memory with scalar fields.
+        /// </summary>
+        public Vector2 SizeAsVector
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            readonly get => vectorSize;
+
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            set
+            {
+                vectorSize = value;
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets the rectangle as Vector4: (X, Y, Width, Height).
+        /// </summary>
+        public Vector4 AsVector
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            readonly get => vectorAll;
+
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            set
+            {
+                vectorAll = value;
             }
         }
 
