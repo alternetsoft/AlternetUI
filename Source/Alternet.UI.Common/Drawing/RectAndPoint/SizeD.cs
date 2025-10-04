@@ -8,6 +8,8 @@ using Alternet.UI;
 using Alternet.UI.Localization;
 using Alternet.UI.Markup;
 
+using SkiaSharp;
+
 namespace Alternet.Drawing
 {
     /*
@@ -20,7 +22,7 @@ namespace Alternet.Drawing
     /// and height.
     /// </summary>
     [Serializable]
-    [StructLayout(LayoutKind.Sequential, Pack = 1)]
+    [StructLayout(LayoutKind.Explicit)]
     public struct SizeD : IEquatable<SizeD>
     {
         /// <summary>
@@ -62,8 +64,23 @@ namespace Alternet.Drawing
         /// </summary>
         public static Func<Coord, Coord>? CoerceCoordFunc = null;
 
-        private Coord width; // Do not rename (binary serialization)
-        private Coord height; // Do not rename (binary serialization)
+        [FieldOffset(0)]
+        private float width;
+
+        [FieldOffset(4)]
+        private float height;
+
+        [FieldOffset(0)]
+        private PointD point;
+
+        [FieldOffset(0)]
+        private SKPoint skiaPoint;
+
+        [FieldOffset(0)]
+        private SKSize skiaSize;
+
+        [FieldOffset(0)]
+        private Vector2 vector;
 
         /// <summary>
         /// Initializes a new instance of the <see cref='Drawing.SizeD'/> class
@@ -85,8 +102,7 @@ namespace Alternet.Drawing
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public SizeD(PointD pt)
         {
-            width = pt.X;
-            height = pt.Y;
+            point = pt;
         }
 
         /// <summary>
@@ -97,8 +113,7 @@ namespace Alternet.Drawing
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public SizeD(Vector2 vector)
         {
-            width = vector.X;
-            height = vector.Y;
+            this.vector = vector;
         }
 
         /// <summary>
@@ -305,8 +320,7 @@ namespace Alternet.Drawing
         /// <see cref='PointD'/>.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static explicit operator PointD(SizeD size) =>
-            new(size.Width, size.Height);
+        public static explicit operator PointD(SizeD size) => size.point;
 
         /// <summary>
         /// Creates a <see cref='SizeD'/> with the properties of the
@@ -336,7 +350,7 @@ namespace Alternet.Drawing
         /// <see cref="System.Numerics.Vector2"/>.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static explicit operator Vector2(SizeD size) => size.ToVector2();
+        public static explicit operator Vector2(SizeD size) => size.vector;
 
         /// <summary>
         /// Converts the specified <see cref="System.Numerics.Vector2"/> to
@@ -666,7 +680,7 @@ namespace Alternet.Drawing
         /// </summary>
         /// <returns>A hash code for the current object.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public override readonly int GetHashCode() => (Width, Height).GetHashCode();
+        public override readonly int GetHashCode() => vector.GetHashCode();
 
         /// <summary>
         /// Returns new <see cref="SizeD"/> value with ceiling of the <see cref="Width"/> and
@@ -688,7 +702,7 @@ namespace Alternet.Drawing
         /// </summary>
         /// <returns>A <see cref="PointD"/> structure.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public readonly PointD ToPointD() => (PointD)this;
+        public readonly PointD ToPointD() => point;
 
         /// <summary>
         /// Get this object with applied min and max constraints.
@@ -719,6 +733,7 @@ namespace Alternet.Drawing
         /// <param name="scaleFactor">Scale factor used for the conversion. Optional.
         /// If not specified, default value is used.</param>
         /// <returns></returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public readonly SizeD PixelToDip(Coord? scaleFactor = null)
         {
             return GraphicsFactory.PixelToDip(this.ToSize(), scaleFactor);
@@ -732,6 +747,7 @@ namespace Alternet.Drawing
         /// <param name="scaleFactor">An optional scaling factor to use for the conversion.
         /// If <see langword="null"/>, the default scaling factor is applied.</param>
         /// <returns>A <see cref="SizeI"/> representing the dimensions in physical pixels.</returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public readonly SizeI PixelFromDip(Coord? scaleFactor = null)
         {
             return GraphicsFactory.PixelFromDip(this, scaleFactor);
@@ -745,6 +761,7 @@ namespace Alternet.Drawing
         /// by replacing any negative values with zero.</remarks>
         /// <returns>A new <see cref="PointD"/> instance with the width and height
         /// clamped to zero if they are less than zero.</returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public readonly SizeD ClampToZero()
         {
             return new SizeD(
@@ -772,6 +789,7 @@ namespace Alternet.Drawing
         /// Returns this size (in inches) converted to device-independent units.
         /// </summary>
         /// <returns></returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public readonly SizeD InchesToDips()
         {
             var result = GraphicsUnitConverter.ConvertSize(
@@ -786,6 +804,7 @@ namespace Alternet.Drawing
         /// Returns this size (in millimeters) converted to device-independent units.
         /// </summary>
         /// <returns></returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public readonly SizeD MillimetersToDips()
         {
             var result = GraphicsUnitConverter.ConvertSize(
@@ -802,6 +821,7 @@ namespace Alternet.Drawing
         /// <param name="vert">Whether to shrink vertical or horizontal size.</param>
         /// <param name="maxSize">Maximal possible value.</param>
         /// <returns></returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public readonly SizeD Shrink(bool vert, Coord maxSize)
         {
             var result = this;
@@ -820,6 +840,20 @@ namespace Alternet.Drawing
         /// lower integer values.</remarks>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public readonly SizeI ToSize() => SizeI.Truncate(this);
+
+        /// <summary>
+        /// Converts the current instance to an <see cref="SKSize"/> structure.
+        /// </summary>
+        /// <returns>An <see cref="SKSize"/> representing the size of the current instance.</returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public readonly SKSize ToSkiaSize() => skiaSize;
+
+        /// <summary>
+        /// Converts the current instance to an <see cref="SKPoint"/>.
+        /// </summary>
+        /// <returns>An <see cref="SKPoint"/> representing the current instance.</returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public readonly SKPoint ToSkiaPoint() => skiaPoint;
 
         /// <summary>
         /// Creates a human-readable string that represents this
@@ -917,7 +951,6 @@ namespace Alternet.Drawing
         /// Creates a new <see cref="System.Numerics.Vector2"/> from this object.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public readonly Vector2 ToVector2()
-            => new(RectD.CoordToFloat(width), RectD.CoordToFloat(height));
+        public readonly Vector2 ToVector2() => vector;
     }
 }
