@@ -255,6 +255,15 @@ namespace Alternet.UI
             Fn("Log fonts system", SystemSettings.LogSystemFonts);
             Fn("Log fonts fixed width", SystemSettings.LogFixedWidthFonts);
             Fn("Log display info", Display.Log);
+
+            Fn("Log SIMD support", () =>
+            {
+                SimdSupportLogger.LogSimdSupport((s) =>
+                {
+                    App.Log(s);
+                });
+            });
+
             Fn("Log useful defines", LogUtils.LogUsefulDefines);
             Fn("Log system information", LogUtils.LogOSInformation);
             Fn("Log system colors", LogUtils.LogSystemColors);
