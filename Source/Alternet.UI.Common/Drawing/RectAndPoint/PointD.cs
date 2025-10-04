@@ -60,6 +60,9 @@ namespace Alternet.Drawing
         [FieldOffset(0)]
         private SKPoint skiaPoint;
 
+        [FieldOffset(0)]
+        private Vector2 vector;
+
         /// <summary>
         /// Initializes a new instance of the <see cref="PointD"/>
         /// class using the specified SkiaSharp point.
@@ -115,8 +118,7 @@ namespace Alternet.Drawing
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public PointD(Vector2 vector)
         {
-            x = vector.X;
-            y = vector.Y;
+            this.vector = vector;
         }
 
         /// <summary>
@@ -154,7 +156,7 @@ namespace Alternet.Drawing
         /// <see cref="System.Numerics.Vector2"/>.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static explicit operator Vector2(PointD point) => point.ToVector2();
+        public static explicit operator Vector2(PointD point) => point.vector;
 
         /// <summary>
         /// Converts the specified <see cref="System.Numerics.Vector2"/> to a
@@ -531,7 +533,7 @@ namespace Alternet.Drawing
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public readonly Vector2 ToVector2()
         {
-            return new(RectD.CoordToFloat(x), RectD.CoordToFloat(y));
+            return vector;
         }
 
         /// <summary>
