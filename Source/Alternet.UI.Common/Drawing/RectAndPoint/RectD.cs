@@ -167,6 +167,7 @@ namespace Alternet.Drawing
         /// <summary>
         /// Gets or sets the location (X,Y) as a Vector2 sharing memory with scalar fields.
         /// </summary>
+        [Browsable(false)]
         public Vector2 LocationAsVector
         {
             readonly get => vectorLocation;
@@ -180,6 +181,7 @@ namespace Alternet.Drawing
         /// <summary>
         /// Gets or sets the size (Width, Height) as a Vector2 sharing memory with scalar fields.
         /// </summary>
+        [Browsable(false)]
         public Vector2 SizeAsVector
         {
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -195,6 +197,7 @@ namespace Alternet.Drawing
         /// <summary>
         /// Gets or sets the rectangle as Vector4: (X, Y, Width, Height).
         /// </summary>
+        [Browsable(false)]
         public Vector4 AsVector
         {
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -759,7 +762,7 @@ namespace Alternet.Drawing
         /// <see cref="System.Numerics.Vector4"/>.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static explicit operator Vector4(RectD rectangle) => rectangle.ToVector4();
+        public static explicit operator Vector4(RectD rectangle) => rectangle.vectorAll;
 
         /// <summary>
         /// Converts the specified <see cref="Vector2"/> to a
@@ -899,17 +902,6 @@ namespace Alternet.Drawing
         {
             int i = (int)MathF.Round(value, DefaultMidpointRounding);
             return i;
-        }
-
-        /// <summary>
-        /// Converts <see cref="Coord"/> coordinate to the <see cref="float"/> value.
-        /// </summary>
-        /// <param name="value">Coordinate.</param>
-        /// <returns></returns>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static float CoordToFloat(Coord value)
-        {
-            return Convert.ToSingle(value);
         }
 
         /// <summary>
@@ -1258,8 +1250,7 @@ namespace Alternet.Drawing
         /// <summary>
         /// Creates a new <see cref="System.Numerics.Vector4"/> from this <see cref="RectD"/>.
         /// </summary>
-        public readonly Vector4 ToVector4()
-            => new(CoordToFloat(x), CoordToFloat(y), CoordToFloat(width), CoordToFloat(height));
+        public readonly Vector4 ToVector4() => vectorAll;
 
         /// <summary>
         /// Sets <see cref="Width"/> or <see cref="Height"/> depending on <paramref name="vert"/>
