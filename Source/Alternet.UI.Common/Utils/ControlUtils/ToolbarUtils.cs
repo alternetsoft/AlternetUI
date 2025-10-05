@@ -182,6 +182,53 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Retrieves an SVG image and its associated size based on the provided parameters.
+        /// </summary>
+        /// <remarks>If both <paramref name="svg"/> and <paramref name="btn"/> are null,
+        /// the method returns null for the SVG image and the default size determined
+        /// by the <paramref name="control"/> parameter.</remarks>
+        /// <param name="svg">An optional <see cref="SvgImage"/> instance.
+        /// If null, the method attempts to retrieve an image based on the
+        /// <paramref name="btn"/> parameter.</param>
+        /// <param name="btn">An optional <see cref="KnownButton"/> value
+        /// used to retrieve a default SVG image if <paramref name="svg"/>
+        /// is null.</param>
+        /// <param name="control">The <see cref="AbstractControl"/> instance
+        /// used to determine the default image size if
+        /// <paramref name="size"/> is not provided.</param>
+        /// <param name="size">An optional size, in pixels, for the SVG image.
+        /// If null, the default size is determined based on the
+        /// <paramref name="control"/> parameter.</param>
+        /// <returns>A tuple containing the resulting <see cref="SvgImage"/>
+        /// (or null if no image is available) and the size of
+        /// the image in pixels.</returns>
+        public static (SvgImage? SvgImage, int SvgSize) GetSvgImageAndSize(
+            SvgImage? svg,
+            KnownButton? btn,
+            AbstractControl control,
+            int? size)
+        {
+            var sz = size ?? ToolBarUtils.GetDefaultImageSize(control).Width;
+
+            if (svg is null)
+            {
+                if (btn is null)
+                {
+                    return (null, sz);
+                }
+
+                svg = KnownButtons.GetImage(btn.Value);
+            }
+
+            if (svg is null)
+            {
+                return (null, sz);
+            }
+
+            return (svg, sz);
+        }
+
+        /// <summary>
         /// Gets the normal and disabled images as <see cref="ImageSet"/> from the specified
         /// <see cref="SvgImage"/> and <see cref="KnownButton"/>.
         /// </summary>
@@ -199,29 +246,16 @@ namespace Alternet.UI
             AbstractControl control,
             int? size = null)
         {
-            if (svg is null)
-            {
-                if (btn is null)
-                {
-                    return (null, null);
-                }
+            var (svgImage, svgSize) = GetSvgImageAndSize(svg, btn, control, size);
 
-                var info = KnownButtons.GetInfo(btn.Value);
-                svg = info?.SvgImage;
-            }
-
-            if (svg is null)
-            {
+            if (svgImage is null)
                 return (null, null);
-            }
-
-            size ??= ToolBarUtils.GetDefaultImageSize(control).Width;
 
             var normalColor = control.GetSvgColor(KnownSvgColor.Normal);
             var disabledColor = control.GetSvgColor(KnownSvgColor.Disabled);
 
-            var normalImage = svg.ImageSetWithColor(size.Value, normalColor);
-            var disabledImage = svg.ImageSetWithColor(size.Value, disabledColor);
+            var normalImage = svgImage.ImageSetWithColor(svgSize, normalColor);
+            var disabledImage = svgImage.ImageSetWithColor(svgSize, disabledColor);
 
             return (normalImage, disabledImage);
         }
