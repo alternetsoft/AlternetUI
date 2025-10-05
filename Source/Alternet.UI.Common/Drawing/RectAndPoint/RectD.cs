@@ -21,6 +21,16 @@ namespace Alternet.Drawing
     public struct RectD : IEquatable<RectD>
     {
         /// <summary>
+        /// Represents a predefined vector used to adjust the dimensions of a rectangle or bounding box.
+        /// </summary>
+        /// <remarks>The vector components are defined as (-1, -1, 2, 2), which can be used to "inflate"
+        /// a rectangle by decreasing its position by 1 unit on both the X and Y
+        /// axes and increasing its width and height by 2 units each.
+        /// This is commonly used in scenarios where padding or margin adjustments are
+        /// required.</remarks>
+        public static readonly Vector4 InflateDelta = new (-1f, -1f, 2f, 2f);
+
+        /// <summary>
         /// Initializes a new instance of the <see cref='RectD'/> class.
         /// </summary>
         public static readonly RectD Empty;
@@ -1314,12 +1324,6 @@ namespace Alternet.Drawing
         public readonly RectD InflatedBy(Coord x, Coord y) => Inflate(this, x, y);
 
         /// <summary>
-        /// Creates a <see cref='RectD'/> that is inflated by 1.
-        /// </summary>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public readonly RectD Inflated() => Inflate(this, CoordD.One, CoordD.One);
-
-        /// <summary>
         /// Returns a new rectangle that is inflated by the specified size.
         /// </summary>
         /// <param name="size">The amount by which to inflate the rectangle.
@@ -1419,20 +1423,6 @@ namespace Alternet.Drawing
         public void Inflate(SizeD size) => Inflate(size.Width, size.Height);
 
         /// <summary>
-        /// Inflates this <see cref='RectD'/> by 1. <see cref="X"/> and <see cref="Y"/>
-        /// are decremented by 1, <see cref="Width"/> and <see cref="Height"/> are
-        /// incremented by 2.
-        /// </summary>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public void Inflate()
-        {
-            x -= CoordD.One;
-            y -= CoordD.One;
-            width += CoordD.Two;
-            height += CoordD.Two;
-        }
-
-        /// <summary>
         /// Deflates this <see cref='RectD'/> by 1. <see cref="X"/> and <see cref="Y"/>
         /// are incremented by 1, <see cref="Width"/> and <see cref="Height"/> are
         /// decremented by 2.
@@ -1440,10 +1430,40 @@ namespace Alternet.Drawing
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void Deflate()
         {
-            x += CoordD.One;
-            y += CoordD.One;
-            width -= CoordD.Two;
-            height -= CoordD.Two;
+            vectorAll -= InflateDelta;
+        }
+
+        /// <summary>
+        /// Inflates this <see cref='RectD'/> by 1. <see cref="X"/> and <see cref="Y"/>
+        /// are decremented by 1, <see cref="Width"/> and <see cref="Height"/> are
+        /// incremented by 2.
+        /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public void Inflate()
+        {
+            vectorAll += InflateDelta;
+        }
+
+        /// <summary>
+        /// Creates a <see cref='RectD'/> that is inflated by 1.
+        /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public readonly RectD Inflated()
+        {
+            var result = this;
+            result.Inflate();
+            return result;
+        }
+
+        /// <summary>
+        /// Creates a <see cref='RectD'/> that is deflated by 1.
+        /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public readonly RectD Deflated()
+        {
+            var result = this;
+            result.Deflate();
+            return result;
         }
 
         /// <summary>
