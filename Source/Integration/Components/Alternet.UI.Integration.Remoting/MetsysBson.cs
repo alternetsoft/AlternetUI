@@ -511,7 +511,7 @@ namespace Metsys.Bson
 
         public static ObjectId NewObjectId()
         {
-            // TODO: generate random-ish bits.
+            // generate random-ish bits.
             return new ObjectId { Value = ObjectIdGenerator.Generate() };
         }
 

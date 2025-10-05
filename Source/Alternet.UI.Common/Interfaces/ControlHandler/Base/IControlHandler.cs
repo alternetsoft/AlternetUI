@@ -258,5 +258,10 @@ namespace Alternet.UI
         /// This methods is called when the layout of the control changes.
         /// </summary>
         void OnLayoutChanged();
+
+        /// <summary>
+        /// This method is called when system colors are changed.
+        /// </summary>
+        void OnSystemColorsChanged();
     }
 }

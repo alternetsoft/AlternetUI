@@ -850,8 +850,7 @@ namespace Alternet.UI
 
             try
             {
-                // TODO: Add clip rect checking.
-                if (e.ClientRectangle.SizeIsEmpty)
+                if (e.ClientRectangle.SizeIsEmpty || e.ClipRectangle.SizeIsEmpty)
                     return;
                 OnPaint(e);
                 Paint?.Invoke(this, e);
