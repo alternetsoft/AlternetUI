@@ -17,11 +17,11 @@ namespace Alternet.Drawing
         public SvgImage? SvgImage;
 
         /// <summary>
-        /// Gets or sets svg color override for the single color svgs.
+        /// Gets or sets svg color override for the single color svg images.
         /// </summary>
         public Color? SvgColor;
 
-        private int svgSize = 16;
+        private int? svgSize;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="SvgImageInfo"/> struct.
@@ -34,7 +34,7 @@ namespace Alternet.Drawing
         /// Initializes a new instance of the <see cref="SvgImageInfo"/> struct.
         /// </summary>
         /// <param name="image">Svg image to draw.</param>
-        /// <param name="color">Svg color override for the single color svgs.</param>
+        /// <param name="color">Svg color override for the single color svg images.</param>
         public SvgImageInfo(SvgImage image, Color? color = null)
         {
             SvgImage = image;
@@ -44,7 +44,7 @@ namespace Alternet.Drawing
         /// <summary>
         /// Gets or sets svg width and height.
         /// </summary>
-        public int SvgSize
+        public int? SvgSize
         {
             readonly get => svgSize;
 
@@ -53,7 +53,13 @@ namespace Alternet.Drawing
                 if (svgSize == value)
                     return;
 
-                if(value < 0)
+                if(value == null)
+                {
+                    svgSize = null;
+                    return;
+                }
+
+                if (value < 0)
                 {
                     svgSize = 16;
                     return;
@@ -64,14 +70,16 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
-        /// Gets this svg image as <see cref="Image"/>.
+        /// Resets any cached images associated with the current instance.
         /// </summary>
-        public readonly Image? AsImage
+        /// <remarks>This method clears the cached images to ensure that any
+        /// subsequent operations use
+        /// updated or refreshed image data. It is typically used when the
+        /// underlying image source has changed and the
+        /// cache needs to be invalidated.</remarks>
+        public readonly void ResetCachedImages()
         {
-            get
-            {
-                return SvgImage?.ImageWithColor(SvgSize, SvgColor);
-            }
+            SvgImage?.ResetCachedImages();
         }
     }
 }
