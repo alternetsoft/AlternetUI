@@ -328,5 +328,10 @@ namespace Alternet.UI
         void IControlHandler.SetAllowDefaultContextMenu(bool value)
         {
         }
+
+        /// <inheritdoc/>
+        public void OnSystemColorsChanged()
+        {
+        }
     }
 }

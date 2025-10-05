@@ -990,6 +990,9 @@ namespace Alternet.UI
         protected override void OnSystemColorsChanged(EventArgs e)
         {
             base.OnSystemColorsChanged(e);
+            if (DisposingOrDisposed)
+                return;
+            Handler?.OnSystemColorsChanged();
         }
 
         private class EmptyControl : Control

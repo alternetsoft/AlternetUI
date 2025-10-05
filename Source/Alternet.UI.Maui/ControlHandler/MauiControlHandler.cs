@@ -395,6 +395,10 @@ namespace Alternet.UI
         {
         }
 
+        public virtual void OnSystemColorsChanged()
+        {
+        }
+
         private MauiControlHandler? GetRootHandler()
         {
             var result = (Control?.Root as Control)?.Handler as MauiControlHandler;
