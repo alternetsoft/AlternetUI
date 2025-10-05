@@ -177,6 +177,14 @@ namespace Alternet.UI
             return new Native.ListView();
         }
 
+        public override void OnSystemColorsChanged()
+        {
+            base.OnSystemColorsChanged();
+
+            if (App.IsWindowsOS)
+                RecreateWindow();
+        }
+
         protected override void OnAttach()
         {
             base.OnAttach();

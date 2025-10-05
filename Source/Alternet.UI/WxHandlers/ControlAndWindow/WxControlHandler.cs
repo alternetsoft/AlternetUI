@@ -538,5 +538,9 @@ namespace Alternet.UI
         {
             NativeControl.SetAllowDefaultContextMenu(value);
         }
+
+        public virtual void OnSystemColorsChanged()
+        {
+        }
     }
 }
