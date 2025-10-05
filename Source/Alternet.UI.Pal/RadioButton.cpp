@@ -94,7 +94,7 @@ namespace Alternet::UI
         if (parent == nullptr)
             return result;
 
-        // todo: check with wxRB_GROUP
+        // check with wxRB_GROUP?
         for (auto child : parent->GetChildren())
         {
             auto radioButton = dynamic_cast<RadioButton*>(child);

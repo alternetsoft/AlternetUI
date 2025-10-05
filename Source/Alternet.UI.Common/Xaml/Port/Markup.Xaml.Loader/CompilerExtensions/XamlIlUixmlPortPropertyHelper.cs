@@ -220,28 +220,6 @@ namespace Alternet.UI.Markup.Xaml.XamlIl.CompilerExtensions
             public abstract void Emit(IXamlILEmitter codegen);
         }
 
-        /*class BindingSetter : UixmlPortPropertyCustomSetter
-        {
-            public BindingSetter(UixmlPortXamlIlWellKnownTypes types,
-                IXamlType declaringType,
-                IXamlField uixmlPortProperty) : base(types, declaringType, uixmlPortProperty)
-            {
-                Parameters = new[] {types.Binding};
-            }
-
-            public override void Emit(IXamlILEmitter emitter)
-            {
-                using (var bloc = emitter.LocalsPool.GetLocal(Types.Binding))
-                    emitter
-                        .Stloc(bloc.Local)
-                        .Ldsfld(UixmlPortProperty)
-                        .Ldloc(bloc.Local)
-                        // TODO: provide anchor?
-                        .Ldnull();
-                emitter.EmitCall(Types.UixmlPortObjectBindMethod, true);
-            }
-        }*/
-
         class UnsetValueSetter : UixmlPortPropertyCustomSetter
         {
             public UnsetValueSetter(UixmlPortXamlIlWellKnownTypes types, IXamlType declaringType, IXamlField uixmlPortProperty) 

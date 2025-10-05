@@ -83,7 +83,7 @@ namespace Alternet::UI
 		}
 
 #ifdef __WXOSX__
-		// todo: port all platforms to the latest wx version, and then the ifdef
+		// port all platforms to the latest wx version, and then the ifdef
 		// can be removed.
 		// EnableVisibleFocus is implemented only on macOS at the moment through.
 		if (_editControlOnly)

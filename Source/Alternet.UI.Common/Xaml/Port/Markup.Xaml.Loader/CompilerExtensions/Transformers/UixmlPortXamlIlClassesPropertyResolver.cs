@@ -65,36 +65,5 @@ namespace Alternet.UI.Markup.Xaml.XamlIl.CompilerExtensions.Transformers
                 new PropertySetterBinderParameters { AllowXNull = false };
             public IReadOnlyList<IXamlType> Parameters { get; }
         }
-
-        /*class ClassBindingSetter : IXamlEmitablePropertySetter<IXamlILEmitter>
-        {
-            private readonly UixmlPortXamlIlWellKnownTypes _types;
-            private readonly string _className;
-
-            public ClassBindingSetter(UixmlPortXamlIlWellKnownTypes types, string className)
-            {
-                _types = types;
-                _className = className;
-                Parameters = new[] {types.Binding};
-            }
-            
-            public void Emit(IXamlILEmitter emitter)
-            {
-                using (var bloc = emitter.LocalsPool.GetLocal(_types.Binding))
-                    emitter
-                        .Stloc(bloc.Local)
-                        .Ldstr(_className)
-                        .Ldloc(bloc.Local)
-                        // TODO: provide anchor?
-                        .Ldnull();
-                emitter.EmitCall(_types.ClassesBindMethod, true);
-            }
-
-            public IXamlType TargetType => _types.StyledElement;
-
-            public PropertySetterBinderParameters BinderParameters { get; } =
-                new PropertySetterBinderParameters { AllowXNull = false };
-            public IReadOnlyList<IXamlType> Parameters { get; }
-        }*/
     }
 }

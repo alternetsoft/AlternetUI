@@ -106,12 +106,12 @@ namespace Alternet.UI
         /// </summary>
         public static void RegisterCollectionEditors()
         {
-            // todo: List edit for ImageList.Images
-            // todo: List edit for ImageSet.Images
-            // todo: List edit for TabControl.Pages
-            // todo: List edit for Toolbar.Items
-            // todo: List edit for Menu.Items
-            /* todo: List edit for Window.InputBindings*/
+            // List edit for ImageList.Images
+            // List edit for ImageSet.Images
+            // List edit for TabControl.Pages
+            // List edit for Toolbar.Items
+            // List edit for Menu.Items
+            /* List edit for Window.InputBindings*/
 
             if (staticStateFlags.HasFlag(StaticStateFlags.CollectionEditorsRegistered))
                 return;

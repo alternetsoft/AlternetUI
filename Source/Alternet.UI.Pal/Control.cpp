@@ -359,7 +359,7 @@ namespace Alternet::UI
         event.Skip();
         auto app = Application::GetCurrent();
         if (app == nullptr || app->GetInUixmlPreviewerMode())
-            return; // HACK. This gets invoked by wxWidgets on a dead this pointer.
+            return;
 
         auto wxWindow = event.GetWindow();
         if (wxWindow != _wxWindow)
@@ -1350,7 +1350,7 @@ namespace Alternet::UI
 
     Size Control::ClientSizeToSize(const Size& clientSize)
     {
-        // todo: On Linux ClientSize is not reported correctly until the window is shown
+        // On Linux ClientSize is not reported correctly until the window is shown
         // See https://forums.wxwidgets.org/viewtopic.php?f=1&t=47439
         // So on Linux ClientSizeToSize and SizeToClientSize will return the input value
         // until the window is shown.

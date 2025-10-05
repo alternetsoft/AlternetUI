@@ -114,7 +114,7 @@ namespace Alternet.UI.Markup.Xaml.XamlIl.CompilerExtensions.Transformers
                     {
                         if(!expectCast)
                             throw new XamlX.XamlParseException("Unexpected cast node", text);
-                        //TODO: Check if cast can be done
+                        // Check if cast can be done?
                         currentType = GetType(cts.TypeNamespace, cts.TypeName);
                         elements.Add(new XamlIlCastPropertyPathElementNode(currentType, false));
                         expectProperty = false;

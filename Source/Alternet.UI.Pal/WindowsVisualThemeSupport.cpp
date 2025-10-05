@@ -21,7 +21,7 @@ namespace Alternet::UI
                 &moduleHandle);
 
             if (result == 0)
-                throw 0; // todo
+				throw std::runtime_error("Failed to get module handle");
 
             return moduleHandle;
         }
@@ -37,7 +37,7 @@ namespace Alternet::UI
 
         activationContextHandle = CreateActCtx(&context);
         if (activationContextHandle == INVALID_HANDLE_VALUE)
-            throw 0; // todo
+            throw std::runtime_error("Failed to create activation context");
     }
 
     WindowsVisualThemeSupport::~WindowsVisualThemeSupport()
@@ -65,7 +65,7 @@ namespace Alternet::UI
 
         ULONG_PTR activation = NULL;
         if (ActivateActCtx(activationContextHandle, &activation) == FALSE)
-            throw 0; // todo
+            throw std::runtime_error("Failed to activate context");
 
         return activation;
     }
@@ -77,7 +77,7 @@ namespace Alternet::UI
             return;
 
         if (DeactivateActCtx(0, activation) == FALSE)
-            throw 0; // todo
+            throw std::runtime_error("Failed to deactivate context");
     }
 
     bool WindowsVisualThemeSupport::IsEnabled()
@@ -86,7 +86,7 @@ namespace Alternet::UI
 
         HANDLE currentContextHandle = NULL;
         if (GetCurrentActCtx(&currentContextHandle) == FALSE)
-            throw 0; // todo
+            throw std::runtime_error("Failed to get current context");
 
         return currentContextHandle == activationContextHandle;
     }

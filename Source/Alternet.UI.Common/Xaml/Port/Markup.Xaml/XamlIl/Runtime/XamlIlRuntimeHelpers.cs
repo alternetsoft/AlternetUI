@@ -90,34 +90,9 @@ namespace Alternet.UI.Port
             public object IntermediateRootObject => RootObject;
         }
 
-        /*
         /// <summary>
-        /// This item supports the framework infrastructure and is not intended to be used directly from your code.
-        /// </summary>
-        public static void ApplyNonMatchingMarkupExtensionV1(object target, object property, IServiceProvider prov,
-            object value)
-        {
-            if (value is Alternet.UI.Port.Binding b)
-            {
-                if (property is Alternet.UI.Port.DependencyProperty p)
-                    throw new Exception();
-                //((Alternet.UI.DependencyObject)target).Bind(p, b);
-                else
-                    throw new ArgumentException("Attempt to apply binding to non-uixmlPort property " + property);
-            }
-            //else if (value is UnsetValueType unset)
-            //{
-            //    if (property is UixmlPortProperty p)
-            //        ((UixmlPortObject)target).SetValue(p, unset);
-            //    //TODO: Investigate
-            //    //throw new ArgumentException("Attempt to apply UnsetValue to non-uixmlPort property " + property);
-            //}
-            else
-                throw new ArgumentException("Don't know what to do with " + value.GetType());
-        }*/
-
-        /// <summary>
-        /// This item supports the framework infrastructure and is not intended to be used directly from your code.
+        /// This item supports the framework infrastructure
+        /// and is not intended to be used directly from your code.
         /// </summary>
         public static IServiceProvider CreateInnerServiceProviderV1(IServiceProvider compiled) 
             => new InnerServiceProvider(compiled);
