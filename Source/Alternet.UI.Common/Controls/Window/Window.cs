@@ -2168,7 +2168,12 @@ namespace Alternet.UI
                 return;
             base.OnSystemColorsChanged(e);
             if (AutoUpdateColors)
+            {
                 InitializeColors();
+            }
+
+            InflateAndDeflateSize();
+            Invalidate();
         }
 
         /// <summary>
@@ -2205,6 +2210,13 @@ namespace Alternet.UI
                 return;
             BackColor = DefaultColors.WindowBackColor.Current;
             ForeColor = DefaultColors.WindowForeColor.Current;
+        }
+
+        private void InflateAndDeflateSize()
+        {
+            var b = BoundsInPixels;
+            Size = Size.Inflated();
+            BoundsInPixels = b;
         }
 
         private void RaiseLoadedOnce()
