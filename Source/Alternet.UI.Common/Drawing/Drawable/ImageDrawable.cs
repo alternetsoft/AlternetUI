@@ -13,42 +13,74 @@ namespace Alternet.Drawing
     /// </summary>
     public class ImageDrawable : BaseDrawable
     {
+        private SvgImageInfo svgImageInfo;
+        private bool stretch = false;
+
         /// <summary>
-        /// Gets or sets svg image to draw.
+        /// Gets a value indicating whether the object has an associated image.
         /// </summary>
-        public SvgImageInfo SvgImage;
+        public bool IsImageSpecified => SvgImage is not null || Image is not null || ImageSet is not null;
+
+        /// <summary>
+        /// Gets or sets the SVG image associated with this instance.
+        /// </summary>
+        public SvgImage? SvgImage
+        {
+            get => svgImageInfo.SvgImage;
+
+            set
+            {
+                svgImageInfo.SvgImage = value;
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets the color used to render the SVG image.
+        /// </summary>
+        public Color? SvgColor
+        {
+            get => svgImageInfo.SvgColor;
+            set => svgImageInfo.SvgColor = value;
+        }
+
+        /// <summary>
+        /// Gets or sets the size of the SVG image in pixels.
+        /// </summary>
+        public int? SvgSize
+        {
+            get => svgImageInfo.SvgSize;
+            set => svgImageInfo.SvgSize = value;
+        }
 
         /// <summary>
         /// Gets or sets image to draw.
         /// </summary>
-        public Image? Image;
+        public Image? Image { get; set; }
 
         /// <summary>
         /// Gets or sets image to draw.
         /// </summary>
-        public ImageSet? ImageSet;
+        public ImageSet? ImageSet { get; set; }
 
         /// <summary>
         /// Gets or sets image to draw.
         /// </summary>
-        public Image? DisabledImage;
+        public Image? DisabledImage { get; set; }
 
         /// <summary>
         /// Gets or sets image to draw.
         /// </summary>
-        public ImageSet? DisabledImageSet;
+        public ImageSet? DisabledImageSet { get; set; }
 
         /// <summary>
         /// Gets whether or not to center this object vertically. Default is <c>true</c>.
         /// </summary>
-        public bool CenterVert = true;
+        public bool CenterVert { get; set; } = true;
 
         /// <summary>
         /// Gets whether or not to center this object horizontally. Default is <c>true</c>.
         /// </summary>
-        public bool CenterHorz = true;
-
-        private bool stretch = false;
+        public bool CenterHorz { get; set; } = true;
 
         /// <summary>
         /// Gets whether or not to stretch this object. Default is <c>true</c>.
@@ -72,18 +104,20 @@ namespace Alternet.Drawing
         /// Gets image to draw.
         /// </summary>
         /// <returns></returns>
-        public virtual Image? GetImage(bool isDark)
+        public virtual Image? GetImage(AbstractControl control, bool isDark)
         {
+            var sz = SvgSize ?? ToolBarUtils.GetDefaultImageSize(control).Width;
+
             Image? GetNormalImage()
             {
                 Image? image = null;
 
-                if(SvgImage.SvgImage is not null)
+                if(SvgImage is not null)
                 {
-                    if(SvgImage.SvgColor is null)
-                        image = SvgImage.SvgImage.AsNormalImage(SvgImage.SvgSize, isDark);
+                    if(SvgColor is null)
+                       image = SvgImage.AsNormalImage(sz, isDark);
                     else
-                        image = SvgImage.SvgImage.ImageWithColor(SvgImage.SvgSize, SvgImage.SvgColor);
+                        image = SvgImage.ImageWithColor(sz, SvgColor);
                 }
 
                 image ??= Image ?? ImageSet?.AsImage(ImageSet.DefaultSize);
@@ -96,7 +130,7 @@ namespace Alternet.Drawing
             }
             else
             {
-                var image = SvgImage.SvgImage?.AsDisabledImage(SvgImage.SvgSize, isDark);
+                var image = SvgImage?.AsDisabledImage(sz, isDark);
                 image ??= DisabledImage ?? DisabledImageSet?.AsImage(DisabledImageSet.DefaultSize);
                 image ??= GetNormalImage();
                 return image;
@@ -109,7 +143,20 @@ namespace Alternet.Drawing
         /// <param name="size">New svg image width and height.</param>
         public virtual void SetSvgSize(int size)
         {
-            SvgImage.SvgSize = size;
+            SvgSize = size;
+        }
+
+        /// <summary>
+        /// Resets any cached images associated with the current instance.
+        /// </summary>
+        /// <remarks>This method clears the cached images to ensure that any
+        /// subsequent operations use
+        /// updated or refreshed image data. It is typically used when the
+        /// underlying image source has changed and the
+        /// cache needs to be invalidated.</remarks>
+        public void ResetCachedImages()
+        {
+            svgImageInfo.ResetCachedImages();
         }
 
         /// <summary>
@@ -121,7 +168,7 @@ namespace Alternet.Drawing
         {
             SizeD result;
 
-            var image = GetImage(control.IsDarkBackground);
+            var image = GetImage(control, control.IsDarkBackground);
 
             if (image is not null)
                 result = image.SizeDip(control.ScaleFactor);
@@ -141,7 +188,7 @@ namespace Alternet.Drawing
             if (!Visible)
                 return;
 
-            var image = GetImage(control.IsDarkBackground);
+            var image = GetImage(control, control.IsDarkBackground);
             if (Image.IsNullOrEmpty(image))
                 return;
 
