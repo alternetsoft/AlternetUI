@@ -986,6 +986,12 @@ namespace Alternet.UI
             base.OnMouseEnter(e);
         }
 
+        /// <inheritdoc/>
+        protected override void OnSystemColorsChanged(EventArgs e)
+        {
+            base.OnSystemColorsChanged(e);
+        }
+
         private class EmptyControl : Control
         {
             protected override IControlHandler CreateHandler()

@@ -712,7 +712,6 @@ namespace Alternet.UI
         {
             if (DisposingOrDisposed)
                 return;
-            Refresh();
 
             if (HasChildren)
             {
@@ -722,6 +721,8 @@ namespace Alternet.UI
                         child.BackgroundColor = BackColor;
                 }
             }
+
+            Refresh();
         }
 
         /// <summary>
