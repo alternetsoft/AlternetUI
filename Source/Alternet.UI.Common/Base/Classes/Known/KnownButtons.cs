@@ -42,6 +42,21 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Retrieves the SVG image associated with the specified button index.
+        /// </summary>
+        /// <remarks>This method returns <see langword="null"/> if the specified button
+        /// index does not
+        /// have an associated image.</remarks>
+        /// <param name="index">The button index for which to retrieve the associated SVG image.</param>
+        /// <returns>The <see cref="SvgImage"/> associated with the specified button index,
+        /// or <see langword="null"/>  if no
+        /// image is available for the given index.</returns>
+        public static SvgImage? GetImage(KnownButton index)
+        {
+            return GetInfo(index)?.SvgImage;
+        }
+
+        /// <summary>
         /// Retrieves the text associated with the specified button index.
         /// </summary>
         /// <remarks>Ensure that the button index provided is valid and corresponds
