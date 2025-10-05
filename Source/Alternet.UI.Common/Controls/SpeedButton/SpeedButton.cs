@@ -986,15 +986,15 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Gets a value indicating whether <see cref="Image"/> or <see cref="ImageSet"/>
-        /// is associated with the current instance.
+        /// Gets a value indicating whether <see cref="Image"/>, <see cref="ImageSet"/>
+        /// or <see cref="SvgImage"/> is associated with the current instance.
         /// </summary>
         [Browsable(false)]
         public virtual bool HasImage
         {
             get
             {
-                return (Image is not null) || (ImageSet is not null);
+                return drawable.IsImageSpecified;
             }
         }
 
@@ -1231,6 +1231,48 @@ namespace Alternet.UI
                 PerformLayoutAndInvalidate(() =>
                 {
                     drawable.DisabledImage = value;
+                    PictureSizeChanged();
+                });
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets the svg image that is displayed by the control.
+        /// </summary>
+        [DefaultValue(null)]
+        public virtual SvgImage? SvgImage
+        {
+            get
+            {
+                return drawable.SvgImage;
+            }
+
+            set
+            {
+                PerformLayoutAndInvalidate(() =>
+                {
+                    drawable.SvgImage = value;
+                    PictureSizeChanged();
+                });
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets the svg image size.
+        /// </summary>
+        [DefaultValue(null)]
+        public virtual int? SvgSize
+        {
+            get
+            {
+                return drawable.SvgSize;
+            }
+
+            set
+            {
+                PerformLayoutAndInvalidate(() =>
+                {
+                    drawable.SvgSize = value;
                     PictureSizeChanged();
                 });
             }
@@ -1570,10 +1612,10 @@ namespace Alternet.UI
             KnownButton? btn,
             int? size = null)
         {
-            var (normalImage, disabledImage)
-                = ToolBarUtils.GetNormalAndDisabledSvg(svg, btn, this, size);
-
-            SetImageSets(normalImage, disabledImage);
+            var (svgImage, svgSize) = ToolBarUtils.GetSvgImageAndSize(svg, btn, this, size);
+            drawable.SvgImage = svgImage;
+            drawable.SvgSize = svgSize;
+            ResetImages();
         }
 
         /// <inheritdoc/>
@@ -2322,6 +2364,16 @@ namespace Alternet.UI
         protected virtual void PictureSizeChanged()
         {
             PictureBox.SuggestedSize = drawable.GetPreferredSize(this);
+        }
+
+        /// <inheritdoc/>
+        protected override void OnSystemColorsChanged(EventArgs e)
+        {
+            base.OnSystemColorsChanged(e);
+            drawable.ResetCachedImages();
+            pictureSpacer.RaiseSystemColorsChanged(e);
+            spacer.RaiseSystemColorsChanged(e);
+            label.RaiseSystemColorsChanged(e);
         }
 
         /// <summary>
