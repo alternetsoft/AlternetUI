@@ -1015,6 +1015,12 @@ namespace Alternet.UI
             PerformLayoutAndInvalidate();
         }
 
+        /// <inheritdoc/>
+        protected override void OnSystemColorsChanged(EventArgs e)
+        {
+            base.OnSystemColorsChanged(e);
+        }
+
         /// <summary>
         /// Removes mnemonic markers from a string and returns the index of the
         /// mnemonic character, if present.

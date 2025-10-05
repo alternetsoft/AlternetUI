@@ -748,7 +748,8 @@ namespace Alternet.UI
 
                         RectangleDrawable result = new();
 
-                        result.SvgImage = new(svgImage[state], arrow.AsColor);
+                        result.SvgImage = svgImage[state];
+                        result.SvgColor = arrow.AsColor;
                         result.HasImage = true;
                         result.Stretch = false;
                         result.CenterHorz = true;

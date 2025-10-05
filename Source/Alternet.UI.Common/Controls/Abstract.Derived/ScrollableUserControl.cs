@@ -39,7 +39,14 @@ namespace Alternet.UI
 
         static ScrollableUserControl()
         {
-            DefaultUseInternalScrollBars = App.IsMaui || App.IsLinuxOS;
+            // We use internal scrollbars:
+            // 1. On MAUI because native scrollbars are not supported.
+            // 2. On Linux because native scrollbars are not good enough.
+            // 3. Everywhere else by default because we want to have the same behavior on all platforms.
+            // 4. On Windows with OpenGL because native scrollbars do not work with OpenGL.
+            // 5. On Windows because native scrollbars do not change it's color when
+            // system color theme changes.
+            DefaultUseInternalScrollBars = App.IsMaui || App.IsLinuxOS || true;
         }
 
         /// <summary>
