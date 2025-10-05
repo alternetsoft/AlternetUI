@@ -153,6 +153,64 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets or sets the SVG image associated with this object.
+        /// </summary>
+        public virtual SvgImage? SvgImage
+        {
+            get => primitive.SvgImage;
+
+            set
+            {
+                if (primitive.SvgImage == value)
+                    return;
+                primitive.SvgImage = value;
+                RaiseImageChanged(EventArgs.Empty);
+                if (ImageVisible)
+                    PerformLayoutAndInvalidate();
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets the size of the SVG image in pixels.
+        /// </summary>
+        /// <remarks>Changing this property triggers a layout update and redraw of the associated image if
+        /// it is visible.</remarks>
+        public virtual int? SvgSize
+        {
+            get => primitive.SvgSize;
+
+            set
+            {
+                if (primitive.SvgSize == value)
+                    return;
+                primitive.SvgSize = value;
+                RaiseImageChanged(EventArgs.Empty);
+                if (ImageVisible)
+                    PerformLayoutAndInvalidate();
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets the SVG color.
+        /// </summary>
+        /// <remarks>Setting this property triggers a layout update and invalidates the control if the
+        /// image is visible.</remarks>
+        public virtual Color? SvgColor
+        {
+            get => primitive.SvgColor;
+
+            set
+            {
+                if (primitive.SvgColor == value)
+                    return;
+                primitive.SvgColor = value;
+                RaiseImageChanged(EventArgs.Empty);
+                if (ImageVisible)
+                    PerformLayoutAndInvalidate();
+            }
+        }
+
+        /// <summary>
         /// Gets or sets the disabled image that is displayed by <see cref="PictureBox"/>.
         /// </summary>
         public virtual Image? DisabledImage
@@ -494,6 +552,28 @@ namespace Alternet.UI
             {
                 DrawDefaultImage(e);
             }
+        }
+
+        /// <summary>
+        /// Sets the SVG image, along with optional size and color, for the associated primitive.
+        /// </summary>
+        /// <remarks>This method updates the SVG image and its associated properties for the primitive. 
+        /// If the image visibility is enabled, the layout is recalculated
+        /// and the display is invalidated.</remarks>
+        /// <param name="svg">The <see cref="SvgImage"/> to be applied.
+        /// Can be <see langword="null"/> to clear the current SVG image.</param>
+        /// <param name="size">The optional size of the SVG image.
+        /// If <see langword="null"/>, the default size is used.</param>
+        /// <param name="color">The optional color to apply to the SVG image.
+        /// If <see langword="null"/>, the default color is used.</param>
+        public virtual void SetSvgImage(SvgImage? svg, int? size = null, Color? color = null)
+        {
+            primitive.SvgImage = svg;
+            primitive.SvgSize = size;
+            primitive.SvgColor = color;
+            RaiseImageChanged(EventArgs.Empty);
+            if (ImageVisible)
+                PerformLayoutAndInvalidate();
         }
 
         /// <summary>
