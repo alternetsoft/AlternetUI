@@ -386,7 +386,7 @@ namespace Alternet.UI
 
                 FormUtils.InvalidateAll();
 
-                App.DebugLogIf("System colors were changed.", true);
+                App.DebugLogIf("System colors were changed.", false);
             }
             finally
             {
