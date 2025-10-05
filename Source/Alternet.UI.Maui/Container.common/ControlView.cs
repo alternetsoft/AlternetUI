@@ -677,7 +677,9 @@ namespace Alternet.UI
 
             graphics.UseUnscaledDrawImage = UseUnscaledDrawImage;
 
-            var paintArgs = new PaintEventArgs(graphics, control.Bounds);
+            var r = control.Bounds;
+
+            var paintArgs = new PaintEventArgs(graphics, r, r);
 
             control.RaisePaint(paintArgs);
 

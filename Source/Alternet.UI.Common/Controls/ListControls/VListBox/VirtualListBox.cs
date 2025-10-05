@@ -1304,7 +1304,7 @@ namespace Alternet.UI
                         else
                         {
                             itemPaintArgs.Graphics = dc;
-                            itemPaintArgs.ClipRectangle = rectRow;
+                            itemPaintArgs.ClientRectangle = rectRow;
                             itemPaintArgs.ItemIndex = line;
                         }
 
@@ -2067,7 +2067,7 @@ namespace Alternet.UI
                     return;
 
                 case Key.Space:
-                    // hack: pressing space should work like a mouse click rather than
+                    // pressing space should work like a mouse click rather than
                     // like a keyboard arrow press, so trick DoHandleItemClick() in
                     // thinking we were clicked.
                     flags &= ~ItemClickFlags.Keyboard;

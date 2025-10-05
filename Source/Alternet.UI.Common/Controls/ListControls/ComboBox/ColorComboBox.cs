@@ -286,7 +286,7 @@ namespace Alternet.UI
 
                 var (colorRect, itemRect) = sender.GetItemImageRect(e);
                 ColorListBox.PaintColorImage(e.Graphics, colorRect, itemColor);
-                e.ClipRectangle = itemRect;
+                e.ClientRectangle = itemRect;
                 sender.DefaultItemPaint(e);
             }
         }

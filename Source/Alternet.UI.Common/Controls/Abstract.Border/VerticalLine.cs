@@ -64,7 +64,7 @@ namespace Alternet.UI
         /// <inheritdoc/>
         public override void DefaultPaint(PaintEventArgs e)
         {
-            var rect = e.ClipRectangle;
+            var rect = e.ClientRectangle;
             var brush = DefaultColors.GetControlBorderBrush(this);
             e.Graphics.DrawVertLine(brush, rect.TopLeft, rect.Height, LineWidth);
         }

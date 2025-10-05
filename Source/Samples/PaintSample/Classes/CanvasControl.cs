@@ -40,7 +40,7 @@ namespace PaintSample
 
         protected override void OnPaint(PaintEventArgs e)
         {
-            e.Graphics.FillRectangle(Brushes.LightGray, e.ClipRectangle);
+            e.Graphics.FillRectangle(Brushes.LightGray, e.ClientRectangle);
 
             if (Document == null)
                 return;

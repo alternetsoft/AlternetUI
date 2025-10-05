@@ -468,7 +468,7 @@ namespace Alternet.UI
 
             if (TextVisible)
             {
-                var rect = e.ClipRectangle;
+                var rect = e.ClientRectangle;
                 var dc = e.Graphics;
                 var state = VisualState;
 
@@ -502,7 +502,7 @@ namespace Alternet.UI
         /// <param name="e">Paint arguments.</param>
         public void DrawDefaultImage(PaintEventArgs e)
         {
-            var rect = e.ClipRectangle;
+            var rect = e.ClientRectangle;
             var dc = e.Graphics;
             DrawDefaultImage(dc, rect);
         }

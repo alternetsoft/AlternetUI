@@ -59,7 +59,7 @@ namespace Alternet.UI
         private void DefaultPaintDebug(PaintEventArgs e)
         {
             if (ShowDebugCorners)
-                BorderSettings.DrawDesignCorners(e.Graphics, e.ClipRectangle);
+                BorderSettings.DrawDesignCorners(e.Graphics, e.ClientRectangle);
         }
     }
 }

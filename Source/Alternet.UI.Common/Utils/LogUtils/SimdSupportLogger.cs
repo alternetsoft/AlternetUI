@@ -9,7 +9,7 @@ namespace Alternet.UI
 {
     /// <summary>
     /// SIMD support logger.
-    /// It uses direct probes for Vector<T> and reflection for other runtime types.
+    /// It uses direct probes for Vector{T} and reflection for other runtime types.
     /// </summary>
     internal static class SimdSupportLogger
     {
@@ -83,7 +83,7 @@ namespace Alternet.UI
                     "SKIA_DISABLE_GPU",
                     "DOTNET_TieredCompilation",
                     "DOTNET_UseSharedCompilation",
-                    "DOTNET_EnablePreviewFeatures"
+                    "DOTNET_EnablePreviewFeatures",
                 };
                 foreach (var k in keys)
                 {

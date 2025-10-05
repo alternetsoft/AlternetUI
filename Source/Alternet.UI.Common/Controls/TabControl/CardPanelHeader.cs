@@ -1019,7 +1019,7 @@ namespace Alternet.UI
                 TabControl.DrawTabHeaderInterior(
                     this,
                     e.Graphics,
-                    e.ClipRectangle,
+                    e.ClientRectangle,
                     GetInteriorBorderColor().AsBrush,
                     TabsAlignment);
             }

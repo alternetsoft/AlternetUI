@@ -1367,7 +1367,7 @@ namespace Alternet.UI
                 return;
             if (!hasInteriorBorder || TabCount == 0 || !TabsVisible)
                 return;
-            var r = e.ClipRectangle;
+            var r = e.ClientRectangle;
             if(r.Width > ClientSize.Width)
                 r.Width = ClientSize.Width;
             if (r.Height > ClientSize.Height)

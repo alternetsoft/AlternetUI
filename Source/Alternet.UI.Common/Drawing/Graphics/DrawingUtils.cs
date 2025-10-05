@@ -213,7 +213,7 @@ namespace Alternet.UI
             DrawPushButton(
                         e.Graphics,
                         control,
-                        e.ClipRectangle,
+                        e.ClientRectangle,
                         controlState);
         }
 

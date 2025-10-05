@@ -417,14 +417,14 @@ namespace Alternet.UI
                 var itemColor = GetImageColor(colorListBox, e);
                 if (colorListBox.TextVisible)
                 {
-                    var (colorRect, itemRect) = ListControlItem.GetItemImageRect(e.ClipRectangle);
-                    e.ClipRectangle = itemRect;
+                    var (colorRect, itemRect) = ListControlItem.GetItemImageRect(e.ClientRectangle);
+                    e.ClientRectangle = itemRect;
                     colorListBox.DefaultDrawItemForeground(e);
                     PaintColorImage(e.Graphics, colorRect, itemColor);
                 }
                 else
                 {
-                    PaintColorImage(e.Graphics, e.ClipRectangle, itemColor);
+                    PaintColorImage(e.Graphics, e.ClientRectangle, itemColor);
                 }
             }
 

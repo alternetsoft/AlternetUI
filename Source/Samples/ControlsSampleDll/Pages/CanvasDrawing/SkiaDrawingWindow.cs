@@ -149,7 +149,7 @@ namespace ControlsSample
 
         private void PaintOnCanvas()
         {
-            RectD rectDip = (0, 0, control.Width, control.Height);
+            RectD rectDip = ClientRectangle;
 
             var canvas = SkiaUtils.CreateBitmapCanvas(
                 rectDip.Size.Ceiling(),
@@ -161,7 +161,7 @@ namespace ControlsSample
             try
             {
                 GraphicsFactory.MeasureCanvasOverride = canvas;
-                PaintEventArgs e = new(canvas, rectDip);
+                PaintEventArgs e = new(canvas, rectDip, rectDip);
                 control.RaisePaint(e);
                 pictureBox.Image = (Image)canvas.Bitmap!;
             }

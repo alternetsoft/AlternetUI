@@ -47,7 +47,7 @@ namespace Alternet.Drawing
             {
                 paintArguments.ListBox = Container;
                 paintArguments.Graphics = dc;
-                paintArguments.ClipRectangle = Bounds;
+                paintArguments.ClientRectangle = Bounds;
                 paintArguments.ItemIndex = ItemIndex;
             }
 

@@ -61,7 +61,7 @@ namespace PropertyGridSample
             base.DefaultPaint(e);
 
             var dc = e.Graphics;
-            var bounds = e.ClipRectangle;
+            var bounds = e.ClientRectangle;
 
             var brush = this.Background;
             if (brush != null)

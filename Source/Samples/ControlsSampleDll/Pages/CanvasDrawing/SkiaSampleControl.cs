@@ -39,7 +39,7 @@ namespace Alternet.UI
         public override void DefaultPaint(PaintEventArgs e)
         {
             var dc = e.Graphics;
-            var rect = e.ClipRectangle;
+            var rect = e.ClientRectangle;
 
             dc.FillRectangle(Color.LightGoldenrodYellow.AsBrush, rect);
 
@@ -79,9 +79,9 @@ namespace Alternet.UI
                 Color.Red.AsPen,
                 new PointD[]
                 {
-                    new PointD(10, 50),
-                    new PointD(100, 50),
-                    new PointD(50, 100),
+                    new (10, 50),
+                    new (100, 50),
+                    new (50, 100),
                 });
 
             DrawLines2(dc, (50, 250, 100, 100));

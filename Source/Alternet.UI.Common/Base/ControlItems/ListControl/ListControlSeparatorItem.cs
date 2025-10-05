@@ -67,7 +67,7 @@ namespace Alternet.UI
             if (!e.Visible)
                 return;
 
-            var rect = e.ClipRectangle;
+            var rect = e.ClientRectangle;
             var lineOffset = 0;
             RectD lineRect = (
                 rect.Left + lineOffset,

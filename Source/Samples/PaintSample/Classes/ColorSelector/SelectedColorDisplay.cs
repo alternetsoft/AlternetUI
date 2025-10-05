@@ -35,14 +35,14 @@ namespace PaintSample
         {
             var dc = e.Graphics;
 
-            dc.FillRectangle(Brushes.LightGray, e.ClipRectangle);
-            dc.FillRectangle(backgroundHatchBrush, e.ClipRectangle);
+            dc.FillRectangle(Brushes.LightGray, e.ClientRectangle);
+            dc.FillRectangle(backgroundHatchBrush, e.ClientRectangle);
             dc.DrawLine(
                 Pens.Gray,
-                e.ClipRectangle.TopRight + new PointD(-1, 0),
-                e.ClipRectangle.BottomRight + new PointD(-1, 0));
+                e.ClientRectangle.TopRight + new PointD(-1, 0),
+                e.ClientRectangle.BottomRight + new PointD(-1, 0));
 
-            var innerRect = e.ClipRectangle;
+            var innerRect = e.ClientRectangle;
             innerRect.Inflate(-10, -10);
 
             dc.FillRectangle(new SolidBrush(SelectedColor), innerRect);

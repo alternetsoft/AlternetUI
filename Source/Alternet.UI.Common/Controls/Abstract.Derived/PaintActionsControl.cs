@@ -54,7 +54,7 @@ namespace Alternet.UI
 
             foreach(var paintAction in paintActions)
             {
-                paintAction(this, e.Graphics, e.ClipRectangle);
+                paintAction(this, e.Graphics, e.ClientRectangle);
             }
         }
 

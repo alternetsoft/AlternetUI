@@ -1049,7 +1049,7 @@ namespace Alternet.UI
         /// <param name="e">Draw parameters.</param>
         public virtual void DrawItemForeground(ListBoxItemPaintEventArgs e)
         {
-            e.ClipRectangle = e.ClipRectangle.WithMargin(ItemMargin);
+            e.ClientRectangle = e.ClientRectangle.WithMargin(ItemMargin);
 
             if (painter is null)
             {

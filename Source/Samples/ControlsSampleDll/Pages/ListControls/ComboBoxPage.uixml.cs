@@ -272,23 +272,23 @@ namespace ControlsSample
 
             e.DefaultPaint();
             if(e.IsPaintingControl)
-                e.Graphics.FillRectangle(Color.Red.AsBrush, (e.ClipRectangle.Location, (5, 5)));
+                e.Graphics.FillRectangle(Color.Red.AsBrush, (e.ClientRectangle.Location, (5, 5)));
             else
             {
-                var point = e.ClipRectangle.TopRight;
+                var point = e.ClientRectangle.TopRight;
                 point.Offset(-5, 0);
 
                 if (e.IsSelected)
                 {
                     e.Graphics.FillRectangle(
                         Color.Yellow.AsBrush,
-                        (point, (10, e.ClipRectangle.Height)));
+                        (point, (10, e.ClientRectangle.Height)));
                 }
                 else
                 {
                     e.Graphics.FillRectangle(
                         Color.Green.AsBrush,
-                        (point, (10, e.ClipRectangle.Height)));
+                        (point, (10, e.ClientRectangle.Height)));
                 }
             }
         }

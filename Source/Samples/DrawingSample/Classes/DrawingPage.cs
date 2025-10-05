@@ -53,7 +53,7 @@ namespace DrawingSample
 
         private void Canvas_Paint(object? sender, PaintEventArgs e)
         {
-            var b = e.ClipRectangle;
+            var b = e.ClientRectangle;
             e.Graphics.FillRectangle(Color.White.AsBrush, b);
             Draw(e.Graphics, b);
         }

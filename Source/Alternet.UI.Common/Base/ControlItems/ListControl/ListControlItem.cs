@@ -1154,7 +1154,7 @@ namespace Alternet.UI
             var control = container?.Control;
             var focused = control?.Focused ?? false;
             var selectionUnderImage = container?.Defaults.SelectionUnderImage ?? true;
-            var rect = e.ClipRectangle;
+            var rect = e.ClientRectangle;
             var dc = e.Graphics;
 
             var isSelected = e.IsSelected;
@@ -1472,7 +1472,7 @@ namespace Alternet.UI
                 padding = item.ForegroundMargin;
             }
 
-            var paintRectangle = e.ClipRectangle;
+            var paintRectangle = e.ClientRectangle;
             paintRectangle.ApplyMargin(padding);
 
             var isSelected = e.IsSelected;
@@ -1969,7 +1969,7 @@ namespace Alternet.UI
                 if (Control.FocusedControl == container?.Control)
                 {
                     e.Graphics.FillBorderRectangle(
-                        e.ClipRectangle,
+                        e.ClientRectangle,
                         null,
                         BorderSettings.DebugBorder);
                 }

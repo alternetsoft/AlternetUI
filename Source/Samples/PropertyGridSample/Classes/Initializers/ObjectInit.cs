@@ -94,7 +94,7 @@ Environment.NewLine + Environment.NewLine +
                 control.ParentBackColor = true;
                 control.Paint += (sender, e) =>
                 {
-                    e.Graphics.FillRectangle(control.RealBackgroundColor.AsBrush, e.ClipRectangle);
+                    e.Graphics.FillRectangle(control.RealBackgroundColor.AsBrush, e.ClientRectangle);
                     (sender as UserControl)?.DrawDefaultBackground(e);
                 };
             });

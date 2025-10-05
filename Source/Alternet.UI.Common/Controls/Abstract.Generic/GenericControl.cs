@@ -210,7 +210,7 @@ namespace Alternet.UI
         protected sealed override void OnPaint(PaintEventArgs e)
         {
             e.Graphics.DoInsideClipped(
-                e.ClipRectangle,
+                e.ClientRectangle,
                 () =>
                 {
                     DefaultPaint(e);

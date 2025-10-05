@@ -100,7 +100,7 @@ namespace Alternet.UI.Native
 
             if (App.IsLinuxOS && visible)
             {
-                // todo: this is a workaround for a problem on Linux when
+                // this is a workaround for a problem on Linux when
                 // ClientSize is not reported correctly until the window is shown
                 // So we need to perform layout after the proper client size is available
                 // This should be changed later in respect to RedrawOnResize functionality.
@@ -275,7 +275,9 @@ namespace Alternet.UI.Native
 
             KnownRunTimeTrackers.DefaultPaintStart(uiControl);
 
-            var e = new PaintEventArgs(CreateDefaultGraphics, uiControl.ClientRectangle);
+            var r = uiControl.ClientRectangle;
+
+            var e = new PaintEventArgs(CreateDefaultGraphics, r, r);
 
             try
             {
@@ -317,7 +319,7 @@ namespace Alternet.UI.Native
 
             using var graphics = Drawing.SkiaUtils.CreateSkiaGraphicsOnCanvas(canvas, (float)scaleFactor);
 
-            var e = new PaintEventArgs(() => graphics, clientRect);
+            var e = new PaintEventArgs(() => graphics, clientRect, clientRect);
             uiControl.RaisePaint(e);
 
             canvas.Flush();

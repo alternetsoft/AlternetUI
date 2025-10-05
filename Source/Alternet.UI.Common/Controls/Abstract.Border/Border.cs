@@ -407,10 +407,10 @@ namespace Alternet.UI
             if (BorderMargin.IsAnyPositive)
             {
                 DrawDefaultBackground(e, DrawDefaultBackgroundFlags.DrawBackground);
-                var saved = e.ClipRectangle;
-                e.ClipRectangle = saved.DeflatedWithPadding(BorderMargin);
+                var saved = e.ClientRectangle;
+                e.ClientRectangle = saved.DeflatedWithPadding(BorderMargin);
                 DrawDefaultBackground(e, DrawDefaultBackgroundFlags.DrawBorder);
-                e.ClipRectangle = saved;
+                e.ClientRectangle = saved;
             }
             else
             {
@@ -557,7 +557,7 @@ namespace Alternet.UI
         protected override void DefaultPaintDebug(PaintEventArgs e)
         {
             if (ShowDebugCorners)
-                BorderSettings.DrawDesignCorners(e.Graphics, e.ClipRectangle);
+                BorderSettings.DrawDesignCorners(e.Graphics, e.ClientRectangle);
         }
     }
 }

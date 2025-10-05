@@ -800,7 +800,7 @@ namespace Alternet.UI
         /// <inheritdoc/>
         public override void DefaultPaint(PaintEventArgs e)
         {
-            e.ClipRectangle = ClientRectangle;
+            e.ClientRectangle = ClientRectangle;
 
             var flags = IsTransparent ? DrawDefaultBackgroundFlags.DrawBorder
                 : DrawDefaultBackgroundFlags.DrawBorderAndBackground;
@@ -810,7 +810,7 @@ namespace Alternet.UI
             var state = VisualState;
             var border = GetBorderSettings(state);
 
-            var rect = e.ClipRectangle;
+            var rect = e.ClientRectangle;
             var dc = e.Graphics;
 
             if(border is not null)
@@ -1061,7 +1061,7 @@ namespace Alternet.UI
         private void DefaultPaintDebug(PaintEventArgs e)
         {
             if (ShowDebugCorners)
-                BorderSettings.DrawDesignCorners(e.Graphics, e.ClipRectangle);
+                BorderSettings.DrawDesignCorners(e.Graphics, e.ClientRectangle);
         }
     }
 }

@@ -17,7 +17,7 @@ namespace Alternet.UI.Native
             PaintingControl = 0x0001,
 
             // when set, we are painting an item which should have
-            // focus rectangle painted in the background. Text colour
+            // focus rectangle painted in the background. Text color
             // and clipping region are then appropriately set in
             // the default OnDrawBackground implementation.
             PaintingSelected = 0x0002,
@@ -126,7 +126,7 @@ namespace Alternet.UI.Native
             else
             {
                 paintEventArgs.Graphics = dc;
-                paintEventArgs.ClipRectangle = rect;
+                paintEventArgs.ClientRectangle = rect;
             }
 
             const int ItemIndexNotFound = -1;

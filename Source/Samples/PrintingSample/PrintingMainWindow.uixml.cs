@@ -42,7 +42,7 @@ namespace PrintingSample
         private void DrawingArea_Paint(object? sender, PaintEventArgs e)
         {
             var dc = e.Graphics;
-            var bounds = e.ClipRectangle;
+            var bounds = e.ClientRectangle;
 
             if (originAtMarginCheckBox.IsChecked)
             {
@@ -191,11 +191,6 @@ namespace PrintingSample
 
         private void Document_PrintPage(object? sender, PrintPageEventArgs e)
         {
-            /*var pb = e.PageBounds;
-            var ppb = e.PrintablePageBounds;
-            var phpb = e.PhysicalPageBounds;
-            var mb = e.MarginBounds;*/
-
             int pageNumber = e.PageNumber;
 
             var bounds = new RectD(new PointD(), originAtMarginCheckBox.IsChecked

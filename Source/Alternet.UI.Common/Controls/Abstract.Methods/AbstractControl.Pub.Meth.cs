@@ -663,7 +663,7 @@ namespace Alternet.UI
             PaintEventArgs e,
             DrawDefaultBackgroundFlags flags = DrawDefaultBackgroundFlags.DrawBorderAndBackground)
         {
-            var rect = e.ClipRectangle.DeflatedWithPadding(BackgroundPadding);
+            var rect = e.ClientRectangle.DeflatedWithPadding(BackgroundPadding);
             if (rect.SizeIsEmpty)
                 return;
 

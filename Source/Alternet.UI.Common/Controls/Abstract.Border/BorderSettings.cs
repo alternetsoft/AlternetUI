@@ -345,7 +345,7 @@ namespace Alternet.UI
         {
             if (sender is not BorderSettings border)
                 return;
-            DrawDesignCorners(args.Graphics, args.ClipRectangle, border);
+            DrawDesignCorners(args.Graphics, args.ClientRectangle, border);
         }
 
         /// <summary>
@@ -500,13 +500,24 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Calls paint event.
+        /// Calls paint event with the specified rectangles.
         /// </summary>
         /// <param name="dc">Drawing context.</param>
-        /// <param name="rect">Rectangle.</param>
-        public void InvokePaint(Graphics dc, RectD rect)
+        /// <param name="clipRect">The invalidated rectangle.</param>
+        /// <param name="clientRect">The client rectangle.</param>
+        public void InvokePaint(Graphics dc, RectD clipRect, RectD clientRect)
         {
-            Paint?.Invoke(this, new PaintEventArgs(() => dc, rect));
+            Paint?.Invoke(this, new PaintEventArgs(() => dc, clipRect, clientRect));
+        }
+
+        /// <summary>
+        /// Calls paint event with the specified rectangle.
+        /// </summary>
+        /// <param name="dc">Drawing context.</param>
+        /// <param name="clientRect">The client rectangle.</param>
+        public void InvokePaint(Graphics dc, RectD clientRect)
+        {
+            Paint?.Invoke(this, new PaintEventArgs(() => dc, clientRect, clientRect));
         }
 
         /// <summary>

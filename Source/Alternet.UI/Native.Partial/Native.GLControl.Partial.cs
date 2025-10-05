@@ -161,7 +161,7 @@ namespace Alternet.UI.Native
                 using var graphics = Drawing.SkiaUtils.CreateSkiaGraphicsOnCanvas(canvas, (float)scaleFactor);
 
 
-                var e = new PaintEventArgs(() => graphics, clientRect);
+                var e = new PaintEventArgs(() => graphics, clientRect, clientRect);
                 uiControl.RaisePaint(e);
 
                 if(DrawGLTextAtCorner)

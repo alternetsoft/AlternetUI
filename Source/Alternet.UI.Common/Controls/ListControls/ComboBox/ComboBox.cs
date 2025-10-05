@@ -861,7 +861,7 @@ namespace Alternet.UI
                 ListBoxItemPaintEventArgs listEventArgs = new(
                     this,
                     e.Graphics,
-                    e.ClipRectangle,
+                    e.ClientRectangle,
                     e.ItemIndex);
                 listEventArgs.IsSelected = e.IsSelected;
                 listEventArgs.IsCurrent = e.IsSelected;
@@ -902,8 +902,8 @@ namespace Alternet.UI
                 var size = e.Graphics.GetTextExtent(s, font);
 
                 var offsetX = TextMargin.X;
-                var offsetY = (e.ClipRectangle.Height - size.Height) / 2;
-                var rect = e.ClipRectangle;
+                var offsetY = (e.ClientRectangle.Height - size.Height) / 2;
+                var rect = e.ClientRectangle;
                 rect.Inflate(-offsetX, -offsetY);
 
                 e.Graphics.DrawText(
@@ -922,7 +922,7 @@ namespace Alternet.UI
                     s,
                     font,
                     color.AsBrush,
-                    (e.ClipRectangle.X + 2, e.ClipRectangle.Y));
+                    (e.ClientRectangle.X + 2, e.ClientRectangle.Y));
             }
         }
 
@@ -1018,14 +1018,14 @@ namespace Alternet.UI
             }
 
             var textMargin = TextMargin;
-            var size = e.ClipRectangle.Height - (textMargin.Y * 2) - (offset * 2);
+            var size = e.ClientRectangle.Height - (textMargin.Y * 2) - (offset * 2);
             var imageRect = new RectD(
-                e.ClipRectangle.X + textMargin.X,
-                e.ClipRectangle.Y + textMargin.Y + offset,
+                e.ClientRectangle.X + textMargin.X,
+                e.ClientRectangle.Y + textMargin.Y + offset,
                 size,
                 size);
 
-            var itemRect = e.ClipRectangle;
+            var itemRect = e.ClientRectangle;
             var horzOffset = imageRect.Right + DefaultImageTextDistance;
             itemRect.X += horzOffset;
             itemRect.Width -= imageRect.Right + DefaultImageTextDistance;

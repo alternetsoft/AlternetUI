@@ -41,7 +41,7 @@ namespace Alternet.UI
         public override void DefaultPaint(PaintEventArgs e)
         {
             var dc = e.Graphics;
-            var bounds = e.ClipRectangle;
+            var bounds = e.ClientRectangle;
 
             var brush = GetBackgroundBrush();
             if (brush != null)

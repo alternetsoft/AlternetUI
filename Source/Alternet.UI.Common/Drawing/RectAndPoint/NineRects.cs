@@ -348,7 +348,7 @@ namespace Alternet.Drawing
             protected override void OnPaint(PaintEventArgs e)
             {
                 var scaleFactor = ScaleFactor;
-                NineRects rects = new(e.ClipRectangle.ToRect(), PatchRect);
+                NineRects rects = new(e.ClientRectangle.ToRect(), PatchRect);
                 DrawingUtils.DrawBordersWithBrush(
                     e.Graphics,
                     Color.Red.AsBrush,
