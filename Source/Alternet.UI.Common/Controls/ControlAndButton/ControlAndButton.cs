@@ -808,6 +808,15 @@ namespace Alternet.UI
             }
         }
 
+        /// <inheritdoc/>
+        protected override void OnSystemColorsChanged(EventArgs e)
+        {
+            base.OnSystemColorsChanged(e);
+
+            if(AutoUpdateColors)
+                RaiseAutoBackColorChanged();
+        }
+
         /// <summary>
         /// Gets whether default button need to be created in the constructor.
         /// </summary>
