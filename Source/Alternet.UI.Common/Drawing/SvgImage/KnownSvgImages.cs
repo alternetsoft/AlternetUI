@@ -99,6 +99,17 @@ namespace Alternet.UI
         private static SvgImage? imgSizingGripRight;
         private static SvgImage? imgBars;
 
+        static KnownSvgImages()
+        {
+            SystemSettings.SystemColorsChanged += () =>
+            {
+                foreach(var image in GetAllAllocatedImages())
+                {
+                    image.ResetCachedImages();
+                }
+            };
+        }
+
         /// <summary>
         /// Gets or sets the SVG image with the bars.
         /// </summary>
@@ -811,6 +822,23 @@ namespace Alternet.UI
         {
             get => imgCircleDot ??= new MonoSvgImage(KnownSvgUrls.UrlImageCircleDot);
             set => imgCircleDot = value;
+        }
+
+        /// <summary>
+        /// Retrieves all allocated <see cref="SvgImage"/> instances defined
+        /// in the <see cref="KnownSvgImages"/> class.
+        /// </summary>
+        /// <remarks>This method uses reflection to retrieve static fields of type <see cref="SvgImage"/>
+        /// from the <see cref="KnownSvgImages"/> class.
+        /// It is intended for scenarios where all allocated SVG images
+        /// need to be enumerated.</remarks>
+        /// <returns>An <see cref="IEnumerable{T}"/> containing
+        /// all <see cref="SvgImage"/> objects which are allocated in static fields in
+        /// the <see cref="KnownSvgImages"/> class. The collection
+        /// will be empty if no such fields are allocated.</returns>
+        public static IEnumerable<SvgImage> GetAllAllocatedImages()
+        {
+            return AssemblyUtils.GetStaticFields<SvgImage>(typeof(KnownSvgImages), true);
         }
 
         /// <summary>
