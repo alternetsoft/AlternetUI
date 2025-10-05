@@ -643,10 +643,11 @@ namespace Alternet.UI
             var result = AddSpeedBtnCore(
                 ItemKind.Button,
                 text,
-                ToNormal(image),
-                ToDisabled(image),
+                null,
+                null,
                 toolTip,
                 action);
+            result.SvgImage = image;
             return result;
         }
 
@@ -690,12 +691,71 @@ namespace Alternet.UI
             string? toolTip = null,
             EventHandler? action = null)
         {
-            return AddStickyBtn(
+            var result = AddStickyBtnCore(
                 text,
-                ToNormal(image),
-                ToDisabled(image),
+                null,
+                null,
                 toolTip,
                 action);
+            result.SvgImage = image;
+            return result.UniqueId;
+        }
+
+        /// <summary>
+        /// Adds a sticky button to the user interface with the specified text,
+        /// images, tooltip, and action.
+        /// </summary>
+        /// <remarks>A sticky button remains in a pressed state until explicitly toggled.
+        /// The border
+        /// widths of the button are adjusted dynamically  based on its sticky state when clicked.</remarks>
+        /// <param name="text">The text to display on the button. Can be <see langword="null"/>
+        /// if no text is required.</param>
+        /// <param name="imageSet">The set of images to use for the button's normal state.
+        /// Can be <see langword="null"/> if no image is required.</param>
+        /// <param name="imageSetDisabled">The set of images to use for the button's disabled state.
+        /// Can be <see langword="null"/> if no image is required.</param>
+        /// <param name="toolTip">The tooltip text to display when the user hovers over the button.
+        /// Can be <see langword="null"/> if no tooltip is required.</param>
+        /// <param name="action">The event handler to invoke when the button is clicked.
+        /// Can be <see langword="null"/> if no action is required.</param>
+        /// <returns>A <see cref="SpeedButton"/> instance representing the sticky button.
+        /// The button's margin is set to the
+        /// default sticky button margin, and its click behavior adjusts the border widths
+        /// based on the sticky state.</returns>
+        public virtual SpeedButton AddStickyBtnCore(
+            string? text,
+            ImageSet? imageSet,
+            ImageSet? imageSetDisabled,
+            string? toolTip = null,
+            EventHandler? action = null)
+        {
+            var result = AddSpeedBtnCore(
+                ItemKind.ButtonSticky,
+                text,
+                imageSet,
+                imageSetDisabled,
+                toolTip,
+                action);
+            result.Margin = DefaultStickyBtnMargin;
+            result.Click += StickyButton_Click;
+            return result;
+
+            static void StickyButton_Click(object? sender, EventArgs e)
+            {
+                if (sender is not SpeedButton button)
+                    return;
+                button.Borders ??= new();
+                if (button.Sticky)
+                {
+                    button.Borders.Pressed?.SetWidth(2);
+                    button.Borders.Hovered?.SetWidth(2);
+                }
+                else
+                {
+                    button.Borders.Pressed?.SetWidth(1);
+                    button.Borders.Hovered?.SetWidth(1);
+                }
+            }
         }
 
         /// <summary>
@@ -714,33 +774,13 @@ namespace Alternet.UI
             string? toolTip = null,
             EventHandler? action = null)
         {
-            var result = AddSpeedBtnCore(
-                ItemKind.ButtonSticky,
+            var result = AddStickyBtnCore(
                 text,
                 imageSet,
                 imageSetDisabled,
                 toolTip,
                 action);
-            result.Margin = DefaultStickyBtnMargin;
-            result.Click += StickyButton_Click;
             return result.UniqueId;
-
-            static void StickyButton_Click(object? sender, EventArgs e)
-            {
-                if (sender is not SpeedButton button)
-                    return;
-                button.Borders ??= new();
-                if (button.Sticky)
-                {
-                    button.Borders.Pressed?.SetWidth(2);
-                    button.Borders.Hovered?.SetWidth(2);
-                }
-                else
-                {
-                    button.Borders.Pressed?.SetWidth(1);
-                    button.Borders.Hovered?.SetWidth(1);
-                }
-            }
         }
 
         /// <summary>
@@ -765,8 +805,8 @@ namespace Alternet.UI
             var item = FindTool(id);
             if (item is null)
                 return;
-            item.ImageSet = ToNormal(value);
-            item.DisabledImageSet = ToDisabled(value);
+            item.SvgImage = value;
+            item.ResetImages();
         }
 
         /// <summary>
@@ -988,7 +1028,9 @@ namespace Alternet.UI
             SvgImage? image = null,
             string? toolTip = default)
         {
-            return AddPicture(ToNormal(image), ToDisabled(image), toolTip);
+            var result = AddPictureCore(null, null, toolTip);
+            result.SvgImage = image;
+            return result.UniqueId;
         }
 
         /// <summary>
@@ -1028,15 +1070,32 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Adds <see cref="PictureBox"/> to the control.
+        /// Creates and adds a new <see cref="PictureBox"/> control with the specified properties.
         /// </summary>
-        /// <param name="image">Normal image.</param>
-        /// <param name="imageDisabled">Disable image.</param>
-        /// <param name="toolTip">Item tooltip.</param>
-        /// <param name="ignoreSuggestedSize">Whether to ignore suggested
-        /// size of the item's control.</param>
-        /// <returns><see cref="ObjectUniqueId"/> of the added item.</returns>
-        public virtual ObjectUniqueId AddPicture(
+        /// <remarks>This method initializes a <see cref="PictureBox"/> with default alignment and
+        /// properties,  applies the specified images and tooltip, and optionally configures
+        /// the size based on the
+        /// suggested size. The <see cref="PictureBox"/> is associated with the current parent
+        /// context and updated with
+        /// item-specific properties.</remarks>
+        /// <param name="image">The <see cref="ImageSet"/> to use as the primary
+        /// image for the <see cref="PictureBox"/>. Can be <see
+        /// langword="null"/>.</param>
+        /// <param name="imageDisabled">The <see cref="ImageSet"/> to use as
+        /// the disabled image for the <see cref="PictureBox"/>. Can be <see
+        /// langword="null"/>.</param>
+        /// <param name="toolTip">The tooltip text to display when the user
+        /// hovers over the <see cref="PictureBox"/>. Defaults to an empty
+        /// string if <see langword="null"/>.</param>
+        /// <param name="ignoreSuggestedSize">A value indicating whether to
+        /// ignore the suggested size for the <see cref="PictureBox"/>.
+        /// If <see langword="true"/>, the control will not use the suggested size;
+        /// otherwise, the suggested size and minimum
+        /// size will be applied.</param>
+        /// <returns>A <see cref="PictureBox"/> control configured with the specified properties.
+        /// The control is added to the
+        /// current parent context.</returns>
+        public virtual PictureBox AddPictureCore(
             ImageSet? image = null,
             ImageSet? imageDisabled = null,
             string? toolTip = default,
@@ -1046,10 +1105,14 @@ namespace Alternet.UI
             {
                 IsGraphicControl = true,
                 ImageStretch = false,
-                ImageSet = image,
                 ToolTip = toolTip ?? string.Empty,
                 VerticalAlignment = UI.VerticalAlignment.Center,
             };
+
+            if (image is not null)
+            {
+                picture.ImageSet = image;
+            }
 
             if (ignoreSuggestedSize)
             {
@@ -1069,7 +1132,29 @@ namespace Alternet.UI
             UpdateItemProps(picture, ItemKind.Picture);
 
             picture.Parent = this;
+            return picture;
+        }
 
+        /// <summary>
+        /// Adds <see cref="PictureBox"/> to the control.
+        /// </summary>
+        /// <param name="image">Normal image.</param>
+        /// <param name="imageDisabled">Disable image.</param>
+        /// <param name="toolTip">Item tooltip.</param>
+        /// <param name="ignoreSuggestedSize">Whether to ignore suggested
+        /// size of the item's control.</param>
+        /// <returns><see cref="ObjectUniqueId"/> of the added item.</returns>
+        public virtual ObjectUniqueId AddPicture(
+            ImageSet? image = null,
+            ImageSet? imageDisabled = null,
+            string? toolTip = default,
+            bool ignoreSuggestedSize = false)
+        {
+            var picture = AddPictureCore(
+                image,
+                imageDisabled,
+                toolTip,
+                ignoreSuggestedSize);
             return picture.UniqueId;
         }
 
