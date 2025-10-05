@@ -1973,6 +1973,45 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Retrieves all static fields of a specified type from a given container type.
+        /// </summary>
+        /// <remarks>This method searches for static fields in the specified
+        /// type and filters them by the specified field type.
+        /// Only fields that are assignable to <typeparamref name="TField"/> are included
+        /// in the result.</remarks>
+        /// <typeparam name="TField">The type of the static fields to retrieve.</typeparam>
+        /// <param name="containerType">The type that contains the static fields to search.
+        /// Must not be <see langword="null"/>.</param>
+        /// <param name="includeNonPublic">The <see langword="bool"/> value indicating
+        /// whether to include non-public fields.</param>
+        /// <returns>An <see cref="IEnumerable{T}"/> containing
+        /// all static fields of type <typeparamref name="TField"/>  defined
+        /// in the specified <paramref name="containerType"/>. Returns an
+        /// empty collection if no matching fields are
+        /// found.</returns>
+        public static IEnumerable<TField> GetStaticFields<TField>(
+            Type containerType,
+            bool includeNonPublic = false)
+        {
+            List<TField> result = new();
+
+            var fields = containerType.GetFields(
+                BindingFlags.Static | BindingFlags.Public | (includeNonPublic ? BindingFlags.NonPublic : 0));
+
+            foreach (var f in fields)
+            {
+                if (f.FieldType != typeof(TField))
+                    continue;
+
+                if (f.GetValue(null) is not TField value)
+                    continue;
+                result.Add(value);
+            }
+
+            return result;
+        }
+
+        /// <summary>
         /// Gets all static properties of the specified type in the specified container type.
         /// Returned only not null properties of the exact type <typeparamref name="TProperty"/>.
         /// </summary>
