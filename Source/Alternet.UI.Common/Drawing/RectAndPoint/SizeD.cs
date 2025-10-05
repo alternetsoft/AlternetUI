@@ -26,6 +26,14 @@ namespace Alternet.Drawing
     public struct SizeD : IEquatable<SizeD>
     {
         /// <summary>
+        /// Represents the default inflation delta used to adjust the size of a 2D object.
+        /// </summary>
+        /// <remarks>The value is a <see cref="Vector2"/> with both components set to 1.0.
+        /// This can be used as a standard increment for scaling or inflating 2D objects
+        /// in both the X and Y dimensions.</remarks>
+        public static readonly Vector2 InflateDelta = new(1f, 1f);
+
+        /// <summary>
         /// Gets <see cref="SizeD"/> with zero width and height.
         /// </summary>
         public static readonly SizeD Empty;
@@ -783,6 +791,46 @@ namespace Alternet.Drawing
             return new SizeD(
                 width < clampTo.width ? clampTo.width : width,
                 height < clampTo.height ? clampTo.height : height);
+        }
+
+        /// <summary>
+        /// Creates a <see cref='SizeD'/> that is inflated by 1.
+        /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public readonly SizeD Inflated()
+        {
+            var result = this;
+            result.Inflate();
+            return result;
+        }
+
+        /// <summary>
+        /// Creates a <see cref='SizeD'/> that is deflated by 1.
+        /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public readonly SizeD Deflated()
+        {
+            var result = this;
+            result.Deflate();
+            return result;
+        }
+
+        /// <summary>
+        /// Deflates this <see cref='SizeD'/> by 1.
+        /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public void Deflate()
+        {
+            vector -= InflateDelta;
+        }
+
+        /// <summary>
+        /// Inflates this <see cref='SizeD'/> by 1.
+        /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public void Inflate()
+        {
+            vector += InflateDelta;
         }
 
         /// <summary>
