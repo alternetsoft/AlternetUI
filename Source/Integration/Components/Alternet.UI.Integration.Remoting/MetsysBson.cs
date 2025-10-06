@@ -1298,7 +1298,7 @@ namespace Metsys.Bson
 
         private string ReadName()
         {
-            var buffer = new List<byte>(128); //todo: use a pool to prevent fragmentation
+            var buffer = new List<byte>(128); // use a pool to prevent fragmentation?
             byte b;
             while ((b = _reader.ReadByte()) > 0)
             {
@@ -1311,7 +1311,7 @@ namespace Metsys.Bson
         private string ReadString()
         {
             var length = _reader.ReadInt32();
-            var buffer = _reader.ReadBytes(length - 1); //todo: again, look at fragmentation prevention
+            var buffer = _reader.ReadBytes(length - 1); // again, look at fragmentation prevention?
             _reader.ReadByte(); //null;
             Read(4 + length);
 
@@ -1531,7 +1531,7 @@ namespace Metsys.Bson.Configuration
                     name = Visit((MemberExpression)expression.Object);
                 }
 
-                //TODO: Is there a more certain way to determine if this is an indexed property?
+                // Is there a more certain way to determine if this is an indexed property?
                 if (expression.Method.Name == "get_Item" && expression.Arguments.Count == 1)
                 {
                     var index = Expression.Lambda(expression.Arguments[0]).Compile().DynamicInvoke();
