@@ -443,6 +443,21 @@ namespace Alternet.Drawing
         public string AHex => A.ToString("X2");
 
         /// <summary>
+        /// Gets the current color based on whether a dark or light color scheme is in use.
+        /// For regular <see cref="Color"/> instances, it simply returns the instance itself.
+        /// For <see cref="LightDarkColor"/> instances, it returns either the dark or light color
+        /// </summary>
+        public virtual Color Current
+        {
+            get
+            {
+                if(this is LightDarkColor ldc)
+                    return ldc.Current;
+                return this;
+            }
+        }
+
+        /// <summary>
         /// Gets <see cref="R"/> as hex <see cref="string"/>.
         /// </summary>
         [Browsable(false)]
