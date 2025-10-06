@@ -1550,6 +1550,16 @@ namespace Alternet.UI
             NativeControl.EndAddChildren(ptr.Value);
         }
 
+        public override void OnSystemColorsChanged()
+        {
+            base.OnSystemColorsChanged();
+            NativeControl.EndLabelEdit(false);
+            NativeControl.ResetColors();
+            NativeControl.RefreshEditor();
+            if (App.IsWindowsOS)
+                RecreateWindow();
+        }
+
         private IPropertyGridItem? PtrToItem(IntPtr ptr)
         {
             return Control?.HandleToItem(new WxPropertyGridItemHandle(ptr));
