@@ -449,10 +449,10 @@ namespace Alternet.UI
                 template.NormalBorder = RealDefaultToolTipBorder;
                 template.HasBorder = true;
                 template.BackgroundColor
-                = data.BackgroundColor ?? RichToolTip.DefaultToolTipBackgroundColor;
+                = data.BackgroundColor.Current ?? RichToolTip.DefaultToolTipBackgroundColor.Current;
                 template.RaiseBackgroundColorChanged();
                 template.ForegroundColor
-                = data.ForegroundColor ?? RichToolTip.DefaultToolTipForegroundColor;
+                = data.ForegroundColor.Current ?? RichToolTip.DefaultToolTipForegroundColor.Current;
                 template.TitleLabel.ParentForeColor = false;
                 template.TitleLabel.ParentFont = false;
                 template.TitleLabel.Text = data.Title;
@@ -460,7 +460,7 @@ namespace Alternet.UI
                 template.TitleLabel.Font
                     = data.TitleFont ?? template.Font?.Scaled(1.5f);
                 template.TitleLabel.ForegroundColor
-                    = data.TitleForegroundColor ?? RichToolTip.DefaultToolTipTitleForegroundColor;
+                    = data.TitleForegroundColor.Current ?? RichToolTip.DefaultToolTipTitleForegroundColor.Current;
                 template.MessageLabel.Text = data.Text;
 
                 template.TitleLabel.Visible = !string.IsNullOrEmpty(data.Title);
@@ -1000,6 +1000,12 @@ namespace Alternet.UI
             SafeDisposeObject(ref hideTimer);
             HideToolTip();
             base.DisposeManaged();
+        }
+
+        /// <inheritdoc/>
+        protected override void OnSystemColorsChanged(EventArgs e)
+        {
+            base.OnSystemColorsChanged(e);
         }
 
         /// <inheritdoc/>
