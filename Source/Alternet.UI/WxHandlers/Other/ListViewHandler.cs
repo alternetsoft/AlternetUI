@@ -182,7 +182,31 @@ namespace Alternet.UI
             base.OnSystemColorsChanged();
 
             if (App.IsWindowsOS)
+            {
                 RecreateWindow();
+                ApplyColumnWidth();
+            }
+        }
+
+        public override void OnHandleCreated()
+        {
+            base.OnHandleCreated();
+        }
+
+        protected virtual void ApplyColumnWidth()
+        {
+            if (Control is null)
+                return;
+
+            for (int i = 0; i < Control.Columns.Count; i++)
+            {
+                var col = Control.Columns[i];
+
+                NativeControl.SetColumnWidth(
+                    i,
+                    col.Width,
+                    CoerceWidthMode(col.WidthMode));
+            }
         }
 
         protected override void OnAttach()
