@@ -445,14 +445,12 @@ namespace Alternet.Drawing
         /// <summary>
         /// Gets the current color based on whether a dark or light color scheme is in use.
         /// For regular <see cref="Color"/> instances, it simply returns the instance itself.
-        /// For <see cref="LightDarkColor"/> instances, it returns either the dark or light color
+        /// For <see cref="LightDarkColor"/> instances, it returns either the dark or light color.
         /// </summary>
         public virtual Color Current
         {
             get
             {
-                if(this is LightDarkColor ldc)
-                    return ldc.Current;
                 return this;
             }
         }
