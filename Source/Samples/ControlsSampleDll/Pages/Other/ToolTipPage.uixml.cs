@@ -10,6 +10,7 @@ namespace ControlsSample
     {
         private readonly RichToolTip toolTip = new();
 
+        private Action<object?, EventArgs>? showMethod;
         private ImageSet? customImage;
         private ImageSet? largeImage;
         private MessageBoxIcon toolTipIcon = MessageBoxIcon.Warning;
@@ -98,10 +99,13 @@ namespace ControlsSample
             {
             };
 
-            showTemplateButton.Click += (s, e) =>
+            void ShowFromTemplate(object? sender, EventArgs e)
             {
+                showMethod = ShowFromTemplate;
                 toolTip.SetToolTipFromTemplate(controlTemplate).ShowToolTip();
-            };
+            }
+
+            showTemplateButton.Click += ShowFromTemplate;
 
             popup.Add("Log Information", Log);
 
@@ -247,6 +251,7 @@ namespace ControlsSample
         private void ShowImageButton_Click(object? sender, EventArgs e)
         {
             LoadImages();
+            showMethod = ShowImageButton_Click;
             toolTip.OnlyImage(largeImage).SetToolTipBackgroundColor(Color.ForestGreen).ShowToolTip();
         }
 
@@ -269,6 +274,7 @@ namespace ControlsSample
 
         private void ShowToolTipButton_Click(object? sender, EventArgs e)
         {
+            showMethod = ShowToolTipButton_Click;
             if (customImageCheckBox.IsChecked)
             {
                 LoadImages();
@@ -332,6 +338,7 @@ namespace ControlsSample
 
         private void ShowSimpleButton_Click(object? sender, EventArgs e)
         {
+            showMethod = ShowSimpleButton_Click;
             toolTip.SetToolTip(tooltipMessageTextBox.Text ?? "This is a simple tooltip")
                 .SetIcon(ToolTipIcon)
                 .ShowToolTip();
@@ -340,6 +347,13 @@ namespace ControlsSample
         private void HideToolTipButton_Click(object? sender, EventArgs e)
         {
             toolTip.HideToolTip();
+            showMethod = null;
+        }
+
+        protected override void OnSystemColorsChanged(EventArgs e)
+        {
+            base.OnSystemColorsChanged(e);
+            showMethod?.Invoke(this, EventArgs.Empty);
         }
 
         public MessageBoxIcon ToolTipIcon
