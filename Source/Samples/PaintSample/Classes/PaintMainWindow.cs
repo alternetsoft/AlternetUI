@@ -181,9 +181,11 @@ namespace PaintSample
                 var url = AssemblyUtils.GetImageUrlInAssembly(
                     GetType().Assembly,
                     "Resources.ToolIcons." + tool.GetType().Name.Replace("Tool", "") + ".svg");
-                var (normalImage, disabledImage) =
-                    ToolBarUtils.GetNormalAndDisabledSvg(url, this);
-                var buttonId = toolbar.AddSpeedBtn(tool.Name, normalImage, disabledImage);
+
+                var svgSize = ToolBarUtils.GetDefaultImageSize(this);
+                var svg = new MonoSvgImage(url);
+
+                var buttonId = toolbar.AddSpeedBtn(tool.Name, svg);
 
                 void ClickMe()
                 {
