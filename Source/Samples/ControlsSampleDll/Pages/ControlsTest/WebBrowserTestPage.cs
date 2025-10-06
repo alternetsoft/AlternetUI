@@ -5,6 +5,7 @@ using System.IO;
 using System.Reflection;
 using System.Runtime.InteropServices;
 using System.Threading;
+
 using Alternet.Drawing;
 using Alternet.UI;
 using Alternet.UI.Localization;
@@ -458,103 +459,108 @@ namespace ControlsSample
 
         private void AddTestActions()
         {
-            var webBrowser = rootPanel.WebBrowser;
-
-            AddTestAction("Open Panda sample", () =>
+            rootPanel.ActionsControl.DoInsideUpdate(AddTestActionsInternal);
+            
+            void AddTestActionsInternal()
             {
-                webBrowser.LoadURL(GetPandaUrl());
-            });
+                var webBrowser = rootPanel.WebBrowser;
 
-            AddTestAction("Google", () =>
-            {
-                webBrowser.LoadURL("https://www.google.com");
-            });
+                AddTestAction("Open Panda sample", () =>
+                {
+                    webBrowser.LoadURL(GetPandaUrl());
+                });
 
-            AddTestAction("BrowserVersion", () => { ShowBrowserVersion(); });
-            AddTestAction();
-            AddTestAction("Info", () => { LogInfo(); });
-            AddTestAction("Test", () => { Test(); });
-            AddTestAction(
-                "TestErrorEvent",
-                () => { webBrowser.LoadURL("memoray:myFolder/indeax.html"); });
-            AddTestAction();
-            AddTestAction("Stop", () => { webBrowser.Stop(); });
-            AddTestAction("ClearHistory", () => { webBrowser.ClearHistory(); });
-            AddTestAction("Reload", () => { webBrowser.Reload(); });
-            AddTestAction("Reload(true)", () => { webBrowser.Reload(true); });
-            AddTestAction("Reload(false)", () => { webBrowser.Reload(false); });
-            AddTestAction("SelectAll", () => { webBrowser.SelectAll(); });
-            AddTestAction(
-                "DeleteSelection",
-                () => { webBrowser.DeleteSelection(); });
-            AddTestAction(
-                "ClearSelection",
-                () => { webBrowser.ClearSelection(); });
-            AddTestAction("Cut", () => { webBrowser.Cut(); });
-            AddTestAction("Copy", () => { webBrowser.Copy(); });
-            AddTestAction("Paste", () => { webBrowser.Paste(); });
-            AddTestAction("Undo", () => { webBrowser.Undo(); });
-            AddTestAction("Redo", () => { webBrowser.Redo(); });
-            AddTestAction("Print", () => { webBrowser.Print(); });
-            AddTestAction("ZoomFactor+", () => { webBrowser.ZoomFactor += 1; });
-            AddTestAction("ZoomFactor-", () => { webBrowser.ZoomFactor -= 1; });
-            AddTestAction();
-            AddTestAction("HasBorder", () =>
-            {
-                webBrowser.HasBorder = !webBrowser.HasBorder;
-            });
-            AddTestAction("CanNavigate=false", () => { rootPanel.CanNavigate = false; });
-            AddTestAction("CanNavigate=true", () => { rootPanel.CanNavigate = true; });
-            AddTestAction(
-                "ContextMenuEnabled=true",
-                () => { webBrowser.ContextMenuEnabled = true; });
-            AddTestAction(
-                "ContextMenuEnabled=false",
-                () => { webBrowser.ContextMenuEnabled = false; });
-            AddTestAction("Editable=true", () => { webBrowser.Editable = true; });
-            AddTestAction(
-                "Editable=false",
-                () => { webBrowser.Editable = false; });
-            AddTestAction(
-                "AccessToDevToolsEnabled=true",
-                () => { webBrowser.AccessToDevToolsEnabled = true; });
-            AddTestAction(
-                "AccessToDevToolsEnabled=false",
-                () => { webBrowser.AccessToDevToolsEnabled = false; });
-            AddTestAction(
-                "EnableHistory=true",
-                () => { webBrowser.EnableHistory(true); });
-            AddTestAction(
-                "EnableHistory=false",
-                () => { webBrowser.EnableHistory(false); });
+                AddTestAction("Google", () =>
+                {
+                    webBrowser.LoadURL("https://www.google.com");
+                });
 
-            if (webBrowser.Backend == WebBrowserBackend.Edge)
-            {
+                AddTestAction("BrowserVersion", () => { ShowBrowserVersion(); });
+                AddTestAction();
+                AddTestAction("Info", () => { LogInfo(); });
+                AddTestAction("Test", () => { Test(); });
                 AddTestAction(
-                    "Test Edge Mapping",
-                    () => { TestMapping(); });
-            }
-
-            if (!rootPanel.IsIEBackend)
-            {
+                    "TestErrorEvent",
+                    () => { webBrowser.LoadURL("memoray:myFolder/indeax.html"); });
+                AddTestAction();
+                AddTestAction("Stop", () => { webBrowser.Stop(); });
+                AddTestAction("ClearHistory", () => { webBrowser.ClearHistory(); });
+                AddTestAction("Reload", () => { webBrowser.Reload(); });
+                AddTestAction("Reload(true)", () => { webBrowser.Reload(true); });
+                AddTestAction("Reload(false)", () => { webBrowser.Reload(false); });
+                AddTestAction("SelectAll", () => { webBrowser.SelectAll(); });
                 AddTestAction(
-                    "Load PDF",
-                    () =>
-                    {
-                        string sPdfPath = CommonUtils.GetAppFolder() +
-                            "Resources/SamplePandaPdf.pdf";
-                        webBrowser.LoadURL(CommonUtils.PrepareFileUrl(sPdfPath));
-                    });
-            }
+                    "DeleteSelection",
+                    () => { webBrowser.DeleteSelection(); });
+                AddTestAction(
+                    "ClearSelection",
+                    () => { webBrowser.ClearSelection(); });
+                AddTestAction("Cut", () => { webBrowser.Cut(); });
+                AddTestAction("Copy", () => { webBrowser.Copy(); });
+                AddTestAction("Paste", () => { webBrowser.Paste(); });
+                AddTestAction("Undo", () => { webBrowser.Undo(); });
+                AddTestAction("Redo", () => { webBrowser.Redo(); });
+                AddTestAction("Print", () => { webBrowser.Print(); });
+                AddTestAction("ZoomFactor+", () => { webBrowser.ZoomFactor += 1; });
+                AddTestAction("ZoomFactor-", () => { webBrowser.ZoomFactor -= 1; });
+                AddTestAction();
+                AddTestAction("HasBorder", () =>
+                {
+                    webBrowser.HasBorder = !webBrowser.HasBorder;
+                });
+                AddTestAction("CanNavigate=false", () => { rootPanel.CanNavigate = false; });
+                AddTestAction("CanNavigate=true", () => { rootPanel.CanNavigate = true; });
+                AddTestAction(
+                    "ContextMenuEnabled=true",
+                    () => { webBrowser.ContextMenuEnabled = true; });
+                AddTestAction(
+                    "ContextMenuEnabled=false",
+                    () => { webBrowser.ContextMenuEnabled = false; });
+                AddTestAction("Editable=true", () => { webBrowser.Editable = true; });
+                AddTestAction(
+                    "Editable=false",
+                    () => { webBrowser.Editable = false; });
+                AddTestAction(
+                    "AccessToDevToolsEnabled=true",
+                    () => { webBrowser.AccessToDevToolsEnabled = true; });
+                AddTestAction(
+                    "AccessToDevToolsEnabled=false",
+                    () => { webBrowser.AccessToDevToolsEnabled = false; });
+                AddTestAction(
+                    "EnableHistory=true",
+                    () => { webBrowser.EnableHistory(true); });
+                AddTestAction(
+                    "EnableHistory=false",
+                    () => { webBrowser.EnableHistory(false); });
 
-            AddTestAction();
+                if (webBrowser.Backend == WebBrowserBackend.Edge)
+                {
+                    AddTestAction(
+                        "Test Edge Mapping",
+                        () => { TestMapping(); });
+                }
 
-            var methods = GetType().GetRuntimeMethods();
-            foreach (var item in methods)
-            {
-                if (!item.Name.StartsWith("DoTest"))
-                    continue;
-                AddTestAction(item.Name.Substring(6), AssemblyUtils.CreateAction(this, item));
+                if (!rootPanel.IsIEBackend)
+                {
+                    AddTestAction(
+                        "Load PDF",
+                        () =>
+                        {
+                            string sPdfPath = CommonUtils.GetAppFolder() +
+                                "Resources/SamplePandaPdf.pdf";
+                            webBrowser.LoadURL(CommonUtils.PrepareFileUrl(sPdfPath));
+                        });
+                }
+
+                AddTestAction();
+
+                var methods = GetType().GetRuntimeMethods();
+                foreach (var item in methods)
+                {
+                    if (!item.Name.StartsWith("DoTest"))
+                        continue;
+                    AddTestAction(item.Name.Substring(6), AssemblyUtils.CreateAction(this, item));
+                }
             }
         }
 
