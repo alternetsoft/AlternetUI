@@ -431,6 +431,12 @@ namespace PropertyGridSample
 
         }
 
+        protected override void OnSystemColorsChanged(EventArgs e)
+        {
+            base.OnSystemColorsChanged(e);
+            UpdatePropertyGrid();
+        }
+
         protected override void DisposeManaged()
         {
             ComponentDesigner.SafeDefault.ObjectPropertyChanged -= Designer_PropertyChanged;
