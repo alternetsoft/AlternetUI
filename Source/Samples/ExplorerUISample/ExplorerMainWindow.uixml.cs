@@ -52,25 +52,26 @@ namespace ExplorerUISample
 
             var folderImage = FileListBox.GetDefaultFolderImage();
 
-            int FolderImageIndex = -1;
+            var imageSize = SvgUtils.GetSvgSize(ScaleFactor);
 
-            ImageList treeImageList = new(HasScaleFactor ? 32 : 16);
-
-            if (folderImage is not null)
+            TreeViewItem CreateFolderItem(string name)
             {
-                FolderImageIndex = 0;
-                treeImageList.AddSvg(folderImage, IsDarkBackground);
-                treeView.ImageList = treeImageList;
+                TreeViewItem result = new(name);
+                result.SvgImage = folderImage;
+                result.SvgImageSize = imageSize;
+                return result;
             }
 
-            var firstItem = new TreeViewItem("MaryM", FolderImageIndex);
-            firstItem.Add(new TreeViewItem("Docs", FolderImageIndex));
-            firstItem.Add(new TreeViewItem("New Reports", FolderImageIndex));
-            firstItem.Add(new TreeViewItem("Misc", FolderImageIndex));
-            var meetings = new TreeViewItem("Meetings", FolderImageIndex);
-            meetings.Add(new TreeViewItem("May", FolderImageIndex));
-            meetings.Add(new TreeViewItem("June", FolderImageIndex));
-            meetings.Add(new TreeViewItem("July", FolderImageIndex));
+            var firstItem = CreateFolderItem("MaryM");
+            firstItem.Add(CreateFolderItem("Docs"));
+            firstItem.Add(CreateFolderItem("New Reports"));
+            firstItem.Add(CreateFolderItem("Misc"));
+
+            var meetings = CreateFolderItem("Meetings");
+            meetings.Add(CreateFolderItem("May"));
+            meetings.Add(CreateFolderItem("June"));
+            meetings.Add(CreateFolderItem("July"));
+
             firstItem.Add(meetings);
             treeView.Add(firstItem);
             treeView.ExpandAll();            
