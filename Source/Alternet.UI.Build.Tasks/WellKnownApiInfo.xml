@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ApiInfo>
-  <Assembly Name="Alternet.UI.Common, Version=0.9.754.0, Culture=neutral, PublicKeyToken=7fb0fe57212b4b74">
+  <Assembly Name="Alternet.UI.Common, Version=0.9.755.0, Culture=neutral, PublicKeyToken=7fb0fe57212b4b74">
     <Type Name="XamlX.Runtime.IXamlParentStackProviderV1" />
     <Type Name="XamlX.Runtime.IXamlXmlNamespaceInfoProviderV1" />
     <Type Name="XamlX.Runtime.XamlXmlNamespaceInfoV1" />
@@ -118,11 +118,13 @@
       <Event Name="PropertyChanged" />
     </Type>
     <Type Name="Alternet.Drawing.Color" />
+    <Type Name="Alternet.Drawing.ColorCache" />
     <Type Name="Alternet.Drawing.ColorTranslator" />
     <Type Name="Alternet.Drawing.ColorUtils" />
     <Type Name="Alternet.Drawing.DefaultColors" />
     <Type Name="Alternet.Drawing.IKnownColorInfo" />
     <Type Name="Alternet.Drawing.ISystemColorStructs" />
+    <Type Name="Alternet.Drawing.KnownColorInfo" />
     <Type Name="Alternet.Drawing.KnownColorNames" />
     <Type Name="Alternet.Drawing.KnownColorTable" />
     <Type Name="Alternet.Drawing.KnownOSColorConsts" />
@@ -139,6 +141,7 @@
     <Type Name="Alternet.Drawing.SystemColorsDarkLinux" />
     <Type Name="Alternet.Drawing.SystemColorsDarkMacOs" />
     <Type Name="Alternet.Drawing.SystemColorsLight" />
+    <Type Name="Alternet.Drawing.SystemDrawingColorCache" />
     <Type Name="Alternet.Drawing.BaseDrawable" />
     <Type Name="Alternet.Drawing.BorderDrawable" />
     <Type Name="Alternet.Drawing.IBaseDrawable" />
@@ -312,6 +315,7 @@
       <Event Name="Disposed" />
       <Event Name="PropertyChanged" />
     </Type>
+    <Type Name="Alternet.Drawing.SkiaSurfaceOnMswDib" />
     <Type Name="Alternet.Drawing.SkiaUtils" />
     <Type Name="Alternet.Drawing.CachedSvgImage`1" />
     <Type Name="Alternet.Drawing.ColorSvgImage" />
@@ -1042,6 +1046,7 @@
     <Type Name="Alternet.UI.EnumArray`2" />
     <Type Name="Alternet.UI.HVAlignment" />
     <Type Name="Alternet.UI.HVDropDownAlignment" />
+    <Type Name="Alternet.UI.InternalMethodReference`1" />
     <Type Name="Alternet.UI.KnownButtonImage" />
     <Type Name="Alternet.UI.LazyStruct`1" />
     <Type Name="Alternet.UI.ObjectUniqueId" />
@@ -16595,6 +16600,7 @@
     <Type Name="Alternet.UI.MathUtils" />
     <Type Name="Alternet.UI.ULongUtils" />
     <Type Name="Alternet.UI.CpuUtils" />
+    <Type Name="Alternet.UI.LibraryLoader" />
     <Type Name="Alternet.UI.LibraryUtils" />
     <Type Name="Alternet.UI.LinuxUtils" />
     <Type Name="Alternet.UI.MacOsUtils" />
@@ -16765,6 +16771,7 @@
       <Event Name="PropertyChanged" />
     </Type>
     <Type Name="Alternet.Drawing.ISkiaSurface+SurfaceKind" />
+    <Type Name="Alternet.Drawing.SkiaUtils+SkCanvasDrawPointsDelegate" />
     <Type Name="Alternet.Drawing.SkiaUtils+BitmapCanvasCached" />
     <Type Name="Alternet.Drawing.TextFormat+Record" />
     <Type Name="Alternet.UI.ItemContainerElement`1+FindItemFlags" />
@@ -17129,6 +17136,7 @@
     <Type Name="Alternet.UI.LogUtils+LogItem" />
     <Type Name="Alternet.UI.MathUtils+DoubleUnion" />
     <Type Name="Alternet.UI.MathUtils+FloatUnion" />
+    <Type Name="Alternet.UI.LinuxUtils+CairoNative" />
     <Type Name="Alternet.UI.LinuxUtils+NativeMethods" />
     <Type Name="Alternet.UI.MacOsUtils+NativeMethods" />
     <Type Name="Alternet.UI.MswPixelFormatDescriptorEnums+Flags" />
@@ -17141,9 +17149,13 @@
     <Type Name="Alternet.UI.SpanUtils+ReadOnlySpanAction`1" />
     <Type Name="Alternet.UI.XmlUtils+XmlStreamConvertParams" />
     <Type Name="Alternet.UI.ScrollBar+AltPositionInfo+Record" />
+    <Type Name="Alternet.UI.StdSlider+SliderThumb+ShapeType" />
     <Type Name="Alternet.UI.MswUtils+NativeMethods+SmallPoint" />
     <Type Name="Alternet.UI.MswUtils+NativeMethods+ConsoleCharUnion" />
     <Type Name="Alternet.UI.MswUtils+NativeMethods+ConsoleCharInfo" />
+    <Type Name="Alternet.UI.MswUtils+NativeMethods+BITMAPINFOHEADER" />
+    <Type Name="Alternet.UI.MswUtils+NativeMethods+RGBQUAD" />
+    <Type Name="Alternet.UI.MswUtils+NativeMethods+BITMAPINFO" />
     <Type Name="Alternet.UI.MswUtils+NativeMethods+DwmWindowAttribute" />
     <Type Name="Alternet.UI.MswUtils+NativeMethods+PIXELFORMATDESCRIPTOR" />
     <Type Name="Alternet.UI.MswUtils+NativeMethods+SmallRect" />

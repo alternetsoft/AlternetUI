@@ -1,3 +1,30 @@
+# 0.9.755 (2025 October 6)
+
+- Improve StdSlider look.
+- Improve system colors change event handling in different controls and classes.
+- Add SvgImage support to SpeedButton and PictureBox controls. Introduced SvgImage, SvgSize, and SvgColor properties.
+- Refactor ToolBar button and picture addition methods to support live SvgImage storage. Previously SvgImage was converted to Image.
+- Refactor PointD and SizeD to use explicit layout and Vector2, SKPoint, SKSize fields and properties.
+- Refactor some of the PointD, SizeD, RectD methods to use Vector2 and Vector4 for improved consistency and performance.
+- Add SkiaSurfaceOnMswDib for SkiaSharp DIB rendering. This is the fastest method to use SkiaSharp on MSW.
+- Expanded the KnownColor check to handle values greater than MenuHighlight when converting from/to System.Drawing.Color.
+- Refactor demo pages to support dynamic system colors.
+- Use selected SVG color override in ListControlItem.
+- Fix selected folder image painting in FileListBox.
+- System colors change event is not processed faster and with less flickering.
+- Splitter: IsBackgroundPainted and IsForegroundPainted properties to control whether the Splitter's background and foreground are painted.
+- Introduces SkiaSharp and Cairo integration to enable direct painting on GTK widgets under Linux.
+- Add Current property to LightDarkColor.
+- AbstractControl: Add the AutoUpdateColors property to control automatic color updates when the system theme changes.
+- Skia: Refactor DrawPolygon and DrawLines to use GraphicsPath. This change improves rendering accuracy and ensures polygons are properly closed.
+- Add color configuration versioning to SystemSettings.
+- Add LibraryLoader, a static class for locating, loading, resolving symbols, and unloading native libraries across Windows, Linux, and macOS.
+- Add caching for Pen instances in the Color class to optimize performance and memory usage, with a configurable maximum cached pen width.
+- Pen: Optimize AsBrush and add new constructor.
+- Replaced redundant ARGB conversion with direct cache access for known colors in Color and System.Drawing.Color conversions.
+- Add ColorCache and SystemDrawingColorCache for cached color retrieval.
+- Add NativeGraphicsContext property to control handlers, providing access to the native graphics context (e.g., CGContextRef on macOS).
+
 # 0.9.754 (2025 September 26)
 
 - Alternet.UI is now compiled with netstandard2.1.

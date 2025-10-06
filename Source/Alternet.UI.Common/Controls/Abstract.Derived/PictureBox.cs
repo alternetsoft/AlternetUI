@@ -557,7 +557,7 @@ namespace Alternet.UI
         /// <summary>
         /// Sets the SVG image, along with optional size and color, for the associated primitive.
         /// </summary>
-        /// <remarks>This method updates the SVG image and its associated properties for the primitive. 
+        /// <remarks>This method updates the SVG image and its associated properties for the primitive.
         /// If the image visibility is enabled, the layout is recalculated
         /// and the display is invalidated.</remarks>
         /// <param name="svg">The <see cref="SvgImage"/> to be applied.
