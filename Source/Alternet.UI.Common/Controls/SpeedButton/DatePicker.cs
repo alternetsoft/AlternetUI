@@ -36,11 +36,23 @@ namespace Alternet.UI
         /// </summary>
         public DatePicker()
         {
-            UseTheme = KnownTheme.StaticBorder;
-            UseControlColors(DefaultUseControlColors);
+            Initialize();
         }
 
         /// <inheritdoc/>
         public override ControlTypeId ControlKind => ControlTypeId.Other;
+
+        /// <inheritdoc/>
+        protected override void OnSystemColorsChanged(EventArgs e)
+        {
+            base.OnSystemColorsChanged(e);
+            Initialize();
+        }
+
+        private void Initialize()
+        {
+            UseTheme = KnownTheme.StaticBorder;
+            UseControlColors(DefaultUseControlColors);
+        }
     }
 }
