@@ -950,7 +950,8 @@ namespace Alternet.UI
             {
                 if (IsDarkBackground)
                 {
-                    HolidayColorFg = Color.Firebrick;
+                    HolidayColorFg = LightDarkColors.Red.Dark;
+                    HolidayColorBg = RealBackgroundColor;
                 }
                 else
                 {
@@ -1077,6 +1078,13 @@ namespace Alternet.UI
         /// the event data.</param>
         protected virtual void OnWeekNumberClick(EventArgs e)
         {
+        }
+
+        /// <inheritdoc/>
+        protected override void OnSystemColorsChanged(EventArgs e)
+        {
+            base.OnSystemColorsChanged(e);
+            UpdateThemeIfRequired();
         }
 
         /// <summary>
