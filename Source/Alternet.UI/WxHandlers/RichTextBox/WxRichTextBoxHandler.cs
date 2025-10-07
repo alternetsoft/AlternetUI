@@ -2086,5 +2086,14 @@ namespace Alternet.UI
         {
             return new Native.RichTextBox();
         }
-   }
+
+        public override void OnSystemColorsChanged()
+        {
+            base.OnSystemColorsChanged();
+
+            if (App.IsWindowsOS)
+            {
+            }
+        }
+    }
 }
