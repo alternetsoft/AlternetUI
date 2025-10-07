@@ -72,7 +72,8 @@ namespace Alternet.UI
             {
                 if (item.Count == 0)
                     continue;
-                logWriter.WriteLine($"{item.Name}: TotalElapsed={item.TotalElapsed} Count={item.Count} AverageElapsed={item.AverageElapsed}");
+                logWriter.WriteLine(
+                    $"{item.Name}: Total={item.TotalElapsed} Count={item.Count} Average={item.AverageElapsed}");
             }
 
             logWriter.Unindent();
