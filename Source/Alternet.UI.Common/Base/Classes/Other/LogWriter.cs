@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.IO;
 using System.Text;
 
 namespace Alternet.UI
@@ -27,23 +28,36 @@ namespace Alternet.UI
         /// actual logging should occur.</remarks>
         public static readonly ILogWriter Null = new NullLogWriter();
 
-        /// <summary>
-        /// Represents the default string used for indentation.
-        /// </summary>
-        /// <remarks>The default value is four spaces. This can be used in scenarios where a consistent
-        /// indentation string is required, such as formatting text or code.</remarks>
-        public static string IndentString = "    ";
-
         private static ILogWriter? current;
         private static ILogWriter debug = new DebugLogWriter();
         private static ILogWriter application = new ApplicationLogWriter();
         private static ILogWriter console = new ConsoleLogWriter();
         private static MultiLogWriter multi = new();
+        private static int indentLength = 4;
 
         static LogWriter()
         {
             multi.Add(() => application);
             current = multi;
+        }
+
+        /// <summary>
+        /// Represents the default number of spaces used for indentation.
+        /// </summary>
+        /// <remarks>This field is commonly used to define the standard indentation length in formatting
+        /// operations.</remarks>
+        public static int IndentLength
+        {
+            get => indentLength;
+
+            set
+            {
+                if (value < 0)
+                    value = 0;
+                if (value == indentLength)
+                    return;
+                indentLength = value;
+            }
         }
 
         /// <summary>
@@ -286,55 +300,164 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Provides a base class for custom log writers that support message formatting with indentation.
+        /// </summary>
+        /// <remarks>This abstract class defines the core functionality for log writers, including
+        /// managing indentation levels and formatting messages. Derived classes must implement the
+        /// <see cref="WriteLine(string)"/> method to define
+        /// how log messages are written to the output.</remarks>
+        public abstract class CustomLogWriter : DisposableObject, ILogWriter
+        {
+            private int indentLevel = 0;
+
+            /// <summary>
+            /// Gets the current indentation level used for formatting output.
+            /// </summary>
+            public int IndentLevel => indentLevel;
+
+            /// <inheritdoc/>
+            public virtual void Indent()
+            {
+                indentLevel++;
+            }
+
+            /// <inheritdoc/>
+            public virtual void Unindent()
+            {
+                if (indentLevel > 0)
+                    indentLevel--;
+                else
+                {
+                    if (DebugUtils.IsDebugDefinedAndAttached)
+                    {
+                        throw new InvalidOperationException("Indent level cannot be less than zero.");
+                    }
+                }
+            }
+
+            /// <summary>
+            /// Formats the specified message by applying the current indentation level.
+            /// </summary>
+            /// <param name="message">The message to format. Cannot be <see langword="null"/>.</param>
+            /// <returns>The formatted message with the appropriate indentation applied.</returns>
+            public virtual string FormatMessage(string message)
+            {
+                if(indentLevel == 0)
+                {
+                    return message;
+                }
+                else
+                {
+                    var indent = new string(' ', indentLevel * IndentLength);
+                    return $"{indent}{message}";
+                }
+            }
+
+            /// <inheritdoc/>
+            public abstract void WriteLine(string message);
+        }
+
+        /// <summary>
+        /// Provides a log writer implementation that writes log messages using a user-defined action.
+        /// </summary>
+        /// <remarks>The <see cref="ActionLogWriter"/> class allows you to define a custom logging
+        /// behavior by specifying an <see cref="Action{T}"/> delegate
+        /// that processes log messages.</remarks>
+        public class ActionLogWriter : CustomLogWriter
+        {
+            private readonly Action<string> logAction;
+
+            /// <summary>
+            /// Initializes a new instance of the <see cref="ActionLogWriter"/>
+            /// class with the specified logging action.
+            /// </summary>
+            /// <param name="logAction">The action to invoke for logging messages.
+            /// This action is called with the log message as its parameter.</param>
+            /// <exception cref="ArgumentNullException">Thrown
+            /// if <paramref name="logAction"/> is <see langword="null"/>.</exception>
+            public ActionLogWriter(Action<string> logAction)
+            {
+                this.logAction = logAction ?? throw new ArgumentNullException(nameof(logAction));
+            }
+
+            /// <inheritdoc/>
+            public override void WriteLine(string message)
+            {
+                logAction(FormatMessage(message));
+            }
+        }
+
+        /// <summary>
         /// Provides functionality for writing application log messages with
         /// optional indentation support.
         /// </summary>
         /// <remarks>This class implements the <see cref="ILogWriter"/> interface
         /// and allows log messages
         /// to be written with a configurable level of indentation.
-        /// Indentation can be increased or decreased using the
-        /// <see cref="Indent"/> and <see cref="Unindent"/> methods, respectively.
         /// The log messages are written using
         /// the application's logging mechanism using <see cref="App.Log"/>.</remarks>
-        public class ApplicationLogWriter : ILogWriter
+        public class ApplicationLogWriter : CustomLogWriter
         {
-            private int indentLevel = 0;
-
             /// <inheritdoc/>
-            public void Indent()
+            public override void WriteLine(string message)
             {
-                indentLevel++;
+                App.Log(FormatMessage(message));
+            }
+        }
+
+        /// <summary>
+        /// Provides a log writer implementation that writes log messages
+        /// to a specified <see cref="TextWriter"/>.
+        /// </summary>
+        /// <remarks>This class allows writing log messages with optional indentation to any
+        /// <see cref="TextWriter"/> instance, such as a <see cref="System.IO.StreamWriter"/>
+        /// or <see cref="System.IO.StringWriter"/>.</remarks>
+        public class TextWriterLogWriter : CustomLogWriter
+        {
+            private readonly TextWriter textWriter;
+
+            /// <summary>
+            /// Initializes a new instance of the <see cref="TextWriterLogWriter"/>
+            /// class using the specified <see cref="TextWriter"/>.
+            /// </summary>
+            /// <param name="textWriter">The <see cref="TextWriter"/> instance
+            /// to which log messages will be written. Cannot be <see langword="null"/>.</param>
+            /// <exception cref="ArgumentNullException">Thrown if
+            /// <paramref name="textWriter"/> is <see langword="null"/>.</exception>
+            public TextWriterLogWriter(TextWriter textWriter)
+            {
+                this.textWriter = textWriter
+                    ?? throw new ArgumentNullException(nameof(textWriter));
             }
 
             /// <inheritdoc/>
-            public void Unindent()
+            public override void WriteLine(string message)
             {
-                if (indentLevel > 0)
-                    indentLevel--;
-            }
-
-            /// <inheritdoc/>
-            public void WriteLine(string message)
-            {
-                var indent = new string(' ', indentLevel * IndentString.Length);
-                App.Log($"{indent}{message}");
+                textWriter.WriteLine(FormatMessage(message));
             }
         }
 
         /// <summary>
         /// Provides a log writer implementation that writes log messages to a specified
-        /// <see cref="StringBuilder"/>
-        /// instance, with support for indentation.
+        /// <see cref="StringBuilder"/> instance, with support for indentation.
         /// </summary>
         /// <remarks>This class is useful for scenarios where log messages need to be
-        /// captured in-memory
-        /// for further processing or inspection. Indentation can be adjusted using
-        /// the <see cref="Indent"/> and <see cref="Unindent"/> methods
-        /// to format log messages hierarchically.</remarks>
-        public class StringBuilderLogWriter : ILogWriter
+        /// captured in-memory for further processing or inspection.</remarks>
+        public class StringBuilderLogWriter : CustomLogWriter
         {
-            private readonly StringBuilder stringBuilder;
-            private int indentLevel = 0;
+            private StringBuilder stringBuilder;
+
+            /// <summary>
+            /// Initializes a new instance of the <see cref="StringBuilderLogWriter"/>
+            /// class using an empty <see cref="StringBuilder"/> instance.
+            /// </summary>
+            /// <remarks>This constructor creates a new <see cref="StringBuilder"/> internally to
+            /// store log messages. Use this constructor when you do not need to provide an existing
+            /// <see cref="StringBuilder"/>.</remarks>
+            public StringBuilderLogWriter()
+            {
+                this.stringBuilder = new ();
+            }
 
             /// <summary>
             /// Initializes a new instance of the <see cref="StringBuilderLogWriter"/>
@@ -346,28 +469,31 @@ namespace Alternet.UI
             /// <paramref name="stringBuilder"/> is <see langword="null"/>.</exception>
             public StringBuilderLogWriter(StringBuilder stringBuilder)
             {
-                this.stringBuilder = stringBuilder
-                    ?? throw new ArgumentNullException(nameof(stringBuilder));
+                this.stringBuilder = stringBuilder ?? new StringBuilder();
+            }
+
+            /// <summary>
+            /// Gets the underlying <see cref="StringBuilder"/> instance used for logging.
+            /// </summary>
+            public StringBuilder StringBuilder
+            {
+                get
+                {
+                    return stringBuilder;
+                }
+
+                set
+                {
+                    if (value == null)
+                        value = new StringBuilder();
+                    stringBuilder = value;
+                }
             }
 
             /// <inheritdoc/>
-            public void Indent()
+            public override void WriteLine(string message)
             {
-                indentLevel++;
-            }
-
-            /// <inheritdoc/>
-            public void Unindent()
-            {
-                if (indentLevel > 0)
-                    indentLevel--;
-            }
-
-            /// <inheritdoc/>
-            public void WriteLine(string message)
-            {
-                var indent = new string(' ', indentLevel * IndentString.Length);
-                stringBuilder.AppendLine($"{indent}{message}");
+                stringBuilder.AppendLine(FormatMessage(message));
             }
         }
 
@@ -375,31 +501,14 @@ namespace Alternet.UI
         /// Provides functionality for writing indented log messages to the console.
         /// </summary>
         /// <remarks>This class implements the <see cref="ILogWriter"/> interface to allow writing log
-        /// messages with adjustable indentation levels. Indentation is managed using
-        /// the <see cref="Indent"/> and <see cref="Unindent"/> methods, and log messages
-        /// are written to the console using the <see cref="WriteLine(string)"/> method.</remarks>
-        public class ConsoleLogWriter : ILogWriter
+        /// messages with adjustable indentation levels. Log messages
+        /// are written to the console using the <see cref="Console.WriteLine(string)"/> method.</remarks>
+        public class ConsoleLogWriter : CustomLogWriter
         {
-            private int indentLevel = 0;
-
             /// <inheritdoc/>
-            public void Indent()
+            public override void WriteLine(string message)
             {
-                indentLevel++;
-            }
-
-            /// <inheritdoc/>
-            public void Unindent()
-            {
-                if (indentLevel > 0)
-                    indentLevel--;
-            }
-
-            /// <inheritdoc/>
-            public void WriteLine(string message)
-            {
-                var indent = new string(' ', indentLevel * IndentString.Length);
-                Console.WriteLine($"{indent}{message}");
+                Console.WriteLine(FormatMessage(message));
             }
         }
     }
