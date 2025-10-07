@@ -509,8 +509,8 @@ namespace Alternet.UI
             {
                 ParentBackColor = false;
                 ParentForeColor = false;
-                BackColor = DefaultColors.ControlBackColor;
-                ForeColor = DefaultColors.ControlForeColor;
+                BackColor = DefaultColors.ControlBackColor.Current;
+                ForeColor = DefaultColors.ControlForeColor.Current;
             }
             else
             {
