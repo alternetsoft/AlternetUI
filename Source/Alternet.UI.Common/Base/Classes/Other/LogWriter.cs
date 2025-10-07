@@ -43,8 +43,6 @@ namespace Alternet.UI
         static LogWriter()
         {
             multi.Add(() => application);
-            if (DebugUtils.IsDebugDefinedAndAttached)
-                multi.Add(() => debug);
             current = multi;
         }
 
