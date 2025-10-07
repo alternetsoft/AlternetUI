@@ -478,6 +478,27 @@ namespace Alternet.UI
                 InsertItemAndChildren(item);
         }
 
+        public override void OnSystemColorsChanged()
+        {
+            base.OnSystemColorsChanged();
+
+            if (Control is null)
+                return;
+
+            if (App.IsWindowsOS)
+            {
+                Control.SuspendEvents();
+                try
+                {
+                    RecreateWindow();
+                }
+                finally
+                {
+                    Control.ResumeEvents();
+                }
+            }
+        }
+
         private void InsertItem(TreeViewItem item)
         {
             if (Control is null || item.Parent is null)
