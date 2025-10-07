@@ -158,44 +158,194 @@ namespace Alternet.UI
             private const string UxTheme = "uxtheme.dll";
             private const string DwmApi = "dwmapi.dll";
 
-            internal enum AppThemeMode
+            /// <summary>
+            /// Specifies the application theme mode, allowing control over light and dark themes.
+            /// </summary>
+            /// <remarks>This enumeration provides options for configuring the application's theme
+            /// behavior, including default system settings, forcing specific themes, or allowing user
+            /// preferences.</remarks>
+            public enum AppThemeMode
             {
+                /// <summary>
+                /// The application will use the system's default theme setting,
+                /// </summary>
                 Default,
+
+                /// <summary>
+                /// The application will follow the system theme setting,
+                /// adapting to light or dark mode as per the user's system preferences.
+                /// </summary>
                 AllowDark,
+
+                /// <summary>
+                /// The application will always use a dark theme, regardless of the system settings.
+                /// </summary>
                 ForceDark,
+
+                /// <summary>
+                /// Forces the light to turn on regardless of other conditions or settings.
+                /// </summary>
+                /// <remarks>This method overrides any automatic or conditional light controls,
+                /// ensuring the light is turned on. Use this method with caution,
+                /// as it may interfere with other light
+                /// management systems.</remarks>
                 ForceLight,
+
+                /// <summary>
+                /// Gets the maximum value.
+                /// </summary>
                 Max,
             }
 
-            internal enum WindowCompositionAttribute : uint
+            /// <summary>
+            /// Represents various window composition attributes that can
+            /// be queried or set for a window.
+            /// These attributes are used with native calls such
+            /// as <c>SetWindowCompositionAttribute</c> to
+            /// control non-client rendering, accent policies, cloaking,
+            /// dark mode colors, and other window
+            /// composition behaviors.
+            /// </summary>
+            public enum WindowCompositionAttribute : uint
             {
+                /// <summary>
+                /// Undefined or unknown attribute. No operation.
+                /// </summary>
                 Undefined = 0,
+
+                /// <summary>
+                /// Enables or disables non-client rendering for the window.
+                /// </summary>
                 NcrenderingEnabled = 1,
+
+                /// <summary>
+                /// Sets the non-client rendering policy for the window.
+                /// </summary>
                 NcrenderingPolicy = 2,
+
+                /// <summary>
+                /// When set, transitions (animations) are forcibly disabled.
+                /// </summary>
                 TransitionsForcedisabled = 3,
+
+                /// <summary>
+                /// Allows the window to receive non-client paint messages.
+                /// </summary>
                 AllowNcpaint = 4,
+
+                /// <summary>
+                /// Retrieves or sets the caption button bounds.
+                /// </summary>
                 CaptionButtonBounds = 5,
+
+                /// <summary>
+                /// Sets non-client right-to-left layout for the window.
+                /// </summary>
                 NonclientRtlLayout = 6,
+
+                /// <summary>
+                /// Forces the window to use an iconic (minimized) representation.
+                /// </summary>
                 ForceIconicRepresentation = 7,
+
+                /// <summary>
+                /// Retrieves the extended frame bounds of the window.
+                /// </summary>
                 ExtendedFrameBounds = 8,
+
+                /// <summary>
+                /// Indicates the window has an iconic bitmap.
+                /// </summary>
                 HasIconicBitmap = 9,
+
+                /// <summary>
+                /// Controls theme-related attributes for non-client areas.
+                /// </summary>
                 ThemeAttributes = 10,
+
+                /// <summary>
+                /// Extended non-client rendering state (exiled state).
+                /// </summary>
                 NcrenderingExiled = 11,
+
+                /// <summary>
+                /// Provides additional non-client adornment information.
+                /// </summary>
                 Ncadornmentinfo = 12,
+
+                /// <summary>
+                /// Excludes the window from live preview (alt-tab or peek).
+                /// </summary>
                 ExcludedFromLivepreview = 13,
+
+                /// <summary>
+                /// Indicates that a video overlay is active for the window.
+                /// </summary>
                 VideoOverlayActive = 14,
+
+                /// <summary>
+                /// Forces the active window appearance when set.
+                /// </summary>
                 ForceActivewindowAppearance = 15,
+
+                /// <summary>
+                /// Disables the Peek feature for the window.
+                /// </summary>
                 DisallowPeek = 16,
+
+                /// <summary>
+                /// Cloaks the window (makes it invisible to the user but still present).
+                /// </summary>
                 Cloak = 17,
+
+                /// <summary>
+                /// Indicates whether the window is currently cloaked.
+                /// </summary>
                 Cloaked = 18,
+
+                /// <summary>
+                /// Controls the accent policy (blur, acrylic, etc.) for the window.
+                /// </summary>
                 AccentPolicy = 19,
+
+                /// <summary>
+                /// Freezes the window representation to prevent updates.
+                /// </summary>
                 FreezeRepresentation = 20,
+
+                /// <summary>
+                /// Indicates the window has been ever uncloaked.
+                /// </summary>
                 EverUncloaked = 21,
+
+                /// <summary>
+                /// Identifies the visual owner for the window.
+                /// </summary>
                 VisualOwner = 22,
+
+                /// <summary>
+                /// Holographic-related composition attribute (platform specific).
+                /// </summary>
                 Holographic = 23,
+
+                /// <summary>
+                /// Excludes the window from DirectDraw acceleration (DDA).
+                /// </summary>
                 ExcludedFromDda = 24,
+
+                /// <summary>
+                /// Enables passive update mode for certain composition operations.
+                /// </summary>
                 Passiveupdatemode = 25,
+
+                /// <summary>
+                /// Indicates that dark mode colors should be used for the window.
+                /// </summary>
                 Usedarkmodecolors = 26,
+
+                /// <summary>
+                /// Last valid attribute index (sentinel value).
+                /// </summary>
                 Last = 27,
             }
 
@@ -523,13 +673,70 @@ namespace Alternet.UI
                 IntPtr template);
 
             /// <summary>
+            /// Sets the visual style of a window by applying a theme from the current theme data.
+            /// </summary>
+            /// <remarks>This method is a wrapper for the native SetWindowTheme function in the
+            /// uxtheme.dll library. It allows you to customize the appearance of a window
+            /// by associating it with a
+            /// specific theme.</remarks>
+            /// <param name="hWnd">A handle to the window whose visual style is to be changed.</param>
+            /// <param name="pszSubAppName">The application name to associate with the window.
+            /// Pass <see langword="null"/> to remove any existing
+            /// association.</param>
+            /// <param name="pszSubIdList">The sub-identifier list to associate with the window.
+            /// Pass <see langword="null"/> to remove any existing
+            /// association.</param>
+            /// <returns>Returns 0 if the operation succeeds; otherwise, returns a nonzero error code.
+            /// For more information about
+            /// error codes, see the Windows API documentation.</returns>
+            [DllImport("uxtheme.dll", SetLastError = true, CharSet = CharSet.Unicode)]
+            public static extern int SetWindowTheme(IntPtr hWnd, string pszSubAppName, string pszSubIdList);
+
+            /// <summary>
+            /// Loads the specified module into the address space of the calling process.
+            /// </summary>
+            /// <remarks>This method is a platform invocation (P/Invoke) wrapper for the Windows API
+            /// function <c>LoadLibrary</c>. The caller is responsible for ensuring
+            /// that the module is unloaded using
+            /// the appropriate method (e.g., <c>FreeLibrary</c>) when it is no longer needed.</remarks>
+            /// <param name="lpFileName">The name of the module to load.
+            /// This can be either a full path or the name of a module in the system's
+            /// search path.</param>
+            /// <returns>A handle to the loaded module if the operation succeeds;
+            /// otherwise, <see cref="IntPtr.Zero"/>.</returns>
+            [DllImport("kernel32.dll", CharSet = CharSet.Unicode, SetLastError = true)]
+            public static extern IntPtr LoadLibrary(string lpFileName);
+
+            /// <summary>
+            /// Retrieves the address of an exported function or variable
+            /// from the specified dynamic-link library (DLL).
+            /// </summary>
+            /// <remarks>This method is used to dynamically retrieve the address
+            /// of a function or
+            /// variable exported by a DLL.  Ensure that the module handle passed
+            /// to <paramref name="hModule"/> is valid
+            /// and that the function or variable name  specified in <paramref name="procName"/>
+            /// exists in the module.
+            /// </remarks>
+            /// <param name="hModule">A handle to the DLL module that contains the function or variable.
+            /// This handle must be obtained by
+            /// calling <see cref="LoadLibrary"/> or a similar method.</param>
+            /// <param name="procName">The name of the function or variable whose address
+            /// is to be retrieved. Alternatively, this can be the
+            /// ordinal value of the function, specified as a string.</param>
+            /// <returns>A pointer to the function or variable if the operation succeeds;
+            /// otherwise, <see cref="IntPtr.Zero"/>.</returns>
+            [DllImport("kernel32.dll", SetLastError = true)]
+            public static extern IntPtr GetProcAddress(IntPtr hModule, string procName);
+
+            /// <summary>
             /// Writes text to console.
             /// </summary>
-            /// <param name="hConsoleOutput"></param>
-            /// <param name="lpBuffer"></param>
-            /// <param name="dwBufferSize"></param>
-            /// <param name="dwBufferCoord"></param>
-            /// <param name="lpWriteRegion"></param>
+            /// <param name="hConsoleOutput">The handle to the console output buffer.</param>
+            /// <param name="lpBuffer">The buffer containing the characters to write to the console.</param>
+            /// <param name="dwBufferSize">The size of the buffer, in characters.</param>
+            /// <param name="dwBufferCoord">The coordinates of the buffer region to write to.</param>
+            /// <param name="lpWriteRegion">The region of the console screen to write to.</param>
             /// <returns></returns>
             [DllImport(
                 "kernel32.dll",
@@ -592,92 +799,236 @@ namespace Alternet.UI
                     IntPtr hToken,
                     out IntPtr ppszPath);
 
+            /// <summary>
+            /// Retrieves information about the specified window.
+            /// </summary>
+            /// <remarks>This method is a wrapper for the native <c>GetWindowInfo</c> function in the
+            /// Windows API. It retrieves information such as the window's dimensions, style, and extended
+            /// style.</remarks>
+            /// <param name="hwnd">A handle to the window whose information is to be retrieved.</param>
+            /// <param name="pwi">A reference to a <see cref="WindowInfo"/> structure that receives
+            /// the window information. The caller
+            /// must initialize the <c>cbSize</c> member of this structure to the size of the
+            /// structure before calling
+            /// this method.</param>
+            /// <returns><see langword="true"/> if the function succeeds; otherwise,
+            /// <see langword="false"/>. Call <see
+            /// cref="Marshal.GetLastWin32Error"/> to retrieve extended error
+            /// information if the function fails.</returns>
             [return: MarshalAs(UnmanagedType.Bool)]
             [DllImport(User32, SetLastError = true)]
-            internal static extern bool GetWindowInfo(IntPtr hwnd, ref WindowInfo pwi);
+            public static extern bool GetWindowInfo(IntPtr hwnd, ref WindowInfo pwi);
 
+            /// <summary>
+            /// Refreshes the immersive color policy state used by the system theme (internal uxtheme call).
+            /// </summary>
+            /// <remarks>Invokes an undocumented entry in uxtheme.dll to refresh theme
+            /// color policy state.</remarks>
             [DllImport(UxTheme, EntryPoint = "#104")]
-            internal static extern void RefreshImmersiveColorPolicyState();
+            public static extern void RefreshImmersiveColorPolicyState();
 
+            /// <summary>
+            /// Enables or disables dark mode for a specific window
+            /// using an undocumented uxtheme entry.
+            /// </summary>
+            /// <param name="window">A handle to the window for which dark mode should
+            /// be allowed or disallowed.</param>
+            /// <param name="isDarkModeAllowed">Pass <see langword="true"/> to allow
+            /// dark mode for the window; otherwise <see langword="false"/>.</param>
+            /// <returns><see langword="true"/> if the operation succeeds; otherwise,
+            /// <see langword="false"/>.</returns>
             [DllImport(UxTheme, EntryPoint = "#133", SetLastError = true)]
-            internal static extern bool AllowDarkModeForWindow(IntPtr window, bool isDarkModeAllowed);
+            public static extern bool AllowDarkModeForWindow(IntPtr window, bool isDarkModeAllowed);
 
-            /// <remarks>Available in Windows 10 build 1903 (May 2019 Update) and later</remarks>
+            /// <summary>
+            /// Sets the preferred application theme mode (internal uxtheme API).
+            /// </summary>
+            /// <param name="preferredAppMode">The preferred theme mode
+            /// to set for the application.</param>
+            /// <returns><see langword="true"/> if the operation succeeds; otherwise,
+            /// <see langword="false"/>.</returns>
+            /// <remarks>Available in Windows 10 build 1903 (May 2019 Update) and later.</remarks>
             [DllImport(UxTheme, EntryPoint = "#135", SetLastError = true)]
-            internal static extern bool SetPreferredAppMode(AppThemeMode preferredAppMode);
+            public static extern bool SetPreferredAppMode(AppThemeMode preferredAppMode);
 
-            /// <remarks>Available only in Windows 10 build 1809 (October 2018 Update)</remarks>
+            /// <summary>
+            /// Allows or disallows dark mode for the entire application (internal uxtheme API).
+            /// </summary>
+            /// <param name="isDarkModeAllowed">Pass <see langword="true"/>
+            /// to allow dark mode for the application; otherwise <see langword="false"/>.</param>
+            /// <returns><see langword="true"/> if the operation succeeds;
+            /// otherwise, <see langword="false"/>.</returns>
+            /// <remarks>Available only in Windows 10 build 1809 (October 2018 Update).</remarks>
             [DllImport(UxTheme, EntryPoint = "#135", SetLastError = true)]
-            internal static extern bool AllowDarkModeForApp(bool isDarkModeAllowed);
+            public static extern bool AllowDarkModeForApp(bool isDarkModeAllowed);
 
+            /// <summary>
+            /// Determines whether dark mode is allowed for a specific window (internal uxtheme API).
+            /// </summary>
+            /// <param name="window">A handle to the window to check.</param>
+            /// <returns><see langword="true"/> if dark mode is allowed for the window;
+            /// otherwise, <see langword="false"/>.</returns>
             [DllImport(UxTheme, EntryPoint = "#137", SetLastError = true)]
             [return: MarshalAs(UnmanagedType.Bool)]
-            internal static extern bool IsDarkModeAllowedForWindow(IntPtr window);
+            public static extern bool IsDarkModeAllowedForWindow(IntPtr window);
 
+            /// <summary>
+            /// Determines whether dark mode is allowed for the current application (internal uxtheme API).
+            /// </summary>
+            /// <returns><see langword="true"/> if dark mode is allowed for the application;
+            /// otherwise, <see langword="false"/>.</returns>
             [DllImport(UxTheme, EntryPoint = "#139", SetLastError = true)]
             [return: MarshalAs(UnmanagedType.Bool)]
-            internal static extern bool IsDarkModeAllowedForApp();
+            public static extern bool IsDarkModeAllowedForApp();
 
+            /// <summary>
+            /// Sets various window composition attributes (such as accent, cloak, etc.).
+            /// </summary>
+            /// <param name="window">A handle to the window whose composition attribute will
+            /// be set.</param>
+            /// <param name="windowCompositionAttribute">A reference to a
+            /// <see cref="WindowCompositionAttributeData"/> structure that specifies the
+            /// attribute and its value.</param>
+            /// <returns><see langword="true"/> if the function succeeds; otherwise,
+            /// <see langword="false"/>.</returns>
             [DllImport(User32, SetLastError = true)]
-            internal static extern bool SetWindowCompositionAttribute(
+            public static extern bool SetWindowCompositionAttribute(
                 IntPtr window,
                 ref WindowCompositionAttributeData windowCompositionAttribute);
 
+            /// <summary>
+            /// Associates a string property with the specified window handle.
+            /// </summary>
+            /// <param name="window">A handle to the window.</param>
+            /// <param name="propertyName">The name of the property to set.</param>
+            /// <param name="propertyValue">A pointer-sized value to associate with
+            /// the property name.</param>
+            /// <returns><see langword="true"/> if the property is set successfully;
+            /// otherwise, <see langword="false"/>.</returns>
             [DllImport(User32, SetLastError = true, CharSet = CharSet.Auto)]
-            internal static extern bool SetProp(
+            public static extern bool SetProp(
                 IntPtr window,
                 string propertyName,
                 IntPtr propertyValue);
 
+            /// <summary>
+            /// Sets a Desktop Window Manager (DWM) window attribute by pointer.
+            /// </summary>
+            /// <param name="window">A handle to the window for which to set the attribute.</param>
+            /// <param name="attribute">The DWM attribute to set.</param>
+            /// <param name="valuePointer">A pointer to the value for the attribute.</param>
+            /// <param name="valuePointerSize">The size, in bytes, of the value pointed to by
+            /// <paramref name="valuePointer"/>.</param>
+            /// <returns>An HRESULT-like integer result. Zero (S_OK) typically indicates success.</returns>
             [DllImport(DwmApi, SetLastError = false)]
-            internal static extern int DwmSetWindowAttribute(
+            public static extern int DwmSetWindowAttribute(
                 IntPtr window,
                 DwmWindowAttribute attribute,
                 IntPtr valuePointer,
                 int valuePointerSize);
 
+            /// <summary>
+            /// Retrieves or sets various system-wide parameters.
+            /// </summary>
+            /// <param name="uiAction">The system-wide parameter to be retrieved or set.</param>
+            /// <param name="uiParam">A parameter whose usage depends on the action specified
+            /// by <paramref name="uiAction"/>.</param>
+            /// <param name="callback">A reference to a <see cref="HighContrastData"/> structure
+            /// or other data, depending on the action.</param>
+            /// <param name="fwinini">Flags indicating whether to update user profile or broadcast setting changes.</param>
+            /// <returns><see langword="true"/> if the call succeeds; otherwise, <see langword="false"/>.</returns>
             [DllImport(User32, CharSet = CharSet.Unicode, SetLastError = true)]
-            internal static extern bool SystemParametersInfo(
+            public static extern bool SystemParametersInfo(
                 uint uiAction,
                 uint uiParam,
                 ref HighContrastData callback,
                 uint fwinini);
 
+            /// <summary>
+            /// Sends the specified message to a window or windows.
+            /// </summary>
+            /// <param name="hWnd">A handle to the window whose window procedure will
+            /// receive the message. If this parameter is <see cref="IntPtr.Zero"/>, the message
+            /// is sent to all top-level windows in the system.</param>
+            /// <param name="message">The message to be sent.</param>
+            /// <param name="wParam">Additional message-specific information.</param>
+            /// <param name="lParam">Additional message-specific information.</param>
+            /// <returns>The result of the message processing; value depends on the message sent.</returns>
             [DllImport(User32, SetLastError = true)]
-            internal static extern uint SendMessage(
+            public static extern uint SendMessage(
                 IntPtr hWnd,
                 uint message,
                 IntPtr wParam,
                 IntPtr lParam);
 
+            /// <summary>
+            /// Flushes menu themes, forcing theme changes to menus to be applied immediately.
+            /// </summary>
             [DllImport(UxTheme, EntryPoint = "#136")]
-            internal static extern void FlushMenuThemes();
+            public static extern void FlushMenuThemes();
 
+            /// <summary>
+            /// Retrieves a handle to the foreground window (the window with which the user is
+            /// currently working).
+            /// </summary>
+            /// <returns>A handle to the foreground window. If no foreground window exists,
+            /// the return value is <see cref="IntPtr.Zero"/>.</returns>
             [DllImport(User32)]
-            internal static extern IntPtr GetForegroundWindow();
+            public static extern IntPtr GetForegroundWindow();
 
-            [DllImport(UxTheme, CharSet = CharSet.Unicode, SetLastError = true)]
-            internal static extern int SetWindowTheme(
-                IntPtr window,
-                string? substituteAppName,
-                string? substituteIdList);
-
+            /// <summary>
+            /// Enumerates the modules (loaded DLLs) for the specified process.
+            /// </summary>
+            /// <param name="hProcess">A handle to the process whose modules are to be enumerated.</param>
+            /// <param name="lphModule">An array that receives the module handles.</param>
+            /// <param name="cb">The size, in bytes, of the array pointed to by
+            /// <paramref name="lphModule"/>.</param>
+            /// <param name="lpcbNeeded">Receives the number of bytes required
+            /// to store all module handles or the number actually written.</param>
+            /// <returns><see langword="true"/> if the function succeeds;
+            /// otherwise, <see langword="false"/>.</returns>
             [DllImport("psapi.dll")]
-            internal static extern bool EnumProcessModules(
+            public static extern bool EnumProcessModules(
                 IntPtr hProcess,
                 IntPtr[] lphModule,
                 int cb,
                 out int lpcbNeeded);
 
+            /// <summary>
+            /// Retrieves the fully qualified path for the file containing the specified module.
+            /// </summary>
+            /// <param name="hProcess">A handle to the process that contains the module.</param>
+            /// <param name="hModule">A handle to the module. If this parameter
+            /// is <see cref="IntPtr.Zero"/>, the function returns the path of the executable
+            /// file for the process
+            /// specified in <paramref name="hProcess"/>.</param>
+            /// <param name="lpFilename">A <see cref="StringBuilder"/> that receives
+            /// the module path.</param>
+            /// <param name="nSize">The size of the <paramref name="lpFilename"/> buffer,
+            /// in characters.</param>
+            /// <returns>The length, in characters, of the string copied to the buffer,
+            /// or zero on failure.</returns>
             [DllImport("psapi.dll")]
-            internal static extern uint GetModuleFileNameEx(
+            public static extern uint GetModuleFileNameEx(
                 IntPtr hProcess,
                 IntPtr hModule,
                 StringBuilder lpFilename,
                 uint nSize);
 
+            /// <summary>
+            /// Opens an existing process object and returns a handle that
+            /// can be used to access the process.
+            /// </summary>
+            /// <param name="dwDesiredAccess">The access level requested for the process handle.</param>
+            /// <param name="bInheritHandle">If <see langword="true"/>, processes created
+            /// by this process will inherit the handle.</param>
+            /// <param name="dwProcessId">The identifier of the local process to be opened.</param>
+            /// <returns>A handle to the specified process, or <see cref="IntPtr.Zero"/> on failure.</returns>
             [DllImport("kernel32.dll")]
-            internal static extern IntPtr OpenProcess(uint dwDesiredAccess, bool bInheritHandle, uint dwProcessId);
+            public static extern IntPtr OpenProcess(
+                uint dwDesiredAccess,
+                bool bInheritHandle,
+                uint dwProcessId);
 
             /// <summary>
             /// Represents X and Y coordinates.
@@ -870,13 +1221,43 @@ namespace Alternet.UI
                 public short Bottom;
             }
 
+            /// <summary>
+            /// Contains data used by <see cref="NativeMethods.SystemParametersInfo"/>
+            /// for high contrast settings.
+            /// </summary>
+            /// <remarks>
+            /// This structure maps to the native HIGHCONTRAST structure. The <see cref="size"/>
+            /// field must be
+            /// initialized to the size of this structure (in bytes) before calling native APIs.
+            /// </remarks>
             [StructLayout(LayoutKind.Sequential)]
-            internal readonly struct HighContrastData
+            public readonly struct HighContrastData
             {
-                internal readonly uint size;
-                internal readonly uint flags;
-                internal readonly IntPtr schemeNamePointer;
+                /// <summary>
+                /// Size of this structure, in bytes. This is initialized in the constructor
+                /// to <see cref="Marshal.SizeOf(Type)"/>.
+                /// </summary>
+                public readonly uint size;
 
+                /// <summary>
+                /// Flags that specify the high-contrast options. The meaning of the bits
+                /// corresponds to the native HIGHCONTRAST flags.
+                /// </summary>
+                public readonly uint flags;
+
+                /// <summary>
+                /// Pointer to a null-terminated string that contains the name of the
+                /// high-contrast color scheme.
+                /// This is typically <see cref="IntPtr.Zero"/> when not used.
+                /// </summary>
+                public readonly IntPtr schemeNamePointer;
+
+                /// <summary>
+                /// Initializes a new instance of the <see cref="HighContrastData"/>
+                /// structure with default values.
+                /// </summary>
+                /// <param name="_">Optional parameter to disambiguate constructor;
+                /// ignored. Exists to keep structure readonly semantics simple.</param>
                 public HighContrastData(object? _ = null)
                 {
                     size = (uint)Marshal.SizeOf(typeof(HighContrastData));
@@ -885,13 +1266,43 @@ namespace Alternet.UI
                 }
             }
 
+            /// <summary>
+            /// Represents data used with <see cref="NativeMethods.SetWindowCompositionAttribute"/>
+            /// to set a specific window composition attribute.
+            /// </summary>
+            /// <remarks>
+            /// The <see cref="attribute"/> field specifies which composition attribute is being set.
+            /// The <see cref="data"/> field is a pointer to the attribute value, and <see cref="size"/>
+            /// is the size, in bytes, of that value.
+            /// This structure should be marshaled exactly as defined when passed to native APIs.
+            /// </remarks>
             [StructLayout(LayoutKind.Sequential)]
-            internal readonly struct WindowCompositionAttributeData
+            public readonly struct WindowCompositionAttributeData
             {
-                internal readonly WindowCompositionAttribute attribute;
-                internal readonly IntPtr data;
-                internal readonly int size;
+                /// <summary>
+                /// The composition attribute to get or set.
+                /// </summary>
+                public readonly WindowCompositionAttribute attribute;
 
+                /// <summary>
+                /// Pointer to the data for the attribute. The interpretation depends
+                /// on <see cref="attribute"/>.
+                /// </summary>
+                public readonly IntPtr data;
+
+                /// <summary>
+                /// Size, in bytes, of the data pointed to by <see cref="data"/>.
+                /// </summary>
+                public readonly int size;
+
+                /// <summary>
+                /// Initializes a new instance of the
+                /// <see cref="WindowCompositionAttributeData"/> structure.
+                /// </summary>
+                /// <param name="attribute">The window composition attribute to set.</param>
+                /// <param name="data">A pointer to the attribute-specific data.</param>
+                /// <param name="size">The size, in bytes, of the attribute data referenced
+                /// by <paramref name="data"/>.</param>
                 public WindowCompositionAttributeData(
                     WindowCompositionAttribute attribute,
                     IntPtr data,
