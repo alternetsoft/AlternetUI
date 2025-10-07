@@ -1,9 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Runtime.InteropServices;
 using System.Text;
 
 namespace Alternet.UI
 {
+    /// <summary>
+    /// Represents a delegate for an unmanaged function with the C calling convention.
+    /// </summary>
+    /// <remarks>This delegate is used to define a method signature for unmanaged
+    /// functions that follow the C calling convention. It is typically used
+    /// in scenarios involving interop with native code.</remarks>
+    [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+    public delegate void CDeclarationActionDelegate();
+
     /// <summary>
     /// Represents a custom native handle wrapper for platform-specific objects.
     /// </summary>
