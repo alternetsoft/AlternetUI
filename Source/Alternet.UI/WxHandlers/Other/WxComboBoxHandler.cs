@@ -131,6 +131,25 @@ namespace Alternet.UI
             return new Native.ComboBox();
         }
 
+        public override void OnSystemColorsChanged()
+        {
+            base.OnSystemColorsChanged();
+
+            if (Control is null)
+                return;
+
+            if (App.IsWindowsOS)
+            {
+                try
+                {
+                    RecreateWindow();
+                }
+                finally
+                {
+                }
+            }
+        }
+
         protected override void OnAttach()
         {
             base.OnAttach();
