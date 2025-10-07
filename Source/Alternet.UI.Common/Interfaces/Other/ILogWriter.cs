@@ -7,7 +7,7 @@ namespace Alternet.UI
     /// <summary>
     /// Defines methods for logging with indentation and other features.
     /// </summary>
-    public interface ILogWriter
+    public interface ILogWriter : IDisposableObject
     {
         /// <summary>
         /// Increases the indentation level for subsequent log messages.

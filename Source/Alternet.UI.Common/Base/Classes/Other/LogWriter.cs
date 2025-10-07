@@ -137,13 +137,66 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Creates an instance of an <see cref="ILogWriter"/> that writes
+        /// log messages using the specified action.
+        /// </summary>
+        /// <param name="logAction">The action to invoke for each log message.
+        /// Cannot be <see langword="null"/>.</param>
+        /// <returns>An <see cref="ILogWriter"/> that uses the provided action
+        /// to handle log messages.</returns>
+        public static ILogWriter Create(Action<string> logAction)
+        {
+            return new ActionLogWriter(logAction);
+        }
+
+        /// <summary>
+        /// Creates a new instance of an <see cref="ILogWriter"/> that writes
+        /// log messages to the specified <see cref="TextWriter"/>.
+        /// </summary>
+        /// <param name="textWriter">The <see cref="TextWriter"/> to which
+        /// log messages will be written. Cannot be <see langword="null"/>.</param>
+        /// <returns>An <see cref="ILogWriter"/> instance
+        /// configured to write log messages to the specified <see cref="TextWriter"/>.</returns>
+        public static ILogWriter Create(TextWriter textWriter)
+        {
+            return new TextWriterLogWriter(textWriter);
+        }
+
+        /// <summary>
+        /// Creates a new instance of an <see cref="ILogWriter"/> that writes
+        /// log messages to the specified <see cref="StringBuilder"/>.
+        /// </summary>
+        /// <param name="stringBuilder">The <see cref="StringBuilder"/>
+        /// to which log messages will be written. Cannot be <see langword="null"/>.</param>
+        /// <returns>An <see cref="ILogWriter"/> instance configured to write to
+        /// the specified <see cref="StringBuilder"/>.</returns>
+        public static ILogWriter Create(StringBuilder stringBuilder)
+        {
+            return new StringBuilderLogWriter(stringBuilder);
+        }
+
+        /// <summary>
+        /// Creates a new instance of a log writer that writes log messages to multiple loggers.
+        /// </summary>
+        /// <remarks>The returned log writer forwards each log message to all provided
+        /// loggers in the order they are specified.</remarks>
+        /// <param name="loggers">An array of log writers to which log messages
+        /// will be forwarded. Cannot be null.</param>
+        /// <returns>An <see cref="ILogWriter"/> instance that writes
+        /// log messages to all specified loggers.</returns>
+        public static ILogWriter Create(params ILogWriter[] loggers)
+        {
+            return new MultiLogWriter(loggers);
+        }
+
+        /// <summary>
         /// Provides a mechanism to write log messages to multiple <see cref="ILogWriter"/> instances.
         /// </summary>
         /// <remarks>The <see cref="MultiLogWriter"/> class allows you to aggregate multiple log writers
         /// and forward log messages to all of them. This is useful when you
         /// need to log messages to multiple destinations simultaneously,
         /// such as a file, console, or remote logging service.</remarks>
-        public class MultiLogWriter : ILogWriter
+        public class MultiLogWriter : DisposableObject, ILogWriter
         {
             private readonly List<Func<ILogWriter>> writers = new();
 
@@ -253,7 +306,7 @@ namespace Alternet.UI
         /// operations. It can be used in scenarios where logging is optional or needs
         /// to be disabled without modifying
         /// the code that depends on an <see cref="ILogWriter"/> instance.</remarks>
-        public class NullLogWriter : ILogWriter
+        public class NullLogWriter : DisposableObject, ILogWriter
         {
             /// <inheritdoc/>
             public void Indent()
@@ -278,7 +331,7 @@ namespace Alternet.UI
         /// <remarks>This class uses the <see cref="System.Diagnostics.Debug"/> class to write messages,
         /// making it suitable for debugging scenarios. Messages are written to the debug
         /// listeners configured for the application.</remarks>
-        public class DebugLogWriter : ILogWriter
+        public class DebugLogWriter : DisposableObject, ILogWriter
         {
             /// <inheritdoc/>
             public void Indent()
