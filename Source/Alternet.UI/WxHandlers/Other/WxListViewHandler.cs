@@ -181,9 +181,20 @@ namespace Alternet.UI
         {
             base.OnSystemColorsChanged();
 
+            if (Control is null)
+                return;
+
             if (App.IsWindowsOS)
             {
-                RecreateWindow();
+                Control.SuspendEvents();
+                try
+                {
+                    RecreateWindow();
+                }
+                finally
+                {
+                    Control.ResumeEvents();
+                }
                 ApplyColumnWidth();
             }
         }
