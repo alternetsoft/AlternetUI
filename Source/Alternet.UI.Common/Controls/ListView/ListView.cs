@@ -32,6 +32,7 @@ namespace Alternet.UI
         private ImageList? smallImageList = null;
         private ImageList? largeImageList = null;
         private ListViewSelectionMode selectionMode = ListViewSelectionMode.Single;
+        private int suspendEventsCounter;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ListView"/> class.
@@ -133,6 +134,15 @@ namespace Alternet.UI
                     return;
                 Handler.ColumnHeaderVisible = value;
             }
+        }
+
+        /// <summary>
+        /// Gets a value indicating whether events are currently suspended.
+        /// </summary>
+        [Browsable(false)]
+        public virtual bool EventsSuspended
+        {
+            get => suspendEventsCounter > 0;
         }
 
         /// <inheritdoc/>
@@ -428,7 +438,8 @@ namespace Alternet.UI
 
                 selectionMode = value;
 
-                SelectionModeChanged?.Invoke(this, EventArgs.Empty);
+                if(!EventsSuspended)
+                    SelectionModeChanged?.Invoke(this, EventArgs.Empty);
             }
         }
 
@@ -472,7 +483,8 @@ namespace Alternet.UI
 
                 view = value;
 
-                ViewChanged?.Invoke(this, EventArgs.Empty);
+                if (!EventsSuspended)
+                    ViewChanged?.Invoke(this, EventArgs.Empty);
             }
         }
 
@@ -534,7 +546,8 @@ namespace Alternet.UI
 
                 smallImageList = value;
 
-                SmallImageListChanged?.Invoke(this, EventArgs.Empty);
+                if (!EventsSuspended)
+                    SmallImageListChanged?.Invoke(this, EventArgs.Empty);
             }
         }
 
@@ -598,7 +611,8 @@ namespace Alternet.UI
 
                 largeImageList = value;
 
-                LargeImageListChanged?.Invoke(this, EventArgs.Empty);
+                if (!EventsSuspended)
+                    LargeImageListChanged?.Invoke(this, EventArgs.Empty);
             }
         }
 
@@ -767,6 +781,33 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Temporarily suspends the raising of events.
+        /// </summary>
+        /// <remarks>This method increments an internal counter to track the suspension state.
+        /// Events will remain suspended until the counter is decremented to zero by a corresponding
+        /// call to <see cref="ResumeEvents" />. Ensure that each
+        /// call to <see cref="SuspendEvents" /> is paired with a call to
+        /// <see cref="ResumeEvents" /> to avoid unintended behavior.</remarks>
+        public virtual void SuspendEvents()
+        {
+            suspendEventsCounter++;
+        }
+
+        /// <summary>
+        /// Resumes the processing of events by decrementing the suspension counter.
+        /// </summary>
+        /// <remarks>This method decreases the internal suspension counter, allowing events to be
+        /// processed if the counter reaches zero. Ensure that each call to
+        /// <see cref="ResumeEvents"/> corresponds to a
+        /// prior call to a method that increments the suspension counter,
+        /// such as a suspend method.</remarks>
+        public virtual void ResumeEvents()
+        {
+            if (suspendEventsCounter > 0)
+                suspendEventsCounter--;
+        }
+
+        /// <summary>
         /// Gets whether there are columns with the specified width mode.
         /// </summary>
         public virtual bool HasSuchColumns(ListViewColumnWidthMode mode)
@@ -798,7 +839,8 @@ namespace Alternet.UI
         public void RaiseColumnClick(ListViewColumnEventArgs e)
         {
             OnColumnClick(e);
-            ColumnClick?.Invoke(this, e);
+            if (!EventsSuspended)
+                ColumnClick?.Invoke(this, e);
         }
 
         /// <summary>
@@ -809,7 +851,8 @@ namespace Alternet.UI
         public void RaiseBeforeLabelEdit(ListViewItemLabelEditEventArgs e)
         {
             OnBeforeLabelEdit(e);
-            BeforeLabelEdit?.Invoke(this, e);
+            if (!EventsSuspended)
+                BeforeLabelEdit?.Invoke(this, e);
         }
 
         /// <summary>
@@ -847,7 +890,8 @@ namespace Alternet.UI
         public void RaiseSelectionChanged(EventArgs e)
         {
             OnSelectionChanged(e);
-            SelectionChanged?.Invoke(this, e);
+            if (!EventsSuspended)
+                SelectionChanged?.Invoke(this, e);
         }
 
         /// <summary>
@@ -858,7 +902,8 @@ namespace Alternet.UI
         public void RaiseAfterLabelEdit(ListViewItemLabelEditEventArgs e)
         {
             OnAfterLabelEdit(e);
-            AfterLabelEdit?.Invoke(this, e);
+            if (!EventsSuspended)
+                AfterLabelEdit?.Invoke(this, e);
         }
 
         /// <summary>
