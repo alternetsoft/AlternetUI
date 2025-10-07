@@ -90,6 +90,14 @@ namespace Alternet.UI
                 refresh);
         }
 
+        public override void OnSystemColorsChanged()
+        {
+            base.OnSystemColorsChanged();
+
+            if (App.IsWindowsOS)
+                RecreateWindow();
+        }
+
         protected override void OnAttach()
         {
             base.OnAttach();
