@@ -9,11 +9,11 @@ using Alternet.UI.Localization;
 
 namespace Alternet.UI
 {
-    internal class PropertyGridHandler : WxControlHandler<PropertyGrid>, IPropertyGridHandler
+    internal class WxPropertyGridHandler : WxControlHandler<PropertyGrid>, IPropertyGridHandler
     {
-        private readonly PropertyGridVariant variant = new();
+        private readonly WxPropertyGridVariant variant = new();
 
-        static PropertyGridHandler()
+        static WxPropertyGridHandler()
         {
             PropertyGrid.EditWithListEdit += DialogFactory.EditWithListEdit;
 
@@ -23,7 +23,7 @@ namespace Alternet.UI
             };
         }
 
-        public PropertyGridHandler()
+        public WxPropertyGridHandler()
         {
         }
 
@@ -48,7 +48,7 @@ namespace Alternet.UI
             get
             {
                 IntPtr handle = NativeControl.EventPropValue;
-                PropertyGridVariant propValue = new(handle);
+                WxPropertyGridVariant propValue = new(handle);
                 return propValue;
             }
         }
@@ -106,7 +106,7 @@ namespace Alternet.UI
         /// </summary>
         public IPropertyGridVariant CreateVariant()
         {
-            return new PropertyGridVariant();
+            return new WxPropertyGridVariant();
         }
 
         public PropertyGridItemHandle CreateColorProperty(string label, string name, Color value)
@@ -324,7 +324,7 @@ namespace Alternet.UI
             if (ptr is null)
                 return CreateVariant();
             var handle = NativeControl.GetPropertyValueAsVariant(ptr.Value);
-            PropertyGridVariant propValue = new(handle);
+            WxPropertyGridVariant propValue = new(handle);
             return propValue;
         }
 
@@ -804,7 +804,7 @@ namespace Alternet.UI
 
         public nint VariantToHandle(IPropertyGridVariant variant)
         {
-            return ((PropertyGridVariant)variant).Handle;
+            return ((WxPropertyGridVariant)variant).Handle;
         }
 
         void IPropertyGridHandler.SetPropertyValueAsDateTime(IPropertyGridItem id, DateTime value)
@@ -1181,7 +1181,7 @@ namespace Alternet.UI
 
         public nint ChoicesToPtr(IPropertyGridChoices choices)
         {
-            return ((PropertyGridChoices)choices).Handle;
+            return ((WxPropertyGridChoices)choices).Handle;
         }
 
         PropertyGridItemHandle IPropertyGridHandler.CreatePropCategory(string label, string name)

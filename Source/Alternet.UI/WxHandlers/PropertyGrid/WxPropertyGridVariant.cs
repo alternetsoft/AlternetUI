@@ -8,7 +8,7 @@ using Alternet.Drawing;
 
 namespace Alternet.UI
 {
-    internal class PropertyGridVariant : IDisposable, IPropertyGridVariant
+    internal class WxPropertyGridVariant : IDisposable, IPropertyGridVariant
     {
         private const string TypeNameNull = "null";
         private const string TypeNameBool = "bool";
@@ -25,22 +25,22 @@ namespace Alternet.UI
         private readonly bool ownHandle;
         private IntPtr handle;
 
-        public PropertyGridVariant()
+        public WxPropertyGridVariant()
         {
             handle = Native.PropertyGridVariant.CreateVariant();
             ownHandle = true;
         }
 
-        public PropertyGridVariant(IntPtr handle)
+        public WxPropertyGridVariant(IntPtr handle)
         {
             this.handle = handle;
             ownHandle = false;
         }
 
         /// <summary>
-        /// Called when <see cref="PropertyGridVariant"/> instance is destroyed.
+        /// Called when <see cref="WxPropertyGridVariant"/> instance is destroyed.
         /// </summary>
-        ~PropertyGridVariant()
+        ~WxPropertyGridVariant()
         {
             Dispose();
         }
@@ -206,13 +206,13 @@ namespace Alternet.UI
             {
                 var color = Native.PropertyGridVariant.GetColor(handle);
                 var kind = Native.PropertyGridVariant.GetLastColorKind();
-                var result = PropertyGridHandler.SetColorKind(color, kind);
+                var result = WxPropertyGridHandler.SetColorKind(color, kind);
                 return result;
             }
 
             set
             {
-                uint kind = PropertyGridHandler.GetColorKind(value);
+                uint kind = WxPropertyGridHandler.GetColorKind(value);
                 Native.PropertyGridVariant.SetColor(handle, value, kind);
             }
         }

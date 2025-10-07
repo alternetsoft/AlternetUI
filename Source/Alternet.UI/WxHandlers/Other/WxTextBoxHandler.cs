@@ -6,7 +6,7 @@ using Alternet.UI.Extensions;
 
 namespace Alternet.UI
 {
-    internal class TextBoxHandler
+    internal class WxTextBoxHandler
         : WxControlHandler<TextBox, Native.TextBox>, ITextBoxHandler, IWxTextBoxHandler
     {
         public bool ReadOnly
@@ -367,31 +367,31 @@ namespace Alternet.UI
 
         public ITextBoxTextAttr CreateTextAttr()
         {
-            return new TextBoxTextAttr();
+            return new WxTextBoxTextAttr();
         }
 
         ITextBoxTextAttr IWxTextBoxHandler.GetDefaultStyle()
         {
-            return new TextBoxTextAttr(NativeControl.GetDefaultStyle());
+            return new WxTextBoxTextAttr(NativeControl.GetDefaultStyle());
         }
 
         bool IWxTextBoxHandler.SetStyle(long start, long end, ITextBoxTextAttr style)
         {
-            if (style is not TextBoxTextAttr s)
+            if (style is not WxTextBoxTextAttr s)
                 return false;
             return SetStyle(start, end, s.Handle);
         }
 
         bool IWxTextBoxHandler.SetDefaultStyle(ITextBoxTextAttr style)
         {
-            if (style is not TextBoxTextAttr s)
+            if (style is not WxTextBoxTextAttr s)
                 return false;
             return SetDefaultStyle(s.Handle);
         }
 
         ITextBoxTextAttr IWxTextBoxHandler.GetStyle(long pos)
         {
-            return new TextBoxTextAttr(NativeControl.GetStyle(pos));
+            return new WxTextBoxTextAttr(NativeControl.GetStyle(pos));
         }
 
         public void SetMaxLength(ulong len)

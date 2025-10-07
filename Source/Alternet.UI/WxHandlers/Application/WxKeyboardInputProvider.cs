@@ -3,14 +3,11 @@ using System.Runtime.InteropServices;
 
 namespace Alternet.UI
 {
-    [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-    internal delegate void CdeclActionDelegate();
-
-    internal class KeyboardInputProvider : DisposableObject
+    internal class WxKeyboardInputProvider : DisposableObject
     {
         private readonly Native.Keyboard nativeKeyboard;
 
-        public KeyboardInputProvider(Native.Keyboard nativeKeyboard)
+        public WxKeyboardInputProvider(Native.Keyboard nativeKeyboard)
         {
             this.nativeKeyboard = nativeKeyboard;
             Native.Keyboard.GlobalObject = nativeKeyboard;

@@ -2,9 +2,9 @@ using System;
 
 namespace Alternet.UI
 {
-    internal class SliderHandler : WxControlHandler<Slider>, ISliderHandler
+    internal class WxSliderHandler : WxControlHandler<Slider>, ISliderHandler
     {
-        public SliderHandler()
+        public WxSliderHandler()
         {
         }
 

@@ -5,7 +5,7 @@ using Alternet.Drawing;
 
 namespace Alternet.UI
 {
-    internal class ComboBoxHandler : WxControlHandler, IComboBoxHandler
+    internal class WxComboBoxHandler : WxControlHandler, IComboBoxHandler
     {
         /// <summary>
         /// Returns <see cref="ComboBox"/> instance with which this handler

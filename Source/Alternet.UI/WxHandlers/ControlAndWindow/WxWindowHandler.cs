@@ -5,7 +5,7 @@ using Alternet.Drawing;
 
 namespace Alternet.UI
 {
-    internal class WindowHandler : WxControlHandler, IWindowHandler
+    internal class WxWindowHandler : WxControlHandler, IWindowHandler
     {
         private DisposableObject? statusBar;
         private WeakReferenceValue<DisposableObject> savedMenuRef = new();
@@ -251,7 +251,7 @@ namespace Alternet.UI
 
             void SetWindow(StatusBar sb, Window? window)
             {
-                if (sb.Handler is StatusBarHandler handler)
+                if (sb.Handler is WxStatusBarHandler handler)
                     handler.AttachedTo = window;
             }
         }

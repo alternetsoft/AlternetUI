@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Alternet.UI
 {
-    internal class WebBrowserFactoryHandler : DisposableObject, IWebBrowserFactoryHandler
+    internal class WxWebBrowserFactoryHandler : DisposableObject, IWebBrowserFactoryHandler
     {
         public bool IsEdgeBackendEnabled
         {
@@ -47,22 +47,22 @@ namespace Alternet.UI
         }
 
         public bool IsBackendIEAvailable()
-            => WebBrowserHandler.IsBackendIEAvailable();
+            => WxWebBrowserHandler.IsBackendIEAvailable();
 
         public bool IsBackendEdgeAvailable()
-            => WebBrowserHandler.IsBackendEdgeAvailable();
+            => WxWebBrowserHandler.IsBackendEdgeAvailable();
 
         public bool IsBackendWebKitAvailable()
-            => WebBrowserHandler.IsBackendWebKitAvailable();
+            => WxWebBrowserHandler.IsBackendWebKitAvailable();
 
         public string? DoCommand(string cmdName, params object?[] args)
         {
-            return WebBrowserHandler.DoCommandGlobal(cmdName, args);
+            return WxWebBrowserHandler.DoCommandGlobal(cmdName, args);
         }
 
         public IWebBrowserMemoryFS CreateMemoryFileSystem(WebBrowser browser)
         {
-            return new WebBrowserMemoryFS(browser);
+            return new WxWebBrowserMemoryFS(browser);
         }
 
         public void SetEdgePath(string path)
@@ -72,7 +72,7 @@ namespace Alternet.UI
 
         public string GetBackendVersionString(WebBrowserBackend value)
         {
-            return WebBrowserHandlerApi.WebBrowser_GetBackendVersionString_((int)value);
+            return WxWebBrowserHandlerApi.WebBrowser_GetBackendVersionString_((int)value);
         }
 
         public void ThrowError(int errorId)
@@ -82,7 +82,7 @@ namespace Alternet.UI
 
         public string GetLibraryVersionString()
         {
-            return WebBrowserHandlerApi.WebBrowser_GetLibraryVersionString_();
+            return WxWebBrowserHandlerApi.WebBrowser_GetLibraryVersionString_();
         }
 
         public bool IsBackendAvailable(WebBrowserBackend value)
@@ -102,17 +102,17 @@ namespace Alternet.UI
 
         public void SetBackend(WebBrowserBackend value)
         {
-            WebBrowserHandlerApi.WebBrowser_SetBackend_((int)value);
+            WxWebBrowserHandlerApi.WebBrowser_SetBackend_((int)value);
         }
 
         public void SetDefaultPage(string url)
         {
-            WebBrowserHandlerApi.WebBrowser_SetDefaultPage_(url);
+            WxWebBrowserHandlerApi.WebBrowser_SetDefaultPage_(url);
         }
 
         public IControlHandler CreateWebBrowserHandler(WebBrowser control)
         {
-            return new WebBrowserHandler();
+            return new WxWebBrowserHandler();
         }
     }
 }

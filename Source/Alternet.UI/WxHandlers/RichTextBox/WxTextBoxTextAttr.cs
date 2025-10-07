@@ -7,14 +7,14 @@ using Alternet.Drawing;
 
 namespace Alternet.UI
 {
-    internal class TextBoxTextAttr : DisposableObject<IntPtr>, ITextBoxTextAttr
+    internal class WxTextBoxTextAttr : DisposableObject<IntPtr>, ITextBoxTextAttr
     {
-        public TextBoxTextAttr()
+        public WxTextBoxTextAttr()
             : base(Native.TextBoxTextAttr.CreateTextAttr(), true)
         {
         }
 
-        public TextBoxTextAttr(IntPtr handle)
+        public WxTextBoxTextAttr(IntPtr handle)
             : base(handle, true)
         {
         }
@@ -81,7 +81,7 @@ namespace Alternet.UI
 
         public void Copy(ITextBoxTextAttr fromAttr)
         {
-            if (fromAttr is not TextBoxTextAttr s)
+            if (fromAttr is not WxTextBoxTextAttr s)
                 return;
 
             Native.TextBoxTextAttr.Copy(Handle, s.Handle);

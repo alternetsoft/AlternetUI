@@ -8,14 +8,14 @@ using Alternet.Drawing;
 
 namespace Alternet.UI
 {
-    internal class StatusBarHandler : DisposableObject, IStatusBarHandler
+    internal class WxStatusBarHandler : DisposableObject, IStatusBarHandler
     {
         private readonly StatusBar control;
         private bool sizingGripVisible = true;
         private TextEllipsisType textEllipse = TextEllipsisType.End;
         private WeakReferenceValue<AbstractControl> attachedToRef = new ();
 
-        public StatusBarHandler(StatusBar control)
+        public WxStatusBarHandler(StatusBar control)
         {
             this.control = control;
         }

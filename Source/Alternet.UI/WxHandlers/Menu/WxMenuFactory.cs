@@ -326,7 +326,7 @@ namespace Alternet.UI
         {
             if (window is null)
                 return null;
-            var handler = window.Handler as WindowHandler;
+            var handler = window.Handler as WxWindowHandler;
             if (handler?.NativeControl is not UI.Native.Window nativeWindow)
                 return null;
             var itemPtr = Native.Menu.FindMenuItem(nativeWindow, id);
@@ -337,7 +337,7 @@ namespace Alternet.UI
 
         public static WxMenuItem? FindMenuItem(Window window, string id)
         {
-            var handler = window.Handler as WindowHandler;
+            var handler = window.Handler as WxWindowHandler;
             if (handler?.NativeControl is not UI.Native.Window nativeWindow)
                 return null;
             var itemPtr = Native.Menu.FindMenuItem(nativeWindow, id);
@@ -459,7 +459,7 @@ namespace Alternet.UI
 
         public WxMainMenu? GetMainMenu(Window window)
         {
-            var handler = window.Handler as WindowHandler;
+            var handler = window.Handler as WxWindowHandler;
             if (handler?.NativeControl is not UI.Native.Window nativeWindow)
                 return null;
             var menuPtr = Native.Menu.GetMainMenu(nativeWindow);
@@ -470,7 +470,7 @@ namespace Alternet.UI
 
         public override void SetMainMenu(Window window, MainMenu? menu)
         {
-            var handler = window.Handler as WindowHandler;
+            var handler = window.Handler as WxWindowHandler;
             if (handler?.NativeControl is not UI.Native.Window nativeWindow)
                 return;
 

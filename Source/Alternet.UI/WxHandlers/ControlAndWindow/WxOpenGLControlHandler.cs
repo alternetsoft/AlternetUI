@@ -8,7 +8,7 @@ using Alternet.Drawing;
 
 namespace Alternet.UI
 {
-    internal class OpenGLControlHandler : WxControlHandler
+    internal class WxOpenGLControlHandler : WxControlHandler
     {
         public override bool Visible
         {

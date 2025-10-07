@@ -10,11 +10,11 @@ using Alternet.UI.Native;
 
 namespace Alternet.UI
 {
-    internal class WebBrowserMemoryFS : IWebBrowserMemoryFS
+    internal class WxWebBrowserMemoryFS : IWebBrowserMemoryFS
     {
         private readonly WebBrowser browser;
 
-        public WebBrowserMemoryFS(WebBrowser browser)
+        public WxWebBrowserMemoryFS(WebBrowser browser)
         {
             this.browser = browser;
         }

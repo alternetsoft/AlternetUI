@@ -8,11 +8,11 @@ using Alternet.Drawing;
 
 namespace Alternet.UI
 {
-    internal class CalendarDateAttr : DisposableObject<IntPtr>, ICalendarDateAttr
+    internal class WxCalendarDateAttr : DisposableObject<IntPtr>, ICalendarDateAttr
     {
         private bool immutable;
 
-        public CalendarDateAttr(IntPtr handle, bool disposeHandle)
+        public WxCalendarDateAttr(IntPtr handle, bool disposeHandle)
             : base(handle, disposeHandle)
         {
         }

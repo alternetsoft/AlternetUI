@@ -6,11 +6,11 @@ using Alternet.Drawing;
 
 namespace Alternet.UI
 {
-    internal class AnimationPlayerHandler : WxControlHandler, IAnimationPlayerHandler
+    internal class WxAnimationPlayerHandler : WxControlHandler, IAnimationPlayerHandler
     {
         private readonly bool useGeneric;
 
-        public AnimationPlayerHandler(bool useGeneric)
+        public WxAnimationPlayerHandler(bool useGeneric)
         {
             this.useGeneric = useGeneric;
         }

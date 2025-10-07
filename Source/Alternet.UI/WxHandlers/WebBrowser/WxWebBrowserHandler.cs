@@ -2,7 +2,7 @@ using System;
 
 namespace Alternet.UI
 {
-    internal partial class WebBrowserHandler :
+    internal partial class WxWebBrowserHandler :
         WxControlHandler<WebBrowser, Native.WebBrowser>, IWebBrowserLite
     {
         public bool IsEdgeBackend
@@ -46,7 +46,7 @@ namespace Alternet.UI
         {
             get
             {
-                int v = WebBrowserHandlerApi.WebBrowser_GetBackend_(NativePointer);
+                int v = WxWebBrowserHandlerApi.WebBrowser_GetBackend_(NativePointer);
                 return (WebBrowserBackend)Enum.ToObject(typeof(WebBrowserBackend), v);
             }
         }
@@ -106,7 +106,7 @@ namespace Alternet.UI
         {
             get
             {
-                var zoomType = WebBrowserHandlerApi.WebBrowser_GetZoomType_(NativeControl.NativePointer);
+                var zoomType = WxWebBrowserHandlerApi.WebBrowser_GetZoomType_(NativeControl.NativePointer);
                 WebBrowserZoomType result =
                     (WebBrowserZoomType)Enum.ToObject(typeof(WebBrowserZoomType), zoomType);
                 return result;
@@ -114,8 +114,8 @@ namespace Alternet.UI
 
             set
             {
-                if (WebBrowserHandlerApi.WebBrowser_CanSetZoomType_(NativeControl.NativePointer, (int)value))
-                    WebBrowserHandlerApi.WebBrowser_SetZoomType_(NativeControl.NativePointer, (int)value);
+                if (WxWebBrowserHandlerApi.WebBrowser_CanSetZoomType_(NativeControl.NativePointer, (int)value))
+                    WxWebBrowserHandlerApi.WebBrowser_SetZoomType_(NativeControl.NativePointer, (int)value);
             }
         }
 
@@ -231,7 +231,7 @@ namespace Alternet.UI
 
         public bool CanSetZoomType(WebBrowserZoomType value)
         {
-            return WebBrowserHandlerApi.WebBrowser_CanSetZoomType_(NativeControl.NativePointer, (int)value);
+            return WxWebBrowserHandlerApi.WebBrowser_CanSetZoomType_(NativeControl.NativePointer, (int)value);
         }
 
         public void Undo() => NativeControl.Undo();
@@ -258,7 +258,7 @@ namespace Alternet.UI
             prm ??= new ();
 
             var flags = (WebBrowserSearchFlags)prm;
-            int result = WebBrowserHandlerApi.WebBrowser_Find_(NativePointer, text, (int)flags);
+            int result = WxWebBrowserHandlerApi.WebBrowser_Find_(NativePointer, text, (int)flags);
             return result;
         }
 
@@ -293,13 +293,13 @@ namespace Alternet.UI
         }
 
         internal static bool IsBackendIEAvailable()
-            => WebBrowserHandlerApi.WebBrowser_IsBackendIEAvailable_();
+            => WxWebBrowserHandlerApi.WebBrowser_IsBackendIEAvailable_();
 
         internal static bool IsBackendEdgeAvailable()
-            => WebBrowserHandlerApi.WebBrowser_IsBackendEdgeAvailable_();
+            => WxWebBrowserHandlerApi.WebBrowser_IsBackendEdgeAvailable_();
 
         internal static bool IsBackendWebKitAvailable()
-            => WebBrowserHandlerApi.WebBrowser_IsBackendWebKitAvailable_();
+            => WxWebBrowserHandlerApi.WebBrowser_IsBackendWebKitAvailable_();
 
         internal override Native.Control CreateNativeControl()
         {

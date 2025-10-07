@@ -35,8 +35,8 @@ namespace Alternet.UI
         private static readonly int minEventIdentifier;
         private static readonly WxEventIdentifiers[] eventIdentifierToEnum;
         private static Native.Application nativeApplication;
-        private static readonly KeyboardInputProvider keyboardInputProvider;
-        private static readonly MouseInputProvider mouseInputProvider;
+        private static readonly WxKeyboardInputProvider keyboardInputProvider;
+        private static readonly WxMouseInputProvider mouseInputProvider;
 
         private static bool assertedWxWidgetsVersion;
 
@@ -76,9 +76,9 @@ namespace Alternet.UI
             nativeApplication.Name = Path.GetFileNameWithoutExtension(
                 Process.GetCurrentProcess()?.MainModule?.FileName!);
 
-            keyboardInputProvider = new KeyboardInputProvider(
+            keyboardInputProvider = new WxKeyboardInputProvider(
                 nativeApplication.Keyboard);
-            mouseInputProvider = new MouseInputProvider(nativeApplication.Mouse);
+            mouseInputProvider = new WxMouseInputProvider(nativeApplication.Mouse);
         }
 
         /// <summary>
@@ -125,7 +125,7 @@ namespace Alternet.UI
         /// <returns>A string representing the version of the WxWidgets library.</returns>
         public static string GetWxWidgetsVersion()
         {
-            var wxWidgets = WebBrowserHandlerApi.WebBrowser_GetLibraryVersionString_();
+            var wxWidgets = WxWebBrowserHandlerApi.WebBrowser_GetLibraryVersionString_();
             var s = wxWidgets.ToLower().Replace("wxwidgets ", string.Empty);
             return s;
         }
@@ -516,7 +516,7 @@ namespace Alternet.UI
         /// <inheritdoc/>
         public virtual void CrtSetDbgFlag(int value)
         {
-            WebBrowserHandlerApi.WebBrowser_CrtSetDbgFlag_(value);
+            WxWebBrowserHandlerApi.WebBrowser_CrtSetDbgFlag_(value);
         }
 
         /// <inheritdoc/>

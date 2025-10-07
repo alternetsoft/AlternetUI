@@ -5,14 +5,14 @@ using Alternet.Drawing;
 
 namespace Alternet.UI
 {
-    internal class RichTextBoxHandler : WxControlHandler, ISimpleRichTextBox, IRichTextBox
+    internal class WxRichTextBoxHandler : WxControlHandler, ISimpleRichTextBox, IRichTextBox
     {
-        static RichTextBoxHandler()
+        static WxRichTextBoxHandler()
         {
             Native.RichTextBox.InitFileHandlers();
         }
 
-        public RichTextBoxHandler()
+        public WxRichTextBoxHandler()
         {
         }
 
@@ -851,7 +851,7 @@ namespace Alternet.UI
         /// <returns></returns>
         public ITextBoxTextAttr CreateTextAttr()
         {
-            return new TextBoxTextAttr();
+            return new WxTextBoxTextAttr();
         }
 
         /// <summary>
@@ -859,7 +859,7 @@ namespace Alternet.UI
         /// </summary>
         public bool BeginStyle(ITextBoxRichAttr style)
         {
-            if (style is not TextBoxRichAttr s)
+            if (style is not WxTextBoxRichAttr s)
                 return false;
             return NativeControl.BeginStyle(s.Handle);
         }
@@ -874,7 +874,7 @@ namespace Alternet.UI
         /// </remarks>
         public bool SetStyle(long start, long end, ITextBoxTextAttr style)
         {
-            if (style is not TextBoxTextAttr s)
+            if (style is not WxTextBoxTextAttr s)
                 return false;
             return NativeControl.SetStyle(start, end, s.Handle);
         }
@@ -891,7 +891,7 @@ namespace Alternet.UI
         public ITextBoxRichAttr GetBasicStyle()
         {
             var result = NativeControl.GetBasicStyle();
-            return new TextBoxRichAttr(result);
+            return new WxTextBoxRichAttr(result);
         }
 
         /// <summary>
@@ -905,7 +905,7 @@ namespace Alternet.UI
         /// </remarks>
         public void SetBasicStyle(ITextBoxRichAttr style)
         {
-            if (style is TextBoxRichAttr s)
+            if (style is WxTextBoxRichAttr s)
                 NativeControl.SetBasicStyle(s.Handle);
         }
 
@@ -957,7 +957,7 @@ namespace Alternet.UI
             ITextBoxRichAttr style,
             RichTextSetStyleFlags flags = RichTextSetStyleFlags.WithUndo)
         {
-            if (style is not TextBoxRichAttr s)
+            if (style is not WxTextBoxRichAttr s)
                 return false;
             return NativeControl.SetStyleEx(startRange, endRange, s.Handle, (int)flags);
         }
@@ -974,7 +974,7 @@ namespace Alternet.UI
         public ITextBoxTextAttr GetStyle(long position)
         {
             var result = NativeControl.GetStyle(position);
-            return new TextBoxTextAttr(result);
+            return new WxTextBoxTextAttr(result);
         }
 
         /// <summary>
@@ -1063,7 +1063,7 @@ namespace Alternet.UI
         /// </returns>
         public virtual bool SetDefaultStyle(ITextBoxTextAttr style)
         {
-            if (style is not TextBoxTextAttr s)
+            if (style is not WxTextBoxTextAttr s)
                 return false;
             return NativeControl.SetDefaultStyle(s.Handle);
         }
@@ -1071,7 +1071,7 @@ namespace Alternet.UI
         /// <inheritdoc cref="SetDefaultStyle(ITextBoxTextAttr)"/>
         public bool SetDefaultRichStyle(ITextBoxRichAttr style)
         {
-            if (style is not TextBoxRichAttr s)
+            if (style is not WxTextBoxRichAttr s)
                 return false;
             return NativeControl.SetDefaultRichStyle(s.Handle);
         }
@@ -1226,7 +1226,7 @@ namespace Alternet.UI
         public ITextBoxRichAttr GetRichStyle(long position)
         {
             var result = NativeControl.GetRichStyle(position);
-            return new TextBoxRichAttr(result);
+            return new WxTextBoxRichAttr(result);
         }
 
         /// <summary>
@@ -1241,10 +1241,10 @@ namespace Alternet.UI
             IntPtr tableAttrPtr = default;
             IntPtr cellAttrPtr = default;
 
-            if (tableAttr is TextBoxRichAttr ta)
+            if (tableAttr is WxTextBoxRichAttr ta)
                 tableAttrPtr = ta.Handle;
 
-            if (cellAttr is TextBoxRichAttr ca)
+            if (cellAttr is WxTextBoxRichAttr ca)
                 cellAttrPtr = ca.Handle;
 
             return NativeControl.WriteTable(
@@ -1322,7 +1322,7 @@ namespace Alternet.UI
         public ITextBoxRichAttr GetDefaultStyleEx()
         {
             var result = NativeControl.GetDefaultStyleEx();
-            return new TextBoxRichAttr(result);
+            return new WxTextBoxRichAttr(result);
         }
 
         /// <summary>
@@ -1402,7 +1402,7 @@ namespace Alternet.UI
         /// </summary>
         public void SetAndShowDefaultStyle(ITextBoxRichAttr attr)
         {
-            if (attr is TextBoxRichAttr s)
+            if (attr is WxTextBoxRichAttr s)
                 NativeControl.SetAndShowDefaultStyle(s.Handle);
         }
 
@@ -1419,7 +1419,7 @@ namespace Alternet.UI
             long endRange,
             ITextBoxRichAttr style)
         {
-            if (style is TextBoxRichAttr s)
+            if (style is WxTextBoxRichAttr s)
             {
                 return NativeControl.HasParagraphAttributes(
                     startRange,
@@ -1440,7 +1440,7 @@ namespace Alternet.UI
         /// </remarks>
         public bool SetRichStyle(long start, long end, ITextBoxRichAttr style)
         {
-            if (style is not TextBoxRichAttr s)
+            if (style is not WxTextBoxRichAttr s)
                 return false;
             return NativeControl.SetRichStyle(start, end, s.Handle);
         }
@@ -1467,7 +1467,7 @@ namespace Alternet.UI
 
         public bool ApplyStyleToSelection(ITextBoxRichAttr style, RichTextSetStyleFlags flags)
         {
-            if (style is not TextBoxRichAttr s)
+            if (style is not WxTextBoxRichAttr s)
                 return false;
             return NativeControl.ApplyStyleToSelection(s.Handle, (int)flags);
         }
@@ -1934,7 +1934,7 @@ namespace Alternet.UI
         /// </remarks>
         public bool HasCharacterAttributes(long startRange, long endRange, ITextBoxRichAttr style)
         {
-            if (style is TextBoxRichAttr s)
+            if (style is WxTextBoxRichAttr s)
                 return NativeControl.HasCharacterAttributes(startRange, endRange, s.Handle);
             else
                 return false;
@@ -2033,7 +2033,7 @@ namespace Alternet.UI
         {
             if (bitmap is null)
                 return false;
-            if (textAttr is TextBoxRichAttr s)
+            if (textAttr is WxTextBoxRichAttr s)
                 return NativeControl.WriteImage((UI.Native.Image)bitmap.Handler, (int)bitmapType, s.Handle);
             return NativeControl.WriteImage((UI.Native.Image)bitmap.Handler, (int)bitmapType, default);
         }
@@ -2046,7 +2046,7 @@ namespace Alternet.UI
         public ITextBoxTextAttr GetStyleForRange(long startRange, long endRange)
         {
             var result = NativeControl.GetStyleForRange(startRange, endRange);
-            return new TextBoxTextAttr(result);
+            return new WxTextBoxTextAttr(result);
         }
 
         /// <summary>
@@ -2057,7 +2057,7 @@ namespace Alternet.UI
         public ITextBoxRichAttr GetRichStyleForRange(long startRange, long endRange)
         {
             var result = NativeControl.GetStyleForRange2(startRange, endRange);
-            return new TextBoxRichAttr(result);
+            return new WxTextBoxRichAttr(result);
         }
 
         /// <summary>
@@ -2068,7 +2068,7 @@ namespace Alternet.UI
             BitmapType bitmapType = BitmapType.Png,
             ITextBoxRichAttr? textAttr = null)
         {
-            if (textAttr is TextBoxRichAttr s)
+            if (textAttr is WxTextBoxRichAttr s)
                 return NativeControl.WriteImage2(filename, (int)bitmapType, s.Handle);
             return NativeControl.WriteImage2(filename, (int)bitmapType, default);
         }
@@ -2079,7 +2079,7 @@ namespace Alternet.UI
         /// <returns></returns>
         public ITextBoxRichAttr CreateRichAttr()
         {
-            return new TextBoxRichAttr();
+            return new WxTextBoxRichAttr();
         }
 
         internal override Native.Control CreateNativeControl()

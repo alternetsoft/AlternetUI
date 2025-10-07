@@ -16,40 +16,40 @@ namespace Alternet.UI
 
         public IControlHandler CreateRichTextBoxHandler(RichTextBox editor)
         {
-            return new RichTextBoxHandler();
+            return new WxRichTextBoxHandler();
         }
 
         public IPropertyGridChoices CreateChoices()
         {
-            return new PropertyGridChoices();
+            return new WxPropertyGridChoices();
         }
 
         /// <inheritdoc/>
         public IControlHandler CreatePropertyGridHandler(PropertyGrid control)
         {
-            return new PropertyGridHandler();
+            return new WxPropertyGridHandler();
         }
 
         public IPropertyGridVariant CreateVariant()
         {
-            return new PropertyGridVariant();
+            return new WxPropertyGridVariant();
         }
 
         public IWebBrowserFactoryHandler CreateWebBrowserFactoryHandler()
         {
-            return new WebBrowserFactoryHandler();
+            return new WxWebBrowserFactoryHandler();
         }
 
         /// <inheritdoc/>
         public IControlHandler CreateCalendarHandler(Calendar control)
         {
-            return new CalendarHandler();
+            return new WxCalendarHandler();
         }
 
         /// <inheritdoc/>
         public IControlHandler CreateProgressBarHandler(ProgressBar control)
         {
-            return new ProgressBarHandler();
+            return new WxProgressBarHandler();
         }
 
         /// <inheritdoc/>
@@ -62,20 +62,20 @@ namespace Alternet.UI
         public IControlHandler CreateWindowHandler(Window window)
         {
             if (window.GetWindowKind() == WindowKind.Control)
-                return new WindowAsControlHandler();
-            return new WindowHandler();
+                return new WxWindowAsControlHandler();
+            return new WxWindowHandler();
         }
 
         /// <inheritdoc/>
         public IControlHandler CreateListViewHandler(ListView control)
         {
-            return new ListViewHandler();
+            return new WxListViewHandler();
         }
 
         /// <inheritdoc/>
         public IControlHandler CreateCheckBoxHandler(CheckBox control)
         {
-            return new CheckBoxHandler();
+            return new WxCheckBoxHandler();
         }
 
         /// <inheritdoc/>
@@ -90,10 +90,10 @@ namespace Alternet.UI
             switch (AnimationPlayer.DefaultHandlerKind)
             {
                 case AnimationPlayer.KnownHandler.Native:
-                    return new AnimationPlayerHandler(false);
+                    return new WxAnimationPlayerHandler(false);
                 case AnimationPlayer.KnownHandler.Generic:
                 default:
-                    return new AnimationPlayerHandler(true);
+                    return new WxAnimationPlayerHandler(true);
                 case AnimationPlayer.KnownHandler.WebBrowser:
                     throw new NotImplementedException(
                         "KnownDriver.WebBrowser is not currently supported.");
@@ -109,13 +109,13 @@ namespace Alternet.UI
         /// <inheritdoc/>
         public IControlHandler CreateTextBoxHandler(TextBox control)
         {
-            return new TextBoxHandler();
+            return new WxTextBoxHandler();
         }
 
         /// <inheritdoc/>
         public IControlHandler CreateComboBoxHandler(ComboBox control)
         {
-            return new ComboBoxHandler();
+            return new WxComboBoxHandler();
         }
 
         /// <inheritdoc/>
@@ -127,7 +127,7 @@ namespace Alternet.UI
         /// <inheritdoc/>
         public IStatusBarHandler CreateStatusBarHandler(StatusBar control)
         {
-            return new StatusBarHandler(control);
+            return new WxStatusBarHandler(control);
         }
 
         /// <inheritdoc/>
@@ -138,17 +138,17 @@ namespace Alternet.UI
 
         public IControlHandler CreateTreeViewHandler(Control control)
         {
-            return new TreeViewHandler();
+            return new WxTreeViewHandler();
         }
 
         public IControlHandler CreateSliderHandler(Slider control)
         {
-            return new SliderHandler();
+            return new WxSliderHandler();
         }
 
         public IControlHandler CreateOpenGLControlHandler(AbstractControl control)
         {
-            return new OpenGLControlHandler();
+            return new WxOpenGLControlHandler();
         }
     }
 }

@@ -6,14 +6,14 @@ using System.Threading.Tasks;
 
 namespace Alternet.UI
 {
-    internal class TextBoxRichAttr : TextBoxTextAttr, ITextBoxRichAttr
+    internal class WxTextBoxRichAttr : WxTextBoxTextAttr, ITextBoxRichAttr
     {
-        public TextBoxRichAttr()
+        public WxTextBoxRichAttr()
             : base(Native.TextBoxTextAttr.CreateRichTextAttr())
         {
         }
 
-        public TextBoxRichAttr(IntPtr handle)
+        public WxTextBoxRichAttr(IntPtr handle)
             : base(handle)
         {
         }

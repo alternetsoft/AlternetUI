@@ -15,7 +15,7 @@ namespace Alternet.UI.Native
 
         public void OnPlatformEventSelectionChanged()
         {
-            if (Handler is not TreeViewHandler handler)
+            if (Handler is not WxTreeViewHandler handler)
                 return;
             if (applyingSelection)
                 return;
@@ -25,7 +25,7 @@ namespace Alternet.UI.Native
 
         public void OnPlatformEventControlRecreated()
         {
-            if (Handler is not TreeViewHandler handler)
+            if (Handler is not WxTreeViewHandler handler)
                 return;
             itemsByHandles.Clear();
             handler.ApplyItems();

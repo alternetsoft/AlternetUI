@@ -9,7 +9,7 @@ using Alternet.Drawing;
 
 namespace Alternet.UI
 {
-    internal class WindowAsControlHandler : WxControlHandler, IWindowHandler
+    internal class WxWindowAsControlHandler : WxControlHandler, IWindowHandler
     {
         public Action? StateChanged { get; set; }
         

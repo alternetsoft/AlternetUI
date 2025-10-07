@@ -10,7 +10,7 @@ namespace Alternet.UI
 {
 #pragma warning disable
     [SuppressUnmanagedCodeSecurity]
-    internal class WebBrowserHandlerApi
+    internal class WxWebBrowserHandlerApi
     {
         private const string ModuleName = Native.NativeApiProvider.NativeModuleName;
 

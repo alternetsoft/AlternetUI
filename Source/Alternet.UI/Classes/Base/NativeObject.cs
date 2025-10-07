@@ -37,7 +37,7 @@ namespace Alternet.UI.Native
 
         public static Window? GetNativeWindow(Alternet.UI.Window? window)
         {
-            if (window?.Handler is not WindowHandler handler)
+            if (window?.Handler is not WxWindowHandler handler)
                 return null;
             var result = handler.NativeControl;
             return result;

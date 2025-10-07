@@ -7,7 +7,7 @@ using Alternet.Drawing;
 
 namespace Alternet.UI
 {
-    internal class PropertyGridChoices : IPropertyGridChoices
+    internal class WxPropertyGridChoices : IPropertyGridChoices
     {
         public const int DefaultNullableValue = int.MaxValue - 1;
         private readonly IntPtr handle;
@@ -20,12 +20,12 @@ namespace Alternet.UI
         private bool hasCustomFgColors = false;
         private bool hasCustomBgColors = false;
 
-        public PropertyGridChoices(IntPtr handle)
+        public WxPropertyGridChoices(IntPtr handle)
         {
             this.handle = handle;
         }
 
-        public PropertyGridChoices()
+        public WxPropertyGridChoices()
         {
             handle = Native.PropertyGridChoices.CreatePropertyGridChoices();
         }
@@ -62,7 +62,7 @@ namespace Alternet.UI
                     return this;
                 if(nullableChoices == null)
                 {
-                    var nullable = new PropertyGridChoices
+                    var nullable = new WxPropertyGridChoices
                     {
                         isNullable = true,
                     };
@@ -292,7 +292,7 @@ namespace Alternet.UI
                     Native.PropertyGridChoices.SetBitmapFromItem(
                         Handle,
                         (uint)index,
-                        ((PropertyGridChoices)choices).Handle,
+                        ((WxPropertyGridChoices)choices).Handle,
                         (uint)i);
                 }
 

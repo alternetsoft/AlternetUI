@@ -2,7 +2,7 @@ using System;
 
 namespace Alternet.UI
 {
-    internal class CheckBoxHandler : WxControlHandler<CheckBox, Native.CheckBox>, ICheckBoxHandler
+    internal class WxCheckBoxHandler : WxControlHandler<CheckBox, Native.CheckBox>, ICheckBoxHandler
     {
         public CheckState CheckState
         {

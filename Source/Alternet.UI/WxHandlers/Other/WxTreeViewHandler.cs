@@ -5,7 +5,7 @@ using Alternet.Drawing;
 
 namespace Alternet.UI
 {
-    internal class TreeViewHandler : WxControlHandler, ITreeViewHandler
+    internal class WxTreeViewHandler : WxControlHandler, ITreeViewHandler
     {
         /// <summary>
         /// Gets a <see cref="TreeView"/> this handler provides the implementation for.

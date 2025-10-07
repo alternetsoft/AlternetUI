@@ -4,7 +4,7 @@ using Alternet.UI.Native;
 
 namespace Alternet.UI
 {
-    internal class MouseInputProvider : DisposableObject
+    internal class WxMouseInputProvider : DisposableObject
     {
         private readonly Action?[] events = new Action?[(int)WxEventIdentifiers.Max + 1];
         private readonly Native.Mouse nativeMouse;
@@ -13,7 +13,7 @@ namespace Alternet.UI
         private long timestamp;
         private int delta;
 
-        public MouseInputProvider(Native.Mouse nativeMouse)
+        public WxMouseInputProvider(Native.Mouse nativeMouse)
         {
             this.nativeMouse = nativeMouse;
             Native.Mouse.GlobalObject = nativeMouse;

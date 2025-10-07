@@ -4,9 +4,9 @@ using Alternet.Drawing;
 
 namespace Alternet.UI
 {
-    internal class CalendarHandler : WxControlHandler, ICalendarHandler
+    internal class WxCalendarHandler : WxControlHandler, ICalendarHandler
     {
-        static CalendarHandler()
+        static WxCalendarHandler()
         {
             Application.BeforeNativeLogMessage += Application_BeforeNativeLogMessage;
 
@@ -19,7 +19,7 @@ namespace Alternet.UI
             }
         }
 
-        public CalendarHandler()
+        public WxCalendarHandler()
         {
         }
 
@@ -30,7 +30,7 @@ namespace Alternet.UI
                 var result = Native.Calendar.GetMarkDateAttr();
                 if (result == default)
                     return null;
-                var resultManaged = new CalendarDateAttr(result, true);
+                var resultManaged = new WxCalendarDateAttr(result, true);
                 resultManaged.SetImmutable(true);
                 return resultManaged;
             }
@@ -40,7 +40,7 @@ namespace Alternet.UI
                 if (value is null)
                     Native.Calendar.SetMarkDateAttr(default);
                 else
-                    Native.Calendar.SetMarkDateAttr(((CalendarDateAttr)value).Handle);
+                    Native.Calendar.SetMarkDateAttr(((WxCalendarDateAttr)value).Handle);
             }
         }
 
@@ -312,7 +312,7 @@ namespace Alternet.UI
             var result = NativeControl.GetAttr(day);
             if (result == default)
                 return null;
-            return new CalendarDateAttr(result, false);
+            return new WxCalendarDateAttr(result, false);
         }
 
         public void SetAttr(int day, ICalendarDateAttr? dateAttr)
@@ -320,13 +320,13 @@ namespace Alternet.UI
             if (dateAttr is null)
                 NativeControl.ResetAttr(day);
             else
-                NativeControl.SetAttr(day, ((CalendarDateAttr)dateAttr).Handle);
+                NativeControl.SetAttr(day, ((WxCalendarDateAttr)dateAttr).Handle);
         }
 
         public ICalendarDateAttr CreateDateAttr(CalendarDateBorder border = 0)
         {
             var result = Native.Calendar.CreateDateAttr((int)border);
-            return new CalendarDateAttr(result, true);
+            return new WxCalendarDateAttr(result, true);
         }
 
         internal override Native.Control CreateNativeControl()

@@ -5,14 +5,14 @@ using Alternet.Drawing;
 
 namespace Alternet.UI
 {
-    internal class ListViewHandler : WxControlHandler, IListViewHandler
+    internal class WxListViewHandler : WxControlHandler, IListViewHandler
     {
         private readonly int clearing = 0;
 
         private int receivingSelection = 0;
         private int applyingSelection = 0;
 
-        public ListViewHandler()
+        public WxListViewHandler()
         {
         }
 

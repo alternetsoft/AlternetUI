@@ -9,7 +9,7 @@ namespace Alternet.UI.Native
     {
         public void OnPlatformEventControlRecreated()
         {
-            if (Handler is not ListViewHandler uiHandler)
+            if (Handler is not WxListViewHandler uiHandler)
                 return;
             BeginUpdate();
             uiHandler.ApplyColumns();
@@ -20,7 +20,7 @@ namespace Alternet.UI.Native
 
         public void OnPlatformEventSelectionChanged()
         {
-            if (Handler is not ListViewHandler uiHandler)
+            if (Handler is not WxListViewHandler uiHandler)
                 return;
 
             uiHandler?.NativeControl_SelectionChanged();
