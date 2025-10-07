@@ -81,6 +81,7 @@ namespace Alternet.UI
 
         private ImageList? imageList = null;
         private TreeViewSelectionMode selectionMode = TreeViewSelectionMode.Single;
+        private int suspendEventsCounter;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="TreeView"/> class.
@@ -323,6 +324,15 @@ namespace Alternet.UI
                     return;
                 Handler.HideRoot = value;
             }
+        }
+
+        /// <summary>
+        /// Gets a value indicating whether events are currently suspended.
+        /// </summary>
+        [Browsable(false)]
+        public virtual bool EventsSuspended
+        {
+            get => suspendEventsCounter > 0;
         }
 
         /// <summary>
@@ -616,7 +626,8 @@ namespace Alternet.UI
 
                 selectionMode = value;
 
-                SelectionModeChanged?.Invoke(this, EventArgs.Empty);
+                if(!EventsSuspended)
+                    SelectionModeChanged?.Invoke(this, EventArgs.Empty);
             }
         }
 
@@ -677,7 +688,8 @@ namespace Alternet.UI
 
                 imageList = value;
 
-                ImageListChanged?.Invoke(this, EventArgs.Empty);
+                if (!EventsSuspended)
+                    ImageListChanged?.Invoke(this, EventArgs.Empty);
             }
         }
 
@@ -924,6 +936,33 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Temporarily suspends the raising of events.
+        /// </summary>
+        /// <remarks>This method increments an internal counter to track the suspension state.
+        /// Events will remain suspended until the counter is decremented to zero by a corresponding
+        /// call to <see cref="ResumeEvents" />. Ensure that each
+        /// call to <see cref="SuspendEvents" /> is paired with a call to
+        /// <see cref="ResumeEvents" /> to avoid unintended behavior.</remarks>
+        public virtual void SuspendEvents()
+        {
+            suspendEventsCounter++;
+        }
+
+        /// <summary>
+        /// Resumes the processing of events by decrementing the suspension counter.
+        /// </summary>
+        /// <remarks>This method decreases the internal suspension counter, allowing events to be
+        /// processed if the counter reaches zero. Ensure that each call to
+        /// <see cref="ResumeEvents"/> corresponds to a
+        /// prior call to a method that increments the suspension counter,
+        /// such as a suspend method.</remarks>
+        public virtual void ResumeEvents()
+        {
+            if (suspendEventsCounter > 0)
+                suspendEventsCounter--;
+        }
+
+        /// <summary>
         /// Scrolls the specified item into view.
         /// </summary>
         public virtual void ScrollIntoView(TreeViewItem? item)
@@ -983,7 +1022,8 @@ namespace Alternet.UI
             if (DisposingOrDisposed)
                 return;
             OnSelectionChanged(e);
-            SelectionChanged?.Invoke(this, e);
+            if (!EventsSuspended)
+                SelectionChanged?.Invoke(this, e);
         }
 
         /// <summary>
@@ -1163,7 +1203,8 @@ namespace Alternet.UI
                 return;
             e.Item.IsExpanded = false;
             OnAfterCollapse(e);
-            AfterCollapse?.Invoke(this, e);
+            if (!EventsSuspended)
+                AfterCollapse?.Invoke(this, e);
         }
 
         /// <summary>
@@ -1178,7 +1219,8 @@ namespace Alternet.UI
                 return;
             e.Item.IsExpanded = true;
             OnAfterExpand(e);
-            AfterExpand?.Invoke(this, e);
+            if (!EventsSuspended)
+                AfterExpand?.Invoke(this, e);
         }
 
         /// <summary>
@@ -1192,7 +1234,8 @@ namespace Alternet.UI
             if (DisposingOrDisposed)
                 return;
             OnBeforeCollapse(e);
-            BeforeCollapse?.Invoke(this, e);
+            if (!EventsSuspended)
+                BeforeCollapse?.Invoke(this, e);
         }
 
         /// <summary>
@@ -1206,7 +1249,8 @@ namespace Alternet.UI
             if (DisposingOrDisposed)
                 return;
             OnBeforeLabelEdit(e);
-            BeforeLabelEdit?.Invoke(this, e);
+            if (!EventsSuspended)
+                BeforeLabelEdit?.Invoke(this, e);
         }
 
         /// <summary>
@@ -1220,7 +1264,8 @@ namespace Alternet.UI
             if (DisposingOrDisposed)
                 return;
             OnAfterLabelEdit(e);
-            AfterLabelEdit?.Invoke(this, e);
+            if (!EventsSuspended)
+                AfterLabelEdit?.Invoke(this, e);
         }
 
         /// <summary>
@@ -1315,7 +1360,8 @@ namespace Alternet.UI
             if (DisposingOrDisposed)
                 return;
             OnBeforeExpand(e);
-            BeforeExpand?.Invoke(this, e);
+            if (!EventsSuspended)
+                BeforeExpand?.Invoke(this, e);
         }
 
         /// <summary>
@@ -1355,7 +1401,8 @@ namespace Alternet.UI
             if (DisposingOrDisposed)
                 return;
             OnExpandedChanged(e);
-            ExpandedChanged?.Invoke(this, e);
+            if (!EventsSuspended)
+                ExpandedChanged?.Invoke(this, e);
         }
 
         internal void RaiseItemAdded(TreeViewEventArgs e)
@@ -1366,7 +1413,8 @@ namespace Alternet.UI
                 return;
 
             OnItemAdded(e);
-            ItemAdded?.Invoke(this, e);
+            if (!EventsSuspended)
+                ItemAdded?.Invoke(this, e);
         }
 
         internal void RaiseItemRemoved(TreeViewEventArgs e)
@@ -1377,7 +1425,8 @@ namespace Alternet.UI
                 return;
 
             OnItemRemoved(e);
-            ItemRemoved?.Invoke(this, e);
+            if (!EventsSuspended)
+                ItemRemoved?.Invoke(this, e);
         }
 
         /// <inheritdoc/>
