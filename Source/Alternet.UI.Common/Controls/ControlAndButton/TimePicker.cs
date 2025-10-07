@@ -532,6 +532,13 @@ namespace Alternet.UI
             secondsAndAmPmSeparator.IsVisible = is12HourFormat;
         }
 
+        /// <inheritdoc/>
+        protected override void OnSystemColorsChanged(EventArgs e)
+        {
+            base.OnSystemColorsChanged(e);
+            UseControlColors(DefaultUseControlColors);
+        }
+
         /// <summary>
         /// Gets time separator used in the <c>TimePicker</c>.
         /// Typically it is a colon (:).
