@@ -261,6 +261,76 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Logs values and their percentage relative to the first value.
+        /// The first value is treated as 100%.
+        /// </summary>
+        /// <param name="values">Array of numeric values (e.g. times in ms).
+        /// Must be non-null and length > 0.</param>
+        /// <param name="titles">Array of titles corresponding to values.
+        /// Must be same length as values.</param>
+        /// <param name="unit">The unit of measurement (e.g. "ms").</param>
+        /// <param name="logger">The logger to use for logging.</param>
+        public static void LogPercentRelativeToFirst(
+            double[] values,
+            string[] titles,
+            ILogWriter? logger = null,
+            string? unit = null)
+        {
+            if (unit is not null)
+                unit += " ";
+
+            if (values == null) throw new ArgumentNullException(nameof(values));
+            if (titles == null) throw new ArgumentNullException(nameof(titles));
+            if (values.Length != titles.Length)
+                throw new ArgumentException("values and titles must have the same length");
+            if (values.Length == 0) return;
+
+            double baseline = values[0];
+            bool baselineIsZero = Math.Abs(baseline) < double.Epsilon;
+
+            // compute column widths for neat alignment
+            int maxTitleLen = titles.Max(t => (t ?? string.Empty).Length);
+
+            var sb = new StringBuilder();
+            for (int i = 0; i < values.Length; i++)
+            {
+                string title = titles[i] ?? $"#{i}";
+                double val = values[i];
+
+                // format numeric value with 3 fractional digits
+                string valText = val.ToString("F3", CultureInfo.InvariantCulture);
+
+                string pctText;
+                if (i == 0)
+                {
+                    pctText = "100.0%";
+                }
+                else if (baselineIsZero)
+                {
+                    // cannot compute percentage when baseline is 0
+                    pctText = "N/A";
+                }
+                else
+                {
+                    double pct = (val / baseline) * 100.0;
+                    pctText = pct.ToString("F1", CultureInfo.InvariantCulture) + "%";
+                }
+
+                // example line: "Default    :   10.123 ms (100.0%)"
+                sb.AppendFormat(
+                    CultureInfo.InvariantCulture,
+                    "{0,-" + maxTitleLen + "} : {1,9} {2}({3})",
+                    title,
+                    valText,
+                    unit,
+                    pctText);
+                sb.AppendLine();
+            }
+
+            LogWriter.Safe(logger).Write(sb);
+        }
+
+        /// <summary>
         /// Creates a <see cref="TreeViewItem"/> for logging an exception.
         /// </summary>
         /// <param name="e">The exception to log.</param>
