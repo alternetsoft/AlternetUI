@@ -1405,6 +1405,49 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Converts the contents of the provided <see cref="StringBuilder"/> into an array of strings,
+        /// splitting on CRLF, LF or CR line endings.
+        /// Trailing empty lines are preserved (i.e. "a\n" -> ["a",""]).
+        /// </summary>
+        /// <param name="builder">The StringBuilder to split.</param>
+        /// <returns>An array of lines.</returns>
+        /// <exception cref="ArgumentNullException">If <paramref name="builder"/> is null.</exception>
+        public static string[] ToStrings(StringBuilder builder)
+        {
+            if (builder is null) throw new ArgumentNullException(nameof(builder));
+
+            int len = builder.Length;
+            if (len == 0) return Array.Empty<string>();
+
+            var lines = new List<string>();
+            int start = 0;
+
+            for (int i = 0; i < len; i++)
+            {
+                char c = builder[i];
+
+                if (c == '\r' || c == '\n')
+                {
+                    int length = i - start;
+                    lines.Add(builder.ToString(start, length));
+
+                    // Handle CRLF as a single newline
+                    if (c == '\r' && (i + 1) < len && builder[i + 1] == '\n')
+                    {
+                        i++; // skip '\n'
+                    }
+
+                    start = i + 1;
+                }
+            }
+
+            // Add the final segment (may be empty if the last character was a newline)
+            lines.Add(builder.ToString(start, len - start));
+
+            return lines.ToArray();
+        }
+
+        /// <summary>
         /// Calls <see cref="string.Format(string, object)"/>
         /// in a safe way allowing to use null parameters.
         /// </summary>
