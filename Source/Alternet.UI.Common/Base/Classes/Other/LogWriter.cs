@@ -137,6 +137,19 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Ensures that a non-null <see cref="ILogWriter"/> instance is returned.
+        /// </summary>
+        /// <param name="writer">The <see cref="ILogWriter"/> instance to validate.
+        /// Can be <see langword="null"/>.</param>
+        /// <returns>The provided <paramref name="writer"/> if it
+        /// is not <see langword="null"/>; otherwise, the current default
+        /// writer or a debug writer.</returns>
+        public static ILogWriter Safe(ILogWriter? writer = null)
+        {
+            return writer ?? current ?? Debug;
+        }
+
+        /// <summary>
         /// Creates an instance of an <see cref="ILogWriter"/> that writes
         /// log messages using the specified action.
         /// </summary>
@@ -190,13 +203,30 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Writes the content of the specified <see cref="StringBuilder"/> to the output, line by line.
+        /// This is a convenience method that splits the content into lines and writes each line.
+        /// </summary>
+        /// <remarks>The content of the <paramref name="message"/> is split into lines, and each
+        /// line is written separately.</remarks>
+        /// <param name="writer">The <see cref="ILogWriter"/> instance to use for writing log messages.
+        /// Cannot be <see langword="null"/>.</param>
+        /// <param name="message">The <see cref="StringBuilder"/> containing the message to write.
+        /// Cannot be <see langword="null"/>.</param>
+        public static void Write(this ILogWriter writer, StringBuilder message)
+        {
+            var strings = StringUtils.ToStrings(message);
+            foreach (var s in strings)
+                writer.WriteLine(s);
+        }
+
+        /// <summary>
         /// Provides a mechanism to write log messages to multiple <see cref="ILogWriter"/> instances.
         /// </summary>
         /// <remarks>The <see cref="MultiLogWriter"/> class allows you to aggregate multiple log writers
         /// and forward log messages to all of them. This is useful when you
         /// need to log messages to multiple destinations simultaneously,
         /// such as a file, console, or remote logging service.</remarks>
-        public class MultiLogWriter : DisposableObject, ILogWriter
+        public class MultiLogWriter : BaseLogWriter
         {
             private readonly List<Func<ILogWriter>> writers = new();
 
@@ -254,7 +284,7 @@ namespace Alternet.UI
             }
 
             /// <inheritdoc/>
-            public void Indent()
+            public override void Indent()
             {
                 foreach (var writer in writers)
                 {
@@ -269,7 +299,7 @@ namespace Alternet.UI
             }
 
             /// <inheritdoc/>
-            public void Unindent()
+            public override void Unindent()
             {
                 foreach (var writer in writers)
                 {
@@ -284,7 +314,7 @@ namespace Alternet.UI
             }
 
             /// <inheritdoc/>
-            public void WriteLine(string message)
+            public override void WriteLine(string message)
             {
                 foreach (var writer in writers)
                 {
@@ -306,20 +336,20 @@ namespace Alternet.UI
         /// operations. It can be used in scenarios where logging is optional or needs
         /// to be disabled without modifying
         /// the code that depends on an <see cref="ILogWriter"/> instance.</remarks>
-        public class NullLogWriter : DisposableObject, ILogWriter
+        public class NullLogWriter : BaseLogWriter
         {
             /// <inheritdoc/>
-            public void Indent()
+            public override void Indent()
             {
             }
 
             /// <inheritdoc/>
-            public void Unindent()
+            public override void Unindent()
             {
             }
 
             /// <inheritdoc/>
-            public void WriteLine(string message)
+            public override void WriteLine(string message)
             {
             }
         }
@@ -331,25 +361,46 @@ namespace Alternet.UI
         /// <remarks>This class uses the <see cref="System.Diagnostics.Debug"/> class to write messages,
         /// making it suitable for debugging scenarios. Messages are written to the debug
         /// listeners configured for the application.</remarks>
-        public class DebugLogWriter : DisposableObject, ILogWriter
+        public class DebugLogWriter : BaseLogWriter
         {
             /// <inheritdoc/>
-            public void Indent()
+            public override void Indent()
             {
                 System.Diagnostics.Debug.Indent();
             }
 
             /// <inheritdoc/>
-            public void Unindent()
+            public override void Unindent()
             {
                 System.Diagnostics.Debug.Unindent();
             }
 
             /// <inheritdoc/>
-            public void WriteLine(string message)
+            public override void WriteLine(string message)
             {
                 System.Diagnostics.Debug.WriteLine(message);
             }
+        }
+
+        /// <summary>
+        /// Provides a base implementation for log writers, defining the core methods
+        /// for writing log messages and
+        /// managing indentation levels.
+        /// </summary>
+        /// <remarks>This abstract class serves as a foundation for creating custom log writers.
+        /// Derived classes must implement the methods to handle log message
+        /// output and indentation behavior. The class ensures
+        /// consistent behavior across different log writer implementations.</remarks>
+        public abstract class BaseLogWriter : DisposableObject, ILogWriter
+        {
+            /// <inheritdoc/>
+            public abstract void Indent();
+
+            /// <inheritdoc/>
+            public abstract void Unindent();
+
+            /// <inheritdoc/>
+            public abstract void WriteLine(string message);
         }
 
         /// <summary>
@@ -357,9 +408,9 @@ namespace Alternet.UI
         /// </summary>
         /// <remarks>This abstract class defines the core functionality for log writers, including
         /// managing indentation levels and formatting messages. Derived classes must implement the
-        /// <see cref="WriteLine(string)"/> method to define
+        /// <see cref="BaseLogWriter.WriteLine(string)"/> method to define
         /// how log messages are written to the output.</remarks>
-        public abstract class CustomLogWriter : DisposableObject, ILogWriter
+        public abstract class CustomLogWriter : BaseLogWriter
         {
             private int indentLevel = 0;
 
@@ -369,13 +420,13 @@ namespace Alternet.UI
             public int IndentLevel => indentLevel;
 
             /// <inheritdoc/>
-            public virtual void Indent()
+            public override void Indent()
             {
                 indentLevel++;
             }
 
             /// <inheritdoc/>
-            public virtual void Unindent()
+            public override void Unindent()
             {
                 if (indentLevel > 0)
                     indentLevel--;
@@ -405,9 +456,6 @@ namespace Alternet.UI
                     return $"{indent}{message}";
                 }
             }
-
-            /// <inheritdoc/>
-            public abstract void WriteLine(string message);
         }
 
         /// <summary>
