@@ -271,6 +271,7 @@ namespace Alternet.Drawing
         /// <remarks>
         /// Use <see cref="Graphics.RequireMeasure"/> to get measurement canvas.
         /// </remarks>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Graphics GetOrCreateMemoryCanvas(Graphics.CanvasCreateParams prm)
         {
             var result = MemoryCanvases.GetOrCreate(prm, () => CreateMemoryCanvas(prm));
@@ -282,6 +283,7 @@ namespace Alternet.Drawing
         /// </summary>
         /// <param name="image">Image on which canvas is created.</param>
         /// <returns></returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Graphics CreateMemoryCanvas(Image image)
         {
             return Handler.CreateMemoryCanvas(image);
@@ -293,6 +295,7 @@ namespace Alternet.Drawing
         /// </summary>
         /// <param name="prm">The parameters for creating the measurement canvas.</param>
         /// <returns></returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Graphics CreateMemoryCanvas(Graphics.CanvasCreateParams prm)
         {
             return Handler.CreateMemoryCanvas(prm);
@@ -382,6 +385,7 @@ namespace Alternet.Drawing
         /// instance properties with the default values.
         /// </summary>
         /// <param name="paint"></param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static void SetPaintDefaults(SKPaint paint)
         {
             paint.IsAntialias = GraphicsFactory.DefaultAntialiasing;
@@ -439,6 +443,7 @@ namespace Alternet.Drawing
         /// </summary>
         /// <param name="brushAndPen">Brush and pen for which <see cref="SKPaint"/> is created.</param>
         /// <returns></returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static (SKPaint? Fill, SKPaint? Stroke) CreateStrokeAndFillPaint(BrushAndPen brushAndPen)
         {
             return brushAndPen.AsPaint;
@@ -450,12 +455,36 @@ namespace Alternet.Drawing
         /// </summary>
         /// <param name="pen">Pen for which <see cref="SKPaint"/> is created.</param>
         /// <returns></returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static SKPaint DefaultPenToPaint(Pen pen)
         {
-            var paint = GraphicsFactory.CreateStrokePaint(pen.Color);
-            paint.StrokeCap = pen.LineCap.ToSkia();
-            paint.StrokeJoin = pen.LineJoin.ToSkia();
-            paint.StrokeWidth = (float)pen.Width;
+            return CreatePaint(
+                pen.Color,
+                pen.LineCap,
+                pen.LineJoin,
+                pen.Width);
+        }
+
+        /// <summary>
+        /// Creates and configures a new <see cref="SKPaint"/> instance for drawing strokes.
+        /// </summary>
+        /// <remarks>The returned <see cref="SKPaint"/> is preconfigured for stroke drawing, with the
+        /// <see cref="SKPaint.IsStroke"/> property set to <see langword="true"/>.</remarks>
+        /// <param name="color">The color of the stroke.</param>
+        /// <param name="lineCap">The style of the stroke's end caps.</param>
+        /// <param name="lineJoin">The style of the stroke's joins between line segments.</param>
+        /// <param name="width">The width of the stroke.</param>
+        /// <returns>A configured <see cref="SKPaint"/> instance with the specified stroke properties.</returns>
+        public static SKPaint CreatePaint(
+            SKColor color,
+            LineCap lineCap,
+            LineJoin lineJoin,
+            Coord width)
+        {
+            var paint = GraphicsFactory.CreateStrokePaint(color);
+            paint.StrokeCap = lineCap.ToSkia();
+            paint.StrokeJoin = lineJoin.ToSkia();
+            paint.StrokeWidth = width;
             paint.IsStroke = true;
             return paint;
         }
