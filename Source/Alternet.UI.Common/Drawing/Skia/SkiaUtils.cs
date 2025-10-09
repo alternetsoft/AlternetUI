@@ -230,6 +230,28 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
+        /// Gets or sets the paint object used to render the focus rectangle.
+        /// </summary>
+        public static SKPaint FocusRectPaint { get; set; } = SkiaUtils.CreateFocusRectPaint(SKColors.Black);
+
+        /// <summary>
+        /// Draws a focus rectangle on the specified canvas using the given color.
+        /// <see cref="FocusRectPaint"/> is used to draw the rectangle.
+        /// </summary>
+        /// <param name="canvas">The <see cref="SKCanvas"/> on which the focus rectangle will be drawn.
+        /// Cannot be <see langword="null"/>.</param>
+        /// <param name="rect">The <see cref="SKRect"/> defining the bounds of the focus rectangle.</param>
+        /// <param name="color">The <see cref="SKColor"/> to use for the focus rectangle.</param>
+        public static void DrawFocusRect(SKCanvas canvas, SKRect rect, SKColor color)
+        {
+            FocusRectPaint.Color = color;
+            canvas.Save();
+            canvas.Translate(0.5f, 0.5f);
+            canvas.DrawRect(rect, FocusRectPaint);
+            canvas.Restore();
+        }
+
+        /// <summary>
         /// Gets all installed font families as enumerable.
         /// </summary>
         public static IEnumerable<string> GetFontFamiliesNames()
@@ -936,6 +958,150 @@ namespace Alternet.Drawing
                 font,
                 foreColor,
                 backColor);
+        }
+
+        /// <summary>
+        /// Creates an SKPaint configured to draw a focus-like dashed rectangle (similar to WinForms DrawFocusRectangle).
+        /// The returned SKPaint must be disposed by the caller.
+        /// </summary>
+        /// <param name="color">Primary color used for the stroke (when xor==true, result depends on blend and background).</param>
+        /// <param name="strokeWidth">Stroke width in canvas units (use 1 for a typical hairline).</param>
+        /// <param name="dashOn">Dash "on" length (small value produces dot-like strokes, e.g. 1).</param>
+        /// <param name="gap">Dash "off" length (space between dots).</param>
+        /// <param name="phase">Dash phase offset (use to create marching-ants animation).</param>
+        /// <param name="useXorBlend">If true, sets paint.BlendMode = SKBlendMode.Xor to try to mimic GDI+
+        /// XOR drawing (backend dependent).</param>
+        /// <param name="antialiasing">Whether to enable antialiasing for the paint.</param>
+        /// <param name="strokeCap">Stroke cap to use. Round produces rounded dots for short on-lengths;
+        /// Square produces rectangular dashes.</param>
+        /// <returns>An SKPaint instance configured for focus-rect drawing. Caller must dispose it.</returns>
+        public static SKPaint CreateFocusRectPaint(
+            SKColor color,
+            float strokeWidth = 1f,
+            float dashOn = 1f,
+            float gap = 1f,
+            float phase = 0f,
+            bool useXorBlend = true,
+            bool antialiasing = false,
+            SKStrokeCap strokeCap = SKStrokeCap.Square)
+        {
+            if (dashOn <= 0f) dashOn = 1f;
+            if (gap < 0f) gap = 0f;
+
+            var paint = new SKPaint
+            {
+                Style = SKPaintStyle.Stroke,
+                IsAntialias = antialiasing,
+                Color = color,
+                StrokeWidth = strokeWidth,
+                StrokeCap = strokeCap,
+                StrokeJoin = SKStrokeJoin.Miter,
+            };
+
+            paint.PathEffect = SKPathEffect.CreateDash(new[] { dashOn, gap }, phase);
+
+            if (useXorBlend)
+            {
+                paint.BlendMode = SKBlendMode.Xor;
+            }
+
+            return paint;
+        }
+
+        /// <summary>
+        /// Draws a focus-like dashed rectangle (similar to WinForms DrawFocusRectangle).
+        /// Uses CreateFocusRectPaint internally.
+        /// </summary>
+        /// <param name="canvas">Target canvas (must not be null).</param>
+        /// <param name="rect">Rectangle in canvas coordinates.</param>
+        /// <param name="color">Primary color used for the stroke (when xor==true, result depends on blend and background).</param>
+        /// <param name="strokeWidth">Stroke width in canvas units (use 1 for a typical hairline).</param>
+        /// <param name="dashOn">Dash "on" length (small value produces dot-like strokes, e.g. 1).</param>
+        /// <param name="gap">Dash "off" length (space between dots).</param>
+        /// <param name="phase">Dash phase offset (use to create marching-ants animation).</param>
+        /// <param name="useXorBlend">If true, sets paint.BlendMode = SKBlendMode.Xor
+        /// to try to mimic GDI+ XOR drawing (backend dependent).</param>
+        /// <param name="antialiasing">Whether to enable antialiasing for the paint.</param>
+        public static void DrawFocusRect(
+            SKCanvas canvas,
+            SKRect rect,
+            SKColor color,
+            float strokeWidth = 1f,
+            float dashOn = 1f,
+            float gap = 1f,
+            float phase = 0f,
+            bool useXorBlend = true,
+            bool antialiasing = false)
+        {
+            if (canvas is null) throw new ArgumentNullException(nameof(canvas));
+
+            using var paint = CreateFocusRectPaint(
+                color,
+                strokeWidth,
+                dashOn,
+                gap,
+                phase,
+                useXorBlend,
+                antialiasing,
+                SKStrokeCap.Square);
+
+            // Pixel-snapping trick for crisp 1px strokes on integer-aligned coordinates
+            canvas.Save();
+            canvas.Translate(0.5f, 0.5f);
+            canvas.DrawRect(rect, paint);
+            canvas.Restore();
+        }
+
+        /// <summary>
+        /// Convenience helper that animates the dash phase to produce the "marching ants" effect.
+        /// Call this from your paint loop and pass a time value (e.g. milliseconds).
+        /// Uses CreateFocusRectPaint internally.
+        /// </summary>
+        /// <param name="canvas">Target canvas.</param>
+        /// <param name="rect">Rectangle in canvas coordinates.</param>
+        /// <param name="color">Stroke color.</param>
+        /// <param name="timeMs">Elapsed time in milliseconds (used to compute animated phase).</param>
+        /// <param name="strokeWidth">Stroke width.</param>
+        /// <param name="dashOn">Dash "on" length.</param>
+        /// <param name="gap">Dash "off" length.</param>
+        /// <param name="periodMs">Period in milliseconds for one
+        /// full dash-cycle shift (smaller -> faster animation).</param>
+        /// <param name="useXorBlend">Whether to use XOR blend mode.</param>
+        /// <param name="antialiasing">Whether to enable antialiasing.</param>
+        public static void DrawAnimatedFocusRect(
+            SKCanvas canvas,
+            SKRect rect,
+            SKColor color,
+            long timeMs,
+            float strokeWidth = 1f,
+            float dashOn = 1f,
+            float gap = 1f,
+            float periodMs = 250f,
+            bool useXorBlend = true,
+            bool antialiasing = false)
+        {
+            if (canvas is null) throw new ArgumentNullException(nameof(canvas));
+            if (periodMs <= 0) periodMs = 250f;
+
+            float cycle = dashOn + gap;
+
+            // Normalize time to [0..cycle)
+            float phase = (float)((timeMs % (long)periodMs) / periodMs) * cycle;
+
+            using var paint = CreateFocusRectPaint(
+                color,
+                strokeWidth,
+                dashOn,
+                gap,
+                phase,
+                useXorBlend,
+                antialiasing,
+                SKStrokeCap.Square);
+
+            canvas.Save();
+            canvas.Translate(0.5f, 0.5f);
+            canvas.DrawRect(rect, paint);
+            canvas.Restore();
         }
 
         /// <summary>
