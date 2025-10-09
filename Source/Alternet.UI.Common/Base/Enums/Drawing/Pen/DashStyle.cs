@@ -11,14 +11,14 @@
         Solid,
 
         /// <summary>
-        /// Specifies a line consisting of dots.
-        /// </summary>
-        Dot,
-
-        /// <summary>
         /// Specifies a line consisting of dashes.
         /// </summary>
         Dash,
+
+        /// <summary>
+        /// Specifies a line consisting of dots.
+        /// </summary>
+        Dot,
 
         /// <summary>
         /// Specifies a line consisting of a repeating pattern of dash-dot.
@@ -26,14 +26,13 @@
         DashDot,
 
         /// <summary>
+        /// Specifies a line consisting of a repeating pattern of dash-dot-dot.
+        /// </summary>
+        DashDotDot,
+
+        /// <summary>
         /// Specifies a user-defined custom dash style.
         /// </summary>
         Custom,
-
-        /// <summary>
-        /// Specifies a line consisting of a repeating pattern of dash-dot-dot.
-        /// Currently not implemented and is equal to <see cref="DashDot"/>.
-        /// </summary>
-        DashDotDot = DashDot,
     }
 }
