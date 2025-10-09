@@ -860,8 +860,11 @@ namespace Alternet.Drawing
         /// Converts the specified <see cref='Color'/> to a <see cref='RGBValue'/>.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static implicit operator RGBValue(Color color) =>
-            new(color.R, color.G, color.B);
+        public static implicit operator RGBValue(Color color)
+        {
+            color.RequireArgb();
+            return new(color.color.R, color.color.G, color.color.B);
+        }
 
         /// <summary>
         /// Implicit operator conversion from tuple with three <see cref="byte"/> values
@@ -920,16 +923,20 @@ namespace Alternet.Drawing
         /// structures are equivalent.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static bool operator ==(System.Drawing.Color left, Color right) =>
-            left.IsEmpty == right.IsEmpty && left.ToArgb() == right.ToArgb();
+        public static bool operator ==(System.Drawing.Color left, Color right)
+        {
+            return left.IsEmpty == right.IsEmpty && left.ToArgb() == right.ToArgb();
+        }
 
         /// <summary>
         /// Tests whether <see cref="Color"/> and <see cref="System.Drawing.Color"/>
         /// structures are equivalent.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static bool operator ==(Color left, System.Drawing.Color right) =>
-            left.IsEmpty == right.IsEmpty && left.ToArgb() == right.ToArgb();
+        public static bool operator ==(Color left, System.Drawing.Color right)
+        {
+            return left.IsEmpty == right.IsEmpty && left.ToArgb() == right.ToArgb();
+        }
 
         /// <summary>
         /// Tests whether <see cref="Color"/> and <see cref="System.Drawing.Color"/>
