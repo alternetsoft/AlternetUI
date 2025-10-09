@@ -121,6 +121,7 @@ namespace Alternet.UI
         /// Creates debug image from the specified array of <see cref="TextAndFontStyle"/>.
         /// </summary>
         /// <param name="text">Array of strings with font styles.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Image DebugImageFromTextWithFontStyle(TextAndFontStyle[] text)
         {
             return ImageFromTextWithFontStyle(
@@ -156,6 +157,7 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc cref="IControlPainterHandler.GetCheckBoxSize"/>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static SizeD GetCheckBoxSize(
             AbstractControl control,
             CheckState checkState,
@@ -165,6 +167,7 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc cref="IControlPainterHandler.DrawCheckBox"/>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static void DrawCheckBox(
             this Graphics canvas,
             AbstractControl control,
@@ -181,6 +184,7 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc cref="IControlPainterHandler.DrawPushButton"/>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static void DrawPushButton(
             this Graphics canvas,
             AbstractControl control,
@@ -223,6 +227,7 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="sender">The container control where drawing is performed.</param>
         /// <param name="e">The paint arguments including canvas and bounding rectangle.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static void DrawPushButtonNormal(object? sender, PaintEventArgs e)
         {
             DrawPushButton(sender, e, VisualControlState.Normal);
@@ -234,6 +239,7 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="sender">The container control where drawing is performed.</param>
         /// <param name="e">The paint arguments including canvas and bounding rectangle.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static void DrawPushButtonHovered(object? sender, PaintEventArgs e)
         {
             DrawPushButton(sender, e, VisualControlState.Hovered);
@@ -245,6 +251,7 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="sender">The container control where drawing is performed.</param>
         /// <param name="e">The paint arguments including canvas and bounding rectangle.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static void DrawPushButtonPressed(object? sender, PaintEventArgs e)
         {
             DrawPushButton(sender, e, VisualControlState.Pressed);
@@ -256,6 +263,7 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="sender">The container control where drawing is performed.</param>
         /// <param name="e">The paint arguments including canvas and bounding rectangle.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static void DrawPushButtonDisabled(object? sender, PaintEventArgs e)
         {
             DrawPushButton(sender, e, VisualControlState.Disabled);
@@ -267,12 +275,14 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="sender">The container control where drawing is performed.</param>
         /// <param name="e">The paint arguments including canvas and bounding rectangle.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static void DrawPushButtonFocused(object? sender, PaintEventArgs e)
         {
             DrawPushButton(sender, e, VisualControlState.Focused);
         }
 
         /// <inheritdoc cref="IControlPainterHandler.DrawRadioButton"/>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static void DrawRadioButton(
             this Graphics canvas,
             AbstractControl control,
@@ -389,6 +399,7 @@ namespace Alternet.UI
         /// <param name="border">Border settings.</param>
         /// <param name="hasBorder">Whether border is painted.</param>
         /// <param name="control">Control in which border is painted. Optional.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static void FillBorderRectangle(
             this Graphics dc,
             RectD rect,
@@ -683,6 +694,7 @@ namespace Alternet.UI
         /// <param name="dc">Drawing context.</param>
         /// <param name="rect">Rectangle.</param>
         /// <param name="border">Border settings.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static void DrawBorder(
             AbstractControl? control,
             Graphics dc,
@@ -700,6 +712,7 @@ namespace Alternet.UI
         /// <param name="p2">Second point.</param>
         /// <returns>Distance between point <paramref name="p1"/>
         /// and point <paramref name="p2"/>.</returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Coord GetDistance(PointD p1, PointD p2)
         {
             return MathUtils.GetDistance(p1.X, p1.Y, p2.X, p2.Y);
@@ -713,6 +726,7 @@ namespace Alternet.UI
         /// <param name="value">Value to compare distance with.</param>
         /// <returns><c>true</c> if distance between two points is less
         /// than <paramref name="value"/>; <c>false</c> otherwise.</returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool DistanceIsLess(PointD p1, PointD p2, Coord value)
         {
             return (MathF.Pow(p2.X - p1.X, 2) + MathF.Pow(p2.Y - p1.Y, 2)) < MathF.Pow(value, 2);
@@ -735,6 +749,7 @@ namespace Alternet.UI
         /// <param name="center">Circle center.</param>
         /// <param name="radius">Circle radius.</param>
         /// <returns></returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool IsPointInCircle(PointD p, PointD center, Coord radius)
         {
             return GetDistanceSquared(p, center) <= radius * radius;
@@ -810,6 +825,7 @@ namespace Alternet.UI
         /// <param name="point">Starting point.</param>
         /// <param name="length">Line length.</param>
         /// <param name="width">Line width.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static void DrawHorzLine(
             this Graphics dc,
             Brush brush,
@@ -822,6 +838,27 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Draws a horizontal line on the specified canvas.
+        /// </summary>
+        /// <param name="dc">The <see cref="SKCanvas"/> on which the line will be drawn.</param>
+        /// <param name="brush">The <see cref="SKPaint"/> used to define the color, style,
+        /// and other properties of the line.</param>
+        /// <param name="point">The starting point of the line, represented as a <see cref="PointD"/>.</param>
+        /// <param name="length">The length of the horizontal line.</param>
+        /// <param name="width">The width of the horizontal line.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static void DrawHorzLine(
+            SKCanvas dc,
+            SKPaint brush,
+            PointD point,
+            Coord length,
+            Coord width)
+        {
+            var rect = new RectD(point, new SizeD(length, width));
+            dc.DrawRect(rect, brush);
+        }
+
+        /// <summary>
         /// Draws vertical line using <see cref="Graphics.FillRectangle(Brush,RectD)"/>.
         /// </summary>
         /// <param name="dc">Drawing context.</param>
@@ -829,6 +866,7 @@ namespace Alternet.UI
         /// <param name="point">Starting point.</param>
         /// <param name="length">Line length.</param>
         /// <param name="width">Line width.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static void DrawVertLine(
             this Graphics dc,
             Brush brush,
@@ -838,6 +876,30 @@ namespace Alternet.UI
         {
             var rect = new RectD(point, new SizeD(width, length));
             dc.FillRectangle(brush, rect);
+        }
+
+        /// <summary>
+        /// Draws a vertical line on the specified canvas.
+        /// </summary>
+        /// <param name="dc">The <see cref="SKCanvas"/> on which the vertical line will be drawn.</param>
+        /// <param name="brush">The <see cref="SKPaint"/> used to define the color, style,
+        /// and other properties of the line.</param>
+        /// <param name="point">The starting point of the vertical line, representing the
+        /// top-left corner of the line's bounding rectangle.</param>
+        /// <param name="length">The length of the vertical line, measured in the coordinate
+        /// space of the canvas.</param>
+        /// <param name="width">The width of the vertical line, measured in the coordinate
+        /// space of the canvas.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static void DrawVertLine(
+            SKCanvas dc,
+            SKPaint brush,
+            PointD point,
+            Coord length,
+            Coord width)
+        {
+            var rect = new RectD(point, new SizeD(width, length));
+            dc.DrawRect(rect, brush);
         }
 
         /// <summary>
@@ -897,6 +959,26 @@ namespace Alternet.UI
             dc.FillRectangle(brush, GetBottomLineRect(rect, borderWidth));
             dc.FillRectangle(brush, GetLeftLineRect(rect, borderWidth));
             dc.FillRectangle(brush, GetRightLineRect(rect, borderWidth));
+        }
+
+        /// <summary>
+        /// Draws a border around the specified rectangle using the provided paint and border width.
+        /// </summary>
+        /// <param name="dc">The <see cref="SKCanvas"/> on which the border will be drawn.</param>
+        /// <param name="paint">The <see cref="SKPaint"/> used to define the appearance of the border.</param>
+        /// <param name="rect">The <see cref="RectD"/> representing the rectangle
+        /// around which the border will be drawn.</param>
+        /// <param name="borderWidth">The width of the border. The default value is 1.</param>
+        public static void DrawBorderWithPaint(
+            SKCanvas dc,
+            SKPaint paint,
+            RectD rect,
+            Coord borderWidth = 1)
+        {
+            dc.DrawRect(GetTopLineRect(rect, borderWidth), paint);
+            dc.DrawRect(GetBottomLineRect(rect, borderWidth), paint);
+            dc.DrawRect(GetLeftLineRect(rect, borderWidth), paint);
+            dc.DrawRect(GetRightLineRect(rect, borderWidth), paint);
         }
 
         /// <summary>
