@@ -47,18 +47,19 @@ namespace Alternet::UI
     {
         switch (style)
         {
-        case DashStyle::Solid:
-            return wxPenStyle::wxPENSTYLE_SOLID;
-        case DashStyle::Dot:
-            return wxPenStyle::wxPENSTYLE_DOT;
-        case DashStyle::Dash:
-            return wxPenStyle::wxPENSTYLE_SHORT_DASH;
-        case DashStyle::DashDot:
-            return wxPenStyle::wxPENSTYLE_DOT_DASH;
-        case DashStyle::Custom:
-            return wxPenStyle::wxPENSTYLE_USER_DASH;
-        default:
-            throwExInvalidOp;
+            case DashStyle::Solid:
+                return wxPenStyle::wxPENSTYLE_SOLID;
+            case DashStyle::Dash:
+                return wxPenStyle::wxPENSTYLE_SHORT_DASH;
+            case DashStyle::Dot:
+                return wxPenStyle::wxPENSTYLE_DOT;
+            case DashStyle::DashDot:
+            case DashStyle::DashDotDot:
+                return wxPenStyle::wxPENSTYLE_DOT_DASH;
+            case DashStyle::Custom:
+                return wxPenStyle::wxPENSTYLE_USER_DASH;
+            default:
+                return wxPenStyle::wxPENSTYLE_SOLID;
         }
     }
 

@@ -648,11 +648,11 @@ namespace Alternet::UI
     enum class DashStyle
     {
         Solid = 0,
-        Dot = 1,
-        Dash = 2,
+        Dash = 1,
+        Dot = 2,
         DashDot = 3,
-        DashDotDot = 3,
-        Custom = 4,
+        DashDotDot = 4,
+        Custom = 5,
     };
     
     enum class LineCap
@@ -1563,7 +1563,7 @@ namespace Alternet::UI
         Error = 2,
         Information = 3,
         Warning = 4,
-        HighlightText = 5,
+        Selected = 5,
         MaxValue = 5,
     };
     
