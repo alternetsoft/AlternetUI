@@ -235,6 +235,252 @@ namespace Alternet.Drawing
         public static SKPaint FocusRectPaint { get; set; } = SkiaUtils.CreateFocusRectPaint(SKColors.Black);
 
         /// <summary>
+        /// Computes the pixel-snapping offset (in canvas/logical coordinates) that aligns
+        /// 1px strokes to device pixel centers, taking the canvas TotalMatrix into account.
+        /// Returns an SKPoint { X = offsetX, Y = offsetY } where:
+        ///   offsetX = 0.5f / effectiveScaleX
+        ///   offsetY = 0.5f / effectiveScaleY
+        /// Use: canvas.Save(); canvas.Translate(offset.X, offset.Y); ... canvas.Restore();
+        /// </summary>
+        /// <param name="canvas">The SKCanvas to inspect (must not be null).</param>
+        /// <returns>Pixel-snapping offset in canvas coordinates.</returns>
+        public static SKPoint GetPixelSnappingOffset(SKCanvas canvas)
+        {
+            if (canvas is null) throw new ArgumentNullException(nameof(canvas));
+
+            // compute effective scale from the current transform (works with rotation/skew)
+            SKMatrix m = canvas.TotalMatrix;
+            float scaleX = MathF.Sqrt((m.ScaleX * m.ScaleX) + (m.SkewX * m.SkewX));
+            float scaleY = MathF.Sqrt((m.SkewY * m.SkewY) + (m.ScaleY * m.ScaleY));
+
+            // avoid divide-by-zero
+            if (scaleX <= 0f) scaleX = 1f;
+            if (scaleY <= 0f) scaleY = 1f;
+
+            float offsetX = 0.5f / scaleX;
+            float offsetY = 0.5f / scaleY;
+
+            return new SKPoint(offsetX, offsetY);
+        }
+
+        /// <summary>
+        /// Draws a line on the canvas using a dash style similar to System.Drawing.Pen.DashStyle.
+        /// This helper creates and configures an SKPaint internally (caller does not own/dispose it).
+        /// </summary>
+        /// <param name="canvas">Canvas to draw on (not null).</param>
+        /// <param name="p1">Start point in canvas coordinates.</param>
+        /// <param name="p2">End point in canvas coordinates.</param>
+        /// <param name="color">Stroke color.</param>
+        /// <param name="strokeWidth">Stroke width in canvas units (use 0 for hairline).</param>
+        /// <param name="dashStyle">Dash style from System.Drawing.Drawing2D.DashStyle.</param>
+        /// <param name="customPattern">
+        /// If dashStyle == DashStyle.Custom, this supplies the pattern as
+        /// device pixels: {on, off, on, off, ...}.
+        /// If null when Custom is requested, falls back to a dotted pattern.
+        /// </param>
+        /// <param name="dashOffset">
+        /// Phase/offset in device pixels. This is converted to canvas units
+        /// using the canvas transform so animation/phase
+        /// matches device-space expectations.
+        /// </param>
+        /// <param name="antialiasing">Whether to enable antialiasing on the paint.</param>
+        public static void DrawDashedLine(
+            SKCanvas canvas,
+            SKPoint p1,
+            SKPoint p2,
+            SKColor color,
+            float strokeWidth = 1f,
+            DashStyle dashStyle = DashStyle.Solid,
+            float[]? customPattern = null,
+            float dashOffset = 0f,
+            bool antialiasing = true)
+        {
+            if (canvas is null) throw new ArgumentNullException(nameof(canvas));
+
+            // Create paint
+            using var paint = new SKPaint
+            {
+                Style = SKPaintStyle.Stroke,
+                Color = color,
+                StrokeWidth = strokeWidth,
+                IsAntialias = antialiasing,
+                StrokeJoin = SKStrokeJoin.Miter,
+            };
+
+            // Compute effective canvas scale so dash lengths/offsets specified in "device pixels"
+            // are converted to canvas units. This keeps dash pattern visually consistent across DPI/scale.
+            float scale = GetAverageCanvasScale(canvas);
+            if (scale <= 0f) scale = 1f; // safety
+
+            // Common base patterns (device-pixel units). These approximate GDI+ defaults.
+            // We will scale them by strokeWidth (so wider pens yield proportionally longer dashes).
+            // You can tweak these constants to better match your exact target renderer.
+            const float baseDash = 4f;
+            const float baseGap = 2f;
+            const float baseDot = 1f;
+
+            // pattern described in device pixels (on, off, on, off...)
+            float[]? patternDevice;
+
+            switch (dashStyle)
+            {
+                case DashStyle.Solid:
+                case DashStyle.Custom when customPattern == null || customPattern.Length == 0:
+                    patternDevice = null;
+                    break;
+
+                case DashStyle.Dash:
+                    patternDevice = new[]
+                    {
+                        baseDash * strokeWidth,
+                        baseGap * strokeWidth,
+                    };
+                    break;
+
+                case DashStyle.Dot:
+                    // short "on" + gap, with round caps produces dots
+                    patternDevice = new[]
+                    {
+                        baseDot * strokeWidth,
+                        baseGap * strokeWidth,
+                    };
+                    paint.StrokeCap = SKStrokeCap.Round;
+                    break;
+
+                case DashStyle.DashDot:
+                    patternDevice = new[]
+                    {
+                        baseDash * strokeWidth,
+                        baseGap * strokeWidth,
+                        baseDot * strokeWidth,
+                        baseGap * strokeWidth,
+                    };
+                    paint.StrokeCap = SKStrokeCap.Round;
+                    break;
+                case DashStyle.DashDotDot:
+                    patternDevice = new[]
+                    {
+                        baseDash * strokeWidth,
+                        baseGap * strokeWidth,
+                        baseDot * strokeWidth,
+                        baseGap * strokeWidth,
+                        baseDot * strokeWidth,
+                        baseGap * strokeWidth,
+                    };
+                    paint.StrokeCap = SKStrokeCap.Round;
+                    break;
+                case DashStyle.Custom:
+                    // customPattern is expected in device pixels; clone defensively
+                    if (customPattern != null && customPattern.Length > 0)
+                    {
+                        patternDevice = new float[customPattern.Length];
+                        Array.Copy(customPattern, patternDevice, customPattern.Length);
+                    }
+                    else
+                    {
+                        // fallback to dot if nothing provided
+                        patternDevice = new[] { baseDot * strokeWidth, baseGap * strokeWidth };
+                        paint.StrokeCap = SKStrokeCap.Round;
+                    }
+
+                    break;
+
+                default:
+                    patternDevice = null;
+                    break;
+            }
+
+            if (patternDevice != null)
+            {
+                // convert pattern from device pixels into canvas units by dividing by scale
+                var patternCanvas = new float[patternDevice.Length];
+                for (int i = 0; i < patternDevice.Length; i++)
+                    patternCanvas[i] = patternDevice[i] / scale;
+
+                // convert dashOffset (device pixels) to canvas units as well
+                float phaseCanvas = dashOffset / scale;
+
+                paint.PathEffect = SKPathEffect.CreateDash(patternCanvas, phaseCanvas);
+            }
+
+            // Draw the line
+            canvas.DrawLine(p1, p2, paint);
+        }
+
+        /// <summary>
+        /// Returns an approximated average scale factor of the canvas transform (works with rotation/skew).
+        /// Use this to convert "device-pixel" lengths into canvas units: canvasUnits = devicePixels / scale.
+        /// </summary>
+        public static float GetAverageCanvasScale(SKCanvas canvas)
+        {
+            SKMatrix m = canvas.TotalMatrix;
+
+            // effective scale in X = sqrt(scaleX^2 + skewX^2)
+            // effective scale in Y = sqrt(skewY^2 + scaleY^2)
+            float scaleX = MathF.Sqrt((m.ScaleX * m.ScaleX) + (m.SkewX * m.SkewX));
+            float scaleY = MathF.Sqrt((m.SkewY * m.SkewY) + (m.ScaleY * m.ScaleY));
+
+            // average both axes — acceptable for line dash patterns
+            float avg = (scaleX + scaleY) * 0.5f;
+            if (avg <= 0f) avg = 1f;
+            return avg;
+        }
+
+        /// <summary>
+        /// Convenience: apply the pixel-snapping translate to the canvas.
+        /// It saves the canvas state and returns an IDisposable that restores when disposed:
+        /// using (ApplyPixelSnapping(canvas)) { ... }  // paints inside will be offset
+        /// </summary>
+        /// <param name="canvas">The canvas to translate.</param>
+        /// <returns>An SKAutoCanvasRestore that will restore the canvas when disposed.</returns>
+        public static SKAutoCanvasRestore ApplyPixelSnapping(SKCanvas canvas)
+        {
+            if (canvas is null) throw new ArgumentNullException(nameof(canvas));
+            var restore = new SKAutoCanvasRestore(canvas, true);
+            var offset = GetPixelSnappingOffset(canvas);
+            canvas.Translate(offset.X, offset.Y);
+            return restore;
+        }
+
+        /// <summary>
+        /// Converts an array of <see cref="System.Drawing.Point"/> to <see cref="SKPoint"/>.
+        /// </summary>
+        /// <param name="points">Source points (may be null).</param>
+        /// <returns>Array of <see cref="SKPoint"/>. Returns an empty array when input is null or empty.</returns>
+        public static SKPoint[] ToSkiaPoints(System.Drawing.Point[] points)
+        {
+            if (points == null || points.Length == 0)
+                return Array.Empty<SKPoint>();
+
+            var skPoints = new SKPoint[points.Length];
+            for (int i = 0; i < points.Length; i++)
+            {
+                skPoints[i] = new SKPoint(points[i].X, points[i].Y);
+            }
+
+            return skPoints;
+        }
+
+        /// <summary>
+        /// Converts an array of <see cref="System.Drawing.PointF"/> to <see cref="SKPoint"/>.
+        /// </summary>
+        /// <param name="pointsF">Source <see cref="System.Drawing.PointF"/> array (may be null).</param>
+        /// <returns>Array of <see cref="SKPoint"/>. Returns an empty array when input is null or empty.</returns>
+        public static SKPoint[] ToSkiaPoints(System.Drawing.PointF[] pointsF)
+        {
+            if (pointsF == null || pointsF.Length == 0)
+                return Array.Empty<SKPoint>();
+
+            var skPoints = new SKPoint[pointsF.Length];
+            for (int i = 0; i < pointsF.Length; i++)
+            {
+                skPoints[i] = new SKPoint(pointsF[i].X, pointsF[i].Y);
+            }
+
+            return skPoints;
+        }
+
+        /// <summary>
         /// Draws a focus rectangle on the specified canvas using the given color.
         /// <see cref="FocusRectPaint"/> is used to draw the rectangle.
         /// </summary>
@@ -245,10 +491,8 @@ namespace Alternet.Drawing
         public static void DrawFocusRect(SKCanvas canvas, SKRect rect, SKColor color)
         {
             FocusRectPaint.Color = color;
-            canvas.Save();
-            canvas.Translate(0.5f, 0.5f);
+            using var snapping = ApplyPixelSnapping(canvas);
             canvas.DrawRect(rect, FocusRectPaint);
-            canvas.Restore();
         }
 
         /// <summary>
@@ -513,7 +757,49 @@ namespace Alternet.Drawing
         /// <param name="points">The array of points.</param>
         /// <param name="fillMode">The fill mode.</param>
         /// <returns></returns>
-        public static SKPath? GetPathFromPoints(ReadOnlySpan<PointD> points, FillMode fillMode)
+        public static SKPath? GetPathFromPoints(ReadOnlySpan<PointD> points, FillMode fillMode = FillMode.Alternate)
+        {
+            if (points == null || points.Length < 3)
+                return null;
+
+            var path = new SKPath
+            {
+                FillType = fillMode.ToSkia(),
+            };
+
+            // Move to the first point
+            path.MoveTo(points[0].X, points[0].Y);
+
+            // Draw lines between the points
+            for (int i = 1; i < points.Length; i++)
+            {
+                path.LineTo(points[i].X, points[i].Y);
+            }
+
+            // Ensures the polygon is closed
+            path.Close();
+
+            return path;
+        }
+
+        /// <summary>
+        /// Creates a new <see cref="SKPath"/> from a collection of drawing points,
+        /// optionally specifying the fill mode.
+        /// </summary>
+        /// <remarks>The method creates a closed path by connecting the points in the order they appear in
+        /// the span,  and then closing the path to form a polygon. The <paramref name="fillMode"/>
+        /// determines how the
+        /// interior  of the polygon is filled.</remarks>
+        /// <param name="points">A read-only span of <see cref="System.Drawing.Point"/> representing
+        /// the vertices of the path.  Must contain
+        /// at least three points to create a valid path.</param>
+        /// <param name="fillMode">The fill mode to use for the path. Defaults to <see cref="FillMode.Alternate"/>.</param>
+        /// <returns>An <see cref="SKPath"/> representing the closed polygon defined by the provided points,  or <see
+        /// langword="null"/> if the <paramref name="points"/> span is empty
+        /// or contains fewer than three points.</returns>
+        public static SKPath? GetPathFromSystemPoints(
+            ReadOnlySpan<System.Drawing.Point> points,
+            FillMode fillMode = FillMode.Alternate)
         {
             if (points == null || points.Length < 3)
                 return null;
