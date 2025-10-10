@@ -838,6 +838,63 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Generates an array of points representing a wave pattern within the specified rectangular area.
+        /// </summary>
+        /// <remarks>The method ensures that the wave pattern fits within the bounds of the specified
+        /// rectangle. The horizontal spacing and vertical offsets of the wave are determined by internal scaling
+        /// factors.</remarks>
+        /// <param name="rect">The rectangular area within which the wave pattern is generated.</param>
+        /// <returns>An array of <see cref="PointD"/> objects representing the points of the wave pattern. The wave spans the
+        /// horizontal range of the rectangle and alternates vertically to create the pattern.</returns>
+        public static PointD[] GetPointsForDrawWave(RectI rect)
+        {
+            int minSize = 4;
+            int offset = 6;
+
+            int left = rect.Left - (rect.Left % offset);
+            int i = rect.Right % offset;
+            int right = (i != 0) ? rect.Right + (offset - i) : rect.Right;
+
+            int scale = 2;
+            int size = (right - left) / scale;
+
+            offset = 3;
+
+            if (size < minSize)
+                size = minSize;
+            else
+            {
+                i = (int)((size - minSize) / offset);
+                if ((size - minSize) % offset != 0)
+                    i++;
+                size = minSize + (i * offset);
+            }
+
+            PointD[] pts = new PointD[size];
+            for (int index = 0; index < size; index++)
+            {
+                pts[index].X = left + (index * scale);
+                pts[index].Y = rect.Bottom - 1;
+                switch (index % 3)
+                {
+                    case 0:
+                        {
+                            pts[index].Y -= scale;
+                            break;
+                        }
+
+                    case 2:
+                        {
+                            pts[index].Y += scale;
+                            break;
+                        }
+                }
+            }
+
+            return pts;
+        }
+
+        /// <summary>
         /// Draws a horizontal line on the specified canvas.
         /// </summary>
         /// <param name="dc">The <see cref="SKCanvas"/> on which the line will be drawn.</param>
