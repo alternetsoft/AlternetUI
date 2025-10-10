@@ -603,55 +603,8 @@ namespace Alternet.Drawing
         /// </remarks>
         public virtual void DrawWave(RectD rect, Color color)
         {
-            Draw(this, rect.ToRect(), color);
-
-            static void Draw(Graphics dc, RectI rect, Color color)
-            {
-                int minSize = 4;
-                int offset = 6;
-
-                int left = rect.Left - (rect.Left % offset);
-                int i = rect.Right % offset;
-                int right = (i != 0) ? rect.Right + (offset - i) : rect.Right;
-
-                int scale = 2;
-                int size = (right - left) / scale;
-
-                offset = 3;
-
-                if (size < minSize)
-                    size = minSize;
-                else
-                {
-                    i = (int)((size - minSize) / offset);
-                    if ((size - minSize) % offset != 0)
-                        i++;
-                    size = minSize + (i * offset);
-                }
-
-                PointD[] pts = new PointD[size];
-                for (int index = 0; index < size; index++)
-                {
-                    pts[index].X = left + (index * scale);
-                    pts[index].Y = rect.Bottom - 1;
-                    switch (index % 3)
-                    {
-                        case 0:
-                            {
-                                pts[index].Y -= scale;
-                                break;
-                            }
-
-                        case 2:
-                            {
-                                pts[index].Y += scale;
-                                break;
-                            }
-                    }
-                }
-
-                dc.DrawBeziers(color.GetAsPen(1), pts);
-            }
+            var pts = DrawingUtils.GetPointsForDrawWave(rect.ToRect());
+            DrawBeziers(color.GetAsPen(1), pts);
         }
 
         /// <summary>
