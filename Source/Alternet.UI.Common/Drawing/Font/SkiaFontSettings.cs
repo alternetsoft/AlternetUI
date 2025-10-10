@@ -28,58 +28,58 @@ namespace Alternet.Drawing
         /// reloading configuration-dependent resources.</remarks>
         public static event EventHandler? SettingsChanged;
 
-        /// <inheritdoc cref="Font.DefaultSkiaTextScaleX"/>.
+        /// <inheritdoc cref="SkiaFontDefaults.TextScaleX"/>.
         public float TextScaleX
         {
-            get => Font.DefaultSkiaTextScaleX;
+            get => SkiaFontDefaults.TextScaleX;
             set
             {
-                Font.DefaultSkiaTextScaleX = value;
+                SkiaFontDefaults.TextScaleX = value;
                 RaisePropertyChanged(nameof(TextScaleX));
             }
         }
 
-        /// <inheritdoc cref="Font.DefaultSkiaFontSubpixel"/>.
+        /// <inheritdoc cref="SkiaFontDefaults.Subpixel"/>.
         public bool Subpixel
         {
-            get => Font.DefaultSkiaFontSubpixel;
+            get => SkiaFontDefaults.Subpixel;
             set
             {
-                Font.DefaultSkiaFontSubpixel = value;
+                SkiaFontDefaults.Subpixel = value;
                 RaisePropertyChanged(nameof(Subpixel));
             }
         }
 
-        /// <inheritdoc cref="Font.DefaultSkiaFontHinting"/>.
+        /// <inheritdoc cref="SkiaFontDefaults.Hinting"/>.
         public SKFontHinting Hinting
         {
-            get => Font.DefaultSkiaFontHinting;
+            get => SkiaFontDefaults.Hinting;
             set
             {
-                Font.DefaultSkiaFontHinting = value;
+                SkiaFontDefaults.Hinting = value;
                 RaisePropertyChanged(nameof(Hinting));
             }
         }
 
-        /// <inheritdoc cref="Font.DefaultSkiaTextScaleX"/>.
+        /// <inheritdoc cref="SkiaFontDefaults.TextScaleX"/>.
         public SKFontEdging Edging
         {
-            get => Font.DefaultSkiaFontEdging;
+            get => SkiaFontDefaults.Edging;
             set
             {
-                Font.DefaultSkiaFontEdging = value;
+                SkiaFontDefaults.Edging = value;
                 RaisePropertyChanged(nameof(Edging));
             }
         }
 
-        /// <inheritdoc cref="Font.DefaultSkiaFontForceAutoHinting"/>.
+        /// <inheritdoc cref="SkiaFontDefaults.ForceAutoHinting"/>.
         public bool ForceAutoHinting
         {
-            get => Font.DefaultSkiaFontForceAutoHinting;
+            get => SkiaFontDefaults.ForceAutoHinting;
 
             set
             {
-                Font.DefaultSkiaFontForceAutoHinting = value;
+                SkiaFontDefaults.ForceAutoHinting = value;
                 RaisePropertyChanged(nameof(ForceAutoHinting));
             }
         }
