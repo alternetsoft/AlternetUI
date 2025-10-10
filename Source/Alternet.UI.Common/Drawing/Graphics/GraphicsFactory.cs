@@ -711,25 +711,9 @@ namespace Alternet.Drawing
         /// <returns></returns>
         public static SKFont DefaultFontToSkiaFont(Font font)
         {
-            SKFontStyleWeight skiaWeight = (SKFontStyleWeight)font.Weight;
-            SKFontStyleSlant skiaSlant = font.IsItalic ?
-                SKFontStyleSlant.Italic : SKFontStyleSlant.Upright;
-
-            var typeFace = SKTypeface.FromFamilyName(
-                font.Name,
-                skiaWeight,
-                SKFontStyleWidth.Normal,
-                skiaSlant);
-
-            SKFont skiaFont = new(typeFace, font.SizeInDips);
-
-            skiaFont.Subpixel = Font.DefaultSkiaFontSubpixel;
-            skiaFont.Hinting = Font.DefaultSkiaFontHinting;
-            skiaFont.Edging = Font.DefaultSkiaFontEdging;
-            skiaFont.ScaleX = Font.DefaultSkiaTextScaleX;
-            skiaFont.ForceAutoHinting = Font.DefaultSkiaFontForceAutoHinting;
-
-            return skiaFont;
+            var info = font.ToSkiaFontInfo();
+            var result = info.CreateFont();
+            return result;
         }
 
         private static void LoadImageBitsFormats()
