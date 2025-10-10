@@ -5,6 +5,7 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Reflection.Metadata;
+using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
@@ -498,6 +499,7 @@ namespace Alternet.Drawing
         /// <summary>
         /// Gets all installed font families as enumerable.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static IEnumerable<string> GetFontFamiliesNames()
         {
             return FontFamilies;
@@ -525,6 +527,7 @@ namespace Alternet.Drawing
         /// <returns>
         /// A new <see cref="Image"/> instance containing the grayscale version of the input image.
         /// </returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Image ConvertToGrayscale(Image image)
         {
             var result = SkiaUtils.ConvertToGrayscale((SKBitmap)image);
@@ -563,6 +566,7 @@ namespace Alternet.Drawing
         /// </summary>
         /// <param name="name">Font name.</param>
         /// <returns></returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool IsFamilySkia(string name)
         {
             var index = Array.BinarySearch<string>(FontFamilies, name);
@@ -594,6 +598,7 @@ namespace Alternet.Drawing
         /// </summary>
         /// <param name="scaleFactor">Scaling factor.</param>
         /// <returns></returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static SkiaGraphics CreateMeasureCanvas(Coord scaleFactor)
         {
             return CreateBitmapCanvas(SizeD.Empty, scaleFactor, true);
@@ -692,6 +697,7 @@ namespace Alternet.Drawing
         /// </summary>
         /// <param name="bitmap">Bitmap to check.</param>
         /// <returns></returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool BitmapIsOk(SKBitmap? bitmap)
         {
             return bitmap is not null && bitmap.ReadyToDraw && bitmap.Height > 0 && bitmap.Width > 0;
@@ -700,6 +706,7 @@ namespace Alternet.Drawing
         /// <summary>
         /// Resets loaded font families.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static void ResetFonts()
         {
             fontFamilies = null;
@@ -746,6 +753,7 @@ namespace Alternet.Drawing
         /// Creates default font.
         /// </summary>
         /// <returns></returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static SKFont CreateDefaultFont()
         {
             return new SKFont(DefaultTypeFace, (float)DefaultFontSize);
@@ -893,6 +901,7 @@ namespace Alternet.Drawing
         /// <param name="pen">Pen to use.</param>
         /// <param name="brush">Brush to use.</param>
         /// <returns></returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static (SKPaint? Fill, SKPaint? Stroke) GetFillAndStrokePaint(Pen? pen, Brush? brush)
         {
             return (brush?.SkiaPaint, pen?.SkiaPaint);
@@ -985,6 +994,7 @@ namespace Alternet.Drawing
         /// <param name="foreColor">Foreground color.</param>
         /// <param name="backColor">Background color.
         /// Pass <see cref="Color.Empty"/> to have transparent background under the text.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static void DrawText(
             this SKCanvas canvas,
             ReadOnlySpan<char> s,
@@ -993,7 +1003,47 @@ namespace Alternet.Drawing
             Color foreColor,
             Color backColor)
         {
-            if(s.Length == 0)
+            DrawText(
+                canvas,
+                s,
+                location,
+                font,
+                foreColor.AsStrokeAndFillPaint,
+                backColor.IsOk ? backColor.AsFillPaint : null);
+        }
+
+        /// <summary>
+        /// Draws the specified text on the canvas at the given location using the
+        /// specified font and paint settings.
+        /// </summary>
+        /// <remarks>The method measures the text using the specified font and adjusts the drawing
+        /// position to account for font metrics. If a background color is provided,
+        /// a rectangle is drawn behind the
+        /// text to match its dimensions.</remarks>
+        /// <param name="canvas">The <see cref="SKCanvas"/> on which the text will be drawn.
+        /// Cannot be <see langword="null"/>.</param>
+        /// <param name="s">The text to draw, represented as a <see cref="ReadOnlySpan{Char}"/>.
+        /// If the span is empty, no text will be
+        /// drawn.</param>
+        /// <param name="location">The <see cref="PointD"/> specifying the top-left corner where the text will be drawn.</param>
+        /// <param name="font">The <see cref="Font"/> to use for rendering the text. Cannot
+        /// be <see langword="null"/>.</param>
+        /// <param name="foreColor">The <see cref="SKPaint"/> used to define the foreground
+        /// color and style of the text. Cannot be <see
+        /// langword="null"/>.</param>
+        /// <param name="backColor">An optional <see cref="SKPaint"/> used to define
+        /// the background color and style. If provided, a rectangle
+        /// will be drawn behind the text. If <see langword="null"/>,
+        /// no background will be drawn.</param>
+        public static void DrawText(
+            SKCanvas canvas,
+            ReadOnlySpan<char> s,
+            PointD location,
+            Font font,
+            SKPaint foreColor,
+            SKPaint? backColor = null)
+        {
+            if (s.Length == 0)
                 return;
 
             float x = location.X;
@@ -1004,18 +1054,20 @@ namespace Alternet.Drawing
             var offsetX = 0;
             var offsetY = Math.Abs(skFont.Metrics.Top);
 
-            var measureResult = skFont.MeasureText(s);
+            if (backColor is not null)
+            {
+                var measureResult = skFont.MeasureText(s);
 
-            var rect = SKRect.Create(
-                measureResult,
-                skFont.Metrics.Top.Abs() + skFont.Metrics.Bottom.Abs());
-            rect.Offset(x, y);
+                var rect = SKRect.Create(
+                    measureResult,
+                    skFont.Metrics.Top.Abs() + skFont.Metrics.Bottom.Abs());
+                rect.Offset(x, y);
 
-            if (backColor.IsOk)
-                canvas.DrawRect(rect, backColor.AsFillPaint);
+                canvas.DrawRect(rect, backColor);
+            }
 
             using var blob = SKTextBlob.Create(s, skFont);
-            canvas.DrawText(blob, x + offsetX, y + offsetY, foreColor.AsStrokeAndFillPaint);
+            canvas.DrawText(blob, x + offsetX, y + offsetY, foreColor);
         }
 
         /// <summary>
@@ -1073,6 +1125,106 @@ namespace Alternet.Drawing
             }
 
             canvas.DrawPath(path, pen);
+        }
+
+        /// <summary>
+        /// Draws a series of connected cubic Bezier curves on the specified canvas.
+        /// </summary>
+        /// <remarks>This method creates a path consisting of one or more cubic Bezier curves, starting at
+        /// the first point in <paramref name="points"/>  and using each subsequent group of three points to define the
+        /// control points and endpoint of each curve. The resulting path is  drawn on the specified <paramref
+        /// name="canvas"/> using the provided <paramref name="paint"/>.</remarks>
+        /// <param name="canvas">The <see cref="SKCanvas"/> on which the Bezier curves will be drawn.
+        /// Cannot be <see langword="null"/>.</param>
+        /// <param name="paint">The <see cref="SKPaint"/> used to define the style, color, and other properties
+        /// of the drawn curves. Cannot
+        /// be <see langword="null"/>.</param>
+        /// <param name="points">A read-only span of <see cref="PointD"/> representing the control points
+        /// for the Bezier curves.  The first
+        /// point specifies the starting point, and every subsequent group of three points defines
+        /// a cubic Bezier curve.
+        /// The total number of points must be at least 4 and a multiple of 3 plus 1 (e.g., 4, 7, 10, etc.).</param>
+        public static void DrawBeziers(SKCanvas canvas, SKPaint paint, ReadOnlySpan<PointD> points)
+        {
+            var pointsCount = points.Length;
+            Graphics.DebugBezierPointsAssert(points);
+
+            SKPath path = new();
+            path.MoveTo(points[0]);
+
+            for (int i = 1; i <= pointsCount - 3; i += 3)
+            {
+                path.CubicTo(points[i], points[i + 1], points[i + 2]);
+            }
+
+            canvas.DrawPath(path, paint);
+        }
+
+        /// <summary>
+        /// Fills the specified rectangular area on the canvas with a linear gradient.
+        /// </summary>
+        /// <remarks>This method creates a linear gradient between <paramref name="point1"/> and
+        /// <paramref name="point2"/> and fills the specified rectangle with it.
+        /// If the gradient points are identical, the
+        /// rectangle is filled with a solid color instead.</remarks>
+        /// <param name="canvas">The <see cref="SKCanvas"/> on which the gradient will be drawn.
+        /// Cannot be <c>null</c>.</param>
+        /// <param name="rect">The rectangular area to fill, specified as a <see cref="RectD"/>.
+        /// If the width or height is less than or
+        /// equal to zero, the method does nothing.</param>
+        /// <param name="beginColor">The starting color of the gradient.</param>
+        /// <param name="endColor">The ending color of the gradient.</param>
+        /// <param name="point1">The starting point of the gradient, specified as a <see cref="PointD"/>.</param>
+        /// <param name="point2">The ending point of the gradient, specified as a <see cref="PointD"/>.
+        /// If this point coincides with
+        /// <paramref name="point1"/>, the method falls back to a solid fill
+        /// using <paramref name="beginColor"/>.</param>
+        public static void FillGradient(
+            SKCanvas canvas,
+            RectD rect,
+            SKColor beginColor,
+            SKColor endColor,
+            PointD point1,
+            PointD point2)
+        {
+            if (rect.Width <= 0 || rect.Height <= 0)
+                return;
+
+            var skRect = new SKRect(
+                rect.X,
+                rect.Y,
+                rect.X + rect.Width,
+                rect.Y + rect.Height);
+
+            // If the two gradient points coincide, fall back to a solid fill.
+            if (MathF.Abs(point1.X - point2.X) < float.Epsilon && MathF.Abs(point1.Y - point2.Y) < float.Epsilon)
+            {
+                using var solid = new SKPaint
+                {
+                    Style = SKPaintStyle.Fill,
+                    IsAntialias = true,
+                    Color = beginColor,
+                };
+                canvas.DrawRect(skRect, solid);
+                return;
+            }
+
+            // Create shader and paint, ensure proper disposal.
+            using var shader = SKShader.CreateLinearGradient(
+                point1,
+                point2,
+                new[] { beginColor, endColor },
+                new float[] { 0f, 1f },
+                SKShaderTileMode.Clamp);
+
+            using var paint = new SKPaint
+            {
+                Style = SKPaintStyle.Fill,
+                IsAntialias = true,
+                Shader = shader,
+            };
+
+            canvas.DrawRect(skRect, paint);
         }
 
         /// <summary>
