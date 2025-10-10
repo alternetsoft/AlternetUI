@@ -133,6 +133,52 @@ namespace Alternet.Drawing
         [FieldOffset(FieldOffsetDY)]
         public Coord TransY;
 
+        /* Vector fields */
+
+        /// <summary>
+        /// Represents the 2x2 linear transformation matrix as a <see cref="Vector4"/>.
+        /// </summary>
+        /// <remarks>The vector overlays the 2x2 linear part of the structure, with the components
+        /// corresponding to the matrix elements in row-major order: (M11, M12, M21, M22). This allows efficient
+        /// manipulation of the matrix as a single vector.</remarks>
+        [FieldOffset(FieldOffsetM11)]
+        public Vector4 Matrix2x2;
+
+        /// <summary>
+        /// Represents the translation vector with X and Y components.
+        /// </summary>
+        /// <remarks>This field specifies the displacement in the X and Y directions, typically used for
+        /// transformations or positioning.</remarks>
+        [FieldOffset(FieldOffsetDX)]
+        public Vector2 Translation;
+
+        /// <summary>
+        /// Represents the first row of a 2x2 matrix, where the X component corresponds to M11 and the Y component
+        /// corresponds to M12.
+        /// </summary>
+        /// <remarks>This field is typically used to directly access or modify the elements of the first
+        /// row in a 2x2 matrix. The X component represents the value at the first row, first column (M11), and the Y
+        /// component represents the value at the first row, second column (M12).</remarks>
+        [FieldOffset(FieldOffsetM11)]
+        public Vector2 Row0;
+
+        /// <summary>
+        /// Represents the second row of the matrix as a <see cref="Vector2"/>.
+        /// </summary>
+        /// <remarks>The X component corresponds to the M21 element of the matrix, and the Y component
+        /// corresponds to the M22 element.</remarks>
+        [FieldOffset(FieldOffsetM21)]
+        public Vector2 Row1;
+
+        /// <summary>
+        /// Represents a 3x2 matrix used for transformations in 2D space.
+        /// </summary>
+        /// <remarks>This field is a direct representation of a <see cref="System.Numerics.Matrix3x2"/>
+        /// structure, which can be used for operations such as scaling, rotation, translation, and skewing in 2D
+        /// graphics.</remarks>
+        [FieldOffset(FieldOffsetM11)]
+        public System.Numerics.Matrix3x2 Matrix3x2;
+
         private const int SizeOf = sizeof(Coord);
         private const int FieldOffsetM11 = 0;
         private const int FieldOffsetM12 = SizeOf;
@@ -178,6 +224,17 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
+        /// Initializes a new instance of the <see cref="TransformMatrix"/> class using the specified <see
+        /// cref="SKMatrix"/>.
+        /// </summary>
+        /// <param name="m">The <see cref="SKMatrix"/> representing the transformation
+        /// matrix to initialize this instance with.</param>
+        public TransformMatrix(SKMatrix m)
+            : this(m.ScaleX, m.SkewY, m.SkewX, m.ScaleY, m.TransX, m.TransY)
+        {
+        }
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="TransformMatrix"/> class
         /// using data from the specified matrix.
         /// </summary>
@@ -220,12 +277,26 @@ namespace Alternet.Drawing
         /// <summary>
         /// Gets a value indicating whether the object is mirrored along the X-axis.
         /// </summary>
-        public readonly bool IsMirroredX => M11 < 0;
+        public readonly bool IsMirroredX
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get
+            {
+                return M11 < 0;
+            }
+        }
 
         /// <summary>
         /// Gets a value indicating whether the transformation includes a vertical mirroring.
         /// </summary>
-        public readonly bool IsMirroredY => M22 < 0;
+        public readonly bool IsMirroredY
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get
+            {
+                return M22 < 0;
+            }
+        }
 
         /// <summary>
         /// Gets a value indicating whether this <see cref="TransformMatrix"/>
@@ -236,11 +307,10 @@ namespace Alternet.Drawing
         /// <see langword="false"/>.</value>
         public readonly bool IsIdentity
         {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
             get
             {
-                return M11 == 1d && M12 == 0d &&
-                       M21 == 0d && M22 == 1d &&
-                       DX == 0d && DY == 0d;
+                return Matrix3x2.IsIdentity;
             }
         }
 
@@ -250,6 +320,7 @@ namespace Alternet.Drawing
         [Browsable(false)]
         public readonly Coord Determinant
         {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
             get
             {
                 return (M11 * M22) - (M12 * M21);
@@ -275,12 +346,12 @@ namespace Alternet.Drawing
         public static explicit operator SKMatrix(TransformMatrix m)
         {
             var result = new SKMatrix(
-                (float)m.ScaleX,
-                (float)m.SkewX,
-                (float)m.TransX,
-                (float)m.SkewY,
-                (float)m.ScaleY,
-                (float)m.TransY,
+                m.ScaleX,
+                m.SkewX,
+                m.TransX,
+                m.SkewY,
+                m.ScaleY,
+                m.TransY,
                 0,
                 0,
                 1);
@@ -355,14 +426,10 @@ namespace Alternet.Drawing
         /// <summary>
         /// Resets this <see cref="TransformMatrix"/> to have the elements of the identity matrix.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void Reset()
         {
-            M11 = CoordD.One;
-            M12 = CoordD.Empty;
-            M21 = CoordD.Empty;
-            M22 = CoordD.One;
-            DX = CoordD.Empty;
-            DY = CoordD.Empty;
+            Matrix3x2 = System.Numerics.Matrix3x2.Identity;
         }
 
         /// <summary>
@@ -537,6 +604,7 @@ namespace Alternet.Drawing
         /// Creates a copy of this matrix.
         /// </summary>
         /// <returns></returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public readonly TransformMatrix Clone()
         {
             return new(this);
@@ -546,14 +614,10 @@ namespace Alternet.Drawing
         /// Assigns matrix values with data from the specified matrix;
         /// </summary>
         /// <param name="matrix"></param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void Assign(TransformMatrix matrix)
         {
-            M11 = matrix.M11;
-            M12 = matrix.M12;
-            M21 = matrix.M21;
-            M22 = matrix.M22;
-            DX = matrix.DX;
-            DY = matrix.DY;
+            Matrix3x2 = matrix.Matrix3x2;
         }
 
         /// <summary>
@@ -595,14 +659,7 @@ namespace Alternet.Drawing
         /// <returns></returns>
         public readonly bool Equals(TransformMatrix matrix)
         {
-            var result =
-                M11 == matrix.M11 &&
-                M12 == matrix.M12 &&
-                M21 == matrix.M21 &&
-                M22 == matrix.M22 &&
-                DX == matrix.DX &&
-                DY == matrix.DY;
-            return result;
+            return Matrix3x2.Equals(matrix.Matrix3x2);
         }
 
         /// <inheritdoc/>
@@ -616,7 +673,7 @@ namespace Alternet.Drawing
         /// <inheritdoc/>
         public readonly override int GetHashCode()
         {
-            return HashCode.Combine(M11, M12, M21, M22, DX, DY);
+            return Matrix3x2.GetHashCode();
         }
 
         /// <summary>
