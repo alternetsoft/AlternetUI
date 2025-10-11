@@ -176,6 +176,7 @@ namespace Alternet::UI
         bool _showHorzScrollBar = false;
         bool _scrollBarAlwaysVisible = false;
         bool _destroyed = false;
+        bool _allowDoubleBuffered = true;
         
         bool bindScrollEvents = true;
         int _ignoreRecreate = 0;

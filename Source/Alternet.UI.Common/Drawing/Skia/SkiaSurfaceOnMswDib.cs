@@ -78,14 +78,14 @@ namespace Alternet.Drawing
 
             var canvas = surface.Canvas;
 
-            // Optional: restrict to clip
-            if (clip.IsEmpty) clip = new RectI(0, 0, w, h);
-
-            // You can clip to reduce work:
             canvas.Save();
-            canvas.ClipRect(new SKRect(clip.Left, clip.Top, clip.Right, clip.Bottom));
 
-            if(clearColor != SKColors.Transparent)
+            if (clip.IsEmpty)
+                clip = new RectI(0, 0, w, h);
+            else
+                canvas.ClipRect(new SKRect(clip.Left, clip.Top, clip.Right, clip.Bottom));
+
+            if (clearColor != SKColors.Transparent)
             {
                 // Clear only the clip (optional) or full:
                 // canvas.Clear(new SKColor(0xFF, 0xFF, 0xFF, 0xFF));
@@ -106,7 +106,7 @@ namespace Alternet.Drawing
             canvas.Restore();
             canvas.Flush();
 
-            MswUtils.NativeMethods.BitBlt(
+            var bitBltResult = MswUtils.NativeMethods.BitBlt(
                 hdcTarget,
                 clip.Left,
                 clip.Top,

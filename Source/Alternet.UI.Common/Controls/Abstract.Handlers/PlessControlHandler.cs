@@ -333,5 +333,10 @@ namespace Alternet.UI
         public void OnSystemColorsChanged()
         {
         }
+
+        /// <inheritdoc/>
+        public void SetRenderingFlags(ControlRenderingFlags flags)
+        {
+        }
     }
 }

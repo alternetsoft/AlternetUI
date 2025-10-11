@@ -7,7 +7,9 @@ namespace Alternet.UI.Native
 {
     internal partial class Control
     {
-        Drawing.DynamicBitmap? dynamicBitmap;
+        private readonly Alternet.Drawing.SkiaSurfaceOnMswDib dibSurface = new();
+
+        private Drawing.DynamicBitmap? dynamicBitmap;
 
         public AbstractControl? EventUIFocusedControl
         {
@@ -277,7 +279,7 @@ namespace Alternet.UI.Native
 
             var r = uiControl.ClientRectangle;
 
-            var e = new PaintEventArgs(CreateDefaultGraphics, r, r);
+            var e = new PaintEventArgs(CreateDefaultGraphics, clipRect: r, clientRect: r);
 
             try
             {
@@ -294,7 +296,51 @@ namespace Alternet.UI.Native
             KnownRunTimeTrackers.DefaultPaintStop(uiControl);
         }
 
+        protected void SkiaPaintMsw()
+        {
+            var uiControl = UIControl;
+            if (uiControl is null)
+                return;
+
+            KnownRunTimeTrackers.SkiaPaintStart(uiControl);
+
+            var clientRect = uiControl.ClientRectangle;
+            var scaleFactor = uiControl.ScaleFactor;
+            var clientRectI = clientRect.PixelFromDip(scaleFactor);
+
+            using var nativeGraphics = CreateDefaultGraphics();
+            var hdc = nativeGraphics.GetHdc();
+            try
+            {
+                dibSurface.Paint(
+                    hdc,
+                    clip: clientRectI,
+                    clientRectI.Size,
+                    SKColors.Transparent,
+                    (surface, clip) =>
+                    {
+                        var canvas = surface.Canvas;
+
+                        using var graphics = Drawing.SkiaUtils.CreateSkiaGraphicsOnCanvas(canvas, scaleFactor);
+
+                        var e = new PaintEventArgs(() => graphics, clipRect: clientRect, clientRect: clientRect);
+                        uiControl.RaisePaint(e);
+                    });
+            }
+            finally
+            {
+                nativeGraphics.ReleaseHdc(hdc);
+            }
+
+            KnownRunTimeTrackers.SkiaPaintStop(uiControl);
+        }
+
         protected void SkiaPaint()
+        {
+            SkiaPaintCrossPlatform();
+        }
+
+        protected void SkiaPaintCrossPlatform()
         {
             var uiControl = UIControl;
             if (uiControl is null)
@@ -335,6 +381,7 @@ namespace Alternet.UI.Native
 
         protected override void DisposeManaged()
         {
+            dibSurface.DisposeSurface();
             base.DisposeManaged();
         }
 

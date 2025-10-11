@@ -164,7 +164,7 @@ namespace Alternet.Drawing
         /// <summary>
         /// Gets the handle to the device context associated with this <see cref="Graphics" />.
         /// The following values are returned by wxWidgets backend: on Windows the return value is an HDC,
-        /// on macOS it is a CGContextRef and on wxGTK it will be a GdkDrawable. 
+        /// on macOS it is a CGContextRef and on wxGTK it will be a GdkDrawable.
         /// </summary>
         /// <returns>
         /// Handle to the device context associated with this <see cref="Graphics" />.

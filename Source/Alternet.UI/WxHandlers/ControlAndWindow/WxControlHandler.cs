@@ -259,6 +259,12 @@ namespace Alternet.UI
             NativeControl.Lower();
         }
 
+        public void SetRenderingFlags(ControlRenderingFlags value)
+        {
+            var allowDoubleBuffered = !value.HasFlag(ControlRenderingFlags.UseSkiaSharp);
+            NativeControl.SetAllowDoubleBuffered(allowDoubleBuffered);
+        }
+
         public void UnsetToolTip()
         {
             NativeControl.UnsetToolTip();

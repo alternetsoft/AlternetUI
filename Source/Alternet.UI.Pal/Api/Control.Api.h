@@ -1056,6 +1056,17 @@ ALTERNET_UI_API void Control_Lower_(Control* obj)
     #endif
 }
 
+ALTERNET_UI_API void Control_SetAllowDoubleBuffered_(Control* obj, c_bool allow)
+{
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    MarshalExceptions<void>([&](){
+    #endif
+        obj->SetAllowDoubleBuffered(allow);
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    });
+    #endif
+}
+
 ALTERNET_UI_API void Control_DisableRecreate_(Control* obj)
 {
     #if !defined(__WXMSW__) || defined(_DEBUG)

@@ -767,6 +767,12 @@ namespace Alternet.UI.Native
             NativeApi.Control_Lower_(NativePointer);
         }
         
+        public void SetAllowDoubleBuffered(bool allow)
+        {
+            CheckDisposed();
+            NativeApi.Control_SetAllowDoubleBuffered_(NativePointer, allow);
+        }
+        
         public void DisableRecreate()
         {
             CheckDisposed();
@@ -1602,6 +1608,9 @@ namespace Alternet.UI.Native
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void Control_Lower_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void Control_SetAllowDoubleBuffered_(IntPtr obj, bool allow);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void Control_DisableRecreate_(IntPtr obj);

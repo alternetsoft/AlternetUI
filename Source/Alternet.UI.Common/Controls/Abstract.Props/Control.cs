@@ -113,6 +113,35 @@ namespace Alternet.UI
             }
         }
 
+        /// <inheritdoc/>
+        public override ControlRenderingFlags RenderingFlags
+        {
+            get => base.RenderingFlags;
+
+            set
+            {
+                if (RenderingFlags == value)
+                    return;
+
+                var hasOpenGL = RenderingFlags.HasFlag(ControlRenderingFlags.UseSkiaSharpWithOpenGL);
+                var newHasOpenGL = value.HasFlag(ControlRenderingFlags.UseSkiaSharpWithOpenGL);
+
+                base.RenderingFlags = value;
+
+                if (hasOpenGL != newHasOpenGL)
+                {
+                    RecreateHandler();
+                    Handler.SetRenderingFlags(value);
+                    Refresh();
+                }
+                else
+                {
+                    Handler.SetRenderingFlags(value);
+                    Refresh();
+                }
+            }
+        }
+
         /// <summary>
         /// Gets or sets the language direction for this control.
         /// </summary>

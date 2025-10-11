@@ -45,6 +45,10 @@ namespace NativeApi.Api
         public void Raise() { }
         public void Lower() { }
 
+        public void SetAllowDoubleBuffered(bool allow)
+        {
+        }
+
         public void DisableRecreate() { }
         public void EnableRecreate() { }
         public void UnsetToolTip() { }

@@ -263,5 +263,16 @@ namespace Alternet.UI
         /// This method is called when system colors are changed.
         /// </summary>
         void OnSystemColorsChanged();
+
+        /// <summary>
+        /// Sets the rendering flags for a control, which determine how the control is rendered.
+        /// </summary>
+        /// <remarks>The specified flags control various aspects of the rendering behavior.
+        /// Ensure that the flags provided are valid combinations of the
+        /// <see cref="ControlRenderingFlags"/> enumeration. Invalid
+        /// or unsupported flags may result in undefined behavior.</remarks>
+        /// <param name="flags">A combination of <see cref="ControlRenderingFlags"/> values
+        /// that specify the rendering options to apply.</param>
+        void SetRenderingFlags(ControlRenderingFlags flags);
     }
 }

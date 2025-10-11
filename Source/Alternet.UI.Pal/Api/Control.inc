@@ -143,6 +143,7 @@ void CenterOnParent(int orientation);
 void RefreshRect(const RectD& rect, bool eraseBackground);
 void Raise();
 void Lower();
+void SetAllowDoubleBuffered(bool allow);
 void DisableRecreate();
 void EnableRecreate();
 void UnsetToolTip();

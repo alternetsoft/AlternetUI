@@ -375,6 +375,10 @@ namespace Alternet.UI
             InvalidateContainer();
         }
 
+        public void SetRenderingFlags(ControlRenderingFlags flags)
+        {
+        }
+
         public virtual Graphics CreateDrawingContext()
         {
             SKBitmap bitmap = new();
@@ -399,13 +403,13 @@ namespace Alternet.UI
         {
         }
 
-        private MauiControlHandler? GetRootHandler()
+        public MauiControlHandler? GetRootHandler()
         {
             var result = (Control?.Root as Control)?.Handler as MauiControlHandler;
             return result;
         }
 
-        private void InvalidateContainer(RectD? rect = null)
+        public void InvalidateContainer(RectD? rect = null)
         {
             var c = container ?? GetRootHandler()?.container;
 

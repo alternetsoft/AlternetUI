@@ -938,6 +938,21 @@ namespace Alternet::UI
         RecreateWxWindowIfNeeded();
     }
 
+    void Control::SetAllowDoubleBuffered(bool allow)
+    {
+        _allowDoubleBuffered = allow;
+        auto wxWindow = GetWxWindow();
+        if (allow)
+        {
+            if(GetUserPaint())
+                _wxWindow->SetDoubleBuffered(true);
+        }
+        else
+        {
+            _wxWindow->SetDoubleBuffered(false);
+        }
+    }
+
     void Control::CreateWxWindow()
     {
         _flags.Set(ControlFlags::CreatingWxWindow, true);
@@ -964,7 +979,8 @@ namespace Alternet::UI
 
         if (GetUserPaint())
         {
-            _wxWindow->SetDoubleBuffered(true);
+            if (_allowDoubleBuffered)
+                _wxWindow->SetDoubleBuffered(true);
         }
 
         if (!GetTabStop())
@@ -1976,7 +1992,8 @@ namespace Alternet::UI
         if (GetUserPaint() == value)
             return;
         _flags.Set(ControlFlags::UserPaint, value);
-        GetWxWindow()->SetDoubleBuffered(value);
+        if(_allowDoubleBuffered)
+            GetWxWindow()->SetDoubleBuffered(value);
     }
 
     wxWindow* wxFindWindowAtPoint(wxWindow* win, const wxPoint& pt)
