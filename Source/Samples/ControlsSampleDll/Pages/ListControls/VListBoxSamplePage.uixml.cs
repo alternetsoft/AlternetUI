@@ -15,8 +15,15 @@ namespace ControlsSample
 
         private readonly VirtualListBox listBox = new()
         {
-            SuggestedWidth = 350,
+            Dock = DockStyle.Fill,
             Margin = (0,0,0,5),
+        };
+
+        private readonly Splitter splitter = new()
+        {
+            Dock = DockStyle.Right,
+            MinExtra = 150,
+            MinSize = 150,
         };
 
         public VListBoxSamplePage()
@@ -32,6 +39,9 @@ namespace ControlsSample
             }
 
             InitializeComponent();
+
+            tab1.Width = 400;
+
             Title = "Virtual";
 
             findExactCheckBox.BindBoolProp(this, nameof(FindExact));
@@ -39,6 +49,8 @@ namespace ControlsSample
             findText.TextChanged += FindText_TextChanged;
             PropertyGridSample.ObjectInit.InitVListBox(listBox);
 
+            splitter.TargetMode = SplitterTargetMode.NextVisibleSibling;
+            Children.Prepend(splitter);
             Children.Prepend(listBox);
             listBox.SelectionChanged += ListBox_SelectionChanged;
             listBox.MouseLeftButtonDown += ListBox_MouseLeftButtonDown;

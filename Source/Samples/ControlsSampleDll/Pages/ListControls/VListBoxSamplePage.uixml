@@ -2,8 +2,8 @@
         xmlns="http://schemas.alternetsoft.com/ui/2021"
         xmlns:x="http://schemas.alternetsoft.com/ui/2021/uixml"
         xmlns:local="clr-namespace:ControlsSample;assembly=ControlsSample"
-        Layout="Horizontal">
-  <TabControl Name="tab1" Margin="10,0,10,5" HorizontalAlignment="Fill">
+        Layout="Dock">
+  <TabControl Name="tab1" Margin="10,0,10,5" Dock="Right">
 
     <StackPanel Orientation="Vertical" Padding="10" Name="vertPanel1" Title="Options"
                 HorizontalAlignment = "Left">
