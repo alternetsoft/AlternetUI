@@ -152,6 +152,9 @@ namespace ControlsSample
             object? sender, 
             MouseEventArgs e)
         {
+            if (!cbLogHitTestEvent.Checked)
+                return;
+
             var result = listBox.HitTest(Mouse.GetPosition(listBox));
             
             var item = (result == null ? "<none>" : listBox.GetItem(result.Value)?.ToString());
@@ -177,6 +180,9 @@ namespace ControlsSample
 
         private void ListBox_SelectionChanged(object? sender, EventArgs e)
         {
+            if (!cbLogSelectedEvent.Checked)
+                return;
+
             string s = IndexesToStr(listBox.SelectedIndexes);
             App.Log($"ListBox: SelectionChanged. SelectedIndexes: ({s})");
         }

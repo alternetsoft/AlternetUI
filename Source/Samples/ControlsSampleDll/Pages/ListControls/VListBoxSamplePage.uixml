@@ -43,5 +43,11 @@
       <CheckBox Margin="0,0,0,5" Text="Round Selection" IsTextLocalized="true"
                 Name="roundSelectionCheckBox"/>
     </StackPanel>
+
+    <StackPanel Orientation="Vertical" Padding="10" Name="vertPanel3" Title="Events"
+                HorizontalAlignment = "Left">
+      <CheckBox Text="Log HitTest Event" Name="cbLogHitTestEvent" IsTextLocalized="true" Margin="0,0,0,5"/>
+      <CheckBox Text="Log SelectinoChanged Event" Name="cbLogSelectedEvent" Margin="0,0,0,5" IsTextLocalized="true"/>
+    </StackPanel>
   </TabControl>
 </Panel>
