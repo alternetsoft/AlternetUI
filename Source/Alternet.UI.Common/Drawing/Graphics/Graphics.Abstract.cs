@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Text;
 
 namespace Alternet.Drawing
@@ -159,6 +160,32 @@ namespace Alternet.Drawing
         /// <param name="unit"><see cref="GraphicsUnit"/> that determines
         /// the unit of measure for the rectangle parameter.</param>
         public abstract void FillRectangle(Brush brush, RectD rectangle, GraphicsUnit unit);
+
+        /// <summary>
+        /// Gets the handle to the device context associated with this <see cref="Graphics" />.
+        /// The following values are returned by wxWidgets backend: on Windows the return value is an HDC,
+        /// on macOS it is a CGContextRef and on wxGTK it will be a GdkDrawable. 
+        /// </summary>
+        /// <returns>
+        /// Handle to the device context associated with this <see cref="Graphics" />.
+        /// A value of <see cref="IntPtr.Zero"/> is returned if the DC does
+        /// not have anything that fits the handle concept.
+        /// </returns>
+        /// <remarks>
+        /// Call the <see cref="ReleaseHdc" /> method to release the device context handle when it is no longer needed.
+        /// </remarks>
+        [EditorBrowsable(EditorBrowsableState.Advanced)]
+        public virtual IntPtr GetHdc() => IntPtr.Zero;
+
+        /// <summary>
+        /// Releases a device context handle obtained by a previous call to the <see cref="GetHdc" />
+        /// method of this <see cref="Graphics" />.</summary>
+        /// <param name="hdc">Handle to a device context obtained by a previous call to the
+        /// <see cref="GetHdc" /> method of this <see cref="Graphics" />.</param>
+        [EditorBrowsable(EditorBrowsableState.Advanced)]
+        public virtual void ReleaseHdc(IntPtr hdc)
+        {
+        }
 
         /// <summary>
         /// Fills the interior of a pie section defined by a circle specified by a center

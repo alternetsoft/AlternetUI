@@ -83,6 +83,9 @@ namespace Alternet.Drawing
         }
 
         /// <inheritdoc/>
+        public override IntPtr GetHdc() => dc.GetHandle();
+
+        /// <inheritdoc/>
         public override void Rectangle(Pen pen, Brush brush, RectD rectangle)
         {
             DebugBrushAssert(brush);
