@@ -81,6 +81,9 @@ namespace Alternet.UI
         private Action? doubleClickAction;
         private Action<IListControlItemContainer?, ListBoxItemPaintEventArgs>? drawBackgroundAction;
         private Action<IListControlItemContainer?, ListBoxItemPaintEventArgs>? drawForegroundAction;
+        private ObjectUniqueId? group;
+        private Graphics.DrawElementParams[]? prefixElements;
+        private Graphics.DrawElementParams[]? suffixElements;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ListControlItem"/> class
@@ -136,7 +139,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets group id of the item.
         /// </summary>
-        public virtual ObjectUniqueId? Group { get; set; }
+        public virtual ObjectUniqueId? Group { get => group; set => group = value; }
 
         /// <summary>
         /// Gets or sets distance between lines of the text.
@@ -358,7 +361,7 @@ namespace Alternet.UI
 
             set
             {
-                SetImage(VisualControlState.Normal, value);
+                SetImageLightDark(VisualControlState.Normal, value);
             }
         }
 
@@ -378,7 +381,7 @@ namespace Alternet.UI
 
             set
             {
-                SetImage(VisualControlState.Disabled, value);
+                SetImageLightDark(VisualControlState.Disabled, value);
             }
         }
 
@@ -386,16 +389,25 @@ namespace Alternet.UI
         /// Gets or sets array of elements to draw before the label text and image.
         /// </summary>
         [Browsable(false)]
-        public virtual Graphics.DrawElementParams[]? PrefixElements { get; set; }
+        public virtual Graphics.DrawElementParams[]? PrefixElements
+        {
+            get => prefixElements;
+            set => prefixElements = value;
+        }
 
         /// <summary>
         /// Gets or sets array of elements to draw after the label text and image.
         /// </summary>
         [Browsable(false)]
-        public virtual Graphics.DrawElementParams[]? SuffixElements { get; set; }
+        public virtual Graphics.DrawElementParams[]? SuffixElements
+        {
+            get => suffixElements;
+            set => suffixElements = value;
+        }
 
         /// <summary>
         /// Gets or sets <see cref="Image"/> associated with the item when it is selected.
+        /// Setter of this property sets both light and dark images.
         /// </summary>
         /// <remarks>
         /// It is up to control to decide whether and how this property is used.
@@ -410,7 +422,7 @@ namespace Alternet.UI
 
             set
             {
-                SetImage(VisualControlState.Selected, value);
+                SetImageLightDark(VisualControlState.Selected, value);
             }
         }
 
@@ -1767,6 +1779,20 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Sets the specified image for both light and dark themes in the given visual control state.
+        /// </summary>
+        /// <remarks>This method applies the same image to both the light and dark theme variations of the
+        /// specified visual control state.</remarks>
+        /// <param name="state">The visual control state for which the image is being set.</param>
+        /// <param name="image">The image to associate with the specified state.
+        /// Can be <see langword="null"/> to remove the image.</param>
+        public virtual void SetImageLightDark(VisualControlState state, Image? image)
+        {
+            SetImage(state, image, isDark: false);
+            SetImage(state, image, isDark: true);
+        }
+
+        /// <summary>
         /// Sets <see cref="Value"/> property.
         /// </summary>
         public void SetValue(object? value)
@@ -1777,34 +1803,38 @@ namespace Alternet.UI
         /// <summary>
         /// Copies the properties of the specified <see cref="ListControlItem"/> instance
         /// to the current instance. This method may not copy all the properties.
+        /// Properties that are not copied include those that are <see cref="Action"/> delegates,
+        /// <see cref="Graphics.DrawElementParams"/> arrays, and any other complex objects.
         /// </summary>
         /// <param name="assignFrom">The <see cref="ListControlItem"/> instance whose properties
         /// will be copied.</param>
         public virtual void Assign(ListControlItem assignFrom)
         {
-            DisplayText = assignFrom.DisplayText;
-            CheckState = assignFrom.CheckState;
-            CheckBoxThreeState = assignFrom.CheckBoxThreeState;
-            CheckBoxAllowAllStatesForUser = assignFrom.CheckBoxAllowAllStatesForUser;
-            CheckBoxVisible = assignFrom.CheckBoxVisible;
-            CanRemove = assignFrom.CanRemove;
-            Image = assignFrom.Image;
-            DisabledImage = assignFrom.DisabledImage;
-            SelectedImage = assignFrom.SelectedImage;
-            SvgImage = assignFrom.SvgImage;
-            SvgImageSize = assignFrom.SvgImageSize;
-            MinHeight = assignFrom.MinHeight;
-            FontStyle = assignFrom.FontStyle;
-            Font = assignFrom.Font;
-            HideSelection = assignFrom.HideSelection;
-            HideFocusRect = assignFrom.HideFocusRect;
-            ForegroundColor = assignFrom.ForegroundColor;
+            Alignment = assignFrom.Alignment;
             BackgroundColor = assignFrom.BackgroundColor;
             Border = assignFrom.Border;
-            Alignment = assignFrom.Alignment;
+            cachedSvg = assignFrom.cachedSvg.Clone();
+            CanRemove = assignFrom.CanRemove;
+            CheckBoxAllowAllStatesForUser = assignFrom.CheckBoxAllowAllStatesForUser;
+            CheckBoxThreeState = assignFrom.CheckBoxThreeState;
+            CheckBoxVisible = assignFrom.CheckBoxVisible;
+            CheckState = assignFrom.CheckState;
+            DisplayText = assignFrom.DisplayText;
+            Font = assignFrom.Font;
+            FontStyle = assignFrom.FontStyle;
+            ForegroundColor = assignFrom.ForegroundColor;
+            ForegroundMargin = assignFrom.ForegroundMargin;
+            HideFocusRect = assignFrom.HideFocusRect;
+            HideSelection = assignFrom.HideSelection;
+            ImageIndex = assignFrom.ImageIndex;
+            IsRadioButton = assignFrom.IsRadioButton;
             LabelFlags = assignFrom.LabelFlags;
+            MinHeight = assignFrom.MinHeight;
+            TextLineAlignment = assignFrom.TextLineAlignment;
+            TextLineDistance = assignFrom.TextLineDistance;
             Text = assignFrom.Text;
             Value = assignFrom.Value;
+            Group = assignFrom.Group;
         }
 
         /// <summary>
