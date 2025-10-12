@@ -141,6 +141,31 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
+        /// Assigns the values from the specified <see cref="CachedSvgImage{TImage}"/> instance to this instance.
+        /// </summary>
+        /// <param name="other">The <see cref="CachedSvgImage{TImage}"/> instance whose values
+        /// will be assigned to this instance.</param>
+        public void Assign(in CachedSvgImage<TImage> other)
+        {
+            svgImage = other.svgImage;
+            svgSize = other.svgSize;
+            imageData = other.imageData.Clone();
+        }
+
+        /// <summary>
+        /// Creates a new instance of <see cref="CachedSvgImage{TImage}"/> that is a copy of the current instance.
+        /// </summary>
+        /// <remarks>The cloned instance will have the same state and data as the original instance.
+        /// Changes made to the cloned instance will not affect the original instance, and vice versa.</remarks>
+        /// <returns>A new <see cref="CachedSvgImage{TImage}"/> instance that is a copy of the current instance.</returns>
+        public CachedSvgImage<TImage> Clone()
+        {
+            var result = new CachedSvgImage<TImage>();
+            result.Assign(this);
+            return result;
+        }
+
+        /// <summary>
         /// Saves svg as <see cref="Image"/> to the specified state.
         /// </summary>
         /// <param name="state">Item state.</param>
