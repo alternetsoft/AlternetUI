@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ApiInfo>
-  <Assembly Name="Alternet.UI.Common, Version=0.9.755.0, Culture=neutral, PublicKeyToken=7fb0fe57212b4b74">
+  <Assembly Name="Alternet.UI.Common, Version=0.9.756.0, Culture=neutral, PublicKeyToken=7fb0fe57212b4b74">
     <Type Name="XamlX.Runtime.IXamlParentStackProviderV1" />
     <Type Name="XamlX.Runtime.IXamlXmlNamespaceInfoProviderV1" />
     <Type Name="XamlX.Runtime.XamlXmlNamespaceInfoV1" />
@@ -168,6 +168,8 @@
       <Event Name="Disposed" />
       <Event Name="PropertyChanged" />
     </Type>
+    <Type Name="Alternet.Drawing.SkiaFontDefaults" />
+    <Type Name="Alternet.Drawing.SkiaFontInfo" />
     <Type Name="Alternet.Drawing.SkiaFontSettings">
       <Event Name="PropertyChanged" />
     </Type>
@@ -485,6 +487,7 @@
     <Type Name="Alternet.UI.CommandLineArgs">
       <Event Name="Error" />
     </Type>
+    <Type Name="Alternet.UI.CDeclarationActionDelegate" />
     <Type Name="Alternet.UI.CustomNativeHandle">
       <Event Name="Disposed" />
       <Event Name="PropertyChanged" />
@@ -16781,12 +16784,46 @@
     </Type>
     <Type Name="Alternet.UI.KnownButtons+Info" />
     <Type Name="Alternet.UI.KnownProperties+AbstractControlProperties" />
-    <Type Name="Alternet.UI.LogWriter+MultiLogWriter" />
-    <Type Name="Alternet.UI.LogWriter+NullLogWriter" />
-    <Type Name="Alternet.UI.LogWriter+DebugLogWriter" />
-    <Type Name="Alternet.UI.LogWriter+ApplicationLogWriter" />
-    <Type Name="Alternet.UI.LogWriter+StringBuilderLogWriter" />
-    <Type Name="Alternet.UI.LogWriter+ConsoleLogWriter" />
+    <Type Name="Alternet.UI.LogWriter+MultiLogWriter">
+      <Event Name="Disposed" />
+      <Event Name="PropertyChanged" />
+    </Type>
+    <Type Name="Alternet.UI.LogWriter+NullLogWriter">
+      <Event Name="Disposed" />
+      <Event Name="PropertyChanged" />
+    </Type>
+    <Type Name="Alternet.UI.LogWriter+DebugLogWriter">
+      <Event Name="Disposed" />
+      <Event Name="PropertyChanged" />
+    </Type>
+    <Type Name="Alternet.UI.LogWriter+BaseLogWriter">
+      <Event Name="Disposed" />
+      <Event Name="PropertyChanged" />
+    </Type>
+    <Type Name="Alternet.UI.LogWriter+CustomLogWriter">
+      <Event Name="Disposed" />
+      <Event Name="PropertyChanged" />
+    </Type>
+    <Type Name="Alternet.UI.LogWriter+ActionLogWriter">
+      <Event Name="Disposed" />
+      <Event Name="PropertyChanged" />
+    </Type>
+    <Type Name="Alternet.UI.LogWriter+ApplicationLogWriter">
+      <Event Name="Disposed" />
+      <Event Name="PropertyChanged" />
+    </Type>
+    <Type Name="Alternet.UI.LogWriter+TextWriterLogWriter">
+      <Event Name="Disposed" />
+      <Event Name="PropertyChanged" />
+    </Type>
+    <Type Name="Alternet.UI.LogWriter+StringBuilderLogWriter">
+      <Event Name="Disposed" />
+      <Event Name="PropertyChanged" />
+    </Type>
+    <Type Name="Alternet.UI.LogWriter+ConsoleLogWriter">
+      <Event Name="Disposed" />
+      <Event Name="PropertyChanged" />
+    </Type>
     <Type Name="Alternet.UI.UixmlLoader+Flags" />
     <Type Name="Alternet.UI.DataObject+XmlDictionaryItems" />
     <Type Name="Alternet.UI.DataObject+XmlDictionaryItem" />
@@ -17150,6 +17187,8 @@
     <Type Name="Alternet.UI.XmlUtils+XmlStreamConvertParams" />
     <Type Name="Alternet.UI.ScrollBar+AltPositionInfo+Record" />
     <Type Name="Alternet.UI.StdSlider+SliderThumb+ShapeType" />
+    <Type Name="Alternet.UI.MswUtils+NativeMethods+AppThemeMode" />
+    <Type Name="Alternet.UI.MswUtils+NativeMethods+WindowCompositionAttribute" />
     <Type Name="Alternet.UI.MswUtils+NativeMethods+SmallPoint" />
     <Type Name="Alternet.UI.MswUtils+NativeMethods+ConsoleCharUnion" />
     <Type Name="Alternet.UI.MswUtils+NativeMethods+ConsoleCharInfo" />
@@ -17159,5 +17198,7 @@
     <Type Name="Alternet.UI.MswUtils+NativeMethods+DwmWindowAttribute" />
     <Type Name="Alternet.UI.MswUtils+NativeMethods+PIXELFORMATDESCRIPTOR" />
     <Type Name="Alternet.UI.MswUtils+NativeMethods+SmallRect" />
+    <Type Name="Alternet.UI.MswUtils+NativeMethods+HighContrastData" />
+    <Type Name="Alternet.UI.MswUtils+NativeMethods+WindowCompositionAttributeData" />
   </Assembly>
 </ApiInfo>

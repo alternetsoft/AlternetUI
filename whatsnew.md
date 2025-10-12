@@ -1,3 +1,21 @@
+# 0.9.756 (2025 October 12)
+
+- Handle system color changes in ListPicker, EnumPicker, ColorPicker, TreeView, ComboBox, ScrollBar, DatePicker, Calendar, TimePicker, RichToolTip, PropertyGrid.
+- ListControlItem: Replaced auto-properties for Group, PrefixElements, and SuffixElements with explicit backing fields and accessors.
+- Color: Introduces a virtual Current property, which returns the appropriate color based on the color scheme. For LightDarkColor instances, it returns either the dark or light color; for regular Color instances, it returns itself.
+- ListControlItem: Introduced SetImageLightDark to set images for both light and dark themes.
+- ListControlItem: Updated Assign method to copy additional properties and clarified which properties are not copied.
+- CachedSvgImage: Introduced Assign and Clone methods for copying and duplicating instances.
+- Graphics: Add GetHdc and ReleaseHdc methods.
+- Add SkiaFontInfo struct and refactor font creation.
+- Add SkiaFontDefaults for SKFont property defaults (scaling, subpixel precision, hinting, and edging).
+- TransformMatrix: Added vector-based fields (Vector2, Vector4, Matrix3x2) for more efficient manipulation and interoperability.
+- Add different static methods for painting primitives over SKCanvas.
+- Reordered and renumbered DashStyle enum values to match System.Drawing.
+- Introduced SuspendEvents and ResumeEvents methods with an internalcounter to allow temporarily suspending event notifications in ListView and TreeView.
+- Improved LogWriter classes.
+- Improve demo behavior on system colors change.
+
 # 0.9.755 (2025 October 6)
 
 - Improve StdSlider look.
