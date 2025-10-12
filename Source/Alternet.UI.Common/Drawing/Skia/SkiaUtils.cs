@@ -47,6 +47,14 @@ namespace Alternet.Drawing
         public static readonly EnumArray<InterpolationMode, SKPaint?> InterpolationModePaints = new();
 
         /// <summary>
+        /// A sample string containing characters commonly used to test whether a font is monospaced.
+        /// </summary>
+        /// <remarks>This string includes a variety of characters with differing widths in proportional
+        /// fonts, such as  narrow characters ('i', 'l') and wide characters ('m', 'W'). It is intended for use in
+        /// scenarios where determining if a font renders all characters with equal width is necessary.</remarks>
+        public static string SampleCharsForIsMonospace = "iIl1. ,:;`'\"!l/\\|[](){}<>=-+*mwW@#%&0123456789";
+
+        /// <summary>
         /// Represents the name of the SkiaSharp native library.
         /// </summary>
         public static string NativeLibraryName = "libSkiaSharp";
@@ -926,6 +934,57 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
+        /// Returns the size of a sequence of identical characters when drawn with the specified font.
+        /// </summary>
+        /// <param name="canvas">The <see cref="SKCanvas"/> on which the character will be measured.</param>
+        /// <param name="ch">The character to measure.</param>
+        /// <param name="count">The number of times the character is repeated.</param>
+        /// <param name="font">The font used for measurement.</param>
+        /// <returns>
+        /// A <see cref="SizeD"/> structure representing the width and height of the repeated characters.
+        /// </returns>
+        public static SizeD CharSize(
+            this SKCanvas canvas,
+            char ch,
+            int count,
+            SKFont font)
+        {
+            if (count == 1)
+                return canvas.CharSize(ch, font);
+            if (count <= 0)
+                return SizeD.Empty;
+
+            SizeD result = SizeD.Empty;
+
+            SpanUtils.InvokeWithFilledSpan(
+                count,
+                ch,
+                span =>
+                {
+                    result = canvas.GetTextExtent(span, font);
+                });
+
+            return result;
+        }
+
+        /// <summary>
+        /// Measures the size of a single character when drawn using the specified font.
+        /// </summary>
+        /// <param name="canvas">The <see cref="SKCanvas"/> on which the character will be measured.</param>
+        /// <param name="ch">The character to measure.</param>
+        /// <param name="font">The <see cref="SKFont"/> used to measure the character.</param>
+        /// <returns>A <see cref="SizeD"/> representing the width and height of the character.</returns>
+        public static SizeD CharSize(
+            this SKCanvas canvas,
+            char ch,
+            SKFont font)
+        {
+            Span<char> buffer = stackalloc char[1];
+            buffer[0] = ch;
+            return canvas.GetTextExtent(buffer, font);
+        }
+
+        /// <summary>
         /// Gets text size.
         /// </summary>
         /// <param name="canvas">Drawing context.</param>
@@ -935,15 +994,13 @@ namespace Alternet.Drawing
         public static SizeD GetTextExtent(
             this SKCanvas canvas,
             ReadOnlySpan<char> text,
-            Font font)
+            SKFont font)
         {
-            var skFont = (SKFont)font;
-
-            var measureResult = skFont.MeasureText(text);
+            var measureResult = font.MeasureText(text);
 
             SizeD result = new(
                 measureResult,
-                skFont.Metrics.Top.Abs() + skFont.Metrics.Bottom.Abs());
+                font.Metrics.Top.Abs() + font.Metrics.Bottom.Abs());
 
             return result;
         }
@@ -1013,6 +1070,46 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
+        /// Returns true if the <see cref="SKFont"/> appears to be monospaced.
+        /// It first checks <c>Typeface.IsFixedPitch</c> if available, then measures glyph advance widths.
+        /// </summary>
+        /// <param name="font">The <see cref="SKFont"/> to test (must not be null).</param>
+        /// <param name="tolerance">Maximum allowed difference (in device/pixel units)
+        /// between widest and narrowest glyph to consider the font monospace. Default 0.5f.</param>
+        public static bool IsMonospace(SKFont font, float tolerance = 0.5f)
+        {
+            if (font is null) throw new ArgumentNullException(nameof(font));
+            if (tolerance < 0) throw new ArgumentOutOfRangeException(nameof(tolerance));
+
+            var tf = font.Typeface;
+            if (tf != null)
+            {
+                try
+                {
+                    if (tf.IsFixedPitch)
+                        return true;
+                    return false;
+                }
+                catch
+                {
+                }
+            }
+
+            var widths = new float[SampleCharsForIsMonospace.Length];
+
+            for (int i = 0; i < SampleCharsForIsMonospace.Length; i++)
+            {
+                string s = SampleCharsForIsMonospace[i].ToString();
+                widths[i] = font.MeasureText(s);
+            }
+
+            float min = widths.Min();
+            float max = widths.Max();
+
+            return (max - min) <= tolerance;
+        }
+
+        /// <summary>
         /// Draws the specified text on the canvas at the given location using the
         /// specified font and paint settings.
         /// </summary>
@@ -1039,7 +1136,7 @@ namespace Alternet.Drawing
             SKCanvas canvas,
             ReadOnlySpan<char> s,
             PointD location,
-            Font font,
+            SKFont font,
             SKPaint foreColor,
             SKPaint? backColor = null)
         {
@@ -1049,24 +1146,22 @@ namespace Alternet.Drawing
             float x = location.X;
             float y = location.Y;
 
-            var skFont = (SKFont)font;
-
             var offsetX = 0;
-            var offsetY = Math.Abs(skFont.Metrics.Top);
+            var offsetY = Math.Abs(font.Metrics.Top);
 
             if (backColor is not null)
             {
-                var measureResult = skFont.MeasureText(s);
+                var measureResult = font.MeasureText(s);
 
                 var rect = SKRect.Create(
                     measureResult,
-                    skFont.Metrics.Top.Abs() + skFont.Metrics.Bottom.Abs());
+                    font.Metrics.Top.Abs() + font.Metrics.Bottom.Abs());
                 rect.Offset(x, y);
 
                 canvas.DrawRect(rect, backColor);
             }
 
-            using var blob = SKTextBlob.Create(s, skFont);
+            using var blob = SKTextBlob.Create(s, font);
             canvas.DrawText(blob, x + offsetX, y + offsetY, foreColor);
         }
 
