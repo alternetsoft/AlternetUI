@@ -1070,6 +1070,149 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
+        /// Draws a dotted line on the specified graphics context, alternating between two colors.
+        /// </summary>
+        /// <remarks>This method supports drawing horizontal or vertical dotted lines only.
+        /// The line alternates between <paramref name="color1"/> and
+        /// <paramref name="color2"/> (or transparency if <paramref name="color2"/> is
+        /// <see cref="Color.Empty"/>). The size of the dots is determined by the
+        /// <paramref name="size"/> parameter.</remarks>
+        /// <param name="dc">The <see cref="Graphics"/> object used to draw the line.</param>
+        /// <param name="x1">The starting x-coordinate of the line.</param>
+        /// <param name="y1">The starting y-coordinate of the line.</param>
+        /// <param name="x2">The ending x-coordinate of the line.</param>
+        /// <param name="y2">The ending y-coordinate of the line.</param>
+        /// <param name="color1">The primary color used for the dots in the line.</param>
+        /// <param name="color2">The secondary color used for the dots in the line.
+        /// If set to <see cref="Color.Empty"/>, the line will
+        /// alternate between the primary color and transparency.</param>
+        /// <param name="size">The size of each dot in pixels. Defaults to 1.
+        /// Larger values result in thicker dots.</param>
+        public static void DrawDotLine(
+            SKCanvas dc,
+            Coord x1,
+            Coord y1,
+            Coord x2,
+            Coord y2,
+            SKPaint color1,
+            SKPaint? color2,
+            int size = 1)
+        {
+            var pxSize = size;
+
+            bool isTransparent = color2 is null;
+            if (x1 == x2)
+            {
+                if (pxSize > 1)
+                {
+                    int oldStart = 0;
+                    SKPaint? oldColor = null;
+                    SKPaint? color;
+
+                    for (int i = 0; i < y2 - y1; i++)
+                    {
+                        if ((i + y1) % (size * 2) < size)
+                            color = color1;
+                        else
+                            color = color2;
+
+                        if (i != 0 && color != oldColor)
+                        {
+                            if (oldColor != null)
+                            {
+                                DrawingUtils.DrawVertLine(
+                                    dc,
+                                    oldColor,
+                                    (x1, oldStart + y1),
+                                    i - oldStart,
+                                    1);
+                            }
+
+                            oldStart = i;
+                            oldColor = color;
+                        }
+                    }
+
+                    if (oldColor != null && oldStart + y1 < y2)
+                    {
+                        DrawingUtils.DrawVertLine(
+                            dc,
+                            oldColor,
+                            (x1, oldStart + y1),
+                            y2 - oldStart - y1,
+                            1);
+                    }
+                }
+                else
+                {
+                    for (int i = 0; i < y2 - y1; i++)
+                    {
+                        if ((i + y1) % (size * 2) < size)
+                            DrawingUtils.DrawHorzLine(dc, color1, (x1, i + y1), 1, 1);
+                        else
+                            if (color2 is not null)
+                                DrawingUtils.DrawHorzLine(dc, color2, (x1, i + y1), 1, 1);
+                    }
+                }
+            }
+            else
+            if (y1 == y2)
+            {
+                if (pxSize > 1)
+                {
+                    int oldStart = 0;
+                    SKPaint? oldColor = null;
+                    SKPaint? color;
+
+                    for (int i = 0; i < x2 - x1; i++)
+                    {
+                        if ((i + y1) % (size * 2) < size)
+                            color = color1;
+                        else
+                            color = color2;
+
+                        if (i != 0 && color != oldColor)
+                        {
+                            if (oldColor != null)
+                            {
+                                DrawingUtils.DrawHorzLine(
+                                    dc,
+                                    oldColor,
+                                    (oldStart + x1, y1),
+                                    i - oldStart,
+                                    1);
+                            }
+
+                            oldStart = i;
+                            oldColor = color;
+                        }
+                    }
+
+                    if (oldColor != null && oldStart + y1 < y2)
+                    {
+                        DrawingUtils.DrawHorzLine(
+                            dc,
+                            oldColor,
+                            (oldStart + x1, y1),
+                            x2 - x1 - oldStart,
+                            1);
+                    }
+                }
+                else
+                {
+                    for (int i = 0; i < x2 - x1; i++)
+                    {
+                        if ((i + y1) % (size * 2) < size)
+                            DrawingUtils.DrawHorzLine(dc, color1, (i + x1, y1), 1, 1);
+                        else
+                            if (color2 is not null)
+                                DrawingUtils.DrawHorzLine(dc, color2, (i + x1, y1), 1, 1);
+                    }
+                }
+            }
+        }
+
+        /// <summary>
         /// Returns true if the <see cref="SKFont"/> appears to be monospaced.
         /// It first checks <c>Typeface.IsFixedPitch</c> if available, then measures glyph advance widths.
         /// </summary>
