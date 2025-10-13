@@ -9,7 +9,8 @@ namespace NativeApi.Api
     {
         public event EventHandler? SelectionChanged;
         
-        int GetSelection() => default;
+        public int GetSelection() => default;
+
         public bool HasBorder { get; set; }
         public bool IsSelected(int n) => default;
         public bool IsSorted() => default;
@@ -40,5 +41,9 @@ namespace NativeApi.Api
         public int GetSelectionsItem(int index) => default;
 
         public void UpdateSelections() { }
+
+        public void SetFlags(Alternet.UI.ListBoxHandlerFlags flags) { }
+
+        public Alternet.UI.ListBoxHandlerFlags GetFlags() => default;
     }
 }

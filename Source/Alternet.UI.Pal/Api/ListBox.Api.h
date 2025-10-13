@@ -41,6 +41,17 @@ ALTERNET_UI_API void ListBox_SetHasBorder_(ListBox* obj, c_bool value)
     #endif
 }
 
+ALTERNET_UI_API int ListBox_GetSelection_(ListBox* obj)
+{
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    return MarshalExceptions<int>([&](){
+    #endif
+        return obj->GetSelection();
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    });
+    #endif
+}
+
 ALTERNET_UI_API c_bool ListBox_IsSelected_(ListBox* obj, int n)
 {
     #if !defined(__WXMSW__) || defined(_DEBUG)
@@ -278,6 +289,28 @@ ALTERNET_UI_API void ListBox_UpdateSelections_(ListBox* obj)
     MarshalExceptions<void>([&](){
     #endif
         obj->UpdateSelections();
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    });
+    #endif
+}
+
+ALTERNET_UI_API void ListBox_SetFlags_(ListBox* obj, ListBoxHandlerFlags flags)
+{
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    MarshalExceptions<void>([&](){
+    #endif
+        obj->SetFlags(flags);
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    });
+    #endif
+}
+
+ALTERNET_UI_API ListBoxHandlerFlags ListBox_GetFlags_(ListBox* obj)
+{
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    return MarshalExceptions<ListBoxHandlerFlags>([&](){
+    #endif
+        return obj->GetFlags();
     #if !defined(__WXMSW__) || defined(_DEBUG)
     });
     #endif

@@ -1293,6 +1293,17 @@ namespace Alternet::UI
         All = 37,
     };
     
+    enum class ListBoxHandlerFlags
+    {
+        SingleSelection = 32,
+        MultipleSelection = 64,
+        ExtendedSelection = 128,
+        AlwaysShowVertScroll = 512,
+        NoVertScrollBar = 1024,
+        IntegralHeight = 2048,
+        ShowHorzScrollWhenNeeded = 1073741824,
+    };
+    
     enum class SetBoundsFlags
     {
         UseExisting = 0,
@@ -3639,6 +3650,7 @@ template<> struct enable_bitmask_operators<Alternet::UI::ControlFlags> { static 
 template<> struct enable_bitmask_operators<Alternet::UI::ControlRefreshOptions> { static const bool enable = true; };
 template<> struct enable_bitmask_operators<Alternet::UI::ControlRenderingFlags> { static const bool enable = true; };
 template<> struct enable_bitmask_operators<Alternet::UI::ControlStyles> { static const bool enable = true; };
+template<> struct enable_bitmask_operators<Alternet::UI::ListBoxHandlerFlags> { static const bool enable = true; };
 template<> struct enable_bitmask_operators<Alternet::UI::SetBoundsFlags> { static const bool enable = true; };
 template<> struct enable_bitmask_operators<Alternet::UI::VisualControlStates> { static const bool enable = true; };
 template<> struct enable_bitmask_operators<Alternet::UI::DatePickerStyleFlags> { static const bool enable = true; };

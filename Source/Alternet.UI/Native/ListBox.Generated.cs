@@ -39,6 +39,12 @@ namespace Alternet.UI.Native
             }
         }
         
+        public int GetSelection()
+        {
+            CheckDisposed();
+            return NativeApi.ListBox_GetSelection_(NativePointer);
+        }
+        
         public bool IsSelected(int n)
         {
             CheckDisposed();
@@ -171,6 +177,18 @@ namespace Alternet.UI.Native
             NativeApi.ListBox_UpdateSelections_(NativePointer);
         }
         
+        public void SetFlags(Alternet.UI.ListBoxHandlerFlags flags)
+        {
+            CheckDisposed();
+            NativeApi.ListBox_SetFlags_(NativePointer, flags);
+        }
+        
+        public Alternet.UI.ListBoxHandlerFlags GetFlags()
+        {
+            CheckDisposed();
+            return NativeApi.ListBox_GetFlags_(NativePointer);
+        }
+        
         static GCHandle eventCallbackGCHandle;
         public static ListBox? GlobalObject;
         
@@ -223,6 +241,9 @@ namespace Alternet.UI.Native
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void ListBox_SetHasBorder_(IntPtr obj, bool value);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern int ListBox_GetSelection_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern bool ListBox_IsSelected_(IntPtr obj, int n);
@@ -289,6 +310,12 @@ namespace Alternet.UI.Native
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void ListBox_UpdateSelections_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void ListBox_SetFlags_(IntPtr obj, Alternet.UI.ListBoxHandlerFlags flags);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern Alternet.UI.ListBoxHandlerFlags ListBox_GetFlags_(IntPtr obj);
             
         }
     }

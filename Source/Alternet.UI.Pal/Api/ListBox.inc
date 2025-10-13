@@ -4,6 +4,7 @@ public:
 bool GetHasBorder();
 void SetHasBorder(bool value);
 
+int GetSelection();
 bool IsSelected(int n);
 bool IsSorted();
 bool SetStringSelection(const string& s, bool select);
@@ -26,6 +27,8 @@ int Insert(const string& item, uint32_t pos);
 int GetSelectionsCount();
 int GetSelectionsItem(int index);
 void UpdateSelections();
+void SetFlags(ListBoxHandlerFlags flags);
+ListBoxHandlerFlags GetFlags();
 
 public:
 

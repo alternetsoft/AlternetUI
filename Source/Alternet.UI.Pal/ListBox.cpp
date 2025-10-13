@@ -51,11 +51,10 @@ namespace Alternet::UI
 
     wxWindow* ListBox::CreateWxWindowCore(wxWindow* parent)
     {
-        long style = 0;
+        long style = (long)_flags;
 
         if (!hasBorder)
             style = style | wxBORDER_NONE;
-
 
         auto value = new wxListBox2(
             parent,
@@ -84,6 +83,24 @@ namespace Alternet::UI
     {
         event.Skip();
         RaiseEvent(ListBoxEvent::SelectionChanged);
+    }
+
+    ListBoxHandlerFlags ListBox::GetFlags()
+    {
+        return _flags;
+	}
+
+    void ListBox::SetFlags(ListBoxHandlerFlags flags)
+    {
+        if(_flags == flags)
+			return;
+		_flags = flags;
+        RecreateWxWindowIfNeeded();
+    }
+
+    int ListBox::GetSelection()
+    {
+		return GetListBoxBase()->GetSelection();
     }
 
     bool ListBox::IsSelected(int n)
