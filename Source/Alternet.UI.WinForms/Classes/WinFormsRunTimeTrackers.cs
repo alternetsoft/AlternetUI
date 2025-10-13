@@ -16,6 +16,11 @@ namespace Alternet.UI.WinForms
     public static class WinFormsRunTimeTrackers
     {
         /// <summary>
+        /// Tracks the runtime duration of the clipped control painting operation.
+        /// </summary>
+        public static readonly RunTimeTracker ClippedPaint = new("Control.Paint.Clipped");
+
+        /// <summary>
         /// Tracks the runtime duration of the default control painting operation.
         /// </summary>
         public static readonly RunTimeTracker DefaultPaint = new("Control.Paint.Default");
@@ -34,6 +39,30 @@ namespace Alternet.UI.WinForms
         /// Gets the control currently being tracked for painting operations.
         /// </summary>
         public static System.Windows.Forms.Control? TrackedControl { get; private set; }
+
+        /// <summary>
+        /// Starts tracking the clipped paint operation for the specified control.
+        /// </summary>
+        /// <param name="control">The control to track.</param>
+        [Conditional("DEBUG")]
+        public static void ClippedPaintStart(System.Windows.Forms.Control control)
+        {
+            if (TrackedControl != control)
+                return;
+            ClippedPaint.Start();
+        }
+
+        /// <summary>
+        /// Stops tracking the clipped paint operation for the specified control.
+        /// </summary>
+        /// <param name="control">The control to stop tracking.</param>
+        [Conditional("DEBUG")]
+        public static void ClippedPaintStop(System.Windows.Forms.Control control)
+        {
+            if (TrackedControl != control)
+                return;
+            ClippedPaint.Stop();
+        }
 
         /// <summary>
         /// Starts tracking the default paint operation for the specified control.
