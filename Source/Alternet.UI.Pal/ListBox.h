@@ -37,7 +37,7 @@ namespace Alternet::UI
 
     private:
         bool hasBorder = true;
-		ListBoxHandlerFlags _flags = ListBoxHandlerFlags::SingleSelection;
+		ListBoxHandlerFlags _flags = ListBoxHandlerFlags::SingleSelection | ListBoxHandlerFlags::IntegralHeight;
         wxArrayInt _selections = wxArrayInt();
 
         wxListBoxBase* GetListBoxBase();
