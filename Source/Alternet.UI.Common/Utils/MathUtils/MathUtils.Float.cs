@@ -230,13 +230,19 @@ namespace Alternet.UI
         /// IsEven(0f);     // returns true
         /// </code>
         /// </example>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool IsEvenInteger(float value)
         {
-            if (value % 1 != 0)
-                return false;
+            if (!float.IsFinite(value)) return false;
 
-            return ((int)value % 2) == 0;
+            float truncate = MathF.Truncate(value);
+            if (value != truncate) return false; // has fractional part
+
+            // All representable float integers with |x| >= 2^24 are multiples of 2 (so even).
+            const float IntExactLimit = 16777216f; // 2^24
+            if (MathF.Abs(truncate) >= IntExactLimit) return true;
+
+            // Now safe to cast to int because |truncate| < 2^24 < int.MaxValue
+            return ((int)truncate % 2) == 0;
         }
 
         /// <summary>
@@ -247,9 +253,11 @@ namespace Alternet.UI
         /// <param name="value">The floating-point value to evaluate.</param>
         /// <returns><see langword="true"/> if the specified value is an integer;
         /// otherwise, <see langword="false"/>.</returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool IsInteger(float value)
         {
-            return value % 1 == 0;
+            if (!float.IsFinite(value)) return false;
+            return value == MathF.Truncate(value);
         }
 
         /// <summary>
