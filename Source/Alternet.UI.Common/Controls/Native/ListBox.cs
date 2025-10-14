@@ -85,7 +85,7 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="n">Zero-based index of the item to test.</param>
         /// <returns><c>true</c> if the item is selected; otherwise, <c>false</c>.</returns>
-        public virtual bool IsSelected(int n) => PlatformControl.IsSelected(n);
+        public virtual bool GetSelected(int n) => PlatformControl.IsSelected(n);
 
         /// <summary>
         /// Determines whether the items in the list box are displayed in sorted order.
@@ -113,7 +113,7 @@ namespace Alternet.UI
         /// <param name="bCase">If <c>true</c>, perform a case-sensitive search;
         /// otherwise case-insensitive.</param>
         /// <returns>The zero-based index of the matching item, or -1 if not found.</returns>
-        public virtual int FindString(string s, bool bCase = false) => PlatformControl.FindString(s, bCase);
+        public virtual int FindStringExact(string s, bool bCase = false) => PlatformControl.FindString(s, bCase);
 
         /// <summary>
         /// Gets the number of items that are visible per page in the list box viewport.
@@ -125,12 +125,32 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Gets the index of the topmost visible item in the list box.
+        /// Deselects all currently selected items.
         /// </summary>
-        /// <returns>The zero-based index of the top item.</returns>
-        public virtual int GetTopItem()
+        public void ClearSelected()
         {
-            return PlatformControl.GetTopItem();
+            var count = GetCount();
+            if (count == 0)
+                return;
+
+            PlatformControl.UpdateSelections();
+            var selectedCount = PlatformControl.GetSelectionsCount();
+            if (selectedCount == 0)
+                return;
+
+            if (selectedCount == 1)
+                Internal();
+            else
+                DoInsideUpdate(Internal);
+
+            void Internal()
+            {
+                for (int i = 0; i < selectedCount; i++)
+                {
+                    var index = PlatformControl.GetSelectionsItem(i);
+                    Deselect(index);
+                }
+            }
         }
 
         /// <summary>
@@ -171,30 +191,54 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Sets the specified item to be the first (top) visible item.
-        /// </summary>
-        /// <param name="n">Zero-based index of the item to place first.</param>
-        public virtual void SetFirstItem(int n)
-        {
-            PlatformControl.SetFirstItem(n);
-        }
-
-        /// <summary>
-        /// Sets the first visible item by searching for the specified string and making that item first.
-        /// </summary>
-        /// <param name="s">The string of the item to set as first.</param>
-        public virtual void SetFirstItem(string s)
-        {
-            PlatformControl.SetFirstItemStr(s);
-        }
-
-        /// <summary>
         /// Sets the selection to the item at the specified index.
         /// </summary>
         /// <param name="n">Zero-based index of the item to select.</param>
         public virtual void SetSelection(int n)
         {
             PlatformControl.SetSelection(n);
+        }
+
+        /// <summary>
+        /// Updates the selection state of the specified item.
+        /// </summary>
+        /// <remarks>When <paramref name="select"/> is <see langword="true"/>,
+        /// the item is selected using
+        /// the platform-specific  selection mechanism. When <paramref name="select"/>
+        /// is <see langword="false"/>, the item is deselected.</remarks>
+        /// <param name="n">The zero-based index of the item to update.</param>
+        /// <param name="select">A value indicating whether to select or deselect the item.
+        /// <see langword="true"/> to select the item; <see
+        /// langword="false"/> to deselect it.</param>
+        public virtual void SetSelected(int n, bool select)
+        {
+            if (select)
+                PlatformControl.SetSelection(n, select);
+            else
+                Deselect(n);
+        }
+
+        /// <summary>
+        /// Returns a string representation for this control.
+        /// </summary>
+        public override string ToString()
+        {
+            string s = base.ToString();
+            if (itemsCollection is not null)
+            {
+                s += $", Items.Count: {Items.Count}";
+                if (Items.Count > 0)
+                {
+                    string? z = GetItemText(Items[0]);
+                    if (z is not null)
+                    {
+                        ReadOnlySpan<char> txt = (z.Length > 40) ? z.AsSpan(0, 40) : z;
+                        s += $", Items[0]: {txt.ToString()}";
+                    }
+                }
+            }
+
+            return s;
         }
 
         /// <inheritdoc/>
@@ -306,7 +350,7 @@ namespace Alternet.UI
         {
             if (n < 0 || n >= GetCount())
                 return false;
-            PlatformControl.SetString(n, ItemToString(s));
+            PlatformControl.SetString(n, GetItemText(s));
             return true;
         }
 
@@ -326,7 +370,7 @@ namespace Alternet.UI
         /// <returns>The zero-based index of the newly appended item.</returns>
         internal virtual int Add(object s)
         {
-            return PlatformControl.Append(ItemToString(s));
+            return PlatformControl.Append(GetItemText(s));
         }
 
         /// <summary>
@@ -337,7 +381,7 @@ namespace Alternet.UI
         /// <returns>The zero-based index of the inserted item.</returns>
         internal virtual int Insert(object item, int pos)
         {
-            return PlatformControl.Insert(ItemToString(item), pos);
+            return PlatformControl.Insert(GetItemText(item), pos);
         }
 
         /// <inheritdoc/>
@@ -356,7 +400,7 @@ namespace Alternet.UI
         /// <see cref="System.IFormattable"/>, its formatted string representation
         /// is returned using the current culture.
         /// Otherwise, the result of <see cref="object.ToString"/> is returned.</returns>
-        protected virtual string ItemToString(object item)
+        protected virtual string GetItemText(object item)
         {
             if (item == null)
                 return string.Empty;

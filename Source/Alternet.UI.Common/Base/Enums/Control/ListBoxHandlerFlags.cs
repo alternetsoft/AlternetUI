@@ -13,6 +13,11 @@ namespace Alternet.UI
     public enum ListBoxHandlerFlags
     {
         /// <summary>
+        /// Represents a default or uninitialized state with no flags set.
+        /// </summary>
+        None = 0x0000,
+
+        /// <summary>
         /// Represents a selection mode where only a single item can be selected at a time.
         /// </summary>
         SingleSelection = 0x0020,

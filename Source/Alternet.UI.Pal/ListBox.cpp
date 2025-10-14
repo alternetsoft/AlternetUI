@@ -199,6 +199,12 @@ namespace Alternet::UI
 		return listBox->HitTest(p);
     }
 
+    void ListBox::SetItemSelection(int index, bool select)
+    {
+        auto listBox = GetListBoxBase();
+		listBox->SetSelection(index, select);
+    }
+
     int ListBox::GetSelectionsCount()
     {
 		return (int)_selections.GetCount();

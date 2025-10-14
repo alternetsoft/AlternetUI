@@ -85,6 +85,17 @@ ALTERNET_UI_API c_bool ListBox_SetStringSelection_(ListBox* obj, const char16_t*
     #endif
 }
 
+ALTERNET_UI_API void ListBox_SetItemSelection_(ListBox* obj, int index, c_bool select)
+{
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    MarshalExceptions<void>([&](){
+    #endif
+        obj->SetItemSelection(index, select);
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    });
+    #endif
+}
+
 ALTERNET_UI_API int ListBox_FindString_(ListBox* obj, const char16_t* s, c_bool bCase)
 {
     #if !defined(__WXMSW__) || defined(_DEBUG)

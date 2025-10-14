@@ -206,5 +206,10 @@ namespace Alternet.UI
         {
             NativeControl.UpdateSelections();
         }
+
+        public void SetSelection(int index, bool select)
+        {
+            NativeControl.SetItemSelection(index, select);
+        }
     }
 }

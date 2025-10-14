@@ -15,6 +15,9 @@ namespace NativeApi.Api
         public bool IsSelected(int n) => default;
         public bool IsSorted() => default;
         public bool SetStringSelection(string s, bool select) => default;
+
+        public void SetItemSelection(int index, bool select) { }
+
         public int FindString(string s, bool bCase = false) => default;
         public int GetCountPerPage() => default;
         public int GetTopItem() => default;

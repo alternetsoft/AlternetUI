@@ -8,6 +8,7 @@ int GetSelection();
 bool IsSelected(int n);
 bool IsSorted();
 bool SetStringSelection(const string& s, bool select);
+void SetItemSelection(int index, bool select);
 int FindString(const string& s, bool bCase);
 int GetCountPerPage();
 int GetTopItem();

@@ -1295,6 +1295,7 @@ namespace Alternet::UI
     
     enum class ListBoxHandlerFlags
     {
+        None = 0,
         SingleSelection = 32,
         MultipleSelection = 64,
         ExtendedSelection = 128,

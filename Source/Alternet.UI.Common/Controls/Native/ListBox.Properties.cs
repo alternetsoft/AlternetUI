@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics.CodeAnalysis;
+using System.Globalization;
 using System.Text;
 
 namespace Alternet.UI
@@ -12,11 +14,45 @@ namespace Alternet.UI
         private bool scrollAlwaysVisible;
 
         /// <summary>
+        /// This event is not relevant for this control and is hidden from intellisense.
+        /// </summary>
+        [Browsable(false)]
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public new event EventHandler? PaddingChanged
+        {
+            add => base.PaddingChanged += value;
+            remove => base.PaddingChanged -= value;
+        }
+
+        /// <summary>
+        /// This event is not relevant for this control and is hidden from intellisense.
+        /// </summary>
+        [Browsable(false)]
+        [EditorBrowsable(EditorBrowsableState.Advanced)]
+        public new event EventHandler? TextChanged
+        {
+            add => base.TextChanged += value;
+            remove => base.TextChanged -= value;
+        }
+
+        /// <summary>
         /// Occurs when the <see cref="SelectedIndex" /> property or the <see cref="SelectedIndices" />
         /// collection has changed.
         /// </summary>
         [Category("Behavior")]
         public event EventHandler? SelectedIndexChanged;
+
+        /// <summary>
+        /// This property is not relevant for this control and is hidden from intellisense.
+        /// </summary>
+        [Browsable(false)]
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+        public new Thickness Padding
+        {
+            get => base.Padding;
+            set => base.Padding = value;
+        }
 
         /// <summary>
         /// Indicates whether or not the list box should display a horizontal scrollbar
@@ -178,6 +214,140 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// The collection of selected items.
+        /// </summary>
+        [Browsable(false)]
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+        public IReadOnlyList<object> SelectedItems
+        {
+            get
+            {
+                var result = new List<object>();
+                PlatformControl.UpdateSelections();
+                var count = PlatformControl.GetSelectionsCount();
+                for (int i = 0; i < count; i++)
+                {
+                    var index = PlatformControl.GetSelectionsItem(i);
+                    if (index >= 0 && index < Items.Count)
+                        result.Add(Items[index]);
+                }
+
+                return result;
+            }
+        }
+
+        /// <summary>
+        /// Controls how many items at a time can be selected in the list box. Valid
+        /// values are from the <see cref="Alternet.UI.SelectionMode"/> enumeration.
+        /// </summary>
+        [Category("Behavior")]
+        [DefaultValue(SelectionMode.One)]
+        public virtual SelectionMode SelectionMode
+        {
+            get
+            {
+                if (PlatformControl.Flags.HasFlag(ListBoxHandlerFlags.SingleSelection))
+                    return SelectionMode.One;
+                else if (PlatformControl.Flags.HasFlag(ListBoxHandlerFlags.MultipleSelection))
+                    return SelectionMode.MultiSimple;
+                else if (PlatformControl.Flags.HasFlag(ListBoxHandlerFlags.ExtendedSelection))
+                    return SelectionMode.MultiExtended;
+                else
+                    return SelectionMode.None;
+            }
+
+            set
+            {
+                if(SelectionMode == value)
+                    return;
+                switch (value)
+                {
+                    case SelectionMode.None:
+                        ChangeHandlerFlags(
+                            ListBoxHandlerFlags.None,
+                            ListBoxHandlerFlags.SingleSelection | ListBoxHandlerFlags.MultipleSelection | ListBoxHandlerFlags.ExtendedSelection);
+                        break;
+                    case SelectionMode.One:
+                        ChangeHandlerFlags(
+                            ListBoxHandlerFlags.SingleSelection,
+                            ListBoxHandlerFlags.MultipleSelection | ListBoxHandlerFlags.ExtendedSelection);
+                        break;
+                    case SelectionMode.MultiSimple:
+                        ChangeHandlerFlags(
+                            ListBoxHandlerFlags.MultipleSelection,
+                            ListBoxHandlerFlags.SingleSelection | ListBoxHandlerFlags.ExtendedSelection);
+                        break;
+                    case SelectionMode.MultiExtended:
+                        ChangeHandlerFlags(
+                            ListBoxHandlerFlags.ExtendedSelection,
+                            ListBoxHandlerFlags.SingleSelection | ListBoxHandlerFlags.MultipleSelection);
+                        break;
+                }
+            }
+        }
+
+        /// <summary>
+        /// The index of the first visible item in a list box. Initially
+        /// the item with index 0 is at the top of the list box, but if the list
+        /// box contents have been scrolled another item may be at the top.
+        /// </summary>
+        [Browsable(false)]
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+        public virtual int TopIndex
+        {
+            get => PlatformControl.GetTopItem();
+
+            set
+            {
+                if (value < 0 || value >= Items.Count)
+                    return;
+                PlatformControl.SetFirstItem(value);
+            }
+        }
+
+        /// <inheritdoc/>
+        [Browsable(false)]
+        [EditorBrowsable(EditorBrowsableState.Advanced)]
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+        [Bindable(false)]
+        [AllowNull]
+        public override string Text
+        {
+            get
+            {
+                var selectedItem = SelectedItem;
+
+                if (SelectionMode != SelectionMode.None && selectedItem is not null)
+                {
+                    return GetItemText(selectedItem) ?? string.Empty;
+                }
+                else
+                {
+                    return base.Text;
+                }
+            }
+
+            set
+            {
+                base.Text = value ?? string.Empty;
+
+                if (SelectionMode != SelectionMode.None && value is not null
+                    && (SelectedItem is null || !value.Equals(GetItemText(SelectedItem))))
+                {
+                    int cnt = Items.Count;
+                    for (int index = 0; index < cnt; ++index)
+                    {
+                        if (string.Compare(value, GetItemText(Items[index]), true, CultureInfo.CurrentCulture) == 0)
+                        {
+                            SelectedIndex = index;
+                            return;
+                        }
+                    }
+                }
+            }
+        }
+
+        /// <summary>
         /// Raises the <see cref="SelectedIndexChanged"/> event and <see cref="OnSelectedIndexChanged"/> method.
         /// </summary>
         /// <remarks>This method invokes the <see cref="SelectedIndexChanged"/> event, allowing
@@ -206,12 +376,22 @@ namespace Alternet.UI
         /// behavior when flags are modified.</remarks>
         /// <param name="flag">The <see cref="ListBoxHandlerFlags"/> value to set or clear.</param>
         /// <param name="value"><see langword="true"/> to set the specified flag; <see langword="false"/> to clear it.</param>
-        protected virtual void SetHandlerFlag(ListBoxHandlerFlags flag, bool value)
+        private void SetHandlerFlag(ListBoxHandlerFlags flag, bool value)
         {
             if (value)
                 PlatformControl.Flags |= flag;
             else
                 PlatformControl.Flags &= ~flag;
+        }
+
+        private void ChangeHandlerFlags(ListBoxHandlerFlags setFlags, ListBoxHandlerFlags clearFlags)
+        {
+            var oldFlags = PlatformControl.Flags;
+            var currentFlags = oldFlags;
+            currentFlags |= setFlags;
+            currentFlags &= ~clearFlags;
+            if (currentFlags != oldFlags)
+                PlatformControl.Flags = currentFlags;
         }
     }
 }

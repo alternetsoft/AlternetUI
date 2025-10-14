@@ -63,6 +63,12 @@ namespace Alternet.UI.Native
             return NativeApi.ListBox_SetStringSelection_(NativePointer, s, select);
         }
         
+        public void SetItemSelection(int index, bool select)
+        {
+            CheckDisposed();
+            NativeApi.ListBox_SetItemSelection_(NativePointer, index, select);
+        }
+        
         public int FindString(string s, bool bCase)
         {
             CheckDisposed();
@@ -253,6 +259,9 @@ namespace Alternet.UI.Native
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern bool ListBox_SetStringSelection_(IntPtr obj, string s, bool select);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void ListBox_SetItemSelection_(IntPtr obj, int index, bool select);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern int ListBox_FindString_(IntPtr obj, string s, bool bCase);

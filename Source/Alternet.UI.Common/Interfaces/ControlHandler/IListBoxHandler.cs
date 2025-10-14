@@ -42,6 +42,15 @@ namespace Alternet.UI
         bool IsSorted();
 
         /// <summary>
+        /// Updates the selection state of an item at the specified index.
+        /// </summary>
+        /// <param name="index">The zero-based index of the item to update.
+        /// Must be within the valid range of items.</param>
+        /// <param name="select">A value indicating whether to select or deselect the item.
+        /// <see langword="true"/> to select the item; <see langword="false"/> to deselect it.</param>
+        void SetSelection(int index, bool select);
+
+        /// <summary>
         /// Selects or deselects the first item whose content matches the specified string.
         /// </summary>
         /// <param name="s">The string to match.</param>
