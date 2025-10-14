@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Text;
@@ -24,7 +25,7 @@ namespace Alternet.UI
     [DefaultProperty("Items")]
     [DefaultBindingProperty("SelectedValue")]
     [ControlCategory("Common")]
-    public partial class ListBox : Control
+    public partial class ListBox : Control, ICollectionChangeRouter
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="ListBox"/> class
@@ -143,16 +144,6 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Gets the string representation of the item at the specified index.
-        /// </summary>
-        /// <param name="n">Zero-based index of the item.</param>
-        /// <returns>The item's string.</returns>
-        public virtual string GetItem(int n)
-        {
-            return PlatformControl.GetString(n);
-        }
-
-        /// <summary>
         /// Gets the number of items in the list box.
         /// </summary>
         /// <returns>The count of items.</returns>
@@ -206,12 +197,112 @@ namespace Alternet.UI
             PlatformControl.SetSelection(n);
         }
 
+        /// <inheritdoc/>
+        void ICollectionChangeRouter.OnCollectionAdd(object? sender, IList newItems, int newIndex)
+        {
+            if (DisposingOrDisposed)
+                return;
+            if (newItems.Count <= 1)
+                Internal();
+            else
+                DoInsideUpdate(Internal);
+
+            void Internal()
+            {
+                foreach (var newItem in newItems)
+                {
+                    Insert(newItem, newIndex);
+                    newIndex++;
+                }
+            }
+        }
+
+        /// <inheritdoc/>
+        void ICollectionChangeRouter.OnCollectionReset(object? sender)
+        {
+            if(DisposingOrDisposed)
+                return;
+            DoInsideUpdate(() =>
+            {
+                if (GetCount() != 0)
+                    PlatformControl.Clear();
+                foreach (var item in Items)
+                {
+                    Add(item);
+                }
+            });
+        }
+
+        /// <inheritdoc/>
+        void ICollectionChangeRouter.OnCollectionReplace(
+            object? sender,
+            IList oldItems,
+            IList newItems,
+            int index)
+        {
+            if (DisposingOrDisposed)
+                return;
+            var router = (ICollectionChangeRouter)this;
+            DoInsideUpdate(() =>
+            {
+                router.OnCollectionRemove(sender, oldItems, index);
+                router.OnCollectionAdd(sender, newItems, index);
+            });
+        }
+
+        /// <inheritdoc/>
+        void ICollectionChangeRouter.OnCollectionMove(
+            object? sender,
+            IList movedItems,
+            int oldIndex,
+            int newIndex)
+        {
+            if (oldIndex == newIndex)
+                return;
+            if (DisposingOrDisposed)
+                return;
+            var router = (ICollectionChangeRouter)this;
+            DoInsideUpdate(() =>
+            {
+                router.OnCollectionRemove(sender, movedItems, oldIndex);
+                router.OnCollectionAdd(sender, movedItems, newIndex);
+            });
+        }
+
+        /// <inheritdoc/>
+        void ICollectionChangeRouter.OnCollectionRemove(object? sender, IList oldItems, int oldIndex)
+        {
+            if (DisposingOrDisposed)
+                return;
+
+            if (oldItems.Count <= 1)
+                Internal();
+            else
+                DoInsideUpdate(Internal);
+
+            void Internal()
+            {
+                for (int i = 0; i < oldItems.Count; i++)
+                    Delete(oldIndex);
+            }
+        }
+
+        /// <summary>
+        /// Gets the string representation of the item at the specified index.
+        /// </summary>
+        /// <param name="n">Zero-based index of the item.</param>
+        /// <returns>The item's string.</returns>
+        internal virtual string GetItem(int n)
+        {
+            return PlatformControl.GetString(n);
+        }
+
         /// <summary>
         /// Replaces the item at the specified index.
         /// </summary>
         /// <param name="n">Zero-based index of the item.</param>
         /// <param name="s">The new string for the item.</param>
-        public virtual bool SetItem(int n, object s)
+        internal virtual bool SetItem(int n, object s)
         {
             if (n < 0 || n >= GetCount())
                 return false;
@@ -220,18 +311,10 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Removes all items from the list box.
-        /// </summary>
-        public virtual void Clear()
-        {
-            PlatformControl.Clear();
-        }
-
-        /// <summary>
         /// Deletes the item at the specified index.
         /// </summary>
         /// <param name="n">Zero-based index of the item to delete.</param>
-        public virtual void Delete(int n)
+        internal virtual void Delete(int n)
         {
             PlatformControl.Delete(n);
         }
@@ -241,7 +324,7 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="s">The string to append.</param>
         /// <returns>The zero-based index of the newly appended item.</returns>
-        public virtual int Add(object s)
+        internal virtual int Add(object s)
         {
             return PlatformControl.Append(ItemToString(s));
         }
@@ -252,7 +335,7 @@ namespace Alternet.UI
         /// <param name="item">The string for the item to insert.</param>
         /// <param name="pos">Zero-based position to insert the item at.</param>
         /// <returns>The zero-based index of the inserted item.</returns>
-        public virtual int Insert(object item, int pos)
+        internal virtual int Insert(object item, int pos)
         {
             return PlatformControl.Insert(ItemToString(item), pos);
         }

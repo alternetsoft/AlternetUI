@@ -157,7 +157,7 @@ namespace PropertyGridSample
             listBox.SuggestedSize = defaultListSize;
 
             foreach (var item in GetTenItems())
-                listBox.Add(item);
+                listBox.Items.Add(item);
         }
 
         public static void InitStdListBox(object control)
