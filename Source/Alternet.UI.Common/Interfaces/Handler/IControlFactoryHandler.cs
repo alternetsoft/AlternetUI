@@ -12,6 +12,13 @@ namespace Alternet.UI
     public interface IControlFactoryHandler : IDisposable
     {
         /// <summary>
+        /// Creates platform control for the list box.
+        /// </summary>
+        /// <param name="control">Owner.</param>
+        /// <returns></returns>
+        IControlHandler CreateListBoxHandler(ListBox control);
+
+        /// <summary>
         /// Creates platform control for the <see cref="Panel"/>.
         /// </summary>
         /// <param name="control">Owner.</param>

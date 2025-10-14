@@ -23,11 +23,6 @@ namespace Alternet.UI
         bool HasBorder { get; set; }
 
         /// <summary>
-        /// Gets or sets the callback invoked when the selection changes.
-        /// </summary>
-        Action? SelectionChanged { get; set; }
-
-        /// <summary>
         /// Gets the index of the current selection.
         /// </summary>
         /// <returns>The zero-based index of the selected item, or -1 if no selection.</returns>

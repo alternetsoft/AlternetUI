@@ -150,5 +150,10 @@ namespace Alternet.UI
         {
             return new WxOpenGLControlHandler();
         }
+
+        public IControlHandler CreateListBoxHandler(ListBox control)
+        {
+            return new WxListBoxHandler();
+        }
     }
 }
