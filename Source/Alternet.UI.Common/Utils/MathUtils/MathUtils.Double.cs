@@ -223,7 +223,7 @@ namespace Alternet.UI
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool IsOne(double value)
         {
-            return AreClose(value, 1);
+            return AreClose(value, 1d);
         }
 
         /// <summary>
@@ -238,7 +238,7 @@ namespace Alternet.UI
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool IsZero(double value)
         {
-            return AreClose(value, 0);
+            return AreClose(value, 0d);
         }
 
         /// <summary>
@@ -312,7 +312,11 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Determines whether a double-precision floating-point value represents an even integer.
+        /// Returns true when the provided double represents an integer
+        /// with no fractional part and that integer is even.
+        /// NaN and Infinity return false.
+        /// Uses the 2^53 shortcut: all representable double integers with absolute value >= 2^53 have spacing >= 2,
+        /// so any such representable integer is even.
         /// </summary>
         /// <param name="value">The value to evaluate.</param>
         /// <returns>
@@ -328,14 +332,29 @@ namespace Alternet.UI
         /// IsEvenInteger(0.0)    // returns true
         /// </code>
         /// </example>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool IsEvenInteger(double value)
         {
-            // Check whether the value is an integer
-            if (value % 1 != 0)
+            // Exclude NaN and infinities
+            if (double.IsNaN(value) || double.IsInfinity(value))
                 return false;
 
-            return ((int)value % 2) == 0;
+            // Check whether value has no fractional part (exact for the stored double)
+            double truncate = Math.Truncate(value);
+            if (value != truncate)
+                return false;
+
+            double abs = Math.Abs(truncate);
+
+            // 2^53 is the largest integer that double can represent exactly for all integers.
+            // For |x| >= 2^53 the spacing between representable doubles is >= 2 (ULP >= 2),
+            // so any representable integer in that range is a multiple of 2 (hence even).
+            const double IntExactLimit = 9007199254740992.0; // 2^53
+            if (abs >= IntExactLimit)
+                return true;
+
+            // Now abs < 2^53, casting to long is safe (no overflow), test parity
+            long n = (long)truncate;
+            return (n & 1L) == 0L;
         }
 
         /// <summary>
@@ -349,7 +368,8 @@ namespace Alternet.UI
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool IsInteger(double value)
         {
-            return value % 1 == 0;
+            if (!double.IsFinite(value)) return false;
+            return value == Math.Truncate(value);
         }
 
         /// <summary>
