@@ -467,7 +467,7 @@ namespace Alternet.UI
         /// window at this size, the thumb position can never go above 50 minus 16, or 34.
         /// You can determine how many lines are currently visible by dividing the
         /// current view size by the character height in pixels. When defining your own
-        /// scrollbar behaviour, you will always need to recalculate the scrollbar settings
+        /// scrollbar behavior, you will always need to recalculate the scrollbar settings
         /// when the window size changes. You could therefore put your scrollbar calculations
         /// and SetScrollbar() call into a function named AdjustScrollbars, which can
         /// be called initially and also from a size event handler function.

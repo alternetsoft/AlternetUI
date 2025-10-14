@@ -9,9 +9,12 @@ namespace Alternet.UI
 {
     /// <summary>
     /// Displays a hierarchical collection of labeled items with optional images,
-    /// each represented by a <see cref="TreeViewItem"/>. We suggest to use
-    /// <see cref="StdTreeView"/> instead of this control. <see cref="StdTreeView"/>
-    /// works faster, especially with large number of items, and has much more features.
+    /// each represented by a <see cref="TreeViewItem"/>.
+    /// This control encapsulates the native tree view implemented by the operating system.
+    /// It has limited functionality.
+    /// For the full featured tree view control, use the <see cref="StdTreeView"/> control.
+    /// <see cref="StdTreeView"/> supports all capabilities specified in <see cref="TreeViewItem"/> properties
+    /// and works much faster, especially with large number of items.
     /// </summary>
     /// <remarks>
     /// <para>
