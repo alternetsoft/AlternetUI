@@ -1842,15 +1842,24 @@ namespace Alternet.Drawing
 
         /// <summary>
         /// Gets this color as <see cref="Pen"/> with the specified width.
+        /// This method caches pens with integer widths using <see cref="GetPen(int)"/>.
+        /// Pens with non-integer widths are not cached.
         /// </summary>
         /// <param name="width">Width of the pen.</param>
+        /// <remarks>
+        /// The difference between this method and <see cref="GetPen(int)"/>
+        /// is that this method accepts <see cref="Coord"/> values.
+        /// </remarks>
         /// <returns></returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public Pen GetAsPen(Coord width = 1)
+        public Pen GetAsPen(Coord width = 1f)
         {
-            if (width == 1)
-                return AsPen;
-            return new(this, width);
+            if (MathUtils.IsInteger(width) && width > 0 && width <= MaxCachedPenWidth)
+            {
+                return GetPen((int)width);
+            }
+
+            return CreatePenInstance(width);
         }
 
         /// <summary>
@@ -1863,9 +1872,9 @@ namespace Alternet.Drawing
         /// <returns></returns>
         public Pen GetAsPen(Coord width, DashStyle dashStyle)
         {
-            if (width == 1 && dashStyle == DashStyle.Solid)
-                return AsPen;
-            return new(this, width, dashStyle);
+            if (dashStyle == DashStyle.Solid)
+                return GetAsPen(width);
+            return CreatePenInstance(width, dashStyle);
         }
 
         /// <summary>
@@ -2222,25 +2231,17 @@ namespace Alternet.Drawing
             resources = new();
         }
 
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        internal static bool IsKnownColorSystem(KnownColor knownColor)
-             => KnownColorTable.ColorKindTable[(int)knownColor] ==
-                 KnownColorTable.KnownColorKindSystem;
-
         /// <summary>
         /// Creates a new instance of a <see cref="Pen"/> with
         /// the specified width and default settings.
         /// </summary>
-        /// <remarks>This method is intended to be overridden in derived
-        /// classes to customize the creation
-        /// of <see cref="Pen"/> instances used in <see cref="AsPen"/> and <see cref="GetPen"/>.
-        /// By default, the pen is created with
-        /// a solid dash style, flat line caps,
+        /// <remarks>
+        /// The pen is created with a solid dash style, flat line caps,
         /// mitered line joins, and is immutable.</remarks>
         /// <param name="width">The width of the pen, in device-independent units (DIPs).</param>
         /// <returns>A new <see cref="Pen"/> instance configured with the specified
         /// width and default settings.</returns>
-        protected virtual Pen CreatePenInstance(Coord width)
+        public virtual Pen CreatePenInstance(Coord width)
         {
             return new(
                 this,
@@ -2250,6 +2251,32 @@ namespace Alternet.Drawing
                 LineJoin.Miter,
                 immutable: true);
         }
+
+        /// <summary>
+        /// Creates a new instance of a <see cref="Pen"/> with the specified width, dash style, and default settings.
+        /// </summary>
+        /// <remarks>The created <see cref="Pen"/> is immutable and uses <see cref="LineCap.Flat"/> for
+        /// line caps and <see cref="LineJoin.Miter"/> for line joins.</remarks>
+        /// <param name="width">The width of the pen, represented as a <see cref="Coord"/>. Must be a positive value.</param>
+        /// <param name="dash">The dash style of the pen, specified as a <see cref="DashStyle"/>.</param>
+        /// <returns>A new <see cref="Pen"/> instance configured with the specified width,
+        /// dash style, and default settings for
+        /// line caps, joins, and immutability.</returns>
+        public virtual Pen CreatePenInstance(Coord width, DashStyle dash)
+        {
+            return new(
+                this,
+                width,
+                dash,
+                LineCap.Flat,
+                LineJoin.Miter,
+                immutable: true);
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        internal static bool IsKnownColorSystem(KnownColor knownColor)
+             => KnownColorTable.ColorKindTable[(int)knownColor] ==
+                 KnownColorTable.KnownColorKindSystem;
 
         /// <summary>
         /// Ensures that the color ARGB value is valid.
