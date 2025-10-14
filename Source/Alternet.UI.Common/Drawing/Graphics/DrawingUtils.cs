@@ -907,11 +907,11 @@ namespace Alternet.UI
         public static void DrawHorzLine(
             SKCanvas dc,
             SKPaint brush,
-            PointD point,
+            SKPoint point,
             Coord length,
             Coord width)
         {
-            var rect = new RectD(point, new SizeD(length, width));
+            var rect = SKRect.Create(point, new SKSize(length, width));
             dc.DrawRect(rect, brush);
         }
 
@@ -951,11 +951,11 @@ namespace Alternet.UI
         public static void DrawVertLine(
             SKCanvas dc,
             SKPaint brush,
-            PointD point,
+            SKPoint point,
             Coord length,
             Coord width)
         {
-            var rect = new RectD(point, new SizeD(width, length));
+            var rect = SKRect.Create(point, new SKSize(width, length));
             dc.DrawRect(rect, brush);
         }
 
@@ -1029,7 +1029,7 @@ namespace Alternet.UI
         public static void DrawBorderWithPaint(
             SKCanvas dc,
             SKPaint paint,
-            RectD rect,
+            SKRect rect,
             Coord borderWidth = 1)
         {
             dc.DrawRect(GetTopLineRect(rect, borderWidth), paint);

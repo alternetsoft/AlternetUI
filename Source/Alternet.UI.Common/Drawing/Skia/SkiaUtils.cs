@@ -1123,7 +1123,7 @@ namespace Alternet.Drawing
                                 DrawingUtils.DrawVertLine(
                                     dc,
                                     oldColor,
-                                    (x1, oldStart + y1),
+                                    new SKPoint(x1, oldStart + y1),
                                     i - oldStart,
                                     1);
                             }
@@ -1138,7 +1138,7 @@ namespace Alternet.Drawing
                         DrawingUtils.DrawVertLine(
                             dc,
                             oldColor,
-                            (x1, oldStart + y1),
+                            new SKPoint(x1, oldStart + y1),
                             y2 - oldStart - y1,
                             1);
                     }
@@ -1148,10 +1148,10 @@ namespace Alternet.Drawing
                     for (int i = 0; i < y2 - y1; i++)
                     {
                         if ((i + y1) % (size * 2) < size)
-                            DrawingUtils.DrawHorzLine(dc, color1, (x1, i + y1), 1, 1);
+                            DrawingUtils.DrawHorzLine(dc, color1, new SKPoint(x1, i + y1), 1, 1);
                         else
                             if (color2 is not null)
-                                DrawingUtils.DrawHorzLine(dc, color2, (x1, i + y1), 1, 1);
+                                DrawingUtils.DrawHorzLine(dc, color2, new SKPoint(x1, i + y1), 1, 1);
                     }
                 }
             }
@@ -1178,7 +1178,7 @@ namespace Alternet.Drawing
                                 DrawingUtils.DrawHorzLine(
                                     dc,
                                     oldColor,
-                                    (oldStart + x1, y1),
+                                    new SKPoint(oldStart + x1, y1),
                                     i - oldStart,
                                     1);
                             }
@@ -1193,7 +1193,7 @@ namespace Alternet.Drawing
                         DrawingUtils.DrawHorzLine(
                             dc,
                             oldColor,
-                            (oldStart + x1, y1),
+                            new SKPoint(oldStart + x1, y1),
                             x2 - x1 - oldStart,
                             1);
                     }
@@ -1203,10 +1203,10 @@ namespace Alternet.Drawing
                     for (int i = 0; i < x2 - x1; i++)
                     {
                         if ((i + y1) % (size * 2) < size)
-                            DrawingUtils.DrawHorzLine(dc, color1, (i + x1, y1), 1, 1);
+                            DrawingUtils.DrawHorzLine(dc, color1, new SKPoint(i + x1, y1), 1, 1);
                         else
                             if (color2 is not null)
-                                DrawingUtils.DrawHorzLine(dc, color2, (i + x1, y1), 1, 1);
+                                DrawingUtils.DrawHorzLine(dc, color2, new SKPoint(i + x1, y1), 1, 1);
                     }
                 }
             }
@@ -1278,7 +1278,7 @@ namespace Alternet.Drawing
         public static void DrawText(
             SKCanvas canvas,
             ReadOnlySpan<char> s,
-            PointD location,
+            SKPoint location,
             SKFont font,
             SKPaint foreColor,
             SKPaint? backColor = null)
@@ -1338,21 +1338,43 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
-        /// Draws a series of Bezier splines from an array of <see cref="PointD"/> structures.
+        /// Checks whether array of <see cref="SKPoint"/> parameter is ok.
         /// </summary>
-        /// <param name="pen"><see cref="Pen"/> that determines the color, width, and style
+        /// <param name="points">Parameter value.</param>
+        /// <exception cref="Exception">Raised if parameter is not ok.</exception>
+        [Conditional("DEBUG")]
+        [System.Diagnostics.DebuggerNonUserCodeAttribute]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static void DebugBezierPointsAssert(ReadOnlySpan<SKPoint> points)
+        {
+            var length = points.Length;
+
+            if (length == 0)
+                return;
+
+            if ((length - 1) % 3 != 0)
+            {
+                throw new ArgumentException(
+                    "The number of points should be a multiple of 3 plus 1, such as 4, 7, or 10.",
+                    nameof(points));
+            }
+        }
+
+        /// <summary>
+        /// Draws a series of Bezier splines from an array of <see cref="SKPoint"/> structures.
+        /// </summary>
+        /// <param name="pen"><see cref="SKPaint"/> that determines the color, width, and style
         /// of the curve.</param>
         /// <param name="points">
-        /// Array of <see cref="PointD"/> structures that represent the points that
+        /// Array of <see cref="SKPoint"/> structures that represent the points that
         /// determine the curve.
         /// The number of points in the array should be a multiple of 3 plus 1, such as 4, 7, or 10.
         /// </param>
         /// <param name="canvas">Drawing context.</param>
-        public static void DrawBeziers(this SKCanvas canvas, Pen pen, ReadOnlySpan<PointD> points)
+        public static void DrawBeziers(this SKCanvas canvas, SKPaint pen, ReadOnlySpan<SKPoint> points)
         {
             var pointsCount = points.Length;
-            Graphics.DebugPenAssert(pen);
-            Graphics.DebugBezierPointsAssert(points);
+            DebugBezierPointsAssert(points);
 
             SKPath path = new();
             path.MoveTo(points[0]);
@@ -1369,20 +1391,25 @@ namespace Alternet.Drawing
         /// Draws a series of connected cubic Bezier curves on the specified canvas.
         /// </summary>
         /// <remarks>This method creates a path consisting of one or more cubic Bezier curves, starting at
-        /// the first point in <paramref name="points"/>  and using each subsequent group of three points to define the
-        /// control points and endpoint of each curve. The resulting path is  drawn on the specified <paramref
+        /// the first point in <paramref name="points"/>  and using each subsequent
+        /// group of three points to define the
+        /// control points and endpoint of each curve. The resulting path is
+        /// drawn on the specified <paramref
         /// name="canvas"/> using the provided <paramref name="paint"/>.</remarks>
-        /// <param name="canvas">The <see cref="SKCanvas"/> on which the Bezier curves will be drawn.
+        /// <param name="canvas">The <see cref="SKCanvas"/> on which the Bezier
+        /// curves will be drawn.
         /// Cannot be <see langword="null"/>.</param>
-        /// <param name="paint">The <see cref="SKPaint"/> used to define the style, color, and other properties
+        /// <param name="paint">The <see cref="SKPaint"/> used to define the style,
+        /// color, and other properties
         /// of the drawn curves. Cannot
         /// be <see langword="null"/>.</param>
-        /// <param name="points">A read-only span of <see cref="PointD"/> representing the control points
-        /// for the Bezier curves.  The first
+        /// <param name="points">A read-only span of <see cref="PointD"/> representing
+        /// the control points for the Bezier curves. The first
         /// point specifies the starting point, and every subsequent group of three points defines
         /// a cubic Bezier curve.
-        /// The total number of points must be at least 4 and a multiple of 3 plus 1 (e.g., 4, 7, 10, etc.).</param>
-        public static void DrawBeziers(SKCanvas canvas, SKPaint paint, ReadOnlySpan<PointD> points)
+        /// The total number of points must be at least 4 and a multiple of 3
+        /// plus 1 (e.g., 4, 7, 10, etc.).</param>
+        public static void DrawBeziers(this SKCanvas canvas, SKPaint paint, ReadOnlySpan<PointD> points)
         {
             var pointsCount = points.Length;
             Graphics.DebugBezierPointsAssert(points);
@@ -1419,20 +1446,14 @@ namespace Alternet.Drawing
         /// using <paramref name="beginColor"/>.</param>
         public static void FillGradient(
             SKCanvas canvas,
-            RectD rect,
+            SKRect rect,
             SKColor beginColor,
             SKColor endColor,
-            PointD point1,
-            PointD point2)
+            SKPoint point1,
+            SKPoint point2)
         {
             if (rect.Width <= 0 || rect.Height <= 0)
                 return;
-
-            var skRect = new SKRect(
-                rect.X,
-                rect.Y,
-                rect.X + rect.Width,
-                rect.Y + rect.Height);
 
             // If the two gradient points coincide, fall back to a solid fill.
             if (MathF.Abs(point1.X - point2.X) < float.Epsilon && MathF.Abs(point1.Y - point2.Y) < float.Epsilon)
@@ -1443,7 +1464,7 @@ namespace Alternet.Drawing
                     IsAntialias = true,
                     Color = beginColor,
                 };
-                canvas.DrawRect(skRect, solid);
+                canvas.DrawRect(rect, solid);
                 return;
             }
 
@@ -1462,7 +1483,64 @@ namespace Alternet.Drawing
                 Shader = shader,
             };
 
-            canvas.DrawRect(skRect, paint);
+            canvas.DrawRect(rect, paint);
+        }
+
+        /// <summary>
+        /// Generates an array of points representing a wave pattern within the specified rectangular area.
+        /// </summary>
+        /// <remarks>The method ensures that the wave pattern fits within the bounds of the specified
+        /// rectangle. The horizontal spacing and vertical offsets of the wave are determined by internal scaling
+        /// factors.</remarks>
+        /// <param name="rect">The rectangular area within which the wave pattern is generated.</param>
+        /// <returns>An array of <see cref="PointD"/> objects representing the points of the wave pattern. The wave spans the
+        /// horizontal range of the rectangle and alternates vertically to create the pattern.</returns>
+        public static SKPoint[] GetSKPointsForDrawWave(SKRectI rect)
+        {
+            int minSize = 4;
+            int offset = 6;
+
+            int left = rect.Left - (rect.Left % offset);
+            int i = rect.Right % offset;
+            int right = (i != 0) ? rect.Right + (offset - i) : rect.Right;
+
+            int scale = 2;
+            int size = (right - left) / scale;
+
+            offset = 3;
+
+            if (size < minSize)
+                size = minSize;
+            else
+            {
+                i = (int)((size - minSize) / offset);
+                if ((size - minSize) % offset != 0)
+                    i++;
+                size = minSize + (i * offset);
+            }
+
+            SKPoint[] pts = new SKPoint[size];
+            for (int index = 0; index < size; index++)
+            {
+                pts[index].X = left + (index * scale);
+                pts[index].Y = rect.Bottom - 1;
+                switch (index % 3)
+                {
+                    case 0:
+                        {
+                            pts[index].Y -= scale;
+                            break;
+                        }
+
+                    case 2:
+                        {
+                            pts[index].Y += scale;
+                            break;
+                        }
+                }
+            }
+
+            return pts;
         }
 
         /// <summary>
