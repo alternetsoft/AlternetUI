@@ -81,7 +81,8 @@ Environment.NewLine + Environment.NewLine +
             Actions.Add(typeof(SideBarPanel), InitSideBarPanel);
             Actions.Add(typeof(TabControl), InitGenericTabControl);
             Actions.Add(typeof(VirtualListBox), InitVListBox);
-            Actions.Add(typeof(StdListBox), InitListBox);
+            Actions.Add(typeof(StdListBox), InitStdListBox);
+            Actions.Add(typeof(ListBox), InitListBox);
             Actions.Add(typeof(ComboBox), InitComboBox);
             Actions.Add(typeof(StdComboBox), InitStdComboBox);
             Actions.Add(typeof(StdCheckListBox), InitCheckListBox);

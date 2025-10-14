@@ -103,6 +103,7 @@ namespace PropertyGridSample
                 LimitedTypes.Add(typeof(CardPanelHeader));
                 LimitedTypes.Add(typeof(TreeView));
                 LimitedTypes.Add(typeof(StdTreeView));
+                LimitedTypes.Add(typeof(ListBox));
 
                 LimitedTypes.Add(typeof(Label));
 

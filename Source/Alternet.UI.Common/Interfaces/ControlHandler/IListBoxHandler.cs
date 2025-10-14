@@ -81,13 +81,13 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="n">Zero-based index of the item.</param>
         /// <returns>The item's string.</returns>
-        string GetString(uint n);
+        string GetString(int n);
 
         /// <summary>
         /// Gets the number of items in the list box.
         /// </summary>
         /// <returns>The count of items.</returns>
-        uint GetCount();
+        int GetCount();
 
         /// <summary>
         /// Deselects the item at the specified index.
@@ -124,7 +124,7 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="n">Zero-based index of the item.</param>
         /// <param name="s">The new string for the item.</param>
-        void SetString(uint n, string s);
+        void SetString(int n, string s);
 
         /// <summary>
         /// Removes all items from the list box.
@@ -135,7 +135,7 @@ namespace Alternet.UI
         /// Deletes the item at the specified index.
         /// </summary>
         /// <param name="n">Zero-based index of the item to delete.</param>
-        void Delete(uint n);
+        void Delete(int n);
 
         /// <summary>
         /// Appends an item with the specified string to the end of the list box.
@@ -150,7 +150,7 @@ namespace Alternet.UI
         /// <param name="item">The string for the item to insert.</param>
         /// <param name="pos">Zero-based position to insert the item at.</param>
         /// <returns>The zero-based index of the inserted item.</returns>
-        int Insert(string item, uint pos);
+        int Insert(string item, int pos);
 
         /// <summary>
         /// Gets the number of currently selected items (for multi-selection list boxes).

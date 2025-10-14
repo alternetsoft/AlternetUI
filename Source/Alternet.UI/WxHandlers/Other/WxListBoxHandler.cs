@@ -130,14 +130,16 @@ namespace Alternet.UI
             return NativeControl.HitTest(point);
         }
 
-        public string GetString(uint n)
+        public string GetString(int n)
         {
-            return NativeControl.GetString(n);
+            if (n < 0 || n >= GetCount())
+                return string.Empty;
+            return NativeControl.GetString((uint)n);
         }
 
-        public uint GetCount()
+        public int GetCount()
         {
-            return NativeControl.GetCount();
+            return (int)NativeControl.GetCount();
         }
 
         public void Deselect(int n)
@@ -165,9 +167,9 @@ namespace Alternet.UI
             NativeControl.SetSelection(n);
         }
 
-        public void SetString(uint n, string s)
+        public void SetString(int n, string s)
         {
-            NativeControl.SetString(n, s);
+            NativeControl.SetString((uint)n, s);
         }
 
         public void Clear()
@@ -175,9 +177,9 @@ namespace Alternet.UI
             NativeControl.Clear();
         }
 
-        public void Delete(uint n)
+        public void Delete(int n)
         {
-            NativeControl.Delete(n);
+            NativeControl.Delete((uint)n);
         }
 
         public int Append(string s)
@@ -185,9 +187,9 @@ namespace Alternet.UI
             return NativeControl.Append(s);
         }
 
-        public int Insert(string item, uint pos)
+        public int Insert(string item, int pos)
         {
-            return NativeControl.Insert(item, pos);
+            return NativeControl.Insert(item, (uint)pos);
         }
 
         public int GetSelectionsCount()
