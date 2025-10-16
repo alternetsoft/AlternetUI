@@ -167,11 +167,11 @@ namespace Alternet.UI
         /// </summary>
         [Browsable(false)]
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
-        public virtual IReadOnlyList<object> SelectedIndices
+        public virtual IReadOnlyList<int> SelectedIndices
         {
             get
             {
-                var result = new List<object>();
+                var result = new List<int>();
                 PlatformControl.UpdateSelections();
                 var count = PlatformControl.GetSelectionsCount();
                 for (int i = 0; i < count; i++)

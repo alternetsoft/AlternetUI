@@ -158,6 +158,26 @@ namespace PropertyGridSample
 
             foreach (var item in GetTenItems())
                 listBox.Items.Add(item);
+
+            listBox.SelectedIndexChanged += (s, e) =>
+            {
+                var prefix = "ListBox SelectedIndexChanged";
+                var selectedItems = listBox.SelectedItems;
+
+                if(selectedItems.Count > 100)
+                    App.LogReplace ($"{prefix}: {selectedItems.Count} items selected", prefix);
+                else
+                {
+                    var st = selectedItems.Count == 0 ? "<none>" :
+                    string.Join(", ", selectedItems.Select(x => x.ToString()));
+                    App.LogReplace($"{prefix}: {st}", prefix);
+                }
+            };
+
+            listBox.ParentChanged += (s, e) =>
+            {
+                listBox.RecreateHandler();
+            };
         }
 
         public static void InitStdListBox(object control)

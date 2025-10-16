@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Linq;
 using System.Text;
 
 using Alternet.Drawing;
@@ -77,6 +78,14 @@ namespace Alternet.UI
         /// <returns>The zero-based index of the selected item, or -1 if no selection.</returns>
         public virtual int GetSelection()
         {
+            if(SelectionMode == SelectionMode.MultiExtended || SelectionMode == SelectionMode.MultiSimple)
+            {
+                var indexes = SelectedIndices;
+                if(indexes.Count > 0)
+                    return indexes[0];
+                return -1;
+            }
+
             return PlatformControl.GetSelection();
         }
 
@@ -216,6 +225,27 @@ namespace Alternet.UI
                 PlatformControl.SetSelection(n, select);
             else
                 Deselect(n);
+        }
+
+        /// <summary>
+        /// Converts the specified item to its string representation.
+        /// </summary>
+        /// <param name="item">The object to convert. Can be <see langword="null"/>.</param>
+        /// <returns>A string representation of the specified item. Returns an empty string
+        /// if <paramref name="item"/> is <see langword="null"/>.
+        /// If the item is a string, it is returned as-is. If the item implements
+        /// <see cref="System.IFormattable"/>, its formatted string representation
+        /// is returned using the current culture.
+        /// Otherwise, the result of <see cref="object.ToString"/> is returned.</returns>
+        public virtual string GetItemText(object item)
+        {
+            if (item == null)
+                return string.Empty;
+            if (item is string s)
+                return s;
+            if (item is IFormattable formattable)
+                return formattable.ToString(null, System.Globalization.CultureInfo.CurrentCulture);
+            return item.ToString() ?? string.Empty;
         }
 
         /// <summary>
@@ -388,27 +418,6 @@ namespace Alternet.UI
         protected override IControlHandler CreateHandler()
         {
             return ControlFactory.Handler.CreateListBoxHandler(this);
-        }
-
-        /// <summary>
-        /// Converts the specified item to its string representation.
-        /// </summary>
-        /// <param name="item">The object to convert. Can be <see langword="null"/>.</param>
-        /// <returns>A string representation of the specified item. Returns an empty string
-        /// if <paramref name="item"/> is <see langword="null"/>.
-        /// If the item is a string, it is returned as-is. If the item implements
-        /// <see cref="System.IFormattable"/>, its formatted string representation
-        /// is returned using the current culture.
-        /// Otherwise, the result of <see cref="object.ToString"/> is returned.</returns>
-        protected virtual string GetItemText(object item)
-        {
-            if (item == null)
-                return string.Empty;
-            if (item is string s)
-                return s;
-            if (item is IFormattable formattable)
-                return formattable.ToString(null, System.Globalization.CultureInfo.CurrentCulture);
-            return item.ToString() ?? string.Empty;
         }
     }
 }

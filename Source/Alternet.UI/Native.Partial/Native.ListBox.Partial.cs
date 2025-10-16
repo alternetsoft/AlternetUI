@@ -7,8 +7,9 @@ namespace Alternet.UI.Native
 {
     internal partial class ListBox
     {
-	public void OnPlatformEventSelectionChanged()
-	{
-	}
+        public void OnPlatformEventSelectionChanged()
+        {
+            (UIControl as UI.ListBox)?.RaiseSelectedIndexChanged();
+        }
     }
 }

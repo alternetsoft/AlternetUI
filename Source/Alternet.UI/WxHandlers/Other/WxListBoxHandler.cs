@@ -43,6 +43,19 @@ namespace Alternet.UI
 
         public void ItemsToPlatform()
         {
+            if (Control is null || Control.Items.Count == 0)
+                return;
+            NativeControl.BeginUpdate();
+            try
+            {
+                NativeControl.Clear();
+                foreach (var item in Control.Items)
+                    NativeControl.Append(Control.GetItemText(item));
+            }
+            finally
+            {
+                NativeControl.EndUpdate();
+            }
         }
 
         internal override Native.Control CreateNativeControl()
