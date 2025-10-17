@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+using Alternet.Skia;
 using Alternet.UI;
 
 using SkiaSharp;
@@ -41,7 +42,7 @@ namespace Alternet.Drawing
 
         public SKBitmap? Bitmap => bitmap;
 
-        public virtual bool IsOk => SkiaUtils.BitmapIsOk(bitmap);
+        public virtual bool IsOk => SkiaHelper.BitmapIsOk(bitmap);
 
         protected override void DisposeManaged()
         {
@@ -53,7 +54,7 @@ namespace Alternet.Drawing
         {
             if (bitmap is null)
             {
-                surface = SkiaUtils.CreateNullSurface(0, 0);
+                surface = SkiaHelper.CreateNullSurface(0, 0);
                 canvas = surface.Canvas;
             }
             else

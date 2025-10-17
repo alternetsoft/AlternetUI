@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+using Alternet.Skia;
 using Alternet.UI;
 
 using SkiaSharp;
@@ -44,7 +45,7 @@ namespace Alternet.Drawing
         /// <returns></returns>
         public virtual IFontHandler CreateDefaultFontHandler()
         {
-            return new SkiaFontHandler(SkiaUtils.DefaultFontName, SkiaUtils.DefaultFontSize);
+            return new SkiaFontHandler(SkiaHelper.DefaultFontName, SkiaHelper.DefaultFontSize);
         }
 
         /// <summary>
@@ -69,7 +70,7 @@ namespace Alternet.Drawing
         /// Gets font families names.
         /// </summary>
         /// <returns></returns>
-        public virtual IEnumerable<string> GetFontFamiliesNames() => SkiaUtils.GetFontFamiliesNames();
+        public virtual IEnumerable<string> GetFontFamiliesNames() => SkiaHelper.GetFontFamiliesNames();
 
         /// <summary>
         /// Gets generic font family name.
@@ -85,8 +86,8 @@ namespace Alternet.Drawing
         /// <param name="value">Font.</param>
         public virtual void SetDefaultFont(Font value)
         {
-            SkiaUtils.DefaultFontSize = value?.SizeInPoints ?? SkiaUtils.DefaultFontSize;
-            SkiaUtils.DefaultFontName = value?.Name ?? SKTypeface.Default.FamilyName;
+            SkiaHelper.DefaultFontSize = value?.SizeInPoints ?? SkiaHelper.DefaultFontSize;
+            SkiaHelper.DefaultFontName = value?.Name ?? SKTypeface.Default.FamilyName;
         }
     }
 }

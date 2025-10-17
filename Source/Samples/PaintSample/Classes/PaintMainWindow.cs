@@ -1,7 +1,9 @@
 using System;
 using System.IO;
 using System.Text;
+
 using Alternet.Drawing;
+using Alternet.Skia;
 using Alternet.UI;
 
 using SkiaSharp;
@@ -530,7 +532,7 @@ namespace PaintSample
 
         public void DoConvertToDisabledSkia()
         {
-            var result = SkiaUtils.ConvertToGrayscale((SKBitmap)Document.Bitmap);
+            var result = SkiaHelper.ConvertToGrayscale((SKBitmap)Document.Bitmap);
             Document.Bitmap = (Bitmap)result;
         }
 

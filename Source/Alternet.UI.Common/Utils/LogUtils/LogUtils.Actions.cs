@@ -9,6 +9,7 @@ using System.Reflection;
 using System.Text;
 
 using Alternet.Drawing;
+using Alternet.Skia;
 
 using SkiaSharp;
 
@@ -572,7 +573,7 @@ namespace Alternet.UI
         /// </summary>
         internal static void LogSkiaFont()
         {
-            LogSkiaFont(SkiaUtils.DefaultFont);
+            LogSkiaFont(SkiaHelper.DefaultFont);
         }
 
         /// <summary>
@@ -713,7 +714,7 @@ namespace Alternet.UI
 
             App.LogEmptyLine();
             LogMeasureSkiaFont("Hello", font);
-            LogMeasureSkiaFont("xy;", SkiaUtils.DefaultFont);
+            LogMeasureSkiaFont("xy;", SkiaHelper.DefaultFont);
             App.LogEmptyLine();
 
             var canvas1 = GraphicsFactory.GetOrCreateMemoryCanvas(new(1));

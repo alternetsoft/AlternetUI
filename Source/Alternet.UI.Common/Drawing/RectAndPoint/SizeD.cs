@@ -103,6 +103,18 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
+        /// Initializes a new instance of the <see cref="SizeD"/> structure
+        /// using the specified <see cref="SKSize"/>.
+        /// </summary>
+        /// <param name="size">The <see cref="SKSize"/> value used to initialize
+        /// the dimensions of the <see cref="SizeD"/> instance.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public SizeD(SKSize size)
+        {
+            skiaSize = size;
+        }
+
+        /// <summary>
         /// Initializes a new instance of the <see cref='Drawing.SizeD'/> class
         /// from the specified
         /// <see cref='Drawing.PointD'/>.
@@ -336,6 +348,18 @@ namespace Alternet.Drawing
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static implicit operator SizeD(System.Drawing.Size p) => new(p.Width, p.Height);
+
+        /// <summary>
+        /// Converts a <see cref="SizeD"/> instance to an <see cref="SKSize"/> instance.
+        /// </summary>
+        /// <param name="size">The <see cref="SizeD"/> instance to convert.</param>
+        public static implicit operator SKSize(SizeD size) => size.skiaSize;
+
+        /// <summary>
+        /// Converts an <see cref="SKSize"/> to a <see cref="SizeD"/>.
+        /// </summary>
+        /// <param name="skiaSize">The <see cref="SKSize"/> instance to convert.</param>
+        public static implicit operator SizeD(SKSize skiaSize) => new(skiaSize);
 
         /// <summary>
         /// Creates a <see cref='System.Drawing.Size'/> with the properties of the

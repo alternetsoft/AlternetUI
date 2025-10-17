@@ -4,6 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+using Alternet.Skia;
+
 namespace Alternet.Drawing
 {
     /// <summary>
@@ -53,7 +55,7 @@ namespace Alternet.Drawing
         /// <returns></returns>
         public static FontNameAndSize SkiaOrDefault(FontNameAndSize value)
         {
-            if (SkiaUtils.IsFamilySkia(value.Name))
+            if (SkiaHelper.IsFamilySkia(value.Name))
                 return value;
             return Default;
         }

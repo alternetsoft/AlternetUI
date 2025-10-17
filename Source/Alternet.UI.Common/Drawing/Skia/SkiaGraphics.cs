@@ -6,6 +6,7 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
+using Alternet.Skia;
 using Alternet.UI;
 using Alternet.UI.Extensions;
 
@@ -33,7 +34,7 @@ namespace Alternet.Drawing
         /// </summary>
         public SkiaGraphics()
         {
-            canvas = SkiaUtils.NullCanvas;
+            canvas = SkiaHelper.NullCanvas;
         }
 
         /// <summary>
@@ -108,7 +109,7 @@ namespace Alternet.Drawing
                     return;
                 bitmap = value;
                 if (value is null)
-                    canvas = SkiaUtils.CreateNullCanvas(1, 1);
+                    canvas = SkiaHelper.CreateNullCanvas(1, 1);
                 else
                     canvas = new SKCanvas(bitmap);
             }
@@ -127,7 +128,7 @@ namespace Alternet.Drawing
                     return;
                 bitmap = null;
                 if (value is null)
-                    canvas = SkiaUtils.CreateNullCanvas(1, 1);
+                    canvas = SkiaHelper.CreateNullCanvas(1, 1);
                 else
                     canvas = value;
             }

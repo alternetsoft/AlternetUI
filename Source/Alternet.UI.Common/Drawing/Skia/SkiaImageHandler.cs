@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 using Alternet.Drawing;
+using Alternet.Skia;
 using Alternet.UI.Extensions;
 
 using SkiaSharp;
@@ -239,7 +240,7 @@ namespace Alternet.UI
         /// <inheritdoc/>
         public virtual bool IsOk
         {
-            get => SkiaUtils.BitmapIsOk(bitmap);
+            get => SkiaHelper.BitmapIsOk(bitmap);
         }
 
         /// <inheritdoc/>

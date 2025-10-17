@@ -4,7 +4,10 @@ using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+
+using Alternet.Skia;
 using Alternet.UI;
+
 using SkiaSharp;
 
 namespace Alternet.Drawing
@@ -59,7 +62,7 @@ namespace Alternet.Drawing
             }
             else
             {
-                surface = SkiaUtils.CreateNullSurface(width, height);
+                surface = SkiaHelper.CreateNullSurface(width, height);
             }
 
             canvas = surface.Canvas;

@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
+using Alternet.Skia;
 using Alternet.UI;
 
 using SkiaSharp;
@@ -163,7 +164,7 @@ namespace Alternet.Drawing
                         continue;
                     if (FontFactory.OnlySkiaFonts)
                     {
-                        if (!SkiaUtils.IsFamilySkia(name))
+                        if (!SkiaHelper.IsFamilySkia(name))
                             continue;
                     }
 
@@ -305,7 +306,7 @@ namespace Alternet.Drawing
         /// <returns></returns>
         public static IEnumerable<string> RemoveNonSkiaFonts(IEnumerable<string> fonts)
         {
-            var result = fonts.Where(x => SkiaUtils.IsFamilySkia(x));
+            var result = fonts.Where(x => SkiaHelper.IsFamilySkia(x));
             return result;
         }
 
